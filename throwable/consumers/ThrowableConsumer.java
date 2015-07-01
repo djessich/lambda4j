@@ -24,9 +24,8 @@ import java.util.function.Consumer;
  * This functional interface implements a {@link Consumer} which is able to throw any {@link Exception}.
  * <p>
  * The thrown {@link Exception} is sneakily thrown unless its a {@link RuntimeException}. This means that there is no
- * need to catch the thrown exception, nor to declare that you throw it using the throws keyword. The exception is
- * still
- * thrown, but the Java compiler stops warning about it.
+ * need to catch the thrown exception, nor to declare that you throw it using the <em>throws</em> keyword. The
+ * exception is still thrown, but the Java compiler stops warning about it.
  * <p>
  * However, when using this throwing lambda, be aware of the following consequences:
  * <ol>
@@ -141,7 +140,7 @@ public interface ThrowableConsumer<T> extends Consumer<T> {
      * as described in {@link Class#newInstance()} is thrown.
      *
      * @param <X> The type for the class extending {@code Exception}
-     * @param clazz The exception class to throw if an error occrured
+     * @param clazz The exception class to throw if an error occurred
      * @return A composed {@code ThrowableConsumer} that applies this {@code ThrowableConsumer}, and if an error
      * occurred, throws the given {@code Exception}.
      * @throws NullPointerException If the given argument is {@code null}
@@ -161,7 +160,7 @@ public interface ThrowableConsumer<T> extends Consumer<T> {
 
     /**
      * Returns a composed {@link Consumer} that applies this {@link ThrowableConsumer} to its input, ignoring any
-     * possible errors, unless it is an unchecked exception.
+     * possible exceptions, unless it is an unchecked exception.
      *
      * @return A composed {@code Consumer} that applies this {@code ThrowableConsumer}, ignoring any possible errors,
      * unless it is an unchecked exception.
@@ -180,7 +179,7 @@ public interface ThrowableConsumer<T> extends Consumer<T> {
 
     /**
      * Returns a composed {@link Consumer} that applies this {@link ThrowableConsumer} to its input, ignoring any
-     * possible errors.
+     * possible exceptions.
      *
      * @return A composed {@code Consumer} that applies this {@code ThrowableConsumer}, ignoring any possible errors.
      */

@@ -85,6 +85,7 @@ public final class Predicates {
      * Class} argument. If the given {@code Class} represents a primitive type, this {@code Predicate} evaluates also
      * to {@code true}. In any other case, it evaluates to {@code false}.
      *
+     * @param clazz The clazz to be checked if assigneable from
      * @return A {@code Predicate} representing the conversion.
      * @throws NullPointerException If the given argument is {@code null}
      * @see #isNull()

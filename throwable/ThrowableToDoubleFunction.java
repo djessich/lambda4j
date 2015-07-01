@@ -25,9 +25,8 @@ import java.util.function.ToDoubleFunction;
  * This functional interface implements a {@link ToDoubleFunction} which is able to throw any {@link Exception}.
  * <p>
  * The thrown {@link Exception} is sneakily thrown unless its a {@link RuntimeException}. This means that there is no
- * need to catch the thrown exception, nor to declare that you throw it using the throws keyword. The exception is
- * still
- * thrown, but the Java compiler stops warning about it.
+ * need to catch the thrown exception, nor to declare that you throw it using the <em>throws</em> keyword. The
+ * exception is still thrown, but the Java compiler stops warning about it.
  * <p>
  * However, when using this throwing lambda, be aware of the following consequences:
  * <ol>

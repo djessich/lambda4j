@@ -25,9 +25,8 @@ import java.util.function.IntSupplier;
  * This functional interface implements a {@link Comparator} which is able to throw any {@link Exception}.
  * <p>
  * The thrown {@link Exception} is sneakily thrown unless its a {@link RuntimeException}. This means that there is no
- * need to catch the thrown exception, nor to declare that you throw it using the throws keyword. The exception is
- * still
- * thrown, but the Java compiler stops warning about it.
+ * need to catch the thrown exception, nor to declare that you throw it using the <em>throws</em> keyword. The
+ * exception is still thrown, but the Java compiler stops warning about it.
  * <p>
  * However, when using this throwing lambda, be aware of the following consequences:
  * <ol>
@@ -149,7 +148,7 @@ public interface ThrowableComparator<T> extends Comparator<T> {
      * as described in {@link Class#newInstance()} is thrown.
      *
      * @param <X> The type for the class extending {@code Exception}
-     * @param clazz The exception class to throw if an error occrured
+     * @param clazz The exception class to throw if an error occurred
      * @return A composed {@code ThrowableComparator} that applies this {@code ThrowableComparator}, and if an error
      * occurred, throws the given {@code Exception}.
      * @throws NullPointerException If the given argument is {@code null}
