@@ -50,6 +50,7 @@ import java.util.function.Supplier;
  * exception due to sneaky throwing.
  *
  * @param <R> The type of return value from the function
+ * @apiNote This is a throwable JRE lambda
  * @see java.util.function.Function
  */
 @SuppressWarnings("unused")

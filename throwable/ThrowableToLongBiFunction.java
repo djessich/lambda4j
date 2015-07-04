@@ -51,6 +51,7 @@ import java.util.function.ToLongBiFunction;
  *
  * @param <T> The type of the first argument to the function
  * @param <U> The type of the second argument to the function
+ * @apiNote This is a throwable JRE lambda
  * @see java.util.function.BiFunction
  */
 @SuppressWarnings("unused")

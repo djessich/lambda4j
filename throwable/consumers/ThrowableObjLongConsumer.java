@@ -48,6 +48,7 @@ import java.util.function.ObjLongConsumer;
  * exception due to sneaky throwing.
  *
  * @param <T> The type of argument for the function
+ * @apiNote This is a throwable JRE lambda
  * @see java.util.function.Consumer
  */
 @SuppressWarnings("unused")

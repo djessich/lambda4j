@@ -49,6 +49,7 @@ import java.util.function.Supplier;
  * exception due to sneaky throwing.
  *
  * @param <T> The type of return value from the Supplier
+ * @apiNote This is a throwable JRE lambda
  */
 @SuppressWarnings("unused")
 @FunctionalInterface

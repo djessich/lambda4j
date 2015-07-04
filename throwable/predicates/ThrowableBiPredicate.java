@@ -50,6 +50,7 @@ import java.util.function.Consumer;
  *
  * @param <T> The type of the first argument for the function
  * @param <U> The type of the second argument for the function
+ * @apiNote This is a throwable JRE lambda
  * @see java.util.function.Predicate
  */
 @SuppressWarnings("unused")

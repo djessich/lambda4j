@@ -49,6 +49,7 @@ import java.util.function.Predicate;
  * exception due to sneaky throwing.
  *
  * @param <T> The type of argument for the function
+ * @apiNote This is a throwable JRE lambda
  */
 @SuppressWarnings("unused")
 @FunctionalInterface

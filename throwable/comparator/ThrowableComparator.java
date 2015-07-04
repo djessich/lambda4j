@@ -50,6 +50,7 @@ import java.util.function.IntSupplier;
  * exception due to sneaky throwing.
  *
  * @param <T> The type of the compared values
+ * @apiNote This is a throwable JRE lambda.
  */
 @SuppressWarnings("unused")
 @FunctionalInterface

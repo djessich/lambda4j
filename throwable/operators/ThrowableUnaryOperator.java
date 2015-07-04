@@ -50,6 +50,7 @@ import java.util.function.UnaryOperator;
  * exception due to sneaky throwing.
  *
  * @param <T> The type of the argument and the return value for this operator
+ * @apiNote This is a throwable JRE lambda
  * @see java.util.function.Function
  */
 @SuppressWarnings("unused")

@@ -51,6 +51,7 @@ import java.util.function.Supplier;
  *
  * @param <T> The type of argument for the function
  * @param <R> The type of return value from the function
+ * @apiNote This is a throwable JRE lambda
  */
 @SuppressWarnings("unused")
 @FunctionalInterface

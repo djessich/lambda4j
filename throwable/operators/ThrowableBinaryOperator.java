@@ -50,6 +50,7 @@ import java.util.function.Supplier;
  * exception due to sneaky throwing.
  *
  * @param <T> The type of the arguments and the return value for this operator
+ * @apiNote This is a throwable JRE lambda
  * @see java.util.function.BiFunction
  */
 @SuppressWarnings("unused")
