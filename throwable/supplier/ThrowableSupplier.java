@@ -18,6 +18,7 @@ package at.gridtec.internals.lang.function.throwable.supplier;
 import at.gridtec.internals.lang.util.ThrowableUtils;
 
 import java.util.Objects;
+import java.util.function.Consumer;
 import java.util.function.Supplier;
 
 /**
@@ -49,8 +50,37 @@ import java.util.function.Supplier;
  *
  * @param <T> The type of return value from the Supplier
  */
+@SuppressWarnings("unused")
 @FunctionalInterface
 public interface ThrowableSupplier<T> extends Supplier<T> {
+
+    /**
+     * Implicitly casts, and therefore wraps a given lambda as {@link ThrowableSupplier}. This is a convenience method
+     * in case the given {@link ThrowableSupplier} is ambiguous for the compiler. This might happen for overloaded
+     * methods accepting different functional interfaces. The given {@code ThrowableSupplier} is returned as-is.
+     *
+     * @param <T> The type of return value from the Supplier
+     * @param lambda The {@code ThrowableSupplier} which should be returned as-is.
+     * @return The given {@code ThrowableSupplier} as-is.
+     * @throws NullPointerException If the given argument is {@code null}
+     */
+    static <T> ThrowableSupplier<T> wrap(final ThrowableSupplier<T> lambda) {
+        Objects.requireNonNull(lambda);
+        return lambda;
+    }
+
+    /**
+     * Creates a {@link ThrowableSupplier} which always returns a given value.
+     *
+     * @param <T> The type of return value from the Supplier
+     * @param t The return value for the constant
+     * @return A {@code ThrowableSupplier} which always returns a given value.
+     * @throws NullPointerException If the given argument is {@code null}
+     */
+    static <T> ThrowableSupplier<T> of(T t) {
+        Objects.requireNonNull(t);
+        return () -> t;
+    }
 
     /**
      * The get method for this {@link Supplier} which is able to throw any {@link Exception} type.
@@ -81,8 +111,7 @@ public interface ThrowableSupplier<T> extends Supplier<T> {
 
     /**
      * Returns a composed {@link ThrowableSupplier} that applies this {@code ThrowableSupplier} to its input, and if an
-     * error occurred, applies the given one. The exception from this {@code ThrowableSupplier} is ignored, unless it
-     * is an unchecked exception.
+     * error occurred, applies the given one. The exception from this {@code ThrowableSupplier} is ignored.
      *
      * @param other A {@code ThrowableSupplier} to be applied if this one fails
      * @return A composed {@code ThrowableSupplier} that applies this {@code ThrowableSupplier}, and if an error
@@ -94,39 +123,8 @@ public interface ThrowableSupplier<T> extends Supplier<T> {
         return () -> {
             try {
                 return getThrows();
-            } catch (RuntimeException e) {
-                throw e;
             } catch (Exception ignored) {
                 return other.getThrows();
-            }
-        };
-    }
-
-    /**
-     * Returns a composed {@link ThrowableSupplier} that applies this {@code ThrowableSupplier} to its input, and if an
-     * error occurred, throws the given {@link Exception}. The exception from this {@code ThrowableSupplier} is added
-     * as suppressed to the given one, unless it is an unchecked exception.
-     * <p>
-     * The given exception must have a no arg constructor for reflection purposes. If not, then appropriate exception
-     * as described in {@link Class#newInstance()} is thrown.
-     *
-     * @param <X> The type for the class extending {@code Exception}
-     * @param clazz The exception class to throw if an error occurred
-     * @return A composed {@code ThrowableSupplier} that applies this {@code ThrowableSupplier}, and if an error
-     * occurred, throws the given {@code Exception}.
-     * @throws NullPointerException If the given argument is {@code null}
-     */
-    default <X extends Exception> ThrowableSupplier<T> orThrow(Class<X> clazz) {
-        Objects.requireNonNull(clazz);
-        return () -> {
-            try {
-                return getThrows();
-            } catch (RuntimeException e) {
-                throw e;
-            } catch (Exception e) {
-                X ex = clazz.newInstance();
-                ex.addSuppressed(e);
-                throw ThrowableUtils.sneakyThrow(ex);
             }
         };
     }
@@ -145,7 +143,7 @@ public interface ThrowableSupplier<T> extends Supplier<T> {
      * occurred, throws the given {@code Exception}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    default <X extends Exception> ThrowableSupplier<T> orThrowAlways(Class<X> clazz) {
+    default <X extends Exception> ThrowableSupplier<T> orThrow(Class<X> clazz) {
         Objects.requireNonNull(clazz);
         return () -> {
             try {
@@ -161,7 +159,7 @@ public interface ThrowableSupplier<T> extends Supplier<T> {
     /**
      * Returns a composed {@link Supplier} that applies this {@link ThrowableSupplier} to its input, and if an error
      * occurred, applies the given {@code Supplier} representing a fallback. The exception from this {@code
-     * ThrowableSupplier} is ignored, unless it is an unchecked exception.
+     * ThrowableSupplier} is ignored.
      *
      * @param fallback A {@code Supplier} to be applied if this one fails
      * @return A composed {@code Supplier} that applies this {@code ThrowableSupplier}, and if an error occurred,
@@ -173,8 +171,6 @@ public interface ThrowableSupplier<T> extends Supplier<T> {
         return () -> {
             try {
                 return getThrows();
-            } catch (RuntimeException e) {
-                throw e;
             } catch (Exception ignored) {
                 return fallback.get();
             }
@@ -182,25 +178,21 @@ public interface ThrowableSupplier<T> extends Supplier<T> {
     }
 
     /**
-     * Returns a composed {@link Supplier} that applies this {@link ThrowableSupplier} to its input, and if an error
-     * occurred, returns the given value. The exception from this {@code ThrowableSupplier} is ignored, unless it is an
-     * unchecked exception.
+     * Returns a composed {@link ThrowableSupplier} that applies this {@code ThrowableSupplier} to its input,
+     * additionally performing the provided action to the resulting value. This method exists mainly to support
+     * debugging.
      *
-     * @param value The value to be returned if this {@code ThrowableSupplier} fails
-     * @return A composed {@code Supplier} that applies this {@code ThrowableSupplier}, and if an error occurred,
-     * returns the given value.
+     * @param action A {@link Consumer} to be applied additionally to this {@code ThrowableSupplier}
+     * @return A composed {@code ThrowableSupplier} that applies this {@code ThrowableSupplier}, additionally performing
+     * the provided action to the resulting value.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    default Supplier<T> orReturn(final T value) {
-        Objects.requireNonNull(value);
+    default ThrowableSupplier<T> peek(final Consumer<? super T> action) {
+        Objects.requireNonNull(action);
         return () -> {
-            try {
-                return getThrows();
-            } catch (RuntimeException e) {
-                throw e;
-            } catch (Exception ignored) {
-                return value;
-            }
+            final T t = get();
+            action.accept(t);
+            return t;
         };
     }
 
@@ -213,7 +205,7 @@ public interface ThrowableSupplier<T> extends Supplier<T> {
      * returns the given value.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    default Supplier<T> orReturnAlways(final T value) {
+    default Supplier<T> orReturn(final T value) {
         Objects.requireNonNull(value);
         return () -> {
             try {

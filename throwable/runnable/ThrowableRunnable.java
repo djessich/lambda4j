@@ -46,8 +46,23 @@ import java.util.Objects;
  * declaration in the <em>throws</em> clause. The checked exception will behave just like a normal <b>unchecked</b>
  * exception due to sneaky throwing.
  */
+@SuppressWarnings("unused")
 @FunctionalInterface
 public interface ThrowableRunnable extends Runnable {
+
+    /**
+     * Implicitly casts, and therefore wraps a given lambda as {@link ThrowableRunnable}. This is a convenience method
+     * in case the given {@link ThrowableRunnable} is ambiguous for the compiler. This might happen for overloaded
+     * methods accepting different functional interfaces. The given {@code ThrowableRunnable} is returned as-is.
+     *
+     * @param lambda The {@code ThrowableRunnable} which should be returned as-is.
+     * @return The given {@code ThrowableRunnable} as-is.
+     * @throws NullPointerException If the given argument is {@code null}
+     */
+    static ThrowableRunnable wrap(final ThrowableRunnable lambda) {
+        Objects.requireNonNull(lambda);
+        return lambda;
+    }
 
     /**
      * The run method for this {@link Runnable} which is able to throw any {@link Exception} type.
@@ -75,30 +90,21 @@ public interface ThrowableRunnable extends Runnable {
     }
 
     /**
-     * Returns a composed {@link ThrowableRunnable} that applies this {@code ThrowableRunnable} to its input, and if an
-     * error occurred, throws the given {@link Exception}. The exception from this {@code ThrowableRunnable} is added
-     * as suppressed to the given one, unless it is an unchecked exception.
-     * <p>
-     * The given exception must have a no arg constructor for reflection purposes. If not, then appropriate exception
-     * as described in {@link Class#newInstance()} is thrown.
+     * Returns a composed {@link ThrowableRunnable} that executes this {@code ThrowableRunnable}, and if an error
+     * occurred, executes the given one. The exception from this {@code ThrowableRunnable} is ignored.
      *
-     * @param <X> The type for the class extending {@code Exception}
-     * @param clazz The exception class to throw if an error occurred
-     * @return A composed {@code ThrowableRunnable} that applies this {@code ThrowableRunnable}, and if an error
-     * occurred, throws the given {@code Exception}.
+     * @param other A {@code ThrowableRunnable} to be executed if this one fails
+     * @return A composed {@code ThrowableRunnable} that executes this {@code ThrowableRunnable}, and if an error
+     * occurred, executes the given one.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    default <X extends Exception> ThrowableRunnable orThrow(Class<X> clazz) {
-        Objects.requireNonNull(clazz);
+    default ThrowableRunnable orElse(final ThrowableRunnable other) {
+        Objects.requireNonNull(other);
         return () -> {
             try {
                 runThrows();
-            } catch (RuntimeException e) {
-                throw e;
-            } catch (Exception e) {
-                X ex = clazz.newInstance();
-                ex.addSuppressed(e);
-                throw ThrowableUtils.sneakyThrow(ex);
+            } catch (Exception ignored) {
+                other.runThrows();
             }
         };
     }
@@ -117,7 +123,7 @@ public interface ThrowableRunnable extends Runnable {
      * occurred, throws the given {@code Exception}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    default <X extends Exception> ThrowableRunnable orThrowAlways(Class<X> clazz) {
+    default <X extends Exception> ThrowableRunnable orThrow(Class<X> clazz) {
         Objects.requireNonNull(clazz);
         return () -> {
             try {

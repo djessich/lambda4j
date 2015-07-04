@@ -19,6 +19,7 @@ import at.gridtec.internals.lang.util.ThrowableUtils;
 
 import java.util.Objects;
 import java.util.function.BiPredicate;
+import java.util.function.Consumer;
 
 /**
  * This functional interface implements a {@link BiPredicate} which is able to throw any {@link Exception}.
@@ -51,8 +52,40 @@ import java.util.function.BiPredicate;
  * @param <U> The type of the second argument for the function
  * @see java.util.function.Predicate
  */
+@SuppressWarnings("unused")
 @FunctionalInterface
 public interface ThrowableBiPredicate<T, U> extends BiPredicate<T, U> {
+
+    /**
+     * Implicitly casts, and therefore wraps a given lambda as {@link ThrowableBiPredicate}. This is a convenience
+     * method in case the given {@link ThrowableBiPredicate} is ambiguous for the compiler. This might happen for
+     * overloaded methods accepting different functional interfaces. The given {@code ThrowableBiPredicate} is returned
+     * as-is.
+     *
+     * @param <T> The type of the first argument for the function
+     * @param <U> The type of the second argument for the function
+     * @param lambda The {@code ThrowableBiPredicate} which should be returned as-is.
+     * @return The given {@code ThrowableBiPredicate} as-is.
+     * @throws NullPointerException If the given argument is {@code null}
+     */
+    static <T, U> ThrowableBiPredicate<T, U> wrap(final ThrowableBiPredicate<T, U> lambda) {
+        Objects.requireNonNull(lambda);
+        return lambda;
+    }
+
+    /**
+     * Creates a {@link ThrowableBiPredicate} which always returns a given value.
+     *
+     * @param <T> The type of the first argument for the function
+     * @param <U> The type of the second argument for the function
+     * @param ret The return value for the constant
+     * @return A {@code ThrowableBiPredicate} which always returns a given value.
+     * @throws NullPointerException If the given argument is {@code null}
+     */
+    static <T, U> ThrowableBiPredicate<T, U> constant(boolean ret) {
+        Objects.requireNonNull(ret);
+        return (t, u) -> ret;
+    }
 
     /**
      * The test method for this {@link BiPredicate} which is able to throw any {@link Exception} type.
@@ -88,8 +121,7 @@ public interface ThrowableBiPredicate<T, U> extends BiPredicate<T, U> {
 
     /**
      * Returns a composed {@link ThrowableBiPredicate} that applies this {@code ThrowableBiPredicate} to its input, and
-     * if an error occurred, applies the given one. The exception from this {@code ThrowableBiPredicate} is ignored,
-     * unless it is an unchecked exception.
+     * if an error occurred, applies the given one. The exception from this {@code ThrowableBiPredicate} is ignored.
      *
      * @param other A {@code ThrowableBiPredicate} to be applied if this one fails
      * @return A composed {@code ThrowableBiPredicate} that applies this {@code ThrowableBiPredicate}, and if an error
@@ -101,39 +133,8 @@ public interface ThrowableBiPredicate<T, U> extends BiPredicate<T, U> {
         return (t, u) -> {
             try {
                 return testThrows(t, u);
-            } catch (RuntimeException e) {
-                throw e;
             } catch (Exception ignored) {
                 return other.testThrows(t, u);
-            }
-        };
-    }
-
-    /**
-     * Returns a composed {@link ThrowableBiPredicate} that applies this {@code ThrowableBiPredicate} to its input, and
-     * if an error occurred, throws the given {@link Exception}. The exception from this {@code ThrowableBiPredicate}
-     * is added as suppressed to the given one, unless it is an unchecked exception.
-     * <p>
-     * The given exception must have a no arg constructor for reflection purposes. If not, then appropriate exception
-     * as described in {@link Class#newInstance()} is thrown.
-     *
-     * @param <X> The type for the class extending {@code Exception}
-     * @param clazz The exception class to throw if an error occurred
-     * @return A composed {@code ThrowableBiPredicate} that applies this {@code ThrowableBiPredicate}, and if an error
-     * occurred, throws the given {@code Exception}.
-     * @throws NullPointerException If the given argument is {@code null}
-     */
-    default <X extends Exception> ThrowableBiPredicate<T, U> orThrow(Class<X> clazz) {
-        Objects.requireNonNull(clazz);
-        return (t, u) -> {
-            try {
-                return testThrows(t, u);
-            } catch (RuntimeException e) {
-                throw e;
-            } catch (Exception e) {
-                X ex = clazz.newInstance();
-                ex.addSuppressed(e);
-                throw ThrowableUtils.sneakyThrow(ex);
             }
         };
     }
@@ -152,7 +153,7 @@ public interface ThrowableBiPredicate<T, U> extends BiPredicate<T, U> {
      * occurred, throws the given {@code Exception}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    default <X extends Exception> ThrowableBiPredicate<T, U> orThrowAlways(Class<X> clazz) {
+    default <X extends Exception> ThrowableBiPredicate<T, U> orThrow(Class<X> clazz) {
         Objects.requireNonNull(clazz);
         return (t, u) -> {
             try {
@@ -168,7 +169,7 @@ public interface ThrowableBiPredicate<T, U> extends BiPredicate<T, U> {
     /**
      * Returns a composed {@link BiPredicate} that applies this {@link ThrowableBiPredicate} to its input, and if an
      * error occurred, applies the given {@code BiPredicate} representing a fallback. The exception from this {@code
-     * ThrowableBiPredicate} is ignored, unless it is an unchecked exception.
+     * ThrowableBiPredicate} is ignored.
      *
      * @param fallback A {@code BiPredicate} to be applied if this one fails
      * @return A composed {@code BiPredicate} that applies this {@code ThrowableBiPredicate}, and if an error occurred,
@@ -180,8 +181,6 @@ public interface ThrowableBiPredicate<T, U> extends BiPredicate<T, U> {
         return (t, u) -> {
             try {
                 return testThrows(t, u);
-            } catch (RuntimeException e) {
-                throw e;
             } catch (Exception ignored) {
                 return fallback.test(t, u);
             }
@@ -189,42 +188,21 @@ public interface ThrowableBiPredicate<T, U> extends BiPredicate<T, U> {
     }
 
     /**
-     * Returns a composed {@link BiPredicate} that applies this {@link ThrowableBiPredicate} to its input, and if an
-     * error occurred, returns {@code true}. The exception from this {@code ThrowableBiPredicate} is ignored, unless it
-     * is an unchecked exception.
+     * Returns a composed {@link ThrowableBiPredicate} that applies this {@code ThrowableBiPredicate} to its input,
+     * additionally performing the provided action to the resulting value. This method exists mainly to support
+     * debugging.
      *
-     * @return A composed {@code BiPredicate} that applies this {@code ThrowableBiPredicate}, and if an error occurred,
-     * returns {@code true}.
+     * @param action A {@link Consumer} to be applied additionally to this {@code ThrowableBiPredicate}
+     * @return A composed {@code ThrowableBiPredicate} that applies this {@code ThrowableBiPredicate}, additionally
+     * performing the provided action to the resulting value.
+     * @throws NullPointerException If the given argument is {@code null}
      */
-    default BiPredicate<T, U> orReturnTrue() {
+    default ThrowableBiPredicate<T, U> peek(final Consumer<? super Boolean> action) {
+        Objects.requireNonNull(action);
         return (t, u) -> {
-            try {
-                return testThrows(t, u);
-            } catch (RuntimeException e) {
-                throw e;
-            } catch (Exception ignored) {
-                return true;
-            }
-        };
-    }
-
-    /**
-     * Returns a composed {@link BiPredicate} that applies this {@link ThrowableBiPredicate} to its input, and if an
-     * error occurred, returns {@code false}. The exception from this {@code ThrowableBiPredicate} is ignored, unless
-     * it is an unchecked exception.
-     *
-     * @return A composed {@code BiPredicate} that applies this {@code ThrowableBiPredicate}, and if an error occurred,
-     * returns {@code false}.
-     */
-    default BiPredicate<T, U> orReturnFalse() {
-        return (t, u) -> {
-            try {
-                return testThrows(t, u);
-            } catch (RuntimeException e) {
-                throw e;
-            } catch (Exception ignored) {
-                return false;
-            }
+            final boolean ret = test(t, u);
+            action.accept(ret);
+            return ret;
         };
     }
 
@@ -235,7 +213,7 @@ public interface ThrowableBiPredicate<T, U> extends BiPredicate<T, U> {
      * @return A composed {@code BiPredicate} that applies this {@code ThrowableBiPredicate}, and if an error occurred,
      * returns {@code true}.
      */
-    default BiPredicate<T, U> orReturnAlwaysTrue() {
+    default BiPredicate<T, U> orReturnTrue() {
         return (t, u) -> {
             try {
                 return testThrows(t, u);
@@ -252,7 +230,7 @@ public interface ThrowableBiPredicate<T, U> extends BiPredicate<T, U> {
      * @return A composed {@code BiPredicate} that applies this {@code ThrowableBiPredicate}, and if an error occurred,
      * returns {@code false}.
      */
-    default BiPredicate<T, U> orReturnAlwaysFalse() {
+    default BiPredicate<T, U> orReturnFalse() {
         return (t, u) -> {
             try {
                 return testThrows(t, u);

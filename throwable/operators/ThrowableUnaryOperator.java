@@ -18,6 +18,7 @@ package at.gridtec.internals.lang.function.throwable.operators;
 import at.gridtec.internals.lang.util.ThrowableUtils;
 
 import java.util.Objects;
+import java.util.function.Consumer;
 import java.util.function.Supplier;
 import java.util.function.UnaryOperator;
 
@@ -51,8 +52,38 @@ import java.util.function.UnaryOperator;
  * @param <T> The type of the argument and the return value for this operator
  * @see java.util.function.Function
  */
+@SuppressWarnings("unused")
 @FunctionalInterface
 public interface ThrowableUnaryOperator<T> extends UnaryOperator<T> {
+
+    /**
+     * Implicitly casts, and therefore wraps a given lambda as {@link ThrowableUnaryOperator}. This is a convenience
+     * method in case the given {@link ThrowableUnaryOperator} is ambiguous for the compiler. This might happen for
+     * overloaded methods accepting different functional interfaces. The given {@code ThrowableUnaryOperator} is
+     * returned as-is.
+     *
+     * @param <T> The type of argument for the function
+     * @param lambda The {@code ThrowableUnaryOperator} which should be returned as-is.
+     * @return The given {@code ThrowableUnaryOperator} as-is.
+     * @throws NullPointerException If the given argument is {@code null}
+     */
+    static <T> ThrowableUnaryOperator<T> wrap(final ThrowableUnaryOperator<T> lambda) {
+        Objects.requireNonNull(lambda);
+        return lambda;
+    }
+
+    /**
+     * Creates a {@link ThrowableUnaryOperator} which always returns a given value.
+     *
+     * @param <T> The type of argument for the function
+     * @param r The return value for the constant
+     * @return A {@code ThrowableUnaryOperator} which always returns a given value.
+     * @throws NullPointerException If the given argument is {@code null}
+     */
+    static <T> ThrowableUnaryOperator<T> constant(T r) {
+        Objects.requireNonNull(r);
+        return t -> r;
+    }
 
     /**
      * The apply method for this {@link UnaryOperator} which is able to throw any {@link Exception} type.
@@ -86,7 +117,7 @@ public interface ThrowableUnaryOperator<T> extends UnaryOperator<T> {
     /**
      * Returns a composed {@link ThrowableUnaryOperator} that applies this {@code ThrowableUnaryOperator} to its input,
      * and if an  error occurred, applies the given one. The exception from this {@code ThrowableUnaryOperator} is
-     * ignored, unless it is an unchecked exception.
+     * ignored.
      *
      * @param other A {@code ThrowableUnaryOperator} to be applied if this one fails
      * @return A composed {@code ThrowableUnaryOperator} that applies this {@code ThrowableUnaryOperator}, and if an
@@ -98,39 +129,8 @@ public interface ThrowableUnaryOperator<T> extends UnaryOperator<T> {
         return t -> {
             try {
                 return applyThrows(t);
-            } catch (RuntimeException e) {
-                throw e;
             } catch (Exception ignored) {
                 return other.applyThrows(t);
-            }
-        };
-    }
-
-    /**
-     * Returns a composed {@link ThrowableUnaryOperator} that applies this {@code ThrowableUnaryOperator} to its input,
-     * and if an error occurred, throws the given {@link Exception}. The exception from this {@code
-     * ThrowableUnaryOperator} is added as suppressed to the given one, unless it is an unchecked exception.
-     * <p>
-     * The given exception must have a no arg constructor for reflection purposes. If not, then appropriate exception
-     * as described in {@link Class#newInstance()} is thrown.
-     *
-     * @param <X> The type for the class extending {@code Exception}
-     * @param clazz The exception class to throw if an error occurred
-     * @return A composed {@code ThrowableUnaryOperator} that applies this {@code ThrowableUnaryOperator}, and if an
-     * error occurred, throws the given {@code Exception}.
-     * @throws NullPointerException If the given argument is {@code null}
-     */
-    default <X extends Exception> ThrowableUnaryOperator<T> orThrow(Class<X> clazz) {
-        Objects.requireNonNull(clazz);
-        return t -> {
-            try {
-                return applyThrows(t);
-            } catch (RuntimeException e) {
-                throw e;
-            } catch (Exception e) {
-                X ex = clazz.newInstance();
-                ex.addSuppressed(e);
-                throw ThrowableUtils.sneakyThrow(ex);
             }
         };
     }
@@ -149,7 +149,7 @@ public interface ThrowableUnaryOperator<T> extends UnaryOperator<T> {
      * error occurred, throws the given {@code Exception}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    default <X extends Exception> ThrowableUnaryOperator<T> orThrowAlways(Class<X> clazz) {
+    default <X extends Exception> ThrowableUnaryOperator<T> orThrow(Class<X> clazz) {
         Objects.requireNonNull(clazz);
         return t -> {
             try {
@@ -165,7 +165,7 @@ public interface ThrowableUnaryOperator<T> extends UnaryOperator<T> {
     /**
      * Returns a composed {@link UnaryOperator} that applies this {@link ThrowableUnaryOperator} to its input, and if
      * an error occurred, applies the given {@code UnaryOperator} representing a fallback. The exception from this
-     * {@code ThrowableUnaryOperator} is ignored, unless it is an unchecked exception.
+     * {@code ThrowableUnaryOperator} is ignored.
      *
      * @param fallback A {@code UnaryOperator} to be applied if this one fails
      * @return A composed {@code UnaryOperator} that applies this {@code ThrowableUnaryOperator}, and if an error
@@ -177,8 +177,6 @@ public interface ThrowableUnaryOperator<T> extends UnaryOperator<T> {
         return t -> {
             try {
                 return applyThrows(t);
-            } catch (RuntimeException e) {
-                throw e;
             } catch (Exception ignored) {
                 return fallback.apply(t);
             }
@@ -186,68 +184,21 @@ public interface ThrowableUnaryOperator<T> extends UnaryOperator<T> {
     }
 
     /**
-     * Returns a composed {@link UnaryOperator} that applies this {@link ThrowableUnaryOperator} to its input, and if
-     * an error occurred, returns the given value. The exception from this {@code ThrowableUnaryOperator} is ignored,
-     * unless it is an unchecked exception.
+     * Returns a composed {@link ThrowableUnaryOperator} that applies this {@code ThrowableUnaryOperator} to its input,
+     * additionally performing the provided action to the resulting value. This method exists mainly to support
+     * debugging.
      *
-     * @param value The value to be returned if this {@code ThrowableUnaryOperator} fails
-     * @return A composed {@code UnaryOperator} that applies this {@code ThrowableUnaryOperator}, and if an error
-     * occurred, returns the given value.
+     * @param action A {@link Consumer} to be applied additionally to this {@code ThrowableUnaryOperator}
+     * @return A composed {@code ThrowableUnaryOperator} that applies this {@code ThrowableUnaryOperator}, additionally
+     * performing the provided action to the resulting value.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    default UnaryOperator<T> orReturn(final T value) {
-        Objects.requireNonNull(value);
+    default ThrowableUnaryOperator<T> peek(final Consumer<? super T> action) {
+        Objects.requireNonNull(action);
         return t -> {
-            try {
-                return applyThrows(t);
-            } catch (RuntimeException e) {
-                throw e;
-            } catch (Exception ignored) {
-                return value;
-            }
-        };
-    }
-
-    /**
-     * Returns a composed {@link UnaryOperator} that applies this {@link ThrowableUnaryOperator} to its input, and if
-     * an error occurred, returns the supplied value from the given {@link Supplier}. The exception from this {@code
-     * ThrowableUnaryOperator} is ignored, unless it is an unchecked exception.
-     *
-     * @param supplier A {@code Supplier} to return a supplied value if this {@code ThrowableUnaryOperator} fails
-     * @return A composed {@code UnaryOperator} that applies this {@code ThrowableUnaryOperator}, and if an error
-     * occurred, the supplied value from the given {@code Supplier}.
-     * @throws NullPointerException If the given argument is {@code null}
-     */
-    default UnaryOperator<T> orReturn(final Supplier<? extends T> supplier) {
-        Objects.requireNonNull(supplier);
-        return t -> {
-            try {
-                return applyThrows(t);
-            } catch (RuntimeException e) {
-                throw e;
-            } catch (Exception ignored) {
-                return supplier.get();
-            }
-        };
-    }
-
-    /**
-     * Returns a composed {@link UnaryOperator} that applies this {@link ThrowableUnaryOperator} to its input, and if
-     * an error occurred, returns its value. The exception from this {@code ThrowableUnaryOperator} is ignored, unless
-     * it is an unchecked exception.
-     *
-     * @return A composed {@code UnaryOperator} that applies this {@code ThrowableUnaryOperator}, and if an error
-     * occurred, returns its value.
-     */
-    default UnaryOperator<T> orReturnSelf() {
-        return t -> {
-            try {
-                return applyThrows(t);
-            } catch (RuntimeException e) {
-                throw e;
-            } catch (Exception ignored) {
-                return t;
-            }
+            final T ret = apply(t);
+            action.accept(ret);
+            return ret;
         };
     }
 
@@ -260,7 +211,7 @@ public interface ThrowableUnaryOperator<T> extends UnaryOperator<T> {
      * occurred, returns the given value.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    default UnaryOperator<T> orReturnAlways(final T value) {
+    default UnaryOperator<T> orReturn(final T value) {
         Objects.requireNonNull(value);
         return t -> {
             try {
@@ -281,7 +232,7 @@ public interface ThrowableUnaryOperator<T> extends UnaryOperator<T> {
      * occurred, the supplied value from the given {@code Supplier}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    default UnaryOperator<T> orReturnAlways(final Supplier<? extends T> supplier) {
+    default UnaryOperator<T> orReturn(final Supplier<? extends T> supplier) {
         Objects.requireNonNull(supplier);
         return t -> {
             try {
@@ -299,7 +250,7 @@ public interface ThrowableUnaryOperator<T> extends UnaryOperator<T> {
      * @return A composed {@code UnaryOperator} that applies this {@code ThrowableUnaryOperator}, and if an error
      * occurred, returns its value.
      */
-    default UnaryOperator<T> orReturnAlwaysSelf() {
+    default UnaryOperator<T> orReturnSelf() {
         return t -> {
             try {
                 return applyThrows(t);

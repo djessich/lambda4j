@@ -18,6 +18,7 @@ package at.gridtec.internals.lang.function.throwable.supplier;
 import at.gridtec.internals.lang.util.ThrowableUtils;
 
 import java.util.Objects;
+import java.util.function.IntConsumer;
 import java.util.function.IntSupplier;
 
 /**
@@ -49,8 +50,36 @@ import java.util.function.IntSupplier;
  *
  * @see java.util.function.Supplier
  */
+@SuppressWarnings("unused")
 @FunctionalInterface
 public interface ThrowableIntSupplier extends IntSupplier {
+
+    /**
+     * Implicitly casts, and therefore wraps a given lambda as {@link ThrowableIntSupplier}. This is a convenience
+     * method in case the given {@link ThrowableIntSupplier} is ambiguous for the compiler. This might happen for
+     * overloaded methods accepting different functional interfaces. The given {@code ThrowableIntSupplier} is returned
+     * as-is.
+     *
+     * @param lambda The {@code ThrowableIntSupplier} which should be returned as-is.
+     * @return The given {@code ThrowableIntSupplier} as-is.
+     * @throws NullPointerException If the given argument is {@code null}
+     */
+    static ThrowableIntSupplier wrap(final ThrowableIntSupplier lambda) {
+        Objects.requireNonNull(lambda);
+        return lambda;
+    }
+
+    /**
+     * Creates a {@link ThrowableIntSupplier} which always returns a given value.
+     *
+     * @param ret The return value for the constant
+     * @return A {@code ThrowableIntSupplier} which always returns a given value.
+     * @throws NullPointerException If the given argument is {@code null}
+     */
+    static ThrowableIntSupplier of(int ret) {
+        Objects.requireNonNull(ret);
+        return () -> ret;
+    }
 
     /**
      * The get method for this {@link IntSupplier} which is able to throw any {@link Exception} type.
@@ -81,8 +110,7 @@ public interface ThrowableIntSupplier extends IntSupplier {
 
     /**
      * Returns a composed {@link ThrowableIntSupplier} that applies this {@code ThrowableIntSupplier} to its input, and
-     * if an error occurred, applies the given one. The exception from this {@code ThrowableIntSupplier} is ignored,
-     * unless it is an unchecked exception.
+     * if an error occurred, applies the given one. The exception from this {@code ThrowableIntSupplier} is ignored.
      *
      * @param other A {@code ThrowableIntSupplier} to be applied if this one fails
      * @return A composed {@code ThrowableIntSupplier} that applies this {@code ThrowableIntSupplier}, and if an error
@@ -94,39 +122,8 @@ public interface ThrowableIntSupplier extends IntSupplier {
         return () -> {
             try {
                 return getAsIntThrows();
-            } catch (RuntimeException e) {
-                throw e;
             } catch (Exception ignored) {
                 return other.getAsIntThrows();
-            }
-        };
-    }
-
-    /**
-     * Returns a composed {@link ThrowableIntSupplier} that applies this {@code ThrowableIntSupplier} to its input, and
-     * if an error occurred, throws the given {@link Exception}. The exception from this {@code ThrowableIntSupplier}
-     * is added as suppressed to the given one, unless it is an unchecked exception.
-     * <p>
-     * The given exception must have a no arg constructor for reflection purposes. If not, then appropriate exception
-     * as described in {@link Class#newInstance()} is thrown.
-     *
-     * @param <X> The type for the class extending {@code Exception}
-     * @param clazz The exception class to throw if an error occurred
-     * @return A composed {@code ThrowableIntSupplier} that applies this {@code ThrowableIntSupplier}, and if an error
-     * occurred, throws the given {@code Exception}.
-     * @throws NullPointerException If the given argument is {@code null}
-     */
-    default <X extends Exception> ThrowableIntSupplier orThrow(Class<X> clazz) {
-        Objects.requireNonNull(clazz);
-        return () -> {
-            try {
-                return getAsIntThrows();
-            } catch (RuntimeException e) {
-                throw e;
-            } catch (Exception e) {
-                X ex = clazz.newInstance();
-                ex.addSuppressed(e);
-                throw ThrowableUtils.sneakyThrow(ex);
             }
         };
     }
@@ -145,7 +142,7 @@ public interface ThrowableIntSupplier extends IntSupplier {
      * occurred, throws the given {@code Exception}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    default <X extends Exception> ThrowableIntSupplier orThrowAlways(Class<X> clazz) {
+    default <X extends Exception> ThrowableIntSupplier orThrow(Class<X> clazz) {
         Objects.requireNonNull(clazz);
         return () -> {
             try {
@@ -161,7 +158,7 @@ public interface ThrowableIntSupplier extends IntSupplier {
     /**
      * Returns a composed {@link IntSupplier} that applies this {@link ThrowableIntSupplier} to its input, and if an
      * error occurred, applies the given {@code IntSupplier} representing a fallback. The exception from this {@code
-     * ThrowableIntSupplier} is ignored, unless it is an unchecked exception.
+     * ThrowableIntSupplier} is ignored.
      *
      * @param fallback A {@code IntSupplier} to be applied if this one fails
      * @return A composed {@code IntSupplier} that applies this {@code ThrowableIntSupplier}, and if an error occurred,
@@ -173,8 +170,6 @@ public interface ThrowableIntSupplier extends IntSupplier {
         return () -> {
             try {
                 return getAsIntThrows();
-            } catch (RuntimeException e) {
-                throw e;
             } catch (Exception ignored) {
                 return fallback.getAsInt();
             }
@@ -182,23 +177,21 @@ public interface ThrowableIntSupplier extends IntSupplier {
     }
 
     /**
-     * Returns a composed {@link IntSupplier} that applies this {@link ThrowableIntSupplier} to its input, and if an
-     * error occurred, returns the given value. The exception from this {@code ThrowableIntSupplier} is ignored, unless
-     * it is an unchecked exception.
+     * Returns a composed {@link ThrowableIntSupplier} that applies this {@code ThrowableIntSupplier} to its input,
+     * additionally performing the provided action to the resulting value. This method exists mainly to support
+     * debugging.
      *
-     * @param value The value to be returned if this {@code ThrowableIntSupplier} fails
-     * @return A composed {@code IntSupplier} that applies this {@code ThrowableIntSupplier}, and if an error
-     * occurred, returns the given value.
+     * @param action A {@link IntConsumer} to be applied additionally to this {@code ThrowableIntSupplier}
+     * @return A composed {@code ThrowableIntSupplier} that applies this {@code ThrowableIntSupplier}, additionally
+     * performing the provided action to the resulting value.
+     * @throws NullPointerException If the given argument is {@code null}
      */
-    default IntSupplier orReturn(int value) {
+    default ThrowableIntSupplier peek(final IntConsumer action) {
+        Objects.requireNonNull(action);
         return () -> {
-            try {
-                return getAsIntThrows();
-            } catch (RuntimeException e) {
-                throw e;
-            } catch (Exception ignored) {
-                return value;
-            }
+            final int ret = getAsInt();
+            action.accept(ret);
+            return ret;
         };
     }
 
@@ -210,7 +203,7 @@ public interface ThrowableIntSupplier extends IntSupplier {
      * @return A composed {@code IntSupplier} that applies this {@code ThrowableIntSupplier}, and if an error
      * occurred, returns the given value.
      */
-    default IntSupplier orReturnAlways(int value) {
+    default IntSupplier orReturn(int value) {
         return () -> {
             try {
                 return getAsIntThrows();

@@ -19,6 +19,7 @@ import at.gridtec.internals.lang.util.ThrowableUtils;
 
 import java.util.Objects;
 import java.util.function.BinaryOperator;
+import java.util.function.Consumer;
 import java.util.function.Supplier;
 
 /**
@@ -51,8 +52,38 @@ import java.util.function.Supplier;
  * @param <T> The type of the arguments and the return value for this operator
  * @see java.util.function.BiFunction
  */
+@SuppressWarnings("unused")
 @FunctionalInterface
 public interface ThrowableBinaryOperator<T> extends BinaryOperator<T> {
+
+    /**
+     * Implicitly casts, and therefore wraps a given lambda as {@link ThrowableBinaryOperator}. This is a convenience
+     * method in case the given {@link ThrowableBinaryOperator} is ambiguous for the compiler. This might happen for
+     * overloaded methods accepting different functional interfaces. The given {@code ThrowableBinaryOperator} is
+     * returned as-is.
+     *
+     * @param <T> The type of argument for the function
+     * @param lambda The {@code ThrowableBinaryOperator} which should be returned as-is.
+     * @return The given {@code ThrowableBinaryOperator} as-is.
+     * @throws NullPointerException If the given argument is {@code null}
+     */
+    static <T> ThrowableBinaryOperator<T> wrap(final ThrowableBinaryOperator<T> lambda) {
+        Objects.requireNonNull(lambda);
+        return lambda;
+    }
+
+    /**
+     * Creates a {@link ThrowableBinaryOperator} which always returns a given value.
+     *
+     * @param <T> The type of argument for the function
+     * @param r The return value for the constant
+     * @return A {@code ThrowableBinaryOperator} which always returns a given value.
+     * @throws NullPointerException If the given argument is {@code null}
+     */
+    static <T> ThrowableBinaryOperator<T> constant(T r) {
+        Objects.requireNonNull(r);
+        return (t, u) -> r;
+    }
 
     /**
      * The apply method for this {@link BinaryOperator} which is able to throw any {@link Exception} type.
@@ -89,7 +120,7 @@ public interface ThrowableBinaryOperator<T> extends BinaryOperator<T> {
     /**
      * Returns a composed {@link ThrowableBinaryOperator} that applies this {@code ThrowableBinaryOperator} to its
      * input, and if an  error occurred, applies the given one. The exception from this {@code ThrowableBinaryOperator}
-     * is ignored, unless it is an unchecked exception.
+     * is ignored.
      *
      * @param other A {@code ThrowableBinaryOperator} to be applied if this one fails
      * @return A composed {@code ThrowableBinaryOperator} that applies this {@code ThrowableBinaryOperator}, and if an
@@ -101,39 +132,8 @@ public interface ThrowableBinaryOperator<T> extends BinaryOperator<T> {
         return (t, u) -> {
             try {
                 return applyThrows(t, u);
-            } catch (RuntimeException e) {
-                throw e;
             } catch (Exception ignored) {
                 return other.applyThrows(t, u);
-            }
-        };
-    }
-
-    /**
-     * Returns a composed {@link ThrowableBinaryOperator} that applies this {@code ThrowableBinaryOperator} to its
-     * input, and if an error occurred, throws the given {@link Exception}. The exception from this {@code
-     * ThrowableBinaryOperator} is added as suppressed to the given one, unless it is an unchecked exception.
-     * <p>
-     * The given exception must have a no arg constructor for reflection purposes. If not, then appropriate exception
-     * as described in {@link Class#newInstance()} is thrown.
-     *
-     * @param <X> The type for the class extending {@code Exception}
-     * @param clazz The exception class to throw if an error occurred
-     * @return A composed {@code ThrowableBinaryOperator} that applies this {@code ThrowableBinaryOperator}, and if an
-     * error occurred, throws the given {@code Exception}.
-     * @throws NullPointerException If the given argument is {@code null}
-     */
-    default <X extends Exception> ThrowableBinaryOperator<T> orThrow(Class<X> clazz) {
-        Objects.requireNonNull(clazz);
-        return (t, u) -> {
-            try {
-                return applyThrows(t, u);
-            } catch (RuntimeException e) {
-                throw e;
-            } catch (Exception e) {
-                X ex = clazz.newInstance();
-                ex.addSuppressed(e);
-                throw ThrowableUtils.sneakyThrow(ex);
             }
         };
     }
@@ -152,7 +152,7 @@ public interface ThrowableBinaryOperator<T> extends BinaryOperator<T> {
      * error occurred, throws the given {@code Exception}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    default <X extends Exception> ThrowableBinaryOperator<T> orThrowAlways(Class<X> clazz) {
+    default <X extends Exception> ThrowableBinaryOperator<T> orThrow(Class<X> clazz) {
         Objects.requireNonNull(clazz);
         return (t, u) -> {
             try {
@@ -168,7 +168,7 @@ public interface ThrowableBinaryOperator<T> extends BinaryOperator<T> {
     /**
      * Returns a composed {@link BinaryOperator} that applies this {@link ThrowableBinaryOperator} to its input, and if
      * an error occurred, applies the given {@code BinaryOperator} representing a fallback. The exception from this
-     * {@code ThrowableBinaryOperator} is ignored, unless it is an unchecked exception.
+     * {@code ThrowableBinaryOperator} is ignored.
      *
      * @param fallback A {@code BinaryOperator} to be applied if this one fails
      * @return A composed {@code BinaryOperator} that applies this {@code ThrowableBinaryOperator}, and if an error
@@ -180,8 +180,6 @@ public interface ThrowableBinaryOperator<T> extends BinaryOperator<T> {
         return (t, u) -> {
             try {
                 return applyThrows(t, u);
-            } catch (RuntimeException e) {
-                throw e;
             } catch (Exception ignored) {
                 return fallback.apply(t, u);
             }
@@ -189,88 +187,21 @@ public interface ThrowableBinaryOperator<T> extends BinaryOperator<T> {
     }
 
     /**
-     * Returns a composed {@link BinaryOperator} that applies this {@link ThrowableBinaryOperator} to its input, and if
-     * an error occurred, returns the given value. The exception from this {@code ThrowableBinaryOperator} is ignored,
-     * unless it is an unchecked exception.
+     * Returns a composed {@link ThrowableBinaryOperator} that applies this {@code ThrowableBinaryOperator} to its
+     * input, additionally performing the provided action to the resulting value. This method exists mainly to support
+     * debugging.
      *
-     * @param value The value to be returned if this {@code ThrowableBinaryOperator} fails
-     * @return A composed {@code BinaryOperator} that applies this {@code ThrowableBinaryOperator}, and if an error
-     * occurred, returns the given value.
+     * @param action A {@link Consumer} to be applied additionally to this {@code ThrowableBinaryOperator}
+     * @return A composed {@code ThrowableBinaryOperator} that applies this {@code ThrowableBinaryOperator},
+     * additionally performing the provided action to the resulting value.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    default BinaryOperator<T> orReturn(final T value) {
-        Objects.requireNonNull(value);
+    default ThrowableBinaryOperator<T> peek(final Consumer<? super T> action) {
+        Objects.requireNonNull(action);
         return (t, u) -> {
-            try {
-                return applyThrows(t, u);
-            } catch (RuntimeException e) {
-                throw e;
-            } catch (Exception ignored) {
-                return value;
-            }
-        };
-    }
-
-    /**
-     * Returns a composed {@link BinaryOperator} that applies this {@link ThrowableBinaryOperator} to its input, and if
-     * an error occurred, returns the supplied value from the given {@link Supplier}. The exception from this {@code
-     * ThrowableBinaryOperator} is ignored, unless it is an unchecked exception.
-     *
-     * @param supplier A {@code Supplier} to return a supplied value if this {@code ThrowableBinaryOperator} fails
-     * @return A composed {@code BinaryOperator} that applies this {@code ThrowableBinaryOperator}, and if an error
-     * occurred, the supplied value from the given {@code Supplier}.
-     * @throws NullPointerException If the given argument is {@code null}
-     */
-    default BinaryOperator<T> orReturn(final Supplier<? extends T> supplier) {
-        Objects.requireNonNull(supplier);
-        return (t, u) -> {
-            try {
-                return applyThrows(t, u);
-            } catch (RuntimeException e) {
-                throw e;
-            } catch (Exception ignored) {
-                return supplier.get();
-            }
-        };
-    }
-
-    /**
-     * Returns a composed {@link BinaryOperator} that applies this {@link ThrowableBinaryOperator} to its input, and if
-     * an error occurred, returns the left value from this operator. The exception from this {@code
-     * ThrowableBinaryOperator} is ignored, unless it is an unchecked exception.
-     *
-     * @return A composed {@code BinaryOperator} that applies this {@code ThrowableBinaryOperator}, and if an error
-     * occurred, returns the left value from this operator.
-     */
-    default BinaryOperator<T> orReturnLeft() {
-        return (t, u) -> {
-            try {
-                return applyThrows(t, u);
-            } catch (RuntimeException e) {
-                throw e;
-            } catch (Exception ignored) {
-                return t;
-            }
-        };
-    }
-
-    /**
-     * Returns a composed {@link BinaryOperator} that applies this {@link ThrowableBinaryOperator} to its input, and if
-     * an error occurred, returns the right value from this operator. The exception from this {@code
-     * ThrowableBinaryOperator} is ignored, unless it is an unchecked exception.
-     *
-     * @return A composed {@code BinaryOperator} that applies this {@code ThrowableBinaryOperator}, and if an error
-     * occurred, returns the right value from this operator.
-     */
-    default BinaryOperator<T> orReturnRight() {
-        return (t, u) -> {
-            try {
-                return applyThrows(t, u);
-            } catch (RuntimeException e) {
-                throw e;
-            } catch (Exception ignored) {
-                return u;
-            }
+            final T ret = apply(t, u);
+            action.accept(ret);
+            return ret;
         };
     }
 
@@ -283,7 +214,7 @@ public interface ThrowableBinaryOperator<T> extends BinaryOperator<T> {
      * occurred, returns the given value.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    default BinaryOperator<T> orReturnAlways(final T value) {
+    default BinaryOperator<T> orReturn(final T value) {
         Objects.requireNonNull(value);
         return (t, u) -> {
             try {
@@ -304,7 +235,7 @@ public interface ThrowableBinaryOperator<T> extends BinaryOperator<T> {
      * occurred, the supplied value from the given {@code Supplier}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    default BinaryOperator<T> orReturnAlways(final Supplier<? extends T> supplier) {
+    default BinaryOperator<T> orReturn(final Supplier<? extends T> supplier) {
         Objects.requireNonNull(supplier);
         return (t, u) -> {
             try {
@@ -323,7 +254,7 @@ public interface ThrowableBinaryOperator<T> extends BinaryOperator<T> {
      * @return A composed {@code BinaryOperator} that applies this {@code ThrowableBinaryOperator}, and if an error
      * occurred, returns the left value from this operator.
      */
-    default BinaryOperator<T> orReturnAlwaysLeft() {
+    default BinaryOperator<T> orReturnLeft() {
         return (t, u) -> {
             try {
                 return applyThrows(t, u);
@@ -341,7 +272,7 @@ public interface ThrowableBinaryOperator<T> extends BinaryOperator<T> {
      * @return A composed {@code BinaryOperator} that applies this {@code ThrowableBinaryOperator}, and if an error
      * occurred, returns the right value from this operator.
      */
-    default BinaryOperator<T> orReturnAlwaysRight() {
+    default BinaryOperator<T> orReturnRight() {
         return (t, u) -> {
             try {
                 return applyThrows(t, u);

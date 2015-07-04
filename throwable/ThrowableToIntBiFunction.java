@@ -18,6 +18,7 @@ package at.gridtec.internals.lang.function.throwable;
 import at.gridtec.internals.lang.util.ThrowableUtils;
 
 import java.util.Objects;
+import java.util.function.IntConsumer;
 import java.util.function.IntSupplier;
 import java.util.function.ToIntBiFunction;
 
@@ -52,8 +53,40 @@ import java.util.function.ToIntBiFunction;
  * @param <U> The type of the second argument to the function
  * @see java.util.function.BiFunction
  */
+@SuppressWarnings("unused")
 @FunctionalInterface
 public interface ThrowableToIntBiFunction<T, U> extends ToIntBiFunction<T, U> {
+
+    /**
+     * Implicitly casts, and therefore wraps a given lambda as {@link ThrowableToIntBiFunction}. This is a convenience
+     * method in case the given {@link ThrowableToIntBiFunction} is ambiguous for the compiler. This might happen for
+     * overloaded methods accepting different functional interfaces. The given {@code ThrowableToIntBiFunction} is
+     * returned as-is.
+     *
+     * @param <T> The type of the first argument to the function
+     * @param <U> The type of the second argument to the function
+     * @param lambda The {@code ThrowableToIntBiFunction} which should be returned as-is.
+     * @return The given {@code ThrowableToIntBiFunction} as-is.
+     * @throws NullPointerException If the given argument is {@code null}
+     */
+    static <T, U> ThrowableToIntBiFunction<T, U> wrap(final ThrowableToIntBiFunction<T, U> lambda) {
+        Objects.requireNonNull(lambda);
+        return lambda;
+    }
+
+    /**
+     * Creates a {@link ThrowableToIntBiFunction} which always returns a given value.
+     *
+     * @param <T> The type of the first argument to the function
+     * @param <U> The type of the second argument to the function
+     * @param ret The return value for the constant
+     * @return A {@code ThrowableToIntBiFunction} which always returns a given value.
+     * @throws NullPointerException If the given argument is {@code null}
+     */
+    static <T, U> ThrowableToIntBiFunction<T, U> constant(int ret) {
+        Objects.requireNonNull(ret);
+        return (t, u) -> ret;
+    }
 
     /**
      * The apply method for this {@link ToIntBiFunction} which is able to throw any {@link Exception} type.
@@ -90,7 +123,7 @@ public interface ThrowableToIntBiFunction<T, U> extends ToIntBiFunction<T, U> {
     /**
      * Returns a composed {@link ThrowableToIntBiFunction} that applies this {@code ThrowableToIntBiFunction} to its
      * input, and if an error occurred, applies the given one. The exception from this {@code ThrowableToIntBiFunction}
-     * is ignored, unless it is an unchecked exception.
+     * is ignored.
      *
      * @param other A {@code ThrowableToIntBiFunction} to be applied if this one fails
      * @return A composed {@code ThrowableToIntBiFunction} that applies this {@code ThrowableToIntBiFunction}, and if an
@@ -102,39 +135,8 @@ public interface ThrowableToIntBiFunction<T, U> extends ToIntBiFunction<T, U> {
         return (t, u) -> {
             try {
                 return applyAsIntThrows(t, u);
-            } catch (RuntimeException e) {
-                throw e;
             } catch (Exception ignored) {
                 return other.applyAsIntThrows(t, u);
-            }
-        };
-    }
-
-    /**
-     * Returns a composed {@link ThrowableToIntBiFunction} that applies this {@code ThrowableToIntBiFunction} to its
-     * input, and if an error occurred, throws the given {@link Exception}. The exception from this {@code
-     * ThrowableToIntBiFunction} is added as suppressed to the given one, unless it is an unchecked exception.
-     * <p>
-     * The given exception must have a no arg constructor for reflection purposes. If not, then appropriate exception
-     * as described in {@link Class#newInstance()} is thrown.
-     *
-     * @param <X> The type for the class extending {@code Exception}
-     * @param clazz The exception class to throw if an error occurred
-     * @return A composed {@code ThrowableToIntBiFunction} that applies this {@code ThrowableToIntBiFunction}, and if
-     * an error occurred, throws the given {@code Exception}.
-     * @throws NullPointerException If the given argument is {@code null}
-     */
-    default <X extends Exception> ThrowableToIntBiFunction<T, U> orThrow(Class<X> clazz) {
-        Objects.requireNonNull(clazz);
-        return (t, u) -> {
-            try {
-                return applyAsIntThrows(t, u);
-            } catch (RuntimeException e) {
-                throw e;
-            } catch (Exception e) {
-                X ex = clazz.newInstance();
-                ex.addSuppressed(e);
-                throw ThrowableUtils.sneakyThrow(ex);
             }
         };
     }
@@ -153,7 +155,7 @@ public interface ThrowableToIntBiFunction<T, U> extends ToIntBiFunction<T, U> {
      * an error occurred, throws the given {@code Exception}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    default <X extends Exception> ThrowableToIntBiFunction<T, U> orThrowAlways(Class<X> clazz) {
+    default <X extends Exception> ThrowableToIntBiFunction<T, U> orThrow(Class<X> clazz) {
         Objects.requireNonNull(clazz);
         return (t, u) -> {
             try {
@@ -169,7 +171,7 @@ public interface ThrowableToIntBiFunction<T, U> extends ToIntBiFunction<T, U> {
     /**
      * Returns a composed {@link ToIntBiFunction} that applies this {@link ThrowableToIntBiFunction} to its input, and
      * if an error occurred, applies the given {@code ToIntBiFunction} representing a fallback. The exception from this
-     * {@code ThrowableToIntBiFunction} is ignored, unless it is an unchecked exception.
+     * {@code ThrowableToIntBiFunction} is ignored.
      *
      * @param fallback A {@code ToIntBiFunction} to be applied if this one fails
      * @return A composed {@code ToIntBiFunction} that applies this {@code ThrowableToIntBiFunction}, and if an error
@@ -181,8 +183,6 @@ public interface ThrowableToIntBiFunction<T, U> extends ToIntBiFunction<T, U> {
         return (t, u) -> {
             try {
                 return applyAsIntThrows(t, u);
-            } catch (RuntimeException e) {
-                throw e;
             } catch (Exception ignored) {
                 return fallback.applyAsInt(t, u);
             }
@@ -190,46 +190,21 @@ public interface ThrowableToIntBiFunction<T, U> extends ToIntBiFunction<T, U> {
     }
 
     /**
-     * Returns a composed {@link ToIntBiFunction} that applies this {@link ThrowableToIntBiFunction} to its input, and
-     * if an error occurred, returns the given value. The exception from this {@code ThrowableToIntBiFunction} is
-     * ignored, unless it is an unchecked exception.
+     * Returns a composed {@link ThrowableToIntBiFunction} that applies this {@code ThrowableToIntBiFunction} to its
+     * input, additionally performing the provided action to the resulting value. This method exists mainly to support
+     * debugging.
      *
-     * @param value The value to be returned if this {@code ThrowableToIntBiFunction} fails
-     * @return A composed {@code ToIntBiFunction} that applies this {@code ThrowableToIntBiFunction}, and if an error
-     * occurred, returns the given value.
-     */
-    default ToIntBiFunction<T, U> orReturn(int value) {
-        return (t, u) -> {
-            try {
-                return applyAsIntThrows(t, u);
-            } catch (RuntimeException e) {
-                throw e;
-            } catch (Exception ignored) {
-                return value;
-            }
-        };
-    }
-
-    /**
-     * Returns a composed {@link ToIntBiFunction} that applies this {@link ThrowableToIntBiFunction} to its input, and
-     * if an error occurred, returns the supplied value from the given {@link IntSupplier}. The exception from this
-     * {@code ThrowableToIntBiFunction} is ignored, unless it is an unchecked exception.
-     *
-     * @param supplier A {@code Supplier} to return a supplied value if this {@code ThrowableToIntBiFunction} fails
-     * @return A composed {@code ToIntBiFunction} that applies this {@code ThrowableToIntBiFunction}, and if an error
-     * occurred, the supplied value from the given {@code IntSupplier}.
+     * @param action A {@link IntConsumer} to be applied additionally to this {@code ThrowableToIntBiFunction}
+     * @return A composed {@code ThrowableToIntBiFunction} that applies this {@code ThrowableToIntBiFunction},
+     * additionally performing the provided action to the resulting value.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    default ToIntBiFunction<T, U> orReturn(final IntSupplier supplier) {
-        Objects.requireNonNull(supplier);
+    default ThrowableToIntBiFunction<T, U> peek(final IntConsumer action) {
+        Objects.requireNonNull(action);
         return (t, u) -> {
-            try {
-                return applyAsIntThrows(t, u);
-            } catch (RuntimeException e) {
-                throw e;
-            } catch (Exception ignored) {
-                return supplier.getAsInt();
-            }
+            final int ret = applyAsInt(t, u);
+            action.accept(ret);
+            return ret;
         };
     }
 
@@ -242,7 +217,7 @@ public interface ThrowableToIntBiFunction<T, U> extends ToIntBiFunction<T, U> {
      * @return A composed {@code ToIntBiFunction} that applies this {@code ThrowableToIntBiFunction}, and if an error
      * occurred, returns the given value.
      */
-    default ToIntBiFunction<T, U> orReturnAlways(int value) {
+    default ToIntBiFunction<T, U> orReturn(int value) {
         return (t, u) -> {
             try {
                 return applyAsIntThrows(t, u);
@@ -262,7 +237,7 @@ public interface ThrowableToIntBiFunction<T, U> extends ToIntBiFunction<T, U> {
      * occurred, the supplied value from the given {@code IntSupplier}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    default ToIntBiFunction<T, U> orReturnAlways(final IntSupplier supplier) {
+    default ToIntBiFunction<T, U> orReturn(final IntSupplier supplier) {
         Objects.requireNonNull(supplier);
         return (t, u) -> {
             try {

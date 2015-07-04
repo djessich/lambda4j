@@ -19,6 +19,7 @@ import at.gridtec.internals.lang.util.ThrowableUtils;
 
 import java.util.Comparator;
 import java.util.Objects;
+import java.util.function.IntConsumer;
 import java.util.function.IntSupplier;
 
 /**
@@ -50,8 +51,25 @@ import java.util.function.IntSupplier;
  *
  * @param <T> The type of the compared values
  */
+@SuppressWarnings("unused")
 @FunctionalInterface
 public interface ThrowableComparator<T> extends Comparator<T> {
+
+    /**
+     * Implicitly casts, and therefore wraps a given lambda as {@link ThrowableComparator}. This is a convenience
+     * method in case the given {@link ThrowableComparator} is ambiguous for the compiler. This might happen for
+     * overloaded methods accepting different functional interfaces. The given {@code ThrowableComparator} is returned
+     * as-is.
+     *
+     * @param <T> The type of the compared values
+     * @param lambda The {@code ThrowableComparator} which should be returned as-is.
+     * @return The given {@code ThrowableComparator} as-is.
+     * @throws NullPointerException If the given argument is {@code null}
+     */
+    static <T> ThrowableComparator<T> wrap(final ThrowableComparator<T> lambda) {
+        Objects.requireNonNull(lambda);
+        return lambda;
+    }
 
     /**
      * The compare method for this {@link Comparator} which is able to throw any {@link Exception} type.
@@ -89,8 +107,7 @@ public interface ThrowableComparator<T> extends Comparator<T> {
 
     /**
      * Returns a composed {@link ThrowableComparator} that applies this {@code ThrowableComparator} to its input, and
-     * if an error occurred, applies the given one. The exception from this {@code ThrowableComparator} is ignored,
-     * unless it is an unchecked exception.
+     * if an error occurred, applies the given one. The exception from this {@code ThrowableComparator} is ignored.
      *
      * @param other A {@code ThrowableComparator} to be applied if this one fails
      * @return A composed {@code ThrowableComparator} that applies this {@code ThrowableComparator}, and if an error
@@ -102,39 +119,8 @@ public interface ThrowableComparator<T> extends Comparator<T> {
         return (o1, o2) -> {
             try {
                 return compareThrows(o1, o2);
-            } catch (RuntimeException e) {
-                throw e;
             } catch (Exception ignored) {
                 return other.compareThrows(o1, o2);
-            }
-        };
-    }
-
-    /**
-     * Returns a composed {@link ThrowableComparator} that applies this {@code ThrowableComparator} to its input, and
-     * if an error occurred, throws the given {@link Exception}. The exception from this {@code ThrowableComparator} is
-     * added as suppressed to the given one, unless it is an unchecked exception.
-     * <p>
-     * The given exception must have a no arg constructor for reflection purposes. If not, then appropriate exception
-     * as described in {@link Class#newInstance()} is thrown.
-     *
-     * @param <X> The type for the class extending {@code Exception}
-     * @param clazz The exception class to throw if an error occurred
-     * @return A composed {@code ThrowableComparator} that applies this {@code ThrowableComparator}, and if an error
-     * occurred, throws the given {@code Exception}.
-     * @throws NullPointerException If the given argument is {@code null}
-     */
-    default <X extends Exception> ThrowableComparator<T> orThrow(Class<X> clazz) {
-        Objects.requireNonNull(clazz);
-        return (o1, o2) -> {
-            try {
-                return compareThrows(o1, o2);
-            } catch (RuntimeException e) {
-                throw e;
-            } catch (Exception e) {
-                X ex = clazz.newInstance();
-                ex.addSuppressed(e);
-                throw ThrowableUtils.sneakyThrow(ex);
             }
         };
     }
@@ -153,7 +139,7 @@ public interface ThrowableComparator<T> extends Comparator<T> {
      * occurred, throws the given {@code Exception}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    default <X extends Exception> ThrowableComparator<T> orThrowAlways(Class<X> clazz) {
+    default <X extends Exception> ThrowableComparator<T> orThrow(Class<X> clazz) {
         Objects.requireNonNull(clazz);
         return (o1, o2) -> {
             try {
@@ -169,7 +155,7 @@ public interface ThrowableComparator<T> extends Comparator<T> {
     /**
      * Returns a composed {@link Comparator} that applies this {@link ThrowableComparator} to its input, and if an
      * error occurred, applies the given {@code Comparator} representing a fallback. The exception from this {@code
-     * ThrowableComparator} is ignored, unless it is an unchecked exception.
+     * ThrowableComparator} is ignored.
      *
      * @param fallback A {@code Comparator} to be applied if this one fails
      * @return A composed {@code Comparator} that applies this {@code ThrowableComparator}, and if an error occurred,
@@ -181,8 +167,6 @@ public interface ThrowableComparator<T> extends Comparator<T> {
         return (o1, o2) -> {
             try {
                 return compareThrows(o1, o2);
-            } catch (RuntimeException e) {
-                throw e;
             } catch (Exception ignored) {
                 return fallback.compare(o1, o2);
             }
@@ -190,46 +174,21 @@ public interface ThrowableComparator<T> extends Comparator<T> {
     }
 
     /**
-     * Returns a composed {@link Comparator} that applies this {@link ThrowableComparator} to its input, and if an
-     * error occurred, returns the given value. The exception from this {@code ThrowableComparator} is ignored, unless
-     * it is an unchecked exception.
+     * Returns a composed {@link ThrowableComparator} that applies this {@code ThrowableComparator} to its input,
+     * additionally performing the provided action to the resulting value. This method exists mainly to support
+     * debugging.
      *
-     * @param value The value to be returned if this {@code ThrowableComparator} fails
-     * @return A composed {@code Comparator} that applies this {@code ThrowableComparator}, and if an error occurred,
-     * returns the given value.
-     */
-    default Comparator<T> orReturn(int value) {
-        return (o1, o2) -> {
-            try {
-                return compareThrows(o1, o2);
-            } catch (RuntimeException e) {
-                throw e;
-            } catch (Exception ignored) {
-                return value;
-            }
-        };
-    }
-
-    /**
-     * Returns a composed {@link Comparator} that applies this {@link ThrowableComparator} to its input, and if an
-     * error occurred, returns the supplied value from the given {@link IntSupplier}. The exception from this {@code
-     * ThrowableComparator} is ignored, unless it is an unchecked exception.
-     *
-     * @param supplier A {@code Supplier} to return a supplied value if this {@code ThrowableComparator} fails
-     * @return A composed {@code Comparator} that applies this {@code ThrowableComparator}, and if an error occurred,
-     * the supplied value from the given {@code IntSupplier}.
+     * @param action A {@link IntConsumer} to be applied additionally to this {@code ThrowableComparator}
+     * @return A composed {@code ThrowableComparator} that applies this {@code ThrowableComparator}, additionally
+     * performing the provided action to the resulting value.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    default Comparator<T> orReturn(final IntSupplier supplier) {
-        Objects.requireNonNull(supplier);
+    default ThrowableComparator<T> peek(final IntConsumer action) {
+        Objects.requireNonNull(action);
         return (o1, o2) -> {
-            try {
-                return compareThrows(o1, o2);
-            } catch (RuntimeException e) {
-                throw e;
-            } catch (Exception ignored) {
-                return supplier.getAsInt();
-            }
+            final int ret = compare(o1, o2);
+            action.accept(ret);
+            return ret;
         };
     }
 
@@ -241,7 +200,7 @@ public interface ThrowableComparator<T> extends Comparator<T> {
      * @return A composed {@code Comparator} that applies this {@code ThrowableComparator}, and if an error occurred,
      * returns the given value.
      */
-    default Comparator<T> orReturnAlways(int value) {
+    default Comparator<T> orReturn(int value) {
         return (o1, o2) -> {
             try {
                 return compareThrows(o1, o2);
@@ -261,7 +220,7 @@ public interface ThrowableComparator<T> extends Comparator<T> {
      * the supplied value from the given {@code IntSupplier}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    default Comparator<T> orReturnAlways(final IntSupplier supplier) {
+    default Comparator<T> orReturn(final IntSupplier supplier) {
         Objects.requireNonNull(supplier);
         return (o1, o2) -> {
             try {

@@ -49,8 +49,24 @@ import java.util.function.IntConsumer;
  *
  * @see java.util.function.Consumer
  */
+@SuppressWarnings("unused")
 @FunctionalInterface
 public interface ThrowableIntConsumer extends IntConsumer {
+
+    /**
+     * Implicitly casts, and therefore wraps a given lambda as {@link ThrowableIntConsumer}. This is a convenience
+     * method in case the given {@link ThrowableIntConsumer} is ambiguous for the compiler. This might happen for
+     * overloaded methods accepting different functional interfaces. The given {@code ThrowableIntConsumer} is
+     * returned as-is.
+     *
+     * @param lambda The {@code ThrowableIntConsumer} which should be returned as-is.
+     * @return The given {@code ThrowableIntConsumer} as-is.
+     * @throws NullPointerException If the given argument is {@code null}
+     */
+    static ThrowableIntConsumer wrap(final ThrowableIntConsumer lambda) {
+        Objects.requireNonNull(lambda);
+        return lambda;
+    }
 
     /**
      * The accept method for this {@link IntConsumer} which is able to throw any {@link Exception} type.
@@ -81,8 +97,7 @@ public interface ThrowableIntConsumer extends IntConsumer {
 
     /**
      * Returns a composed {@link ThrowableIntConsumer} that applies this {@code ThrowableIntConsumer} to its input, and
-     * if an error occurred, applies the given one. The exception from this {@code ThrowableIntConsumer} is ignored,
-     * unless it is an unchecked exception.
+     * if an error occurred, applies the given one. The exception from this {@code ThrowableIntConsumer} is ignored.
      *
      * @param other A {@code ThrowableIntConsumer} to be applied if this one fails
      * @return A composed {@code ThrowableIntConsumer} that applies this {@code ThrowableIntConsumer}, and if an
@@ -94,39 +109,8 @@ public interface ThrowableIntConsumer extends IntConsumer {
         return value -> {
             try {
                 acceptThrows(value);
-            } catch (RuntimeException e) {
-                throw e;
             } catch (Exception ignored) {
                 other.acceptThrows(value);
-            }
-        };
-    }
-
-    /**
-     * Returns a composed {@link ThrowableIntConsumer} that applies this {@code ThrowableIntConsumer} to its input, and
-     * if an error occurred, throws the given {@link Exception}. The exception from this {@code ThrowableIntConsumer}
-     * is added as suppressed to the given one, unless it is an unchecked exception.
-     * <p>
-     * The given exception must have a no arg constructor for reflection purposes. If not, then appropriate exception
-     * as described in {@link Class#newInstance()} is thrown.
-     *
-     * @param <X> The type for the class extending {@code Exception}
-     * @param clazz The exception class to throw if an error occurred
-     * @return A composed {@code ThrowableIntConsumer} that applies this {@code ThrowableIntConsumer}, and if an error
-     * occurred, throws the given {@code Exception}.
-     * @throws NullPointerException If the given argument is {@code null}
-     */
-    default <X extends Exception> ThrowableIntConsumer orThrow(Class<X> clazz) {
-        Objects.requireNonNull(clazz);
-        return value -> {
-            try {
-                acceptThrows(value);
-            } catch (RuntimeException e) {
-                throw e;
-            } catch (Exception e) {
-                X ex = clazz.newInstance();
-                ex.addSuppressed(e);
-                throw ThrowableUtils.sneakyThrow(ex);
             }
         };
     }
@@ -145,7 +129,7 @@ public interface ThrowableIntConsumer extends IntConsumer {
      * occurred, throws the given {@code Exception}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    default <X extends Exception> ThrowableIntConsumer orThrowAlways(Class<X> clazz) {
+    default <X extends Exception> ThrowableIntConsumer orThrow(Class<X> clazz) {
         Objects.requireNonNull(clazz);
         return value -> {
             try {

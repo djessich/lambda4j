@@ -19,6 +19,7 @@ import at.gridtec.internals.lang.util.ThrowableUtils;
 
 import java.util.Objects;
 import java.util.function.DoubleBinaryOperator;
+import java.util.function.DoubleConsumer;
 import java.util.function.Supplier;
 
 /**
@@ -50,8 +51,36 @@ import java.util.function.Supplier;
  *
  * @see java.util.function.BinaryOperator
  */
+@SuppressWarnings("unused")
 @FunctionalInterface
 public interface ThrowableDoubleBinaryOperator extends DoubleBinaryOperator {
+
+    /**
+     * Implicitly casts, and therefore wraps a given lambda as {@link ThrowableDoubleBinaryOperator}. This is a
+     * convenience method in case the given {@link ThrowableDoubleBinaryOperator} is ambiguous for the compiler. This
+     * might happen for overloaded methods accepting different functional interfaces. The given {@code
+     * ThrowableDoubleBinaryOperator} is returned as-is.
+     *
+     * @param lambda The {@code ThrowableDoubleBinaryOperator} which should be returned as-is.
+     * @return The given {@code ThrowableDoubleBinaryOperator} as-is.
+     * @throws NullPointerException If the given argument is {@code null}
+     */
+    static ThrowableDoubleBinaryOperator wrap(final ThrowableDoubleBinaryOperator lambda) {
+        Objects.requireNonNull(lambda);
+        return lambda;
+    }
+
+    /**
+     * Creates a {@link ThrowableDoubleBinaryOperator} which always returns a given value.
+     *
+     * @param ret The return value for the constant
+     * @return A {@code ThrowableDoubleBinaryOperator} which always returns a given value.
+     * @throws NullPointerException If the given argument is {@code null}
+     */
+    static ThrowableDoubleBinaryOperator constant(double ret) {
+        Objects.requireNonNull(ret);
+        return (left, right) -> ret;
+    }
 
     /**
      * The apply method for this {@link DoubleBinaryOperator} which is able to throw any {@link Exception} type.
@@ -88,7 +117,7 @@ public interface ThrowableDoubleBinaryOperator extends DoubleBinaryOperator {
     /**
      * Returns a composed {@link ThrowableDoubleBinaryOperator} that applies this {@code ThrowableDoubleBinaryOperator}
      * to its input, and if an  error occurred, applies the given one. The exception from this {@code
-     * ThrowableDoubleBinaryOperator} is ignored, unless it is an unchecked exception.
+     * ThrowableDoubleBinaryOperator} is ignored.
      *
      * @param other A {@code ThrowableDoubleBinaryOperator} to be applied if this one fails
      * @return A composed {@code ThrowableDoubleBinaryOperator} that applies this {@code ThrowableDoubleBinaryOperator},
@@ -97,42 +126,11 @@ public interface ThrowableDoubleBinaryOperator extends DoubleBinaryOperator {
      */
     default ThrowableDoubleBinaryOperator orElse(final ThrowableDoubleBinaryOperator other) {
         Objects.requireNonNull(other);
-        return (t, u) -> {
+        return (left, right) -> {
             try {
-                return applyAsDoubleThrows(t, u);
-            } catch (RuntimeException e) {
-                throw e;
+                return applyAsDoubleThrows(left, right);
             } catch (Exception ignored) {
-                return other.applyAsDoubleThrows(t, u);
-            }
-        };
-    }
-
-    /**
-     * Returns a composed {@link ThrowableDoubleBinaryOperator} that applies this {@code ThrowableDoubleBinaryOperator}
-     * to its input, and if an error occurred, throws the given {@link Exception}. The exception from this {@code
-     * ThrowableDoubleBinaryOperator} is added as suppressed to the given one, unless it is an unchecked exception.
-     * <p>
-     * The given exception must have a no arg constructor for reflection purposes. If not, then appropriate exception
-     * as described in {@link Class#newInstance()} is thrown.
-     *
-     * @param <X> The type for the class extending {@code Exception}
-     * @param clazz The exception class to throw if an error occurred
-     * @return A composed {@code ThrowableDoubleBinaryOperator} that applies this {@code ThrowableDoubleBinaryOperator},
-     * and if an error occurred, throws the given {@code Exception}.
-     * @throws NullPointerException If the given argument is {@code null}
-     */
-    default <X extends Exception> ThrowableDoubleBinaryOperator orThrow(Class<X> clazz) {
-        Objects.requireNonNull(clazz);
-        return (t, u) -> {
-            try {
-                return applyAsDoubleThrows(t, u);
-            } catch (RuntimeException e) {
-                throw e;
-            } catch (Exception e) {
-                X ex = clazz.newInstance();
-                ex.addSuppressed(e);
-                throw ThrowableUtils.sneakyThrow(ex);
+                return other.applyAsDoubleThrows(left, right);
             }
         };
     }
@@ -151,11 +149,11 @@ public interface ThrowableDoubleBinaryOperator extends DoubleBinaryOperator {
      * and if an error occurred, throws the given {@code Exception}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    default <X extends Exception> ThrowableDoubleBinaryOperator orThrowAlways(Class<X> clazz) {
+    default <X extends Exception> ThrowableDoubleBinaryOperator orThrow(Class<X> clazz) {
         Objects.requireNonNull(clazz);
-        return (t, u) -> {
+        return (left, right) -> {
             try {
-                return applyAsDoubleThrows(t, u);
+                return applyAsDoubleThrows(left, right);
             } catch (Exception e) {
                 X ex = clazz.newInstance();
                 ex.addSuppressed(e);
@@ -167,7 +165,7 @@ public interface ThrowableDoubleBinaryOperator extends DoubleBinaryOperator {
     /**
      * Returns a composed {@link DoubleBinaryOperator} that applies this {@link ThrowableDoubleBinaryOperator} to its
      * input, and if an error occurred, applies the given {@code DoubleBinaryOperator} representing a fallback. The
-     * exception from this {@code ThrowableDoubleBinaryOperator} is ignored, unless it is an unchecked exception.
+     * exception from this {@code ThrowableDoubleBinaryOperator} is ignored.
      *
      * @param fallback A {@code DoubleBinaryOperator} to be applied if this one fails
      * @return A composed {@code DoubleBinaryOperator} that applies this {@code ThrowableDoubleBinaryOperator}, and if
@@ -176,99 +174,31 @@ public interface ThrowableDoubleBinaryOperator extends DoubleBinaryOperator {
      */
     default DoubleBinaryOperator fallbackTo(final DoubleBinaryOperator fallback) {
         Objects.requireNonNull(fallback);
-        return (t, u) -> {
+        return (left, right) -> {
             try {
-                return applyAsDoubleThrows(t, u);
-            } catch (RuntimeException e) {
-                throw e;
+                return applyAsDoubleThrows(left, right);
             } catch (Exception ignored) {
-                return fallback.applyAsDouble(t, u);
+                return fallback.applyAsDouble(left, right);
             }
         };
     }
 
     /**
-     * Returns a composed {@link DoubleBinaryOperator} that applies this {@link ThrowableDoubleBinaryOperator} to its
-     * input, and if an error occurred, returns the given value. The exception from this {@code
-     * ThrowableDoubleBinaryOperator} is ignored, unless it is an unchecked exception.
+     * Returns a composed {@link ThrowableDoubleBinaryOperator} that applies this {@code ThrowableDoubleBinaryOperator}
+     * to its input, additionally performing the provided action to the resulting value. This method exists mainly to
+     * support debugging.
      *
-     * @param value The value to be returned if this {@code ThrowableDoubleBinaryOperator} fails
-     * @return A composed {@code DoubleBinaryOperator} that applies this {@code ThrowableDoubleBinaryOperator}, and if
-     * an error occurred, returns the given value.
-     */
-    default DoubleBinaryOperator orReturn(double value) {
-        return (t, u) -> {
-            try {
-                return applyAsDoubleThrows(t, u);
-            } catch (RuntimeException e) {
-                throw e;
-            } catch (Exception ignored) {
-                return value;
-            }
-        };
-    }
-
-    /**
-     * Returns a composed {@link DoubleBinaryOperator} that applies this {@link ThrowableDoubleBinaryOperator} to its
-     * input, and if an error occurred, returns the supplied value from the given {@link Supplier}. The exception from
-     * this {@code ThrowableDoubleBinaryOperator} is ignored, unless it is an unchecked exception.
-     *
-     * @param supplier A {@code Supplier} to return a supplied value if this {@code ThrowableDoubleBinaryOperator}
-     * fails
-     * @return A composed {@code DoubleBinaryOperator} that applies this {@code ThrowableDoubleBinaryOperator}, and if
-     * an error occurred, the supplied value from the given {@code Supplier}.
+     * @param action A {@link DoubleConsumer} to be applied additionally to this {@code ThrowableDoubleBinaryOperator}
+     * @return A composed {@code ThrowableDoubleBinaryOperator} that applies this {@code ThrowableDoubleBinaryOperator},
+     * additionally performing the provided action to the resulting value.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    default DoubleBinaryOperator orReturn(final Supplier<? extends Double> supplier) {
-        Objects.requireNonNull(supplier);
-        return (t, u) -> {
-            try {
-                return applyAsDoubleThrows(t, u);
-            } catch (RuntimeException e) {
-                throw e;
-            } catch (Exception ignored) {
-                return supplier.get();
-            }
-        };
-    }
-
-    /**
-     * Returns a composed {@link DoubleBinaryOperator} that applies this {@link ThrowableDoubleBinaryOperator} to its
-     * input, and if an error occurred, returns the left value from this operator. The exception from this {@code
-     * ThrowableDoubleBinaryOperator} is ignored, unless it is an unchecked exception.
-     *
-     * @return A composed {@code DoubleBinaryOperator} that applies this {@code ThrowableDoubleBinaryOperator}, and if
-     * an error occurred, returns the left value from this operator.
-     */
-    default DoubleBinaryOperator orReturnLeft() {
-        return (t, u) -> {
-            try {
-                return applyAsDoubleThrows(t, u);
-            } catch (RuntimeException e) {
-                throw e;
-            } catch (Exception ignored) {
-                return t;
-            }
-        };
-    }
-
-    /**
-     * Returns a composed {@link DoubleBinaryOperator} that applies this {@link ThrowableDoubleBinaryOperator} to its
-     * input, and if an error occurred, returns the right value from this operator. The exception from this {@code
-     * ThrowableDoubleBinaryOperator} is ignored, unless it is an unchecked exception.
-     *
-     * @return A composed {@code DoubleBinaryOperator} that applies this {@code ThrowableDoubleBinaryOperator}, and if
-     * an error occurred, returns the right value from this operator.
-     */
-    default DoubleBinaryOperator orReturnRight() {
-        return (t, u) -> {
-            try {
-                return applyAsDoubleThrows(t, u);
-            } catch (RuntimeException e) {
-                throw e;
-            } catch (Exception ignored) {
-                return u;
-            }
+    default ThrowableDoubleBinaryOperator peek(final DoubleConsumer action) {
+        Objects.requireNonNull(action);
+        return (left, right) -> {
+            final double ret = applyAsDouble(left, right);
+            action.accept(ret);
+            return ret;
         };
     }
 
@@ -281,10 +211,10 @@ public interface ThrowableDoubleBinaryOperator extends DoubleBinaryOperator {
      * @return A composed {@code DoubleBinaryOperator} that applies this {@code ThrowableDoubleBinaryOperator}, and if
      * an error occurred, returns the given value.
      */
-    default DoubleBinaryOperator orReturnAlways(double value) {
-        return (t, u) -> {
+    default DoubleBinaryOperator orReturn(double value) {
+        return (left, right) -> {
             try {
-                return applyAsDoubleThrows(t, u);
+                return applyAsDoubleThrows(left, right);
             } catch (Exception ignored) {
                 return value;
             }
@@ -302,11 +232,11 @@ public interface ThrowableDoubleBinaryOperator extends DoubleBinaryOperator {
      * an error occurred, the supplied value from the given {@code Supplier}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    default DoubleBinaryOperator orReturnAlways(final Supplier<? extends Double> supplier) {
+    default DoubleBinaryOperator orReturn(final Supplier<? extends Double> supplier) {
         Objects.requireNonNull(supplier);
-        return (t, u) -> {
+        return (left, right) -> {
             try {
-                return applyAsDoubleThrows(t, u);
+                return applyAsDoubleThrows(left, right);
             } catch (Exception ignored) {
                 return supplier.get();
             }
@@ -321,12 +251,12 @@ public interface ThrowableDoubleBinaryOperator extends DoubleBinaryOperator {
      * @return A composed {@code DoubleBinaryOperator} that applies this {@code ThrowableDoubleBinaryOperator}, and if
      * an error occurred, returns the left value from this operator.
      */
-    default DoubleBinaryOperator orReturnAlwaysLeft() {
-        return (t, u) -> {
+    default DoubleBinaryOperator orReturnLeft() {
+        return (left, right) -> {
             try {
-                return applyAsDoubleThrows(t, u);
+                return applyAsDoubleThrows(left, right);
             } catch (Exception ignored) {
-                return t;
+                return left;
             }
         };
     }
@@ -339,12 +269,12 @@ public interface ThrowableDoubleBinaryOperator extends DoubleBinaryOperator {
      * @return A composed {@code DoubleBinaryOperator} that applies this {@code ThrowableDoubleBinaryOperator}, and if
      * an error occurred, returns the right value from this operator.
      */
-    default DoubleBinaryOperator orReturnAlwaysRight() {
-        return (t, u) -> {
+    default DoubleBinaryOperator orReturnRight() {
+        return (left, right) -> {
             try {
-                return applyAsDoubleThrows(t, u);
+                return applyAsDoubleThrows(left, right);
             } catch (Exception ignored) {
-                return u;
+                return right;
             }
         };
     }

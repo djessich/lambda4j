@@ -18,6 +18,7 @@ package at.gridtec.internals.lang.function.throwable;
 import at.gridtec.internals.lang.util.ThrowableUtils;
 
 import java.util.Objects;
+import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
@@ -51,8 +52,39 @@ import java.util.function.Supplier;
  * @param <T> The type of argument for the function
  * @param <R> The type of return value from the function
  */
+@SuppressWarnings("unused")
 @FunctionalInterface
 public interface ThrowableFunction<T, R> extends Function<T, R> {
+
+    /**
+     * Implicitly casts, and therefore wraps a given lambda as {@link ThrowableFunction}. This is a convenience method
+     * in case the given {@link ThrowableFunction} is ambiguous for the compiler. This might happen for overloaded
+     * methods accepting different functional interfaces. The given {@code ThrowableFunction} is returned as-is.
+     *
+     * @param <T> The type of argument for the function
+     * @param <R> The type of return value from the function
+     * @param lambda The {@code ThrowableFunction} which should be returned as-is.
+     * @return The given {@code ThrowableFunction} as-is.
+     * @throws NullPointerException If the given argument is {@code null}
+     */
+    static <T, R> ThrowableFunction<T, R> wrap(final ThrowableFunction<T, R> lambda) {
+        Objects.requireNonNull(lambda);
+        return lambda;
+    }
+
+    /**
+     * Creates a {@link ThrowableFunction} which always returns a given value.
+     *
+     * @param <T> The type of argument for the function
+     * @param <R> The type of return value from the function
+     * @param r The return value for the constant
+     * @return A {@code ThrowableFunction} which always returns a given value.
+     * @throws NullPointerException If the given argument is {@code null}
+     */
+    static <T, R> ThrowableFunction<T, R> constant(R r) {
+        Objects.requireNonNull(r);
+        return t -> r;
+    }
 
     /**
      * The apply method for this {@link Function} which is able to throw any {@link Exception} type.
@@ -85,8 +117,7 @@ public interface ThrowableFunction<T, R> extends Function<T, R> {
 
     /**
      * Returns a composed {@link ThrowableFunction} that applies this {@code ThrowableFunction} to its input, and if an
-     * error occurred, applies the given one. The exception from this {@code ThrowableFunction} is ignored, unless it
-     * is an unchecked exception.
+     * error occurred, applies the given one. The exception from this {@code ThrowableFunction} is ignored.
      *
      * @param other A {@code ThrowableFunction} to be applied if this one fails
      * @return A composed {@code ThrowableFunction} that applies this {@code ThrowableFunction}, and if an error
@@ -98,39 +129,8 @@ public interface ThrowableFunction<T, R> extends Function<T, R> {
         return t -> {
             try {
                 return applyThrows(t);
-            } catch (RuntimeException e) {
-                throw e;
             } catch (Exception ignored) {
                 return other.applyThrows(t);
-            }
-        };
-    }
-
-    /**
-     * Returns a composed {@link ThrowableFunction} that applies this {@code ThrowableFunction} to its input, and if an
-     * error occurred, throws the given {@link Exception}. The exception from this {@code ThrowableFunction} is added
-     * as suppressed to the given one, unless it is an unchecked exception.
-     * <p>
-     * The given exception must have a no arg constructor for reflection purposes. If not, then appropriate exception
-     * as described in {@link Class#newInstance()} is thrown.
-     *
-     * @param <X> The type for the class extending {@code Exception}
-     * @param clazz The exception class to throw if an error occurred
-     * @return A composed {@code ThrowableFunction} that applies this {@code ThrowableFunction}, and if an error
-     * occurred, throws the given {@code Exception}.
-     * @throws NullPointerException If the given argument is {@code null}
-     */
-    default <X extends Exception> ThrowableFunction<T, R> orThrow(Class<X> clazz) {
-        Objects.requireNonNull(clazz);
-        return t -> {
-            try {
-                return applyThrows(t);
-            } catch (RuntimeException e) {
-                throw e;
-            } catch (Exception e) {
-                X ex = clazz.newInstance();
-                ex.addSuppressed(e);
-                throw ThrowableUtils.sneakyThrow(ex);
             }
         };
     }
@@ -149,7 +149,7 @@ public interface ThrowableFunction<T, R> extends Function<T, R> {
      * occurred, throws the given {@code Exception}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    default <X extends Exception> ThrowableFunction<T, R> orThrowAlways(Class<X> clazz) {
+    default <X extends Exception> ThrowableFunction<T, R> orThrow(Class<X> clazz) {
         Objects.requireNonNull(clazz);
         return t -> {
             try {
@@ -165,7 +165,7 @@ public interface ThrowableFunction<T, R> extends Function<T, R> {
     /**
      * Returns a composed {@link Function} that applies this {@link ThrowableFunction} to its input, and if an error
      * occurred, applies the given {@code Function} representing a fallback. The exception from this {@code
-     * ThrowableFunction} is ignored, unless it is an unchecked exception.
+     * ThrowableFunction} is ignored.
      *
      * @param fallback A {@code Function} to be applied if this one fails
      * @return A composed {@code Function} that applies this {@code ThrowableFunction}, and if an error occurred,
@@ -177,8 +177,6 @@ public interface ThrowableFunction<T, R> extends Function<T, R> {
         return t -> {
             try {
                 return applyThrows(t);
-            } catch (RuntimeException e) {
-                throw e;
             } catch (Exception ignored) {
                 return fallback.apply(t);
             }
@@ -186,48 +184,21 @@ public interface ThrowableFunction<T, R> extends Function<T, R> {
     }
 
     /**
-     * Returns a composed {@link Function} that applies this {@link ThrowableFunction} to its input, and if an error
-     * occurred, returns the given value. The exception from this {@code ThrowableFunction} is ignored, unless it is an
-     * unchecked exception.
+     * Returns a composed {@link ThrowableFunction} that applies this {@code ThrowableFunction} to its input,
+     * additionally performing the provided action to the resulting value. This method exists mainly to support
+     * debugging.
      *
-     * @param value The value to be returned if this {@code ThrowableFunction} fails
-     * @return A composed {@code Function} that applies this {@code ThrowableFunction}, and if an error occurred,
-     * returns the given value.
+     * @param action A {@link Consumer} to be applied additionally to this {@code ThrowableFunction}
+     * @return A composed {@code ThrowableFunction} that applies this {@code ThrowableFunction}, additionally performing
+     * the provided action to the resulting value.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    default Function<T, R> orReturn(final R value) {
-        Objects.requireNonNull(value);
+    default ThrowableFunction<T, R> peek(final Consumer<? super R> action) {
+        Objects.requireNonNull(action);
         return t -> {
-            try {
-                return applyThrows(t);
-            } catch (RuntimeException e) {
-                throw e;
-            } catch (Exception ignored) {
-                return value;
-            }
-        };
-    }
-
-    /**
-     * Returns a composed {@link Function} that applies this {@link ThrowableFunction} to its input, and if an
-     * error occurred, returns the supplied value from the given {@link Supplier}. The exception from this {@code
-     * ThrowableFunction} is ignored, unless it is an unchecked exception.
-     *
-     * @param supplier A {@code Supplier} to return a supplied value if this {@code ThrowableFunction} fails
-     * @return A composed {@code Function} that applies this {@code ThrowableFunction}, and if an error occurred,
-     * the supplied value from the given {@code Supplier}.
-     * @throws NullPointerException If the given argument is {@code null}
-     */
-    default Function<T, R> orReturn(final Supplier<? extends R> supplier) {
-        Objects.requireNonNull(supplier);
-        return t -> {
-            try {
-                return applyThrows(t);
-            } catch (RuntimeException e) {
-                throw e;
-            } catch (Exception ignored) {
-                return supplier.get();
-            }
+            final R r = apply(t);
+            action.accept(r);
+            return r;
         };
     }
 
@@ -240,7 +211,7 @@ public interface ThrowableFunction<T, R> extends Function<T, R> {
      * returns the given value.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    default Function<T, R> orReturnAlways(final R value) {
+    default Function<T, R> orReturn(final R value) {
         Objects.requireNonNull(value);
         return t -> {
             try {
@@ -261,7 +232,7 @@ public interface ThrowableFunction<T, R> extends Function<T, R> {
      * the supplied value from the given {@code Supplier}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    default Function<T, R> orReturnAlways(final Supplier<? extends R> supplier) {
+    default Function<T, R> orReturn(final Supplier<? extends R> supplier) {
         Objects.requireNonNull(supplier);
         return t -> {
             try {

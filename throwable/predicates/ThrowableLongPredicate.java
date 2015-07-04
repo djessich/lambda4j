@@ -18,6 +18,7 @@ package at.gridtec.internals.lang.function.throwable.predicates;
 import at.gridtec.internals.lang.util.ThrowableUtils;
 
 import java.util.Objects;
+import java.util.function.Consumer;
 import java.util.function.LongPredicate;
 
 /**
@@ -49,8 +50,36 @@ import java.util.function.LongPredicate;
  *
  * @see java.util.function.Predicate
  */
+@SuppressWarnings("unused")
 @FunctionalInterface
 public interface ThrowableLongPredicate extends LongPredicate {
+
+    /**
+     * Implicitly casts, and therefore wraps a given lambda as {@link ThrowableLongPredicate}. This is a convenience
+     * method in case the given {@link ThrowableLongPredicate} is ambiguous for the compiler. This might happen for
+     * overloaded methods accepting different functional interfaces. The given {@code ThrowableLongPredicate} is
+     * returned as-is.
+     *
+     * @param lambda The {@code ThrowableLongPredicate} which should be returned as-is.
+     * @return The given {@code ThrowableLongPredicate} as-is.
+     * @throws NullPointerException If the given argument is {@code null}
+     */
+    static ThrowableLongPredicate wrap(final ThrowableLongPredicate lambda) {
+        Objects.requireNonNull(lambda);
+        return lambda;
+    }
+
+    /**
+     * Creates a {@link ThrowableLongPredicate} which always returns a given value.
+     *
+     * @param ret The return value for the constant
+     * @return A {@code ThrowableLongPredicate} which always returns a given value.
+     * @throws NullPointerException If the given argument is {@code null}
+     */
+    static ThrowableLongPredicate constant(boolean ret) {
+        Objects.requireNonNull(ret);
+        return value -> ret;
+    }
 
     /**
      * The test method for this {@link LongPredicate} which is able to throw any {@link Exception} type.
@@ -84,7 +113,7 @@ public interface ThrowableLongPredicate extends LongPredicate {
     /**
      * Returns a composed {@link ThrowableLongPredicate} that applies this {@code ThrowableLongPredicate} to its input,
      * and if an error occurred, applies the given one. The exception from this {@code ThrowableLongPredicate} is
-     * ignored, unless it is an unchecked exception.
+     * ignored.
      *
      * @param other A {@code ThrowableLongPredicate} to be applied if this one fails
      * @return A composed {@code ThrowableLongPredicate} that applies this {@code ThrowableLongPredicate}, and if an
@@ -96,39 +125,8 @@ public interface ThrowableLongPredicate extends LongPredicate {
         return value -> {
             try {
                 return testThrows(value);
-            } catch (RuntimeException e) {
-                throw e;
             } catch (Exception ignored) {
                 return other.testThrows(value);
-            }
-        };
-    }
-
-    /**
-     * Returns a composed {@link ThrowableLongPredicate} that applies this {@code ThrowableLongPredicate} to its input,
-     * and if an error occurred, throws the given {@link Exception}. The exception from this {@code
-     * ThrowableLongPredicate} is added as suppressed to the given one, unless it is an unchecked exception.
-     * <p>
-     * The given exception must have a no arg constructor for reflection purposes. If not, then appropriate exception
-     * as described in {@link Class#newInstance()} is thrown.
-     *
-     * @param <X> The type for the class extending {@code Exception}
-     * @param clazz The exception class to throw if an error occurred
-     * @return A composed {@code ThrowableLongPredicate} that applies this {@code ThrowableLongPredicate}, and if an
-     * error occurred, throws the given {@code Exception}.
-     * @throws NullPointerException If the given argument is {@code null}
-     */
-    default <X extends Exception> ThrowableLongPredicate orThrow(Class<X> clazz) {
-        Objects.requireNonNull(clazz);
-        return value -> {
-            try {
-                return testThrows(value);
-            } catch (RuntimeException e) {
-                throw e;
-            } catch (Exception e) {
-                X ex = clazz.newInstance();
-                ex.addSuppressed(e);
-                throw ThrowableUtils.sneakyThrow(ex);
             }
         };
     }
@@ -147,7 +145,7 @@ public interface ThrowableLongPredicate extends LongPredicate {
      * error occurred, throws the given {@code Exception}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    default <X extends Exception> ThrowableLongPredicate orThrowAlways(Class<X> clazz) {
+    default <X extends Exception> ThrowableLongPredicate orThrow(Class<X> clazz) {
         Objects.requireNonNull(clazz);
         return value -> {
             try {
@@ -163,7 +161,7 @@ public interface ThrowableLongPredicate extends LongPredicate {
     /**
      * Returns a composed {@link LongPredicate} that applies this {@link ThrowableLongPredicate} to its input, and if
      * an error occurred, applies the given {@code LongPredicate} representing a fallback. The exception from this
-     * {@code ThrowableLongPredicate} is ignored, unless it is an unchecked exception.
+     * {@code ThrowableLongPredicate} is ignored.
      *
      * @param fallback A {@code LongPredicate} to be applied if this one fails
      * @return A composed {@code LongPredicate} that applies this {@code ThrowableLongPredicate}, and if an error
@@ -175,8 +173,6 @@ public interface ThrowableLongPredicate extends LongPredicate {
         return value -> {
             try {
                 return testThrows(value);
-            } catch (RuntimeException e) {
-                throw e;
             } catch (Exception ignored) {
                 return fallback.test(value);
             }
@@ -184,42 +180,21 @@ public interface ThrowableLongPredicate extends LongPredicate {
     }
 
     /**
-     * Returns a composed {@link LongPredicate} that applies this {@link ThrowableLongPredicate} to its input, and if
-     * an error occurred, returns {@code true}. The exception from this {@code ThrowableLongPredicate} is ignored,
-     * unless it is an unchecked exception.
+     * Returns a composed {@link ThrowableLongPredicate} that applies this {@code ThrowableLongPredicate} to its input,
+     * additionally performing the provided action to the resulting value. This method exists mainly to support
+     * debugging.
      *
-     * @return A composed {@code LongPredicate} that applies this {@code ThrowableLongPredicate}, and if an error
-     * occurred, returns {@code true}.
+     * @param action A {@link Consumer} to be applied additionally to this {@code ThrowableLongPredicate}
+     * @return A composed {@code ThrowableLongPredicate} that applies this {@code ThrowableLongPredicate}, additionally
+     * performing the provided action to the resulting value.
+     * @throws NullPointerException If the given argument is {@code null}
      */
-    default LongPredicate orReturnTrue() {
+    default ThrowableLongPredicate peek(final Consumer<? super Boolean> action) {
+        Objects.requireNonNull(action);
         return value -> {
-            try {
-                return testThrows(value);
-            } catch (RuntimeException e) {
-                throw e;
-            } catch (Exception ignored) {
-                return true;
-            }
-        };
-    }
-
-    /**
-     * Returns a composed {@link LongPredicate} that applies this {@link ThrowableLongPredicate} to its input, and if
-     * an error occurred, returns {@code false}. The exception from this {@code ThrowableLongPredicate} is ignored,
-     * unless it is an unchecked exception.
-     *
-     * @return A composed {@code LongPredicate} that applies this {@code ThrowableLongPredicate}, and if an error
-     * occurred, returns {@code false}.
-     */
-    default LongPredicate orReturnFalse() {
-        return value -> {
-            try {
-                return testThrows(value);
-            } catch (RuntimeException e) {
-                throw e;
-            } catch (Exception ignored) {
-                return false;
-            }
+            final boolean ret = test(value);
+            action.accept(ret);
+            return ret;
         };
     }
 
@@ -230,7 +205,7 @@ public interface ThrowableLongPredicate extends LongPredicate {
      * @return A composed {@code LongPredicate} that applies this {@code ThrowableLongPredicate}, and if an error
      * occurred, returns {@code true}.
      */
-    default LongPredicate orReturnAlwaysTrue() {
+    default LongPredicate orReturnTrue() {
         return value -> {
             try {
                 return testThrows(value);
@@ -247,7 +222,7 @@ public interface ThrowableLongPredicate extends LongPredicate {
      * @return A composed {@code LongPredicate} that applies this {@code ThrowableLongPredicate}, and if an error
      * occurred, returns {@code false}.
      */
-    default LongPredicate orReturnAlwaysFalse() {
+    default LongPredicate orReturnFalse() {
         return value -> {
             try {
                 return testThrows(value);

@@ -19,6 +19,7 @@ import at.gridtec.internals.lang.util.ThrowableUtils;
 
 import java.util.Objects;
 import java.util.function.LongBinaryOperator;
+import java.util.function.LongConsumer;
 import java.util.function.Supplier;
 
 /**
@@ -50,8 +51,36 @@ import java.util.function.Supplier;
  *
  * @see java.util.function.BinaryOperator
  */
+@SuppressWarnings("unused")
 @FunctionalInterface
 public interface ThrowableLongBinaryOperator extends LongBinaryOperator {
+
+    /**
+     * Implicitly casts, and therefore wraps a given lambda as {@link ThrowableLongBinaryOperator}. This is a
+     * convenience method in case the given {@link ThrowableLongBinaryOperator} is ambiguous for the compiler. This
+     * might happen for overloaded methods accepting different functional interfaces. The given {@code
+     * ThrowableLongBinaryOperator} is returned as-is.
+     *
+     * @param lambda The {@code ThrowableLongBinaryOperator} which should be returned as-is.
+     * @return The given {@code ThrowableLongBinaryOperator} as-is.
+     * @throws NullPointerException If the given argument is {@code null}
+     */
+    static ThrowableLongBinaryOperator wrap(final ThrowableLongBinaryOperator lambda) {
+        Objects.requireNonNull(lambda);
+        return lambda;
+    }
+
+    /**
+     * Creates a {@link ThrowableLongBinaryOperator} which always returns a given value.
+     *
+     * @param ret The return value for the constant
+     * @return A {@code ThrowableLongBinaryOperator} which always returns a given value.
+     * @throws NullPointerException If the given argument is {@code null}
+     */
+    static ThrowableLongBinaryOperator constant(long ret) {
+        Objects.requireNonNull(ret);
+        return (left, right) -> ret;
+    }
 
     /**
      * The apply method for this {@link LongBinaryOperator} which is able to throw any {@link Exception} type.
@@ -87,29 +116,21 @@ public interface ThrowableLongBinaryOperator extends LongBinaryOperator {
 
     /**
      * Returns a composed {@link ThrowableLongBinaryOperator} that applies this {@code ThrowableLongBinaryOperator} to
-     * its input, and if an error occurred, throws the given {@link Exception}. The exception from this {@code
-     * ThrowableLongBinaryOperator} is added as suppressed to the given one, unless it is an unchecked exception.
-     * <p>
-     * The given exception must have a no arg constructor for reflection purposes. If not, then appropriate exception
-     * as described in {@link Class#newInstance()} is thrown.
+     * its input, and if an error occurred, applies the given one. The exception from this {@code
+     * ThrowableLongBinaryOperator} is ignored.
      *
-     * @param <X> The type for the class extending {@code Exception}
-     * @param clazz The exception class to throw if an error occurred
+     * @param other A {@code ThrowableLongBinaryOperator} to be applied if this one fails
      * @return A composed {@code ThrowableLongBinaryOperator} that applies this {@code ThrowableLongBinaryOperator}, and
-     * if an error occurred, throws the given {@code Exception}.
+     * if an error occurred, applies the given one.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    default <X extends Exception> ThrowableLongBinaryOperator orThrow(Class<X> clazz) {
-        Objects.requireNonNull(clazz);
-        return (t, u) -> {
+    default ThrowableLongBinaryOperator orElse(final ThrowableLongBinaryOperator other) {
+        Objects.requireNonNull(other);
+        return (left, right) -> {
             try {
-                return applyAsLongThrows(t, u);
-            } catch (RuntimeException e) {
-                throw e;
-            } catch (Exception e) {
-                X ex = clazz.newInstance();
-                ex.addSuppressed(e);
-                throw ThrowableUtils.sneakyThrow(ex);
+                return applyAsLongThrows(left, right);
+            } catch (Exception ignored) {
+                return other.applyAsLongThrows(left, right);
             }
         };
     }
@@ -128,11 +149,11 @@ public interface ThrowableLongBinaryOperator extends LongBinaryOperator {
      * if an error occurred, throws the given {@code Exception}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    default <X extends Exception> ThrowableLongBinaryOperator orThrowAlways(Class<X> clazz) {
+    default <X extends Exception> ThrowableLongBinaryOperator orThrow(Class<X> clazz) {
         Objects.requireNonNull(clazz);
-        return (t, u) -> {
+        return (left, right) -> {
             try {
-                return applyAsLongThrows(t, u);
+                return applyAsLongThrows(left, right);
             } catch (Exception e) {
                 X ex = clazz.newInstance();
                 ex.addSuppressed(e);
@@ -142,32 +163,9 @@ public interface ThrowableLongBinaryOperator extends LongBinaryOperator {
     }
 
     /**
-     * Returns a composed {@link ThrowableLongBinaryOperator} that applies this {@code ThrowableLongBinaryOperator} to
-     * its input, and if an error occurred, applies the given one. The exception from this {@code
-     * ThrowableLongBinaryOperator} is ignored, unless it is an unchecked exception.
-     *
-     * @param other A {@code ThrowableLongBinaryOperator} to be applied if this one fails
-     * @return A composed {@code ThrowableLongBinaryOperator} that applies this {@code ThrowableLongBinaryOperator}, and
-     * if an error occurred, applies the given one.
-     * @throws NullPointerException If the given argument is {@code null}
-     */
-    default ThrowableLongBinaryOperator orElse(final ThrowableLongBinaryOperator other) {
-        Objects.requireNonNull(other);
-        return (t, u) -> {
-            try {
-                return applyAsLongThrows(t, u);
-            } catch (RuntimeException e) {
-                throw e;
-            } catch (Exception ignored) {
-                return other.applyAsLongThrows(t, u);
-            }
-        };
-    }
-
-    /**
      * Returns a composed {@link LongBinaryOperator} that applies this {@link ThrowableLongBinaryOperator} to its
      * input, and if an error occurred, applies the given {@code LongBinaryOperator} representing a fallback. The
-     * exception from this {@code ThrowableLongBinaryOperator} is ignored, unless it is an unchecked exception.
+     * exception from this {@code ThrowableLongBinaryOperator} is ignored.
      *
      * @param fallback A {@code LongBinaryOperator} to be applied if this one fails
      * @return A composed {@code LongBinaryOperator} that applies this {@code ThrowableLongBinaryOperator}, and if an
@@ -176,98 +174,31 @@ public interface ThrowableLongBinaryOperator extends LongBinaryOperator {
      */
     default LongBinaryOperator fallbackTo(final LongBinaryOperator fallback) {
         Objects.requireNonNull(fallback);
-        return (t, u) -> {
+        return (left, right) -> {
             try {
-                return applyAsLongThrows(t, u);
-            } catch (RuntimeException e) {
-                throw e;
+                return applyAsLongThrows(left, right);
             } catch (Exception ignored) {
-                return fallback.applyAsLong(t, u);
+                return fallback.applyAsLong(left, right);
             }
         };
     }
 
     /**
-     * Returns a composed {@link LongBinaryOperator} that applies this {@link ThrowableLongBinaryOperator} to its
-     * input, and if an error occurred, returns the given value. The exception from this {@code
-     * ThrowableLongBinaryOperator} is ignored, unless it is an unchecked exception.
+     * Returns a composed {@link ThrowableLongBinaryOperator} that applies this {@code ThrowableLongBinaryOperator} to
+     * its input, additionally performing the provided action to the resulting value. This method exists mainly to
+     * support debugging.
      *
-     * @param value The value to be returned if this {@code ThrowableLongBinaryOperator} fails
-     * @return A composed {@code LongBinaryOperator} that applies this {@code ThrowableLongBinaryOperator}, and if an
-     * error occurred, returns the given value.
-     */
-    default LongBinaryOperator orReturn(long value) {
-        return (t, u) -> {
-            try {
-                return applyAsLongThrows(t, u);
-            } catch (RuntimeException e) {
-                throw e;
-            } catch (Exception ignored) {
-                return value;
-            }
-        };
-    }
-
-    /**
-     * Returns a composed {@link LongBinaryOperator} that applies this {@link ThrowableLongBinaryOperator} to its
-     * input, and if an error occurred, returns the supplied value from the given {@link Supplier}. The exception from
-     * this {@code ThrowableLongBinaryOperator} is ignored, unless it is an unchecked exception.
-     *
-     * @param supplier A {@code Supplier} to return a supplied value if this {@code ThrowableLongBinaryOperator} fails
-     * @return A composed {@code LongBinaryOperator} that applies this {@code ThrowableLongBinaryOperator}, and if an
-     * error occurred, the supplied value from the given {@code Supplier}.
+     * @param action A {@link LongConsumer} to be applied additionally to this {@code ThrowableLongBinaryOperator}
+     * @return A composed {@code ThrowableLongBinaryOperator} that applies this {@code ThrowableLongBinaryOperator},
+     * additionally performing the provided action to the resulting value.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    default LongBinaryOperator orReturn(final Supplier<? extends Long> supplier) {
-        Objects.requireNonNull(supplier);
-        return (t, u) -> {
-            try {
-                return applyAsLongThrows(t, u);
-            } catch (RuntimeException e) {
-                throw e;
-            } catch (Exception ignored) {
-                return supplier.get();
-            }
-        };
-    }
-
-    /**
-     * Returns a composed {@link LongBinaryOperator} that applies this {@link ThrowableLongBinaryOperator} to its
-     * input, and if an error occurred, returns the left value from this operator. The exception from this {@code
-     * ThrowableLongBinaryOperator} is ignored, unless it is an unchecked exception.
-     *
-     * @return A composed {@code LongBinaryOperator} that applies this {@code ThrowableLongBinaryOperator}, and if an
-     * error occurred, returns the left value from this operator.
-     */
-    default LongBinaryOperator orReturnLeft() {
-        return (t, u) -> {
-            try {
-                return applyAsLongThrows(t, u);
-            } catch (RuntimeException e) {
-                throw e;
-            } catch (Exception ignored) {
-                return t;
-            }
-        };
-    }
-
-    /**
-     * Returns a composed {@link LongBinaryOperator} that applies this {@link ThrowableLongBinaryOperator} to its
-     * input, and if an error occurred, returns the right value from this operator. The exception from this {@code
-     * ThrowableLongBinaryOperator} is ignored, unless it is an unchecked exception.
-     *
-     * @return A composed {@code LongBinaryOperator} that applies this {@code ThrowableLongBinaryOperator}, and if an
-     * error occurred, returns the right value from this operator.
-     */
-    default LongBinaryOperator orReturnRight() {
-        return (t, u) -> {
-            try {
-                return applyAsLongThrows(t, u);
-            } catch (RuntimeException e) {
-                throw e;
-            } catch (Exception ignored) {
-                return u;
-            }
+    default ThrowableLongBinaryOperator peek(final LongConsumer action) {
+        Objects.requireNonNull(action);
+        return (left, right) -> {
+            final long ret = applyAsLong(left, right);
+            action.accept(ret);
+            return ret;
         };
     }
 
@@ -280,10 +211,10 @@ public interface ThrowableLongBinaryOperator extends LongBinaryOperator {
      * @return A composed {@code LongBinaryOperator} that applies this {@code ThrowableLongBinaryOperator}, and if an
      * error occurred, returns the given value.
      */
-    default LongBinaryOperator orReturnAlways(long value) {
-        return (t, u) -> {
+    default LongBinaryOperator orReturn(long value) {
+        return (left, right) -> {
             try {
-                return applyAsLongThrows(t, u);
+                return applyAsLongThrows(left, right);
             } catch (Exception ignored) {
                 return value;
             }
@@ -300,13 +231,11 @@ public interface ThrowableLongBinaryOperator extends LongBinaryOperator {
      * error occurred, the supplied value from the given {@code Supplier}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    default LongBinaryOperator orReturnAlways(final Supplier<? extends Long> supplier) {
+    default LongBinaryOperator orReturn(final Supplier<? extends Long> supplier) {
         Objects.requireNonNull(supplier);
-        return (t, u) -> {
+        return (left, right) -> {
             try {
-                return applyAsLongThrows(t, u);
-            } catch (RuntimeException e) {
-                throw e;
+                return applyAsLongThrows(left, right);
             } catch (Exception ignored) {
                 return supplier.get();
             }
@@ -321,14 +250,12 @@ public interface ThrowableLongBinaryOperator extends LongBinaryOperator {
      * @return A composed {@code LongBinaryOperator} that applies this {@code ThrowableLongBinaryOperator}, and if an
      * error occurred, returns the left value from this operator.
      */
-    default LongBinaryOperator orReturnAlwaysLeft() {
-        return (t, u) -> {
+    default LongBinaryOperator orReturnLeft() {
+        return (left, right) -> {
             try {
-                return applyAsLongThrows(t, u);
-            } catch (RuntimeException e) {
-                throw e;
+                return applyAsLongThrows(left, right);
             } catch (Exception ignored) {
-                return t;
+                return left;
             }
         };
     }
@@ -341,14 +268,12 @@ public interface ThrowableLongBinaryOperator extends LongBinaryOperator {
      * @return A composed {@code LongBinaryOperator} that applies this {@code ThrowableLongBinaryOperator}, and if an
      * error occurred, returns the right value from this operator.
      */
-    default LongBinaryOperator orReturnAlwaysRight() {
-        return (t, u) -> {
+    default LongBinaryOperator orReturnRight() {
+        return (left, right) -> {
             try {
-                return applyAsLongThrows(t, u);
-            } catch (RuntimeException e) {
-                throw e;
+                return applyAsLongThrows(left, right);
             } catch (Exception ignored) {
-                return u;
+                return right;
             }
         };
     }

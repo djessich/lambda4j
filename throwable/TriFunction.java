@@ -30,6 +30,7 @@ import java.util.function.Function;
  * @param <R> The type of return value from the function
  * @see java.util.function.Function
  */
+@SuppressWarnings("unused")
 @FunctionalInterface
 public interface TriFunction<T, U, V, R> {
 

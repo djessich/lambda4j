@@ -18,6 +18,7 @@ package at.gridtec.internals.lang.function.throwable.operators;
 import at.gridtec.internals.lang.util.ThrowableUtils;
 
 import java.util.Objects;
+import java.util.function.LongConsumer;
 import java.util.function.LongUnaryOperator;
 import java.util.function.Supplier;
 
@@ -51,8 +52,36 @@ import java.util.function.Supplier;
  * @author JESSICH Dominik
  * @see java.util.function.UnaryOperator
  */
+@SuppressWarnings("unused")
 @FunctionalInterface
 public interface ThrowableLongUnaryOperator extends LongUnaryOperator {
+
+    /**
+     * Implicitly casts, and therefore wraps a given lambda as {@link ThrowableLongUnaryOperator}. This is a
+     * convenience method in case the given {@link ThrowableLongUnaryOperator} is ambiguous for the compiler. This
+     * might happen for overloaded methods accepting different functional interfaces. The given {@code
+     * ThrowableLongUnaryOperator} is returned as-is.
+     *
+     * @param lambda The {@code ThrowableLongUnaryOperator} which should be returned as-is.
+     * @return The given {@code ThrowableLongUnaryOperator} as-is.
+     * @throws NullPointerException If the given argument is {@code null}
+     */
+    static ThrowableLongUnaryOperator wrap(final ThrowableLongUnaryOperator lambda) {
+        Objects.requireNonNull(lambda);
+        return lambda;
+    }
+
+    /**
+     * Creates a {@link ThrowableLongUnaryOperator} which always returns a given value.
+     *
+     * @param ret The return value for the constant
+     * @return A {@code ThrowableLongUnaryOperator} which always returns a given value.
+     * @throws NullPointerException If the given argument is {@code null}
+     */
+    static ThrowableLongUnaryOperator constant(long ret) {
+        Objects.requireNonNull(ret);
+        return operand -> ret;
+    }
 
     /**
      * The apply method for this {@link LongUnaryOperator} which is able to throw any {@link Exception} type.
@@ -87,7 +116,7 @@ public interface ThrowableLongUnaryOperator extends LongUnaryOperator {
     /**
      * Returns a composed {@link ThrowableLongUnaryOperator} that applies this {@code ThrowableLongUnaryOperator} to
      * its input, and if an  error occurred, applies the given one. The exception from this {@code
-     * ThrowableLongUnaryOperator} is ignored, unless it is an unchecked exception.
+     * ThrowableLongUnaryOperator} is ignored.
      *
      * @param other A {@code ThrowableLongUnaryOperator} to be applied if this one fails
      * @return A composed {@code ThrowableLongUnaryOperator} that applies this {@code ThrowableLongUnaryOperator}, and
@@ -96,42 +125,11 @@ public interface ThrowableLongUnaryOperator extends LongUnaryOperator {
      */
     default ThrowableLongUnaryOperator orElse(final ThrowableLongUnaryOperator other) {
         Objects.requireNonNull(other);
-        return t -> {
+        return operand -> {
             try {
-                return applyAsLongThrows(t);
-            } catch (RuntimeException e) {
-                throw e;
+                return applyAsLongThrows(operand);
             } catch (Exception ignored) {
-                return other.applyAsLongThrows(t);
-            }
-        };
-    }
-
-    /**
-     * Returns a composed {@link ThrowableLongUnaryOperator} that applies this {@code ThrowableLongUnaryOperator} to
-     * its input, and if an error occurred, throws the given {@link Exception}. The exception from this {@code
-     * ThrowableLongUnaryOperator} is added as suppressed to the given one, unless it is an unchecked exception.
-     * <p>
-     * The given exception must have a no arg constructor for reflection purposes. If not, then appropriate exception
-     * as described in {@link Class#newInstance()} is thrown.
-     *
-     * @param <X> The type for the class extending {@code Exception}
-     * @param clazz The exception class to throw if an error occurred
-     * @return A composed {@code ThrowableLongUnaryOperator} that applies this {@code ThrowableLongUnaryOperator}, and
-     * if an error occurred, throws the given {@code Exception}.
-     * @throws NullPointerException If the given argument is {@code null}
-     */
-    default <X extends Exception> ThrowableLongUnaryOperator orThrow(Class<X> clazz) {
-        Objects.requireNonNull(clazz);
-        return t -> {
-            try {
-                return applyAsLongThrows(t);
-            } catch (RuntimeException e) {
-                throw e;
-            } catch (Exception e) {
-                X ex = clazz.newInstance();
-                ex.addSuppressed(e);
-                throw ThrowableUtils.sneakyThrow(ex);
+                return other.applyAsLongThrows(operand);
             }
         };
     }
@@ -150,11 +148,11 @@ public interface ThrowableLongUnaryOperator extends LongUnaryOperator {
      * if an error occurred, throws the given {@code Exception}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    default <X extends Exception> ThrowableLongUnaryOperator orThrowAlways(Class<X> clazz) {
+    default <X extends Exception> ThrowableLongUnaryOperator orThrow(Class<X> clazz) {
         Objects.requireNonNull(clazz);
-        return t -> {
+        return operand -> {
             try {
-                return applyAsLongThrows(t);
+                return applyAsLongThrows(operand);
             } catch (Exception e) {
                 X ex = clazz.newInstance();
                 ex.addSuppressed(e);
@@ -166,7 +164,7 @@ public interface ThrowableLongUnaryOperator extends LongUnaryOperator {
     /**
      * Returns a composed {@link LongUnaryOperator} that applies this {@link ThrowableLongUnaryOperator} to its input,
      * and if an error occurred, applies the given {@code LongUnaryOperator} representing a fallback. The exception
-     * from this {@code ThrowableLongUnaryOperator} is ignored, unless it is an unchecked exception.
+     * from this {@code ThrowableLongUnaryOperator} is ignored.
      *
      * @param fallback A {@code LongUnaryOperator} to be applied if this one fails
      * @return A composed {@code LongUnaryOperator} that applies this {@code ThrowableLongUnaryOperator}, and if an
@@ -175,78 +173,31 @@ public interface ThrowableLongUnaryOperator extends LongUnaryOperator {
      */
     default LongUnaryOperator fallbackTo(final LongUnaryOperator fallback) {
         Objects.requireNonNull(fallback);
-        return t -> {
+        return operand -> {
             try {
-                return applyAsLongThrows(t);
-            } catch (RuntimeException e) {
-                throw e;
+                return applyAsLongThrows(operand);
             } catch (Exception ignored) {
-                return fallback.applyAsLong(t);
+                return fallback.applyAsLong(operand);
             }
         };
     }
 
     /**
-     * Returns a composed {@link LongUnaryOperator} that applies this {@link ThrowableLongUnaryOperator} to its input,
-     * and if an error occurred, returns the given value. The exception from this {@code ThrowableLongUnaryOperator} is
-     * ignored, unless it is an unchecked exception.
+     * Returns a composed {@link ThrowableLongUnaryOperator} that applies this {@code ThrowableLongUnaryOperator} to
+     * its input, additionally performing the provided action to the resulting value. This method exists mainly to
+     * support debugging.
      *
-     * @param value The value to be returned if this {@code ThrowableLongUnaryOperator} fails
-     * @return A composed {@code LongUnaryOperator} that applies this {@code ThrowableLongUnaryOperator}, and if an
-     * error occurred, returns the given value.
-     */
-    default LongUnaryOperator orReturn(long value) {
-        return t -> {
-            try {
-                return applyAsLongThrows(t);
-            } catch (RuntimeException e) {
-                throw e;
-            } catch (Exception ignored) {
-                return value;
-            }
-        };
-    }
-
-    /**
-     * Returns a composed {@link LongUnaryOperator} that applies this {@link ThrowableLongUnaryOperator} to its input,
-     * and if an error occurred, returns the supplied value from the given {@link Supplier}. The exception from this
-     * {@code ThrowableLongUnaryOperator} is ignored, unless it is an unchecked exception.
-     *
-     * @param supplier A {@code Supplier} to return a supplied value if this {@code ThrowableLongUnaryOperator} fails
-     * @return A composed {@code LongUnaryOperator} that applies this {@code ThrowableLongUnaryOperator}, and if an
-     * error occurred, the supplied value from the given {@code Supplier}.
+     * @param action A {@link LongConsumer} to be applied additionally to this {@code ThrowableLongUnaryOperator}
+     * @return A composed {@code ThrowableLongUnaryOperator} that applies this {@code ThrowableLongUnaryOperator},
+     * additionally performing the provided action to the resulting value.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    default LongUnaryOperator orReturn(final Supplier<? extends Long> supplier) {
-        Objects.requireNonNull(supplier);
-        return t -> {
-            try {
-                return applyAsLongThrows(t);
-            } catch (RuntimeException e) {
-                throw e;
-            } catch (Exception ignored) {
-                return supplier.get();
-            }
-        };
-    }
-
-    /**
-     * Returns a composed {@link LongUnaryOperator} that applies this {@link ThrowableLongUnaryOperator} to its input,
-     * and if an error occurred, returns its value. The exception from this {@code ThrowableLongUnaryOperator} is
-     * ignored, unless it is an unchecked exception.
-     *
-     * @return A composed {@code LongUnaryOperator} that applies this {@code ThrowableLongUnaryOperator}, and if an
-     * error occurred, returns its value.
-     */
-    default LongUnaryOperator orReturnSelf() {
-        return t -> {
-            try {
-                return applyAsLongThrows(t);
-            } catch (RuntimeException e) {
-                throw e;
-            } catch (Exception ignored) {
-                return t;
-            }
+    default ThrowableLongUnaryOperator peek(final LongConsumer action) {
+        Objects.requireNonNull(action);
+        return operand -> {
+            final long ret = applyAsLong(operand);
+            action.accept(ret);
+            return ret;
         };
     }
 
@@ -259,10 +210,10 @@ public interface ThrowableLongUnaryOperator extends LongUnaryOperator {
      * @return A composed {@code LongUnaryOperator} that applies this {@code ThrowableLongUnaryOperator}, and if an
      * error occurred, returns the given value.
      */
-    default LongUnaryOperator orReturnAlways(long value) {
-        return t -> {
+    default LongUnaryOperator orReturn(long value) {
+        return operand -> {
             try {
-                return applyAsLongThrows(t);
+                return applyAsLongThrows(operand);
             } catch (Exception ignored) {
                 return value;
             }
@@ -279,11 +230,11 @@ public interface ThrowableLongUnaryOperator extends LongUnaryOperator {
      * error occurred, the supplied value from the given {@code Supplier}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    default LongUnaryOperator orReturnAlways(final Supplier<? extends Long> supplier) {
+    default LongUnaryOperator orReturn(final Supplier<? extends Long> supplier) {
         Objects.requireNonNull(supplier);
-        return t -> {
+        return operand -> {
             try {
-                return applyAsLongThrows(t);
+                return applyAsLongThrows(operand);
             } catch (Exception ignored) {
                 return supplier.get();
             }
@@ -298,14 +249,12 @@ public interface ThrowableLongUnaryOperator extends LongUnaryOperator {
      * @return A composed {@code LongUnaryOperator} that applies this {@code ThrowableLongUnaryOperator}, and if an
      * error occurred, returns its value.
      */
-    default LongUnaryOperator orReturnAlwaysSelf() {
-        return t -> {
+    default LongUnaryOperator orReturnSelf() {
+        return operand -> {
             try {
-                return applyAsLongThrows(t);
-            } catch (RuntimeException e) {
-                throw e;
+                return applyAsLongThrows(operand);
             } catch (Exception ignored) {
-                return t;
+                return operand;
             }
         };
     }

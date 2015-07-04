@@ -18,6 +18,7 @@ package at.gridtec.internals.lang.function.throwable.supplier;
 import at.gridtec.internals.lang.util.ThrowableUtils;
 
 import java.util.Objects;
+import java.util.function.DoubleConsumer;
 import java.util.function.DoubleSupplier;
 
 /**
@@ -49,8 +50,36 @@ import java.util.function.DoubleSupplier;
  *
  * @see java.util.function.Supplier
  */
+@SuppressWarnings("unused")
 @FunctionalInterface
 public interface ThrowableDoubleSupplier extends DoubleSupplier {
+
+    /**
+     * Implicitly casts, and therefore wraps a given lambda as {@link ThrowableDoubleSupplier}. This is a convenience
+     * method in case the given {@link ThrowableDoubleSupplier} is ambiguous for the compiler. This might happen for
+     * overloaded methods accepting different functional interfaces. The given {@code ThrowableDoubleSupplier} is
+     * returned as-is.
+     *
+     * @param lambda The {@code ThrowableDoubleSupplier} which should be returned as-is.
+     * @return The given {@code ThrowableDoubleSupplier} as-is.
+     * @throws NullPointerException If the given argument is {@code null}
+     */
+    static ThrowableDoubleSupplier wrap(final ThrowableDoubleSupplier lambda) {
+        Objects.requireNonNull(lambda);
+        return lambda;
+    }
+
+    /**
+     * Creates a {@link ThrowableDoubleSupplier} which always returns a given value.
+     *
+     * @param ret The return value for the constant
+     * @return A {@code ThrowableDoubleSupplier} which always returns a given value.
+     * @throws NullPointerException If the given argument is {@code null}
+     */
+    static ThrowableDoubleSupplier of(double ret) {
+        Objects.requireNonNull(ret);
+        return () -> ret;
+    }
 
     /**
      * The get method for this {@link DoubleSupplier} which is able to throw any {@link Exception} type.
@@ -82,7 +111,7 @@ public interface ThrowableDoubleSupplier extends DoubleSupplier {
     /**
      * Returns a composed {@link ThrowableDoubleSupplier} that applies this {@code ThrowableDoubleSupplier} to its
      * input, and if an error occurred, applies the given one. The exception from this {@code ThrowableDoubleSupplier}
-     * is ignored, unless it is an unchecked exception.
+     * is ignored.
      *
      * @param other A {@code ThrowableDoubleSupplier} to be applied if this one fails
      * @return A composed {@code ThrowableDoubleSupplier} that applies this {@code ThrowableDoubleSupplier}, and if an
@@ -94,39 +123,8 @@ public interface ThrowableDoubleSupplier extends DoubleSupplier {
         return () -> {
             try {
                 return getAsDoubleThrows();
-            } catch (RuntimeException e) {
-                throw e;
             } catch (Exception ignored) {
                 return other.getAsDoubleThrows();
-            }
-        };
-    }
-
-    /**
-     * Returns a composed {@link ThrowableDoubleSupplier} that applies this {@code ThrowableDoubleSupplier} to its
-     * input, and if an error occurred, throws the given {@link Exception}. The exception from this {@code
-     * ThrowableDoubleSupplier} is added as suppressed to the given one, unless it is an unchecked exception.
-     * <p>
-     * The given exception must have a no arg constructor for reflection purposes. If not, then appropriate exception
-     * as described in {@link Class#newInstance()} is thrown.
-     *
-     * @param <X> The type for the class extending {@code Exception}
-     * @param clazz The exception class to throw if an error occurred
-     * @return A composed {@code ThrowableDoubleSupplier} that applies this {@code ThrowableDoubleSupplier}, and if an
-     * error occurred, throws the given {@code Exception}.
-     * @throws NullPointerException If the given argument is {@code null}
-     */
-    default <X extends Exception> ThrowableDoubleSupplier orThrow(Class<X> clazz) {
-        Objects.requireNonNull(clazz);
-        return () -> {
-            try {
-                return getAsDoubleThrows();
-            } catch (RuntimeException e) {
-                throw e;
-            } catch (Exception e) {
-                X ex = clazz.newInstance();
-                ex.addSuppressed(e);
-                throw ThrowableUtils.sneakyThrow(ex);
             }
         };
     }
@@ -145,7 +143,7 @@ public interface ThrowableDoubleSupplier extends DoubleSupplier {
      * error occurred, throws the given {@code Exception}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    default <X extends Exception> ThrowableDoubleSupplier orThrowAlways(Class<X> clazz) {
+    default <X extends Exception> ThrowableDoubleSupplier orThrow(Class<X> clazz) {
         Objects.requireNonNull(clazz);
         return () -> {
             try {
@@ -161,7 +159,7 @@ public interface ThrowableDoubleSupplier extends DoubleSupplier {
     /**
      * Returns a composed {@link DoubleSupplier} that applies this {@link ThrowableDoubleSupplier} to its input, and if
      * an error occurred, applies the given {@code DoubleSupplier} representing a fallback. The exception from this
-     * {@code ThrowableDoubleSupplier} is ignored, unless it is an unchecked exception.
+     * {@code ThrowableDoubleSupplier} is ignored.
      *
      * @param fallback A {@code DoubleSupplier} to be applied if this one fails
      * @return A composed {@code DoubleSupplier} that applies this {@code ThrowableDoubleSupplier}, and if an error
@@ -173,8 +171,6 @@ public interface ThrowableDoubleSupplier extends DoubleSupplier {
         return () -> {
             try {
                 return getAsDoubleThrows();
-            } catch (RuntimeException e) {
-                throw e;
             } catch (Exception ignored) {
                 return fallback.getAsDouble();
             }
@@ -182,23 +178,21 @@ public interface ThrowableDoubleSupplier extends DoubleSupplier {
     }
 
     /**
-     * Returns a composed {@link DoubleSupplier} that applies this {@link ThrowableDoubleSupplier} to its input, and if
-     * an error occurred, returns the given value. The exception from this {@code ThrowableDoubleSupplier} is ignored,
-     * unless it is an unchecked exception.
+     * Returns a composed {@link ThrowableDoubleSupplier} that applies this {@code ThrowableDoubleSupplier} to its
+     * input, additionally performing the provided action to the resulting value. This method exists mainly to support
+     * debugging.
      *
-     * @param value The value to be returned if this {@code ThrowableDoubleSupplier} fails
-     * @return A composed {@code DoubleSupplier} that applies this {@code ThrowableDoubleSupplier}, and if an error
-     * occurred, returns the given value.
+     * @param action A {@link DoubleConsumer} to be applied additionally to this {@code ThrowableDoubleSupplier}
+     * @return A composed {@code ThrowableDoubleSupplier} that applies this {@code ThrowableDoubleSupplier},
+     * additionally performing the provided action to the resulting value.
+     * @throws NullPointerException If the given argument is {@code null}
      */
-    default DoubleSupplier orReturn(double value) {
+    default ThrowableDoubleSupplier peek(final DoubleConsumer action) {
+        Objects.requireNonNull(action);
         return () -> {
-            try {
-                return getAsDoubleThrows();
-            } catch (RuntimeException e) {
-                throw e;
-            } catch (Exception ignored) {
-                return value;
-            }
+            final double ret = getAsDouble();
+            action.accept(ret);
+            return ret;
         };
     }
 
@@ -210,7 +204,7 @@ public interface ThrowableDoubleSupplier extends DoubleSupplier {
      * @return A composed {@code DoubleSupplier} that applies this {@code ThrowableDoubleSupplier}, and if an error
      * occurred, returns the given value.
      */
-    default DoubleSupplier orReturnAlways(double value) {
+    default DoubleSupplier orReturn(double value) {
         return () -> {
             try {
                 return getAsDoubleThrows();

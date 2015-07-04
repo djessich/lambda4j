@@ -18,6 +18,7 @@ package at.gridtec.internals.lang.function.throwable;
 import at.gridtec.internals.lang.util.ThrowableUtils;
 
 import java.util.Objects;
+import java.util.function.Consumer;
 import java.util.function.IntFunction;
 import java.util.function.Supplier;
 
@@ -51,8 +52,38 @@ import java.util.function.Supplier;
  * @param <R> The type of return value from the function
  * @see java.util.function.Function
  */
+@SuppressWarnings("unused")
 @FunctionalInterface
 public interface ThrowableIntFunction<R> extends IntFunction<R> {
+
+    /**
+     * Implicitly casts, and therefore wraps a given lambda as {@link ThrowableIntFunction}. This is a convenience
+     * method in case the given {@link ThrowableIntFunction} is ambiguous for the compiler. This might happen for
+     * overloaded methods accepting different functional interfaces. The given {@code ThrowableIntFunction} is returned
+     * as-is.
+     *
+     * @param <R> The type of return value from the function
+     * @param lambda The {@code ThrowableIntFunction} which should be returned as-is.
+     * @return The given {@code ThrowableIntFunction} as-is.
+     * @throws NullPointerException If the given argument is {@code null}
+     */
+    static <R> ThrowableIntFunction<R> wrap(final ThrowableIntFunction<R> lambda) {
+        Objects.requireNonNull(lambda);
+        return lambda;
+    }
+
+    /**
+     * Creates a {@link ThrowableIntFunction} which always returns a given value.
+     *
+     * @param <R> The type of return value from the function
+     * @param r The return value for the constant
+     * @return A {@code ThrowableIntFunction} which always returns a given value.
+     * @throws NullPointerException If the given argument is {@code null}
+     */
+    static <R> ThrowableIntFunction<R> constant(R r) {
+        Objects.requireNonNull(r);
+        return value -> r;
+    }
 
     /**
      * The apply method for this {@link IntFunction} which is able to throw any {@link Exception} type.
@@ -85,8 +116,7 @@ public interface ThrowableIntFunction<R> extends IntFunction<R> {
 
     /**
      * Returns a composed {@link ThrowableIntFunction} that applies this {@code ThrowableIntFunction} to its input, and
-     * if an error occurred, applies the given one. The exception from this {@code ThrowableIntFunction} is ignored,
-     * unless it is an unchecked exception.
+     * if an error occurred, applies the given one. The exception from this {@code ThrowableIntFunction} is ignored.
      *
      * @param other A {@code ThrowableIntFunction} to be applied if this one fails
      * @return A composed {@code ThrowableIntFunction} that applies this {@code ThrowableIntFunction}, and if an error
@@ -95,42 +125,11 @@ public interface ThrowableIntFunction<R> extends IntFunction<R> {
      */
     default ThrowableIntFunction<R> orElse(final ThrowableIntFunction<? extends R> other) {
         Objects.requireNonNull(other);
-        return t -> {
-            try {
-                return applyThrows(t);
-            } catch (RuntimeException e) {
-                throw e;
-            } catch (Exception ignored) {
-                return other.applyThrows(t);
-            }
-        };
-    }
-
-    /**
-     * Returns a composed {@link ThrowableIntFunction} that applies this {@code ThrowableIntFunction} to its input, and
-     * if an error occurred, throws the given {@link Exception}. The exception from this {@code ThrowableIntFunction}
-     * is added as suppressed to the given one, unless it is an unchecked exception.
-     * <p>
-     * The given exception must have a no arg constructor for reflection purposes. If not, then appropriate exception
-     * as described in {@link Class#newInstance()} is thrown.
-     *
-     * @param <X> The type for the class extending {@code Exception}
-     * @param clazz The exception class to throw if an error occurred
-     * @return A composed {@code ThrowableIntFunction} that applies this {@code ThrowableIntFunction}, and if an error
-     * occurred, throws the given {@code Exception}.
-     * @throws NullPointerException If the given argument is {@code null}
-     */
-    default <X extends Exception> ThrowableIntFunction<R> orThrow(Class<X> clazz) {
-        Objects.requireNonNull(clazz);
         return value -> {
             try {
                 return applyThrows(value);
-            } catch (RuntimeException e) {
-                throw e;
-            } catch (Exception e) {
-                X ex = clazz.newInstance();
-                ex.addSuppressed(e);
-                throw ThrowableUtils.sneakyThrow(ex);
+            } catch (Exception ignored) {
+                return other.applyThrows(value);
             }
         };
     }
@@ -149,7 +148,7 @@ public interface ThrowableIntFunction<R> extends IntFunction<R> {
      * occurred, throws the given {@code Exception}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    default <X extends Exception> ThrowableIntFunction<R> orThrowAlways(Class<X> clazz) {
+    default <X extends Exception> ThrowableIntFunction<R> orThrow(Class<X> clazz) {
         Objects.requireNonNull(clazz);
         return value -> {
             try {
@@ -165,7 +164,7 @@ public interface ThrowableIntFunction<R> extends IntFunction<R> {
     /**
      * Returns a composed {@link IntFunction} that applies this {@link ThrowableIntFunction} to its input, and if an
      * error occurred, applies the given {@code IntFunction} representing a fallback. The exception from this {@code
-     * ThrowableIntFunction} is ignored, unless it is an unchecked exception.
+     * ThrowableIntFunction} is ignored.
      *
      * @param fallback A {@code IntFunction} to be applied if this one fails
      * @return A composed {@code IntFunction} that applies this {@code ThrowableIntFunction}, and if an error occurred,
@@ -177,8 +176,6 @@ public interface ThrowableIntFunction<R> extends IntFunction<R> {
         return value -> {
             try {
                 return applyThrows(value);
-            } catch (RuntimeException e) {
-                throw e;
             } catch (Exception ignored) {
                 return fallback.apply(value);
             }
@@ -186,48 +183,21 @@ public interface ThrowableIntFunction<R> extends IntFunction<R> {
     }
 
     /**
-     * Returns a composed {@link IntFunction} that applies this {@link ThrowableIntFunction} to its input, and if an
-     * error occurred, returns the given value. The exception from this {@code ThrowableIntFunction} is ignored, unless
-     * it is an unchecked exception.
+     * Returns a composed {@link ThrowableIntFunction} that applies this {@code ThrowableIntFunction} to its input,
+     * additionally performing the provided action to the resulting value. This method exists mainly to support
+     * debugging.
      *
-     * @param retVal The value to be returned if this {@code ThrowableIntFunction} fails
-     * @return A composed {@code IntFunction} that applies this {@code ThrowableIntFunction}, and if an error occurred,
-     * returns the given value.
+     * @param action A {@link Consumer} to be applied additionally to this {@code ThrowableIntFunction}
+     * @return A composed {@code ThrowableIntFunction} that applies this {@code ThrowableIntFunction}, additionally
+     * performing the provided action to the resulting value.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    default IntFunction<R> orReturn(final R retVal) {
-        Objects.requireNonNull(retVal);
+    default ThrowableIntFunction<R> peek(final Consumer<? super R> action) {
+        Objects.requireNonNull(action);
         return value -> {
-            try {
-                return applyThrows(value);
-            } catch (RuntimeException e) {
-                throw e;
-            } catch (Exception ignored) {
-                return retVal;
-            }
-        };
-    }
-
-    /**
-     * Returns a composed {@link IntFunction} that applies this {@link ThrowableIntFunction} to its input, and if an
-     * error occurred, returns the supplied value from the given {@link Supplier}. The exception from this {@code
-     * ThrowableIntFunction} is ignored, unless it is an unchecked exception.
-     *
-     * @param supplier A {@code Supplier} to return a supplied value if this {@code ThrowableIntFunction} fails
-     * @return A composed {@code IntFunction} that applies this {@code ThrowableIntFunction}, and if an error occurred,
-     * the supplied value from the given {@code Supplier}.
-     * @throws NullPointerException If the given argument is {@code null}
-     */
-    default IntFunction<R> orReturn(final Supplier<? extends R> supplier) {
-        Objects.requireNonNull(supplier);
-        return value -> {
-            try {
-                return applyThrows(value);
-            } catch (RuntimeException e) {
-                throw e;
-            } catch (Exception ignored) {
-                return supplier.get();
-            }
+            final R r = apply(value);
+            action.accept(r);
+            return r;
         };
     }
 
@@ -240,13 +210,11 @@ public interface ThrowableIntFunction<R> extends IntFunction<R> {
      * returns the given value.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    default IntFunction<R> orReturnAlways(final R retVal) {
+    default IntFunction<R> orReturn(final R retVal) {
         Objects.requireNonNull(retVal);
         return value -> {
             try {
                 return applyThrows(value);
-            } catch (RuntimeException e) {
-                throw e;
             } catch (Exception ignored) {
                 return retVal;
             }
@@ -263,7 +231,7 @@ public interface ThrowableIntFunction<R> extends IntFunction<R> {
      * the supplied value from the given {@code Supplier}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    default IntFunction<R> orReturnAlways(final Supplier<? extends R> supplier) {
+    default IntFunction<R> orReturn(final Supplier<? extends R> supplier) {
         Objects.requireNonNull(supplier);
         return value -> {
             try {

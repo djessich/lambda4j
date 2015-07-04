@@ -51,8 +51,26 @@ import java.util.function.BiConsumer;
  * @param <U> The type of the second argument for the function
  * @see java.util.function.Consumer
  */
+@SuppressWarnings("unused")
 @FunctionalInterface
 public interface ThrowableBiConsumer<T, U> extends BiConsumer<T, U> {
+
+    /**
+     * Implicitly casts, and therefore wraps a given lambda as {@link ThrowableBiConsumer}. This is a convenience
+     * method in case the given {@link ThrowableBiConsumer} is ambiguous for the compiler. This might happen for
+     * overloaded methods accepting different functional interfaces. The given {@code ThrowableBiConsumer} is returned
+     * as-is.
+     *
+     * @param <T> The type of the first argument for the function
+     * @param <U> The type of the second argument for the function
+     * @param lambda The {@code ThrowableBiConsumer} which should be returned as-is.
+     * @return The given {@code ThrowableBiConsumer} as-is.
+     * @throws NullPointerException If the given argument is {@code null}
+     */
+    static <T, U> ThrowableBiConsumer<T, U> wrap(final ThrowableBiConsumer<T, U> lambda) {
+        Objects.requireNonNull(lambda);
+        return lambda;
+    }
 
     /**
      * The accept method for this {@link BiConsumer} which is able to throw any {@link Exception} type.
@@ -86,10 +104,7 @@ public interface ThrowableBiConsumer<T, U> extends BiConsumer<T, U> {
 
     /**
      * Returns a composed {@link ThrowableBiConsumer} that applies this {@code ThrowableBiConsumer} to its input, and
-     * if
-     * an
-     * error occurred, applies the given one. The exception from this {@code ThrowableBiConsumer} is ignored, unless it
-     * is an unchecked exception.
+     * if an error occurred, applies the given one. The exception from this {@code ThrowableBiConsumer} is ignored.
      *
      * @param other A {@code ThrowableBiConsumer} to be applied if this one fails
      * @return A composed {@code ThrowableBiConsumer} that applies this {@code ThrowableBiConsumer}, and if an error
@@ -101,39 +116,8 @@ public interface ThrowableBiConsumer<T, U> extends BiConsumer<T, U> {
         return (t, u) -> {
             try {
                 acceptThrows(t, u);
-            } catch (RuntimeException e) {
-                throw e;
             } catch (Exception ignored) {
                 other.acceptThrows(t, u);
-            }
-        };
-    }
-
-    /**
-     * Returns a composed {@link ThrowableBiConsumer} that applies this {@code ThrowableBiConsumer} to its input, and
-     * if an error occurred, throws the given {@link Exception}. The exception from this {@code ThrowableBiConsumer} is
-     * added as suppressed to the given one, unless it is an unchecked exception.
-     * <p>
-     * The given exception must have a no arg constructor for reflection purposes. If not, then appropriate exception
-     * as described in {@link Class#newInstance()} is thrown.
-     *
-     * @param <X> The type for the class extending {@code Exception}
-     * @param clazz The exception class to throw if an error occurred
-     * @return A composed {@code ThrowableBiConsumer} that applies this {@code ThrowableBiConsumer}, and if an error
-     * occurred, throws the given {@code Exception}.
-     * @throws NullPointerException If the given argument is {@code null}
-     */
-    default <X extends Exception> ThrowableBiConsumer<T, U> orThrow(Class<X> clazz) {
-        Objects.requireNonNull(clazz);
-        return (t, u) -> {
-            try {
-                acceptThrows(t, u);
-            } catch (RuntimeException e) {
-                throw e;
-            } catch (Exception e) {
-                X ex = clazz.newInstance();
-                ex.addSuppressed(e);
-                throw ThrowableUtils.sneakyThrow(ex);
             }
         };
     }
@@ -152,7 +136,7 @@ public interface ThrowableBiConsumer<T, U> extends BiConsumer<T, U> {
      * occurred, throws the given {@code Exception}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    default <X extends Exception> ThrowableBiConsumer<T, U> orThrowAlways(Class<X> clazz) {
+    default <X extends Exception> ThrowableBiConsumer<T, U> orThrow(Class<X> clazz) {
         Objects.requireNonNull(clazz);
         return (t, u) -> {
             try {

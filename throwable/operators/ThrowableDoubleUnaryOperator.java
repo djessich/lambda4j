@@ -18,6 +18,7 @@ package at.gridtec.internals.lang.function.throwable.operators;
 import at.gridtec.internals.lang.util.ThrowableUtils;
 
 import java.util.Objects;
+import java.util.function.DoubleConsumer;
 import java.util.function.DoubleUnaryOperator;
 import java.util.function.Supplier;
 
@@ -50,8 +51,36 @@ import java.util.function.Supplier;
  *
  * @see java.util.function.UnaryOperator
  */
+@SuppressWarnings("unused")
 @FunctionalInterface
 public interface ThrowableDoubleUnaryOperator extends DoubleUnaryOperator {
+
+    /**
+     * Implicitly casts, and therefore wraps a given lambda as {@link ThrowableDoubleUnaryOperator}. This is a
+     * convenience method in case the given {@link ThrowableDoubleUnaryOperator} is ambiguous for the compiler. This
+     * might happen for overloaded methods accepting different functional interfaces. The given {@code
+     * ThrowableDoubleUnaryOperator} is returned as-is.
+     *
+     * @param lambda The {@code ThrowableDoubleUnaryOperator} which should be returned as-is.
+     * @return The given {@code ThrowableDoubleUnaryOperator} as-is.
+     * @throws NullPointerException If the given argument is {@code null}
+     */
+    static ThrowableDoubleUnaryOperator wrap(final ThrowableDoubleUnaryOperator lambda) {
+        Objects.requireNonNull(lambda);
+        return lambda;
+    }
+
+    /**
+     * Creates a {@link ThrowableDoubleUnaryOperator} which always returns a given value.
+     *
+     * @param ret The return value for the constant
+     * @return A {@code ThrowableDoubleUnaryOperator} which always returns a given value.
+     * @throws NullPointerException If the given argument is {@code null}
+     */
+    static ThrowableDoubleUnaryOperator constant(double ret) {
+        Objects.requireNonNull(ret);
+        return operand -> ret;
+    }
 
     /**
      * The apply method for this {@link DoubleUnaryOperator} which is able to throw any {@link Exception} type.
@@ -86,7 +115,7 @@ public interface ThrowableDoubleUnaryOperator extends DoubleUnaryOperator {
     /**
      * Returns a composed {@link ThrowableDoubleUnaryOperator} that applies this {@code ThrowableDoubleUnaryOperator}
      * to its input, and if an  error occurred, applies the given one. The exception from this {@code
-     * ThrowableDoubleUnaryOperator} is ignored, unless it is an unchecked exception.
+     * ThrowableDoubleUnaryOperator} is ignored.
      *
      * @param other A {@code ThrowableDoubleUnaryOperator} to be applied if this one fails
      * @return A composed {@code ThrowableDoubleUnaryOperator} that applies this {@code ThrowableDoubleUnaryOperator},
@@ -95,42 +124,11 @@ public interface ThrowableDoubleUnaryOperator extends DoubleUnaryOperator {
      */
     default ThrowableDoubleUnaryOperator orElse(final ThrowableDoubleUnaryOperator other) {
         Objects.requireNonNull(other);
-        return t -> {
+        return operand -> {
             try {
-                return applyAsDoubleThrows(t);
-            } catch (RuntimeException e) {
-                throw e;
+                return applyAsDoubleThrows(operand);
             } catch (Exception ignored) {
-                return other.applyAsDoubleThrows(t);
-            }
-        };
-    }
-
-    /**
-     * Returns a composed {@link ThrowableDoubleUnaryOperator} that applies this {@code ThrowableDoubleUnaryOperator}
-     * to its input, and if an error occurred, throws the given {@link Exception}. The exception from this {@code
-     * ThrowableDoubleUnaryOperator} is added as suppressed to the given one, unless it is an unchecked exception.
-     * <p>
-     * The given exception must have a no arg constructor for reflection purposes. If not, then appropriate exception
-     * as described in {@link Class#newInstance()} is thrown.
-     *
-     * @param <X> The type for the class extending {@code Exception}
-     * @param clazz The exception class to throw if an error occurred
-     * @return A composed {@code ThrowableDoubleUnaryOperator} that applies this {@code ThrowableDoubleUnaryOperator},
-     * and if an error occurred, throws the given {@code Exception}.
-     * @throws NullPointerException If the given argument is {@code null}
-     */
-    default <X extends Exception> ThrowableDoubleUnaryOperator orThrow(Class<X> clazz) {
-        Objects.requireNonNull(clazz);
-        return t -> {
-            try {
-                return applyAsDoubleThrows(t);
-            } catch (RuntimeException e) {
-                throw e;
-            } catch (Exception e) {
-                X ex = clazz.newInstance();
-                ex.addSuppressed(e);
-                throw ThrowableUtils.sneakyThrow(ex);
+                return other.applyAsDoubleThrows(operand);
             }
         };
     }
@@ -149,11 +147,11 @@ public interface ThrowableDoubleUnaryOperator extends DoubleUnaryOperator {
      * and if an error occurred, throws the given {@code Exception}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    default <X extends Exception> ThrowableDoubleUnaryOperator orThrowAlways(Class<X> clazz) {
+    default <X extends Exception> ThrowableDoubleUnaryOperator orThrow(Class<X> clazz) {
         Objects.requireNonNull(clazz);
-        return t -> {
+        return operand -> {
             try {
-                return applyAsDoubleThrows(t);
+                return applyAsDoubleThrows(operand);
             } catch (Exception e) {
                 X ex = clazz.newInstance();
                 ex.addSuppressed(e);
@@ -165,7 +163,7 @@ public interface ThrowableDoubleUnaryOperator extends DoubleUnaryOperator {
     /**
      * Returns a composed {@link DoubleUnaryOperator} that applies this {@link ThrowableDoubleUnaryOperator} to its
      * input, and if an error occurred, applies the given {@code DoubleUnaryOperator} representing a fallback. The
-     * exception from this {@code ThrowableDoubleUnaryOperator} is ignored, unless it is an unchecked exception.
+     * exception from this {@code ThrowableDoubleUnaryOperator} is ignored.
      *
      * @param fallback A {@code DoubleUnaryOperator} to be applied if this one fails
      * @return A composed {@code DoubleUnaryOperator} that applies this {@code ThrowableDoubleUnaryOperator}, and if an
@@ -174,78 +172,31 @@ public interface ThrowableDoubleUnaryOperator extends DoubleUnaryOperator {
      */
     default DoubleUnaryOperator fallbackTo(final DoubleUnaryOperator fallback) {
         Objects.requireNonNull(fallback);
-        return t -> {
+        return operand -> {
             try {
-                return applyAsDoubleThrows(t);
-            } catch (RuntimeException e) {
-                throw e;
+                return applyAsDoubleThrows(operand);
             } catch (Exception ignored) {
-                return fallback.applyAsDouble(t);
+                return fallback.applyAsDouble(operand);
             }
         };
     }
 
     /**
-     * Returns a composed {@link DoubleUnaryOperator} that applies this {@link ThrowableDoubleUnaryOperator} to its
-     * input, and if an error occurred, returns the given value. The exception from this {@code
-     * ThrowableDoubleUnaryOperator} is ignored, unless it is an unchecked exception.
+     * Returns a composed {@link ThrowableDoubleUnaryOperator} that applies this {@code ThrowableDoubleUnaryOperator}
+     * to its input, additionally performing the provided action to the resulting value. This method exists mainly to
+     * support debugging.
      *
-     * @param value The value to be returned if this {@code ThrowableDoubleUnaryOperator} fails
-     * @return A composed {@code DoubleUnaryOperator} that applies this {@code ThrowableDoubleUnaryOperator}, and if an
-     * error occurred, returns the given value.
-     */
-    default DoubleUnaryOperator orReturn(double value) {
-        return t -> {
-            try {
-                return applyAsDoubleThrows(t);
-            } catch (RuntimeException e) {
-                throw e;
-            } catch (Exception ignored) {
-                return value;
-            }
-        };
-    }
-
-    /**
-     * Returns a composed {@link DoubleUnaryOperator} that applies this {@link ThrowableDoubleUnaryOperator} to its
-     * input, and if an error occurred, returns the supplied value from the given {@link Supplier}. The exception from
-     * this {@code ThrowableDoubleUnaryOperator} is ignored, unless it is an unchecked exception.
-     *
-     * @param supplier A {@code Supplier} to return a supplied value if this {@code ThrowableDoubleUnaryOperator} fails
-     * @return A composed {@code DoubleUnaryOperator} that applies this {@code ThrowableDoubleUnaryOperator}, and if an
-     * error occurred, the supplied value from the given {@code Supplier}.
+     * @param action A {@link DoubleConsumer} to be applied additionally to this {@code ThrowableDoubleUnaryOperator}
+     * @return A composed {@code ThrowableDoubleUnaryOperator} that applies this {@code ThrowableDoubleUnaryOperator},
+     * additionally performing the provided action to the resulting value.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    default DoubleUnaryOperator orReturn(final Supplier<? extends Double> supplier) {
-        Objects.requireNonNull(supplier);
-        return t -> {
-            try {
-                return applyAsDoubleThrows(t);
-            } catch (RuntimeException e) {
-                throw e;
-            } catch (Exception ignored) {
-                return supplier.get();
-            }
-        };
-    }
-
-    /**
-     * Returns a composed {@link DoubleUnaryOperator} that applies this {@link ThrowableDoubleUnaryOperator} to its
-     * input, and if an error occurred, returns its value. The exception from this {@code ThrowableDoubleUnaryOperator}
-     * is ignored, unless it is an unchecked exception.
-     *
-     * @return A composed {@code DoubleUnaryOperator} that applies this {@code ThrowableDoubleUnaryOperator}, and if an
-     * error occurred, returns its value.
-     */
-    default DoubleUnaryOperator orReturnSelf() {
-        return t -> {
-            try {
-                return applyAsDoubleThrows(t);
-            } catch (RuntimeException e) {
-                throw e;
-            } catch (Exception ignored) {
-                return t;
-            }
+    default ThrowableDoubleUnaryOperator peek(final DoubleConsumer action) {
+        Objects.requireNonNull(action);
+        return operand -> {
+            final double ret = applyAsDouble(operand);
+            action.accept(ret);
+            return ret;
         };
     }
 
@@ -258,10 +209,10 @@ public interface ThrowableDoubleUnaryOperator extends DoubleUnaryOperator {
      * @return A composed {@code DoubleUnaryOperator} that applies this {@code ThrowableDoubleUnaryOperator}, and if an
      * error occurred, returns the given value.
      */
-    default DoubleUnaryOperator orReturnAlways(double value) {
-        return t -> {
+    default DoubleUnaryOperator orReturn(double value) {
+        return operand -> {
             try {
-                return applyAsDoubleThrows(t);
+                return applyAsDoubleThrows(operand);
             } catch (Exception ignored) {
                 return value;
             }
@@ -278,11 +229,11 @@ public interface ThrowableDoubleUnaryOperator extends DoubleUnaryOperator {
      * error occurred, the supplied value from the given {@code Supplier}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    default DoubleUnaryOperator orReturnAlways(final Supplier<? extends Double> supplier) {
+    default DoubleUnaryOperator orReturn(final Supplier<? extends Double> supplier) {
         Objects.requireNonNull(supplier);
-        return t -> {
+        return operand -> {
             try {
-                return applyAsDoubleThrows(t);
+                return applyAsDoubleThrows(operand);
             } catch (Exception ignored) {
                 return supplier.get();
             }
@@ -297,12 +248,12 @@ public interface ThrowableDoubleUnaryOperator extends DoubleUnaryOperator {
      * @return A composed {@code DoubleUnaryOperator} that applies this {@code ThrowableDoubleUnaryOperator}, and if an
      * error occurred, returns its value.
      */
-    default DoubleUnaryOperator orReturnAlwaysSelf() {
-        return t -> {
+    default DoubleUnaryOperator orReturnSelf() {
+        return operand -> {
             try {
-                return applyAsDoubleThrows(t);
+                return applyAsDoubleThrows(operand);
             } catch (Exception ignored) {
-                return t;
+                return operand;
             }
         };
     }

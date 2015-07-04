@@ -18,6 +18,7 @@ package at.gridtec.internals.lang.function.throwable;
 import at.gridtec.internals.lang.util.ThrowableUtils;
 
 import java.util.Objects;
+import java.util.function.DoubleConsumer;
 import java.util.function.DoubleSupplier;
 import java.util.function.LongToDoubleFunction;
 
@@ -50,8 +51,36 @@ import java.util.function.LongToDoubleFunction;
  *
  * @see java.util.function.Function
  */
+@SuppressWarnings("unused")
 @FunctionalInterface
 public interface ThrowableLongToDoubleFunction extends LongToDoubleFunction {
+
+    /**
+     * Implicitly casts, and therefore wraps a given lambda as {@link ThrowableLongToDoubleFunction}. This is a
+     * convenience method in case the given {@link ThrowableLongToDoubleFunction} is ambiguous for the compiler. This
+     * might happen for overloaded methods accepting different functional interfaces. The given {@code
+     * ThrowableLongToDoubleFunction} is returned as-is.
+     *
+     * @param lambda The {@code ThrowableLongToDoubleFunction} which should be returned as-is.
+     * @return The given {@code ThrowableLongToDoubleFunction} as-is.
+     * @throws NullPointerException If the given argument is {@code null}
+     */
+    static ThrowableLongToDoubleFunction wrap(final ThrowableLongToDoubleFunction lambda) {
+        Objects.requireNonNull(lambda);
+        return lambda;
+    }
+
+    /**
+     * Creates a {@link ThrowableLongToDoubleFunction} which always returns a given value.
+     *
+     * @param ret The return value for the constant
+     * @return A {@code ThrowableLongToDoubleFunction} which always returns a given value.
+     * @throws NullPointerException If the given argument is {@code null}
+     */
+    static ThrowableLongToDoubleFunction constant(double ret) {
+        Objects.requireNonNull(ret);
+        return value -> ret;
+    }
 
     /**
      * The apply method for this {@link LongToDoubleFunction} which is able to throw any {@link Exception} type.
@@ -86,7 +115,7 @@ public interface ThrowableLongToDoubleFunction extends LongToDoubleFunction {
     /**
      * Returns a composed {@link ThrowableLongToDoubleFunction} that applies this {@code ThrowableLongToDoubleFunction}
      * to its input, and if an error occurred, applies the given one. The exception from this {@code
-     * ThrowableLongToDoubleFunction} is ignored, unless it is an unchecked exception.
+     * ThrowableLongToDoubleFunction} is ignored.
      *
      * @param other A {@code ThrowableLongToDoubleFunction} to be applied if this one fails
      * @return A composed {@code ThrowableLongToDoubleFunction} that applies this {@code ThrowableLongToDoubleFunction},
@@ -98,39 +127,8 @@ public interface ThrowableLongToDoubleFunction extends LongToDoubleFunction {
         return value -> {
             try {
                 return applyAsDoubleThrows(value);
-            } catch (RuntimeException e) {
-                throw e;
             } catch (Exception ignored) {
                 return other.applyAsDoubleThrows(value);
-            }
-        };
-    }
-
-    /**
-     * Returns a composed {@link ThrowableLongToDoubleFunction} that applies this {@code ThrowableLongToDoubleFunction}
-     * to its input, and if an error occurred, throws the given {@link Exception}. The exception from this {@code
-     * ThrowableLongToDoubleFunction} is added as suppressed to the given one, unless it is an unchecked exception.
-     * <p>
-     * The given exception must have a no arg constructor for reflection purposes. If not, then appropriate exception
-     * as described in {@link Class#newInstance()} is thrown.
-     *
-     * @param <X> The type for the class extending {@code Exception}
-     * @param clazz The exception class to throw if an error occurred
-     * @return A composed {@code ThrowableLongToDoubleFunction} that applies this {@code ThrowableLongToDoubleFunction},
-     * and if an error occurred, throws the given {@code Exception}.
-     * @throws NullPointerException If the given argument is {@code null}
-     */
-    default <X extends Exception> ThrowableLongToDoubleFunction orThrow(Class<X> clazz) {
-        Objects.requireNonNull(clazz);
-        return value -> {
-            try {
-                return applyAsDouble(value);
-            } catch (RuntimeException e) {
-                throw e;
-            } catch (Exception e) {
-                X ex = clazz.newInstance();
-                ex.addSuppressed(e);
-                throw ThrowableUtils.sneakyThrow(ex);
             }
         };
     }
@@ -149,7 +147,7 @@ public interface ThrowableLongToDoubleFunction extends LongToDoubleFunction {
      * and if an error occurred, throws the given {@code Exception}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    default <X extends Exception> ThrowableLongToDoubleFunction orThrowAlways(Class<X> clazz) {
+    default <X extends Exception> ThrowableLongToDoubleFunction orThrow(Class<X> clazz) {
         Objects.requireNonNull(clazz);
         return value -> {
             try {
@@ -165,7 +163,7 @@ public interface ThrowableLongToDoubleFunction extends LongToDoubleFunction {
     /**
      * Returns a composed {@link LongToDoubleFunction} that applies this {@link ThrowableLongToDoubleFunction} to its
      * input, and if an error occurred, applies the given {@code LongToDoubleFunction} representing a fallback. The
-     * exception from this {@code ThrowableLongToDoubleFunction} is ignored, unless it is an unchecked exception.
+     * exception from this {@code ThrowableLongToDoubleFunction} is ignored.
      *
      * @param fallback A {@code LongToDoubleFunction} to be applied if this one fails
      * @return A composed {@code LongToDoubleFunction} that applies this {@code ThrowableLongToDoubleFunction}, and if
@@ -177,8 +175,6 @@ public interface ThrowableLongToDoubleFunction extends LongToDoubleFunction {
         return value -> {
             try {
                 return applyAsDoubleThrows(value);
-            } catch (RuntimeException e) {
-                throw e;
             } catch (Exception ignored) {
                 return fallback.applyAsDouble(value);
             }
@@ -186,47 +182,21 @@ public interface ThrowableLongToDoubleFunction extends LongToDoubleFunction {
     }
 
     /**
-     * Returns a composed {@link LongToDoubleFunction} that applies this {@link ThrowableLongToDoubleFunction} to its
-     * input, and if an error occurred, returns the given value. The exception from this {@code
-     * ThrowableLongToDoubleFunction} is ignored, unless it is an unchecked exception.
+     * Returns a composed {@link ThrowableLongToDoubleFunction} that applies this {@code ThrowableLongToDoubleFunction}
+     * to its input, additionally performing the provided action to the resulting value. This method exists mainly to
+     * support debugging.
      *
-     * @param retVal The value to be returned if this {@code ThrowableLongToDoubleFunction} fails
-     * @return A composed {@code LongToDoubleFunction} that applies this {@code ThrowableLongToDoubleFunction}, and if
-     * an error occurred, returns the given value.
-     */
-    default LongToDoubleFunction orReturn(double retVal) {
-        return value -> {
-            try {
-                return applyAsDoubleThrows(value);
-            } catch (RuntimeException e) {
-                throw e;
-            } catch (Exception ignored) {
-                return retVal;
-            }
-        };
-    }
-
-    /**
-     * Returns a composed {@link LongToDoubleFunction} that applies this {@link ThrowableLongToDoubleFunction} to its
-     * input, and if an error occurred, returns the supplied value from the given {@link DoubleSupplier}. The exception
-     * from this {@code ThrowableLongToDoubleFunction} is ignored, unless it is an unchecked exception.
-     *
-     * @param supplier A {@code Supplier} to return a supplied value if this {@code ThrowableLongToDoubleFunction}
-     * fails
-     * @return A composed {@code LongToDoubleFunction} that applies this {@code ThrowableLongToDoubleFunction}, and if
-     * an error occurred, the supplied value from the given {@code DoubleSupplier}.
+     * @param action A {@link DoubleConsumer} to be applied additionally to this {@code ThrowableLongToDoubleFunction}
+     * @return A composed {@code ThrowableLongToDoubleFunction} that applies this {@code ThrowableLongToDoubleFunction},
+     * additionally performing the provided action to the resulting value.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    default LongToDoubleFunction orReturn(final DoubleSupplier supplier) {
-        Objects.requireNonNull(supplier);
+    default ThrowableLongToDoubleFunction peek(final DoubleConsumer action) {
+        Objects.requireNonNull(action);
         return value -> {
-            try {
-                return applyAsDoubleThrows(value);
-            } catch (RuntimeException e) {
-                throw e;
-            } catch (Exception ignored) {
-                return supplier.getAsDouble();
-            }
+            final double ret = applyAsDouble(value);
+            action.accept(ret);
+            return ret;
         };
     }
 
@@ -239,7 +209,7 @@ public interface ThrowableLongToDoubleFunction extends LongToDoubleFunction {
      * @return A composed {@code LongToDoubleFunction} that applies this {@code ThrowableLongToDoubleFunction}, and if
      * an error occurred, returns the given value.
      */
-    default LongToDoubleFunction orReturnAlways(double retVal) {
+    default LongToDoubleFunction orReturn(double retVal) {
         return value -> {
             try {
                 return applyAsDoubleThrows(value);
@@ -260,7 +230,7 @@ public interface ThrowableLongToDoubleFunction extends LongToDoubleFunction {
      * an error occurred, the supplied value from the given {@code DoubleSupplier}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    default LongToDoubleFunction orReturnAlways(final DoubleSupplier supplier) {
+    default LongToDoubleFunction orReturn(final DoubleSupplier supplier) {
         Objects.requireNonNull(supplier);
         return value -> {
             try {

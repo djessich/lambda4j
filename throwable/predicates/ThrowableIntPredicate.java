@@ -18,6 +18,7 @@ package at.gridtec.internals.lang.function.throwable.predicates;
 import at.gridtec.internals.lang.util.ThrowableUtils;
 
 import java.util.Objects;
+import java.util.function.Consumer;
 import java.util.function.IntPredicate;
 
 /**
@@ -50,8 +51,36 @@ import java.util.function.IntPredicate;
  * @author JESSICH Dominik
  * @see java.util.function.Predicate
  */
+@SuppressWarnings("unused")
 @FunctionalInterface
 public interface ThrowableIntPredicate extends IntPredicate {
+
+    /**
+     * Implicitly casts, and therefore wraps a given lambda as {@link ThrowableIntPredicate}. This is a convenience
+     * method in case the given {@link ThrowableIntPredicate} is ambiguous for the compiler. This might happen for
+     * overloaded methods accepting different functional interfaces. The given {@code ThrowableIntPredicate} is
+     * returned as-is.
+     *
+     * @param lambda The {@code ThrowableIntPredicate} which should be returned as-is.
+     * @return The given {@code ThrowableIntPredicate} as-is.
+     * @throws NullPointerException If the given argument is {@code null}
+     */
+    static ThrowableIntPredicate wrap(final ThrowableIntPredicate lambda) {
+        Objects.requireNonNull(lambda);
+        return lambda;
+    }
+
+    /**
+     * Creates a {@link ThrowableIntPredicate} which always returns a given value.
+     *
+     * @param ret The return value for the constant
+     * @return A {@code ThrowableIntPredicate} which always returns a given value.
+     * @throws NullPointerException If the given argument is {@code null}
+     */
+    static ThrowableIntPredicate constant(boolean ret) {
+        Objects.requireNonNull(ret);
+        return value -> ret;
+    }
 
     /**
      * The test method for this {@link IntPredicate} which is able to throw any {@link Exception} type.
@@ -85,7 +114,7 @@ public interface ThrowableIntPredicate extends IntPredicate {
     /**
      * Returns a composed {@link ThrowableIntPredicate} that applies this {@code ThrowableIntPredicate} to its
      * input, and if an error occurred, applies the given one. The exception from this {@code ThrowableIntPredicate}
-     * is ignored, unless it is an unchecked exception.
+     * is ignored.
      *
      * @param other A {@code ThrowableIntPredicate} to be applied if this one fails
      * @return A composed {@code ThrowableIntPredicate} that applies this {@code ThrowableIntPredicate}, and if an error
@@ -97,39 +126,8 @@ public interface ThrowableIntPredicate extends IntPredicate {
         return value -> {
             try {
                 return testThrows(value);
-            } catch (RuntimeException e) {
-                throw e;
             } catch (Exception ignored) {
                 return other.testThrows(value);
-            }
-        };
-    }
-
-    /**
-     * Returns a composed {@link ThrowableIntPredicate} that applies this {@code ThrowableIntPredicate} to its input,
-     * and if an error occurred, throws the given {@link Exception}. The exception from this {@code
-     * ThrowableIntPredicate} is added as suppressed to the given one, unless it is an unchecked exception.
-     * <p>
-     * The given exception must have a no arg constructor for reflection purposes. If not, then appropriate exception
-     * as described in {@link Class#newInstance()} is thrown.
-     *
-     * @param <X> The type for the class extending {@code Exception}
-     * @param clazz The exception class to throw if an error occurred
-     * @return A composed {@code ThrowableIntPredicate} that applies this {@code ThrowableIntPredicate}, and if an error
-     * occurred, throws the given {@code Exception}.
-     * @throws NullPointerException If the given argument is {@code null}
-     */
-    default <X extends Exception> ThrowableIntPredicate orThrow(Class<X> clazz) {
-        Objects.requireNonNull(clazz);
-        return value -> {
-            try {
-                return testThrows(value);
-            } catch (RuntimeException e) {
-                throw e;
-            } catch (Exception e) {
-                X ex = clazz.newInstance();
-                ex.addSuppressed(e);
-                throw ThrowableUtils.sneakyThrow(ex);
             }
         };
     }
@@ -148,7 +146,7 @@ public interface ThrowableIntPredicate extends IntPredicate {
      * occurred, throws the given {@code Exception}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    default <X extends Exception> ThrowableIntPredicate orThrowAlways(Class<X> clazz) {
+    default <X extends Exception> ThrowableIntPredicate orThrow(Class<X> clazz) {
         Objects.requireNonNull(clazz);
         return value -> {
             try {
@@ -164,7 +162,7 @@ public interface ThrowableIntPredicate extends IntPredicate {
     /**
      * Returns a composed {@link IntPredicate} that applies this {@link ThrowableIntPredicate} to its input, and
      * if an error occurred, applies the given {@code IntPredicate} representing a fallback. The exception from this
-     * {@code ThrowableIntPredicate} is ignored, unless it is an unchecked exception.
+     * {@code ThrowableIntPredicate} is ignored.
      *
      * @param fallback A {@code IntPredicate} to be applied if this one fails
      * @return A composed {@code IntPredicate} that applies this {@code ThrowableIntPredicate}, and if an error
@@ -176,8 +174,6 @@ public interface ThrowableIntPredicate extends IntPredicate {
         return value -> {
             try {
                 return testThrows(value);
-            } catch (RuntimeException e) {
-                throw e;
             } catch (Exception ignored) {
                 return fallback.test(value);
             }
@@ -185,42 +181,21 @@ public interface ThrowableIntPredicate extends IntPredicate {
     }
 
     /**
-     * Returns a composed {@link IntPredicate} that applies this {@link ThrowableIntPredicate} to its input, and
-     * if an error occurred, returns {@code true}. The exception from this {@code ThrowableIntPredicate} is ignored,
-     * unless it is an unchecked exception.
+     * Returns a composed {@link ThrowableIntPredicate} that applies this {@code ThrowableIntPredicate} to its input,
+     * additionally performing the provided action to the resulting value. This method exists mainly to support
+     * debugging.
      *
-     * @return A composed {@code IntPredicate} that applies this {@code ThrowableIntPredicate}, and if an error
-     * occurred, returns {@code true}.
+     * @param action A {@link Consumer} to be applied additionally to this {@code ThrowableIntPredicate}
+     * @return A composed {@code ThrowableIntPredicate} that applies this {@code ThrowableIntPredicate}, additionally
+     * performing the provided action to the resulting value.
+     * @throws NullPointerException If the given argument is {@code null}
      */
-    default IntPredicate orReturnTrue() {
+    default ThrowableIntPredicate peek(final Consumer<? super Boolean> action) {
+        Objects.requireNonNull(action);
         return value -> {
-            try {
-                return testThrows(value);
-            } catch (RuntimeException e) {
-                throw e;
-            } catch (Exception ignored) {
-                return true;
-            }
-        };
-    }
-
-    /**
-     * Returns a composed {@link IntPredicate} that applies this {@link ThrowableIntPredicate} to its input, and if an
-     * error occurred, returns {@code false}. The exception from this {@code ThrowableIntPredicate} is ignored, unless
-     * it is an unchecked exception.
-     *
-     * @return A composed {@code IntPredicate} that applies this {@code ThrowableIntPredicate}, and if an error
-     * occurred, returns {@code false}.
-     */
-    default IntPredicate orReturnFalse() {
-        return value -> {
-            try {
-                return testThrows(value);
-            } catch (RuntimeException e) {
-                throw e;
-            } catch (Exception ignored) {
-                return false;
-            }
+            final boolean ret = test(value);
+            action.accept(ret);
+            return ret;
         };
     }
 
@@ -231,7 +206,7 @@ public interface ThrowableIntPredicate extends IntPredicate {
      * @return A composed {@code IntPredicate} that applies this {@code ThrowableIntPredicate}, and if an error
      * occurred, returns {@code true}.
      */
-    default IntPredicate orReturnAlwaysTrue() {
+    default IntPredicate orReturnTrue() {
         return value -> {
             try {
                 return testThrows(value);
@@ -248,7 +223,7 @@ public interface ThrowableIntPredicate extends IntPredicate {
      * @return A composed {@code IntPredicate} that applies this {@code ThrowableIntPredicate}, and if an error
      * occurred, returns {@code false}.
      */
-    default IntPredicate orReturnAlwaysFalse() {
+    default IntPredicate orReturnFalse() {
         return value -> {
             try {
                 return testThrows(value);

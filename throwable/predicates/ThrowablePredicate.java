@@ -18,6 +18,7 @@ package at.gridtec.internals.lang.function.throwable.predicates;
 import at.gridtec.internals.lang.util.ThrowableUtils;
 
 import java.util.Objects;
+import java.util.function.Consumer;
 import java.util.function.Predicate;
 
 /**
@@ -49,8 +50,37 @@ import java.util.function.Predicate;
  *
  * @param <T> The type of argument for the function
  */
+@SuppressWarnings("unused")
 @FunctionalInterface
 public interface ThrowablePredicate<T> extends Predicate<T> {
+
+    /**
+     * Implicitly casts, and therefore wraps a given lambda as {@link ThrowablePredicate}. This is a convenience method
+     * in case the given {@link ThrowablePredicate} is ambiguous for the compiler. This might happen for overloaded
+     * methods accepting different functional interfaces. The given {@code ThrowablePredicate} is returned as-is.
+     *
+     * @param <T> The type of argument for the function
+     * @param lambda The {@code ThrowablePredicate} which should be returned as-is.
+     * @return The given {@code ThrowablePredicate} as-is.
+     * @throws NullPointerException If the given argument is {@code null}
+     */
+    static <T> ThrowablePredicate<T> wrap(final ThrowablePredicate<T> lambda) {
+        Objects.requireNonNull(lambda);
+        return lambda;
+    }
+
+    /**
+     * Creates a {@link ThrowablePredicate} which always returns a given value.
+     *
+     * @param <T> The type of argument for the function
+     * @param ret The return value for the constant
+     * @return A {@code ThrowablePredicate} which always returns a given value.
+     * @throws NullPointerException If the given argument is {@code null}
+     */
+    static <T> ThrowablePredicate<T> constant(boolean ret) {
+        Objects.requireNonNull(ret);
+        return t -> ret;
+    }
 
     /**
      * Returns a {@link Predicate} that tests if two arguments are not equal according to {@link Objects#equals(Object,
@@ -97,8 +127,7 @@ public interface ThrowablePredicate<T> extends Predicate<T> {
 
     /**
      * Returns a composed {@link ThrowablePredicate} that applies this {@code ThrowablePredicate} to its input, and if
-     * an error occurred, applies the given one. The exception from this {@code ThrowablePredicate} is ignored, unless
-     * it is an unchecked exception.
+     * an error occurred, applies the given one. The exception from this {@code ThrowablePredicate} is ignored.
      *
      * @param other A {@code ThrowablePredicate} to be applied if this one fails
      * @return A composed {@code ThrowablePredicate} that applies this {@code ThrowablePredicate}, and if an error
@@ -110,39 +139,8 @@ public interface ThrowablePredicate<T> extends Predicate<T> {
         return t -> {
             try {
                 return testThrows(t);
-            } catch (RuntimeException e) {
-                throw e;
             } catch (Exception ignored) {
                 return other.testThrows(t);
-            }
-        };
-    }
-
-    /**
-     * Returns a composed {@link ThrowablePredicate} that applies this {@code ThrowablePredicate} to its input, and if
-     * an error occurred, throws the given {@link Exception}. The exception from this {@code ThrowablePredicate} is
-     * added as suppressed to the given one, unless it is an unchecked exception.
-     * <p>
-     * The given exception must have a no arg constructor for reflection purposes. If not, then appropriate exception
-     * as described in {@link Class#newInstance()} is thrown.
-     *
-     * @param <X> The type for the class extending {@code Exception}
-     * @param clazz The exception class to throw if an error occurred
-     * @return A composed {@code ThrowablePredicate} that applies this {@code ThrowablePredicate}, and if an error
-     * occurred, throws the given {@code Exception}.
-     * @throws NullPointerException If the given argument is {@code null}
-     */
-    default <X extends Exception> ThrowablePredicate<T> orThrow(Class<X> clazz) {
-        Objects.requireNonNull(clazz);
-        return t -> {
-            try {
-                return testThrows(t);
-            } catch (RuntimeException e) {
-                throw e;
-            } catch (Exception e) {
-                X ex = clazz.newInstance();
-                ex.addSuppressed(e);
-                throw ThrowableUtils.sneakyThrow(ex);
             }
         };
     }
@@ -161,7 +159,7 @@ public interface ThrowablePredicate<T> extends Predicate<T> {
      * occurred, throws the given {@code Exception}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    default <X extends Exception> ThrowablePredicate<T> orThrowAlways(Class<X> clazz) {
+    default <X extends Exception> ThrowablePredicate<T> orThrow(Class<X> clazz) {
         Objects.requireNonNull(clazz);
         return t -> {
             try {
@@ -177,7 +175,7 @@ public interface ThrowablePredicate<T> extends Predicate<T> {
     /**
      * Returns a composed {@link Predicate} that applies this {@link ThrowablePredicate} to its input, and if an error
      * occurred, applies the given {@code Predicate} representing a fallback. The exception from this {@code
-     * ThrowablePredicate} is ignored, unless it is an unchecked exception.
+     * ThrowablePredicate} is ignored.
      *
      * @param fallback A {@code Predicate} to be applied if this one fails
      * @return A composed {@code Predicate} that applies this {@code ThrowablePredicate}, and if an error occurred,
@@ -189,8 +187,6 @@ public interface ThrowablePredicate<T> extends Predicate<T> {
         return t -> {
             try {
                 return testThrows(t);
-            } catch (RuntimeException e) {
-                throw e;
             } catch (Exception ignored) {
                 return fallback.test(t);
             }
@@ -198,42 +194,21 @@ public interface ThrowablePredicate<T> extends Predicate<T> {
     }
 
     /**
-     * Returns a composed {@link Predicate} that applies this {@link ThrowablePredicate} to its input, and if an error
-     * occurred, returns {@code true}. The exception from this {@code ThrowablePredicate} is ignored, unless it is
-     * an unchecked exception.
+     * Returns a composed {@link ThrowablePredicate} that applies this {@code ThrowablePredicate} to its input,
+     * additionally performing the provided action to the resulting value. This method exists mainly to support
+     * debugging.
      *
-     * @return A composed {@code Predicate} that applies this {@code ThrowablePredicate}, and if an error occurred,
-     * returns {@code true}.
+     * @param action A {@link Consumer} to be applied additionally to this {@code ThrowablePredicate}
+     * @return A composed {@code ThrowablePredicate} that applies this {@code ThrowablePredicate}, additionally
+     * performing the provided action to the resulting value.
+     * @throws NullPointerException If the given argument is {@code null}
      */
-    default Predicate<T> orReturnTrue() {
+    default ThrowablePredicate<T> peek(final Consumer<? super Boolean> action) {
+        Objects.requireNonNull(action);
         return t -> {
-            try {
-                return testThrows(t);
-            } catch (RuntimeException e) {
-                throw e;
-            } catch (Exception ignored) {
-                return true;
-            }
-        };
-    }
-
-    /**
-     * Returns a composed {@link Predicate} that applies this {@link ThrowablePredicate} to its input, and if an error
-     * occurred, returns {@code false}. The exception from this {@code ThrowablePredicate} is ignored, unless it is
-     * an unchecked exception.
-     *
-     * @return A composed {@code Predicate} that applies this {@code ThrowablePredicate}, and if an error occurred,
-     * returns {@code false}.
-     */
-    default Predicate<T> orReturnFalse() {
-        return t -> {
-            try {
-                return testThrows(t);
-            } catch (RuntimeException e) {
-                throw e;
-            } catch (Exception ignored) {
-                return false;
-            }
+            final boolean ret = test(t);
+            action.accept(ret);
+            return ret;
         };
     }
 
@@ -244,7 +219,7 @@ public interface ThrowablePredicate<T> extends Predicate<T> {
      * @return A composed {@code Predicate} that applies this {@code ThrowablePredicate}, and if an error occurred,
      * returns {@code true}.
      */
-    default Predicate<T> orReturnAlwaysTrue() {
+    default Predicate<T> orReturnTrue() {
         return t -> {
             try {
                 return testThrows(t);
@@ -261,7 +236,7 @@ public interface ThrowablePredicate<T> extends Predicate<T> {
      * @return A composed {@code Predicate} that applies this {@code ThrowablePredicate}, and if an error occurred,
      * returns {@code false}.
      */
-    default Predicate<T> orReturnAlwaysFalse() {
+    default Predicate<T> orReturnFalse() {
         return t -> {
             try {
                 return testThrows(t);

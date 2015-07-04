@@ -19,6 +19,7 @@ import at.gridtec.internals.lang.util.ThrowableUtils;
 
 import java.util.Objects;
 import java.util.function.BiFunction;
+import java.util.function.Consumer;
 import java.util.function.Supplier;
 
 /**
@@ -54,8 +55,44 @@ import java.util.function.Supplier;
  * @param <R> The type of return value from the function
  * @see java.util.function.Function
  */
+@SuppressWarnings("unused")
 @FunctionalInterface
 public interface ThrowableTriFunction<T, U, V, R> extends TriFunction<T, U, V, R> {
+
+    /**
+     * Implicitly casts, and therefore wraps a given lambda as {@link ThrowableTriFunction}. This is a convenience
+     * method in case the given {@link ThrowableTriFunction} is ambiguous for the compiler. This might happen for
+     * overloaded methods accepting different functional interfaces. The given {@code ThrowableTriFunction} is returned
+     * as-is.
+     *
+     * @param <T> The type of the first argument to the function
+     * @param <U> The type of the second argument to the function
+     * @param <V> The type of the third argument to the function
+     * @param <R> The type of return value from the function
+     * @param lambda The {@code ThrowableTriFunction} which should be returned as-is.
+     * @return The given {@code ThrowableTriFunction} as-is.
+     * @throws NullPointerException If the given argument is {@code null}
+     */
+    static <T, U, V, R> ThrowableTriFunction<T, U, V, R> as(final ThrowableTriFunction<T, U, V, R> lambda) {
+        Objects.requireNonNull(lambda);
+        return lambda;
+    }
+
+    /**
+     * Creates a {@link ThrowableTriFunction} which always returns a given value.
+     *
+     * @param <T> The type of the first argument to the function
+     * @param <U> The type of the second argument to the function
+     * @param <V> The type of the third argument to the function
+     * @param <R> The type of return value from the function
+     * @param r The return value for the constant
+     * @return A {@code ThrowableTriFunction} which always returns a given value.
+     * @throws NullPointerException If the given argument is {@code null}
+     */
+    static <T, U, V, R> ThrowableTriFunction<T, U, V, R> constant(R r) {
+        Objects.requireNonNull(r);
+        return (t, u, v) -> r;
+    }
 
     /**
      * The apply method for this {@link BiFunction} which is able to throw any {@link Exception} type.
@@ -93,8 +130,7 @@ public interface ThrowableTriFunction<T, U, V, R> extends TriFunction<T, U, V, R
 
     /**
      * Returns a composed {@link ThrowableTriFunction} that applies this {@code ThrowableTriFunction} to its input, and
-     * if an error occurred, applies the given one. The exception from this {@code ThrowableTriFunction} is ignored,
-     * unless it is an unchecked exception.
+     * if an error occurred, applies the given one. The exception from this {@code ThrowableTriFunction} is ignored.
      *
      * @param other A {@code ThrowableTriFunction} to be applied if this one fails
      * @return A composed {@code ThrowableTriFunction} that applies this {@code ThrowableTriFunction}, and if an error
@@ -107,39 +143,8 @@ public interface ThrowableTriFunction<T, U, V, R> extends TriFunction<T, U, V, R
         return (t, u, v) -> {
             try {
                 return applyThrows(t, u, v);
-            } catch (RuntimeException e) {
-                throw e;
             } catch (Exception ignored) {
                 return other.applyThrows(t, u, v);
-            }
-        };
-    }
-
-    /**
-     * Returns a composed {@link ThrowableTriFunction} that applies this {@code ThrowableTriFunction} to its input, and
-     * if an error occurred, throws the given {@link Exception}. The exception from this {@code ThrowableTriFunction}
-     * is added as suppressed to the given one, unless it is an unchecked exception.
-     * <p>
-     * The given exception must have a no arg constructor for reflection purposes. If not, then appropriate exception
-     * as described in {@link Class#newInstance()} is thrown.
-     *
-     * @param <X> The type for the class extending {@code Exception}
-     * @param clazz The exception class to throw if an error occurred
-     * @return A composed {@code ThrowableTriFunction} that applies this {@code ThrowableTriFunction}, and if an error
-     * occurred, throws the given {@code Exception}.
-     * @throws NullPointerException If the given argument is {@code null}
-     */
-    default <X extends Exception> ThrowableTriFunction<T, U, V, R> orThrow(Class<X> clazz) {
-        Objects.requireNonNull(clazz);
-        return (t, u, v) -> {
-            try {
-                return applyThrows(t, u, v);
-            } catch (RuntimeException e) {
-                throw e;
-            } catch (Exception e) {
-                X ex = clazz.newInstance();
-                ex.addSuppressed(e);
-                throw ThrowableUtils.sneakyThrow(ex);
             }
         };
     }
@@ -158,7 +163,7 @@ public interface ThrowableTriFunction<T, U, V, R> extends TriFunction<T, U, V, R
      * occurred, throws the given {@code Exception}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    default <X extends Exception> ThrowableTriFunction<T, U, V, R> orThrowAlways(Class<X> clazz) {
+    default <X extends Exception> ThrowableTriFunction<T, U, V, R> orThrow(Class<X> clazz) {
         Objects.requireNonNull(clazz);
         return (t, u, v) -> {
             try {
@@ -174,7 +179,7 @@ public interface ThrowableTriFunction<T, U, V, R> extends TriFunction<T, U, V, R
     /**
      * Returns a composed {@link TriFunction} that applies this {@link ThrowableTriFunction} to its input, and if an
      * error occurred, applies the given {@code TriFunction} representing a fallback. The exception from this {@code
-     * ThrowableTriFunction} is ignored, unless it is an unchecked exception.
+     * ThrowableTriFunction} is ignored.
      *
      * @param fallback A {@code TriFunction} to be applied if this one fails
      * @return A composed {@code TriFunction} that applies this {@code ThrowableTriFunction}, and if an error occurred,
@@ -187,8 +192,6 @@ public interface ThrowableTriFunction<T, U, V, R> extends TriFunction<T, U, V, R
         return (t, u, v) -> {
             try {
                 return applyThrows(t, u, v);
-            } catch (RuntimeException e) {
-                throw e;
             } catch (Exception ignored) {
                 return fallback.apply(t, u, v);
             }
@@ -196,48 +199,21 @@ public interface ThrowableTriFunction<T, U, V, R> extends TriFunction<T, U, V, R
     }
 
     /**
-     * Returns a composed {@link TriFunction} that applies this {@link ThrowableTriFunction} to its input, and if an
-     * error occurred, returns the given value. The exception from this {@code ThrowableTriFunction} is ignored, unless
-     * it is an unchecked exception.
+     * Returns a composed {@link ThrowableTriFunction} that applies this {@code ThrowableTriFunction} to its input,
+     * additionally performing the provided action to the resulting value. This method exists mainly to support
+     * debugging.
      *
-     * @param value The value to be returned if this {@code ThrowableTriFunction} fails
-     * @return A composed {@code TriFunction} that applies this {@code ThrowableTriFunction}, and if an error occurred,
-     * returns the given value.
+     * @param action A {@link Consumer} to be applied additionally to this {@code ThrowableTriFunction}
+     * @return A composed {@code ThrowableTriFunction} that applies this {@code ThrowableTriFunction}, additionally
+     * performing the provided action to the resulting value.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    default TriFunction<T, U, V, R> orReturn(final R value) {
-        Objects.requireNonNull(value);
+    default ThrowableTriFunction<T, U, V, R> peek(final Consumer<? super R> action) {
+        Objects.requireNonNull(action);
         return (t, u, v) -> {
-            try {
-                return applyThrows(t, u, v);
-            } catch (RuntimeException e) {
-                throw e;
-            } catch (Exception ignored) {
-                return value;
-            }
-        };
-    }
-
-    /**
-     * Returns a composed {@link TriFunction} that applies this {@link ThrowableTriFunction} to its input, and if an
-     * error occurred, returns the supplied value from the given {@link Supplier}. The exception from this {@code
-     * ThrowableTriFunction} is ignored, unless it is an unchecked exception.
-     *
-     * @param supplier A {@code Supplier} to return a supplied value if this {@code ThrowableTriFunction} fails
-     * @return A composed {@code TriFunction} that applies this {@code ThrowableTriFunction}, and if an error occurred,
-     * the supplied value from the given {@code Supplier}.
-     * @throws NullPointerException If the given argument is {@code null}
-     */
-    default TriFunction<T, U, V, R> orReturn(final Supplier<? extends R> supplier) {
-        Objects.requireNonNull(supplier);
-        return (t, u, v) -> {
-            try {
-                return applyThrows(t, u, v);
-            } catch (RuntimeException e) {
-                throw e;
-            } catch (Exception ignored) {
-                return supplier.get();
-            }
+            final R r = apply(t, u, v);
+            action.accept(r);
+            return r;
         };
     }
 
@@ -250,7 +226,7 @@ public interface ThrowableTriFunction<T, U, V, R> extends TriFunction<T, U, V, R
      * returns the given value.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    default TriFunction<T, U, V, R> orReturnAlways(final R value) {
+    default TriFunction<T, U, V, R> orReturn(final R value) {
         Objects.requireNonNull(value);
         return (t, u, v) -> {
             try {
@@ -271,7 +247,7 @@ public interface ThrowableTriFunction<T, U, V, R> extends TriFunction<T, U, V, R
      * the supplied value from the given {@code Supplier}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    default TriFunction<T, U, V, R> orReturnAlways(final Supplier<? extends R> supplier) {
+    default TriFunction<T, U, V, R> orReturn(final Supplier<? extends R> supplier) {
         Objects.requireNonNull(supplier);
         return (t, u, v) -> {
             try {
@@ -280,5 +256,32 @@ public interface ThrowableTriFunction<T, U, V, R> extends TriFunction<T, U, V, R
                 return supplier.get();
             }
         };
+    }
+
+    /**
+     * Returns a curried version of this {@link ThrowableTriFunction}. The returned curried version of this {@code
+     * ThrowableTriFunction} is able to throw any {@link Exception} type.
+     *
+     * @return A curried version of this {@code ThrowableTriFunction}.
+     * @see #reversed(ThrowableFunction)
+     */
+    default ThrowableFunction<T, ThrowableFunction<U, ThrowableFunction<V, R>>> curried() {
+        return t -> u -> v -> apply(t, u, v);
+    }
+
+    /**
+     * Returns a reversed (uncurried) {@link ThrowableTriFunction} from the given curried {@code ThrowableTriFunction}.
+     * The returned {@code ThrowableTriFunction} from the given curried {@code ThrowableTriFunction} is able to throw
+     * any {@link Exception} type.
+     *
+     * @param f A curried {@code ThrowableTriFunction}
+     * @return A reversed (uncurried) {@link ThrowableTriFunction} from the given curried {@code ThrowableTriFunction}.
+     * @throws NullPointerException If the given argument is {@code null}
+     * @see #curried()
+     */
+    default ThrowableTriFunction<T, U, V, R> reversed(
+            ThrowableFunction<? super T, ThrowableFunction<? super U, ThrowableFunction<? super V, ? extends R>>> f) {
+        Objects.requireNonNull(f);
+        return (t, u, v) -> f.apply(t).apply(u).apply(v);
     }
 }

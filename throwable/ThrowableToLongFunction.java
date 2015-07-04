@@ -18,6 +18,7 @@ package at.gridtec.internals.lang.function.throwable;
 import at.gridtec.internals.lang.util.ThrowableUtils;
 
 import java.util.Objects;
+import java.util.function.LongConsumer;
 import java.util.function.LongSupplier;
 import java.util.function.ToLongFunction;
 
@@ -51,8 +52,38 @@ import java.util.function.ToLongFunction;
  * @param <T> The type of argument for the function
  * @see java.util.function.Function
  */
+@SuppressWarnings("unused")
 @FunctionalInterface
 public interface ThrowableToLongFunction<T> extends ToLongFunction<T> {
+
+    /**
+     * Implicitly casts, and therefore wraps a given lambda as {@link ThrowableToLongFunction}. This is a convenience
+     * method in case the given {@link ThrowableToLongFunction} is ambiguous for the compiler. This might happen for
+     * overloaded methods accepting different functional interfaces. The given {@code ThrowableToLongFunction} is
+     * returned as-is.
+     *
+     * @param <T> The type of argument for the function
+     * @param lambda The {@code ThrowableToLongFunction} which should be returned as-is.
+     * @return The given {@code ThrowableToLongFunction} as-is.
+     * @throws NullPointerException If the given argument is {@code null}
+     */
+    static <T> ThrowableToLongFunction<T> wrap(final ThrowableToLongFunction<T> lambda) {
+        Objects.requireNonNull(lambda);
+        return lambda;
+    }
+
+    /**
+     * Creates a {@link ThrowableToLongFunction} which always returns a given value.
+     *
+     * @param <T> The type of argument for the function
+     * @param ret The return value for the constant
+     * @return A {@code ThrowableToLongFunction} which always returns a given value.
+     * @throws NullPointerException If the given argument is {@code null}
+     */
+    static <T> ThrowableToLongFunction<T> constant(long ret) {
+        Objects.requireNonNull(ret);
+        return t -> ret;
+    }
 
     /**
      * The apply method for this {@link ToLongFunction} which is able to throw any {@link Exception} type.
@@ -87,7 +118,7 @@ public interface ThrowableToLongFunction<T> extends ToLongFunction<T> {
     /**
      * Returns a composed {@link ThrowableToLongFunction} that applies this {@code ThrowableToLongFunction} to its
      * input, and if an error occurred, applies the given one. The exception from this {@code ThrowableToLongFunction}
-     * is ignored, unless it is an unchecked exception.
+     * is ignored.
      *
      * @param other A {@code ThrowableToLongFunction} to be applied if this one fails
      * @return A composed {@code ThrowableToLongFunction} that applies this {@code ThrowableToLongFunction}, and if an
@@ -99,39 +130,8 @@ public interface ThrowableToLongFunction<T> extends ToLongFunction<T> {
         return t -> {
             try {
                 return applyAsLongThrows(t);
-            } catch (RuntimeException e) {
-                throw e;
             } catch (Exception ignored) {
                 return other.applyAsLongThrows(t);
-            }
-        };
-    }
-
-    /**
-     * Returns a composed {@link ThrowableToLongFunction} that applies this {@code ThrowableToLongFunction} to its
-     * input, and if an error occurred, throws the given {@link Exception}. The exception from this {@code
-     * ThrowableToLongFunction} is added as suppressed to the given one, unless it is an unchecked exception.
-     * <p>
-     * The given exception must have a no arg constructor for reflection purposes. If not, then appropriate exception
-     * as described in {@link Class#newInstance()} is thrown.
-     *
-     * @param <X> The type for the class extending {@code Exception}
-     * @param clazz The exception class to throw if an error occurred
-     * @return A composed {@code ThrowableToLongFunction} that applies this {@code ThrowableToLongFunction}, and if an
-     * error occurred, throws the given {@code Exception}.
-     * @throws NullPointerException If the given argument is {@code null}
-     */
-    default <X extends Exception> ThrowableToLongFunction<T> orThrow(Class<X> clazz) {
-        Objects.requireNonNull(clazz);
-        return t -> {
-            try {
-                return applyAsLongThrows(t);
-            } catch (RuntimeException e) {
-                throw e;
-            } catch (Exception e) {
-                X ex = clazz.newInstance();
-                ex.addSuppressed(e);
-                throw ThrowableUtils.sneakyThrow(ex);
             }
         };
     }
@@ -150,7 +150,7 @@ public interface ThrowableToLongFunction<T> extends ToLongFunction<T> {
      * error occurred, throws the given {@code Exception}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    default <X extends Exception> ThrowableToLongFunction<T> orThrowAlways(Class<X> clazz) {
+    default <X extends Exception> ThrowableToLongFunction<T> orThrow(Class<X> clazz) {
         Objects.requireNonNull(clazz);
         return t -> {
             try {
@@ -166,7 +166,7 @@ public interface ThrowableToLongFunction<T> extends ToLongFunction<T> {
     /**
      * Returns a composed {@link ToLongFunction} that applies this {@link ThrowableToLongFunction} to its input, and if
      * an error occurred, applies the given {@code ToLongFunction} representing a fallback. The exception from this
-     * {@code ThrowableToLongFunction} is ignored, unless it is an unchecked exception.
+     * {@code ThrowableToLongFunction} is ignored.
      *
      * @param fallback A {@code ToLongFunction} to be applied if this one fails
      * @return A composed {@code ToLongFunction} that applies this {@code ThrowableToLongFunction}, and if an error
@@ -178,8 +178,6 @@ public interface ThrowableToLongFunction<T> extends ToLongFunction<T> {
         return t -> {
             try {
                 return applyAsLongThrows(t);
-            } catch (RuntimeException e) {
-                throw e;
             } catch (Exception ignored) {
                 return fallback.applyAsLong(t);
             }
@@ -187,46 +185,21 @@ public interface ThrowableToLongFunction<T> extends ToLongFunction<T> {
     }
 
     /**
-     * Returns a composed {@link ToLongFunction} that applies this {@link ThrowableToLongFunction} to its input, and if
-     * an error occurred, returns the given value. The exception from this {@code ThrowableToLongFunction} is ignored,
-     * unless it is an unchecked exception.
+     * Returns a composed {@link ThrowableToLongFunction} that applies this {@code ThrowableToLongFunction} to its
+     * input, additionally performing the provided action to the resulting value. This method exists mainly to support
+     * debugging.
      *
-     * @param value The value to be returned if this {@code ThrowableToLongFunction} fails
-     * @return A composed {@code ToLongFunction} that applies this {@code ThrowableToLongFunction}, and if an error
-     * occurred, returns the given value.
-     */
-    default ToLongFunction<T> orReturn(long value) {
-        return t -> {
-            try {
-                return applyAsLongThrows(t);
-            } catch (RuntimeException e) {
-                throw e;
-            } catch (Exception ignored) {
-                return value;
-            }
-        };
-    }
-
-    /**
-     * Returns a composed {@link ToLongFunction} that applies this {@link ThrowableToLongFunction} to its input, and if
-     * an error occurred, returns the supplied value from the given {@link LongSupplier}. The exception from this
-     * {@code ThrowableToLongFunction} is ignored, unless it is an unchecked exception.
-     *
-     * @param supplier A {@code Supplier} to return a supplied value if this {@code ThrowableToLongFunction} fails
-     * @return A composed {@code ToLongFunction} that applies this {@code ThrowableToLongFunction}, and if an error
-     * occurred, the supplied value from the given {@code LongSupplier}.
+     * @param action A {@link LongConsumer} to be applied additionally to this {@code ThrowableToLongFunction}
+     * @return A composed {@code ThrowableToLongFunction} that applies this {@code ThrowableToLongFunction},
+     * additionally performing the provided action to the resulting value.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    default ToLongFunction<T> orReturn(final LongSupplier supplier) {
-        Objects.requireNonNull(supplier);
+    default ThrowableToLongFunction<T> peek(final LongConsumer action) {
+        Objects.requireNonNull(action);
         return t -> {
-            try {
-                return applyAsLongThrows(t);
-            } catch (RuntimeException e) {
-                throw e;
-            } catch (Exception ignored) {
-                return supplier.getAsLong();
-            }
+            final long ret = applyAsLong(t);
+            action.accept(ret);
+            return ret;
         };
     }
 
@@ -238,7 +211,7 @@ public interface ThrowableToLongFunction<T> extends ToLongFunction<T> {
      * @return A composed {@code ToLongFunction} that applies this {@code ThrowableToLongFunction}, and if an error
      * occurred, returns the given value.
      */
-    default ToLongFunction<T> orReturnAlways(long value) {
+    default ToLongFunction<T> orReturn(long value) {
         return t -> {
             try {
                 return applyAsLongThrows(t);
@@ -258,7 +231,7 @@ public interface ThrowableToLongFunction<T> extends ToLongFunction<T> {
      * occurred, the supplied value from the given {@code LongSupplier}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    default ToLongFunction<T> orReturnAlways(final LongSupplier supplier) {
+    default ToLongFunction<T> orReturn(final LongSupplier supplier) {
         Objects.requireNonNull(supplier);
         return t -> {
             try {

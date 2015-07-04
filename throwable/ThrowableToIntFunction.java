@@ -18,6 +18,7 @@ package at.gridtec.internals.lang.function.throwable;
 import at.gridtec.internals.lang.util.ThrowableUtils;
 
 import java.util.Objects;
+import java.util.function.IntConsumer;
 import java.util.function.IntSupplier;
 import java.util.function.ToIntFunction;
 
@@ -51,8 +52,38 @@ import java.util.function.ToIntFunction;
  * @param <T> The type of argument for the function
  * @see java.util.function.Function
  */
+@SuppressWarnings("unused")
 @FunctionalInterface
 public interface ThrowableToIntFunction<T> extends ToIntFunction<T> {
+
+    /**
+     * Implicitly casts, and therefore wraps a given lambda as {@link ThrowableToIntFunction}. This is a convenience
+     * method in case the given {@link ThrowableToIntFunction} is ambiguous for the compiler. This might happen for
+     * overloaded methods accepting different functional interfaces. The given {@code ThrowableToIntFunction} is
+     * returned as-is.
+     *
+     * @param <T> The type of argument for the function
+     * @param lambda The {@code ThrowableToIntFunction} which should be returned as-is.
+     * @return The given {@code ThrowableToIntFunction} as-is.
+     * @throws NullPointerException If the given argument is {@code null}
+     */
+    static <T> ThrowableToIntFunction<T> wrap(final ThrowableToIntFunction<T> lambda) {
+        Objects.requireNonNull(lambda);
+        return lambda;
+    }
+
+    /**
+     * Creates a {@link ThrowableToIntFunction} which always returns a given value.
+     *
+     * @param <T> The type of argument for the function
+     * @param ret The return value for the constant
+     * @return A {@code ThrowableToIntFunction} which always returns a given value.
+     * @throws NullPointerException If the given argument is {@code null}
+     */
+    static <T> ThrowableToIntFunction<T> constant(int ret) {
+        Objects.requireNonNull(ret);
+        return t -> ret;
+    }
 
     /**
      * The apply method for this {@link ToIntFunction} which is able to throw any {@link Exception} type.
@@ -87,7 +118,7 @@ public interface ThrowableToIntFunction<T> extends ToIntFunction<T> {
     /**
      * Returns a composed {@link ThrowableToIntFunction} that applies this {@code ThrowableToIntFunction} to its input,
      * and if an error occurred, applies the given one. The exception from this {@code ThrowableToIntFunction} is
-     * ignored, unless it is an unchecked exception.
+     * ignored.
      *
      * @param other A {@code ThrowableToIntFunction} to be applied if this one fails
      * @return A composed {@code ThrowableToIntFunction} that applies this {@code ThrowableToIntFunction}, and if an
@@ -99,39 +130,8 @@ public interface ThrowableToIntFunction<T> extends ToIntFunction<T> {
         return t -> {
             try {
                 return applyAsIntThrows(t);
-            } catch (RuntimeException e) {
-                throw e;
             } catch (Exception ignored) {
                 return other.applyAsIntThrows(t);
-            }
-        };
-    }
-
-    /**
-     * Returns a composed {@link ThrowableToIntFunction} that applies this {@code ThrowableToIntFunction} to its input,
-     * and if an error occurred, throws the given {@link Exception}. The exception from this {@code
-     * ThrowableToIntFunction} is added as suppressed to the given one, unless it is an unchecked exception.
-     * <p>
-     * The given exception must have a no arg constructor for reflection purposes. If not, then appropriate exception
-     * as described in {@link Class#newInstance()} is thrown.
-     *
-     * @param <X> The type for the class extending {@code Exception}
-     * @param clazz The exception class to throw if an error occurred
-     * @return A composed {@code ThrowableToIntFunction} that applies this {@code ThrowableToIntFunction}, and if an
-     * error occurred, throws the given {@code Exception}.
-     * @throws NullPointerException If the given argument is {@code null}
-     */
-    default <X extends Exception> ThrowableToIntFunction<T> orThrow(Class<X> clazz) {
-        Objects.requireNonNull(clazz);
-        return t -> {
-            try {
-                return applyAsIntThrows(t);
-            } catch (RuntimeException e) {
-                throw e;
-            } catch (Exception e) {
-                X ex = clazz.newInstance();
-                ex.addSuppressed(e);
-                throw ThrowableUtils.sneakyThrow(ex);
             }
         };
     }
@@ -150,7 +150,7 @@ public interface ThrowableToIntFunction<T> extends ToIntFunction<T> {
      * error occurred, throws the given {@code Exception}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    default <X extends Exception> ThrowableToIntFunction<T> orThrowAlways(Class<X> clazz) {
+    default <X extends Exception> ThrowableToIntFunction<T> orThrow(Class<X> clazz) {
         Objects.requireNonNull(clazz);
         return t -> {
             try {
@@ -166,7 +166,7 @@ public interface ThrowableToIntFunction<T> extends ToIntFunction<T> {
     /**
      * Returns a composed {@link ToIntFunction} that applies this {@link ThrowableToIntFunction} to its input, and if
      * an error occurred, applies the given {@code ToIntFunction} representing a fallback. The exception from this
-     * {@code ThrowableToIntFunction} is ignored, unless it is an unchecked exception.
+     * {@code ThrowableToIntFunction} is ignored.
      *
      * @param fallback A {@code ToIntFunction} to be applied if this one fails
      * @return A composed {@code ToIntFunction} that applies this {@code ThrowableToIntFunction}, and if an error
@@ -178,8 +178,6 @@ public interface ThrowableToIntFunction<T> extends ToIntFunction<T> {
         return t -> {
             try {
                 return applyAsIntThrows(t);
-            } catch (RuntimeException e) {
-                throw e;
             } catch (Exception ignored) {
                 return fallback.applyAsInt(t);
             }
@@ -187,46 +185,21 @@ public interface ThrowableToIntFunction<T> extends ToIntFunction<T> {
     }
 
     /**
-     * Returns a composed {@link ToIntFunction} that applies this {@link ThrowableToIntFunction} to its input, and if
-     * an error occurred, returns the given value. The exception from this {@code ThrowableToIntFunction} is ignored,
-     * unless it is an unchecked exception.
+     * Returns a composed {@link ThrowableToIntFunction} that applies this {@code ThrowableToIntFunction} to its input,
+     * additionally performing the provided action to the resulting value. This method exists mainly to support
+     * debugging.
      *
-     * @param value The value to be returned if this {@code ThrowableToIntFunction} fails
-     * @return A composed {@code ToIntFunction} that applies this {@code ThrowableToIntFunction}, and if an error
-     * occurred, returns the given value.
-     */
-    default ToIntFunction<T> orReturn(int value) {
-        return t -> {
-            try {
-                return applyAsIntThrows(t);
-            } catch (RuntimeException e) {
-                throw e;
-            } catch (Exception ignored) {
-                return value;
-            }
-        };
-    }
-
-    /**
-     * Returns a composed {@link ToIntFunction} that applies this {@link ThrowableToIntFunction} to its input, and if
-     * an error occurred, returns the supplied value from the given {@link IntSupplier}. The exception from this {@code
-     * ThrowableToIntFunction} is ignored, unless it is an unchecked exception.
-     *
-     * @param supplier A {@code Supplier} to return a supplied value if this {@code ThrowableToIntFunction} fails
-     * @return A composed {@code ToIntFunction} that applies this {@code ThrowableToIntFunction}, and if an error
-     * occurred, the supplied value from the given {@code IntSupplier}.
+     * @param action A {@link IntConsumer} to be applied additionally to this {@code ThrowableToIntFunction}
+     * @return A composed {@code ThrowableToIntFunction} that applies this {@code ThrowableToIntFunction}, additionally
+     * performing the provided action to the resulting value.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    default ToIntFunction<T> orReturn(final IntSupplier supplier) {
-        Objects.requireNonNull(supplier);
+    default ThrowableToIntFunction<T> peek(final IntConsumer action) {
+        Objects.requireNonNull(action);
         return t -> {
-            try {
-                return applyAsIntThrows(t);
-            } catch (RuntimeException e) {
-                throw e;
-            } catch (Exception ignored) {
-                return supplier.getAsInt();
-            }
+            final int ret = applyAsInt(t);
+            action.accept(ret);
+            return ret;
         };
     }
 
@@ -238,7 +211,7 @@ public interface ThrowableToIntFunction<T> extends ToIntFunction<T> {
      * @return A composed {@code ToIntFunction} that applies this {@code ThrowableToIntFunction}, and if an error
      * occurred, returns the given value.
      */
-    default ToIntFunction<T> orReturnAlways(int value) {
+    default ToIntFunction<T> orReturn(int value) {
         return t -> {
             try {
                 return applyAsIntThrows(t);
@@ -258,7 +231,7 @@ public interface ThrowableToIntFunction<T> extends ToIntFunction<T> {
      * occurred, the supplied value from the given {@code IntSupplier}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    default ToIntFunction<T> orReturnAlways(final IntSupplier supplier) {
+    default ToIntFunction<T> orReturn(final IntSupplier supplier) {
         Objects.requireNonNull(supplier);
         return t -> {
             try {

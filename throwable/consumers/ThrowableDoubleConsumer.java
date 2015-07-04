@@ -49,8 +49,24 @@ import java.util.function.DoubleConsumer;
  *
  * @see java.util.function.Consumer
  */
+@SuppressWarnings("unused")
 @FunctionalInterface
 public interface ThrowableDoubleConsumer extends DoubleConsumer {
+
+    /**
+     * Implicitly casts, and therefore wraps a given lambda as {@link ThrowableDoubleConsumer}. This is a convenience
+     * method in case the given {@link ThrowableDoubleConsumer} is ambiguous for the compiler. This might happen for
+     * overloaded methods accepting different functional interfaces. The given {@code ThrowableDoubleConsumer} is
+     * returned as-is.
+     *
+     * @param lambda The {@code ThrowableDoubleConsumer} which should be returned as-is.
+     * @return The given {@code ThrowableDoubleConsumer} as-is.
+     * @throws NullPointerException If the given argument is {@code null}
+     */
+    static ThrowableDoubleConsumer wrap(final ThrowableDoubleConsumer lambda) {
+        Objects.requireNonNull(lambda);
+        return lambda;
+    }
 
     /**
      * The accept method for this {@link DoubleConsumer} which is able to throw any {@link Exception} type.
@@ -82,7 +98,7 @@ public interface ThrowableDoubleConsumer extends DoubleConsumer {
     /**
      * Returns a composed {@link ThrowableDoubleConsumer} that applies this {@code ThrowableDoubleConsumer} to its
      * input, and if an error occurred, applies the given one. The exception from this {@code ThrowableDoubleConsumer}
-     * is ignored, unless it is an unchecked exception.
+     * is ignored.
      *
      * @param other A {@code ThrowableDoubleConsumer} to be applied if this one fails
      * @return A composed {@code ThrowableDoubleConsumer} that applies this {@code ThrowableDoubleConsumer}, and if an
@@ -94,39 +110,8 @@ public interface ThrowableDoubleConsumer extends DoubleConsumer {
         return value -> {
             try {
                 acceptThrows(value);
-            } catch (RuntimeException e) {
-                throw e;
             } catch (Exception ignored) {
                 other.acceptThrows(value);
-            }
-        };
-    }
-
-    /**
-     * Returns a composed {@link ThrowableDoubleConsumer} that applies this {@code ThrowableDoubleConsumer} to its
-     * input, and if an error occurred, throws the given {@link Exception}. The exception from this {@code
-     * ThrowableDoubleConsumer} is added as suppressed to the given one, unless it is an unchecked exception.
-     * <p>
-     * The given exception must have a no arg constructor for reflection purposes. If not, then appropriate exception
-     * as described in {@link Class#newInstance()} is thrown.
-     *
-     * @param <X> The type for the class extending {@code Exception}
-     * @param clazz The exception class to throw if an error occurred
-     * @return A composed {@code ThrowableDoubleConsumer} that applies this {@code ThrowableDoubleConsumer}, and if an
-     * error occurred, throws the given {@code Exception}.
-     * @throws NullPointerException If the given argument is {@code null}
-     */
-    default <X extends Exception> ThrowableDoubleConsumer orThrow(Class<X> clazz) {
-        Objects.requireNonNull(clazz);
-        return value -> {
-            try {
-                acceptThrows(value);
-            } catch (RuntimeException e) {
-                throw e;
-            } catch (Exception e) {
-                X ex = clazz.newInstance();
-                ex.addSuppressed(e);
-                throw ThrowableUtils.sneakyThrow(ex);
             }
         };
     }
@@ -145,7 +130,7 @@ public interface ThrowableDoubleConsumer extends DoubleConsumer {
      * error occurred, throws the given {@code Exception}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    default <X extends Exception> ThrowableDoubleConsumer orThrowAlways(Class<X> clazz) {
+    default <X extends Exception> ThrowableDoubleConsumer orThrow(Class<X> clazz) {
         Objects.requireNonNull(clazz);
         return value -> {
             try {

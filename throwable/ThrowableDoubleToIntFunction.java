@@ -19,6 +19,7 @@ import at.gridtec.internals.lang.util.ThrowableUtils;
 
 import java.util.Objects;
 import java.util.function.DoubleToIntFunction;
+import java.util.function.IntConsumer;
 import java.util.function.IntSupplier;
 
 /**
@@ -50,8 +51,36 @@ import java.util.function.IntSupplier;
  *
  * @see java.util.function.Function
  */
+@SuppressWarnings("unused")
 @FunctionalInterface
 public interface ThrowableDoubleToIntFunction extends DoubleToIntFunction {
+
+    /**
+     * Implicitly casts, and therefore wraps a given lambda as {@link ThrowableDoubleToIntFunction}. This is a
+     * convenience method in case the given {@link ThrowableDoubleToIntFunction} is ambiguous for the compiler. This
+     * might happen for overloaded methods accepting different functional interfaces. The given {@code
+     * ThrowableDoubleToIntFunction} is returned as-is.
+     *
+     * @param lambda The {@code ThrowableDoubleToIntFunction} which should be returned as-is.
+     * @return The given {@code ThrowableDoubleToIntFunction} as-is.
+     * @throws NullPointerException If the given argument is {@code null}
+     */
+    static ThrowableDoubleToIntFunction wrap(final ThrowableDoubleToIntFunction lambda) {
+        Objects.requireNonNull(lambda);
+        return lambda;
+    }
+
+    /**
+     * Creates a {@link ThrowableDoubleToIntFunction} which always returns a given value.
+     *
+     * @param ret The return value for the constant
+     * @return A {@code ThrowableDoubleToIntFunction} which always returns a given value.
+     * @throws NullPointerException If the given argument is {@code null}
+     */
+    static ThrowableDoubleToIntFunction constant(int ret) {
+        Objects.requireNonNull(ret);
+        return value -> ret;
+    }
 
     /**
      * The apply method for this {@link DoubleToIntFunction} which is able to throw any {@link Exception} type.
@@ -86,7 +115,7 @@ public interface ThrowableDoubleToIntFunction extends DoubleToIntFunction {
     /**
      * Returns a composed {@link ThrowableDoubleToIntFunction} that applies this {@code ThrowableDoubleToIntFunction}
      * to its input, and if an error occurred, applies the given one. The exception from this {@code
-     * ThrowableDoubleToIntFunction} is ignored, unless it is an unchecked exception.
+     * ThrowableDoubleToIntFunction} is ignored.
      *
      * @param other A {@code ThrowableDoubleToIntFunction} to be applied if this one fails
      * @return A composed {@code ThrowableDoubleToIntFunction} that applies this {@code ThrowableDoubleToIntFunction},
@@ -98,39 +127,8 @@ public interface ThrowableDoubleToIntFunction extends DoubleToIntFunction {
         return value -> {
             try {
                 return applyAsIntThrows(value);
-            } catch (RuntimeException e) {
-                throw e;
             } catch (Exception ignored) {
                 return other.applyAsIntThrows(value);
-            }
-        };
-    }
-
-    /**
-     * Returns a composed {@link ThrowableDoubleToIntFunction} that applies this {@code ThrowableDoubleToIntFunction}
-     * to its input, and if an error occurred, throws the given {@link Exception}. The exception from this {@code
-     * ThrowableDoubleToIntFunction} is added as suppressed to the given one, unless it is an unchecked exception.
-     * <p>
-     * The given exception must have a no arg constructor for reflection purposes. If not, then appropriate exception
-     * as described in {@link Class#newInstance()} is thrown.
-     *
-     * @param <X> The type for the class extending {@code Exception}
-     * @param clazz The exception class to throw if an error occurred
-     * @return A composed {@code ThrowableDoubleToIntFunction} that applies this {@code ThrowableDoubleToIntFunction},
-     * and if an error occurred, throws the given {@code Exception}.
-     * @throws NullPointerException If the given argument is {@code null}
-     */
-    default <X extends Exception> ThrowableDoubleToIntFunction orThrow(Class<X> clazz) {
-        Objects.requireNonNull(clazz);
-        return value -> {
-            try {
-                return applyAsIntThrows(value);
-            } catch (RuntimeException e) {
-                throw e;
-            } catch (Exception e) {
-                X ex = clazz.newInstance();
-                ex.addSuppressed(e);
-                throw ThrowableUtils.sneakyThrow(ex);
             }
         };
     }
@@ -149,7 +147,7 @@ public interface ThrowableDoubleToIntFunction extends DoubleToIntFunction {
      * and if an error occurred, throws the given {@code Exception}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    default <X extends Exception> ThrowableDoubleToIntFunction orThrowAlways(Class<X> clazz) {
+    default <X extends Exception> ThrowableDoubleToIntFunction orThrow(Class<X> clazz) {
         Objects.requireNonNull(clazz);
         return value -> {
             try {
@@ -165,7 +163,7 @@ public interface ThrowableDoubleToIntFunction extends DoubleToIntFunction {
     /**
      * Returns a composed {@link DoubleToIntFunction} that applies this {@link ThrowableDoubleToIntFunction} to its
      * input, and if an error occurred, applies the given {@code DoubleToIntFunction} representing a fallback. The
-     * exception from this {@code ThrowableDoubleToIntFunction} is ignored, unless it is an unchecked exception.
+     * exception from this {@code ThrowableDoubleToIntFunction} is ignored.
      *
      * @param fallback A {@code DoubleToIntFunction} to be applied if this one fails
      * @return A composed {@code DoubleToIntFunction} that applies this {@code ThrowableDoubleToIntFunction}, and if an
@@ -177,8 +175,6 @@ public interface ThrowableDoubleToIntFunction extends DoubleToIntFunction {
         return value -> {
             try {
                 return applyAsIntThrows(value);
-            } catch (RuntimeException e) {
-                throw e;
             } catch (Exception ignored) {
                 return fallback.applyAsInt(value);
             }
@@ -186,46 +182,21 @@ public interface ThrowableDoubleToIntFunction extends DoubleToIntFunction {
     }
 
     /**
-     * Returns a composed {@link DoubleToIntFunction} that applies this {@link ThrowableDoubleToIntFunction} to its
-     * input, and if an error occurred, returns the given value. The exception from this {@code
-     * ThrowableDoubleToIntFunction} is ignored, unless it is an unchecked exception.
+     * Returns a composed {@link ThrowableDoubleToIntFunction} that applies this {@code ThrowableDoubleToIntFunction}
+     * to its input, additionally performing the provided action to the resulting value. This method exists mainly to
+     * support debugging.
      *
-     * @param retVal The value to be returned if this {@code ThrowableDoubleToIntFunction} fails
-     * @return A composed {@code DoubleToIntFunction} that applies this {@code ThrowableDoubleToIntFunction}, and if an
-     * error occurred, returns the given value.
-     */
-    default DoubleToIntFunction orReturn(int retVal) {
-        return value -> {
-            try {
-                return applyAsIntThrows(value);
-            } catch (RuntimeException e) {
-                throw e;
-            } catch (Exception ignored) {
-                return retVal;
-            }
-        };
-    }
-
-    /**
-     * Returns a composed {@link DoubleToIntFunction} that applies this {@link ThrowableDoubleToIntFunction} to its
-     * input, and if an error occurred, returns the supplied value from the given {@link IntSupplier}. The exception
-     * from this {@code ThrowableDoubleToIntFunction} is ignored, unless it is an unchecked exception.
-     *
-     * @param supplier A {@code Supplier} to return a supplied value if this {@code ThrowableDoubleToIntFunction} fails
-     * @return A composed {@code DoubleToIntFunction} that applies this {@code ThrowableDoubleToIntFunction}, and if an
-     * error occurred, the supplied value from the given {@code IntSupplier}.
+     * @param action A {@link IntConsumer} to be applied additionally to this {@code ThrowableDoubleToIntFunction}
+     * @return A composed {@code ThrowableDoubleToIntFunction} that applies this {@code ThrowableDoubleToIntFunction},
+     * additionally performing the provided action to the resulting value.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    default DoubleToIntFunction orReturn(final IntSupplier supplier) {
-        Objects.requireNonNull(supplier);
+    default ThrowableDoubleToIntFunction peek(final IntConsumer action) {
+        Objects.requireNonNull(action);
         return value -> {
-            try {
-                return applyAsIntThrows(value);
-            } catch (RuntimeException e) {
-                throw e;
-            } catch (Exception ignored) {
-                return supplier.getAsInt();
-            }
+            final int ret = applyAsInt(value);
+            action.accept(ret);
+            return ret;
         };
     }
 
@@ -238,7 +209,7 @@ public interface ThrowableDoubleToIntFunction extends DoubleToIntFunction {
      * @return A composed {@code DoubleToIntFunction} that applies this {@code ThrowableDoubleToIntFunction}, and if an
      * error occurred, returns the given value.
      */
-    default DoubleToIntFunction orReturnAlways(int retVal) {
+    default DoubleToIntFunction orReturn(int retVal) {
         return value -> {
             try {
                 return applyAsIntThrows(value);
@@ -258,7 +229,7 @@ public interface ThrowableDoubleToIntFunction extends DoubleToIntFunction {
      * error occurred, the supplied value from the given {@code IntSupplier}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    default DoubleToIntFunction orReturnAlways(final IntSupplier supplier) {
+    default DoubleToIntFunction orReturn(final IntSupplier supplier) {
         Objects.requireNonNull(supplier);
         return value -> {
             try {

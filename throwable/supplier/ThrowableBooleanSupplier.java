@@ -19,6 +19,7 @@ import at.gridtec.internals.lang.util.ThrowableUtils;
 
 import java.util.Objects;
 import java.util.function.BooleanSupplier;
+import java.util.function.Consumer;
 
 /**
  * This functional interface implements a {@link BooleanSupplier} which is able to throw any {@link Exception}.
@@ -49,8 +50,36 @@ import java.util.function.BooleanSupplier;
  *
  * @see java.util.function.Supplier
  */
+@SuppressWarnings("unused")
 @FunctionalInterface
 public interface ThrowableBooleanSupplier extends BooleanSupplier {
+
+    /**
+     * Implicitly casts, and therefore wraps a given lambda as {@link ThrowableBooleanSupplier}. This is a convenience
+     * method in case the given {@link ThrowableBooleanSupplier} is ambiguous for the compiler. This might happen for
+     * overloaded methods accepting different functional interfaces. The given {@code ThrowableBooleanSupplier} is
+     * returned as-is.
+     *
+     * @param lambda The {@code ThrowableBooleanSupplier} which should be returned as-is.
+     * @return The given {@code ThrowableBooleanSupplier} as-is.
+     * @throws NullPointerException If the given argument is {@code null}
+     */
+    static ThrowableBooleanSupplier wrap(final ThrowableBooleanSupplier lambda) {
+        Objects.requireNonNull(lambda);
+        return lambda;
+    }
+
+    /**
+     * Creates a {@link ThrowableBooleanSupplier} which always returns a given value.
+     *
+     * @param ret The return value for the constant
+     * @return A {@code ThrowableBooleanSupplier} which always returns a given value.
+     * @throws NullPointerException If the given argument is {@code null}
+     */
+    static ThrowableBooleanSupplier of(boolean ret) {
+        Objects.requireNonNull(ret);
+        return () -> ret;
+    }
 
     /**
      * The get method for this {@link BooleanSupplier} which is able to throw any {@link Exception} type.
@@ -82,7 +111,7 @@ public interface ThrowableBooleanSupplier extends BooleanSupplier {
     /**
      * Returns a composed {@link ThrowableBooleanSupplier} that applies this {@code ThrowableBooleanSupplier} to its
      * input, and if an error occurred, applies the given one. The exception from this {@code ThrowableBooleanSupplier}
-     * is ignored, unless it is an unchecked exception.
+     * is ignored.
      *
      * @param other A {@code ThrowableBooleanSupplier} to be applied if this one fails
      * @return A composed {@code ThrowableBooleanSupplier} that applies this {@code ThrowableBooleanSupplier}, and if an
@@ -94,39 +123,8 @@ public interface ThrowableBooleanSupplier extends BooleanSupplier {
         return () -> {
             try {
                 return getAsBooleanThrows();
-            } catch (RuntimeException e) {
-                throw e;
             } catch (Exception ignored) {
                 return other.getAsBooleanThrows();
-            }
-        };
-    }
-
-    /**
-     * Returns a composed {@link ThrowableBooleanSupplier} that applies this {@code ThrowableBooleanSupplier} to its
-     * input, and if an error occurred, throws the given {@link Exception}. The exception from this {@code
-     * ThrowableBooleanSupplier} is added as suppressed to the given one, unless it is an unchecked exception.
-     * <p>
-     * The given exception must have a no arg constructor for reflection purposes. If not, then appropriate exception
-     * as described in {@link Class#newInstance()} is thrown.
-     *
-     * @param <X> The type for the class extending {@code Exception}
-     * @param clazz The exception class to throw if an error occurred
-     * @return A composed {@code ThrowableBooleanSupplier} that applies this {@code ThrowableBooleanSupplier}, and if an
-     * error occurred, throws the given {@code Exception}.
-     * @throws NullPointerException If the given argument is {@code null}
-     */
-    default <X extends Exception> ThrowableBooleanSupplier orThrow(Class<X> clazz) {
-        Objects.requireNonNull(clazz);
-        return () -> {
-            try {
-                return getAsBooleanThrows();
-            } catch (RuntimeException e) {
-                throw e;
-            } catch (Exception e) {
-                X ex = clazz.newInstance();
-                ex.addSuppressed(e);
-                throw ThrowableUtils.sneakyThrow(ex);
             }
         };
     }
@@ -145,7 +143,7 @@ public interface ThrowableBooleanSupplier extends BooleanSupplier {
      * error occurred, throws the given {@code Exception}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    default <X extends Exception> ThrowableBooleanSupplier orThrowAlways(Class<X> clazz) {
+    default <X extends Exception> ThrowableBooleanSupplier orThrow(Class<X> clazz) {
         Objects.requireNonNull(clazz);
         return () -> {
             try {
@@ -161,7 +159,7 @@ public interface ThrowableBooleanSupplier extends BooleanSupplier {
     /**
      * Returns a composed {@link BooleanSupplier} that applies this {@link ThrowableBooleanSupplier} to its input, and
      * if an error occurred, applies the given {@code BooleanSupplier} representing a fallback. The exception from this
-     * {@code ThrowableBooleanSupplier} is ignored, unless it is an unchecked exception.
+     * {@code ThrowableBooleanSupplier} is ignored.
      *
      * @param fallback A {@code BooleanSupplier} to be applied if this one fails
      * @return A composed {@code BooleanSupplier} that applies this {@code ThrowableBooleanSupplier}, and if an error
@@ -173,8 +171,6 @@ public interface ThrowableBooleanSupplier extends BooleanSupplier {
         return () -> {
             try {
                 return getAsBooleanThrows();
-            } catch (RuntimeException e) {
-                throw e;
             } catch (Exception ignored) {
                 return fallback.getAsBoolean();
             }
@@ -182,23 +178,21 @@ public interface ThrowableBooleanSupplier extends BooleanSupplier {
     }
 
     /**
-     * Returns a composed {@link BooleanSupplier} that applies this {@link ThrowableBooleanSupplier} to its input, and
-     * if an error occurred, returns the given value. The exception from this {@code ThrowableBooleanSupplier} is
-     * ignored, unless it is an unchecked exception.
+     * Returns a composed {@link ThrowableBooleanSupplier} that applies this {@code ThrowableBooleanSupplier} to its
+     * input, additionally performing the provided action to the resulting value. This method exists mainly to support
+     * debugging.
      *
-     * @param value The value to be returned if this {@code ThrowableBooleanSupplier} fails
-     * @return A composed {@code BooleanSupplier} that applies this {@code ThrowableBooleanSupplier}, and if an error
-     * occurred, returns the given value.
+     * @param action A {@link Consumer} to be applied additionally to this {@code ThrowableBooleanSupplier}
+     * @return A composed {@code ThrowableBooleanSupplier} that applies this {@code ThrowableBooleanSupplier},
+     * additionally performing the provided action to the resulting value.
+     * @throws NullPointerException If the given argument is {@code null}
      */
-    default BooleanSupplier orReturn(boolean value) {
+    default ThrowableBooleanSupplier peek(final Consumer<? super Boolean> action) {
+        Objects.requireNonNull(action);
         return () -> {
-            try {
-                return getAsBooleanThrows();
-            } catch (RuntimeException e) {
-                throw e;
-            } catch (Exception ignored) {
-                return value;
-            }
+            final boolean ret = getAsBoolean();
+            action.accept(ret);
+            return ret;
         };
     }
 
@@ -211,7 +205,7 @@ public interface ThrowableBooleanSupplier extends BooleanSupplier {
      * @return A composed {@code BooleanSupplier} that applies this {@code ThrowableBooleanSupplier}, and if an error
      * occurred, returns the given value.
      */
-    default BooleanSupplier orReturnAlways(boolean value) {
+    default BooleanSupplier orReturn(boolean value) {
         return () -> {
             try {
                 return getAsBooleanThrows();
