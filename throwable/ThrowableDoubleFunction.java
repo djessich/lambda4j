@@ -74,6 +74,20 @@ public interface ThrowableDoubleFunction<R> extends DoubleFunction<R> {
     }
 
     /**
+     * Creates a {@link ThrowableDoubleFunction} from the given {@link DoubleFunction}. This method is just convenience
+     * to provide a mapping for the non-throwable/throwable instances of the corresponding functional interface.
+     *
+     * @param <R> The type of return value from the function
+     * @param lambda A {@code DoubleFunction} which should be mapped to its throwable counterpart
+     * @return A {@code ThrowableDoubleFunction} from the given {@code DoubleFunction}.
+     * @throws NullPointerException If the given argument is {@code null}
+     */
+    static <R> ThrowableDoubleFunction<R> from(final DoubleFunction<R> lambda) {
+        Objects.requireNonNull(lambda);
+        return lambda::apply;
+    }
+
+    /**
      * Creates a {@link ThrowableDoubleFunction} which always returns a given value.
      *
      * @param <R> The type of return value from the function

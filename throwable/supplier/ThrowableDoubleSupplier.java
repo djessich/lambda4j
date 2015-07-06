@@ -71,6 +71,19 @@ public interface ThrowableDoubleSupplier extends DoubleSupplier {
     }
 
     /**
+     * Creates a {@link ThrowableDoubleSupplier} from the given {@link DoubleSupplier}. This method is just convenience
+     * to provide a mapping for the non-throwable/throwable instances of the corresponding functional interface.
+     *
+     * @param lambda A {@code DoubleSupplier} which should be mapped to its throwable counterpart
+     * @return A {@code ThrowableDoubleSupplier} from the given {@code DoubleSupplier}.
+     * @throws NullPointerException If the given argument is {@code null}
+     */
+    static ThrowableDoubleSupplier from(final DoubleSupplier lambda) {
+        Objects.requireNonNull(lambda);
+        return lambda::getAsDouble;
+    }
+
+    /**
      * Creates a {@link ThrowableDoubleSupplier} which always returns a given value.
      *
      * @param ret The return value for the constant

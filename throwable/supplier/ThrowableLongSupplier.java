@@ -71,6 +71,19 @@ public interface ThrowableLongSupplier extends LongSupplier {
     }
 
     /**
+     * Creates a {@link ThrowableLongSupplier} from the given {@link LongSupplier}. This method is just convenience to
+     * provide a mapping for the non-throwable/throwable instances of the corresponding functional interface.
+     *
+     * @param lambda A {@code LongSupplier} which should be mapped to its throwable counterpart
+     * @return A {@code ThrowableLongSupplier} from the given {@code LongSupplier}.
+     * @throws NullPointerException If the given argument is {@code null}
+     */
+    static ThrowableLongSupplier from(final LongSupplier lambda) {
+        Objects.requireNonNull(lambda);
+        return lambda::getAsLong;
+    }
+
+    /**
      * Creates a {@link ThrowableLongSupplier} which always returns a given value.
      *
      * @param ret The return value for the constant

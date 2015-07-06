@@ -70,6 +70,19 @@ public interface ThrowableIntConsumer extends IntConsumer {
     }
 
     /**
+     * Creates a {@link ThrowableIntConsumer} from the given {@link IntConsumer}. This method is just convenience to
+     * provide a mapping for the non-throwable/throwable instances of the corresponding functional interface.
+     *
+     * @param lambda A {@code IntConsumer} which should be mapped to its throwable counterpart
+     * @return A {@code ThrowableIntConsumer} from the given {@code IntConsumer}.
+     * @throws NullPointerException If the given argument is {@code null}
+     */
+    static ThrowableIntConsumer from(final IntConsumer lambda) {
+        Objects.requireNonNull(lambda);
+        return lambda::accept;
+    }
+
+    /**
      * The accept method for this {@link IntConsumer} which is able to throw any {@link Exception} type.
      *
      * @param value The argument for the function to be consumed

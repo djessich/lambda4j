@@ -71,6 +71,20 @@ public interface ThrowableBooleanSupplier extends BooleanSupplier {
     }
 
     /**
+     * Creates a {@link ThrowableBooleanSupplier} from the given {@link BooleanSupplier}. This method is just
+     * convenience to provide a mapping for the non-throwable/throwable instances of the corresponding functional
+     * interface.
+     *
+     * @param lambda A {@code BooleanSupplier} which should be mapped to its throwable counterpart
+     * @return A {@code ThrowableBooleanSupplier} from the given {@code BooleanSupplier}.
+     * @throws NullPointerException If the given argument is {@code null}
+     */
+    static ThrowableBooleanSupplier from(final BooleanSupplier lambda) {
+        Objects.requireNonNull(lambda);
+        return lambda::getAsBoolean;
+    }
+
+    /**
      * Creates a {@link ThrowableBooleanSupplier} which always returns a given value.
      *
      * @param ret The return value for the constant

@@ -73,6 +73,20 @@ public interface ThrowableComparator<T> extends Comparator<T> {
     }
 
     /**
+     * Creates a {@link ThrowableComparator} from the given {@link Comparator}. This method is just convenience to
+     * provide a mapping for the non-throwable/throwable instances of the corresponding functional interface.
+     *
+     * @param <T> The type of the compared values
+     * @param lambda A {@code Comparator} which should be mapped to its throwable counterpart
+     * @return A {@code ThrowableComparator} from the given {@code Comparator}.
+     * @throws NullPointerException If the given argument is {@code null}
+     */
+    static <T> ThrowableComparator<T> from(final Comparator<T> lambda) {
+        Objects.requireNonNull(lambda);
+        return lambda::compare;
+    }
+
+    /**
      * The compare method for this {@link Comparator} which is able to throw any {@link Exception} type.
      *
      * @param o1 The first object to be compared

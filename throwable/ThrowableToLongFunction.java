@@ -74,6 +74,20 @@ public interface ThrowableToLongFunction<T> extends ToLongFunction<T> {
     }
 
     /**
+     * Creates a {@link ThrowableToLongFunction} from the given {@link ToLongFunction}. This method is just convenience
+     * to provide a mapping for the non-throwable/throwable instances of the corresponding functional interface.
+     *
+     * @param <T> The type of argument for the function
+     * @param lambda A {@code ToLongFunction} which should be mapped to its throwable counterpart
+     * @return A {@code ThrowableToLongFunction} from the given {@code ToLongFunction}.
+     * @throws NullPointerException If the given argument is {@code null}
+     */
+    static <T> ThrowableToLongFunction<T> from(final ToLongFunction<T> lambda) {
+        Objects.requireNonNull(lambda);
+        return lambda::applyAsLong;
+    }
+
+    /**
      * Creates a {@link ThrowableToLongFunction} which always returns a given value.
      *
      * @param <T> The type of argument for the function

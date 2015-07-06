@@ -71,6 +71,20 @@ public interface ThrowableDoublePredicate extends DoublePredicate {
     }
 
     /**
+     * Creates a {@link ThrowableDoublePredicate} from the given {@link DoublePredicate}. This method is just
+     * convenience to provide a mapping for the non-throwable/throwable instances of the corresponding functional
+     * interface.
+     *
+     * @param lambda A {@code DoublePredicate} which should be mapped to its throwable counterpart
+     * @return A {@code ThrowableDoublePredicate} from the given {@code DoublePredicate}.
+     * @throws NullPointerException If the given argument is {@code null}
+     */
+    static ThrowableDoublePredicate from(final DoublePredicate lambda) {
+        Objects.requireNonNull(lambda);
+        return lambda::test;
+    }
+
+    /**
      * Creates a {@link ThrowableDoublePredicate} which always returns a given value.
      *
      * @param ret The return value for the constant

@@ -72,6 +72,20 @@ public interface ThrowableDoubleUnaryOperator extends DoubleUnaryOperator {
     }
 
     /**
+     * Creates a {@link ThrowableDoubleUnaryOperator} from the given {@link DoubleUnaryOperator}. This method is just
+     * convenience to provide a mapping for the non-throwable/throwable instances of the corresponding functional
+     * interface.
+     *
+     * @param lambda A {@code DoubleUnaryOperator} which should be mapped to its throwable counterpart
+     * @return A {@code ThrowableDoubleUnaryOperator} from the given {@code DoubleUnaryOperator}.
+     * @throws NullPointerException If the given argument is {@code null}
+     */
+    static ThrowableDoubleUnaryOperator from(final DoubleUnaryOperator lambda) {
+        Objects.requireNonNull(lambda);
+        return lambda::applyAsDouble;
+    }
+
+    /**
      * Creates a {@link ThrowableDoubleUnaryOperator} which always returns a given value.
      *
      * @param ret The return value for the constant

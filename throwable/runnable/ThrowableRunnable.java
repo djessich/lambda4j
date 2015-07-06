@@ -67,6 +67,19 @@ public interface ThrowableRunnable extends Runnable {
     }
 
     /**
+     * Creates a {@link ThrowableRunnable} from the given {@link Runnable}. This method is just convenience to provide
+     * a mapping for the non-throwable/throwable instances of the corresponding functional interface.
+     *
+     * @param lambda A {@code Runnable} which should be mapped to its throwable counterpart
+     * @return A {@code ThrowableRunnable} from the given {@code Runnable}.
+     * @throws NullPointerException If the given argument is {@code null}
+     */
+    static ThrowableRunnable from(final Runnable lambda) {
+        Objects.requireNonNull(lambda);
+        return lambda::run;
+    }
+
+    /**
      * The run method for this {@link Runnable} which is able to throw any {@link Exception} type.
      *
      * @throws Exception Any exception from this functions action
@@ -134,6 +147,43 @@ public interface ThrowableRunnable extends Runnable {
                 X ex = clazz.newInstance();
                 ex.addSuppressed(e);
                 throw ThrowableUtils.sneakyThrow(ex);
+            }
+        };
+    }
+
+    /**
+     * Returns a composed {@link ThrowableRunnable} that executes this {@code ThrowableRunnable}, and if an error
+     * occurred, does nothing. The exception from this {@code ThrowableRunnable} is ignored, unless its an unchecked
+     * exception.
+     *
+     * @return A composed {@code ThrowableRunnable} that executes this {@code ThrowableRunnable}, and if an error
+     * occurred, does nothing.
+     */
+    default Runnable orDoNothing() {
+        return () -> {
+            try {
+                runThrows();
+            } catch (RuntimeException e) {
+                throw e;
+            } catch (Exception ignored) {
+                // do nothing
+            }
+        };
+    }
+
+    /**
+     * Returns a composed {@link ThrowableRunnable} that executes this {@code ThrowableRunnable}, and if an error
+     * occurred, does nothing. The exception from this {@code ThrowableRunnable} is ignored.
+     *
+     * @return A composed {@code ThrowableRunnable} that executes this {@code ThrowableRunnable}, and if an error
+     * occurred, does nothing.
+     */
+    default Runnable orDoNothingAlways() {
+        return () -> {
+            try {
+                runThrows();
+            } catch (Exception ignored) {
+                // do nothing
             }
         };
     }

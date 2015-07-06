@@ -71,6 +71,19 @@ public interface ThrowableLongPredicate extends LongPredicate {
     }
 
     /**
+     * Creates a {@link ThrowableLongPredicate} from the given {@link LongPredicate}. This method is just convenience
+     * to provide a mapping for the non-throwable/throwable instances of the corresponding functional interface.
+     *
+     * @param lambda A {@code LongPredicate} which should be mapped to its throwable counterpart
+     * @return A {@code ThrowableLongPredicate} from the given {@code LongPredicate}.
+     * @throws NullPointerException If the given argument is {@code null}
+     */
+    static ThrowableLongPredicate from(final LongPredicate lambda) {
+        Objects.requireNonNull(lambda);
+        return lambda::test;
+    }
+
+    /**
      * Creates a {@link ThrowableLongPredicate} which always returns a given value.
      *
      * @param ret The return value for the constant

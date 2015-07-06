@@ -71,6 +71,20 @@ public interface ThrowablePredicate<T> extends Predicate<T> {
     }
 
     /**
+     * Creates a {@link ThrowablePredicate} from the given {@link Predicate}. This method is just convenience to
+     * provide a mapping for the non-throwable/throwable instances of the corresponding functional interface.
+     *
+     * @param <T> The type of argument for the function
+     * @param lambda A {@code Predicate} which should be mapped to its throwable counterpart
+     * @return A {@code ThrowablePredicate} from the given {@code Predicate}.
+     * @throws NullPointerException If the given argument is {@code null}
+     */
+    static <T> ThrowablePredicate<T> from(final Predicate<T> lambda) {
+        Objects.requireNonNull(lambda);
+        return lambda::test;
+    }
+
+    /**
      * Creates a {@link ThrowablePredicate} which always returns a given value.
      *
      * @param <T> The type of argument for the function

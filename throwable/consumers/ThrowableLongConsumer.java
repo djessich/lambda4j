@@ -70,6 +70,19 @@ public interface ThrowableLongConsumer extends LongConsumer {
     }
 
     /**
+     * Creates a {@link ThrowableLongConsumer} from the given {@link LongConsumer}. This method is just convenience to
+     * provide a mapping for the non-throwable/throwable instances of the corresponding functional interface.
+     *
+     * @param lambda A {@code LongConsumer} which should be mapped to its throwable counterpart
+     * @return A {@code ThrowableLongConsumer} from the given {@code LongConsumer}.
+     * @throws NullPointerException If the given argument is {@code null}
+     */
+    static ThrowableLongConsumer from(final LongConsumer lambda) {
+        Objects.requireNonNull(lambda);
+        return lambda::accept;
+    }
+
+    /**
      * The accept method for this {@link LongConsumer} which is able to throw any {@link Exception} type.
      *
      * @param value The argument for the function to be consumed

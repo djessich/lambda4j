@@ -72,6 +72,20 @@ public interface ThrowableLongUnaryOperator extends LongUnaryOperator {
     }
 
     /**
+     * Creates a {@link ThrowableLongUnaryOperator} from the given {@link LongUnaryOperator}. This method is just
+     * convenience to provide a mapping for the non-throwable/throwable instances of the corresponding functional
+     * interface.
+     *
+     * @param lambda A {@code LongUnaryOperator} which should be mapped to its throwable counterpart
+     * @return A {@code ThrowableLongUnaryOperator} from the given {@code LongUnaryOperator}.
+     * @throws NullPointerException If the given argument is {@code null}
+     */
+    static ThrowableLongUnaryOperator from(final LongUnaryOperator lambda) {
+        Objects.requireNonNull(lambda);
+        return lambda::applyAsLong;
+    }
+
+    /**
      * Creates a {@link ThrowableLongUnaryOperator} which always returns a given value.
      *
      * @param ret The return value for the constant

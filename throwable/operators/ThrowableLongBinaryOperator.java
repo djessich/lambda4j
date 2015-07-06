@@ -72,6 +72,20 @@ public interface ThrowableLongBinaryOperator extends LongBinaryOperator {
     }
 
     /**
+     * Creates a {@link ThrowableLongBinaryOperator} from the given {@link LongBinaryOperator}. This method is just
+     * convenience to provide a mapping for the non-throwable/throwable instances of the corresponding functional
+     * interface.
+     *
+     * @param lambda A {@code LongBinaryOperator} which should be mapped to its throwable counterpart
+     * @return A {@code ThrowableLongBinaryOperator} from the given {@code LongBinaryOperator}.
+     * @throws NullPointerException If the given argument is {@code null}
+     */
+    static ThrowableLongBinaryOperator from(final LongBinaryOperator lambda) {
+        Objects.requireNonNull(lambda);
+        return lambda::applyAsLong;
+    }
+
+    /**
      * Creates a {@link ThrowableLongBinaryOperator} which always returns a given value.
      *
      * @param ret The return value for the constant

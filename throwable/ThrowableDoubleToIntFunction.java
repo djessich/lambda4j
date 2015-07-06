@@ -72,6 +72,20 @@ public interface ThrowableDoubleToIntFunction extends DoubleToIntFunction {
     }
 
     /**
+     * Creates a {@link ThrowableDoubleToIntFunction} from the given {@link DoubleToIntFunction}. This method is just
+     * convenience to provide a mapping for the non-throwable/throwable instances of the corresponding functional
+     * interface.
+     *
+     * @param lambda A {@code DoubleToIntFunction} which should be mapped to its throwable counterpart
+     * @return A {@code ThrowableDoubleToIntFunction} from the given {@code DoubleToIntFunction}.
+     * @throws NullPointerException If the given argument is {@code null}
+     */
+    static ThrowableDoubleToIntFunction from(final DoubleToIntFunction lambda) {
+        Objects.requireNonNull(lambda);
+        return lambda::applyAsInt;
+    }
+
+    /**
      * Creates a {@link ThrowableDoubleToIntFunction} which always returns a given value.
      *
      * @param ret The return value for the constant

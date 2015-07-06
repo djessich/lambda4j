@@ -74,6 +74,21 @@ public interface ThrowableToDoubleFunction<T> extends ToDoubleFunction<T> {
     }
 
     /**
+     * Creates a {@link ThrowableToDoubleFunction} from the given {@link ToDoubleFunction}. This method is just
+     * convenience to provide a mapping for the non-throwable/throwable instances of the corresponding functional
+     * interface.
+     *
+     * @param <T> The type of argument for the function
+     * @param lambda A {@code ToDoubleFunction} which should be mapped to its throwable counterpart
+     * @return A {@code ThrowableToDoubleFunction} from the given {@code ToDoubleFunction}.
+     * @throws NullPointerException If the given argument is {@code null}
+     */
+    static <T> ThrowableToDoubleFunction<T> from(final ToDoubleFunction<T> lambda) {
+        Objects.requireNonNull(lambda);
+        return lambda::applyAsDouble;
+    }
+
+    /**
      * Creates a {@link ThrowableToDoubleFunction} which always returns a given value.
      *
      * @param <T> The type of argument for the function

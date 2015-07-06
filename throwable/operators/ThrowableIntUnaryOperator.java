@@ -72,6 +72,20 @@ public interface ThrowableIntUnaryOperator extends IntUnaryOperator {
     }
 
     /**
+     * Creates a {@link ThrowableIntUnaryOperator} from the given {@link IntUnaryOperator}. This method is just
+     * convenience to provide a mapping for the non-throwable/throwable instances of the corresponding functional
+     * interface.
+     *
+     * @param lambda A {@code IntUnaryOperator} which should be mapped to its throwable counterpart
+     * @return A {@code ThrowableIntUnaryOperator} from the given {@code IntUnaryOperator}.
+     * @throws NullPointerException If the given argument is {@code null}
+     */
+    static ThrowableIntUnaryOperator from(final IntUnaryOperator lambda) {
+        Objects.requireNonNull(lambda);
+        return lambda::applyAsInt;
+    }
+
+    /**
      * Creates a {@link ThrowableIntUnaryOperator} which always returns a given value.
      *
      * @param ret The return value for the constant

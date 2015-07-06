@@ -73,9 +73,27 @@ public interface ThrowableTriFunction<T, U, V, R> extends TriFunction<T, U, V, R
      * @return The given {@code ThrowableTriFunction} as-is.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static <T, U, V, R> ThrowableTriFunction<T, U, V, R> as(final ThrowableTriFunction<T, U, V, R> lambda) {
+    static <T, U, V, R> ThrowableTriFunction<T, U, V, R> wrap(final ThrowableTriFunction<T, U, V, R> lambda) {
         Objects.requireNonNull(lambda);
         return lambda;
+    }
+
+    /**
+     * Creates a {@link ThrowableTriFunction} from the given {@link TriFunction}. This method is just convenience to
+     * provide a mapping for the non-throwable/throwable instances of the corresponding functional interface.
+     *
+     * @param <T> The type of the first argument to the function
+     * @param <U> The type of the second argument to the function
+     * @param <V> The type of the third argument to the function
+     * @param <V> The type of the third argument to the function
+     * @param <R> The type of return value from the function
+     * @param lambda A {@code TriFunction} which should be mapped to its throwable counterpart
+     * @return A {@code ThrowableTriFunction} from the given {@code TriFunction}.
+     * @throws NullPointerException If the given argument is {@code null}
+     */
+    static <T, U, V, R> ThrowableTriFunction<T, U, V, R> from(final TriFunction<T, U, V, R> lambda) {
+        Objects.requireNonNull(lambda);
+        return lambda::apply;
     }
 
     /**

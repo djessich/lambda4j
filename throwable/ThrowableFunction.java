@@ -74,6 +74,21 @@ public interface ThrowableFunction<T, R> extends Function<T, R> {
     }
 
     /**
+     * Creates a {@link ThrowableFunction} from the given {@link Function}. This method is just convenience to provide
+     * a mapping for the non-throwable/throwable instances of the corresponding functional interface.
+     *
+     * @param <T> The type of argument for the function
+     * @param <R> The type of return value from the function
+     * @param lambda A {@code Function} which should be mapped to its throwable counterpart
+     * @return A {@code ThrowableFunction} from the given {@code Function}.
+     * @throws NullPointerException If the given argument is {@code null}
+     */
+    static <T, R> ThrowableFunction<T, R> from(final Function<T, R> lambda) {
+        Objects.requireNonNull(lambda);
+        return lambda::apply;
+    }
+
+    /**
      * Creates a {@link ThrowableFunction} which always returns a given value.
      *
      * @param <T> The type of argument for the function

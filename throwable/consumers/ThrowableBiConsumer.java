@@ -74,6 +74,21 @@ public interface ThrowableBiConsumer<T, U> extends BiConsumer<T, U> {
     }
 
     /**
+     * Creates a {@link ThrowableBiConsumer} from the given {@link BiConsumer}. This method is just convenience to
+     * provide a mapping for the non-throwable/throwable instances of the corresponding functional interface.
+     *
+     * @param <T> The type of the first argument for the function
+     * @param <U> The type of the second argument for the function
+     * @param lambda A {@code BiConsumer} which should be mapped to its throwable counterpart
+     * @return A {@code ThrowableBiConsumer} from the given {@code BiConsumer}.
+     * @throws NullPointerException If the given argument is {@code null}
+     */
+    static <T, U> ThrowableBiConsumer<T, U> from(final BiConsumer<T, U> lambda) {
+        Objects.requireNonNull(lambda);
+        return lambda::accept;
+    }
+
+    /**
      * The accept method for this {@link BiConsumer} which is able to throw any {@link Exception} type.
      *
      * @param t The first argument for the function to be consumed

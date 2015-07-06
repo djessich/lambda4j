@@ -76,6 +76,22 @@ public interface ThrowableToIntBiFunction<T, U> extends ToIntBiFunction<T, U> {
     }
 
     /**
+     * Creates a {@link ThrowableToIntBiFunction} from the given {@link ToIntBiFunction}. This method is just
+     * convenience to provide a mapping for the non-throwable/throwable instances of the corresponding functional
+     * interface.
+     *
+     * @param <T> The type of the first argument to the function
+     * @param <U> The type of the second argument to the function
+     * @param lambda A {@code ToIntBiFunction} which should be mapped to its throwable counterpart
+     * @return A {@code ThrowableToIntBiFunction} from the given {@code ToIntBiFunction}.
+     * @throws NullPointerException If the given argument is {@code null}
+     */
+    static <T, U> ThrowableToIntBiFunction<T, U> from(final ToIntBiFunction<T, U> lambda) {
+        Objects.requireNonNull(lambda);
+        return lambda::applyAsInt;
+    }
+
+    /**
      * Creates a {@link ThrowableToIntBiFunction} which always returns a given value.
      *
      * @param <T> The type of the first argument to the function

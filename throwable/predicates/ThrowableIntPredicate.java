@@ -71,6 +71,19 @@ public interface ThrowableIntPredicate extends IntPredicate {
     }
 
     /**
+     * Creates a {@link ThrowableIntPredicate} from the given {@link IntPredicate}. This method is just convenience to
+     * provide a mapping for the non-throwable/throwable instances of the corresponding functional interface.
+     *
+     * @param lambda A {@code IntPredicate} which should be mapped to its throwable counterpart
+     * @return A {@code ThrowableIntPredicate} from the given {@code IntPredicate}.
+     * @throws NullPointerException If the given argument is {@code null}
+     */
+    static ThrowableIntPredicate from(final IntPredicate lambda) {
+        Objects.requireNonNull(lambda);
+        return lambda::test;
+    }
+
+    /**
      * Creates a {@link ThrowableIntPredicate} which always returns a given value.
      *
      * @param ret The return value for the constant

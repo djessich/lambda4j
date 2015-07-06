@@ -72,6 +72,20 @@ public interface ThrowableIntBinaryOperator extends IntBinaryOperator {
     }
 
     /**
+     * Creates a {@link ThrowableIntBinaryOperator} from the given {@link IntBinaryOperator}. This method is just
+     * convenience to provide a mapping for the non-throwable/throwable instances of the corresponding functional
+     * interface.
+     *
+     * @param lambda A {@code IntBinaryOperator} which should be mapped to its throwable counterpart
+     * @return A {@code ThrowableIntBinaryOperator} from the given {@code IntBinaryOperator}.
+     * @throws NullPointerException If the given argument is {@code null}
+     */
+    static ThrowableIntBinaryOperator from(final IntBinaryOperator lambda) {
+        Objects.requireNonNull(lambda);
+        return lambda::applyAsInt;
+    }
+
+    /**
      * Creates a {@link ThrowableIntBinaryOperator} which always returns a given value.
      *
      * @param ret The return value for the constant

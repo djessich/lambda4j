@@ -75,6 +75,21 @@ public interface ThrowableBiPredicate<T, U> extends BiPredicate<T, U> {
     }
 
     /**
+     * Creates a {@link ThrowableBiPredicate} from the given {@link BiPredicate}. This method is just convenience to
+     * provide a mapping for the non-throwable/throwable instances of the corresponding functional interface.
+     *
+     * @param <T> The type of the first argument for the function
+     * @param <U> The type of the second argument for the function
+     * @param lambda A {@code BiPredicate} which should be mapped to its throwable counterpart
+     * @return A {@code ThrowableBiPredicate} from the given {@code BiPredicate}.
+     * @throws NullPointerException If the given argument is {@code null}
+     */
+    static <T, U> ThrowableBiPredicate<T, U> from(final BiPredicate<T, U> lambda) {
+        Objects.requireNonNull(lambda);
+        return lambda::test;
+    }
+
+    /**
      * Creates a {@link ThrowableBiPredicate} which always returns a given value.
      *
      * @param <T> The type of the first argument for the function

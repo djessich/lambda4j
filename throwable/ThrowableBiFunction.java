@@ -78,6 +78,22 @@ public interface ThrowableBiFunction<T, U, R> extends BiFunction<T, U, R> {
     }
 
     /**
+     * Creates a {@link ThrowableBiFunction} from the given {@link BiFunction}. This method is just convenience to
+     * provide a mapping for the non-throwable/throwable instances of the corresponding functional interface.
+     *
+     * @param <T> The type of the first argument to the function
+     * @param <U> The type of the second argument to the function
+     * @param <R> The type of return value from the function
+     * @param lambda A {@code BiFunction} which should be mapped to its throwable counterpart
+     * @return A {@code ThrowableBiFunction} from the given {@code BiFunction}.
+     * @throws NullPointerException If the given argument is {@code null}
+     */
+    static <T, U, R> ThrowableBiFunction<T, U, R> from(final BiFunction<T, U, R> lambda) {
+        Objects.requireNonNull(lambda);
+        return lambda::apply;
+    }
+
+    /**
      * Creates a {@link ThrowableBiFunction} which always returns a given value.
      *
      * @param <T> The type of the first argument to the function

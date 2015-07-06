@@ -71,6 +71,19 @@ public interface ThrowableIntSupplier extends IntSupplier {
     }
 
     /**
+     * Creates a {@link ThrowableIntSupplier} from the given {@link IntSupplier}. This method is just convenience to
+     * provide a mapping for the non-throwable/throwable instances of the corresponding functional interface.
+     *
+     * @param lambda A {@code IntSupplier} which should be mapped to its throwable counterpart
+     * @return A {@code ThrowableIntSupplier} from the given {@code IntSupplier}.
+     * @throws NullPointerException If the given argument is {@code null}
+     */
+    static ThrowableIntSupplier from(final IntSupplier lambda) {
+        Objects.requireNonNull(lambda);
+        return lambda::getAsInt;
+    }
+
+    /**
      * Creates a {@link ThrowableIntSupplier} which always returns a given value.
      *
      * @param ret The return value for the constant

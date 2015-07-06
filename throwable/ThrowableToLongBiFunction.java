@@ -76,6 +76,22 @@ public interface ThrowableToLongBiFunction<T, U> extends ToLongBiFunction<T, U> 
     }
 
     /**
+     * Creates a {@link ThrowableToLongBiFunction} from the given {@link ToLongBiFunction}. This method is just
+     * convenience to provide a mapping for the non-throwable/throwable instances of the corresponding functional
+     * interface.
+     *
+     * @param <T> The type of the first argument to the function
+     * @param <U> The type of the second argument to the function
+     * @param lambda A {@code ToLongBiFunction} which should be mapped to its throwable counterpart
+     * @return A {@code ThrowableToLongBiFunction} from the given {@code ToLongBiFunction}.
+     * @throws NullPointerException If the given argument is {@code null}
+     */
+    static <T, U> ThrowableToLongBiFunction<T, U> from(final ToLongBiFunction<T, U> lambda) {
+        Objects.requireNonNull(lambda);
+        return lambda::applyAsLong;
+    }
+
+    /**
      * Creates a {@link ThrowableToLongBiFunction} which always returns a given value.
      *
      * @param <T> The type of the first argument to the function

@@ -74,6 +74,20 @@ public interface ThrowableToIntFunction<T> extends ToIntFunction<T> {
     }
 
     /**
+     * Creates a {@link ThrowableToIntFunction} from the given {@link ToIntFunction}. This method is just convenience
+     * to provide a mapping for the non-throwable/throwable instances of the corresponding functional interface.
+     *
+     * @param <T> The type of argument for the function
+     * @param lambda A {@code ToIntFunction} which should be mapped to its throwable counterpart
+     * @return A {@code ThrowableToIntFunction} from the given {@code ToIntFunction}.
+     * @throws NullPointerException If the given argument is {@code null}
+     */
+    static <T> ThrowableToIntFunction<T> from(final ToIntFunction<T> lambda) {
+        Objects.requireNonNull(lambda);
+        return lambda::applyAsInt;
+    }
+
+    /**
      * Creates a {@link ThrowableToIntFunction} which always returns a given value.
      *
      * @param <T> The type of argument for the function

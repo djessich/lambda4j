@@ -74,6 +74,20 @@ public interface ThrowableUnaryOperator<T> extends UnaryOperator<T> {
     }
 
     /**
+     * Creates a {@link ThrowableUnaryOperator} from the given {@link UnaryOperator}. This method is just convenience
+     * to provide a mapping for the non-throwable/throwable instances of the corresponding functional interface.
+     *
+     * @param <T> The type of argument for the function
+     * @param lambda A {@code UnaryOperator} which should be mapped to its throwable counterpart
+     * @return A {@code ThrowableUnaryOperator} from the given {@code UnaryOperator}.
+     * @throws NullPointerException If the given argument is {@code null}
+     */
+    static <T> ThrowableUnaryOperator<T> from(final UnaryOperator<T> lambda) {
+        Objects.requireNonNull(lambda);
+        return lambda::apply;
+    }
+
+    /**
      * Creates a {@link ThrowableUnaryOperator} which always returns a given value.
      *
      * @param <T> The type of argument for the function

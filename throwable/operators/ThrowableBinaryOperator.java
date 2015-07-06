@@ -74,6 +74,20 @@ public interface ThrowableBinaryOperator<T> extends BinaryOperator<T> {
     }
 
     /**
+     * Creates a {@link ThrowableBinaryOperator} from the given {@link BinaryOperator}. This method is just convenience
+     * to provide a mapping for the non-throwable/throwable instances of the corresponding functional interface.
+     *
+     * @param <T> The type of argument for the function
+     * @param lambda A {@code BinaryOperator} which should be mapped to its throwable counterpart
+     * @return A {@code ThrowableBinaryOperator} from the given {@code BinaryOperator}.
+     * @throws NullPointerException If the given argument is {@code null}
+     */
+    static <T> ThrowableBinaryOperator<T> from(final BinaryOperator<T> lambda) {
+        Objects.requireNonNull(lambda);
+        return lambda::apply;
+    }
+
+    /**
      * Creates a {@link ThrowableBinaryOperator} which always returns a given value.
      *
      * @param <T> The type of argument for the function

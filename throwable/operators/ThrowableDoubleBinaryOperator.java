@@ -72,6 +72,20 @@ public interface ThrowableDoubleBinaryOperator extends DoubleBinaryOperator {
     }
 
     /**
+     * Creates a {@link ThrowableDoubleBinaryOperator} from the given {@link DoubleBinaryOperator}. This method is just
+     * convenience to provide a mapping for the non-throwable/throwable instances of the corresponding functional
+     * interface.
+     *
+     * @param lambda A {@code DoubleBinaryOperator} which should be mapped to its throwable counterpart
+     * @return A {@code ThrowableDoubleBinaryOperator} from the given {@code DoubleBinaryOperator}.
+     * @throws NullPointerException If the given argument is {@code null}
+     */
+    static ThrowableDoubleBinaryOperator from(final DoubleBinaryOperator lambda) {
+        Objects.requireNonNull(lambda);
+        return lambda::applyAsDouble;
+    }
+
+    /**
      * Creates a {@link ThrowableDoubleBinaryOperator} which always returns a given value.
      *
      * @param ret The return value for the constant

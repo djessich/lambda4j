@@ -71,6 +71,20 @@ public interface ThrowableSupplier<T> extends Supplier<T> {
     }
 
     /**
+     * Creates a {@link ThrowableSupplier} from the given {@link Supplier}. This method is just convenience to provide
+     * a mapping for the non-throwable/throwable instances of the corresponding functional interface.
+     *
+     * @param <T> The type of argument for the function
+     * @param lambda A {@code Supplier} which should be mapped to its throwable counterpart
+     * @return A {@code ThrowableSupplier} from the given {@code Supplier}.
+     * @throws NullPointerException If the given argument is {@code null}
+     */
+    static <T> ThrowableSupplier<T> from(final Supplier<T> lambda) {
+        Objects.requireNonNull(lambda);
+        return lambda::get;
+    }
+
+    /**
      * Creates a {@link ThrowableSupplier} which always returns a given value.
      *
      * @param <T> The type of return value from the Supplier

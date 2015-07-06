@@ -74,6 +74,20 @@ public interface ThrowableLongFunction<R> extends LongFunction<R> {
     }
 
     /**
+     * Creates a {@link ThrowableLongFunction} from the given {@link LongFunction}. This method is just convenience to
+     * provide a mapping for the non-throwable/throwable instances of the corresponding functional interface.
+     *
+     * @param <R> The type of return value from the function
+     * @param lambda A {@code LongFunction} which should be mapped to its throwable counterpart
+     * @return A {@code ThrowableLongFunction} from the given {@code LongFunction}.
+     * @throws NullPointerException If the given argument is {@code null}
+     */
+    static <R> ThrowableLongFunction<R> from(final LongFunction<R> lambda) {
+        Objects.requireNonNull(lambda);
+        return lambda::apply;
+    }
+
+    /**
      * Creates a {@link ThrowableLongFunction} which always returns a given value.
      *
      * @param <R> The type of return value from the function

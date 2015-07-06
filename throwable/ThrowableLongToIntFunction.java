@@ -72,6 +72,20 @@ public interface ThrowableLongToIntFunction extends LongToIntFunction {
     }
 
     /**
+     * Creates a {@link ThrowableLongToIntFunction} from the given {@link LongToIntFunction}. This method is just
+     * convenience to provide a mapping for the non-throwable/throwable instances of the corresponding functional
+     * interface.
+     *
+     * @param lambda A {@code LongToIntFunction} which should be mapped to its throwable counterpart
+     * @return A {@code ThrowableLongToIntFunction} from the given {@code LongToIntFunction}.
+     * @throws NullPointerException If the given argument is {@code null}
+     */
+    static ThrowableLongToIntFunction from(final LongToIntFunction lambda) {
+        Objects.requireNonNull(lambda);
+        return lambda::applyAsInt;
+    }
+
+    /**
      * Creates a {@link ThrowableLongToIntFunction} which always returns a given value.
      *
      * @param ret The return value for the constant
