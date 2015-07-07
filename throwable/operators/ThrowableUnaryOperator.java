@@ -48,6 +48,8 @@ import java.util.function.UnaryOperator;
  * Moreover, if no checked exception should be used at all or its use is inappropriate for any reasons, omit the
  * declaration in the <em>throws</em> clause. The checked exception will behave just like a normal <b>unchecked</b>
  * exception due to sneaky throwing.
+ * <p>
+ * This is a {@link FunctionalInterface} whose functional method is {@link #applyThrows(Object)}.
  *
  * @param <T> The type of the argument and the return value for this operator
  * @apiNote This is a throwable JRE lambda
