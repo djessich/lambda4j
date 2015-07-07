@@ -15,6 +15,7 @@
  */
 package at.gridtec.internals.lang.function.throwable;
 
+import at.gridtec.internals.lang.function.TriFunction;
 import at.gridtec.internals.lang.util.ThrowableUtils;
 
 import java.util.Objects;
@@ -48,6 +49,8 @@ import java.util.function.Supplier;
  * Moreover, if no checked exception should be used at all or its use is inappropriate for any reasons, omit the
  * declaration in the <em>throws</em> clause. The checked exception will behave just like a normal <b>unchecked</b>
  * exception due to sneaky throwing.
+ * <p>
+ * This is a {@link FunctionalInterface} whose functional method is {@link #applyThrows(Object, Object, Object)}.
  *
  * @param <T> The type of the first argument to the function
  * @param <U> The type of the second argument to the function
@@ -84,7 +87,6 @@ public interface ThrowableTriFunction<T, U, V, R> extends TriFunction<T, U, V, R
      *
      * @param <T> The type of the first argument to the function
      * @param <U> The type of the second argument to the function
-     * @param <V> The type of the third argument to the function
      * @param <V> The type of the third argument to the function
      * @param <R> The type of return value from the function
      * @param lambda A {@code TriFunction} which should be mapped to its throwable counterpart

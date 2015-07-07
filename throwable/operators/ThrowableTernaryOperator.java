@@ -16,8 +16,8 @@
 
 package at.gridtec.internals.lang.function.throwable.operators;
 
+import at.gridtec.internals.lang.function.TriFunction;
 import at.gridtec.internals.lang.function.operators.TernaryOperator;
-import at.gridtec.internals.lang.function.throwable.TriFunction;
 import at.gridtec.internals.lang.util.ThrowableUtils;
 
 import java.util.Objects;

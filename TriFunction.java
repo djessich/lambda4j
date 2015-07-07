@@ -13,7 +13,9 @@
  * This software consists of voluntary contributions made by individuals on behalf
  * of Gridtec. For more information on Gridtec, please refer to www.gridtec.at homepage.
  */
-package at.gridtec.internals.lang.function.throwable;
+package at.gridtec.internals.lang.function;
+
+import at.gridtec.internals.lang.function.throwable.ThrowableFunction;
 
 import java.util.Objects;
 import java.util.function.Function;
