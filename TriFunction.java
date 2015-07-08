@@ -15,8 +15,6 @@
  */
 package at.gridtec.internals.lang.function;
 
-import at.gridtec.internals.lang.function.throwable.ThrowableFunction;
-
 import java.util.Objects;
 import java.util.function.Function;
 
@@ -65,19 +63,18 @@ public interface TriFunction<T, U, V, R> {
     /**
      * Returns a composed {@link TriFunction} that applies the given {@code before} {@link Function}s to its input, and
      * then applies this function to the result. If evaluation of either of the given functions throws an exception, it
-     * is relayed to the caller of the composed function. To workaround this, provide a throwing counterpart of the
-     * arguments.
+     * is relayed to the caller of the composed function.
      *
      * @param <A> The type of the argument to the first before function
      * @param <B> The type of the argument to the second before function
      * @param <C> The type of the argument to the third before function
-     * @param before1 The first before {@code Function}
-     * @param before2 The second before {@code Function}
-     * @param before3 The third before {@code Function}
+     * @param before1 The first before {@code Function} to apply after this function is applied
+     * @param before2 The second before {@code Function} to apply after this function is applied
+     * @param before3 The third before {@code Function} to apply after this function is applied
      * @return A composed {@code TriFunction} that applies the given {@code before} {@code Function}s to its input, and
      * then applies this function to the result.
      * @throws NullPointerException If one of the given functions are {@code null}
-     * @see ThrowableFunction
+     * @see #andThen(Function)
      */
     default <A, B, C> TriFunction<A, B, C, R> compose(final Function<? super A, ? extends T> before1,
             final Function<? super B, ? extends U> before2, final Function<? super C, ? extends V> before3) {
@@ -90,15 +87,14 @@ public interface TriFunction<T, U, V, R> {
     /**
      * Returns a composed {@link TriFunction} that first applies this function to its input, and then applies the
      * {@code after} {@link Function} to the result. If evaluation of either function throws an exception, it is
-     * relayed to the caller of the composed function. To workaround this, provide a throwing counterpart of the
-     * argument.
+     * relayed to the caller of the composed function.
      *
      * @param <S> The type of output of the {@code after} function, and of the composed function
      * @param after The function to apply after this function is applied
      * @return A composed {@code TriFunction} that first applies this function and then applies the {@code after}
      * function.
      * @throws NullPointerException If after function is {@code null}
-     * @see ThrowableFunction
+     * @see #compose(Function, Function, Function)
      */
     default <S> TriFunction<T, U, V, S> andThen(final Function<? super R, ? extends S> after) {
         Objects.requireNonNull(after);
