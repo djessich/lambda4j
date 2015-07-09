@@ -93,7 +93,7 @@ public interface TriFunction<T, U, V, R> {
      * @param after The function to apply after this function is applied
      * @return A composed {@code TriFunction} that first applies this function and then applies the {@code after}
      * function.
-     * @throws NullPointerException If after function is {@code null}
+     * @throws NullPointerException If given after function is {@code null}
      * @see #compose(Function, Function, Function)
      */
     default <S> TriFunction<T, U, V, S> andThen(final Function<? super R, ? extends S> after) {

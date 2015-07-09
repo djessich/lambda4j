@@ -67,9 +67,9 @@ public interface ToFloatTriFunction<T, U, V> {
      * @param <A> The type of the argument to the first before function
      * @param <B> The type of the argument to the second before function
      * @param <C> The type of the argument to the second before function
-     * @param before1 The first before {@code Function} to apply after this function is applied
-     * @param before2 The second before {@code Function} to apply after this function is applied
-     * @param before3 The third before {@code Function} to apply after this function is applied
+     * @param before1 The first before {@code Function} to apply before this function is applied
+     * @param before2 The second before {@code Function} to apply before this function is applied
+     * @param before3 The third before {@code Function} to apply before this function is applied
      * @return A composed {@code ToFloatTriFunction} that applies the given {@code before} {@code Function}s to its
      * input, and then applies this function to the result.
      * @throws NullPointerException If one of the given functions are {@code null}
@@ -92,7 +92,7 @@ public interface ToFloatTriFunction<T, U, V> {
      * @param after The {@code FloatFunction} to apply after this function is applied
      * @return A composed {@code TriFunction} that first applies this function and then applies the {@code after}
      * function.
-     * @throws NullPointerException If after function is {@code null}
+     * @throws NullPointerException If given after function is {@code null}
      * @see #compose(Function, Function, Function)
      */
     default <R> TriFunction<T, U, V, R> andThen(final FloatFunction<? extends R> after) {

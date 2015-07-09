@@ -79,7 +79,7 @@ public interface FloatFunction<R> {
      * @param after The {@code Function} to apply after this function is applied
      * @return A composed {@code FloatFunction} that first applies this function and then applies the {@code after}
      * function.
-     * @throws NullPointerException If after function is {@code null}
+     * @throws NullPointerException If given after function is {@code null}
      * @see #compose(ToFloatFunction)
      */
     default <S> FloatFunction<S> andThen(final Function<? super R, ? extends S> after) {

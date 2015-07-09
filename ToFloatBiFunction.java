@@ -64,8 +64,8 @@ public interface ToFloatBiFunction<T, U> {
      *
      * @param <A> The type of the argument to the first before function
      * @param <B> The type of the argument to the second before function
-     * @param before1 The first before {@code Function} to apply after this function is applied
-     * @param before2 The second before {@code Function} to apply after this function is applied
+     * @param before1 The first before {@code Function} to apply before this function is applied
+     * @param before2 The second before {@code Function} to apply before this function is applied
      * @return A composed {@code ToFloatBiFunction} that applies the given {@code before} {@code Function}s to its
      * input, and then applies this function to the result.
      * @throws NullPointerException If one of the given functions are {@code null}
@@ -87,7 +87,7 @@ public interface ToFloatBiFunction<T, U> {
      * @param after The {@code FloatFunction} to apply after this function is applied
      * @return A composed {@code BiFunction} that first applies this function and then applies the {@code after}
      * function.
-     * @throws NullPointerException If after function is {@code null}
+     * @throws NullPointerException If given after function is {@code null}
      * @see #compose(Function, Function)
      */
     default <R> BiFunction<T, U, R> andThen(final FloatFunction<? extends R> after) {
