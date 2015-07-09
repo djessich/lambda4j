@@ -50,8 +50,8 @@ import java.util.function.Consumer;
  * <p>
  * This is a {@link FunctionalInterface} whose functional method is {@link #testThrows(Object, Object)}.
  *
- * @param <T> The type of the first argument for the function
- * @param <U> The type of the second argument for the function
+ * @param <T> The type of the first argument for the predicate
+ * @param <U> The type of the second argument for the predicate
  * @apiNote This is a throwable JRE lambda
  * @see java.util.function.Predicate
  */
@@ -65,8 +65,8 @@ public interface ThrowableBiPredicate<T, U> extends BiPredicate<T, U> {
      * overloaded methods accepting different functional interfaces. The given {@code ThrowableBiPredicate} is returned
      * as-is.
      *
-     * @param <T> The type of the first argument for the function
-     * @param <U> The type of the second argument for the function
+     * @param <T> The type of the first argument for the predicate
+     * @param <U> The type of the second argument for the predicate
      * @param lambda The {@code ThrowableBiPredicate} which should be returned as-is.
      * @return The given {@code ThrowableBiPredicate} as-is.
      * @throws NullPointerException If the given argument is {@code null}
@@ -80,8 +80,8 @@ public interface ThrowableBiPredicate<T, U> extends BiPredicate<T, U> {
      * Creates a {@link ThrowableBiPredicate} from the given {@link BiPredicate}. This method is just convenience to
      * provide a mapping for the non-throwable/throwable instances of the corresponding functional interface.
      *
-     * @param <T> The type of the first argument for the function
-     * @param <U> The type of the second argument for the function
+     * @param <T> The type of the first argument for the predicate
+     * @param <U> The type of the second argument for the predicate
      * @param lambda A {@code BiPredicate} which should be mapped to its throwable counterpart
      * @return A {@code ThrowableBiPredicate} from the given {@code BiPredicate}.
      * @throws NullPointerException If the given argument is {@code null}
@@ -94,8 +94,8 @@ public interface ThrowableBiPredicate<T, U> extends BiPredicate<T, U> {
     /**
      * Creates a {@link ThrowableBiPredicate} which always returns a given value.
      *
-     * @param <T> The type of the first argument for the function
-     * @param <U> The type of the second argument for the function
+     * @param <T> The type of the first argument for the predicate
+     * @param <U> The type of the second argument for the predicate
      * @param ret The return value for the constant
      * @return A {@code ThrowableBiPredicate} which always returns a given value.
      * @throws NullPointerException If the given argument is {@code null}
@@ -108,8 +108,8 @@ public interface ThrowableBiPredicate<T, U> extends BiPredicate<T, U> {
     /**
      * The test method for this {@link BiPredicate} which is able to throw any {@link Exception} type.
      *
-     * @param t The first argument to the function
-     * @param u The second argument to the function
+     * @param t The first argument to the predicate
+     * @param u The second argument to the predicate
      * @return {@code true} if the input argument matches the predicate, otherwise {@code false}
      * @throws Exception Any exception from this functions action
      */
@@ -121,8 +121,8 @@ public interface ThrowableBiPredicate<T, U> extends BiPredicate<T, U> {
      * from it. If it is of type {@link RuntimeException}, the exception is rethrown. Other exception types are
      * sneakily thrown.
      *
-     * @param t The first argument to the function
-     * @param u The second argument to the function
+     * @param t The first argument to the predicate
+     * @param u The second argument to the predicate
      * @return {@code true} if the input argument matches the predicate, otherwise {@code false}
      * @see ThrowableUtils#sneakyThrow(Throwable)
      */

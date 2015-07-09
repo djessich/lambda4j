@@ -50,7 +50,7 @@ import java.util.function.Predicate;
  * <p>
  * This is a {@link FunctionalInterface} whose functional method is {@link #testThrows(Object)}.
  *
- * @param <T> The type of argument for the function
+ * @param <T> The type of argument for the predicate
  * @apiNote This is a throwable JRE lambda
  */
 @SuppressWarnings("unused")
@@ -62,7 +62,7 @@ public interface ThrowablePredicate<T> extends Predicate<T> {
      * in case the given {@link ThrowablePredicate} is ambiguous for the compiler. This might happen for overloaded
      * methods accepting different functional interfaces. The given {@code ThrowablePredicate} is returned as-is.
      *
-     * @param <T> The type of argument for the function
+     * @param <T> The type of argument for the predicate
      * @param lambda The {@code ThrowablePredicate} which should be returned as-is.
      * @return The given {@code ThrowablePredicate} as-is.
      * @throws NullPointerException If the given argument is {@code null}
@@ -76,7 +76,7 @@ public interface ThrowablePredicate<T> extends Predicate<T> {
      * Creates a {@link ThrowablePredicate} from the given {@link Predicate}. This method is just convenience to
      * provide a mapping for the non-throwable/throwable instances of the corresponding functional interface.
      *
-     * @param <T> The type of argument for the function
+     * @param <T> The type of argument for the predicate
      * @param lambda A {@code Predicate} which should be mapped to its throwable counterpart
      * @return A {@code ThrowablePredicate} from the given {@code Predicate}.
      * @throws NullPointerException If the given argument is {@code null}
@@ -89,7 +89,7 @@ public interface ThrowablePredicate<T> extends Predicate<T> {
     /**
      * Creates a {@link ThrowablePredicate} which always returns a given value.
      *
-     * @param <T> The type of argument for the function
+     * @param <T> The type of argument for the predicate
      * @param ret The return value for the constant
      * @return A {@code ThrowablePredicate} which always returns a given value.
      * @throws NullPointerException If the given argument is {@code null}
@@ -100,23 +100,9 @@ public interface ThrowablePredicate<T> extends Predicate<T> {
     }
 
     /**
-     * Returns a {@link Predicate} that tests if two arguments are not equal according to {@link Objects#equals(Object,
-     * Object)}.
-     *
-     * @param <T> The type of argument for the function
-     * @param targetRef The object reference with which to compare for equality, which may be {@code null}
-     * @return A {@code Predicate} that tests if two arguments are not equal according to {@link Objects#equals(Object,
-     * Object)}
-     * @see java.util.function.Predicate#isEqual(Object)
-     */
-    static <T> ThrowablePredicate<T> isNotEqual(Object targetRef) {
-        return (targetRef == null) ? object -> !Objects.isNull(object) : object -> !targetRef.equals(object);
-    }
-
-    /**
      * The test method for this {@link Predicate} which is able to throw any {@link Exception} type.
      *
-     * @param t The argument for the function
+     * @param t The argument for the predicate
      * @return {@code true} if the input argument matches the predicate, otherwise {@code false}
      * @throws Exception Any exception from this functions action
      */
@@ -127,7 +113,7 @@ public interface ThrowablePredicate<T> extends Predicate<T> {
      * {@link #testThrows(Object)} method of this interface and catches the thrown {@link Exception}s from it. If it is
      * of type {@link RuntimeException}, the exception is rethrown. Other exception types are sneakily thrown.
      *
-     * @param t The argument for the function
+     * @param t The argument for the predicate
      * @return {@code true} if the input argument matches the predicate, otherwise {@code false}
      * @see ThrowableUtils#sneakyThrow(Throwable)
      */
