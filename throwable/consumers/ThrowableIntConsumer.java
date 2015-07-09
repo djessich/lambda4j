@@ -85,8 +85,8 @@ public interface ThrowableIntConsumer extends IntConsumer {
     /**
      * The accept method for this {@link IntConsumer} which is able to throw any {@link Exception} type.
      *
-     * @param value The argument for the function to be consumed
-     * @throws Exception Any exception from this functions action
+     * @param value The argument for the operation to be consumed
+     * @throws Exception Any exception from this operations action
      */
     void acceptThrows(int value) throws Exception;
 
@@ -95,7 +95,7 @@ public interface ThrowableIntConsumer extends IntConsumer {
      * {@link #acceptThrows(int)} method of this interface and catches the thrown {@link Exception}s from it. If it is
      * of type {@link RuntimeException}, the exception is rethrown. Other exception types are sneakily thrown.
      *
-     * @param value The argument for the function to be consumed
+     * @param value The argument for the operation to be consumed
      * @see ThrowableUtils#sneakyThrow(Throwable)
      */
     @Override

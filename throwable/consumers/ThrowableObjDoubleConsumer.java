@@ -47,7 +47,7 @@ import java.util.function.ObjDoubleConsumer;
  * declaration in the <em>throws</em> clause. The checked exception will behave just like a normal <b>unchecked</b>
  * exception due to sneaky throwing.
  *
- * @param <T> The type of argument for the function
+ * @param <T> The type of argument for the operation
  * @apiNote This is a throwable JRE lambda
  * @see java.util.function.Consumer
  */
@@ -61,7 +61,7 @@ public interface ThrowableObjDoubleConsumer<T> extends ObjDoubleConsumer<T> {
      * might happen for overloaded methods accepting different functional interfaces. The given {@code
      * ThrowableObjDoubleConsumer} is returned as-is.
      *
-     * @param <T> The type of argument for the function
+     * @param <T> The type of argument for the operation
      * @param lambda The {@code ThrowableObjDoubleConsumer} which should be returned as-is.
      * @return The given {@code ThrowableObjDoubleConsumer} as-is.
      * @throws NullPointerException If the given argument is {@code null}
@@ -76,7 +76,7 @@ public interface ThrowableObjDoubleConsumer<T> extends ObjDoubleConsumer<T> {
      * convenience to provide a mapping for the non-throwable/throwable instances of the corresponding functional
      * interface.
      *
-     * @param <T> The type of argument for the function
+     * @param <T> The type of argument for the operation
      * @param lambda A {@code ObjDoubleConsumer} which should be mapped to its throwable counterpart
      * @return A {@code ThrowableObjDoubleConsumer} from the given {@code ObjDoubleConsumer}.
      * @throws NullPointerException If the given argument is {@code null}
@@ -89,9 +89,9 @@ public interface ThrowableObjDoubleConsumer<T> extends ObjDoubleConsumer<T> {
     /**
      * The accept method for this {@link ObjDoubleConsumer} which is able to throw any {@link Exception} type.
      *
-     * @param t The first argument for the function to be consumed
-     * @param value The second argument for the function to be consumed
-     * @throws Exception Any exception from this functions action
+     * @param t The first argument for the operation to be consumed
+     * @param value The second argument for the operation to be consumed
+     * @throws Exception Any exception from this operations action
      */
     void acceptThrows(T t, double value) throws Exception;
 
@@ -101,8 +101,8 @@ public interface ThrowableObjDoubleConsumer<T> extends ObjDoubleConsumer<T> {
      * Exception}s from it. If it is of type {@link RuntimeException}, the exception is rethrown. Other exception types
      * are sneakily thrown.
      *
-     * @param t The first argument for the function to be consumed
-     * @param value The second argument for the function to be consumed
+     * @param t The first argument for the operation to be consumed
+     * @param value The second argument for the operation to be consumed
      * @see ThrowableUtils#sneakyThrow(Throwable)
      */
     @Override

@@ -47,7 +47,7 @@ import java.util.function.ObjIntConsumer;
  * declaration in the <em>throws</em> clause. The checked exception will behave just like a normal <b>unchecked</b>
  * exception due to sneaky throwing.
  *
- * @param <T> The type of argument for the function
+ * @param <T> The type of argument for the operation
  * @apiNote This is a throwable JRE lambda
  * @see java.util.function.Consumer
  */
@@ -61,7 +61,7 @@ public interface ThrowableObjIntConsumer<T> extends ObjIntConsumer<T> {
      * overloaded methods accepting different functional interfaces. The given {@code ThrowableObjIntConsumer} is
      * returned as-is.
      *
-     * @param <T> The type of argument for the function
+     * @param <T> The type of argument for the operation
      * @param lambda The {@code ThrowableObjIntConsumer} which should be returned as-is.
      * @return The given {@code ThrowableObjIntConsumer} as-is.
      * @throws NullPointerException If the given argument is {@code null}
@@ -75,7 +75,7 @@ public interface ThrowableObjIntConsumer<T> extends ObjIntConsumer<T> {
      * Creates a {@link ThrowableObjIntConsumer} from the given {@link ObjIntConsumer}. This method is just convenience
      * to provide a mapping for the non-throwable/throwable instances of the corresponding functional interface.
      *
-     * @param <T> The type of argument for the function
+     * @param <T> The type of argument for the operation
      * @param lambda A {@code ObjIntConsumer} which should be mapped to its throwable counterpart
      * @return A {@code ThrowableObjIntConsumer} from the given {@code ObjIntConsumer}.
      * @throws NullPointerException If the given argument is {@code null}
@@ -88,9 +88,9 @@ public interface ThrowableObjIntConsumer<T> extends ObjIntConsumer<T> {
     /**
      * The accept method for this {@link ObjIntConsumer} which is able to throw any {@link Exception} type.
      *
-     * @param t The first argument for the function to be consumed
-     * @param value The second argument for the function to be consumed
-     * @throws Exception Any exception from this functions action
+     * @param t The first argument for the operation to be consumed
+     * @param value The second argument for the operation to be consumed
+     * @throws Exception Any exception from this operations action
      */
     void acceptThrows(T t, int value) throws Exception;
 
@@ -100,8 +100,8 @@ public interface ThrowableObjIntConsumer<T> extends ObjIntConsumer<T> {
      * from it. If it is of type {@link RuntimeException}, the exception is rethrown. Other exception types are
      * sneakily thrown.
      *
-     * @param t The first argument for the function to be consumed
-     * @param value The second argument for the function to be consumed
+     * @param t The first argument for the operation to be consumed
+     * @param value The second argument for the operation to be consumed
      * @see ThrowableUtils#sneakyThrow(Throwable)
      */
     @Override

@@ -38,18 +38,18 @@ public interface FloatTriConsumer {
     /**
      * Performs this operation on the given arguments.
      *
-     * @param value1 The first argument for the function to be consumed
-     * @param value2 The second argument for the function to be consumed
+     * @param value1 The first argument for the operation to be consumed
+     * @param value2 The second argument for the operation to be consumed
      */
     void accept(float value1, float value2);
 
     /**
      * Returns a composed {@link BiConsumer} that applies the given {@code before} {@link ToFloatFunction}s to its
      * input, and then applies this operation to the result. If evaluation of either operation throws an exception, it
-     * is relayed to the caller of the composed function.
+     * is relayed to the caller of the composed operation.
      *
-     * @param <T> The type of the argument for the first before function, and of composed function
-     * @param <U> The type of the argument to the second before function, and of composed function
+     * @param <T> The type of the argument for the first before function, and of composed operation
+     * @param <U> The type of the argument to the second before function, and of composed operation
      * @param before1 The first before {@code ToFloatFunction} to apply before this operation is applied
      * @param before1 The second before {@code ToFloatFunction} to apply before this operation is applied
      * @return A composed {@code BiConsumer} that applies the given {@code before} {@code ToFloatFunction}s to its
@@ -86,9 +86,8 @@ public interface FloatTriConsumer {
 
     /**
      * Returns a composed {@link BiConsumer} which represents this {@link FloatTriConsumer}. Thereby the primitive
-     * input
-     * argument for this function is autoboxed. This method is just convenience to provide the ability to use this
-     * {@code FloatBiConsumer} with JRE specific methods, only accepting {@code Function}.
+     * input argument for this operation is autoboxed. This method is just convenience to provide the ability to use
+     * this {@code FloatBiConsumer} with JRE specific methods, only accepting {@code Function}.
      *
      * @return A composed {@code BiConsumer} which represents this {@code FloatBiConsumer}.
      */

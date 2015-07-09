@@ -37,16 +37,16 @@ public interface FloatConsumer {
     /**
      * Performs this operation on the given argument.
      *
-     * @param value The argument for the function to be consumed
+     * @param value The argument for the operation to be consumed
      */
     void accept(float value);
 
     /**
      * Returns a composed {@link Consumer} that applies the given {@code before} {@link ToFloatFunction} to its input,
      * and then applies this operation to the result. If evaluation of either operation throws an exception, it is
-     * relayed to the caller of the composed function.
+     * relayed to the caller of the composed operation.
      *
-     * @param <T> The type of argument for the function, and of composed operation
+     * @param <T> The type of argument for the operation, and of composed operation
      * @param before The {@code ToFloatFunction} to apply before this operation is applied
      * @return A composed {@code Consumer} that applies the given {@code before} {@code ToFloatFunction} to its input,
      * and then applies this operation to the result.
@@ -80,7 +80,7 @@ public interface FloatConsumer {
 
     /**
      * Returns a composed {@link Consumer} which represents this {@link FloatConsumer}. Thereby the primitive input
-     * argument for this function is autoboxed. This method is just convenience to provide the ability to use this
+     * argument for this operation is autoboxed. This method is just convenience to provide the ability to use this
      * {@code FloatConsumer} with JRE specific methods, only accepting {@code Function}.
      *
      * @return A composed {@code Consumer} which represents this {@code FloatConsumer}.
