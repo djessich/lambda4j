@@ -27,7 +27,7 @@ import java.util.Objects;
  * <p>
  * This is a {@link FunctionalInterface} whose functional method is {@link #apply(Object, Object, Object)}.
  *
- * @param <T> the type of the operands and result of the operator
+ * @param <T> The type of the operands and result of the operator
  */
 @SuppressWarnings("unused")
 @FunctionalInterface
@@ -36,7 +36,7 @@ public interface TernaryOperator<T> extends TriFunction<T, T, T, T> {
     /**
      * Creates a {@link TernaryOperator} which always returns a given value.
      *
-     * @param <T> The type of argument for the function
+     * @param <T> The type of argument for the operator
      * @param r The return value for the constant
      * @return A {@code TernaryOperator} which always returns a given value.
      * @throws NullPointerException If the given argument is {@code null}
