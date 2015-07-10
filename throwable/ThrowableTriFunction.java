@@ -107,10 +107,8 @@ public interface ThrowableTriFunction<T, U, V, R> extends TriFunction<T, U, V, R
      * @param <R> The type of return value from the function
      * @param r The return value for the constant
      * @return A {@code ThrowableTriFunction} which always returns a given value.
-     * @throws NullPointerException If the given argument is {@code null}
      */
     static <T, U, V, R> ThrowableTriFunction<T, U, V, R> constant(R r) {
-        Objects.requireNonNull(r);
         return (t, u, v) -> r;
     }
 

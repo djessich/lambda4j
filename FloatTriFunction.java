@@ -26,7 +26,7 @@ import java.util.function.Function;
  * This is a {@link FunctionalInterface} whose functional method is {@link #apply(float, float, float)}.
  *
  * @param <R> The type of return value from the function
- * @see TriFunction
+ * @see at.gridtec.internals.lang.function.consumer.TriConsumer
  */
 @SuppressWarnings("unused")
 @FunctionalInterface
@@ -38,10 +38,8 @@ public interface FloatTriFunction<R> {
      * @param <R> The type of return value from the function
      * @param r The return value for the constant
      * @return A {@code FloatTriFunction} which always returns a given value.
-     * @throws NullPointerException If the given argument is {@code null}
      */
     static <R> FloatTriFunction<R> constant(R r) {
-        Objects.requireNonNull(r);
         return (t, u, v) -> r;
     }
 
@@ -50,7 +48,7 @@ public interface FloatTriFunction<R> {
      *
      * @param value1 The first argument to the function
      * @param value2 The second argument to the function
-     * @param value3 The second argument to the function
+     * @param value3 The third argument to the function
      * @return The return value from the function, which is its result.
      */
     R apply(float value1, float value2, float value3);
@@ -98,8 +96,7 @@ public interface FloatTriFunction<R> {
 
     /**
      * Returns a composed {@link TriFunction} which represents this {@link FloatTriFunction}. Thereby the primitive
-     * input argument for this function is autoboxed. This method is just convenience to provide the ability to use
-     * this {@code FloatTriFunction} with JRE specific methods, only accepting {@code TriFunction}.
+     * input argument for this function is autoboxed.
      *
      * @return A composed {@code TriFunction} which represents this {@code FloatTriFunction}.
      */

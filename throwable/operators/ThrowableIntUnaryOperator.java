@@ -92,10 +92,8 @@ public interface ThrowableIntUnaryOperator extends IntUnaryOperator {
      *
      * @param ret The return value for the constant
      * @return A {@code ThrowableIntUnaryOperator} which always returns a given value.
-     * @throws NullPointerException If the given argument is {@code null}
      */
     static ThrowableIntUnaryOperator constant(int ret) {
-        Objects.requireNonNull(ret);
         return operand -> ret;
     }
 

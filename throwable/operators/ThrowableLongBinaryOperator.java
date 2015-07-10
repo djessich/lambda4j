@@ -92,10 +92,8 @@ public interface ThrowableLongBinaryOperator extends LongBinaryOperator {
      *
      * @param ret The return value for the constant
      * @return A {@code ThrowableLongBinaryOperator} which always returns a given value.
-     * @throws NullPointerException If the given argument is {@code null}
      */
     static ThrowableLongBinaryOperator constant(long ret) {
-        Objects.requireNonNull(ret);
         return (left, right) -> ret;
     }
 

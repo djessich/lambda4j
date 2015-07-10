@@ -98,10 +98,8 @@ public interface ThrowableBiPredicate<T, U> extends BiPredicate<T, U> {
      * @param <U> The type of the second argument for the predicate
      * @param ret The return value for the constant
      * @return A {@code ThrowableBiPredicate} which always returns a given value.
-     * @throws NullPointerException If the given argument is {@code null}
      */
     static <T, U> ThrowableBiPredicate<T, U> constant(boolean ret) {
-        Objects.requireNonNull(ret);
         return (t, u) -> ret;
     }
 

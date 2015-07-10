@@ -97,10 +97,8 @@ public interface ThrowableFunction<T, R> extends Function<T, R> {
      * @param <R> The type of return value from the function
      * @param r The return value for the constant
      * @return A {@code ThrowableFunction} which always returns a given value.
-     * @throws NullPointerException If the given argument is {@code null}
      */
     static <T, R> ThrowableFunction<T, R> constant(R r) {
-        Objects.requireNonNull(r);
         return t -> r;
     }
 

@@ -28,7 +28,7 @@ import java.util.function.Function;
  *
  * @param <T> The type of the first argument to the function
  * @param <U> The type of the second argument to the function
- * @see BiFunction
+ * @see java.util.function.BiFunction
  */
 @SuppressWarnings("unused")
 @FunctionalInterface
@@ -41,10 +41,8 @@ public interface ToFloatBiFunction<T, U> {
      * @param <U> The type of the second argument to the function
      * @param ret The return value for the constant
      * @return A {@code ToFloatFunction} which always returns a given value.
-     * @throws NullPointerException If the given argument is {@code null}
      */
     static <T, U> ToFloatBiFunction<T, U> constant(float ret) {
-        Objects.requireNonNull(ret);
         return (t, u) -> ret;
     }
 

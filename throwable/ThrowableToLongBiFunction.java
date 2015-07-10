@@ -100,10 +100,8 @@ public interface ThrowableToLongBiFunction<T, U> extends ToLongBiFunction<T, U> 
      * @param <U> The type of the second argument to the function
      * @param ret The return value for the constant
      * @return A {@code ThrowableToLongBiFunction} which always returns a given value.
-     * @throws NullPointerException If the given argument is {@code null}
      */
     static <T, U> ThrowableToLongBiFunction<T, U> constant(long ret) {
-        Objects.requireNonNull(ret);
         return (t, u) -> ret;
     }
 

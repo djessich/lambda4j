@@ -92,10 +92,8 @@ public interface ThrowableSupplier<T> extends Supplier<T> {
      * @param <T> The type of return value from the Supplier
      * @param t The return value for the constant
      * @return A {@code ThrowableSupplier} which always returns a given value.
-     * @throws NullPointerException If the given argument is {@code null}
      */
     static <T> ThrowableSupplier<T> of(T t) {
-        Objects.requireNonNull(t);
         return () -> t;
     }
 

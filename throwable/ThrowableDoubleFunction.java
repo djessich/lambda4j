@@ -95,10 +95,8 @@ public interface ThrowableDoubleFunction<R> extends DoubleFunction<R> {
      * @param <R> The type of return value from the function
      * @param r The return value for the constant
      * @return A {@code ThrowableDoubleFunction} which always returns a given value.
-     * @throws NullPointerException If the given argument is {@code null}
      */
     static <R> ThrowableDoubleFunction<R> constant(R r) {
-        Objects.requireNonNull(r);
         return value -> r;
     }
 

@@ -68,10 +68,8 @@ public interface ThrowableIntFunction<R> extends IntFunction<R> {
      * @param <R> The type of return value from the function
      * @param lambda The {@code ThrowableIntFunction} which should be returned as-is.
      * @return The given {@code ThrowableIntFunction} as-is.
-     * @throws NullPointerException If the given argument is {@code null}
      */
     static <R> ThrowableIntFunction<R> wrap(final ThrowableIntFunction<R> lambda) {
-        Objects.requireNonNull(lambda);
         return lambda;
     }
 

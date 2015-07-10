@@ -92,10 +92,8 @@ public interface ThrowableDoubleToLongFunction extends DoubleToLongFunction {
      *
      * @param ret The return value for the constant
      * @return A {@code ThrowableDoubleToLongFunction} which always returns a given value.
-     * @throws NullPointerException If the given argument is {@code null}
      */
     static ThrowableDoubleToLongFunction constant(long ret) {
-        Objects.requireNonNull(ret);
         return value -> ret;
     }
 

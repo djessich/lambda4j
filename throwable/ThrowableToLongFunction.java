@@ -95,10 +95,8 @@ public interface ThrowableToLongFunction<T> extends ToLongFunction<T> {
      * @param <T> The type of argument for the function
      * @param ret The return value for the constant
      * @return A {@code ThrowableToLongFunction} which always returns a given value.
-     * @throws NullPointerException If the given argument is {@code null}
      */
     static <T> ThrowableToLongFunction<T> constant(long ret) {
-        Objects.requireNonNull(ret);
         return t -> ret;
     }
 

@@ -92,10 +92,8 @@ public interface ThrowablePredicate<T> extends Predicate<T> {
      * @param <T> The type of argument for the predicate
      * @param ret The return value for the constant
      * @return A {@code ThrowablePredicate} which always returns a given value.
-     * @throws NullPointerException If the given argument is {@code null}
      */
     static <T> ThrowablePredicate<T> constant(boolean ret) {
-        Objects.requireNonNull(ret);
         return t -> ret;
     }
 

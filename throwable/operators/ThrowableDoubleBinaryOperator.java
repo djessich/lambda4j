@@ -92,10 +92,8 @@ public interface ThrowableDoubleBinaryOperator extends DoubleBinaryOperator {
      *
      * @param ret The return value for the constant
      * @return A {@code ThrowableDoubleBinaryOperator} which always returns a given value.
-     * @throws NullPointerException If the given argument is {@code null}
      */
     static ThrowableDoubleBinaryOperator constant(double ret) {
-        Objects.requireNonNull(ret);
         return (left, right) -> ret;
     }
 

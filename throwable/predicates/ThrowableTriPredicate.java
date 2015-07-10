@@ -101,10 +101,8 @@ public interface ThrowableTriPredicate<T, U, V> extends TriPredicate<T, U, V> {
      * @param <V> The type of the third argument for the predicate
      * @param ret The return value for the constant
      * @return A {@code ThrowableTriPredicate} which always returns a given value.
-     * @throws NullPointerException If the given argument is {@code null}
      */
     static <T, U, V> ThrowableTriPredicate<T, U, V> constant(boolean ret) {
-        Objects.requireNonNull(ret);
         return (t, u, v) -> ret;
     }
 

@@ -33,6 +33,19 @@ import java.util.function.Predicate;
 public interface TriPredicate<T, U, V> {
 
     /**
+     * Creates a {@link TriPredicate} which always returns a given value.
+     *
+     * @param <T> The type of the first argument to the predicate
+     * @param <U> The type of the second argument to the predicate
+     * @param <V> The type of the third argument to the predicate
+     * @param ret The return value for the constant
+     * @return A {@code TriPredicate} which always returns a given value.
+     */
+    static <T, U, V> TriPredicate<T, U, V> constant(boolean ret) {
+        return (t, v, u) -> ret;
+    }
+
+    /**
      * Returns a {@link TriPredicate} that tests if three arguments are equal according to {@link
      * Objects#equals(Object)} method.
      *
@@ -56,8 +69,9 @@ public interface TriPredicate<T, U, V> {
     /**
      * Evaluates this predicate on the given arguments.
      *
-     * @param t the first input argument
-     * @param u the second input argument
+     * @param t The first argument to the predicate
+     * @param u The second argument to the predicate
+     * @param v The third argument to the predicate
      * @return {@code true} if the input arguments match the predicate,
      * otherwise {@code false}
      */

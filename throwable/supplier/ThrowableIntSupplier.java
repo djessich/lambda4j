@@ -90,10 +90,8 @@ public interface ThrowableIntSupplier extends IntSupplier {
      *
      * @param ret The return value for the constant
      * @return A {@code ThrowableIntSupplier} which always returns a given value.
-     * @throws NullPointerException If the given argument is {@code null}
      */
     static ThrowableIntSupplier of(int ret) {
-        Objects.requireNonNull(ret);
         return () -> ret;
     }
 

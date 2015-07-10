@@ -43,10 +43,8 @@ public interface TriFunction<T, U, V, R> {
      * @param <R> The type of return value from the function
      * @param r The return value for the constant
      * @return A {@code TriFunction} which always returns a given value.
-     * @throws NullPointerException If the given argument is {@code null}
      */
     static <T, U, V, R> TriFunction<T, U, V, R> constant(R r) {
-        Objects.requireNonNull(r);
         return (t, u, v) -> r;
     }
 

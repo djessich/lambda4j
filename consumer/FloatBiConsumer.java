@@ -28,7 +28,7 @@ import java.util.function.BiConsumer;
  * <p>
  * This is a {@link FunctionalInterface} whose functional method is {@link #accept(float, float)}.
  *
- * @see BiConsumer
+ * @see java.util.function.BiConsumer
  */
 @SuppressWarnings("unused")
 @FunctionalInterface
@@ -50,7 +50,7 @@ public interface FloatBiConsumer {
      * @param <T> The type of the argument for the first before function, and of composed operation
      * @param <U> The type of the argument to the second before function, and of composed operation
      * @param before1 The first before {@code ToFloatFunction} to apply before this operation is applied
-     * @param before1 The second before {@code ToFloatFunction} to apply before this operation is applied
+     * @param before2 The second before {@code ToFloatFunction} to apply before this operation is applied
      * @return A composed {@code BiConsumer} that applies the given {@code before} {@code ToFloatFunction}s to its
      * input, and then applies this operation to the result.
      * @throws NullPointerException If one of the given functions are {@code null}
@@ -86,7 +86,7 @@ public interface FloatBiConsumer {
     /**
      * Returns a composed {@link BiConsumer} which represents this {@link FloatBiConsumer}. Thereby the primitive input
      * argument for this operation is autoboxed. This method is just convenience to provide the ability to use this
-     * {@code FloatBiConsumer} with JRE specific methods, only accepting {@code Function}.
+     * {@code FloatBiConsumer} with JRE specific methods, only accepting {@code BiConsumer}.
      *
      * @return A composed {@code BiConsumer} which represents this {@code FloatBiConsumer}.
      */

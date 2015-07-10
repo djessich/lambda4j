@@ -103,10 +103,8 @@ public interface ThrowableBiFunction<T, U, R> extends BiFunction<T, U, R> {
      * @param <R> The type of return value from the function
      * @param r The return value for the constant
      * @return A {@code ThrowableBiFunction} which always returns a given value.
-     * @throws NullPointerException If the given argument is {@code null}
      */
     static <T, U, R> ThrowableBiFunction<T, U, R> constant(R r) {
-        Objects.requireNonNull(r);
         return (t, u) -> r;
     }
 

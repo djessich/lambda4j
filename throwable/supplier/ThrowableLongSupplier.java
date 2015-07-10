@@ -90,10 +90,8 @@ public interface ThrowableLongSupplier extends LongSupplier {
      *
      * @param ret The return value for the constant
      * @return A {@code ThrowableLongSupplier} which always returns a given value.
-     * @throws NullPointerException If the given argument is {@code null}
      */
     static ThrowableLongSupplier of(long ret) {
-        Objects.requireNonNull(ret);
         return () -> ret;
     }
 

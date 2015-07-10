@@ -90,10 +90,8 @@ public interface ThrowableIntPredicate extends IntPredicate {
      *
      * @param ret The return value for the constant
      * @return A {@code ThrowableIntPredicate} which always returns a given value.
-     * @throws NullPointerException If the given argument is {@code null}
      */
     static ThrowableIntPredicate constant(boolean ret) {
-        Objects.requireNonNull(ret);
         return value -> ret;
     }
 

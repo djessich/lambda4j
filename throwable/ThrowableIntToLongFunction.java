@@ -92,10 +92,8 @@ public interface ThrowableIntToLongFunction extends IntToLongFunction {
      *
      * @param ret The return value for the constant
      * @return A {@code ThrowableIntToLongFunction} which always returns a given value.
-     * @throws NullPointerException If the given argument is {@code null}
      */
     static ThrowableIntToLongFunction constant(long ret) {
-        Objects.requireNonNull(ret);
         return value -> ret;
     }
 

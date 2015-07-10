@@ -91,10 +91,8 @@ public interface ThrowableBooleanSupplier extends BooleanSupplier {
      *
      * @param ret The return value for the constant
      * @return A {@code ThrowableBooleanSupplier} which always returns a given value.
-     * @throws NullPointerException If the given argument is {@code null}
      */
     static ThrowableBooleanSupplier of(boolean ret) {
-        Objects.requireNonNull(ret);
         return () -> ret;
     }
 

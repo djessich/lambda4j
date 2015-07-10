@@ -90,10 +90,8 @@ public interface ThrowableDoubleSupplier extends DoubleSupplier {
      *
      * @param ret The return value for the constant
      * @return A {@code ThrowableDoubleSupplier} which always returns a given value.
-     * @throws NullPointerException If the given argument is {@code null}
      */
     static ThrowableDoubleSupplier of(double ret) {
-        Objects.requireNonNull(ret);
         return () -> ret;
     }
 

@@ -28,7 +28,7 @@ import java.util.function.Consumer;
  * <p>
  * This is a {@link FunctionalInterface} whose functional method is {@link #accept(float)}.
  *
- * @see Consumer
+ * @see java.util.function.Consumer
  */
 @SuppressWarnings("unused")
 @FunctionalInterface
@@ -81,7 +81,7 @@ public interface FloatConsumer {
     /**
      * Returns a composed {@link Consumer} which represents this {@link FloatConsumer}. Thereby the primitive input
      * argument for this operation is autoboxed. This method is just convenience to provide the ability to use this
-     * {@code FloatConsumer} with JRE specific methods, only accepting {@code Function}.
+     * {@code FloatConsumer} with JRE specific methods, only accepting {@code Consumer}.
      *
      * @return A composed {@code Consumer} which represents this {@code FloatConsumer}.
      */

@@ -92,10 +92,8 @@ public interface ThrowableDoubleToIntFunction extends DoubleToIntFunction {
      *
      * @param ret The return value for the constant
      * @return A {@code ThrowableDoubleToIntFunction} which always returns a given value.
-     * @throws NullPointerException If the given argument is {@code null}
      */
     static ThrowableDoubleToIntFunction constant(int ret) {
-        Objects.requireNonNull(ret);
         return value -> ret;
     }
 

@@ -92,10 +92,8 @@ public interface ThrowableIntBinaryOperator extends IntBinaryOperator {
      *
      * @param ret The return value for the constant
      * @return A {@code ThrowableIntBinaryOperator} which always returns a given value.
-     * @throws NullPointerException If the given argument is {@code null}
      */
     static ThrowableIntBinaryOperator constant(int ret) {
-        Objects.requireNonNull(ret);
         return (left, right) -> ret;
     }
 

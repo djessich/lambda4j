@@ -26,7 +26,7 @@ import java.util.function.Function;
  * This is a {@link FunctionalInterface} whose functional method is {@link #apply(float)}.
  *
  * @param <R> The type of return value from the function
- * @see Function
+ * @see java.util.function.Function
  */
 @SuppressWarnings("unused")
 @FunctionalInterface
@@ -38,10 +38,8 @@ public interface FloatFunction<R> {
      * @param <R> The type of return value from the function
      * @param r The return value for the constant
      * @return A {@code FloatFunction} which always returns a given value.
-     * @throws NullPointerException If the given argument is {@code null}
      */
     static <R> FloatFunction<R> constant(R r) {
-        Objects.requireNonNull(r);
         return (t) -> r;
     }
 

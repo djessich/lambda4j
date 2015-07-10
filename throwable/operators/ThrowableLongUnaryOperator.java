@@ -92,10 +92,8 @@ public interface ThrowableLongUnaryOperator extends LongUnaryOperator {
      *
      * @param ret The return value for the constant
      * @return A {@code ThrowableLongUnaryOperator} which always returns a given value.
-     * @throws NullPointerException If the given argument is {@code null}
      */
     static ThrowableLongUnaryOperator constant(long ret) {
-        Objects.requireNonNull(ret);
         return operand -> ret;
     }
 

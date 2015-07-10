@@ -28,7 +28,7 @@ import java.util.function.Function;
  * @param <T> The type of the first argument to the function
  * @param <U> The type of the second argument to the function
  * @param <V> The type of the third argument to the function
- * @see TriFunction
+ * @see at.gridtec.internals.lang.function.consumer.TriConsumer
  */
 @SuppressWarnings("unused")
 @FunctionalInterface
@@ -42,10 +42,8 @@ public interface ToFloatTriFunction<T, U, V> {
      * @param <V> The type of the third argument to the function
      * @param ret The return value for the constant
      * @return A {@code ToFloatFunction} which always returns a given value.
-     * @throws NullPointerException If the given argument is {@code null}
      */
     static <T, U, V> ToFloatTriFunction<T, U, V> constant(float ret) {
-        Objects.requireNonNull(ret);
         return (t, u, v) -> ret;
     }
 
@@ -66,7 +64,7 @@ public interface ToFloatTriFunction<T, U, V> {
      *
      * @param <A> The type of the argument to the first before function
      * @param <B> The type of the argument to the second before function
-     * @param <C> The type of the argument to the second before function
+     * @param <C> The type of the argument to the third before function
      * @param before1 The first before {@code Function} to apply before this function is applied
      * @param before2 The second before {@code Function} to apply before this function is applied
      * @param before3 The third before {@code Function} to apply before this function is applied

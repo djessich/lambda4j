@@ -26,7 +26,7 @@ import java.util.function.Function;
  * This is a {@link FunctionalInterface} whose functional method is {@link #applyAsFloat(Object)}.
  *
  * @param <T> The type of argument for the function
- * @see Function
+ * @see java.util.function.Function
  */
 @SuppressWarnings("unused")
 @FunctionalInterface
@@ -38,10 +38,8 @@ public interface ToFloatFunction<T> {
      * @param <T> The type of argument for the function
      * @param ret The return value for the constant
      * @return A {@code ToFloatFunction} which always returns a given value.
-     * @throws NullPointerException If the given argument is {@code null}
      */
     static <T> ToFloatFunction<T> constant(float ret) {
-        Objects.requireNonNull(ret);
         return t -> ret;
     }
 

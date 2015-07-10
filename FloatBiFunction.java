@@ -27,7 +27,7 @@ import java.util.function.Function;
  * This is a {@link FunctionalInterface} whose functional method is {@link #apply(float, float)}.
  *
  * @param <R> The type of return value from the function
- * @see BiFunction
+ * @see java.util.function.BiFunction
  */
 @SuppressWarnings("unused")
 @FunctionalInterface
@@ -39,10 +39,8 @@ public interface FloatBiFunction<R> {
      * @param <R> The type of return value from the function
      * @param r The return value for the constant
      * @return A {@code FloatBiFunction} which always returns a given value.
-     * @throws NullPointerException If the given argument is {@code null}
      */
     static <R> FloatBiFunction<R> constant(R r) {
-        Objects.requireNonNull(r);
         return (t, u) -> r;
     }
 

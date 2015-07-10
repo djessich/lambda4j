@@ -95,10 +95,8 @@ public interface ThrowableBinaryOperator<T> extends BinaryOperator<T> {
      * @param <T> The type of argument for the function
      * @param r The return value for the constant
      * @return A {@code ThrowableBinaryOperator} which always returns a given value.
-     * @throws NullPointerException If the given argument is {@code null}
      */
     static <T> ThrowableBinaryOperator<T> constant(T r) {
-        Objects.requireNonNull(r);
         return (t, u) -> r;
     }
 

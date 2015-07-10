@@ -18,8 +18,6 @@ package at.gridtec.internals.lang.function.operators;
 
 import at.gridtec.internals.lang.function.TriFunction;
 
-import java.util.Objects;
-
 /**
  * Represents an operation upon three operands of the same type, producing a result of the same type as the operands.
  * This is a specialization of {@link TriFunction} for the case where the operands and the result are all of the same
@@ -39,10 +37,8 @@ public interface TernaryOperator<T> extends TriFunction<T, T, T, T> {
      * @param <T> The type of argument for the operator
      * @param r The return value for the constant
      * @return A {@code TernaryOperator} which always returns a given value.
-     * @throws NullPointerException If the given argument is {@code null}
      */
     static <T> TernaryOperator<T> constant(T r) {
-        Objects.requireNonNull(r);
         return (t, u, v) -> r;
     }
 }

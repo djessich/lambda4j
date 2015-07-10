@@ -92,10 +92,8 @@ public interface ThrowableDoubleUnaryOperator extends DoubleUnaryOperator {
      *
      * @param ret The return value for the constant
      * @return A {@code ThrowableDoubleUnaryOperator} which always returns a given value.
-     * @throws NullPointerException If the given argument is {@code null}
      */
     static ThrowableDoubleUnaryOperator constant(double ret) {
-        Objects.requireNonNull(ret);
         return operand -> ret;
     }
 
