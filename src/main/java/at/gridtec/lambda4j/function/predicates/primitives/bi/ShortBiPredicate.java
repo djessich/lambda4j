@@ -13,27 +13,29 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package at.gridtec.lambda4j.function.predicates;
 
-import java.util.function.Predicate;
+package at.gridtec.lambda4j.function.predicates.primitives.bi;
+
+import java.util.function.BiPredicate;
 
 /**
- * Represents a predicate (boolean-valued function) of one {@code float}-valued argument. This is the {@code
- * float}-consuming primitive type specialization of {@link Predicate}.
+ * Represents a predicate (boolean-valued function) of two {@code short}-valued argument. This is the {@code
+ * short}-consuming primitive type specialization of {@link BiPredicate}.
  * <p>
- * This is a {@link FunctionalInterface} whose functional method is {@link #test(float)}.
+ * This is a {@link FunctionalInterface} whose functional method is {@link #test(short, short)}.
  *
- * @see java.util.function.Predicate
+ * @see java.util.function.BiPredicate
  */
 @SuppressWarnings("unused")
 @FunctionalInterface
-public interface FloatPredicate {
+public interface ShortBiPredicate {
 
     /**
      * Evaluates this predicate on the given arguments.
      *
-     * @param value The argument for the predicate
-     * @return {@code true} if the input argument matches the predicate, otherwise {@code false}
+     * @param value1 The first argument to the predicate
+     * @param value2 The second argument to the predicate
+     * @return {@code true} if the input argument matches the predicate, otherwise {@code false}.
      */
-    boolean test(float value);
+    boolean test(short value1, short value2);
 }
