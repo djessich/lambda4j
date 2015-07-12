@@ -32,31 +32,9 @@ import java.util.function.Supplier;
 public interface FloatSupplier {
 
     /**
-     * Creates a {@link FloatSupplier} which always returns a given value.
-     *
-     * @param ret The return value for the constant
-     * @return A {@code FloatSupplier} which always returns a given value.
-     */
-    static FloatSupplier of(float ret) {
-        return () -> ret;
-    }
-
-    /**
      * Gets the supplied result from this supplier.
      *
      * @return The supplied result.
      */
     float getAsFloat();
-
-    /**
-     * Returns a composed {@link Supplier} which represents this {@link FloatSupplier}. Thereby the primitive input
-     * argument for this operation is autoboxed. This method is just convenience to provide the ability to use this
-     * {@code FloatSupplier} with JRE specific methods, only accepting {@code Supplier}.
-     *
-     * @return A composed {@code Supplier} which represents this {@code FloatSupplier}.
-     */
-    default Supplier<Float> boxed() {
-        return this::getAsFloat;
-    }
-
 }

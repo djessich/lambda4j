@@ -13,28 +13,28 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package at.gridtec.lambda4j.function;
 
-import java.util.function.Function;
+package at.gridtec.lambda4j.function.operators.unary;
+
+import java.util.function.UnaryOperator;
 
 /**
- * Represents a function that accepts a float-valued argument and produces a result. This is the {@code
- * float}-consuming primitive specialization for {@link Function}.
+ * Represents an operation on a single {@code char}-valued operand that produces a {@code char}-valued result. This is
+ * the primitive type specialization of {@link UnaryOperator} for {@code char}.
  * <p>
- * This is a {@link FunctionalInterface} whose functional method is {@link #apply(float)}.
+ * This is a {@link FunctionalInterface} whose functional method is {@link #applyAsChar(char)}.
  *
- * @param <R> The type of return value from the function
- * @see java.util.function.Function
+ * @see java.util.function.UnaryOperator
  */
 @SuppressWarnings("unused")
 @FunctionalInterface
-public interface FloatFunction<R> {
+public interface CharUnaryOperator {
 
     /**
-     * Applies this {@link FloatFunction} to the given argument.
+     * Applies this operator to the given operand argument.
      *
-     * @param value The argument for the function
-     * @return The return value from the function, which is its result.
+     * @param operand The argument to the operator
+     * @return The result of this operator.
      */
-    R apply(float value);
+    char applyAsChar(char operand);
 }

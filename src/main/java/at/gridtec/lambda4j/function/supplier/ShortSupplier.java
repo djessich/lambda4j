@@ -13,28 +13,29 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package at.gridtec.lambda4j.function;
 
-import java.util.function.Function;
+package at.gridtec.lambda4j.function.supplier;
+
+import java.util.function.Supplier;
 
 /**
- * Represents a function that accepts a float-valued argument and produces a result. This is the {@code
- * float}-consuming primitive specialization for {@link Function}.
+ * Represents a supplier of {@code short}-valued results.  This is the {@code short}-producing primitive specialization
+ * of {@link Supplier}.
  * <p>
- * This is a {@link FunctionalInterface} whose functional method is {@link #apply(float)}.
+ * There is no requirement that a distinct result be returned each time the supplier is invoked.
+ * <p>
+ * This is a {@link FunctionalInterface} whose functional method is {@link #getAsShort()}.
  *
- * @param <R> The type of return value from the function
- * @see java.util.function.Function
+ * @see java.util.function.Supplier
  */
 @SuppressWarnings("unused")
 @FunctionalInterface
-public interface FloatFunction<R> {
+public interface ShortSupplier {
 
     /**
-     * Applies this {@link FloatFunction} to the given argument.
+     * Gets the supplied result from this supplier.
      *
-     * @param value The argument for the function
-     * @return The return value from the function, which is its result.
+     * @return The supplied result.
      */
-    R apply(float value);
+    short getAsShort();
 }

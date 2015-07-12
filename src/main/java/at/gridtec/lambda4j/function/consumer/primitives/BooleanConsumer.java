@@ -13,28 +13,28 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package at.gridtec.lambda4j.function;
 
-import java.util.function.Function;
+package at.gridtec.lambda4j.function.consumer.primitives;
+
+import java.util.function.Consumer;
 
 /**
- * Represents a function that produces a float-valued result from one argument. This is the {@code float}-producing
- * primitive specialization for {@link Function}.
+ * Represents an operation that accepts a single {@code boolean}-valued argument and returns no result. This is the
+ * primitive type specialization of {@link Consumer} for {@code boolean}. Unlike most other functional interfaces,
+ * {@code BooleanConsumer} is expected to operate via side-effects.
  * <p>
- * This is a {@link FunctionalInterface} whose functional method is {@link #applyAsFloat(Object)}.
+ * This is a {@link FunctionalInterface} whose functional method is {@link #accept(boolean)}.
  *
- * @param <T> The type of argument for the function
- * @see java.util.function.Function
+ * @see java.util.function.Consumer
  */
 @SuppressWarnings("unused")
 @FunctionalInterface
-public interface ToFloatFunction<T> {
+public interface BooleanConsumer {
 
     /**
-     * Applies this {@link ToFloatFunction} to the given argument.
+     * Performs this operation on the given argument.
      *
-     * @param t The argument for the function
-     * @return The return value from the function, which is its result.
+     * @param value The argument for the operation to be consumed
      */
-    float applyAsFloat(T t);
+    void accept(boolean value);
 }

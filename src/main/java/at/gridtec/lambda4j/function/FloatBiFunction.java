@@ -15,9 +15,7 @@
  */
 package at.gridtec.lambda4j.function;
 
-import java.util.Objects;
 import java.util.function.BiFunction;
-import java.util.function.Function;
 
 /**
  * Represents a function that accepts two float-valued arguments and produces a result. This is the {@code
@@ -33,17 +31,6 @@ import java.util.function.Function;
 public interface FloatBiFunction<R> {
 
     /**
-     * Creates a {@link FloatBiFunction} which always returns a given value.
-     *
-     * @param <R> The type of return value from the function
-     * @param r The return value for the constant
-     * @return A {@code FloatBiFunction} which always returns a given value.
-     */
-    static <R> FloatBiFunction<R> constant(R r) {
-        return (t, u) -> r;
-    }
-
-    /**
      * Applies this {@link FloatBiFunction} to the given argument.
      *
      * @param value1 The first argument to the function
@@ -51,53 +38,4 @@ public interface FloatBiFunction<R> {
      * @return The return value from the function, which is its result.
      */
     R apply(float value1, float value2);
-
-    /**
-     * Returns a composed {@link BiFunction} that applies the given {@code before} {@link ToFloatFunction}s to its
-     * input, and then applies this function to the result. If evaluation of either function throws an exception, it is
-     * relayed to the caller of the composed function.
-     *
-     * @param <T> The type of the argument to the first before function
-     * @param <U> The type of the argument to the second before function
-     * @param before1 The first before {@code ToFloatFunction} to apply before this function is applied
-     * @param before2 The second before {@code ToFloatFunction} to apply before this function is applied
-     * @return A composed {@code BiFunction} that applies the given {@code before} {@code ToFloatFunction}s to its
-     * input, and then applies this function to the result.
-     * @throws NullPointerException If one of the given functions are {@code null}
-     * @see #andThen(Function)
-     */
-    default <T, U> BiFunction<T, U, R> compose(final ToFloatFunction<? super T> before1,
-            final ToFloatFunction<? super U> before2) {
-        Objects.requireNonNull(before1);
-        Objects.requireNonNull(before2);
-        return (t, u) -> apply(before1.applyAsFloat(t), before2.applyAsFloat(u));
-    }
-
-    /**
-     * Returns a composed {@link FloatBiFunction} that first applies this function to its input, and then applies the
-     * {@code after} {@link Function} to the result. If evaluation of either function throws an exception, it is
-     * relayed to the caller of the composed function.
-     *
-     * @param <S> The type of output of the {@code after} function, and of the composed function
-     * @param after The {@code Function} to apply after this function is applied
-     * @return A composed {@code FloatFunction} that first applies this function and then applies the {@code after}
-     * function.
-     * @throws NullPointerException If given after function is {@code null}
-     * @see #compose(ToFloatFunction, ToFloatFunction)
-     */
-    default <S> FloatBiFunction<S> andThen(final Function<? super R, ? extends S> after) {
-        Objects.requireNonNull(after);
-        return (value1, value2) -> after.apply(apply(value1, value2));
-    }
-
-    /**
-     * Returns a composed {@link BiFunction} which represents this {@link FloatBiFunction}. Thereby the primitive input
-     * argument for this function is autoboxed. This method is just convenience to provide the ability to use this
-     * {@code FloatBiFunction} with JRE specific methods, only accepting {@code BiFunction}.
-     *
-     * @return A composed {@code BiFunction} which represents this {@code FloatBiFunction}.
-     */
-    default BiFunction<Float, Float, R> boxed() {
-        return this::apply;
-    }
 }

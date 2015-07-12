@@ -13,28 +13,27 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package at.gridtec.lambda4j.function;
+package at.gridtec.lambda4j.function.consumer.primitives;
 
-import java.util.function.Function;
+import java.util.function.Consumer;
 
 /**
- * Represents a function that accepts a float-valued argument and produces a result. This is the {@code
- * float}-consuming primitive specialization for {@link Function}.
+ * Represents an operation that accepts a single {@code float}-valued argument and returns no result. This is the
+ * primitive type specialization of {@link Consumer} for {@code float}. Unlike most other functional interfaces, {@code
+ * FloatConsumer} is expected to operate via side-effects.
  * <p>
- * This is a {@link FunctionalInterface} whose functional method is {@link #apply(float)}.
+ * This is a {@link FunctionalInterface} whose functional method is {@link #accept(float)}.
  *
- * @param <R> The type of return value from the function
- * @see java.util.function.Function
+ * @see java.util.function.Consumer
  */
 @SuppressWarnings("unused")
 @FunctionalInterface
-public interface FloatFunction<R> {
+public interface FloatConsumer {
 
     /**
-     * Applies this {@link FloatFunction} to the given argument.
+     * Performs this operation on the given argument.
      *
-     * @param value The argument for the function
-     * @return The return value from the function, which is its result.
+     * @param value The argument for the operation to be consumed
      */
-    R apply(float value);
+    void accept(float value);
 }
