@@ -13,28 +13,29 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package at.gridtec.lambda4j.function.predicates;
+package at.gridtec.lambda4j.function.predicates.primitives.tri;
 
-import java.util.function.BiPredicate;
+import at.gridtec.lambda4j.function.predicates.TriPredicate;
 
 /**
- * Represents a predicate (boolean-valued function) of two {@code float}-valued argument. This is the {@code
- * float}-consuming primitive type specialization of {@link BiPredicate}.
+ * Represents a predicate (boolean-valued function) of three {@code float}-valued argument. This is the {@code
+ * float}-consuming primitive type specialization of {@link TriPredicate}.
  * <p>
- * This is a {@link FunctionalInterface} whose functional method is {@link #test(float, float)}.
+ * This is a {@link FunctionalInterface} whose functional method is {@link #test(float, float, float)}.
  *
- * @see java.util.function.BiPredicate
+ * @see TriPredicate
  */
 @SuppressWarnings("unused")
 @FunctionalInterface
-public interface FloatBiPredicate {
+public interface FloatTriPredicate {
 
     /**
      * Evaluates this predicate on the given arguments.
      *
      * @param value1 The first argument to the predicate
      * @param value2 The second argument to the predicate
-     * @return {@code true} if the input argument matches the predicate, otherwise {@code false}
+     * @param value3 The third argument to the predicate
+     * @return {@code true} if the input argument matches the predicate, otherwise {@code false}.
      */
-    boolean test(float value1, float value2);
+    boolean test(float value1, float value2, float value3);
 }
