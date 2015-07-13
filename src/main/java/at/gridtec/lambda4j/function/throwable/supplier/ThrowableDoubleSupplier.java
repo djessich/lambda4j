@@ -18,7 +18,6 @@ package at.gridtec.lambda4j.function.throwable.supplier;
 import at.gridtec.lambda4j.util.ThrowableUtils;
 
 import java.util.Objects;
-import java.util.function.DoubleConsumer;
 import java.util.function.DoubleSupplier;
 
 /**
@@ -188,25 +187,6 @@ public interface ThrowableDoubleSupplier extends DoubleSupplier {
             } catch (Exception ignored) {
                 return fallback.getAsDouble();
             }
-        };
-    }
-
-    /**
-     * Returns a composed {@link ThrowableDoubleSupplier} that applies this {@code ThrowableDoubleSupplier} to its
-     * input, additionally performing the provided action to the resulting value. This method exists mainly to support
-     * debugging.
-     *
-     * @param action A {@link DoubleConsumer} to be applied additionally to this {@code ThrowableDoubleSupplier}
-     * @return A composed {@code ThrowableDoubleSupplier} that applies this {@code ThrowableDoubleSupplier},
-     * additionally performing the provided action to the resulting value.
-     * @throws NullPointerException If the given argument is {@code null}
-     */
-    default ThrowableDoubleSupplier peek(final DoubleConsumer action) {
-        Objects.requireNonNull(action);
-        return () -> {
-            final double ret = getAsDouble();
-            action.accept(ret);
-            return ret;
         };
     }
 

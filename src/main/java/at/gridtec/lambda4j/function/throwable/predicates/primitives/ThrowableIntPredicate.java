@@ -18,7 +18,6 @@ package at.gridtec.lambda4j.function.throwable.predicates.primitives;
 import at.gridtec.lambda4j.util.ThrowableUtils;
 
 import java.util.Objects;
-import java.util.function.Consumer;
 import java.util.function.IntPredicate;
 
 /**
@@ -190,25 +189,6 @@ public interface ThrowableIntPredicate extends IntPredicate {
             } catch (Exception ignored) {
                 return fallback.test(value);
             }
-        };
-    }
-
-    /**
-     * Returns a composed {@link ThrowableIntPredicate} that applies this {@code ThrowableIntPredicate} to its input,
-     * additionally performing the provided action to the resulting value. This method exists mainly to support
-     * debugging.
-     *
-     * @param action A {@link Consumer} to be applied additionally to this {@code ThrowableIntPredicate}
-     * @return A composed {@code ThrowableIntPredicate} that applies this {@code ThrowableIntPredicate}, additionally
-     * performing the provided action to the resulting value.
-     * @throws NullPointerException If the given argument is {@code null}
-     */
-    default ThrowableIntPredicate peek(final Consumer<? super Boolean> action) {
-        Objects.requireNonNull(action);
-        return value -> {
-            final boolean ret = test(value);
-            action.accept(ret);
-            return ret;
         };
     }
 

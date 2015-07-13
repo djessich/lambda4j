@@ -18,7 +18,6 @@ package at.gridtec.lambda4j.function.throwable;
 import at.gridtec.lambda4j.util.ThrowableUtils;
 
 import java.util.Objects;
-import java.util.function.Consumer;
 import java.util.function.DoubleFunction;
 import java.util.function.Supplier;
 
@@ -196,25 +195,6 @@ public interface ThrowableDoubleFunction<R> extends DoubleFunction<R> {
             } catch (Exception ignored) {
                 return fallback.apply(value);
             }
-        };
-    }
-
-    /**
-     * Returns a composed {@link ThrowableDoubleFunction} that applies this {@code ThrowableDoubleFunction} to its
-     * input, additionally performing the provided action to the resulting value. This method exists mainly to support
-     * debugging.
-     *
-     * @param action A {@link Consumer} to be applied additionally to this {@code ThrowableDoubleFunction}
-     * @return A composed {@code ThrowableDoubleFunction} that applies this {@code ThrowableDoubleFunction},
-     * additionally performing the provided action to the resulting value.
-     * @throws NullPointerException If the given argument is {@code null}
-     */
-    default ThrowableDoubleFunction<R> peek(final Consumer<? super R> action) {
-        Objects.requireNonNull(action);
-        return value -> {
-            final R r = apply(value);
-            action.accept(r);
-            return r;
         };
     }
 

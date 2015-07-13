@@ -19,7 +19,6 @@ import at.gridtec.lambda4j.util.ThrowableUtils;
 
 import java.util.Objects;
 import java.util.function.IntBinaryOperator;
-import java.util.function.IntConsumer;
 import java.util.function.Supplier;
 
 /**
@@ -195,25 +194,6 @@ public interface ThrowableIntBinaryOperator extends IntBinaryOperator {
             } catch (Exception ignored) {
                 return fallback.applyAsInt(left, right);
             }
-        };
-    }
-
-    /**
-     * Returns a composed {@link ThrowableIntBinaryOperator} that applies this {@code ThrowableIntBinaryOperator} to
-     * its input, additionally performing the provided action to the resulting value. This method exists mainly to
-     * support debugging.
-     *
-     * @param action A {@link IntConsumer} to be applied additionally to this {@code ThrowableIntBinaryOperator}
-     * @return A composed {@code ThrowableIntBinaryOperator} that applies this {@code ThrowableIntBinaryOperator},
-     * additionally performing the provided action to the resulting value.
-     * @throws NullPointerException If the given argument is {@code null}
-     */
-    default ThrowableIntBinaryOperator peek(final IntConsumer action) {
-        Objects.requireNonNull(action);
-        return (left, right) -> {
-            final int ret = applyAsInt(left, right);
-            action.accept(ret);
-            return ret;
         };
     }
 

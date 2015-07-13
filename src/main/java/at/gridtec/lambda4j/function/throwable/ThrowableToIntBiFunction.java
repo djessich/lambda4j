@@ -18,7 +18,6 @@ package at.gridtec.lambda4j.function.throwable;
 import at.gridtec.lambda4j.util.ThrowableUtils;
 
 import java.util.Objects;
-import java.util.function.IntConsumer;
 import java.util.function.IntSupplier;
 import java.util.function.ToIntBiFunction;
 
@@ -203,25 +202,6 @@ public interface ThrowableToIntBiFunction<T, U> extends ToIntBiFunction<T, U> {
             } catch (Exception ignored) {
                 return fallback.applyAsInt(t, u);
             }
-        };
-    }
-
-    /**
-     * Returns a composed {@link ThrowableToIntBiFunction} that applies this {@code ThrowableToIntBiFunction} to its
-     * input, additionally performing the provided action to the resulting value. This method exists mainly to support
-     * debugging.
-     *
-     * @param action A {@link IntConsumer} to be applied additionally to this {@code ThrowableToIntBiFunction}
-     * @return A composed {@code ThrowableToIntBiFunction} that applies this {@code ThrowableToIntBiFunction},
-     * additionally performing the provided action to the resulting value.
-     * @throws NullPointerException If the given argument is {@code null}
-     */
-    default ThrowableToIntBiFunction<T, U> peek(final IntConsumer action) {
-        Objects.requireNonNull(action);
-        return (t, u) -> {
-            final int ret = applyAsInt(t, u);
-            action.accept(ret);
-            return ret;
         };
     }
 

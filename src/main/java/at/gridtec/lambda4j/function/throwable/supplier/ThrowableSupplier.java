@@ -18,7 +18,6 @@ package at.gridtec.lambda4j.function.throwable.supplier;
 import at.gridtec.lambda4j.util.ThrowableUtils;
 
 import java.util.Objects;
-import java.util.function.Consumer;
 import java.util.function.Supplier;
 
 /**
@@ -189,25 +188,6 @@ public interface ThrowableSupplier<T> extends Supplier<T> {
             } catch (Exception ignored) {
                 return fallback.get();
             }
-        };
-    }
-
-    /**
-     * Returns a composed {@link ThrowableSupplier} that applies this {@code ThrowableSupplier} to its input,
-     * additionally performing the provided action to the resulting value. This method exists mainly to support
-     * debugging.
-     *
-     * @param action A {@link Consumer} to be applied additionally to this {@code ThrowableSupplier}
-     * @return A composed {@code ThrowableSupplier} that applies this {@code ThrowableSupplier}, additionally performing
-     * the provided action to the resulting value.
-     * @throws NullPointerException If the given argument is {@code null}
-     */
-    default ThrowableSupplier<T> peek(final Consumer<? super T> action) {
-        Objects.requireNonNull(action);
-        return () -> {
-            final T t = get();
-            action.accept(t);
-            return t;
         };
     }
 

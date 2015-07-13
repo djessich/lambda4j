@@ -19,7 +19,6 @@ import at.gridtec.lambda4j.util.ThrowableUtils;
 
 import java.util.Objects;
 import java.util.function.DoubleBinaryOperator;
-import java.util.function.DoubleConsumer;
 import java.util.function.Supplier;
 
 /**
@@ -195,25 +194,6 @@ public interface ThrowableDoubleBinaryOperator extends DoubleBinaryOperator {
             } catch (Exception ignored) {
                 return fallback.applyAsDouble(left, right);
             }
-        };
-    }
-
-    /**
-     * Returns a composed {@link ThrowableDoubleBinaryOperator} that applies this {@code ThrowableDoubleBinaryOperator}
-     * to its input, additionally performing the provided action to the resulting value. This method exists mainly to
-     * support debugging.
-     *
-     * @param action A {@link DoubleConsumer} to be applied additionally to this {@code ThrowableDoubleBinaryOperator}
-     * @return A composed {@code ThrowableDoubleBinaryOperator} that applies this {@code ThrowableDoubleBinaryOperator},
-     * additionally performing the provided action to the resulting value.
-     * @throws NullPointerException If the given argument is {@code null}
-     */
-    default ThrowableDoubleBinaryOperator peek(final DoubleConsumer action) {
-        Objects.requireNonNull(action);
-        return (left, right) -> {
-            final double ret = applyAsDouble(left, right);
-            action.accept(ret);
-            return ret;
         };
     }
 

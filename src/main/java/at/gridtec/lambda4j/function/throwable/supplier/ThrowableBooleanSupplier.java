@@ -19,7 +19,6 @@ import at.gridtec.lambda4j.util.ThrowableUtils;
 
 import java.util.Objects;
 import java.util.function.BooleanSupplier;
-import java.util.function.Consumer;
 
 /**
  * This functional interface implements a {@link BooleanSupplier} which is able to throw any {@link Exception}.
@@ -189,25 +188,6 @@ public interface ThrowableBooleanSupplier extends BooleanSupplier {
             } catch (Exception ignored) {
                 return fallback.getAsBoolean();
             }
-        };
-    }
-
-    /**
-     * Returns a composed {@link ThrowableBooleanSupplier} that applies this {@code ThrowableBooleanSupplier} to its
-     * input, additionally performing the provided action to the resulting value. This method exists mainly to support
-     * debugging.
-     *
-     * @param action A {@link Consumer} to be applied additionally to this {@code ThrowableBooleanSupplier}
-     * @return A composed {@code ThrowableBooleanSupplier} that applies this {@code ThrowableBooleanSupplier},
-     * additionally performing the provided action to the resulting value.
-     * @throws NullPointerException If the given argument is {@code null}
-     */
-    default ThrowableBooleanSupplier peek(final Consumer<? super Boolean> action) {
-        Objects.requireNonNull(action);
-        return () -> {
-            final boolean ret = getAsBoolean();
-            action.accept(ret);
-            return ret;
         };
     }
 

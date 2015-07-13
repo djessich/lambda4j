@@ -19,7 +19,6 @@ import at.gridtec.lambda4j.util.ThrowableUtils;
 
 import java.util.Objects;
 import java.util.function.DoubleToIntFunction;
-import java.util.function.IntConsumer;
 import java.util.function.IntSupplier;
 
 /**
@@ -193,25 +192,6 @@ public interface ThrowableDoubleToIntFunction extends DoubleToIntFunction {
             } catch (Exception ignored) {
                 return fallback.applyAsInt(value);
             }
-        };
-    }
-
-    /**
-     * Returns a composed {@link ThrowableDoubleToIntFunction} that applies this {@code ThrowableDoubleToIntFunction}
-     * to its input, additionally performing the provided action to the resulting value. This method exists mainly to
-     * support debugging.
-     *
-     * @param action A {@link IntConsumer} to be applied additionally to this {@code ThrowableDoubleToIntFunction}
-     * @return A composed {@code ThrowableDoubleToIntFunction} that applies this {@code ThrowableDoubleToIntFunction},
-     * additionally performing the provided action to the resulting value.
-     * @throws NullPointerException If the given argument is {@code null}
-     */
-    default ThrowableDoubleToIntFunction peek(final IntConsumer action) {
-        Objects.requireNonNull(action);
-        return value -> {
-            final int ret = applyAsInt(value);
-            action.accept(ret);
-            return ret;
         };
     }
 

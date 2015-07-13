@@ -18,7 +18,6 @@ package at.gridtec.lambda4j.function.throwable.supplier;
 import at.gridtec.lambda4j.util.ThrowableUtils;
 
 import java.util.Objects;
-import java.util.function.LongConsumer;
 import java.util.function.LongSupplier;
 
 /**
@@ -188,25 +187,6 @@ public interface ThrowableLongSupplier extends LongSupplier {
             } catch (Exception ignored) {
                 return fallback.getAsLong();
             }
-        };
-    }
-
-    /**
-     * Returns a composed {@link ThrowableLongSupplier} that applies this {@code ThrowableLongSupplier} to its input,
-     * additionally performing the provided action to the resulting value. This method exists mainly to support
-     * debugging.
-     *
-     * @param action A {@link LongConsumer} to be applied additionally to this {@code ThrowableLongSupplier}
-     * @return A composed {@code ThrowableLongSupplier} that applies this {@code ThrowableLongSupplier}, additionally
-     * performing the provided action to the resulting value.
-     * @throws NullPointerException If the given argument is {@code null}
-     */
-    default ThrowableLongSupplier peek(final LongConsumer action) {
-        Objects.requireNonNull(action);
-        return () -> {
-            final long ret = getAsLong();
-            action.accept(ret);
-            return ret;
         };
     }
 

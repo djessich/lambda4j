@@ -18,7 +18,6 @@ package at.gridtec.lambda4j.function.throwable;
 import at.gridtec.lambda4j.util.ThrowableUtils;
 
 import java.util.Objects;
-import java.util.function.Consumer;
 import java.util.function.LongFunction;
 import java.util.function.Supplier;
 
@@ -195,25 +194,6 @@ public interface ThrowableLongFunction<R> extends LongFunction<R> {
             } catch (Exception ignored) {
                 return fallback.apply(value);
             }
-        };
-    }
-
-    /**
-     * Returns a composed {@link ThrowableLongFunction} that applies this {@code ThrowableLongFunction} to its input,
-     * additionally performing the provided action to the resulting value. This method exists mainly to support
-     * debugging.
-     *
-     * @param action A {@link Consumer} to be applied additionally to this {@code ThrowableLongFunction}
-     * @return A composed {@code ThrowableLongFunction} that applies this {@code ThrowableLongFunction}, additionally
-     * performing the provided action to the resulting value.
-     * @throws NullPointerException If the given argument is {@code null}
-     */
-    default ThrowableLongFunction<R> peek(final Consumer<? super R> action) {
-        Objects.requireNonNull(action);
-        return value -> {
-            final R r = apply(value);
-            action.accept(r);
-            return r;
         };
     }
 

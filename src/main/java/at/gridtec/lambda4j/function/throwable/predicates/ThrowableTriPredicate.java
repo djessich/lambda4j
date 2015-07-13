@@ -19,7 +19,6 @@ import at.gridtec.lambda4j.function.predicates.TriPredicate;
 import at.gridtec.lambda4j.util.ThrowableUtils;
 
 import java.util.Objects;
-import java.util.function.Consumer;
 
 /**
  * This functional interface implements a {@link TriPredicate} which is able to throw any {@link Exception}.
@@ -206,25 +205,6 @@ public interface ThrowableTriPredicate<T, U, V> extends TriPredicate<T, U, V> {
             } catch (Exception ignored) {
                 return fallback.test(t, u, v);
             }
-        };
-    }
-
-    /**
-     * Returns a composed {@link ThrowableTriPredicate} that applies this {@code ThrowableTriPredicate} to its input,
-     * additionally performing the provided action to the resulting value. This method exists mainly to support
-     * debugging.
-     *
-     * @param action A {@link Consumer} to be applied additionally to this {@code ThrowableTriPredicate}
-     * @return A composed {@code ThrowableTriPredicate} that applies this {@code ThrowableTriPredicate}, additionally
-     * performing the provided action to the resulting value.
-     * @throws NullPointerException If the given argument is {@code null}
-     */
-    default ThrowableTriPredicate<T, U, V> peek(final Consumer<? super Boolean> action) {
-        Objects.requireNonNull(action);
-        return (t, u, v) -> {
-            final boolean ret = test(t, u, v);
-            action.accept(ret);
-            return ret;
         };
     }
 

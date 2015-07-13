@@ -19,7 +19,6 @@ import at.gridtec.lambda4j.util.ThrowableUtils;
 
 import java.util.Objects;
 import java.util.function.LongBinaryOperator;
-import java.util.function.LongConsumer;
 import java.util.function.Supplier;
 
 /**
@@ -195,25 +194,6 @@ public interface ThrowableLongBinaryOperator extends LongBinaryOperator {
             } catch (Exception ignored) {
                 return fallback.applyAsLong(left, right);
             }
-        };
-    }
-
-    /**
-     * Returns a composed {@link ThrowableLongBinaryOperator} that applies this {@code ThrowableLongBinaryOperator} to
-     * its input, additionally performing the provided action to the resulting value. This method exists mainly to
-     * support debugging.
-     *
-     * @param action A {@link LongConsumer} to be applied additionally to this {@code ThrowableLongBinaryOperator}
-     * @return A composed {@code ThrowableLongBinaryOperator} that applies this {@code ThrowableLongBinaryOperator},
-     * additionally performing the provided action to the resulting value.
-     * @throws NullPointerException If the given argument is {@code null}
-     */
-    default ThrowableLongBinaryOperator peek(final LongConsumer action) {
-        Objects.requireNonNull(action);
-        return (left, right) -> {
-            final long ret = applyAsLong(left, right);
-            action.accept(ret);
-            return ret;
         };
     }
 

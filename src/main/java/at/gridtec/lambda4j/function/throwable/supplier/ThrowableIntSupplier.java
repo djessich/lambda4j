@@ -18,7 +18,6 @@ package at.gridtec.lambda4j.function.throwable.supplier;
 import at.gridtec.lambda4j.util.ThrowableUtils;
 
 import java.util.Objects;
-import java.util.function.IntConsumer;
 import java.util.function.IntSupplier;
 
 /**
@@ -187,25 +186,6 @@ public interface ThrowableIntSupplier extends IntSupplier {
             } catch (Exception ignored) {
                 return fallback.getAsInt();
             }
-        };
-    }
-
-    /**
-     * Returns a composed {@link ThrowableIntSupplier} that applies this {@code ThrowableIntSupplier} to its input,
-     * additionally performing the provided action to the resulting value. This method exists mainly to support
-     * debugging.
-     *
-     * @param action A {@link IntConsumer} to be applied additionally to this {@code ThrowableIntSupplier}
-     * @return A composed {@code ThrowableIntSupplier} that applies this {@code ThrowableIntSupplier}, additionally
-     * performing the provided action to the resulting value.
-     * @throws NullPointerException If the given argument is {@code null}
-     */
-    default ThrowableIntSupplier peek(final IntConsumer action) {
-        Objects.requireNonNull(action);
-        return () -> {
-            final int ret = getAsInt();
-            action.accept(ret);
-            return ret;
         };
     }
 

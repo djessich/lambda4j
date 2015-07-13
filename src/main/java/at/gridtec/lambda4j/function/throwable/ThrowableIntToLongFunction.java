@@ -19,7 +19,6 @@ import at.gridtec.lambda4j.util.ThrowableUtils;
 
 import java.util.Objects;
 import java.util.function.IntToLongFunction;
-import java.util.function.LongConsumer;
 import java.util.function.LongSupplier;
 
 /**
@@ -193,25 +192,6 @@ public interface ThrowableIntToLongFunction extends IntToLongFunction {
             } catch (Exception ignored) {
                 return fallback.applyAsLong(value);
             }
-        };
-    }
-
-    /**
-     * Returns a composed {@link ThrowableIntToLongFunction} that applies this {@code ThrowableIntToLongFunction} to
-     * its input, additionally performing the provided action to the resulting value. This method exists mainly to
-     * support debugging.
-     *
-     * @param action A {@link LongConsumer} to be applied additionally to this {@code ThrowableIntToLongFunction}
-     * @return A composed {@code ThrowableIntToLongFunction} that applies this {@code ThrowableIntToLongFunction},
-     * additionally performing the provided action to the resulting value.
-     * @throws NullPointerException If the given argument is {@code null}
-     */
-    default ThrowableIntToLongFunction peek(final LongConsumer action) {
-        Objects.requireNonNull(action);
-        return value -> {
-            final long ret = applyAsLong(value);
-            action.accept(ret);
-            return ret;
         };
     }
 

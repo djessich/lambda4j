@@ -18,7 +18,6 @@ package at.gridtec.lambda4j.function.throwable.predicates.primitives;
 import at.gridtec.lambda4j.util.ThrowableUtils;
 
 import java.util.Objects;
-import java.util.function.Consumer;
 import java.util.function.DoublePredicate;
 
 /**
@@ -191,25 +190,6 @@ public interface ThrowableDoublePredicate extends DoublePredicate {
             } catch (Exception ignored) {
                 return fallback.test(value);
             }
-        };
-    }
-
-    /**
-     * Returns a composed {@link ThrowableDoublePredicate} that applies this {@code ThrowableDoublePredicate} to its
-     * input, additionally performing the provided action to the resulting value. This method exists mainly to support
-     * debugging.
-     *
-     * @param action A {@link Consumer} to be applied additionally to this {@code ThrowableDoublePredicate}
-     * @return A composed {@code ThrowableDoublePredicate} that applies this {@code ThrowableDoublePredicate},
-     * additionally performing the provided action to the resulting value.
-     * @throws NullPointerException If the given argument is {@code null}
-     */
-    default ThrowableDoublePredicate peek(final Consumer<? super Boolean> action) {
-        Objects.requireNonNull(action);
-        return value -> {
-            final boolean ret = test(value);
-            action.accept(ret);
-            return ret;
         };
     }
 

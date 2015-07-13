@@ -18,7 +18,6 @@ package at.gridtec.lambda4j.function.throwable;
 import at.gridtec.lambda4j.util.ThrowableUtils;
 
 import java.util.Objects;
-import java.util.function.LongConsumer;
 import java.util.function.LongSupplier;
 import java.util.function.ToLongBiFunction;
 
@@ -203,25 +202,6 @@ public interface ThrowableToLongBiFunction<T, U> extends ToLongBiFunction<T, U> 
             } catch (Exception ignored) {
                 return fallback.applyAsLong(t, u);
             }
-        };
-    }
-
-    /**
-     * Returns a composed {@link ThrowableToLongBiFunction} that applies this {@code ThrowableToLongBiFunction} to its
-     * input, additionally performing the provided action to the resulting value. This method exists mainly to support
-     * debugging.
-     *
-     * @param action A {@link LongConsumer} to be applied additionally to this {@code ThrowableToLongBiFunction}
-     * @return A composed {@code ThrowableToLongBiFunction} that applies this {@code ThrowableToLongBiFunction},
-     * additionally performing the provided action to the resulting value.
-     * @throws NullPointerException If the given argument is {@code null}
-     */
-    default ThrowableToLongBiFunction<T, U> peek(final LongConsumer action) {
-        Objects.requireNonNull(action);
-        return (t, u) -> {
-            final long ret = applyAsLong(t, u);
-            action.accept(ret);
-            return ret;
         };
     }
 

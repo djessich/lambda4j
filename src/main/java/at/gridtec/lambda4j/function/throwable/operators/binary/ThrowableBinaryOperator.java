@@ -19,7 +19,6 @@ import at.gridtec.lambda4j.util.ThrowableUtils;
 
 import java.util.Objects;
 import java.util.function.BinaryOperator;
-import java.util.function.Consumer;
 import java.util.function.Supplier;
 
 /**
@@ -198,25 +197,6 @@ public interface ThrowableBinaryOperator<T> extends BinaryOperator<T> {
             } catch (Exception ignored) {
                 return fallback.apply(t, u);
             }
-        };
-    }
-
-    /**
-     * Returns a composed {@link ThrowableBinaryOperator} that applies this {@code ThrowableBinaryOperator} to its
-     * input, additionally performing the provided action to the resulting value. This method exists mainly to support
-     * debugging.
-     *
-     * @param action A {@link Consumer} to be applied additionally to this {@code ThrowableBinaryOperator}
-     * @return A composed {@code ThrowableBinaryOperator} that applies this {@code ThrowableBinaryOperator},
-     * additionally performing the provided action to the resulting value.
-     * @throws NullPointerException If the given argument is {@code null}
-     */
-    default ThrowableBinaryOperator<T> peek(final Consumer<? super T> action) {
-        Objects.requireNonNull(action);
-        return (t, u) -> {
-            final T ret = apply(t, u);
-            action.accept(ret);
-            return ret;
         };
     }
 

@@ -20,7 +20,6 @@ import at.gridtec.lambda4j.function.operators.ternary.TernaryOperator;
 import at.gridtec.lambda4j.util.ThrowableUtils;
 
 import java.util.Objects;
-import java.util.function.Consumer;
 import java.util.function.Supplier;
 
 /**
@@ -201,25 +200,6 @@ public interface ThrowableTernaryOperator<T> extends TernaryOperator<T> {
             } catch (Exception ignored) {
                 return fallback.apply(t, u, v);
             }
-        };
-    }
-
-    /**
-     * Returns a composed {@link ThrowableTernaryOperator} that applies this {@code ThrowableTernaryOperator} to its
-     * input, additionally performing the provided action to the resulting value. This method exists mainly to support
-     * debugging.
-     *
-     * @param action A {@link Consumer} to be applied additionally to this {@code ThrowableTernaryOperator}
-     * @return A composed {@code ThrowableTernaryOperator} that applies this {@code ThrowableTernaryOperator},
-     * additionally performing the provided action to the resulting value.
-     * @throws NullPointerException If the given argument is {@code null}
-     */
-    default ThrowableTernaryOperator<T> peek(final Consumer<? super T> action) {
-        Objects.requireNonNull(action);
-        return (t, u, v) -> {
-            final T ret = apply(t, u, v);
-            action.accept(ret);
-            return ret;
         };
     }
 

@@ -19,7 +19,6 @@ import at.gridtec.lambda4j.util.ThrowableUtils;
 
 import java.util.Objects;
 import java.util.function.BiPredicate;
-import java.util.function.Consumer;
 
 /**
  * This functional interface implements a {@link BiPredicate} which is able to throw any {@link Exception}.
@@ -200,25 +199,6 @@ public interface ThrowableBiPredicate<T, U> extends BiPredicate<T, U> {
             } catch (Exception ignored) {
                 return fallback.test(t, u);
             }
-        };
-    }
-
-    /**
-     * Returns a composed {@link ThrowableBiPredicate} that applies this {@code ThrowableBiPredicate} to its input,
-     * additionally performing the provided action to the resulting value. This method exists mainly to support
-     * debugging.
-     *
-     * @param action A {@link Consumer} to be applied additionally to this {@code ThrowableBiPredicate}
-     * @return A composed {@code ThrowableBiPredicate} that applies this {@code ThrowableBiPredicate}, additionally
-     * performing the provided action to the resulting value.
-     * @throws NullPointerException If the given argument is {@code null}
-     */
-    default ThrowableBiPredicate<T, U> peek(final Consumer<? super Boolean> action) {
-        Objects.requireNonNull(action);
-        return (t, u) -> {
-            final boolean ret = test(t, u);
-            action.accept(ret);
-            return ret;
         };
     }
 

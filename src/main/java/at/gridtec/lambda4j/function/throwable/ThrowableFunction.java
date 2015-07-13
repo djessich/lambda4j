@@ -18,7 +18,6 @@ package at.gridtec.lambda4j.function.throwable;
 import at.gridtec.lambda4j.util.ThrowableUtils;
 
 import java.util.Objects;
-import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
@@ -196,25 +195,6 @@ public interface ThrowableFunction<T, R> extends Function<T, R> {
             } catch (Exception ignored) {
                 return fallback.apply(t);
             }
-        };
-    }
-
-    /**
-     * Returns a composed {@link ThrowableFunction} that applies this {@code ThrowableFunction} to its input,
-     * additionally performing the provided action to the resulting value. This method exists mainly to support
-     * debugging.
-     *
-     * @param action A {@link Consumer} to be applied additionally to this {@code ThrowableFunction}
-     * @return A composed {@code ThrowableFunction} that applies this {@code ThrowableFunction}, additionally performing
-     * the provided action to the resulting value.
-     * @throws NullPointerException If the given argument is {@code null}
-     */
-    default ThrowableFunction<T, R> peek(final Consumer<? super R> action) {
-        Objects.requireNonNull(action);
-        return t -> {
-            final R r = apply(t);
-            action.accept(r);
-            return r;
         };
     }
 

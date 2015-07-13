@@ -18,7 +18,6 @@ package at.gridtec.lambda4j.function.throwable.predicates;
 import at.gridtec.lambda4j.util.ThrowableUtils;
 
 import java.util.Objects;
-import java.util.function.Consumer;
 import java.util.function.Predicate;
 
 /**
@@ -191,25 +190,6 @@ public interface ThrowablePredicate<T> extends Predicate<T> {
             } catch (Exception ignored) {
                 return fallback.test(t);
             }
-        };
-    }
-
-    /**
-     * Returns a composed {@link ThrowablePredicate} that applies this {@code ThrowablePredicate} to its input,
-     * additionally performing the provided action to the resulting value. This method exists mainly to support
-     * debugging.
-     *
-     * @param action A {@link Consumer} to be applied additionally to this {@code ThrowablePredicate}
-     * @return A composed {@code ThrowablePredicate} that applies this {@code ThrowablePredicate}, additionally
-     * performing the provided action to the resulting value.
-     * @throws NullPointerException If the given argument is {@code null}
-     */
-    default ThrowablePredicate<T> peek(final Consumer<? super Boolean> action) {
-        Objects.requireNonNull(action);
-        return t -> {
-            final boolean ret = test(t);
-            action.accept(ret);
-            return ret;
         };
     }
 

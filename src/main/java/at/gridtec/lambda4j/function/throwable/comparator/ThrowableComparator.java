@@ -19,7 +19,6 @@ import at.gridtec.lambda4j.util.ThrowableUtils;
 
 import java.util.Comparator;
 import java.util.Objects;
-import java.util.function.IntConsumer;
 import java.util.function.IntSupplier;
 
 /**
@@ -187,25 +186,6 @@ public interface ThrowableComparator<T> extends Comparator<T> {
             } catch (Exception ignored) {
                 return fallback.compare(o1, o2);
             }
-        };
-    }
-
-    /**
-     * Returns a composed {@link ThrowableComparator} that applies this {@code ThrowableComparator} to its input,
-     * additionally performing the provided action to the resulting value. This method exists mainly to support
-     * debugging.
-     *
-     * @param action A {@link IntConsumer} to be applied additionally to this {@code ThrowableComparator}
-     * @return A composed {@code ThrowableComparator} that applies this {@code ThrowableComparator}, additionally
-     * performing the provided action to the resulting value.
-     * @throws NullPointerException If the given argument is {@code null}
-     */
-    default ThrowableComparator<T> peek(final IntConsumer action) {
-        Objects.requireNonNull(action);
-        return (o1, o2) -> {
-            final int ret = compare(o1, o2);
-            action.accept(ret);
-            return ret;
         };
     }
 

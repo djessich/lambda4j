@@ -18,7 +18,6 @@ package at.gridtec.lambda4j.function.throwable.operators.unary;
 import at.gridtec.lambda4j.util.ThrowableUtils;
 
 import java.util.Objects;
-import java.util.function.DoubleConsumer;
 import java.util.function.DoubleUnaryOperator;
 import java.util.function.Supplier;
 
@@ -193,25 +192,6 @@ public interface ThrowableDoubleUnaryOperator extends DoubleUnaryOperator {
             } catch (Exception ignored) {
                 return fallback.applyAsDouble(operand);
             }
-        };
-    }
-
-    /**
-     * Returns a composed {@link ThrowableDoubleUnaryOperator} that applies this {@code ThrowableDoubleUnaryOperator}
-     * to its input, additionally performing the provided action to the resulting value. This method exists mainly to
-     * support debugging.
-     *
-     * @param action A {@link DoubleConsumer} to be applied additionally to this {@code ThrowableDoubleUnaryOperator}
-     * @return A composed {@code ThrowableDoubleUnaryOperator} that applies this {@code ThrowableDoubleUnaryOperator},
-     * additionally performing the provided action to the resulting value.
-     * @throws NullPointerException If the given argument is {@code null}
-     */
-    default ThrowableDoubleUnaryOperator peek(final DoubleConsumer action) {
-        Objects.requireNonNull(action);
-        return operand -> {
-            final double ret = applyAsDouble(operand);
-            action.accept(ret);
-            return ret;
         };
     }
 

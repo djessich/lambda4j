@@ -18,7 +18,6 @@ package at.gridtec.lambda4j.function.throwable;
 import at.gridtec.lambda4j.util.ThrowableUtils;
 
 import java.util.Objects;
-import java.util.function.IntConsumer;
 import java.util.function.IntSupplier;
 import java.util.function.ToIntFunction;
 
@@ -196,25 +195,6 @@ public interface ThrowableToIntFunction<T> extends ToIntFunction<T> {
             } catch (Exception ignored) {
                 return fallback.applyAsInt(t);
             }
-        };
-    }
-
-    /**
-     * Returns a composed {@link ThrowableToIntFunction} that applies this {@code ThrowableToIntFunction} to its input,
-     * additionally performing the provided action to the resulting value. This method exists mainly to support
-     * debugging.
-     *
-     * @param action A {@link IntConsumer} to be applied additionally to this {@code ThrowableToIntFunction}
-     * @return A composed {@code ThrowableToIntFunction} that applies this {@code ThrowableToIntFunction}, additionally
-     * performing the provided action to the resulting value.
-     * @throws NullPointerException If the given argument is {@code null}
-     */
-    default ThrowableToIntFunction<T> peek(final IntConsumer action) {
-        Objects.requireNonNull(action);
-        return t -> {
-            final int ret = applyAsInt(t);
-            action.accept(ret);
-            return ret;
         };
     }
 

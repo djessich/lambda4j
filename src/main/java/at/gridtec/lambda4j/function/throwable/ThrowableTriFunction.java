@@ -20,7 +20,6 @@ import at.gridtec.lambda4j.util.ThrowableUtils;
 
 import java.util.Objects;
 import java.util.function.BiFunction;
-import java.util.function.Consumer;
 import java.util.function.Supplier;
 
 /**
@@ -213,25 +212,6 @@ public interface ThrowableTriFunction<T, U, V, R> extends TriFunction<T, U, V, R
             } catch (Exception ignored) {
                 return fallback.apply(t, u, v);
             }
-        };
-    }
-
-    /**
-     * Returns a composed {@link ThrowableTriFunction} that applies this {@code ThrowableTriFunction} to its input,
-     * additionally performing the provided action to the resulting value. This method exists mainly to support
-     * debugging.
-     *
-     * @param action A {@link Consumer} to be applied additionally to this {@code ThrowableTriFunction}
-     * @return A composed {@code ThrowableTriFunction} that applies this {@code ThrowableTriFunction}, additionally
-     * performing the provided action to the resulting value.
-     * @throws NullPointerException If the given argument is {@code null}
-     */
-    default ThrowableTriFunction<T, U, V, R> peek(final Consumer<? super R> action) {
-        Objects.requireNonNull(action);
-        return (t, u, v) -> {
-            final R r = apply(t, u, v);
-            action.accept(r);
-            return r;
         };
     }
 

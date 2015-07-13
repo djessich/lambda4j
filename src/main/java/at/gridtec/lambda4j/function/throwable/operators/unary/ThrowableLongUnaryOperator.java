@@ -18,7 +18,6 @@ package at.gridtec.lambda4j.function.throwable.operators.unary;
 import at.gridtec.lambda4j.util.ThrowableUtils;
 
 import java.util.Objects;
-import java.util.function.LongConsumer;
 import java.util.function.LongUnaryOperator;
 import java.util.function.Supplier;
 
@@ -193,25 +192,6 @@ public interface ThrowableLongUnaryOperator extends LongUnaryOperator {
             } catch (Exception ignored) {
                 return fallback.applyAsLong(operand);
             }
-        };
-    }
-
-    /**
-     * Returns a composed {@link ThrowableLongUnaryOperator} that applies this {@code ThrowableLongUnaryOperator} to
-     * its input, additionally performing the provided action to the resulting value. This method exists mainly to
-     * support debugging.
-     *
-     * @param action A {@link LongConsumer} to be applied additionally to this {@code ThrowableLongUnaryOperator}
-     * @return A composed {@code ThrowableLongUnaryOperator} that applies this {@code ThrowableLongUnaryOperator},
-     * additionally performing the provided action to the resulting value.
-     * @throws NullPointerException If the given argument is {@code null}
-     */
-    default ThrowableLongUnaryOperator peek(final LongConsumer action) {
-        Objects.requireNonNull(action);
-        return operand -> {
-            final long ret = applyAsLong(operand);
-            action.accept(ret);
-            return ret;
         };
     }
 

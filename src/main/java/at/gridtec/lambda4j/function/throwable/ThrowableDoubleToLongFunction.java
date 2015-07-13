@@ -19,7 +19,6 @@ import at.gridtec.lambda4j.util.ThrowableUtils;
 
 import java.util.Objects;
 import java.util.function.DoubleToLongFunction;
-import java.util.function.LongConsumer;
 import java.util.function.LongSupplier;
 
 /**
@@ -193,25 +192,6 @@ public interface ThrowableDoubleToLongFunction extends DoubleToLongFunction {
             } catch (Exception ignored) {
                 return fallback.applyAsLong(value);
             }
-        };
-    }
-
-    /**
-     * Returns a composed {@link ThrowableDoubleToLongFunction} that applies this {@code ThrowableDoubleToLongFunction}
-     * to its input, additionally performing the provided action to the resulting value. This method exists mainly to
-     * support debugging.
-     *
-     * @param action A {@link LongConsumer} to be applied additionally to this {@code ThrowableDoubleToLongFunction}
-     * @return A composed {@code ThrowableDoubleToLongFunction} that applies this {@code ThrowableDoubleToLongFunction},
-     * additionally performing the provided action to the resulting value.
-     * @throws NullPointerException If the given argument is {@code null}
-     */
-    default ThrowableDoubleToLongFunction peek(final LongConsumer action) {
-        Objects.requireNonNull(action);
-        return value -> {
-            final long ret = applyAsLong(value);
-            action.accept(ret);
-            return ret;
         };
     }
 

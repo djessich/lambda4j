@@ -18,7 +18,6 @@ package at.gridtec.lambda4j.function.throwable.operators.unary;
 import at.gridtec.lambda4j.util.ThrowableUtils;
 
 import java.util.Objects;
-import java.util.function.Consumer;
 import java.util.function.Supplier;
 import java.util.function.UnaryOperator;
 
@@ -195,25 +194,6 @@ public interface ThrowableUnaryOperator<T> extends UnaryOperator<T> {
             } catch (Exception ignored) {
                 return fallback.apply(t);
             }
-        };
-    }
-
-    /**
-     * Returns a composed {@link ThrowableUnaryOperator} that applies this {@code ThrowableUnaryOperator} to its input,
-     * additionally performing the provided action to the resulting value. This method exists mainly to support
-     * debugging.
-     *
-     * @param action A {@link Consumer} to be applied additionally to this {@code ThrowableUnaryOperator}
-     * @return A composed {@code ThrowableUnaryOperator} that applies this {@code ThrowableUnaryOperator}, additionally
-     * performing the provided action to the resulting value.
-     * @throws NullPointerException If the given argument is {@code null}
-     */
-    default ThrowableUnaryOperator<T> peek(final Consumer<? super T> action) {
-        Objects.requireNonNull(action);
-        return t -> {
-            final T ret = apply(t);
-            action.accept(ret);
-            return ret;
         };
     }
 

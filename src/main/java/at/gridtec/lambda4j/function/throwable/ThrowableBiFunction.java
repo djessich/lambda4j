@@ -19,7 +19,6 @@ import at.gridtec.lambda4j.util.ThrowableUtils;
 
 import java.util.Objects;
 import java.util.function.BiFunction;
-import java.util.function.Consumer;
 import java.util.function.Supplier;
 
 /**
@@ -205,25 +204,6 @@ public interface ThrowableBiFunction<T, U, R> extends BiFunction<T, U, R> {
             } catch (Exception ignored) {
                 return fallback.apply(t, u);
             }
-        };
-    }
-
-    /**
-     * Returns a composed {@link ThrowableBiFunction} that applies this {@code ThrowableBiFunction} to its input,
-     * additionally performing the provided action to the resulting value. This method exists mainly to support
-     * debugging.
-     *
-     * @param action A {@link Consumer} to be applied additionally to this {@code ThrowableBiFunction}
-     * @return A composed {@code ThrowableBiFunction} that applies this {@code ThrowableBiFunction}, additionally
-     * performing the provided action to the resulting value.
-     * @throws NullPointerException If the given argument is {@code null}
-     */
-    default ThrowableBiFunction<T, U, R> peek(final Consumer<? super R> action) {
-        Objects.requireNonNull(action);
-        return (t, u) -> {
-            final R r = apply(t, u);
-            action.accept(r);
-            return r;
         };
     }
 

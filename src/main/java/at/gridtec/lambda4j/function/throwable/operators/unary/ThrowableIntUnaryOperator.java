@@ -18,7 +18,6 @@ package at.gridtec.lambda4j.function.throwable.operators.unary;
 import at.gridtec.lambda4j.util.ThrowableUtils;
 
 import java.util.Objects;
-import java.util.function.IntConsumer;
 import java.util.function.IntUnaryOperator;
 import java.util.function.Supplier;
 
@@ -193,25 +192,6 @@ public interface ThrowableIntUnaryOperator extends IntUnaryOperator {
             } catch (Exception ignored) {
                 return fallback.applyAsInt(operand);
             }
-        };
-    }
-
-    /**
-     * Returns a composed {@link ThrowableIntUnaryOperator} that applies this {@code ThrowableIntUnaryOperator} to its
-     * input, additionally performing the provided action to the resulting value. This method exists mainly to support
-     * debugging.
-     *
-     * @param action A {@link IntConsumer} to be applied additionally to this {@code ThrowableIntUnaryOperator}
-     * @return A composed {@code ThrowableIntUnaryOperator} that applies this {@code ThrowableIntUnaryOperator},
-     * additionally performing the provided action to the resulting value.
-     * @throws NullPointerException If the given argument is {@code null}
-     */
-    default ThrowableIntUnaryOperator peek(final IntConsumer action) {
-        Objects.requireNonNull(action);
-        return operand -> {
-            final int ret = applyAsInt(operand);
-            action.accept(ret);
-            return ret;
         };
     }
 

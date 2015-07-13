@@ -18,7 +18,6 @@ package at.gridtec.lambda4j.function.throwable.predicates.primitives;
 import at.gridtec.lambda4j.util.ThrowableUtils;
 
 import java.util.Objects;
-import java.util.function.Consumer;
 import java.util.function.LongPredicate;
 
 /**
@@ -190,25 +189,6 @@ public interface ThrowableLongPredicate extends LongPredicate {
             } catch (Exception ignored) {
                 return fallback.test(value);
             }
-        };
-    }
-
-    /**
-     * Returns a composed {@link ThrowableLongPredicate} that applies this {@code ThrowableLongPredicate} to its input,
-     * additionally performing the provided action to the resulting value. This method exists mainly to support
-     * debugging.
-     *
-     * @param action A {@link Consumer} to be applied additionally to this {@code ThrowableLongPredicate}
-     * @return A composed {@code ThrowableLongPredicate} that applies this {@code ThrowableLongPredicate}, additionally
-     * performing the provided action to the resulting value.
-     * @throws NullPointerException If the given argument is {@code null}
-     */
-    default ThrowableLongPredicate peek(final Consumer<? super Boolean> action) {
-        Objects.requireNonNull(action);
-        return value -> {
-            final boolean ret = test(value);
-            action.accept(ret);
-            return ret;
         };
     }
 
