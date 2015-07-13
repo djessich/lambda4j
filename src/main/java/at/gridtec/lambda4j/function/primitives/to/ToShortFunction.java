@@ -13,28 +13,29 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package at.gridtec.lambda4j.function.primitives.to;
 
 import java.util.function.Function;
 
 /**
- * Represents a function that produces a float-valued result from one argument. This is the {@code float}-producing
+ * Represents a function that produces a short-valued result from one argument. This is the {@code short}-producing
  * primitive specialization for {@link Function}.
  * <p>
- * This is a {@link FunctionalInterface} whose functional method is {@link #applyAsFloat(Object)}.
+ * This is a {@link FunctionalInterface} whose functional method is {@link #applyAsShort(Object)}.
  *
  * @param <T> The type of argument to the function
  * @see java.util.function.Function
  */
 @SuppressWarnings("unused")
 @FunctionalInterface
-public interface ToFloatFunction<T> {
+public interface ToShortFunction<T> {
 
     /**
-     * Applies this {@link ToFloatFunction} to the given argument.
+     * Applies this {@link ToShortFunction} to the given argument.
      *
      * @param t The argument to the function
      * @return The return value from the function, which is its result.
      */
-    float applyAsFloat(T t);
+    short applyAsShort(T t);
 }
