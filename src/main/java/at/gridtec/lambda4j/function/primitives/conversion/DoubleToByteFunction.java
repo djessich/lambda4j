@@ -34,7 +34,7 @@ public interface DoubleToByteFunction {
      * Applies this function to the given argument.
      *
      * @param value The argument to this function
-     * @return The result from this function.
+     * @return The result from this function, which is its result.
      */
     byte applyAsByte(double value);
 }
