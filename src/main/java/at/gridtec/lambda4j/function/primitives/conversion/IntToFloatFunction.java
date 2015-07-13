@@ -19,8 +19,8 @@ package at.gridtec.lambda4j.function.primitives.conversion;
 import java.util.function.Function;
 
 /**
- * Represents a function that accepts a {@code int}-valued argument and produces a {@code float}-valued result. This is
- * the {@code int}-to-{@code float} primitive specialization for {@link Function}.
+ * Represents a function that accepts a int-valued argument and produces a float-valued result. This is the {@code
+ * int}-to-{@code float} primitive specialization for {@link Function}.
  * <p>
  * This is a {@link FunctionalInterface} whose functional method is {@link #applyAsFloat(int)}.
  *

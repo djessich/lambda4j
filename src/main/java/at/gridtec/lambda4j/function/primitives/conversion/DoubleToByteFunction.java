@@ -19,8 +19,8 @@ package at.gridtec.lambda4j.function.primitives.conversion;
 import java.util.function.Function;
 
 /**
- * Represents a function that accepts a {@code double}-valued argument and produces a {@code byte}-valued result. This
- * is the {@code double}-to-{@code byte} primitive specialization for {@link Function}.
+ * Represents a function that accepts a double-valued argument and produces a byte-valued result. This is the {@code
+ * double}-to-{@code byte} primitive specialization for {@link Function}.
  * <p>
  * This is a {@link FunctionalInterface} whose functional method is {@link #applyAsByte(double)}.
  *

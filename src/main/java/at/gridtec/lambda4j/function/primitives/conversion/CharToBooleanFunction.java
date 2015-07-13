@@ -19,8 +19,8 @@ package at.gridtec.lambda4j.function.primitives.conversion;
 import java.util.function.Function;
 
 /**
- * Represents a function that accepts a {@code char}-valued argument and produces a {@code boolean}-valued result. This
- * is the {@code char}-to-{@code boolean} primitive specialization for {@link Function}.
+ * Represents a function that accepts a char-valued argument and produces a boolean-valued result. This is the {@code
+ * char}-to-{@code boolean} primitive specialization for {@link Function}.
  * <p>
  * This is a {@link FunctionalInterface} whose functional method is {@link #applyAsBoolean(char)}.
  *

@@ -19,8 +19,8 @@ package at.gridtec.lambda4j.function.primitives.conversion;
 import java.util.function.Function;
 
 /**
- * Represents a function that accepts a {@code short}-valued argument and produces a {@code char}-valued result. This
- * is the {@code short}-to-{@code char} primitive specialization for {@link Function}.
+ * Represents a function that accepts a short-valued argument and produces a char-valued result. This is the {@code
+ * short}-to-{@code char} primitive specialization for {@link Function}.
  * <p>
  * This is a {@link FunctionalInterface} whose functional method is {@link #applyAsChar(short)}.
  *

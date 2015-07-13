@@ -19,8 +19,8 @@ package at.gridtec.lambda4j.function.primitives.conversion;
 import java.util.function.Function;
 
 /**
- * Represents a function that accepts a {@code char}-valued argument and produces a {@code int}-valued result. This is
- * the {@code char}-to-{@code int} primitive specialization for {@link Function}.
+ * Represents a function that accepts a char-valued argument and produces a int-valued result. This is the {@code
+ * char}-to-{@code int} primitive specialization for {@link Function}.
  * <p>
  * This is a {@link FunctionalInterface} whose functional method is {@link #applyAsInt(char)}.
  *
