@@ -62,7 +62,7 @@ public final class ThrowableUtils {
     }
 
     @SuppressWarnings("unchecked")
-    private static <T extends Throwable> void sneakyThrow0(Throwable t) throws T {
-        throw (T) t;
+    private static <X extends Throwable> void sneakyThrow0(Throwable t) throws X {
+        throw (X) t;
     }
 }
