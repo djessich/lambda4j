@@ -33,7 +33,7 @@ import at.gridtec.lambda4j.function.TriFunction;
 public interface ToDoubleTriFunction<T, U, V> {
 
     /**
-     * Applies this {@link ToDoubleTriFunction} to the given argument.
+     * Applies this {@link ToDoubleTriFunction} to the given arguments.
      *
      * @param t The first argument to the function
      * @param u The second argument to the function

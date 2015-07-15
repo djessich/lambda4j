@@ -13,30 +13,29 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package at.gridtec.lambda4j.function.primitives.to;
+package at.gridtec.lambda4j.function.primitives.obj;
 
 import java.util.function.BiFunction;
 
 /**
- * Represents a function that produces a float-valued result from two arguments. This is the {@code float}-producing
- * primitive specialization for {@link BiFunction}.
+ * Represents a function that accepts an object-valued and a {@code char}-valued argument, and produces a result. This
+ * is the {@code (reference, char)} specialization of {@link BiFunction}.
  * <p>
- * This is a {@link FunctionalInterface} whose functional method is {@link #applyAsFloat(Object, Object)}.
+ * This is a {@link FunctionalInterface} whose functional method is {@link #apply(Object, char)}.
  *
- * @param <T> The type of the first argument to the function
- * @param <U> The type of the second argument to the function
+ * @param <T> The type of argument to the function
+ * @param <R> The type of return value from the function
  * @see java.util.function.BiFunction
  */
 @SuppressWarnings("unused")
 @FunctionalInterface
-public interface ToFloatBiFunction<T, U> {
+public interface ObjCharFunction<T, R> {
 
     /**
-     * Applies this {@link ToFloatBiFunction} to the given arguments.
+     * Performs this {@link ObjCharFunction} to the given arguments.
      *
      * @param t The first argument to the function
-     * @param u The second argument to the function
-     * @return The return value from the function, which is its result.
+     * @param value The second argument to the function
      */
-    float applyAsFloat(T t, U u);
+    R apply(T t, char value);
 }

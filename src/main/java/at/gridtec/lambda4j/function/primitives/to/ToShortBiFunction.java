@@ -32,7 +32,7 @@ import java.util.function.BiFunction;
 public interface ToShortBiFunction<T, U> {
 
     /**
-     * Applies this {@link ToShortBiFunction} to the given argument.
+     * Applies this {@link ToShortBiFunction} to the given arguments.
      *
      * @param t The first argument to the function
      * @param u The second argument to the function
