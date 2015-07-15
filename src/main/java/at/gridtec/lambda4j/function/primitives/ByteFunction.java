@@ -13,30 +13,28 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package at.gridtec.lambda4j.function.primitives.to;
+package at.gridtec.lambda4j.function.primitives;
 
-import java.util.function.BiFunction;
+import java.util.function.Function;
 
 /**
- * Represents a function that produces a byte-valued result from two arguments. This is the {@code byte}-producing
- * primitive specialization for {@link BiFunction}.
+ * Represents a function that accepts a byte-valued argument and produces a result. This is the {@code byte}-consuming
+ * primitive specialization for {@link Function}.
  * <p>
- * This is a {@link FunctionalInterface} whose functional method is {@link #applyAsByte(Object, Object)}.
+ * This is a {@link FunctionalInterface} whose functional method is {@link #apply(byte)}.
  *
- * @param <T> The type of the first argument to the function
- * @param <U> The type of the second argument to the function
- * @see java.util.function.BiFunction
+ * @param <R> The type of return value from the function
+ * @see java.util.function.Function
  */
 @SuppressWarnings("unused")
 @FunctionalInterface
-public interface ToByteBiFunction<T, U> {
+public interface ByteFunction<R> {
 
     /**
-     * Applies this {@link ToByteBiFunction} to the given argument.
+     * Applies this {@link ByteFunction} to the given argument.
      *
-     * @param t The first argument to the function
-     * @param u The second argument to the function
+     * @param value The argument to the function
      * @return The return value from the function, which is its result.
      */
-    byte applyAsByte(T t, U u);
+    R apply(byte value);
 }

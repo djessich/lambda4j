@@ -13,29 +13,28 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package at.gridtec.lambda4j.function;
+package at.gridtec.lambda4j.function.primitives;
 
-import java.util.function.BiFunction;
+import java.util.function.Function;
 
 /**
- * Represents a function that accepts two float-valued arguments and produces a result. This is the {@code
- * float}-consuming primitive specialization for {@link BiFunction}.
+ * Represents a function that accepts a boolean-valued argument and produces a result. This is the {@code
+ * boolean}-consuming primitive specialization for {@link Function}.
  * <p>
- * This is a {@link FunctionalInterface} whose functional method is {@link #apply(float, float)}.
+ * This is a {@link FunctionalInterface} whose functional method is {@link #apply(boolean)}.
  *
  * @param <R> The type of return value from the function
- * @see java.util.function.BiFunction
+ * @see java.util.function.Function
  */
 @SuppressWarnings("unused")
 @FunctionalInterface
-public interface FloatBiFunction<R> {
+public interface BooleanFunction<R> {
 
     /**
-     * Applies this {@link FloatBiFunction} to the given argument.
+     * Applies this {@link BooleanFunction} to the given argument.
      *
-     * @param value1 The first argument to the function
-     * @param value2 The second argument to the function
+     * @param value The argument to the function
      * @return The return value from the function, which is its result.
      */
-    R apply(float value1, float value2);
+    R apply(boolean value);
 }

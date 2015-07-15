@@ -13,28 +13,28 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package at.gridtec.lambda4j.function;
+package at.gridtec.lambda4j.function.primitives;
+
+import java.util.function.Function;
 
 /**
- * Represents a function that accepts three float-valued argument and produces a result. This is the {@code
- * float}-consuming primitive specialization for {@link TriFunction}.
+ * Represents a function that accepts a float-valued argument and produces a result. This is the {@code
+ * float}-consuming primitive specialization for {@link Function}.
  * <p>
- * This is a {@link FunctionalInterface} whose functional method is {@link #apply(float, float, float)}.
+ * This is a {@link FunctionalInterface} whose functional method is {@link #apply(float)}.
  *
  * @param <R> The type of return value from the function
- * @see at.gridtec.lambda4j.consumer.TriConsumer
+ * @see java.util.function.Function
  */
 @SuppressWarnings("unused")
 @FunctionalInterface
-public interface FloatTriFunction<R> {
+public interface FloatFunction<R> {
 
     /**
-     * Applies this {@link FloatTriFunction} to the given argument.
+     * Applies this {@link FloatFunction} to the given argument.
      *
-     * @param value1 The first argument to the function
-     * @param value2 The second argument to the function
-     * @param value3 The third argument to the function
+     * @param value The argument to the function
      * @return The return value from the function, which is its result.
      */
-    R apply(float value1, float value2, float value3);
+    R apply(float value);
 }
