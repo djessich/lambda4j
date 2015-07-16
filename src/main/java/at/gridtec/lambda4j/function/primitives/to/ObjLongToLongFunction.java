@@ -21,8 +21,8 @@ import java.util.function.BiFunction;
  * Represents a function that accepts an object-valued and a {@code long}-valued argument, and produces a {@code
  * long}-valued result. This is the {@code (reference, long)}, {@code long}-producing primitive specialization for
  * {@link BiFunction}.
- * <p/>
- * This is a {@link FunctionalInterface} whose functional method is {@link #applyAsInt(Object, long)}.
+ * <p>
+ * This is a {@link FunctionalInterface} whose functional method is {@link #applyAsLong(Object, long)}.
  *
  * @param <T> The type of argument to the function
  * @see java.util.function.BiFunction
@@ -38,5 +38,5 @@ public interface ObjLongToLongFunction<T> {
      * @param value The second argument to the function
      * @return The return value from the function, which is its result.
      */
-    long applyAsInt(T t, long value);
+    long applyAsLong(T t, long value);
 }

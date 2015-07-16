@@ -21,8 +21,8 @@ import java.util.function.BiFunction;
  * Represents a function that accepts an object-valued and a {@code char}-valued argument, and produces a {@code
  * char}-valued result. This is the {@code (reference, char)}, {@code char}-producing primitive specialization for
  * {@link BiFunction}.
- * <p/>
- * This is a {@link FunctionalInterface} whose functional method is {@link #applyAsInt(Object, char)}.
+ * <p>
+ * This is a {@link FunctionalInterface} whose functional method is {@link #applyAsChar(Object, char)}.
  *
  * @param <T> The type of argument to the function
  * @see java.util.function.BiFunction
@@ -38,5 +38,5 @@ public interface ObjCharToCharFunction<T> {
      * @param value The second argument to the function
      * @return The return value from the function, which is its result.
      */
-    char applyAsInt(T t, char value);
+    char applyAsChar(T t, char value);
 }

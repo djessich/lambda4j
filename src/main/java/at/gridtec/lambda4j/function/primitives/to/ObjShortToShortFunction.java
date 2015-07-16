@@ -21,8 +21,8 @@ import java.util.function.BiFunction;
  * Represents a function that accepts an object-valued and a {@code short}-valued argument, and produces a {@code
  * short}-valued result. This is the {@code (reference, short)}, {@code short}-producing primitive specialization for
  * {@link BiFunction}.
- * <p/>
- * This is a {@link FunctionalInterface} whose functional method is {@link #applyAsInt(Object, short)}.
+ * <p>
+ * This is a {@link FunctionalInterface} whose functional method is {@link #applyAsShort(Object, short)}.
  *
  * @param <T> The type of argument to the function
  * @see java.util.function.BiFunction
@@ -38,5 +38,5 @@ public interface ObjShortToShortFunction<T> {
      * @param value The second argument to the function
      * @return The return value from the function, which is its result.
      */
-    short applyAsInt(T t, short value);
+    short applyAsShort(T t, short value);
 }

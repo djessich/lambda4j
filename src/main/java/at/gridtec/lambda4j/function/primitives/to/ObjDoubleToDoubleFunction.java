@@ -21,8 +21,8 @@ import java.util.function.BiFunction;
  * Represents a function that accepts an object-valued and a {@code double}-valued argument, and produces a {@code
  * double}-valued result. This is the {@code (reference, double)}, {@code double}-producing primitive specialization
  * for {@link BiFunction}.
- * <p/>
- * This is a {@link FunctionalInterface} whose functional method is {@link #applyAsInt(Object, double)}.
+ * <p>
+ * This is a {@link FunctionalInterface} whose functional method is {@link #applyAsDouble(Object, double)}.
  *
  * @param <T> The type of argument to the function
  * @see java.util.function.BiFunction
@@ -38,5 +38,5 @@ public interface ObjDoubleToDoubleFunction<T> {
      * @param value The second argument to the function
      * @return The return value from the function, which is its result.
      */
-    double applyAsInt(T t, double value);
+    double applyAsDouble(T t, double value);
 }
