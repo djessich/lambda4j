@@ -20,7 +20,7 @@ import at.gridtec.lambda4j.function.TriFunction;
 /**
  * Represents a function that accepts two object-valued and a {@code boolean}-valued argument, and produces a result.
  * This is the {@code (reference, reference, boolean)} specialization of {@link TriFunction}.
- * <p>
+ * <p/>
  * This is a {@link FunctionalInterface} whose functional method is {@link #apply(Object, Object, boolean)}.
  *
  * @param <T> The type of the first argument to the function
@@ -38,6 +38,7 @@ public interface BiObjBooleanFunction<T, U, R> {
      * @param t The first argument to the function
      * @param u The second argument to the function
      * @param value The third argument to the function
+     * @return The return value from the function, which is its result.
      */
     R apply(T t, U u, boolean value);
 }

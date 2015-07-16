@@ -20,7 +20,7 @@ import java.util.function.BiFunction;
 /**
  * Represents a function that accepts an object-valued and a {@code long}-valued argument, and produces a result. This
  * is the {@code (reference, long)} specialization of {@link BiFunction}.
- * <p>
+ * <p/>
  * This is a {@link FunctionalInterface} whose functional method is {@link #apply(Object, long)}.
  *
  * @param <T> The type of argument to the function
@@ -36,6 +36,7 @@ public interface ObjLongFunction<T, R> {
      *
      * @param t The first argument to the function
      * @param value The second argument to the function
+     * @return The return value from the function, which is its result.
      */
     R apply(T t, long value);
 }

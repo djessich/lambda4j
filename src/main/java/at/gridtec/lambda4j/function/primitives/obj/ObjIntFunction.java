@@ -36,6 +36,7 @@ public interface ObjIntFunction<T, R> {
      *
      * @param t The first argument to the function
      * @param value The second argument to the function
+     * @return The return value from the function, which is its result.
      */
     R apply(T t, int value);
 }
