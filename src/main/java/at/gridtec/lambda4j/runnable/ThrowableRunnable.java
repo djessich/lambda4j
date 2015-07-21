@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package at.gridtec.lambda4j.throwable.runnable;
+package at.gridtec.lambda4j.runnable;
 
 import at.gridtec.lambda4j.util.ThrowableUtils;
 
@@ -156,10 +156,11 @@ public interface ThrowableRunnable extends Runnable {
     /**
      * Returns a composed {@link ThrowableRunnable} that executes this {@code ThrowableRunnable}, and if an error
      * occurred, does nothing. The exception from this {@code ThrowableRunnable} is ignored, unless its an unchecked
-     * exception.
+     * exception. This method is just convenience to enable more specific handling for failure situation.
      *
      * @return A composed {@code ThrowableRunnable} that executes this {@code ThrowableRunnable}, and if an error
      * occurred, does nothing.
+     * @see #orDoNothingAlways()
      */
     default Runnable orDoNothing() {
         return () -> {
@@ -179,6 +180,7 @@ public interface ThrowableRunnable extends Runnable {
      *
      * @return A composed {@code ThrowableRunnable} that executes this {@code ThrowableRunnable}, and if an error
      * occurred, does nothing.
+     * @see #orDoNothing()
      */
     default Runnable orDoNothingAlways() {
         return () -> {
