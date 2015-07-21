@@ -26,16 +26,38 @@ import java.util.function.Supplier;
  * <p>
  * This is a {@link FunctionalInterface} whose functional method is {@link #getAsByte()}.
  *
- * @see java.util.function.Supplier
+ * @see ThrowableByteSupplier
+ * @see Supplier
  */
 @SuppressWarnings("unused")
 @FunctionalInterface
 public interface ByteSupplier {
 
     /**
-     * Gets the supplied result from this supplier.
+     * Creates a {@link ByteSupplier} which always returns a given value.
+     *
+     * @param ret The return value for the constant
+     * @return A {@code ThrowableByteSupplier} which always returns a given value.
+     */
+    static ByteSupplier constant(byte ret) {
+        return () -> ret;
+    }
+
+    /**
+     * Gets the supplied result from this {@link ByteSupplier}.
      *
      * @return The supplied result.
      */
     byte getAsByte();
+
+    /**
+     * Returns a composed {@link Supplier} which represents this {@link ByteSupplier}. Thereby the primitive input
+     * argument for this operation is autoboxed. This method is just convenience to provide the ability to use this
+     * {@code FloatSupplier} with JRE specific methods, only accepting {@code Supplier}.
+     *
+     * @return A composed {@code Supplier} which represents this {@code ByteSupplier}.
+     */
+    default Supplier<Byte> boxed() {
+        return this::getAsByte;
+    }
 }

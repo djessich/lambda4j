@@ -13,15 +13,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package at.gridtec.lambda4j.throwable.supplier;
+package at.gridtec.lambda4j.supplier;
 
 import at.gridtec.lambda4j.util.ThrowableUtils;
 
 import java.util.Objects;
-import java.util.function.LongSupplier;
+import java.util.function.DoubleSupplier;
 
 /**
- * This functional interface implements a {@link LongSupplier} which is able to throw any {@link Exception}.
+ * This functional interface implements a {@link DoubleSupplier} which is able to throw any {@link Exception}.
  * <p>
  * The thrown {@link Exception} is sneakily thrown unless its a {@link RuntimeException}. This means that there is no
  * need to catch the thrown exception, nor to declare that you throw it using the <em>throws</em> keyword. The
@@ -47,73 +47,73 @@ import java.util.function.LongSupplier;
  * declaration in the <em>throws</em> clause. The checked exception will behave just like a normal <b>unchecked</b>
  * exception due to sneaky throwing.
  * <p>
- * This is a {@link FunctionalInterface} whose functional method is {@link #getAsLongThrows()}.
+ * This is a {@link FunctionalInterface} whose functional method is {@link #getAsDoubleThrows()}.
  *
  * @apiNote This is a throwable JRE lambda
  * @see java.util.function.Supplier
  */
 @SuppressWarnings("unused")
 @FunctionalInterface
-public interface ThrowableLongSupplier extends LongSupplier {
+public interface ThrowableDoubleSupplier extends DoubleSupplier {
 
     /**
-     * Implicitly casts, and therefore wraps a given lambda as {@link ThrowableLongSupplier}. This is a convenience
-     * method in case the given {@link ThrowableLongSupplier} is ambiguous for the compiler. This might happen for
-     * overloaded methods accepting different functional interfaces. The given {@code ThrowableLongSupplier} is
+     * Implicitly casts, and therefore wraps a given lambda as {@link ThrowableDoubleSupplier}. This is a convenience
+     * method in case the given {@link ThrowableDoubleSupplier} is ambiguous for the compiler. This might happen for
+     * overloaded methods accepting different functional interfaces. The given {@code ThrowableDoubleSupplier} is
      * returned as-is.
      *
-     * @param lambda The {@code ThrowableLongSupplier} which should be returned as-is.
-     * @return The given {@code ThrowableLongSupplier} as-is.
+     * @param lambda The {@code ThrowableDoubleSupplier} which should be returned as-is.
+     * @return The given {@code ThrowableDoubleSupplier} as-is.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static ThrowableLongSupplier wrap(final ThrowableLongSupplier lambda) {
+    static ThrowableDoubleSupplier wrap(final ThrowableDoubleSupplier lambda) {
         Objects.requireNonNull(lambda);
         return lambda;
     }
 
     /**
-     * Creates a {@link ThrowableLongSupplier} from the given {@link LongSupplier}. This method is just convenience to
-     * provide a mapping for the non-throwable/throwable instances of the corresponding functional interface.
+     * Creates a {@link ThrowableDoubleSupplier} from the given {@link DoubleSupplier}. This method is just convenience
+     * to provide a mapping for the non-throwable/throwable instances of the corresponding functional interface.
      *
-     * @param lambda A {@code LongSupplier} which should be mapped to its throwable counterpart
-     * @return A {@code ThrowableLongSupplier} from the given {@code LongSupplier}.
+     * @param lambda A {@code DoubleSupplier} which should be mapped to its throwable counterpart
+     * @return A {@code ThrowableDoubleSupplier} from the given {@code DoubleSupplier}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static ThrowableLongSupplier from(final LongSupplier lambda) {
+    static ThrowableDoubleSupplier from(final DoubleSupplier lambda) {
         Objects.requireNonNull(lambda);
-        return lambda::getAsLong;
+        return lambda::getAsDouble;
     }
 
     /**
-     * Creates a {@link ThrowableLongSupplier} which always returns a given value.
+     * Creates a {@link ThrowableDoubleSupplier} which always returns a given value.
      *
      * @param ret The return value for the constant
-     * @return A {@code ThrowableLongSupplier} which always returns a given value.
+     * @return A {@code ThrowableDoubleSupplier} which always returns a given value.
      */
-    static ThrowableLongSupplier of(long ret) {
+    static ThrowableDoubleSupplier constant(double ret) {
         return () -> ret;
     }
 
     /**
-     * The get method for this {@link LongSupplier} which is able to throw any {@link Exception} type.
+     * The get method for this {@link DoubleSupplier} which is able to throw any {@link Exception} type.
      *
      * @return The supplied value.
      * @throws Exception Any exception from this functions action
      */
-    long getAsLongThrows() throws Exception;
+    double getAsDoubleThrows() throws Exception;
 
     /**
-     * Overrides the {@link LongSupplier#getAsLong()} method by using a redefinition as default method. It calls the
-     * {@link #getAsLongThrows()} method of this interface and catches the thrown {@link Exception}s from it. If it is
-     * of type {@link RuntimeException}, the exception is rethrown. Other exception types are sneakily thrown.
+     * Overrides the {@link DoubleSupplier#getAsDouble()} method by using a redefinition as default method. It calls
+     * the {@link #getAsDoubleThrows()} method of this interface and catches the thrown {@link Exception}s from it. If
+     * it is of type {@link RuntimeException}, the exception is rethrown. Other exception types are sneakily thrown.
      *
      * @return The supplied value.
      * @see at.gridtec.lambda4j.util.ThrowableUtils#sneakyThrow(Throwable)
      */
     @Override
-    default long getAsLong() {
+    default double getAsDouble() {
         try {
-            return getAsLongThrows();
+            return getAsDoubleThrows();
         } catch (RuntimeException e) {
             throw e;
         } catch (Exception e) {
@@ -122,45 +122,45 @@ public interface ThrowableLongSupplier extends LongSupplier {
     }
 
     /**
-     * Returns a composed {@link ThrowableLongSupplier} that applies this {@code ThrowableLongSupplier} to its input,
-     * and if an error occurred, applies the given one. The exception from this {@code ThrowableLongSupplier} is
-     * ignored.
+     * Returns a composed {@link ThrowableDoubleSupplier} that applies this {@code ThrowableDoubleSupplier} to its
+     * input, and if an error occurred, applies the given one. The exception from this {@code ThrowableDoubleSupplier}
+     * is ignored.
      *
-     * @param other A {@code ThrowableLongSupplier} to be applied if this one fails
-     * @return A composed {@code ThrowableLongSupplier} that applies this {@code ThrowableLongSupplier}, and if an error
-     * occurred, applies the given one.
+     * @param other A {@code ThrowableDoubleSupplier} to be applied if this one fails
+     * @return A composed {@code ThrowableDoubleSupplier} that applies this {@code ThrowableDoubleSupplier}, and if an
+     * error occurred, applies the given one.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    default ThrowableLongSupplier orElse(final ThrowableLongSupplier other) {
+    default ThrowableDoubleSupplier orElse(final ThrowableDoubleSupplier other) {
         Objects.requireNonNull(other);
         return () -> {
             try {
-                return getAsLongThrows();
+                return getAsDoubleThrows();
             } catch (Exception ignored) {
-                return other.getAsLongThrows();
+                return other.getAsDoubleThrows();
             }
         };
     }
 
     /**
-     * Returns a composed {@link ThrowableLongSupplier} that applies this {@code ThrowableLongSupplier} to its input,
-     * and if an error occurred, throws the given {@link Exception}. The exception from this {@code
-     * ThrowableLongSupplier} is added as suppressed to the given one.
+     * Returns a composed {@link ThrowableDoubleSupplier} that applies this {@code ThrowableDoubleSupplier} to its
+     * input, and if an error occurred, throws the given {@link Exception}. The exception from this {@code
+     * ThrowableDoubleSupplier} is added as suppressed to the given one.
      * <p>
      * The given exception must have a no arg constructor for reflection purposes. If not, then appropriate exception
      * as described in {@link Class#newInstance()} is thrown.
      *
      * @param <X> The type for the class extending {@code Exception}
      * @param clazz The exception class to throw if an error occurred
-     * @return A composed {@code ThrowableLongSupplier} that applies this {@code ThrowableLongSupplier}, and if an error
-     * occurred, throws the given {@code Exception}.
+     * @return A composed {@code ThrowableDoubleSupplier} that applies this {@code ThrowableDoubleSupplier}, and if an
+     * error occurred, throws the given {@code Exception}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    default <X extends Exception> ThrowableLongSupplier orThrow(Class<X> clazz) {
+    default <X extends Exception> ThrowableDoubleSupplier orThrow(Class<X> clazz) {
         Objects.requireNonNull(clazz);
         return () -> {
             try {
-                return getAsLongThrows();
+                return getAsDoubleThrows();
             } catch (Exception e) {
                 X ex = clazz.newInstance();
                 ex.addSuppressed(e);
@@ -170,38 +170,38 @@ public interface ThrowableLongSupplier extends LongSupplier {
     }
 
     /**
-     * Returns a composed {@link LongSupplier} that applies this {@link ThrowableLongSupplier} to its input, and if an
-     * error occurred, applies the given {@code LongSupplier} representing a fallback. The exception from this {@code
-     * ThrowableLongSupplier} is ignored.
+     * Returns a composed {@link DoubleSupplier} that applies this {@link ThrowableDoubleSupplier} to its input, and if
+     * an error occurred, applies the given {@code DoubleSupplier} representing a fallback. The exception from this
+     * {@code ThrowableDoubleSupplier} is ignored.
      *
-     * @param fallback A {@code LongSupplier} to be applied if this one fails
-     * @return A composed {@code LongSupplier} that applies this {@code ThrowableLongSupplier}, and if an error
-     * occurred, applies the given {@code LongSupplier}.
+     * @param fallback A {@code DoubleSupplier} to be applied if this one fails
+     * @return A composed {@code DoubleSupplier} that applies this {@code ThrowableDoubleSupplier}, and if an error
+     * occurred, applies the given {@code DoubleSupplier}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    default LongSupplier fallbackTo(final LongSupplier fallback) {
+    default DoubleSupplier fallbackTo(final DoubleSupplier fallback) {
         Objects.requireNonNull(fallback);
         return () -> {
             try {
-                return getAsLongThrows();
+                return getAsDoubleThrows();
             } catch (Exception ignored) {
-                return fallback.getAsLong();
+                return fallback.getAsDouble();
             }
         };
     }
 
     /**
-     * Returns a composed {@link LongSupplier} that applies this {@link ThrowableLongSupplier} to its input, and if an
-     * error occurred, returns the given value. The exception from this {@code ThrowableLongSupplier} is ignored.
+     * Returns a composed {@link DoubleSupplier} that applies this {@link ThrowableDoubleSupplier} to its input, and if
+     * an error occurred, returns the given value. The exception from this {@code ThrowableDoubleSupplier} is ignored.
      *
-     * @param value The value to be returned if this {@code ThrowableLongSupplier} fails
-     * @return A composed {@code LongSupplier} that applies this {@code ThrowableLongSupplier}, and if an error
+     * @param value The value to be returned if this {@code ThrowableDoubleSupplier} fails
+     * @return A composed {@code DoubleSupplier} that applies this {@code ThrowableDoubleSupplier}, and if an error
      * occurred, returns the given value.
      */
-    default LongSupplier orReturn(long value) {
+    default DoubleSupplier orReturn(double value) {
         return () -> {
             try {
-                return getAsLongThrows();
+                return getAsDoubleThrows();
             } catch (Exception ignored) {
                 return value;
             }

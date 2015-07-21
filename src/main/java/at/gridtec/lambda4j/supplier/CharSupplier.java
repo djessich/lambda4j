@@ -33,9 +33,30 @@ import java.util.function.Supplier;
 public interface CharSupplier {
 
     /**
+     * Creates a {@link CharSupplier} which always returns a given value.
+     *
+     * @param ret The return value for the constant
+     * @return A {@code ThrowableByteSupplier} which always returns a given value.
+     */
+    static CharSupplier constant(char ret) {
+        return () -> ret;
+    }
+
+    /**
      * Gets the supplied result from this supplier.
      *
      * @return The supplied result.
      */
     char getAsChar();
+
+    /**
+     * Returns a composed {@link Supplier} which represents this {@link ShortSupplier}. Thereby the primitive input
+     * argument for this operation is autoboxed. This method is just convenience to provide the ability to use this
+     * {@code ShortSupplier} with JRE specific methods, only accepting {@code Supplier}.
+     *
+     * @return A composed {@code Supplier} which represents this {@code ShortSupplier}.
+     */
+    default Supplier<Character> boxed() {
+        return this::getAsChar;
+    }
 }

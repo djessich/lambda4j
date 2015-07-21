@@ -13,15 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package at.gridtec.lambda4j.throwable.supplier;
+package at.gridtec.lambda4j.supplier;
 
 import at.gridtec.lambda4j.util.ThrowableUtils;
 
 import java.util.Objects;
-import java.util.function.IntSupplier;
 
 /**
- * This functional interface implements a {@link IntSupplier} which is able to throw any {@link Exception}.
+ * This functional interface implements a {@link FloatSupplier} which is able to throw any {@link Exception}.
  * <p>
  * The thrown {@link Exception} is sneakily thrown unless its a {@link RuntimeException}. This means that there is no
  * need to catch the thrown exception, nor to declare that you throw it using the <em>throws</em> keyword. The
@@ -47,73 +46,72 @@ import java.util.function.IntSupplier;
  * declaration in the <em>throws</em> clause. The checked exception will behave just like a normal <b>unchecked</b>
  * exception due to sneaky throwing.
  * <p>
- * This is a {@link FunctionalInterface} whose functional method is {@link #getAsIntThrows()}.
+ * This is a {@link FunctionalInterface} whose functional method is {@link #getAsFloatThrows()}.
  *
- * @apiNote This is a throwable JRE lambda
  * @see java.util.function.Supplier
  */
 @SuppressWarnings("unused")
 @FunctionalInterface
-public interface ThrowableIntSupplier extends IntSupplier {
+public interface ThrowableFloatSupplier extends FloatSupplier {
 
     /**
-     * Implicitly casts, and therefore wraps a given lambda as {@link ThrowableIntSupplier}. This is a convenience
-     * method in case the given {@link ThrowableIntSupplier} is ambiguous for the compiler. This might happen for
-     * overloaded methods accepting different functional interfaces. The given {@code ThrowableIntSupplier} is returned
-     * as-is.
+     * Implicitly casts, and therefore wraps a given lambda as {@link ThrowableFloatSupplier}. This is a convenience
+     * method in case the given {@link ThrowableFloatSupplier} is ambiguous for the compiler. This might happen for
+     * overloaded methods accepting different functional interfaces. The given {@code ThrowableFloatSupplier} is
+     * returned as-is.
      *
-     * @param lambda The {@code ThrowableIntSupplier} which should be returned as-is.
-     * @return The given {@code ThrowableIntSupplier} as-is.
+     * @param lambda The {@code ThrowableFloatSupplier} which should be returned as-is.
+     * @return The given {@code ThrowableFloatSupplier} as-is.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static ThrowableIntSupplier wrap(final ThrowableIntSupplier lambda) {
+    static ThrowableFloatSupplier wrap(final ThrowableFloatSupplier lambda) {
         Objects.requireNonNull(lambda);
         return lambda;
     }
 
     /**
-     * Creates a {@link ThrowableIntSupplier} from the given {@link IntSupplier}. This method is just convenience to
-     * provide a mapping for the non-throwable/throwable instances of the corresponding functional interface.
+     * Creates a {@link ThrowableFloatSupplier} from the given {@link FloatSupplier}. This method is just convenience
+     * to provide a mapping for the non-throwable/throwable instances of the corresponding functional interface.
      *
-     * @param lambda A {@code IntSupplier} which should be mapped to its throwable counterpart
-     * @return A {@code ThrowableIntSupplier} from the given {@code IntSupplier}.
+     * @param lambda A {@code FloatSupplier} which should be mapped to its throwable counterpart
+     * @return A {@code ThrowableFloatSupplier} from the given {@code FloatSupplier}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static ThrowableIntSupplier from(final IntSupplier lambda) {
+    static ThrowableFloatSupplier from(final FloatSupplier lambda) {
         Objects.requireNonNull(lambda);
-        return lambda::getAsInt;
+        return lambda::getAsFloat;
     }
 
     /**
-     * Creates a {@link ThrowableIntSupplier} which always returns a given value.
+     * Creates a {@link ThrowableFloatSupplier} which always returns a given value.
      *
      * @param ret The return value for the constant
-     * @return A {@code ThrowableIntSupplier} which always returns a given value.
+     * @return A {@code ThrowableFloatSupplier} which always returns a given value.
      */
-    static ThrowableIntSupplier of(int ret) {
+    static ThrowableFloatSupplier constant(byte ret) {
         return () -> ret;
     }
 
     /**
-     * The get method for this {@link IntSupplier} which is able to throw any {@link Exception} type.
+     * The get method for this {@link FloatSupplier} which is able to throw any {@link Exception} type.
      *
      * @return The supplied value.
      * @throws Exception Any exception from this functions action
      */
-    int getAsIntThrows() throws Exception;
+    float getAsFloatThrows() throws Exception;
 
     /**
-     * Overrides the {@link IntSupplier#getAsInt()} method by using a redefinition as default method. It calls the
-     * {@link #getAsIntThrows()} method of this interface and catches the thrown {@link Exception}s from it. If it is
+     * Overrides the {@link FloatSupplier#getAsFloat()} method by using a redefinition as default method. It calls the
+     * {@link #getAsFloatThrows()} method of this interface and catches the thrown {@link Exception}s from it. If it is
      * of type {@link RuntimeException}, the exception is rethrown. Other exception types are sneakily thrown.
      *
      * @return The supplied value.
-     * @see at.gridtec.lambda4j.util.ThrowableUtils#sneakyThrow(Throwable)
+     * @see ThrowableUtils#sneakyThrow(Throwable)
      */
     @Override
-    default int getAsInt() {
+    default float getAsFloat() {
         try {
-            return getAsIntThrows();
+            return getAsFloatThrows();
         } catch (RuntimeException e) {
             throw e;
         } catch (Exception e) {
@@ -122,44 +120,45 @@ public interface ThrowableIntSupplier extends IntSupplier {
     }
 
     /**
-     * Returns a composed {@link ThrowableIntSupplier} that applies this {@code ThrowableIntSupplier} to its input, and
-     * if an error occurred, applies the given one. The exception from this {@code ThrowableIntSupplier} is ignored.
+     * Returns a composed {@link ThrowableFloatSupplier} that applies this {@code ThrowableFloatSupplier} to its input,
+     * and if an error occurred, applies the given one. The exception from this {@code ThrowableFloatSupplier} is
+     * ignored.
      *
-     * @param other A {@code ThrowableIntSupplier} to be applied if this one fails
-     * @return A composed {@code ThrowableIntSupplier} that applies this {@code ThrowableIntSupplier}, and if an error
-     * occurred, applies the given one.
+     * @param other A {@code ThrowableFloatSupplier} to be applied if this one fails
+     * @return A composed {@code ThrowableFloatSupplier} that applies this {@code ThrowableFloatSupplier}, and if an
+     * error occurred, applies the given one.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    default ThrowableIntSupplier orElse(final ThrowableIntSupplier other) {
+    default ThrowableFloatSupplier orElse(final ThrowableFloatSupplier other) {
         Objects.requireNonNull(other);
         return () -> {
             try {
-                return getAsIntThrows();
+                return getAsFloatThrows();
             } catch (Exception ignored) {
-                return other.getAsIntThrows();
+                return other.getAsFloatThrows();
             }
         };
     }
 
     /**
-     * Returns a composed {@link ThrowableIntSupplier} that applies this {@code ThrowableIntSupplier} to its input, and
-     * if an error occurred, throws the given {@link Exception}. The exception from this {@code ThrowableIntSupplier}
-     * is added as suppressed to the given one.
+     * Returns a composed {@link ThrowableFloatSupplier} that applies this {@code ThrowableFloatSupplier} to its input,
+     * and if an error occurred, throws the given {@link Exception}. The exception from this {@code
+     * ThrowableFloatSupplier} is added as suppressed to the given one.
      * <p>
      * The given exception must have a no arg constructor for reflection purposes. If not, then appropriate exception
      * as described in {@link Class#newInstance()} is thrown.
      *
      * @param <X> The type for the class extending {@code Exception}
      * @param clazz The exception class to throw if an error occurred
-     * @return A composed {@code ThrowableIntSupplier} that applies this {@code ThrowableIntSupplier}, and if an error
-     * occurred, throws the given {@code Exception}.
+     * @return A composed {@code ThrowableFloatSupplier} that applies this {@code ThrowableFloatSupplier}, and if an
+     * error occurred, throws the given {@code Exception}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    default <X extends Exception> ThrowableIntSupplier orThrow(Class<X> clazz) {
+    default <X extends Exception> ThrowableFloatSupplier orThrow(Class<X> clazz) {
         Objects.requireNonNull(clazz);
         return () -> {
             try {
-                return getAsIntThrows();
+                return getAsFloatThrows();
             } catch (Exception e) {
                 X ex = clazz.newInstance();
                 ex.addSuppressed(e);
@@ -169,38 +168,38 @@ public interface ThrowableIntSupplier extends IntSupplier {
     }
 
     /**
-     * Returns a composed {@link IntSupplier} that applies this {@link ThrowableIntSupplier} to its input, and if an
-     * error occurred, applies the given {@code IntSupplier} representing a fallback. The exception from this {@code
-     * ThrowableIntSupplier} is ignored.
+     * Returns a composed {@link FloatSupplier} that applies this {@link ThrowableFloatSupplier} to its input, and if
+     * an error occurred, applies the given {@code FloatSupplier} representing a fallback. The exception from this
+     * {@code ThrowableFloatSupplier} is ignored.
      *
-     * @param fallback A {@code IntSupplier} to be applied if this one fails
-     * @return A composed {@code IntSupplier} that applies this {@code ThrowableIntSupplier}, and if an error occurred,
-     * applies the given {@code IntSupplier}.
+     * @param fallback A {@code FloatSupplier} to be applied if this one fails
+     * @return A composed {@code FloatSupplier} that applies this {@code ThrowableFloatSupplier}, and if an error
+     * occurred, applies the given {@code FloatSupplier}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    default IntSupplier fallbackTo(final IntSupplier fallback) {
+    default FloatSupplier fallbackTo(final FloatSupplier fallback) {
         Objects.requireNonNull(fallback);
         return () -> {
             try {
-                return getAsIntThrows();
+                return getAsFloatThrows();
             } catch (Exception ignored) {
-                return fallback.getAsInt();
+                return fallback.getAsFloat();
             }
         };
     }
 
     /**
-     * Returns a composed {@link IntSupplier} that applies this {@link ThrowableIntSupplier} to its input, and if an
-     * error occurred, returns the given value. The exception from this {@code ThrowableIntSupplier} is ignored.
+     * Returns a composed {@link FloatSupplier} that applies this {@link ThrowableFloatSupplier} to its input, and if
+     * an error occurred, returns the given value. The exception from this {@code ThrowableFloatSupplier} is ignored.
      *
-     * @param value The value to be returned if this {@code ThrowableIntSupplier} fails
-     * @return A composed {@code IntSupplier} that applies this {@code ThrowableIntSupplier}, and if an error
+     * @param value The value to be returned if this {@code ThrowableFloatSupplier} fails
+     * @return A composed {@code FloatSupplier} that applies this {@code ThrowableFloatSupplier}, and if an error
      * occurred, returns the given value.
      */
-    default IntSupplier orReturn(int value) {
+    default FloatSupplier orReturn(float value) {
         return () -> {
             try {
-                return getAsIntThrows();
+                return getAsFloatThrows();
             } catch (Exception ignored) {
                 return value;
             }

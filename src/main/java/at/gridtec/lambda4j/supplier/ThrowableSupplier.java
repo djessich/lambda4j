@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package at.gridtec.lambda4j.throwable.supplier;
+package at.gridtec.lambda4j.supplier;
 
 import at.gridtec.lambda4j.util.ThrowableUtils;
 
@@ -92,7 +92,7 @@ public interface ThrowableSupplier<T> extends Supplier<T> {
      * @param t The return value for the constant
      * @return A {@code ThrowableSupplier} which always returns a given value.
      */
-    static <T> ThrowableSupplier<T> of(T t) {
+    static <T> ThrowableSupplier<T> constant(T t) {
         return () -> t;
     }
 
