@@ -13,30 +13,30 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package at.gridtec.lambda4j.function.primitives.to;
+package at.gridtec.lambda4j.function.primitives.obj;
 
 import java.util.function.BiFunction;
 
 /**
- * Represents a function that accepts an object-valued and a {@code double}-valued argument, and produces a {@code
- * double}-valued result. This is the {@code (reference, double)}, {@code double}-producing primitive specialization
- * for {@link BiFunction}.
+ * Represents a function that accepts an object-valued and a {@code byte}-valued argument, and produces a {@code
+ * byte}-valued result. This is the {@code (reference, byte)}, {@code byte}-producing primitive specialization for
+ * {@link BiFunction}.
  * <p>
- * This is a {@link FunctionalInterface} whose functional method is {@link #applyAsDouble(Object, double)}.
+ * This is a {@link FunctionalInterface} whose functional method is {@link #applyAsByte(Object, byte)}.
  *
  * @param <T> The type of argument to the function
  * @see java.util.function.BiFunction
  */
 @SuppressWarnings("unused")
 @FunctionalInterface
-public interface ObjDoubleToDoubleFunction<T> {
+public interface ObjByteToByteFunction<T> {
 
     /**
-     * Applies this {@link ObjDoubleToDoubleFunction} to the given arguments.
+     * Applies this {@link ObjByteToByteFunction} to the given arguments.
      *
      * @param t The first argument to the function
      * @param value The second argument to the function
      * @return The return value from the function, which is its result.
      */
-    double applyAsDouble(T t, double value);
+    byte applyAsByte(T t, byte value);
 }

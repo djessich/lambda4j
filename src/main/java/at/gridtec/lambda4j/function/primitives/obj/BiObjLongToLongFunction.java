@@ -13,16 +13,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package at.gridtec.lambda4j.function.primitives.to;
+package at.gridtec.lambda4j.function.primitives.obj;
 
 import at.gridtec.lambda4j.function.TriFunction;
 
 /**
- * Represents a function that accepts two object-valued and a {@code byte}-valued argument, and produces a {@code
- * byte}-valued result. This is the {@code (reference, reference, byte)}, {@code byte}-producing primitive
+ * Represents a function that accepts two object-valued and a {@code long}-valued argument, and produces a {@code
+ * long}-valued result. This is the {@code (reference, reference, long)}, {@code long}-producing primitive
  * specialization for {@link TriFunction}.
  * <p>
- * This is a {@link FunctionalInterface} whose functional method is {@link #applyAsByte(Object, Object, byte)}.
+ * This is a {@link FunctionalInterface} whose functional method is {@link #applyAsLong(Object, Object, long)}.
  *
  * @param <T> The type of the first argument to the function
  * @param <U> The type of the second argument to the function
@@ -30,15 +30,15 @@ import at.gridtec.lambda4j.function.TriFunction;
  */
 @SuppressWarnings("unused")
 @FunctionalInterface
-public interface BiObjByteToByteFunction<T, U> {
+public interface BiObjLongToLongFunction<T, U> {
 
     /**
-     * Applies this {@link BiObjByteToByteFunction} to the given arguments.
+     * Applies this {@link BiObjLongToLongFunction} to the given arguments.
      *
      * @param t The first argument to the function
      * @param u The second argument to the function
      * @param value The third argument to the function
      * @return The return value from the function, which is its result.
      */
-    byte applyAsByte(T t, U u, byte value);
+    long applyAsLong(T t, U u, long value);
 }

@@ -13,16 +13,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package at.gridtec.lambda4j.function.primitives.to;
+package at.gridtec.lambda4j.function.primitives.obj;
 
 import at.gridtec.lambda4j.function.TriFunction;
 
 /**
- * Represents a function that accepts two object-valued and a {@code double}-valued argument, and produces a {@code
- * double}-valued result. This is the {@code (reference, reference, double)}, {@code double}-producing primitive
+ * Represents a function that accepts two object-valued and a {@code float}-valued argument, and produces a {@code
+ * float}-valued result. This is the {@code (reference, reference, float)}, {@code float}-producing primitive
  * specialization for {@link TriFunction}.
  * <p>
- * This is a {@link FunctionalInterface} whose functional method is {@link #applyAsDouble(Object, Object, double)}.
+ * This is a {@link FunctionalInterface} whose functional method is {@link #applyAsFloat(Object, Object, float)}.
  *
  * @param <T> The type of the first argument to the function
  * @param <U> The type of the second argument to the function
@@ -30,15 +30,15 @@ import at.gridtec.lambda4j.function.TriFunction;
  */
 @SuppressWarnings("unused")
 @FunctionalInterface
-public interface BiObjDoubleToDoubleFunction<T, U> {
+public interface BiObjFloatToFloatFunction<T, U> {
 
     /**
-     * Applies this {@link BiObjDoubleToDoubleFunction} to the given arguments.
+     * Applies this {@link BiObjFloatToFloatFunction} to the given arguments.
      *
      * @param t The first argument to the function
      * @param u The second argument to the function
      * @param value The third argument to the function
      * @return The return value from the function, which is its result.
      */
-    double applyAsDouble(T t, U u, double value);
+    float applyAsFloat(T t, U u, float value);
 }

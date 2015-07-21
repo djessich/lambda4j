@@ -20,7 +20,7 @@ import java.util.function.BiFunction;
 /**
  * Represents a function that accepts an object-valued and a {@code double}-valued argument, and produces a result.
  * This is the {@code (reference, doubles)} specialization of {@link BiFunction}.
- * <p/>
+ * <p>
  * This is a {@link FunctionalInterface} whose functional method is {@link #apply(Object, double)}.
  *
  * @param <T> The type of argument to the function

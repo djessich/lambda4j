@@ -20,7 +20,7 @@ import java.util.function.BiFunction;
 /**
  * Represents a function that accepts an object-valued and a {@code boolean}-valued argument, and produces a result.
  * This is the {@code (reference, boolean)} specialization of {@link BiFunction}.
- * <p/>
+ * <p>
  * This is a {@link FunctionalInterface} whose functional method is {@link #apply(Object, boolean)}.
  *
  * @param <T> The type of argument to the function

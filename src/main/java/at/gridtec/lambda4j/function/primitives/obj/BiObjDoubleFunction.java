@@ -20,7 +20,7 @@ import at.gridtec.lambda4j.function.TriFunction;
 /**
  * Represents a function that accepts two object-valued and a {@code double}-valued argument, and produces a result.
  * This is the {@code (reference, reference, double)} specialization of {@link TriFunction}.
- * <p/>
+ * <p>
  * This is a {@link FunctionalInterface} whose functional method is {@link #apply(Object, Object, double)}.
  *
  * @param <T> The type of the first argument to the function

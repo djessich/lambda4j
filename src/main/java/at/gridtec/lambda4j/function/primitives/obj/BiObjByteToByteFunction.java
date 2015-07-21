@@ -13,16 +13,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package at.gridtec.lambda4j.function.primitives.to;
+package at.gridtec.lambda4j.function.primitives.obj;
 
 import at.gridtec.lambda4j.function.TriFunction;
 
 /**
- * Represents a function that accepts two object-valued and a {@code char}-valued argument, and produces a {@code
- * char}-valued result. This is the {@code (reference, reference, char)}, {@code char}-producing primitive
+ * Represents a function that accepts two object-valued and a {@code byte}-valued argument, and produces a {@code
+ * byte}-valued result. This is the {@code (reference, reference, byte)}, {@code byte}-producing primitive
  * specialization for {@link TriFunction}.
  * <p>
- * This is a {@link FunctionalInterface} whose functional method is {@link #applyAsChar(Object, Object, char)}.
+ * This is a {@link FunctionalInterface} whose functional method is {@link #applyAsByte(Object, Object, byte)}.
  *
  * @param <T> The type of the first argument to the function
  * @param <U> The type of the second argument to the function
@@ -30,15 +30,15 @@ import at.gridtec.lambda4j.function.TriFunction;
  */
 @SuppressWarnings("unused")
 @FunctionalInterface
-public interface BiObjCharToCharFunction<T, U> {
+public interface BiObjByteToByteFunction<T, U> {
 
     /**
-     * Applies this {@link BiObjCharToCharFunction} to the given arguments.
+     * Applies this {@link BiObjByteToByteFunction} to the given arguments.
      *
      * @param t The first argument to the function
      * @param u The second argument to the function
      * @param value The third argument to the function
      * @return The return value from the function, which is its result.
      */
-    char applyAsChar(T t, U u, char value);
+    byte applyAsByte(T t, U u, byte value);
 }

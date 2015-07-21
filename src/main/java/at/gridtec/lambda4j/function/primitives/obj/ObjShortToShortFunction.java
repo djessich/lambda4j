@@ -13,30 +13,30 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package at.gridtec.lambda4j.function.primitives.to;
+package at.gridtec.lambda4j.function.primitives.obj;
 
 import java.util.function.BiFunction;
 
 /**
- * Represents a function that accepts an object-valued and a {@code long}-valued argument, and produces a {@code
- * long}-valued result. This is the {@code (reference, long)}, {@code long}-producing primitive specialization for
+ * Represents a function that accepts an object-valued and a {@code short}-valued argument, and produces a {@code
+ * short}-valued result. This is the {@code (reference, short)}, {@code short}-producing primitive specialization for
  * {@link BiFunction}.
  * <p>
- * This is a {@link FunctionalInterface} whose functional method is {@link #applyAsLong(Object, long)}.
+ * This is a {@link FunctionalInterface} whose functional method is {@link #applyAsShort(Object, short)}.
  *
  * @param <T> The type of argument to the function
  * @see java.util.function.BiFunction
  */
 @SuppressWarnings("unused")
 @FunctionalInterface
-public interface ObjLongToLongFunction<T> {
+public interface ObjShortToShortFunction<T> {
 
     /**
-     * Applies this {@link ObjLongToLongFunction} to the given arguments.
+     * Applies this {@link ObjShortToShortFunction} to the given arguments.
      *
      * @param t The first argument to the function
      * @param value The second argument to the function
      * @return The return value from the function, which is its result.
      */
-    long applyAsLong(T t, long value);
+    short applyAsShort(T t, short value);
 }

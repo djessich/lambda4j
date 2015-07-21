@@ -13,30 +13,30 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package at.gridtec.lambda4j.function.primitives.to;
+package at.gridtec.lambda4j.function.primitives.obj;
 
 import java.util.function.BiFunction;
 
 /**
- * Represents a function that accepts an object-valued and a {@code float}-valued argument, and produces a {@code
- * float}-valued result. This is the {@code (reference, float)}, {@code float}-producing primitive specialization for
- * {@link BiFunction}.
+ * Represents a function that accepts an object-valued and a {@code int}-valued argument, and produces a {@code
+ * int}-valued result. This is the {@code (reference, int)}, {@code int}-producing primitive specialization for {@link
+ * BiFunction}.
  * <p>
- * This is a {@link FunctionalInterface} whose functional method is {@link #applyAsFloat(Object, float)}.
+ * This is a {@link FunctionalInterface} whose functional method is {@link #applyAsInt(Object, int)}.
  *
  * @param <T> The type of argument to the function
  * @see java.util.function.BiFunction
  */
 @SuppressWarnings("unused")
 @FunctionalInterface
-public interface ObjFloatToFloatFunction<T> {
+public interface ObjIntToIntFunction<T> {
 
     /**
-     * Applies this {@link ObjFloatToFloatFunction} to the given arguments.
+     * Applies this {@link ObjIntToIntFunction} to the given arguments.
      *
      * @param t The first argument to the function
      * @param value The second argument to the function
      * @return The return value from the function, which is its result.
      */
-    float applyAsFloat(T t, float value);
+    int applyAsInt(T t, int value);
 }
