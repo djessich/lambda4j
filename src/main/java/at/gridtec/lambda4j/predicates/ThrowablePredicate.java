@@ -49,7 +49,7 @@ import java.util.function.Predicate;
  * <p>
  * This is a {@link FunctionalInterface} whose functional method is {@link #testThrows(Object)}.
  *
- * @param <T> The type of argument for the predicate
+ * @param <T> The type of argument to the predicate
  * @apiNote This is a throwable JRE lambda
  */
 @SuppressWarnings("unused")
@@ -61,7 +61,7 @@ public interface ThrowablePredicate<T> extends Predicate<T> {
      * in case the given {@link ThrowablePredicate} is ambiguous for the compiler. This might happen for overloaded
      * methods accepting different functional interfaces. The given {@code ThrowablePredicate} is returned as-is.
      *
-     * @param <T> The type of argument for the predicate
+     * @param <T> The type of argument to the predicate
      * @param lambda The {@code ThrowablePredicate} which should be returned as-is.
      * @return The given {@code ThrowablePredicate} as-is.
      * @throws NullPointerException If the given argument is {@code null}
@@ -75,7 +75,7 @@ public interface ThrowablePredicate<T> extends Predicate<T> {
      * Creates a {@link ThrowablePredicate} from the given {@link Predicate}. This method is just convenience to
      * provide a mapping for the non-throwable/throwable instances of the corresponding functional interface.
      *
-     * @param <T> The type of argument for the predicate
+     * @param <T> The type of argument to the predicate
      * @param lambda A {@code Predicate} which should be mapped to its throwable counterpart
      * @return A {@code ThrowablePredicate} from the given {@code Predicate}.
      * @throws NullPointerException If the given argument is {@code null}
@@ -88,12 +88,62 @@ public interface ThrowablePredicate<T> extends Predicate<T> {
     /**
      * Creates a {@link ThrowablePredicate} which always returns a given value.
      *
-     * @param <T> The type of argument for the predicate
+     * @param <T> The type of argument to the predicate
      * @param ret The return value for the constant
      * @return A {@code ThrowablePredicate} which always returns a given value.
      */
     static <T> ThrowablePredicate<T> constant(boolean ret) {
         return t -> ret;
+    }
+
+    /**
+     * Returns a {@link ThrowablePredicate} that tests if two arguments are equal according to {@link
+     * Objects#equals(Object)} method.
+     *
+     * @param <T> The type of argument to the predicate
+     * @param targetRef The object reference with which to compare for equality, which may be {@code null}
+     * @return A {@code ThrowablePredicate} that tests if three arguments are equal according to {@link
+     * Objects#equals(Object, Object)}
+     * @see #isNotEqual(Object)
+     */
+    static <T> ThrowablePredicate<T> isEqual(final Object targetRef) {
+        return t -> t == null ? targetRef == null : t.equals(targetRef);
+    }
+
+    /**
+     * Returns a {@link ThrowablePredicate} that tests if two arguments are not equal according to {@link
+     * Objects#equals(Object)} method.
+     *
+     * @param <T> The type of argument to the predicate
+     * @param targetRef The object reference with which to compare for equality, which may be {@code null}
+     * @return A {@code ThrowablePredicate} that tests if two arguments are equal according to {@link
+     * Objects#equals(Object, Object)}
+     * @see #isEqual(Object)
+     */
+    static <T> ThrowablePredicate<T> isNotEqual(final Object targetRef) {
+        return t -> !(t == null ? targetRef == null : t.equals(targetRef));
+    }
+
+    /**
+     * Returns a {@link ThrowablePredicate} the always returns {@code true}.
+     *
+     * @param <T> The type of argument to the predicate
+     * @return A {@link ThrowablePredicate} the always returns {@code true}.
+     * @see #alwaysFalse()
+     */
+    static <T> ThrowablePredicate<T> alwaysTrue() {
+        return t -> true;
+    }
+
+    /**
+     * Returns a {@link ThrowablePredicate} the always returns {@code false}.
+     *
+     * @param <T> The type of argument to the predicate
+     * @return A {@link ThrowablePredicate} the always returns {@code false}.
+     * @see #alwaysTrue()
+     */
+    static <T> ThrowablePredicate<T> alwaysFalse() {
+        return t -> false;
     }
 
     /**

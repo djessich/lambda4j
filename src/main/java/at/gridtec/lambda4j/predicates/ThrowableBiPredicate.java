@@ -103,6 +103,68 @@ public interface ThrowableBiPredicate<T, U> extends BiPredicate<T, U> {
     }
 
     /**
+     * Returns a {@link ThrowableBiPredicate} that tests if three arguments are equal according to {@link
+     * Objects#equals(Object)} method.
+     *
+     * @param <T> The type of the first argument to the predicate
+     * @param <U> The type of the second argument to the predicate
+     * @param targetRef1 The first object reference with which to compare for equality, which may be {@code null}
+     * @param targetRef2 The second object reference with which to compare for equality, which may be {@code null}
+     * @return A {@code ThrowableBiPredicate} that tests if three arguments are equal according to {@link
+     * Objects#equals(Object, Object)}
+     * @see #isNotEqual(Object, Object)
+     */
+    //@formatter:off
+    static <T, U> ThrowableBiPredicate<T, U> isEqual(final Object targetRef1, final Object targetRef2) {
+        return (t, u) -> (t == null ? targetRef1 == null : t.equals(targetRef1))
+                && (u == null ? targetRef2 == null : u.equals(targetRef2));
+    }
+    //@formatter:on
+
+    /**
+     * Returns a {@link ThrowableBiPredicate} that tests if three arguments are not equal according to {@link
+     * Objects#equals(Object)} method.
+     *
+     * @param <T> The type of the first argument to the predicate
+     * @param <U> The type of the second argument to the predicate
+     * @param targetRef1 The first object reference with which to compare for equality, which may be {@code null}
+     * @param targetRef2 The second object reference with which to compare for equality, which may be {@code null}
+     * @return A {@code ThrowableBiPredicate} that tests if three arguments are equal according to {@link
+     * Objects#equals(Object, Object)}
+     * @see #isEqual(Object, Object)
+     */
+    //@formatter:off
+    static <T, U> ThrowableBiPredicate<T, U> isNotEqual(final Object targetRef1, final Object targetRef2) {
+        return (t, u) -> !(t == null ? targetRef1 == null : t.equals(targetRef1))
+                || !(u == null ? targetRef2 == null : u.equals(targetRef2));
+    }
+    //@formatter:on
+
+    /**
+     * Returns a {@link ThrowableBiPredicate} the always returns {@code true}.
+     *
+     * @param <T> The type of the first argument to the predicate
+     * @param <U> The type of the second argument to the predicate
+     * @return A {@link ThrowableBiPredicate} the always returns {@code true}.
+     * @see #alwaysFalse()
+     */
+    static <T, U> ThrowableBiPredicate<T, U> alwaysTrue() {
+        return (t, u) -> true;
+    }
+
+    /**
+     * Returns a {@link ThrowableBiPredicate} the always returns {@code false}.
+     *
+     * @param <T> The type of the first argument to the predicate
+     * @param <U> The type of the second argument to the predicate
+     * @return A {@link ThrowableBiPredicate} the always returns {@code false}.
+     * @see #alwaysTrue()
+     */
+    static <T, U> ThrowableBiPredicate<T, U> alwaysFalse() {
+        return (t, u) -> false;
+    }
+
+    /**
      * The test method for this {@link BiPredicate} which is able to throw any {@link Exception} type.
      *
      * @param t The first argument to the predicate
