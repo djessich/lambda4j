@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package at.gridtec.lambda4j.throwable.predicates.primitives;
+package at.gridtec.lambda4j.predicates.primitives;
 
 import at.gridtec.lambda4j.util.ThrowableUtils;
 
@@ -92,6 +92,50 @@ public interface ThrowableIntPredicate extends IntPredicate {
      */
     static ThrowableIntPredicate constant(boolean ret) {
         return value -> ret;
+    }
+
+    /**
+     * Returns a {@link ThrowableIntPredicate} that tests if two arguments are equal according to {@code value ==
+     * target} operation.
+     *
+     * @param target The target value with which to compare for equality
+     * @return A {@code ThrowableIntPredicate} that tests if two arguments are equal.
+     * @see #isNotEqual(int)
+     */
+    static ThrowableIntPredicate isEqual(int target) {
+        return value -> value == target;
+    }
+
+    /**
+     * Returns a {@link ThrowableIntPredicate} that tests if two arguments are not equal according to {@code value !=
+     * target} operation.
+     *
+     * @param target The target value with which to compare for equality
+     * @return A {@code ThrowableIntPredicate} that tests if two arguments are not equal.
+     * @see #isEqual(int)
+     */
+    static ThrowableIntPredicate isNotEqual(int target) {
+        return value -> value != target;
+    }
+
+    /**
+     * Returns a {@link ThrowableIntPredicate} the always returns {@code true}.
+     *
+     * @return A {@link ThrowableIntPredicate} the always returns {@code true}.
+     * @see #alwaysFalse()
+     */
+    static ThrowableIntPredicate alwaysTrue() {
+        return value -> true;
+    }
+
+    /**
+     * Returns a {@link ThrowableIntPredicate} the always returns {@code false}.
+     *
+     * @return A {@link ThrowableIntPredicate} the always returns {@code false}.
+     * @see #alwaysTrue()
+     */
+    static ThrowableIntPredicate alwaysFalse() {
+        return value -> false;
     }
 
     /**

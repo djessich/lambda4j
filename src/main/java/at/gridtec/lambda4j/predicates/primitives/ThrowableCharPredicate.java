@@ -13,15 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package at.gridtec.lambda4j.throwable.predicates.primitives;
+package at.gridtec.lambda4j.predicates.primitives;
 
 import at.gridtec.lambda4j.util.ThrowableUtils;
 
 import java.util.Objects;
-import java.util.function.LongPredicate;
 
 /**
- * This functional interface implements a {@link LongPredicate} which is able to throw any {@link Exception}.
+ * This functional interface implements a {@link CharPredicate} which is able to throw any {@link Exception}.
  * <p>
  * The thrown {@link Exception} is sneakily thrown unless its a {@link RuntimeException}. This means that there is no
  * need to catch the thrown exception, nor to declare that you throw it using the <em>throws</em> keyword. The
@@ -47,65 +46,108 @@ import java.util.function.LongPredicate;
  * declaration in the <em>throws</em> clause. The checked exception will behave just like a normal <b>unchecked</b>
  * exception due to sneaky throwing.
  * <p>
- * This is a {@link FunctionalInterface} whose functional method is {@link #testThrows(long)}.
+ * This is a {@link FunctionalInterface} whose functional method is {@link #testThrows(char)}.
  *
- * @apiNote This is a throwable JRE lambda
  * @see java.util.function.Predicate
  */
 @SuppressWarnings("unused")
 @FunctionalInterface
-public interface ThrowableLongPredicate extends LongPredicate {
+public interface ThrowableCharPredicate extends CharPredicate {
 
     /**
-     * Implicitly casts, and therefore wraps a given lambda as {@link ThrowableLongPredicate}. This is a convenience
-     * method in case the given {@link ThrowableLongPredicate} is ambiguous for the compiler. This might happen for
-     * overloaded methods accepting different functional interfaces. The given {@code ThrowableLongPredicate} is
+     * Implicitly casts, and therefore wraps a given lambda as {@link ThrowableCharPredicate}. This is a convenience
+     * method in case the given {@link ThrowableCharPredicate} is ambiguous for the compiler. This might happen for
+     * overloaded methods accepting different functional interfaces. The given {@code ThrowableCharPredicate} is
      * returned as-is.
      *
-     * @param lambda The {@code ThrowableLongPredicate} which should be returned as-is.
-     * @return The given {@code ThrowableLongPredicate} as-is.
+     * @param lambda The {@code ThrowableCharPredicate} which should be returned as-is.
+     * @return The given {@code ThrowableCharPredicate} as-is.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static ThrowableLongPredicate wrap(final ThrowableLongPredicate lambda) {
+    static ThrowableCharPredicate wrap(final ThrowableCharPredicate lambda) {
         Objects.requireNonNull(lambda);
         return lambda;
     }
 
     /**
-     * Creates a {@link ThrowableLongPredicate} from the given {@link LongPredicate}. This method is just convenience
+     * Creates a {@link ThrowableCharPredicate} from the given {@link CharPredicate}. This method is just convenience
      * to provide a mapping for the non-throwable/throwable instances of the corresponding functional interface.
      *
-     * @param lambda A {@code LongPredicate} which should be mapped to its throwable counterpart
-     * @return A {@code ThrowableLongPredicate} from the given {@code LongPredicate}.
+     * @param lambda A {@code CharPredicate} which should be mapped to its throwable counterpart
+     * @return A {@code ThrowableCharPredicate} from the given {@code CharPredicate}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static ThrowableLongPredicate from(final LongPredicate lambda) {
+    static ThrowableCharPredicate from(final CharPredicate lambda) {
         Objects.requireNonNull(lambda);
         return lambda::test;
     }
 
     /**
-     * Creates a {@link ThrowableLongPredicate} which always returns a given value.
+     * Creates a {@link ThrowableCharPredicate} which always returns a given value.
      *
      * @param ret The return value for the constant
-     * @return A {@code ThrowableLongPredicate} which always returns a given value.
+     * @return A {@code ThrowableCharPredicate} which always returns a given value.
      */
-    static ThrowableLongPredicate constant(boolean ret) {
+    static ThrowableCharPredicate constant(boolean ret) {
         return value -> ret;
     }
 
     /**
-     * The test method for this {@link LongPredicate} which is able to throw any {@link Exception} type.
+     * Returns a {@link ThrowableCharPredicate} that tests if two arguments are equal according to {@code value ==
+     * target} operation.
+     *
+     * @param target The target value with which to compare for equality
+     * @return A {@code ThrowableCharPredicate} that tests if two arguments are equal.
+     * @see #isNotEqual(char)
+     */
+    static ThrowableCharPredicate isEqual(char target) {
+        return value -> value == target;
+    }
+
+    /**
+     * Returns a {@link ThrowableCharPredicate} that tests if two arguments are not equal according to {@code value !=
+     * target} operation.
+     *
+     * @param target The target value with which to compare for equality
+     * @return A {@code ThrowableCharPredicate} that tests if two arguments are not equal.
+     * @see #isEqual(char)
+     */
+    static ThrowableCharPredicate isNotEqual(char target) {
+        return value -> value != target;
+    }
+
+    /**
+     * Returns a {@link ThrowableCharPredicate} the always returns {@code true}.
+     *
+     * @return A {@link ThrowableCharPredicate} the always returns {@code true}.
+     * @see #alwaysFalse()
+     */
+    static ThrowableCharPredicate alwaysTrue() {
+        return value -> true;
+    }
+
+    /**
+     * Returns a {@link ThrowableCharPredicate} the always returns {@code false}.
+     *
+     * @return A {@link ThrowableCharPredicate} the always returns {@code false}.
+     * @see #alwaysTrue()
+     */
+    static ThrowableCharPredicate alwaysFalse() {
+        return value -> false;
+    }
+
+    /**
+     * The test method for this {@link CharPredicate} which is able to throw any {@link Exception} type.
      *
      * @param value The argument for the predicate
      * @return {@code true} if the input argument matches the predicate, otherwise {@code false}
      * @throws Exception Any exception from this functions action
      */
-    boolean testThrows(long value) throws Exception;
+    boolean testThrows(char value) throws Exception;
 
     /**
-     * Overrides the {@link LongPredicate#test(long)} method by using a redefinition as default method. It calls the
-     * {@link #testThrows(long)} method of this interface and catches the thrown {@link Exception}s from it. If it is
+     * Overrides the {@link CharPredicate#test(char)} method by using a redefinition as default method. It calls the
+     * {@link #testThrows(char)} method of this interface and catches the thrown {@link Exception}s from it. If it is
      * of type {@link RuntimeException}, the exception is rethrown. Other exception types are sneakily thrown.
      *
      * @param value The argument for the predicate
@@ -113,7 +155,7 @@ public interface ThrowableLongPredicate extends LongPredicate {
      * @see ThrowableUtils#sneakyThrow(Throwable)
      */
     @Override
-    default boolean test(long value) {
+    default boolean test(char value) {
         try {
             return testThrows(value);
         } catch (RuntimeException e) {
@@ -124,16 +166,16 @@ public interface ThrowableLongPredicate extends LongPredicate {
     }
 
     /**
-     * Returns a composed {@link ThrowableLongPredicate} that applies this {@code ThrowableLongPredicate} to its input,
-     * and if an error occurred, applies the given one. The exception from this {@code ThrowableLongPredicate} is
+     * Returns a composed {@link ThrowableCharPredicate} that applies this {@code ThrowableCharPredicate} to its input,
+     * and if an error occurred, applies the given one. The exception from this {@code ThrowableCharPredicate} is
      * ignored.
      *
-     * @param other A {@code ThrowableLongPredicate} to be applied if this one fails
-     * @return A composed {@code ThrowableLongPredicate} that applies this {@code ThrowableLongPredicate}, and if an
+     * @param other A {@code ThrowableCharPredicate} to be applied if this one fails
+     * @return A composed {@code ThrowableCharPredicate} that applies this {@code ThrowableCharPredicate}, and if an
      * error occurred, applies the given one.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    default ThrowableLongPredicate orElse(final ThrowableLongPredicate other) {
+    default ThrowableCharPredicate orElse(final ThrowableCharPredicate other) {
         Objects.requireNonNull(other);
         return value -> {
             try {
@@ -145,20 +187,20 @@ public interface ThrowableLongPredicate extends LongPredicate {
     }
 
     /**
-     * Returns a composed {@link ThrowableLongPredicate} that applies this {@code ThrowableLongPredicate} to its input,
+     * Returns a composed {@link ThrowableCharPredicate} that applies this {@code ThrowableCharPredicate} to its input,
      * and if an error occurred, throws the given {@link Exception}. The exception from this {@code
-     * ThrowableLongPredicate} is added as suppressed to the given one.
+     * ThrowableCharPredicate} is added as suppressed to the given one.
      * <p>
      * The given exception must have a no arg constructor for reflection purposes. If not, then appropriate exception
      * as described in {@link Class#newInstance()} is thrown.
      *
      * @param <X> The type for the class extending {@code Exception}
      * @param clazz The exception class to throw if an error occurred
-     * @return A composed {@code ThrowableLongPredicate} that applies this {@code ThrowableLongPredicate}, and if an
+     * @return A composed {@code ThrowableCharPredicate} that applies this {@code ThrowableCharPredicate}, and if an
      * error occurred, throws the given {@code Exception}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    default <X extends Exception> ThrowableLongPredicate orThrow(Class<X> clazz) {
+    default <X extends Exception> ThrowableCharPredicate orThrow(Class<X> clazz) {
         Objects.requireNonNull(clazz);
         return value -> {
             try {
@@ -172,16 +214,16 @@ public interface ThrowableLongPredicate extends LongPredicate {
     }
 
     /**
-     * Returns a composed {@link LongPredicate} that applies this {@link ThrowableLongPredicate} to its input, and if
-     * an error occurred, applies the given {@code LongPredicate} representing a fallback. The exception from this
-     * {@code ThrowableLongPredicate} is ignored.
+     * Returns a composed {@link CharPredicate} that applies this {@link ThrowableCharPredicate} to its input, and if
+     * an error occurred, applies the given {@code CharPredicate} representing a fallback. The exception from this
+     * {@code ThrowableCharPredicate} is ignored.
      *
-     * @param fallback A {@code LongPredicate} to be applied if this one fails
-     * @return A composed {@code LongPredicate} that applies this {@code ThrowableLongPredicate}, and if an error
-     * occurred, applies the given {@code LongPredicate}.
+     * @param fallback A {@code CharPredicate} to be applied if this one fails
+     * @return A composed {@code CharPredicate} that applies this {@code ThrowableCharPredicate}, and if an error
+     * occurred, applies the given {@code CharPredicate}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    default LongPredicate fallbackTo(final LongPredicate fallback) {
+    default CharPredicate fallbackTo(final CharPredicate fallback) {
         Objects.requireNonNull(fallback);
         return value -> {
             try {
@@ -193,13 +235,13 @@ public interface ThrowableLongPredicate extends LongPredicate {
     }
 
     /**
-     * Returns a composed {@link LongPredicate} that applies this {@link ThrowableLongPredicate} to its input, and if
-     * an error occurred, returns {@code true}. The exception from this {@code ThrowableLongPredicate} is ignored.
+     * Returns a composed {@link CharPredicate} that applies this {@link ThrowableCharPredicate} to its input, and if
+     * an error occurred, returns {@code true}. The exception from this {@code ThrowableCharPredicate} is ignored.
      *
-     * @return A composed {@code LongPredicate} that applies this {@code ThrowableLongPredicate}, and if an error
+     * @return A composed {@code CharPredicate} that applies this {@code ThrowableCharPredicate}, and if an error
      * occurred, returns {@code true}.
      */
-    default LongPredicate orReturnTrue() {
+    default CharPredicate orReturnTrue() {
         return value -> {
             try {
                 return testThrows(value);
@@ -210,13 +252,13 @@ public interface ThrowableLongPredicate extends LongPredicate {
     }
 
     /**
-     * Returns a composed {@link LongPredicate} that applies this {@link ThrowableLongPredicate} to its input, and if
-     * an error occurred, returns {@code false}. The exception from this {@code ThrowableLongPredicate} is ignored.
+     * Returns a composed {@link CharPredicate} that applies this {@link ThrowableCharPredicate} to its input, and if
+     * an error occurred, returns {@code false}. The exception from this {@code ThrowableCharPredicate} is ignored.
      *
-     * @return A composed {@code LongPredicate} that applies this {@code ThrowableLongPredicate}, and if an error
+     * @return A composed {@code CharPredicate} that applies this {@code ThrowableCharPredicate}, and if an error
      * occurred, returns {@code false}.
      */
-    default LongPredicate orReturnFalse() {
+    default CharPredicate orReturnFalse() {
         return value -> {
             try {
                 return testThrows(value);

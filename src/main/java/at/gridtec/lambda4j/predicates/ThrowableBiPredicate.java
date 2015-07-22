@@ -13,15 +13,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package at.gridtec.lambda4j.throwable.predicates;
+package at.gridtec.lambda4j.predicates;
 
-import at.gridtec.lambda4j.predicates.TriPredicate;
 import at.gridtec.lambda4j.util.ThrowableUtils;
 
 import java.util.Objects;
+import java.util.function.BiPredicate;
 
 /**
- * This functional interface implements a {@link TriPredicate} which is able to throw any {@link Exception}.
+ * This functional interface implements a {@link BiPredicate} which is able to throw any {@link Exception}.
  * <p>
  * The thrown {@link Exception} is sneakily thrown unless its a {@link RuntimeException}. This means that there is no
  * need to catch the thrown exception, nor to declare that you throw it using the <em>throws</em> keyword. The
@@ -47,91 +47,86 @@ import java.util.Objects;
  * declaration in the <em>throws</em> clause. The checked exception will behave just like a normal <b>unchecked</b>
  * exception due to sneaky throwing.
  * <p>
- * This is a {@link FunctionalInterface} whose functional method is {@link #testThrows(Object, Object, Object)}.
+ * This is a {@link FunctionalInterface} whose functional method is {@link #testThrows(Object, Object)}.
  *
  * @param <T> The type of the first argument for the predicate
  * @param <U> The type of the second argument for the predicate
- * @param <V> The type of the third argument for the predicate
+ * @apiNote This is a throwable JRE lambda
  * @see java.util.function.Predicate
  */
 @SuppressWarnings("unused")
 @FunctionalInterface
-public interface ThrowableTriPredicate<T, U, V> extends TriPredicate<T, U, V> {
+public interface ThrowableBiPredicate<T, U> extends BiPredicate<T, U> {
 
     /**
-     * Implicitly casts, and therefore wraps a given lambda as {@link ThrowableTriPredicate}. This is a convenience
-     * method in case the given {@link ThrowableTriPredicate} is ambiguous for the compiler. This might happen for
-     * overloaded methods accepting different functional interfaces. The given {@code ThrowableTriPredicate} is
-     * returned as-is.
+     * Implicitly casts, and therefore wraps a given lambda as {@link ThrowableBiPredicate}. This is a convenience
+     * method in case the given {@link ThrowableBiPredicate} is ambiguous for the compiler. This might happen for
+     * overloaded methods accepting different functional interfaces. The given {@code ThrowableBiPredicate} is returned
+     * as-is.
      *
      * @param <T> The type of the first argument for the predicate
      * @param <U> The type of the second argument for the predicate
-     * @param <V> The type of the third argument for the predicate
-     * @param lambda The {@code ThrowableTriPredicate} which should be returned as-is.
-     * @return The given {@code ThrowableTriPredicate} as-is.
+     * @param lambda The {@code ThrowableBiPredicate} which should be returned as-is.
+     * @return The given {@code ThrowableBiPredicate} as-is.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static <T, U, V> ThrowableTriPredicate<T, U, V> wrap(final ThrowableTriPredicate<T, U, V> lambda) {
+    static <T, U> ThrowableBiPredicate<T, U> wrap(final ThrowableBiPredicate<T, U> lambda) {
         Objects.requireNonNull(lambda);
         return lambda;
     }
 
     /**
-     * Creates a {@link ThrowableTriPredicate} from the given {@link TriPredicate}. This method is just convenience to
+     * Creates a {@link ThrowableBiPredicate} from the given {@link BiPredicate}. This method is just convenience to
      * provide a mapping for the non-throwable/throwable instances of the corresponding functional interface.
      *
      * @param <T> The type of the first argument for the predicate
      * @param <U> The type of the second argument for the predicate
-     * @param <V> The type of the third argument for the predicate
-     * @param lambda A {@code TriPredicate} which should be mapped to its throwable counterpart
-     * @return A {@code ThrowableTriPredicate} from the given {@code TriPredicate}.
+     * @param lambda A {@code BiPredicate} which should be mapped to its throwable counterpart
+     * @return A {@code ThrowableBiPredicate} from the given {@code BiPredicate}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static <T, U, V> ThrowableTriPredicate<T, U, V> from(final TriPredicate<T, U, V> lambda) {
+    static <T, U> ThrowableBiPredicate<T, U> from(final BiPredicate<T, U> lambda) {
         Objects.requireNonNull(lambda);
         return lambda::test;
     }
 
     /**
-     * Creates a {@link ThrowableTriPredicate} which always returns a given value.
+     * Creates a {@link ThrowableBiPredicate} which always returns a given value.
      *
      * @param <T> The type of the first argument for the predicate
      * @param <U> The type of the second argument for the predicate
-     * @param <V> The type of the third argument for the predicate
      * @param ret The return value for the constant
-     * @return A {@code ThrowableTriPredicate} which always returns a given value.
+     * @return A {@code ThrowableBiPredicate} which always returns a given value.
      */
-    static <T, U, V> ThrowableTriPredicate<T, U, V> constant(boolean ret) {
-        return (t, u, v) -> ret;
+    static <T, U> ThrowableBiPredicate<T, U> constant(boolean ret) {
+        return (t, u) -> ret;
     }
 
     /**
-     * The test method for this {@link TriPredicate} which is able to throw any {@link Exception} type.
+     * The test method for this {@link BiPredicate} which is able to throw any {@link Exception} type.
      *
      * @param t The first argument to the predicate
      * @param u The second argument to the predicate
-     * @param v The third argument to the predicate
      * @return {@code true} if the input argument matches the predicate, otherwise {@code false}
      * @throws Exception Any exception from this functions action
      */
-    boolean testThrows(T t, U u, V v) throws Exception;
+    boolean testThrows(T t, U u) throws Exception;
 
     /**
-     * Overrides the {@link TriPredicate#test(Object, Object, Object)} method by using a redefinition as default
-     * method. It calls the {@link #testThrows(Object, Object, Object)} method of this interface and catches the thrown
-     * {@link Exception}s from it. If it is of type {@link RuntimeException}, the exception is rethrown. Other
-     * exception types are sneakily thrown.
+     * Overrides the {@link BiPredicate#test(Object, Object)} method by using a redefinition as default method. It
+     * calls the {@link #testThrows(Object, Object)} method of this interface and catches the thrown {@link Exception}s
+     * from it. If it is of type {@link RuntimeException}, the exception is rethrown. Other exception types are
+     * sneakily thrown.
      *
      * @param t The first argument to the predicate
      * @param u The second argument to the predicate
-     * @param v The third argument to the predicate
      * @return {@code true} if the input argument matches the predicate, otherwise {@code false}
      * @see ThrowableUtils#sneakyThrow(Throwable)
      */
     @Override
-    default boolean test(T t, U u, V v) {
+    default boolean test(T t, U u) {
         try {
-            return testThrows(t, u, v);
+            return testThrows(t, u);
         } catch (RuntimeException e) {
             throw e;
         } catch (Exception e) {
@@ -140,45 +135,44 @@ public interface ThrowableTriPredicate<T, U, V> extends TriPredicate<T, U, V> {
     }
 
     /**
-     * Returns a composed {@link ThrowableTriPredicate} that applies this {@code ThrowableTriPredicate} to its input,
-     * and if an error occurred, applies the given one. The exception from this {@code ThrowableTriPredicate} is
-     * ignored.
+     * Returns a composed {@link ThrowableBiPredicate} that applies this {@code ThrowableBiPredicate} to its input, and
+     * if an error occurred, applies the given one. The exception from this {@code ThrowableBiPredicate} is ignored.
      *
-     * @param other A {@code ThrowableTriPredicate} to be applied if this one fails
-     * @return A composed {@code ThrowableTriPredicate} that applies this {@code ThrowableTriPredicate}, and if an error
+     * @param other A {@code ThrowableBiPredicate} to be applied if this one fails
+     * @return A composed {@code ThrowableBiPredicate} that applies this {@code ThrowableBiPredicate}, and if an error
      * occurred, applies the given one.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    default ThrowableTriPredicate<T, U, V> orElse(final ThrowableTriPredicate<? super T, ? super U, ? super V> other) {
+    default ThrowableBiPredicate<T, U> orElse(final ThrowableBiPredicate<? super T, ? super U> other) {
         Objects.requireNonNull(other);
-        return (t, u, v) -> {
+        return (t, u) -> {
             try {
-                return testThrows(t, u, v);
+                return testThrows(t, u);
             } catch (Exception ignored) {
-                return other.testThrows(t, u, v);
+                return other.testThrows(t, u);
             }
         };
     }
 
     /**
-     * Returns a composed {@link ThrowableTriPredicate} that applies this {@code ThrowableTriPredicate} to its input,
-     * and if an error occurred, throws the given {@link Exception}. The exception from this {@code
-     * ThrowableTriPredicate} is added as suppressed to the given one.
+     * Returns a composed {@link ThrowableBiPredicate} that applies this {@code ThrowableBiPredicate} to its input, and
+     * if an error occurred, throws the given {@link Exception}. The exception from this {@code ThrowableBiPredicate}
+     * is added as suppressed to the given one.
      * <p>
      * The given exception must have a no arg constructor for reflection purposes. If not, then appropriate exception
      * as described in {@link Class#newInstance()} is thrown.
      *
      * @param <X> The type for the class extending {@code Exception}
      * @param clazz The exception class to throw if an error occurred
-     * @return A composed {@code ThrowableTriPredicate} that applies this {@code ThrowableTriPredicate}, and if an error
+     * @return A composed {@code ThrowableBiPredicate} that applies this {@code ThrowableBiPredicate}, and if an error
      * occurred, throws the given {@code Exception}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    default <X extends Exception> ThrowableTriPredicate<T, U, V> orThrow(Class<X> clazz) {
+    default <X extends Exception> ThrowableBiPredicate<T, U> orThrow(Class<X> clazz) {
         Objects.requireNonNull(clazz);
-        return (t, u, v) -> {
+        return (t, u) -> {
             try {
-                return testThrows(t, u, v);
+                return testThrows(t, u);
             } catch (Exception e) {
                 X ex = clazz.newInstance();
                 ex.addSuppressed(e);
@@ -188,37 +182,37 @@ public interface ThrowableTriPredicate<T, U, V> extends TriPredicate<T, U, V> {
     }
 
     /**
-     * Returns a composed {@link TriPredicate} that applies this {@link ThrowableTriPredicate} to its input, and if an
-     * error occurred, applies the given {@code TriPredicate} representing a fallback. The exception from this {@code
-     * ThrowableTriPredicate} is ignored.
+     * Returns a composed {@link BiPredicate} that applies this {@link ThrowableBiPredicate} to its input, and if an
+     * error occurred, applies the given {@code BiPredicate} representing a fallback. The exception from this {@code
+     * ThrowableBiPredicate} is ignored.
      *
-     * @param fallback A {@code TriPredicate} to be applied if this one fails
-     * @return A composed {@code TriPredicate} that applies this {@code ThrowableTriPredicate}, and if an error
-     * occurred, applies the given {@code TriPredicate}.
+     * @param fallback A {@code BiPredicate} to be applied if this one fails
+     * @return A composed {@code BiPredicate} that applies this {@code ThrowableBiPredicate}, and if an error occurred,
+     * applies the given {@code BiPredicate}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    default TriPredicate<T, U, V> fallbackTo(final TriPredicate<? super T, ? super U, ? super V> fallback) {
+    default BiPredicate<T, U> fallbackTo(final BiPredicate<? super T, ? super U> fallback) {
         Objects.requireNonNull(fallback);
-        return (t, u, v) -> {
+        return (t, u) -> {
             try {
-                return testThrows(t, u, v);
+                return testThrows(t, u);
             } catch (Exception ignored) {
-                return fallback.test(t, u, v);
+                return fallback.test(t, u);
             }
         };
     }
 
     /**
-     * Returns a composed {@link TriPredicate} that applies this {@link ThrowableTriPredicate} to its input, and if an
-     * error occurred, returns {@code true}. The exception from this {@code ThrowableTriPredicate} is ignored.
+     * Returns a composed {@link BiPredicate} that applies this {@link ThrowableBiPredicate} to its input, and if an
+     * error occurred, returns {@code true}. The exception from this {@code ThrowableBiPredicate} is ignored.
      *
-     * @return A composed {@code TriPredicate} that applies this {@code ThrowableTriPredicate}, and if an error
-     * occurred, returns {@code true}.
+     * @return A composed {@code BiPredicate} that applies this {@code ThrowableBiPredicate}, and if an error occurred,
+     * returns {@code true}.
      */
-    default TriPredicate<T, U, V> orReturnTrue() {
-        return (t, u, v) -> {
+    default BiPredicate<T, U> orReturnTrue() {
+        return (t, u) -> {
             try {
-                return testThrows(t, u, v);
+                return testThrows(t, u);
             } catch (Exception ignored) {
                 return true;
             }
@@ -226,16 +220,16 @@ public interface ThrowableTriPredicate<T, U, V> extends TriPredicate<T, U, V> {
     }
 
     /**
-     * Returns a composed {@link TriPredicate} that applies this {@link ThrowableTriPredicate} to its input, and if an
-     * error occurred, returns {@code false}. The exception from this {@code ThrowableTriPredicate} is ignored.
+     * Returns a composed {@link BiPredicate} that applies this {@link ThrowableBiPredicate} to its input, and if an
+     * error occurred, returns {@code false}. The exception from this {@code ThrowableBiPredicate} is ignored.
      *
-     * @return A composed {@code TriPredicate} that applies this {@code ThrowableTriPredicate}, and if an error
-     * occurred, returns {@code false}.
+     * @return A composed {@code BiPredicate} that applies this {@code ThrowableBiPredicate}, and if an error occurred,
+     * returns {@code false}.
      */
-    default TriPredicate<T, U, V> orReturnFalse() {
-        return (t, u, v) -> {
+    default BiPredicate<T, U> orReturnFalse() {
+        return (t, u) -> {
             try {
-                return testThrows(t, u, v);
+                return testThrows(t, u);
             } catch (Exception ignored) {
                 return false;
             }

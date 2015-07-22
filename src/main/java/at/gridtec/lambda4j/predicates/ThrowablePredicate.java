@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package at.gridtec.lambda4j.throwable.predicates;
+package at.gridtec.lambda4j.predicates;
 
 import at.gridtec.lambda4j.util.ThrowableUtils;
 

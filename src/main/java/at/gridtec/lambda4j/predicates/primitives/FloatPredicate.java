@@ -15,6 +15,7 @@
  */
 package at.gridtec.lambda4j.predicates.primitives;
 
+import java.util.Objects;
 import java.util.function.Predicate;
 
 /**
@@ -30,10 +31,137 @@ import java.util.function.Predicate;
 public interface FloatPredicate {
 
     /**
+     * Creates a {@link FloatPredicate} which always returns a given value.
+     *
+     * @param ret The return value for the constant
+     * @return A {@code FloatPredicate} which always returns a given value.
+     */
+    static FloatPredicate constant(boolean ret) {
+        return value -> ret;
+    }
+
+    /**
+     * Returns a {@link FloatPredicate} that tests if two arguments are equal according to {@code value == target}
+     * operation.
+     *
+     * @param target The target value with which to compare for equality
+     * @return A {@code FloatPredicate} that tests if two arguments are equal.
+     * @see #isNotEqual(float)
+     */
+    static FloatPredicate isEqual(float target) {
+        return value -> value == target;
+    }
+
+    /**
+     * Returns a {@link FloatPredicate} that tests if two arguments are not equal according to {@code value != target}
+     * operation.
+     *
+     * @param target The target value with which to compare for equality
+     * @return A {@code FloatPredicate} that tests if two arguments are not equal.
+     * @see #isEqual(float)
+     */
+    static FloatPredicate isNotEqual(float target) {
+        return value -> value != target;
+    }
+
+    /**
+     * Returns a {@link FloatPredicate} the always returns {@code true}.
+     *
+     * @return A {@link FloatPredicate} the always returns {@code true}.
+     * @see #alwaysFalse()
+     */
+    static FloatPredicate alwaysTrue() {
+        return value -> true;
+    }
+
+    /**
+     * Returns a {@link FloatPredicate} the always returns {@code false}.
+     *
+     * @return A {@link FloatPredicate} the always returns {@code false}.
+     * @see #alwaysTrue()
+     */
+    static FloatPredicate alwaysFalse() {
+        return value -> false;
+    }
+
+    /**
      * Evaluates this predicate on the given arguments.
      *
      * @param value The argument to the predicate
      * @return {@code true} if the input argument matches the predicate, otherwise {@code false}.
      */
     boolean test(float value);
+
+    /**
+     * Returns a composed {@link FloatPredicate} that represents a short-circuiting logical AND of this predicate and
+     * another. When evaluating the composed predicate, if this predicate is {@code false}, then the {@code other}
+     * predicate is not evaluated.
+     * <p>
+     * Any exceptions thrown during evaluation of either predicate are relayed to the caller; if evaluation of this
+     * {@code FloatPredicate} throws an exception, the {@code other} {@code FloatPredicate} will not be evaluated.
+     *
+     * @param other A {@code FloatPredicate} that will be logically-ANDed with this one
+     * @return A composed {@code FloatPredicate} that represents the short-circuiting logical AND of this predicate and
+     * the {@code other} predicate.
+     * @throws NullPointerException If the given argument is {@code null}
+     * @see #or(FloatPredicate)
+     * @see #xor(FloatPredicate)
+     * @see Predicate#and(Predicate)
+     */
+    default FloatPredicate and(final FloatPredicate other) {
+        Objects.requireNonNull(other);
+        return value -> test(value) && other.test(value);
+    }
+
+    /**
+     * Returns a composed {@link FloatPredicate} that represents a short-circuiting logical OR of this predicate and
+     * another. When evaluating the composed predicate, if this predicate is {@code true}, then the {@code other}
+     * predicate is not evaluated.
+     * <p>
+     * Any exceptions thrown during evaluation of either predicate are relayed to the caller; if evaluation of this
+     * {@code FloatPredicate} throws an exception, the {@code other} {@code FloatPredicate} will not be evaluated.
+     *
+     * @param other A {@code FloatPredicate} that will be logically-ORed with this one
+     * @return A composed {@code FloatPredicate} that represents the short-circuiting logical OR of this predicate and
+     * the {@code other} predicate.
+     * @throws NullPointerException If the given argument is {@code null}
+     * @see #and(FloatPredicate)
+     * @see #xor(FloatPredicate)
+     * @see Predicate#or(Predicate)
+     */
+    default FloatPredicate or(final FloatPredicate other) {
+        Objects.requireNonNull(other);
+        return value -> test(value) && other.test(value);
+    }
+
+    /**
+     * Returns a composed {@link FloatPredicate} that represents a short-circuiting logical XOR of this predicate and
+     * another. When evaluating the composed predicate, if this predicate is {@code true}, then the {@code other}
+     * predicate is not evaluated.
+     * <p>
+     * Any exceptions thrown during evaluation of either predicate are relayed to the caller; if evaluation of this
+     * {@code FloatPredicate} throws an exception, the {@code other} {@code FloatPredicate} will not be evaluated.
+     *
+     * @param other A {@code FloatPredicate} that will be logically-XORed with this one
+     * @return A composed {@code FloatPredicate} that represents the short-circuiting logical OR of this predicate and
+     * the {@code other} predicate.
+     * @throws NullPointerException If the given argument is {@code null}
+     * @see #and(FloatPredicate)
+     * @see #or(FloatPredicate)
+     */
+    default FloatPredicate xor(final FloatPredicate other) {
+        Objects.requireNonNull(other);
+        return value -> test(value) ^ other.test(value);
+    }
+
+    /**
+     * Returns a composed {@link Predicate} which represents this {@link FloatPredicate}. Thereby the primitive input
+     * argument for this predicate is autoboxed. This method is just convenience to provide the ability to use this
+     * {@code FloatPredicate} with JRE specific methods, only accepting {@code Predicate}.
+     *
+     * @return A composed {@code Predicate} which represents this {@code FloatPredicate}.
+     */
+    default Predicate<Float> boxed() {
+        return this::test;
+    }
 }
