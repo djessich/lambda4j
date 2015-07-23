@@ -93,11 +93,11 @@ public interface ThrowableCharPredicate extends CharPredicate {
     }
 
     /**
-     * Returns a {@link ThrowableCharPredicate} that tests if two arguments are equal according to {@code value ==
-     * target} operation.
+     * Returns a {@link ThrowableCharPredicate} that tests if the given argument is equal to the one of this predicate
+     * according to {@code value == target} operation.
      *
      * @param target The target value with which to compare for equality
-     * @return A {@code ThrowableCharPredicate} that tests if two arguments are equal.
+     * @return A {@code ThrowableCharPredicate} that tests if the given argument is equal to the one of this predicate.
      * @see #isNotEqual(char)
      */
     static ThrowableCharPredicate isEqual(char target) {
@@ -105,11 +105,12 @@ public interface ThrowableCharPredicate extends CharPredicate {
     }
 
     /**
-     * Returns a {@link ThrowableCharPredicate} that tests if two arguments are not equal according to {@code value !=
-     * target} operation.
+     * Returns a {@link ThrowableCharPredicate} that tests if the given argument is not equal to the one of this
+     * predicate according to {@code value != target} operation.
      *
      * @param target The target value with which to compare for equality
-     * @return A {@code ThrowableCharPredicate} that tests if two arguments are not equal.
+     * @return A {@code ThrowableCharPredicate} that tests if the given argument is not equal to the one of this
+     * predicate.
      * @see #isEqual(char)
      */
     static ThrowableCharPredicate isNotEqual(char target) {

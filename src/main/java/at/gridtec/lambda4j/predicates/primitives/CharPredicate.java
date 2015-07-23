@@ -42,11 +42,11 @@ public interface CharPredicate {
     }
 
     /**
-     * Returns a {@link CharPredicate} that tests if two arguments are equal according to {@code value == target}
-     * operation.
+     * Returns a {@link CharPredicate} that tests if the given argument is equal to the one of this predicate according
+     * to {@code value == target} operation.
      *
      * @param target The target value with which to compare for equality
-     * @return A {@code CharPredicate} that tests if two arguments are equal.
+     * @return A {@code CharPredicate} that tests if the given argument is equal to the one of this predicate.
      * @see #isNotEqual(char)
      */
     static CharPredicate isEqual(char target) {
@@ -54,11 +54,11 @@ public interface CharPredicate {
     }
 
     /**
-     * Returns a {@link CharPredicate} that tests if two arguments are not equal according to {@code value != target}
-     * operation.
+     * Returns a {@link CharPredicate} that tests if the given argument is not equal to the one of this predicate
+     * according to {@code value != target} operation.
      *
      * @param target The target value with which to compare for equality
-     * @return A {@code CharPredicate} that tests if two arguments are not equal.
+     * @return A {@code CharPredicate} that tests if the given argument is not equal to the one of this predicate.
      * @see #isEqual(char)
      */
     static CharPredicate isNotEqual(char target) {
@@ -154,7 +154,7 @@ public interface CharPredicate {
      * {@code CharPredicate} throws an exception, the {@code other} {@code CharPredicate} will not be evaluated.
      *
      * @param other A {@code CharPredicate} that will be logically-XORed with this one
-     * @return A composed {@code CharPredicate} that represents the short-circuiting logical OR of this predicate and
+     * @return A composed {@code CharPredicate} that represents the short-circuiting logical XOR of this predicate and
      * the {@code other} predicate.
      * @throws NullPointerException If the given argument is {@code null}
      * @see #and(CharPredicate)

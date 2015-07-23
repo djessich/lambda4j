@@ -95,11 +95,11 @@ public interface ThrowableLongPredicate extends LongPredicate {
     }
 
     /**
-     * Returns a {@link ThrowableLongPredicate} that tests if two arguments are equal according to {@code value ==
-     * target} operation.
+     * Returns a {@link ThrowableLongPredicate} that tests if the given argument is equal to the one of this predicate
+     * according to {@code value == target} operation.
      *
      * @param target The target value with which to compare for equality
-     * @return A {@code ThrowableLongPredicate} that tests if two arguments are equal.
+     * @return A {@code ThrowableLongPredicate} that tests if the given argument is equal to the one of this predicate.
      * @see #isNotEqual(long)
      */
     static ThrowableLongPredicate isEqual(long target) {
@@ -107,11 +107,12 @@ public interface ThrowableLongPredicate extends LongPredicate {
     }
 
     /**
-     * Returns a {@link ThrowableLongPredicate} that tests if two arguments are not equal according to {@code value !=
-     * target} operation.
+     * Returns a {@link ThrowableLongPredicate} that tests if the given argument is not equal to the one of this
+     * predicate according to {@code value != target} operation.
      *
      * @param target The target value with which to compare for equality
-     * @return A {@code ThrowableLongPredicate} that tests if two arguments are not equal.
+     * @return A {@code ThrowableLongPredicate} that tests if the given argument is not equal to the one of this
+     * predicate.
      * @see #isEqual(long)
      */
     static ThrowableLongPredicate isNotEqual(long target) {

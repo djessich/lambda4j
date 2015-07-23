@@ -42,11 +42,11 @@ public interface BytePredicate {
     }
 
     /**
-     * Returns a {@link BytePredicate} that tests if two arguments are equal according to {@code value == target}
-     * operation.
+     * Returns a {@link BytePredicate} that tests if the given argument is equal to the one of this predicate according
+     * to {@code value == target} operation.
      *
      * @param target The target value with which to compare for equality
-     * @return A {@code BytePredicate} that tests if two arguments are equal.
+     * @return A {@code BytePredicate} that tests if the given argument is equal to the one of this predicate.
      * @see #isNotEqual(byte)
      */
     static BytePredicate isEqual(byte target) {
@@ -54,11 +54,11 @@ public interface BytePredicate {
     }
 
     /**
-     * Returns a {@link BytePredicate} that tests if two arguments are not equal according to {@code value != target}
-     * operation.
+     * Returns a {@link BytePredicate} that tests if the given argument is not equal to the one of this predicate
+     * according to {@code value != target} operation.
      *
      * @param target The target value with which to compare for equality
-     * @return A {@code BytePredicate} that tests if two arguments are not equal.
+     * @return A {@code BytePredicate} that tests if the given argument is not equal to the one of this predicate.
      * @see #isEqual(byte)
      */
     static BytePredicate isNotEqual(byte target) {
@@ -154,7 +154,7 @@ public interface BytePredicate {
      * {@code BytePredicate} throws an exception, the {@code other} {@code BytePredicate} will not be evaluated.
      *
      * @param other A {@code BytePredicate} that will be logically-XORed with this one
-     * @return A composed {@code BytePredicate} that represents the short-circuiting logical OR of this predicate and
+     * @return A composed {@code BytePredicate} that represents the short-circuiting logical XOR of this predicate and
      * the {@code other} predicate.
      * @throws NullPointerException If the given argument is {@code null}
      * @see #and(BytePredicate)

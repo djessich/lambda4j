@@ -97,13 +97,12 @@ public interface ThrowablePredicate<T> extends Predicate<T> {
     }
 
     /**
-     * Returns a {@link ThrowablePredicate} that tests if two arguments are equal according to {@link
-     * Objects#equals(Object)} method.
+     * Returns a {@link ThrowablePredicate} that tests if the given argument is equal to the one of this predicate
+     * according to {@link Objects#equals(Object)} method.
      *
      * @param <T> The type of argument to the predicate
      * @param targetRef The object reference with which to compare for equality, which may be {@code null}
-     * @return A {@code ThrowablePredicate} that tests if three arguments are equal according to {@link
-     * Objects#equals(Object, Object)}
+     * @return A {@code ThrowablePredicate} that tests if the given argument is equal to the one of this predicate.
      * @see #isNotEqual(Object)
      */
     static <T> ThrowablePredicate<T> isEqual(final Object targetRef) {
@@ -111,13 +110,12 @@ public interface ThrowablePredicate<T> extends Predicate<T> {
     }
 
     /**
-     * Returns a {@link ThrowablePredicate} that tests if two arguments are not equal according to {@link
-     * Objects#equals(Object)} method.
+     * Returns a {@link ThrowablePredicate} that tests if the given argument is equal to the one of this predicate
+     * according to {@link Objects#equals(Object)} method.
      *
      * @param <T> The type of argument to the predicate
      * @param targetRef The object reference with which to compare for equality, which may be {@code null}
-     * @return A {@code ThrowablePredicate} that tests if two arguments are equal according to {@link
-     * Objects#equals(Object, Object)}
+     * @return A {@code ThrowablePredicate} that tests if the given argument is not equal to the one of this predicate.
      * @see #isEqual(Object)
      */
     static <T> ThrowablePredicate<T> isNotEqual(final Object targetRef) {

@@ -47,8 +47,8 @@ public interface TriPredicate<T, U, V> {
     }
 
     /**
-     * Returns a {@link TriPredicate} that tests if four arguments are equal according to {@link
-     * Objects#equals(Object)} method.
+     * Returns a {@link TriPredicate} that tests if the given arguments are equal to the ones of this predicate
+     * according to {@link Objects#equals(Object)} method.
      *
      * @param <T> The type of the first argument to the predicate
      * @param <U> The type of the second argument to the predicate
@@ -56,8 +56,7 @@ public interface TriPredicate<T, U, V> {
      * @param targetRef1 The first object reference with which to compare for equality, which may be {@code null}
      * @param targetRef2 The second object reference with which to compare for equality, which may be {@code null}
      * @param targetRef3 The third object reference with which to compare for equality, which may be {@code null}
-     * @return A {@code TriPredicate} that tests if four arguments are equal according to {@link Objects#equals(Object,
-     * Object)}
+     * @return A {@code TriPredicate} that tests if the given arguments are equal to the ones of this predicate.
      * @see #isNotEqual(Object, Object, Object)
      */
     //@formatter:off
@@ -70,8 +69,8 @@ public interface TriPredicate<T, U, V> {
     //@formatter:on
 
     /**
-     * Returns a {@link TriPredicate} that tests if four arguments are not equal according to {@link
-     * Objects#equals(Object)} method.
+     * Returns a {@link TriPredicate} that tests if given arguments are not equal to the ones of this predicate
+     * according to {@link Objects#equals(Object)} method.
      *
      * @param <T> The type of the first argument to the predicate
      * @param <U> The type of the second argument to the predicate
@@ -79,8 +78,7 @@ public interface TriPredicate<T, U, V> {
      * @param targetRef1 The first object reference with which to compare for equality, which may be {@code null}
      * @param targetRef2 The second object reference with which to compare for equality, which may be {@code null}
      * @param targetRef3 The third object reference with which to compare for equality, which may be {@code null}
-     * @return A {@code TriPredicate} that tests if four arguments are equal according to {@link Objects#equals(Object,
-     * Object)}
+     * @return A {@code TriPredicate} that tests if the given arguments are not equal to the ones of this predicate.
      * @see #isEqual(Object, Object, Object)
      */
     //@formatter:off
@@ -150,6 +148,8 @@ public interface TriPredicate<T, U, V> {
      * @return A composed {@code TriPredicate} that represents the short-circuiting logical AND of this predicate and
      * the {@code other} predicate.
      * @throws NullPointerException If the given argument is {@code null}
+     * @see #or(TriPredicate)
+     * @see #xor(TriPredicate)
      */
     default TriPredicate<T, U, V> and(final TriPredicate<? super T, ? super U, ? super V> other) {
         Objects.requireNonNull(other);
@@ -168,6 +168,8 @@ public interface TriPredicate<T, U, V> {
      * @return A composed {@code TriPredicate} that represents the short-circuiting logical OR of this predicate and the
      * {@code other} predicate.
      * @throws NullPointerException If the given argument is {@code null}
+     * @see #and(TriPredicate)
+     * @see #xor(TriPredicate)
      */
     default TriPredicate<T, U, V> or(final TriPredicate<? super T, ? super U, ? super V> other) {
         Objects.requireNonNull(other);
@@ -183,9 +185,11 @@ public interface TriPredicate<T, U, V> {
      * {@code TriPredicate} throws an exception, the {@code other} {@code TriPredicate} will not be evaluated.
      *
      * @param other A {@code TriPredicate} that will be logically-XORed with this one
-     * @return A composed {@code TriPredicate} that represents the short-circuiting logical OR of this predicate and the
-     * {@code other} predicate.
+     * @return A composed {@code TriPredicate} that represents the short-circuiting logical XOR of this predicate and
+     * the {@code other} predicate.
      * @throws NullPointerException If the given argument is {@code null}
+     * @see #and(TriPredicate)
+     * @see #or(TriPredicate)
      */
     default TriPredicate<T, U, V> xor(final TriPredicate<? super T, ? super U, ? super V> other) {
         Objects.requireNonNull(other);

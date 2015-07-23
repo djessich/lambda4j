@@ -93,11 +93,11 @@ public interface ThrowableFloatPredicate extends FloatPredicate {
     }
 
     /**
-     * Returns a {@link ThrowableFloatPredicate} that tests if two arguments are equal according to {@code value ==
-     * target} operation.
+     * Returns a {@link ThrowableFloatPredicate} that tests if the given argument is equal to the one of this predicate
+     * according to {@code value == target} operation.
      *
      * @param target The target value with which to compare for equality
-     * @return A {@code ThrowableFloatPredicate} that tests if two arguments are equal.
+     * @return A {@code ThrowableFloatPredicate} that tests if the given argument is equal to the one of this predicate.
      * @see #isNotEqual(float)
      */
     static ThrowableFloatPredicate isEqual(float target) {
@@ -105,11 +105,12 @@ public interface ThrowableFloatPredicate extends FloatPredicate {
     }
 
     /**
-     * Returns a {@link ThrowableFloatPredicate} that tests if two arguments are not equal according to {@code value !=
-     * target} operation.
+     * Returns a {@link ThrowableFloatPredicate} that tests if the given argument is not equal to the one of this
+     * predicate according to {@code value != target} operation.
      *
      * @param target The target value with which to compare for equality
-     * @return A {@code ThrowableFloatPredicate} that tests if two arguments are not equal.
+     * @return A {@code ThrowableFloatPredicate} that tests if the given argument is not equal to the one of this
+     * predicate.
      * @see #isEqual(float)
      */
     static ThrowableFloatPredicate isNotEqual(float target) {

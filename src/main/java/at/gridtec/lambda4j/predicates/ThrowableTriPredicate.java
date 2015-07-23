@@ -105,8 +105,8 @@ public interface ThrowableTriPredicate<T, U, V> extends TriPredicate<T, U, V> {
     }
 
     /**
-     * Returns a {@link ThrowableTriPredicate} that tests if four arguments are equal according to {@link
-     * Objects#equals(Object)} method.
+     * Returns a {@link ThrowableTriPredicate} that tests if the given arguments are equal to the ones of this
+     * predicate according to {@link Objects#equals(Object)} method.
      *
      * @param <T> The type of the first argument to the predicate
      * @param <U> The type of the second argument to the predicate
@@ -114,8 +114,8 @@ public interface ThrowableTriPredicate<T, U, V> extends TriPredicate<T, U, V> {
      * @param targetRef1 The first object reference with which to compare for equality, which may be {@code null}
      * @param targetRef2 The second object reference with which to compare for equality, which may be {@code null}
      * @param targetRef3 The third object reference with which to compare for equality, which may be {@code null}
-     * @return A {@code ThrowableTriPredicate} that tests if four arguments are equal according to {@link
-     * Objects#equals(Object, Object)}
+     * @return A {@code ThrowableTriPredicate} that tests if the given arguments are equal to the ones of this
+     * predicate.
      * @see #isNotEqual(Object, Object, Object)
      */
     //@formatter:off
@@ -128,8 +128,8 @@ public interface ThrowableTriPredicate<T, U, V> extends TriPredicate<T, U, V> {
     //@formatter:on
 
     /**
-     * Returns a {@link ThrowableTriPredicate} that tests if four arguments are not equal according to {@link
-     * Objects#equals(Object)} method.
+     * Returns a {@link ThrowableTriPredicate} that tests if the given arguments are not equal to the ones of this
+     * predicate according to {@link Objects#equals(Object)} method.
      *
      * @param <T> The type of the first argument to the predicate
      * @param <U> The type of the second argument to the predicate
@@ -137,8 +137,8 @@ public interface ThrowableTriPredicate<T, U, V> extends TriPredicate<T, U, V> {
      * @param targetRef1 The first object reference with which to compare for equality, which may be {@code null}
      * @param targetRef2 The second object reference with which to compare for equality, which may be {@code null}
      * @param targetRef3 The third object reference with which to compare for equality, which may be {@code null}
-     * @return A {@code ThrowableTriPredicate} that tests if four arguments are equal according to {@link
-     * Objects#equals(Object, Object)}
+     * @return A {@code ThrowableTriPredicate} that tests if the given arguments are not equal to the ones of this
+     * predicate.
      * @see #isEqual(Object, Object, Object)
      */
     //@formatter:off

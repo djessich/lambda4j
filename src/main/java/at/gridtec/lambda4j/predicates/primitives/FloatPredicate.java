@@ -41,11 +41,11 @@ public interface FloatPredicate {
     }
 
     /**
-     * Returns a {@link FloatPredicate} that tests if two arguments are equal according to {@code value == target}
-     * operation.
+     * Returns a {@link FloatPredicate} that tests if the given argument is equal to the one of this predicate
+     * according to {@code value == target} operation.
      *
      * @param target The target value with which to compare for equality
-     * @return A {@code FloatPredicate} that tests if two arguments are equal.
+     * @return A {@code FloatPredicate} that tests if the given argument is equal to the one of this predicate.
      * @see #isNotEqual(float)
      */
     static FloatPredicate isEqual(float target) {
@@ -53,11 +53,11 @@ public interface FloatPredicate {
     }
 
     /**
-     * Returns a {@link FloatPredicate} that tests if two arguments are not equal according to {@code value != target}
-     * operation.
+     * Returns a {@link FloatPredicate} that tests if the given argument is not equal to the one of this predicate
+     * according to {@code value != target} operation.
      *
      * @param target The target value with which to compare for equality
-     * @return A {@code FloatPredicate} that tests if two arguments are not equal.
+     * @return A {@code FloatPredicate} that tests if the given argument is not equal to the one of this predicate.
      * @see #isEqual(float)
      */
     static FloatPredicate isNotEqual(float target) {
@@ -143,7 +143,7 @@ public interface FloatPredicate {
      * {@code FloatPredicate} throws an exception, the {@code other} {@code FloatPredicate} will not be evaluated.
      *
      * @param other A {@code FloatPredicate} that will be logically-XORed with this one
-     * @return A composed {@code FloatPredicate} that represents the short-circuiting logical OR of this predicate and
+     * @return A composed {@code FloatPredicate} that represents the short-circuiting logical XOR of this predicate and
      * the {@code other} predicate.
      * @throws NullPointerException If the given argument is {@code null}
      * @see #and(FloatPredicate)

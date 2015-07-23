@@ -42,11 +42,11 @@ public interface ShortPredicate {
     }
 
     /**
-     * Returns a {@link ShortPredicate} that tests if two arguments are equal according to {@code value == target}
-     * operation.
+     * Returns a {@link ShortPredicate} that tests if the given argument is equal to the one of this predicate
+     * according to {@code value == target} operation.
      *
      * @param target The target value with which to compare for equality
-     * @return A {@code ShortPredicate} that tests if two arguments are equal.
+     * @return A {@code ShortPredicate} that tests if the given argument is equal to the one of this predicate.
      * @see #isNotEqual(short)
      */
     static ShortPredicate isEqual(short target) {
@@ -54,11 +54,11 @@ public interface ShortPredicate {
     }
 
     /**
-     * Returns a {@link ShortPredicate} that tests if two arguments are not equal according to {@code value != target}
-     * operation.
+     * Returns a {@link ShortPredicate} that tests if the given argument is not equal to the one of this predicate
+     * according to {@code value != target} operation.
      *
      * @param target The target value with which to compare for equality
-     * @return A {@code ShortPredicate} that tests if two arguments are not equal.
+     * @return A {@code ShortPredicate} that tests if the given argument is not equal to the one of this predicate.
      * @see #isEqual(short)
      */
     static ShortPredicate isNotEqual(short target) {
@@ -144,7 +144,7 @@ public interface ShortPredicate {
      * {@code ShortPredicate} throws an exception, the {@code other} {@code ShortPredicate} will not be evaluated.
      *
      * @param other A {@code ShortPredicate} that will be logically-XORed with this one
-     * @return A composed {@code ShortPredicate} that represents the short-circuiting logical OR of this predicate and
+     * @return A composed {@code ShortPredicate} that represents the short-circuiting logical XOR of this predicate and
      * the {@code other} predicate.
      * @throws NullPointerException If the given argument is {@code null}
      * @see #and(ShortPredicate)
