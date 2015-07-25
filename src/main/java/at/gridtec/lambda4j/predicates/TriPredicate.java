@@ -122,8 +122,7 @@ public interface TriPredicate<T, U, V> {
      * @param t The first argument to the predicate
      * @param u The second argument to the predicate
      * @param v The third argument to the predicate
-     * @return {@code true} if the input arguments match the predicate,
-     * otherwise {@code false}
+     * @return {@code true} if the input arguments match the predicate, otherwise {@code false}.
      */
     boolean test(T t, U u, V v);
 

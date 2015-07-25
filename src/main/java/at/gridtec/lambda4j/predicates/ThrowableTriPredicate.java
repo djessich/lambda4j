@@ -182,7 +182,7 @@ public interface ThrowableTriPredicate<T, U, V> extends TriPredicate<T, U, V> {
      * @param t The first argument to the predicate
      * @param u The second argument to the predicate
      * @param v The third argument to the predicate
-     * @return {@code true} if the input argument matches the predicate, otherwise {@code false}
+     * @return {@code true} if the input argument matches the predicate, otherwise {@code false}.
      * @throws Exception Any exception from this functions action
      */
     boolean testThrows(T t, U u, V v) throws Exception;
@@ -196,7 +196,7 @@ public interface ThrowableTriPredicate<T, U, V> extends TriPredicate<T, U, V> {
      * @param t The first argument to the predicate
      * @param u The second argument to the predicate
      * @param v The third argument to the predicate
-     * @return {@code true} if the input argument matches the predicate, otherwise {@code false}
+     * @return {@code true} if the input argument matches the predicate, otherwise {@code false}.
      * @see ThrowableUtils#sneakyThrow(Throwable)
      */
     @Override

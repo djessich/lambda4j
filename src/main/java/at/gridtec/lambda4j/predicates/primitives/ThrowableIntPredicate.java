@@ -143,7 +143,7 @@ public interface ThrowableIntPredicate extends IntPredicate {
      * The test method for this {@link IntPredicate} which is able to throw any {@link Exception} type.
      *
      * @param value The argument for the predicate
-     * @return {@code true} if the input argument matches the predicate, otherwise {@code false}
+     * @return {@code true} if the input argument matches the predicate, otherwise {@code false}.
      * @throws Exception Any exception from this functions action
      */
     boolean testThrows(int value) throws Exception;
@@ -154,7 +154,7 @@ public interface ThrowableIntPredicate extends IntPredicate {
      * type {@link RuntimeException}, the exception is rethrown. Other exception types are sneakily thrown.
      *
      * @param value The argument for the predicate
-     * @return {@code true} if the input argument matches the predicate, otherwise {@code false}
+     * @return {@code true} if the input argument matches the predicate, otherwise {@code false}.
      * @see ThrowableUtils#sneakyThrow(Throwable)
      */
     @Override

@@ -145,7 +145,7 @@ public interface ThrowableDoublePredicate extends DoublePredicate {
      * The test method for this {@link DoublePredicate} which is able to throw any {@link Exception} type.
      *
      * @param value The argument for the predicate
-     * @return {@code true} if the input argument matches the predicate, otherwise {@code false}
+     * @return {@code true} if the input argument matches the predicate, otherwise {@code false}.
      * @throws Exception Any exception from this functions action
      */
     boolean testThrows(double value) throws Exception;
@@ -156,7 +156,7 @@ public interface ThrowableDoublePredicate extends DoublePredicate {
      * it is of type {@link RuntimeException}, the exception is rethrown. Other exception types are sneakily thrown.
      *
      * @param value The argument for the predicate
-     * @return {@code true} if the input argument matches the predicate, otherwise {@code false}
+     * @return {@code true} if the input argument matches the predicate, otherwise {@code false}.
      * @see ThrowableUtils#sneakyThrow(Throwable)
      */
     @Override

@@ -146,7 +146,7 @@ public interface ThrowableByteBiPredicate extends ByteBiPredicate {
      *
      * @param value1 The first argument to the predicate
      * @param value2 The second argument to the predicate
-     * @return {@code true} if the input argument matches the predicate, otherwise {@code false}
+     * @return {@code true} if the input argument matches the predicate, otherwise {@code false}.
      * @throws Exception Any exception from this functions action
      */
     boolean testThrows(byte value1, byte value2) throws Exception;
@@ -159,7 +159,7 @@ public interface ThrowableByteBiPredicate extends ByteBiPredicate {
      *
      * @param value1 The first argument to the predicate
      * @param value2 The second argument to the predicate
-     * @return {@code true} if the input argument matches the predicate, otherwise {@code false}
+     * @return {@code true} if the input argument matches the predicate, otherwise {@code false}.
      * @see ThrowableUtils#sneakyThrow(Throwable)
      */
     @Override
