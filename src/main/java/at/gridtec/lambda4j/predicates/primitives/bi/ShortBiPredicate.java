@@ -63,7 +63,7 @@ public interface ShortBiPredicate {
      * @see #isEqual(short, short)
      */
     static ShortBiPredicate isNotEqual(short target1, short target2) {
-        return (value1, value2) -> (value1 != target1) && (value2 != target2);
+        return (value1, value2) -> (value1 != target1) || (value2 != target2);
     }
 
     /**

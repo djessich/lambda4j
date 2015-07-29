@@ -114,7 +114,7 @@ public interface ThrowableCharBiPredicate extends CharBiPredicate {
      * @see #isEqual(char, char)
      */
     static ThrowableCharBiPredicate isNotEqual(char target1, char target2) {
-        return (value1, value2) -> (value1 != target1) && (value2 != target2);
+        return (value1, value2) -> (value1 != target1) || (value2 != target2);
     }
 
     /**

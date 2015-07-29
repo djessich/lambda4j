@@ -114,7 +114,7 @@ public interface ThrowableFloatBiPredicate extends FloatBiPredicate {
      * @see #isEqual(float, float)
      */
     static ThrowableFloatBiPredicate isNotEqual(float target1, float target2) {
-        return (value1, value2) -> (value1 != target1) && (value2 != target2);
+        return (value1, value2) -> (value1 != target1) || (value2 != target2);
     }
 
     /**

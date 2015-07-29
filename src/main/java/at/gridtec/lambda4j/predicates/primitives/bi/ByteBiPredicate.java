@@ -63,7 +63,7 @@ public interface ByteBiPredicate {
      * @see #isEqual(byte, byte)
      */
     static ByteBiPredicate isNotEqual(byte target1, byte target2) {
-        return (value1, value2) -> (value1 != target1) && (value2 != target2);
+        return (value1, value2) -> (value1 != target1) || (value2 != target2);
     }
 
     /**

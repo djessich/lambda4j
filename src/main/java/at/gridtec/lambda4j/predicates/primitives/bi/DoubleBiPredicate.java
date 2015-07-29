@@ -64,7 +64,7 @@ public interface DoubleBiPredicate {
      * @see #isEqual(double, double)
      */
     static DoubleBiPredicate isNotEqual(double target1, double target2) {
-        return (value1, value2) -> (value1 != target1) && (value2 != target2);
+        return (value1, value2) -> (value1 != target1) || (value2 != target2);
     }
 
     /**

@@ -114,7 +114,7 @@ public interface ThrowableShortBiPredicate extends ShortBiPredicate {
      * @see #isEqual(short, short)
      */
     static ThrowableShortBiPredicate isNotEqual(short target1, short target2) {
-        return (value1, value2) -> (value1 != target1) && (value2 != target2);
+        return (value1, value2) -> (value1 != target1) || (value2 != target2);
     }
 
     /**

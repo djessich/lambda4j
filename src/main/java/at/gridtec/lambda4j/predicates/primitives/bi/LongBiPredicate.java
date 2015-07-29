@@ -63,7 +63,7 @@ public interface LongBiPredicate {
      * @see #isEqual(long, long)
      */
     static LongBiPredicate isNotEqual(long target1, long target2) {
-        return (value1, value2) -> (value1 != target1) && (value2 != target2);
+        return (value1, value2) -> (value1 != target1) || (value2 != target2);
     }
 
     /**

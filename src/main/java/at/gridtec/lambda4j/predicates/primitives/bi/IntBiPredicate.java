@@ -63,7 +63,7 @@ public interface IntBiPredicate {
      * @see #isEqual(int, int)
      */
     static IntBiPredicate isNotEqual(int target1, int target2) {
-        return (value1, value2) -> (value1 != target1) && (value2 != target2);
+        return (value1, value2) -> (value1 != target1) || (value2 != target2);
     }
 
     /**

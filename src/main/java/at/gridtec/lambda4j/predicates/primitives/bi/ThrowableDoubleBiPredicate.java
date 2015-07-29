@@ -114,7 +114,7 @@ public interface ThrowableDoubleBiPredicate extends DoubleBiPredicate {
      * @see #isEqual(double, double)
      */
     static ThrowableDoubleBiPredicate isNotEqual(double target1, double target2) {
-        return (value1, value2) -> (value1 != target1) && (value2 != target2);
+        return (value1, value2) -> (value1 != target1) || (value2 != target2);
     }
 
     /**
