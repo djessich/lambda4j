@@ -18,9 +18,9 @@ package at.gridtec.lambda4j.consumer.primitives.obj;
 import at.gridtec.lambda4j.consumer.TriConsumer;
 
 /**
- * Represents an operation that accepts two object-valued and a {@code int}-valued argument, and returns no result.
- * This is the {@code (reference, reference, int)} specialization of {@link TriConsumer}. Unlike most other
- * functional interfaces, {@code BiObjIntConsumer} is expected to operate via side-effects.
+ * Represents an operation that accepts two object-valued and a {@code int}-valued argument, and returns no result. This
+ * is the {@code (reference, reference, int)} specialization of {@link TriConsumer}. Unlike most other functional
+ * interfaces, {@code BiObjIntConsumer} is expected to operate via side-effects.
  * <p>
  * This is a {@link FunctionalInterface} whose functional method is {@link #accept(Object, Object, int)}.
  *

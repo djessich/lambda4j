@@ -18,8 +18,8 @@ package at.gridtec.lambda4j.operators.unary;
 import java.util.function.UnaryOperator;
 
 /**
- * Represents an operation on a single {@code float}-valued operand that produces a {@code float}-valued result. This
- * is the primitive type specialization of {@link UnaryOperator} for {@code float}.
+ * Represents an operation on a single {@code float}-valued operand that produces a {@code float}-valued result. This is
+ * the primitive type specialization of {@link UnaryOperator} for {@code float}.
  * <p>
  * This is a {@link FunctionalInterface} whose functional method is {@link #applyAsFloat(float)}.
  *

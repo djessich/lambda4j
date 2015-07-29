@@ -18,8 +18,8 @@ package at.gridtec.lambda4j.function.primitives;
 import at.gridtec.lambda4j.function.TriFunction;
 
 /**
- * Represents a function that accepts three int-valued argument and produces a result. This is the {@code
- * int}-consuming primitive specialization for {@link TriFunction}.
+ * Represents a function that accepts three int-valued argument and produces a result. This is the {@code int}-consuming
+ * primitive specialization for {@link TriFunction}.
  * <p>
  * This is a {@link FunctionalInterface} whose functional method is {@link #apply(int, int, int)}.
  *

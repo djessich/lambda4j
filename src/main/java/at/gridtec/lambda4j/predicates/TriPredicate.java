@@ -19,8 +19,8 @@ import java.util.Objects;
 import java.util.function.Predicate;
 
 /**
- * Represents a predicate (boolean-valued function) of three arguments. This is the three-arity specialization of
- * {@link Predicate}.
+ * Represents a predicate (boolean-valued function) of three arguments. This is the three-arity specialization of {@link
+ * Predicate}.
  * <p>
  * This is a {@link FunctionalInterface} whose functional method is {@link #test(Object, Object, Object)}.
  *

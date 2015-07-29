@@ -18,8 +18,8 @@ package at.gridtec.lambda4j.function.primitives.to;
 import at.gridtec.lambda4j.function.TriFunction;
 
 /**
- * Represents a function that produces a double-valued result from three arguments. This is the {@code
- * double}-producing primitive specialization for {@link TriFunction}.
+ * Represents a function that produces a double-valued result from three arguments. This is the {@code double}-producing
+ * primitive specialization for {@link TriFunction}.
  * <p>
  * This is a {@link FunctionalInterface} whose functional method is {@link #applyAsDouble(Object, Object, Object)}.
  *

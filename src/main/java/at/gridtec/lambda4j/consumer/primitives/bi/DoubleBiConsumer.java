@@ -18,9 +18,9 @@ package at.gridtec.lambda4j.consumer.primitives.bi;
 import java.util.function.BiConsumer;
 
 /**
- * Represents an operation that accepts two {@code double}-valued arguments and returns no result. This is the
- * primitive type specialization of {@link BiConsumer} for {@code double}. Unlike most other functional interfaces,
- * {@code DoubleBiConsumer} is expected to operate via side-effects.
+ * Represents an operation that accepts two {@code double}-valued arguments and returns no result. This is the primitive
+ * type specialization of {@link BiConsumer} for {@code double}. Unlike most other functional interfaces, {@code
+ * DoubleBiConsumer} is expected to operate via side-effects.
  * <p>
  * This is a {@link FunctionalInterface} whose functional method is {@link #accept(double, double)}.
  *

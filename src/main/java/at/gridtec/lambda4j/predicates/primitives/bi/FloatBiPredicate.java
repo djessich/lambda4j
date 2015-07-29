@@ -106,8 +106,8 @@ public interface FloatBiPredicate {
     }
 
     /**
-     * Returns a composed {@link FloatBiPredicate} that represents a short-circuiting logical AND of this predicate
-     * and another. When evaluating the composed predicate, if this predicate is {@code false}, then the {@code other}
+     * Returns a composed {@link FloatBiPredicate} that represents a short-circuiting logical AND of this predicate and
+     * another. When evaluating the composed predicate, if this predicate is {@code false}, then the {@code other}
      * predicate is not evaluated.
      * <p>
      * Any exceptions thrown during evaluation of either predicate are relayed to the caller; if evaluation of this
@@ -135,8 +135,8 @@ public interface FloatBiPredicate {
      * {@code FloatBiPredicate} throws an exception, the {@code other} {@code FloatBiPredicate} will not be evaluated.
      *
      * @param other A {@code FloatBiPredicate} that will be logically-ORed with this one
-     * @return A composed {@code FloatBiPredicate} that represents the short-circuiting logical OR of this predicate
-     * and the {@code other} predicate.
+     * @return A composed {@code FloatBiPredicate} that represents the short-circuiting logical OR of this predicate and
+     * the {@code other} predicate.
      * @throws NullPointerException If the given argument is {@code null}
      * @see #and(FloatBiPredicate)
      * @see #xor(FloatBiPredicate)

@@ -18,8 +18,8 @@ package at.gridtec.lambda4j.predicates.primitives.obj;
 import at.gridtec.lambda4j.predicates.TriPredicate;
 
 /**
- * Represents a predicate (boolean-valued function) of two object-valued and a {@code byte}-valued argument. This is
- * the {@code (reference, reference, byte)}-consuming specialization of {@link TriPredicate}.
+ * Represents a predicate (boolean-valued function) of two object-valued and a {@code byte}-valued argument. This is the
+ * {@code (reference, reference, byte)}-consuming specialization of {@link TriPredicate}.
  * <p>
  * This is a {@link FunctionalInterface} whose functional method is {@link #test(Object, Object, byte)};
  *

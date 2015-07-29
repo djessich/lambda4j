@@ -23,16 +23,14 @@ import java.util.Objects;
  * This functional interface implements a {@link LongTriPredicate} which is able to throw any {@link Exception}.
  * <p>
  * The thrown {@link Exception} is sneakily thrown unless its a {@link RuntimeException}. This means that there is no
- * need to catch the thrown exception, nor to declare that you throw it using the <em>throws</em> keyword. The
- * exception
+ * need to catch the thrown exception, nor to declare that you throw it using the <em>throws</em> keyword. The exception
  * is still thrown, but the Java compiler stops warning about it.
  * <p>
  * However, when using this throwing lambda, be aware of the following consequences: <ol> <li>If the calling code is to
  * handle a thrown {@code Exception}, it MUST be declared in the methods <em>throws</em> clause which uses this lambda.
  * The compiler will not force you to add it.</li> <li>If the calling code already handles a thrown {@code Exception},
  * it needs to be declared in the methods <em>throws</em> clause which uses this lambda. If not the compiler prints an
- * error that the corresponding {@code try} block never throws the specific exception.</li> <li>In any case, there is
- * no
+ * error that the corresponding {@code try} block never throws the specific exception.</li> <li>In any case, there is no
  * way of explicitly catching the thrown {@code Exception} in the method which uses this lambda. If you try, the
  * compiler prints an error that the corresponding {@code try} block never throws the specific exception.</li> </ol>
  * <p>
@@ -68,9 +66,8 @@ public interface ThrowableLongPredicate extends LongTriPredicate {
     }
 
     /**
-     * Creates a {@link ThrowableLongPredicate} from the given {@link LongTriPredicate}. This method is just
-     * convenience to provide a mapping for the non-throwable/throwable instances of the corresponding functional
-     * interface.
+     * Creates a {@link ThrowableLongPredicate} from the given {@link LongTriPredicate}. This method is just convenience
+     * to provide a mapping for the non-throwable/throwable instances of the corresponding functional interface.
      *
      * @param lambda A {@code LongTriPredicate} which should be mapped to its throwable counterpart
      * @return A {@code ThrowableLongTriPredicate} from the given {@code LongTriPredicate}.
@@ -177,8 +174,8 @@ public interface ThrowableLongPredicate extends LongTriPredicate {
 
     /**
      * Returns a composed {@link ThrowableLongPredicate} that applies this {@code ThrowableLongTriPredicate} to its
-     * input, and if an error occurred, applies the given one. The exception from this {@code
-     * ThrowableLongTriPredicate} is ignored.
+     * input, and if an error occurred, applies the given one. The exception from this {@code ThrowableLongTriPredicate}
+     * is ignored.
      *
      * @param other A {@code ThrowableLongTriPredicate} to be applied if this one fails
      * @return A composed {@code ThrowableLongTriPredicate} that applies this {@code ThrowableLongTriPredicate}, and if
@@ -201,8 +198,8 @@ public interface ThrowableLongPredicate extends LongTriPredicate {
      * input, and if an error occurred, throws the given {@link Exception}. The exception from this {@code
      * ThrowableLongTriPredicate} is added as suppressed to the given one.
      * <p>
-     * The given exception must have a no arg constructor for reflection purposes. If not, then appropriate exception
-     * as described in {@link Class#newInstance()} is thrown.
+     * The given exception must have a no arg constructor for reflection purposes. If not, then appropriate exception as
+     * described in {@link Class#newInstance()} is thrown.
      *
      * @param <X> The type for the class extending {@code Exception}
      * @param clazz The exception class to throw if an error occurred
@@ -224,9 +221,9 @@ public interface ThrowableLongPredicate extends LongTriPredicate {
     }
 
     /**
-     * Returns a composed {@link LongTriPredicate} that applies this {@link ThrowableLongPredicate} to its input,
-     * and if an error occurred, applies the given {@code LongTriPredicate} representing a fallback. The exception from
-     * this {@code ThrowableLongTriPredicate} is ignored.
+     * Returns a composed {@link LongTriPredicate} that applies this {@link ThrowableLongPredicate} to its input, and if
+     * an error occurred, applies the given {@code LongTriPredicate} representing a fallback. The exception from this
+     * {@code ThrowableLongTriPredicate} is ignored.
      *
      * @param fallback A {@code LongTriPredicate} to be applied if this one fails
      * @return A composed {@code LongTriPredicate} that applies this {@code ThrowableLongTriPredicate}, and if an error
@@ -245,9 +242,8 @@ public interface ThrowableLongPredicate extends LongTriPredicate {
     }
 
     /**
-     * Returns a composed {@link LongTriPredicate} that applies this {@link ThrowableLongPredicate} to its input,
-     * and if an error occurred, returns {@code true}. The exception from this {@code ThrowableLongTriPredicate} is
-     * ignored.
+     * Returns a composed {@link LongTriPredicate} that applies this {@link ThrowableLongPredicate} to its input, and if
+     * an error occurred, returns {@code true}. The exception from this {@code ThrowableLongTriPredicate} is ignored.
      *
      * @return A composed {@code LongTriPredicate} that applies this {@code ThrowableLongTriPredicate}, and if an error
      * occurred, returns {@code true}.
@@ -263,9 +259,8 @@ public interface ThrowableLongPredicate extends LongTriPredicate {
     }
 
     /**
-     * Returns a composed {@link LongTriPredicate} that applies this {@link ThrowableLongPredicate} to its input,
-     * and if an error occurred, returns {@code false}. The exception from this {@code ThrowableLongTriPredicate} is
-     * ignored.
+     * Returns a composed {@link LongTriPredicate} that applies this {@link ThrowableLongPredicate} to its input, and if
+     * an error occurred, returns {@code false}. The exception from this {@code ThrowableLongTriPredicate} is ignored.
      *
      * @return A composed {@code LongTriPredicate} that applies this {@code ThrowableLongTriPredicate}, and if an error
      * occurred, returns {@code false}.

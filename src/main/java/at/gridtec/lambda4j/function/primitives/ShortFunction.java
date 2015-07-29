@@ -18,8 +18,8 @@ package at.gridtec.lambda4j.function.primitives;
 import java.util.function.Function;
 
 /**
- * Represents a function that accepts a short-valued argument and produces a result. This is the {@code
- * short}-consuming primitive specialization for {@link Function}.
+ * Represents a function that accepts a short-valued argument and produces a result. This is the {@code short}-consuming
+ * primitive specialization for {@link Function}.
  * <p>
  * This is a {@link FunctionalInterface} whose functional method is {@link #apply(short)}.
  *

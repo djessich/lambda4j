@@ -16,8 +16,8 @@
 package at.gridtec.lambda4j.operators.ternary;
 
 /**
- * Represents an operation on a two {@code long}-valued operands and producing a {@code long}-valued result. This is
- * the primitive type specialization of {@link TernaryOperator} for {@code long}.
+ * Represents an operation on a two {@code long}-valued operands and producing a {@code long}-valued result. This is the
+ * primitive type specialization of {@link TernaryOperator} for {@code long}.
  * <p>
  * This is a {@link FunctionalInterface} whose functional method is {@link #applyAsFloat(long, long, long)}.
  *

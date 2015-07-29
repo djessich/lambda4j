@@ -19,8 +19,8 @@ import java.util.function.BiFunction;
 
 /**
  * Represents a function that accepts an object-valued and a {@code double}-valued argument, and produces a {@code
- * double}-valued result. This is the {@code (reference, double)}, {@code double}-producing primitive specialization
- * for {@link BiFunction}.
+ * double}-valued result. This is the {@code (reference, double)}, {@code double}-producing primitive specialization for
+ * {@link BiFunction}.
  * <p>
  * This is a {@link FunctionalInterface} whose functional method is {@link #applyAsDouble(Object, double)}.
  *

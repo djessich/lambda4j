@@ -18,8 +18,8 @@ package at.gridtec.lambda4j.operators.binary;
 import java.util.function.BinaryOperator;
 
 /**
- * Represents an operation on a two {@code char}-valued operands and producing a {@code char}-valued result. This is
- * the primitive type specialization of {@link BinaryOperator} for {@code char}.
+ * Represents an operation on a two {@code char}-valued operands and producing a {@code char}-valued result. This is the
+ * primitive type specialization of {@link BinaryOperator} for {@code char}.
  * <p>
  * This is a {@link FunctionalInterface} whose functional method is {@link #applyAsChar(char, char)}.
  *

@@ -19,8 +19,8 @@ import java.util.function.BiConsumer;
 
 /**
  * Represents an operation that accepts an object-valued and a {@code float}-valued argument, and returns no result.
- * This is the {@code (reference, float)} specialization of {@link BiConsumer}. Unlike most other functional
- * interfaces, {@code ObjFloatConsumer} is expected to operate via side-effects.
+ * This is the {@code (reference, float)} specialization of {@link BiConsumer}. Unlike most other functional interfaces,
+ * {@code ObjFloatConsumer} is expected to operate via side-effects.
  * <p>
  * This is a {@link FunctionalInterface} whose functional method is {@link #accept(Object, float)}.
  *

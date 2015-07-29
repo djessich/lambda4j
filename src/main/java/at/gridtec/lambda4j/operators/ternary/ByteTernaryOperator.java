@@ -16,8 +16,8 @@
 package at.gridtec.lambda4j.operators.ternary;
 
 /**
- * Represents an operation on a two {@code byte}-valued operands and producing a {@code byte}-valued result. This is
- * the primitive type specialization of {@link TernaryOperator} for {@code byte}.
+ * Represents an operation on a two {@code byte}-valued operands and producing a {@code byte}-valued result. This is the
+ * primitive type specialization of {@link TernaryOperator} for {@code byte}.
  * <p>
  * This is a {@link FunctionalInterface} whose functional method is {@link #applyAsByte(byte, byte, byte)}.
  *

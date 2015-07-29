@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package at.gridtec.lambda4j.throwable.operators.binary;
+package at.gridtec.lambda4j.operators.binary;
 
 import at.gridtec.lambda4j.util.ThrowableUtils;
 
@@ -25,24 +25,20 @@ import java.util.function.Supplier;
  * This functional interface implements a {@link DoubleBinaryOperator} which is able to throw any {@link Exception}.
  * <p>
  * The thrown {@link Exception} is sneakily thrown unless its a {@link RuntimeException}. This means that there is no
- * need to catch the thrown exception, nor to declare that you throw it using the <em>throws</em> keyword. The
- * exception is still thrown, but the Java compiler stops warning about it.
+ * need to catch the thrown exception, nor to declare that you throw it using the <em>throws</em> keyword. The exception
+ * is still thrown, but the Java compiler stops warning about it.
  * <p>
- * However, when using this throwing lambda, be aware of the following consequences:
- * <ol>
- * <li>If the calling code is to handle a thrown {@code Exception}, it MUST be declared in the methods
- * <em>throws</em> clause which uses this lambda. The compiler will not force you to add it.</li>
- * <li>If the calling code already handles a thrown {@code Exception}, it needs to be declared in the methods
- * <em>throws</em> clause which uses this lambda. If not the compiler prints an error that the corresponding {@code
- * try} block never throws the specific exception.</li>
- * <li>In any case, there is no way of explicitly catching the thrown {@code Exception} in the method which uses this
- * lambda. If you try, the compiler prints an error that the corresponding {@code try} block never throws the specific
- * exception.</li>
- * </ol>
+ * However, when using this throwing lambda, be aware of the following consequences: <ol> <li>If the calling code is to
+ * handle a thrown {@code Exception}, it MUST be declared in the methods <em>throws</em> clause which uses this lambda.
+ * The compiler will not force you to add it.</li> <li>If the calling code already handles a thrown {@code Exception},
+ * it needs to be declared in the methods <em>throws</em> clause which uses this lambda. If not the compiler prints an
+ * error that the corresponding {@code try} block never throws the specific exception.</li> <li>In any case, there is no
+ * way of explicitly catching the thrown {@code Exception} in the method which uses this lambda. If you try, the
+ * compiler prints an error that the corresponding {@code try} block never throws the specific exception.</li> </ol>
  * <p>
  * When the calling code never throws the specific exception that it declares, you should omit it. For example: {@code
- * new String(byteArr, "UTF-8") throws UnsupportedEncodingException}, but UTF-8 is guaranteed by the Java
- * specification to be always present. The exception should therefore be omitted.
+ * new String(byteArr, "UTF-8") throws UnsupportedEncodingException}, but UTF-8 is guaranteed by the Java specification
+ * to be always present. The exception should therefore be omitted.
  * <p>
  * Moreover, if no checked exception should be used at all or its use is inappropriate for any reasons, omit the
  * declaration in the <em>throws</em> clause. The checked exception will behave just like a normal <b>unchecked</b>
@@ -154,8 +150,8 @@ public interface ThrowableDoubleBinaryOperator extends DoubleBinaryOperator {
      * to its input, and if an error occurred, throws the given {@link Exception}. The exception from this {@code
      * ThrowableDoubleBinaryOperator} is added as suppressed to the given one.
      * <p>
-     * The given exception must have a no arg constructor for reflection purposes. If not, then appropriate exception
-     * as described in {@link Class#newInstance()} is thrown.
+     * The given exception must have a no arg constructor for reflection purposes. If not, then appropriate exception as
+     * described in {@link Class#newInstance()} is thrown.
      *
      * @param <X> The type for the class extending {@code Exception}
      * @param clazz The exception class to throw if an error occurred

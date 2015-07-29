@@ -33,8 +33,8 @@ public final class ThrowableUtils {
 
     /**
      * The given {@link Throwable} is sneakily thrown by this method. This means that there is no need to catch it, nor
-     * to declare that you throw it using the throws keyword. The exception is still thrown, but the Java compiler
-     * stops warning about it. The following example demonstrates how to use this method correctly.
+     * to declare that you throw it using the throws keyword. The exception is still thrown, but the Java compiler stops
+     * warning about it. The following example demonstrates how to use this method correctly.
      * <pre>
      * public void run() {
      *     throw sneakyThrow(new IOException("Sneaky Thrown!"));
@@ -45,9 +45,9 @@ public final class ThrowableUtils {
      * the act of throwing a checked exception from the java compiler.
      * <p>
      * Note: that this method has a return type of {@code RuntimeException}. It is therefore advised you always call
-     * this method as argument to the {@code throw} statement to avoid compiler errors regarding no return statement
-     * and similar problems. This method won't, of course, return an actual {@code RuntimeException}. It never returns,
-     * it always throws the provided exception.
+     * this method as argument to the {@code throw} statement to avoid compiler errors regarding no return statement and
+     * similar problems. This method won't, of course, return an actual {@code RuntimeException}. It never returns, it
+     * always throws the provided exception.
      * <p>
      * Warning: This method should be save, but use with care.
      *

@@ -83,9 +83,9 @@ public interface TriFunction<T, U, V, R> {
     }
 
     /**
-     * Returns a composed {@link TriFunction} that first applies this function to its input, and then applies the
-     * {@code after} {@link Function} to the result. If evaluation of either function throws an exception, it is
-     * relayed to the caller of the composed function.
+     * Returns a composed {@link TriFunction} that first applies this function to its input, and then applies the {@code
+     * after} {@link Function} to the result. If evaluation of either function throws an exception, it is relayed to the
+     * caller of the composed function.
      *
      * @param <S> The type of output of the {@code after} function, and of the composed function
      * @param after The function to apply after this function is applied

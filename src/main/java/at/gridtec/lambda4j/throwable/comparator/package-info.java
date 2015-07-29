@@ -15,8 +15,8 @@
  */
 
 /**
- * This package allows us to use {@link java.util.Comparator}s which are able to throw any {@link
- * java.lang.Exception}s. For more information visit the main package.
+ * This package allows us to use {@link java.util.Comparator}s which are able to throw any {@link java.lang.Exception}s.
+ * For more information visit the main package.
  *
  * @see at.gridtec.lambda4j.throwable
  */

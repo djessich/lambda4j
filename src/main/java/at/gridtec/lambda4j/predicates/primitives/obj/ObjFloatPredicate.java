@@ -18,8 +18,8 @@ package at.gridtec.lambda4j.predicates.primitives.obj;
 import java.util.function.BiPredicate;
 
 /**
- * Represents a predicate (boolean-valued function) of an object-valued and a {@code float}-valued argument. This is
- * the {@code (reference, float)}-consuming specialization of {@link BiPredicate}.
+ * Represents a predicate (boolean-valued function) of an object-valued and a {@code float}-valued argument. This is the
+ * {@code (reference, float)}-consuming specialization of {@link BiPredicate}.
  * <p>
  * This is a {@link FunctionalInterface} whose functional method is {@link #test(Object, float)};
  *

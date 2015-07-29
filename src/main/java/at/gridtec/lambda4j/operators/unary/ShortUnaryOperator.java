@@ -18,8 +18,8 @@ package at.gridtec.lambda4j.operators.unary;
 import java.util.function.UnaryOperator;
 
 /**
- * Represents an operation on a single {@code short}-valued operand that produces a {@code short}-valued result. This
- * is the primitive type specialization of {@link UnaryOperator} for {@code short}.
+ * Represents an operation on a single {@code short}-valued operand that produces a {@code short}-valued result. This is
+ * the primitive type specialization of {@link UnaryOperator} for {@code short}.
  * <p>
  * This is a {@link FunctionalInterface} whose functional method is {@link #applyAsShort(short)}.
  *

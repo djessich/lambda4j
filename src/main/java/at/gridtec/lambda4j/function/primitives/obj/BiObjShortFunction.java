@@ -18,8 +18,8 @@ package at.gridtec.lambda4j.function.primitives.obj;
 import at.gridtec.lambda4j.function.TriFunction;
 
 /**
- * Represents a function that accepts two object-valued and a {@code short}-valued argument, and produces a result.
- * This is the {@code (reference, reference, short)} specialization of {@link TriFunction}.
+ * Represents a function that accepts two object-valued and a {@code short}-valued argument, and produces a result. This
+ * is the {@code (reference, reference, short)} specialization of {@link TriFunction}.
  * <p>
  * This is a {@link FunctionalInterface} whose functional method is {@link #apply(Object, Object, short)}.
  *

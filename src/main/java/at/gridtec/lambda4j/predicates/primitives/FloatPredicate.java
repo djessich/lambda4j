@@ -41,8 +41,8 @@ public interface FloatPredicate {
     }
 
     /**
-     * Returns a {@link FloatPredicate} that tests if the given argument is equal to the one of this predicate
-     * according to {@code value == target} operation.
+     * Returns a {@link FloatPredicate} that tests if the given argument is equal to the one of this predicate according
+     * to {@code value == target} operation.
      *
      * @param target The target value with which to compare for equality
      * @return A {@code FloatPredicate} that tests if the given argument is equal to the one of this predicate.

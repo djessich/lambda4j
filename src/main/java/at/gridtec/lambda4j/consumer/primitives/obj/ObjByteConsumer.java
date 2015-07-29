@@ -18,8 +18,8 @@ package at.gridtec.lambda4j.consumer.primitives.obj;
 import java.util.function.BiConsumer;
 
 /**
- * Represents an operation that accepts an object-valued and a {@code byte}-valued argument, and returns no result.
- * This is the {@code (reference, byte)} specialization of {@link BiConsumer}. Unlike most other functional interfaces,
+ * Represents an operation that accepts an object-valued and a {@code byte}-valued argument, and returns no result. This
+ * is the {@code (reference, byte)} specialization of {@link BiConsumer}. Unlike most other functional interfaces,
  * {@code ObjByteConsumer} is expected to operate via side-effects.
  * <p>
  * This is a {@link FunctionalInterface} whose functional method is {@link #accept(Object, byte)}.

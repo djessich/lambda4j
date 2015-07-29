@@ -19,9 +19,9 @@ package at.gridtec.lambda4j.consumer.primitives.tri;
 import at.gridtec.lambda4j.consumer.TriConsumer;
 
 /**
- * Represents an operation that accepts three {@code long}-valued arguments and returns no result. This is the
- * primitive type specialization of {@link TriConsumer} for {@code long}. Unlike most other functional interfaces,
- * {@code LongTriConsumer} is expected to operate via side-effects.
+ * Represents an operation that accepts three {@code long}-valued arguments and returns no result. This is the primitive
+ * type specialization of {@link TriConsumer} for {@code long}. Unlike most other functional interfaces, {@code
+ * LongTriConsumer} is expected to operate via side-effects.
  * <p>
  * This is a {@link FunctionalInterface} whose functional method is {@link #accept(long, long, long)}.
  *

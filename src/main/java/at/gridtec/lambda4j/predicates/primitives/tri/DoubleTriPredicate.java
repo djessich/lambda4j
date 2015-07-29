@@ -56,8 +56,8 @@ public interface DoubleTriPredicate {
     }
 
     /**
-     * Returns a {@link ShortTriPredicate} that tests if the given arguments are not equal to the ones of this
-     * predicate according to {@code value != target} method.
+     * Returns a {@link ShortTriPredicate} that tests if the given arguments are not equal to the ones of this predicate
+     * according to {@code value != target} method.
      *
      * @param target1 The first target value with which to compare for equality
      * @param target2 The second target value with which to compare for equality
@@ -133,8 +133,8 @@ public interface DoubleTriPredicate {
     }
 
     /**
-     * Returns a composed {@link DoubleTriPredicate} that represents a short-circuiting logical OR of this predicate
-     * and another. When evaluating the composed predicate, if this predicate is {@code true}, then the {@code other}
+     * Returns a composed {@link DoubleTriPredicate} that represents a short-circuiting logical OR of this predicate and
+     * another. When evaluating the composed predicate, if this predicate is {@code true}, then the {@code other}
      * predicate is not evaluated.
      * <p>
      * Any exceptions thrown during evaluation of either predicate are relayed to the caller; if evaluation of this
