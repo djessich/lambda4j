@@ -31,6 +31,68 @@ import java.util.function.BiPredicate;
 public interface ObjFloatPredicate<T> {
 
     /**
+     * Creates a {@link ObjFloatPredicate} which always returns a given value.
+     *
+     * @param <T> The type of argument to the predicate
+     * @param ret The return value for the constant
+     * @return A {@code ObjFloatPredicate} which always returns a given value.
+     */
+    static <T> ObjFloatPredicate<T> constant(boolean ret) {
+        return (t, value) -> ret;
+    }
+
+    /**
+     * Returns a {@link ObjFloatPredicate} that tests if the given arguments are equal to the ones of this predicate
+     * according to {@code value == target} method.
+     *
+     * @param <T> The type of argument to the predicate
+     * @param targetRef The first target value with which to compare for equality
+     * @param targetValue The second target value with which to compare for equality
+     * @return A {@code ObjFloatPredicate} that tests if the given arguments are equal to the ones of this predicate.
+     * @see #isNotEqual(Object, float)
+     */
+    static <T> ObjFloatPredicate<T> isEqual(Object targetRef, float targetValue) {
+        return (t, value) -> (t == null ? targetRef == null : t.equals(targetRef)) && (value == targetValue);
+    }
+
+    /**
+     * Returns a {@link ObjFloatPredicate} that tests if the given arguments are not equal to the ones of this predicate
+     * according to {@code value != target} method.
+     *
+     * @param <T> The type of argument to the predicate
+     * @param targetRef The first target value with which to compare for equality
+     * @param targetValue The second target value with which to compare for equality
+     * @return A {@code ObjFloatPredicate} that tests if the given arguments are not equal to the ones of this
+     * predicate.
+     * @see #isEqual(Object, float)
+     */
+    static <T> ObjFloatPredicate<T> isNotEqual(Object targetRef, float targetValue) {
+        return (t, value) -> !(t == null ? targetRef == null : t.equals(targetRef)) || (value != targetValue);
+    }
+
+    /**
+     * Returns a {@link ObjFloatPredicate} the always returns {@code true}.
+     *
+     * @param <T> The type of argument to the predicate
+     * @return A {@link ObjFloatPredicate} the always returns {@code true}.
+     * @see #alwaysFalse()
+     */
+    static <T> ObjFloatPredicate<T> alwaysTrue() {
+        return (t, value) -> true;
+    }
+
+    /**
+     * Returns a {@link ObjFloatPredicate} the always returns {@code false}.
+     *
+     * @param <T> The type of argument to the predicate
+     * @return A {@link ObjFloatPredicate} the always returns {@code false}.
+     * @see #alwaysTrue()
+     */
+    static <T> ObjFloatPredicate<T> alwaysFalse() {
+        return (t, value) -> false;
+    }
+
+    /**
      * Evaluates this predicate on the given arguments.
      *
      * @param t The first argument to the predicate

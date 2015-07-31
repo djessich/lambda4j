@@ -31,6 +31,68 @@ import java.util.function.BiPredicate;
 public interface ObjShortPredicate<T> {
 
     /**
+     * Creates a {@link ObjShortPredicate} which always returns a given value.
+     *
+     * @param <T> The type of argument to the predicate
+     * @param ret The return value for the constant
+     * @return A {@code ObjShortPredicate} which always returns a given value.
+     */
+    static <T> ObjShortPredicate<T> constant(boolean ret) {
+        return (t, value) -> ret;
+    }
+
+    /**
+     * Returns a {@link ObjShortPredicate} that tests if the given arguments are equal to the ones of this predicate
+     * according to {@code value == target} method.
+     *
+     * @param <T> The type of argument to the predicate
+     * @param targetRef The first target value with which to compare for equality
+     * @param targetValue The second target value with which to compare for equality
+     * @return A {@code ObjShortPredicate} that tests if the given arguments are equal to the ones of this predicate.
+     * @see #isNotEqual(Object, short)
+     */
+    static <T> ObjShortPredicate<T> isEqual(Object targetRef, short targetValue) {
+        return (t, value) -> (t == null ? targetRef == null : t.equals(targetRef)) && (value == targetValue);
+    }
+
+    /**
+     * Returns a {@link ObjShortPredicate} that tests if the given arguments are not equal to the ones of this predicate
+     * according to {@code value != target} method.
+     *
+     * @param <T> The type of argument to the predicate
+     * @param targetRef The first target value with which to compare for equality
+     * @param targetValue The second target value with which to compare for equality
+     * @return A {@code ObjShortPredicate} that tests if the given arguments are not equal to the ones of this
+     * predicate.
+     * @see #isEqual(Object, short)
+     */
+    static <T> ObjShortPredicate<T> isNotEqual(Object targetRef, short targetValue) {
+        return (t, value) -> !(t == null ? targetRef == null : t.equals(targetRef)) || (value != targetValue);
+    }
+
+    /**
+     * Returns a {@link ObjShortPredicate} the always returns {@code true}.
+     *
+     * @param <T> The type of argument to the predicate
+     * @return A {@link ObjShortPredicate} the always returns {@code true}.
+     * @see #alwaysFalse()
+     */
+    static <T> ObjShortPredicate<T> alwaysTrue() {
+        return (t, value) -> true;
+    }
+
+    /**
+     * Returns a {@link ObjShortPredicate} the always returns {@code false}.
+     *
+     * @param <T> The type of argument to the predicate
+     * @return A {@link ObjShortPredicate} the always returns {@code false}.
+     * @see #alwaysTrue()
+     */
+    static <T> ObjShortPredicate<T> alwaysFalse() {
+        return (t, value) -> false;
+    }
+
+    /**
      * Evaluates this predicate on the given arguments.
      *
      * @param t The first argument to the predicate
