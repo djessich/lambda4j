@@ -15,6 +15,7 @@
  */
 package at.gridtec.lambda4j.predicates.primitives.obj;
 
+import java.util.Objects;
 import java.util.function.BiPredicate;
 
 /**
@@ -100,4 +101,90 @@ public interface ObjBooleanPredicate<T> {
      * @return {@code true} if the input argument matches the predicate, otherwise {@code false}.
      */
     boolean test(T t, boolean value);
+
+    /**
+     * Returns a {@link ObjBooleanPredicate} that represents the logical negation of this one.
+     *
+     * @return A {@code ObjBooleanPredicate} that represents the logical negation of this one.
+     * @see BiPredicate#negate()
+     */
+    default ObjBooleanPredicate<T> negate() {
+        return (t, value) -> !test(t, value);
+    }
+
+    /**
+     * Returns a composed {@link ObjBooleanPredicate} that represents a short-circuiting logical AND of this predicate
+     * and another. When evaluating the composed predicate, if this predicate is {@code false}, then the {@code other}
+     * predicate is not evaluated.
+     * <p>
+     * Any exceptions thrown during evaluation of either predicate are relayed to the caller; if evaluation of this
+     * {@code ObjBooleanPredicate} throws an exception, the {@code other} {@code ObjBooleanPredicate} will not be
+     * evaluated.
+     *
+     * @param other A {@code ObjBooleanPredicate} that will be logically-ANDed with this one
+     * @return A composed {@code ObjBooleanPredicate} that represents the short-circuiting logical AND of this predicate
+     * and the {@code other} predicate.
+     * @throws NullPointerException If the given argument is {@code null}
+     * @see #or(ObjBooleanPredicate)
+     * @see #xor(ObjBooleanPredicate)
+     * @see BiPredicate#and(BiPredicate)
+     */
+    default ObjBooleanPredicate<T> and(final ObjBooleanPredicate<T> other) {
+        Objects.requireNonNull(other);
+        return (t, value) -> test(t, value) && other.test(t, value);
+    }
+
+    /**
+     * Returns a composed {@link ObjBooleanPredicate} that represents a short-circuiting logical OR of this predicate
+     * and another. When evaluating the composed predicate, if this predicate is {@code true}, then the {@code other}
+     * predicate is not evaluated.
+     * <p>
+     * Any exceptions thrown during evaluation of either predicate are relayed to the caller; if evaluation of this
+     * {@code ObjBooleanPredicate} throws an exception, the {@code other} {@code ObjBooleanPredicate} will not be
+     * evaluated.
+     *
+     * @param other A {@code ObjBooleanPredicate} that will be logically-ORed with this one
+     * @return A composed {@code ObjBooleanPredicate} that represents the short-circuiting logical OR of this predicate
+     * and the {@code other} predicate.
+     * @throws NullPointerException If the given argument is {@code null}
+     * @see #and(ObjBooleanPredicate)
+     * @see #xor(ObjBooleanPredicate)
+     * @see BiPredicate#or(BiPredicate)
+     */
+    default ObjBooleanPredicate<T> or(final ObjBooleanPredicate<T> other) {
+        Objects.requireNonNull(other);
+        return (t, value) -> test(t, value) && other.test(t, value);
+    }
+
+    /**
+     * Returns a composed {@link ObjBooleanPredicate} that represents a short-circuiting logical XOR of this predicate
+     * and another. When evaluating the composed predicate, if this predicate is {@code true}, then the {@code other}
+     * predicate is not evaluated.
+     * <p>
+     * Any exceptions thrown during evaluation of either predicate are relayed to the caller; if evaluation of this
+     * {@code ObjBooleanPredicate} throws an exception, the {@code other} {@code ObjBooleanPredicate} will not be
+     * evaluated.
+     *
+     * @param other A {@code ObjBooleanPredicate} that will be logically-XORed with this one
+     * @return A composed {@code ObjBooleanPredicate} that represents the short-circuiting logical XOR of this predicate
+     * and the {@code other} predicate.
+     * @throws NullPointerException If the given argument is {@code null}
+     * @see #and(ObjBooleanPredicate)
+     * @see #or(ObjBooleanPredicate)
+     */
+    default ObjBooleanPredicate<T> xor(final ObjBooleanPredicate<T> other) {
+        Objects.requireNonNull(other);
+        return (t, value) -> test(t, value) ^ other.test(t, value);
+    }
+
+    /**
+     * Returns a composed {@link BiPredicate} which represents this {@link ObjBooleanPredicate}. Thereby the primitive
+     * input argument for this predicate is autoboxed. This method is just convenience to provide the ability to use
+     * this {@code ObjBooleanPredicate} with JRE specific methods, only accepting {@code BiPredicate}.
+     *
+     * @return A composed {@code BiPredicate} which represents this {@code ObjBooleanPredicate}.
+     */
+    default BiPredicate<T, Boolean> boxed() {
+        return this::test;
+    }
 }

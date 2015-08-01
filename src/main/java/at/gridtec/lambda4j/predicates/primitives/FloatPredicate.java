@@ -93,6 +93,16 @@ public interface FloatPredicate {
     boolean test(float value);
 
     /**
+     * Returns a {@link FloatPredicate} that represents the logical negation of this one.
+     *
+     * @return A {@code FloatPredicate} that represents the logical negation of this one.
+     * @see Predicate#negate()
+     */
+    default FloatPredicate negate() {
+        return value -> !test(value);
+    }
+
+    /**
      * Returns a composed {@link FloatPredicate} that represents a short-circuiting logical AND of this predicate and
      * another. When evaluating the composed predicate, if this predicate is {@code false}, then the {@code other}
      * predicate is not evaluated.

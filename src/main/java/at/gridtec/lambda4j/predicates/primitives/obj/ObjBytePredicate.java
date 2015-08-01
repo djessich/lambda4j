@@ -97,4 +97,87 @@ public interface ObjBytePredicate<T> {
      * @return {@code true} if the input argument matches the predicate, otherwise {@code false}.
      */
     boolean test(T t, byte value);
+
+    /**
+     * Returns a {@link ObjBytePredicate} that represents the logical negation of this one.
+     *
+     * @return A {@code ObjBytePredicate} that represents the logical negation of this one.
+     * @see BiPredicate#negate()
+     */
+    default ObjBytePredicate<T> negate() {
+        return (t, value) -> !test(t, value);
+    }
+
+    /**
+     * Returns a composed {@link ObjBytePredicate} that represents a short-circuiting logical AND of this predicate and
+     * another. When evaluating the composed predicate, if this predicate is {@code false}, then the {@code other}
+     * predicate is not evaluated.
+     * <p>
+     * Any exceptions thrown during evaluation of either predicate are relayed to the caller; if evaluation of this
+     * {@code ObjBytePredicate} throws an exception, the {@code other} {@code ObjBytePredicate} will not be evaluated.
+     *
+     * @param other A {@code ObjBytePredicate} that will be logically-ANDed with this one
+     * @return A composed {@code ObjBytePredicate} that represents the short-circuiting logical AND of this predicate
+     * and the {@code other} predicate.
+     * @throws NullPointerException If the given argument is {@code null}
+     * @see #or(ObjBytePredicate)
+     * @see #xor(ObjBytePredicate)
+     * @see BiPredicate#and(BiPredicate)
+     */
+    default ObjBytePredicate<T> and(final ObjBytePredicate<T> other) {
+        Objects.requireNonNull(other);
+        return (t, value) -> test(t, value) && other.test(t, value);
+    }
+
+    /**
+     * Returns a composed {@link ObjBytePredicate} that represents a short-circuiting logical OR of this predicate and
+     * another. When evaluating the composed predicate, if this predicate is {@code true}, then the {@code other}
+     * predicate is not evaluated.
+     * <p>
+     * Any exceptions thrown during evaluation of either predicate are relayed to the caller; if evaluation of this
+     * {@code ObjBytePredicate} throws an exception, the {@code other} {@code ObjBytePredicate} will not be evaluated.
+     *
+     * @param other A {@code ObjBytePredicate} that will be logically-ORed with this one
+     * @return A composed {@code ObjBytePredicate} that represents the short-circuiting logical OR of this predicate and
+     * the {@code other} predicate.
+     * @throws NullPointerException If the given argument is {@code null}
+     * @see #and(ObjBytePredicate)
+     * @see #xor(ObjBytePredicate)
+     * @see BiPredicate#or(BiPredicate)
+     */
+    default ObjBytePredicate<T> or(final ObjBytePredicate<T> other) {
+        Objects.requireNonNull(other);
+        return (t, value) -> test(t, value) && other.test(t, value);
+    }
+
+    /**
+     * Returns a composed {@link ObjBytePredicate} that represents a short-circuiting logical XOR of this predicate and
+     * another. When evaluating the composed predicate, if this predicate is {@code true}, then the {@code other}
+     * predicate is not evaluated.
+     * <p>
+     * Any exceptions thrown during evaluation of either predicate are relayed to the caller; if evaluation of this
+     * {@code ObjBytePredicate} throws an exception, the {@code other} {@code ObjBytePredicate} will not be evaluated.
+     *
+     * @param other A {@code ObjBytePredicate} that will be logically-XORed with this one
+     * @return A composed {@code ObjBytePredicate} that represents the short-circuiting logical XOR of this predicate
+     * and the {@code other} predicate.
+     * @throws NullPointerException If the given argument is {@code null}
+     * @see #and(ObjBytePredicate)
+     * @see #or(ObjBytePredicate)
+     */
+    default ObjBytePredicate<T> xor(final ObjBytePredicate<T> other) {
+        Objects.requireNonNull(other);
+        return (t, value) -> test(t, value) ^ other.test(t, value);
+    }
+
+    /**
+     * Returns a composed {@link BiPredicate} which represents this {@link ObjBytePredicate}. Thereby the primitive
+     * input argument for this predicate is autoboxed. This method is just convenience to provide the ability to use
+     * this {@code ObjBytePredicate} with JRE specific methods, only accepting {@code BiPredicate}.
+     *
+     * @return A composed {@code BiPredicate} which represents this {@code ObjBytePredicate}.
+     */
+    default BiPredicate<T, Byte> boxed() {
+        return this::test;
+    }
 }

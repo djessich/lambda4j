@@ -93,6 +93,16 @@ public interface ShortPredicate {
     boolean test(short value);
 
     /**
+     * Returns a {@link ShortPredicate} that represents the logical negation of this one.
+     *
+     * @return A {@code ShortPredicate} that represents the logical negation of this one.
+     * @see Predicate#negate()
+     */
+    default ShortPredicate negate() {
+        return value -> !test(value);
+    }
+
+    /**
      * Returns a composed {@link ShortPredicate} that represents a short-circuiting logical AND of this predicate and
      * another. When evaluating the composed predicate, if this predicate is {@code false}, then the {@code other}
      * predicate is not evaluated.
