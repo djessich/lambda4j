@@ -35,7 +35,7 @@ public interface ShortSupplier {
      * Creates a {@link ShortSupplier} which always returns a given value.
      *
      * @param ret The return value for the constant
-     * @return A {@code ThrowableByteSupplier} which always returns a given value.
+     * @return A {@code ShortSupplier} which always returns a given value.
      */
     static ShortSupplier constant(short ret) {
         return () -> ret;

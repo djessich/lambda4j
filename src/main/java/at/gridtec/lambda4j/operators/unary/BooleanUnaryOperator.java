@@ -15,11 +15,13 @@
  */
 package at.gridtec.lambda4j.operators.unary;
 
+import java.util.Objects;
 import java.util.function.UnaryOperator;
 
 /**
- * Represents an operation on a single {@code boolean}-valued operand that produces a {@code ShortUnaryOperator}-valued
- * result. This is the primitive type specialization of {@link UnaryOperator} for {@code boolean}.
+ * Represents an operation on a single {@code boolean}-valued operand that produces a {@code
+ * BooleanUnaryOperator}-valued result. This is the primitive type specialization of {@link UnaryOperator} for {@code
+ * boolean}.
  * <p>
  * This is a {@link FunctionalInterface} whose functional method is {@link #applyAsBoolean(boolean)}.
  *
@@ -30,10 +32,61 @@ import java.util.function.UnaryOperator;
 public interface BooleanUnaryOperator {
 
     /**
+     * Creates a {@link BooleanUnaryOperator} which always returns a given value.
+     *
+     * @param ret The return value for the constant
+     * @return A {@code BooleanUnaryOperator} which always returns a given value.
+     */
+    static BooleanUnaryOperator constant(boolean ret) {
+        return operand -> ret;
+    }
+
+    /**
+     * Returns a {@link BooleanUnaryOperator} that always returns its input argument.
+     *
+     * @return A {@code BooleanUnaryOperator} that always returns its input argument
+     */
+    static BooleanUnaryOperator identity() {
+        return operand -> operand;
+    }
+
+    /**
      * Applies this operator to the given operand argument.
      *
      * @param operand The argument to the operator
      * @return The result of this operator.
      */
     boolean applyAsBoolean(boolean operand);
+
+    /**
+     * Returns a composed {@link BooleanUnaryOperator} that first applies the {@code before} operator to its input, and
+     * then applies this operator to the result. If evaluation of either operator throws an exception, it is relayed to
+     * the caller of the composed operator.
+     *
+     * @param before The {@code BooleanUnaryOperator} to apply before this operator is applied
+     * @return A composed {@code BooleanUnaryOperator} that first applies the {@code before} operator and then applies
+     * this operator
+     * @throws NullPointerException If given argument is {@code null}
+     * @see #andThen(BooleanUnaryOperator)
+     */
+    default BooleanUnaryOperator compose(BooleanUnaryOperator before) {
+        Objects.requireNonNull(before);
+        return operand -> applyAsBoolean(before.applyAsBoolean(operand));
+    }
+
+    /**
+     * Returns a composed {@link BooleanUnaryOperator} that first applies this operator to its input, and then applies
+     * the {@code after} operator to the result. If evaluation of either operator throws an exception, it is relayed to
+     * the caller of the composed operator.
+     *
+     * @param after The {@code BooleanUnaryOperator} to apply after this operator is applied
+     * @return A composed {@code BooleanUnaryOperator} that first applies this operator and then applies the {@code
+     * after} operator
+     * @throws NullPointerException If given argument is {@code null}
+     * @see #compose(BooleanUnaryOperator)
+     */
+    default BooleanUnaryOperator andThen(BooleanUnaryOperator after) {
+        Objects.requireNonNull(after);
+        return operand -> after.applyAsBoolean(applyAsBoolean(operand));
+    }
 }

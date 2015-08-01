@@ -25,7 +25,7 @@ import java.util.function.Supplier;
  * <p>
  * This is a {@link FunctionalInterface} whose functional method is {@link #getAsByte()}.
  *
- * @see ThrowableByteSupplier
+ * @see ByteSupplier
  * @see Supplier
  */
 @SuppressWarnings("unused")
@@ -36,7 +36,7 @@ public interface ByteSupplier {
      * Creates a {@link ByteSupplier} which always returns a given value.
      *
      * @param ret The return value for the constant
-     * @return A {@code ThrowableByteSupplier} which always returns a given value.
+     * @return A {@code ByteSupplier} which always returns a given value.
      */
     static ByteSupplier constant(byte ret) {
         return () -> ret;

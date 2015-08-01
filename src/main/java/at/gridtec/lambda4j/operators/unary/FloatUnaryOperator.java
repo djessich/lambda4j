@@ -15,6 +15,7 @@
  */
 package at.gridtec.lambda4j.operators.unary;
 
+import java.util.Objects;
 import java.util.function.UnaryOperator;
 
 /**
@@ -30,10 +31,61 @@ import java.util.function.UnaryOperator;
 public interface FloatUnaryOperator {
 
     /**
+     * Creates a {@link FloatUnaryOperator} which always returns a given value.
+     *
+     * @param ret The return value for the constant
+     * @return A {@code FloatUnaryOperator} which always returns a given value.
+     */
+    static FloatUnaryOperator constant(float ret) {
+        return operand -> ret;
+    }
+
+    /**
+     * Returns a {@link FloatUnaryOperator} that always returns its input argument.
+     *
+     * @return A {@code FloatUnaryOperator} that always returns its input argument
+     */
+    static FloatUnaryOperator identity() {
+        return operand -> operand;
+    }
+
+    /**
      * Applies this operator to the given operand argument.
      *
      * @param operand The argument to the operator
      * @return The result of this operator.
      */
     float applyAsFloat(float operand);
+
+    /**
+     * Returns a composed {@link FloatUnaryOperator} that first applies the {@code before} operator to its input, and
+     * then applies this operator to the result. If evaluation of either operator throws an exception, it is relayed to
+     * the caller of the composed operator.
+     *
+     * @param before The {@code FloatUnaryOperator} to apply before this operator is applied
+     * @return A composed {@code FloatUnaryOperator} that first applies the {@code before} operator and then applies
+     * this operator
+     * @throws NullPointerException If given argument is {@code null}
+     * @see #andThen(FloatUnaryOperator)
+     */
+    default FloatUnaryOperator compose(FloatUnaryOperator before) {
+        Objects.requireNonNull(before);
+        return operand -> applyAsFloat(before.applyAsFloat(operand));
+    }
+
+    /**
+     * Returns a composed {@link FloatUnaryOperator} that first applies this operator to its input, and then applies the
+     * {@code after} operator to the result. If evaluation of either operator throws an exception, it is relayed to the
+     * caller of the composed operator.
+     *
+     * @param after The {@code FloatUnaryOperator} to apply after this operator is applied
+     * @return A composed {@code FloatUnaryOperator} that first applies this operator and then applies the {@code after}
+     * operator
+     * @throws NullPointerException If given argument is {@code null}
+     * @see #compose(FloatUnaryOperator)
+     */
+    default FloatUnaryOperator andThen(FloatUnaryOperator after) {
+        Objects.requireNonNull(after);
+        return operand -> after.applyAsFloat(applyAsFloat(operand));
+    }
 }

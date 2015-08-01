@@ -36,7 +36,7 @@ public interface CharSupplier {
      * Creates a {@link CharSupplier} which always returns a given value.
      *
      * @param ret The return value for the constant
-     * @return A {@code ThrowableByteSupplier} which always returns a given value.
+     * @return A {@code CharSupplier} which always returns a given value.
      */
     static CharSupplier constant(char ret) {
         return () -> ret;
