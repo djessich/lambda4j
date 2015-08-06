@@ -18,5 +18,7 @@ Some points you should know:
 
 This library is developed by Gridtec under Apache Licence 2.
 
+**See our website under www.gridtec.at.**
+
 
 
