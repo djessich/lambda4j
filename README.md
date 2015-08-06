@@ -16,9 +16,9 @@ Some points you should know:
 * If you have found any bugs, please let us know or raise a ticket. 
 * If you want to suggest new features, please get in contact with us or raise a ticket.
 
+*During development, there will be some major changes in our project structure, interface/class naming convention, 
+functions naming, etc., so until release, we are not able to provide backwards compatibility.*
+
 This library is developed by Gridtec under Apache Licence 2.
 
 **See our website under www.gridtec.at.**
-
-
-
