@@ -38,7 +38,7 @@
  * exception due to sneaky throwing.
  * <p>
  * A throwable Lambda inherits from its non-throwable equivalent. This means, that for example {@link
- * at.gridtec.lambda4j.throwable.function.ThrowableFunction} inherits from {@link java.util.function.Function}. So each
+ * at.gridtec.lambda4j.function.ThrowableFunction} inherits from {@link java.util.function.Function}. So each
  * throwable Lambda is usable as its non-throwing counterpart. For example:
  * <pre>
  *     final List&lt;String&gt; stringList = new ArrayList&lt;String&gt;();

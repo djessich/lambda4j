@@ -13,15 +13,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package at.gridtec.lambda4j.throwable.consumers.primitives;
+package at.gridtec.lambda4j.consumer;
 
 import at.gridtec.lambda4j.util.ThrowableUtils;
 
 import java.util.Objects;
-import java.util.function.LongConsumer;
+import java.util.function.BiConsumer;
 
 /**
- * This functional interface implements a {@link LongConsumer} which is able to throw any {@link Exception}.
+ * This functional interface implements a {@link BiConsumer} which is able to throw any {@link Exception}.
  * <p>
  * The thrown {@link Exception} is sneakily thrown unless its a {@link RuntimeException}. This means that there is no
  * need to catch the thrown exception, nor to declare that you throw it using the <em>throws</em> keyword. The exception
@@ -43,61 +43,69 @@ import java.util.function.LongConsumer;
  * declaration in the <em>throws</em> clause. The checked exception will behave just like a normal <b>unchecked</b>
  * exception due to sneaky throwing.
  *
+ * @param <T> The type of the first argument for the operation
+ * @param <U> The type of the second argument for the operation
  * @apiNote This is a throwable JRE lambda
  * @see java.util.function.Consumer
  */
 @SuppressWarnings("unused")
 @FunctionalInterface
-public interface ThrowableLongConsumer extends LongConsumer {
+public interface ThrowableBiConsumer<T, U> extends BiConsumer<T, U> {
 
     /**
-     * Implicitly casts, and therefore wraps a given lambda as {@link ThrowableLongConsumer}. This is a convenience
-     * method in case the given {@link ThrowableLongConsumer} is ambiguous for the compiler. This might happen for
-     * overloaded methods accepting different functional interfaces. The given {@code ThrowableLongConsumer} is returned
-     * as-is.
+     * Implicitly casts, and therefore wraps a given lambda as {@link ThrowableBiConsumer}. This is a convenience method
+     * in case the given {@link ThrowableBiConsumer} is ambiguous for the compiler. This might happen for overloaded
+     * methods accepting different functional interfaces. The given {@code ThrowableBiConsumer} is returned as-is.
      *
-     * @param lambda The {@code ThrowableLongConsumer} which should be returned as-is.
-     * @return The given {@code ThrowableLongConsumer} as-is.
+     * @param <T> The type of the first argument for the operation
+     * @param <U> The type of the second argument for the operation
+     * @param lambda The {@code ThrowableBiConsumer} which should be returned as-is.
+     * @return The given {@code ThrowableBiConsumer} as-is.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static ThrowableLongConsumer wrap(final ThrowableLongConsumer lambda) {
+    static <T, U> ThrowableBiConsumer<T, U> wrap(final ThrowableBiConsumer<T, U> lambda) {
         Objects.requireNonNull(lambda);
         return lambda;
     }
 
     /**
-     * Creates a {@link ThrowableLongConsumer} from the given {@link LongConsumer}. This method is just convenience to
+     * Creates a {@link ThrowableBiConsumer} from the given {@link BiConsumer}. This method is just convenience to
      * provide a mapping for the non-throwable/throwable instances of the corresponding functional interface.
      *
-     * @param lambda A {@code LongConsumer} which should be mapped to its throwable counterpart
-     * @return A {@code ThrowableLongConsumer} from the given {@code LongConsumer}.
+     * @param <T> The type of the first argument for the operation
+     * @param <U> The type of the second argument for the operation
+     * @param lambda A {@code BiConsumer} which should be mapped to its throwable counterpart
+     * @return A {@code ThrowableBiConsumer} from the given {@code BiConsumer}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static ThrowableLongConsumer from(final LongConsumer lambda) {
+    static <T, U> ThrowableBiConsumer<T, U> from(final BiConsumer<T, U> lambda) {
         Objects.requireNonNull(lambda);
         return lambda::accept;
     }
 
     /**
-     * The accept method for this {@link LongConsumer} which is able to throw any {@link Exception} type.
+     * The accept method for this {@link BiConsumer} which is able to throw any {@link Exception} type.
      *
-     * @param value The argument for the operation to be consumed
+     * @param t The first argument for the operation to be consumed
+     * @param u The second argument for the operation to be consumed
      * @throws Exception Any exception from this operations action
      */
-    void acceptThrows(long value) throws Exception;
+    void acceptThrows(T t, U u) throws Exception;
 
     /**
-     * Overrides the {@link LongConsumer#accept(long)} method by using a redefinition as default method. It calls the
-     * {@link #acceptThrows(long)} method of this interface and catches the thrown {@link Exception}s from it. If it is
-     * of type {@link RuntimeException}, the exception is rethrown. Other exception types are sneakily thrown.
+     * Overrides the {@link BiConsumer#accept(Object, Object)} method by using a redefinition as default method. It
+     * calls the {@link #acceptThrows(Object, Object)} method of this interface and catches the thrown {@link
+     * Exception}s from it. If it is of type {@link RuntimeException}, the exception is rethrown. Other exception types
+     * are sneakily thrown.
      *
-     * @param value The argument for the operation to be consumed
+     * @param t The first argument for the operation to be consumed
+     * @param u The second argument for the operation to be consumed
      * @see ThrowableUtils#sneakyThrow(Throwable)
      */
     @Override
-    default void accept(long value) {
+    default void accept(T t, U u) {
         try {
-            acceptThrows(value);
+            acceptThrows(t, u);
         } catch (RuntimeException e) {
             throw e;
         } catch (Exception e) {
@@ -106,45 +114,44 @@ public interface ThrowableLongConsumer extends LongConsumer {
     }
 
     /**
-     * Returns a composed {@link ThrowableLongConsumer} that applies this {@code ThrowableLongConsumer} to its input,
-     * and if an error occurred, applies the given one. The exception from this {@code ThrowableLongConsumer} is
-     * ignored.
+     * Returns a composed {@link ThrowableBiConsumer} that applies this {@code ThrowableBiConsumer} to its input, and if
+     * an error occurred, applies the given one. The exception from this {@code ThrowableBiConsumer} is ignored.
      *
-     * @param other A {@code ThrowableLongConsumer} to be applied if this one fails
-     * @return A composed {@code ThrowableLongConsumer} that applies this {@code ThrowableLongConsumer}, and if an error
+     * @param other A {@code ThrowableBiConsumer} to be applied if this one fails
+     * @return A composed {@code ThrowableBiConsumer} that applies this {@code ThrowableBiConsumer}, and if an error
      * occurred, applies the given one.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    default ThrowableLongConsumer orElse(final ThrowableLongConsumer other) {
+    default ThrowableBiConsumer<T, U> orElse(final ThrowableBiConsumer<? super T, ? super U> other) {
         Objects.requireNonNull(other);
-        return value -> {
+        return (t, u) -> {
             try {
-                acceptThrows(value);
+                acceptThrows(t, u);
             } catch (Exception ignored) {
-                other.acceptThrows(value);
+                other.acceptThrows(t, u);
             }
         };
     }
 
     /**
-     * Returns a composed {@link ThrowableLongConsumer} that applies this {@code ThrowableLongConsumer} to its input,
-     * and if an error occurred, throws the given {@link Exception}. The exception from this {@code
-     * ThrowableLongConsumer} is added as suppressed to the given one.
+     * Returns a composed {@link ThrowableBiConsumer} that applies this {@code ThrowableBiConsumer} to its input, and if
+     * an error occurred, throws the given {@link Exception}. The exception from this {@code ThrowableBiConsumer} is
+     * added as suppressed to the given one.
      * <p>
      * The given exception must have a no arg constructor for reflection purposes. If not, then appropriate exception as
      * described in {@link Class#newInstance()} is thrown.
      *
      * @param <X> The type for the class extending {@code Exception}
      * @param clazz The exception class to throw if an error occurred
-     * @return A composed {@code ThrowableLongConsumer} that applies this {@code ThrowableLongConsumer}, and if an error
+     * @return A composed {@code ThrowableBiConsumer} that applies this {@code ThrowableBiConsumer}, and if an error
      * occurred, throws the given {@code Exception}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    default <X extends Exception> ThrowableLongConsumer orThrow(Class<X> clazz) {
+    default <X extends Exception> ThrowableBiConsumer<T, U> orThrow(Class<X> clazz) {
         Objects.requireNonNull(clazz);
-        return value -> {
+        return (t, u) -> {
             try {
-                acceptThrows(value);
+                acceptThrows(t, u);
             } catch (Exception e) {
                 X ex = clazz.newInstance();
                 ex.addSuppressed(e);
@@ -154,16 +161,16 @@ public interface ThrowableLongConsumer extends LongConsumer {
     }
 
     /**
-     * Returns a composed {@link LongConsumer} that applies this {@link ThrowableLongConsumer} to its input, ignoring
-     * any possible errors, unless it is an unchecked exception.
+     * Returns a composed {@link BiConsumer} that applies this {@link ThrowableBiConsumer} to its input, ignoring any
+     * possible errors, unless it is an unchecked exception.
      *
-     * @return A composed {@code LongConsumer} that applies this {@code ThrowableLongConsumer}, ignoring any possible
+     * @return A composed {@code BiConsumer} that applies this {@code ThrowableBiConsumer}, ignoring any possible
      * errors, unless it is an unchecked exception.
      */
-    default LongConsumer ignore() {
-        return value -> {
+    default BiConsumer<T, U> ignore() {
+        return (t, u) -> {
             try {
-                acceptThrows(value);
+                acceptThrows(t, u);
             } catch (RuntimeException e) {
                 throw e;
             } catch (Exception ignored) {
@@ -173,16 +180,16 @@ public interface ThrowableLongConsumer extends LongConsumer {
     }
 
     /**
-     * Returns a composed {@link LongConsumer} that applies this {@link ThrowableLongConsumer} to its input, ignoring
-     * any possible errors.
+     * Returns a composed {@link BiConsumer} that applies this {@link ThrowableBiConsumer} to its input, ignoring any
+     * possible errors.
      *
-     * @return A composed {@code LongConsumer} that applies this {@code ThrowableLongConsumer}, ignoring any possible
+     * @return A composed {@code BiConsumer} that applies this {@code ThrowableBiConsumer}, ignoring any possible
      * errors.
      */
-    default LongConsumer ignoreAll() {
-        return value -> {
+    default BiConsumer<T, U> ignoreAll() {
+        return (t, u) -> {
             try {
-                acceptThrows(value);
+                acceptThrows(t, u);
             } catch (Exception ignored) {
                 // Do nothing
             }

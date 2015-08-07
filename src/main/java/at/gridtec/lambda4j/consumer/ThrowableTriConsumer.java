@@ -13,9 +13,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package at.gridtec.lambda4j.throwable.consumers;
+package at.gridtec.lambda4j.consumer;
 
-import at.gridtec.lambda4j.consumer.TriConsumer;
 import at.gridtec.lambda4j.util.ThrowableUtils;
 
 import java.util.Objects;

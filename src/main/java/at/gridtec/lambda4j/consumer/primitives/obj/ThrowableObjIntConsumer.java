@@ -13,15 +13,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package at.gridtec.lambda4j.throwable.consumers.primitives.obj;
+package at.gridtec.lambda4j.consumer.primitives.obj;
 
 import at.gridtec.lambda4j.util.ThrowableUtils;
 
 import java.util.Objects;
-import java.util.function.ObjDoubleConsumer;
+import java.util.function.ObjIntConsumer;
 
 /**
- * This functional interface implements a {@link ObjDoubleConsumer} which is able to throw any {@link Exception}.
+ * This functional interface implements a {@link ObjIntConsumer} which is able to throw any {@link Exception}.
  * <p>
  * The thrown {@link Exception} is sneakily thrown unless its a {@link RuntimeException}. This means that there is no
  * need to catch the thrown exception, nor to declare that you throw it using the <em>throws</em> keyword. The exception
@@ -49,60 +49,59 @@ import java.util.function.ObjDoubleConsumer;
  */
 @SuppressWarnings("unused")
 @FunctionalInterface
-public interface ThrowableObjDoubleConsumer<T> extends ObjDoubleConsumer<T> {
+public interface ThrowableObjIntConsumer<T> extends ObjIntConsumer<T> {
 
     /**
-     * Implicitly casts, and therefore wraps a given lambda as {@link ThrowableObjDoubleConsumer}. This is a convenience
-     * method in case the given {@link ThrowableObjDoubleConsumer} is ambiguous for the compiler. This might happen for
-     * overloaded methods accepting different functional interfaces. The given {@code ThrowableObjDoubleConsumer} is
+     * Implicitly casts, and therefore wraps a given lambda as {@link ThrowableObjIntConsumer}. This is a convenience
+     * method in case the given {@link ThrowableObjIntConsumer} is ambiguous for the compiler. This might happen for
+     * overloaded methods accepting different functional interfaces. The given {@code ThrowableObjIntConsumer} is
      * returned as-is.
      *
      * @param <T> The type of argument for the operation
-     * @param lambda The {@code ThrowableObjDoubleConsumer} which should be returned as-is.
-     * @return The given {@code ThrowableObjDoubleConsumer} as-is.
+     * @param lambda The {@code ThrowableObjIntConsumer} which should be returned as-is.
+     * @return The given {@code ThrowableObjIntConsumer} as-is.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static <T> ThrowableObjDoubleConsumer<T> wrap(final ThrowableObjDoubleConsumer<T> lambda) {
+    static <T> ThrowableObjIntConsumer<T> wrap(final ThrowableObjIntConsumer<T> lambda) {
         Objects.requireNonNull(lambda);
         return lambda;
     }
 
     /**
-     * Creates a {@link ThrowableObjDoubleConsumer} from the given {@link ObjDoubleConsumer}. This method is just
-     * convenience to provide a mapping for the non-throwable/throwable instances of the corresponding functional
-     * interface.
+     * Creates a {@link ThrowableObjIntConsumer} from the given {@link ObjIntConsumer}. This method is just convenience
+     * to provide a mapping for the non-throwable/throwable instances of the corresponding functional interface.
      *
      * @param <T> The type of argument for the operation
-     * @param lambda A {@code ObjDoubleConsumer} which should be mapped to its throwable counterpart
-     * @return A {@code ThrowableObjDoubleConsumer} from the given {@code ObjDoubleConsumer}.
+     * @param lambda A {@code ObjIntConsumer} which should be mapped to its throwable counterpart
+     * @return A {@code ThrowableObjIntConsumer} from the given {@code ObjIntConsumer}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static <T> ThrowableObjDoubleConsumer<T> from(final ObjDoubleConsumer<T> lambda) {
+    static <T> ThrowableObjIntConsumer<T> from(final ObjIntConsumer<T> lambda) {
         Objects.requireNonNull(lambda);
         return lambda::accept;
     }
 
     /**
-     * The accept method for this {@link ObjDoubleConsumer} which is able to throw any {@link Exception} type.
+     * The accept method for this {@link ObjIntConsumer} which is able to throw any {@link Exception} type.
      *
      * @param t The first argument for the operation to be consumed
      * @param value The second argument for the operation to be consumed
      * @throws Exception Any exception from this operations action
      */
-    void acceptThrows(T t, double value) throws Exception;
+    void acceptThrows(T t, int value) throws Exception;
 
     /**
-     * Overrides the {@link ObjDoubleConsumer#accept(Object, double)} method by using a redefinition as default method.
-     * It calls the {@link #acceptThrows(Object, double)} method of this interface and catches the thrown {@link
-     * Exception}s from it. If it is of type {@link RuntimeException}, the exception is rethrown. Other exception types
-     * are sneakily thrown.
+     * Overrides the {@link ObjIntConsumer#accept(Object, int)} method by using a redefinition as default method. It
+     * calls the {@link #acceptThrows(Object, int)} method of this interface and catches the thrown {@link Exception}s
+     * from it. If it is of type {@link RuntimeException}, the exception is rethrown. Other exception types are sneakily
+     * thrown.
      *
      * @param t The first argument for the operation to be consumed
      * @param value The second argument for the operation to be consumed
      * @see ThrowableUtils#sneakyThrow(Throwable)
      */
     @Override
-    default void accept(T t, double value) {
+    default void accept(T t, int value) {
         try {
             acceptThrows(t, value);
         } catch (RuntimeException e) {
@@ -113,16 +112,16 @@ public interface ThrowableObjDoubleConsumer<T> extends ObjDoubleConsumer<T> {
     }
 
     /**
-     * Returns a composed {@link ThrowableObjDoubleConsumer} that applies this {@code ThrowableObjDoubleConsumer} to its
-     * input, and if an error occurred, applies the given one. The exception from this {@code
-     * ThrowableObjDoubleConsumer} is ignored.
+     * Returns a composed {@link ThrowableObjIntConsumer} that applies this {@code ThrowableObjIntConsumer} to its
+     * input, and if an error occurred, applies the given one. The exception from this {@code ThrowableObjIntConsumer}
+     * is ignored.
      *
-     * @param other A {@code ThrowableObjDoubleConsumer} to be applied if this one fails
-     * @return A composed {@code ThrowableObjDoubleConsumer} that applies this {@code ThrowableObjDoubleConsumer}, and
-     * if an error occurred, applies the given one.
+     * @param other A {@code ThrowableObjIntConsumer} to be applied if this one fails
+     * @return A composed {@code ThrowableObjIntConsumer} that applies this {@code ThrowableObjIntConsumer}, and if an
+     * error occurred, applies the given one.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    default ThrowableObjDoubleConsumer<T> orElse(final ThrowableObjDoubleConsumer<? super T> other) {
+    default ThrowableObjIntConsumer<T> orElse(final ThrowableObjIntConsumer<? super T> other) {
         Objects.requireNonNull(other);
         return (t, value) -> {
             try {
@@ -134,20 +133,20 @@ public interface ThrowableObjDoubleConsumer<T> extends ObjDoubleConsumer<T> {
     }
 
     /**
-     * Returns a composed {@link ThrowableObjDoubleConsumer} that applies this {@code ThrowableObjDoubleConsumer} to its
+     * Returns a composed {@link ThrowableObjIntConsumer} that applies this {@code ThrowableObjIntConsumer} to its
      * input, and if an error occurred, throws the given {@link Exception}. The exception from this {@code
-     * ThrowableObjDoubleConsumer} is added as suppressed to the given one.
+     * ThrowableObjIntConsumer} is added as suppressed to the given one.
      * <p>
      * The given exception must have a no arg constructor for reflection purposes. If not, then appropriate exception as
      * described in {@link Class#newInstance()} is thrown.
      *
      * @param <X> The type for the class extending {@code Exception}
      * @param clazz The exception class to throw if an error occurred
-     * @return A composed {@code ThrowableObjDoubleConsumer} that applies this {@code ThrowableObjDoubleConsumer}, and
-     * if an error occurred, throws the given {@code Exception}.
+     * @return A composed {@code ThrowableObjIntConsumer} that applies this {@code ThrowableObjIntConsumer}, and if an
+     * error occurred, throws the given {@code Exception}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    default <X extends Exception> ThrowableObjDoubleConsumer<T> orThrow(Class<X> clazz) {
+    default <X extends Exception> ThrowableObjIntConsumer<T> orThrow(Class<X> clazz) {
         Objects.requireNonNull(clazz);
         return (t, value) -> {
             try {
@@ -161,13 +160,13 @@ public interface ThrowableObjDoubleConsumer<T> extends ObjDoubleConsumer<T> {
     }
 
     /**
-     * Returns a composed {@link ObjDoubleConsumer} that applies this {@link ThrowableObjDoubleConsumer} to its input,
+     * Returns a composed {@link ObjIntConsumer} that applies this {@link ThrowableObjIntConsumer} to its input,
      * ignoring any possible errors, unless it is an unchecked exception.
      *
-     * @return A composed {@code ObjDoubleConsumer} that applies this {@code ThrowableObjDoubleConsumer}, ignoring any
+     * @return A composed {@code ObjIntConsumer} that applies this {@code ThrowableObjIntConsumer}, ignoring any
      * possible errors, unless it is an unchecked exception.
      */
-    default ObjDoubleConsumer<T> ignore() {
+    default ObjIntConsumer<T> ignore() {
         return (t, value) -> {
             try {
                 acceptThrows(t, value);
@@ -180,13 +179,13 @@ public interface ThrowableObjDoubleConsumer<T> extends ObjDoubleConsumer<T> {
     }
 
     /**
-     * Returns a composed {@link ObjDoubleConsumer} that applies this {@link ThrowableObjDoubleConsumer} to its input,
+     * Returns a composed {@link ObjIntConsumer} that applies this {@link ThrowableObjIntConsumer} to its input,
      * ignoring any possible errors.
      *
-     * @return A composed {@code ObjDoubleConsumer} that applies this {@code ThrowableObjDoubleConsumer}, ignoring any
+     * @return A composed {@code ObjIntConsumer} that applies this {@code ThrowableObjIntConsumer}, ignoring any
      * possible errors.
      */
-    default ObjDoubleConsumer<T> ignoreAll() {
+    default ObjIntConsumer<T> ignoreAll() {
         return (t, value) -> {
             try {
                 acceptThrows(t, value);

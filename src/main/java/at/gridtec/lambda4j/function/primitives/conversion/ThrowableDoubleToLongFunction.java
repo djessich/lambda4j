@@ -13,16 +13,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package at.gridtec.lambda4j.throwable.function;
+package at.gridtec.lambda4j.function.primitives.conversion;
 
 import at.gridtec.lambda4j.util.ThrowableUtils;
 
 import java.util.Objects;
-import java.util.function.DoubleToIntFunction;
-import java.util.function.IntSupplier;
+import java.util.function.DoubleToLongFunction;
+import java.util.function.LongSupplier;
 
 /**
- * This functional interface implements a {@link DoubleToIntFunction} which is able to throw any {@link Exception}.
+ * This functional interface implements a {@link DoubleToLongFunction} which is able to throw any {@link Exception}.
  * <p>
  * The thrown {@link Exception} is sneakily thrown unless its a {@link RuntimeException}. This means that there is no
  * need to catch the thrown exception, nor to declare that you throw it using the <em>throws</em> keyword. The exception
@@ -44,77 +44,77 @@ import java.util.function.IntSupplier;
  * declaration in the <em>throws</em> clause. The checked exception will behave just like a normal <b>unchecked</b>
  * exception due to sneaky throwing.
  * <p>
- * This is a {@link FunctionalInterface} whose functional method is {@link #applyAsIntThrows(double)}.
+ * This is a {@link FunctionalInterface} whose functional method is {@link #applyAsLongThrows(double)}.
  *
  * @apiNote This is a throwable JRE lambda
  * @see java.util.function.Function
  */
 @SuppressWarnings("unused")
 @FunctionalInterface
-public interface ThrowableDoubleToIntFunction extends DoubleToIntFunction {
+public interface ThrowableDoubleToLongFunction extends DoubleToLongFunction {
 
     /**
-     * Implicitly casts, and therefore wraps a given lambda as {@link ThrowableDoubleToIntFunction}. This is a
-     * convenience method in case the given {@link ThrowableDoubleToIntFunction} is ambiguous for the compiler. This
+     * Implicitly casts, and therefore wraps a given lambda as {@link ThrowableDoubleToLongFunction}. This is a
+     * convenience method in case the given {@link ThrowableDoubleToLongFunction} is ambiguous for the compiler. This
      * might happen for overloaded methods accepting different functional interfaces. The given {@code
-     * ThrowableDoubleToIntFunction} is returned as-is.
+     * ThrowableDoubleToLongFunction} is returned as-is.
      *
-     * @param lambda The {@code ThrowableDoubleToIntFunction} which should be returned as-is.
-     * @return The given {@code ThrowableDoubleToIntFunction} as-is.
+     * @param lambda The {@code ThrowableDoubleToLongFunction} which should be returned as-is.
+     * @return The given {@code ThrowableDoubleToLongFunction} as-is.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static ThrowableDoubleToIntFunction wrap(final ThrowableDoubleToIntFunction lambda) {
+    static ThrowableDoubleToLongFunction wrap(final ThrowableDoubleToLongFunction lambda) {
         Objects.requireNonNull(lambda);
         return lambda;
     }
 
     /**
-     * Creates a {@link ThrowableDoubleToIntFunction} from the given {@link DoubleToIntFunction}. This method is just
+     * Creates a {@link ThrowableDoubleToLongFunction} from the given {@link DoubleToLongFunction}. This method is just
      * convenience to provide a mapping for the non-throwable/throwable instances of the corresponding functional
      * interface.
      *
-     * @param lambda A {@code DoubleToIntFunction} which should be mapped to its throwable counterpart
-     * @return A {@code ThrowableDoubleToIntFunction} from the given {@code DoubleToIntFunction}.
+     * @param lambda A {@code DoubleToLongFunction} which should be mapped to its throwable counterpart
+     * @return A {@code ThrowableDoubleToLongFunction} from the given {@code DoubleToLongFunction}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static ThrowableDoubleToIntFunction from(final DoubleToIntFunction lambda) {
+    static ThrowableDoubleToLongFunction from(final DoubleToLongFunction lambda) {
         Objects.requireNonNull(lambda);
-        return lambda::applyAsInt;
+        return lambda::applyAsLong;
     }
 
     /**
-     * Creates a {@link ThrowableDoubleToIntFunction} which always returns a given value.
+     * Creates a {@link ThrowableDoubleToLongFunction} which always returns a given value.
      *
      * @param ret The return value for the constant
-     * @return A {@code ThrowableDoubleToIntFunction} which always returns a given value.
+     * @return A {@code ThrowableDoubleToLongFunction} which always returns a given value.
      */
-    static ThrowableDoubleToIntFunction constant(int ret) {
+    static ThrowableDoubleToLongFunction constant(long ret) {
         return value -> ret;
     }
 
     /**
-     * The apply method for this {@link DoubleToIntFunction} which is able to throw any {@link Exception} type.
+     * The apply method for this {@link DoubleToLongFunction} which is able to throw any {@link Exception} type.
      *
      * @param value The argument for the function
      * @return The return value from the function, which is its result.
      * @throws Exception Any exception from this functions action
      */
-    int applyAsIntThrows(double value) throws Exception;
+    long applyAsLongThrows(double value) throws Exception;
 
     /**
-     * Overrides the {@link DoubleToIntFunction#applyAsInt(double)} method by using a redefinition as default method. It
-     * calls the {@link #applyAsIntThrows(double)} method of this interface and catches the thrown {@link Exception}s
-     * from it. If it is of type {@link RuntimeException}, the exception is rethrown. Other exception types are sneakily
-     * thrown.
+     * Overrides the {@link DoubleToLongFunction#applyAsLong(double)} method by using a redefinition as default method.
+     * It calls the {@link #applyAsLongThrows(double)} method of this interface and catches the thrown {@link
+     * Exception}s from it. If it is of type {@link RuntimeException}, the exception is rethrown. Other exception types
+     * are sneakily thrown.
      *
      * @param value The argument for the function
      * @return The return value from the function, which is its result.
      * @see at.gridtec.lambda4j.util.ThrowableUtils#sneakyThrow(Throwable)
      */
     @Override
-    default int applyAsInt(double value) {
+    default long applyAsLong(double value) {
         try {
-            return applyAsIntThrows(value);
+            return applyAsLongThrows(value);
         } catch (RuntimeException e) {
             throw e;
         } catch (Exception e) {
@@ -123,45 +123,45 @@ public interface ThrowableDoubleToIntFunction extends DoubleToIntFunction {
     }
 
     /**
-     * Returns a composed {@link ThrowableDoubleToIntFunction} that applies this {@code ThrowableDoubleToIntFunction} to
-     * its input, and if an error occurred, applies the given one. The exception from this {@code
-     * ThrowableDoubleToIntFunction} is ignored.
+     * Returns a composed {@link ThrowableDoubleToLongFunction} that applies this {@code ThrowableDoubleToLongFunction}
+     * to its input, and if an error occurred, applies the given one. The exception from this {@code
+     * ThrowableDoubleToLongFunction} is ignored.
      *
-     * @param other A {@code ThrowableDoubleToIntFunction} to be applied if this one fails
-     * @return A composed {@code ThrowableDoubleToIntFunction} that applies this {@code ThrowableDoubleToIntFunction},
+     * @param other A {@code ThrowableDoubleToLongFunction} to be applied if this one fails
+     * @return A composed {@code ThrowableDoubleToLongFunction} that applies this {@code ThrowableDoubleToLongFunction},
      * and if an error occurred, applies the given one.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    default ThrowableDoubleToIntFunction orElse(final ThrowableDoubleToIntFunction other) {
+    default ThrowableDoubleToLongFunction orElse(final ThrowableDoubleToLongFunction other) {
         Objects.requireNonNull(other);
         return value -> {
             try {
-                return applyAsIntThrows(value);
+                return applyAsLongThrows(value);
             } catch (Exception ignored) {
-                return other.applyAsIntThrows(value);
+                return other.applyAsLongThrows(value);
             }
         };
     }
 
     /**
-     * Returns a composed {@link ThrowableDoubleToIntFunction} that applies this {@code ThrowableDoubleToIntFunction} to
-     * its input, and if an error occurred, throws the given {@link Exception}. The exception from this {@code
-     * ThrowableDoubleToIntFunction} is added as suppressed to the given one.
+     * Returns a composed {@link ThrowableDoubleToLongFunction} that applies this {@code ThrowableDoubleToLongFunction}
+     * to its input, and if an error occurred, throws the given {@link Exception}. The exception from this {@code
+     * ThrowableDoubleToLongFunction} is added as suppressed to the given one.
      * <p>
      * The given exception must have a no arg constructor for reflection purposes. If not, then appropriate exception as
      * described in {@link Class#newInstance()} is thrown.
      *
      * @param <X> The type for the class extending {@code Exception}
      * @param clazz The exception class to throw if an error occurred
-     * @return A composed {@code ThrowableDoubleToIntFunction} that applies this {@code ThrowableDoubleToIntFunction},
+     * @return A composed {@code ThrowableDoubleToLongFunction} that applies this {@code ThrowableDoubleToLongFunction},
      * and if an error occurred, throws the given {@code Exception}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    default <X extends Exception> ThrowableDoubleToIntFunction orThrow(Class<X> clazz) {
+    default <X extends Exception> ThrowableDoubleToLongFunction orThrow(Class<X> clazz) {
         Objects.requireNonNull(clazz);
         return value -> {
             try {
-                return applyAsIntThrows(value);
+                return applyAsLongThrows(value);
             } catch (Exception e) {
                 X ex = clazz.newInstance();
                 ex.addSuppressed(e);
@@ -171,39 +171,39 @@ public interface ThrowableDoubleToIntFunction extends DoubleToIntFunction {
     }
 
     /**
-     * Returns a composed {@link DoubleToIntFunction} that applies this {@link ThrowableDoubleToIntFunction} to its
-     * input, and if an error occurred, applies the given {@code DoubleToIntFunction} representing a fallback. The
-     * exception from this {@code ThrowableDoubleToIntFunction} is ignored.
+     * Returns a composed {@link DoubleToLongFunction} that applies this {@link ThrowableDoubleToLongFunction} to its
+     * input, and if an error occurred, applies the given {@code DoubleToLongFunction} representing a fallback. The
+     * exception from this {@code ThrowableDoubleToLongFunction} is ignored.
      *
-     * @param fallback A {@code DoubleToIntFunction} to be applied if this one fails
-     * @return A composed {@code DoubleToIntFunction} that applies this {@code ThrowableDoubleToIntFunction}, and if an
-     * error occurred, applies the given {@code DoubleToIntFunction}.
+     * @param fallback A {@code DoubleToLongFunction} to be applied if this one fails
+     * @return A composed {@code DoubleToLongFunction} that applies this {@code ThrowableDoubleToLongFunction}, and if
+     * an error occurred, applies the given {@code DoubleToLongFunction}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    default DoubleToIntFunction fallbackTo(final DoubleToIntFunction fallback) {
+    default DoubleToLongFunction fallbackTo(final DoubleToLongFunction fallback) {
         Objects.requireNonNull(fallback);
         return value -> {
             try {
-                return applyAsIntThrows(value);
+                return applyAsLongThrows(value);
             } catch (Exception ignored) {
-                return fallback.applyAsInt(value);
+                return fallback.applyAsLong(value);
             }
         };
     }
 
     /**
-     * Returns a composed {@link DoubleToIntFunction} that applies this {@link ThrowableDoubleToIntFunction} to its
+     * Returns a composed {@link DoubleToLongFunction} that applies this {@link ThrowableDoubleToLongFunction} to its
      * input, and if an error occurred, returns the given value. The exception from this {@code
-     * ThrowableDoubleToIntFunction} is ignored.
+     * ThrowableDoubleToLongFunction} is ignored.
      *
-     * @param retVal The value to be returned if this {@code ThrowableDoubleToIntFunction} fails
-     * @return A composed {@code DoubleToIntFunction} that applies this {@code ThrowableDoubleToIntFunction}, and if an
-     * error occurred, returns the given value.
+     * @param retVal The value to be returned if this {@code ThrowableDoubleToLongFunction} fails
+     * @return A composed {@code DoubleToLongFunction} that applies this {@code ThrowableDoubleToLongFunction}, and if
+     * an error occurred, returns the given value.
      */
-    default DoubleToIntFunction orReturn(int retVal) {
+    default DoubleToLongFunction orReturn(long retVal) {
         return value -> {
             try {
-                return applyAsIntThrows(value);
+                return applyAsLongThrows(value);
             } catch (Exception ignored) {
                 return retVal;
             }
@@ -211,22 +211,23 @@ public interface ThrowableDoubleToIntFunction extends DoubleToIntFunction {
     }
 
     /**
-     * Returns a composed {@link DoubleToIntFunction} that applies this {@link ThrowableDoubleToIntFunction} to its
-     * input, and if an error occurred, returns the supplied value from the given {@link IntSupplier}. The exception
-     * from this {@code ThrowableDoubleToIntFunction} is ignored.
+     * Returns a composed {@link DoubleToLongFunction} that applies this {@link ThrowableDoubleToLongFunction} to its
+     * input, and if an error occurred, returns the supplied value from the given {@link LongSupplier}. The exception
+     * from this {@code ThrowableDoubleToLongFunction} is ignored.
      *
-     * @param supplier A {@code Supplier} to return a supplied value if this {@code ThrowableDoubleToIntFunction} fails
-     * @return A composed {@code DoubleToIntFunction} that applies this {@code ThrowableDoubleToIntFunction}, and if an
-     * error occurred, the supplied value from the given {@code IntSupplier}.
+     * @param supplier A {@code Supplier} to return a supplied value if this {@code ThrowableDoubleToLongFunction}
+     * fails
+     * @return A composed {@code DoubleToLongFunction} that applies this {@code ThrowableDoubleToLongFunction}, and if
+     * an error occurred, the supplied value from the given {@code LongSupplier}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    default DoubleToIntFunction orReturn(final IntSupplier supplier) {
+    default DoubleToLongFunction orReturn(final LongSupplier supplier) {
         Objects.requireNonNull(supplier);
         return value -> {
             try {
-                return applyAsIntThrows(value);
+                return applyAsLongThrows(value);
             } catch (Exception ignored) {
-                return supplier.getAsInt();
+                return supplier.getAsLong();
             }
         };
     }
