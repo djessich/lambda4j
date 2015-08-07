@@ -68,7 +68,7 @@ public interface CharUnaryOperator {
      * @throws NullPointerException If given argument is {@code null}
      * @see #andThen(CharUnaryOperator)
      */
-    default CharUnaryOperator compose(CharUnaryOperator before) {
+    default CharUnaryOperator compose(final CharUnaryOperator before) {
         Objects.requireNonNull(before);
         return operand -> applyAsChar(before.applyAsChar(operand));
     }
@@ -84,7 +84,7 @@ public interface CharUnaryOperator {
      * @throws NullPointerException If given argument is {@code null}
      * @see #compose(CharUnaryOperator)
      */
-    default CharUnaryOperator andThen(CharUnaryOperator after) {
+    default CharUnaryOperator andThen(final CharUnaryOperator after) {
         Objects.requireNonNull(after);
         return operand -> after.applyAsChar(applyAsChar(operand));
     }

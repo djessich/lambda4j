@@ -68,7 +68,7 @@ public interface ByteUnaryOperator {
      * @throws NullPointerException If given argument is {@code null}
      * @see #andThen(ByteUnaryOperator)
      */
-    default ByteUnaryOperator compose(ByteUnaryOperator before) {
+    default ByteUnaryOperator compose(final ByteUnaryOperator before) {
         Objects.requireNonNull(before);
         return operand -> applyAsByte(before.applyAsByte(operand));
     }
@@ -84,7 +84,7 @@ public interface ByteUnaryOperator {
      * @throws NullPointerException If given argument is {@code null}
      * @see #compose(ByteUnaryOperator)
      */
-    default ByteUnaryOperator andThen(ByteUnaryOperator after) {
+    default ByteUnaryOperator andThen(final ByteUnaryOperator after) {
         Objects.requireNonNull(after);
         return operand -> after.applyAsByte(applyAsByte(operand));
     }

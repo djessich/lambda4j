@@ -68,7 +68,7 @@ public interface ShortUnaryOperator {
      * @throws NullPointerException If given argument is {@code null}
      * @see #andThen(ShortUnaryOperator)
      */
-    default ShortUnaryOperator compose(ShortUnaryOperator before) {
+    default ShortUnaryOperator compose(final ShortUnaryOperator before) {
         Objects.requireNonNull(before);
         return operand -> applyAsShort(before.applyAsShort(operand));
     }
@@ -84,7 +84,7 @@ public interface ShortUnaryOperator {
      * @throws NullPointerException If given argument is {@code null}
      * @see #compose(ShortUnaryOperator)
      */
-    default ShortUnaryOperator andThen(ShortUnaryOperator after) {
+    default ShortUnaryOperator andThen(final ShortUnaryOperator after) {
         Objects.requireNonNull(after);
         return operand -> after.applyAsShort(applyAsShort(operand));
     }

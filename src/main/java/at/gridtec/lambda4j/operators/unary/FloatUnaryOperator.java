@@ -68,7 +68,7 @@ public interface FloatUnaryOperator {
      * @throws NullPointerException If given argument is {@code null}
      * @see #andThen(FloatUnaryOperator)
      */
-    default FloatUnaryOperator compose(FloatUnaryOperator before) {
+    default FloatUnaryOperator compose(final FloatUnaryOperator before) {
         Objects.requireNonNull(before);
         return operand -> applyAsFloat(before.applyAsFloat(operand));
     }
@@ -84,7 +84,7 @@ public interface FloatUnaryOperator {
      * @throws NullPointerException If given argument is {@code null}
      * @see #compose(FloatUnaryOperator)
      */
-    default FloatUnaryOperator andThen(FloatUnaryOperator after) {
+    default FloatUnaryOperator andThen(final FloatUnaryOperator after) {
         Objects.requireNonNull(after);
         return operand -> after.applyAsFloat(applyAsFloat(operand));
     }

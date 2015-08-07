@@ -17,7 +17,9 @@ package at.gridtec.lambda4j.operators.binary;
 
 import at.gridtec.lambda4j.util.ThrowableUtils;
 
+import java.util.Comparator;
 import java.util.Objects;
+import java.util.function.BinaryOperator;
 import java.util.function.IntBinaryOperator;
 import java.util.function.Supplier;
 
@@ -90,6 +92,32 @@ public interface ThrowableIntBinaryOperator extends IntBinaryOperator {
      */
     static ThrowableIntBinaryOperator constant(int ret) {
         return (left, right) -> ret;
+    }
+
+    /**
+     * Returns a {@link ThrowableIntBinaryOperator} which returns the lesser of two elements according to {@link
+     * Integer#min(int, int)} operation.
+     *
+     * @return A {@code ThrowableIntBinaryOperator} which returns the lesser of its operands.
+     * @see BinaryOperator#minBy(Comparator)
+     * @see Integer#min(int, int)
+     * @see Math#min(int, int)
+     */
+    static ThrowableIntBinaryOperator min() {
+        return Integer::min;
+    }
+
+    /**
+     * Returns a {@link ThrowableIntBinaryOperator} which returns the greater of two elements according to {@link
+     * Integer#max(int, int)} operation.
+     *
+     * @return A {@code ThrowableIntBinaryOperator} which returns the greater of its operands.
+     * @see BinaryOperator#maxBy(Comparator)
+     * @see Integer#max(int, int)
+     * @see Math#max(int, int)
+     */
+    static ThrowableIntBinaryOperator max() {
+        return Integer::max;
     }
 
     /**

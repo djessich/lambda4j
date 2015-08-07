@@ -15,6 +15,10 @@
  */
 package at.gridtec.lambda4j.operators.binary;
 
+import at.gridtec.lambda4j.operators.unary.FloatUnaryOperator;
+
+import java.util.Comparator;
+import java.util.Objects;
 import java.util.function.BinaryOperator;
 
 /**
@@ -30,6 +34,42 @@ import java.util.function.BinaryOperator;
 public interface FloatBinaryOperator {
 
     /**
+     * Creates a {@link FloatBinaryOperator} which always returns a given value.
+     *
+     * @param ret The return value for the constant
+     * @return A {@code FloatBinaryOperator} which always returns a given value.
+     */
+    static FloatBinaryOperator constant(float ret) {
+        return (left, right) -> ret;
+    }
+
+    /**
+     * Returns a {@link FloatBinaryOperator} which returns the lesser of two elements according to {@link
+     * Float#min(float, float)} operation.
+     *
+     * @return A {@code FloatBinaryOperator} which returns the lesser of its operands.
+     * @see BinaryOperator#minBy(Comparator)
+     * @see Float#min(float, float)
+     * @see Math#min(float, float)
+     */
+    static FloatBinaryOperator min() {
+        return Float::min;
+    }
+
+    /**
+     * Returns a {@link FloatBinaryOperator} which returns the greater of two elements according to {@link
+     * Float#max(float, float)} operation.
+     *
+     * @return A {@code FloatBinaryOperator} which returns the greater of its operands.
+     * @see BinaryOperator#maxBy(Comparator)
+     * @see Float#max(float, float)
+     * @see Math#max(float, float)
+     */
+    static FloatBinaryOperator max() {
+        return Float::max;
+    }
+
+    /**
      * Applies this operator to the given operand argument.
      *
      * @param left The first argument to the operator (left input)
@@ -37,4 +77,38 @@ public interface FloatBinaryOperator {
      * @return The return value from the operator.
      */
     float applyAsFloat(float left, float right);
+
+    /**
+     * Returns a composed {@link FloatBinaryOperator} that first applies the given {@code before} operators to its
+     * input, and then applies this operator to the result. If evaluation of either operator throws an exception, it is
+     * relayed to the caller of the composed operator.
+     *
+     * @param before1 The first {@code FloatUnaryOperator} to apply before this operator is applied
+     * @param before2 The second {@code FloatUnaryOperator} to apply before this operator is applied
+     * @return A composed {@code FloatBinaryOperator} that first applies the {@code before} operator and then applies
+     * this operator
+     * @throws NullPointerException If one of the given operators are {@code null}
+     * @see #andThen(FloatUnaryOperator)
+     */
+    default FloatBinaryOperator compose(final FloatUnaryOperator before1, final FloatUnaryOperator before2) {
+        Objects.requireNonNull(before1);
+        Objects.requireNonNull(before2);
+        return (left, right) -> applyAsFloat(before1.applyAsFloat(left), before2.applyAsFloat(right));
+    }
+
+    /**
+     * Returns a composed {@link FloatBinaryOperator} that first applies this operator to its input, and then applies
+     * the {@code after} operator to the result. If evaluation of either operator throws an exception, it is relayed to
+     * the caller of the composed operator.
+     *
+     * @param after The {@code FloatUnaryOperator} to apply after this operator is applied
+     * @return A composed {@code FloatBinaryOperator} that first applies this operator and then applies the {@code
+     * after} operator
+     * @throws NullPointerException If one of the given operators are {@code null}
+     * @see #compose(FloatUnaryOperator, FloatUnaryOperator)
+     */
+    default FloatBinaryOperator andThen(FloatUnaryOperator after) {
+        Objects.requireNonNull(after);
+        return (left, right) -> after.applyAsFloat(applyAsFloat(left, right));
+    }
 }

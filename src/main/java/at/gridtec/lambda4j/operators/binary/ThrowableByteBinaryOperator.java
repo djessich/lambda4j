@@ -20,11 +20,10 @@ import at.gridtec.lambda4j.util.ThrowableUtils;
 import java.util.Comparator;
 import java.util.Objects;
 import java.util.function.BinaryOperator;
-import java.util.function.LongBinaryOperator;
 import java.util.function.Supplier;
 
 /**
- * This functional interface implements a {@link LongBinaryOperator} which is able to throw any {@link Exception}.
+ * This functional interface implements a {@link ByteBinaryOperator} which is able to throw any {@link Exception}.
  * <p>
  * The thrown {@link Exception} is sneakily thrown unless its a {@link RuntimeException}. This means that there is no
  * need to catch the thrown exception, nor to declare that you throw it using the <em>throws</em> keyword. The exception
@@ -46,93 +45,89 @@ import java.util.function.Supplier;
  * declaration in the <em>throws</em> clause. The checked exception will behave just like a normal <b>unchecked</b>
  * exception due to sneaky throwing.
  * <p>
- * This is a {@link FunctionalInterface} whose functional method is {@link #applyAsLongThrows(long, long)}.
+ * This is a {@link FunctionalInterface} whose functional method is {@link #applyAsShortThrows(byte, byte)}.
  *
  * @apiNote This is a throwable JRE lambda
- * @see java.util.function.BinaryOperator
+ * @see BinaryOperator
  */
 @SuppressWarnings("unused")
 @FunctionalInterface
-public interface ThrowableLongBinaryOperator extends LongBinaryOperator {
+public interface ThrowableByteBinaryOperator extends ByteBinaryOperator {
 
     /**
-     * Implicitly casts, and therefore wraps a given lambda as {@link ThrowableLongBinaryOperator}. This is a
-     * convenience method in case the given {@link ThrowableLongBinaryOperator} is ambiguous for the compiler. This
+     * Implicitly casts, and therefore wraps a given lambda as {@link ThrowableByteBinaryOperator}. This is a
+     * convenience method in case the given {@link ThrowableByteBinaryOperator} is ambiguous for the compiler. This
      * might happen for overloaded methods accepting different functional interfaces. The given {@code
-     * ThrowableLongBinaryOperator} is returned as-is.
+     * ThrowableByteBinaryOperator} is returned as-is.
      *
-     * @param lambda The {@code ThrowableLongBinaryOperator} which should be returned as-is.
-     * @return The given {@code ThrowableLongBinaryOperator} as-is.
+     * @param lambda The {@code ThrowableByteBinaryOperator} which should be returned as-is.
+     * @return The given {@code ThrowableByteBinaryOperator} as-is.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static ThrowableLongBinaryOperator wrap(final ThrowableLongBinaryOperator lambda) {
+    static ThrowableByteBinaryOperator wrap(final ThrowableByteBinaryOperator lambda) {
         Objects.requireNonNull(lambda);
         return lambda;
     }
 
     /**
-     * Creates a {@link ThrowableLongBinaryOperator} from the given {@link LongBinaryOperator}. This method is just
+     * Creates a {@link ThrowableByteBinaryOperator} from the given {@link ByteBinaryOperator}. This method is just
      * convenience to provide a mapping for the non-throwable/throwable instances of the corresponding functional
      * interface.
      *
-     * @param lambda A {@code LongBinaryOperator} which should be mapped to its throwable counterpart
-     * @return A {@code ThrowableLongBinaryOperator} from the given {@code LongBinaryOperator}.
+     * @param lambda A {@code ByteBinaryOperator} which should be mapped to its throwable counterpart
+     * @return A {@code ThrowableByteBinaryOperator} from the given {@code ByteBinaryOperator}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static ThrowableLongBinaryOperator from(final LongBinaryOperator lambda) {
+    static ThrowableByteBinaryOperator from(final ByteBinaryOperator lambda) {
         Objects.requireNonNull(lambda);
-        return lambda::applyAsLong;
+        return lambda::applyAsByte;
     }
 
     /**
-     * Creates a {@link ThrowableLongBinaryOperator} which always returns a given value.
+     * Creates a {@link ThrowableByteBinaryOperator} which always returns a given value.
      *
      * @param ret The return value for the constant
-     * @return A {@code ThrowableLongBinaryOperator} which always returns a given value.
+     * @return A {@code ThrowableByteBinaryOperator} which always returns a given value.
      */
-    static ThrowableLongBinaryOperator constant(long ret) {
+    static ThrowableByteBinaryOperator constant(byte ret) {
         return (left, right) -> ret;
     }
 
     /**
-     * Returns a {@link ThrowableLongBinaryOperator} which returns the lesser of two elements according to {@link
-     * Long#min(long, long)} operation.
+     * Returns a {@link ThrowableByteBinaryOperator} which returns the lesser of two elements according to {@code left
+     * &lt;= right} operation.
      *
-     * @return A {@code ThrowableLongBinaryOperator} which returns the lesser of its operands.
+     * @return A {@code ThrowableByteBinaryOperator} which returns the lesser of its operands.
      * @see BinaryOperator#minBy(Comparator)
-     * @see Long#min(long, long)
-     * @see Math#min(long, long)
      */
-    static ThrowableLongBinaryOperator min() {
-        return Long::min;
+    static ThrowableByteBinaryOperator min() {
+        return (left, right) -> (left <= right) ? left : right;
     }
 
     /**
-     * Returns a {@link ThrowableLongBinaryOperator} which returns the greater of two elements according to {@link
-     * Long#max(long, long)} operation.
+     * Returns a {@link ThrowableByteBinaryOperator} which returns the greater of two elements according to {@code left
+     * &gt;= right} operation.
      *
-     * @return A {@code ThrowableLongBinaryOperator} which returns the greater of its operands.
+     * @return A {@code ThrowableByteBinaryOperator} which returns the greater of its operands.
      * @see BinaryOperator#maxBy(Comparator)
-     * @see Long#max(long, long)
-     * @see Math#max(long, long)
      */
-    static ThrowableLongBinaryOperator max() {
-        return Long::max;
+    static ThrowableByteBinaryOperator max() {
+        return (left, right) -> (left >= right) ? left : right;
     }
 
     /**
-     * The apply method for this {@link LongBinaryOperator} which is able to throw any {@link Exception} type.
+     * The apply method for this {@link ByteBinaryOperator} which is able to throw any {@link Exception} type.
      *
      * @param left The first argument for the operator
      * @param right The second argument for the operator
      * @return The return value from the operator.
      * @throws Exception Any exception from this functions action
      */
-    long applyAsLongThrows(long left, long right) throws Exception;
+    byte applyAsShortThrows(byte left, byte right) throws Exception;
 
     /**
-     * Overrides the {@link LongBinaryOperator#applyAsLong(long, long)} method by using a redefinition as default
-     * method. It calls the {@link #applyAsLongThrows(long, long)} method of this interface and catches the thrown
+     * Overrides the {@link ByteBinaryOperator#applyAsByte(byte, byte)} method by using a redefinition as default
+     * method. It calls the {@link #applyAsShortThrows(byte, byte)} method of this interface and catches the thrown
      * {@link Exception}s from it. If it is of type {@link RuntimeException}, the exception is rethrown. Other throwable
      * types are sneakily thrown.
      *
@@ -142,9 +137,9 @@ public interface ThrowableLongBinaryOperator extends LongBinaryOperator {
      * @see ThrowableUtils#sneakyThrow(Throwable)
      */
     @Override
-    default long applyAsLong(long left, long right) {
+    default byte applyAsByte(byte left, byte right) {
         try {
-            return applyAsLongThrows(left, right);
+            return applyAsShortThrows(left, right);
         } catch (RuntimeException e) {
             throw e;
         } catch (Exception e) {
@@ -153,45 +148,45 @@ public interface ThrowableLongBinaryOperator extends LongBinaryOperator {
     }
 
     /**
-     * Returns a composed {@link ThrowableLongBinaryOperator} that applies this {@code ThrowableLongBinaryOperator} to
+     * Returns a composed {@link ThrowableByteBinaryOperator} that applies this {@code ThrowableByteBinaryOperator} to
      * its input, and if an error occurred, applies the given one. The exception from this {@code
-     * ThrowableLongBinaryOperator} is ignored.
+     * ThrowableByteBinaryOperator} is ignored.
      *
-     * @param other A {@code ThrowableLongBinaryOperator} to be applied if this one fails
-     * @return A composed {@code ThrowableLongBinaryOperator} that applies this {@code ThrowableLongBinaryOperator}, and
+     * @param other A {@code ThrowableByteBinaryOperator} to be applied if this one fails
+     * @return A composed {@code ThrowableByteBinaryOperator} that applies this {@code ThrowableByteBinaryOperator}, and
      * if an error occurred, applies the given one.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    default ThrowableLongBinaryOperator orElse(final ThrowableLongBinaryOperator other) {
+    default ThrowableByteBinaryOperator orElse(final ThrowableByteBinaryOperator other) {
         Objects.requireNonNull(other);
         return (left, right) -> {
             try {
-                return applyAsLongThrows(left, right);
+                return applyAsShortThrows(left, right);
             } catch (Exception ignored) {
-                return other.applyAsLongThrows(left, right);
+                return other.applyAsShortThrows(left, right);
             }
         };
     }
 
     /**
-     * Returns a composed {@link ThrowableLongBinaryOperator} that applies this {@code ThrowableLongBinaryOperator} to
+     * Returns a composed {@link ThrowableByteBinaryOperator} that applies this {@code ThrowableByteBinaryOperator} to
      * its input, and if an error occurred, throws the given {@link Exception}. The exception from this {@code
-     * ThrowableLongBinaryOperator} is added as suppressed to the given one.
+     * ThrowableByteBinaryOperator} is added as suppressed to the given one.
      * <p>
      * The given exception must have a no arg constructor for reflection purposes. If not, then appropriate exception as
      * described in {@link Class#newInstance()} is thrown.
      *
      * @param <X> The type for the class extending {@code Exception}
      * @param clazz The exception class to throw if an error occurred
-     * @return A composed {@code ThrowableLongBinaryOperator} that applies this {@code ThrowableLongBinaryOperator}, and
+     * @return A composed {@code ThrowableByteBinaryOperator} that applies this {@code ThrowableByteBinaryOperator}, and
      * if an error occurred, throws the given {@code Exception}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    default <X extends Exception> ThrowableLongBinaryOperator orThrow(Class<X> clazz) {
+    default <X extends Exception> ThrowableByteBinaryOperator orThrow(Class<X> clazz) {
         Objects.requireNonNull(clazz);
         return (left, right) -> {
             try {
-                return applyAsLongThrows(left, right);
+                return applyAsShortThrows(left, right);
             } catch (Exception e) {
                 X ex = clazz.newInstance();
                 ex.addSuppressed(e);
@@ -201,39 +196,39 @@ public interface ThrowableLongBinaryOperator extends LongBinaryOperator {
     }
 
     /**
-     * Returns a composed {@link LongBinaryOperator} that applies this {@link ThrowableLongBinaryOperator} to its input,
-     * and if an error occurred, applies the given {@code LongBinaryOperator} representing a fallback. The exception
-     * from this {@code ThrowableLongBinaryOperator} is ignored.
+     * Returns a composed {@link ByteBinaryOperator} that applies this {@link ThrowableByteBinaryOperator} to its input,
+     * and if an error occurred, applies the given {@code ByteBinaryOperator} representing a fallback. The exception
+     * from this {@code ThrowableByteBinaryOperator} is ignored.
      *
-     * @param fallback A {@code LongBinaryOperator} to be applied if this one fails
-     * @return A composed {@code LongBinaryOperator} that applies this {@code ThrowableLongBinaryOperator}, and if an
-     * error occurred, applies the given {@code LongBinaryOperator}.
+     * @param fallback A {@code ByteBinaryOperator} to be applied if this one fails
+     * @return A composed {@code ByteBinaryOperator} that applies this {@code ThrowableByteBinaryOperator}, and if an
+     * error occurred, applies the given {@code ByteBinaryOperator}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    default LongBinaryOperator fallbackTo(final LongBinaryOperator fallback) {
+    default ByteBinaryOperator fallbackTo(final ByteBinaryOperator fallback) {
         Objects.requireNonNull(fallback);
         return (left, right) -> {
             try {
-                return applyAsLongThrows(left, right);
+                return applyAsShortThrows(left, right);
             } catch (Exception ignored) {
-                return fallback.applyAsLong(left, right);
+                return fallback.applyAsByte(left, right);
             }
         };
     }
 
     /**
-     * Returns a composed {@link LongBinaryOperator} that applies this {@link ThrowableLongBinaryOperator} to its input,
-     * and if an error occurred, returns the given value. The exception from this {@code ThrowableLongBinaryOperator} is
+     * Returns a composed {@link ByteBinaryOperator} that applies this {@link ThrowableByteBinaryOperator} to its input,
+     * and if an error occurred, returns the given value. The exception from this {@code ThrowableByteBinaryOperator} is
      * ignored.
      *
-     * @param value The value to be returned if this {@code ThrowableLongBinaryOperator} fails
-     * @return A composed {@code LongBinaryOperator} that applies this {@code ThrowableLongBinaryOperator}, and if an
+     * @param value The value to be returned if this {@code ThrowableByteBinaryOperator} fails
+     * @return A composed {@code ByteBinaryOperator} that applies this {@code ThrowableByteBinaryOperator}, and if an
      * error occurred, returns the given value.
      */
-    default LongBinaryOperator orReturn(long value) {
+    default ByteBinaryOperator orReturn(byte value) {
         return (left, right) -> {
             try {
-                return applyAsLongThrows(left, right);
+                return applyAsShortThrows(left, right);
             } catch (Exception ignored) {
                 return value;
             }
@@ -241,20 +236,20 @@ public interface ThrowableLongBinaryOperator extends LongBinaryOperator {
     }
 
     /**
-     * Returns a composed {@link LongBinaryOperator} that applies this {@link ThrowableLongBinaryOperator} to its input,
+     * Returns a composed {@link ByteBinaryOperator} that applies this {@link ThrowableByteBinaryOperator} to its input,
      * and if an error occurred, returns the supplied value from the given {@link Supplier}. The exception from this
-     * {@code ThrowableLongBinaryOperator} is ignored.
+     * {@code ThrowableByteBinaryOperator} is ignored.
      *
-     * @param supplier A {@code Supplier} to return a supplied value if this {@code ThrowableLongBinaryOperator} fails
-     * @return A composed {@code LongBinaryOperator} that applies this {@code ThrowableLongBinaryOperator}, and if an
+     * @param supplier A {@code Supplier} to return a supplied value if this {@code ThrowableByteBinaryOperator} fails
+     * @return A composed {@code ByteBinaryOperator} that applies this {@code ThrowableByteBinaryOperator}, and if an
      * error occurred, the supplied value from the given {@code Supplier}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    default LongBinaryOperator orReturn(final Supplier<? extends Long> supplier) {
+    default ByteBinaryOperator orReturn(final Supplier<? extends Byte> supplier) {
         Objects.requireNonNull(supplier);
         return (left, right) -> {
             try {
-                return applyAsLongThrows(left, right);
+                return applyAsShortThrows(left, right);
             } catch (Exception ignored) {
                 return supplier.get();
             }
@@ -262,17 +257,17 @@ public interface ThrowableLongBinaryOperator extends LongBinaryOperator {
     }
 
     /**
-     * Returns a composed {@link LongBinaryOperator} that applies this {@link ThrowableLongBinaryOperator} to its input,
+     * Returns a composed {@link ByteBinaryOperator} that applies this {@link ThrowableByteBinaryOperator} to its input,
      * and if an error occurred, returns the left value from this operator. The exception from this {@code
-     * ThrowableLongBinaryOperator} is ignored.
+     * ThrowableByteBinaryOperator} is ignored.
      *
-     * @return A composed {@code LongBinaryOperator} that applies this {@code ThrowableLongBinaryOperator}, and if an
+     * @return A composed {@code ByteBinaryOperator} that applies this {@code ThrowableByteBinaryOperator}, and if an
      * error occurred, returns the left value from this operator.
      */
-    default LongBinaryOperator orReturnLeft() {
+    default ByteBinaryOperator orReturnLeft() {
         return (left, right) -> {
             try {
-                return applyAsLongThrows(left, right);
+                return applyAsShortThrows(left, right);
             } catch (Exception ignored) {
                 return left;
             }
@@ -280,17 +275,17 @@ public interface ThrowableLongBinaryOperator extends LongBinaryOperator {
     }
 
     /**
-     * Returns a composed {@link LongBinaryOperator} that applies this {@link ThrowableLongBinaryOperator} to its input,
+     * Returns a composed {@link ByteBinaryOperator} that applies this {@link ThrowableByteBinaryOperator} to its input,
      * and if an error occurred, returns the right value from this operator. The exception from this {@code
-     * ThrowableLongBinaryOperator} is ignored.
+     * ThrowableByteBinaryOperator} is ignored.
      *
-     * @return A composed {@code LongBinaryOperator} that applies this {@code ThrowableLongBinaryOperator}, and if an
+     * @return A composed {@code ByteBinaryOperator} that applies this {@code ThrowableByteBinaryOperator}, and if an
      * error occurred, returns the right value from this operator.
      */
-    default LongBinaryOperator orReturnRight() {
+    default ByteBinaryOperator orReturnRight() {
         return (left, right) -> {
             try {
-                return applyAsLongThrows(left, right);
+                return applyAsShortThrows(left, right);
             } catch (Exception ignored) {
                 return right;
             }

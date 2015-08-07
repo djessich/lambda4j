@@ -17,7 +17,9 @@ package at.gridtec.lambda4j.operators.binary;
 
 import at.gridtec.lambda4j.util.ThrowableUtils;
 
+import java.util.Comparator;
 import java.util.Objects;
+import java.util.function.BinaryOperator;
 import java.util.function.DoubleBinaryOperator;
 import java.util.function.Supplier;
 
@@ -90,6 +92,32 @@ public interface ThrowableDoubleBinaryOperator extends DoubleBinaryOperator {
      */
     static ThrowableDoubleBinaryOperator constant(double ret) {
         return (left, right) -> ret;
+    }
+
+    /**
+     * Returns a {@link ThrowableDoubleBinaryOperator} which returns the lesser of two elements according to {@link
+     * Double#min(double, double)} operation.
+     *
+     * @return A {@code ThrowableDoubleBinaryOperator} which returns the lesser of its operands.
+     * @see BinaryOperator#minBy(Comparator)
+     * @see Double#min(double, double)
+     * @see Math#min(double, double)
+     */
+    static ThrowableDoubleBinaryOperator min() {
+        return Double::min;
+    }
+
+    /**
+     * Returns a {@link ThrowableDoubleBinaryOperator} which returns the greater of two elements according to {@link
+     * Double#max(double, double)} operation.
+     *
+     * @return A {@code ThrowableDoubleBinaryOperator} which returns the greater of its operands.
+     * @see BinaryOperator#maxBy(Comparator)
+     * @see Double#max(double, double)
+     * @see Math#max(double, double)
+     */
+    static ThrowableDoubleBinaryOperator max() {
+        return Double::max;
     }
 
     /**

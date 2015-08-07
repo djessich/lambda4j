@@ -15,6 +15,10 @@
  */
 package at.gridtec.lambda4j.operators.binary;
 
+import at.gridtec.lambda4j.operators.unary.ShortUnaryOperator;
+
+import java.util.Comparator;
+import java.util.Objects;
 import java.util.function.BinaryOperator;
 
 /**
@@ -30,6 +34,38 @@ import java.util.function.BinaryOperator;
 public interface ShortBinaryOperator {
 
     /**
+     * Creates a {@link ShortBinaryOperator} which always returns a given value.
+     *
+     * @param ret The return value for the constant
+     * @return A {@code ShortBinaryOperator} which always returns a given value.
+     */
+    static ShortBinaryOperator constant(short ret) {
+        return (left, right) -> ret;
+    }
+
+    /**
+     * Returns a {@link ShortBinaryOperator} which returns the lesser of two elements according to {@code left &lt;=
+     * right} operation.
+     *
+     * @return A {@code ShortBinaryOperator} which returns the lesser of its operands.
+     * @see BinaryOperator#minBy(Comparator)
+     */
+    static ShortBinaryOperator min() {
+        return (left, right) -> (left <= right) ? left : right;
+    }
+
+    /**
+     * Returns a {@link ShortBinaryOperator} which returns the greater of two elements according to {@code left &gt;=
+     * right} operation.
+     *
+     * @return A {@code ShortBinaryOperator} which returns the greater of its operands.
+     * @see BinaryOperator#maxBy(Comparator)
+     */
+    static ShortBinaryOperator max() {
+        return (left, right) -> (left >= right) ? left : right;
+    }
+
+    /**
      * Applies this operator to the given operand argument.
      *
      * @param left The first argument to the operator (left input)
@@ -37,4 +73,38 @@ public interface ShortBinaryOperator {
      * @return The return value from the operator.
      */
     short applyAsShort(short left, short right);
+
+    /**
+     * Returns a composed {@link ShortBinaryOperator} that first applies the given {@code before} operators to its
+     * input, and then applies this operator to the result. If evaluation of either operator throws an exception, it is
+     * relayed to the caller of the composed operator.
+     *
+     * @param before1 The first {@code ShortUnaryOperator} to apply before this operator is applied
+     * @param before2 The second {@code ShortUnaryOperator} to apply before this operator is applied
+     * @return A composed {@code ShortBinaryOperator} that first applies the {@code before} operator and then applies
+     * this operator
+     * @throws NullPointerException If one of the given operators are {@code null}
+     * @see #andThen(ShortUnaryOperator)
+     */
+    default ShortBinaryOperator compose(final ShortUnaryOperator before1, final ShortUnaryOperator before2) {
+        Objects.requireNonNull(before1);
+        Objects.requireNonNull(before2);
+        return (left, right) -> applyAsShort(before1.applyAsShort(left), before2.applyAsShort(right));
+    }
+
+    /**
+     * Returns a composed {@link ShortBinaryOperator} that first applies this operator to its input, and then applies
+     * the {@code after} operator to the result. If evaluation of either operator throws an exception, it is relayed to
+     * the caller of the composed operator.
+     *
+     * @param after The {@code ShortUnaryOperator} to apply after this operator is applied
+     * @return A composed {@code ShortBinaryOperator} that first applies this operator and then applies the {@code
+     * after} operator
+     * @throws NullPointerException If one of the given operators are {@code null}
+     * @see #compose(ShortUnaryOperator, ShortUnaryOperator)
+     */
+    default ShortBinaryOperator andThen(ShortUnaryOperator after) {
+        Objects.requireNonNull(after);
+        return (left, right) -> after.applyAsShort(applyAsShort(left, right));
+    }
 }

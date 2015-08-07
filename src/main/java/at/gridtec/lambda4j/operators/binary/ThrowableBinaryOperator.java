@@ -17,6 +17,7 @@ package at.gridtec.lambda4j.operators.binary;
 
 import at.gridtec.lambda4j.util.ThrowableUtils;
 
+import java.util.Comparator;
 import java.util.Objects;
 import java.util.function.BinaryOperator;
 import java.util.function.Supplier;
@@ -60,7 +61,7 @@ public interface ThrowableBinaryOperator<T> extends BinaryOperator<T> {
      * overloaded methods accepting different functional interfaces. The given {@code ThrowableBinaryOperator} is
      * returned as-is.
      *
-     * @param <T> The type of argument for the function
+     * @param <T> The type of the arguments and the return value for this operator
      * @param lambda The {@code ThrowableBinaryOperator} which should be returned as-is.
      * @return The given {@code ThrowableBinaryOperator} as-is.
      * @throws NullPointerException If the given argument is {@code null}
@@ -74,7 +75,7 @@ public interface ThrowableBinaryOperator<T> extends BinaryOperator<T> {
      * Creates a {@link ThrowableBinaryOperator} from the given {@link BinaryOperator}. This method is just convenience
      * to provide a mapping for the non-throwable/throwable instances of the corresponding functional interface.
      *
-     * @param <T> The type of argument for the function
+     * @param <T> The type of the arguments and the return value for this operator
      * @param lambda A {@code BinaryOperator} which should be mapped to its throwable counterpart
      * @return A {@code ThrowableBinaryOperator} from the given {@code BinaryOperator}.
      * @throws NullPointerException If the given argument is {@code null}
@@ -87,12 +88,42 @@ public interface ThrowableBinaryOperator<T> extends BinaryOperator<T> {
     /**
      * Creates a {@link ThrowableBinaryOperator} which always returns a given value.
      *
-     * @param <T> The type of argument for the function
+     * @param <T> The type of the arguments and the return value for this operator
      * @param r The return value for the constant
      * @return A {@code ThrowableBinaryOperator} which always returns a given value.
      */
     static <T> ThrowableBinaryOperator<T> constant(T r) {
         return (t, u) -> r;
+    }
+
+    /**
+     * Returns a {@link ThrowableBinaryOperator} which returns the lesser of two elements according to the specified
+     * {@code Comparator}.
+     *
+     * @param <T> The type of the arguments and the return value for this operator
+     * @param comparator A {@code Comparator} for comparing the operators operands
+     * @return A {@code ThrowableBinaryOperator} which returns the lesser of its operands, according to the supplied
+     * {@code Comparator}
+     * @throws NullPointerException If the given argument is {@code null}
+     */
+    static <T> ThrowableBinaryOperator<T> minBy(final Comparator<? super T> comparator) {
+        Objects.requireNonNull(comparator);
+        return (a, b) -> comparator.compare(a, b) <= 0 ? a : b;
+    }
+
+    /**
+     * Returns a {@link ThrowableBinaryOperator} which returns the greater of two elements according to the specified
+     * {@code Comparator}.
+     *
+     * @param <T> The type of the arguments and the return value for this operator
+     * @param comparator A {@code Comparator} for comparing the operators operands
+     * @return A {@code ThrowableBinaryOperator} which returns the greater of its operands, according to the supplied
+     * {@code Comparator}
+     * @throws NullPointerException If the given argument is {@code null}
+     */
+    static <T> ThrowableBinaryOperator<T> maxBy(final Comparator<? super T> comparator) {
+        Objects.requireNonNull(comparator);
+        return (a, b) -> comparator.compare(a, b) >= 0 ? a : b;
     }
 
     /**
