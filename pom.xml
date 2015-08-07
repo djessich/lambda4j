@@ -62,7 +62,11 @@
     </pluginRepositories>
 
     <dependencies>
-        <!-- Testing Frameworks -->
+        <dependency>
+            <groupId>com.google.code.findbugs</groupId>
+            <artifactId>jsr305</artifactId>
+            <version>3.0.0</version>
+        </dependency>
         <dependency>
             <groupId>org.testng</groupId>
             <artifactId>testng</artifactId>
