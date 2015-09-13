@@ -93,40 +93,40 @@ public interface ThrowableShortTernaryOperator extends ShortTernaryOperator {
     }
 
     /**
-     * Creates a {@link ThrowableShortTernaryOperator} which uses the left parameter only from the given {@link
+     * Creates a {@link ThrowableShortTernaryOperator} which uses the left parameter as argument for the given {@link
      * ThrowableShortUnaryOperator}.
      *
-     * @return Creates a {@code ThrowableShortTernaryOperator} which uses the left parameter only from the given {@code
-     * ThrowableShortUnaryOperator}.
+     * @return Creates a {@code ThrowableShortTernaryOperator} which uses the left parameter as argument for the given
+     * {@code ThrowableShortUnaryOperator}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static ThrowableShortTernaryOperator forLeft(final ThrowableShortUnaryOperator operator) {
+    static ThrowableShortTernaryOperator useLeft(final ThrowableShortUnaryOperator operator) {
         Objects.requireNonNull(operator);
         return (left, middle, right) -> operator.applyAsShort(left);
     }
 
     /**
-     * Creates a {@link ThrowableShortTernaryOperator} which uses the middle parameter only from the given {@link
+     * Creates a {@link ThrowableShortTernaryOperator} which uses the middle parameter as argument for the given {@link
      * ThrowableShortUnaryOperator}.
      *
-     * @return Creates a {@code ThrowableShortTernaryOperator} which uses the middle parameter only from the given
+     * @return Creates a {@code ThrowableShortTernaryOperator} which uses the middle parameter as argument for the given
      * {@code ThrowableShortUnaryOperator}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static ThrowableShortTernaryOperator forMiddle(final ThrowableShortUnaryOperator operator) {
+    static ThrowableShortTernaryOperator useMiddle(final ThrowableShortUnaryOperator operator) {
         Objects.requireNonNull(operator);
         return (left, middle, right) -> operator.applyAsShort(middle);
     }
 
     /**
-     * Creates a {@link ThrowableShortTernaryOperator} which uses the right parameter only from the given {@link
+     * Creates a {@link ThrowableShortTernaryOperator} which uses the right parameter as argument for the given {@link
      * ThrowableShortUnaryOperator}.
      *
-     * @return Creates a {@code ThrowableShortTernaryOperator} which uses the right parameter only from the given {@code
-     * ThrowableShortUnaryOperator}.
+     * @return Creates a {@code ThrowableShortTernaryOperator} which uses the right parameter as argument for the given
+     * {@code ThrowableShortUnaryOperator}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static ThrowableShortTernaryOperator forRight(final ThrowableShortUnaryOperator operator) {
+    static ThrowableShortTernaryOperator useRight(final ThrowableShortUnaryOperator operator) {
         Objects.requireNonNull(operator);
         return (left, middle, right) -> operator.applyAsShort(right);
     }

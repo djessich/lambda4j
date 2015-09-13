@@ -15,6 +15,7 @@
  */
 package at.gridtec.lambda4j.operators.binary;
 
+import at.gridtec.lambda4j.operators.unary.CharUnaryOperator;
 import at.gridtec.lambda4j.supplier.CharSupplier;
 import at.gridtec.lambda4j.util.ThrowableUtils;
 
@@ -45,7 +46,7 @@ import java.util.function.BinaryOperator;
  * declaration in the <em>throws</em> clause. The checked exception will behave just like a normal <b>unchecked</b>
  * exception due to sneaky throwing.
  * <p>
- * This is a {@link FunctionalInterface} whose functional method is {@link #applyAsShortThrows(char, char)}.
+ * This is a {@link FunctionalInterface} whose functional method is {@link #applyAsCharThrows(char, char)}.
  *
  * @apiNote This is a throwable JRE lambda
  * @see BinaryOperator
@@ -94,6 +95,32 @@ public interface ThrowableCharBinaryOperator extends CharBinaryOperator {
     }
 
     /**
+     * Creates a {@link CharBinaryOperator} which uses the left parameter as argument for the given {@link
+     * CharUnaryOperator}.
+     *
+     * @return Creates a {@code CharBinaryOperator} which uses the left parameter as argument for the given {@code
+     * CharUnaryOperator}.
+     * @throws NullPointerException If the given argument is {@code null}
+     */
+    static CharBinaryOperator useLeft(final CharUnaryOperator operator) {
+        Objects.requireNonNull(operator);
+        return (left, right) -> operator.applyAsChar(left);
+    }
+
+    /**
+     * Creates a {@link CharBinaryOperator} which uses the right parameter as argument for the given {@link
+     * CharUnaryOperator}.
+     *
+     * @return Creates a {@code CharBinaryOperator} which uses the right parameter as argument for the given {@code
+     * CharUnaryOperator}.
+     * @throws NullPointerException If the given argument is {@code null}
+     */
+    static CharBinaryOperator useRight(final CharUnaryOperator operator) {
+        Objects.requireNonNull(operator);
+        return (left, right) -> operator.applyAsChar(right);
+    }
+
+    /**
      * Returns a {@link ThrowableCharBinaryOperator} which returns the lesser of two elements according to {@code left
      * &lt;= right} operation.
      *
@@ -123,11 +150,11 @@ public interface ThrowableCharBinaryOperator extends CharBinaryOperator {
      * @return The return value from the operator.
      * @throws Exception Any exception from this functions action
      */
-    char applyAsShortThrows(char left, char right) throws Exception;
+    char applyAsCharThrows(char left, char right) throws Exception;
 
     /**
      * Overrides the {@link CharBinaryOperator#applyAsChar(char, char)} method by using a redefinition as default
-     * method. It calls the {@link #applyAsShortThrows(char, char)} method of this interface and catches the thrown
+     * method. It calls the {@link #applyAsCharThrows(char, char)} method of this interface and catches the thrown
      * {@link Exception}s from it. If it is of type {@link RuntimeException}, the exception is rethrown. Other throwable
      * types are sneakily thrown.
      *
@@ -139,7 +166,7 @@ public interface ThrowableCharBinaryOperator extends CharBinaryOperator {
     @Override
     default char applyAsChar(char left, char right) {
         try {
-            return applyAsShortThrows(left, right);
+            return applyAsCharThrows(left, right);
         } catch (RuntimeException e) {
             throw e;
         } catch (Exception e) {
@@ -161,9 +188,9 @@ public interface ThrowableCharBinaryOperator extends CharBinaryOperator {
         Objects.requireNonNull(other);
         return (left, right) -> {
             try {
-                return applyAsShortThrows(left, right);
+                return applyAsCharThrows(left, right);
             } catch (Exception ignored) {
-                return other.applyAsShortThrows(left, right);
+                return other.applyAsCharThrows(left, right);
             }
         };
     }
@@ -186,7 +213,7 @@ public interface ThrowableCharBinaryOperator extends CharBinaryOperator {
         Objects.requireNonNull(clazz);
         return (left, right) -> {
             try {
-                return applyAsShortThrows(left, right);
+                return applyAsCharThrows(left, right);
             } catch (Exception e) {
                 X ex = clazz.newInstance();
                 ex.addSuppressed(e);
@@ -209,7 +236,7 @@ public interface ThrowableCharBinaryOperator extends CharBinaryOperator {
         Objects.requireNonNull(fallback);
         return (left, right) -> {
             try {
-                return applyAsShortThrows(left, right);
+                return applyAsCharThrows(left, right);
             } catch (Exception ignored) {
                 return fallback.applyAsChar(left, right);
             }
@@ -228,7 +255,7 @@ public interface ThrowableCharBinaryOperator extends CharBinaryOperator {
     default CharBinaryOperator orReturn(char value) {
         return (left, right) -> {
             try {
-                return applyAsShortThrows(left, right);
+                return applyAsCharThrows(left, right);
             } catch (Exception ignored) {
                 return value;
             }
@@ -250,7 +277,7 @@ public interface ThrowableCharBinaryOperator extends CharBinaryOperator {
         Objects.requireNonNull(supplier);
         return (left, right) -> {
             try {
-                return applyAsShortThrows(left, right);
+                return applyAsCharThrows(left, right);
             } catch (Exception ignored) {
                 return supplier.getAsChar();
             }
@@ -268,7 +295,7 @@ public interface ThrowableCharBinaryOperator extends CharBinaryOperator {
     default CharBinaryOperator orReturnLeft() {
         return (left, right) -> {
             try {
-                return applyAsShortThrows(left, right);
+                return applyAsCharThrows(left, right);
             } catch (Exception ignored) {
                 return left;
             }
@@ -286,7 +313,7 @@ public interface ThrowableCharBinaryOperator extends CharBinaryOperator {
     default CharBinaryOperator orReturnRight() {
         return (left, right) -> {
             try {
-                return applyAsShortThrows(left, right);
+                return applyAsCharThrows(left, right);
             } catch (Exception ignored) {
                 return right;
             }

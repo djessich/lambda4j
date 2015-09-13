@@ -93,40 +93,40 @@ public interface ThrowableIntTernaryOperator extends IntTernaryOperator {
     }
 
     /**
-     * Creates a {@link ThrowableIntTernaryOperator} which uses the left parameter only from the given {@link
+     * Creates a {@link ThrowableIntTernaryOperator} which uses the left parameter as argument for the given {@link
      * ThrowableIntUnaryOperator}.
      *
-     * @return Creates a {@code ThrowableIntTernaryOperator} which uses the left parameter only from the given {@code
-     * ThrowableIntUnaryOperator}.
+     * @return Creates a {@code ThrowableIntTernaryOperator} which uses the left parameter as argument for the given
+     * {@code ThrowableIntUnaryOperator}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static ThrowableIntTernaryOperator forLeft(final ThrowableIntUnaryOperator operator) {
+    static ThrowableIntTernaryOperator useLeft(final ThrowableIntUnaryOperator operator) {
         Objects.requireNonNull(operator);
         return (left, middle, right) -> operator.applyAsInt(left);
     }
 
     /**
-     * Creates a {@link ThrowableIntTernaryOperator} which uses the middle parameter only from the given {@link
+     * Creates a {@link ThrowableIntTernaryOperator} which uses the middle parameter as argument for the given {@link
      * ThrowableIntUnaryOperator}.
      *
-     * @return Creates a {@code ThrowableIntTernaryOperator} which uses the middle parameter only from the given {@code
-     * ThrowableIntUnaryOperator}.
+     * @return Creates a {@code ThrowableIntTernaryOperator} which uses the middle parameter as argument for the given
+     * {@code ThrowableIntUnaryOperator}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static ThrowableIntTernaryOperator forMiddle(final ThrowableIntUnaryOperator operator) {
+    static ThrowableIntTernaryOperator useMiddle(final ThrowableIntUnaryOperator operator) {
         Objects.requireNonNull(operator);
         return (left, middle, right) -> operator.applyAsInt(middle);
     }
 
     /**
-     * Creates a {@link ThrowableIntTernaryOperator} which uses the right parameter only from the given {@link
+     * Creates a {@link ThrowableIntTernaryOperator} which uses the right parameter as argument for the given {@link
      * ThrowableIntUnaryOperator}.
      *
-     * @return Creates a {@code ThrowableIntTernaryOperator} which uses the right parameter only from the given {@code
-     * ThrowableIntUnaryOperator}.
+     * @return Creates a {@code ThrowableIntTernaryOperator} which uses the right parameter as argument for the given
+     * {@code ThrowableIntUnaryOperator}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static ThrowableIntTernaryOperator forRight(final ThrowableIntUnaryOperator operator) {
+    static ThrowableIntTernaryOperator useRight(final ThrowableIntUnaryOperator operator) {
         Objects.requireNonNull(operator);
         return (left, middle, right) -> operator.applyAsInt(right);
     }

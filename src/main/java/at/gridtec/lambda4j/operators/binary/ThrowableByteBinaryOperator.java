@@ -15,6 +15,7 @@
  */
 package at.gridtec.lambda4j.operators.binary;
 
+import at.gridtec.lambda4j.operators.unary.ByteUnaryOperator;
 import at.gridtec.lambda4j.supplier.ByteSupplier;
 import at.gridtec.lambda4j.util.ThrowableUtils;
 
@@ -45,7 +46,7 @@ import java.util.function.BinaryOperator;
  * declaration in the <em>throws</em> clause. The checked exception will behave just like a normal <b>unchecked</b>
  * exception due to sneaky throwing.
  * <p>
- * This is a {@link FunctionalInterface} whose functional method is {@link #applyAsShortThrows(byte, byte)}.
+ * This is a {@link FunctionalInterface} whose functional method is {@link #applyAsByteThrows(byte, byte)}.
  *
  * @apiNote This is a throwable JRE lambda
  * @see BinaryOperator
@@ -94,6 +95,32 @@ public interface ThrowableByteBinaryOperator extends ByteBinaryOperator {
     }
 
     /**
+     * Creates a {@link ByteBinaryOperator} which uses the left parameter as argument for the given {@link
+     * ByteUnaryOperator}.
+     *
+     * @return Creates a {@code ByteBinaryOperator} which uses the left parameter as argument for the given {@code
+     * ByteUnaryOperator}.
+     * @throws NullPointerException If the given argument is {@code null}
+     */
+    static ByteBinaryOperator useLeft(final ByteUnaryOperator operator) {
+        Objects.requireNonNull(operator);
+        return (left, right) -> operator.applyAsByte(left);
+    }
+
+    /**
+     * Creates a {@link ByteBinaryOperator} which uses the right parameter as argument for the given {@link
+     * ByteUnaryOperator}.
+     *
+     * @return Creates a {@code ByteBinaryOperator} which uses the right parameter as argument for the given {@code
+     * ByteUnaryOperator}.
+     * @throws NullPointerException If the given argument is {@code null}
+     */
+    static ByteBinaryOperator useRight(final ByteUnaryOperator operator) {
+        Objects.requireNonNull(operator);
+        return (left, right) -> operator.applyAsByte(right);
+    }
+
+    /**
      * Returns a {@link ThrowableByteBinaryOperator} which returns the lesser of two elements according to {@code left
      * &lt;= right} operation.
      *
@@ -123,11 +150,11 @@ public interface ThrowableByteBinaryOperator extends ByteBinaryOperator {
      * @return The return value from the operator.
      * @throws Exception Any exception from this functions action
      */
-    byte applyAsShortThrows(byte left, byte right) throws Exception;
+    byte applyAsByteThrows(byte left, byte right) throws Exception;
 
     /**
      * Overrides the {@link ByteBinaryOperator#applyAsByte(byte, byte)} method by using a redefinition as default
-     * method. It calls the {@link #applyAsShortThrows(byte, byte)} method of this interface and catches the thrown
+     * method. It calls the {@link #applyAsByteThrows(byte, byte)} method of this interface and catches the thrown
      * {@link Exception}s from it. If it is of type {@link RuntimeException}, the exception is rethrown. Other throwable
      * types are sneakily thrown.
      *
@@ -139,7 +166,7 @@ public interface ThrowableByteBinaryOperator extends ByteBinaryOperator {
     @Override
     default byte applyAsByte(byte left, byte right) {
         try {
-            return applyAsShortThrows(left, right);
+            return applyAsByteThrows(left, right);
         } catch (RuntimeException e) {
             throw e;
         } catch (Exception e) {
@@ -161,9 +188,9 @@ public interface ThrowableByteBinaryOperator extends ByteBinaryOperator {
         Objects.requireNonNull(other);
         return (left, right) -> {
             try {
-                return applyAsShortThrows(left, right);
+                return applyAsByteThrows(left, right);
             } catch (Exception ignored) {
-                return other.applyAsShortThrows(left, right);
+                return other.applyAsByteThrows(left, right);
             }
         };
     }
@@ -186,7 +213,7 @@ public interface ThrowableByteBinaryOperator extends ByteBinaryOperator {
         Objects.requireNonNull(clazz);
         return (left, right) -> {
             try {
-                return applyAsShortThrows(left, right);
+                return applyAsByteThrows(left, right);
             } catch (Exception e) {
                 X ex = clazz.newInstance();
                 ex.addSuppressed(e);
@@ -209,7 +236,7 @@ public interface ThrowableByteBinaryOperator extends ByteBinaryOperator {
         Objects.requireNonNull(fallback);
         return (left, right) -> {
             try {
-                return applyAsShortThrows(left, right);
+                return applyAsByteThrows(left, right);
             } catch (Exception ignored) {
                 return fallback.applyAsByte(left, right);
             }
@@ -228,7 +255,7 @@ public interface ThrowableByteBinaryOperator extends ByteBinaryOperator {
     default ByteBinaryOperator orReturn(byte value) {
         return (left, right) -> {
             try {
-                return applyAsShortThrows(left, right);
+                return applyAsByteThrows(left, right);
             } catch (Exception ignored) {
                 return value;
             }
@@ -250,7 +277,7 @@ public interface ThrowableByteBinaryOperator extends ByteBinaryOperator {
         Objects.requireNonNull(supplier);
         return (left, right) -> {
             try {
-                return applyAsShortThrows(left, right);
+                return applyAsByteThrows(left, right);
             } catch (Exception ignored) {
                 return supplier.getAsByte();
             }
@@ -268,7 +295,7 @@ public interface ThrowableByteBinaryOperator extends ByteBinaryOperator {
     default ByteBinaryOperator orReturnLeft() {
         return (left, right) -> {
             try {
-                return applyAsShortThrows(left, right);
+                return applyAsByteThrows(left, right);
             } catch (Exception ignored) {
                 return left;
             }
@@ -286,7 +313,7 @@ public interface ThrowableByteBinaryOperator extends ByteBinaryOperator {
     default ByteBinaryOperator orReturnRight() {
         return (left, right) -> {
             try {
-                return applyAsShortThrows(left, right);
+                return applyAsByteThrows(left, right);
             } catch (Exception ignored) {
                 return right;
             }

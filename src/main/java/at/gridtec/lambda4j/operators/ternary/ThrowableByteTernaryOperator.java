@@ -93,40 +93,40 @@ public interface ThrowableByteTernaryOperator extends ByteTernaryOperator {
     }
 
     /**
-     * Creates a {@link ThrowableByteTernaryOperator} which uses the left parameter only from the given {@link
+     * Creates a {@link ThrowableByteTernaryOperator} which uses the left parameter as argument for the given {@link
      * ThrowableByteUnaryOperator}.
      *
-     * @return Creates a {@code ThrowableByteTernaryOperator} which uses the left parameter only from the given {@code
-     * ThrowableByteUnaryOperator}.
+     * @return Creates a {@code ThrowableByteTernaryOperator} which uses the left parameter as argument for the given
+     * {@code ThrowableByteUnaryOperator}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static ThrowableByteTernaryOperator forLeft(final ThrowableByteUnaryOperator operator) {
+    static ThrowableByteTernaryOperator useLeft(final ThrowableByteUnaryOperator operator) {
         Objects.requireNonNull(operator);
         return (left, middle, right) -> operator.applyAsByte(left);
     }
 
     /**
-     * Creates a {@link ThrowableByteTernaryOperator} which uses the middle parameter only from the given {@link
+     * Creates a {@link ThrowableByteTernaryOperator} which uses the middle parameter as argument for the given {@link
      * ThrowableByteUnaryOperator}.
      *
-     * @return Creates a {@code ThrowableByteTernaryOperator} which uses the middle parameter only from the given {@code
-     * ThrowableByteUnaryOperator}.
+     * @return Creates a {@code ThrowableByteTernaryOperator} which uses the middle parameter as argument for the given
+     * {@code ThrowableByteUnaryOperator}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static ThrowableByteTernaryOperator forMiddle(final ThrowableByteUnaryOperator operator) {
+    static ThrowableByteTernaryOperator useMiddle(final ThrowableByteUnaryOperator operator) {
         Objects.requireNonNull(operator);
         return (left, middle, right) -> operator.applyAsByte(middle);
     }
 
     /**
-     * Creates a {@link ThrowableByteTernaryOperator} which uses the right parameter only from the given {@link
+     * Creates a {@link ThrowableByteTernaryOperator} which uses the right parameter as argument for the given {@link
      * ThrowableByteUnaryOperator}.
      *
-     * @return Creates a {@code ThrowableByteTernaryOperator} which uses the right parameter only from the given {@code
-     * ThrowableByteUnaryOperator}.
+     * @return Creates a {@code ThrowableByteTernaryOperator} which uses the right parameter as argument for the given
+     * {@code ThrowableByteUnaryOperator}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static ThrowableByteTernaryOperator forRight(final ThrowableByteUnaryOperator operator) {
+    static ThrowableByteTernaryOperator useRight(final ThrowableByteUnaryOperator operator) {
         Objects.requireNonNull(operator);
         return (left, middle, right) -> operator.applyAsByte(right);
     }

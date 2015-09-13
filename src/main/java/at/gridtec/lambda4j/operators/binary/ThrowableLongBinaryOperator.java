@@ -22,6 +22,7 @@ import java.util.Objects;
 import java.util.function.BinaryOperator;
 import java.util.function.LongBinaryOperator;
 import java.util.function.LongSupplier;
+import java.util.function.LongUnaryOperator;
 
 /**
  * This functional interface implements a {@link LongBinaryOperator} which is able to throw any {@link Exception}.
@@ -92,6 +93,32 @@ public interface ThrowableLongBinaryOperator extends LongBinaryOperator {
      */
     static ThrowableLongBinaryOperator constant(long ret) {
         return (left, right) -> ret;
+    }
+
+    /**
+     * Creates a {@link LongBinaryOperator} which uses the left parameter as argument for the given {@link
+     * LongUnaryOperator}.
+     *
+     * @return Creates a {@code LongBinaryOperator} which uses the left parameter as argument for the given {@code
+     * LongUnaryOperator}.
+     * @throws NullPointerException If the given argument is {@code null}
+     */
+    static LongBinaryOperator useLeft(final LongUnaryOperator operator) {
+        Objects.requireNonNull(operator);
+        return (left, right) -> operator.applyAsLong(left);
+    }
+
+    /**
+     * Creates a {@link LongBinaryOperator} which uses the right parameter as argument for the given {@link
+     * LongUnaryOperator}.
+     *
+     * @return Creates a {@code LongBinaryOperator} which uses the right parameter as argument for the given {@code
+     * LongUnaryOperator}.
+     * @throws NullPointerException If the given argument is {@code null}
+     */
+    static LongBinaryOperator useRight(final LongUnaryOperator operator) {
+        Objects.requireNonNull(operator);
+        return (left, right) -> operator.applyAsLong(right);
     }
 
     /**

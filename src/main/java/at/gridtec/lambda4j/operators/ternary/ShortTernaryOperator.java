@@ -42,40 +42,40 @@ public interface ShortTernaryOperator {
     }
 
     /**
-     * Creates a {@link ShortTernaryOperator} which uses the left parameter only from the given {@link
+     * Creates a {@link ShortTernaryOperator} which uses the left parameter as argument for the given {@link
      * ShortUnaryOperator}.
      *
-     * @return Creates a {@code ShortTernaryOperator} which uses the left parameter only from the given {@code
+     * @return Creates a {@code ShortTernaryOperator} which uses the left parameter as argument for the given {@code
      * ShortUnaryOperator}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static <T> ShortTernaryOperator forLeft(final ShortUnaryOperator operator) {
+    static ShortTernaryOperator useLeft(final ShortUnaryOperator operator) {
         Objects.requireNonNull(operator);
         return (left, middle, right) -> operator.applyAsShort(left);
     }
 
     /**
-     * Creates a {@link ShortTernaryOperator} which uses the middle parameter only from the given {@link
+     * Creates a {@link ShortTernaryOperator} which uses the middle parameter as argument for the given {@link
      * ShortUnaryOperator}.
      *
-     * @return Creates a {@code ShortTernaryOperator} which uses the middle parameter only from the given {@code
+     * @return Creates a {@code ShortTernaryOperator} which uses the middle parameter as argument for the given {@code
      * ShortUnaryOperator}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static <T> ShortTernaryOperator forMiddle(final ShortUnaryOperator operator) {
+    static ShortTernaryOperator useMiddle(final ShortUnaryOperator operator) {
         Objects.requireNonNull(operator);
         return (left, middle, right) -> operator.applyAsShort(middle);
     }
 
     /**
-     * Creates a {@link ShortTernaryOperator} which uses the right parameter only from the given {@link
+     * Creates a {@link ShortTernaryOperator} which uses the right parameter as argument for the given {@link
      * ShortUnaryOperator}.
      *
-     * @return Creates a {@code ShortTernaryOperator} which uses the right parameter only from the given {@code
+     * @return Creates a {@code ShortTernaryOperator} which uses the right parameter as argument for the given {@code
      * ShortUnaryOperator}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static <T> ShortTernaryOperator forRight(final ShortUnaryOperator operator) {
+    static ShortTernaryOperator useRight(final ShortUnaryOperator operator) {
         Objects.requireNonNull(operator);
         return (left, middle, right) -> operator.applyAsShort(right);
     }

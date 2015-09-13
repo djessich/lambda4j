@@ -22,6 +22,7 @@ import java.util.Objects;
 import java.util.function.BinaryOperator;
 import java.util.function.DoubleBinaryOperator;
 import java.util.function.DoubleSupplier;
+import java.util.function.DoubleUnaryOperator;
 
 /**
  * This functional interface implements a {@link DoubleBinaryOperator} which is able to throw any {@link Exception}.
@@ -92,6 +93,32 @@ public interface ThrowableDoubleBinaryOperator extends DoubleBinaryOperator {
      */
     static ThrowableDoubleBinaryOperator constant(double ret) {
         return (left, right) -> ret;
+    }
+
+    /**
+     * Creates a {@link DoubleBinaryOperator} which uses the left parameter as argument for the given {@link
+     * DoubleUnaryOperator}.
+     *
+     * @return Creates a {@code DoubleBinaryOperator} which uses the left parameter as argument for the given {@code
+     * DoubleUnaryOperator}.
+     * @throws NullPointerException If the given argument is {@code null}
+     */
+    static DoubleBinaryOperator useLeft(final DoubleUnaryOperator operator) {
+        Objects.requireNonNull(operator);
+        return (left, right) -> operator.applyAsDouble(left);
+    }
+
+    /**
+     * Creates a {@link DoubleBinaryOperator} which uses the right parameter as argument for the given {@link
+     * DoubleUnaryOperator}.
+     *
+     * @return Creates a {@code DoubleBinaryOperator} which uses the right parameter as argument for the given {@code
+     * DoubleUnaryOperator}.
+     * @throws NullPointerException If the given argument is {@code null}
+     */
+    static DoubleBinaryOperator useRight(final DoubleUnaryOperator operator) {
+        Objects.requireNonNull(operator);
+        return (left, right) -> operator.applyAsDouble(right);
     }
 
     /**

@@ -97,43 +97,43 @@ public interface ThrowableTernaryOperator<T> extends TernaryOperator<T> {
     }
 
     /**
-     * Creates a {@link ThrowableTernaryOperator} which uses the left parameter only from the given {@link
+     * Creates a {@link ThrowableTernaryOperator} which uses the left parameter as argument for the given {@link
      * ThrowableUnaryOperator}.
      *
      * @param <T> The type of argument to the operator
-     * @return Creates a {@code ThrowableTernaryOperator} which uses the left parameter only from the given {@code
+     * @return Creates a {@code ThrowableTernaryOperator} which uses the left parameter as argument for the given {@code
      * ThrowableUnaryOperator}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static <T> ThrowableTernaryOperator<T> forLeft(final ThrowableUnaryOperator<T> operator) {
+    static <T> ThrowableTernaryOperator<T> useLeft(final ThrowableUnaryOperator<T> operator) {
         Objects.requireNonNull(operator);
         return (t, u, v) -> operator.apply(t);
     }
 
     /**
-     * Creates a {@link ThrowableTernaryOperator} which uses the middle parameter only from the given {@link
+     * Creates a {@link ThrowableTernaryOperator} which uses the middle parameter as argument for the given {@link
      * ThrowableUnaryOperator}.
      *
      * @param <T> The type of argument to the operator
-     * @return Creates a {@code ThrowableTernaryOperator} which uses the middle parameter only from the given {@code
-     * ThrowableUnaryOperator}.
+     * @return Creates a {@code ThrowableTernaryOperator} which uses the middle parameter as argument for the given
+     * {@code ThrowableUnaryOperator}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static <T> ThrowableTernaryOperator<T> forMiddle(final ThrowableUnaryOperator<T> operator) {
+    static <T> ThrowableTernaryOperator<T> useMiddle(final ThrowableUnaryOperator<T> operator) {
         Objects.requireNonNull(operator);
         return (t, u, v) -> operator.apply(u);
     }
 
     /**
-     * Creates a {@link ThrowableTernaryOperator} which uses the right parameter only from the given {@link
+     * Creates a {@link ThrowableTernaryOperator} which uses the right parameter as argument for the given {@link
      * ThrowableUnaryOperator}.
      *
      * @param <T> The type of argument to the operator
-     * @return Creates a {@code ThrowableTernaryOperator} which uses the right parameter only from the given {@code
-     * ThrowableUnaryOperator}.
+     * @return Creates a {@code ThrowableTernaryOperator} which uses the right parameter as argument for the given
+     * {@code ThrowableUnaryOperator}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static <T> ThrowableTernaryOperator<T> forRight(final ThrowableUnaryOperator<T> operator) {
+    static <T> ThrowableTernaryOperator<T> useRight(final ThrowableUnaryOperator<T> operator) {
         Objects.requireNonNull(operator);
         return (t, u, v) -> operator.apply(v);
     }

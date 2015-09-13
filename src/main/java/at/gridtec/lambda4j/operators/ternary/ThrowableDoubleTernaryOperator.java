@@ -93,40 +93,40 @@ public interface ThrowableDoubleTernaryOperator extends DoubleTernaryOperator {
     }
 
     /**
-     * Creates a {@link ThrowableDoubleTernaryOperator} which uses the left parameter only from the given {@link
+     * Creates a {@link ThrowableDoubleTernaryOperator} which uses the left parameter as argument for the given {@link
      * ThrowableDoubleUnaryOperator}.
      *
-     * @return Creates a {@code ThrowableDoubleTernaryOperator} which uses the left parameter only from the given {@code
-     * ThrowableDoubleUnaryOperator}.
+     * @return Creates a {@code ThrowableDoubleTernaryOperator} which uses the left parameter as argument for the given
+     * {@code ThrowableDoubleUnaryOperator}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static ThrowableDoubleTernaryOperator forLeft(final ThrowableDoubleUnaryOperator operator) {
+    static ThrowableDoubleTernaryOperator useLeft(final ThrowableDoubleUnaryOperator operator) {
         Objects.requireNonNull(operator);
         return (left, middle, right) -> operator.applyAsDouble(left);
     }
 
     /**
-     * Creates a {@link ThrowableDoubleTernaryOperator} which uses the middle parameter only from the given {@link
+     * Creates a {@link ThrowableDoubleTernaryOperator} which uses the middle parameter as argument for the given {@link
      * ThrowableDoubleUnaryOperator}.
      *
-     * @return Creates a {@code ThrowableDoubleTernaryOperator} which uses the middle parameter only from the given
-     * {@code ThrowableDoubleUnaryOperator}.
+     * @return Creates a {@code ThrowableDoubleTernaryOperator} which uses the middle parameter as argument for the
+     * given {@code ThrowableDoubleUnaryOperator}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static ThrowableDoubleTernaryOperator forMiddle(final ThrowableDoubleUnaryOperator operator) {
+    static ThrowableDoubleTernaryOperator useMiddle(final ThrowableDoubleUnaryOperator operator) {
         Objects.requireNonNull(operator);
         return (left, middle, right) -> operator.applyAsDouble(middle);
     }
 
     /**
-     * Creates a {@link ThrowableDoubleTernaryOperator} which uses the right parameter only from the given {@link
+     * Creates a {@link ThrowableDoubleTernaryOperator} which uses the right parameter as argument for the given {@link
      * ThrowableDoubleUnaryOperator}.
      *
-     * @return Creates a {@code ThrowableDoubleTernaryOperator} which uses the right parameter only from the given
+     * @return Creates a {@code ThrowableDoubleTernaryOperator} which uses the right parameter as argument for the given
      * {@code ThrowableDoubleUnaryOperator}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static ThrowableDoubleTernaryOperator forRight(final ThrowableDoubleUnaryOperator operator) {
+    static ThrowableDoubleTernaryOperator useRight(final ThrowableDoubleUnaryOperator operator) {
         Objects.requireNonNull(operator);
         return (left, middle, right) -> operator.applyAsDouble(right);
     }

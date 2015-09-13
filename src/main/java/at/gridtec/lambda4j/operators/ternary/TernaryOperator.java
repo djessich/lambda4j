@@ -45,40 +45,42 @@ public interface TernaryOperator<T> extends TriFunction<T, T, T, T> {
     }
 
     /**
-     * Creates a {@link TernaryOperator} which uses the left parameter only from the given {@link UnaryOperator}.
+     * Creates a {@link TernaryOperator} which uses the left parameter as argument for the given {@link UnaryOperator}.
      *
      * @param <T> The type of argument to the operator
-     * @return Creates a {@code TernaryOperator} which uses the left parameter only from the given {@code
+     * @return Creates a {@code TernaryOperator} which uses the left parameter as argument for the given {@code
      * UnaryOperator}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static <T> TernaryOperator<T> forLeft(final UnaryOperator<T> operator) {
+    static <T> TernaryOperator<T> useLeft(final UnaryOperator<T> operator) {
         Objects.requireNonNull(operator);
         return (t, u, v) -> operator.apply(t);
     }
 
     /**
-     * Creates a {@link TernaryOperator} which uses the middle parameter only from the given {@link UnaryOperator}.
+     * Creates a {@link TernaryOperator} which uses the middle parameter as argument for the given {@link
+     * UnaryOperator}.
      *
      * @param <T> The type of argument to the operator
-     * @return Creates a {@code TernaryOperator} which uses the middle parameter only from the given {@code
+     * @return Creates a {@code TernaryOperator} which uses the middle parameter as argument for the given {@code
      * UnaryOperator}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static <T> TernaryOperator<T> forMiddle(final UnaryOperator<T> operator) {
+    static <T> TernaryOperator<T> useMiddle(final UnaryOperator<T> operator) {
         Objects.requireNonNull(operator);
         return (t, u, v) -> operator.apply(u);
     }
 
     /**
-     * Creates a {@link TernaryOperator} which uses the right parameter only from the given {@link UnaryOperator}.
+     * Creates a {@link TernaryOperator} which uses the right parameter as argument for the given {@link
+     * UnaryOperator}.
      *
      * @param <T> The type of argument to the operator
-     * @return Creates a {@code TernaryOperator} which uses the right parameter only from the given {@code
+     * @return Creates a {@code TernaryOperator} which uses the right parameter as argument for the given {@code
      * UnaryOperator}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static <T> TernaryOperator<T> forRight(final UnaryOperator<T> operator) {
+    static <T> TernaryOperator<T> useRight(final UnaryOperator<T> operator) {
         Objects.requireNonNull(operator);
         return (t, u, v) -> operator.apply(v);
     }

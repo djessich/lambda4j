@@ -44,6 +44,32 @@ public interface CharBinaryOperator {
     }
 
     /**
+     * Creates a {@link CharBinaryOperator} which uses the left parameter as argument for the given {@link
+     * CharUnaryOperator}.
+     *
+     * @return Creates a {@code CharBinaryOperator} which uses the left parameter as argument for the given {@code
+     * CharUnaryOperator}.
+     * @throws NullPointerException If the given argument is {@code null}
+     */
+    static CharBinaryOperator useLeft(final CharUnaryOperator operator) {
+        Objects.requireNonNull(operator);
+        return (left, right) -> operator.applyAsChar(left);
+    }
+
+    /**
+     * Creates a {@link CharBinaryOperator} which uses the right parameter as argument for the given {@link
+     * CharUnaryOperator}.
+     *
+     * @return Creates a {@code CharBinaryOperator} which uses the right parameter as argument for the given {@code
+     * CharUnaryOperator}.
+     * @throws NullPointerException If the given argument is {@code null}
+     */
+    static CharBinaryOperator useRight(final CharUnaryOperator operator) {
+        Objects.requireNonNull(operator);
+        return (left, right) -> operator.applyAsChar(right);
+    }
+
+    /**
      * Returns a {@link CharBinaryOperator} which returns the lesser of two elements according to {@code left &lt;=
      * right} operation.
      *

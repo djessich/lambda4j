@@ -21,6 +21,7 @@ import java.util.Comparator;
 import java.util.Objects;
 import java.util.function.BinaryOperator;
 import java.util.function.Supplier;
+import java.util.function.UnaryOperator;
 
 /**
  * This functional interface implements a {@link BinaryOperator} which is able to throw any {@link Exception}.
@@ -94,6 +95,32 @@ public interface ThrowableBinaryOperator<T> extends BinaryOperator<T> {
      */
     static <T> ThrowableBinaryOperator<T> constant(T r) {
         return (t, u) -> r;
+    }
+
+    /**
+     * Creates a {@link BinaryOperator} which uses the left parameter as argument for the given {@link UnaryOperator}.
+     *
+     * @param <T> The type of argument to the operator
+     * @return Creates a {@code BinaryOperator} which uses the left parameter as argument for the given {@code
+     * UnaryOperator}.
+     * @throws NullPointerException If the given argument is {@code null}
+     */
+    static <T> BinaryOperator<T> useLeft(final UnaryOperator<T> operator) {
+        Objects.requireNonNull(operator);
+        return (left, right) -> operator.apply(left);
+    }
+
+    /**
+     * Creates a {@link BinaryOperator} which uses the right parameter as argument for the given {@link UnaryOperator}.
+     *
+     * @param <T> The type of argument to the operator
+     * @return Creates a {@code BinaryOperator} which uses the right parameter as argument for the given {@code
+     * UnaryOperator}.
+     * @throws NullPointerException If the given argument is {@code null}
+     */
+    static <T> BinaryOperator<T> useRight(final UnaryOperator<T> operator) {
+        Objects.requireNonNull(operator);
+        return (left, right) -> operator.apply(right);
     }
 
     /**

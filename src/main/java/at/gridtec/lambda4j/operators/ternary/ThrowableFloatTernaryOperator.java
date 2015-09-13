@@ -93,40 +93,40 @@ public interface ThrowableFloatTernaryOperator extends FloatTernaryOperator {
     }
 
     /**
-     * Creates a {@link ThrowableFloatTernaryOperator} which uses the left parameter only from the given {@link
+     * Creates a {@link ThrowableFloatTernaryOperator} which uses the left parameter as argument for the given {@link
      * ThrowableFloatUnaryOperator}.
      *
-     * @return Creates a {@code ThrowableFloatTernaryOperator} which uses the left parameter only from the given {@code
-     * ThrowableFloatUnaryOperator}.
+     * @return Creates a {@code ThrowableFloatTernaryOperator} which uses the left parameter as argument for the given
+     * {@code ThrowableFloatUnaryOperator}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static ThrowableFloatTernaryOperator forLeft(final ThrowableFloatUnaryOperator operator) {
+    static ThrowableFloatTernaryOperator useLeft(final ThrowableFloatUnaryOperator operator) {
         Objects.requireNonNull(operator);
         return (left, middle, right) -> operator.applyAsFloat(left);
     }
 
     /**
-     * Creates a {@link ThrowableFloatTernaryOperator} which uses the middle parameter only from the given {@link
+     * Creates a {@link ThrowableFloatTernaryOperator} which uses the middle parameter as argument for the given {@link
      * ThrowableFloatUnaryOperator}.
      *
-     * @return Creates a {@code ThrowableFloatTernaryOperator} which uses the middle parameter only from the given
+     * @return Creates a {@code ThrowableFloatTernaryOperator} which uses the middle parameter as argument for the given
      * {@code ThrowableFloatUnaryOperator}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static ThrowableFloatTernaryOperator forMiddle(final ThrowableFloatUnaryOperator operator) {
+    static ThrowableFloatTernaryOperator useMiddle(final ThrowableFloatUnaryOperator operator) {
         Objects.requireNonNull(operator);
         return (left, middle, right) -> operator.applyAsFloat(middle);
     }
 
     /**
-     * Creates a {@link ThrowableFloatTernaryOperator} which uses the right parameter only from the given {@link
+     * Creates a {@link ThrowableFloatTernaryOperator} which uses the right parameter as argument for the given {@link
      * ThrowableFloatUnaryOperator}.
      *
-     * @return Creates a {@code ThrowableFloatTernaryOperator} which uses the right parameter only from the given {@code
-     * ThrowableFloatUnaryOperator}.
+     * @return Creates a {@code ThrowableFloatTernaryOperator} which uses the right parameter as argument for the given
+     * {@code ThrowableFloatUnaryOperator}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static ThrowableFloatTernaryOperator forRight(final ThrowableFloatUnaryOperator operator) {
+    static ThrowableFloatTernaryOperator useRight(final ThrowableFloatUnaryOperator operator) {
         Objects.requireNonNull(operator);
         return (left, middle, right) -> operator.applyAsFloat(right);
     }

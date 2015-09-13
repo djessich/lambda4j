@@ -93,40 +93,40 @@ public interface ThrowableLongTernaryOperator extends LongTernaryOperator {
     }
 
     /**
-     * Creates a {@link ThrowableLongTernaryOperator} which uses the left parameter only from the given {@link
+     * Creates a {@link ThrowableLongTernaryOperator} which uses the left parameter as argument for the given {@link
      * ThrowableLongUnaryOperator}.
      *
-     * @return Creates a {@code ThrowableLongTernaryOperator} which uses the left parameter only from the given {@code
-     * ThrowableLongUnaryOperator}.
+     * @return Creates a {@code ThrowableLongTernaryOperator} which uses the left parameter as argument for the given
+     * {@code ThrowableLongUnaryOperator}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static ThrowableLongTernaryOperator forLeft(final ThrowableLongUnaryOperator operator) {
+    static ThrowableLongTernaryOperator useLeft(final ThrowableLongUnaryOperator operator) {
         Objects.requireNonNull(operator);
         return (left, middle, right) -> operator.applyAsLong(left);
     }
 
     /**
-     * Creates a {@link ThrowableLongTernaryOperator} which uses the middle parameter only from the given {@link
+     * Creates a {@link ThrowableLongTernaryOperator} which uses the middle parameter as argument for the given {@link
      * ThrowableLongUnaryOperator}.
      *
-     * @return Creates a {@code ThrowableLongTernaryOperator} which uses the middle parameter only from the given {@code
-     * ThrowableLongUnaryOperator}.
+     * @return Creates a {@code ThrowableLongTernaryOperator} which uses the middle parameter as argument for the given
+     * {@code ThrowableLongUnaryOperator}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static ThrowableLongTernaryOperator forMiddle(final ThrowableLongUnaryOperator operator) {
+    static ThrowableLongTernaryOperator useMiddle(final ThrowableLongUnaryOperator operator) {
         Objects.requireNonNull(operator);
         return (left, middle, right) -> operator.applyAsLong(middle);
     }
 
     /**
-     * Creates a {@link ThrowableLongTernaryOperator} which uses the right parameter only from the given {@link
+     * Creates a {@link ThrowableLongTernaryOperator} which uses the right parameter as argument for the given {@link
      * ThrowableLongUnaryOperator}.
      *
-     * @return Creates a {@code ThrowableLongTernaryOperator} which uses the right parameter only from the given {@code
-     * ThrowableLongUnaryOperator}.
+     * @return Creates a {@code ThrowableLongTernaryOperator} which uses the right parameter as argument for the given
+     * {@code ThrowableLongUnaryOperator}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static ThrowableLongTernaryOperator forRight(final ThrowableLongUnaryOperator operator) {
+    static ThrowableLongTernaryOperator useRight(final ThrowableLongUnaryOperator operator) {
         Objects.requireNonNull(operator);
         return (left, middle, right) -> operator.applyAsLong(right);
     }

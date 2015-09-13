@@ -42,40 +42,40 @@ public interface CharTernaryOperator {
     }
 
     /**
-     * Creates a {@link CharTernaryOperator} which uses the left parameter only from the given {@link
+     * Creates a {@link CharTernaryOperator} which uses the left parameter as argument for the given {@link
      * CharUnaryOperator}.
      *
-     * @return Creates a {@code CharTernaryOperator} which uses the left parameter only from the given {@code
+     * @return Creates a {@code CharTernaryOperator} which uses the left parameter as argument for the given {@code
      * CharUnaryOperator}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static <T> CharTernaryOperator forLeft(final CharUnaryOperator operator) {
+    static CharTernaryOperator useLeft(final CharUnaryOperator operator) {
         Objects.requireNonNull(operator);
         return (left, middle, right) -> operator.applyAsChar(left);
     }
 
     /**
-     * Creates a {@link CharTernaryOperator} which uses the middle parameter only from the given {@link
+     * Creates a {@link CharTernaryOperator} which uses the middle parameter as argument for the given {@link
      * CharUnaryOperator}.
      *
-     * @return Creates a {@code CharTernaryOperator} which uses the middle parameter only from the given {@code
+     * @return Creates a {@code CharTernaryOperator} which uses the middle parameter as argument for the given {@code
      * CharUnaryOperator}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static <T> CharTernaryOperator forMiddle(final CharUnaryOperator operator) {
+    static CharTernaryOperator useMiddle(final CharUnaryOperator operator) {
         Objects.requireNonNull(operator);
         return (left, middle, right) -> operator.applyAsChar(middle);
     }
 
     /**
-     * Creates a {@link CharTernaryOperator} which uses the right parameter only from the given {@link
+     * Creates a {@link CharTernaryOperator} which uses the right parameter as argument for the given {@link
      * CharUnaryOperator}.
      *
-     * @return Creates a {@code CharTernaryOperator} which uses the right parameter only from the given {@code
+     * @return Creates a {@code CharTernaryOperator} which uses the right parameter as argument for the given {@code
      * CharUnaryOperator}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static <T> CharTernaryOperator forRight(final CharUnaryOperator operator) {
+    static CharTernaryOperator useRight(final CharUnaryOperator operator) {
         Objects.requireNonNull(operator);
         return (left, middle, right) -> operator.applyAsChar(right);
     }

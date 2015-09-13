@@ -42,40 +42,40 @@ public interface FloatTernaryOperator {
     }
 
     /**
-     * Creates a {@link FloatTernaryOperator} which uses the left parameter only from the given {@link
+     * Creates a {@link FloatTernaryOperator} which uses the left parameter as argument for the given {@link
      * FloatUnaryOperator}.
      *
-     * @return Creates a {@code FloatTernaryOperator} which uses the left parameter only from the given {@code
+     * @return Creates a {@code FloatTernaryOperator} which uses the left parameter as argument for the given {@code
      * FloatUnaryOperator}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static <T> FloatTernaryOperator forLeft(final FloatUnaryOperator operator) {
+    static FloatTernaryOperator useLeft(final FloatUnaryOperator operator) {
         Objects.requireNonNull(operator);
         return (left, middle, right) -> operator.applyAsFloat(left);
     }
 
     /**
-     * Creates a {@link FloatTernaryOperator} which uses the middle parameter only from the given {@link
+     * Creates a {@link FloatTernaryOperator} which uses the middle parameter as argument for the given {@link
      * FloatUnaryOperator}.
      *
-     * @return Creates a {@code FloatTernaryOperator} which uses the middle parameter only from the given {@code
+     * @return Creates a {@code FloatTernaryOperator} which uses the middle parameter as argument for the given {@code
      * FloatUnaryOperator}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static <T> FloatTernaryOperator forMiddle(final FloatUnaryOperator operator) {
+    static FloatTernaryOperator useMiddle(final FloatUnaryOperator operator) {
         Objects.requireNonNull(operator);
         return (left, middle, right) -> operator.applyAsFloat(middle);
     }
 
     /**
-     * Creates a {@link FloatTernaryOperator} which uses the right parameter only from the given {@link
+     * Creates a {@link FloatTernaryOperator} which uses the right parameter as argument for the given {@link
      * FloatUnaryOperator}.
      *
-     * @return Creates a {@code FloatTernaryOperator} which uses the right parameter only from the given {@code
+     * @return Creates a {@code FloatTernaryOperator} which uses the right parameter as argument for the given {@code
      * FloatUnaryOperator}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static <T> FloatTernaryOperator forRight(final FloatUnaryOperator operator) {
+    static FloatTernaryOperator useRight(final FloatUnaryOperator operator) {
         Objects.requireNonNull(operator);
         return (left, middle, right) -> operator.applyAsFloat(right);
     }

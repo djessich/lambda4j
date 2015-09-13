@@ -44,6 +44,32 @@ public interface FloatBinaryOperator {
     }
 
     /**
+     * Creates a {@link FloatBinaryOperator} which uses the left parameter as argument for the given {@link
+     * FloatUnaryOperator}.
+     *
+     * @return Creates a {@code FloatBinaryOperator} which uses the left parameter as argument for the given {@code
+     * FloatUnaryOperator}.
+     * @throws NullPointerException If the given argument is {@code null}
+     */
+    static FloatBinaryOperator useLeft(final FloatUnaryOperator operator) {
+        Objects.requireNonNull(operator);
+        return (left, right) -> operator.applyAsFloat(left);
+    }
+
+    /**
+     * Creates a {@link FloatBinaryOperator} which uses the right parameter as argument for the given {@link
+     * FloatUnaryOperator}.
+     *
+     * @return Creates a {@code FloatBinaryOperator} which uses the right parameter as argument for the given {@code
+     * FloatUnaryOperator}.
+     * @throws NullPointerException If the given argument is {@code null}
+     */
+    static FloatBinaryOperator useRight(final FloatUnaryOperator operator) {
+        Objects.requireNonNull(operator);
+        return (left, right) -> operator.applyAsFloat(right);
+    }
+
+    /**
      * Returns a {@link FloatBinaryOperator} which returns the lesser of two elements according to {@link
      * Float#min(float, float)} operation.
      *

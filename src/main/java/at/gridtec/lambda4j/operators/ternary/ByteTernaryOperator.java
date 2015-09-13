@@ -42,40 +42,40 @@ public interface ByteTernaryOperator {
     }
 
     /**
-     * Creates a {@link ByteTernaryOperator} which uses the left parameter only from the given {@link
+     * Creates a {@link ByteTernaryOperator} which uses the left parameter as argument for the given {@link
      * ByteUnaryOperator}.
      *
-     * @return Creates a {@code ByteTernaryOperator} which uses the left parameter only from the given {@code
+     * @return Creates a {@code ByteTernaryOperator} which uses the left parameter as argument for the given {@code
      * ByteUnaryOperator}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static <T> ByteTernaryOperator forLeft(final ByteUnaryOperator operator) {
+    static ByteTernaryOperator useLeft(final ByteUnaryOperator operator) {
         Objects.requireNonNull(operator);
         return (left, middle, right) -> operator.applyAsByte(left);
     }
 
     /**
-     * Creates a {@link ByteTernaryOperator} which uses the middle parameter only from the given {@link
+     * Creates a {@link ByteTernaryOperator} which uses the middle parameter as argument for the given {@link
      * ByteUnaryOperator}.
      *
-     * @return Creates a {@code ByteTernaryOperator} which uses the middle parameter only from the given {@code
+     * @return Creates a {@code ByteTernaryOperator} which uses the middle parameter as argument for the given {@code
      * ByteUnaryOperator}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static <T> ByteTernaryOperator forMiddle(final ByteUnaryOperator operator) {
+    static ByteTernaryOperator useMiddle(final ByteUnaryOperator operator) {
         Objects.requireNonNull(operator);
         return (left, middle, right) -> operator.applyAsByte(middle);
     }
 
     /**
-     * Creates a {@link ByteTernaryOperator} which uses the right parameter only from the given {@link
+     * Creates a {@link ByteTernaryOperator} which uses the right parameter as argument for the given {@link
      * ByteUnaryOperator}.
      *
-     * @return Creates a {@code ByteTernaryOperator} which uses the right parameter only from the given {@code
+     * @return Creates a {@code ByteTernaryOperator} which uses the right parameter as argument for the given {@code
      * ByteUnaryOperator}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static <T> ByteTernaryOperator forRight(final ByteUnaryOperator operator) {
+    static ByteTernaryOperator useRight(final ByteUnaryOperator operator) {
         Objects.requireNonNull(operator);
         return (left, middle, right) -> operator.applyAsByte(right);
     }

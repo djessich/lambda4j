@@ -15,6 +15,7 @@
  */
 package at.gridtec.lambda4j.operators.binary;
 
+import at.gridtec.lambda4j.operators.unary.ShortUnaryOperator;
 import at.gridtec.lambda4j.supplier.ShortSupplier;
 import at.gridtec.lambda4j.util.ThrowableUtils;
 
@@ -91,6 +92,32 @@ public interface ThrowableShortBinaryOperator extends ShortBinaryOperator {
      */
     static ThrowableShortBinaryOperator constant(short ret) {
         return (left, right) -> ret;
+    }
+
+    /**
+     * Creates a {@link ShortBinaryOperator} which uses the left parameter as argument for the given {@link
+     * ShortUnaryOperator}.
+     *
+     * @return Creates a {@code ShortBinaryOperator} which uses the left parameter as argument for the given {@code
+     * ShortUnaryOperator}.
+     * @throws NullPointerException If the given argument is {@code null}
+     */
+    static ShortBinaryOperator useLeft(final ShortUnaryOperator operator) {
+        Objects.requireNonNull(operator);
+        return (left, right) -> operator.applyAsShort(left);
+    }
+
+    /**
+     * Creates a {@link ShortBinaryOperator} which uses the right parameter as argument for the given {@link
+     * ShortUnaryOperator}.
+     *
+     * @return Creates a {@code ShortBinaryOperator} which uses the right parameter as argument for the given {@code
+     * ShortUnaryOperator}.
+     * @throws NullPointerException If the given argument is {@code null}
+     */
+    static ShortBinaryOperator useRight(final ShortUnaryOperator operator) {
+        Objects.requireNonNull(operator);
+        return (left, right) -> operator.applyAsShort(right);
     }
 
     /**

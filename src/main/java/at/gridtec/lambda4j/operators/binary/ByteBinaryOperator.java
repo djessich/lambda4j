@@ -44,6 +44,32 @@ public interface ByteBinaryOperator {
     }
 
     /**
+     * Creates a {@link ByteBinaryOperator} which uses the left parameter as argument for the given {@link
+     * ByteUnaryOperator}.
+     *
+     * @return Creates a {@code ByteBinaryOperator} which uses the left parameter as argument for the given {@code
+     * ByteUnaryOperator}.
+     * @throws NullPointerException If the given argument is {@code null}
+     */
+    static ByteBinaryOperator useLeft(final ByteUnaryOperator operator) {
+        Objects.requireNonNull(operator);
+        return (left, right) -> operator.applyAsByte(left);
+    }
+
+    /**
+     * Creates a {@link ByteBinaryOperator} which uses the right parameter as argument for the given {@link
+     * ByteUnaryOperator}.
+     *
+     * @return Creates a {@code ByteBinaryOperator} which uses the right parameter as argument for the given {@code
+     * ByteUnaryOperator}.
+     * @throws NullPointerException If the given argument is {@code null}
+     */
+    static ByteBinaryOperator useRight(final ByteUnaryOperator operator) {
+        Objects.requireNonNull(operator);
+        return (left, right) -> operator.applyAsByte(right);
+    }
+
+    /**
      * Returns a {@link ByteBinaryOperator} which returns the lesser of two elements according to {@code left &lt;=
      * right} operation.
      *

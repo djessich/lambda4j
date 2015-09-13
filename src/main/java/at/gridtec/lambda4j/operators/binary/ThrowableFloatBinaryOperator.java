@@ -15,6 +15,7 @@
  */
 package at.gridtec.lambda4j.operators.binary;
 
+import at.gridtec.lambda4j.operators.unary.FloatUnaryOperator;
 import at.gridtec.lambda4j.supplier.FloatSupplier;
 import at.gridtec.lambda4j.util.ThrowableUtils;
 
@@ -45,7 +46,7 @@ import java.util.function.BinaryOperator;
  * declaration in the <em>throws</em> clause. The checked exception will behave just like a normal <b>unchecked</b>
  * exception due to sneaky throwing.
  * <p>
- * This is a {@link FunctionalInterface} whose functional method is {@link #applyAsShortThrows(float, float)}.
+ * This is a {@link FunctionalInterface} whose functional method is {@link #applyAsFloatThrows(float, float)}.
  *
  * @apiNote This is a throwable JRE lambda
  * @see BinaryOperator
@@ -94,6 +95,32 @@ public interface ThrowableFloatBinaryOperator extends FloatBinaryOperator {
     }
 
     /**
+     * Creates a {@link FloatBinaryOperator} which uses the left parameter as argument for the given {@link
+     * FloatUnaryOperator}.
+     *
+     * @return Creates a {@code FloatBinaryOperator} which uses the left parameter as argument for the given {@code
+     * FloatUnaryOperator}.
+     * @throws NullPointerException If the given argument is {@code null}
+     */
+    static FloatBinaryOperator useLeft(final FloatUnaryOperator operator) {
+        Objects.requireNonNull(operator);
+        return (left, right) -> operator.applyAsFloat(left);
+    }
+
+    /**
+     * Creates a {@link FloatBinaryOperator} which uses the right parameter as argument for the given {@link
+     * FloatUnaryOperator}.
+     *
+     * @return Creates a {@code FloatBinaryOperator} which uses the right parameter as argument for the given {@code
+     * FloatUnaryOperator}.
+     * @throws NullPointerException If the given argument is {@code null}
+     */
+    static FloatBinaryOperator useRight(final FloatUnaryOperator operator) {
+        Objects.requireNonNull(operator);
+        return (left, right) -> operator.applyAsFloat(right);
+    }
+
+    /**
      * Returns a {@link ThrowableFloatBinaryOperator} which returns the lesser of two elements according to {@code left
      * &lt;= right} operation.
      *
@@ -127,11 +154,11 @@ public interface ThrowableFloatBinaryOperator extends FloatBinaryOperator {
      * @return The return value from the operator.
      * @throws Exception Any exception from this functions action
      */
-    float applyAsShortThrows(float left, float right) throws Exception;
+    float applyAsFloatThrows(float left, float right) throws Exception;
 
     /**
      * Overrides the {@link FloatBinaryOperator#applyAsFloat(float, float)} method by using a redefinition as default
-     * method. It calls the {@link #applyAsShortThrows(float, float)} method of this interface and catches the thrown
+     * method. It calls the {@link #applyAsFloatThrows(float, float)} method of this interface and catches the thrown
      * {@link Exception}s from it. If it is of type {@link RuntimeException}, the exception is rethrown. Other throwable
      * types are sneakily thrown.
      *
@@ -143,7 +170,7 @@ public interface ThrowableFloatBinaryOperator extends FloatBinaryOperator {
     @Override
     default float applyAsFloat(float left, float right) {
         try {
-            return applyAsShortThrows(left, right);
+            return applyAsFloatThrows(left, right);
         } catch (RuntimeException e) {
             throw e;
         } catch (Exception e) {
@@ -165,9 +192,9 @@ public interface ThrowableFloatBinaryOperator extends FloatBinaryOperator {
         Objects.requireNonNull(other);
         return (left, right) -> {
             try {
-                return applyAsShortThrows(left, right);
+                return applyAsFloatThrows(left, right);
             } catch (Exception ignored) {
-                return other.applyAsShortThrows(left, right);
+                return other.applyAsFloatThrows(left, right);
             }
         };
     }
@@ -190,7 +217,7 @@ public interface ThrowableFloatBinaryOperator extends FloatBinaryOperator {
         Objects.requireNonNull(clazz);
         return (left, right) -> {
             try {
-                return applyAsShortThrows(left, right);
+                return applyAsFloatThrows(left, right);
             } catch (Exception e) {
                 X ex = clazz.newInstance();
                 ex.addSuppressed(e);
@@ -213,7 +240,7 @@ public interface ThrowableFloatBinaryOperator extends FloatBinaryOperator {
         Objects.requireNonNull(fallback);
         return (left, right) -> {
             try {
-                return applyAsShortThrows(left, right);
+                return applyAsFloatThrows(left, right);
             } catch (Exception ignored) {
                 return fallback.applyAsFloat(left, right);
             }
@@ -232,7 +259,7 @@ public interface ThrowableFloatBinaryOperator extends FloatBinaryOperator {
     default FloatBinaryOperator orReturn(float value) {
         return (left, right) -> {
             try {
-                return applyAsShortThrows(left, right);
+                return applyAsFloatThrows(left, right);
             } catch (Exception ignored) {
                 return value;
             }
@@ -254,7 +281,7 @@ public interface ThrowableFloatBinaryOperator extends FloatBinaryOperator {
         Objects.requireNonNull(supplier);
         return (left, right) -> {
             try {
-                return applyAsShortThrows(left, right);
+                return applyAsFloatThrows(left, right);
             } catch (Exception ignored) {
                 return supplier.getAsFloat();
             }
@@ -272,7 +299,7 @@ public interface ThrowableFloatBinaryOperator extends FloatBinaryOperator {
     default FloatBinaryOperator orReturnLeft() {
         return (left, right) -> {
             try {
-                return applyAsShortThrows(left, right);
+                return applyAsFloatThrows(left, right);
             } catch (Exception ignored) {
                 return left;
             }
@@ -290,7 +317,7 @@ public interface ThrowableFloatBinaryOperator extends FloatBinaryOperator {
     default FloatBinaryOperator orReturnRight() {
         return (left, right) -> {
             try {
-                return applyAsShortThrows(left, right);
+                return applyAsFloatThrows(left, right);
             } catch (Exception ignored) {
                 return right;
             }

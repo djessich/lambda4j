@@ -41,40 +41,40 @@ public interface LongTernaryOperator {
     }
 
     /**
-     * Creates a {@link LongTernaryOperator} which uses the left parameter only from the given {@link
+     * Creates a {@link LongTernaryOperator} which uses the left parameter as argument for the given {@link
      * LongUnaryOperator}.
      *
-     * @return Creates a {@code LongTernaryOperator} which uses the left parameter only from the given {@code
+     * @return Creates a {@code LongTernaryOperator} which uses the left parameter as argument for the given {@code
      * LongUnaryOperator}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static <T> LongTernaryOperator forLeft(final LongUnaryOperator operator) {
+    static LongTernaryOperator useLeft(final LongUnaryOperator operator) {
         Objects.requireNonNull(operator);
         return (left, middle, right) -> operator.applyAsLong(left);
     }
 
     /**
-     * Creates a {@link LongTernaryOperator} which uses the middle parameter only from the given {@link
+     * Creates a {@link LongTernaryOperator} which uses the middle parameter as argument for the given {@link
      * LongUnaryOperator}.
      *
-     * @return Creates a {@code LongTernaryOperator} which uses the middle parameter only from the given {@code
+     * @return Creates a {@code LongTernaryOperator} which uses the middle parameter as argument for the given {@code
      * LongUnaryOperator}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static <T> LongTernaryOperator forMiddle(final LongUnaryOperator operator) {
+    static LongTernaryOperator useMiddle(final LongUnaryOperator operator) {
         Objects.requireNonNull(operator);
         return (left, middle, right) -> operator.applyAsLong(middle);
     }
 
     /**
-     * Creates a {@link LongTernaryOperator} which uses the right parameter only from the given {@link
+     * Creates a {@link LongTernaryOperator} which uses the right parameter as argument for the given {@link
      * LongUnaryOperator}.
      *
-     * @return Creates a {@code LongTernaryOperator} which uses the right parameter only from the given {@code
+     * @return Creates a {@code LongTernaryOperator} which uses the right parameter as argument for the given {@code
      * LongUnaryOperator}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static <T> LongTernaryOperator forRight(final LongUnaryOperator operator) {
+    static LongTernaryOperator useRight(final LongUnaryOperator operator) {
         Objects.requireNonNull(operator);
         return (left, middle, right) -> operator.applyAsLong(right);
     }

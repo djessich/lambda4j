@@ -22,6 +22,7 @@ import java.util.Objects;
 import java.util.function.BinaryOperator;
 import java.util.function.IntBinaryOperator;
 import java.util.function.IntSupplier;
+import java.util.function.IntUnaryOperator;
 
 /**
  * This functional interface implements a {@link IntBinaryOperator} which is able to throw any {@link Exception}.
@@ -92,6 +93,32 @@ public interface ThrowableIntBinaryOperator extends IntBinaryOperator {
      */
     static ThrowableIntBinaryOperator constant(int ret) {
         return (left, right) -> ret;
+    }
+
+    /**
+     * Creates a {@link IntBinaryOperator} which uses the left parameter as argument for the given {@link
+     * IntUnaryOperator}.
+     *
+     * @return Creates a {@code IntBinaryOperator} which uses the left parameter as argument for the given {@code
+     * IntUnaryOperator}.
+     * @throws NullPointerException If the given argument is {@code null}
+     */
+    static IntBinaryOperator useLeft(final IntUnaryOperator operator) {
+        Objects.requireNonNull(operator);
+        return (left, right) -> operator.applyAsInt(left);
+    }
+
+    /**
+     * Creates a {@link IntBinaryOperator} which uses the right parameter as argument for the given {@link
+     * IntUnaryOperator}.
+     *
+     * @return Creates a {@code IntBinaryOperator} which uses the right parameter as argument for the given {@code
+     * IntUnaryOperator}.
+     * @throws NullPointerException If the given argument is {@code null}
+     */
+    static IntBinaryOperator useRight(final IntUnaryOperator operator) {
+        Objects.requireNonNull(operator);
+        return (left, right) -> operator.applyAsInt(right);
     }
 
     /**

@@ -41,39 +41,40 @@ public interface IntTernaryOperator {
     }
 
     /**
-     * Creates a {@link IntTernaryOperator} which uses the left parameter only from the given {@link IntUnaryOperator}.
+     * Creates a {@link IntTernaryOperator} which uses the left parameter as argument for the given {@link
+     * IntUnaryOperator}.
      *
-     * @return Creates a {@code IntTernaryOperator} which uses the left parameter only from the given {@code
+     * @return Creates a {@code IntTernaryOperator} which uses the left parameter as argument for the given {@code
      * IntUnaryOperator}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static <T> IntTernaryOperator forLeft(final IntUnaryOperator operator) {
+    static IntTernaryOperator useLeft(final IntUnaryOperator operator) {
         Objects.requireNonNull(operator);
         return (left, middle, right) -> operator.applyAsInt(left);
     }
 
     /**
-     * Creates a {@link IntTernaryOperator} which uses the middle parameter only from the given {@link
+     * Creates a {@link IntTernaryOperator} which uses the middle parameter as argument for the given {@link
      * IntUnaryOperator}.
      *
-     * @return Creates a {@code IntTernaryOperator} which uses the middle parameter only from the given {@code
+     * @return Creates a {@code IntTernaryOperator} which uses the middle parameter as argument for the given {@code
      * IntUnaryOperator}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static <T> IntTernaryOperator forMiddle(final IntUnaryOperator operator) {
+    static IntTernaryOperator useMiddle(final IntUnaryOperator operator) {
         Objects.requireNonNull(operator);
         return (left, middle, right) -> operator.applyAsInt(middle);
     }
 
     /**
-     * Creates a {@link IntTernaryOperator} which uses the right parameter only from the given {@link
+     * Creates a {@link IntTernaryOperator} which uses the right parameter as argument for the given {@link
      * IntUnaryOperator}.
      *
-     * @return Creates a {@code IntTernaryOperator} which uses the right parameter only from the given {@code
+     * @return Creates a {@code IntTernaryOperator} which uses the right parameter as argument for the given {@code
      * IntUnaryOperator}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static <T> IntTernaryOperator forRight(final IntUnaryOperator operator) {
+    static IntTernaryOperator useRight(final IntUnaryOperator operator) {
         Objects.requireNonNull(operator);
         return (left, middle, right) -> operator.applyAsInt(right);
     }

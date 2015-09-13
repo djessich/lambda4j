@@ -41,40 +41,40 @@ public interface DoubleTernaryOperator {
     }
 
     /**
-     * Creates a {@link DoubleTernaryOperator} which uses the left parameter only from the given {@link
+     * Creates a {@link DoubleTernaryOperator} which uses the left parameter as argument for the given {@link
      * DoubleUnaryOperator}.
      *
-     * @return Creates a {@code DoubleTernaryOperator} which uses the left parameter only from the given {@code
+     * @return Creates a {@code DoubleTernaryOperator} which uses the left parameter as argument for the given {@code
      * DoubleUnaryOperator}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static <T> DoubleTernaryOperator forLeft(final DoubleUnaryOperator operator) {
+    static DoubleTernaryOperator useLeft(final DoubleUnaryOperator operator) {
         Objects.requireNonNull(operator);
         return (left, middle, right) -> operator.applyAsDouble(left);
     }
 
     /**
-     * Creates a {@link DoubleTernaryOperator} which uses the middle parameter only from the given {@link
+     * Creates a {@link DoubleTernaryOperator} which uses the middle parameter as argument for the given {@link
      * DoubleUnaryOperator}.
      *
-     * @return Creates a {@code DoubleTernaryOperator} which uses the middle parameter only from the given {@code
+     * @return Creates a {@code DoubleTernaryOperator} which uses the middle parameter as argument for the given {@code
      * DoubleUnaryOperator}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static <T> DoubleTernaryOperator forMiddle(final DoubleUnaryOperator operator) {
+    static DoubleTernaryOperator useMiddle(final DoubleUnaryOperator operator) {
         Objects.requireNonNull(operator);
         return (left, middle, right) -> operator.applyAsDouble(middle);
     }
 
     /**
-     * Creates a {@link DoubleTernaryOperator} which uses the right parameter only from the given {@link
+     * Creates a {@link DoubleTernaryOperator} which uses the right parameter as argument for the given {@link
      * DoubleUnaryOperator}.
      *
-     * @return Creates a {@code DoubleTernaryOperator} which uses the right parameter only from the given {@code
+     * @return Creates a {@code DoubleTernaryOperator} which uses the right parameter as argument for the given {@code
      * DoubleUnaryOperator}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static <T> DoubleTernaryOperator forRight(final DoubleUnaryOperator operator) {
+    static DoubleTernaryOperator useRight(final DoubleUnaryOperator operator) {
         Objects.requireNonNull(operator);
         return (left, middle, right) -> operator.applyAsDouble(right);
     }

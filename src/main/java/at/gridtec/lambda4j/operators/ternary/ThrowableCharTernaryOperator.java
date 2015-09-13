@@ -93,40 +93,40 @@ public interface ThrowableCharTernaryOperator extends CharTernaryOperator {
     }
 
     /**
-     * Creates a {@link ThrowableCharTernaryOperator} which uses the left parameter only from the given {@link
+     * Creates a {@link ThrowableCharTernaryOperator} which uses the left parameter as argument for the given {@link
      * ThrowableCharUnaryOperator}.
      *
-     * @return Creates a {@code ThrowableCharTernaryOperator} which uses the left parameter only from the given {@code
-     * ThrowableCharUnaryOperator}.
+     * @return Creates a {@code ThrowableCharTernaryOperator} which uses the left parameter as argument for the given
+     * {@code ThrowableCharUnaryOperator}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static ThrowableCharTernaryOperator forLeft(final ThrowableCharUnaryOperator operator) {
+    static ThrowableCharTernaryOperator useLeft(final ThrowableCharUnaryOperator operator) {
         Objects.requireNonNull(operator);
         return (left, middle, right) -> operator.applyAsChar(left);
     }
 
     /**
-     * Creates a {@link ThrowableCharTernaryOperator} which uses the middle parameter only from the given {@link
+     * Creates a {@link ThrowableCharTernaryOperator} which uses the middle parameter as argument for the given {@link
      * ThrowableCharUnaryOperator}.
      *
-     * @return Creates a {@code ThrowableCharTernaryOperator} which uses the middle parameter only from the given {@code
-     * ThrowableCharUnaryOperator}.
+     * @return Creates a {@code ThrowableCharTernaryOperator} which uses the middle parameter as argument for the given
+     * {@code ThrowableCharUnaryOperator}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static ThrowableCharTernaryOperator forMiddle(final ThrowableCharUnaryOperator operator) {
+    static ThrowableCharTernaryOperator useMiddle(final ThrowableCharUnaryOperator operator) {
         Objects.requireNonNull(operator);
         return (left, middle, right) -> operator.applyAsChar(middle);
     }
 
     /**
-     * Creates a {@link ThrowableCharTernaryOperator} which uses the right parameter only from the given {@link
+     * Creates a {@link ThrowableCharTernaryOperator} which uses the right parameter as argument for the given {@link
      * ThrowableCharUnaryOperator}.
      *
-     * @return Creates a {@code ThrowableCharTernaryOperator} which uses the right parameter only from the given {@code
-     * ThrowableCharUnaryOperator}.
+     * @return Creates a {@code ThrowableCharTernaryOperator} which uses the right parameter as argument for the given
+     * {@code ThrowableCharUnaryOperator}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static ThrowableCharTernaryOperator forRight(final ThrowableCharUnaryOperator operator) {
+    static ThrowableCharTernaryOperator useRight(final ThrowableCharUnaryOperator operator) {
         Objects.requireNonNull(operator);
         return (left, middle, right) -> operator.applyAsChar(right);
     }
