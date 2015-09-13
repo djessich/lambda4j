@@ -49,7 +49,7 @@ public interface CharTernaryOperator {
      * CharUnaryOperator}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static CharTernaryOperator useLeft(final CharUnaryOperator operator) {
+    static CharTernaryOperator onlyLeft(final CharUnaryOperator operator) {
         Objects.requireNonNull(operator);
         return (left, middle, right) -> operator.applyAsChar(left);
     }
@@ -62,7 +62,7 @@ public interface CharTernaryOperator {
      * CharUnaryOperator}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static CharTernaryOperator useMiddle(final CharUnaryOperator operator) {
+    static CharTernaryOperator onlyMiddle(final CharUnaryOperator operator) {
         Objects.requireNonNull(operator);
         return (left, middle, right) -> operator.applyAsChar(middle);
     }
@@ -75,7 +75,7 @@ public interface CharTernaryOperator {
      * CharUnaryOperator}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static CharTernaryOperator useRight(final CharUnaryOperator operator) {
+    static CharTernaryOperator onlyRight(final CharUnaryOperator operator) {
         Objects.requireNonNull(operator);
         return (left, middle, right) -> operator.applyAsChar(right);
     }

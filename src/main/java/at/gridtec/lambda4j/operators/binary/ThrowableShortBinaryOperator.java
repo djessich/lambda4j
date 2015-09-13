@@ -95,32 +95,6 @@ public interface ThrowableShortBinaryOperator extends ShortBinaryOperator {
     }
 
     /**
-     * Creates a {@link ShortBinaryOperator} which uses the left parameter as argument for the given {@link
-     * ShortUnaryOperator}.
-     *
-     * @return Creates a {@code ShortBinaryOperator} which uses the left parameter as argument for the given {@code
-     * ShortUnaryOperator}.
-     * @throws NullPointerException If the given argument is {@code null}
-     */
-    static ShortBinaryOperator useLeft(final ShortUnaryOperator operator) {
-        Objects.requireNonNull(operator);
-        return (left, right) -> operator.applyAsShort(left);
-    }
-
-    /**
-     * Creates a {@link ShortBinaryOperator} which uses the right parameter as argument for the given {@link
-     * ShortUnaryOperator}.
-     *
-     * @return Creates a {@code ShortBinaryOperator} which uses the right parameter as argument for the given {@code
-     * ShortUnaryOperator}.
-     * @throws NullPointerException If the given argument is {@code null}
-     */
-    static ShortBinaryOperator useRight(final ShortUnaryOperator operator) {
-        Objects.requireNonNull(operator);
-        return (left, right) -> operator.applyAsShort(right);
-    }
-
-    /**
      * Returns a {@link ThrowableShortBinaryOperator} which returns the lesser of two elements according to {@code left
      * &lt;= right} operation.
      *
@@ -140,6 +114,32 @@ public interface ThrowableShortBinaryOperator extends ShortBinaryOperator {
      */
     static ThrowableShortBinaryOperator max() {
         return (left, right) -> (left >= right) ? left : right;
+    }
+
+    /**
+     * Creates a {@link ShortBinaryOperator} which uses the left parameter as argument for the given {@link
+     * ShortUnaryOperator}.
+     *
+     * @return Creates a {@code ShortBinaryOperator} which uses the left parameter as argument for the given {@code
+     * ShortUnaryOperator}.
+     * @throws NullPointerException If the given argument is {@code null}
+     */
+    static ShortBinaryOperator onlyLeft(final ShortUnaryOperator operator) {
+        Objects.requireNonNull(operator);
+        return (left, right) -> operator.applyAsShort(left);
+    }
+
+    /**
+     * Creates a {@link ShortBinaryOperator} which uses the right parameter as argument for the given {@link
+     * ShortUnaryOperator}.
+     *
+     * @return Creates a {@code ShortBinaryOperator} which uses the right parameter as argument for the given {@code
+     * ShortUnaryOperator}.
+     * @throws NullPointerException If the given argument is {@code null}
+     */
+    static ShortBinaryOperator onlyRight(final ShortUnaryOperator operator) {
+        Objects.requireNonNull(operator);
+        return (left, right) -> operator.applyAsShort(right);
     }
 
     /**

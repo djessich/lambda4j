@@ -100,7 +100,7 @@ public interface ThrowableFloatTernaryOperator extends FloatTernaryOperator {
      * {@code ThrowableFloatUnaryOperator}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static ThrowableFloatTernaryOperator useLeft(final ThrowableFloatUnaryOperator operator) {
+    static ThrowableFloatTernaryOperator onlyLeft(final ThrowableFloatUnaryOperator operator) {
         Objects.requireNonNull(operator);
         return (left, middle, right) -> operator.applyAsFloat(left);
     }
@@ -113,7 +113,7 @@ public interface ThrowableFloatTernaryOperator extends FloatTernaryOperator {
      * {@code ThrowableFloatUnaryOperator}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static ThrowableFloatTernaryOperator useMiddle(final ThrowableFloatUnaryOperator operator) {
+    static ThrowableFloatTernaryOperator onlyMiddle(final ThrowableFloatUnaryOperator operator) {
         Objects.requireNonNull(operator);
         return (left, middle, right) -> operator.applyAsFloat(middle);
     }
@@ -126,7 +126,7 @@ public interface ThrowableFloatTernaryOperator extends FloatTernaryOperator {
      * {@code ThrowableFloatUnaryOperator}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static ThrowableFloatTernaryOperator useRight(final ThrowableFloatUnaryOperator operator) {
+    static ThrowableFloatTernaryOperator onlyRight(final ThrowableFloatUnaryOperator operator) {
         Objects.requireNonNull(operator);
         return (left, middle, right) -> operator.applyAsFloat(right);
     }

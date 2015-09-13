@@ -96,32 +96,6 @@ public interface ThrowableLongBinaryOperator extends LongBinaryOperator {
     }
 
     /**
-     * Creates a {@link LongBinaryOperator} which uses the left parameter as argument for the given {@link
-     * LongUnaryOperator}.
-     *
-     * @return Creates a {@code LongBinaryOperator} which uses the left parameter as argument for the given {@code
-     * LongUnaryOperator}.
-     * @throws NullPointerException If the given argument is {@code null}
-     */
-    static LongBinaryOperator useLeft(final LongUnaryOperator operator) {
-        Objects.requireNonNull(operator);
-        return (left, right) -> operator.applyAsLong(left);
-    }
-
-    /**
-     * Creates a {@link LongBinaryOperator} which uses the right parameter as argument for the given {@link
-     * LongUnaryOperator}.
-     *
-     * @return Creates a {@code LongBinaryOperator} which uses the right parameter as argument for the given {@code
-     * LongUnaryOperator}.
-     * @throws NullPointerException If the given argument is {@code null}
-     */
-    static LongBinaryOperator useRight(final LongUnaryOperator operator) {
-        Objects.requireNonNull(operator);
-        return (left, right) -> operator.applyAsLong(right);
-    }
-
-    /**
      * Returns a {@link ThrowableLongBinaryOperator} which returns the lesser of two elements according to {@link
      * Long#min(long, long)} operation.
      *
@@ -145,6 +119,32 @@ public interface ThrowableLongBinaryOperator extends LongBinaryOperator {
      */
     static ThrowableLongBinaryOperator max() {
         return Long::max;
+    }
+
+    /**
+     * Creates a {@link LongBinaryOperator} which uses the left parameter as argument for the given {@link
+     * LongUnaryOperator}.
+     *
+     * @return Creates a {@code LongBinaryOperator} which uses the left parameter as argument for the given {@code
+     * LongUnaryOperator}.
+     * @throws NullPointerException If the given argument is {@code null}
+     */
+    static LongBinaryOperator onlyLeft(final LongUnaryOperator operator) {
+        Objects.requireNonNull(operator);
+        return (left, right) -> operator.applyAsLong(left);
+    }
+
+    /**
+     * Creates a {@link LongBinaryOperator} which uses the right parameter as argument for the given {@link
+     * LongUnaryOperator}.
+     *
+     * @return Creates a {@code LongBinaryOperator} which uses the right parameter as argument for the given {@code
+     * LongUnaryOperator}.
+     * @throws NullPointerException If the given argument is {@code null}
+     */
+    static LongBinaryOperator onlyRight(final LongUnaryOperator operator) {
+        Objects.requireNonNull(operator);
+        return (left, right) -> operator.applyAsLong(right);
     }
 
     /**

@@ -100,7 +100,7 @@ public interface ThrowableByteTernaryOperator extends ByteTernaryOperator {
      * {@code ThrowableByteUnaryOperator}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static ThrowableByteTernaryOperator useLeft(final ThrowableByteUnaryOperator operator) {
+    static ThrowableByteTernaryOperator onlyLeft(final ThrowableByteUnaryOperator operator) {
         Objects.requireNonNull(operator);
         return (left, middle, right) -> operator.applyAsByte(left);
     }
@@ -113,7 +113,7 @@ public interface ThrowableByteTernaryOperator extends ByteTernaryOperator {
      * {@code ThrowableByteUnaryOperator}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static ThrowableByteTernaryOperator useMiddle(final ThrowableByteUnaryOperator operator) {
+    static ThrowableByteTernaryOperator onlyMiddle(final ThrowableByteUnaryOperator operator) {
         Objects.requireNonNull(operator);
         return (left, middle, right) -> operator.applyAsByte(middle);
     }
@@ -126,7 +126,7 @@ public interface ThrowableByteTernaryOperator extends ByteTernaryOperator {
      * {@code ThrowableByteUnaryOperator}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static ThrowableByteTernaryOperator useRight(final ThrowableByteUnaryOperator operator) {
+    static ThrowableByteTernaryOperator onlyRight(final ThrowableByteUnaryOperator operator) {
         Objects.requireNonNull(operator);
         return (left, middle, right) -> operator.applyAsByte(right);
     }

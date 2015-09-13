@@ -105,7 +105,7 @@ public interface ThrowableTernaryOperator<T> extends TernaryOperator<T> {
      * ThrowableUnaryOperator}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static <T> ThrowableTernaryOperator<T> useLeft(final ThrowableUnaryOperator<T> operator) {
+    static <T> ThrowableTernaryOperator<T> onlyLeft(final ThrowableUnaryOperator<T> operator) {
         Objects.requireNonNull(operator);
         return (t, u, v) -> operator.apply(t);
     }
@@ -119,7 +119,7 @@ public interface ThrowableTernaryOperator<T> extends TernaryOperator<T> {
      * {@code ThrowableUnaryOperator}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static <T> ThrowableTernaryOperator<T> useMiddle(final ThrowableUnaryOperator<T> operator) {
+    static <T> ThrowableTernaryOperator<T> onlyMiddle(final ThrowableUnaryOperator<T> operator) {
         Objects.requireNonNull(operator);
         return (t, u, v) -> operator.apply(u);
     }
@@ -133,7 +133,7 @@ public interface ThrowableTernaryOperator<T> extends TernaryOperator<T> {
      * {@code ThrowableUnaryOperator}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static <T> ThrowableTernaryOperator<T> useRight(final ThrowableUnaryOperator<T> operator) {
+    static <T> ThrowableTernaryOperator<T> onlyRight(final ThrowableUnaryOperator<T> operator) {
         Objects.requireNonNull(operator);
         return (t, u, v) -> operator.apply(v);
     }

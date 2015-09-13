@@ -100,7 +100,7 @@ public interface ThrowableLongTernaryOperator extends LongTernaryOperator {
      * {@code ThrowableLongUnaryOperator}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static ThrowableLongTernaryOperator useLeft(final ThrowableLongUnaryOperator operator) {
+    static ThrowableLongTernaryOperator onlyLeft(final ThrowableLongUnaryOperator operator) {
         Objects.requireNonNull(operator);
         return (left, middle, right) -> operator.applyAsLong(left);
     }
@@ -113,7 +113,7 @@ public interface ThrowableLongTernaryOperator extends LongTernaryOperator {
      * {@code ThrowableLongUnaryOperator}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static ThrowableLongTernaryOperator useMiddle(final ThrowableLongUnaryOperator operator) {
+    static ThrowableLongTernaryOperator onlyMiddle(final ThrowableLongUnaryOperator operator) {
         Objects.requireNonNull(operator);
         return (left, middle, right) -> operator.applyAsLong(middle);
     }
@@ -126,7 +126,7 @@ public interface ThrowableLongTernaryOperator extends LongTernaryOperator {
      * {@code ThrowableLongUnaryOperator}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static ThrowableLongTernaryOperator useRight(final ThrowableLongUnaryOperator operator) {
+    static ThrowableLongTernaryOperator onlyRight(final ThrowableLongUnaryOperator operator) {
         Objects.requireNonNull(operator);
         return (left, middle, right) -> operator.applyAsLong(right);
     }

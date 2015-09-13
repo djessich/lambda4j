@@ -96,32 +96,6 @@ public interface ThrowableDoubleBinaryOperator extends DoubleBinaryOperator {
     }
 
     /**
-     * Creates a {@link DoubleBinaryOperator} which uses the left parameter as argument for the given {@link
-     * DoubleUnaryOperator}.
-     *
-     * @return Creates a {@code DoubleBinaryOperator} which uses the left parameter as argument for the given {@code
-     * DoubleUnaryOperator}.
-     * @throws NullPointerException If the given argument is {@code null}
-     */
-    static DoubleBinaryOperator useLeft(final DoubleUnaryOperator operator) {
-        Objects.requireNonNull(operator);
-        return (left, right) -> operator.applyAsDouble(left);
-    }
-
-    /**
-     * Creates a {@link DoubleBinaryOperator} which uses the right parameter as argument for the given {@link
-     * DoubleUnaryOperator}.
-     *
-     * @return Creates a {@code DoubleBinaryOperator} which uses the right parameter as argument for the given {@code
-     * DoubleUnaryOperator}.
-     * @throws NullPointerException If the given argument is {@code null}
-     */
-    static DoubleBinaryOperator useRight(final DoubleUnaryOperator operator) {
-        Objects.requireNonNull(operator);
-        return (left, right) -> operator.applyAsDouble(right);
-    }
-
-    /**
      * Returns a {@link ThrowableDoubleBinaryOperator} which returns the lesser of two elements according to {@link
      * Double#min(double, double)} operation.
      *
@@ -145,6 +119,32 @@ public interface ThrowableDoubleBinaryOperator extends DoubleBinaryOperator {
      */
     static ThrowableDoubleBinaryOperator max() {
         return Double::max;
+    }
+
+    /**
+     * Creates a {@link DoubleBinaryOperator} which uses the left parameter as argument for the given {@link
+     * DoubleUnaryOperator}.
+     *
+     * @return Creates a {@code DoubleBinaryOperator} which uses the left parameter as argument for the given {@code
+     * DoubleUnaryOperator}.
+     * @throws NullPointerException If the given argument is {@code null}
+     */
+    static DoubleBinaryOperator onlyLeft(final DoubleUnaryOperator operator) {
+        Objects.requireNonNull(operator);
+        return (left, right) -> operator.applyAsDouble(left);
+    }
+
+    /**
+     * Creates a {@link DoubleBinaryOperator} which uses the right parameter as argument for the given {@link
+     * DoubleUnaryOperator}.
+     *
+     * @return Creates a {@code DoubleBinaryOperator} which uses the right parameter as argument for the given {@code
+     * DoubleUnaryOperator}.
+     * @throws NullPointerException If the given argument is {@code null}
+     */
+    static DoubleBinaryOperator onlyRight(final DoubleUnaryOperator operator) {
+        Objects.requireNonNull(operator);
+        return (left, right) -> operator.applyAsDouble(right);
     }
 
     /**

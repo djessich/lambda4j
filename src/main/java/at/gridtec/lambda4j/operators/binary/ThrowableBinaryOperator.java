@@ -98,32 +98,6 @@ public interface ThrowableBinaryOperator<T> extends BinaryOperator<T> {
     }
 
     /**
-     * Creates a {@link BinaryOperator} which uses the left parameter as argument for the given {@link UnaryOperator}.
-     *
-     * @param <T> The type of argument to the operator
-     * @return Creates a {@code BinaryOperator} which uses the left parameter as argument for the given {@code
-     * UnaryOperator}.
-     * @throws NullPointerException If the given argument is {@code null}
-     */
-    static <T> BinaryOperator<T> useLeft(final UnaryOperator<T> operator) {
-        Objects.requireNonNull(operator);
-        return (left, right) -> operator.apply(left);
-    }
-
-    /**
-     * Creates a {@link BinaryOperator} which uses the right parameter as argument for the given {@link UnaryOperator}.
-     *
-     * @param <T> The type of argument to the operator
-     * @return Creates a {@code BinaryOperator} which uses the right parameter as argument for the given {@code
-     * UnaryOperator}.
-     * @throws NullPointerException If the given argument is {@code null}
-     */
-    static <T> BinaryOperator<T> useRight(final UnaryOperator<T> operator) {
-        Objects.requireNonNull(operator);
-        return (left, right) -> operator.apply(right);
-    }
-
-    /**
      * Returns a {@link ThrowableBinaryOperator} which returns the lesser of two elements according to the specified
      * {@code Comparator}.
      *
@@ -151,6 +125,32 @@ public interface ThrowableBinaryOperator<T> extends BinaryOperator<T> {
     static <T> ThrowableBinaryOperator<T> maxBy(final Comparator<? super T> comparator) {
         Objects.requireNonNull(comparator);
         return (a, b) -> comparator.compare(a, b) >= 0 ? a : b;
+    }
+
+    /**
+     * Creates a {@link BinaryOperator} which uses the left parameter as argument for the given {@link UnaryOperator}.
+     *
+     * @param <T> The type of argument to the operator
+     * @return Creates a {@code BinaryOperator} which uses the left parameter as argument for the given {@code
+     * UnaryOperator}.
+     * @throws NullPointerException If the given argument is {@code null}
+     */
+    static <T> BinaryOperator<T> onlyLeft(final UnaryOperator<T> operator) {
+        Objects.requireNonNull(operator);
+        return (left, right) -> operator.apply(left);
+    }
+
+    /**
+     * Creates a {@link BinaryOperator} which uses the right parameter as argument for the given {@link UnaryOperator}.
+     *
+     * @param <T> The type of argument to the operator
+     * @return Creates a {@code BinaryOperator} which uses the right parameter as argument for the given {@code
+     * UnaryOperator}.
+     * @throws NullPointerException If the given argument is {@code null}
+     */
+    static <T> BinaryOperator<T> onlyRight(final UnaryOperator<T> operator) {
+        Objects.requireNonNull(operator);
+        return (left, right) -> operator.apply(right);
     }
 
     /**

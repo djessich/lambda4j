@@ -100,7 +100,7 @@ public interface ThrowableIntTernaryOperator extends IntTernaryOperator {
      * {@code ThrowableIntUnaryOperator}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static ThrowableIntTernaryOperator useLeft(final ThrowableIntUnaryOperator operator) {
+    static ThrowableIntTernaryOperator onlyLeft(final ThrowableIntUnaryOperator operator) {
         Objects.requireNonNull(operator);
         return (left, middle, right) -> operator.applyAsInt(left);
     }
@@ -113,7 +113,7 @@ public interface ThrowableIntTernaryOperator extends IntTernaryOperator {
      * {@code ThrowableIntUnaryOperator}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static ThrowableIntTernaryOperator useMiddle(final ThrowableIntUnaryOperator operator) {
+    static ThrowableIntTernaryOperator onlyMiddle(final ThrowableIntUnaryOperator operator) {
         Objects.requireNonNull(operator);
         return (left, middle, right) -> operator.applyAsInt(middle);
     }
@@ -126,7 +126,7 @@ public interface ThrowableIntTernaryOperator extends IntTernaryOperator {
      * {@code ThrowableIntUnaryOperator}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static ThrowableIntTernaryOperator useRight(final ThrowableIntUnaryOperator operator) {
+    static ThrowableIntTernaryOperator onlyRight(final ThrowableIntUnaryOperator operator) {
         Objects.requireNonNull(operator);
         return (left, middle, right) -> operator.applyAsInt(right);
     }

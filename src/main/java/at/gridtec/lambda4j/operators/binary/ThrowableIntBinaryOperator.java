@@ -96,32 +96,6 @@ public interface ThrowableIntBinaryOperator extends IntBinaryOperator {
     }
 
     /**
-     * Creates a {@link IntBinaryOperator} which uses the left parameter as argument for the given {@link
-     * IntUnaryOperator}.
-     *
-     * @return Creates a {@code IntBinaryOperator} which uses the left parameter as argument for the given {@code
-     * IntUnaryOperator}.
-     * @throws NullPointerException If the given argument is {@code null}
-     */
-    static IntBinaryOperator useLeft(final IntUnaryOperator operator) {
-        Objects.requireNonNull(operator);
-        return (left, right) -> operator.applyAsInt(left);
-    }
-
-    /**
-     * Creates a {@link IntBinaryOperator} which uses the right parameter as argument for the given {@link
-     * IntUnaryOperator}.
-     *
-     * @return Creates a {@code IntBinaryOperator} which uses the right parameter as argument for the given {@code
-     * IntUnaryOperator}.
-     * @throws NullPointerException If the given argument is {@code null}
-     */
-    static IntBinaryOperator useRight(final IntUnaryOperator operator) {
-        Objects.requireNonNull(operator);
-        return (left, right) -> operator.applyAsInt(right);
-    }
-
-    /**
      * Returns a {@link ThrowableIntBinaryOperator} which returns the lesser of two elements according to {@link
      * Integer#min(int, int)} operation.
      *
@@ -145,6 +119,32 @@ public interface ThrowableIntBinaryOperator extends IntBinaryOperator {
      */
     static ThrowableIntBinaryOperator max() {
         return Integer::max;
+    }
+
+    /**
+     * Creates a {@link IntBinaryOperator} which uses the left parameter as argument for the given {@link
+     * IntUnaryOperator}.
+     *
+     * @return Creates a {@code IntBinaryOperator} which uses the left parameter as argument for the given {@code
+     * IntUnaryOperator}.
+     * @throws NullPointerException If the given argument is {@code null}
+     */
+    static IntBinaryOperator onlyLeft(final IntUnaryOperator operator) {
+        Objects.requireNonNull(operator);
+        return (left, right) -> operator.applyAsInt(left);
+    }
+
+    /**
+     * Creates a {@link IntBinaryOperator} which uses the right parameter as argument for the given {@link
+     * IntUnaryOperator}.
+     *
+     * @return Creates a {@code IntBinaryOperator} which uses the right parameter as argument for the given {@code
+     * IntUnaryOperator}.
+     * @throws NullPointerException If the given argument is {@code null}
+     */
+    static IntBinaryOperator onlyRight(final IntUnaryOperator operator) {
+        Objects.requireNonNull(operator);
+        return (left, right) -> operator.applyAsInt(right);
     }
 
     /**

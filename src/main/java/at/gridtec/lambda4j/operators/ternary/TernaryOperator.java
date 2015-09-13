@@ -52,7 +52,7 @@ public interface TernaryOperator<T> extends TriFunction<T, T, T, T> {
      * UnaryOperator}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static <T> TernaryOperator<T> useLeft(final UnaryOperator<T> operator) {
+    static <T> TernaryOperator<T> onlyLeft(final UnaryOperator<T> operator) {
         Objects.requireNonNull(operator);
         return (t, u, v) -> operator.apply(t);
     }
@@ -66,7 +66,7 @@ public interface TernaryOperator<T> extends TriFunction<T, T, T, T> {
      * UnaryOperator}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static <T> TernaryOperator<T> useMiddle(final UnaryOperator<T> operator) {
+    static <T> TernaryOperator<T> onlyMiddle(final UnaryOperator<T> operator) {
         Objects.requireNonNull(operator);
         return (t, u, v) -> operator.apply(u);
     }
@@ -80,7 +80,7 @@ public interface TernaryOperator<T> extends TriFunction<T, T, T, T> {
      * UnaryOperator}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static <T> TernaryOperator<T> useRight(final UnaryOperator<T> operator) {
+    static <T> TernaryOperator<T> onlyRight(final UnaryOperator<T> operator) {
         Objects.requireNonNull(operator);
         return (t, u, v) -> operator.apply(v);
     }

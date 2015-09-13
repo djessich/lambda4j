@@ -100,7 +100,7 @@ public interface ThrowableCharTernaryOperator extends CharTernaryOperator {
      * {@code ThrowableCharUnaryOperator}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static ThrowableCharTernaryOperator useLeft(final ThrowableCharUnaryOperator operator) {
+    static ThrowableCharTernaryOperator onlyLeft(final ThrowableCharUnaryOperator operator) {
         Objects.requireNonNull(operator);
         return (left, middle, right) -> operator.applyAsChar(left);
     }
@@ -113,7 +113,7 @@ public interface ThrowableCharTernaryOperator extends CharTernaryOperator {
      * {@code ThrowableCharUnaryOperator}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static ThrowableCharTernaryOperator useMiddle(final ThrowableCharUnaryOperator operator) {
+    static ThrowableCharTernaryOperator onlyMiddle(final ThrowableCharUnaryOperator operator) {
         Objects.requireNonNull(operator);
         return (left, middle, right) -> operator.applyAsChar(middle);
     }
@@ -126,7 +126,7 @@ public interface ThrowableCharTernaryOperator extends CharTernaryOperator {
      * {@code ThrowableCharUnaryOperator}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static ThrowableCharTernaryOperator useRight(final ThrowableCharUnaryOperator operator) {
+    static ThrowableCharTernaryOperator onlyRight(final ThrowableCharUnaryOperator operator) {
         Objects.requireNonNull(operator);
         return (left, middle, right) -> operator.applyAsChar(right);
     }

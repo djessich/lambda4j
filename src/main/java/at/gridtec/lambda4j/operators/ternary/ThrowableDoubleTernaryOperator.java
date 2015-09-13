@@ -100,7 +100,7 @@ public interface ThrowableDoubleTernaryOperator extends DoubleTernaryOperator {
      * {@code ThrowableDoubleUnaryOperator}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static ThrowableDoubleTernaryOperator useLeft(final ThrowableDoubleUnaryOperator operator) {
+    static ThrowableDoubleTernaryOperator onlyLeft(final ThrowableDoubleUnaryOperator operator) {
         Objects.requireNonNull(operator);
         return (left, middle, right) -> operator.applyAsDouble(left);
     }
@@ -113,7 +113,7 @@ public interface ThrowableDoubleTernaryOperator extends DoubleTernaryOperator {
      * given {@code ThrowableDoubleUnaryOperator}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static ThrowableDoubleTernaryOperator useMiddle(final ThrowableDoubleUnaryOperator operator) {
+    static ThrowableDoubleTernaryOperator onlyMiddle(final ThrowableDoubleUnaryOperator operator) {
         Objects.requireNonNull(operator);
         return (left, middle, right) -> operator.applyAsDouble(middle);
     }
@@ -126,7 +126,7 @@ public interface ThrowableDoubleTernaryOperator extends DoubleTernaryOperator {
      * {@code ThrowableDoubleUnaryOperator}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static ThrowableDoubleTernaryOperator useRight(final ThrowableDoubleUnaryOperator operator) {
+    static ThrowableDoubleTernaryOperator onlyRight(final ThrowableDoubleUnaryOperator operator) {
         Objects.requireNonNull(operator);
         return (left, middle, right) -> operator.applyAsDouble(right);
     }

@@ -100,7 +100,7 @@ public interface ThrowableShortTernaryOperator extends ShortTernaryOperator {
      * {@code ThrowableShortUnaryOperator}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static ThrowableShortTernaryOperator useLeft(final ThrowableShortUnaryOperator operator) {
+    static ThrowableShortTernaryOperator onlyLeft(final ThrowableShortUnaryOperator operator) {
         Objects.requireNonNull(operator);
         return (left, middle, right) -> operator.applyAsShort(left);
     }
@@ -113,7 +113,7 @@ public interface ThrowableShortTernaryOperator extends ShortTernaryOperator {
      * {@code ThrowableShortUnaryOperator}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static ThrowableShortTernaryOperator useMiddle(final ThrowableShortUnaryOperator operator) {
+    static ThrowableShortTernaryOperator onlyMiddle(final ThrowableShortUnaryOperator operator) {
         Objects.requireNonNull(operator);
         return (left, middle, right) -> operator.applyAsShort(middle);
     }
@@ -126,7 +126,7 @@ public interface ThrowableShortTernaryOperator extends ShortTernaryOperator {
      * {@code ThrowableShortUnaryOperator}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static ThrowableShortTernaryOperator useRight(final ThrowableShortUnaryOperator operator) {
+    static ThrowableShortTernaryOperator onlyRight(final ThrowableShortUnaryOperator operator) {
         Objects.requireNonNull(operator);
         return (left, middle, right) -> operator.applyAsShort(right);
     }
