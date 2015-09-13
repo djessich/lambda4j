@@ -15,12 +15,12 @@
  */
 package at.gridtec.lambda4j.operators.binary;
 
+import at.gridtec.lambda4j.supplier.CharSupplier;
 import at.gridtec.lambda4j.util.ThrowableUtils;
 
 import java.util.Comparator;
 import java.util.Objects;
 import java.util.function.BinaryOperator;
-import java.util.function.Supplier;
 
 /**
  * This functional interface implements a {@link CharBinaryOperator} which is able to throw any {@link Exception}.
@@ -237,21 +237,22 @@ public interface ThrowableCharBinaryOperator extends CharBinaryOperator {
 
     /**
      * Returns a composed {@link CharBinaryOperator} that applies this {@link ThrowableCharBinaryOperator} to its input,
-     * and if an error occurred, returns the supplied value from the given {@link Supplier}. The exception from this
+     * and if an error occurred, returns the supplied value from the given {@link CharSupplier}. The exception from this
      * {@code ThrowableCharBinaryOperator} is ignored.
      *
-     * @param supplier A {@code Supplier} to return a supplied value if this {@code ThrowableCharBinaryOperator} fails
+     * @param supplier A {@code CharSupplier} to return a supplied value if this {@code ThrowableCharBinaryOperator}
+     * fails
      * @return A composed {@code CharBinaryOperator} that applies this {@code ThrowableCharBinaryOperator}, and if an
-     * error occurred, the supplied value from the given {@code Supplier}.
+     * error occurred, the supplied value from the given {@code CharSupplier}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    default CharBinaryOperator orReturn(final Supplier<? extends Character> supplier) {
+    default CharBinaryOperator orReturn(final CharSupplier supplier) {
         Objects.requireNonNull(supplier);
         return (left, right) -> {
             try {
                 return applyAsShortThrows(left, right);
             } catch (Exception ignored) {
-                return supplier.get();
+                return supplier.getAsChar();
             }
         };
     }

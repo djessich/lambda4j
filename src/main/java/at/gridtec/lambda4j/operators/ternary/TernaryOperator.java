@@ -17,6 +17,9 @@ package at.gridtec.lambda4j.operators.ternary;
 
 import at.gridtec.lambda4j.function.TriFunction;
 
+import java.util.Objects;
+import java.util.function.UnaryOperator;
+
 /**
  * Represents an operation upon three operands of the same type, producing a result of the same type as the operands.
  * This is a specialization of {@link TriFunction} for the case where the operands and the result are all of the same
@@ -39,5 +42,44 @@ public interface TernaryOperator<T> extends TriFunction<T, T, T, T> {
      */
     static <T> TernaryOperator<T> constant(T r) {
         return (t, u, v) -> r;
+    }
+
+    /**
+     * Creates a {@link TernaryOperator} which uses the left parameter only from the given {@link UnaryOperator}.
+     *
+     * @param <T> The type of argument to the operator
+     * @return Creates a {@code TernaryOperator} which uses the left parameter only from the given {@code
+     * UnaryOperator}.
+     * @throws NullPointerException If the given argument is {@code null}
+     */
+    static <T> TernaryOperator<T> forLeft(final UnaryOperator<T> operator) {
+        Objects.requireNonNull(operator);
+        return (t, u, v) -> operator.apply(t);
+    }
+
+    /**
+     * Creates a {@link TernaryOperator} which uses the middle parameter only from the given {@link UnaryOperator}.
+     *
+     * @param <T> The type of argument to the operator
+     * @return Creates a {@code TernaryOperator} which uses the middle parameter only from the given {@code
+     * UnaryOperator}.
+     * @throws NullPointerException If the given argument is {@code null}
+     */
+    static <T> TernaryOperator<T> forMiddle(final UnaryOperator<T> operator) {
+        Objects.requireNonNull(operator);
+        return (t, u, v) -> operator.apply(u);
+    }
+
+    /**
+     * Creates a {@link TernaryOperator} which uses the right parameter only from the given {@link UnaryOperator}.
+     *
+     * @param <T> The type of argument to the operator
+     * @return Creates a {@code TernaryOperator} which uses the right parameter only from the given {@code
+     * UnaryOperator}.
+     * @throws NullPointerException If the given argument is {@code null}
+     */
+    static <T> TernaryOperator<T> forRight(final UnaryOperator<T> operator) {
+        Objects.requireNonNull(operator);
+        return (t, u, v) -> operator.apply(v);
     }
 }

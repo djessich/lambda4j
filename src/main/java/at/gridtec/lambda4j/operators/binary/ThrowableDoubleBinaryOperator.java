@@ -21,7 +21,7 @@ import java.util.Comparator;
 import java.util.Objects;
 import java.util.function.BinaryOperator;
 import java.util.function.DoubleBinaryOperator;
-import java.util.function.Supplier;
+import java.util.function.DoubleSupplier;
 
 /**
  * This functional interface implements a {@link DoubleBinaryOperator} which is able to throw any {@link Exception}.
@@ -242,22 +242,22 @@ public interface ThrowableDoubleBinaryOperator extends DoubleBinaryOperator {
 
     /**
      * Returns a composed {@link DoubleBinaryOperator} that applies this {@link ThrowableDoubleBinaryOperator} to its
-     * input, and if an error occurred, returns the supplied value from the given {@link Supplier}. The exception from
-     * this {@code ThrowableDoubleBinaryOperator} is ignored.
+     * input, and if an error occurred, returns the supplied value from the given {@link DoubleSupplier}. The exception
+     * from this {@code ThrowableDoubleBinaryOperator} is ignored.
      *
-     * @param supplier A {@code Supplier} to return a supplied value if this {@code ThrowableDoubleBinaryOperator}
+     * @param supplier A {@code DoubleSupplier} to return a supplied value if this {@code ThrowableDoubleBinaryOperator}
      * fails
      * @return A composed {@code DoubleBinaryOperator} that applies this {@code ThrowableDoubleBinaryOperator}, and if
-     * an error occurred, the supplied value from the given {@code Supplier}.
+     * an error occurred, the supplied value from the given {@code DoubleSupplier}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    default DoubleBinaryOperator orReturn(final Supplier<? extends Double> supplier) {
+    default DoubleBinaryOperator orReturn(final DoubleSupplier supplier) {
         Objects.requireNonNull(supplier);
         return (left, right) -> {
             try {
                 return applyAsDoubleThrows(left, right);
             } catch (Exception ignored) {
-                return supplier.get();
+                return supplier.getAsDouble();
             }
         };
     }

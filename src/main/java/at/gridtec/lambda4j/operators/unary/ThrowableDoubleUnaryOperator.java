@@ -18,8 +18,8 @@ package at.gridtec.lambda4j.operators.unary;
 import at.gridtec.lambda4j.util.ThrowableUtils;
 
 import java.util.Objects;
+import java.util.function.DoubleSupplier;
 import java.util.function.DoubleUnaryOperator;
-import java.util.function.Supplier;
 
 /**
  * This functional interface implements a {@link DoubleUnaryOperator} which is able to throw any {@link Exception}.
@@ -212,21 +212,22 @@ public interface ThrowableDoubleUnaryOperator extends DoubleUnaryOperator {
 
     /**
      * Returns a composed {@link DoubleUnaryOperator} that applies this {@link ThrowableDoubleUnaryOperator} to its
-     * input, and if an error occurred, returns the supplied value from the given {@link Supplier}. The exception from
-     * this {@code ThrowableDoubleUnaryOperator} is ignored.
+     * input, and if an error occurred, returns the supplied value from the given {@link DoubleSupplier}. The exception
+     * from this {@code ThrowableDoubleUnaryOperator} is ignored.
      *
-     * @param supplier A {@code Supplier} to return a supplied value if this {@code ThrowableDoubleUnaryOperator} fails
+     * @param supplier A {@code DoubleSupplier} to return a supplied value if this {@code ThrowableDoubleUnaryOperator}
+     * fails
      * @return A composed {@code DoubleUnaryOperator} that applies this {@code ThrowableDoubleUnaryOperator}, and if an
-     * error occurred, the supplied value from the given {@code Supplier}.
+     * error occurred, the supplied value from the given {@code DoubleSupplier}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    default DoubleUnaryOperator orReturn(final Supplier<? extends Double> supplier) {
+    default DoubleUnaryOperator orReturn(final DoubleSupplier supplier) {
         Objects.requireNonNull(supplier);
         return operand -> {
             try {
                 return applyAsDoubleThrows(operand);
             } catch (Exception ignored) {
-                return supplier.get();
+                return supplier.getAsDouble();
             }
         };
     }

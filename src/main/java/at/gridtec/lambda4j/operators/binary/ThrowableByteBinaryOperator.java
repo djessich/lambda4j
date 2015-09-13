@@ -15,12 +15,12 @@
  */
 package at.gridtec.lambda4j.operators.binary;
 
+import at.gridtec.lambda4j.supplier.ByteSupplier;
 import at.gridtec.lambda4j.util.ThrowableUtils;
 
 import java.util.Comparator;
 import java.util.Objects;
 import java.util.function.BinaryOperator;
-import java.util.function.Supplier;
 
 /**
  * This functional interface implements a {@link ByteBinaryOperator} which is able to throw any {@link Exception}.
@@ -237,21 +237,22 @@ public interface ThrowableByteBinaryOperator extends ByteBinaryOperator {
 
     /**
      * Returns a composed {@link ByteBinaryOperator} that applies this {@link ThrowableByteBinaryOperator} to its input,
-     * and if an error occurred, returns the supplied value from the given {@link Supplier}. The exception from this
+     * and if an error occurred, returns the supplied value from the given {@link ByteSupplier}. The exception from this
      * {@code ThrowableByteBinaryOperator} is ignored.
      *
-     * @param supplier A {@code Supplier} to return a supplied value if this {@code ThrowableByteBinaryOperator} fails
+     * @param supplier A {@code ByteSupplier} to return a supplied value if this {@code ThrowableByteBinaryOperator}
+     * fails
      * @return A composed {@code ByteBinaryOperator} that applies this {@code ThrowableByteBinaryOperator}, and if an
-     * error occurred, the supplied value from the given {@code Supplier}.
+     * error occurred, the supplied value from the given {@code ByteSupplier}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    default ByteBinaryOperator orReturn(final Supplier<? extends Byte> supplier) {
+    default ByteBinaryOperator orReturn(final ByteSupplier supplier) {
         Objects.requireNonNull(supplier);
         return (left, right) -> {
             try {
                 return applyAsShortThrows(left, right);
             } catch (Exception ignored) {
-                return supplier.get();
+                return supplier.getAsByte();
             }
         };
     }

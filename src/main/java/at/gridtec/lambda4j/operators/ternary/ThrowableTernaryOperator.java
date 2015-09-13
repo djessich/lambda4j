@@ -16,6 +16,7 @@
 package at.gridtec.lambda4j.operators.ternary;
 
 import at.gridtec.lambda4j.function.TriFunction;
+import at.gridtec.lambda4j.operators.unary.ThrowableUnaryOperator;
 import at.gridtec.lambda4j.util.ThrowableUtils;
 
 import java.util.Objects;
@@ -93,6 +94,48 @@ public interface ThrowableTernaryOperator<T> extends TernaryOperator<T> {
      */
     static <T> ThrowableTernaryOperator<T> constant(T r) {
         return (t, u, v) -> r;
+    }
+
+    /**
+     * Creates a {@link ThrowableTernaryOperator} which uses the left parameter only from the given {@link
+     * ThrowableUnaryOperator}.
+     *
+     * @param <T> The type of argument to the operator
+     * @return Creates a {@code ThrowableTernaryOperator} which uses the left parameter only from the given {@code
+     * ThrowableUnaryOperator}.
+     * @throws NullPointerException If the given argument is {@code null}
+     */
+    static <T> ThrowableTernaryOperator<T> forLeft(final ThrowableUnaryOperator<T> operator) {
+        Objects.requireNonNull(operator);
+        return (t, u, v) -> operator.apply(t);
+    }
+
+    /**
+     * Creates a {@link ThrowableTernaryOperator} which uses the middle parameter only from the given {@link
+     * ThrowableUnaryOperator}.
+     *
+     * @param <T> The type of argument to the operator
+     * @return Creates a {@code ThrowableTernaryOperator} which uses the middle parameter only from the given {@code
+     * ThrowableUnaryOperator}.
+     * @throws NullPointerException If the given argument is {@code null}
+     */
+    static <T> ThrowableTernaryOperator<T> forMiddle(final ThrowableUnaryOperator<T> operator) {
+        Objects.requireNonNull(operator);
+        return (t, u, v) -> operator.apply(u);
+    }
+
+    /**
+     * Creates a {@link ThrowableTernaryOperator} which uses the right parameter only from the given {@link
+     * ThrowableUnaryOperator}.
+     *
+     * @param <T> The type of argument to the operator
+     * @return Creates a {@code ThrowableTernaryOperator} which uses the right parameter only from the given {@code
+     * ThrowableUnaryOperator}.
+     * @throws NullPointerException If the given argument is {@code null}
+     */
+    static <T> ThrowableTernaryOperator<T> forRight(final ThrowableUnaryOperator<T> operator) {
+        Objects.requireNonNull(operator);
+        return (t, u, v) -> operator.apply(v);
     }
 
     /**

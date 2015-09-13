@@ -15,6 +15,10 @@
  */
 package at.gridtec.lambda4j.operators.ternary;
 
+import at.gridtec.lambda4j.operators.unary.ByteUnaryOperator;
+
+import java.util.Objects;
+
 /**
  * Represents an operation on a two {@code byte}-valued operands and producing a {@code byte}-valued result. This is the
  * primitive type specialization of {@link TernaryOperator} for {@code byte}.
@@ -28,7 +32,56 @@ package at.gridtec.lambda4j.operators.ternary;
 public interface ByteTernaryOperator {
 
     /**
-     * Applies this operator to the given operand argument.
+     * Creates a {@link ByteTernaryOperator} which always returns a given value.
+     *
+     * @param r The return value for the constant
+     * @return A {@code ByteTernaryOperator} which always returns a given value.
+     */
+    static <T> ByteTernaryOperator constant(byte r) {
+        return (left, middle, right) -> r;
+    }
+
+    /**
+     * Creates a {@link ByteTernaryOperator} which uses the left parameter only from the given {@link
+     * ByteUnaryOperator}.
+     *
+     * @return Creates a {@code ByteTernaryOperator} which uses the left parameter only from the given {@code
+     * ByteUnaryOperator}.
+     * @throws NullPointerException If the given argument is {@code null}
+     */
+    static <T> ByteTernaryOperator forLeft(final ByteUnaryOperator operator) {
+        Objects.requireNonNull(operator);
+        return (left, middle, right) -> operator.applyAsByte(left);
+    }
+
+    /**
+     * Creates a {@link ByteTernaryOperator} which uses the middle parameter only from the given {@link
+     * ByteUnaryOperator}.
+     *
+     * @return Creates a {@code ByteTernaryOperator} which uses the middle parameter only from the given {@code
+     * ByteUnaryOperator}.
+     * @throws NullPointerException If the given argument is {@code null}
+     */
+    static <T> ByteTernaryOperator forMiddle(final ByteUnaryOperator operator) {
+        Objects.requireNonNull(operator);
+        return (left, middle, right) -> operator.applyAsByte(middle);
+    }
+
+    /**
+     * Creates a {@link ByteTernaryOperator} which uses the right parameter only from the given {@link
+     * ByteUnaryOperator}.
+     *
+     * @return Creates a {@code ByteTernaryOperator} which uses the right parameter only from the given {@code
+     * ByteUnaryOperator}.
+     * @throws NullPointerException If the given argument is {@code null}
+     */
+    static <T> ByteTernaryOperator forRight(final ByteUnaryOperator operator) {
+        Objects.requireNonNull(operator);
+        return (left, middle, right) -> operator.applyAsByte(right);
+    }
+
+    /**
+     * Applies this operator to the given operand arguments.
      *
      * @param left The first argument to the operator (left input)
      * @param middle The second argument to the operator (middle input)
@@ -36,4 +89,42 @@ public interface ByteTernaryOperator {
      * @return The return value from the operator.
      */
     byte applyAsByte(byte left, byte middle, byte right);
+
+    /**
+     * Returns a composed {@link ByteTernaryOperator} that first applies the given {@code before} operators to its
+     * input, and then applies this operator to the result. If evaluation of either operator throws an exception, it is
+     * relayed to the caller of the composed operator.
+     *
+     * @param before1 The first {@code ByteUnaryOperator} to apply before this operator is applied
+     * @param before2 The second {@code ByteUnaryOperator} to apply before this operator is applied
+     * @param before3 The third {@code ByteUnaryOperator} to apply before this operator is applied
+     * @return A composed {@code ByteTernaryOperator} that first applies the given {@code before} operators and then
+     * applies this operator.
+     * @throws NullPointerException If one of the given operators are {@code null}
+     * @see #andThen(ByteUnaryOperator)
+     */
+    default ByteTernaryOperator compose(final ByteUnaryOperator before1, final ByteUnaryOperator before2,
+            final ByteUnaryOperator before3) {
+        Objects.requireNonNull(before1);
+        Objects.requireNonNull(before2);
+        Objects.requireNonNull(before3);
+        return (left, middle, right) -> applyAsByte(before1.applyAsByte(left), before2.applyAsByte(middle),
+                                                    before3.applyAsByte(right));
+    }
+
+    /**
+     * Returns a composed {@link ByteTernaryOperator} that first applies this operator to its input, and then applies
+     * the {@code after} operator to the result. If evaluation of either operator throws an exception, it is relayed to
+     * the caller of the composed operator.
+     *
+     * @param after The {@code ByteUnaryOperator} to apply after this operator is applied
+     * @return A composed {@code ByteTernaryOperator} that first applies this operator and then applies the {@code
+     * after} operator.
+     * @throws NullPointerException If one of the given operators are {@code null}
+     * @see #compose(ByteUnaryOperator, ByteUnaryOperator, ByteUnaryOperator)
+     */
+    default ByteTernaryOperator andThen(ByteUnaryOperator after) {
+        Objects.requireNonNull(after);
+        return (left, middle, right) -> after.applyAsByte(applyAsByte(left, middle, right));
+    }
 }

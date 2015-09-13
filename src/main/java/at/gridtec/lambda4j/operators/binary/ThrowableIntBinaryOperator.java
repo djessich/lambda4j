@@ -21,7 +21,7 @@ import java.util.Comparator;
 import java.util.Objects;
 import java.util.function.BinaryOperator;
 import java.util.function.IntBinaryOperator;
-import java.util.function.Supplier;
+import java.util.function.IntSupplier;
 
 /**
  * This functional interface implements a {@link IntBinaryOperator} which is able to throw any {@link Exception}.
@@ -242,21 +242,22 @@ public interface ThrowableIntBinaryOperator extends IntBinaryOperator {
 
     /**
      * Returns a composed {@link IntBinaryOperator} that applies this {@link ThrowableIntBinaryOperator} to its input,
-     * and if an error occurred, returns the supplied value from the given {@link Supplier}. The exception from this
+     * and if an error occurred, returns the supplied value from the given {@link IntSupplier}. The exception from this
      * {@code ThrowableIntBinaryOperator} is ignored.
      *
-     * @param supplier A {@code Supplier} to return a supplied value if this {@code ThrowableIntBinaryOperator} fails
+     * @param supplier A {@code IntSupplier} to return a supplied value if this {@code ThrowableIntBinaryOperator}
+     * fails
      * @return A composed {@code IntBinaryOperator} that applies this {@code ThrowableIntBinaryOperator}, and if an
-     * error occurred, the supplied value from the given {@code Supplier}.
+     * error occurred, the supplied value from the given {@code IntSupplier}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    default IntBinaryOperator orReturn(final Supplier<? extends Integer> supplier) {
+    default IntBinaryOperator orReturn(final IntSupplier supplier) {
         Objects.requireNonNull(supplier);
         return (left, right) -> {
             try {
                 return applyAsIntThrows(left, right);
             } catch (Exception ignored) {
-                return supplier.get();
+                return supplier.getAsInt();
             }
         };
     }

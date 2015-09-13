@@ -15,12 +15,12 @@
  */
 package at.gridtec.lambda4j.operators.binary;
 
+import at.gridtec.lambda4j.supplier.FloatSupplier;
 import at.gridtec.lambda4j.util.ThrowableUtils;
 
 import java.util.Comparator;
 import java.util.Objects;
 import java.util.function.BinaryOperator;
-import java.util.function.Supplier;
 
 /**
  * This functional interface implements a {@link FloatBinaryOperator} which is able to throw any {@link Exception}.
@@ -241,21 +241,22 @@ public interface ThrowableFloatBinaryOperator extends FloatBinaryOperator {
 
     /**
      * Returns a composed {@link FloatBinaryOperator} that applies this {@link ThrowableFloatBinaryOperator} to its
-     * input, and if an error occurred, returns the supplied value from the given {@link Supplier}. The exception from
-     * this {@code ThrowableFloatBinaryOperator} is ignored.
+     * input, and if an error occurred, returns the supplied value from the given {@link FloatSupplier}. The exception
+     * from this {@code ThrowableFloatBinaryOperator} is ignored.
      *
-     * @param supplier A {@code Supplier} to return a supplied value if this {@code ThrowableFloatBinaryOperator} fails
+     * @param supplier A {@code FloatSupplier} to return a supplied value if this {@code ThrowableFloatBinaryOperator}
+     * fails
      * @return A composed {@code FloatBinaryOperator} that applies this {@code ThrowableFloatBinaryOperator}, and if an
-     * error occurred, the supplied value from the given {@code Supplier}.
+     * error occurred, the supplied value from the given {@code FloatSupplier}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    default FloatBinaryOperator orReturn(final Supplier<? extends Float> supplier) {
+    default FloatBinaryOperator orReturn(final FloatSupplier supplier) {
         Objects.requireNonNull(supplier);
         return (left, right) -> {
             try {
                 return applyAsShortThrows(left, right);
             } catch (Exception ignored) {
-                return supplier.get();
+                return supplier.getAsFloat();
             }
         };
     }

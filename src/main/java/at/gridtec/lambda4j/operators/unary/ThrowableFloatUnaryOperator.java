@@ -15,10 +15,10 @@
  */
 package at.gridtec.lambda4j.operators.unary;
 
+import at.gridtec.lambda4j.supplier.FloatSupplier;
 import at.gridtec.lambda4j.util.ThrowableUtils;
 
 import java.util.Objects;
-import java.util.function.Supplier;
 
 /**
  * This functional interface implements a {@link FloatUnaryOperator} which is able to throw any {@link Exception}.
@@ -211,21 +211,22 @@ public interface ThrowableFloatUnaryOperator extends FloatUnaryOperator {
 
     /**
      * Returns a composed {@link FloatUnaryOperator} that applies this {@link ThrowableFloatUnaryOperator} to its input,
-     * and if an error occurred, returns the supplied value from the given {@link Supplier}. The exception from this
-     * {@code ThrowableFloatUnaryOperator} is ignored.
+     * and if an error occurred, returns the supplied value from the given {@link FloatSupplier}. The exception from
+     * this {@code ThrowableFloatUnaryOperator} is ignored.
      *
-     * @param supplier A {@code Supplier} to return a supplied value if this {@code ThrowableFloatUnaryOperator} fails
+     * @param supplier A {@code FloatSupplier} to return a supplied value if this {@code ThrowableFloatUnaryOperator}
+     * fails
      * @return A composed {@code FloatUnaryOperator} that applies this {@code ThrowableFloatUnaryOperator}, and if an
-     * error occurred, the supplied value from the given {@code Supplier}.
+     * error occurred, the supplied value from the given {@code FloatSupplier}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    default FloatUnaryOperator orReturn(final Supplier<? extends Float> supplier) {
+    default FloatUnaryOperator orReturn(final FloatSupplier supplier) {
         Objects.requireNonNull(supplier);
         return operand -> {
             try {
                 return applyAsFloatThrows(operand);
             } catch (Exception ignored) {
-                return supplier.get();
+                return supplier.getAsFloat();
             }
         };
     }

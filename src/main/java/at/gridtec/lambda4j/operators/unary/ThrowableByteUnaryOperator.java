@@ -15,10 +15,10 @@
  */
 package at.gridtec.lambda4j.operators.unary;
 
+import at.gridtec.lambda4j.supplier.ByteSupplier;
 import at.gridtec.lambda4j.util.ThrowableUtils;
 
 import java.util.Objects;
-import java.util.function.Supplier;
 
 /**
  * This functional interface implements a {@link ByteUnaryOperator} which is able to throw any {@link Exception}.
@@ -211,21 +211,22 @@ public interface ThrowableByteUnaryOperator extends ByteUnaryOperator {
 
     /**
      * Returns a composed {@link ByteUnaryOperator} that applies this {@link ThrowableByteUnaryOperator} to its input,
-     * and if an error occurred, returns the supplied value from the given {@link Supplier}. The exception from this
+     * and if an error occurred, returns the supplied value from the given {@link ByteSupplier}. The exception from this
      * {@code ThrowableByteUnaryOperator} is ignored.
      *
-     * @param supplier A {@code Supplier} to return a supplied value if this {@code ThrowableByteUnaryOperator} fails
+     * @param supplier A {@code ByteSupplier} to return a supplied value if this {@code ThrowableByteUnaryOperator}
+     * fails
      * @return A composed {@code ByteUnaryOperator} that applies this {@code ThrowableByteUnaryOperator}, and if an
-     * error occurred, the supplied value from the given {@code Supplier}.
+     * error occurred, the supplied value from the given {@code ByteSupplier}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    default ByteUnaryOperator orReturn(final Supplier<? extends Byte> supplier) {
+    default ByteUnaryOperator orReturn(final ByteSupplier supplier) {
         Objects.requireNonNull(supplier);
         return operand -> {
             try {
                 return applyAsByteThrows(operand);
             } catch (Exception ignored) {
-                return supplier.get();
+                return supplier.getAsByte();
             }
         };
     }

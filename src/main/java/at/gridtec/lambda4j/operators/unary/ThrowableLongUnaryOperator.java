@@ -18,8 +18,8 @@ package at.gridtec.lambda4j.operators.unary;
 import at.gridtec.lambda4j.util.ThrowableUtils;
 
 import java.util.Objects;
+import java.util.function.LongSupplier;
 import java.util.function.LongUnaryOperator;
-import java.util.function.Supplier;
 
 /**
  * This functional interface implements a {@link LongUnaryOperator} which is able to throw any {@link Exception}.
@@ -212,21 +212,22 @@ public interface ThrowableLongUnaryOperator extends LongUnaryOperator {
 
     /**
      * Returns a composed {@link LongUnaryOperator} that applies this {@link ThrowableLongUnaryOperator} to its input,
-     * and if an error occurred, returns the supplied value from the given {@link Supplier}. The exception from this
+     * and if an error occurred, returns the supplied value from the given {@link LongSupplier}. The exception from this
      * {@code ThrowableLongUnaryOperator} is ignored.
      *
-     * @param supplier A {@code Supplier} to return a supplied value if this {@code ThrowableLongUnaryOperator} fails
+     * @param supplier A {@code LongSupplier} to return a supplied value if this {@code ThrowableLongUnaryOperator}
+     * fails
      * @return A composed {@code LongUnaryOperator} that applies this {@code ThrowableLongUnaryOperator}, and if an
-     * error occurred, the supplied value from the given {@code Supplier}.
+     * error occurred, the supplied value from the given {@code LongSupplier}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    default LongUnaryOperator orReturn(final Supplier<? extends Long> supplier) {
+    default LongUnaryOperator orReturn(final LongSupplier supplier) {
         Objects.requireNonNull(supplier);
         return operand -> {
             try {
                 return applyAsLongThrows(operand);
             } catch (Exception ignored) {
-                return supplier.get();
+                return supplier.getAsLong();
             }
         };
     }

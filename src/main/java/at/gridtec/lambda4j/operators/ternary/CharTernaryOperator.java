@@ -15,6 +15,10 @@
  */
 package at.gridtec.lambda4j.operators.ternary;
 
+import at.gridtec.lambda4j.operators.unary.CharUnaryOperator;
+
+import java.util.Objects;
+
 /**
  * Represents an operation on a two {@code char}-valued operands and producing a {@code char}-valued result. This is the
  * primitive type specialization of {@link TernaryOperator} for {@code char}.
@@ -28,7 +32,56 @@ package at.gridtec.lambda4j.operators.ternary;
 public interface CharTernaryOperator {
 
     /**
-     * Applies this operator to the given operand argument.
+     * Creates a {@link CharTernaryOperator} which always returns a given value.
+     *
+     * @param r The return value for the constant
+     * @return A {@code CharTernaryOperator} which always returns a given value.
+     */
+    static <T> CharTernaryOperator constant(char r) {
+        return (left, middle, right) -> r;
+    }
+
+    /**
+     * Creates a {@link CharTernaryOperator} which uses the left parameter only from the given {@link
+     * CharUnaryOperator}.
+     *
+     * @return Creates a {@code CharTernaryOperator} which uses the left parameter only from the given {@code
+     * CharUnaryOperator}.
+     * @throws NullPointerException If the given argument is {@code null}
+     */
+    static <T> CharTernaryOperator forLeft(final CharUnaryOperator operator) {
+        Objects.requireNonNull(operator);
+        return (left, middle, right) -> operator.applyAsChar(left);
+    }
+
+    /**
+     * Creates a {@link CharTernaryOperator} which uses the middle parameter only from the given {@link
+     * CharUnaryOperator}.
+     *
+     * @return Creates a {@code CharTernaryOperator} which uses the middle parameter only from the given {@code
+     * CharUnaryOperator}.
+     * @throws NullPointerException If the given argument is {@code null}
+     */
+    static <T> CharTernaryOperator forMiddle(final CharUnaryOperator operator) {
+        Objects.requireNonNull(operator);
+        return (left, middle, right) -> operator.applyAsChar(middle);
+    }
+
+    /**
+     * Creates a {@link CharTernaryOperator} which uses the right parameter only from the given {@link
+     * CharUnaryOperator}.
+     *
+     * @return Creates a {@code CharTernaryOperator} which uses the right parameter only from the given {@code
+     * CharUnaryOperator}.
+     * @throws NullPointerException If the given argument is {@code null}
+     */
+    static <T> CharTernaryOperator forRight(final CharUnaryOperator operator) {
+        Objects.requireNonNull(operator);
+        return (left, middle, right) -> operator.applyAsChar(right);
+    }
+
+    /**
+     * Applies this operator to the given operand arguments.
      *
      * @param left The first argument to the operator (left input)
      * @param middle The second argument to the operator (middle input)
@@ -36,4 +89,42 @@ public interface CharTernaryOperator {
      * @return The return value from the operator.
      */
     char applyAsChar(char left, char middle, char right);
+
+    /**
+     * Returns a composed {@link CharTernaryOperator} that first applies the given {@code before} operators to its
+     * input, and then applies this operator to the result. If evaluation of either operator throws an exception, it is
+     * relayed to the caller of the composed operator.
+     *
+     * @param before1 The first {@code CharUnaryOperator} to apply before this operator is applied
+     * @param before2 The second {@code CharUnaryOperator} to apply before this operator is applied
+     * @param before3 The third {@code CharUnaryOperator} to apply before this operator is applied
+     * @return A composed {@code CharTernaryOperator} that first applies the given {@code before} operators and then
+     * applies this operator.
+     * @throws NullPointerException If one of the given operators are {@code null}
+     * @see #andThen(CharUnaryOperator)
+     */
+    default CharTernaryOperator compose(final CharUnaryOperator before1, final CharUnaryOperator before2,
+            final CharUnaryOperator before3) {
+        Objects.requireNonNull(before1);
+        Objects.requireNonNull(before2);
+        Objects.requireNonNull(before3);
+        return (left, middle, right) -> applyAsChar(before1.applyAsChar(left), before2.applyAsChar(middle),
+                                                    before3.applyAsChar(right));
+    }
+
+    /**
+     * Returns a composed {@link CharTernaryOperator} that first applies this operator to its input, and then applies
+     * the {@code after} operator to the result. If evaluation of either operator throws an exception, it is relayed to
+     * the caller of the composed operator.
+     *
+     * @param after The {@code CharUnaryOperator} to apply after this operator is applied
+     * @return A composed {@code CharTernaryOperator} that first applies this operator and then applies the {@code
+     * after} operator.
+     * @throws NullPointerException If one of the given operators are {@code null}
+     * @see #compose(CharUnaryOperator, CharUnaryOperator, CharUnaryOperator)
+     */
+    default CharTernaryOperator andThen(CharUnaryOperator after) {
+        Objects.requireNonNull(after);
+        return (left, middle, right) -> after.applyAsChar(applyAsChar(left, middle, right));
+    }
 }

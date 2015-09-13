@@ -81,8 +81,8 @@ public interface CharBinaryOperator {
      *
      * @param before1 The first {@code CharUnaryOperator} to apply before this operator is applied
      * @param before2 The second {@code CharUnaryOperator} to apply before this operator is applied
-     * @return A composed {@code CharBinaryOperator} that first applies the {@code before} operator and then applies
-     * this operator
+     * @return A composed {@code CharBinaryOperator} that first applies the given {@code before} operators and then
+     * applies this operator.
      * @throws NullPointerException If one of the given operators are {@code null}
      * @see #andThen(CharUnaryOperator)
      */
@@ -99,7 +99,7 @@ public interface CharBinaryOperator {
      *
      * @param after The {@code CharUnaryOperator} to apply after this operator is applied
      * @return A composed {@code CharBinaryOperator} that first applies this operator and then applies the {@code after}
-     * operator
+     * operator.
      * @throws NullPointerException If one of the given operators are {@code null}
      * @see #compose(CharUnaryOperator, CharUnaryOperator)
      */

@@ -15,10 +15,10 @@
  */
 package at.gridtec.lambda4j.operators.unary;
 
+import at.gridtec.lambda4j.supplier.ShortSupplier;
 import at.gridtec.lambda4j.util.ThrowableUtils;
 
 import java.util.Objects;
-import java.util.function.Supplier;
 
 /**
  * This functional interface implements a {@link ShortUnaryOperator} which is able to throw any {@link Exception}.
@@ -211,21 +211,22 @@ public interface ThrowableShortUnaryOperator extends ShortUnaryOperator {
 
     /**
      * Returns a composed {@link ShortUnaryOperator} that applies this {@link ThrowableShortUnaryOperator} to its input,
-     * and if an error occurred, returns the supplied value from the given {@link Supplier}. The exception from this
-     * {@code ThrowableShortUnaryOperator} is ignored.
+     * and if an error occurred, returns the supplied value from the given {@link ShortSupplier}. The exception from
+     * this {@code ThrowableShortUnaryOperator} is ignored.
      *
-     * @param supplier A {@code Supplier} to return a supplied value if this {@code ThrowableShortUnaryOperator} fails
+     * @param supplier A {@code ShortSupplier} to return a supplied value if this {@code ThrowableShortUnaryOperator}
+     * fails
      * @return A composed {@code ShortUnaryOperator} that applies this {@code ThrowableShortUnaryOperator}, and if an
-     * error occurred, the supplied value from the given {@code Supplier}.
+     * error occurred, the supplied value from the given {@code ShortSupplier}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    default ShortUnaryOperator orReturn(final Supplier<? extends Short> supplier) {
+    default ShortUnaryOperator orReturn(final ShortSupplier supplier) {
         Objects.requireNonNull(supplier);
         return operand -> {
             try {
                 return applyAsShortThrows(operand);
             } catch (Exception ignored) {
-                return supplier.get();
+                return supplier.getAsShort();
             }
         };
     }

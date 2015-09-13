@@ -81,8 +81,8 @@ public interface ByteBinaryOperator {
      *
      * @param before1 The first {@code ByteUnaryOperator} to apply before this operator is applied
      * @param before2 The second {@code ByteUnaryOperator} to apply before this operator is applied
-     * @return A composed {@code ByteBinaryOperator} that first applies the {@code before} operator and then applies
-     * this operator
+     * @return A composed {@code ByteBinaryOperator} that first applies the given {@code before} operators and then
+     * applies this operator.
      * @throws NullPointerException If one of the given operators are {@code null}
      * @see #andThen(ByteUnaryOperator)
      */
@@ -99,7 +99,7 @@ public interface ByteBinaryOperator {
      *
      * @param after The {@code ByteUnaryOperator} to apply after this operator is applied
      * @return A composed {@code ByteBinaryOperator} that first applies this operator and then applies the {@code after}
-     * operator
+     * operator.
      * @throws NullPointerException If one of the given operators are {@code null}
      * @see #compose(ByteUnaryOperator, ByteUnaryOperator)
      */

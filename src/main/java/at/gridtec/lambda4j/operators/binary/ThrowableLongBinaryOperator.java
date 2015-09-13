@@ -21,7 +21,7 @@ import java.util.Comparator;
 import java.util.Objects;
 import java.util.function.BinaryOperator;
 import java.util.function.LongBinaryOperator;
-import java.util.function.Supplier;
+import java.util.function.LongSupplier;
 
 /**
  * This functional interface implements a {@link LongBinaryOperator} which is able to throw any {@link Exception}.
@@ -242,21 +242,22 @@ public interface ThrowableLongBinaryOperator extends LongBinaryOperator {
 
     /**
      * Returns a composed {@link LongBinaryOperator} that applies this {@link ThrowableLongBinaryOperator} to its input,
-     * and if an error occurred, returns the supplied value from the given {@link Supplier}. The exception from this
+     * and if an error occurred, returns the supplied value from the given {@link LongSupplier}. The exception from this
      * {@code ThrowableLongBinaryOperator} is ignored.
      *
-     * @param supplier A {@code Supplier} to return a supplied value if this {@code ThrowableLongBinaryOperator} fails
+     * @param supplier A {@code LongSupplier} to return a supplied value if this {@code ThrowableLongBinaryOperator}
+     * fails
      * @return A composed {@code LongBinaryOperator} that applies this {@code ThrowableLongBinaryOperator}, and if an
-     * error occurred, the supplied value from the given {@code Supplier}.
+     * error occurred, the supplied value from the given {@code LongSupplier}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    default LongBinaryOperator orReturn(final Supplier<? extends Long> supplier) {
+    default LongBinaryOperator orReturn(final LongSupplier supplier) {
         Objects.requireNonNull(supplier);
         return (left, right) -> {
             try {
                 return applyAsLongThrows(left, right);
             } catch (Exception ignored) {
-                return supplier.get();
+                return supplier.getAsLong();
             }
         };
     }
