@@ -96,10 +96,38 @@ public interface ThrowableDoubleBinaryOperator extends DoubleBinaryOperator {
     }
 
     /**
+     * Returns a {@link ThrowableDoubleBinaryOperator} which returns the lesser of two elements, according to the
+     * specified {@code Comparator}.
+     *
+     * @param comparator A {@code Comparator} for comparing the operators operands
+     * @return A {@code ThrowableDoubleBinaryOperator} which returns the lesser of two elements, according to the
+     * supplied {@code Comparator}.
+     * @throws NullPointerException If the given argument is {@code null}
+     */
+    static ThrowableDoubleBinaryOperator minBy(final Comparator<? super Double> comparator) {
+        Objects.requireNonNull(comparator);
+        return (a, b) -> comparator.compare(a, b) <= 0 ? a : b;
+    }
+
+    /**
+     * Returns a {@link ThrowableDoubleBinaryOperator} which returns the greater of two elements, according to the
+     * specified {@code Comparator}.
+     *
+     * @param comparator A {@code Comparator} for comparing the operators operands
+     * @return A {@code ThrowableDoubleBinaryOperator} which returns the greater of two elements, according to the
+     * supplied {@code Comparator}.
+     * @throws NullPointerException If the given argument is {@code null}
+     */
+    static ThrowableDoubleBinaryOperator maxBy(final Comparator<? super Double> comparator) {
+        Objects.requireNonNull(comparator);
+        return (a, b) -> comparator.compare(a, b) >= 0 ? a : b;
+    }
+
+    /**
      * Returns a {@link ThrowableDoubleBinaryOperator} which returns the lesser of two elements according to {@link
      * Double#min(double, double)} operation.
      *
-     * @return A {@code ThrowableDoubleBinaryOperator} which returns the lesser of its operands.
+     * @return A {@code ThrowableDoubleBinaryOperator} which returns the lesser of two elements.
      * @see BinaryOperator#minBy(Comparator)
      * @see Double#min(double, double)
      * @see Math#min(double, double)
@@ -112,7 +140,7 @@ public interface ThrowableDoubleBinaryOperator extends DoubleBinaryOperator {
      * Returns a {@link ThrowableDoubleBinaryOperator} which returns the greater of two elements according to {@link
      * Double#max(double, double)} operation.
      *
-     * @return A {@code ThrowableDoubleBinaryOperator} which returns the greater of its operands.
+     * @return A {@code ThrowableDoubleBinaryOperator} which returns the greater of two elements.
      * @see BinaryOperator#maxBy(Comparator)
      * @see Double#max(double, double)
      * @see Math#max(double, double)

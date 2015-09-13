@@ -95,10 +95,38 @@ public interface ThrowableShortBinaryOperator extends ShortBinaryOperator {
     }
 
     /**
+     * Returns a {@link ThrowableShortBinaryOperator} which returns the lesser of two elements, according to the
+     * specified {@code Comparator}.
+     *
+     * @param comparator A {@code Comparator} for comparing the operators operands
+     * @return A {@code ThrowableShortBinaryOperator} which returns the lesser of two elements, according to the
+     * supplied {@code Comparator}.
+     * @throws NullPointerException If the given argument is {@code null}
+     */
+    static ThrowableShortBinaryOperator minBy(final Comparator<? super Short> comparator) {
+        Objects.requireNonNull(comparator);
+        return (a, b) -> comparator.compare(a, b) <= 0 ? a : b;
+    }
+
+    /**
+     * Returns a {@link ThrowableShortBinaryOperator} which returns the greater of two elements, according to the
+     * specified {@code Comparator}.
+     *
+     * @param comparator A {@code Comparator} for comparing the operators operands
+     * @return A {@code ThrowableShortBinaryOperator} which returns the greater of two elements, according to the
+     * supplied {@code Comparator}.
+     * @throws NullPointerException If the given argument is {@code null}
+     */
+    static ThrowableShortBinaryOperator maxBy(final Comparator<? super Short> comparator) {
+        Objects.requireNonNull(comparator);
+        return (a, b) -> comparator.compare(a, b) >= 0 ? a : b;
+    }
+
+    /**
      * Returns a {@link ThrowableShortBinaryOperator} which returns the lesser of two elements according to {@code left
      * &lt;= right} operation.
      *
-     * @return A {@code ThrowableShortBinaryOperator} which returns the lesser of its operands.
+     * @return A {@code ThrowableShortBinaryOperator} which returns the lesser of two elements.
      * @see BinaryOperator#minBy(Comparator)
      */
     static ThrowableShortBinaryOperator min() {
@@ -109,7 +137,7 @@ public interface ThrowableShortBinaryOperator extends ShortBinaryOperator {
      * Returns a {@link ThrowableShortBinaryOperator} which returns the greater of two elements according to {@code left
      * &gt;= right} operation.
      *
-     * @return A {@code ThrowableShortBinaryOperator} which returns the greater of its operands.
+     * @return A {@code ThrowableShortBinaryOperator} which returns the greater of two elements.
      * @see BinaryOperator#maxBy(Comparator)
      */
     static ThrowableShortBinaryOperator max() {

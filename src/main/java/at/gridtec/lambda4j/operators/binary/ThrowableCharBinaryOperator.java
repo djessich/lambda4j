@@ -39,8 +39,8 @@ import java.util.function.BinaryOperator;
  * compiler prints an error that the corresponding {@code try} block never throws the specific exception.</li> </ol>
  * <p>
  * When the calling code never throws the specific exception that it declares, you should omit it. For example: {@code
- * new String(byteArr, "UTF-8") throws UnsupportedEncodingException}, but UTF-8 is guaranteed by the Java specification
- * to be always present. The exception should therefore be omitted.
+ * new String(CharacterArr, "UTF-8") throws UnsupportedEncodingException}, but UTF-8 is guaranteed by the Java
+ * specification to be always present. The exception should therefore be omitted.
  * <p>
  * Moreover, if no checked exception should be used at all or its use is inappropriate for any reasons, omit the
  * declaration in the <em>throws</em> clause. The checked exception will behave just like a normal <b>unchecked</b>
@@ -95,10 +95,38 @@ public interface ThrowableCharBinaryOperator extends CharBinaryOperator {
     }
 
     /**
+     * Returns a {@link ThrowableCharBinaryOperator} which returns the lesser of two elements, according to the
+     * specified {@code Comparator}.
+     *
+     * @param comparator A {@code Comparator} for comparing the operators operands
+     * @return A {@code ThrowableCharBinaryOperator} which returns the lesser of two elements, according to the supplied
+     * {@code Comparator}.
+     * @throws NullPointerException If the given argument is {@code null}
+     */
+    static ThrowableCharBinaryOperator minBy(final Comparator<? super Character> comparator) {
+        Objects.requireNonNull(comparator);
+        return (a, b) -> comparator.compare(a, b) <= 0 ? a : b;
+    }
+
+    /**
+     * Returns a {@link ThrowableCharBinaryOperator} which returns the greater of two elements, according to the
+     * specified {@code Comparator}.
+     *
+     * @param comparator A {@code Comparator} for comparing the operators operands
+     * @return A {@code ThrowableCharBinaryOperator} which returns the greater of two elements, according to the
+     * supplied {@code Comparator}.
+     * @throws NullPointerException If the given argument is {@code null}
+     */
+    static ThrowableCharBinaryOperator maxBy(final Comparator<? super Character> comparator) {
+        Objects.requireNonNull(comparator);
+        return (a, b) -> comparator.compare(a, b) >= 0 ? a : b;
+    }
+
+    /**
      * Returns a {@link ThrowableCharBinaryOperator} which returns the lesser of two elements according to {@code left
      * &lt;= right} operation.
      *
-     * @return A {@code ThrowableCharBinaryOperator} which returns the lesser of its operands.
+     * @return A {@code ThrowableCharBinaryOperator} which returns the lesser of two elements.
      * @see BinaryOperator#minBy(Comparator)
      */
     static ThrowableCharBinaryOperator min() {
@@ -109,7 +137,7 @@ public interface ThrowableCharBinaryOperator extends CharBinaryOperator {
      * Returns a {@link ThrowableCharBinaryOperator} which returns the greater of two elements according to {@code left
      * &gt;= right} operation.
      *
-     * @return A {@code ThrowableCharBinaryOperator} which returns the greater of its operands.
+     * @return A {@code ThrowableCharBinaryOperator} which returns the greater of two elements.
      * @see BinaryOperator#maxBy(Comparator)
      */
     static ThrowableCharBinaryOperator max() {

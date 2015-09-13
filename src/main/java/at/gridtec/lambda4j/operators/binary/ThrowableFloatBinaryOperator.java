@@ -95,10 +95,38 @@ public interface ThrowableFloatBinaryOperator extends FloatBinaryOperator {
     }
 
     /**
+     * Returns a {@link ThrowableFloatBinaryOperator} which returns the lesser of two elements, according to the
+     * specified {@code Comparator}.
+     *
+     * @param comparator A {@code Comparator} for comparing the operators operands
+     * @return A {@code ThrowableFloatBinaryOperator} which returns the lesser of two elements, according to the
+     * supplied {@code Comparator}.
+     * @throws NullPointerException If the given argument is {@code null}
+     */
+    static ThrowableFloatBinaryOperator minBy(final Comparator<? super Float> comparator) {
+        Objects.requireNonNull(comparator);
+        return (a, b) -> comparator.compare(a, b) <= 0 ? a : b;
+    }
+
+    /**
+     * Returns a {@link ThrowableFloatBinaryOperator} which returns the greater of two elements, according to the
+     * specified {@code Comparator}.
+     *
+     * @param comparator A {@code Comparator} for comparing the operators operands
+     * @return A {@code ThrowableFloatBinaryOperator} which returns the greater of two elements, according to the
+     * supplied {@code Comparator}.
+     * @throws NullPointerException If the given argument is {@code null}
+     */
+    static ThrowableFloatBinaryOperator maxBy(final Comparator<? super Float> comparator) {
+        Objects.requireNonNull(comparator);
+        return (a, b) -> comparator.compare(a, b) >= 0 ? a : b;
+    }
+
+    /**
      * Returns a {@link ThrowableFloatBinaryOperator} which returns the lesser of two elements according to {@code left
      * &lt;= right} operation.
      *
-     * @return A {@code ThrowableFloatBinaryOperator} which returns the lesser of its operands.
+     * @return A {@code ThrowableFloatBinaryOperator} which returns the lesser of two elements.
      * @see BinaryOperator#minBy(Comparator)
      * @see Float#min(float, float)
      * @see Math#min(float, float)
@@ -111,7 +139,7 @@ public interface ThrowableFloatBinaryOperator extends FloatBinaryOperator {
      * Returns a {@link ThrowableFloatBinaryOperator} which returns the greater of two elements according to {@code left
      * &gt;= right} operation.
      *
-     * @return A {@code ThrowableFloatBinaryOperator} which returns the greater of its operands.
+     * @return A {@code ThrowableFloatBinaryOperator} which returns the greater of two elements.
      * @see BinaryOperator#maxBy(Comparator)
      * @see Float#max(float, float)
      * @see Math#max(float, float)

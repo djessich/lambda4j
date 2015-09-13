@@ -98,12 +98,12 @@ public interface ThrowableBinaryOperator<T> extends BinaryOperator<T> {
     }
 
     /**
-     * Returns a {@link ThrowableBinaryOperator} which returns the lesser of two elements according to the specified
+     * Returns a {@link ThrowableBinaryOperator} which returns the lesser of two elements, according to the specified
      * {@code Comparator}.
      *
      * @param <T> The type of the arguments and the return value for this operator
      * @param comparator A {@code Comparator} for comparing the operators operands
-     * @return A {@code ThrowableBinaryOperator} which returns the lesser of its operands, according to the supplied
+     * @return A {@code ThrowableBinaryOperator} which returns the lesser of two elements, according to the supplied
      * {@code Comparator}
      * @throws NullPointerException If the given argument is {@code null}
      */
@@ -113,12 +113,12 @@ public interface ThrowableBinaryOperator<T> extends BinaryOperator<T> {
     }
 
     /**
-     * Returns a {@link ThrowableBinaryOperator} which returns the greater of two elements according to the specified
+     * Returns a {@link ThrowableBinaryOperator} which returns the greater of two elements, according to the specified
      * {@code Comparator}.
      *
      * @param <T> The type of the arguments and the return value for this operator
      * @param comparator A {@code Comparator} for comparing the operators operands
-     * @return A {@code ThrowableBinaryOperator} which returns the greater of its operands, according to the supplied
+     * @return A {@code ThrowableBinaryOperator} which returns the greater of two elements, according to the supplied
      * {@code Comparator}
      * @throws NullPointerException If the given argument is {@code null}
      */

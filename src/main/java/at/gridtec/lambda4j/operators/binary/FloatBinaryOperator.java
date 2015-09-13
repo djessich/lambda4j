@@ -44,10 +44,38 @@ public interface FloatBinaryOperator {
     }
 
     /**
+     * Returns a {@link FloatBinaryOperator} which returns the lesser of two elements, according to the specified {@code
+     * Comparator}.
+     *
+     * @param comparator A {@code Comparator} for comparing the operators operands
+     * @return A {@code FloatBinaryOperator} which returns the lesser of two elements, according to the supplied {@code
+     * Comparator}.
+     * @throws NullPointerException If the given argument is {@code null}
+     */
+    static FloatBinaryOperator minBy(final Comparator<? super Float> comparator) {
+        Objects.requireNonNull(comparator);
+        return (a, b) -> comparator.compare(a, b) <= 0 ? a : b;
+    }
+
+    /**
+     * Returns a {@link FloatBinaryOperator} which returns the greater of two elements, according to the specified
+     * {@code Comparator}.
+     *
+     * @param comparator A {@code Comparator} for comparing the operators operands
+     * @return A {@code FloatBinaryOperator} which returns the greater of two elements, according to the supplied {@code
+     * Comparator}.
+     * @throws NullPointerException If the given argument is {@code null}
+     */
+    static FloatBinaryOperator maxBy(final Comparator<? super Float> comparator) {
+        Objects.requireNonNull(comparator);
+        return (a, b) -> comparator.compare(a, b) >= 0 ? a : b;
+    }
+
+    /**
      * Returns a {@link FloatBinaryOperator} which returns the lesser of two elements according to {@link
      * Float#min(float, float)} operation.
      *
-     * @return A {@code FloatBinaryOperator} which returns the lesser of its operands.
+     * @return A {@code FloatBinaryOperator} which returns the lesser of two elements.
      * @see BinaryOperator#minBy(Comparator)
      * @see Float#min(float, float)
      * @see Math#min(float, float)
@@ -60,7 +88,7 @@ public interface FloatBinaryOperator {
      * Returns a {@link FloatBinaryOperator} which returns the greater of two elements according to {@link
      * Float#max(float, float)} operation.
      *
-     * @return A {@code FloatBinaryOperator} which returns the greater of its operands.
+     * @return A {@code FloatBinaryOperator} which returns the greater of two elements.
      * @see BinaryOperator#maxBy(Comparator)
      * @see Float#max(float, float)
      * @see Math#max(float, float)

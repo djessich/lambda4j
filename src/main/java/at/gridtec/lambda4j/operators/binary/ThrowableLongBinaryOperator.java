@@ -96,10 +96,38 @@ public interface ThrowableLongBinaryOperator extends LongBinaryOperator {
     }
 
     /**
+     * Returns a {@link ThrowableLongBinaryOperator} which returns the lesser of two elements, according to the
+     * specified {@code Comparator}.
+     *
+     * @param comparator A {@code Comparator} for comparing the operators operands
+     * @return A {@code ThrowableLongBinaryOperator} which returns the lesser of two elements, according to the supplied
+     * {@code Comparator}.
+     * @throws NullPointerException If the given argument is {@code null}
+     */
+    static ThrowableLongBinaryOperator minBy(final Comparator<? super Long> comparator) {
+        Objects.requireNonNull(comparator);
+        return (a, b) -> comparator.compare(a, b) <= 0 ? a : b;
+    }
+
+    /**
+     * Returns a {@link ThrowableLongBinaryOperator} which returns the greater of two elements, according to the
+     * specified {@code Comparator}.
+     *
+     * @param comparator A {@code Comparator} for comparing the operators operands
+     * @return A {@code ThrowableLongBinaryOperator} which returns the greater of two elements, according to the
+     * supplied {@code Comparator}.
+     * @throws NullPointerException If the given argument is {@code null}
+     */
+    static ThrowableLongBinaryOperator maxBy(final Comparator<? super Long> comparator) {
+        Objects.requireNonNull(comparator);
+        return (a, b) -> comparator.compare(a, b) >= 0 ? a : b;
+    }
+
+    /**
      * Returns a {@link ThrowableLongBinaryOperator} which returns the lesser of two elements according to {@link
      * Long#min(long, long)} operation.
      *
-     * @return A {@code ThrowableLongBinaryOperator} which returns the lesser of its operands.
+     * @return A {@code ThrowableLongBinaryOperator} which returns the lesser of two elements.
      * @see BinaryOperator#minBy(Comparator)
      * @see Long#min(long, long)
      * @see Math#min(long, long)
@@ -112,7 +140,7 @@ public interface ThrowableLongBinaryOperator extends LongBinaryOperator {
      * Returns a {@link ThrowableLongBinaryOperator} which returns the greater of two elements according to {@link
      * Long#max(long, long)} operation.
      *
-     * @return A {@code ThrowableLongBinaryOperator} which returns the greater of its operands.
+     * @return A {@code ThrowableLongBinaryOperator} which returns the greater of two elements.
      * @see BinaryOperator#maxBy(Comparator)
      * @see Long#max(long, long)
      * @see Math#max(long, long)

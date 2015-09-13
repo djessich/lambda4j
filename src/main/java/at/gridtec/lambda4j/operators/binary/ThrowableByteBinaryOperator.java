@@ -95,10 +95,38 @@ public interface ThrowableByteBinaryOperator extends ByteBinaryOperator {
     }
 
     /**
+     * Returns a {@link ThrowableByteBinaryOperator} which returns the lesser of two elements, according to the
+     * specified {@code Comparator}.
+     *
+     * @param comparator A {@code Comparator} for comparing the operators operands
+     * @return A {@code ThrowableByteBinaryOperator} which returns the lesser of two elements, according to the supplied
+     * {@code Comparator}.
+     * @throws NullPointerException If the given argument is {@code null}
+     */
+    static ThrowableByteBinaryOperator minBy(final Comparator<? super Byte> comparator) {
+        Objects.requireNonNull(comparator);
+        return (a, b) -> comparator.compare(a, b) <= 0 ? a : b;
+    }
+
+    /**
+     * Returns a {@link ThrowableByteBinaryOperator} which returns the greater of two elements, according to the
+     * specified {@code Comparator}.
+     *
+     * @param comparator A {@code Comparator} for comparing the operators operands
+     * @return A {@code ThrowableByteBinaryOperator} which returns the greater of two elements, according to the
+     * supplied {@code Comparator}.
+     * @throws NullPointerException If the given argument is {@code null}
+     */
+    static ThrowableByteBinaryOperator maxBy(final Comparator<? super Byte> comparator) {
+        Objects.requireNonNull(comparator);
+        return (a, b) -> comparator.compare(a, b) >= 0 ? a : b;
+    }
+
+    /**
      * Returns a {@link ThrowableByteBinaryOperator} which returns the lesser of two elements according to {@code left
      * &lt;= right} operation.
      *
-     * @return A {@code ThrowableByteBinaryOperator} which returns the lesser of its operands.
+     * @return A {@code ThrowableByteBinaryOperator} which returns the lesser of two elements.
      * @see BinaryOperator#minBy(Comparator)
      */
     static ThrowableByteBinaryOperator min() {
@@ -109,7 +137,7 @@ public interface ThrowableByteBinaryOperator extends ByteBinaryOperator {
      * Returns a {@link ThrowableByteBinaryOperator} which returns the greater of two elements according to {@code left
      * &gt;= right} operation.
      *
-     * @return A {@code ThrowableByteBinaryOperator} which returns the greater of its operands.
+     * @return A {@code ThrowableByteBinaryOperator} which returns the greater of two elements.
      * @see BinaryOperator#maxBy(Comparator)
      */
     static ThrowableByteBinaryOperator max() {
