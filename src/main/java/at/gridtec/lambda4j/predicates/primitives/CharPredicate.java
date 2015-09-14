@@ -146,11 +146,8 @@ public interface CharPredicate {
 
     /**
      * Returns a composed {@link CharPredicate} that represents a short-circuiting logical XOR of this predicate and
-     * another. When evaluating the composed predicate, if this predicate is {@code true}, then the {@code other}
-     * predicate is not evaluated.
-     * <p>
-     * Any exceptions thrown during evaluation of either predicate are relayed to the caller; if evaluation of this
-     * {@code CharPredicate} throws an exception, the {@code other} {@code CharPredicate} will not be evaluated.
+     * another. Any exceptions thrown during evaluation of either predicate are relayed to the caller; if evaluation of
+     * this {@code CharPredicate} throws an exception, the {@code other} {@code CharPredicate} will not be evaluated.
      *
      * @param other A {@code CharPredicate} that will be logically-XORed with this one
      * @return A composed {@code CharPredicate} that represents the short-circuiting logical XOR of this predicate and

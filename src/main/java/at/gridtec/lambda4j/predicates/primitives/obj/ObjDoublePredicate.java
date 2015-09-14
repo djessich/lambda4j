@@ -32,35 +32,6 @@ import java.util.function.BiPredicate;
 public interface ObjDoublePredicate<T> {
 
     /**
-     * Implicitly casts, and therefore wraps a given lambda as {@link ObjDoublePredicate}. This is a convenience method
-     * in case the given {@link ObjDoublePredicate} is ambiguous for the compiler. This might happen for overloaded
-     * methods accepting different functional interfaces. The given {@code ObjDoublePredicate} is returned as-is.
-     *
-     * @param <T> The type of argument to the predicate
-     * @param lambda The {@code ObjDoublePredicate} which should be returned as-is.
-     * @return The given {@code ObjDoublePredicate} as-is.
-     * @throws NullPointerException If the given argument is {@code null}
-     */
-    static <T> ObjDoublePredicate<T> wrap(final ObjDoublePredicate<T> lambda) {
-        Objects.requireNonNull(lambda);
-        return lambda;
-    }
-
-    /**
-     * Creates a {@link ObjDoublePredicate} from the given {@link ObjDoublePredicate}. This method is just convenience
-     * to provide a mapping for the non-throwable/throwable instances of the corresponding functional interface.
-     *
-     * @param <T> The type of argument to the predicate
-     * @param lambda A {@code ObjDoublePredicate} which should be mapped to its throwable counterpart
-     * @return A {@code ObjDoublePredicate} from the given {@code ObjDoublePredicate}.
-     * @throws NullPointerException If the given argument is {@code null}
-     */
-    static <T> ObjDoublePredicate<T> from(final ObjDoublePredicate<T> lambda) {
-        Objects.requireNonNull(lambda);
-        return lambda::test;
-    }
-
-    /**
      * Creates a {@link ObjDoublePredicate} which always returns a given value.
      *
      * @param <T> The type of argument to the predicate

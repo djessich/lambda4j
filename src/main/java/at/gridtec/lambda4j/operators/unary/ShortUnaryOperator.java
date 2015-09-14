@@ -64,7 +64,7 @@ public interface ShortUnaryOperator {
      *
      * @param before The {@code ShortUnaryOperator} to apply before this operator is applied
      * @return A composed {@code ShortUnaryOperator} that first applies the {@code before} operator and then applies
-     * this operator
+     * this operator.
      * @throws NullPointerException If given argument is {@code null}
      * @see #andThen(ShortUnaryOperator)
      */
@@ -80,7 +80,7 @@ public interface ShortUnaryOperator {
      *
      * @param after The {@code ShortUnaryOperator} to apply after this operator is applied
      * @return A composed {@code ShortUnaryOperator} that first applies this operator and then applies the {@code after}
-     * operator
+     * operator.
      * @throws NullPointerException If given argument is {@code null}
      * @see #compose(ShortUnaryOperator)
      */

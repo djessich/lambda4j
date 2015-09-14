@@ -158,12 +158,9 @@ public interface ObjBooleanPredicate<T> {
 
     /**
      * Returns a composed {@link ObjBooleanPredicate} that represents a short-circuiting logical XOR of this predicate
-     * and another. When evaluating the composed predicate, if this predicate is {@code true}, then the {@code other}
-     * predicate is not evaluated.
-     * <p>
-     * Any exceptions thrown during evaluation of either predicate are relayed to the caller; if evaluation of this
-     * {@code ObjBooleanPredicate} throws an exception, the {@code other} {@code ObjBooleanPredicate} will not be
-     * evaluated.
+     * and another. Any exceptions thrown during evaluation of either predicate are relayed to the caller; if evaluation
+     * of this {@code ObjBooleanPredicate} throws an exception, the {@code other} {@code ObjBooleanPredicate} will not
+     * be evaluated.
      *
      * @param other A {@code ObjBooleanPredicate} that will be logically-XORed with this one
      * @return A composed {@code ObjBooleanPredicate} that represents the short-circuiting logical XOR of this predicate

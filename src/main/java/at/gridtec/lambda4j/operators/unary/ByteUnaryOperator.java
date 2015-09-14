@@ -64,7 +64,7 @@ public interface ByteUnaryOperator {
      *
      * @param before The {@code ByteUnaryOperator} to apply before this operator is applied
      * @return A composed {@code ByteUnaryOperator} that first applies the {@code before} operator and then applies this
-     * operator
+     * operator.
      * @throws NullPointerException If given argument is {@code null}
      * @see #andThen(ByteUnaryOperator)
      */
@@ -80,7 +80,7 @@ public interface ByteUnaryOperator {
      *
      * @param after The {@code ByteUnaryOperator} to apply after this operator is applied
      * @return A composed {@code ByteUnaryOperator} that first applies this operator and then applies the {@code after}
-     * operator
+     * operator.
      * @throws NullPointerException If given argument is {@code null}
      * @see #compose(ByteUnaryOperator)
      */

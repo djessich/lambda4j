@@ -64,7 +64,7 @@ public interface CharUnaryOperator {
      *
      * @param before The {@code CharUnaryOperator} to apply before this operator is applied
      * @return A composed {@code CharUnaryOperator} that first applies the {@code before} operator and then applies this
-     * operator
+     * operator.
      * @throws NullPointerException If given argument is {@code null}
      * @see #andThen(CharUnaryOperator)
      */
@@ -80,7 +80,7 @@ public interface CharUnaryOperator {
      *
      * @param after The {@code CharUnaryOperator} to apply after this operator is applied
      * @return A composed {@code CharUnaryOperator} that first applies this operator and then applies the {@code after}
-     * operator
+     * operator.
      * @throws NullPointerException If given argument is {@code null}
      * @see #compose(CharUnaryOperator)
      */
