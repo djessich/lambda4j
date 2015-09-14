@@ -126,4 +126,14 @@ public interface LongTernaryOperator {
         Objects.requireNonNull(after);
         return (left, middle, right) -> after.applyAsLong(applyAsLong(left, middle, right));
     }
+
+    /**
+     * Returns a composed {@link TernaryOperator} which represents this {@link LongTernaryOperator}. Thereby the
+     * primitive input argument for this operation is autoboxed.
+     *
+     * @return A composed {@code TernaryOperator} which represents this {@code LongTernaryOperator}.
+     */
+    default TernaryOperator<Long> boxed() {
+        return this::applyAsLong;
+    }
 }

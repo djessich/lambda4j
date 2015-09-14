@@ -127,4 +127,14 @@ public interface FloatTernaryOperator {
         Objects.requireNonNull(after);
         return (left, middle, right) -> after.applyAsFloat(applyAsFloat(left, middle, right));
     }
+
+    /**
+     * Returns a composed {@link TernaryOperator} which represents this {@link FloatTernaryOperator}. Thereby the
+     * primitive input argument for this operation is autoboxed.
+     *
+     * @return A composed {@code TernaryOperator} which represents this {@code FloatTernaryOperator}.
+     */
+    default TernaryOperator<Float> boxed() {
+        return this::applyAsFloat;
+    }
 }

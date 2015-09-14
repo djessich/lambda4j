@@ -127,4 +127,14 @@ public interface CharTernaryOperator {
         Objects.requireNonNull(after);
         return (left, middle, right) -> after.applyAsChar(applyAsChar(left, middle, right));
     }
+
+    /**
+     * Returns a composed {@link TernaryOperator} which represents this {@link CharTernaryOperator}. Thereby the
+     * primitive input argument for this operation is autoboxed.
+     *
+     * @return A composed {@code TernaryOperator} which represents this {@code CharTernaryOperator}.
+     */
+    default TernaryOperator<Character> boxed() {
+        return this::applyAsChar;
+    }
 }

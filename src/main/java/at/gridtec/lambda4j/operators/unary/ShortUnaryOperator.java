@@ -88,4 +88,15 @@ public interface ShortUnaryOperator {
         Objects.requireNonNull(after);
         return operand -> after.applyAsShort(applyAsShort(operand));
     }
+
+    /**
+     * Returns a composed {@link UnaryOperator} which represents this {@link ShortUnaryOperator}. Thereby the primitive
+     * input argument for this operation is autoboxed. This method is just convenience to provide the ability to use
+     * this {@code ShortUnaryOperator} with JRE specific methods, only accepting {@code UnaryOperator}.
+     *
+     * @return A composed {@code UnaryOperator} which represents this {@code ShortUnaryOperator}.
+     */
+    default UnaryOperator<Short> boxed() {
+        return this::applyAsShort;
+    }
 }

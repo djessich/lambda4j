@@ -126,4 +126,14 @@ public interface DoubleTernaryOperator {
         Objects.requireNonNull(after);
         return (left, middle, right) -> after.applyAsDouble(applyAsDouble(left, middle, right));
     }
+
+    /**
+     * Returns a composed {@link TernaryOperator} which represents this {@link DoubleTernaryOperator}. Thereby the
+     * primitive input argument for this operation is autoboxed.
+     *
+     * @return A composed {@code TernaryOperator} which represents this {@code DoubleTernaryOperator}.
+     */
+    default TernaryOperator<Double> boxed() {
+        return this::applyAsDouble;
+    }
 }

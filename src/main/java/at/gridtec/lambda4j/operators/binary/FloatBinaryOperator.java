@@ -165,4 +165,15 @@ public interface FloatBinaryOperator {
         Objects.requireNonNull(after);
         return (left, right) -> after.applyAsFloat(applyAsFloat(left, right));
     }
+
+    /**
+     * Returns a composed {@link BinaryOperator} which represents this {@link FloatBinaryOperator}. Thereby the
+     * primitive input argument for this operation is autoboxed. This method is just convenience to provide the ability
+     * to use this {@code FloatBinaryOperator} with JRE specific methods, only accepting {@code BinaryOperator}.
+     *
+     * @return A composed {@code BinaryOperator} which represents this {@code FloatBinaryOperator}.
+     */
+    default BinaryOperator<Float> boxed() {
+        return this::applyAsFloat;
+    }
 }

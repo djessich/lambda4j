@@ -161,4 +161,15 @@ public interface ByteBinaryOperator {
         Objects.requireNonNull(after);
         return (left, right) -> after.applyAsByte(applyAsByte(left, right));
     }
+
+    /**
+     * Returns a composed {@link BinaryOperator} which represents this {@link ByteBinaryOperator}. Thereby the primitive
+     * input argument for this operation is autoboxed. This method is just convenience to provide the ability to use
+     * this {@code ByteBinaryOperator} with JRE specific methods, only accepting {@code BinaryOperator}.
+     *
+     * @return A composed {@code BinaryOperator} which represents this {@code ByteBinaryOperator}.
+     */
+    default BinaryOperator<Byte> boxed() {
+        return this::applyAsByte;
+    }
 }

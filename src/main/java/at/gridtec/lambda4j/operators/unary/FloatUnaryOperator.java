@@ -88,4 +88,15 @@ public interface FloatUnaryOperator {
         Objects.requireNonNull(after);
         return operand -> after.applyAsFloat(applyAsFloat(operand));
     }
+
+    /**
+     * Returns a composed {@link UnaryOperator} which represents this {@link FloatUnaryOperator}. Thereby the primitive
+     * input argument for this operation is autoboxed. This method is just convenience to provide the ability to use
+     * this {@code FloatUnaryOperator} with JRE specific methods, only accepting {@code UnaryOperator}.
+     *
+     * @return A composed {@code UnaryOperator} which represents this {@code FloatUnaryOperator}.
+     */
+    default UnaryOperator<Float> boxed() {
+        return this::applyAsFloat;
+    }
 }

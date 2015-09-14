@@ -88,4 +88,15 @@ public interface CharUnaryOperator {
         Objects.requireNonNull(after);
         return operand -> after.applyAsChar(applyAsChar(operand));
     }
+
+    /**
+     * Returns a composed {@link UnaryOperator} which represents this {@link CharUnaryOperator}. Thereby the primitive
+     * input argument for this operation is autoboxed. This method is just convenience to provide the ability to use
+     * this {@code CharUnaryOperator} with JRE specific methods, only accepting {@code UnaryOperator}.
+     *
+     * @return A composed {@code UnaryOperator} which represents this {@code CharUnaryOperator}.
+     */
+    default UnaryOperator<Character> boxed() {
+        return this::applyAsChar;
+    }
 }

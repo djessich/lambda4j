@@ -88,4 +88,15 @@ public interface ByteUnaryOperator {
         Objects.requireNonNull(after);
         return operand -> after.applyAsByte(applyAsByte(operand));
     }
+
+    /**
+     * Returns a composed {@link UnaryOperator} which represents this {@link ByteUnaryOperator}. Thereby the primitive
+     * input argument for this operation is autoboxed. This method is just convenience to provide the ability to use
+     * this {@code ByteUnaryOperator} with JRE specific methods, only accepting {@code UnaryOperator}.
+     *
+     * @return A composed {@code UnaryOperator} which represents this {@code ByteUnaryOperator}.
+     */
+    default UnaryOperator<Byte> boxed() {
+        return this::applyAsByte;
+    }
 }

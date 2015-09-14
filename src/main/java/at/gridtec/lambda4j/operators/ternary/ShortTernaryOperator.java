@@ -127,4 +127,14 @@ public interface ShortTernaryOperator {
         Objects.requireNonNull(after);
         return (left, middle, right) -> after.applyAsShort(applyAsShort(left, middle, right));
     }
+
+    /**
+     * Returns a composed {@link TernaryOperator} which represents this {@link ShortTernaryOperator}. Thereby the
+     * primitive input argument for this operation is autoboxed.
+     *
+     * @return A composed {@code TernaryOperator} which represents this {@code ShortTernaryOperator}.
+     */
+    default TernaryOperator<Short> boxed() {
+        return this::applyAsShort;
+    }
 }

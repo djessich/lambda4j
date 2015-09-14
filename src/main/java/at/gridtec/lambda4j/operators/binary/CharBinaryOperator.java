@@ -161,4 +161,15 @@ public interface CharBinaryOperator {
         Objects.requireNonNull(after);
         return (left, right) -> after.applyAsChar(applyAsChar(left, right));
     }
+
+    /**
+     * Returns a composed {@link BinaryOperator} which represents this {@link CharBinaryOperator}. Thereby the primitive
+     * input argument for this operation is autoboxed. This method is just convenience to provide the ability to use
+     * this {@code CharBinaryOperator} with JRE specific methods, only accepting {@code BinaryOperator}.
+     *
+     * @return A composed {@code BinaryOperator} which represents this {@code CharBinaryOperator}.
+     */
+    default BinaryOperator<Character> boxed() {
+        return this::applyAsChar;
+    }
 }
