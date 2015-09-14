@@ -37,7 +37,7 @@ public interface ShortTernaryOperator {
      * @param r The return value for the constant
      * @return A {@code ShortTernaryOperator} which always returns a given value.
      */
-    static <T> ShortTernaryOperator constant(short r) {
+    static ShortTernaryOperator constant(short r) {
         return (left, middle, right) -> r;
     }
 

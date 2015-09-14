@@ -36,7 +36,7 @@ public interface DoubleTernaryOperator {
      * @param r The return value for the constant
      * @return A {@code DoubleTernaryOperator} which always returns a given value.
      */
-    static <T> DoubleTernaryOperator constant(double r) {
+    static DoubleTernaryOperator constant(double r) {
         return (left, middle, right) -> r;
     }
 

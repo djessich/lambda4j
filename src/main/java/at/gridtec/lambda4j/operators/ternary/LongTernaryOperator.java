@@ -36,7 +36,7 @@ public interface LongTernaryOperator {
      * @param r The return value for the constant
      * @return A {@code LongTernaryOperator} which always returns a given value.
      */
-    static <T> LongTernaryOperator constant(long r) {
+    static LongTernaryOperator constant(long r) {
         return (left, middle, right) -> r;
     }
 

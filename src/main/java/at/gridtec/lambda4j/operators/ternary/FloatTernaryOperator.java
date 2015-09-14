@@ -37,7 +37,7 @@ public interface FloatTernaryOperator {
      * @param r The return value for the constant
      * @return A {@code FloatTernaryOperator} which always returns a given value.
      */
-    static <T> FloatTernaryOperator constant(float r) {
+    static FloatTernaryOperator constant(float r) {
         return (left, middle, right) -> r;
     }
 

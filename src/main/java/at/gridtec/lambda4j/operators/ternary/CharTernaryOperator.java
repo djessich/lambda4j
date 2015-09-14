@@ -37,7 +37,7 @@ public interface CharTernaryOperator {
      * @param r The return value for the constant
      * @return A {@code CharTernaryOperator} which always returns a given value.
      */
-    static <T> CharTernaryOperator constant(char r) {
+    static CharTernaryOperator constant(char r) {
         return (left, middle, right) -> r;
     }
 

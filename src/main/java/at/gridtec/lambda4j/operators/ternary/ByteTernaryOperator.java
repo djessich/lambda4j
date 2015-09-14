@@ -37,7 +37,7 @@ public interface ByteTernaryOperator {
      * @param r The return value for the constant
      * @return A {@code ByteTernaryOperator} which always returns a given value.
      */
-    static <T> ByteTernaryOperator constant(byte r) {
+    static ByteTernaryOperator constant(byte r) {
         return (left, middle, right) -> r;
     }
 

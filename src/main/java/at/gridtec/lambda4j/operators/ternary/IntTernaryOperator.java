@@ -36,7 +36,7 @@ public interface IntTernaryOperator {
      * @param r The return value for the constant
      * @return A {@code IntTernaryOperator} which always returns a given value.
      */
-    static <T> IntTernaryOperator constant(int r) {
+    static IntTernaryOperator constant(int r) {
         return (left, middle, right) -> r;
     }
 
