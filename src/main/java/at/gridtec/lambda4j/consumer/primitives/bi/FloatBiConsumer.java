@@ -15,6 +15,10 @@
  */
 package at.gridtec.lambda4j.consumer.primitives.bi;
 
+import at.gridtec.lambda4j.function.primitives.to.ToFloatFunction;
+import at.gridtec.lambda4j.operators.unary.FloatUnaryOperator;
+
+import java.util.Objects;
 import java.util.function.BiConsumer;
 
 /**
@@ -37,4 +41,75 @@ public interface FloatBiConsumer {
      * @param value2 The second argument for the operation to be consumed
      */
     void accept(float value1, float value2);
+
+    /**
+     * Returns a composed {@link FloatBiConsumer} that applies the given {@code before} {@link FloatUnaryOperator}s to
+     * its input, and then applies this operation to the result. If evaluation of either of the given operations throws
+     * an exception, it is relayed to the caller of the composed function.
+     *
+     * @param before1 The first before {@code FloatUnaryOperator} to apply before this operation is applied
+     * @param before2 The second before {@code FloatUnaryOperator} to apply before this operation is applied
+     * @return A composed {@code FloatBiConsumer} that applies the given {@code before} {@code FloatUnaryOperator}s to
+     * its input, and then applies this operation to the result.
+     * @throws NullPointerException If one of the given functions are {@code null}
+     * @see #andThen(FloatBiConsumer)
+     */
+    default FloatBiConsumer compose(final FloatUnaryOperator before1, final FloatUnaryOperator before2) {
+        Objects.requireNonNull(before1);
+        Objects.requireNonNull(before2);
+        return (value1, value2) -> accept(before1.applyAsFloat(value1), before2.applyAsFloat(value2));
+    }
+
+    /**
+     * Returns a composed {@link BiConsumer} that applies the given {@code before} {@link ToFloatFunction}s to its
+     * input, and then applies this operation to the result. If evaluation of either of the given operations throws an
+     * exception, it is relayed to the caller of the composed function.
+     *
+     * @param <T> The type of the argument to the first before operation
+     * @param <U> The type of the argument to the second before operation
+     * @param before1 The first before {@code ToFloatFunction} to apply before this operation is applied
+     * @param before2 The second before {@code ToFloatFunction} to apply before this operation is applied
+     * @return A composed {@code BiConsumer} that applies the given {@code before} {@code ToFloatFunction}s to its
+     * input, and then applies this operation to the result.
+     * @throws NullPointerException If one of the given functions are {@code null}
+     * @see #andThen(FloatBiConsumer)
+     */
+    default <T, U> BiConsumer<T, U> compose(final ToFloatFunction<? super T> before1,
+            final ToFloatFunction<? super U> before2) {
+        Objects.requireNonNull(before1);
+        Objects.requireNonNull(before2);
+        return (value1, value2) -> accept(before1.applyAsFloat(value1), before2.applyAsFloat(value2));
+    }
+
+    /**
+     * Returns a composed {@link FloatBiConsumer} that performs, in sequence, this operation followed by the {@code
+     * after} operation. If evaluation of either operation throws an exception, it is relayed to the caller of the
+     * composed function. If performing this operation throws an exception, the {@code after} operation will not be
+     * performed.
+     *
+     * @param after The operation to apply after this operation is applied
+     * @return A composed {@link FloatBiConsumer} that performs, in sequence, this operation followed by the {@code
+     * after} operation.
+     * @throws NullPointerException If given after operation is {@code null}
+     * @see #compose(FloatUnaryOperator, FloatUnaryOperator)
+     * @see #compose(ToFloatFunction, ToFloatFunction)
+     */
+    default FloatBiConsumer andThen(final FloatBiConsumer after) {
+        Objects.requireNonNull(after);
+        return (value1, value2) -> {
+            accept(value1, value2);
+            after.accept(value1, value2);
+        };
+    }
+
+    /**
+     * Returns a composed {@link BiConsumer} which represents this {@link FloatBiConsumer}. Thereby the primitive input
+     * argument for this predicate is autoboxed. This method is just convenience to provide the ability to use this
+     * {@code FloatBiConsumer} with JRE specific methods, only accepting {@code BiConsumer}.
+     *
+     * @return A composed {@code BiConsumer} which represents this {@code FloatBiConsumer}.
+     */
+    default BiConsumer<Float, Float> boxed() {
+        return this::accept;
+    }
 }

@@ -15,7 +15,12 @@
  */
 package at.gridtec.lambda4j.consumer.primitives.obj;
 
+import at.gridtec.lambda4j.operators.unary.BooleanUnaryOperator;
+
+import java.util.Objects;
 import java.util.function.BiConsumer;
+import java.util.function.Function;
+import java.util.function.Predicate;
 
 /**
  * Represents an operation that accepts an object-valued and a {@code boolean}-valued argument, and returns no result.
@@ -38,4 +43,77 @@ public interface ObjBooleanConsumer<T> {
      * @param value The second argument to the operation
      */
     void accept(T t, boolean value);
+
+    /**
+     * Returns a composed {@link ObjBooleanConsumer} that applies the given {@code before} {@link Function} and {@link
+     * BooleanUnaryOperator} to its input, and then applies this operation to the result. If evaluation of either of the
+     * given operations throws an exception, it is relayed to the caller of the composed function.
+     *
+     * @param <U> The type of the argument to the first before operation
+     * @param before1 The {@code Function} to apply before this operation is applied
+     * @param before2 The {@code BooleanUnaryOperator} to apply before this operation is applied
+     * @return A composed {@code ObjBooleanConsumer} that applies the given {@code before} {@code Function} and {@code
+     * BooleanUnaryOperator} to its input, and then applies this operation to the result.
+     * @throws NullPointerException If one of the given functions are {@code null}
+     * @see #andThen(ObjBooleanConsumer)
+     */
+    default <U> ObjBooleanConsumer<U> compose(final Function<? super U, ? extends T> before1,
+            final BooleanUnaryOperator before2) {
+        Objects.requireNonNull(before1);
+        Objects.requireNonNull(before2);
+        return (u, value) -> accept(before1.apply(u), before2.applyAsBoolean(value));
+    }
+
+    /**
+     * Returns a composed {@link BiConsumer} that applies the given {@code before} {@link Function} and {@link
+     * Predicate} to its input, and then applies this operation to the result. If evaluation of either of the given
+     * operations throws an exception, it is relayed to the caller of the composed function.
+     *
+     * @param <U> The type of the argument to the first before operation
+     * @param <V> The type of the argument to the second before operation
+     * @param before1 The {@code Function} to apply after this operation is applied
+     * @param before2 The {@code Predicate} to apply after this operation is applied
+     * @return A composed {@code BiConsumer} that applies the given {@code before} {@code Function} and {@code
+     * Predicate} to its input, and then applies this operation to the result.
+     * @throws NullPointerException If one of the given functions are {@code null}
+     * @see #andThen(ObjBooleanConsumer)
+     */
+    default <U, V> BiConsumer<U, V> compose(final Function<? super U, ? extends T> before1,
+            final Predicate<? super V> before2) {
+        Objects.requireNonNull(before1);
+        Objects.requireNonNull(before2);
+        return (u, v) -> accept(before1.apply(u), before2.test(v));
+    }
+
+    /**
+     * Returns a composed {@link ObjBooleanConsumer} that performs, in sequence, this operation followed by the {@code
+     * after} operation. If evaluation of either operation throws an exception, it is relayed to the caller of the
+     * composed function. If performing this operation throws an exception, the {@code after} operation will not be
+     * performed.
+     *
+     * @param after The operation to apply after this operation is applied
+     * @return A composed {@link ObjBooleanConsumer} that performs, in sequence, this operation followed by the {@code
+     * after} operation.
+     * @throws NullPointerException If given after operation is {@code null}
+     * @see #compose(Function, BooleanUnaryOperator)
+     * @see #compose(Function, Predicate)
+     */
+    default ObjBooleanConsumer<T> andThen(final ObjBooleanConsumer<? super T> after) {
+        Objects.requireNonNull(after);
+        return (t, value) -> {
+            accept(t, value);
+            after.accept(t, value);
+        };
+    }
+
+    /**
+     * Returns a composed {@link BiConsumer} which represents this {@link ObjBooleanConsumer}. Thereby the primitive
+     * input argument for this predicate is autoboxed. This method is just convenience to provide the ability to use
+     * this {@code ObjBooleanConsumer} with JRE specific methods, only accepting {@code BiConsumer}.
+     *
+     * @return A composed {@code BiConsumer} which represents this {@code ObjBooleanConsumer}.
+     */
+    default BiConsumer<T, Boolean> boxed() {
+        return this::accept;
+    }
 }

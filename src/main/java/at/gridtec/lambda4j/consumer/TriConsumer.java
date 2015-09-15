@@ -52,13 +52,13 @@ public interface TriConsumer<T, U, V> {
      * @param <A> The type of the argument to the first before operation
      * @param <B> The type of the argument to the second before operation
      * @param <C> The type of the argument to the third before operation
-     * @param before1 The first before {@code Function} to apply after this operation is applied
-     * @param before2 The second before {@code Function} to apply after this operation is applied
-     * @param before3 The third before {@code Function} to apply after this operation is applied
+     * @param before1 The first before {@code Function} to apply before this operation is applied
+     * @param before2 The second before {@code Function} to apply before this operation is applied
+     * @param before3 The third before {@code Function} to apply before this operation is applied
      * @return A composed {@code TriConsumer} that applies the given {@code before} {@code Function}s to its input, and
      * then applies this operation to the result.
      * @throws NullPointerException If one of the given functions are {@code null}
-     * @see #accept(Object, Object, Object)
+     * @see #andThen(TriConsumer)
      */
     default <A, B, C> TriConsumer<A, B, C> compose(final Function<? super A, ? extends T> before1,
             final Function<? super B, ? extends U> before2, final Function<? super C, ? extends V> before3) {
@@ -69,13 +69,13 @@ public interface TriConsumer<T, U, V> {
     }
 
     /**
-     * Returns a composed {@link TriConsumer} that first applies this operation to its input, and then applies the
-     * {@code after} {@link TriConsumer} to the result. If evaluation of either operation throws an exception, it is
-     * relayed to the caller of the composed function.
+     * Returns a composed {@link TriConsumer} that performs, in sequence, this operation followed by the {@code after}
+     * operation. If evaluation of either operation throws an exception, it is relayed to the caller of the composed
+     * function. If performing this operation throws an exception, the {@code after} operation will not be performed.
      *
      * @param after The operation to apply after this operation is applied
-     * @return A composed {@code TriFunction} that first applies this operation and then applies the {@code after}
-     * function.
+     * @return A composed {@link TriConsumer} that performs, in sequence, this operation followed by the {@code after}
+     * operation.
      * @throws NullPointerException If given after operation is {@code null}
      * @see #compose(Function, Function, Function)
      */

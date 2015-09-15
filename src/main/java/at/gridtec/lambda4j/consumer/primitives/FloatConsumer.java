@@ -15,6 +15,10 @@
  */
 package at.gridtec.lambda4j.consumer.primitives;
 
+import at.gridtec.lambda4j.function.primitives.to.ToFloatFunction;
+import at.gridtec.lambda4j.operators.unary.FloatUnaryOperator;
+
+import java.util.Objects;
 import java.util.function.Consumer;
 
 /**
@@ -36,4 +40,68 @@ public interface FloatConsumer {
      * @param value The argument for the operation to be consumed
      */
     void accept(float value);
+
+    /**
+     * Returns a composed {@link FloatConsumer} that applies the given {@code before} {@link FloatUnaryOperator} to its
+     * input, and then applies this operation to the result. If evaluation of either of the given operations throws an
+     * exception, it is relayed to the caller of the composed function.
+     *
+     * @param before The before {@code FloatUnaryOperator} to apply before this operation is applied
+     * @return A composed {@code FloatConsumer} that applies the given {@code before} {@code FloatUnaryOperator} to its
+     * input, and then applies this operation to the result.
+     * @throws NullPointerException If one of the given functions are {@code null}
+     * @see #andThen(FloatConsumer)
+     */
+    default FloatConsumer compose(final FloatUnaryOperator before) {
+        Objects.requireNonNull(before);
+        return value -> accept(before.applyAsFloat(value));
+    }
+
+    /**
+     * Returns a composed {@link Consumer} that applies the given {@code before} {@link ToFloatFunction} to its input,
+     * and then applies this operation to the result. If evaluation of either of the given operations throws an
+     * exception, it is relayed to the caller of the composed function.
+     *
+     * @param <T> The type of the argument to the before operation
+     * @param before The before {@code ToFloatFunction} to apply before this operation is applied
+     * @return A composed {@code Consumer} that applies the given {@code before} {@code ToFloatFunction} to its input,
+     * and then applies this operation to the result.
+     * @throws NullPointerException If one of the given functions are {@code null}
+     * @see #andThen(FloatConsumer)
+     */
+    default <T> Consumer<T> compose(final ToFloatFunction<T> before) {
+        Objects.requireNonNull(before);
+        return value -> accept(before.applyAsFloat(value));
+    }
+
+    /**
+     * Returns a composed {@link FloatConsumer} that performs, in sequence, this operation followed by the {@code after}
+     * operation. If evaluation of either operation throws an exception, it is relayed to the caller of the composed
+     * function. If performing this operation throws an exception, the {@code after} operation will not be performed.
+     *
+     * @param after The operation to apply after this operation is applied
+     * @return A composed {@link FloatConsumer} that performs, in sequence, this operation followed by the {@code after}
+     * operation.
+     * @throws NullPointerException If given after operation is {@code null}
+     * @see #compose(FloatUnaryOperator)
+     * @see #compose(ToFloatFunction)
+     */
+    default FloatConsumer andThen(final FloatConsumer after) {
+        Objects.requireNonNull(after);
+        return value -> {
+            accept(value);
+            after.accept(value);
+        };
+    }
+
+    /**
+     * Returns a composed {@link Consumer} which represents this {@link FloatConsumer}. Thereby the primitive input
+     * argument for this predicate is autoboxed. This method is just convenience to provide the ability to use this
+     * {@code FloatConsumer} with JRE specific methods, only accepting {@code Consumer}.
+     *
+     * @return A composed {@code Consumer} which represents this {@code FloatConsumer}.
+     */
+    default Consumer<Float> boxed() {
+        return this::accept;
+    }
 }

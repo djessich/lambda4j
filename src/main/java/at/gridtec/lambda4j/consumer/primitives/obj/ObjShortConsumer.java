@@ -15,7 +15,12 @@
  */
 package at.gridtec.lambda4j.consumer.primitives.obj;
 
+import at.gridtec.lambda4j.function.primitives.to.ToShortFunction;
+import at.gridtec.lambda4j.operators.unary.ShortUnaryOperator;
+
+import java.util.Objects;
 import java.util.function.BiConsumer;
+import java.util.function.Function;
 
 /**
  * Represents an operation that accepts an object-valued and a {@code short}-valued argument, and returns no result.
@@ -38,4 +43,77 @@ public interface ObjShortConsumer<T> {
      * @param value The second argument to the operation
      */
     void accept(T t, short value);
+
+    /**
+     * Returns a composed {@link ObjShortConsumer} that applies the given {@code before} {@link Function} and {@link
+     * ShortUnaryOperator} to its input, and then applies this operation to the result. If evaluation of either of the
+     * given operations throws an exception, it is relayed to the caller of the composed function.
+     *
+     * @param <U> The type of the argument to the first before operation
+     * @param before1 The {@code Function} to apply before this operation is applied
+     * @param before2 The {@code ShortUnaryOperator} to apply before this operation is applied
+     * @return A composed {@code ObjShortConsumer} that applies the given {@code before} {@code Function} and {@code
+     * ShortUnaryOperator} to its input, and then applies this operation to the result.
+     * @throws NullPointerException If one of the given functions are {@code null}
+     * @see #andThen(ObjShortConsumer)
+     */
+    default <U> ObjShortConsumer<U> compose(final Function<? super U, ? extends T> before1,
+            final ShortUnaryOperator before2) {
+        Objects.requireNonNull(before1);
+        Objects.requireNonNull(before2);
+        return (u, value) -> accept(before1.apply(u), before2.applyAsShort(value));
+    }
+
+    /**
+     * Returns a composed {@link BiConsumer} that applies the given {@code before} {@link Function} and {@link
+     * ToShortFunction} to its input, and then applies this operation to the result. If evaluation of either of the
+     * given operations throws an exception, it is relayed to the caller of the composed function.
+     *
+     * @param <U> The type of the argument to the first before operation
+     * @param <V> The type of the argument to the second before operation
+     * @param before1 The {@code Function} to apply after this operation is applied
+     * @param before2 The {@code ToShortFunction} to apply after this operation is applied
+     * @return A composed {@code BiConsumer} that applies the given {@code before} {@code Function} and {@code
+     * ToShortFunction} to its input, and then applies this operation to the result.
+     * @throws NullPointerException If one of the given functions are {@code null}
+     * @see #andThen(ObjShortConsumer)
+     */
+    default <U, V> BiConsumer<U, V> compose(final Function<? super U, ? extends T> before1,
+            final ToShortFunction<? super V> before2) {
+        Objects.requireNonNull(before1);
+        Objects.requireNonNull(before2);
+        return (u, v) -> accept(before1.apply(u), before2.applyAsShort(v));
+    }
+
+    /**
+     * Returns a composed {@link ObjShortConsumer} that performs, in sequence, this operation followed by the {@code
+     * after} operation. If evaluation of either operation throws an exception, it is relayed to the caller of the
+     * composed function. If performing this operation throws an exception, the {@code after} operation will not be
+     * performed.
+     *
+     * @param after The operation to apply after this operation is applied
+     * @return A composed {@link ObjShortConsumer} that performs, in sequence, this operation followed by the {@code
+     * after} operation.
+     * @throws NullPointerException If given after operation is {@code null}
+     * @see #compose(Function, ShortUnaryOperator)
+     * @see #compose(Function, ToShortFunction)
+     */
+    default ObjShortConsumer<T> andThen(final ObjShortConsumer<? super T> after) {
+        Objects.requireNonNull(after);
+        return (t, value) -> {
+            accept(t, value);
+            after.accept(t, value);
+        };
+    }
+
+    /**
+     * Returns a composed {@link BiConsumer} which represents this {@link ObjShortConsumer}. Thereby the primitive input
+     * argument for this predicate is autoboxed. This method is just convenience to provide the ability to use this
+     * {@code ObjShortConsumer} with JRE specific methods, only accepting {@code BiConsumer}.
+     *
+     * @return A composed {@code BiConsumer} which represents this {@code ObjShortConsumer}.
+     */
+    default BiConsumer<T, Short> boxed() {
+        return this::accept;
+    }
 }

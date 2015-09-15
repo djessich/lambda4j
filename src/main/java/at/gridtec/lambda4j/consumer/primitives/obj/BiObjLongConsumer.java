@@ -17,6 +17,11 @@ package at.gridtec.lambda4j.consumer.primitives.obj;
 
 import at.gridtec.lambda4j.consumer.TriConsumer;
 
+import java.util.Objects;
+import java.util.function.Function;
+import java.util.function.LongUnaryOperator;
+import java.util.function.ToLongFunction;
+
 /**
  * Represents an operation that accepts two object-valued and a {@code long}-valued argument, and returns no result.
  * This is the {@code (reference, reference, long)} specialization of {@link TriConsumer}. Unlike most other functional
@@ -40,4 +45,82 @@ public interface BiObjLongConsumer<T, U> {
      * @param value The third argument to the operation
      */
     void accept(T t, U u, long value);
+
+    /**
+     * Returns a composed {@link BiObjLongConsumer} that applies the given {@code before} {@link Function}s and {@link
+     * LongUnaryOperator} to its input, and then applies this operation to the result. If evaluation of either of the
+     * given operations throws an exception, it is relayed to the caller of the composed function.
+     *
+     * @param <A> The type of the argument to the first before operation
+     * @param <B> The type of the argument to the second before operation
+     * @param before1 The first before {@code Function} to apply before this operation is applied
+     * @param before2 The second before {@code Function} to apply before this operation is applied
+     * @param before3 The {@code LongUnaryOperator} to apply before this operation is applied
+     * @return A composed {@code BiObjLongConsumer} that applies the given {@code before} {@code Function}s and {@code
+     * LongUnaryOperator} to its input, and then applies this operation to the result.
+     * @throws NullPointerException If one of the given functions are {@code null}
+     * @see #andThen(BiObjLongConsumer)
+     */
+    default <A, B> BiObjLongConsumer<A, B> compose(final Function<? super A, ? extends T> before1,
+            final Function<? super B, ? extends U> before2, final LongUnaryOperator before3) {
+        Objects.requireNonNull(before1);
+        Objects.requireNonNull(before2);
+        Objects.requireNonNull(before3);
+        return (a, b, value) -> accept(before1.apply(a), before2.apply(b), before3.applyAsLong(value));
+    }
+
+    /**
+     * Returns a composed {@link TriConsumer} that applies the given {@code before} {@link Function}s and {@link
+     * ToLongFunction} to its input, and then applies this operation to the result. If evaluation of either of the given
+     * operations throws an exception, it is relayed to the caller of the composed function.
+     *
+     * @param <A> The type of the argument to the first before operation
+     * @param <B> The type of the argument to the second before operation
+     * @param <C> The type of the argument to the third before operation
+     * @param before1 The first before {@code Function} to apply before this operation is applied
+     * @param before2 The second before {@code Function} to apply before this operation is applied
+     * @param before3 The {@code ToLongFunction} to apply before this operation is applied
+     * @return A composed {@code BiConsumer} that applies the given {@code before} {@code Function}s and {@code
+     * ToLongFunction} to its input, and then applies this operation to the result.
+     * @throws NullPointerException If one of the given functions are {@code null}
+     * @see #andThen(BiObjLongConsumer)
+     */
+    default <A, B, C> TriConsumer<A, B, C> compose(final Function<? super A, ? extends T> before1,
+            final Function<? super B, ? extends U> before2, final ToLongFunction<? super C> before3) {
+        Objects.requireNonNull(before1);
+        Objects.requireNonNull(before2);
+        Objects.requireNonNull(before3);
+        return (a, b, c) -> accept(before1.apply(a), before2.apply(b), before3.applyAsLong(c));
+    }
+
+    /**
+     * Returns a composed {@link BiObjLongConsumer} that performs, in sequence, this operation followed by the {@code
+     * after} operation. If evaluation of either operation throws an exception, it is relayed to the caller of the
+     * composed function. If performing this operation throws an exception, the {@code after} operation will not be
+     * performed.
+     *
+     * @param after The operation to apply after this operation is applied
+     * @return A composed {@link BiObjLongConsumer} that performs, in sequence, this operation followed by the {@code
+     * after} operation.
+     * @throws NullPointerException If given after operation is {@code null}
+     * @see #compose(Function, Function, LongUnaryOperator)
+     * @see #compose(Function, Function, ToLongFunction)
+     */
+    default BiObjLongConsumer<T, U> andThen(final BiObjLongConsumer<? super T, ? super U> after) {
+        Objects.requireNonNull(after);
+        return (t, u, value) -> {
+            accept(t, u, value);
+            after.accept(t, u, value);
+        };
+    }
+
+    /**
+     * Returns a composed {@link TriConsumer} which represents this {@link BiObjLongConsumer}. Thereby the primitive
+     * input argument for this predicate is autoboxed.
+     *
+     * @return A composed {@code TriConsumer} which represents this {@code BiObjLongConsumer}.
+     */
+    default TriConsumer<T, U, Long> boxed() {
+        return this::accept;
+    }
 }

@@ -15,7 +15,10 @@
  */
 package at.gridtec.lambda4j.consumer.primitives.bi;
 
+import java.util.Objects;
 import java.util.function.BiConsumer;
+import java.util.function.LongUnaryOperator;
+import java.util.function.ToLongFunction;
 
 /**
  * Represents an operation that accepts two {@code long}-valued arguments and returns no result. This is the primitive
@@ -37,4 +40,75 @@ public interface LongBiConsumer {
      * @param value2 The second argument for the operation to be consumed
      */
     void accept(long value1, long value2);
+
+    /**
+     * Returns a composed {@link LongBiConsumer} that applies the given {@code before} {@link LongUnaryOperator}s to its
+     * input, and then applies this operation to the result. If evaluation of either of the given operations throws an
+     * exception, it is relayed to the caller of the composed function.
+     *
+     * @param before1 The first before {@code LongUnaryOperator} to apply before this operation is applied
+     * @param before2 The second before {@code LongUnaryOperator} to apply before this operation is applied
+     * @return A composed {@code LongBiConsumer} that applies the given {@code before} {@code LongUnaryOperator}s to its
+     * input, and then applies this operation to the result.
+     * @throws NullPointerException If one of the given functions are {@code null}
+     * @see #andThen(LongBiConsumer)
+     */
+    default LongBiConsumer compose(final LongUnaryOperator before1, final LongUnaryOperator before2) {
+        Objects.requireNonNull(before1);
+        Objects.requireNonNull(before2);
+        return (value1, value2) -> accept(before1.applyAsLong(value1), before2.applyAsLong(value2));
+    }
+
+    /**
+     * Returns a composed {@link BiConsumer} that applies the given {@code before} {@link ToLongFunction}s to its input,
+     * and then applies this operation to the result. If evaluation of either of the given operations throws an
+     * exception, it is relayed to the caller of the composed function.
+     *
+     * @param <T> The type of the argument to the first before operation
+     * @param <U> The type of the argument to the second before operation
+     * @param before1 The first before {@code ToLongFunction} to apply before this operation is applied
+     * @param before2 The second before {@code ToLongFunction} to apply before this operation is applied
+     * @return A composed {@code BiConsumer} that applies the given {@code before} {@code ToLongFunction}s to its input,
+     * and then applies this operation to the result.
+     * @throws NullPointerException If one of the given functions are {@code null}
+     * @see #andThen(LongBiConsumer)
+     */
+    default <T, U> BiConsumer<T, U> compose(final ToLongFunction<? super T> before1,
+            final ToLongFunction<? super U> before2) {
+        Objects.requireNonNull(before1);
+        Objects.requireNonNull(before2);
+        return (value1, value2) -> accept(before1.applyAsLong(value1), before2.applyAsLong(value2));
+    }
+
+    /**
+     * Returns a composed {@link LongBiConsumer} that performs, in sequence, this operation followed by the {@code
+     * after} operation. If evaluation of either operation throws an exception, it is relayed to the caller of the
+     * composed function. If performing this operation throws an exception, the {@code after} operation will not be
+     * performed.
+     *
+     * @param after The operation to apply after this operation is applied
+     * @return A composed {@link LongBiConsumer} that performs, in sequence, this operation followed by the {@code
+     * after} operation.
+     * @throws NullPointerException If given after operation is {@code null}
+     * @see #compose(LongUnaryOperator, LongUnaryOperator)
+     * @see #compose(ToLongFunction, ToLongFunction)
+     */
+    default LongBiConsumer andThen(final LongBiConsumer after) {
+        Objects.requireNonNull(after);
+        return (value1, value2) -> {
+            accept(value1, value2);
+            after.accept(value1, value2);
+        };
+    }
+
+    /**
+     * Returns a composed {@link BiConsumer} which represents this {@link LongBiConsumer}. Thereby the primitive input
+     * argument for this predicate is autoboxed. This method is just convenience to provide the ability to use this
+     * {@code LongBiConsumer} with JRE specific methods, only accepting {@code BiConsumer}.
+     *
+     * @return A composed {@code BiConsumer} which represents this {@code LongBiConsumer}.
+     */
+    default BiConsumer<Long, Long> boxed() {
+        return this::accept;
+    }
 }

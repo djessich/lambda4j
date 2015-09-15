@@ -16,6 +16,11 @@
 package at.gridtec.lambda4j.consumer.primitives.obj;
 
 import at.gridtec.lambda4j.consumer.TriConsumer;
+import at.gridtec.lambda4j.operators.unary.BooleanUnaryOperator;
+
+import java.util.Objects;
+import java.util.function.Function;
+import java.util.function.Predicate;
 
 /**
  * Represents an operation that accepts two object-valued and a {@code boolean}-valued argument, and returns no result.
@@ -40,4 +45,82 @@ public interface BiObjBooleanConsumer<T, U> {
      * @param value The third argument to the operation
      */
     void accept(T t, U u, boolean value);
+
+    /**
+     * Returns a composed {@link BiObjBooleanConsumer} that applies the given {@code before} {@link Function}s and
+     * {@link BooleanUnaryOperator} to its input, and then applies this operation to the result. If evaluation of either
+     * of the given operations throws an exception, it is relayed to the caller of the composed function.
+     *
+     * @param <A> The type of the argument to the first before operation
+     * @param <B> The type of the argument to the second before operation
+     * @param before1 The first before {@code Function} to apply before this operation is applied
+     * @param before2 The second before {@code Function} to apply before this operation is applied
+     * @param before3 The {@code BooleanUnaryOperator} to apply before this operation is applied
+     * @return A composed {@code BiObjBooleanConsumer} that applies the given {@code before} {@code Function}s and
+     * {@code BooleanUnaryOperator} to its input, and then applies this operation to the result.
+     * @throws NullPointerException If one of the given functions are {@code null}
+     * @see #andThen(BiObjBooleanConsumer)
+     */
+    default <A, B> BiObjBooleanConsumer<A, B> compose(final Function<? super A, ? extends T> before1,
+            final Function<? super B, ? extends U> before2, final BooleanUnaryOperator before3) {
+        Objects.requireNonNull(before1);
+        Objects.requireNonNull(before2);
+        Objects.requireNonNull(before3);
+        return (a, b, value) -> accept(before1.apply(a), before2.apply(b), before3.applyAsBoolean(value));
+    }
+
+    /**
+     * Returns a composed {@link TriConsumer} that applies the given {@code before} {@link Function}s and {@link
+     * Predicate} to its input, and then applies this operation to the result. If evaluation of either of the given
+     * operations throws an exception, it is relayed to the caller of the composed function.
+     *
+     * @param <A> The type of the argument to the first before operation
+     * @param <B> The type of the argument to the second before operation
+     * @param <C> The type of the argument to the third before operation
+     * @param before1 The first before {@code Function} to apply before this operation is applied
+     * @param before2 The second before {@code Function} to apply before this operation is applied
+     * @param before3 The {@code Predicate} to apply after before operation is applied
+     * @return A composed {@code BiConsumer} that applies the given {@code before} {@code Function}s and {@code
+     * Predicate} to its input, and then applies this operation to the result.
+     * @throws NullPointerException If one of the given functions are {@code null}
+     * @see #andThen(BiObjBooleanConsumer)
+     */
+    default <A, B, C> TriConsumer<A, B, C> compose(final Function<? super A, ? extends T> before1,
+            final Function<? super B, ? extends U> before2, final Predicate<? super C> before3) {
+        Objects.requireNonNull(before1);
+        Objects.requireNonNull(before2);
+        Objects.requireNonNull(before3);
+        return (a, b, c) -> accept(before1.apply(a), before2.apply(b), before3.test(c));
+    }
+
+    /**
+     * Returns a composed {@link BiObjBooleanConsumer} that performs, in sequence, this operation followed by the {@code
+     * after} operation. If evaluation of either operation throws an exception, it is relayed to the caller of the
+     * composed function. If performing this operation throws an exception, the {@code after} operation will not be
+     * performed.
+     *
+     * @param after The operation to apply after this operation is applied
+     * @return A composed {@link BiObjBooleanConsumer} that performs, in sequence, this operation followed by the {@code
+     * after} operation.
+     * @throws NullPointerException If given after operation is {@code null}
+     * @see #compose(Function, Function, BooleanUnaryOperator)
+     * @see #compose(Function, Function, Predicate)
+     */
+    default BiObjBooleanConsumer<T, U> andThen(final BiObjBooleanConsumer<? super T, ? super U> after) {
+        Objects.requireNonNull(after);
+        return (t, u, value) -> {
+            accept(t, u, value);
+            after.accept(t, u, value);
+        };
+    }
+
+    /**
+     * Returns a composed {@link TriConsumer} which represents this {@link BiObjBooleanConsumer}. Thereby the primitive
+     * input argument for this predicate is autoboxed.
+     *
+     * @return A composed {@code TriConsumer} which represents this {@code BiObjBooleanConsumer}.
+     */
+    default TriConsumer<T, U, Boolean> boxed() {
+        return this::accept;
+    }
 }

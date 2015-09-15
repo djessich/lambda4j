@@ -15,6 +15,10 @@
  */
 package at.gridtec.lambda4j.consumer.primitives;
 
+import at.gridtec.lambda4j.function.primitives.to.ToShortFunction;
+import at.gridtec.lambda4j.operators.unary.ShortUnaryOperator;
+
+import java.util.Objects;
 import java.util.function.Consumer;
 
 /**
@@ -36,4 +40,68 @@ public interface ShortConsumer {
      * @param value The argument for the operation to be consumed
      */
     void accept(short value);
+
+    /**
+     * Returns a composed {@link ShortConsumer} that applies the given {@code before} {@link ShortUnaryOperator} to its
+     * input, and then applies this operation to the result. If evaluation of either of the given operations throws an
+     * exception, it is relayed to the caller of the composed function.
+     *
+     * @param before The before {@code ShortUnaryOperator} to apply before this operation is applied
+     * @return A composed {@code ShortConsumer} that applies the given {@code before} {@code ShortUnaryOperator} to its
+     * input, and then applies this operation to the result.
+     * @throws NullPointerException If one of the given functions are {@code null}
+     * @see #andThen(ShortConsumer)
+     */
+    default ShortConsumer compose(final ShortUnaryOperator before) {
+        Objects.requireNonNull(before);
+        return value -> accept(before.applyAsShort(value));
+    }
+
+    /**
+     * Returns a composed {@link Consumer} that applies the given {@code before} {@link ToShortFunction} to its input,
+     * and then applies this operation to the result. If evaluation of either of the given operations throws an
+     * exception, it is relayed to the caller of the composed function.
+     *
+     * @param <T> The type of the argument to the before operation
+     * @param before The before {@code ToShortFunction} to apply before this operation is applied
+     * @return A composed {@code Consumer} that applies the given {@code before} {@code ToShortFunction} to its input,
+     * and then applies this operation to the result.
+     * @throws NullPointerException If one of the given functions are {@code null}
+     * @see #andThen(ShortConsumer)
+     */
+    default <T> Consumer<T> compose(final ToShortFunction<T> before) {
+        Objects.requireNonNull(before);
+        return value -> accept(before.applyAsShort(value));
+    }
+
+    /**
+     * Returns a composed {@link ShortConsumer} that performs, in sequence, this operation followed by the {@code after}
+     * operation. If evaluation of either operation throws an exception, it is relayed to the caller of the composed
+     * function. If performing this operation throws an exception, the {@code after} operation will not be performed.
+     *
+     * @param after The operation to apply after this operation is applied
+     * @return A composed {@link ShortConsumer} that performs, in sequence, this operation followed by the {@code after}
+     * operation.
+     * @throws NullPointerException If given after operation is {@code null}
+     * @see #compose(ShortUnaryOperator)
+     * @see #compose(ToShortFunction)
+     */
+    default ShortConsumer andThen(final ShortConsumer after) {
+        Objects.requireNonNull(after);
+        return value -> {
+            accept(value);
+            after.accept(value);
+        };
+    }
+
+    /**
+     * Returns a composed {@link Consumer} which represents this {@link ShortConsumer}. Thereby the primitive input
+     * argument for this predicate is autoboxed. This method is just convenience to provide the ability to use this
+     * {@code ShortConsumer} with JRE specific methods, only accepting {@code Consumer}.
+     *
+     * @return A composed {@code Consumer} which represents this {@code ShortConsumer}.
+     */
+    default Consumer<Short> boxed() {
+        return this::accept;
+    }
 }

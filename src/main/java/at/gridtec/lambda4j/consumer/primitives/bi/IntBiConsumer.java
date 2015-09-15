@@ -15,7 +15,10 @@
  */
 package at.gridtec.lambda4j.consumer.primitives.bi;
 
+import java.util.Objects;
 import java.util.function.BiConsumer;
+import java.util.function.IntUnaryOperator;
+import java.util.function.ToIntFunction;
 
 /**
  * Represents an operation that accepts two {@code int}-valued arguments and returns no result. This is the primitive
@@ -37,4 +40,74 @@ public interface IntBiConsumer {
      * @param value2 The second argument for the operation to be consumed
      */
     void accept(int value1, int value2);
+
+    /**
+     * Returns a composed {@link IntBiConsumer} that applies the given {@code before} {@link IntUnaryOperator}s to its
+     * input, and then applies this operation to the result. If evaluation of either of the given operations throws an
+     * exception, it is relayed to the caller of the composed function.
+     *
+     * @param before1 The first before {@code IntUnaryOperator} to apply before this operation is applied
+     * @param before2 The second before {@code IntUnaryOperator} to apply before this operation is applied
+     * @return A composed {@code IntBiConsumer} that applies the given {@code before} {@code IntUnaryOperator}s to its
+     * input, and then applies this operation to the result.
+     * @throws NullPointerException If one of the given functions are {@code null}
+     * @see #andThen(IntBiConsumer)
+     */
+    default IntBiConsumer compose(final IntUnaryOperator before1, final IntUnaryOperator before2) {
+        Objects.requireNonNull(before1);
+        Objects.requireNonNull(before2);
+        return (value1, value2) -> accept(before1.applyAsInt(value1), before2.applyAsInt(value2));
+    }
+
+    /**
+     * Returns a composed {@link BiConsumer} that applies the given {@code before} {@link ToIntFunction}s to its input,
+     * and then applies this operation to the result. If evaluation of either of the given operations throws an
+     * exception, it is relayed to the caller of the composed function.
+     *
+     * @param <T> The type of the argument to the first before operation
+     * @param <U> The type of the argument to the second before operation
+     * @param before1 The first before {@code ToIntFunction} to apply before this operation is applied
+     * @param before2 The second before {@code ToIntFunction} to apply before this operation is applied
+     * @return A composed {@code BiConsumer} that applies the given {@code before} {@code ToIntFunction}s to its input,
+     * and then applies this operation to the result.
+     * @throws NullPointerException If one of the given functions are {@code null}
+     * @see #andThen(IntBiConsumer)
+     */
+    default <T, U> BiConsumer<T, U> compose(final ToIntFunction<? super T> before1,
+            final ToIntFunction<? super U> before2) {
+        Objects.requireNonNull(before1);
+        Objects.requireNonNull(before2);
+        return (value1, value2) -> accept(before1.applyAsInt(value1), before2.applyAsInt(value2));
+    }
+
+    /**
+     * Returns a composed {@link IntBiConsumer} that performs, in sequence, this operation followed by the {@code after}
+     * operation. If evaluation of either operation throws an exception, it is relayed to the caller of the composed
+     * function. If performing this operation throws an exception, the {@code after} operation will not be performed.
+     *
+     * @param after The operation to apply after this operation is applied
+     * @return A composed {@link IntBiConsumer} that performs, in sequence, this operation followed by the {@code after}
+     * operation.
+     * @throws NullPointerException If given after operation is {@code null}
+     * @see #compose(IntUnaryOperator, IntUnaryOperator)
+     * @see #compose(ToIntFunction, ToIntFunction)
+     */
+    default IntBiConsumer andThen(final IntBiConsumer after) {
+        Objects.requireNonNull(after);
+        return (value1, value2) -> {
+            accept(value1, value2);
+            after.accept(value1, value2);
+        };
+    }
+
+    /**
+     * Returns a composed {@link BiConsumer} which represents this {@link IntBiConsumer}. Thereby the primitive input
+     * argument for this predicate is autoboxed. This method is just convenience to provide the ability to use this
+     * {@code IntBiConsumer} with JRE specific methods, only accepting {@code BiConsumer}.
+     *
+     * @return A composed {@code BiConsumer} which represents this {@code IntBiConsumer}.
+     */
+    default BiConsumer<Integer, Integer> boxed() {
+        return this::accept;
+    }
 }

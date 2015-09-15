@@ -15,6 +15,10 @@
  */
 package at.gridtec.lambda4j.consumer.primitives.bi;
 
+import at.gridtec.lambda4j.function.primitives.to.ToByteFunction;
+import at.gridtec.lambda4j.operators.unary.ByteUnaryOperator;
+
+import java.util.Objects;
 import java.util.function.BiConsumer;
 
 /**
@@ -37,4 +41,75 @@ public interface ByteBiConsumer {
      * @param value2 The second argument for the operation to be consumed
      */
     void accept(byte value1, byte value2);
+
+    /**
+     * Returns a composed {@link ByteBiConsumer} that applies the given {@code before} {@link ByteUnaryOperator}s to its
+     * input, and then applies this operation to the result. If evaluation of either of the given operations throws an
+     * exception, it is relayed to the caller of the composed function.
+     *
+     * @param before1 The first before {@code ByteUnaryOperator} to apply before this operation is applied
+     * @param before2 The second before {@code ByteUnaryOperator} to apply before this operation is applied
+     * @return A composed {@code ByteBiConsumer} that applies the given {@code before} {@code ByteUnaryOperator}s to its
+     * input, and then applies this operation to the result.
+     * @throws NullPointerException If one of the given functions are {@code null}
+     * @see #andThen(ByteBiConsumer)
+     */
+    default ByteBiConsumer compose(final ByteUnaryOperator before1, final ByteUnaryOperator before2) {
+        Objects.requireNonNull(before1);
+        Objects.requireNonNull(before2);
+        return (value1, value2) -> accept(before1.applyAsByte(value1), before2.applyAsByte(value2));
+    }
+
+    /**
+     * Returns a composed {@link BiConsumer} that applies the given {@code before} {@link ToByteFunction}s to its input,
+     * and then applies this operation to the result. If evaluation of either of the given operations throws an
+     * exception, it is relayed to the caller of the composed function.
+     *
+     * @param <T> The type of the argument to the first before operation
+     * @param <U> The type of the argument to the second before operation
+     * @param before1 The first before {@code ToByteFunction} to apply before this operation is applied
+     * @param before2 The second before {@code ToByteFunction} to apply before this operation is applied
+     * @return A composed {@code BiConsumer} that applies the given {@code before} {@code ToByteFunction}s to its input,
+     * and then applies this operation to the result.
+     * @throws NullPointerException If one of the given functions are {@code null}
+     * @see #andThen(ByteBiConsumer)
+     */
+    default <T, U> BiConsumer<T, U> compose(final ToByteFunction<? super T> before1,
+            final ToByteFunction<? super U> before2) {
+        Objects.requireNonNull(before1);
+        Objects.requireNonNull(before2);
+        return (value1, value2) -> accept(before1.applyAsByte(value1), before2.applyAsByte(value2));
+    }
+
+    /**
+     * Returns a composed {@link ByteBiConsumer} that performs, in sequence, this operation followed by the {@code
+     * after} operation. If evaluation of either operation throws an exception, it is relayed to the caller of the
+     * composed function. If performing this operation throws an exception, the {@code after} operation will not be
+     * performed.
+     *
+     * @param after The operation to apply after this operation is applied
+     * @return A composed {@link ByteBiConsumer} that performs, in sequence, this operation followed by the {@code
+     * after} operation.
+     * @throws NullPointerException If given after operation is {@code null}
+     * @see #compose(ByteUnaryOperator, ByteUnaryOperator)
+     * @see #compose(ToByteFunction, ToByteFunction)
+     */
+    default ByteBiConsumer andThen(final ByteBiConsumer after) {
+        Objects.requireNonNull(after);
+        return (value1, value2) -> {
+            accept(value1, value2);
+            after.accept(value1, value2);
+        };
+    }
+
+    /**
+     * Returns a composed {@link BiConsumer} which represents this {@link ByteBiConsumer}. Thereby the primitive input
+     * argument for this predicate is autoboxed. This method is just convenience to provide the ability to use this
+     * {@code ByteBiConsumer} with JRE specific methods, only accepting {@code BiConsumer}.
+     *
+     * @return A composed {@code BiConsumer} which represents this {@code ByteBiConsumer}.
+     */
+    default BiConsumer<Byte, Byte> boxed() {
+        return this::accept;
+    }
 }
