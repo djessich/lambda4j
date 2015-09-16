@@ -15,11 +15,13 @@
  */
 package at.gridtec.lambda4j.consumer.primitives.obj;
 
+import at.gridtec.lambda4j.consumer.primitives.CharConsumer;
 import at.gridtec.lambda4j.function.primitives.to.ToCharFunction;
 import at.gridtec.lambda4j.operators.unary.CharUnaryOperator;
 
 import java.util.Objects;
 import java.util.function.BiConsumer;
+import java.util.function.Consumer;
 import java.util.function.Function;
 
 /**
@@ -35,6 +37,36 @@ import java.util.function.Function;
 @SuppressWarnings("unused")
 @FunctionalInterface
 public interface ObjCharConsumer<T> {
+
+    /**
+     * Creates a {@link ObjCharConsumer} which uses the first parameter of this one as argument for the given {@link
+     * Consumer}.
+     *
+     * @param <T> The type of the first argument to the operation
+     * @param consumer The consumer which accepts the {@code first} parameter of this one
+     * @return Creates a {@code ObjCharConsumer} which uses the first parameter of this one as argument for the given
+     * {@code Consumer}.
+     * @throws NullPointerException If the given argument is {@code null}
+     */
+    static <T> ObjCharConsumer<T> onlyFirst(final Consumer<? super T> consumer) {
+        Objects.requireNonNull(consumer);
+        return (t, value) -> consumer.accept(t);
+    }
+
+    /**
+     * Creates a {@link ObjCharConsumer} which uses the second parameter of this one as argument for the given {@link
+     * CharConsumer}.
+     *
+     * @param <T> The type of the first argument to the operation
+     * @param consumer The consumer which accepts the {@code second} parameter of this one
+     * @return Creates a {@code ObjCharConsumer} which uses the second parameter of this one as argument for the given
+     * {@code CharConsumer}.
+     * @throws NullPointerException If the given argument is {@code null}
+     */
+    static <T> ObjCharConsumer<T> onlySecond(final CharConsumer consumer) {
+        Objects.requireNonNull(consumer);
+        return (t, value) -> consumer.accept(value);
+    }
 
     /**
      * Performs this operation on the given argument.

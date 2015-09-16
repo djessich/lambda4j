@@ -16,10 +16,12 @@
 package at.gridtec.lambda4j.consumer.primitives.obj;
 
 import at.gridtec.lambda4j.consumer.TriConsumer;
+import at.gridtec.lambda4j.consumer.primitives.ShortConsumer;
 import at.gridtec.lambda4j.function.primitives.to.ToShortFunction;
 import at.gridtec.lambda4j.operators.unary.ShortUnaryOperator;
 
 import java.util.Objects;
+import java.util.function.Consumer;
 import java.util.function.Function;
 
 /**
@@ -36,6 +38,54 @@ import java.util.function.Function;
 @SuppressWarnings("unused")
 @FunctionalInterface
 public interface BiObjShortConsumer<T, U> {
+
+    /**
+     * Creates a {@link BiObjShortConsumer} which uses the first parameter of this one as argument for the given {@link
+     * Consumer}.
+     *
+     * @param <T> The type of the first argument to the operation
+     * @param <U> The type of the second argument to the operation
+     * @param consumer The consumer which accepts the {@code first} parameter of this one
+     * @return Creates a {@code BiObjShortConsumer} which uses the first parameter of this one as argument for the given
+     * {@code Consumer}.
+     * @throws NullPointerException If the given argument is {@code null}
+     */
+    static <T, U> BiObjShortConsumer<T, U> onlyFirst(final Consumer<? super T> consumer) {
+        Objects.requireNonNull(consumer);
+        return (t, u, value) -> consumer.accept(t);
+    }
+
+    /**
+     * Creates a {@link BiObjShortConsumer} which uses the second parameter of this one as argument for the given {@link
+     * Consumer}.
+     *
+     * @param <T> The type of the first argument to the operation
+     * @param <U> The type of the second argument to the operation
+     * @param consumer The consumer which accepts the {@code second} parameter of this one
+     * @return Creates a {@code BiObjShortConsumer} which uses the second parameter of this one as argument for the
+     * given {@code Consumer}.
+     * @throws NullPointerException If the given argument is {@code null}
+     */
+    static <T, U> BiObjShortConsumer<T, U> onlySecond(final Consumer<? super U> consumer) {
+        Objects.requireNonNull(consumer);
+        return (t, u, value) -> consumer.accept(u);
+    }
+
+    /**
+     * Creates a {@link BiObjShortConsumer} which uses the third parameter of this one as argument for the given {@link
+     * ShortConsumer}.
+     *
+     * @param <T> The type of the first argument to the operation
+     * @param <U> The type of the second argument to the operation
+     * @param consumer The consumer which accepts the {@code third} parameter of this one
+     * @return Creates a {@code BiObjShortConsumer} which uses the third parameter of this one as argument for the given
+     * {@code ShortConsumer}.
+     * @throws NullPointerException If the given argument is {@code null}
+     */
+    static <T, U> BiObjShortConsumer<T, U> onlyThird(final ShortConsumer consumer) {
+        Objects.requireNonNull(consumer);
+        return (t, u, value) -> consumer.accept(value);
+    }
 
     /**
      * Performs this operation on the given argument.

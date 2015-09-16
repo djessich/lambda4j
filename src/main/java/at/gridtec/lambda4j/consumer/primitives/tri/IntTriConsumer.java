@@ -19,6 +19,7 @@ package at.gridtec.lambda4j.consumer.primitives.tri;
 import at.gridtec.lambda4j.consumer.TriConsumer;
 
 import java.util.Objects;
+import java.util.function.IntConsumer;
 import java.util.function.IntUnaryOperator;
 import java.util.function.ToIntFunction;
 
@@ -34,6 +35,45 @@ import java.util.function.ToIntFunction;
 @SuppressWarnings("unused")
 @FunctionalInterface
 public interface IntTriConsumer {
+
+    /**
+     * Creates a {@link IntTriConsumer} which uses the first parameter as argument for the given {@link IntConsumer}.
+     *
+     * @param consumer The consumer which accepts the {@code first} parameter of this one
+     * @return Creates a {@code IntTriConsumer} which uses the first parameter as argument for the given {@code
+     * IntConsumer}.
+     * @throws NullPointerException If the given argument is {@code null}
+     */
+    static IntTriConsumer onlyFirst(final IntConsumer consumer) {
+        Objects.requireNonNull(consumer);
+        return (value1, value2, value3) -> consumer.accept(value1);
+    }
+
+    /**
+     * Creates a {@link IntTriConsumer} which uses the second parameter as argument for the given {@link IntConsumer}.
+     *
+     * @param consumer The consumer which accepts the {@code second} parameter of this one
+     * @return Creates a {@code IntTriConsumer} which uses the second parameter as argument for the given {@code
+     * IntConsumer}.
+     * @throws NullPointerException If the given argument is {@code null}
+     */
+    static IntTriConsumer onlySecond(final IntConsumer consumer) {
+        Objects.requireNonNull(consumer);
+        return (value1, value2, value3) -> consumer.accept(value2);
+    }
+
+    /**
+     * Creates a {@link IntTriConsumer} which uses the third parameter as argument for the given {@link IntConsumer}.
+     *
+     * @param consumer The consumer which accepts the {@code third} parameter of this one
+     * @return Creates a {@code IntTriConsumer} which uses the third parameter as argument for the given {@code
+     * IntConsumer}.
+     * @throws NullPointerException If the given argument is {@code null}
+     */
+    static IntTriConsumer onlyThird(final IntConsumer consumer) {
+        Objects.requireNonNull(consumer);
+        return (value1, value2, value3) -> consumer.accept(value3);
+    }
 
     /**
      * Performs this operation on the given arguments.

@@ -19,6 +19,7 @@ package at.gridtec.lambda4j.consumer.primitives.tri;
 import at.gridtec.lambda4j.consumer.TriConsumer;
 
 import java.util.Objects;
+import java.util.function.DoubleConsumer;
 import java.util.function.DoubleUnaryOperator;
 import java.util.function.ToDoubleFunction;
 
@@ -34,6 +35,48 @@ import java.util.function.ToDoubleFunction;
 @SuppressWarnings("unused")
 @FunctionalInterface
 public interface DoubleTriConsumer {
+
+    /**
+     * Creates a {@link DoubleTriConsumer} which uses the first parameter as argument for the given {@link
+     * DoubleConsumer}.
+     *
+     * @param consumer The consumer which accepts the {@code first} parameter of this one
+     * @return Creates a {@code DoubleTriConsumer} which uses the first parameter as argument for the given {@code
+     * DoubleConsumer}.
+     * @throws NullPointerException If the given argument is {@code null}
+     */
+    static DoubleTriConsumer onlyFirst(final DoubleConsumer consumer) {
+        Objects.requireNonNull(consumer);
+        return (value1, value2, value3) -> consumer.accept(value1);
+    }
+
+    /**
+     * Creates a {@link DoubleTriConsumer} which uses the second parameter as argument for the given {@link
+     * DoubleConsumer}.
+     *
+     * @param consumer The consumer which accepts the {@code second} parameter of this one
+     * @return Creates a {@code DoubleTriConsumer} which uses the second parameter as argument for the given {@code
+     * DoubleConsumer}.
+     * @throws NullPointerException If the given argument is {@code null}
+     */
+    static DoubleTriConsumer onlySecond(final DoubleConsumer consumer) {
+        Objects.requireNonNull(consumer);
+        return (value1, value2, value3) -> consumer.accept(value2);
+    }
+
+    /**
+     * Creates a {@link DoubleTriConsumer} which uses the third parameter as argument for the given {@link
+     * DoubleConsumer}.
+     *
+     * @param consumer The consumer which accepts the {@code third} parameter of this one
+     * @return Creates a {@code DoubleTriConsumer} which uses the third parameter as argument for the given {@code
+     * DoubleConsumer}.
+     * @throws NullPointerException If the given argument is {@code null}
+     */
+    static DoubleTriConsumer onlyThird(final DoubleConsumer consumer) {
+        Objects.requireNonNull(consumer);
+        return (value1, value2, value3) -> consumer.accept(value3);
+    }
 
     /**
      * Performs this operation on the given arguments.

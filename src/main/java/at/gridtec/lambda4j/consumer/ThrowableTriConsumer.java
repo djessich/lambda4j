@@ -86,6 +86,57 @@ public interface ThrowableTriConsumer<T, U, V> extends TriConsumer<T, U, V> {
     }
 
     /**
+     * Creates a {@link ThrowableTriConsumer} which uses the first parameter of this one as argument for the given
+     * {@link ThrowableConsumer}.
+     *
+     * @param <T> The type of the first argument to the operation
+     * @param <U> The type of the second argument to the operation
+     * @param <V> The type of the third argument to the operation
+     * @param consumer The consumer which accepts the {@code first} parameter of this one
+     * @return Creates a {@code ThrowableTriConsumer} which uses the first parameter of this one as argument for the
+     * given {@code ThrowableConsumer}.
+     * @throws NullPointerException If the given argument is {@code null}
+     */
+    static <T, U, V> ThrowableTriConsumer<T, U, V> onlyFirst(final ThrowableConsumer<? super T> consumer) {
+        Objects.requireNonNull(consumer);
+        return (t, u, v) -> consumer.accept(t);
+    }
+
+    /**
+     * Creates a {@link ThrowableTriConsumer} which uses the second parameter of this one as argument for the given
+     * {@link ThrowableConsumer}.
+     *
+     * @param <T> The type of the first argument to the operation
+     * @param <U> The type of the second argument to the operation
+     * @param <V> The type of the third argument to the operation
+     * @param consumer The consumer which accepts the {@code second} parameter of this one
+     * @return Creates a {@code ThrowableTriConsumer} which uses the second parameter of this one as argument for the
+     * given {@code ThrowableConsumer}.
+     * @throws NullPointerException If the given argument is {@code null}
+     */
+    static <T, U, V> ThrowableTriConsumer<T, U, V> onlySecond(final ThrowableConsumer<? super U> consumer) {
+        Objects.requireNonNull(consumer);
+        return (t, u, v) -> consumer.accept(u);
+    }
+
+    /**
+     * Creates a {@link ThrowableTriConsumer} which uses the third parameter of this one as argument for the given
+     * {@link ThrowableConsumer}.
+     *
+     * @param <T> The type of the first argument to the operation
+     * @param <U> The type of the second argument to the operation
+     * @param <V> The type of the third argument to the operation
+     * @param consumer The consumer which accepts the {@code third} parameter of this one
+     * @return Creates a {@code ThrowableTriConsumer} which uses the third parameter of this one as argument for the
+     * given {@code ThrowableConsumer}.
+     * @throws NullPointerException If the given argument is {@code null}
+     */
+    static <T, U, V> ThrowableTriConsumer<T, U, V> onlyThird(final ThrowableConsumer<? super V> consumer) {
+        Objects.requireNonNull(consumer);
+        return (t, u, v) -> consumer.accept(v);
+    }
+
+    /**
      * The accept method for this {@link TriConsumer} which is able to throw any {@link Exception} type.
      *
      * @param t The first argument for the operation to be consumed

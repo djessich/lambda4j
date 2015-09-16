@@ -101,6 +101,7 @@ public interface ThrowableTernaryOperator<T> extends TernaryOperator<T> {
      * ThrowableUnaryOperator}.
      *
      * @param <T> The type of argument to the operator
+     * @param operator The operator which accepts the {@code left} parameter of this one
      * @return Creates a {@code ThrowableTernaryOperator} which uses the left parameter as argument for the given {@code
      * ThrowableUnaryOperator}.
      * @throws NullPointerException If the given argument is {@code null}
@@ -115,6 +116,7 @@ public interface ThrowableTernaryOperator<T> extends TernaryOperator<T> {
      * ThrowableUnaryOperator}.
      *
      * @param <T> The type of argument to the operator
+     * @param operator The operator which accepts the {@code middle} parameter of this one
      * @return Creates a {@code ThrowableTernaryOperator} which uses the middle parameter as argument for the given
      * {@code ThrowableUnaryOperator}.
      * @throws NullPointerException If the given argument is {@code null}
@@ -129,6 +131,7 @@ public interface ThrowableTernaryOperator<T> extends TernaryOperator<T> {
      * ThrowableUnaryOperator}.
      *
      * @param <T> The type of argument to the operator
+     * @param operator The operator which accepts the {@code right} parameter of this one
      * @return Creates a {@code ThrowableTernaryOperator} which uses the right parameter as argument for the given
      * {@code ThrowableUnaryOperator}.
      * @throws NullPointerException If the given argument is {@code null}

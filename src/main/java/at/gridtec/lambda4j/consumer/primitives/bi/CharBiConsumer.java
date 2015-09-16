@@ -15,6 +15,7 @@
  */
 package at.gridtec.lambda4j.consumer.primitives.bi;
 
+import at.gridtec.lambda4j.consumer.primitives.CharConsumer;
 import at.gridtec.lambda4j.function.primitives.to.ToCharFunction;
 import at.gridtec.lambda4j.operators.unary.CharUnaryOperator;
 
@@ -33,6 +34,34 @@ import java.util.function.BiConsumer;
 @SuppressWarnings("unused")
 @FunctionalInterface
 public interface CharBiConsumer {
+
+    /**
+     * Creates a {@link CharBiConsumer} which uses the first parameter of this one as argument for the given {@link
+     * CharConsumer}.
+     *
+     * @param consumer The consumer which accepts the {@code first} parameter of this one
+     * @return Creates a {@code CharBiConsumer} which uses the first parameter of this one as argument for the given
+     * {@code CharConsumer}.
+     * @throws NullPointerException If the given argument is {@code null}
+     */
+    static CharBiConsumer onlyFirst(final CharConsumer consumer) {
+        Objects.requireNonNull(consumer);
+        return (value1, value2) -> consumer.accept(value1);
+    }
+
+    /**
+     * Creates a {@link CharBiConsumer} which uses the second parameter of this one as argument for the given {@link
+     * CharConsumer}.
+     *
+     * @param consumer The consumer which accepts the {@code second} parameter of this one
+     * @return Creates a {@code CharBiConsumer} which uses the second parameter of this one as argument for the given
+     * {@code CharConsumer}.
+     * @throws NullPointerException If the given argument is {@code null}
+     */
+    static CharBiConsumer onlySecond(final CharConsumer consumer) {
+        Objects.requireNonNull(consumer);
+        return (value1, value2) -> consumer.accept(value2);
+    }
 
     /**
      * Performs this operation on the given arguments.

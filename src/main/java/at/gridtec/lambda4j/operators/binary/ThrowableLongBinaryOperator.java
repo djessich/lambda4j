@@ -153,6 +153,7 @@ public interface ThrowableLongBinaryOperator extends LongBinaryOperator {
      * Creates a {@link LongBinaryOperator} which uses the left parameter as argument for the given {@link
      * LongUnaryOperator}.
      *
+     * @param operator The operator which accepts the {@code short} parameter of this one
      * @return Creates a {@code LongBinaryOperator} which uses the left parameter as argument for the given {@code
      * LongUnaryOperator}.
      * @throws NullPointerException If the given argument is {@code null}
@@ -166,6 +167,7 @@ public interface ThrowableLongBinaryOperator extends LongBinaryOperator {
      * Creates a {@link LongBinaryOperator} which uses the right parameter as argument for the given {@link
      * LongUnaryOperator}.
      *
+     * @param operator The operator which accepts the {@code right} parameter of this one
      * @return Creates a {@code LongBinaryOperator} which uses the right parameter as argument for the given {@code
      * LongUnaryOperator}.
      * @throws NullPointerException If the given argument is {@code null}

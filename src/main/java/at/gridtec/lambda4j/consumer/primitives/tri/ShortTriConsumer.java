@@ -17,6 +17,7 @@
 package at.gridtec.lambda4j.consumer.primitives.tri;
 
 import at.gridtec.lambda4j.consumer.TriConsumer;
+import at.gridtec.lambda4j.consumer.primitives.ShortConsumer;
 import at.gridtec.lambda4j.function.primitives.to.ToShortFunction;
 import at.gridtec.lambda4j.operators.unary.ShortUnaryOperator;
 
@@ -34,6 +35,48 @@ import java.util.Objects;
 @SuppressWarnings("unused")
 @FunctionalInterface
 public interface ShortTriConsumer {
+
+    /**
+     * Creates a {@link ShortTriConsumer} which uses the first parameter as argument for the given {@link
+     * ShortConsumer}.
+     *
+     * @param consumer The consumer which accepts the {@code first} parameter of this one
+     * @return Creates a {@code ShortTriConsumer} which uses the first parameter as argument for the given {@code
+     * ShortConsumer}.
+     * @throws NullPointerException If the given argument is {@code null}
+     */
+    static ShortTriConsumer onlyFirst(final ShortConsumer consumer) {
+        Objects.requireNonNull(consumer);
+        return (value1, value2, value3) -> consumer.accept(value1);
+    }
+
+    /**
+     * Creates a {@link ShortTriConsumer} which uses the second parameter as argument for the given {@link
+     * ShortConsumer}.
+     *
+     * @param consumer The consumer which accepts the {@code second} parameter of this one
+     * @return Creates a {@code ShortTriConsumer} which uses the second parameter as argument for the given {@code
+     * ShortConsumer}.
+     * @throws NullPointerException If the given argument is {@code null}
+     */
+    static ShortTriConsumer onlySecond(final ShortConsumer consumer) {
+        Objects.requireNonNull(consumer);
+        return (value1, value2, value3) -> consumer.accept(value2);
+    }
+
+    /**
+     * Creates a {@link ShortTriConsumer} which uses the third parameter as argument for the given {@link
+     * ShortConsumer}.
+     *
+     * @param consumer The consumer which accepts the {@code third} parameter of this one
+     * @return Creates a {@code ShortTriConsumer} which uses the third parameter as argument for the given {@code
+     * ShortConsumer}.
+     * @throws NullPointerException If the given argument is {@code null}
+     */
+    static ShortTriConsumer onlyThird(final ShortConsumer consumer) {
+        Objects.requireNonNull(consumer);
+        return (value1, value2, value3) -> consumer.accept(value3);
+    }
 
     /**
      * Performs this operation on the given arguments.

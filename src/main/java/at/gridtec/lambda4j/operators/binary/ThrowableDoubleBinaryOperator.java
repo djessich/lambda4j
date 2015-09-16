@@ -153,6 +153,7 @@ public interface ThrowableDoubleBinaryOperator extends DoubleBinaryOperator {
      * Creates a {@link DoubleBinaryOperator} which uses the left parameter as argument for the given {@link
      * DoubleUnaryOperator}.
      *
+     * @param operator The operator which accepts the {@code short} parameter of this one
      * @return Creates a {@code DoubleBinaryOperator} which uses the left parameter as argument for the given {@code
      * DoubleUnaryOperator}.
      * @throws NullPointerException If the given argument is {@code null}
@@ -166,6 +167,7 @@ public interface ThrowableDoubleBinaryOperator extends DoubleBinaryOperator {
      * Creates a {@link DoubleBinaryOperator} which uses the right parameter as argument for the given {@link
      * DoubleUnaryOperator}.
      *
+     * @param operator The operator which accepts the {@code right} parameter of this one
      * @return Creates a {@code DoubleBinaryOperator} which uses the right parameter as argument for the given {@code
      * DoubleUnaryOperator}.
      * @throws NullPointerException If the given argument is {@code null}

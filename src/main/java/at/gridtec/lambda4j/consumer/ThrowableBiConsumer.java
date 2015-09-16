@@ -84,6 +84,38 @@ public interface ThrowableBiConsumer<T, U> extends BiConsumer<T, U> {
     }
 
     /**
+     * Creates a {@link ThrowableBiConsumer} which uses the first parameter of this one as argument for the given {@link
+     * ThrowableConsumer}.
+     *
+     * @param <T> The type of the first argument to the operation
+     * @param <U> The type of the second argument to the operation
+     * @param consumer The consumer which accepts the {@code first} parameter of this one
+     * @return Creates a {@code ThrowableBiConsumer} which uses the first parameter of this one as argument for the
+     * given {@code ThrowableConsumer}.
+     * @throws NullPointerException If the given argument is {@code null}
+     */
+    static <T, U, V> ThrowableBiConsumer<T, U> onlyFirst(final ThrowableConsumer<? super T> consumer) {
+        Objects.requireNonNull(consumer);
+        return (t, u) -> consumer.accept(t);
+    }
+
+    /**
+     * Creates a {@link ThrowableBiConsumer} which uses the second parameter of this one as argument for the given
+     * {@link ThrowableConsumer}.
+     *
+     * @param <T> The type of the first argument to the operation
+     * @param <U> The type of the second argument to the operation
+     * @param consumer The consumer which accepts the {@code second} parameter of this one
+     * @return Creates a {@code ThrowableBiConsumer} which uses the second parameter of this one as argument for the
+     * given {@code ThrowableConsumer}.
+     * @throws NullPointerException If the given argument is {@code null}
+     */
+    static <T, U> ThrowableBiConsumer<T, U> onlySecond(final ThrowableConsumer<? super U> consumer) {
+        Objects.requireNonNull(consumer);
+        return (t, u) -> consumer.accept(u);
+    }
+
+    /**
      * The accept method for this {@link BiConsumer} which is able to throw any {@link Exception} type.
      *
      * @param t The first argument for the operation to be consumed

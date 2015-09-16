@@ -17,6 +17,7 @@
 package at.gridtec.lambda4j.consumer.primitives.tri;
 
 import at.gridtec.lambda4j.consumer.TriConsumer;
+import at.gridtec.lambda4j.consumer.primitives.ByteConsumer;
 import at.gridtec.lambda4j.function.primitives.to.ToCharFunction;
 import at.gridtec.lambda4j.operators.unary.CharUnaryOperator;
 
@@ -34,6 +35,46 @@ import java.util.Objects;
 @SuppressWarnings("unused")
 @FunctionalInterface
 public interface CharTriConsumer {
+
+    /**
+     * Creates a {@link ByteTriConsumer} which uses the first parameter as argument for the given {@link ByteConsumer}.
+     *
+     * @param consumer The consumer which accepts the {@code first} parameter of this one
+     * @return Creates a {@code ByteTriConsumer} which uses the first parameter as argument for the given {@code
+     * ByteConsumer}.
+     * @throws NullPointerException If the given argument is {@code null}
+     */
+    static ByteTriConsumer onlyFirst(final ByteConsumer consumer) {
+        Objects.requireNonNull(consumer);
+        return (value1, value2, value3) -> consumer.accept(value1);
+    }
+
+    /**
+     * Creates a {@link ByteTriConsumer} which uses the second parameter as argument for the given {@link
+     * ByteConsumer}.
+     *
+     * @param consumer The consumer which accepts the {@code second} parameter of this one
+     * @return Creates a {@code ByteTriConsumer} which uses the second parameter as argument for the given {@code
+     * ByteConsumer}.
+     * @throws NullPointerException If the given argument is {@code null}
+     */
+    static ByteTriConsumer onlySecond(final ByteConsumer consumer) {
+        Objects.requireNonNull(consumer);
+        return (value1, value2, value3) -> consumer.accept(value2);
+    }
+
+    /**
+     * Creates a {@link ByteTriConsumer} which uses the third parameter as argument for the given {@link ByteConsumer}.
+     *
+     * @param consumer The consumer which accepts the {@code third} parameter of this one
+     * @return Creates a {@code ByteTriConsumer} which uses the third parameter as argument for the given {@code
+     * ByteConsumer}.
+     * @throws NullPointerException If the given argument is {@code null}
+     */
+    static ByteTriConsumer onlyThird(final ByteConsumer consumer) {
+        Objects.requireNonNull(consumer);
+        return (value1, value2, value3) -> consumer.accept(value3);
+    }
 
     /**
      * Performs this operation on the given arguments.

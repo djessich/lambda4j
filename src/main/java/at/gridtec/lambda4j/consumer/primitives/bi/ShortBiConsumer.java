@@ -15,6 +15,7 @@
  */
 package at.gridtec.lambda4j.consumer.primitives.bi;
 
+import at.gridtec.lambda4j.consumer.primitives.ShortConsumer;
 import at.gridtec.lambda4j.function.primitives.to.ToShortFunction;
 import at.gridtec.lambda4j.operators.unary.ShortUnaryOperator;
 
@@ -33,6 +34,34 @@ import java.util.function.BiConsumer;
 @SuppressWarnings("unused")
 @FunctionalInterface
 public interface ShortBiConsumer {
+
+    /**
+     * Creates a {@link ShortBiConsumer} which uses the first parameter of this one as argument for the given {@link
+     * ShortConsumer}.
+     *
+     * @param consumer The consumer which accepts the {@code first} parameter of this one
+     * @return Creates a {@code ShortBiConsumer} which uses the first parameter of this one as argument for the given
+     * {@code ShortConsumer}.
+     * @throws NullPointerException If the given argument is {@code null}
+     */
+    static ShortBiConsumer onlyFirst(final ShortConsumer consumer) {
+        Objects.requireNonNull(consumer);
+        return (value1, value2) -> consumer.accept(value1);
+    }
+
+    /**
+     * Creates a {@link ShortBiConsumer} which uses the second parameter of this one as argument for the given {@link
+     * ShortConsumer}.
+     *
+     * @param consumer The consumer which accepts the {@code second} parameter of this one
+     * @return Creates a {@code ShortBiConsumer} which uses the second parameter of this one as argument for the given
+     * {@code ShortConsumer}.
+     * @throws NullPointerException If the given argument is {@code null}
+     */
+    static ShortBiConsumer onlySecond(final ShortConsumer consumer) {
+        Objects.requireNonNull(consumer);
+        return (value1, value2) -> consumer.accept(value2);
+    }
 
     /**
      * Performs this operation on the given arguments.

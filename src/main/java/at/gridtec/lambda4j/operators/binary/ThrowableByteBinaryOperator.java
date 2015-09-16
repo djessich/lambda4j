@@ -148,6 +148,7 @@ public interface ThrowableByteBinaryOperator extends ByteBinaryOperator {
      * Creates a {@link ByteBinaryOperator} which uses the left parameter as argument for the given {@link
      * ByteUnaryOperator}.
      *
+     * @param operator The operator which accepts the {@code short} parameter of this one
      * @return Creates a {@code ByteBinaryOperator} which uses the left parameter as argument for the given {@code
      * ByteUnaryOperator}.
      * @throws NullPointerException If the given argument is {@code null}
@@ -161,6 +162,7 @@ public interface ThrowableByteBinaryOperator extends ByteBinaryOperator {
      * Creates a {@link ByteBinaryOperator} which uses the right parameter as argument for the given {@link
      * ByteUnaryOperator}.
      *
+     * @param operator The operator which accepts the {@code right} parameter of this one
      * @return Creates a {@code ByteBinaryOperator} which uses the right parameter as argument for the given {@code
      * ByteUnaryOperator}.
      * @throws NullPointerException If the given argument is {@code null}

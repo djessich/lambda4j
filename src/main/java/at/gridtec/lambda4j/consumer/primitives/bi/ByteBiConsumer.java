@@ -15,6 +15,7 @@
  */
 package at.gridtec.lambda4j.consumer.primitives.bi;
 
+import at.gridtec.lambda4j.consumer.primitives.ByteConsumer;
 import at.gridtec.lambda4j.function.primitives.to.ToByteFunction;
 import at.gridtec.lambda4j.operators.unary.ByteUnaryOperator;
 
@@ -33,6 +34,34 @@ import java.util.function.BiConsumer;
 @SuppressWarnings("unused")
 @FunctionalInterface
 public interface ByteBiConsumer {
+
+    /**
+     * Creates a {@link ByteBiConsumer} which uses the first parameter of this one as argument for the given {@link
+     * ByteConsumer}.
+     *
+     * @param consumer The consumer which accepts the {@code first} parameter of this one
+     * @return Creates a {@code ByteBiConsumer} which uses the first parameter of this one as argument for the given
+     * {@code ByteConsumer}.
+     * @throws NullPointerException If the given argument is {@code null}
+     */
+    static ByteBiConsumer onlyFirst(final ByteConsumer consumer) {
+        Objects.requireNonNull(consumer);
+        return (value1, value2) -> consumer.accept(value1);
+    }
+
+    /**
+     * Creates a {@link ByteBiConsumer} which uses the second parameter of this one as argument for the given {@link
+     * ByteConsumer}.
+     *
+     * @param consumer The consumer which accepts the {@code second} parameter of this one
+     * @return Creates a {@code ByteBiConsumer} which uses the second parameter of this one as argument for the given
+     * {@code ByteConsumer}.
+     * @throws NullPointerException If the given argument is {@code null}
+     */
+    static ByteBiConsumer onlySecond(final ByteConsumer consumer) {
+        Objects.requireNonNull(consumer);
+        return (value1, value2) -> consumer.accept(value2);
+    }
 
     /**
      * Performs this operation on the given arguments.

@@ -97,6 +97,7 @@ public interface ShortBinaryOperator {
      * Creates a {@link ShortBinaryOperator} which uses the left parameter as argument for the given {@link
      * ShortUnaryOperator}.
      *
+     * @param operator The operator which accepts the {@code short} parameter of this one
      * @return Creates a {@code ShortBinaryOperator} which uses the left parameter as argument for the given {@code
      * ShortUnaryOperator}.
      * @throws NullPointerException If the given argument is {@code null}
@@ -110,6 +111,7 @@ public interface ShortBinaryOperator {
      * Creates a {@link ShortBinaryOperator} which uses the right parameter as argument for the given {@link
      * ShortUnaryOperator}.
      *
+     * @param operator The operator which accepts the {@code right} parameter of this one
      * @return Creates a {@code ShortBinaryOperator} which uses the right parameter as argument for the given {@code
      * ShortUnaryOperator}.
      * @throws NullPointerException If the given argument is {@code null}

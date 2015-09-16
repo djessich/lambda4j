@@ -45,6 +45,7 @@ public interface ShortTernaryOperator {
      * Creates a {@link ShortTernaryOperator} which uses the left parameter as argument for the given {@link
      * ShortUnaryOperator}.
      *
+     * @param operator The operator which accepts the {@code left} parameter of this one
      * @return Creates a {@code ShortTernaryOperator} which uses the left parameter as argument for the given {@code
      * ShortUnaryOperator}.
      * @throws NullPointerException If the given argument is {@code null}
@@ -58,6 +59,7 @@ public interface ShortTernaryOperator {
      * Creates a {@link ShortTernaryOperator} which uses the middle parameter as argument for the given {@link
      * ShortUnaryOperator}.
      *
+     * @param operator The operator which accepts the {@code middle} parameter of this one
      * @return Creates a {@code ShortTernaryOperator} which uses the middle parameter as argument for the given {@code
      * ShortUnaryOperator}.
      * @throws NullPointerException If the given argument is {@code null}
@@ -71,6 +73,7 @@ public interface ShortTernaryOperator {
      * Creates a {@link ShortTernaryOperator} which uses the right parameter as argument for the given {@link
      * ShortUnaryOperator}.
      *
+     * @param operator The operator which accepts the {@code right} parameter of this one
      * @return Creates a {@code ShortTernaryOperator} which uses the right parameter as argument for the given {@code
      * ShortUnaryOperator}.
      * @throws NullPointerException If the given argument is {@code null}

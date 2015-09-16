@@ -48,6 +48,7 @@ public interface TernaryOperator<T> extends TriFunction<T, T, T, T> {
      * Creates a {@link TernaryOperator} which uses the left parameter as argument for the given {@link UnaryOperator}.
      *
      * @param <T> The type of argument to the operator
+     * @param operator The operator which accepts the {@code left} parameter of this one
      * @return Creates a {@code TernaryOperator} which uses the left parameter as argument for the given {@code
      * UnaryOperator}.
      * @throws NullPointerException If the given argument is {@code null}
@@ -62,6 +63,7 @@ public interface TernaryOperator<T> extends TriFunction<T, T, T, T> {
      * UnaryOperator}.
      *
      * @param <T> The type of argument to the operator
+     * @param operator The operator which accepts the {@code middle} parameter of this one
      * @return Creates a {@code TernaryOperator} which uses the middle parameter as argument for the given {@code
      * UnaryOperator}.
      * @throws NullPointerException If the given argument is {@code null}
@@ -76,6 +78,7 @@ public interface TernaryOperator<T> extends TriFunction<T, T, T, T> {
      * UnaryOperator}.
      *
      * @param <T> The type of argument to the operator
+     * @param operator The operator which accepts the {@code right} parameter of this one
      * @return Creates a {@code TernaryOperator} which uses the right parameter as argument for the given {@code
      * UnaryOperator}.
      * @throws NullPointerException If the given argument is {@code null}

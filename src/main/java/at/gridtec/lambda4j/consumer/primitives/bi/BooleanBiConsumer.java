@@ -15,6 +15,7 @@
  */
 package at.gridtec.lambda4j.consumer.primitives.bi;
 
+import at.gridtec.lambda4j.consumer.primitives.BooleanConsumer;
 import at.gridtec.lambda4j.operators.unary.BooleanUnaryOperator;
 
 import java.util.Objects;
@@ -33,6 +34,34 @@ import java.util.function.Predicate;
 @SuppressWarnings("unused")
 @FunctionalInterface
 public interface BooleanBiConsumer {
+
+    /**
+     * Creates a {@link BooleanBiConsumer} which uses the first parameter of this one as argument for the given {@link
+     * BooleanConsumer}.
+     *
+     * @param consumer The consumer which accepts the {@code first} parameter of this one
+     * @return Creates a {@code BooleanBiConsumer} which uses the first parameter of this one as argument for the given
+     * {@code BooleanConsumer}.
+     * @throws NullPointerException If the given argument is {@code null}
+     */
+    static BooleanBiConsumer onlyFirst(final BooleanConsumer consumer) {
+        Objects.requireNonNull(consumer);
+        return (value1, value2) -> consumer.accept(value1);
+    }
+
+    /**
+     * Creates a {@link BooleanBiConsumer} which uses the second parameter of this one as argument for the given {@link
+     * BooleanConsumer}.
+     *
+     * @param consumer The consumer which accepts the {@code second} parameter of this one
+     * @return Creates a {@code BooleanBiConsumer} which uses the second parameter of this one as argument for the given
+     * {@code BooleanConsumer}.
+     * @throws NullPointerException If the given argument is {@code null}
+     */
+    static BooleanBiConsumer onlySecond(final BooleanConsumer consumer) {
+        Objects.requireNonNull(consumer);
+        return (value1, value2) -> consumer.accept(value2);
+    }
 
     /**
      * Performs this operation on the given arguments.

@@ -15,6 +15,7 @@
  */
 package at.gridtec.lambda4j.consumer.primitives.bi;
 
+import at.gridtec.lambda4j.consumer.primitives.FloatConsumer;
 import at.gridtec.lambda4j.function.primitives.to.ToFloatFunction;
 import at.gridtec.lambda4j.operators.unary.FloatUnaryOperator;
 
@@ -33,6 +34,34 @@ import java.util.function.BiConsumer;
 @SuppressWarnings("unused")
 @FunctionalInterface
 public interface FloatBiConsumer {
+
+    /**
+     * Creates a {@link FloatBiConsumer} which uses the first parameter of this one as argument for the given {@link
+     * FloatConsumer}.
+     *
+     * @param consumer The consumer which accepts the {@code first} parameter of this one
+     * @return Creates a {@code FloatBiConsumer} which uses the first parameter of this one as argument for the given
+     * {@code FloatConsumer}.
+     * @throws NullPointerException If the given argument is {@code null}
+     */
+    static FloatBiConsumer onlyFirst(final FloatConsumer consumer) {
+        Objects.requireNonNull(consumer);
+        return (value1, value2) -> consumer.accept(value1);
+    }
+
+    /**
+     * Creates a {@link FloatBiConsumer} which uses the second parameter of this one as argument for the given {@link
+     * FloatConsumer}.
+     *
+     * @param consumer The consumer which accepts the {@code second} parameter of this one
+     * @return Creates a {@code FloatBiConsumer} which uses the second parameter of this one as argument for the given
+     * {@code FloatConsumer}.
+     * @throws NullPointerException If the given argument is {@code null}
+     */
+    static FloatBiConsumer onlySecond(final FloatConsumer consumer) {
+        Objects.requireNonNull(consumer);
+        return (value1, value2) -> consumer.accept(value2);
+    }
 
     /**
      * Performs this operation on the given arguments.

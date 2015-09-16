@@ -17,6 +17,7 @@
 package at.gridtec.lambda4j.consumer.primitives.tri;
 
 import at.gridtec.lambda4j.consumer.TriConsumer;
+import at.gridtec.lambda4j.consumer.primitives.FloatConsumer;
 import at.gridtec.lambda4j.function.primitives.to.ToFloatFunction;
 import at.gridtec.lambda4j.operators.unary.FloatUnaryOperator;
 
@@ -34,6 +35,48 @@ import java.util.Objects;
 @SuppressWarnings("unused")
 @FunctionalInterface
 public interface FloatTriConsumer {
+
+    /**
+     * Creates a {@link FloatTriConsumer} which uses the first parameter as argument for the given {@link
+     * FloatConsumer}.
+     *
+     * @param consumer The consumer which accepts the {@code first} parameter of this one
+     * @return Creates a {@code FloatTriConsumer} which uses the first parameter as argument for the given {@code
+     * FloatConsumer}.
+     * @throws NullPointerException If the given argument is {@code null}
+     */
+    static FloatTriConsumer onlyFirst(final FloatConsumer consumer) {
+        Objects.requireNonNull(consumer);
+        return (value1, value2, value3) -> consumer.accept(value1);
+    }
+
+    /**
+     * Creates a {@link FloatTriConsumer} which uses the second parameter as argument for the given {@link
+     * FloatConsumer}.
+     *
+     * @param consumer The consumer which accepts the {@code second} parameter of this one
+     * @return Creates a {@code FloatTriConsumer} which uses the second parameter as argument for the given {@code
+     * FloatConsumer}.
+     * @throws NullPointerException If the given argument is {@code null}
+     */
+    static FloatTriConsumer onlySecond(final FloatConsumer consumer) {
+        Objects.requireNonNull(consumer);
+        return (value1, value2, value3) -> consumer.accept(value2);
+    }
+
+    /**
+     * Creates a {@link FloatTriConsumer} which uses the third parameter as argument for the given {@link
+     * FloatConsumer}.
+     *
+     * @param consumer The consumer which accepts the {@code third} parameter of this one
+     * @return Creates a {@code FloatTriConsumer} which uses the third parameter as argument for the given {@code
+     * FloatConsumer}.
+     * @throws NullPointerException If the given argument is {@code null}
+     */
+    static FloatTriConsumer onlyThird(final FloatConsumer consumer) {
+        Objects.requireNonNull(consumer);
+        return (value1, value2, value3) -> consumer.accept(value3);
+    }
 
     /**
      * Performs this operation on the given arguments.

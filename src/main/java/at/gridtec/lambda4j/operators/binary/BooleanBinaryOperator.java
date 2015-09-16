@@ -76,6 +76,7 @@ public interface BooleanBinaryOperator {
      * Creates a {@link BooleanBinaryOperator} which uses the left parameter as argument for the given {@link
      * BooleanUnaryOperator}.
      *
+     * @param operator The operator which accepts the {@code short} parameter of this one
      * @return Creates a {@code BooleanBinaryOperator} which uses the left parameter as argument for the given {@code
      * BooleanUnaryOperator}.
      * @throws NullPointerException If the given argument is {@code null}
@@ -89,6 +90,7 @@ public interface BooleanBinaryOperator {
      * Creates a {@link BooleanBinaryOperator} which uses the right parameter as argument for the given {@link
      * BooleanUnaryOperator}.
      *
+     * @param operator The operator which accepts the {@code right} parameter of this one
      * @return Creates a {@code BooleanBinaryOperator} which uses the right parameter as argument for the given {@code
      * BooleanUnaryOperator}.
      * @throws NullPointerException If the given argument is {@code null}

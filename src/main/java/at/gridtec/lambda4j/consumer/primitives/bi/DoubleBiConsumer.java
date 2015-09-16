@@ -17,6 +17,7 @@ package at.gridtec.lambda4j.consumer.primitives.bi;
 
 import java.util.Objects;
 import java.util.function.BiConsumer;
+import java.util.function.DoubleConsumer;
 import java.util.function.DoubleUnaryOperator;
 import java.util.function.ToDoubleFunction;
 
@@ -32,6 +33,34 @@ import java.util.function.ToDoubleFunction;
 @SuppressWarnings("unused")
 @FunctionalInterface
 public interface DoubleBiConsumer {
+
+    /**
+     * Creates a {@link DoubleBiConsumer} which uses the first parameter of this one as argument for the given {@link
+     * DoubleConsumer}.
+     *
+     * @param consumer The consumer which accepts the {@code first} parameter of this one
+     * @return Creates a {@code DoubleBiConsumer} which uses the first parameter of this one as argument for the given
+     * {@code DoubleConsumer}.
+     * @throws NullPointerException If the given argument is {@code null}
+     */
+    static DoubleBiConsumer onlyFirst(final DoubleConsumer consumer) {
+        Objects.requireNonNull(consumer);
+        return (value1, value2) -> consumer.accept(value1);
+    }
+
+    /**
+     * Creates a {@link DoubleBiConsumer} which uses the second parameter of this one as argument for the given {@link
+     * DoubleConsumer}.
+     *
+     * @param consumer The consumer which accepts the {@code second} parameter of this one
+     * @return Creates a {@code DoubleBiConsumer} which uses the second parameter of this one as argument for the given
+     * {@code DoubleConsumer}.
+     * @throws NullPointerException If the given argument is {@code null}
+     */
+    static DoubleBiConsumer onlySecond(final DoubleConsumer consumer) {
+        Objects.requireNonNull(consumer);
+        return (value1, value2) -> consumer.accept(value2);
+    }
 
     /**
      * Performs this operation on the given arguments.

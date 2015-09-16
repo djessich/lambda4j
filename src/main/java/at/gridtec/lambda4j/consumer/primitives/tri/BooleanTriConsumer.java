@@ -17,6 +17,7 @@
 package at.gridtec.lambda4j.consumer.primitives.tri;
 
 import at.gridtec.lambda4j.consumer.TriConsumer;
+import at.gridtec.lambda4j.consumer.primitives.BooleanConsumer;
 import at.gridtec.lambda4j.operators.unary.BooleanUnaryOperator;
 
 import java.util.Objects;
@@ -34,6 +35,48 @@ import java.util.function.Predicate;
 @SuppressWarnings("unused")
 @FunctionalInterface
 public interface BooleanTriConsumer {
+
+    /**
+     * Creates a {@link BooleanTriConsumer} which uses the first parameter as argument for the given {@link
+     * BooleanConsumer}.
+     *
+     * @param consumer The consumer which accepts the {@code first} parameter of this one
+     * @return Creates a {@code BooleanTriConsumer} which uses the first parameter as argument for the given {@code
+     * BooleanConsumer}.
+     * @throws NullPointerException If the given argument is {@code null}
+     */
+    static BooleanTriConsumer onlyFirst(final BooleanConsumer consumer) {
+        Objects.requireNonNull(consumer);
+        return (value1, value2, value3) -> consumer.accept(value1);
+    }
+
+    /**
+     * Creates a {@link BooleanTriConsumer} which uses the second parameter as argument for the given {@link
+     * BooleanConsumer}.
+     *
+     * @param consumer The consumer which accepts the {@code second} parameter of this one
+     * @return Creates a {@code BooleanTriConsumer} which uses the second parameter as argument for the given {@code
+     * BooleanConsumer}.
+     * @throws NullPointerException If the given argument is {@code null}
+     */
+    static BooleanTriConsumer onlySecond(final BooleanConsumer consumer) {
+        Objects.requireNonNull(consumer);
+        return (value1, value2, value3) -> consumer.accept(value2);
+    }
+
+    /**
+     * Creates a {@link BooleanTriConsumer} which uses the third parameter as argument for the given {@link
+     * BooleanConsumer}.
+     *
+     * @param consumer The consumer which accepts the {@code third} parameter of this one
+     * @return Creates a {@code BooleanTriConsumer} which uses the third parameter as argument for the given {@code
+     * BooleanConsumer}.
+     * @throws NullPointerException If the given argument is {@code null}
+     */
+    static BooleanTriConsumer onlyThird(final BooleanConsumer consumer) {
+        Objects.requireNonNull(consumer);
+        return (value1, value2, value3) -> consumer.accept(value3);
+    }
 
     /**
      * Performs this operation on the given arguments.

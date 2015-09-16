@@ -17,6 +17,7 @@ package at.gridtec.lambda4j.consumer.primitives.bi;
 
 import java.util.Objects;
 import java.util.function.BiConsumer;
+import java.util.function.LongConsumer;
 import java.util.function.LongUnaryOperator;
 import java.util.function.ToLongFunction;
 
@@ -32,6 +33,34 @@ import java.util.function.ToLongFunction;
 @SuppressWarnings("unused")
 @FunctionalInterface
 public interface LongBiConsumer {
+
+    /**
+     * Creates a {@link LongBiConsumer} which uses the first parameter of this one as argument for the given {@link
+     * LongConsumer}.
+     *
+     * @param consumer The consumer which accepts the {@code first} parameter of this one
+     * @return Creates a {@code LongBiConsumer} which uses the first parameter of this one as argument for the given
+     * {@code LongConsumer}.
+     * @throws NullPointerException If the given argument is {@code null}
+     */
+    static LongBiConsumer onlyFirst(final LongConsumer consumer) {
+        Objects.requireNonNull(consumer);
+        return (value1, value2) -> consumer.accept(value1);
+    }
+
+    /**
+     * Creates a {@link LongBiConsumer} which uses the second parameter of this one as argument for the given {@link
+     * LongConsumer}.
+     *
+     * @param consumer The consumer which accepts the {@code second} parameter of this one
+     * @return Creates a {@code LongBiConsumer} which uses the second parameter of this one as argument for the given
+     * {@code LongConsumer}.
+     * @throws NullPointerException If the given argument is {@code null}
+     */
+    static LongBiConsumer onlySecond(final LongConsumer consumer) {
+        Objects.requireNonNull(consumer);
+        return (value1, value2) -> consumer.accept(value2);
+    }
 
     /**
      * Performs this operation on the given arguments.
