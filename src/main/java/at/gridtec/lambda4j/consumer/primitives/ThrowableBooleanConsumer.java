@@ -1,27 +1,26 @@
 /*
  * Copyright (c) 2015 Gridtec. All rights reserved.
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * This program is proprietary software; all information contained herein is, and
+ * remains, the property of Gridtec and its suppliers, if any. The intellectual
+ * and technical concepts contained herein are proprietary to Gridtec and its suppliers
+ * and may be covered by Austrian and Foreign Patents, patents in process, and are
+ * protected by trade secret or copyright law.
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ * Dissemination of this information or reproduction of this material is strictly
+ * forbidden unless prior written permission is obtained from Gridtec company.
  *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ * This software consists of voluntary contributions made by individuals on behalf
+ * of Gridtec. For more information on Gridtec, please refer to www.gridtec.at homepage.
  */
 package at.gridtec.lambda4j.consumer.primitives;
 
 import at.gridtec.lambda4j.util.ThrowableUtils;
 
 import java.util.Objects;
-import java.util.function.DoubleConsumer;
 
 /**
- * This functional interface implements a {@link DoubleConsumer} which is able to throw any {@link Exception}.
+ * This functional interface implements a {@link BooleanConsumer} which is able to throw any {@link Exception}.
  * <p>
  * The thrown {@link Exception} is sneakily thrown unless its a {@link RuntimeException}. This means that there is no
  * need to catch the thrown exception, nor to declare that you throw it using the <em>throws</em> keyword. The exception
@@ -43,61 +42,61 @@ import java.util.function.DoubleConsumer;
  * declaration in the <em>throws</em> clause. The checked exception will behave just like a normal <b>unchecked</b>
  * exception due to sneaky throwing.
  * <p>
- * This is a {@link FunctionalInterface} whose functional method is {@link #acceptThrows(double)}.
+ * This is a {@link FunctionalInterface} whose functional method is {@link #acceptThrows(boolean)}.
  *
- * @apiNote This is a throwable JRE lambda
  * @see java.util.function.Consumer
  */
 @SuppressWarnings("unused")
 @FunctionalInterface
-public interface ThrowableDoubleConsumer extends DoubleConsumer {
+public interface ThrowableBooleanConsumer extends BooleanConsumer {
 
     /**
-     * Implicitly casts, and therefore wraps a given lambda as {@link ThrowableDoubleConsumer}. This is a convenience
-     * method in case the given {@link ThrowableDoubleConsumer} is ambiguous for the compiler. This might happen for
-     * overloaded methods accepting different functional interfaces. The given {@code ThrowableDoubleConsumer} is
+     * Implicitly casts, and therefore wraps a given lambda as {@link ThrowableBooleanConsumer}. This is a convenience
+     * method in case the given {@link ThrowableBooleanConsumer} is ambiguous for the compiler. This might happen for
+     * overloaded methods accepting different functional interfaces. The given {@code ThrowableBooleanConsumer} is
      * returned as-is.
      *
-     * @param lambda The {@code ThrowableDoubleConsumer} which should be returned as-is.
-     * @return The given {@code ThrowableDoubleConsumer} as-is.
+     * @param lambda The {@code ThrowableBooleanConsumer} which should be returned as-is.
+     * @return The given {@code ThrowableBooleanConsumer} as-is.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static ThrowableDoubleConsumer wrap(final ThrowableDoubleConsumer lambda) {
+    static ThrowableBooleanConsumer wrap(final ThrowableBooleanConsumer lambda) {
         Objects.requireNonNull(lambda);
         return lambda;
     }
 
     /**
-     * Creates a {@link ThrowableDoubleConsumer} from the given {@link DoubleConsumer}. This method is just convenience
-     * to provide a mapping for the non-throwable/throwable instances of the corresponding functional interface.
+     * Creates a {@link ThrowableBooleanConsumer} from the given {@link BooleanConsumer}. This method is just
+     * convenience to provide a mapping for the non-throwable/throwable instances of the corresponding functional
+     * interface.
      *
-     * @param lambda A {@code DoubleConsumer} which should be mapped to its throwable counterpart
-     * @return A {@code ThrowableDoubleConsumer} from the given {@code DoubleConsumer}.
+     * @param lambda A {@code BooleanConsumer} which should be mapped to its throwable counterpart
+     * @return A {@code ThrowableBooleanConsumer} from the given {@code BooleanConsumer}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static ThrowableDoubleConsumer from(final DoubleConsumer lambda) {
+    static ThrowableBooleanConsumer from(final BooleanConsumer lambda) {
         Objects.requireNonNull(lambda);
         return lambda::accept;
     }
 
     /**
-     * The accept method for this {@link DoubleConsumer} which is able to throw any {@link Exception} type.
+     * The accept method for this {@link BooleanConsumer} which is able to throw any {@link Exception} type.
      *
      * @param value The argument for the operation to be consumed
      * @throws Exception Any exception from this operations action
      */
-    void acceptThrows(double value) throws Exception;
+    void acceptThrows(boolean value) throws Exception;
 
     /**
-     * Overrides the {@link DoubleConsumer#accept(double)} method by using a redefinition as default method. It calls
-     * the {@link #acceptThrows(double)} method of this interface and catches the thrown {@link Exception}s from it. If
+     * Overrides the {@link BooleanConsumer#accept(boolean)} method by using a redefinition as default method. It calls
+     * the {@link #acceptThrows(boolean)} method of this interface and catches the thrown {@link Exception}s from it. If
      * it is of type {@link RuntimeException}, the exception is rethrown. Other exception types are sneakily thrown.
      *
      * @param value The argument for the operation to be consumed
      * @see ThrowableUtils#sneakyThrow(Throwable)
      */
     @Override
-    default void accept(double value) {
+    default void accept(boolean value) {
         try {
             acceptThrows(value);
         } catch (RuntimeException e) {
@@ -108,16 +107,16 @@ public interface ThrowableDoubleConsumer extends DoubleConsumer {
     }
 
     /**
-     * Returns a composed {@link ThrowableDoubleConsumer} that applies this {@code ThrowableDoubleConsumer} to its
-     * input, and if an error occurred, applies the given one. The exception from this {@code ThrowableDoubleConsumer}
+     * Returns a composed {@link ThrowableBooleanConsumer} that applies this {@code ThrowableBooleanConsumer} to its
+     * input, and if an error occurred, applies the given one. The exception from this {@code ThrowableBooleanConsumer}
      * is ignored.
      *
-     * @param other A {@code ThrowableDoubleConsumer} to be applied if this one fails
-     * @return A composed {@code ThrowableDoubleConsumer} that applies this {@code ThrowableDoubleConsumer}, and if an
+     * @param other A {@code ThrowableBooleanConsumer} to be applied if this one fails
+     * @return A composed {@code ThrowableBooleanConsumer} that applies this {@code ThrowableBooleanConsumer}, and if an
      * error occurred, applies the given one.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    default ThrowableDoubleConsumer orElse(final ThrowableDoubleConsumer other) {
+    default ThrowableBooleanConsumer orElse(final ThrowableBooleanConsumer other) {
         Objects.requireNonNull(other);
         return value -> {
             try {
@@ -129,20 +128,20 @@ public interface ThrowableDoubleConsumer extends DoubleConsumer {
     }
 
     /**
-     * Returns a composed {@link ThrowableDoubleConsumer} that applies this {@code ThrowableDoubleConsumer} to its
+     * Returns a composed {@link ThrowableBooleanConsumer} that applies this {@code ThrowableBooleanConsumer} to its
      * input, and if an error occurred, throws the given {@link Exception}. The exception from this {@code
-     * ThrowableDoubleConsumer} is added as suppressed to the given one.
+     * ThrowableBooleanConsumer} is added as suppressed to the given one.
      * <p>
      * The given exception must have a no arg constructor for reflection purposes. If not, then appropriate exception as
      * described in {@link Class#newInstance()} is thrown.
      *
      * @param <X> The type for the class extending {@code Exception}
      * @param clazz The exception class to throw if an error occurred
-     * @return A composed {@code ThrowableDoubleConsumer} that applies this {@code ThrowableDoubleConsumer}, and if an
+     * @return A composed {@code ThrowableBooleanConsumer} that applies this {@code ThrowableBooleanConsumer}, and if an
      * error occurred, throws the given {@code Exception}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    default <X extends Exception> ThrowableDoubleConsumer orThrow(Class<X> clazz) {
+    default <X extends Exception> ThrowableBooleanConsumer orThrow(Class<X> clazz) {
         Objects.requireNonNull(clazz);
         return value -> {
             try {
@@ -156,13 +155,13 @@ public interface ThrowableDoubleConsumer extends DoubleConsumer {
     }
 
     /**
-     * Returns a composed {@link DoubleConsumer} that applies this {@link ThrowableDoubleConsumer} to its input,
+     * Returns a composed {@link BooleanConsumer} that applies this {@link ThrowableBooleanConsumer} to its input,
      * ignoring any possible errors, unless it is an unchecked exception.
      *
-     * @return A composed {@code DoubleConsumer} that applies this {@code ThrowableDoubleConsumer}, ignoring any
+     * @return A composed {@code BooleanConsumer} that applies this {@code ThrowableBooleanConsumer}, ignoring any
      * possible errors, unless it is an unchecked exception.
      */
-    default DoubleConsumer ignore() {
+    default BooleanConsumer ignore() {
         return value -> {
             try {
                 acceptThrows(value);
@@ -175,13 +174,13 @@ public interface ThrowableDoubleConsumer extends DoubleConsumer {
     }
 
     /**
-     * Returns a composed {@link DoubleConsumer} that applies this {@link ThrowableDoubleConsumer} to its input,
+     * Returns a composed {@link BooleanConsumer} that applies this {@link ThrowableBooleanConsumer} to its input,
      * ignoring any possible errors.
      *
-     * @return A composed {@code DoubleConsumer} that applies this {@code ThrowableDoubleConsumer}, ignoring any
+     * @return A composed {@code BooleanConsumer} that applies this {@code ThrowableBooleanConsumer}, ignoring any
      * possible errors.
      */
-    default DoubleConsumer ignoreAll() {
+    default BooleanConsumer ignoreAll() {
         return value -> {
             try {
                 acceptThrows(value);
