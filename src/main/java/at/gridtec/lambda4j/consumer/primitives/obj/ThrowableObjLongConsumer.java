@@ -1,23 +1,25 @@
 /*
  * Copyright (c) 2015 Gridtec. All rights reserved.
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * This program is proprietary software; all information contained herein is, and
+ * remains, the property of Gridtec and its suppliers, if any. The intellectual
+ * and technical concepts contained herein are proprietary to Gridtec and its suppliers
+ * and may be covered by Austrian and Foreign Patents, patents in process, and are
+ * protected by trade secret or copyright law.
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ * Dissemination of this information or reproduction of this material is strictly
+ * forbidden unless prior written permission is obtained from Gridtec company.
  *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ * This software consists of voluntary contributions made by individuals on behalf
+ * of Gridtec. For more information on Gridtec, please refer to www.gridtec.at homepage.
  */
 package at.gridtec.lambda4j.consumer.primitives.obj;
 
 import at.gridtec.lambda4j.util.ThrowableUtils;
 
 import java.util.Objects;
+import java.util.function.Consumer;
+import java.util.function.LongConsumer;
 import java.util.function.ObjLongConsumer;
 
 /**
@@ -36,16 +38,18 @@ import java.util.function.ObjLongConsumer;
  * compiler prints an error that the corresponding {@code try} block never throws the specific exception.</li> </ol>
  * <p>
  * When the calling code never throws the specific exception that it declares, you should omit it. For example: {@code
- * new String(byteArr, "UTF-8") throws UnsupportedEncodingException}, but UTF-8 is guaranteed by the Java specification
+ * new String(LongArr, "UTF-8") throws UnsupportedEncodingException}, but UTF-8 is guaranteed by the Java specification
  * to be always present. The exception should therefore be omitted.
  * <p>
  * Moreover, if no checked exception should be used at all or its use is inappropriate for any reasons, omit the
  * declaration in the <em>throws</em> clause. The checked exception will behave just like a normal <b>unchecked</b>
  * exception due to sneaky throwing.
+ * <p>
+ * This is a {@link FunctionalInterface} whose functional method is {@link #accept(Object, long)}.
  *
  * @param <T> The type of argument for the operation
  * @apiNote This is a throwable JRE lambda
- * @see java.util.function.Consumer
+ * @see Consumer
  */
 @SuppressWarnings("unused")
 @FunctionalInterface
@@ -80,6 +84,36 @@ public interface ThrowableObjLongConsumer<T> extends ObjLongConsumer<T> {
     static <T> ThrowableObjLongConsumer<T> from(final ObjLongConsumer<T> lambda) {
         Objects.requireNonNull(lambda);
         return lambda::accept;
+    }
+
+    /**
+     * Creates a {@link ObjLongConsumer} which uses the first parameter of this one as argument for the given {@link
+     * Consumer}.
+     *
+     * @param <T> The type of the first argument to the operation
+     * @param consumer The consumer which accepts the {@code first} parameter of this one
+     * @return Creates a {@code ObjLongConsumer} which uses the first parameter of this one as argument for the given
+     * {@code Consumer}.
+     * @throws NullPointerException If the given argument is {@code null}
+     */
+    static <T> ObjLongConsumer<T> onlyFirst(final Consumer<? super T> consumer) {
+        Objects.requireNonNull(consumer);
+        return (t, value) -> consumer.accept(t);
+    }
+
+    /**
+     * Creates a {@link ObjLongConsumer} which uses the second parameter of this one as argument for the given {@link
+     * LongConsumer}.
+     *
+     * @param <T> The type of the first argument to the operation
+     * @param consumer The consumer which accepts the {@code second} parameter of this one
+     * @return Creates a {@code ObjLongConsumer} which uses the second parameter of this one as argument for the given
+     * {@code LongConsumer}.
+     * @throws NullPointerException If the given argument is {@code null}
+     */
+    static <T> ObjLongConsumer<T> onlySecond(final LongConsumer consumer) {
+        Objects.requireNonNull(consumer);
+        return (t, value) -> consumer.accept(value);
     }
 
     /**
