@@ -13,29 +13,29 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package at.gridtec.lambda4j.function.primitives;
+package at.gridtec.lambda4j.function.primitives.bi;
 
 import java.util.function.BiFunction;
 
 /**
- * Represents a function that accepts two short-valued arguments and produces a result. This is the {@code
- * short}-consuming primitive specialization for {@link BiFunction}.
+ * Represents a function that accepts two double-valued arguments and produces a result. This is the {@code
+ * double}-consuming primitive specialization for {@link BiFunction}.
  * <p>
- * This is a {@link FunctionalInterface} whose functional method is {@link #apply(short, short)}.
+ * This is a {@link FunctionalInterface} whose functional method is {@link #apply(double, double)}.
  *
  * @param <R> The type of return value from the function
  * @see java.util.function.BiFunction
  */
 @SuppressWarnings("unused")
 @FunctionalInterface
-public interface ShortBiFunction<R> {
+public interface DoubleBiFunction<R> {
 
     /**
-     * Applies this {@link ShortBiFunction} to the given argument.
+     * Applies this {@link DoubleBiFunction} to the given argument.
      *
      * @param value1 The first argument to the function
      * @param value2 The second argument to the function
      * @return The return value from the function, which is its result.
      */
-    R apply(short value1, short value2);
+    R apply(double value1, double value2);
 }

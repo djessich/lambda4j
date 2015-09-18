@@ -13,30 +13,30 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package at.gridtec.lambda4j.function.primitives;
+package at.gridtec.lambda4j.function.primitives.tri;
 
 import at.gridtec.lambda4j.function.TriFunction;
 
 /**
- * Represents a function that accepts three double-valued argument and produces a result. This is the {@code
- * double}-consuming primitive specialization for {@link TriFunction}.
+ * Represents a function that accepts three short-valued argument and produces a result. This is the {@code
+ * short}-consuming primitive specialization for {@link TriFunction}.
  * <p>
- * This is a {@link FunctionalInterface} whose functional method is {@link #apply(double, double, double)}.
+ * This is a {@link FunctionalInterface} whose functional method is {@link #apply(short, short, short)}.
  *
  * @param <R> The type of return value from the function
  * @see TriFunction
  */
 @SuppressWarnings("unused")
 @FunctionalInterface
-public interface DoubleTriFunction<R> {
+public interface ShortTriFunction<R> {
 
     /**
-     * Applies this {@link DoubleTriFunction} to the given argument.
+     * Applies this {@link ShortTriFunction} to the given argument.
      *
      * @param value1 The first argument to the function
      * @param value2 The second argument to the function
      * @param value3 The third argument to the function
      * @return The return value from the function, which is its result.
      */
-    R apply(double value1, double value2, double value3);
+    R apply(short value1, short value2, short value3);
 }

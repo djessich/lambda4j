@@ -250,31 +250,4 @@ public interface ThrowableTriFunction<T, U, V, R> extends TriFunction<T, U, V, R
             }
         };
     }
-
-    /**
-     * Returns a curried version of this {@link ThrowableTriFunction}. The returned curried version of this {@code
-     * ThrowableTriFunction} is able to throw any {@link Exception} type.
-     *
-     * @return A curried version of this {@code ThrowableTriFunction}.
-     * @see #reversed(ThrowableFunction)
-     */
-    default ThrowableFunction<T, ThrowableFunction<U, ThrowableFunction<V, R>>> curried() {
-        return t -> u -> v -> apply(t, u, v);
-    }
-
-    /**
-     * Returns a reversed (uncurried) {@link ThrowableTriFunction} from the given curried {@code ThrowableTriFunction}.
-     * The returned {@code ThrowableTriFunction} from the given curried {@code ThrowableTriFunction} is able to throw
-     * any {@link Exception} type.
-     *
-     * @param f A curried {@code ThrowableTriFunction}
-     * @return A reversed (uncurried) {@link ThrowableTriFunction} from the given curried {@code ThrowableTriFunction}.
-     * @throws NullPointerException If the given argument is {@code null}
-     * @see #curried()
-     */
-    default ThrowableTriFunction<T, U, V, R> reversed(
-            ThrowableFunction<? super T, ThrowableFunction<? super U, ThrowableFunction<? super V, ? extends R>>> f) {
-        Objects.requireNonNull(f);
-        return (t, u, v) -> f.apply(t).apply(u).apply(v);
-    }
 }

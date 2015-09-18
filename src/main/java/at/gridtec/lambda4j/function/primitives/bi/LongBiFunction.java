@@ -13,30 +13,29 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package at.gridtec.lambda4j.function.primitives;
+package at.gridtec.lambda4j.function.primitives.bi;
 
-import at.gridtec.lambda4j.function.TriFunction;
+import java.util.function.BiFunction;
 
 /**
- * Represents a function that accepts three short-valued argument and produces a result. This is the {@code
- * short}-consuming primitive specialization for {@link TriFunction}.
+ * Represents a function that accepts two long-valued arguments and produces a result. This is the {@code
+ * long}-consuming primitive specialization for {@link BiFunction}.
  * <p>
- * This is a {@link FunctionalInterface} whose functional method is {@link #apply(short, short, short)}.
+ * This is a {@link FunctionalInterface} whose functional method is {@link #apply(long, long)}.
  *
  * @param <R> The type of return value from the function
- * @see TriFunction
+ * @see java.util.function.BiFunction
  */
 @SuppressWarnings("unused")
 @FunctionalInterface
-public interface ShortTriFunction<R> {
+public interface LongBiFunction<R> {
 
     /**
-     * Applies this {@link ShortTriFunction} to the given argument.
+     * Applies this {@link LongBiFunction} to the given argument.
      *
      * @param value1 The first argument to the function
      * @param value2 The second argument to the function
-     * @param value3 The third argument to the function
      * @return The return value from the function, which is its result.
      */
-    R apply(short value1, short value2, short value3);
+    R apply(long value1, long value2);
 }

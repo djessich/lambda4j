@@ -98,4 +98,28 @@ public interface TriFunction<T, U, V, R> {
         Objects.requireNonNull(after);
         return (t, u, v) -> after.apply(apply(t, u, v));
     }
+
+    /**
+     * Returns a curried version of this {@link ThrowableTriFunction}.
+     *
+     * @return A curried version of this {@code ThrowableTriFunction}.
+     * @see #reversed(Function)
+     */
+    default Function<T, Function<U, Function<V, R>>> curried() {
+        return t -> u -> v -> apply(t, u, v);
+    }
+
+    /**
+     * Returns a reversed (uncurried) {@link TriFunction} from the given curried {@code TriFunction}.
+     *
+     * @param f A curried {@code TriFunction}
+     * @return A reversed (uncurried) {@link TriFunction} from the given curried {@code TriFunction}.
+     * @throws NullPointerException If the given argument is {@code null}
+     * @see #curried()
+     */
+    default TriFunction<T, U, V, R> reversed(
+            Function<? super T, Function<? super U, Function<? super V, ? extends R>>> f) {
+        Objects.requireNonNull(f);
+        return (t, u, v) -> f.apply(t).apply(u).apply(v);
+    }
 }

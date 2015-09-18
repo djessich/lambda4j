@@ -13,30 +13,29 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package at.gridtec.lambda4j.function.primitives;
+package at.gridtec.lambda4j.function.primitives.bi;
 
-import at.gridtec.lambda4j.function.TriFunction;
+import java.util.function.BiFunction;
 
 /**
- * Represents a function that accepts three float-valued argument and produces a result. This is the {@code
- * float}-consuming primitive specialization for {@link TriFunction}.
+ * Represents a function that accepts two char-valued arguments and produces a result. This is the {@code
+ * char}-consuming primitive specialization for {@link BiFunction}.
  * <p>
- * This is a {@link FunctionalInterface} whose functional method is {@link #apply(float, float, float)}.
+ * This is a {@link FunctionalInterface} whose functional method is {@link #apply(char, char)}.
  *
  * @param <R> The type of return value from the function
- * @see TriFunction
+ * @see java.util.function.BiFunction
  */
 @SuppressWarnings("unused")
 @FunctionalInterface
-public interface FloatTriFunction<R> {
+public interface CharBiFunction<R> {
 
     /**
-     * Applies this {@link FloatTriFunction} to the given argument.
+     * Applies this {@link CharBiFunction} to the given argument.
      *
      * @param value1 The first argument to the function
      * @param value2 The second argument to the function
-     * @param value3 The third argument to the function
      * @return The return value from the function, which is its result.
      */
-    R apply(float value1, float value2, float value3);
+    R apply(char value1, char value2);
 }

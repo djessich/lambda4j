@@ -13,30 +13,30 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package at.gridtec.lambda4j.function.primitives;
+package at.gridtec.lambda4j.function.primitives.tri;
 
 import at.gridtec.lambda4j.function.TriFunction;
 
 /**
- * Represents a function that accepts three char-valued argument and produces a result. This is the {@code
- * char}-consuming primitive specialization for {@link TriFunction}.
+ * Represents a function that accepts three int-valued argument and produces a result. This is the {@code int}-consuming
+ * primitive specialization for {@link TriFunction}.
  * <p>
- * This is a {@link FunctionalInterface} whose functional method is {@link #apply(char, char, char)}.
+ * This is a {@link FunctionalInterface} whose functional method is {@link #apply(int, int, int)}.
  *
  * @param <R> The type of return value from the function
  * @see TriFunction
  */
 @SuppressWarnings("unused")
 @FunctionalInterface
-public interface CharTriFunction<R> {
+public interface IntTriFunction<R> {
 
     /**
-     * Applies this {@link CharTriFunction} to the given argument.
+     * Applies this {@link IntTriFunction} to the given argument.
      *
      * @param value1 The first argument to the function
      * @param value2 The second argument to the function
      * @param value3 The third argument to the function
      * @return The return value from the function, which is its result.
      */
-    R apply(char value1, char value2, char value3);
+    R apply(int value1, int value2, int value3);
 }

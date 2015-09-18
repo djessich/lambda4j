@@ -13,30 +13,29 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package at.gridtec.lambda4j.function.primitives;
+package at.gridtec.lambda4j.function.primitives.bi;
 
-import at.gridtec.lambda4j.function.TriFunction;
+import java.util.function.BiFunction;
 
 /**
- * Represents a function that accepts three int-valued argument and produces a result. This is the {@code int}-consuming
- * primitive specialization for {@link TriFunction}.
+ * Represents a function that accepts two boolean-valued arguments and produces a result. This is the {@code
+ * boolean}-consuming primitive specialization for {@link BiFunction}.
  * <p>
- * This is a {@link FunctionalInterface} whose functional method is {@link #apply(int, int, int)}.
+ * This is a {@link FunctionalInterface} whose functional method is {@link #apply(boolean, boolean)}.
  *
  * @param <R> The type of return value from the function
- * @see TriFunction
+ * @see java.util.function.BiFunction
  */
 @SuppressWarnings("unused")
 @FunctionalInterface
-public interface IntTriFunction<R> {
+public interface BooleanBiFunction<R> {
 
     /**
-     * Applies this {@link IntTriFunction} to the given argument.
+     * Applies this {@link BooleanBiFunction} to the given argument.
      *
      * @param value1 The first argument to the function
      * @param value2 The second argument to the function
-     * @param value3 The third argument to the function
      * @return The return value from the function, which is its result.
      */
-    R apply(int value1, int value2, int value3);
+    R apply(boolean value1, boolean value2);
 }
