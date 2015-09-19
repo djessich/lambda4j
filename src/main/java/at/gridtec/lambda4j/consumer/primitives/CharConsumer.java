@@ -69,7 +69,7 @@ public interface CharConsumer {
      * @throws NullPointerException If one of the given functions are {@code null}
      * @see #andThen(CharConsumer)
      */
-    default <T> Consumer<T> compose(final ToCharFunction<T> before) {
+    default <T> Consumer<T> compose(final ToCharFunction<? super T> before) {
         Objects.requireNonNull(before);
         return value -> accept(before.applyAsChar(value));
     }

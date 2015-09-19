@@ -69,7 +69,7 @@ public interface ShortConsumer {
      * @throws NullPointerException If one of the given functions are {@code null}
      * @see #andThen(ShortConsumer)
      */
-    default <T> Consumer<T> compose(final ToShortFunction<T> before) {
+    default <T> Consumer<T> compose(final ToShortFunction<? super T> before) {
         Objects.requireNonNull(before);
         return value -> accept(before.applyAsShort(value));
     }

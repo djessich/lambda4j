@@ -69,7 +69,7 @@ public interface ByteConsumer {
      * @throws NullPointerException If one of the given functions are {@code null}
      * @see #andThen(ByteConsumer)
      */
-    default <T> Consumer<T> compose(final ToByteFunction<T> before) {
+    default <T> Consumer<T> compose(final ToByteFunction<? super T> before) {
         Objects.requireNonNull(before);
         return value -> accept(before.applyAsByte(value));
     }

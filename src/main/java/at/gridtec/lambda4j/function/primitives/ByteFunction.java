@@ -15,7 +15,16 @@
  */
 package at.gridtec.lambda4j.function.primitives;
 
-import java.util.function.Function;
+import at.gridtec.lambda4j.consumer.primitives.ByteConsumer;
+import at.gridtec.lambda4j.function.primitives.conversion.*;
+import at.gridtec.lambda4j.function.primitives.to.ToByteFunction;
+import at.gridtec.lambda4j.function.primitives.to.ToCharFunction;
+import at.gridtec.lambda4j.function.primitives.to.ToFloatFunction;
+import at.gridtec.lambda4j.function.primitives.to.ToShortFunction;
+import at.gridtec.lambda4j.operators.unary.ByteUnaryOperator;
+
+import java.util.Objects;
+import java.util.function.*;
 
 /**
  * Represents a function that accepts a byte-valued argument and produces a result. This is the {@code byte}-consuming
@@ -31,10 +40,218 @@ import java.util.function.Function;
 public interface ByteFunction<R> {
 
     /**
+     * Creates a {@link ByteFunction} which always returns a given value.
+     *
+     * @param <R> The type of return value from the function
+     * @param r The return value for the constant
+     * @return A {@code ByteFunction} which always returns a given value.
+     */
+    static <R> ByteFunction<R> constant(R r) {
+        return value -> r;
+    }
+
+    /**
      * Applies this {@link ByteFunction} to the given argument.
      *
      * @param value The argument to the function
      * @return The return value from the function, which is its result.
      */
     R apply(byte value);
+
+    /**
+     * Returns a composed {@link ByteFunction} that first applies the {@code before} {@link ByteUnaryOperator} to its
+     * input, and then applies this operation to the result. If evaluation of either operation throws an exception, it
+     * is relayed to the caller of the composed function.
+     *
+     * @param before The {@code ByteUnaryOperator} to apply before this operation is applied
+     * @return A composed {@code ByteFunction} that first applies the {@code before} {@code ByteUnaryOperator} to its
+     * input, and then applies this operation to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @see #andThen(Function)
+     */
+    default ByteFunction<R> compose(final ByteUnaryOperator before) {
+        Objects.requireNonNull(before);
+        return value -> apply(before.applyAsByte(value));
+    }
+
+    /**
+     * Returns a composed {@link Function} that applies the given {@code before} {@link ToByteFunction} to its input,
+     * and then applies this operation to the result. If evaluation of either operation throws an exception, it is
+     * relayed to the caller of the composed function.
+     *
+     * @param <T> The type of the argument to the before operation
+     * @param before The before {@code ToByteFunction} to apply before this operation is applied
+     * @return A composed {@code Function} that applies the given {@code before} {@code ToByteFunction} to its input,
+     * and then applies this operation to the result.
+     * @throws NullPointerException If one of the given functions are {@code null}
+     * @see #andThen(Function)
+     */
+    default <T> Function<T, R> compose(final ToByteFunction<? super T> before) {
+        Objects.requireNonNull(before);
+        return value -> apply(before.applyAsByte(value));
+    }
+
+    /**
+     * Returns a composed {@link ByteFunction} that first applies this operation to its input, and then applies the
+     * {@code after} operation to the result. If evaluation of either operation throws an exception, it is relayed to
+     * the caller of the composed operation.
+     *
+     * @param <S> The type of output of the {@code after} function, and of the composed function
+     * @param after The {@code ByteFunction} to apply after this operation is applied
+     * @return A composed {@code ByteFunction} that first applies this operation, and then applies the {@code after}
+     * operation to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @see #compose(ByteUnaryOperator)
+     * @see #compose(ToByteFunction)
+     */
+    default <S> ByteFunction<S> andThen(final Function<? super R, ? extends S> after) {
+        Objects.requireNonNull(after);
+        return value -> after.apply(apply(value));
+    }
+
+    /**
+     * Returns a composed {@link ByteToBooleanFunction} that first applies this operation to its input, and then applies
+     * the {@code after} operation to the result. If evaluation of either operations throws an exception, it is relayed
+     * to the caller of the composed operation.
+     *
+     * @param after The {@code Predicate} to apply after this operation is applied
+     * @return A composed {@code ByteToBooleanFunction} that first applies this operation to its input, and then applies
+     * the {@code after} operation to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     */
+    default ByteToBooleanFunction toBoolean(final Predicate<? super R> after) {
+        Objects.requireNonNull(after);
+        return value -> after.test(apply(value));
+    }
+
+    /**
+     * Returns a composed {@link ByteUnaryOperator} that first applies this operation to its input, and then applies the
+     * {@code after} operation to the result. If evaluation of either operations throws an exception, it is relayed to
+     * the caller of the composed operation.
+     *
+     * @param after The {@code ToByteFunction} to apply after this operation is applied
+     * @return A composed {@code ByteUnaryOperator} that first applies this operation to its input, and then applies the
+     * {@code after} operation to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     */
+    default ByteUnaryOperator toByte(final ToByteFunction<? super R> after) {
+        Objects.requireNonNull(after);
+        return value -> after.applyAsByte(apply(value));
+    }
+
+    /**
+     * Returns a composed {@link ByteToCharFunction} that first applies this operation to its input, and then applies
+     * the {@code after} operation to the result. If evaluation of either operations throws an exception, it is relayed
+     * to the caller of the composed operation.
+     *
+     * @param after The {@code ToCharFunction} to apply after this operation is applied
+     * @return A composed {@code ByteToCharFunction} that first applies this operation to its input, and then applies
+     * the {@code after} operation to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     */
+    default ByteToCharFunction toChar(final ToCharFunction<? super R> after) {
+        Objects.requireNonNull(after);
+        return value -> after.applyAsChar(apply(value));
+    }
+
+    /**
+     * Returns a composed {@link ByteToDoubleFunction} that first applies this operation to its input, and then applies
+     * the {@code after} operation to the result. If evaluation of either operations throws an exception, it is relayed
+     * to the caller of the composed operation.
+     *
+     * @param after The {@code ToDoubleFunction} to apply after this operation is applied
+     * @return A composed {@code ByteToDoubleFunction} that first applies this operation to its input, and then applies
+     * the {@code after} operation to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     */
+    default ByteToDoubleFunction toDouble(final ToDoubleFunction<? super R> after) {
+        Objects.requireNonNull(after);
+        return value -> after.applyAsDouble(apply(value));
+    }
+
+    /**
+     * Returns a composed {@link ByteToFloatFunction} that first applies this operation to its input, and then applies
+     * the {@code after} operation to the result. If evaluation of either operations throws an exception, it is relayed
+     * to the caller of the composed operation.
+     *
+     * @param after The {@code ToFloatFunction} to apply after this operation is applied
+     * @return A composed {@code ByteToFloatFunction} that first applies this operation to its input, and then applies
+     * the {@code after} operation to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     */
+    default ByteToFloatFunction toFloat(final ToFloatFunction<? super R> after) {
+        Objects.requireNonNull(after);
+        return value -> after.applyAsFloat(apply(value));
+    }
+
+    /**
+     * Returns a composed {@link ByteToIntFunction} that first applies this operation to its input, and then applies the
+     * {@code after} operation to the result. If evaluation of either operations throws an exception, it is relayed to
+     * the caller of the composed operation.
+     *
+     * @param after The {@code ToIntFunction} to apply after this operation is applied
+     * @return A composed {@code ByteToIntFunction} that first applies this operation to its input, and then applies the
+     * {@code after} operation to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     */
+    default ByteToIntFunction toInt(final ToIntFunction<? super R> after) {
+        Objects.requireNonNull(after);
+        return value -> after.applyAsInt(apply(value));
+    }
+
+    /**
+     * Returns a composed {@link ByteToLongFunction} that first applies this operation to its input, and then applies
+     * the {@code after} operation to the result. If evaluation of either operations throws an exception, it is relayed
+     * to the caller of the composed operation.
+     *
+     * @param after The {@code ToLongFunction} to apply after this operation is applied
+     * @return A composed {@code ByteToLongFunction} that first applies this operation to its input, and then applies
+     * the {@code after} operation to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     */
+    default ByteToLongFunction toLong(final ToLongFunction<? super R> after) {
+        Objects.requireNonNull(after);
+        return value -> after.applyAsLong(apply(value));
+    }
+
+    /**
+     * Returns a composed {@link ByteToShortFunction} that first applies this operation to its input, and then applies
+     * the {@code after} operation to the result. If evaluation of either operations throws an exception, it is relayed
+     * to the caller of the composed operation.
+     *
+     * @param after The {@code ToShortFunction} to apply after this operation is applied
+     * @return A composed {@code ByteToShortFunction} that first applies this operation to its input, and then applies
+     * the {@code after} operation to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     */
+    default ByteToShortFunction toShort(final ToShortFunction<? super R> after) {
+        Objects.requireNonNull(after);
+        return value -> after.applyAsShort(apply(value));
+    }
+
+    /**
+     * Returns a composed {@link ByteConsumer} that fist applies this operation to its input, and then consumes the
+     * result using the given {@code Consumer}. If evaluation of either operator throws an exception, it is relayed to
+     * the caller of the composed operation.
+     *
+     * @param consumer The {@code Consumer} which consumes the result from this operation
+     * @return A composed {@code ByteFunction} that first applies this operation to its input, and then consumes the
+     * result using the given {@code Consumer}.
+     * @throws NullPointerException If given argument is {@code null}
+     */
+    default ByteConsumer consume(Consumer<? super R> consumer) {
+        Objects.requireNonNull(consumer);
+        return value -> consumer.accept(this.apply(value));
+    }
+
+    /**
+     * Returns a composed {@link Function} which represents this {@link ByteFunction}. Thereby the primitive input
+     * argument for this operation is autoboxed. This method is just convenience to provide the ability to use this
+     * {@code ByteFunction} with JRE specific methods, only accepting {@code Function}.
+     *
+     * @return A composed {@code Function} which represents this {@code ByteFunction}.
+     */
+    default Function<Byte, R> boxed() {
+        return this::apply;
+    }
 }

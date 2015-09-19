@@ -69,7 +69,7 @@ public interface BooleanConsumer {
      * @throws NullPointerException If one of the given functions are {@code null}
      * @see #andThen(BooleanConsumer)
      */
-    default <T> Consumer<T> compose(final Predicate<T> before) {
+    default <T> Consumer<T> compose(final Predicate<? super T> before) {
         Objects.requireNonNull(before);
         return value -> accept(before.test(value));
     }
