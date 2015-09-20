@@ -126,6 +126,7 @@ public interface ThrowableByteTriConsumer extends ByteTriConsumer {
      *
      * @param value1 The first argument for the operation to be consumed
      * @param value2 The second argument for the operation to be consumed
+     * @param value3 The third argument for the operation to be consumed
      * @throws Exception Any exception from this operations action
      */
     void acceptThrows(byte value1, byte value2, byte value3) throws Exception;
@@ -138,6 +139,7 @@ public interface ThrowableByteTriConsumer extends ByteTriConsumer {
      *
      * @param value1 The first argument for the operation to be consumed
      * @param value2 The second argument for the operation to be consumed
+     * @param value3 The third argument for the operation to be consumed
      * @see ThrowableUtils#sneakyThrow(Throwable)
      */
     @Override

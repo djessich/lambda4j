@@ -127,6 +127,7 @@ public interface ThrowableDoubleTriConsumer extends DoubleTriConsumer {
      *
      * @param value1 The first argument for the operation to be consumed
      * @param value2 The second argument for the operation to be consumed
+     * @param value3 The third argument for the operation to be consumed
      * @throws Exception Any exception from this operations action
      */
     void acceptThrows(double value1, double value2, double value3) throws Exception;

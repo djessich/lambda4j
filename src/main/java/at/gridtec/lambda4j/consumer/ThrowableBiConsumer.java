@@ -94,7 +94,7 @@ public interface ThrowableBiConsumer<T, U> extends BiConsumer<T, U> {
      * given {@code ThrowableConsumer}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static <T, U, V> ThrowableBiConsumer<T, U> onlyFirst(final ThrowableConsumer<? super T> consumer) {
+    static <T, U> ThrowableBiConsumer<T, U> onlyFirst(final ThrowableConsumer<? super T> consumer) {
         Objects.requireNonNull(consumer);
         return (t, u) -> consumer.accept(t);
     }

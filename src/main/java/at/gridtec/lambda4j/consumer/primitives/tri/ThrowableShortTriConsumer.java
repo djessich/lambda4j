@@ -127,6 +127,7 @@ public interface ThrowableShortTriConsumer extends ShortTriConsumer {
      *
      * @param value1 The first argument for the operation to be consumed
      * @param value2 The second argument for the operation to be consumed
+     * @param value3 The third argument for the operation to be consumed
      * @throws Exception Any exception from this operations action
      */
     void acceptThrows(short value1, short value2, short value3) throws Exception;
@@ -139,6 +140,7 @@ public interface ThrowableShortTriConsumer extends ShortTriConsumer {
      *
      * @param value1 The first argument for the operation to be consumed
      * @param value2 The second argument for the operation to be consumed
+     * @param value3 The third argument for the operation to be consumed
      * @see ThrowableUtils#sneakyThrow(Throwable)
      */
     @Override
