@@ -17,6 +17,7 @@ package at.gridtec.lambda4j.supplier;
 
 import at.gridtec.lambda4j.util.ThrowableUtils;
 
+import javax.annotation.Nonnull;
 import java.util.Objects;
 
 /**
@@ -60,7 +61,8 @@ public interface ThrowableByteSupplier extends ByteSupplier {
      * @return The given {@code ThrowableByteSupplier} as-is.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static ThrowableByteSupplier wrap(final ThrowableByteSupplier lambda) {
+    @Nonnull
+    static ThrowableByteSupplier wrap(@Nonnull final ThrowableByteSupplier lambda) {
         Objects.requireNonNull(lambda);
         return lambda;
     }
@@ -73,7 +75,8 @@ public interface ThrowableByteSupplier extends ByteSupplier {
      * @return A {@code ThrowableByteSupplier} from the given {@code ByteSupplier}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static ThrowableByteSupplier from(final ByteSupplier lambda) {
+    @Nonnull
+    static ThrowableByteSupplier from(@Nonnull final ByteSupplier lambda) {
         Objects.requireNonNull(lambda);
         return lambda::getAsByte;
     }
@@ -125,7 +128,7 @@ public interface ThrowableByteSupplier extends ByteSupplier {
      * occurred, applies the given one.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    default ThrowableByteSupplier orElse(final ThrowableByteSupplier other) {
+    default ThrowableByteSupplier orElse(@Nonnull final ThrowableByteSupplier other) {
         Objects.requireNonNull(other);
         return () -> {
             try {
@@ -150,7 +153,8 @@ public interface ThrowableByteSupplier extends ByteSupplier {
      * occurred, throws the given {@code Exception}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    default <X extends Exception> ThrowableByteSupplier orThrow(Class<X> clazz) {
+    @Nonnull
+    default <X extends Exception> ThrowableByteSupplier orThrow(@Nonnull Class<X> clazz) {
         Objects.requireNonNull(clazz);
         return () -> {
             try {
@@ -173,7 +177,8 @@ public interface ThrowableByteSupplier extends ByteSupplier {
      * occurred, applies the given {@code ByteSupplier}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    default ByteSupplier fallbackTo(final ByteSupplier fallback) {
+    @Nonnull
+    default ByteSupplier fallbackTo(@Nonnull final ByteSupplier fallback) {
         Objects.requireNonNull(fallback);
         return () -> {
             try {
@@ -192,6 +197,7 @@ public interface ThrowableByteSupplier extends ByteSupplier {
      * @return A composed {@code ByteSupplier} that applies this {@code ThrowableByteSupplier}, and if an error
      * occurred, returns the given value.
      */
+    @Nonnull
     default ByteSupplier orReturn(byte value) {
         return () -> {
             try {

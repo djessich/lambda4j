@@ -17,6 +17,7 @@ package at.gridtec.lambda4j.supplier;
 
 import at.gridtec.lambda4j.util.ThrowableUtils;
 
+import javax.annotation.Nonnull;
 import java.util.Objects;
 import java.util.function.BooleanSupplier;
 
@@ -62,7 +63,8 @@ public interface ThrowableBooleanSupplier extends BooleanSupplier {
      * @return The given {@code ThrowableBooleanSupplier} as-is.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static ThrowableBooleanSupplier wrap(final ThrowableBooleanSupplier lambda) {
+    @Nonnull
+    static ThrowableBooleanSupplier wrap(@Nonnull final ThrowableBooleanSupplier lambda) {
         Objects.requireNonNull(lambda);
         return lambda;
     }
@@ -76,7 +78,8 @@ public interface ThrowableBooleanSupplier extends BooleanSupplier {
      * @return A {@code ThrowableBooleanSupplier} from the given {@code BooleanSupplier}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static ThrowableBooleanSupplier from(final BooleanSupplier lambda) {
+    @Nonnull
+    static ThrowableBooleanSupplier from(@Nonnull final BooleanSupplier lambda) {
         Objects.requireNonNull(lambda);
         return lambda::getAsBoolean;
     }
@@ -128,7 +131,8 @@ public interface ThrowableBooleanSupplier extends BooleanSupplier {
      * error occurred, applies the given one.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    default ThrowableBooleanSupplier orElse(final ThrowableBooleanSupplier other) {
+    @Nonnull
+    default ThrowableBooleanSupplier orElse(@Nonnull final ThrowableBooleanSupplier other) {
         Objects.requireNonNull(other);
         return () -> {
             try {
@@ -153,7 +157,8 @@ public interface ThrowableBooleanSupplier extends BooleanSupplier {
      * error occurred, throws the given {@code Exception}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    default <X extends Exception> ThrowableBooleanSupplier orThrow(Class<X> clazz) {
+    @Nonnull
+    default <X extends Exception> ThrowableBooleanSupplier orThrow(@Nonnull Class<X> clazz) {
         Objects.requireNonNull(clazz);
         return () -> {
             try {
@@ -176,7 +181,8 @@ public interface ThrowableBooleanSupplier extends BooleanSupplier {
      * occurred, applies the given {@code BooleanSupplier}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    default BooleanSupplier fallbackTo(final BooleanSupplier fallback) {
+    @Nonnull
+    default BooleanSupplier fallbackTo(@Nonnull final BooleanSupplier fallback) {
         Objects.requireNonNull(fallback);
         return () -> {
             try {
@@ -196,6 +202,7 @@ public interface ThrowableBooleanSupplier extends BooleanSupplier {
      * @return A composed {@code BooleanSupplier} that applies this {@code ThrowableBooleanSupplier}, and if an error
      * occurred, returns the given value.
      */
+    @Nonnull
     default BooleanSupplier orReturn(boolean value) {
         return () -> {
             try {

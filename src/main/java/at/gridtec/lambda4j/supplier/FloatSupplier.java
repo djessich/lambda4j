@@ -15,6 +15,7 @@
  */
 package at.gridtec.lambda4j.supplier;
 
+import javax.annotation.Nonnull;
 import java.util.function.Supplier;
 
 /**
@@ -55,6 +56,7 @@ public interface FloatSupplier {
      *
      * @return A composed {@code Supplier} which represents this {@code FloatSupplier}.
      */
+    @Nonnull
     default Supplier<Float> boxed() {
         return this::getAsFloat;
     }

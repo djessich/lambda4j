@@ -15,6 +15,7 @@
  */
 package at.gridtec.lambda4j.supplier;
 
+import javax.annotation.Nonnull;
 import java.util.function.Supplier;
 
 /**
@@ -55,6 +56,7 @@ public interface ShortSupplier {
      *
      * @return A composed {@code Supplier} which represents this {@code ShortSupplier}.
      */
+    @Nonnull
     default Supplier<Short> boxed() {
         return this::getAsShort;
     }

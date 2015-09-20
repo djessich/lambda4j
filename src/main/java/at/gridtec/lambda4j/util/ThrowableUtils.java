@@ -15,6 +15,7 @@
  */
 package at.gridtec.lambda4j.util;
 
+import javax.annotation.Nonnull;
 import java.util.Objects;
 
 /**
@@ -55,7 +56,7 @@ public final class ThrowableUtils {
      * @return A dummy RuntimeException; this method never returns normally, it <em>always</em> throws an exception.
      * @throws NullPointerException If given argument was {@code null}
      */
-    public static RuntimeException sneakyThrow(Throwable t) {
+    public static RuntimeException sneakyThrow(@Nonnull Throwable t) {
         Objects.requireNonNull(t);
         ThrowableUtils.<RuntimeException>sneakyThrow0(t);
         return null;

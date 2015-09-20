@@ -17,6 +17,8 @@ package at.gridtec.lambda4j.supplier;
 
 import at.gridtec.lambda4j.util.ThrowableUtils;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.util.Objects;
 import java.util.function.Supplier;
 
@@ -62,7 +64,8 @@ public interface ThrowableSupplier<T> extends Supplier<T> {
      * @return The given {@code ThrowableSupplier} as-is.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static <T> ThrowableSupplier<T> wrap(final ThrowableSupplier<T> lambda) {
+    @Nonnull
+    static <T> ThrowableSupplier<T> wrap(@Nonnull final ThrowableSupplier<T> lambda) {
         Objects.requireNonNull(lambda);
         return lambda;
     }
@@ -76,7 +79,8 @@ public interface ThrowableSupplier<T> extends Supplier<T> {
      * @return A {@code ThrowableSupplier} from the given {@code Supplier}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static <T> ThrowableSupplier<T> from(final Supplier<T> lambda) {
+    @Nonnull
+    static <T> ThrowableSupplier<T> from(@Nonnull final Supplier<T> lambda) {
         Objects.requireNonNull(lambda);
         return lambda::get;
     }
@@ -88,7 +92,8 @@ public interface ThrowableSupplier<T> extends Supplier<T> {
      * @param t The return value for the constant
      * @return A {@code ThrowableSupplier} which always returns a given value.
      */
-    static <T> ThrowableSupplier<T> constant(T t) {
+    @Nullable
+    static <T> ThrowableSupplier<T> constant(@Nullable T t) {
         return () -> t;
     }
 
@@ -98,6 +103,7 @@ public interface ThrowableSupplier<T> extends Supplier<T> {
      * @return The supplied value.
      * @throws Exception Any exception from this Suppliers action
      */
+    @Nullable
     T getThrows() throws Exception;
 
     /**
@@ -108,6 +114,7 @@ public interface ThrowableSupplier<T> extends Supplier<T> {
      * @return The supplied value.
      * @see at.gridtec.lambda4j.util.ThrowableUtils#sneakyThrow(Throwable)
      */
+    @Nullable
     @Override
     default T get() {
         try {
@@ -128,7 +135,8 @@ public interface ThrowableSupplier<T> extends Supplier<T> {
      * occurred, applies the given one.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    default ThrowableSupplier<T> orElse(final ThrowableSupplier<? extends T> other) {
+    @Nonnull
+    default ThrowableSupplier<T> orElse(@Nonnull final ThrowableSupplier<? extends T> other) {
         Objects.requireNonNull(other);
         return () -> {
             try {
@@ -153,7 +161,8 @@ public interface ThrowableSupplier<T> extends Supplier<T> {
      * occurred, throws the given {@code Exception}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    default <X extends Exception> ThrowableSupplier<T> orThrow(Class<X> clazz) {
+    @Nonnull
+    default <X extends Exception> ThrowableSupplier<T> orThrow(@Nonnull Class<X> clazz) {
         Objects.requireNonNull(clazz);
         return () -> {
             try {
@@ -176,7 +185,8 @@ public interface ThrowableSupplier<T> extends Supplier<T> {
      * applies the given {@code Supplier}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    default Supplier<T> fallbackTo(final Supplier<? extends T> fallback) {
+    @Nonnull
+    default Supplier<T> fallbackTo(@Nonnull final Supplier<? extends T> fallback) {
         Objects.requireNonNull(fallback);
         return () -> {
             try {
@@ -196,6 +206,8 @@ public interface ThrowableSupplier<T> extends Supplier<T> {
      * returns the given value.
      * @throws NullPointerException If the given argument is {@code null}
      */
+    // TODO Allow giving null to be returned by resulting supplier
+    @Nonnull
     default Supplier<T> orReturn(final T value) {
         Objects.requireNonNull(value);
         return () -> {

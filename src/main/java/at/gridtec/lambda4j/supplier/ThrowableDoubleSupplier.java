@@ -17,6 +17,7 @@ package at.gridtec.lambda4j.supplier;
 
 import at.gridtec.lambda4j.util.ThrowableUtils;
 
+import javax.annotation.Nonnull;
 import java.util.Objects;
 import java.util.function.DoubleSupplier;
 
@@ -62,7 +63,8 @@ public interface ThrowableDoubleSupplier extends DoubleSupplier {
      * @return The given {@code ThrowableDoubleSupplier} as-is.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static ThrowableDoubleSupplier wrap(final ThrowableDoubleSupplier lambda) {
+    @Nonnull
+    static ThrowableDoubleSupplier wrap(@Nonnull final ThrowableDoubleSupplier lambda) {
         Objects.requireNonNull(lambda);
         return lambda;
     }
@@ -75,7 +77,8 @@ public interface ThrowableDoubleSupplier extends DoubleSupplier {
      * @return A {@code ThrowableDoubleSupplier} from the given {@code DoubleSupplier}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static ThrowableDoubleSupplier from(final DoubleSupplier lambda) {
+    @Nonnull
+    static ThrowableDoubleSupplier from(@Nonnull final DoubleSupplier lambda) {
         Objects.requireNonNull(lambda);
         return lambda::getAsDouble;
     }
@@ -127,7 +130,8 @@ public interface ThrowableDoubleSupplier extends DoubleSupplier {
      * error occurred, applies the given one.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    default ThrowableDoubleSupplier orElse(final ThrowableDoubleSupplier other) {
+    @Nonnull
+    default ThrowableDoubleSupplier orElse(@Nonnull final ThrowableDoubleSupplier other) {
         Objects.requireNonNull(other);
         return () -> {
             try {
@@ -152,7 +156,8 @@ public interface ThrowableDoubleSupplier extends DoubleSupplier {
      * error occurred, throws the given {@code Exception}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    default <X extends Exception> ThrowableDoubleSupplier orThrow(Class<X> clazz) {
+    @Nonnull
+    default <X extends Exception> ThrowableDoubleSupplier orThrow(@Nonnull Class<X> clazz) {
         Objects.requireNonNull(clazz);
         return () -> {
             try {
@@ -175,7 +180,8 @@ public interface ThrowableDoubleSupplier extends DoubleSupplier {
      * occurred, applies the given {@code DoubleSupplier}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    default DoubleSupplier fallbackTo(final DoubleSupplier fallback) {
+    @Nonnull
+    default DoubleSupplier fallbackTo(@Nonnull final DoubleSupplier fallback) {
         Objects.requireNonNull(fallback);
         return () -> {
             try {
@@ -194,6 +200,7 @@ public interface ThrowableDoubleSupplier extends DoubleSupplier {
      * @return A composed {@code DoubleSupplier} that applies this {@code ThrowableDoubleSupplier}, and if an error
      * occurred, returns the given value.
      */
+    @Nonnull
     default DoubleSupplier orReturn(double value) {
         return () -> {
             try {

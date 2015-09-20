@@ -17,6 +17,7 @@ package at.gridtec.lambda4j.supplier;
 
 import at.gridtec.lambda4j.util.ThrowableUtils;
 
+import javax.annotation.Nonnull;
 import java.util.Objects;
 import java.util.function.IntSupplier;
 
@@ -62,7 +63,8 @@ public interface ThrowableIntSupplier extends IntSupplier {
      * @return The given {@code ThrowableIntSupplier} as-is.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static ThrowableIntSupplier wrap(final ThrowableIntSupplier lambda) {
+    @Nonnull
+    static ThrowableIntSupplier wrap(@Nonnull final ThrowableIntSupplier lambda) {
         Objects.requireNonNull(lambda);
         return lambda;
     }
@@ -75,7 +77,8 @@ public interface ThrowableIntSupplier extends IntSupplier {
      * @return A {@code ThrowableIntSupplier} from the given {@code IntSupplier}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static ThrowableIntSupplier from(final IntSupplier lambda) {
+    @Nonnull
+    static ThrowableIntSupplier from(@Nonnull final IntSupplier lambda) {
         Objects.requireNonNull(lambda);
         return lambda::getAsInt;
     }
@@ -126,7 +129,8 @@ public interface ThrowableIntSupplier extends IntSupplier {
      * occurred, applies the given one.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    default ThrowableIntSupplier orElse(final ThrowableIntSupplier other) {
+    @Nonnull
+    default ThrowableIntSupplier orElse(@Nonnull final ThrowableIntSupplier other) {
         Objects.requireNonNull(other);
         return () -> {
             try {
@@ -151,7 +155,8 @@ public interface ThrowableIntSupplier extends IntSupplier {
      * occurred, throws the given {@code Exception}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    default <X extends Exception> ThrowableIntSupplier orThrow(Class<X> clazz) {
+    @Nonnull
+    default <X extends Exception> ThrowableIntSupplier orThrow(@Nonnull Class<X> clazz) {
         Objects.requireNonNull(clazz);
         return () -> {
             try {
@@ -174,7 +179,8 @@ public interface ThrowableIntSupplier extends IntSupplier {
      * applies the given {@code IntSupplier}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    default IntSupplier fallbackTo(final IntSupplier fallback) {
+    @Nonnull
+    default IntSupplier fallbackTo(@Nonnull final IntSupplier fallback) {
         Objects.requireNonNull(fallback);
         return () -> {
             try {
@@ -193,6 +199,7 @@ public interface ThrowableIntSupplier extends IntSupplier {
      * @return A composed {@code IntSupplier} that applies this {@code ThrowableIntSupplier}, and if an error occurred,
      * returns the given value.
      */
+    @Nonnull
     default IntSupplier orReturn(int value) {
         return () -> {
             try {

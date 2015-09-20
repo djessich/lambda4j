@@ -17,6 +17,7 @@ package at.gridtec.lambda4j.supplier;
 
 import at.gridtec.lambda4j.util.ThrowableUtils;
 
+import javax.annotation.Nonnull;
 import java.util.Objects;
 
 /**
@@ -60,7 +61,8 @@ public interface ThrowableFloatSupplier extends FloatSupplier {
      * @return The given {@code ThrowableFloatSupplier} as-is.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static ThrowableFloatSupplier wrap(final ThrowableFloatSupplier lambda) {
+    @Nonnull
+    static ThrowableFloatSupplier wrap(@Nonnull final ThrowableFloatSupplier lambda) {
         Objects.requireNonNull(lambda);
         return lambda;
     }
@@ -73,7 +75,8 @@ public interface ThrowableFloatSupplier extends FloatSupplier {
      * @return A {@code ThrowableFloatSupplier} from the given {@code FloatSupplier}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static ThrowableFloatSupplier from(final FloatSupplier lambda) {
+    @Nonnull
+    static ThrowableFloatSupplier from(@Nonnull final FloatSupplier lambda) {
         Objects.requireNonNull(lambda);
         return lambda::getAsFloat;
     }
@@ -125,7 +128,8 @@ public interface ThrowableFloatSupplier extends FloatSupplier {
      * error occurred, applies the given one.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    default ThrowableFloatSupplier orElse(final ThrowableFloatSupplier other) {
+    @Nonnull
+    default ThrowableFloatSupplier orElse(@Nonnull final ThrowableFloatSupplier other) {
         Objects.requireNonNull(other);
         return () -> {
             try {
@@ -150,7 +154,8 @@ public interface ThrowableFloatSupplier extends FloatSupplier {
      * error occurred, throws the given {@code Exception}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    default <X extends Exception> ThrowableFloatSupplier orThrow(Class<X> clazz) {
+    @Nonnull
+    default <X extends Exception> ThrowableFloatSupplier orThrow(@Nonnull Class<X> clazz) {
         Objects.requireNonNull(clazz);
         return () -> {
             try {
@@ -173,7 +178,8 @@ public interface ThrowableFloatSupplier extends FloatSupplier {
      * occurred, applies the given {@code FloatSupplier}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    default FloatSupplier fallbackTo(final FloatSupplier fallback) {
+    @Nonnull
+    default FloatSupplier fallbackTo(@Nonnull final FloatSupplier fallback) {
         Objects.requireNonNull(fallback);
         return () -> {
             try {
@@ -192,6 +198,7 @@ public interface ThrowableFloatSupplier extends FloatSupplier {
      * @return A composed {@code FloatSupplier} that applies this {@code ThrowableFloatSupplier}, and if an error
      * occurred, returns the given value.
      */
+    @Nonnull
     default FloatSupplier orReturn(float value) {
         return () -> {
             try {

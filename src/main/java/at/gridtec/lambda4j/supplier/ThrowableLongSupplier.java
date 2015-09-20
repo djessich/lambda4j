@@ -17,6 +17,7 @@ package at.gridtec.lambda4j.supplier;
 
 import at.gridtec.lambda4j.util.ThrowableUtils;
 
+import javax.annotation.Nonnull;
 import java.util.Objects;
 import java.util.function.LongSupplier;
 
@@ -62,7 +63,8 @@ public interface ThrowableLongSupplier extends LongSupplier {
      * @return The given {@code ThrowableLongSupplier} as-is.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static ThrowableLongSupplier wrap(final ThrowableLongSupplier lambda) {
+    @Nonnull
+    static ThrowableLongSupplier wrap(@Nonnull final ThrowableLongSupplier lambda) {
         Objects.requireNonNull(lambda);
         return lambda;
     }
@@ -75,7 +77,8 @@ public interface ThrowableLongSupplier extends LongSupplier {
      * @return A {@code ThrowableLongSupplier} from the given {@code LongSupplier}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static ThrowableLongSupplier from(final LongSupplier lambda) {
+    @Nonnull
+    static ThrowableLongSupplier from(@Nonnull final LongSupplier lambda) {
         Objects.requireNonNull(lambda);
         return lambda::getAsLong;
     }
@@ -127,7 +130,8 @@ public interface ThrowableLongSupplier extends LongSupplier {
      * occurred, applies the given one.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    default ThrowableLongSupplier orElse(final ThrowableLongSupplier other) {
+    @Nonnull
+    default ThrowableLongSupplier orElse(@Nonnull final ThrowableLongSupplier other) {
         Objects.requireNonNull(other);
         return () -> {
             try {
@@ -152,7 +156,8 @@ public interface ThrowableLongSupplier extends LongSupplier {
      * occurred, throws the given {@code Exception}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    default <X extends Exception> ThrowableLongSupplier orThrow(Class<X> clazz) {
+    @Nonnull
+    default <X extends Exception> ThrowableLongSupplier orThrow(@Nonnull Class<X> clazz) {
         Objects.requireNonNull(clazz);
         return () -> {
             try {
@@ -175,7 +180,8 @@ public interface ThrowableLongSupplier extends LongSupplier {
      * occurred, applies the given {@code LongSupplier}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    default LongSupplier fallbackTo(final LongSupplier fallback) {
+    @Nonnull
+    default LongSupplier fallbackTo(@Nonnull final LongSupplier fallback) {
         Objects.requireNonNull(fallback);
         return () -> {
             try {
@@ -194,6 +200,7 @@ public interface ThrowableLongSupplier extends LongSupplier {
      * @return A composed {@code LongSupplier} that applies this {@code ThrowableLongSupplier}, and if an error
      * occurred, returns the given value.
      */
+    @Nonnull
     default LongSupplier orReturn(long value) {
         return () -> {
             try {

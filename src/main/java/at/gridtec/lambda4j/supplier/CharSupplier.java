@@ -16,6 +16,7 @@
 
 package at.gridtec.lambda4j.supplier;
 
+import javax.annotation.Nonnull;
 import java.util.function.Supplier;
 
 /**
@@ -56,6 +57,7 @@ public interface CharSupplier {
      *
      * @return A composed {@code Supplier} which represents this {@code ShortSupplier}.
      */
+    @Nonnull
     default Supplier<Character> boxed() {
         return this::getAsChar;
     }

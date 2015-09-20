@@ -17,6 +17,7 @@ package at.gridtec.lambda4j.supplier;
 
 import at.gridtec.lambda4j.util.ThrowableUtils;
 
+import javax.annotation.Nonnull;
 import java.util.Objects;
 
 /**
@@ -60,7 +61,8 @@ public interface ThrowableShortSupplier extends ShortSupplier {
      * @return The given {@code ThrowableShortSupplier} as-is.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static ThrowableShortSupplier wrap(final ThrowableShortSupplier lambda) {
+    @Nonnull
+    static ThrowableShortSupplier wrap(@Nonnull final ThrowableShortSupplier lambda) {
         Objects.requireNonNull(lambda);
         return lambda;
     }
@@ -73,7 +75,8 @@ public interface ThrowableShortSupplier extends ShortSupplier {
      * @return A {@code ThrowableShortSupplier} from the given {@code ShortSupplier}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static ThrowableShortSupplier from(final ShortSupplier lambda) {
+    @Nonnull
+    static ThrowableShortSupplier from(@Nonnull final ShortSupplier lambda) {
         Objects.requireNonNull(lambda);
         return lambda::getAsShort;
     }
@@ -125,7 +128,8 @@ public interface ThrowableShortSupplier extends ShortSupplier {
      * error occurred, applies the given one.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    default ThrowableShortSupplier orElse(final ThrowableShortSupplier other) {
+    @Nonnull
+    default ThrowableShortSupplier orElse(@Nonnull final ThrowableShortSupplier other) {
         Objects.requireNonNull(other);
         return () -> {
             try {
@@ -150,7 +154,8 @@ public interface ThrowableShortSupplier extends ShortSupplier {
      * error occurred, throws the given {@code Exception}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    default <X extends Exception> ThrowableShortSupplier orThrow(Class<X> clazz) {
+    @Nonnull
+    default <X extends Exception> ThrowableShortSupplier orThrow(@Nonnull Class<X> clazz) {
         Objects.requireNonNull(clazz);
         return () -> {
             try {
@@ -173,7 +178,8 @@ public interface ThrowableShortSupplier extends ShortSupplier {
      * occurred, applies the given {@code ShortSupplier}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    default ShortSupplier fallbackTo(final ShortSupplier fallback) {
+    @Nonnull
+    default ShortSupplier fallbackTo(@Nonnull final ShortSupplier fallback) {
         Objects.requireNonNull(fallback);
         return () -> {
             try {
@@ -192,6 +198,7 @@ public interface ThrowableShortSupplier extends ShortSupplier {
      * @return A composed {@code ShortSupplier} that applies this {@code ThrowableShortSupplier}, and if an error
      * occurred, returns the given value.
      */
+    @Nonnull
     default ShortSupplier orReturn(short value) {
         return () -> {
             try {

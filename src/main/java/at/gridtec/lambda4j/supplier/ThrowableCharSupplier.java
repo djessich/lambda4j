@@ -17,6 +17,7 @@ package at.gridtec.lambda4j.supplier;
 
 import at.gridtec.lambda4j.util.ThrowableUtils;
 
+import javax.annotation.Nonnull;
 import java.util.Objects;
 
 /**
@@ -60,7 +61,8 @@ public interface ThrowableCharSupplier extends CharSupplier {
      * @return The given {@code ThrowableCharSupplier} as-is.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static ThrowableCharSupplier wrap(final ThrowableCharSupplier lambda) {
+    @Nonnull
+    static ThrowableCharSupplier wrap(@Nonnull final ThrowableCharSupplier lambda) {
         Objects.requireNonNull(lambda);
         return lambda;
     }
@@ -73,7 +75,8 @@ public interface ThrowableCharSupplier extends CharSupplier {
      * @return A {@code ThrowableCharSupplier} from the given {@code CharSupplier}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static ThrowableCharSupplier from(final CharSupplier lambda) {
+    @Nonnull
+    static ThrowableCharSupplier from(@Nonnull final CharSupplier lambda) {
         Objects.requireNonNull(lambda);
         return lambda::getAsChar;
     }
@@ -125,7 +128,8 @@ public interface ThrowableCharSupplier extends CharSupplier {
      * occurred, applies the given one.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    default ThrowableCharSupplier orElse(final ThrowableCharSupplier other) {
+    @Nonnull
+    default ThrowableCharSupplier orElse(@Nonnull final ThrowableCharSupplier other) {
         Objects.requireNonNull(other);
         return () -> {
             try {
@@ -150,7 +154,8 @@ public interface ThrowableCharSupplier extends CharSupplier {
      * occurred, throws the given {@code Exception}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    default <X extends Exception> ThrowableCharSupplier orThrow(Class<X> clazz) {
+    @Nonnull
+    default <X extends Exception> ThrowableCharSupplier orThrow(@Nonnull Class<X> clazz) {
         Objects.requireNonNull(clazz);
         return () -> {
             try {
@@ -173,7 +178,8 @@ public interface ThrowableCharSupplier extends CharSupplier {
      * occurred, applies the given {@code CharSupplier}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    default CharSupplier fallbackTo(final CharSupplier fallback) {
+    @Nonnull
+    default CharSupplier fallbackTo(@Nonnull final CharSupplier fallback) {
         Objects.requireNonNull(fallback);
         return () -> {
             try {
@@ -192,6 +198,7 @@ public interface ThrowableCharSupplier extends CharSupplier {
      * @return A composed {@code CharSupplier} that applies this {@code ThrowableCharSupplier}, and if an error
      * occurred, returns the given value.
      */
+    @Nonnull
     default CharSupplier orReturn(char value) {
         return () -> {
             try {

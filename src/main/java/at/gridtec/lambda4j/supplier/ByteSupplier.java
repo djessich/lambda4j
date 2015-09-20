@@ -15,6 +15,7 @@
  */
 package at.gridtec.lambda4j.supplier;
 
+import javax.annotation.Nonnull;
 import java.util.function.Supplier;
 
 /**
@@ -56,6 +57,7 @@ public interface ByteSupplier {
      *
      * @return A composed {@code Supplier} which represents this {@code ByteSupplier}.
      */
+    @Nonnull
     default Supplier<Byte> boxed() {
         return this::getAsByte;
     }
