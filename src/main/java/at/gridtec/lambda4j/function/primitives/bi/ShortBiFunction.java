@@ -95,7 +95,7 @@ public interface ShortBiFunction<R> {
      *
      * @param before1 The first {@code ShortUnaryOperator} to apply before this operation is applied
      * @param before2 The second {@code ShortUnaryOperator} to apply before this operation is applied
-     * @return A composed {@code ShortBiFunction} that first applies the {@code before} {@code ShortBiUnaryOperator}s to
+     * @return A composed {@code ShortBiFunction} that first applies the {@code before} {@code ShortUnaryOperator}s to
      * its input, and then applies this operation to the result.
      * @throws NullPointerException If given argument is {@code null}
      * @see #andThen(Function)
@@ -112,7 +112,7 @@ public interface ShortBiFunction<R> {
      * is relayed to the caller of the composed function.
      *
      * @param <T> The type of the argument to the first before operation
-     * @param <V> The type of the argument to the second before operation
+     * @param <U> The type of the argument to the second before operation
      * @param before1 The first before {@code ToShortFunction} to apply before this operation is applied
      * @param before2 The second before {@code ToShortFunction} to apply before this operation is applied
      * @return A composed {@code BiFunction} that applies the given {@code before} {@code ToShortFunction}s to its
@@ -120,8 +120,8 @@ public interface ShortBiFunction<R> {
      * @throws NullPointerException If one of the given functions are {@code null}
      * @see #andThen(Function)
      */
-    default <T, V> BiFunction<T, V, R> compose(final ToShortFunction<? super T> before1,
-            final ToShortFunction<? super V> before2) {
+    default <T, U> BiFunction<T, U, R> compose(final ToShortFunction<? super T> before1,
+            final ToShortFunction<? super U> before2) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         return (value1, value2) -> apply(before1.applyAsShort(value1), before2.applyAsShort(value2));

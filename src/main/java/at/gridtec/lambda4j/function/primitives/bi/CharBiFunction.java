@@ -95,8 +95,8 @@ public interface CharBiFunction<R> {
      *
      * @param before1 The first {@code CharUnaryOperator} to apply before this operation is applied
      * @param before2 The second {@code CharUnaryOperator} to apply before this operation is applied
-     * @return A composed {@code CharBiFunction} that first applies the {@code before} {@code CharBiUnaryOperator}s to
-     * its input, and then applies this operation to the result.
+     * @return A composed {@code CharBiFunction} that first applies the {@code before} {@code CharUnaryOperator}s to its
+     * input, and then applies this operation to the result.
      * @throws NullPointerException If given argument is {@code null}
      * @see #andThen(Function)
      */
@@ -112,7 +112,7 @@ public interface CharBiFunction<R> {
      * relayed to the caller of the composed function.
      *
      * @param <T> The type of the argument to the first before operation
-     * @param <V> The type of the argument to the second before operation
+     * @param <U> The type of the argument to the second before operation
      * @param before1 The first before {@code ToCharFunction} to apply before this operation is applied
      * @param before2 The second before {@code ToCharFunction} to apply before this operation is applied
      * @return A composed {@code BiFunction} that applies the given {@code before} {@code ToCharFunction}s to its input,
@@ -120,8 +120,8 @@ public interface CharBiFunction<R> {
      * @throws NullPointerException If one of the given functions are {@code null}
      * @see #andThen(Function)
      */
-    default <T, V> BiFunction<T, V, R> compose(final ToCharFunction<? super T> before1,
-            final ToCharFunction<? super V> before2) {
+    default <T, U> BiFunction<T, U, R> compose(final ToCharFunction<? super T> before1,
+            final ToCharFunction<? super U> before2) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         return (value1, value2) -> apply(before1.applyAsChar(value1), before2.applyAsChar(value2));

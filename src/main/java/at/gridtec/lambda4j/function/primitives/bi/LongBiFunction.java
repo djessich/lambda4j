@@ -90,8 +90,8 @@ public interface LongBiFunction<R> {
      *
      * @param before1 The first {@code LongUnaryOperator} to apply before this operation is applied
      * @param before2 The second {@code LongUnaryOperator} to apply before this operation is applied
-     * @return A composed {@code LongBiFunction} that first applies the {@code before} {@code LongBiUnaryOperator}s to
-     * its input, and then applies this operation to the result.
+     * @return A composed {@code LongBiFunction} that first applies the {@code before} {@code LongUnaryOperator}s to its
+     * input, and then applies this operation to the result.
      * @throws NullPointerException If given argument is {@code null}
      * @see #andThen(Function)
      */

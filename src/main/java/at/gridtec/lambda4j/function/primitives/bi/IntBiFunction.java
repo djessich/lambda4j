@@ -90,7 +90,7 @@ public interface IntBiFunction<R> {
      *
      * @param before1 The first {@code IntUnaryOperator} to apply before this operation is applied
      * @param before2 The second {@code IntUnaryOperator} to apply before this operation is applied
-     * @return A composed {@code IntBiFunction} that first applies the {@code before} {@code IntBiUnaryOperator}s to its
+     * @return A composed {@code IntBiFunction} that first applies the {@code before} {@code IntUnaryOperator}s to its
      * input, and then applies this operation to the result.
      * @throws NullPointerException If given argument is {@code null}
      * @see #andThen(Function)
@@ -107,7 +107,7 @@ public interface IntBiFunction<R> {
      * relayed to the caller of the composed function.
      *
      * @param <T> The type of the argument to the first before operation
-     * @param <V> The type of the argument to the second before operation
+     * @param <U> The type of the argument to the second before operation
      * @param before1 The first before {@code ToIntFunction} to apply before this operation is applied
      * @param before2 The second before {@code ToIntFunction} to apply before this operation is applied
      * @return A composed {@code BiFunction} that applies the given {@code before} {@code ToIntFunction}s to its input,
@@ -115,8 +115,8 @@ public interface IntBiFunction<R> {
      * @throws NullPointerException If one of the given functions are {@code null}
      * @see #andThen(Function)
      */
-    default <T, V> BiFunction<T, V, R> compose(final ToIntFunction<? super T> before1,
-            final ToIntFunction<? super V> before2) {
+    default <T, U> BiFunction<T, U, R> compose(final ToIntFunction<? super T> before1,
+            final ToIntFunction<? super U> before2) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         return (value1, value2) -> apply(before1.applyAsInt(value1), before2.applyAsInt(value2));

@@ -15,7 +15,15 @@
  */
 package at.gridtec.lambda4j.function.primitives.tri;
 
+import at.gridtec.lambda4j.consumer.primitives.tri.ShortTriConsumer;
 import at.gridtec.lambda4j.function.TriFunction;
+import at.gridtec.lambda4j.function.primitives.ShortFunction;
+import at.gridtec.lambda4j.function.primitives.to.ToShortFunction;
+import at.gridtec.lambda4j.operators.unary.ShortUnaryOperator;
+
+import java.util.Objects;
+import java.util.function.Consumer;
+import java.util.function.Function;
 
 /**
  * Represents a function that accepts three short-valued argument and produces a result. This is the {@code
@@ -31,6 +39,62 @@ import at.gridtec.lambda4j.function.TriFunction;
 public interface ShortTriFunction<R> {
 
     /**
+     * Creates a {@link ShortTriFunction} which always returns a given value.
+     *
+     * @param <R> The type of return value from the function
+     * @param r The return value for the constant
+     * @return A {@code ShortTriFunction} which always returns a given value.
+     */
+    static <R> ShortTriFunction<R> constant(R r) {
+        return (value1, value2, value3) -> r;
+    }
+
+    /**
+     * Creates a {@link ShortTriFunction} which uses the first parameter of this one as argument for the given {@link
+     * ShortFunction}.
+     *
+     * @param <R> The return value from the operation
+     * @param function The function which accepts the {@code first} parameter of this one
+     * @return Creates a {@code ShortTriFunction} which uses the first parameter of this one as argument for the given
+     * {@code ShortFunction}.
+     * @throws NullPointerException If the given argument is {@code null}
+     */
+    static <R> ShortTriFunction<R> onlyFirst(final ShortFunction<R> function) {
+        Objects.requireNonNull(function);
+        return (value1, value2, value3) -> function.apply(value1);
+    }
+
+    /**
+     * Creates a {@link ShortTriFunction} which uses the second parameter of this one as argument for the given {@link
+     * ShortFunction}.
+     *
+     * @param <R> The return value from the operation
+     * @param function The function which accepts the {@code second} parameter of this one
+     * @return Creates a {@code ShortTriFunction} which uses the second parameter of this one as argument for the given
+     * {@code ShortFunction}.
+     * @throws NullPointerException If the given argument is {@code null}
+     */
+    static <R> ShortTriFunction<R> onlySecond(final ShortFunction<R> function) {
+        Objects.requireNonNull(function);
+        return (value1, value2, value3) -> function.apply(value2);
+    }
+
+    /**
+     * Creates a {@link ShortTriFunction} which uses the third parameter of this one as argument for the given {@link
+     * ShortFunction}.
+     *
+     * @param <R> The return value from the operation
+     * @param function The function which accepts the {@code third} parameter of this one
+     * @return Creates a {@code ShortTriFunction} which uses the third parameter of this one as argument for the given
+     * {@code ShortFunction}.
+     * @throws NullPointerException If the given argument is {@code null}
+     */
+    static <R> ShortTriFunction<R> onlyThird(final ShortFunction<R> function) {
+        Objects.requireNonNull(function);
+        return (value1, value2, value3) -> function.apply(value2);
+    }
+
+    /**
      * Applies this {@link ShortTriFunction} to the given argument.
      *
      * @param value1 The first argument to the function
@@ -39,4 +103,92 @@ public interface ShortTriFunction<R> {
      * @return The return value from the function, which is its result.
      */
     R apply(short value1, short value2, short value3);
+
+    /**
+     * Returns a composed {@link ShortTriFunction} that first applies the {@code before} {@link ShortUnaryOperator}s to
+     * its input, and then applies this operation to the result. If evaluation of either operation throws an exception,
+     * it is relayed to the caller of the composed function.
+     *
+     * @param before1 The first {@code ShortUnaryOperator} to apply before this operation is applied
+     * @param before2 The second {@code ShortUnaryOperator} to apply before this operation is applied
+     * @param before3 The third {@code ShortUnaryOperator} to apply before this operation is applied
+     * @return A composed {@code ShortTriFunction} that first applies the {@code before} {@code ShortUnaryOperator}s to
+     * its input, and then applies this operation to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @see #andThen(Function)
+     */
+    default ShortTriFunction<R> compose(final ShortUnaryOperator before1, final ShortUnaryOperator before2,
+            final ShortUnaryOperator before3) {
+        Objects.requireNonNull(before1);
+        Objects.requireNonNull(before2);
+        return (value1, value2, value3) -> apply(before1.applyAsShort(value1), before2.applyAsShort(value2),
+                                                 before3.applyAsShort(value3));
+    }
+
+    /**
+     * Returns a composed {@link TriFunction} that applies the given {@code before} {@link ToShortFunction}s to its
+     * input, and then applies this operation to the result. If evaluation of either operation throws an exception, it
+     * is relayed to the caller of the composed function.
+     *
+     * @param <T> The type of the argument to the first before operation
+     * @param <U> The type of the argument to the second before operation
+     * @param <V> The type of the argument to the third before operation
+     * @param before1 The first before {@code ToShortFunction} to apply before this operation is applied
+     * @param before2 The second before {@code ToShortFunction} to apply before this operation is applied
+     * @param before3 The third before {@code ToShortFunction} to apply before this operation is applied
+     * @return A composed {@code TriFunction} that applies the given {@code before} {@code ToShortFunction}s to its
+     * input, and then applies this operation to the result.
+     * @throws NullPointerException If one of the given functions are {@code null}
+     * @see #andThen(Function)
+     */
+    default <T, U, V> TriFunction<T, U, V, R> compose(final ToShortFunction<? super T> before1,
+            final ToShortFunction<? super U> before2, final ToShortFunction<? super V> before3) {
+        Objects.requireNonNull(before1);
+        Objects.requireNonNull(before2);
+        return (value1, value2, value3) -> apply(before1.applyAsShort(value1), before2.applyAsShort(value2),
+                                                 before3.applyAsShort(value3));
+    }
+
+    /**
+     * Returns a composed {@link ShortTriFunction} that first applies this operation to its input, and then applies the
+     * {@code after} operation to the result. If evaluation of either operation throws an exception, it is relayed to
+     * the caller of the composed operation.
+     *
+     * @param <S> The type of output of the {@code after} function, and of the composed function
+     * @param after The {@code ShortTriFunction} to apply after this operation is applied
+     * @return A composed {@code ShortTriFunction} that first applies this operation, and then applies the {@code after}
+     * operation to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @see #compose(ShortUnaryOperator, ShortUnaryOperator, ShortUnaryOperator)
+     * @see #compose(ToShortFunction, ToShortFunction, ToShortFunction)
+     */
+    default <S> ShortTriFunction<S> andThen(final Function<? super R, ? extends S> after) {
+        Objects.requireNonNull(after);
+        return (value1, value2, value3) -> after.apply(apply(value1, value2, value3));
+    }
+
+    /**
+     * Returns a composed {@link ShortTriConsumer} that fist applies this operation to its input, and then consumes the
+     * result using the given {@code Consumer}. If evaluation of either operator throws an exception, it is relayed to
+     * the caller of the composed operation.
+     *
+     * @param consumer The {@code Consumer} which consumes the result from this operation
+     * @return A composed {@code ShortTriConsumer} that first applies this operation to its input, and then consumes the
+     * result using the given {@code Consumer}.
+     * @throws NullPointerException If given argument is {@code null}
+     */
+    default ShortTriConsumer consume(Consumer<? super R> consumer) {
+        Objects.requireNonNull(consumer);
+        return (value1, value2, value3) -> consumer.accept(this.apply(value1, value2, value3));
+    }
+
+    /**
+     * Returns a composed {@link TriFunction} which represents this {@link ShortTriFunction}. Thereby the primitive
+     * input argument for this operation is autoboxed.
+     *
+     * @return A composed {@code TriFunction} which represents this {@code ShortTriFunction}.
+     */
+    default TriFunction<Short, Short, Short, R> boxed() {
+        return this::apply;
+    }
 }
