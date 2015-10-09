@@ -5,6 +5,7 @@ saves/
 logs/
 log/
 *.log
+TODO.txt
 
 ### Java template
 *.class
