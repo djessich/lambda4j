@@ -13,16 +13,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package at.gridtec.lambda4j.function.primitives.to;
+package at.gridtec.lambda4j.function.primitives.to.bi;
 
 import at.gridtec.lambda4j.util.ThrowableUtils;
 
 import java.util.Objects;
-import java.util.function.LongSupplier;
-import java.util.function.ToLongBiFunction;
+import java.util.function.DoubleSupplier;
+import java.util.function.ToDoubleBiFunction;
 
 /**
- * This functional interface implements a {@link ToLongBiFunction} which is able to throw any {@link Exception}.
+ * This functional interface implements a {@link ToDoubleBiFunction} which is able to throw any {@link Exception}.
  * <p>
  * The thrown {@link Exception} is sneakily thrown unless its a {@link RuntimeException}. This means that there is no
  * need to catch the thrown exception, nor to declare that you throw it using the <em>throws</em> keyword. The exception
@@ -44,7 +44,7 @@ import java.util.function.ToLongBiFunction;
  * declaration in the <em>throws</em> clause. The checked exception will behave just like a normal <b>unchecked</b>
  * exception due to sneaky throwing.
  * <p>
- * This is a {@link FunctionalInterface} whose functional method is {@link #applyAsLongThrows(Object, Object)}.
+ * This is a {@link FunctionalInterface} whose functional method is {@link #applyAsDoubleThrows(Object, Object)}.
  *
  * @param <T> The type of the first argument to the function
  * @param <U> The type of the second argument to the function
@@ -53,66 +53,66 @@ import java.util.function.ToLongBiFunction;
  */
 @SuppressWarnings("unused")
 @FunctionalInterface
-public interface ThrowableToLongBiFunction<T, U> extends ToLongBiFunction<T, U> {
+public interface ThrowableToDoubleBiFunction<T, U> extends ToDoubleBiFunction<T, U> {
 
     /**
-     * Implicitly casts, and therefore wraps a given lambda as {@link ThrowableToLongBiFunction}. This is a convenience
-     * method in case the given {@link ThrowableToLongBiFunction} is ambiguous for the compiler. This might happen for
-     * overloaded methods accepting different functional interfaces. The given {@code ThrowableToLongBiFunction} is
-     * returned as-is.
+     * Implicitly casts, and therefore wraps a given lambda as {@link ThrowableToDoubleBiFunction}. This is a
+     * convenience method in case the given {@link ThrowableToDoubleBiFunction} is ambiguous for the compiler. This
+     * might happen for overloaded methods accepting different functional interfaces. The given {@code
+     * ThrowableToDoubleBiFunction} is returned as-is.
      *
      * @param <T> The type of the first argument to the function
      * @param <U> The type of the second argument to the function
-     * @param lambda The {@code ThrowableToLongBiFunction} which should be returned as-is.
-     * @return The given {@code ThrowableToLongBiFunction} as-is.
+     * @param lambda The {@code ThrowableToDoubleBiFunction} which should be returned as-is.
+     * @return The given {@code ThrowableToDoubleBiFunction} as-is.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static <T, U> ThrowableToLongBiFunction<T, U> wrap(final ThrowableToLongBiFunction<T, U> lambda) {
+    static <T, U> ThrowableToDoubleBiFunction<T, U> wrap(final ThrowableToDoubleBiFunction<T, U> lambda) {
         Objects.requireNonNull(lambda);
         return lambda;
     }
 
     /**
-     * Creates a {@link ThrowableToLongBiFunction} from the given {@link ToLongBiFunction}. This method is just
+     * Creates a {@link ThrowableToDoubleBiFunction} from the given {@link ToDoubleBiFunction}. This method is just
      * convenience to provide a mapping for the non-throwable/throwable instances of the corresponding functional
      * interface.
      *
      * @param <T> The type of the first argument to the function
      * @param <U> The type of the second argument to the function
-     * @param lambda A {@code ToLongBiFunction} which should be mapped to its throwable counterpart
-     * @return A {@code ThrowableToLongBiFunction} from the given {@code ToLongBiFunction}.
+     * @param lambda A {@code ToDoubleBiFunction} which should be mapped to its throwable counterpart
+     * @return A {@code ThrowableToDoubleBiFunction} from the given {@code ToDoubleBiFunction}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static <T, U> ThrowableToLongBiFunction<T, U> from(final ToLongBiFunction<T, U> lambda) {
+    static <T, U> ThrowableToDoubleBiFunction<T, U> from(final ToDoubleBiFunction<T, U> lambda) {
         Objects.requireNonNull(lambda);
-        return lambda::applyAsLong;
+        return lambda::applyAsDouble;
     }
 
     /**
-     * Creates a {@link ThrowableToLongBiFunction} which always returns a given value.
+     * Creates a {@link ThrowableToDoubleBiFunction} which always returns a given value.
      *
      * @param <T> The type of the first argument to the function
      * @param <U> The type of the second argument to the function
      * @param ret The return value for the constant
-     * @return A {@code ThrowableToLongBiFunction} which always returns a given value.
+     * @return A {@code ThrowableToDoubleBiFunction} which always returns a given value.
      */
-    static <T, U> ThrowableToLongBiFunction<T, U> constant(long ret) {
+    static <T, U> ThrowableToDoubleBiFunction<T, U> constant(double ret) {
         return (t, u) -> ret;
     }
 
     /**
-     * The apply method for this {@link ToLongBiFunction} which is able to throw any {@link Exception} type.
+     * The apply method for this {@link ToDoubleBiFunction} which is able to throw any {@link Exception} type.
      *
      * @param t The first argument to the function
      * @param u The second argument to the function
      * @return The return value from the function, which is its result.
      * @throws Exception Any exception from this functions action
      */
-    long applyAsLongThrows(T t, U u) throws Exception;
+    double applyAsDoubleThrows(T t, U u) throws Exception;
 
     /**
-     * Overrides the {@link ToLongBiFunction#applyAsLong(Object, Object)} method by using a redefinition as default
-     * method. It calls the {@link #applyAsLongThrows(Object, Object)} method of this interface and catches the thrown
+     * Overrides the {@link ToDoubleBiFunction#applyAsDouble(Object, Object)} method by using a redefinition as default
+     * method. It calls the {@link #applyAsDoubleThrows(Object, Object)} method of this interface and catches the thrown
      * {@link Exception}s from it. If it is of type {@link RuntimeException}, the exception is rethrown. Other exception
      * types are sneakily thrown.
      *
@@ -122,9 +122,9 @@ public interface ThrowableToLongBiFunction<T, U> extends ToLongBiFunction<T, U> 
      * @see at.gridtec.lambda4j.util.ThrowableUtils#sneakyThrow(Throwable)
      */
     @Override
-    default long applyAsLong(T t, U u) {
+    default double applyAsDouble(T t, U u) {
         try {
-            return applyAsLongThrows(t, u);
+            return applyAsDoubleThrows(t, u);
         } catch (RuntimeException e) {
             throw e;
         } catch (Exception e) {
@@ -133,45 +133,45 @@ public interface ThrowableToLongBiFunction<T, U> extends ToLongBiFunction<T, U> 
     }
 
     /**
-     * Returns a composed {@link ThrowableToLongBiFunction} that applies this {@code ThrowableToLongBiFunction} to its
-     * input, and if an error occurred, applies the given one. The exception from this {@code ThrowableToLongBiFunction}
-     * is ignored.
+     * Returns a composed {@link ThrowableToDoubleBiFunction} that applies this {@code ThrowableToDoubleBiFunction} to
+     * its input, and if an error occurred, applies the given one. The exception from this {@code
+     * ThrowableToDoubleBiFunction} is ignored.
      *
-     * @param other A {@code ThrowableToLongBiFunction} to be applied if this one fails
-     * @return A composed {@code ThrowableToLongBiFunction} that applies this {@code ThrowableToLongBiFunction}, and if
-     * an error occurred, applies the given one.
+     * @param other A {@code ThrowableToDoubleBiFunction} to be applied if this one fails
+     * @return A composed {@code ThrowableToDoubleBiFunction} that applies this {@code ThrowableToDoubleBiFunction}, and
+     * if an error occurred, applies the given one.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    default ThrowableToLongBiFunction<T, U> orElse(final ThrowableToLongBiFunction<? super T, ? super U> other) {
+    default ThrowableToDoubleBiFunction<T, U> orElse(final ThrowableToDoubleBiFunction<? super T, ? super U> other) {
         Objects.requireNonNull(other);
         return (t, u) -> {
             try {
-                return applyAsLongThrows(t, u);
+                return applyAsDoubleThrows(t, u);
             } catch (Exception ignored) {
-                return other.applyAsLongThrows(t, u);
+                return other.applyAsDoubleThrows(t, u);
             }
         };
     }
 
     /**
-     * Returns a composed {@link ThrowableToLongBiFunction} that applies this {@code ThrowableToLongBiFunction} to its
-     * input, and if an error occurred, throws the given {@link Exception}. The exception from this {@code
-     * ThrowableToLongBiFunction} is added as suppressed to the given one.
+     * Returns a composed {@link ThrowableToDoubleBiFunction} that applies this {@code ThrowableToDoubleBiFunction} to
+     * its input, and if an error occurred, throws the given {@link Exception}. The exception from this {@code
+     * ThrowableToDoubleBiFunction} is added as suppressed to the given one.
      * <p>
      * The given exception must have a no arg constructor for reflection purposes. If not, then appropriate exception as
      * described in {@link Class#newInstance()} is thrown.
      *
      * @param <X> The type for the class extending {@code Exception}
      * @param clazz The exception class to throw if an error occurred
-     * @return A composed {@code ThrowableToLongBiFunction} that applies this {@code ThrowableToLongBiFunction}, and if
-     * an error occurred, throws the given {@code Exception}.
+     * @return A composed {@code ThrowableToDoubleBiFunction} that applies this {@code ThrowableToDoubleBiFunction}, and
+     * if an error occurred, throws the given {@code Exception}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    default <X extends Exception> ThrowableToLongBiFunction<T, U> orThrow(Class<X> clazz) {
+    default <X extends Exception> ThrowableToDoubleBiFunction<T, U> orThrow(Class<X> clazz) {
         Objects.requireNonNull(clazz);
         return (t, u) -> {
             try {
-                return applyAsLongThrows(t, u);
+                return applyAsDouble(t, u);
             } catch (Exception e) {
                 X ex = clazz.newInstance();
                 ex.addSuppressed(e);
@@ -181,39 +181,39 @@ public interface ThrowableToLongBiFunction<T, U> extends ToLongBiFunction<T, U> 
     }
 
     /**
-     * Returns a composed {@link ToLongBiFunction} that applies this {@link ThrowableToLongBiFunction} to its input, and
-     * if an error occurred, applies the given {@code ToLongBiFunction} representing a fallback. The exception from this
-     * {@code ThrowableToLongBiFunction} is ignored.
+     * Returns a composed {@link ToDoubleBiFunction} that applies this {@link ThrowableToDoubleBiFunction} to its input,
+     * and if an error occurred, applies the given {@code ToDoubleBiFunction} representing a fallback. The exception
+     * from this {@code ThrowableToDoubleBiFunction} is ignored.
      *
-     * @param fallback A {@code ToLongBiFunction} to be applied if this one fails
-     * @return A composed {@code ToLongBiFunction} that applies this {@code ThrowableToLongBiFunction}, and if an error
-     * occurred, applies the given {@code ToLongBiFunction}.
+     * @param fallback A {@code ToDoubleBiFunction} to be applied if this one fails
+     * @return A composed {@code ToDoubleBiFunction} that applies this {@code ThrowableToDoubleBiFunction}, and if an
+     * error occurred, applies the given {@code ToDoubleBiFunction}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    default ToLongBiFunction<T, U> fallbackTo(final ToLongBiFunction<? super T, ? super U> fallback) {
+    default ToDoubleBiFunction<T, U> fallbackTo(final ToDoubleBiFunction<? super T, ? super U> fallback) {
         Objects.requireNonNull(fallback);
         return (t, u) -> {
             try {
-                return applyAsLongThrows(t, u);
+                return applyAsDoubleThrows(t, u);
             } catch (Exception ignored) {
-                return fallback.applyAsLong(t, u);
+                return fallback.applyAsDouble(t, u);
             }
         };
     }
 
     /**
-     * Returns a composed {@link ToLongBiFunction} that applies this {@link ThrowableToLongBiFunction} to its input, and
-     * if an error occurred, returns the given value. The exception from this {@code ThrowableToLongBiFunction} is
+     * Returns a composed {@link ToDoubleBiFunction} that applies this {@link ThrowableToDoubleBiFunction} to its input,
+     * and if an error occurred, returns the given value. The exception from this {@code ThrowableToDoubleBiFunction} is
      * ignored.
      *
-     * @param value The value to be returned if this {@code ThrowableToLongBiFunction} fails
-     * @return A composed {@code ToLongBiFunction} that applies this {@code ThrowableToLongBiFunction}, and if an error
-     * occurred, returns the given value.
+     * @param value The value to be returned if this {@code ThrowableToDoubleBiFunction} fails
+     * @return A composed {@code ToDoubleBiFunction} that applies this {@code ThrowableToDoubleBiFunction}, and if an
+     * error occurred, returns the given value.
      */
-    default ToLongBiFunction<T, U> orReturn(long value) {
+    default ToDoubleBiFunction<T, U> orReturn(double value) {
         return (t, u) -> {
             try {
-                return applyAsLongThrows(t, u);
+                return applyAsDoubleThrows(t, u);
             } catch (Exception ignored) {
                 return value;
             }
@@ -221,22 +221,22 @@ public interface ThrowableToLongBiFunction<T, U> extends ToLongBiFunction<T, U> 
     }
 
     /**
-     * Returns a composed {@link ToLongBiFunction} that applies this {@link ThrowableToLongBiFunction} to its input, and
-     * if an error occurred, returns the supplied value from the given {@link LongSupplier}. The exception from this
-     * {@code ThrowableToLongBiFunction} is ignored.
+     * Returns a composed {@link ToDoubleBiFunction} that applies this {@link ThrowableToDoubleBiFunction} to its input,
+     * and if an error occurred, returns the supplied value from the given {@link DoubleSupplier}. The exception from
+     * this {@code ThrowableToDoubleBiFunction} is ignored.
      *
-     * @param supplier A {@code Supplier} to return a supplied value if this {@code ThrowableToLongBiFunction} fails
-     * @return A composed {@code ToLongBiFunction} that applies this {@code ThrowableToLongBiFunction}, and if an error
-     * occurred, the supplied value from the given {@code LongSupplier}.
+     * @param supplier A {@code Supplier} to return a supplied value if this {@code ThrowableToDoubleBiFunction} fails
+     * @return A composed {@code ToDoubleBiFunction} that applies this {@code ThrowableToDoubleBiFunction}, and if an
+     * error occurred, the supplied value from the given {@code DoubleSupplier}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    default ToLongBiFunction<T, U> orReturn(final LongSupplier supplier) {
+    default ToDoubleBiFunction<T, U> orReturn(final DoubleSupplier supplier) {
         Objects.requireNonNull(supplier);
         return (t, u) -> {
             try {
-                return applyAsLongThrows(t, u);
+                return applyAsDoubleThrows(t, u);
             } catch (Exception ignored) {
-                return supplier.getAsLong();
+                return supplier.getAsDouble();
             }
         };
     }

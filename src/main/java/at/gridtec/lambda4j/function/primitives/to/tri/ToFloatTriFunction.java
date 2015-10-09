@@ -13,15 +13,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package at.gridtec.lambda4j.function.primitives.to;
+package at.gridtec.lambda4j.function.primitives.to.tri;
 
 import at.gridtec.lambda4j.function.TriFunction;
 
 /**
- * Represents a function that produces a short-valued result from three arguments. This is the {@code short}-producing
+ * Represents a function that produces a float-valued result from three arguments. This is the {@code float}-producing
  * primitive specialization for {@link TriFunction}.
  * <p>
- * This is a {@link FunctionalInterface} whose functional method is {@link #applyAsShort(Object, Object, Object)}.
+ * This is a {@link FunctionalInterface} whose functional method is {@link #applyAsFloat(Object, Object, Object)}.
  *
  * @param <T> The type of the first argument to the function
  * @param <U> The type of the second argument to the function
@@ -30,15 +30,15 @@ import at.gridtec.lambda4j.function.TriFunction;
  */
 @SuppressWarnings("unused")
 @FunctionalInterface
-public interface ToShortTriFunction<T, U, V> {
+public interface ToFloatTriFunction<T, U, V> {
 
     /**
-     * Applies this {@link ToShortTriFunction} to the given arguments.
+     * Applies this {@link ToFloatTriFunction} to the given arguments.
      *
      * @param t The first argument to the function
      * @param u The second argument to the function
      * @param v The third argument to the function
      * @return The return value from the function, which is its result.
      */
-    short applyAsShort(T t, U u, V v);
+    float applyAsFloat(T t, U u, V v);
 }

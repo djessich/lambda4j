@@ -13,15 +13,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package at.gridtec.lambda4j.function.primitives.to;
+package at.gridtec.lambda4j.function.primitives.to.bi;
 
 import java.util.function.BiFunction;
 
 /**
- * Represents a function that produces a short-valued result from two arguments. This is the {@code short}-producing
+ * Represents a function that produces a char-valued result from two arguments. This is the {@code char}-producing
  * primitive specialization for {@link BiFunction}.
  * <p>
- * This is a {@link FunctionalInterface} whose functional method is {@link #applyAsShort(Object, Object)}.
+ * This is a {@link FunctionalInterface} whose functional method is {@link #applyAsChar(Object, Object)}.
  *
  * @param <T> The type of the first argument to the function
  * @param <U> The type of the second argument to the function
@@ -29,14 +29,14 @@ import java.util.function.BiFunction;
  */
 @SuppressWarnings("unused")
 @FunctionalInterface
-public interface ToShortBiFunction<T, U> {
+public interface ToCharBiFunction<T, U> {
 
     /**
-     * Applies this {@link ToShortBiFunction} to the given arguments.
+     * Applies this {@link ToCharBiFunction} to the given arguments.
      *
      * @param t The first argument to the function
      * @param u The second argument to the function
      * @return The return value from the function, which is its result.
      */
-    short applyAsShort(T t, U u);
+    char applyAsChar(T t, U u);
 }
