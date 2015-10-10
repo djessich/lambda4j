@@ -17,6 +17,7 @@ package at.gridtec.lambda4j.function.primitives.tri;
 
 import at.gridtec.lambda4j.consumer.primitives.tri.IntTriConsumer;
 import at.gridtec.lambda4j.function.TriFunction;
+import at.gridtec.lambda4j.operators.ternary.IntTernaryOperator;
 
 import java.util.Objects;
 import java.util.function.*;
@@ -55,7 +56,7 @@ public interface IntTriFunction<R> {
      * {@code IntFunction}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static <R> IntTriFunction<R> onlyFirst(final IntFunction<R> function) {
+    static <R> IntTriFunction<R> onlyFirst(final IntFunction<? extends R> function) {
         Objects.requireNonNull(function);
         return (value1, value2, value3) -> function.apply(value1);
     }
@@ -70,7 +71,7 @@ public interface IntTriFunction<R> {
      * {@code IntFunction}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static <R> IntTriFunction<R> onlySecond(final IntFunction<R> function) {
+    static <R> IntTriFunction<R> onlySecond(final IntFunction<? extends R> function) {
         Objects.requireNonNull(function);
         return (value1, value2, value3) -> function.apply(value2);
     }
@@ -85,7 +86,7 @@ public interface IntTriFunction<R> {
      * {@code IntFunction}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static <R> IntTriFunction<R> onlyThird(final IntFunction<R> function) {
+    static <R> IntTriFunction<R> onlyThird(final IntFunction<? extends R> function) {
         Objects.requireNonNull(function);
         return (value1, value2, value3) -> function.apply(value2);
     }
@@ -143,6 +144,23 @@ public interface IntTriFunction<R> {
         Objects.requireNonNull(before2);
         return (value1, value2, value3) -> apply(before1.applyAsInt(value1), before2.applyAsInt(value2),
                                                  before3.applyAsInt(value3));
+    }
+
+    /**
+     * Returns a composed {@link IntTernaryOperator} that first applies this operation to its input, and then applies
+     * the {@code after} operation to the result. If evaluation of either operation throws an exception, it is relayed
+     * to the caller of the composed operation.
+     *
+     * @param after The {@code ToIntFunction} to apply after this operation is applied
+     * @return A composed {@code IntTernaryOperator} that first applies this operation, and then applies the {@code
+     * after} operation to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @see #compose(IntUnaryOperator, IntUnaryOperator, IntUnaryOperator)
+     * @see #compose(ToIntFunction, ToIntFunction, ToIntFunction)
+     */
+    default IntTernaryOperator andThen(final ToIntFunction<? super R> after) {
+        Objects.requireNonNull(after);
+        return (value1, value2, value3) -> after.applyAsInt(apply(value1, value2, value3));
     }
 
     /**

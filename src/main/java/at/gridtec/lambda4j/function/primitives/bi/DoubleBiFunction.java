@@ -54,7 +54,7 @@ public interface DoubleBiFunction<R> {
      * {@code DoubleFunction}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static <R> DoubleBiFunction<R> onlyFirst(final DoubleFunction<R> function) {
+    static <R> DoubleBiFunction<R> onlyFirst(final DoubleFunction<? extends R> function) {
         Objects.requireNonNull(function);
         return (value1, value2) -> function.apply(value1);
     }
@@ -69,7 +69,7 @@ public interface DoubleBiFunction<R> {
      * {@code DoubleFunction}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static <R> DoubleBiFunction<R> onlySecond(final DoubleFunction<R> function) {
+    static <R> DoubleBiFunction<R> onlySecond(final DoubleFunction<? extends R> function) {
         Objects.requireNonNull(function);
         return (value1, value2) -> function.apply(value2);
     }
@@ -120,6 +120,23 @@ public interface DoubleBiFunction<R> {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         return (value1, value2) -> apply(before1.applyAsDouble(value1), before2.applyAsDouble(value2));
+    }
+
+    /**
+     * Returns a composed {@link DoubleBinaryOperator} that first applies this operation to its input, and then applies
+     * the {@code after} operation to the result. If evaluation of either operation throws an exception, it is relayed
+     * to the caller of the composed operation.
+     *
+     * @param after The {@code ToDoubleFunction} to apply after this operation is applied
+     * @return A composed {@code DoubleBinaryOperator} that first applies this operation, and then applies the {@code
+     * after} operation to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @see #compose(DoubleUnaryOperator, DoubleUnaryOperator)
+     * @see #compose(ToDoubleFunction, ToDoubleFunction)
+     */
+    default DoubleBinaryOperator andThen(final ToDoubleFunction<? super R> after) {
+        Objects.requireNonNull(after);
+        return (value1, value2) -> after.applyAsDouble(apply(value1, value2));
     }
 
     /**

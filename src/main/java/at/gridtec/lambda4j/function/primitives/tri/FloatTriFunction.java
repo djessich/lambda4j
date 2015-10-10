@@ -19,6 +19,7 @@ import at.gridtec.lambda4j.consumer.primitives.tri.FloatTriConsumer;
 import at.gridtec.lambda4j.function.TriFunction;
 import at.gridtec.lambda4j.function.primitives.FloatFunction;
 import at.gridtec.lambda4j.function.primitives.to.ToFloatFunction;
+import at.gridtec.lambda4j.operators.ternary.FloatTernaryOperator;
 import at.gridtec.lambda4j.operators.unary.FloatUnaryOperator;
 
 import java.util.Objects;
@@ -59,7 +60,7 @@ public interface FloatTriFunction<R> {
      * {@code FloatFunction}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static <R> FloatTriFunction<R> onlyFirst(final FloatFunction<R> function) {
+    static <R> FloatTriFunction<R> onlyFirst(final FloatFunction<? extends R> function) {
         Objects.requireNonNull(function);
         return (value1, value2, value3) -> function.apply(value1);
     }
@@ -74,7 +75,7 @@ public interface FloatTriFunction<R> {
      * {@code FloatFunction}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static <R> FloatTriFunction<R> onlySecond(final FloatFunction<R> function) {
+    static <R> FloatTriFunction<R> onlySecond(final FloatFunction<? extends R> function) {
         Objects.requireNonNull(function);
         return (value1, value2, value3) -> function.apply(value2);
     }
@@ -89,7 +90,7 @@ public interface FloatTriFunction<R> {
      * {@code FloatFunction}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static <R> FloatTriFunction<R> onlyThird(final FloatFunction<R> function) {
+    static <R> FloatTriFunction<R> onlyThird(final FloatFunction<? extends R> function) {
         Objects.requireNonNull(function);
         return (value1, value2, value3) -> function.apply(value2);
     }
@@ -147,6 +148,23 @@ public interface FloatTriFunction<R> {
         Objects.requireNonNull(before2);
         return (value1, value2, value3) -> apply(before1.applyAsFloat(value1), before2.applyAsFloat(value2),
                                                  before3.applyAsFloat(value3));
+    }
+
+    /**
+     * Returns a composed {@link FloatTernaryOperator} that first applies this operation to its input, and then applies
+     * the {@code after} operation to the result. If evaluation of either operation throws an exception, it is relayed
+     * to the caller of the composed operation.
+     *
+     * @param after The {@code ToFloatFunction} to apply after this operation is applied
+     * @return A composed {@code FloatTernaryOperator} that first applies this operation, and then applies the {@code
+     * after} operation to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @see #compose(FloatUnaryOperator, FloatUnaryOperator, FloatUnaryOperator)
+     * @see #compose(ToFloatFunction, ToFloatFunction, ToFloatFunction)
+     */
+    default FloatTernaryOperator andThen(final ToFloatFunction<? super R> after) {
+        Objects.requireNonNull(after);
+        return (value1, value2, value3) -> after.applyAsFloat(apply(value1, value2, value3));
     }
 
     /**

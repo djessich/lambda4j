@@ -54,7 +54,7 @@ public interface LongBiFunction<R> {
      * {@code LongFunction}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static <R> LongBiFunction<R> onlyFirst(final LongFunction<R> function) {
+    static <R> LongBiFunction<R> onlyFirst(final LongFunction<? extends R> function) {
         Objects.requireNonNull(function);
         return (value1, value2) -> function.apply(value1);
     }
@@ -69,7 +69,7 @@ public interface LongBiFunction<R> {
      * {@code LongFunction}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static <R> LongBiFunction<R> onlySecond(final LongFunction<R> function) {
+    static <R> LongBiFunction<R> onlySecond(final LongFunction<? extends R> function) {
         Objects.requireNonNull(function);
         return (value1, value2) -> function.apply(value2);
     }
@@ -138,6 +138,23 @@ public interface LongBiFunction<R> {
     default <S> LongBiFunction<S> andThen(final Function<? super R, ? extends S> after) {
         Objects.requireNonNull(after);
         return (value1, value2) -> after.apply(apply(value1, value2));
+    }
+
+    /**
+     * Returns a composed {@link LongBinaryOperator} that first applies this operation to its input, and then applies
+     * the {@code after} operation to the result. If evaluation of either operation throws an exception, it is relayed
+     * to the caller of the composed operation.
+     *
+     * @param after The {@code ToLongFunction} to apply after this operation is applied
+     * @return A composed {@code LongBinaryOperator} that first applies this operation, and then applies the {@code
+     * after} operation to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @see #compose(LongUnaryOperator, LongUnaryOperator)
+     * @see #compose(ToLongFunction, ToLongFunction)
+     */
+    default LongBinaryOperator andThen(final ToLongFunction<? super R> after) {
+        Objects.requireNonNull(after);
+        return (value1, value2) -> after.applyAsLong(apply(value1, value2));
     }
 
     /**

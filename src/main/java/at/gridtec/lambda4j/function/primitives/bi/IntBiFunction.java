@@ -54,7 +54,7 @@ public interface IntBiFunction<R> {
      * {@code IntFunction}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static <R> IntBiFunction<R> onlyFirst(final IntFunction<R> function) {
+    static <R> IntBiFunction<R> onlyFirst(final IntFunction<? extends R> function) {
         Objects.requireNonNull(function);
         return (value1, value2) -> function.apply(value1);
     }
@@ -69,7 +69,7 @@ public interface IntBiFunction<R> {
      * {@code IntFunction}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static <R> IntBiFunction<R> onlySecond(final IntFunction<R> function) {
+    static <R> IntBiFunction<R> onlySecond(final IntFunction<? extends R> function) {
         Objects.requireNonNull(function);
         return (value1, value2) -> function.apply(value2);
     }
@@ -120,6 +120,23 @@ public interface IntBiFunction<R> {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         return (value1, value2) -> apply(before1.applyAsInt(value1), before2.applyAsInt(value2));
+    }
+
+    /**
+     * Returns a composed {@link IntBinaryOperator} that first applies this operation to its input, and then applies the
+     * {@code after} operation to the result. If evaluation of either operation throws an exception, it is relayed to
+     * the caller of the composed operation.
+     *
+     * @param after The {@code ToIntFunction} to apply after this operation is applied
+     * @return A composed {@code IntBinaryOperator} that first applies this operation, and then applies the {@code
+     * after} operation to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @see #compose(IntUnaryOperator, IntUnaryOperator)
+     * @see #compose(ToIntFunction, ToIntFunction)
+     */
+    default IntBinaryOperator andThen(final ToIntFunction<? super R> after) {
+        Objects.requireNonNull(after);
+        return (value1, value2) -> after.applyAsInt(apply(value1, value2));
     }
 
     /**

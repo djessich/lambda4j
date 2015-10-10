@@ -17,6 +17,7 @@ package at.gridtec.lambda4j.function.primitives.tri;
 
 import at.gridtec.lambda4j.consumer.primitives.tri.LongTriConsumer;
 import at.gridtec.lambda4j.function.TriFunction;
+import at.gridtec.lambda4j.operators.ternary.LongTernaryOperator;
 
 import java.util.Objects;
 import java.util.function.*;
@@ -55,7 +56,7 @@ public interface LongTriFunction<R> {
      * {@code LongFunction}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static <R> LongTriFunction<R> onlyFirst(final LongFunction<R> function) {
+    static <R> LongTriFunction<R> onlyFirst(final LongFunction<? extends R> function) {
         Objects.requireNonNull(function);
         return (value1, value2, value3) -> function.apply(value1);
     }
@@ -70,7 +71,7 @@ public interface LongTriFunction<R> {
      * {@code LongFunction}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static <R> LongTriFunction<R> onlySecond(final LongFunction<R> function) {
+    static <R> LongTriFunction<R> onlySecond(final LongFunction<? extends R> function) {
         Objects.requireNonNull(function);
         return (value1, value2, value3) -> function.apply(value2);
     }
@@ -85,7 +86,7 @@ public interface LongTriFunction<R> {
      * {@code LongFunction}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static <R> LongTriFunction<R> onlyThird(final LongFunction<R> function) {
+    static <R> LongTriFunction<R> onlyThird(final LongFunction<? extends R> function) {
         Objects.requireNonNull(function);
         return (value1, value2, value3) -> function.apply(value2);
     }
@@ -143,6 +144,23 @@ public interface LongTriFunction<R> {
         Objects.requireNonNull(before2);
         return (value1, value2, value3) -> apply(before1.applyAsLong(value1), before2.applyAsLong(value2),
                                                  before3.applyAsLong(value3));
+    }
+
+    /**
+     * Returns a composed {@link LongTernaryOperator} that first applies this operation to its input, and then applies
+     * the {@code after} operation to the result. If evaluation of either operation throws an exception, it is relayed
+     * to the caller of the composed operation.
+     *
+     * @param after The {@code ToLongFunction} to apply after this operation is applied
+     * @return A composed {@code LongTernaryOperator} that first applies this operation, and then applies the {@code
+     * after} operation to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @see #compose(LongUnaryOperator, LongUnaryOperator, LongUnaryOperator)
+     * @see #compose(ToLongFunction, ToLongFunction, ToLongFunction)
+     */
+    default LongTernaryOperator andThen(final ToLongFunction<? super R> after) {
+        Objects.requireNonNull(after);
+        return (value1, value2, value3) -> after.applyAsLong(apply(value1, value2, value3));
     }
 
     /**

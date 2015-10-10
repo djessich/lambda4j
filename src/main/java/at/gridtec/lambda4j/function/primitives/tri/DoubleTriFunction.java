@@ -17,6 +17,7 @@ package at.gridtec.lambda4j.function.primitives.tri;
 
 import at.gridtec.lambda4j.consumer.primitives.tri.DoubleTriConsumer;
 import at.gridtec.lambda4j.function.TriFunction;
+import at.gridtec.lambda4j.operators.ternary.DoubleTernaryOperator;
 
 import java.util.Objects;
 import java.util.function.*;
@@ -55,7 +56,7 @@ public interface DoubleTriFunction<R> {
      * {@code DoubleFunction}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static <R> DoubleTriFunction<R> onlyFirst(final DoubleFunction<R> function) {
+    static <R> DoubleTriFunction<R> onlyFirst(final DoubleFunction<? extends R> function) {
         Objects.requireNonNull(function);
         return (value1, value2, value3) -> function.apply(value1);
     }
@@ -70,7 +71,7 @@ public interface DoubleTriFunction<R> {
      * {@code DoubleFunction}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static <R> DoubleTriFunction<R> onlySecond(final DoubleFunction<R> function) {
+    static <R> DoubleTriFunction<R> onlySecond(final DoubleFunction<? extends R> function) {
         Objects.requireNonNull(function);
         return (value1, value2, value3) -> function.apply(value2);
     }
@@ -85,7 +86,7 @@ public interface DoubleTriFunction<R> {
      * {@code DoubleFunction}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static <R> DoubleTriFunction<R> onlyThird(final DoubleFunction<R> function) {
+    static <R> DoubleTriFunction<R> onlyThird(final DoubleFunction<? extends R> function) {
         Objects.requireNonNull(function);
         return (value1, value2, value3) -> function.apply(value2);
     }
@@ -143,6 +144,23 @@ public interface DoubleTriFunction<R> {
         Objects.requireNonNull(before2);
         return (value1, value2, value3) -> apply(before1.applyAsDouble(value1), before2.applyAsDouble(value2),
                                                  before3.applyAsDouble(value3));
+    }
+
+    /**
+     * Returns a composed {@link DoubleTernaryOperator} that first applies this operation to its input, and then applies
+     * the {@code after} operation to the result. If evaluation of either operation throws an exception, it is relayed
+     * to the caller of the composed operation.
+     *
+     * @param after The {@code ToDoubleFunction} to apply after this operation is applied
+     * @return A composed {@code DoubleTernaryOperator} that first applies this operation, and then applies the {@code
+     * after} operation to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @see #compose(DoubleUnaryOperator, DoubleUnaryOperator, DoubleUnaryOperator)
+     * @see #compose(ToDoubleFunction, ToDoubleFunction, ToDoubleFunction)
+     */
+    default DoubleTernaryOperator andThen(final ToDoubleFunction<? super R> after) {
+        Objects.requireNonNull(after);
+        return (value1, value2, value3) -> after.applyAsDouble(apply(value1, value2, value3));
     }
 
     /**

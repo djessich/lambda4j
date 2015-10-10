@@ -19,6 +19,7 @@ import at.gridtec.lambda4j.consumer.primitives.tri.ByteTriConsumer;
 import at.gridtec.lambda4j.function.TriFunction;
 import at.gridtec.lambda4j.function.primitives.ByteFunction;
 import at.gridtec.lambda4j.function.primitives.to.ToByteFunction;
+import at.gridtec.lambda4j.operators.ternary.ByteTernaryOperator;
 import at.gridtec.lambda4j.operators.unary.ByteUnaryOperator;
 
 import java.util.Objects;
@@ -59,7 +60,7 @@ public interface ByteTriFunction<R> {
      * {@code ByteFunction}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static <R> ByteTriFunction<R> onlyFirst(final ByteFunction<R> function) {
+    static <R> ByteTriFunction<R> onlyFirst(final ByteFunction<? extends R> function) {
         Objects.requireNonNull(function);
         return (value1, value2, value3) -> function.apply(value1);
     }
@@ -74,7 +75,7 @@ public interface ByteTriFunction<R> {
      * {@code ByteFunction}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static <R> ByteTriFunction<R> onlySecond(final ByteFunction<R> function) {
+    static <R> ByteTriFunction<R> onlySecond(final ByteFunction<? extends R> function) {
         Objects.requireNonNull(function);
         return (value1, value2, value3) -> function.apply(value2);
     }
@@ -89,7 +90,7 @@ public interface ByteTriFunction<R> {
      * {@code ByteFunction}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static <R> ByteTriFunction<R> onlyThird(final ByteFunction<R> function) {
+    static <R> ByteTriFunction<R> onlyThird(final ByteFunction<? extends R> function) {
         Objects.requireNonNull(function);
         return (value1, value2, value3) -> function.apply(value2);
     }
@@ -147,6 +148,23 @@ public interface ByteTriFunction<R> {
         Objects.requireNonNull(before2);
         return (value1, value2, value3) -> apply(before1.applyAsByte(value1), before2.applyAsByte(value2),
                                                  before3.applyAsByte(value3));
+    }
+
+    /**
+     * Returns a composed {@link ByteTernaryOperator} that first applies this operation to its input, and then applies
+     * the {@code after} operation to the result. If evaluation of either operation throws an exception, it is relayed
+     * to the caller of the composed operation.
+     *
+     * @param after The {@code ToByteFunction} to apply after this operation is applied
+     * @return A composed {@code ByteTernaryOperator} that first applies this operation, and then applies the {@code
+     * after} operation to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @see #compose(ByteUnaryOperator, ByteUnaryOperator, ByteUnaryOperator)
+     * @see #compose(ToByteFunction, ToByteFunction, ToByteFunction)
+     */
+    default ByteTernaryOperator andThen(final ToByteFunction<? super R> after) {
+        Objects.requireNonNull(after);
+        return (value1, value2, value3) -> after.applyAsByte(apply(value1, value2, value3));
     }
 
     /**

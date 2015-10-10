@@ -18,6 +18,7 @@ package at.gridtec.lambda4j.function.primitives.tri;
 import at.gridtec.lambda4j.consumer.primitives.tri.BooleanTriConsumer;
 import at.gridtec.lambda4j.function.TriFunction;
 import at.gridtec.lambda4j.function.primitives.BooleanFunction;
+import at.gridtec.lambda4j.operators.ternary.BooleanTernaryOperator;
 import at.gridtec.lambda4j.operators.unary.BooleanUnaryOperator;
 
 import java.util.Objects;
@@ -59,7 +60,7 @@ public interface BooleanTriFunction<R> {
      * {@code BooleanFunction}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static <R> BooleanTriFunction<R> onlyFirst(final BooleanFunction<R> function) {
+    static <R> BooleanTriFunction<R> onlyFirst(final BooleanFunction<? extends R> function) {
         Objects.requireNonNull(function);
         return (value1, value2, value3) -> function.apply(value1);
     }
@@ -74,7 +75,7 @@ public interface BooleanTriFunction<R> {
      * given {@code BooleanFunction}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static <R> BooleanTriFunction<R> onlySecond(final BooleanFunction<R> function) {
+    static <R> BooleanTriFunction<R> onlySecond(final BooleanFunction<? extends R> function) {
         Objects.requireNonNull(function);
         return (value1, value2, value3) -> function.apply(value2);
     }
@@ -89,7 +90,7 @@ public interface BooleanTriFunction<R> {
      * {@code BooleanFunction}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static <R> BooleanTriFunction<R> onlyThird(final BooleanFunction<R> function) {
+    static <R> BooleanTriFunction<R> onlyThird(final BooleanFunction<? extends R> function) {
         Objects.requireNonNull(function);
         return (value1, value2, value3) -> function.apply(value2);
     }
@@ -146,6 +147,23 @@ public interface BooleanTriFunction<R> {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         return (value1, value2, value3) -> apply(before1.test(value1), before2.test(value2), before3.test(value3));
+    }
+
+    /**
+     * Returns a composed {@link BooleanTernaryOperator} that first applies this operation to its input, and then
+     * applies the {@code after} operation to the result. If evaluation of either operation throws an exception, it is
+     * relayed to the caller of the composed operation.
+     *
+     * @param after The {@code ToBooleanFunction} to apply after this operation is applied
+     * @return A composed {@code BooleanTernaryOperator} that first applies this operation, and then applies the {@code
+     * after} operation to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @see #compose(BooleanUnaryOperator, BooleanUnaryOperator, BooleanUnaryOperator)
+     * @see #compose(Predicate, Predicate, Predicate)
+     */
+    default BooleanTernaryOperator andThen(final Predicate<? super R> after) {
+        Objects.requireNonNull(after);
+        return (value1, value2, value3) -> after.test(apply(value1, value2, value3));
     }
 
     /**

@@ -19,6 +19,7 @@ import at.gridtec.lambda4j.consumer.primitives.tri.ShortTriConsumer;
 import at.gridtec.lambda4j.function.TriFunction;
 import at.gridtec.lambda4j.function.primitives.ShortFunction;
 import at.gridtec.lambda4j.function.primitives.to.ToShortFunction;
+import at.gridtec.lambda4j.operators.ternary.ShortTernaryOperator;
 import at.gridtec.lambda4j.operators.unary.ShortUnaryOperator;
 
 import java.util.Objects;
@@ -59,7 +60,7 @@ public interface ShortTriFunction<R> {
      * {@code ShortFunction}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static <R> ShortTriFunction<R> onlyFirst(final ShortFunction<R> function) {
+    static <R> ShortTriFunction<R> onlyFirst(final ShortFunction<? extends R> function) {
         Objects.requireNonNull(function);
         return (value1, value2, value3) -> function.apply(value1);
     }
@@ -74,7 +75,7 @@ public interface ShortTriFunction<R> {
      * {@code ShortFunction}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static <R> ShortTriFunction<R> onlySecond(final ShortFunction<R> function) {
+    static <R> ShortTriFunction<R> onlySecond(final ShortFunction<? extends R> function) {
         Objects.requireNonNull(function);
         return (value1, value2, value3) -> function.apply(value2);
     }
@@ -89,7 +90,7 @@ public interface ShortTriFunction<R> {
      * {@code ShortFunction}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static <R> ShortTriFunction<R> onlyThird(final ShortFunction<R> function) {
+    static <R> ShortTriFunction<R> onlyThird(final ShortFunction<? extends R> function) {
         Objects.requireNonNull(function);
         return (value1, value2, value3) -> function.apply(value2);
     }
@@ -147,6 +148,23 @@ public interface ShortTriFunction<R> {
         Objects.requireNonNull(before2);
         return (value1, value2, value3) -> apply(before1.applyAsShort(value1), before2.applyAsShort(value2),
                                                  before3.applyAsShort(value3));
+    }
+
+    /**
+     * Returns a composed {@link ShortTernaryOperator} that first applies this operation to its input, and then applies
+     * the {@code after} operation to the result. If evaluation of either operation throws an exception, it is relayed
+     * to the caller of the composed operation.
+     *
+     * @param after The {@code ToShortFunction} to apply after this operation is applied
+     * @return A composed {@code ShortTernaryOperator} that first applies this operation, and then applies the {@code
+     * after} operation to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @see #compose(ShortUnaryOperator, ShortUnaryOperator, ShortUnaryOperator)
+     * @see #compose(ToShortFunction, ToShortFunction, ToShortFunction)
+     */
+    default ShortTernaryOperator andThen(final ToShortFunction<? super R> after) {
+        Objects.requireNonNull(after);
+        return (value1, value2, value3) -> after.applyAsShort(apply(value1, value2, value3));
     }
 
     /**

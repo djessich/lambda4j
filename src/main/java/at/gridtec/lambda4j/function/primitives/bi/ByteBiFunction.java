@@ -18,6 +18,7 @@ package at.gridtec.lambda4j.function.primitives.bi;
 import at.gridtec.lambda4j.consumer.primitives.bi.ByteBiConsumer;
 import at.gridtec.lambda4j.function.primitives.ByteFunction;
 import at.gridtec.lambda4j.function.primitives.to.ToByteFunction;
+import at.gridtec.lambda4j.operators.binary.ByteBinaryOperator;
 import at.gridtec.lambda4j.operators.unary.ByteUnaryOperator;
 
 import java.util.Objects;
@@ -59,7 +60,7 @@ public interface ByteBiFunction<R> {
      * {@code ByteFunction}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static <R> ByteBiFunction<R> onlyFirst(final ByteFunction<R> function) {
+    static <R> ByteBiFunction<R> onlyFirst(final ByteFunction<? extends R> function) {
         Objects.requireNonNull(function);
         return (value1, value2) -> function.apply(value1);
     }
@@ -74,7 +75,7 @@ public interface ByteBiFunction<R> {
      * {@code ByteFunction}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static <R> ByteBiFunction<R> onlySecond(final ByteFunction<R> function) {
+    static <R> ByteBiFunction<R> onlySecond(final ByteFunction<? extends R> function) {
         Objects.requireNonNull(function);
         return (value1, value2) -> function.apply(value2);
     }
@@ -125,6 +126,23 @@ public interface ByteBiFunction<R> {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         return (value1, value2) -> apply(before1.applyAsByte(value1), before2.applyAsByte(value2));
+    }
+
+    /**
+     * Returns a composed {@link ByteBinaryOperator} that first applies this operation to its input, and then applies
+     * the {@code after} operation to the result. If evaluation of either operation throws an exception, it is relayed
+     * to the caller of the composed operation.
+     *
+     * @param after The {@code ToByteFunction} to apply after this operation is applied
+     * @return A composed {@code ByteBinaryOperator} that first applies this operation, and then applies the {@code
+     * after} operation to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @see #compose(ByteUnaryOperator, ByteUnaryOperator)
+     * @see #compose(ToByteFunction, ToByteFunction)
+     */
+    default ByteBinaryOperator andThen(final ToByteFunction<? super R> after) {
+        Objects.requireNonNull(after);
+        return (value1, value2) -> after.applyAsByte(apply(value1, value2));
     }
 
     /**

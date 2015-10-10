@@ -18,6 +18,7 @@ package at.gridtec.lambda4j.function.primitives.bi;
 import at.gridtec.lambda4j.consumer.primitives.bi.FloatBiConsumer;
 import at.gridtec.lambda4j.function.primitives.FloatFunction;
 import at.gridtec.lambda4j.function.primitives.to.ToFloatFunction;
+import at.gridtec.lambda4j.operators.binary.FloatBinaryOperator;
 import at.gridtec.lambda4j.operators.unary.FloatUnaryOperator;
 
 import java.util.Objects;
@@ -59,7 +60,7 @@ public interface FloatBiFunction<R> {
      * {@code FloatFunction}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static <R> FloatBiFunction<R> onlyFirst(final FloatFunction<R> function) {
+    static <R> FloatBiFunction<R> onlyFirst(final FloatFunction<? extends R> function) {
         Objects.requireNonNull(function);
         return (value1, value2) -> function.apply(value1);
     }
@@ -74,7 +75,7 @@ public interface FloatBiFunction<R> {
      * {@code FloatFunction}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static <R> FloatBiFunction<R> onlySecond(final FloatFunction<R> function) {
+    static <R> FloatBiFunction<R> onlySecond(final FloatFunction<? extends R> function) {
         Objects.requireNonNull(function);
         return (value1, value2) -> function.apply(value2);
     }
@@ -125,6 +126,23 @@ public interface FloatBiFunction<R> {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         return (value1, value2) -> apply(before1.applyAsFloat(value1), before2.applyAsFloat(value2));
+    }
+
+    /**
+     * Returns a composed {@link FloatBinaryOperator} that first applies this operation to its input, and then applies
+     * the {@code after} operation to the result. If evaluation of either operation throws an exception, it is relayed
+     * to the caller of the composed operation.
+     *
+     * @param after The {@code ToFloatFunction} to apply after this operation is applied
+     * @return A composed {@code FloatBinaryOperator} that first applies this operation, and then applies the {@code
+     * after} operation to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @see #compose(FloatUnaryOperator, FloatUnaryOperator)
+     * @see #compose(ToFloatFunction, ToFloatFunction)
+     */
+    default FloatBinaryOperator andThen(final ToFloatFunction<? super R> after) {
+        Objects.requireNonNull(after);
+        return (value1, value2) -> after.applyAsFloat(apply(value1, value2));
     }
 
     /**

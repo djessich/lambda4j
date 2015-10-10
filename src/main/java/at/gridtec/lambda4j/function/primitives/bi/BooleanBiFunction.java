@@ -17,6 +17,7 @@ package at.gridtec.lambda4j.function.primitives.bi;
 
 import at.gridtec.lambda4j.consumer.primitives.bi.BooleanBiConsumer;
 import at.gridtec.lambda4j.function.primitives.BooleanFunction;
+import at.gridtec.lambda4j.operators.binary.BooleanBinaryOperator;
 import at.gridtec.lambda4j.operators.unary.BooleanUnaryOperator;
 
 import java.util.Objects;
@@ -59,7 +60,7 @@ public interface BooleanBiFunction<R> {
      * {@code BooleanFunction}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static <R> BooleanBiFunction<R> onlyFirst(final BooleanFunction<R> function) {
+    static <R> BooleanBiFunction<R> onlyFirst(final BooleanFunction<? extends R> function) {
         Objects.requireNonNull(function);
         return (value1, value2) -> function.apply(value1);
     }
@@ -74,7 +75,7 @@ public interface BooleanBiFunction<R> {
      * {@code BooleanFunction}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static <R> BooleanBiFunction<R> onlySecond(final BooleanFunction<R> function) {
+    static <R> BooleanBiFunction<R> onlySecond(final BooleanFunction<? extends R> function) {
         Objects.requireNonNull(function);
         return (value1, value2) -> function.apply(value2);
     }
@@ -124,6 +125,23 @@ public interface BooleanBiFunction<R> {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         return (value1, value2) -> apply(before1.test(value1), before2.test(value2));
+    }
+
+    /**
+     * Returns a composed {@link BooleanBinaryOperator} that first applies this operation to its input, and then applies
+     * the {@code after} operation to the result. If evaluation of either operation throws an exception, it is relayed
+     * to the caller of the composed operation.
+     *
+     * @param after The {@code ToBooleanFunction} to apply after this operation is applied
+     * @return A composed {@code BooleanBinaryOperator} that first applies this operation, and then applies the {@code
+     * after} operation to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @see #compose(BooleanUnaryOperator, BooleanUnaryOperator)
+     * @see #compose(Predicate, Predicate)
+     */
+    default BooleanBinaryOperator andThen(final Predicate<? super R> after) {
+        Objects.requireNonNull(after);
+        return (value1, value2) -> after.test(apply(value1, value2));
     }
 
     /**

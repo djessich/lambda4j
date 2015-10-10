@@ -19,6 +19,7 @@ import at.gridtec.lambda4j.consumer.primitives.tri.CharTriConsumer;
 import at.gridtec.lambda4j.function.TriFunction;
 import at.gridtec.lambda4j.function.primitives.CharFunction;
 import at.gridtec.lambda4j.function.primitives.to.ToCharFunction;
+import at.gridtec.lambda4j.operators.ternary.CharTernaryOperator;
 import at.gridtec.lambda4j.operators.unary.CharUnaryOperator;
 
 import java.util.Objects;
@@ -59,7 +60,7 @@ public interface CharTriFunction<R> {
      * {@code CharFunction}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static <R> CharTriFunction<R> onlyFirst(final CharFunction<R> function) {
+    static <R> CharTriFunction<R> onlyFirst(final CharFunction<? extends R> function) {
         Objects.requireNonNull(function);
         return (value1, value2, value3) -> function.apply(value1);
     }
@@ -74,7 +75,7 @@ public interface CharTriFunction<R> {
      * {@code CharFunction}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static <R> CharTriFunction<R> onlySecond(final CharFunction<R> function) {
+    static <R> CharTriFunction<R> onlySecond(final CharFunction<? extends R> function) {
         Objects.requireNonNull(function);
         return (value1, value2, value3) -> function.apply(value2);
     }
@@ -89,7 +90,7 @@ public interface CharTriFunction<R> {
      * {@code CharFunction}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static <R> CharTriFunction<R> onlyThird(final CharFunction<R> function) {
+    static <R> CharTriFunction<R> onlyThird(final CharFunction<? extends R> function) {
         Objects.requireNonNull(function);
         return (value1, value2, value3) -> function.apply(value2);
     }
@@ -147,6 +148,23 @@ public interface CharTriFunction<R> {
         Objects.requireNonNull(before2);
         return (value1, value2, value3) -> apply(before1.applyAsChar(value1), before2.applyAsChar(value2),
                                                  before3.applyAsChar(value3));
+    }
+
+    /**
+     * Returns a composed {@link CharTernaryOperator} that first applies this operation to its input, and then applies
+     * the {@code after} operation to the result. If evaluation of either operation throws an exception, it is relayed
+     * to the caller of the composed operation.
+     *
+     * @param after The {@code ToCharFunction} to apply after this operation is applied
+     * @return A composed {@code CharTernaryOperator} that first applies this operation, and then applies the {@code
+     * after} operation to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @see #compose(CharUnaryOperator, CharUnaryOperator, CharUnaryOperator)
+     * @see #compose(ToCharFunction, ToCharFunction, ToCharFunction)
+     */
+    default CharTernaryOperator andThen(final ToCharFunction<? super R> after) {
+        Objects.requireNonNull(after);
+        return (value1, value2, value3) -> after.applyAsChar(apply(value1, value2, value3));
     }
 
     /**

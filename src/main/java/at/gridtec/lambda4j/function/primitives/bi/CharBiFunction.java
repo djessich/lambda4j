@@ -18,6 +18,7 @@ package at.gridtec.lambda4j.function.primitives.bi;
 import at.gridtec.lambda4j.consumer.primitives.bi.CharBiConsumer;
 import at.gridtec.lambda4j.function.primitives.CharFunction;
 import at.gridtec.lambda4j.function.primitives.to.ToCharFunction;
+import at.gridtec.lambda4j.operators.binary.CharBinaryOperator;
 import at.gridtec.lambda4j.operators.unary.CharUnaryOperator;
 
 import java.util.Objects;
@@ -59,7 +60,7 @@ public interface CharBiFunction<R> {
      * {@code CharFunction}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static <R> CharBiFunction<R> onlyFirst(final CharFunction<R> function) {
+    static <R> CharBiFunction<R> onlyFirst(final CharFunction<? extends R> function) {
         Objects.requireNonNull(function);
         return (value1, value2) -> function.apply(value1);
     }
@@ -74,7 +75,7 @@ public interface CharBiFunction<R> {
      * {@code CharFunction}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static <R> CharBiFunction<R> onlySecond(final CharFunction<R> function) {
+    static <R> CharBiFunction<R> onlySecond(final CharFunction<? extends R> function) {
         Objects.requireNonNull(function);
         return (value1, value2) -> function.apply(value2);
     }
@@ -143,6 +144,23 @@ public interface CharBiFunction<R> {
     default <S> CharBiFunction<S> andThen(final Function<? super R, ? extends S> after) {
         Objects.requireNonNull(after);
         return (value1, value2) -> after.apply(apply(value1, value2));
+    }
+
+    /**
+     * Returns a composed {@link CharBinaryOperator} that first applies this operation to its input, and then applies
+     * the {@code after} operation to the result. If evaluation of either operation throws an exception, it is relayed
+     * to the caller of the composed operation.
+     *
+     * @param after The {@code ToCharFunction} to apply after this operation is applied
+     * @return A composed {@code CharBinaryOperator} that first applies this operation, and then applies the {@code
+     * after} operation to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @see #compose(CharUnaryOperator, CharUnaryOperator)
+     * @see #compose(ToCharFunction, ToCharFunction)
+     */
+    default CharBinaryOperator andThen(final ToCharFunction<? super R> after) {
+        Objects.requireNonNull(after);
+        return (value1, value2) -> after.applyAsChar(apply(value1, value2));
     }
 
     /**
