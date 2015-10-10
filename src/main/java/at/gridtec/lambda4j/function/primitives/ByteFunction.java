@@ -92,6 +92,23 @@ public interface ByteFunction<R> {
     }
 
     /**
+     * Returns a composed {@link ByteUnaryOperator} that first applies this operation to its input, and then applies the
+     * {@code after} operation to the result. If evaluation of either operation throws an exception, it is relayed to
+     * the caller of the composed operation.
+     *
+     * @param after The {@code ToByteFunction} to apply after this operation is applied
+     * @return A composed {@code ByteUnaryOperator} that first applies this operation, and then applies the {@code
+     * after} operation to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @see #compose(ByteUnaryOperator)
+     * @see #compose(ToByteFunction)
+     */
+    default ByteUnaryOperator andThen(final ToByteFunction<? super R> after) {
+        Objects.requireNonNull(after);
+        return value -> after.applyAsByte(apply(value));
+    }
+
+    /**
      * Returns a composed {@link ByteFunction} that first applies this operation to its input, and then applies the
      * {@code after} operation to the result. If evaluation of either operation throws an exception, it is relayed to
      * the caller of the composed operation.
@@ -122,21 +139,6 @@ public interface ByteFunction<R> {
     default ByteToBooleanFunction toBoolean(final Predicate<? super R> after) {
         Objects.requireNonNull(after);
         return value -> after.test(apply(value));
-    }
-
-    /**
-     * Returns a composed {@link ByteUnaryOperator} that first applies this operation to its input, and then applies the
-     * {@code after} operation to the result. If evaluation of either operations throws an exception, it is relayed to
-     * the caller of the composed operation.
-     *
-     * @param after The {@code ToByteFunction} to apply after this operation is applied
-     * @return A composed {@code ByteUnaryOperator} that first applies this operation to its input, and then applies the
-     * {@code after} operation to the result.
-     * @throws NullPointerException If given argument is {@code null}
-     */
-    default ByteUnaryOperator toByte(final ToByteFunction<? super R> after) {
-        Objects.requireNonNull(after);
-        return value -> after.applyAsByte(apply(value));
     }
 
     /**

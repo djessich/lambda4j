@@ -64,6 +64,7 @@ public interface ToShortFunction<T> {
      * @return A composed {@code ToShortFunction} that first applies the {@code before} {@code UnaryOperator} to its
      * input, and then applies this operation to the result.
      * @throws NullPointerException If given argument is {@code null}
+     * @see #andThen(ShortUnaryOperator)
      * @see #andThen(ShortFunction)
      */
     default ToShortFunction<T> compose(final UnaryOperator<T> before) {
@@ -81,6 +82,7 @@ public interface ToShortFunction<T> {
      * @return A composed {@code ToShortFunction} that applies the given {@code before} {@code Function} to its input,
      * and then applies this operation to the result.
      * @throws NullPointerException If one of the given functions are {@code null}
+     * @see #andThen(ShortUnaryOperator)
      * @see #andThen(ShortFunction)
      */
     default <V> ToShortFunction<V> compose(final Function<? super V, ? extends T> before) {

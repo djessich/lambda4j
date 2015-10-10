@@ -16,12 +16,15 @@
 package at.gridtec.lambda4j.function.primitives;
 
 import at.gridtec.lambda4j.consumer.primitives.CharConsumer;
+import at.gridtec.lambda4j.function.primitives.conversion.*;
+import at.gridtec.lambda4j.function.primitives.to.ToByteFunction;
 import at.gridtec.lambda4j.function.primitives.to.ToCharFunction;
+import at.gridtec.lambda4j.function.primitives.to.ToFloatFunction;
+import at.gridtec.lambda4j.function.primitives.to.ToShortFunction;
 import at.gridtec.lambda4j.operators.unary.CharUnaryOperator;
 
 import java.util.Objects;
-import java.util.function.Consumer;
-import java.util.function.Function;
+import java.util.function.*;
 
 /**
  * Represents a function that accepts a char-valued argument and produces a result. This is the {@code char}-consuming
@@ -89,6 +92,23 @@ public interface CharFunction<R> {
     }
 
     /**
+     * Returns a composed {@link CharUnaryOperator} that first applies this operation to its input, and then applies the
+     * {@code after} operation to the result. If evaluation of either operation throws an exception, it is relayed to
+     * the caller of the composed operation.
+     *
+     * @param after The {@code ToCharFunction} to apply after this operation is applied
+     * @return A composed {@code CharUnaryOperator} that first applies this operation, and then applies the {@code
+     * after} operation to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @see #compose(CharUnaryOperator)
+     * @see #compose(ToCharFunction)
+     */
+    default CharUnaryOperator andThen(final ToCharFunction<? super R> after) {
+        Objects.requireNonNull(after);
+        return value -> after.applyAsChar(apply(value));
+    }
+
+    /**
      * Returns a composed {@link CharFunction} that first applies this operation to its input, and then applies the
      * {@code after} operation to the result. If evaluation of either operation throws an exception, it is relayed to
      * the caller of the composed operation.
@@ -104,6 +124,111 @@ public interface CharFunction<R> {
     default <S> CharFunction<S> andThen(final Function<? super R, ? extends S> after) {
         Objects.requireNonNull(after);
         return value -> after.apply(apply(value));
+    }
+
+    /**
+     * Returns a composed {@link CharToBooleanFunction} that first applies this operation to its input, and then applies
+     * the {@code after} operation to the result. If evaluation of either operations throws an exception, it is relayed
+     * to the caller of the composed operation.
+     *
+     * @param after The {@code Predicate} to apply after this operation is applied
+     * @return A composed {@code CharToBooleanFunction} that first applies this operation to its input, and then applies
+     * the {@code after} operation to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     */
+    default CharToBooleanFunction toBoolean(final Predicate<? super R> after) {
+        Objects.requireNonNull(after);
+        return value -> after.test(apply(value));
+    }
+
+    /**
+     * Returns a composed {@link CharToByteFunction} that first applies this operation to its input, and then applies
+     * the {@code after} operation to the result. If evaluation of either operations throws an exception, it is relayed
+     * to the caller of the composed operation.
+     *
+     * @param after The {@code ToByteFunction} to apply after this operation is applied
+     * @return A composed {@code CharToByteFunction} that first applies this operation to its input, and then applies
+     * the {@code after} operation to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     */
+    default CharToByteFunction toByte(final ToByteFunction<? super R> after) {
+        Objects.requireNonNull(after);
+        return value -> after.applyAsByte(apply(value));
+    }
+
+    /**
+     * Returns a composed {@link CharToDoubleFunction} that first applies this operation to its input, and then applies
+     * the {@code after} operation to the result. If evaluation of either operations throws an exception, it is relayed
+     * to the caller of the composed operation.
+     *
+     * @param after The {@code ToDoubleFunction} to apply after this operation is applied
+     * @return A composed {@code CharToDoubleFunction} that first applies this operation to its input, and then applies
+     * the {@code after} operation to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     */
+    default CharToDoubleFunction toDouble(final ToDoubleFunction<? super R> after) {
+        Objects.requireNonNull(after);
+        return value -> after.applyAsDouble(apply(value));
+    }
+
+    /**
+     * Returns a composed {@link CharToFloatFunction} that first applies this operation to its input, and then applies
+     * the {@code after} operation to the result. If evaluation of either operations throws an exception, it is relayed
+     * to the caller of the composed operation.
+     *
+     * @param after The {@code ToFloatFunction} to apply after this operation is applied
+     * @return A composed {@code CharToFloatFunction} that first applies this operation to its input, and then applies
+     * the {@code after} operation to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     */
+    default CharToFloatFunction toFloat(final ToFloatFunction<? super R> after) {
+        Objects.requireNonNull(after);
+        return value -> after.applyAsFloat(apply(value));
+    }
+
+    /**
+     * Returns a composed {@link CharToIntFunction} that first applies this operation to its input, and then applies the
+     * {@code after} operation to the result. If evaluation of either operations throws an exception, it is relayed to
+     * the caller of the composed operation.
+     *
+     * @param after The {@code ToIntFunction} to apply after this operation is applied
+     * @return A composed {@code CharToIntFunction} that first applies this operation to its input, and then applies the
+     * {@code after} operation to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     */
+    default CharToIntFunction toInt(final ToIntFunction<? super R> after) {
+        Objects.requireNonNull(after);
+        return value -> after.applyAsInt(apply(value));
+    }
+
+    /**
+     * Returns a composed {@link CharToLongFunction} that first applies this operation to its input, and then applies
+     * the {@code after} operation to the result. If evaluation of either operations throws an exception, it is relayed
+     * to the caller of the composed operation.
+     *
+     * @param after The {@code ToLongFunction} to apply after this operation is applied
+     * @return A composed {@code CharToLongFunction} that first applies this operation to its input, and then applies
+     * the {@code after} operation to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     */
+    default CharToLongFunction toLong(final ToLongFunction<? super R> after) {
+        Objects.requireNonNull(after);
+        return value -> after.applyAsLong(apply(value));
+    }
+
+    /**
+     * Returns a composed {@link CharToShortFunction} that first applies this operation to its input, and then applies
+     * the {@code after} operation to the result. If evaluation of either operations throws an exception, it is relayed
+     * to the caller of the composed operation.
+     *
+     * @param after The {@code ToShortFunction} to apply after this operation is applied
+     * @return A composed {@code CharToShortFunction} that first applies this operation to its input, and then applies
+     * the {@code after} operation to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     */
+    default CharToShortFunction toShort(final ToShortFunction<? super R> after) {
+        Objects.requireNonNull(after);
+        return value -> after.applyAsShort(apply(value));
     }
 
     /**

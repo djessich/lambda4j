@@ -64,6 +64,7 @@ public interface ToFloatFunction<T> {
      * @return A composed {@code ToFloatFunction} that first applies the {@code before} {@code UnaryOperator} to its
      * input, and then applies this operation to the result.
      * @throws NullPointerException If given argument is {@code null}
+     * @see #andThen(FloatUnaryOperator)
      * @see #andThen(FloatFunction)
      */
     default ToFloatFunction<T> compose(final UnaryOperator<T> before) {
@@ -81,6 +82,7 @@ public interface ToFloatFunction<T> {
      * @return A composed {@code ToFloatFunction} that applies the given {@code before} {@code Function} to its input,
      * and then applies this operation to the result.
      * @throws NullPointerException If one of the given functions are {@code null}
+     * @see #andThen(FloatUnaryOperator)
      * @see #andThen(FloatFunction)
      */
     default <V> ToFloatFunction<V> compose(final Function<? super V, ? extends T> before) {
