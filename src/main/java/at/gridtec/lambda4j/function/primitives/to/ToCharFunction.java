@@ -39,9 +39,9 @@ public interface ToCharFunction<T> {
     /**
      * Creates a {@link ToCharFunction} which always returns a given value.
      *
-     * @param <T> The type of return value from the function
+     * @param <T> The type of argument to the function
      * @param value The return value for the constant
-     * @return A {@code CharFunction} which always returns a given value.
+     * @return A {@code ToCharFunction} which always returns a given value.
      */
     static <T> ToCharFunction<T> constant(char value) {
         return t -> value;
@@ -226,7 +226,7 @@ public interface ToCharFunction<T> {
      */
     default ToShortFunction<T> toShort(final CharToShortFunction after) {
         Objects.requireNonNull(after);
-        return value -> after.applyAsShort(applyAsChar(value));
+        return t -> after.applyAsShort(applyAsChar(t));
     }
 
     /**

@@ -39,9 +39,9 @@ public interface ToFloatFunction<T> {
     /**
      * Creates a {@link ToFloatFunction} which always returns a given value.
      *
-     * @param <T> The type of return value from the function
+     * @param <T> The type of argument to the function
      * @param value The return value for the constant
-     * @return A {@code FloatFunction} which always returns a given value.
+     * @return A {@code ToFloatFunction} which always returns a given value.
      */
     static <T> ToFloatFunction<T> constant(float value) {
         return t -> value;
@@ -103,6 +103,24 @@ public interface ToFloatFunction<T> {
     default ToFloatFunction<T> andThen(final FloatUnaryOperator after) {
         Objects.requireNonNull(after);
         return t -> after.applyAsFloat(applyAsFloat(t));
+    }
+
+    /**
+     * Returns a composed {@link Function} that first applies this operation to its input, and then applies the {@code
+     * after} operation to the result. If evaluation of either operation throws an exception, it is relayed to the
+     * caller of the composed operation.
+     *
+     * @param <R> The type of output of the {@code after} function, and of the composed function
+     * @param after The {@code FloatFunction} to apply after this operation is applied
+     * @return A composed {@code Function} that first applies this operation, and then applies the {@code after}
+     * operation to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @see #compose(UnaryOperator)
+     * @see #compose(Function)
+     */
+    default <R> Function<T, R> andThen(final FloatFunction<? extends R> after) {
+        Objects.requireNonNull(after);
+        return t -> after.apply(this.applyAsFloat(t));
     }
 
     /**
@@ -208,25 +226,7 @@ public interface ToFloatFunction<T> {
      */
     default ToShortFunction<T> toShort(final FloatToShortFunction after) {
         Objects.requireNonNull(after);
-        return value -> after.applyAsShort(applyAsFloat(value));
-    }
-
-    /**
-     * Returns a composed {@link Function} that first applies this operation to its input, and then applies the {@code
-     * after} operation to the result. If evaluation of either operation throws an exception, it is relayed to the
-     * caller of the composed operation.
-     *
-     * @param <R> The type of output of the {@code after} function, and of the composed function
-     * @param after The {@code FloatFunction} to apply after this operation is applied
-     * @return A composed {@code Function} that first applies this operation, and then applies the {@code after}
-     * operation to the result.
-     * @throws NullPointerException If given argument is {@code null}
-     * @see #compose(UnaryOperator)
-     * @see #compose(Function)
-     */
-    default <R> Function<T, R> andThen(final FloatFunction<? extends R> after) {
-        Objects.requireNonNull(after);
-        return t -> after.apply(this.applyAsFloat(t));
+        return t -> after.applyAsShort(applyAsFloat(t));
     }
 
     /**

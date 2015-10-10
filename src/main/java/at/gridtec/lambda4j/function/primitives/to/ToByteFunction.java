@@ -39,9 +39,9 @@ public interface ToByteFunction<T> {
     /**
      * Creates a {@link ToByteFunction} which always returns a given value.
      *
-     * @param <T> The type of return value from the function
+     * @param <T> The type of argument to the function
      * @param value The return value for the constant
-     * @return A {@code ByteFunction} which always returns a given value.
+     * @return A {@code ToByteFunction} which always returns a given value.
      */
     static <T> ToByteFunction<T> constant(byte value) {
         return t -> value;
@@ -228,7 +228,7 @@ public interface ToByteFunction<T> {
      */
     default ToShortFunction<T> toShort(final ByteToShortFunction after) {
         Objects.requireNonNull(after);
-        return value -> after.applyAsShort(applyAsByte(value));
+        return t -> after.applyAsShort(applyAsByte(t));
     }
 
     /**
