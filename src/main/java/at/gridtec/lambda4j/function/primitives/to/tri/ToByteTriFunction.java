@@ -320,4 +320,15 @@ public interface ToByteTriFunction<T, U, V> {
         Objects.requireNonNull(consumer);
         return (t, u, v) -> consumer.accept(applyAsByte(t, u, v));
     }
+
+    /**
+     * Returns a composed {@link TriFunction} which represents this {@link ToByteTriFunction}. Thereby the primitive
+     * input argument for this operation is autoboxed. This method is just convenience to provide the ability to use
+     * this {@code ToByteTriFunction} with JRE specific methods, only accepting {@code TriFunction}.
+     *
+     * @return A composed {@code TriFunction} which represents this {@code ToByteTriFunction}.
+     */
+    default TriFunction<T, U, V, Byte> boxed() {
+        return this::applyAsByte;
+    }
 }

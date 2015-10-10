@@ -287,4 +287,15 @@ public interface ToCharBiFunction<T, U> {
         Objects.requireNonNull(consumer);
         return (t, u) -> consumer.accept(applyAsChar(t, u));
     }
+
+    /**
+     * Returns a composed {@link BiFunction} which represents this {@link ToCharBiFunction}. Thereby the primitive input
+     * argument for this operation is autoboxed. This method is just convenience to provide the ability to use this
+     * {@code ToCharBiFunction} with JRE specific methods, only accepting {@code BiFunction}.
+     *
+     * @return A composed {@code BiFunction} which represents this {@code ToCharBiFunction}.
+     */
+    default BiFunction<T, U, Character> boxed() {
+        return this::applyAsChar;
+    }
 }

@@ -320,4 +320,15 @@ public interface ToShortTriFunction<T, U, V> {
         Objects.requireNonNull(consumer);
         return (t, u, v) -> consumer.accept(applyAsShort(t, u, v));
     }
+
+    /**
+     * Returns a composed {@link TriFunction} which represents this {@link ToShortTriFunction}. Thereby the primitive
+     * input argument for this operation is autoboxed. This method is just convenience to provide the ability to use
+     * this {@code ToShortTriFunction} with JRE specific methods, only accepting {@code TriFunction}.
+     *
+     * @return A composed {@code TriFunction} which represents this {@code ToShortTriFunction}.
+     */
+    default TriFunction<T, U, V, Short> boxed() {
+        return this::applyAsShort;
+    }
 }

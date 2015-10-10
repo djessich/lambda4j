@@ -319,4 +319,15 @@ public interface ToCharTriFunction<T, U, V> {
         Objects.requireNonNull(consumer);
         return (t, u, v) -> consumer.accept(applyAsChar(t, u, v));
     }
+
+    /**
+     * Returns a composed {@link TriFunction} which represents this {@link ToCharTriFunction}. Thereby the primitive
+     * input argument for this operation is autoboxed. This method is just convenience to provide the ability to use
+     * this {@code ToCharTriFunction} with JRE specific methods, only accepting {@code TriFunction}.
+     *
+     * @return A composed {@code TriFunction} which represents this {@code ToCharTriFunction}.
+     */
+    default TriFunction<T, U, V, Character> boxed() {
+        return this::applyAsChar;
+    }
 }

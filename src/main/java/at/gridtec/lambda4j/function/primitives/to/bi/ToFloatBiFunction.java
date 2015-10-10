@@ -287,4 +287,15 @@ public interface ToFloatBiFunction<T, U> {
         Objects.requireNonNull(consumer);
         return (t, u) -> consumer.accept(applyAsFloat(t, u));
     }
+
+    /**
+     * Returns a composed {@link BiFunction} which represents this {@link ToFloatBiFunction}. Thereby the primitive
+     * input argument for this operation is autoboxed. This method is just convenience to provide the ability to use
+     * this {@code ToFloatBiFunction} with JRE specific methods, only accepting {@code BiFunction}.
+     *
+     * @return A composed {@code BiFunction} which represents this {@code ToFloatBiFunction}.
+     */
+    default BiFunction<T, U, Float> boxed() {
+        return this::applyAsFloat;
+    }
 }

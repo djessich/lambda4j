@@ -320,4 +320,15 @@ public interface ToFloatTriFunction<T, U, V> {
         Objects.requireNonNull(consumer);
         return (t, u, v) -> consumer.accept(applyAsFloat(t, u, v));
     }
+
+    /**
+     * Returns a composed {@link TriFunction} which represents this {@link ToFloatTriFunction}. Thereby the primitive
+     * input argument for this operation is autoboxed. This method is just convenience to provide the ability to use
+     * this {@code ToFloatTriFunction} with JRE specific methods, only accepting {@code TriFunction}.
+     *
+     * @return A composed {@code TriFunction} which represents this {@code ToFloatTriFunction}.
+     */
+    default TriFunction<T, U, V, Float> boxed() {
+        return this::applyAsFloat;
+    }
 }

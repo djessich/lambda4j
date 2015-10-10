@@ -245,4 +245,15 @@ public interface ToShortFunction<T> {
         Objects.requireNonNull(consumer);
         return t -> consumer.accept(this.applyAsShort(t));
     }
+
+    /**
+     * Returns a composed {@link Function} which represents this {@link ToShortFunction}. Thereby the primitive input
+     * argument for this operation is autoboxed. This method is just convenience to provide the ability to use this
+     * {@code ToShortFunction} with JRE specific methods, only accepting {@code Function}.
+     *
+     * @return A composed {@code Function} which represents this {@code ToShortFunction}.
+     */
+    default Function<T, Short> boxed() {
+        return this::applyAsShort;
+    }
 }

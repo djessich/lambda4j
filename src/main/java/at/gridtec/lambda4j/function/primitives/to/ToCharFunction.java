@@ -245,4 +245,15 @@ public interface ToCharFunction<T> {
         Objects.requireNonNull(consumer);
         return t -> consumer.accept(this.applyAsChar(t));
     }
+
+    /**
+     * Returns a composed {@link Function} which represents this {@link ToCharFunction}. Thereby the primitive input
+     * argument for this operation is autoboxed. This method is just convenience to provide the ability to use this
+     * {@code ToCharFunction} with JRE specific methods, only accepting {@code Function}.
+     *
+     * @return A composed {@code Function} which represents this {@code ToCharFunction}.
+     */
+    default Function<T, Character> boxed() {
+        return this::applyAsChar;
+    }
 }

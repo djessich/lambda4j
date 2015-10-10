@@ -315,4 +315,15 @@ public interface ToIntTriFunction<T, U, V> {
         Objects.requireNonNull(consumer);
         return (t, u, v) -> consumer.accept(applyAsInt(t, u, v));
     }
+
+    /**
+     * Returns a composed {@link TriFunction} which represents this {@link ToIntTriFunction}. Thereby the primitive
+     * input argument for this operation is autoboxed. This method is just convenience to provide the ability to use
+     * this {@code ToIntTriFunction} with JRE specific methods, only accepting {@code TriFunction}.
+     *
+     * @return A composed {@code TriFunction} which represents this {@code ToIntTriFunction}.
+     */
+    default TriFunction<T, U, V, Integer> boxed() {
+        return this::applyAsInt;
+    }
 }
