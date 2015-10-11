@@ -15,123 +15,123 @@
  */
 package at.gridtec.lambda4j.function.primitives.obj;
 
+import at.gridtec.lambda4j.consumer.primitives.CharConsumer;
 import at.gridtec.lambda4j.consumer.primitives.obj.ObjCharConsumer;
 import at.gridtec.lambda4j.function.primitives.CharFunction;
 import at.gridtec.lambda4j.function.primitives.to.ToCharFunction;
+import at.gridtec.lambda4j.function.primitives.to.bi.ToCharBiFunction;
 import at.gridtec.lambda4j.operators.binary.CharBinaryOperator;
 import at.gridtec.lambda4j.operators.unary.CharUnaryOperator;
 
 import java.util.Objects;
 import java.util.function.BiFunction;
-import java.util.function.Consumer;
 import java.util.function.Function;
 
 /**
- * Represents a function that accepts an object-valued and a {@code char}-valued argument, and produces a result. This
- * is the {@code (reference, char)} specialization of {@link BiFunction}.
+ * Represents a function that accepts an object-valued and a {@code char}-valued argument, and produces a {@code
+ * char}-valued result. This is the {@code (reference, char)}, {@code char}-producing primitive specialization for
+ * {@link BiFunction}.
  * <p>
- * This is a {@link FunctionalInterface} whose functional method is {@link #apply(Object, char)}.
+ * This is a {@link FunctionalInterface} whose functional method is {@link #applyAsChar(Object, char)}.
  *
  * @param <T> The type of argument to the function
- * @param <R> The type of return value from the function
  * @see java.util.function.BiFunction
  */
 @SuppressWarnings("unused")
 @FunctionalInterface
-public interface ObjCharFunction<T, R> {
+public interface ToCharObjCharFunction<T> {
 
     /**
-     * Creates a {@link ObjCharFunction} which always returns a given value.
+     * Creates a {@link ToCharObjCharFunction} which always returns a given value.
      *
      * @param <T> The type of argument to the function
-     * @param <R> The type of return value from the function
-     * @param r The return value for the constant
-     * @return A {@code ObjCharFunction} which always returns a given value.
+     * @param ret The return value for the constant
+     * @return A {@code ToCharObjCharFunction} which always returns a given value.
      */
-    static <T, R> ObjCharFunction<T, R> constant(R r) {
-        return (t, value) -> r;
+    static <T> ToCharObjCharFunction<T> constant(char ret) {
+        return (t, value) -> ret;
     }
 
     /**
-     * Creates a {@link ObjCharFunction} which uses the first parameter of this one as argument for the given {@link
-     * Function}.
+     * Creates a {@link ToCharObjCharFunction} which uses the first parameter of this one as argument for the given
+     * {@link ToCharFunction}.
      *
      * @param <T> The type of argument to the function
-     * @param <R> The return value from the operation
      * @param function The function which accepts the {@code first} parameter of this one
-     * @return Creates a {@code ObjCharFunction} which uses the first parameter of this one as argument for the given
-     * {@code Function}.
+     * @return Creates a {@code ToCharObjCharFunction} which uses the first parameter of this one as argument for the
+     * given {@code ToCharFunction}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static <T, R> ObjCharFunction<T, R> onlyFirst(final Function<? super T, ? extends R> function) {
+    static <T> ToCharObjCharFunction<T> onlyFirst(final ToCharFunction<? super T> function) {
         Objects.requireNonNull(function);
-        return (t, value) -> function.apply(t);
+        return (t, value) -> function.applyAsChar(t);
     }
 
     /**
-     * Creates a {@link ObjCharFunction} which uses the second parameter of this one as argument for the given {@link
-     * CharFunction}.
+     * Creates a {@link ToCharObjCharFunction} which uses the second parameter of this one as argument for the given
+     * {@link CharUnaryOperator}.
      *
      * @param <T> The type of argument to the function
-     * @param <R> The return value from the operation
      * @param function The function which accepts the {@code second} parameter of this one
-     * @return Creates a {@code ObjCharFunction} which uses the second parameter of this one as argument for the given
-     * {@code CharFunction}.
+     * @return Creates a {@code ToCharObjCharFunction} which uses the second parameter of this one as argument for the
+     * given {@code CharUnaryOperator}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static <T, R> ObjCharFunction<T, R> onlySecond(final CharFunction<? extends R> function) {
+    static <T> ToCharObjCharFunction<T> onlySecond(final CharUnaryOperator function) {
         Objects.requireNonNull(function);
-        return (t, value) -> function.apply(value);
+        return (t, value) -> function.applyAsChar(value);
     }
 
     /**
-     * Performs this {@link ObjCharFunction} to the given arguments.
+     * Applies this {@link ToCharObjCharFunction} to the given arguments.
      *
      * @param t The first argument to the function
      * @param value The second argument to the function
      * @return The return value from the function, which is its result.
      */
-    R apply(T t, char value);
+    char applyAsChar(T t, char value);
 
     /**
-     * Returns a composed {@link ObjCharFunction} that first applies the {@code before} functions to its input, and then
-     * applies this operation to the result. If evaluation of either operation throws an exception, it is relayed to the
-     * caller of the composed function.
+     * Returns a composed {@link ToCharObjCharFunction} that first applies the {@code before} functions to its input,
+     * and then applies this operation to the result. If evaluation of either operation throws an exception, it is
+     * relayed to the caller of the composed function.
      *
      * @param <U> The type of the argument to the first before operation
      * @param before1 The first {@code Function} to apply before this operation is applied
      * @param before2 The second {@code CharUnaryOperator} to apply before this operation is applied
-     * @return A composed {@code ObjCharFunction} that first applies the {@code before} functions to its input, and then
-     * applies this operation to the result.
+     * @return A composed {@code ToCharObjCharFunction} that first applies the {@code before} functions to its input,
+     * and then applies this operation to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @see #andThen(Function)
+     * @see #andThen(CharUnaryOperator)
+     * @see #andThen(CharFunction)
      */
-    default <U> ObjCharFunction<U, R> compose(final Function<? super U, ? extends T> before1,
+    default <U> ToCharObjCharFunction<U> compose(final Function<? super U, ? extends T> before1,
             final CharUnaryOperator before2) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
-        return (u, v) -> apply(before1.apply(u), before2.applyAsChar(v));
+        return (u, value) -> applyAsChar(before1.apply(u), before2.applyAsChar(value));
     }
 
     /**
-     * Returns a composed {@link BiFunction} that applies the given {@code before} functions to its input, and then
-     * applies this operation to the result. If evaluation of either operation throws an exception, it is relayed to the
-     * caller of the composed function.
+     * Returns a composed {@link ToCharBiFunction} that applies the given {@code before} functions to its input, and
+     * then applies this operation to the result. If evaluation of either operation throws an exception, it is relayed
+     * to the caller of the composed function.
      *
      * @param <U> The type of the argument to the first before operation
      * @param <V> The type of the argument to the second before operation
      * @param before1 The first before {@code Function} to apply before this operation is applied
      * @param before2 The second before {@code ToCharFunction} to apply before this operation is applied
-     * @return A composed {@code BiFunction} that applies the given {@code before} functions to its input, and then
-     * applies this operation to the result.
+     * @return A composed {@code ToCharBiFunction} that applies the given {@code before} functions to its input, and
+     * then applies this operation to the result.
      * @throws NullPointerException If one of the given functions are {@code null}
-     * @see #andThen(Function)
+     * @see #andThen(CharUnaryOperator)
+     * @see #andThen(CharFunction)
      */
-    default <U, V> BiFunction<U, V, R> compose(final Function<? super U, ? extends T> before1,
+    default <U, V> ToCharBiFunction<U, V> compose(final Function<? super U, ? extends T> before1,
             final ToCharFunction<? super V> before2) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
-        return (u, v) -> apply(before1.apply(u), before2.applyAsChar(v));
+        return (u, v) -> applyAsChar(before1.apply(u), before2.applyAsChar(v));
     }
 
     /**
@@ -146,9 +146,9 @@ public interface ObjCharFunction<T, R> {
      * @see #compose(Function, CharUnaryOperator)
      * @see #compose(Function, ToCharFunction)
      */
-    default ToCharObjCharFunction<T> andThen(final ToCharFunction<? super R> after) {
+    default ToCharObjCharFunction<T> andThen(final CharUnaryOperator after) {
         Objects.requireNonNull(after);
-        return (t, value) -> after.applyAsChar(apply(t, value));
+        return (t, value) -> after.applyAsChar(applyAsChar(t, value));
     }
 
     /**
@@ -157,16 +157,16 @@ public interface ObjCharFunction<T, R> {
      * the caller of the composed operation.
      *
      * @param <S> The type of output of the {@code after} function, and of the composed function
-     * @param after The {@code Function} to apply after this operation is applied
+     * @param after The {@code CharFunction} to apply after this operation is applied
      * @return A composed {@code ObjCharFunction} that first applies this operation, and then applies the {@code after}
      * operation to the result.
      * @throws NullPointerException If given argument is {@code null}
      * @see #compose(Function, CharUnaryOperator)
      * @see #compose(Function, ToCharFunction)
      */
-    default <S> ObjCharFunction<T, S> andThen(final Function<? super R, ? extends S> after) {
+    default <S> ObjCharFunction<T, S> andThen(final CharFunction<? extends S> after) {
         Objects.requireNonNull(after);
-        return (t, value) -> after.apply(apply(t, value));
+        return (t, value) -> after.apply(applyAsChar(t, value));
     }
 
     /**
@@ -179,9 +179,9 @@ public interface ObjCharFunction<T, R> {
      * result using the given {@code Consumer}.
      * @throws NullPointerException If given argument is {@code null}
      */
-    default ObjCharConsumer<T> consume(Consumer<? super R> consumer) {
+    default ObjCharConsumer<T> consume(CharConsumer consumer) {
         Objects.requireNonNull(consumer);
-        return (t, value) -> consumer.accept(apply(t, value));
+        return (t, value) -> consumer.accept(applyAsChar(t, value));
     }
 
     /**
@@ -191,7 +191,7 @@ public interface ObjCharFunction<T, R> {
      *
      * @return A composed {@code BiFunction} which represents this {@code ObjCharFunction}.
      */
-    default BiFunction<T, Character, R> boxed() {
-        return this::apply;
+    default BiFunction<T, Character, Character> boxed() {
+        return this::applyAsChar;
     }
 }

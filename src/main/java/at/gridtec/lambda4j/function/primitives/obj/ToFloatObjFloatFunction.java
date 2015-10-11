@@ -15,123 +15,123 @@
  */
 package at.gridtec.lambda4j.function.primitives.obj;
 
+import at.gridtec.lambda4j.consumer.primitives.FloatConsumer;
 import at.gridtec.lambda4j.consumer.primitives.obj.ObjFloatConsumer;
 import at.gridtec.lambda4j.function.primitives.FloatFunction;
 import at.gridtec.lambda4j.function.primitives.to.ToFloatFunction;
+import at.gridtec.lambda4j.function.primitives.to.bi.ToFloatBiFunction;
 import at.gridtec.lambda4j.operators.binary.FloatBinaryOperator;
 import at.gridtec.lambda4j.operators.unary.FloatUnaryOperator;
 
 import java.util.Objects;
 import java.util.function.BiFunction;
-import java.util.function.Consumer;
 import java.util.function.Function;
 
 /**
- * Represents a function that accepts an object-valued and a {@code float}-valued argument, and produces a result. This
- * is the {@code (reference, float)} specialization of {@link BiFunction}.
+ * Represents a function that accepts an object-valued and a {@code float}-valued argument, and produces a {@code
+ * float}-valued result. This is the {@code (reference, float)}, {@code float}-producing primitive specialization for
+ * {@link BiFunction}.
  * <p>
- * This is a {@link FunctionalInterface} whose functional method is {@link #apply(Object, float)}.
+ * This is a {@link FunctionalInterface} whose functional method is {@link #applyAsFloat(Object, float)}.
  *
  * @param <T> The type of argument to the function
- * @param <R> The type of return value from the function
  * @see java.util.function.BiFunction
  */
 @SuppressWarnings("unused")
 @FunctionalInterface
-public interface ObjFloatFunction<T, R> {
+public interface ToFloatObjFloatFunction<T> {
 
     /**
-     * Creates a {@link ObjFloatFunction} which always returns a given value.
+     * Creates a {@link ToFloatObjFloatFunction} which always returns a given value.
      *
      * @param <T> The type of argument to the function
-     * @param <R> The type of return value from the function
-     * @param r The return value for the constant
-     * @return A {@code ObjFloatFunction} which always returns a given value.
+     * @param ret The return value for the constant
+     * @return A {@code ToFloatObjFloatFunction} which always returns a given value.
      */
-    static <T, R> ObjFloatFunction<T, R> constant(R r) {
-        return (t, value) -> r;
+    static <T> ToFloatObjFloatFunction<T> constant(float ret) {
+        return (t, value) -> ret;
     }
 
     /**
-     * Creates a {@link ObjFloatFunction} which uses the first parameter of this one as argument for the given {@link
-     * Function}.
+     * Creates a {@link ToFloatObjFloatFunction} which uses the first parameter of this one as argument for the given
+     * {@link ToFloatFunction}.
      *
      * @param <T> The type of argument to the function
-     * @param <R> The return value from the operation
      * @param function The function which accepts the {@code first} parameter of this one
-     * @return Creates a {@code ObjFloatFunction} which uses the first parameter of this one as argument for the given
-     * {@code Function}.
+     * @return Creates a {@code ToFloatObjFloatFunction} which uses the first parameter of this one as argument for the
+     * given {@code ToFloatFunction}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static <T, R> ObjFloatFunction<T, R> onlyFirst(final Function<? super T, ? extends R> function) {
+    static <T> ToFloatObjFloatFunction<T> onlyFirst(final ToFloatFunction<? super T> function) {
         Objects.requireNonNull(function);
-        return (t, value) -> function.apply(t);
+        return (t, value) -> function.applyAsFloat(t);
     }
 
     /**
-     * Creates a {@link ObjFloatFunction} which uses the second parameter of this one as argument for the given {@link
-     * FloatFunction}.
+     * Creates a {@link ToFloatObjFloatFunction} which uses the second parameter of this one as argument for the given
+     * {@link FloatUnaryOperator}.
      *
      * @param <T> The type of argument to the function
-     * @param <R> The return value from the operation
      * @param function The function which accepts the {@code second} parameter of this one
-     * @return Creates a {@code ObjFloatFunction} which uses the second parameter of this one as argument for the given
-     * {@code FloatFunction}.
+     * @return Creates a {@code ToFloatObjFloatFunction} which uses the second parameter of this one as argument for the
+     * given {@code FloatUnaryOperator}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static <T, R> ObjFloatFunction<T, R> onlySecond(final FloatFunction<? extends R> function) {
+    static <T> ToFloatObjFloatFunction<T> onlySecond(final FloatUnaryOperator function) {
         Objects.requireNonNull(function);
-        return (t, value) -> function.apply(value);
+        return (t, value) -> function.applyAsFloat(value);
     }
 
     /**
-     * Performs this {@link ObjFloatFunction} to the given arguments.
+     * Applies this {@link ToFloatObjFloatFunction} to the given arguments.
      *
      * @param t The first argument to the function
      * @param value The second argument to the function
      * @return The return value from the function, which is its result.
      */
-    R apply(T t, float value);
+    float applyAsFloat(T t, float value);
 
     /**
-     * Returns a composed {@link ObjFloatFunction} that first applies the {@code before} functions to its input, and
-     * then applies this operation to the result. If evaluation of either operation throws an exception, it is relayed
-     * to the caller of the composed function.
+     * Returns a composed {@link ToFloatObjFloatFunction} that first applies the {@code before} functions to its input,
+     * and then applies this operation to the result. If evaluation of either operation throws an exception, it is
+     * relayed to the caller of the composed function.
      *
      * @param <U> The type of the argument to the first before operation
      * @param before1 The first {@code Function} to apply before this operation is applied
      * @param before2 The second {@code FloatUnaryOperator} to apply before this operation is applied
-     * @return A composed {@code ObjFloatFunction} that first applies the {@code before} functions to its input, and
-     * then applies this operation to the result.
+     * @return A composed {@code ToFloatObjFloatFunction} that first applies the {@code before} functions to its input,
+     * and then applies this operation to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @see #andThen(Function)
+     * @see #andThen(FloatUnaryOperator)
+     * @see #andThen(FloatFunction)
      */
-    default <U> ObjFloatFunction<U, R> compose(final Function<? super U, ? extends T> before1,
+    default <U> ToFloatObjFloatFunction<U> compose(final Function<? super U, ? extends T> before1,
             final FloatUnaryOperator before2) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
-        return (u, v) -> apply(before1.apply(u), before2.applyAsFloat(v));
+        return (u, value) -> applyAsFloat(before1.apply(u), before2.applyAsFloat(value));
     }
 
     /**
-     * Returns a composed {@link BiFunction} that applies the given {@code before} functions to its input, and then
-     * applies this operation to the result. If evaluation of either operation throws an exception, it is relayed to the
-     * caller of the composed function.
+     * Returns a composed {@link ToFloatBiFunction} that applies the given {@code before} functions to its input, and
+     * then applies this operation to the result. If evaluation of either operation throws an exception, it is relayed
+     * to the caller of the composed function.
      *
      * @param <U> The type of the argument to the first before operation
      * @param <V> The type of the argument to the second before operation
      * @param before1 The first before {@code Function} to apply before this operation is applied
      * @param before2 The second before {@code ToFloatFunction} to apply before this operation is applied
-     * @return A composed {@code BiFunction} that applies the given {@code before} functions to its input, and then
-     * applies this operation to the result.
+     * @return A composed {@code ToFloatBiFunction} that applies the given {@code before} functions to its input, and
+     * then applies this operation to the result.
      * @throws NullPointerException If one of the given functions are {@code null}
-     * @see #andThen(Function)
+     * @see #andThen(FloatUnaryOperator)
+     * @see #andThen(FloatFunction)
      */
-    default <U, V> BiFunction<U, V, R> compose(final Function<? super U, ? extends T> before1,
+    default <U, V> ToFloatBiFunction<U, V> compose(final Function<? super U, ? extends T> before1,
             final ToFloatFunction<? super V> before2) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
-        return (u, v) -> apply(before1.apply(u), before2.applyAsFloat(v));
+        return (u, v) -> applyAsFloat(before1.apply(u), before2.applyAsFloat(v));
     }
 
     /**
@@ -146,9 +146,9 @@ public interface ObjFloatFunction<T, R> {
      * @see #compose(Function, FloatUnaryOperator)
      * @see #compose(Function, ToFloatFunction)
      */
-    default ToFloatObjFloatFunction<T> andThen(final ToFloatFunction<? super R> after) {
+    default ToFloatObjFloatFunction<T> andThen(final FloatUnaryOperator after) {
         Objects.requireNonNull(after);
-        return (t, value) -> after.applyAsFloat(apply(t, value));
+        return (t, value) -> after.applyAsFloat(applyAsFloat(t, value));
     }
 
     /**
@@ -157,16 +157,16 @@ public interface ObjFloatFunction<T, R> {
      * the caller of the composed operation.
      *
      * @param <S> The type of output of the {@code after} function, and of the composed function
-     * @param after The {@code Function} to apply after this operation is applied
+     * @param after The {@code FloatFunction} to apply after this operation is applied
      * @return A composed {@code ObjFloatFunction} that first applies this operation, and then applies the {@code after}
      * operation to the result.
      * @throws NullPointerException If given argument is {@code null}
      * @see #compose(Function, FloatUnaryOperator)
      * @see #compose(Function, ToFloatFunction)
      */
-    default <S> ObjFloatFunction<T, S> andThen(final Function<? super R, ? extends S> after) {
+    default <S> ObjFloatFunction<T, S> andThen(final FloatFunction<? extends S> after) {
         Objects.requireNonNull(after);
-        return (t, value) -> after.apply(apply(t, value));
+        return (t, value) -> after.apply(applyAsFloat(t, value));
     }
 
     /**
@@ -179,9 +179,9 @@ public interface ObjFloatFunction<T, R> {
      * result using the given {@code Consumer}.
      * @throws NullPointerException If given argument is {@code null}
      */
-    default ObjFloatConsumer<T> consume(Consumer<? super R> consumer) {
+    default ObjFloatConsumer<T> consume(FloatConsumer consumer) {
         Objects.requireNonNull(consumer);
-        return (t, value) -> consumer.accept(apply(t, value));
+        return (t, value) -> consumer.accept(applyAsFloat(t, value));
     }
 
     /**
@@ -191,7 +191,7 @@ public interface ObjFloatFunction<T, R> {
      *
      * @return A composed {@code BiFunction} which represents this {@code ObjFloatFunction}.
      */
-    default BiFunction<T, Float, R> boxed() {
-        return this::apply;
+    default BiFunction<T, Float, Float> boxed() {
+        return this::applyAsFloat;
     }
 }

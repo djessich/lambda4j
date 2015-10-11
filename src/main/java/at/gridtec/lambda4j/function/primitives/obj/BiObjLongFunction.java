@@ -19,7 +19,11 @@ import at.gridtec.lambda4j.consumer.primitives.obj.BiObjLongConsumer;
 import at.gridtec.lambda4j.function.TriFunction;
 
 import java.util.Objects;
-import java.util.function.*;
+import java.util.function.Consumer;
+import java.util.function.Function;
+import java.util.function.LongFunction;
+import java.util.function.LongUnaryOperator;
+import java.util.function.ToLongFunction;
 
 /**
  * Represents a function that accepts two object-valued and a {@code long}-valued argument, and produces a result. This
@@ -160,18 +164,18 @@ public interface BiObjLongFunction<T, U, R> {
     }
 
     /**
-     * Returns a composed {@link BiObjLongToLongFunction} that first applies this operation to its input, and then
+     * Returns a composed {@link ToLongBiObjLongFunction} that first applies this operation to its input, and then
      * applies the {@code after} operation to the result. If evaluation of either operation throws an exception, it is
      * relayed to the caller of the composed operation.
      *
      * @param after The {@code ToLongFunction} to apply after this operation is applied
-     * @return A composed {@code BiObjLongToLongFunction} that first applies this operation, and then applies the {@code
+     * @return A composed {@code ToLongBiObjLongFunction} that first applies this operation, and then applies the {@code
      * after} operation to the result.
      * @throws NullPointerException If given argument is {@code null}
      * @see #compose(Function, Function, LongUnaryOperator)
      * @see #compose(Function, Function, ToLongFunction)
      */
-    default BiObjLongToLongFunction<T, U> andThen(final ToLongFunction<? super R> after) {
+    default ToLongBiObjLongFunction<T, U> andThen(final ToLongFunction<? super R> after) {
         Objects.requireNonNull(after);
         return (t, u, value) -> after.applyAsLong(apply(t, u, value));
     }

@@ -164,18 +164,18 @@ public interface BiObjCharFunction<T, U, R> {
     }
 
     /**
-     * Returns a composed {@link BiObjCharToCharFunction} that first applies this operation to its input, and then
+     * Returns a composed {@link ToCharBiObjCharFunction} that first applies this operation to its input, and then
      * applies the {@code after} operation to the result. If evaluation of either operation throws an exception, it is
      * relayed to the caller of the composed operation.
      *
      * @param after The {@code ToCharFunction} to apply after this operation is applied
-     * @return A composed {@code BiObjCharToCharFunction} that first applies this operation, and then applies the {@code
+     * @return A composed {@code ToCharBiObjCharFunction} that first applies this operation, and then applies the {@code
      * after} operation to the result.
      * @throws NullPointerException If given argument is {@code null}
      * @see #compose(Function, Function, CharUnaryOperator)
      * @see #compose(Function, Function, ToCharFunction)
      */
-    default BiObjCharToCharFunction<T, U> andThen(final ToCharFunction<? super R> after) {
+    default ToCharBiObjCharFunction<T, U> andThen(final ToCharFunction<? super R> after) {
         Objects.requireNonNull(after);
         return (t, u, value) -> after.applyAsChar(apply(t, u, value));
     }

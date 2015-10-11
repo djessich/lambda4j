@@ -17,103 +17,101 @@ package at.gridtec.lambda4j.function.primitives.obj;
 
 import java.util.Objects;
 import java.util.function.BiFunction;
-import java.util.function.Consumer;
 import java.util.function.Function;
-import java.util.function.IntBinaryOperator;
+import java.util.function.IntConsumer;
 import java.util.function.IntFunction;
 import java.util.function.IntUnaryOperator;
 import java.util.function.ObjIntConsumer;
+import java.util.function.ToIntBiFunction;
 import java.util.function.ToIntFunction;
 
 /**
- * Represents a function that accepts an object-valued and a {@code int}-valued argument, and produces a result. This is
- * the {@code (reference, int)} specialization of {@link BiFunction}.
+ * Represents a function that accepts an object-valued and a {@code int}-valued argument, and produces a {@code
+ * int}-valued result. This is the {@code (reference, int)}, {@code int}-producing primitive specialization for {@link
+ * BiFunction}.
  * <p>
- * This is a {@link FunctionalInterface} whose functional method is {@link #apply(Object, int)}.
+ * This is a {@link FunctionalInterface} whose functional method is {@link #applyAsInt(Object, int)}.
  *
  * @param <T> The type of argument to the function
- * @param <R> The type of return value from the function
  * @see java.util.function.BiFunction
  */
 @SuppressWarnings("unused")
 @FunctionalInterface
-public interface ObjIntFunction<T, R> {
+public interface ToIntObjIntFunction<T> {
 
     /**
-     * Creates a {@link ObjIntFunction} which always returns a given value.
+     * Creates a {@link ToIntObjIntFunction} which always returns a given value.
      *
      * @param <T> The type of argument to the function
-     * @param <R> The type of return value from the function
-     * @param r The return value for the constant
-     * @return A {@code ObjIntFunction} which always returns a given value.
+     * @param ret The return value for the constant
+     * @return A {@code ToIntObjIntFunction} which always returns a given value.
      */
-    static <T, R> ObjIntFunction<T, R> constant(R r) {
-        return (t, value) -> r;
+    static <T> ToIntObjIntFunction<T> constant(int ret) {
+        return (t, value) -> ret;
     }
 
     /**
-     * Creates a {@link ObjIntFunction} which uses the first parameter of this one as argument for the given {@link
-     * Function}.
+     * Creates a {@link ToIntObjIntFunction} which uses the first parameter of this one as argument for the given {@link
+     * ToIntFunction}.
      *
      * @param <T> The type of argument to the function
-     * @param <R> The return value from the operation
      * @param function The function which accepts the {@code first} parameter of this one
-     * @return Creates a {@code ObjIntFunction} which uses the first parameter of this one as argument for the given
-     * {@code Function}.
+     * @return Creates a {@code ToIntObjIntFunction} which uses the first parameter of this one as argument for the
+     * given {@code ToIntFunction}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static <T, R> ObjIntFunction<T, R> onlyFirst(final Function<? super T, ? extends R> function) {
+    static <T> ToIntObjIntFunction<T> onlyFirst(final ToIntFunction<? super T> function) {
         Objects.requireNonNull(function);
-        return (t, value) -> function.apply(t);
+        return (t, value) -> function.applyAsInt(t);
     }
 
     /**
-     * Creates a {@link ObjIntFunction} which uses the second parameter of this one as argument for the given {@link
-     * IntFunction}.
+     * Creates a {@link ToIntObjIntFunction} which uses the second parameter of this one as argument for the given
+     * {@link IntUnaryOperator}.
      *
      * @param <T> The type of argument to the function
-     * @param <R> The return value from the operation
      * @param function The function which accepts the {@code second} parameter of this one
-     * @return Creates a {@code ObjIntFunction} which uses the second parameter of this one as argument for the given
-     * {@code IntFunction}.
+     * @return Creates a {@code ToIntObjIntFunction} which uses the second parameter of this one as argument for the
+     * given {@code IntUnaryOperator}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static <T, R> ObjIntFunction<T, R> onlySecond(final IntFunction<? extends R> function) {
+    static <T> ToIntObjIntFunction<T> onlySecond(final IntUnaryOperator function) {
         Objects.requireNonNull(function);
-        return (t, value) -> function.apply(value);
+        return (t, value) -> function.applyAsInt(value);
     }
 
     /**
-     * Performs this {@link ObjIntFunction} to the given arguments.
+     * Applies this {@link ToIntObjIntFunction} to the given arguments.
      *
      * @param t The first argument to the function
      * @param value The second argument to the function
      * @return The return value from the function, which is its result.
      */
-    R apply(T t, int value);
+    int applyAsInt(T t, int value);
 
     /**
-     * Returns a composed {@link ObjIntFunction} that first applies the {@code before} functions to its input, and then
-     * applies this operation to the result. If evaluation of either operation throws an exception, it is relayed to the
-     * caller of the composed function.
+     * Returns a composed {@link ToIntObjIntFunction} that first applies the {@code before} functions to its input, and
+     * then applies this operation to the result. If evaluation of either operation throws an exception, it is relayed
+     * to the caller of the composed function.
      *
      * @param <U> The type of the argument to the first before operation
      * @param before1 The first {@code Function} to apply before this operation is applied
      * @param before2 The second {@code IntUnaryOperator} to apply before this operation is applied
-     * @return A composed {@code ObjIntFunction} that first applies the {@code before} functions to its input, and then
-     * applies this operation to the result.
+     * @return A composed {@code ToIntObjIntFunction} that first applies the {@code before} functions to its input, and
+     * then applies this operation to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @see #andThen(Function)
+     * @see #andThen(IntUnaryOperator)
+     * @see #andThen(IntFunction)
      */
-    default <U> ObjIntFunction<U, R> compose(final Function<? super U, ? extends T> before1,
+    default <U> ToIntObjIntFunction<U> compose(final Function<? super U, ? extends T> before1,
             final IntUnaryOperator before2) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
-        return (u, v) -> apply(before1.apply(u), before2.applyAsInt(v));
+        return (u, value) -> applyAsInt(before1.apply(u), before2.applyAsInt(value));
     }
 
     /**
-     * Returns a composed {@link BiFunction} that applies the given {@code before} functions to its input, and then
+     * Returns a composed {@link ToIntBiFunction} that applies the given {@code before} functions to its input, and then
      * applies this operation to the result. If evaluation of either operation throws an exception, it is relayed to the
      * caller of the composed function.
      *
@@ -121,22 +119,23 @@ public interface ObjIntFunction<T, R> {
      * @param <V> The type of the argument to the second before operation
      * @param before1 The first before {@code Function} to apply before this operation is applied
      * @param before2 The second before {@code ToIntFunction} to apply before this operation is applied
-     * @return A composed {@code BiFunction} that applies the given {@code before} functions to its input, and then
+     * @return A composed {@code ToIntBiFunction} that applies the given {@code before} functions to its input, and then
      * applies this operation to the result.
      * @throws NullPointerException If one of the given functions are {@code null}
-     * @see #andThen(Function)
+     * @see #andThen(IntUnaryOperator)
+     * @see #andThen(IntFunction)
      */
-    default <U, V> BiFunction<U, V, R> compose(final Function<? super U, ? extends T> before1,
+    default <U, V> ToIntBiFunction<U, V> compose(final Function<? super U, ? extends T> before1,
             final ToIntFunction<? super V> before2) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
-        return (u, v) -> apply(before1.apply(u), before2.applyAsInt(v));
+        return (u, v) -> applyAsInt(before1.apply(u), before2.applyAsInt(v));
     }
 
     /**
-     * Returns a composed {@link IntBinaryOperator} that first applies this operation to its input, and then applies the
-     * {@code after} operation to the result. If evaluation of either operation throws an exception, it is relayed to
-     * the caller of the composed operation.
+     * Returns a composed {@link ToIntObjIntFunction} that first applies this operation to its input, and then applies
+     * the {@code after} operation to the result. If evaluation of either operation throws an exception, it is relayed
+     * to the caller of the composed operation.
      *
      * @param after The {@code ToIntFunction} to apply after this operation is applied
      * @return A composed {@code IntBinaryOperator} that first applies this operation, and then applies the {@code
@@ -145,9 +144,9 @@ public interface ObjIntFunction<T, R> {
      * @see #compose(Function, IntUnaryOperator)
      * @see #compose(Function, ToIntFunction)
      */
-    default ToIntObjIntFunction<T> andThen(final ToIntFunction<? super R> after) {
+    default ToIntObjIntFunction<T> andThen(final IntUnaryOperator after) {
         Objects.requireNonNull(after);
-        return (t, value) -> after.applyAsInt(apply(t, value));
+        return (t, value) -> after.applyAsInt(applyAsInt(t, value));
     }
 
     /**
@@ -156,16 +155,16 @@ public interface ObjIntFunction<T, R> {
      * the caller of the composed operation.
      *
      * @param <S> The type of output of the {@code after} function, and of the composed function
-     * @param after The {@code Function} to apply after this operation is applied
+     * @param after The {@code IntFunction} to apply after this operation is applied
      * @return A composed {@code ObjIntFunction} that first applies this operation, and then applies the {@code after}
      * operation to the result.
      * @throws NullPointerException If given argument is {@code null}
      * @see #compose(Function, IntUnaryOperator)
      * @see #compose(Function, ToIntFunction)
      */
-    default <S> ObjIntFunction<T, S> andThen(final Function<? super R, ? extends S> after) {
+    default <S> ObjIntFunction<T, S> andThen(final IntFunction<? extends S> after) {
         Objects.requireNonNull(after);
-        return (t, value) -> after.apply(apply(t, value));
+        return (t, value) -> after.apply(applyAsInt(t, value));
     }
 
     /**
@@ -178,9 +177,9 @@ public interface ObjIntFunction<T, R> {
      * result using the given {@code Consumer}.
      * @throws NullPointerException If given argument is {@code null}
      */
-    default ObjIntConsumer<T> consume(Consumer<? super R> consumer) {
+    default ObjIntConsumer<T> consume(IntConsumer consumer) {
         Objects.requireNonNull(consumer);
-        return (t, value) -> consumer.accept(apply(t, value));
+        return (t, value) -> consumer.accept(applyAsInt(t, value));
     }
 
     /**
@@ -190,7 +189,7 @@ public interface ObjIntFunction<T, R> {
      *
      * @return A composed {@code BiFunction} which represents this {@code ObjIntFunction}.
      */
-    default BiFunction<T, Integer, R> boxed() {
-        return this::apply;
+    default BiFunction<T, Integer, Integer> boxed() {
+        return this::applyAsInt;
     }
 }

@@ -18,11 +18,11 @@ package at.gridtec.lambda4j.function.primitives.obj;
 import at.gridtec.lambda4j.function.TriFunction;
 
 /**
- * Represents a function that accepts two object-valued and a {@code long}-valued argument, and produces a {@code
- * long}-valued result. This is the {@code (reference, reference, long)}, {@code long}-producing primitive
+ * Represents a function that accepts two object-valued and a {@code short}-valued argument, and produces a {@code
+ * short}-valued result. This is the {@code (reference, reference, short)}, {@code short}-producing primitive
  * specialization for {@link TriFunction}.
  * <p>
- * This is a {@link FunctionalInterface} whose functional method is {@link #applyAsLong(Object, Object, long)}.
+ * This is a {@link FunctionalInterface} whose functional method is {@link #applyAsShort(Object, Object, short)}.
  *
  * @param <T> The type of the first argument to the function
  * @param <U> The type of the second argument to the function
@@ -30,15 +30,15 @@ import at.gridtec.lambda4j.function.TriFunction;
  */
 @SuppressWarnings("unused")
 @FunctionalInterface
-public interface BiObjLongToLongFunction<T, U> {
+public interface ToShortBiObjShortFunction<T, U> {
 
     /**
-     * Applies this {@link BiObjLongToLongFunction} to the given arguments.
+     * Applies this {@link ToShortBiObjShortFunction} to the given arguments.
      *
      * @param t The first argument to the function
      * @param u The second argument to the function
      * @param value The third argument to the function
      * @return The return value from the function, which is its result.
      */
-    long applyAsLong(T t, U u, long value);
+    short applyAsShort(T t, U u, short value);
 }

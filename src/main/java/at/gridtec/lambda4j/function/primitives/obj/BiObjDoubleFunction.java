@@ -19,7 +19,11 @@ import at.gridtec.lambda4j.consumer.primitives.obj.BiObjDoubleConsumer;
 import at.gridtec.lambda4j.function.TriFunction;
 
 import java.util.Objects;
-import java.util.function.*;
+import java.util.function.Consumer;
+import java.util.function.DoubleFunction;
+import java.util.function.DoubleUnaryOperator;
+import java.util.function.Function;
+import java.util.function.ToDoubleFunction;
 
 /**
  * Represents a function that accepts two object-valued and a {@code double}-valued argument, and produces a result.
@@ -160,18 +164,18 @@ public interface BiObjDoubleFunction<T, U, R> {
     }
 
     /**
-     * Returns a composed {@link BiObjDoubleToDoubleFunction} that first applies this operation to its input, and then
+     * Returns a composed {@link ToDoubleBiObjDoubleFunction} that first applies this operation to its input, and then
      * applies the {@code after} operation to the result. If evaluation of either operation throws an exception, it is
      * relayed to the caller of the composed operation.
      *
      * @param after The {@code ToDoubleFunction} to apply after this operation is applied
-     * @return A composed {@code BiObjDoubleToDoubleFunction} that first applies this operation, and then applies the
+     * @return A composed {@code ToDoubleBiObjDoubleFunction} that first applies this operation, and then applies the
      * {@code after} operation to the result.
      * @throws NullPointerException If given argument is {@code null}
      * @see #compose(Function, Function, DoubleUnaryOperator)
      * @see #compose(Function, Function, ToDoubleFunction)
      */
-    default BiObjDoubleToDoubleFunction<T, U> andThen(final ToDoubleFunction<? super R> after) {
+    default ToDoubleBiObjDoubleFunction<T, U> andThen(final ToDoubleFunction<? super R> after) {
         Objects.requireNonNull(after);
         return (t, u, value) -> after.applyAsDouble(apply(t, u, value));
     }

@@ -15,28 +15,30 @@
  */
 package at.gridtec.lambda4j.function.primitives.obj;
 
-import java.util.function.BiFunction;
+import at.gridtec.lambda4j.function.TriFunction;
 
 /**
- * Represents a function that accepts an object-valued and a {@code float}-valued argument, and produces a {@code
- * float}-valued result. This is the {@code (reference, float)}, {@code float}-producing primitive specialization for
- * {@link BiFunction}.
+ * Represents a function that accepts two object-valued and a {@code char}-valued argument, and produces a {@code
+ * char}-valued result. This is the {@code (reference, reference, char)}, {@code char}-producing primitive
+ * specialization for {@link TriFunction}.
  * <p>
- * This is a {@link FunctionalInterface} whose functional method is {@link #applyAsFloat(Object, float)}.
+ * This is a {@link FunctionalInterface} whose functional method is {@link #applyAsChar(Object, Object, char)}.
  *
- * @param <T> The type of argument to the function
- * @see java.util.function.BiFunction
+ * @param <T> The type of the first argument to the function
+ * @param <U> The type of the second argument to the function
+ * @see TriFunction
  */
 @SuppressWarnings("unused")
 @FunctionalInterface
-public interface ObjFloatToFloatFunction<T> {
+public interface ToCharBiObjCharFunction<T, U> {
 
     /**
-     * Applies this {@link ObjFloatToFloatFunction} to the given arguments.
+     * Applies this {@link ToCharBiObjCharFunction} to the given arguments.
      *
      * @param t The first argument to the function
-     * @param value The second argument to the function
+     * @param u The second argument to the function
+     * @param value The third argument to the function
      * @return The return value from the function, which is its result.
      */
-    float applyAsFloat(T t, float value);
+    char applyAsChar(T t, U u, char value);
 }

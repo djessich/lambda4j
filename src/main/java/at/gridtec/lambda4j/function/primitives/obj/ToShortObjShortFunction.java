@@ -15,123 +15,123 @@
  */
 package at.gridtec.lambda4j.function.primitives.obj;
 
+import at.gridtec.lambda4j.consumer.primitives.ShortConsumer;
 import at.gridtec.lambda4j.consumer.primitives.obj.ObjShortConsumer;
 import at.gridtec.lambda4j.function.primitives.ShortFunction;
 import at.gridtec.lambda4j.function.primitives.to.ToShortFunction;
+import at.gridtec.lambda4j.function.primitives.to.bi.ToShortBiFunction;
 import at.gridtec.lambda4j.operators.binary.ShortBinaryOperator;
 import at.gridtec.lambda4j.operators.unary.ShortUnaryOperator;
 
 import java.util.Objects;
 import java.util.function.BiFunction;
-import java.util.function.Consumer;
 import java.util.function.Function;
 
 /**
- * Represents a function that accepts an object-valued and a {@code short}-valued argument, and produces a result. This
- * is the {@code (reference, short)} specialization of {@link BiFunction}.
+ * Represents a function that accepts an object-valued and a {@code short}-valued argument, and produces a {@code
+ * short}-valued result. This is the {@code (reference, short)}, {@code short}-producing primitive specialization for
+ * {@link BiFunction}.
  * <p>
- * This is a {@link FunctionalInterface} whose functional method is {@link #apply(Object, short)}.
+ * This is a {@link FunctionalInterface} whose functional method is {@link #applyAsShort(Object, short)}.
  *
  * @param <T> The type of argument to the function
- * @param <R> The type of return value from the function
  * @see java.util.function.BiFunction
  */
 @SuppressWarnings("unused")
 @FunctionalInterface
-public interface ObjShortFunction<T, R> {
+public interface ToShortObjShortFunction<T> {
 
     /**
-     * Creates a {@link ObjShortFunction} which always returns a given value.
+     * Creates a {@link ToShortObjShortFunction} which always returns a given value.
      *
      * @param <T> The type of argument to the function
-     * @param <R> The type of return value from the function
-     * @param r The return value for the constant
-     * @return A {@code ObjShortFunction} which always returns a given value.
+     * @param ret The return value for the constant
+     * @return A {@code ToShortObjShortFunction} which always returns a given value.
      */
-    static <T, R> ObjShortFunction<T, R> constant(R r) {
-        return (t, value) -> r;
+    static <T> ToShortObjShortFunction<T> constant(short ret) {
+        return (t, value) -> ret;
     }
 
     /**
-     * Creates a {@link ObjShortFunction} which uses the first parameter of this one as argument for the given {@link
-     * Function}.
+     * Creates a {@link ToShortObjShortFunction} which uses the first parameter of this one as argument for the given
+     * {@link ToShortFunction}.
      *
      * @param <T> The type of argument to the function
-     * @param <R> The return value from the operation
      * @param function The function which accepts the {@code first} parameter of this one
-     * @return Creates a {@code ObjShortFunction} which uses the first parameter of this one as argument for the given
-     * {@code Function}.
+     * @return Creates a {@code ToShortObjShortFunction} which uses the first parameter of this one as argument for the
+     * given {@code ToShortFunction}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static <T, R> ObjShortFunction<T, R> onlyFirst(final Function<? super T, ? extends R> function) {
+    static <T> ToShortObjShortFunction<T> onlyFirst(final ToShortFunction<? super T> function) {
         Objects.requireNonNull(function);
-        return (t, value) -> function.apply(t);
+        return (t, value) -> function.applyAsShort(t);
     }
 
     /**
-     * Creates a {@link ObjShortFunction} which uses the second parameter of this one as argument for the given {@link
-     * ShortFunction}.
+     * Creates a {@link ToShortObjShortFunction} which uses the second parameter of this one as argument for the given
+     * {@link ShortUnaryOperator}.
      *
      * @param <T> The type of argument to the function
-     * @param <R> The return value from the operation
      * @param function The function which accepts the {@code second} parameter of this one
-     * @return Creates a {@code ObjShortFunction} which uses the second parameter of this one as argument for the given
-     * {@code ShortFunction}.
+     * @return Creates a {@code ToShortObjShortFunction} which uses the second parameter of this one as argument for the
+     * given {@code ShortUnaryOperator}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static <T, R> ObjShortFunction<T, R> onlySecond(final ShortFunction<? extends R> function) {
+    static <T> ToShortObjShortFunction<T> onlySecond(final ShortUnaryOperator function) {
         Objects.requireNonNull(function);
-        return (t, value) -> function.apply(value);
+        return (t, value) -> function.applyAsShort(value);
     }
 
     /**
-     * Performs this {@link ObjShortFunction} to the given arguments.
+     * Applies this {@link ToShortObjShortFunction} to the given arguments.
      *
      * @param t The first argument to the function
      * @param value The second argument to the function
      * @return The return value from the function, which is its result.
      */
-    R apply(T t, short value);
+    short applyAsShort(T t, short value);
 
     /**
-     * Returns a composed {@link ObjShortFunction} that first applies the {@code before} functions to its input, and
-     * then applies this operation to the result. If evaluation of either operation throws an exception, it is relayed
-     * to the caller of the composed function.
+     * Returns a composed {@link ToShortObjShortFunction} that first applies the {@code before} functions to its input,
+     * and then applies this operation to the result. If evaluation of either operation throws an exception, it is
+     * relayed to the caller of the composed function.
      *
      * @param <U> The type of the argument to the first before operation
      * @param before1 The first {@code Function} to apply before this operation is applied
      * @param before2 The second {@code ShortUnaryOperator} to apply before this operation is applied
-     * @return A composed {@code ObjShortFunction} that first applies the {@code before} functions to its input, and
-     * then applies this operation to the result.
+     * @return A composed {@code ToShortObjShortFunction} that first applies the {@code before} functions to its input,
+     * and then applies this operation to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @see #andThen(Function)
+     * @see #andThen(ShortUnaryOperator)
+     * @see #andThen(ShortFunction)
      */
-    default <U> ObjShortFunction<U, R> compose(final Function<? super U, ? extends T> before1,
+    default <U> ToShortObjShortFunction<U> compose(final Function<? super U, ? extends T> before1,
             final ShortUnaryOperator before2) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
-        return (u, v) -> apply(before1.apply(u), before2.applyAsShort(v));
+        return (u, value) -> applyAsShort(before1.apply(u), before2.applyAsShort(value));
     }
 
     /**
-     * Returns a composed {@link BiFunction} that applies the given {@code before} functions to its input, and then
-     * applies this operation to the result. If evaluation of either operation throws an exception, it is relayed to the
-     * caller of the composed function.
+     * Returns a composed {@link ToShortBiFunction} that applies the given {@code before} functions to its input, and
+     * then applies this operation to the result. If evaluation of either operation throws an exception, it is relayed
+     * to the caller of the composed function.
      *
      * @param <U> The type of the argument to the first before operation
      * @param <V> The type of the argument to the second before operation
      * @param before1 The first before {@code Function} to apply before this operation is applied
      * @param before2 The second before {@code ToShortFunction} to apply before this operation is applied
-     * @return A composed {@code BiFunction} that applies the given {@code before} functions to its input, and then
-     * applies this operation to the result.
+     * @return A composed {@code ToShortBiFunction} that applies the given {@code before} functions to its input, and
+     * then applies this operation to the result.
      * @throws NullPointerException If one of the given functions are {@code null}
-     * @see #andThen(Function)
+     * @see #andThen(ShortUnaryOperator)
+     * @see #andThen(ShortFunction)
      */
-    default <U, V> BiFunction<U, V, R> compose(final Function<? super U, ? extends T> before1,
+    default <U, V> ToShortBiFunction<U, V> compose(final Function<? super U, ? extends T> before1,
             final ToShortFunction<? super V> before2) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
-        return (u, v) -> apply(before1.apply(u), before2.applyAsShort(v));
+        return (u, v) -> applyAsShort(before1.apply(u), before2.applyAsShort(v));
     }
 
     /**
@@ -146,9 +146,9 @@ public interface ObjShortFunction<T, R> {
      * @see #compose(Function, ShortUnaryOperator)
      * @see #compose(Function, ToShortFunction)
      */
-    default ToShortObjShortFunction<T> andThen(final ToShortFunction<? super R> after) {
+    default ToShortObjShortFunction<T> andThen(final ShortUnaryOperator after) {
         Objects.requireNonNull(after);
-        return (t, value) -> after.applyAsShort(apply(t, value));
+        return (t, value) -> after.applyAsShort(applyAsShort(t, value));
     }
 
     /**
@@ -157,16 +157,16 @@ public interface ObjShortFunction<T, R> {
      * the caller of the composed operation.
      *
      * @param <S> The type of output of the {@code after} function, and of the composed function
-     * @param after The {@code Function} to apply after this operation is applied
+     * @param after The {@code ShortFunction} to apply after this operation is applied
      * @return A composed {@code ObjShortFunction} that first applies this operation, and then applies the {@code after}
      * operation to the result.
      * @throws NullPointerException If given argument is {@code null}
      * @see #compose(Function, ShortUnaryOperator)
      * @see #compose(Function, ToShortFunction)
      */
-    default <S> ObjShortFunction<T, S> andThen(final Function<? super R, ? extends S> after) {
+    default <S> ObjShortFunction<T, S> andThen(final ShortFunction<? extends S> after) {
         Objects.requireNonNull(after);
-        return (t, value) -> after.apply(apply(t, value));
+        return (t, value) -> after.apply(applyAsShort(t, value));
     }
 
     /**
@@ -179,9 +179,9 @@ public interface ObjShortFunction<T, R> {
      * result using the given {@code Consumer}.
      * @throws NullPointerException If given argument is {@code null}
      */
-    default ObjShortConsumer<T> consume(Consumer<? super R> consumer) {
+    default ObjShortConsumer<T> consume(ShortConsumer consumer) {
         Objects.requireNonNull(consumer);
-        return (t, value) -> consumer.accept(apply(t, value));
+        return (t, value) -> consumer.accept(applyAsShort(t, value));
     }
 
     /**
@@ -191,7 +191,7 @@ public interface ObjShortFunction<T, R> {
      *
      * @return A composed {@code BiFunction} which represents this {@code ObjShortFunction}.
      */
-    default BiFunction<T, Short, R> boxed() {
-        return this::apply;
+    default BiFunction<T, Short, Short> boxed() {
+        return this::applyAsShort;
     }
 }

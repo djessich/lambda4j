@@ -164,18 +164,18 @@ public interface BiObjShortFunction<T, U, R> {
     }
 
     /**
-     * Returns a composed {@link BiObjShortToShortFunction} that first applies this operation to its input, and then
+     * Returns a composed {@link ToShortBiObjShortFunction} that first applies this operation to its input, and then
      * applies the {@code after} operation to the result. If evaluation of either operation throws an exception, it is
      * relayed to the caller of the composed operation.
      *
      * @param after The {@code ToShortFunction} to apply after this operation is applied
-     * @return A composed {@code BiObjShortToShortFunction} that first applies this operation, and then applies the
+     * @return A composed {@code ToShortBiObjShortFunction} that first applies this operation, and then applies the
      * {@code after} operation to the result.
      * @throws NullPointerException If given argument is {@code null}
      * @see #compose(Function, Function, ShortUnaryOperator)
      * @see #compose(Function, Function, ToShortFunction)
      */
-    default BiObjShortToShortFunction<T, U> andThen(final ToShortFunction<? super R> after) {
+    default ToShortBiObjShortFunction<T, U> andThen(final ToShortFunction<? super R> after) {
         Objects.requireNonNull(after);
         return (t, u, value) -> after.applyAsShort(apply(t, u, value));
     }

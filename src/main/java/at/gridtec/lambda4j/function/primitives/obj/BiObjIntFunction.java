@@ -19,7 +19,11 @@ import at.gridtec.lambda4j.consumer.primitives.obj.BiObjIntConsumer;
 import at.gridtec.lambda4j.function.TriFunction;
 
 import java.util.Objects;
-import java.util.function.*;
+import java.util.function.Consumer;
+import java.util.function.Function;
+import java.util.function.IntFunction;
+import java.util.function.IntUnaryOperator;
+import java.util.function.ToIntFunction;
 
 /**
  * Represents a function that accepts two object-valued and a {@code int}-valued argument, and produces a result. This
@@ -160,18 +164,18 @@ public interface BiObjIntFunction<T, U, R> {
     }
 
     /**
-     * Returns a composed {@link BiObjIntToIntFunction} that first applies this operation to its input, and then applies
+     * Returns a composed {@link ToIntBiObjIntFunction} that first applies this operation to its input, and then applies
      * the {@code after} operation to the result. If evaluation of either operation throws an exception, it is relayed
      * to the caller of the composed operation.
      *
      * @param after The {@code ToIntFunction} to apply after this operation is applied
-     * @return A composed {@code BiObjIntToIntFunction} that first applies this operation, and then applies the {@code
+     * @return A composed {@code ToIntBiObjIntFunction} that first applies this operation, and then applies the {@code
      * after} operation to the result.
      * @throws NullPointerException If given argument is {@code null}
      * @see #compose(Function, Function, IntUnaryOperator)
      * @see #compose(Function, Function, ToIntFunction)
      */
-    default BiObjIntToIntFunction<T, U> andThen(final ToIntFunction<? super R> after) {
+    default ToIntBiObjIntFunction<T, U> andThen(final ToIntFunction<? super R> after) {
         Objects.requireNonNull(after);
         return (t, u, value) -> after.applyAsInt(apply(t, u, value));
     }

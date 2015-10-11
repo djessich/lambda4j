@@ -18,11 +18,11 @@ package at.gridtec.lambda4j.function.primitives.obj;
 import at.gridtec.lambda4j.function.TriFunction;
 
 /**
- * Represents a function that accepts two object-valued and a {@code char}-valued argument, and produces a {@code
- * char}-valued result. This is the {@code (reference, reference, char)}, {@code char}-producing primitive
- * specialization for {@link TriFunction}.
+ * Represents a function that accepts two object-valued and a {@code int}-valued argument, and produces a {@code
+ * int}-valued result. This is the {@code (reference, reference, int)}, {@code int}-producing primitive specialization
+ * for {@link TriFunction}.
  * <p>
- * This is a {@link FunctionalInterface} whose functional method is {@link #applyAsChar(Object, Object, char)}.
+ * This is a {@link FunctionalInterface} whose functional method is {@link #applyAsInt(Object, Object, int)}.
  *
  * @param <T> The type of the first argument to the function
  * @param <U> The type of the second argument to the function
@@ -30,15 +30,15 @@ import at.gridtec.lambda4j.function.TriFunction;
  */
 @SuppressWarnings("unused")
 @FunctionalInterface
-public interface BiObjCharToCharFunction<T, U> {
+public interface ToIntBiObjIntFunction<T, U> {
 
     /**
-     * Applies this {@link BiObjCharToCharFunction} to the given arguments.
+     * Applies this {@link ToIntBiObjIntFunction} to the given arguments.
      *
      * @param t The first argument to the function
      * @param u The second argument to the function
      * @param value The third argument to the function
      * @return The return value from the function, which is its result.
      */
-    char applyAsChar(T t, U u, char value);
+    int applyAsInt(T t, U u, int value);
 }
