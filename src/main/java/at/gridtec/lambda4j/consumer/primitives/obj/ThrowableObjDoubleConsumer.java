@@ -47,7 +47,7 @@ import java.util.function.ObjDoubleConsumer;
  * <p>
  * This is a {@link FunctionalInterface} whose functional method is {@link #accept(Object, double)}.
  *
- * @param <T> The type of argument for the operation
+ * @param <T> The type of argument to the operation to be consumed
  * @apiNote This is a throwable JRE lambda
  * @see java.util.function.Consumer
  */
@@ -61,7 +61,7 @@ public interface ThrowableObjDoubleConsumer<T> extends ObjDoubleConsumer<T> {
      * overloaded methods accepting different functional interfaces. The given {@code ThrowableObjDoubleConsumer} is
      * returned as-is.
      *
-     * @param <T> The type of argument for the operation
+     * @param <T> The type of argument to the operation to be consumed
      * @param lambda The {@code ThrowableObjDoubleConsumer} which should be returned as-is.
      * @return The given {@code ThrowableObjDoubleConsumer} as-is.
      * @throws NullPointerException If the given argument is {@code null}
@@ -76,7 +76,7 @@ public interface ThrowableObjDoubleConsumer<T> extends ObjDoubleConsumer<T> {
      * convenience to provide a mapping for the non-throwable/throwable instances of the corresponding functional
      * interface.
      *
-     * @param <T> The type of argument for the operation
+     * @param <T> The type of argument to the operation to be consumed
      * @param lambda A {@code ObjDoubleConsumer} which should be mapped to its throwable counterpart
      * @return A {@code ThrowableObjDoubleConsumer} from the given {@code ObjDoubleConsumer}.
      * @throws NullPointerException If the given argument is {@code null}
@@ -90,7 +90,7 @@ public interface ThrowableObjDoubleConsumer<T> extends ObjDoubleConsumer<T> {
      * Creates a {@link ObjDoubleConsumer} which uses the {@code first} parameter of this one as argument for the given
      * {@link Consumer}.
      *
-     * @param <T> The type of the first argument to the operation
+     * @param <T> The type of the first argument to the operation to be consumed
      * @param consumer The consumer which accepts the {@code first} parameter of this one
      * @return Creates a {@code ObjDoubleConsumer} which uses the {@code first} parameter of this one as argument for
      * the given {@code Consumer}.
@@ -105,7 +105,7 @@ public interface ThrowableObjDoubleConsumer<T> extends ObjDoubleConsumer<T> {
      * Creates a {@link ObjDoubleConsumer} which uses the {@code second} parameter of this one as argument for the given
      * {@link DoubleConsumer}.
      *
-     * @param <T> The type of the first argument to the operation
+     * @param <T> The type of the first argument to the operation to be consumed
      * @param consumer The consumer which accepts the {@code second} parameter of this one
      * @return Creates a {@code ObjDoubleConsumer} which uses the {@code second} parameter of this one as argument for
      * the given {@code DoubleConsumer}.
@@ -119,8 +119,8 @@ public interface ThrowableObjDoubleConsumer<T> extends ObjDoubleConsumer<T> {
     /**
      * The accept method for this {@link ObjDoubleConsumer} which is able to throw any {@link Exception} type.
      *
-     * @param t The first argument for the operation to be consumed
-     * @param value The second argument for the operation to be consumed
+     * @param t The first argument to the operation to be consumed
+     * @param value The second argument to the operation to be consumed
      * @throws Exception Any exception from this operations action
      */
     void acceptThrows(T t, double value) throws Exception;
@@ -131,8 +131,8 @@ public interface ThrowableObjDoubleConsumer<T> extends ObjDoubleConsumer<T> {
      * Exception}s from it. If it is of type {@link RuntimeException}, the exception is rethrown. Other exception types
      * are sneakily thrown.
      *
-     * @param t The first argument for the operation to be consumed
-     * @param value The second argument for the operation to be consumed
+     * @param t The first argument to the operation to be consumed
+     * @param value The second argument to the operation to be consumed
      * @see ThrowableUtils#sneakyThrow(Throwable)
      */
     @Override

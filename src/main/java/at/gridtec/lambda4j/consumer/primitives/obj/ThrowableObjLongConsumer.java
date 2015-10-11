@@ -47,7 +47,7 @@ import java.util.function.ObjLongConsumer;
  * <p>
  * This is a {@link FunctionalInterface} whose functional method is {@link #accept(Object, long)}.
  *
- * @param <T> The type of argument for the operation
+ * @param <T> The type of argument to the operation to be consumed
  * @apiNote This is a throwable JRE lambda
  * @see Consumer
  */
@@ -61,7 +61,7 @@ public interface ThrowableObjLongConsumer<T> extends ObjLongConsumer<T> {
      * overloaded methods accepting different functional interfaces. The given {@code ThrowableObjLongConsumer} is
      * returned as-is.
      *
-     * @param <T> The type of argument for the operation
+     * @param <T> The type of argument to the operation to be consumed
      * @param lambda The {@code ThrowableObjLongConsumer} which should be returned as-is.
      * @return The given {@code ThrowableObjLongConsumer} as-is.
      * @throws NullPointerException If the given argument is {@code null}
@@ -76,7 +76,7 @@ public interface ThrowableObjLongConsumer<T> extends ObjLongConsumer<T> {
      * convenience to provide a mapping for the non-throwable/throwable instances of the corresponding functional
      * interface.
      *
-     * @param <T> The type of argument for the operation
+     * @param <T> The type of argument to the operation to be consumed
      * @param lambda A {@code ObjLongConsumer} which should be mapped to its throwable counterpart
      * @return A {@code ThrowableObjLongConsumer} from the given {@code ObjLongConsumer}.
      * @throws NullPointerException If the given argument is {@code null}
@@ -90,7 +90,7 @@ public interface ThrowableObjLongConsumer<T> extends ObjLongConsumer<T> {
      * Creates a {@link ObjLongConsumer} which uses the {@code first} parameter of this one as argument for the given
      * {@link Consumer}.
      *
-     * @param <T> The type of the first argument to the operation
+     * @param <T> The type of the first argument to the operation to be consumed
      * @param consumer The consumer which accepts the {@code first} parameter of this one
      * @return Creates a {@code ObjLongConsumer} which uses the {@code first} parameter of this one as argument for the
      * given {@code Consumer}.
@@ -105,7 +105,7 @@ public interface ThrowableObjLongConsumer<T> extends ObjLongConsumer<T> {
      * Creates a {@link ObjLongConsumer} which uses the {@code second} parameter of this one as argument for the given
      * {@link LongConsumer}.
      *
-     * @param <T> The type of the first argument to the operation
+     * @param <T> The type of the first argument to the operation to be consumed
      * @param consumer The consumer which accepts the {@code second} parameter of this one
      * @return Creates a {@code ObjLongConsumer} which uses the {@code second} parameter of this one as argument for the
      * given {@code LongConsumer}.
@@ -119,8 +119,8 @@ public interface ThrowableObjLongConsumer<T> extends ObjLongConsumer<T> {
     /**
      * The accept method for this {@link ObjLongConsumer} which is able to throw any {@link Exception} type.
      *
-     * @param t The first argument for the operation to be consumed
-     * @param value The second argument for the operation to be consumed
+     * @param t The first argument to the operation to be consumed
+     * @param value The second argument to the operation to be consumed
      * @throws Exception Any exception from this operations action
      */
     void acceptThrows(T t, long value) throws Exception;
@@ -131,8 +131,8 @@ public interface ThrowableObjLongConsumer<T> extends ObjLongConsumer<T> {
      * from it. If it is of type {@link RuntimeException}, the exception is rethrown. Other exception types are sneakily
      * thrown.
      *
-     * @param t The first argument for the operation to be consumed
-     * @param value The second argument for the operation to be consumed
+     * @param t The first argument to the operation to be consumed
+     * @param value The second argument to the operation to be consumed
      * @see ThrowableUtils#sneakyThrow(Throwable)
      */
     @Override

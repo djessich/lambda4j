@@ -46,7 +46,7 @@ import java.util.function.Consumer;
  * <p>
  * This is a {@link FunctionalInterface} whose functional method is {@link #accept(Object, char)}.
  *
- * @param <T> The type of argument for the operation
+ * @param <T> The type of argument to the operation to be consumed
  * @see Consumer
  */
 @SuppressWarnings("unused")
@@ -59,7 +59,7 @@ public interface ThrowableObjCharConsumer<T> extends ObjCharConsumer<T> {
      * overloaded methods accepting different functional interfaces. The given {@code ThrowableObjCharConsumer} is
      * returned as-is.
      *
-     * @param <T> The type of argument for the operation
+     * @param <T> The type of argument to the operation to be consumed
      * @param lambda The {@code ThrowableObjCharConsumer} which should be returned as-is.
      * @return The given {@code ThrowableObjCharConsumer} as-is.
      * @throws NullPointerException If the given argument is {@code null}
@@ -74,7 +74,7 @@ public interface ThrowableObjCharConsumer<T> extends ObjCharConsumer<T> {
      * convenience to provide a mapping for the non-throwable/throwable instances of the corresponding functional
      * interface.
      *
-     * @param <T> The type of argument for the operation
+     * @param <T> The type of argument to the operation to be consumed
      * @param lambda A {@code ObjCharConsumer} which should be mapped to its throwable counterpart
      * @return A {@code ThrowableObjCharConsumer} from the given {@code ObjCharConsumer}.
      * @throws NullPointerException If the given argument is {@code null}
@@ -88,7 +88,7 @@ public interface ThrowableObjCharConsumer<T> extends ObjCharConsumer<T> {
      * Creates a {@link ObjCharConsumer} which uses the {@code first} parameter of this one as argument for the given
      * {@link Consumer}.
      *
-     * @param <T> The type of the first argument to the operation
+     * @param <T> The type of the first argument to the operation to be consumed
      * @param consumer The consumer which accepts the {@code first} parameter of this one
      * @return Creates a {@code ObjCharConsumer} which uses the {@code first} parameter of this one as argument for the
      * given {@code Consumer}.
@@ -103,7 +103,7 @@ public interface ThrowableObjCharConsumer<T> extends ObjCharConsumer<T> {
      * Creates a {@link ObjCharConsumer} which uses the {@code second} parameter of this one as argument for the given
      * {@link CharConsumer}.
      *
-     * @param <T> The type of the first argument to the operation
+     * @param <T> The type of the first argument to the operation to be consumed
      * @param consumer The consumer which accepts the {@code second} parameter of this one
      * @return Creates a {@code ObjCharConsumer} which uses the {@code second} parameter of this one as argument for the
      * given {@code CharConsumer}.
@@ -117,8 +117,8 @@ public interface ThrowableObjCharConsumer<T> extends ObjCharConsumer<T> {
     /**
      * The accept method for this {@link ObjCharConsumer} which is able to throw any {@link Exception} type.
      *
-     * @param t The first argument for the operation to be consumed
-     * @param value The second argument for the operation to be consumed
+     * @param t The first argument to the operation to be consumed
+     * @param value The second argument to the operation to be consumed
      * @throws Exception Any exception from this operations action
      */
     void acceptThrows(T t, char value) throws Exception;
@@ -129,8 +129,8 @@ public interface ThrowableObjCharConsumer<T> extends ObjCharConsumer<T> {
      * from it. If it is of type {@link RuntimeException}, the exception is rethrown. Other exception types are sneakily
      * thrown.
      *
-     * @param t The first argument for the operation to be consumed
-     * @param value The second argument for the operation to be consumed
+     * @param t The first argument to the operation to be consumed
+     * @param value The second argument to the operation to be consumed
      * @see ThrowableUtils#sneakyThrow(Throwable)
      */
     @Override

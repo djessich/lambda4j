@@ -47,8 +47,8 @@ import java.util.function.Consumer;
  * <p>
  * This is a {@link FunctionalInterface} whose functional method is {@link #acceptThrows(Object, Object, short)} .
  *
- * @param <T> The type of the first argument to the operation
- * @param <U> The type of the second argument to the operation
+ * @param <T> The type of the first argument to the operation to be consumed
+ * @param <U> The type of the second argument to the operation to be consumed
  * @see TriConsumer
  */
 @SuppressWarnings("unused")
@@ -61,8 +61,8 @@ public interface ThrowableBiObjShortConsumer<T, U> extends BiObjShortConsumer<T,
      * might happen for overloaded methods accepting different functional interfaces. The given {@code
      * ThrowableBiObjShortConsumer} is returned as-is.
      *
-     * @param <T> The type of the first argument to the operation
-     * @param <U> The type of the second argument to the operation
+     * @param <T> The type of the first argument to the operation to be consumed
+     * @param <U> The type of the second argument to the operation to be consumed
      * @param lambda The {@code ThrowableBiObjShortConsumer} which should be returned as-is.
      * @return The given {@code ThrowableBiObjShortConsumer} as-is.
      * @throws NullPointerException If the given argument is {@code null}
@@ -77,8 +77,8 @@ public interface ThrowableBiObjShortConsumer<T, U> extends BiObjShortConsumer<T,
      * convenience to provide a mapping for the non-throwable/throwable instances of the corresponding functional
      * interface.
      *
-     * @param <T> The type of the first argument to the operation
-     * @param <U> The type of the second argument to the operation
+     * @param <T> The type of the first argument to the operation to be consumed
+     * @param <U> The type of the second argument to the operation to be consumed
      * @param lambda A {@code BiObjShortConsumer} which should be mapped to its throwable counterpart
      * @return A {@code ThrowableBiObjShortConsumer} from the given {@code BiObjShortConsumer}.
      * @throws NullPointerException If the given argument is {@code null}
@@ -92,8 +92,8 @@ public interface ThrowableBiObjShortConsumer<T, U> extends BiObjShortConsumer<T,
      * Creates a {@link ThrowableBiObjShortConsumer} which uses the {@code first} parameter of this one as argument for
      * the given {@link Consumer}.
      *
-     * @param <T> The type of the first argument to the operation
-     * @param <U> The type of the second argument to the operation
+     * @param <T> The type of the first argument to the operation to be consumed
+     * @param <U> The type of the second argument to the operation to be consumed
      * @param consumer The consumer which accepts the {@code first} parameter of this one
      * @return Creates a {@code ThrowableBiObjShortConsumer} which uses the {@code first} parameter of this one as
      * argument for the given {@code Consumer}.
@@ -108,8 +108,8 @@ public interface ThrowableBiObjShortConsumer<T, U> extends BiObjShortConsumer<T,
      * Creates a {@link ThrowableBiObjShortConsumer} which uses the {@code second} parameter of this one as argument for
      * the given {@link Consumer}.
      *
-     * @param <T> The type of the first argument to the operation
-     * @param <U> The type of the second argument to the operation
+     * @param <T> The type of the first argument to the operation to be consumed
+     * @param <U> The type of the second argument to the operation to be consumed
      * @param consumer The consumer which accepts the {@code second} parameter of this one
      * @return Creates a {@code ThrowableBiObjShortConsumer} which uses the {@code second} parameter of this one as
      * argument for the given {@code Consumer}.
@@ -124,8 +124,8 @@ public interface ThrowableBiObjShortConsumer<T, U> extends BiObjShortConsumer<T,
      * Creates a {@link ThrowableBiObjShortConsumer} which uses the {@code third} parameter of this one as argument for
      * the given {@link ShortConsumer}.
      *
-     * @param <T> The type of the first argument to the operation
-     * @param <U> The type of the second argument to the operation
+     * @param <T> The type of the first argument to the operation to be consumed
+     * @param <U> The type of the second argument to the operation to be consumed
      * @param consumer The consumer which accepts the {@code third} parameter of this one
      * @return Creates a {@code ThrowableBiObjShortConsumer} which uses the {@code third} parameter of this one as
      * argument for the given {@code ShortConsumer}.

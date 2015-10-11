@@ -31,7 +31,7 @@ import java.util.function.Predicate;
  * <p>
  * This is a {@link FunctionalInterface} whose functional method is {@link #accept(Object, boolean)}.
  *
- * @param <T> The type of argument to the operation
+ * @param <T> The type of argument to the operation to be consumed
  * @see java.util.function.BiConsumer
  */
 @SuppressWarnings("unused")
@@ -42,7 +42,7 @@ public interface ObjBooleanConsumer<T> {
      * Creates a {@link ObjBooleanConsumer} which uses the {@code first} parameter of this one as argument for the given
      * {@link Consumer}.
      *
-     * @param <T> The type of the first argument to the operation
+     * @param <T> The type of the first argument to the operation to be consumed
      * @param consumer The consumer which accepts the {@code first} parameter of this one
      * @return Creates a {@code ObjBooleanConsumer} which uses the {@code first} parameter of this one as argument for
      * the given {@code Consumer}.
@@ -57,7 +57,7 @@ public interface ObjBooleanConsumer<T> {
      * Creates a {@link ObjBooleanConsumer} which uses the {@code second} parameter of this one as argument for the
      * given {@link BooleanConsumer}.
      *
-     * @param <T> The type of the first argument to the operation
+     * @param <T> The type of the first argument to the operation to be consumed
      * @param consumer The consumer which accepts the {@code second} parameter of this one
      * @return Creates a {@code ObjBooleanConsumer} which uses the {@code second} parameter of this one as argument for
      * the given {@code BooleanConsumer}.

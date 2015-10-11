@@ -111,8 +111,8 @@ public interface ThrowableDoubleBiConsumer extends DoubleBiConsumer {
     /**
      * The accept method for this {@link DoubleBiConsumer} which is able to throw any {@link Exception} type.
      *
-     * @param value1 The first argument for the operation to be consumed
-     * @param value2 The second argument for the operation to be consumed
+     * @param value1 The first argument to the operation to be consumed
+     * @param value2 The second argument to the operation to be consumed
      * @throws Exception Any exception from this operations action
      */
     void acceptThrows(double value1, double value2) throws Exception;
@@ -123,8 +123,8 @@ public interface ThrowableDoubleBiConsumer extends DoubleBiConsumer {
      * Exception}s from it. If it is of type {@link RuntimeException}, the exception is rethrown. Other exception types
      * are sneakily thrown.
      *
-     * @param value1 The first argument for the operation to be consumed
-     * @param value2 The second argument for the operation to be consumed
+     * @param value1 The first argument to the operation to be consumed
+     * @param value2 The second argument to the operation to be consumed
      * @see ThrowableUtils#sneakyThrow(Throwable)
      */
     @Override

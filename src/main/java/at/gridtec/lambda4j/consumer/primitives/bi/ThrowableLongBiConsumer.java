@@ -110,8 +110,8 @@ public interface ThrowableLongBiConsumer extends LongBiConsumer {
     /**
      * The accept method for this {@link LongBiConsumer} which is able to throw any {@link Exception} type.
      *
-     * @param value1 The first argument for the operation to be consumed
-     * @param value2 The second argument for the operation to be consumed
+     * @param value1 The first argument to the operation to be consumed
+     * @param value2 The second argument to the operation to be consumed
      * @throws Exception Any exception from this operations action
      */
     void acceptThrows(long value1, long value2) throws Exception;
@@ -122,8 +122,8 @@ public interface ThrowableLongBiConsumer extends LongBiConsumer {
      * from it. If it is of type {@link RuntimeException}, the exception is rethrown. Other exception types are sneakily
      * thrown.
      *
-     * @param value1 The first argument for the operation to be consumed
-     * @param value2 The second argument for the operation to be consumed
+     * @param value1 The first argument to the operation to be consumed
+     * @param value2 The second argument to the operation to be consumed
      * @see ThrowableUtils#sneakyThrow(Throwable)
      */
     @Override

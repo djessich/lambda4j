@@ -43,7 +43,7 @@ import java.util.function.Consumer;
  * declaration in the <em>throws</em> clause. The checked exception will behave just like a normal <b>unchecked</b>
  * exception due to sneaky throwing.
  *
- * @param <T> The type of argument for the operation
+ * @param <T> The type of argument to the operation to be consumed
  * @apiNote This is a throwable JRE lambda
  */
 @SuppressWarnings("unused")
@@ -55,7 +55,7 @@ public interface ThrowableConsumer<T> extends Consumer<T> {
      * in case the given {@link ThrowableConsumer} is ambiguous for the compiler. This might happen for overloaded
      * methods accepting different functional interfaces. The given {@code ThrowableConsumer} is returned as-is.
      *
-     * @param <T> The type of argument for the operation
+     * @param <T> The type of argument to the operation to be consumed
      * @param lambda The {@code ThrowableConsumer} which should be returned as-is.
      * @return The given {@code ThrowableConsumer} as-is.
      * @throws NullPointerException If the given argument is {@code null}
@@ -69,7 +69,7 @@ public interface ThrowableConsumer<T> extends Consumer<T> {
      * Creates a {@link ThrowableConsumer} from the given {@link Consumer}. This method is just convenience to provide a
      * mapping for the non-throwable/throwable instances of the corresponding functional interface.
      *
-     * @param <T> The type of argument for the operation
+     * @param <T> The type of argument to the operation to be consumed
      * @param lambda A {@code Consumer} which should be mapped to its throwable counterpart
      * @return A {@code ThrowableConsumer} from the given {@code Consumer}.
      * @throws NullPointerException If the given argument is {@code null}
@@ -82,7 +82,7 @@ public interface ThrowableConsumer<T> extends Consumer<T> {
     /**
      * The accept method for this {@link Consumer} which is able to throw any {@link Exception} type.
      *
-     * @param t The argument for the operation to be consumed
+     * @param t The argument to the operation to be consumed
      * @throws Exception Any exception from this operations action
      */
     void acceptThrows(T t) throws Exception;
@@ -92,7 +92,7 @@ public interface ThrowableConsumer<T> extends Consumer<T> {
      * {@link #acceptThrows(Object)} method of this interface and catches the thrown {@link Exception}s from it. If it
      * is of type {@link RuntimeException}, the exception is rethrown. Other exception types are sneakily thrown.
      *
-     * @param t The argument for the operation to be consumed
+     * @param t The argument to the operation to be consumed
      * @see ThrowableUtils#sneakyThrow(Throwable)
      */
     @Override

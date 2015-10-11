@@ -81,7 +81,7 @@ public interface ThrowableCharConsumer extends CharConsumer {
     /**
      * The accept method for this {@link CharConsumer} which is able to throw any {@link Exception} type.
      *
-     * @param value The argument for the operation to be consumed
+     * @param value The argument to the operation to be consumed
      * @throws Exception Any exception from this operations action
      */
     void acceptThrows(char value) throws Exception;
@@ -91,7 +91,7 @@ public interface ThrowableCharConsumer extends CharConsumer {
      * {@link #acceptThrows(char)} method of this interface and catches the thrown {@link Exception}s from it. If it is
      * of type {@link RuntimeException}, the exception is rethrown. Other exception types are sneakily thrown.
      *
-     * @param value The argument for the operation to be consumed
+     * @param value The argument to the operation to be consumed
      * @see ThrowableUtils#sneakyThrow(Throwable)
      */
     @Override

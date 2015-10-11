@@ -47,8 +47,8 @@ import java.util.function.Consumer;
  * <p>
  * This is a {@link FunctionalInterface} whose functional method is {@link #acceptThrows(Object, Object, byte)} .
  *
- * @param <T> The type of the first argument to the operation
- * @param <U> The type of the second argument to the operation
+ * @param <T> The type of the first argument to the operation to be consumed
+ * @param <U> The type of the second argument to the operation to be consumed
  * @see TriConsumer
  */
 @SuppressWarnings("unused")
@@ -61,8 +61,8 @@ public interface ThrowableBiObjByteConsumer<T, U> extends BiObjByteConsumer<T, U
      * overloaded methods accepting different functional interfaces. The given {@code ThrowableBiObjByteConsumer} is
      * returned as-is.
      *
-     * @param <T> The type of the first argument to the operation
-     * @param <U> The type of the second argument to the operation
+     * @param <T> The type of the first argument to the operation to be consumed
+     * @param <U> The type of the second argument to the operation to be consumed
      * @param lambda The {@code ThrowableBiObjByteConsumer} which should be returned as-is.
      * @return The given {@code ThrowableBiObjByteConsumer} as-is.
      * @throws NullPointerException If the given argument is {@code null}
@@ -77,8 +77,8 @@ public interface ThrowableBiObjByteConsumer<T, U> extends BiObjByteConsumer<T, U
      * convenience to provide a mapping for the non-throwable/throwable instances of the corresponding functional
      * interface.
      *
-     * @param <T> The type of the first argument to the operation
-     * @param <U> The type of the second argument to the operation
+     * @param <T> The type of the first argument to the operation to be consumed
+     * @param <U> The type of the second argument to the operation to be consumed
      * @param lambda A {@code BiObjByteConsumer} which should be mapped to its throwable counterpart
      * @return A {@code ThrowableBiObjByteConsumer} from the given {@code BiObjByteConsumer}.
      * @throws NullPointerException If the given argument is {@code null}
@@ -92,8 +92,8 @@ public interface ThrowableBiObjByteConsumer<T, U> extends BiObjByteConsumer<T, U
      * Creates a {@link ThrowableBiObjByteConsumer} which uses the {@code first} parameter of this one as argument for
      * the given {@link Consumer}.
      *
-     * @param <T> The type of the first argument to the operation
-     * @param <U> The type of the second argument to the operation
+     * @param <T> The type of the first argument to the operation to be consumed
+     * @param <U> The type of the second argument to the operation to be consumed
      * @param consumer The consumer which accepts the {@code first} parameter of this one
      * @return Creates a {@code ThrowableBiObjByteConsumer} which uses the {@code first} parameter of this one as
      * argument for the given {@code Consumer}.
@@ -108,8 +108,8 @@ public interface ThrowableBiObjByteConsumer<T, U> extends BiObjByteConsumer<T, U
      * Creates a {@link ThrowableBiObjByteConsumer} which uses the {@code second} parameter of this one as argument for
      * the given {@link Consumer}.
      *
-     * @param <T> The type of the first argument to the operation
-     * @param <U> The type of the second argument to the operation
+     * @param <T> The type of the first argument to the operation to be consumed
+     * @param <U> The type of the second argument to the operation to be consumed
      * @param consumer The consumer which accepts the {@code second} parameter of this one
      * @return Creates a {@code ThrowableBiObjByteConsumer} which uses the {@code second} parameter of this one as
      * argument for the given {@code Consumer}.
@@ -124,8 +124,8 @@ public interface ThrowableBiObjByteConsumer<T, U> extends BiObjByteConsumer<T, U
      * Creates a {@link ThrowableBiObjByteConsumer} which uses the {@code third} parameter of this one as argument for
      * the given {@link ByteConsumer}.
      *
-     * @param <T> The type of the first argument to the operation
-     * @param <U> The type of the second argument to the operation
+     * @param <T> The type of the first argument to the operation to be consumed
+     * @param <U> The type of the second argument to the operation to be consumed
      * @param consumer The consumer which accepts the {@code third} parameter of this one
      * @return Creates a {@code ThrowableBiObjByteConsumer} which uses the {@code third} parameter of this one as
      * argument for the given {@code ByteConsumer}.

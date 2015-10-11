@@ -82,7 +82,7 @@ public interface ThrowableBooleanConsumer extends BooleanConsumer {
     /**
      * The accept method for this {@link BooleanConsumer} which is able to throw any {@link Exception} type.
      *
-     * @param value The argument for the operation to be consumed
+     * @param value The argument to the operation to be consumed
      * @throws Exception Any exception from this operations action
      */
     void acceptThrows(boolean value) throws Exception;
@@ -92,7 +92,7 @@ public interface ThrowableBooleanConsumer extends BooleanConsumer {
      * the {@link #acceptThrows(boolean)} method of this interface and catches the thrown {@link Exception}s from it. If
      * it is of type {@link RuntimeException}, the exception is rethrown. Other exception types are sneakily thrown.
      *
-     * @param value The argument for the operation to be consumed
+     * @param value The argument to the operation to be consumed
      * @see ThrowableUtils#sneakyThrow(Throwable)
      */
     @Override
