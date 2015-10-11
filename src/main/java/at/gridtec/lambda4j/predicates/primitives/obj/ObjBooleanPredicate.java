@@ -98,7 +98,7 @@ public interface ObjBooleanPredicate<T> {
      *
      * @param t The first argument to the predicate
      * @param value The second argument to the predicate
-     * @return {@code true} if the input argument matches the predicate, otherwise {@code false}.
+     * @return {@code true} if the input arguments match the predicate, otherwise {@code false}.
      */
     boolean test(T t, boolean value);
 

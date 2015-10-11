@@ -105,7 +105,7 @@ public interface BiObjByteFunction<T, U, R> {
     }
 
     /**
-     * Performs this {@link BiObjByteFunction} to the given arguments.
+     * Performs this function to the given arguments.
      *
      * @param t The first argument to the function
      * @param u The second argument to the function

@@ -65,8 +65,8 @@ public interface IntBiConsumer {
     /**
      * Performs this operation on the given arguments.
      *
-     * @param value1 The first argument for the operation to be consumed
-     * @param value2 The second argument for the operation to be consumed
+     * @param value1 The first argument to the operation to be consumed
+     * @param value2 The second argument to the operation to be consumed
      */
     void accept(int value1, int value2);
 

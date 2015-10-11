@@ -84,7 +84,7 @@ public interface CharTernaryOperator {
     }
 
     /**
-     * Applies this operator to the given operand arguments.
+     * Applies this operator to the given arguments.
      *
      * @param left The first argument to the operator (left input)
      * @param middle The second argument to the operator (middle input)

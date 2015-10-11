@@ -50,7 +50,7 @@ public interface FloatUnaryOperator {
     }
 
     /**
-     * Applies this operator to the given operand argument.
+     * Applies this operator to the given argument.
      *
      * @param operand The argument to the operator
      * @return The result of this operator.

@@ -34,10 +34,11 @@ public interface ObjBytePredicate<T> {
     /**
      * Creates a {@link ObjBytePredicate} which always returns a given value.
      *
+     * @param <T> The type of argument to the predicate
      * @param ret The return value for the constant
      * @return A {@code ObjBytePredicate} which always returns a given value.
      */
-    static ObjBytePredicate constant(boolean ret) {
+    static <T> ObjBytePredicate<T> constant(boolean ret) {
         return (t, value) -> ret;
     }
 
@@ -94,7 +95,7 @@ public interface ObjBytePredicate<T> {
      *
      * @param t The first argument to the predicate
      * @param value The second argument to the predicate
-     * @return {@code true} if the input argument matches the predicate, otherwise {@code false}.
+     * @return {@code true} if the input arguments match the predicate, otherwise {@code false}.
      */
     boolean test(T t, byte value);
 

@@ -85,7 +85,7 @@ public interface ObjShortFunction<T, R> {
     }
 
     /**
-     * Performs this {@link ObjShortFunction} to the given arguments.
+     * Performs this function to the given arguments.
      *
      * @param t The first argument to the function
      * @param value The second argument to the function

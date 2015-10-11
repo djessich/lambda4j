@@ -37,7 +37,7 @@ public interface ShortConsumer {
     /**
      * Performs this operation on the given argument.
      *
-     * @param value The argument for the operation to be consumed
+     * @param value The argument to the operation to be consumed
      */
     void accept(short value);
 

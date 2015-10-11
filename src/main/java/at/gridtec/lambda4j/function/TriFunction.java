@@ -108,7 +108,7 @@ public interface TriFunction<T, U, V, R> {
      * @param t The first argument to the function
      * @param u The second argument to the function
      * @param v The third argument to the function
-     * @return he return value from the function, which is its result.
+     * @return The return value from the function, which is its result.
      */
     R apply(T t, U u, V v);
 

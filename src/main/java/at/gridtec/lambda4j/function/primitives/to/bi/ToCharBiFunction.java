@@ -96,7 +96,7 @@ public interface ToCharBiFunction<T, U> {
     }
 
     /**
-     * Applies this {@link ToCharBiFunction} to the given arguments.
+     * Applies this function to the given arguments.
      *
      * @param t The first argument to the function
      * @param u The second argument to the function

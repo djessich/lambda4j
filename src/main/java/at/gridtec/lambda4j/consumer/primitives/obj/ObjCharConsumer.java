@@ -69,10 +69,10 @@ public interface ObjCharConsumer<T> {
     }
 
     /**
-     * Performs this operation on the given argument.
+     * Performs this operation on the given arguments.
      *
-     * @param t The first argument to the operation
-     * @param value The second argument to the operation
+     * @param t The first argument to the operation to be consumed
+     * @param value The second argument to the operation to be consumed
      */
     void accept(T t, char value);
 

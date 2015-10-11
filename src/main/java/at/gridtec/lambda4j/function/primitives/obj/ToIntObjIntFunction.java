@@ -81,7 +81,7 @@ public interface ToIntObjIntFunction<T> {
     }
 
     /**
-     * Applies this {@link ToIntObjIntFunction} to the given arguments.
+     * Applies this function to the given arguments.
      *
      * @param t The first argument to the function
      * @param value The second argument to the function

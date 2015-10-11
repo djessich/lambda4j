@@ -89,9 +89,9 @@ public interface TriConsumer<T, U, V> {
     /**
      * Performs this operation on the given arguments.
      *
-     * @param t The first argument for the operation to be consumed
-     * @param u The second argument for the operation to be consumed
-     * @param v The third argument for the operation to be consumed
+     * @param t The first argument to the operation to be consumed
+     * @param u The second argument to the operation to be consumed
+     * @param v The third argument to the operation to be consumed
      */
     void accept(T t, U u, V v);
 

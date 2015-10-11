@@ -95,7 +95,7 @@ public interface ByteTriPredicate {
      * @param value1 The first argument to the predicate
      * @param value2 The second argument to the predicate
      * @param value3 The third argument to the predicate
-     * @return {@code true} if the input argument matches the predicate, otherwise {@code false}.
+     * @return {@code true} if the input arguments match the predicate, otherwise {@code false}.
      */
     boolean test(byte value1, byte value2, byte value3);
 

@@ -83,7 +83,7 @@ public interface ToByteObjByteFunction<T> {
     }
 
     /**
-     * Applies this {@link ToByteObjByteFunction} to the given arguments.
+     * Applies this function to the given arguments.
      *
      * @param t The first argument to the function
      * @param value The second argument to the function

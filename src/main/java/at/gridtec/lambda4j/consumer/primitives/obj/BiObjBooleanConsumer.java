@@ -88,11 +88,11 @@ public interface BiObjBooleanConsumer<T, U> {
     }
 
     /**
-     * Performs this operation on the given argument.
+     * Performs this operation on the given arguments.
      *
-     * @param t The first argument to the operation
-     * @param u The second argument to the operation
-     * @param value The third argument to the operation
+     * @param t The first argument to the operation to be consumed
+     * @param u The second argument to the operation to be consumed
+     * @param value The third argument to the operation to be consumed
      */
     void accept(T t, U u, boolean value);
 

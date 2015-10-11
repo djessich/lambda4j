@@ -62,7 +62,7 @@ public interface BooleanFunction<R> {
     }
 
     /**
-     * Applies this {@link BooleanFunction} to the given argument.
+     * Applies this function to the given argument.
      *
      * @param value The argument to the function
      * @return The return value from the function, which is its result.

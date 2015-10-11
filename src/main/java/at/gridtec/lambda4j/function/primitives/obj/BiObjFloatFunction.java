@@ -105,7 +105,7 @@ public interface BiObjFloatFunction<T, U, R> {
     }
 
     /**
-     * Performs this {@link BiObjFloatFunction} to the given arguments.
+     * Performs this function to the given arguments.
      *
      * @param t The first argument to the function
      * @param u The second argument to the function

@@ -85,7 +85,7 @@ public interface ObjByteFunction<T, R> {
     }
 
     /**
-     * Performs this {@link ObjByteFunction} to the given arguments.
+     * Performs this function to the given arguments.
      *
      * @param t The first argument to the function
      * @param value The second argument to the function

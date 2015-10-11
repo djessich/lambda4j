@@ -85,7 +85,7 @@ public interface FloatPredicate {
     }
 
     /**
-     * Evaluates this predicate on the given arguments.
+     * Evaluates this predicate on the given argument.
      *
      * @param value The argument to the predicate
      * @return {@code true} if the input argument matches the predicate, otherwise {@code false}.

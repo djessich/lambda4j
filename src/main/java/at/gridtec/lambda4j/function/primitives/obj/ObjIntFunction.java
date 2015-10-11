@@ -84,7 +84,7 @@ public interface ObjIntFunction<T, R> {
     }
 
     /**
-     * Performs this {@link ObjIntFunction} to the given arguments.
+     * Performs this function to the given arguments.
      *
      * @param t The first argument to the function
      * @param value The second argument to the function

@@ -60,7 +60,7 @@ public interface ToFloatFunction<T> {
     }
 
     /**
-     * Applies this {@link ToFloatFunction} to the given argument.
+     * Applies this function to the given argument.
      *
      * @param t The argument to the function
      * @return The return value from the function, which is its result.

@@ -178,7 +178,7 @@ public interface BooleanBinaryOperator {
     }
 
     /**
-     * Applies this operator to the given operand argument.
+     * Applies this operator to the given arguments.
      *
      * @param left The first argument to the operator (left input)
      * @param right The second argument to the operator (right input)

@@ -115,7 +115,7 @@ public interface ToShortTriFunction<T, U, V> {
     }
 
     /**
-     * Applies this {@link ToShortTriFunction} to the given arguments.
+     * Applies this function to the given arguments.
      *
      * @param t The first argument to the function
      * @param u The second argument to the function

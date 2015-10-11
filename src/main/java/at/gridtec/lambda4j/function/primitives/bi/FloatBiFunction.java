@@ -81,7 +81,7 @@ public interface FloatBiFunction<R> {
     }
 
     /**
-     * Applies this {@link FloatBiFunction} to the given argument.
+     * Applies this function to the given arguments.
      *
      * @param value1 The first argument to the function
      * @param value2 The second argument to the function
