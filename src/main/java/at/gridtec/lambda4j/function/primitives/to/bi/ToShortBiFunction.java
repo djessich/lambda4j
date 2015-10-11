@@ -64,14 +64,14 @@ public interface ToShortBiFunction<T, U> {
     }
 
     /**
-     * Creates a {@link ToShortBiFunction} which uses the {@code first} parameter of this one as argument for the given {@link
-     * ToShortFunction}.
+     * Creates a {@link ToShortBiFunction} which uses the {@code first} parameter of this one as argument for the given
+     * {@link ToShortFunction}.
      *
      * @param <T> The type of the first argument to the function
      * @param <U> The type of the second argument to the function
      * @param function The function which accepts the {@code first} parameter of this one
-     * @return Creates a {@code ToShortBiFunction} which uses the {@code first} parameter of this one as argument for the given
-     * {@code ToShortFunction}.
+     * @return Creates a {@code ToShortBiFunction} which uses the {@code first} parameter of this one as argument for
+     * the given {@code ToShortFunction}.
      * @throws NullPointerException If the given argument is {@code null}
      */
     static <T, U> ToShortBiFunction<T, U> onlyFirst(final ToShortFunction<? super T> function) {
@@ -80,14 +80,14 @@ public interface ToShortBiFunction<T, U> {
     }
 
     /**
-     * Creates a {@link ToShortBiFunction} which uses the {@code second} parameter of this one as argument for the given {@link
-     * ToShortFunction}.
+     * Creates a {@link ToShortBiFunction} which uses the {@code second} parameter of this one as argument for the given
+     * {@link ToShortFunction}.
      *
      * @param <T> The type of the first argument to the function
      * @param <U> The type of the second argument to the function
      * @param function The consumer which accepts the {@code second} parameter of this one
-     * @return Creates a {@code ToShortBiFunction} which uses the {@code second} parameter of this one as argument for the given
-     * {@code ToShortFunction}.
+     * @return Creates a {@code ToShortBiFunction} which uses the {@code second} parameter of this one as argument for
+     * the given {@code ToShortFunction}.
      * @throws NullPointerException If the given argument is {@code null}
      */
     static <T, U> ToShortBiFunction<T, U> onlySecond(final ToShortFunction<? super U> function) {

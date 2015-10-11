@@ -51,13 +51,13 @@ public interface CharBiFunction<R> {
     }
 
     /**
-     * Creates a {@link CharBiFunction} which uses the {@code first} parameter of this one as argument for the given {@link
-     * CharFunction}.
+     * Creates a {@link CharBiFunction} which uses the {@code first} parameter of this one as argument for the given
+     * {@link CharFunction}.
      *
      * @param <R> The type of return value from the function
      * @param function The function which accepts the {@code first} parameter of this one
-     * @return Creates a {@code CharBiFunction} which uses the {@code first} parameter of this one as argument for the given
-     * {@code CharFunction}.
+     * @return Creates a {@code CharBiFunction} which uses the {@code first} parameter of this one as argument for the
+     * given {@code CharFunction}.
      * @throws NullPointerException If the given argument is {@code null}
      */
     static <R> CharBiFunction<R> onlyFirst(final CharFunction<? extends R> function) {
@@ -66,13 +66,13 @@ public interface CharBiFunction<R> {
     }
 
     /**
-     * Creates a {@link CharBiFunction} which uses the {@code second} parameter of this one as argument for the given {@link
-     * CharFunction}.
+     * Creates a {@link CharBiFunction} which uses the {@code second} parameter of this one as argument for the given
+     * {@link CharFunction}.
      *
      * @param <R> The type of return value from the function
      * @param function The function which accepts the {@code second} parameter of this one
-     * @return Creates a {@code CharBiFunction} which uses the {@code second} parameter of this one as argument for the given
-     * {@code CharFunction}.
+     * @return Creates a {@code CharBiFunction} which uses the {@code second} parameter of this one as argument for the
+     * given {@code CharFunction}.
      * @throws NullPointerException If the given argument is {@code null}
      */
     static <R> CharBiFunction<R> onlySecond(final CharFunction<? extends R> function) {

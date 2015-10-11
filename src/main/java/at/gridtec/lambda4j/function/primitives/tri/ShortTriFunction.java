@@ -51,13 +51,13 @@ public interface ShortTriFunction<R> {
     }
 
     /**
-     * Creates a {@link ShortTriFunction} which uses the {@code first} parameter of this one as argument for the given {@link
-     * ShortFunction}.
+     * Creates a {@link ShortTriFunction} which uses the {@code first} parameter of this one as argument for the given
+     * {@link ShortFunction}.
      *
      * @param <R> The type of return value from the function
      * @param function The function which accepts the {@code first} parameter of this one
-     * @return Creates a {@code ShortTriFunction} which uses the {@code first} parameter of this one as argument for the given
-     * {@code ShortFunction}.
+     * @return Creates a {@code ShortTriFunction} which uses the {@code first} parameter of this one as argument for the
+     * given {@code ShortFunction}.
      * @throws NullPointerException If the given argument is {@code null}
      */
     static <R> ShortTriFunction<R> onlyFirst(final ShortFunction<? extends R> function) {
@@ -66,13 +66,13 @@ public interface ShortTriFunction<R> {
     }
 
     /**
-     * Creates a {@link ShortTriFunction} which uses the {@code second} parameter of this one as argument for the given {@link
-     * ShortFunction}.
+     * Creates a {@link ShortTriFunction} which uses the {@code second} parameter of this one as argument for the given
+     * {@link ShortFunction}.
      *
      * @param <R> The type of return value from the function
      * @param function The function which accepts the {@code second} parameter of this one
-     * @return Creates a {@code ShortTriFunction} which uses the {@code second} parameter of this one as argument for the given
-     * {@code ShortFunction}.
+     * @return Creates a {@code ShortTriFunction} which uses the {@code second} parameter of this one as argument for
+     * the given {@code ShortFunction}.
      * @throws NullPointerException If the given argument is {@code null}
      */
     static <R> ShortTriFunction<R> onlySecond(final ShortFunction<? extends R> function) {
@@ -81,13 +81,13 @@ public interface ShortTriFunction<R> {
     }
 
     /**
-     * Creates a {@link ShortTriFunction} which uses the {@code third} parameter of this one as argument for the given {@link
-     * ShortFunction}.
+     * Creates a {@link ShortTriFunction} which uses the {@code third} parameter of this one as argument for the given
+     * {@link ShortFunction}.
      *
      * @param <R> The type of return value from the function
      * @param function The function which accepts the {@code third} parameter of this one
-     * @return Creates a {@code ShortTriFunction} which uses the {@code third} parameter of this one as argument for the given
-     * {@code ShortFunction}.
+     * @return Creates a {@code ShortTriFunction} which uses the {@code third} parameter of this one as argument for the
+     * given {@code ShortFunction}.
      * @throws NullPointerException If the given argument is {@code null}
      */
     static <R> ShortTriFunction<R> onlyThird(final ShortFunction<? extends R> function) {

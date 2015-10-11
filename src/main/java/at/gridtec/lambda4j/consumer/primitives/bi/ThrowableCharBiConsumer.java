@@ -80,12 +80,12 @@ public interface ThrowableCharBiConsumer extends CharBiConsumer {
     }
 
     /**
-     * Creates a {@link CharBiConsumer} which uses the {@code first} parameter of this one as argument for the given {@link
-     * CharConsumer}.
+     * Creates a {@link CharBiConsumer} which uses the {@code first} parameter of this one as argument for the given
+     * {@link CharConsumer}.
      *
      * @param consumer The consumer which accepts the {@code first} parameter of this one
-     * @return Creates a {@code CharBiConsumer} which uses the {@code first} parameter of this one as argument for the given
-     * {@code CharConsumer}.
+     * @return Creates a {@code CharBiConsumer} which uses the {@code first} parameter of this one as argument for the
+     * given {@code CharConsumer}.
      * @throws NullPointerException If the given argument is {@code null}
      */
     static CharBiConsumer onlyFirst(final CharConsumer consumer) {
@@ -94,12 +94,12 @@ public interface ThrowableCharBiConsumer extends CharBiConsumer {
     }
 
     /**
-     * Creates a {@link CharBiConsumer} which uses the {@code second} parameter of this one as argument for the given {@link
-     * CharConsumer}.
+     * Creates a {@link CharBiConsumer} which uses the {@code second} parameter of this one as argument for the given
+     * {@link CharConsumer}.
      *
      * @param consumer The consumer which accepts the {@code second} parameter of this one
-     * @return Creates a {@code CharBiConsumer} which uses the {@code second} parameter of this one as argument for the given
-     * {@code CharConsumer}.
+     * @return Creates a {@code CharBiConsumer} which uses the {@code second} parameter of this one as argument for the
+     * given {@code CharConsumer}.
      * @throws NullPointerException If the given argument is {@code null}
      */
     static CharBiConsumer onlySecond(final CharConsumer consumer) {

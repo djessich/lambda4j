@@ -154,8 +154,8 @@ public interface ThrowableIntBinaryOperator extends IntBinaryOperator {
      * IntUnaryOperator}.
      *
      * @param operator The operator which accepts the {@code left} parameter of this one
-     * @return Creates a {@code IntBinaryOperator} which uses the {@code left} parameter as argument for the given {@code
-     * IntUnaryOperator}.
+     * @return Creates a {@code IntBinaryOperator} which uses the {@code left} parameter as argument for the given
+     * {@code IntUnaryOperator}.
      * @throws NullPointerException If the given argument is {@code null}
      */
     static IntBinaryOperator onlyLeft(final IntUnaryOperator operator) {
@@ -168,8 +168,8 @@ public interface ThrowableIntBinaryOperator extends IntBinaryOperator {
      * IntUnaryOperator}.
      *
      * @param operator The operator which accepts the {@code right} parameter of this one
-     * @return Creates a {@code IntBinaryOperator} which uses the {@code right} parameter as argument for the given {@code
-     * IntUnaryOperator}.
+     * @return Creates a {@code IntBinaryOperator} which uses the {@code right} parameter as argument for the given
+     * {@code IntUnaryOperator}.
      * @throws NullPointerException If the given argument is {@code null}
      */
     static IntBinaryOperator onlyRight(final IntUnaryOperator operator) {

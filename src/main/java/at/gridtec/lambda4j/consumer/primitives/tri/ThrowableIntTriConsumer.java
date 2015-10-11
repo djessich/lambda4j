@@ -80,12 +80,12 @@ public interface ThrowableIntTriConsumer extends IntTriConsumer {
     }
 
     /**
-     * Creates a {@link IntTriConsumer} which uses the {@code first} parameter of this one as argument for the given {@link
-     * IntConsumer}.
+     * Creates a {@link IntTriConsumer} which uses the {@code first} parameter of this one as argument for the given
+     * {@link IntConsumer}.
      *
      * @param consumer The consumer which accepts the {@code first} parameter of this one
-     * @return Creates a {@code IntTriConsumer} which uses the {@code first} parameter of this one as argument for the given
-     * {@code IntConsumer}.
+     * @return Creates a {@code IntTriConsumer} which uses the {@code first} parameter of this one as argument for the
+     * given {@code IntConsumer}.
      * @throws NullPointerException If the given argument is {@code null}
      */
     static IntTriConsumer onlyFirst(final IntConsumer consumer) {
@@ -94,12 +94,12 @@ public interface ThrowableIntTriConsumer extends IntTriConsumer {
     }
 
     /**
-     * Creates a {@link IntTriConsumer} which uses the {@code second} parameter of this one as argument for the given {@link
-     * IntConsumer}.
+     * Creates a {@link IntTriConsumer} which uses the {@code second} parameter of this one as argument for the given
+     * {@link IntConsumer}.
      *
      * @param consumer The consumer which accepts the {@code second} parameter of this one
-     * @return Creates a {@code IntTriConsumer} which uses the {@code second} parameter of this one as argument for the given
-     * {@code IntConsumer}.
+     * @return Creates a {@code IntTriConsumer} which uses the {@code second} parameter of this one as argument for the
+     * given {@code IntConsumer}.
      * @throws NullPointerException If the given argument is {@code null}
      */
     static IntTriConsumer onlySecond(final IntConsumer consumer) {
@@ -108,7 +108,8 @@ public interface ThrowableIntTriConsumer extends IntTriConsumer {
     }
 
     /**
-     * Creates a {@link IntTriConsumer} which uses the {@code third} parameter as argument for the given {@link IntConsumer}.
+     * Creates a {@link IntTriConsumer} which uses the {@code third} parameter as argument for the given {@link
+     * IntConsumer}.
      *
      * @param consumer The consumer which accepts the {@code third} parameter of this one
      * @return Creates a {@code IntTriConsumer} which uses the {@code third} parameter as argument for the given {@code

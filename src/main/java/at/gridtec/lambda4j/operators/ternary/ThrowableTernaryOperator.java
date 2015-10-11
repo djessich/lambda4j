@@ -102,8 +102,8 @@ public interface ThrowableTernaryOperator<T> extends TernaryOperator<T> {
      *
      * @param <T> The type of argument to the operator
      * @param operator The operator which accepts the {@code left} parameter of this one
-     * @return Creates a {@code ThrowableTernaryOperator} which uses the {@code left} parameter as argument for the given {@code
-     * ThrowableUnaryOperator}.
+     * @return Creates a {@code ThrowableTernaryOperator} which uses the {@code left} parameter as argument for the
+     * given {@code ThrowableUnaryOperator}.
      * @throws NullPointerException If the given argument is {@code null}
      */
     static <T> ThrowableTernaryOperator<T> onlyLeft(final ThrowableUnaryOperator<T> operator) {
@@ -112,13 +112,13 @@ public interface ThrowableTernaryOperator<T> extends TernaryOperator<T> {
     }
 
     /**
-     * Creates a {@link ThrowableTernaryOperator} which uses the {@code middle} parameter as argument for the given {@link
-     * ThrowableUnaryOperator}.
+     * Creates a {@link ThrowableTernaryOperator} which uses the {@code middle} parameter as argument for the given
+     * {@link ThrowableUnaryOperator}.
      *
      * @param <T> The type of argument to the operator
      * @param operator The operator which accepts the {@code middle} parameter of this one
-     * @return Creates a {@code ThrowableTernaryOperator} which uses the {@code middle} parameter as argument for the given
-     * {@code ThrowableUnaryOperator}.
+     * @return Creates a {@code ThrowableTernaryOperator} which uses the {@code middle} parameter as argument for the
+     * given {@code ThrowableUnaryOperator}.
      * @throws NullPointerException If the given argument is {@code null}
      */
     static <T> ThrowableTernaryOperator<T> onlyMiddle(final ThrowableUnaryOperator<T> operator) {
@@ -127,13 +127,13 @@ public interface ThrowableTernaryOperator<T> extends TernaryOperator<T> {
     }
 
     /**
-     * Creates a {@link ThrowableTernaryOperator} which uses the {@code right} parameter as argument for the given {@link
-     * ThrowableUnaryOperator}.
+     * Creates a {@link ThrowableTernaryOperator} which uses the {@code right} parameter as argument for the given
+     * {@link ThrowableUnaryOperator}.
      *
      * @param <T> The type of argument to the operator
      * @param operator The operator which accepts the {@code right} parameter of this one
-     * @return Creates a {@code ThrowableTernaryOperator} which uses the {@code right} parameter as argument for the given
-     * {@code ThrowableUnaryOperator}.
+     * @return Creates a {@code ThrowableTernaryOperator} which uses the {@code right} parameter as argument for the
+     * given {@code ThrowableUnaryOperator}.
      * @throws NullPointerException If the given argument is {@code null}
      */
     static <T> ThrowableTernaryOperator<T> onlyRight(final ThrowableUnaryOperator<T> operator) {

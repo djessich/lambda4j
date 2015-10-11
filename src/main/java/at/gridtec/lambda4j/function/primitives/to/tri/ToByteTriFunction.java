@@ -64,15 +64,15 @@ public interface ToByteTriFunction<T, U, V> {
     }
 
     /**
-     * Creates a {@link ToByteTriFunction} which uses the {@code first} parameter of this one as argument for the given {@link
-     * ToByteFunction}.
+     * Creates a {@link ToByteTriFunction} which uses the {@code first} parameter of this one as argument for the given
+     * {@link ToByteFunction}.
      *
      * @param <T> The type of the first argument to the function
      * @param <U> The type of the second argument to the function
      * @param <V> The type of the third argument to the function
      * @param function The function which accepts the {@code first} parameter of this one
-     * @return Creates a {@code ToByteTriFunction} which uses the {@code first} parameter of this one as argument for the given
-     * {@code ToByteFunction}.
+     * @return Creates a {@code ToByteTriFunction} which uses the {@code first} parameter of this one as argument for
+     * the given {@code ToByteFunction}.
      * @throws NullPointerException If the given argument is {@code null}
      */
     static <T, U, V> ToByteTriFunction<T, U, V> onlyFirst(final ToByteFunction<? super T> function) {
@@ -81,15 +81,15 @@ public interface ToByteTriFunction<T, U, V> {
     }
 
     /**
-     * Creates a {@link ToByteTriFunction} which uses the {@code second} parameter of this one as argument for the given {@link
-     * ToByteFunction}.
+     * Creates a {@link ToByteTriFunction} which uses the {@code second} parameter of this one as argument for the given
+     * {@link ToByteFunction}.
      *
      * @param <T> The type of the first argument to the function
      * @param <U> The type of the second argument to the function
      * @param <V> The type of the third argument to the function
      * @param function The consumer which accepts the {@code second} parameter of this one
-     * @return Creates a {@code ToByteTriFunction} which uses the {@code second} parameter of this one as argument for the given
-     * {@code ToByteFunction}.
+     * @return Creates a {@code ToByteTriFunction} which uses the {@code second} parameter of this one as argument for
+     * the given {@code ToByteFunction}.
      * @throws NullPointerException If the given argument is {@code null}
      */
     static <T, U, V> ToByteTriFunction<T, U, V> onlySecond(final ToByteFunction<? super U> function) {
@@ -98,15 +98,15 @@ public interface ToByteTriFunction<T, U, V> {
     }
 
     /**
-     * Creates a {@link ToByteTriFunction} which uses the {@code third} parameter of this one as argument for the given {@link
-     * ToByteFunction}.
+     * Creates a {@link ToByteTriFunction} which uses the {@code third} parameter of this one as argument for the given
+     * {@link ToByteFunction}.
      *
      * @param <T> The type of the first argument to the function
      * @param <U> The type of the second argument to the function
      * @param <V> The type of the third argument to the function
      * @param function The consumer which accepts the {@code third} parameter of this one
-     * @return Creates a {@code ToByteTriFunction} which uses the {@code third} parameter of this one as argument for the given
-     * {@code ToByteFunction}.
+     * @return Creates a {@code ToByteTriFunction} which uses the {@code third} parameter of this one as argument for
+     * the given {@code ToByteFunction}.
      * @throws NullPointerException If the given argument is {@code null}
      */
     static <T, U, V> ToByteTriFunction<T, U, V> onlyThird(final ToByteFunction<? super V> function) {

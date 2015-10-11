@@ -55,14 +55,14 @@ public interface ToShortBiObjShortFunction<T, U> {
     }
 
     /**
-     * Creates a {@link ToShortBiObjShortFunction} which uses the {@code first} parameter of this one as argument for the given
-     * {@link ToShortFunction}.
+     * Creates a {@link ToShortBiObjShortFunction} which uses the {@code first} parameter of this one as argument for
+     * the given {@link ToShortFunction}.
      *
      * @param <T> The type of the first argument to the function
      * @param <U> The type of the second argument to the function
      * @param function The function which accepts the {@code first} parameter of this one
-     * @return Creates a {@code ToShortBiObjShortFunction} which uses the {@code first} parameter of this one as argument for
-     * the given {@code ToShortFunction}.
+     * @return Creates a {@code ToShortBiObjShortFunction} which uses the {@code first} parameter of this one as
+     * argument for the given {@code ToShortFunction}.
      * @throws NullPointerException If the given argument is {@code null}
      */
     static <T, U> ToShortBiObjShortFunction<T, U> onlyFirst(final ToShortFunction<? super T> function) {
@@ -71,14 +71,14 @@ public interface ToShortBiObjShortFunction<T, U> {
     }
 
     /**
-     * Creates a {@link ToShortBiObjShortFunction} which uses the {@code second} parameter of this one as argument for the given
-     * {@link ToShortFunction}.
+     * Creates a {@link ToShortBiObjShortFunction} which uses the {@code second} parameter of this one as argument for
+     * the given {@link ToShortFunction}.
      *
      * @param <T> The type of the first argument to the function
      * @param <U> The type of the second argument to the function
      * @param function The function which accepts the {@code second} parameter of this one
-     * @return Creates a {@code ToShortBiObjShortFunction} which uses the {@code second} parameter of this one as argument for
-     * the given {@code ToShortFunction}.
+     * @return Creates a {@code ToShortBiObjShortFunction} which uses the {@code second} parameter of this one as
+     * argument for the given {@code ToShortFunction}.
      * @throws NullPointerException If the given argument is {@code null}
      */
     static <T, U> ToShortBiObjShortFunction<T, U> onlySecond(final ToShortFunction<? super U> function) {
@@ -87,14 +87,14 @@ public interface ToShortBiObjShortFunction<T, U> {
     }
 
     /**
-     * Creates a {@link ToShortBiObjShortFunction} which uses the {@code third} parameter of this one as argument for the given
-     * {@link ShortUnaryOperator}.
+     * Creates a {@link ToShortBiObjShortFunction} which uses the {@code third} parameter of this one as argument for
+     * the given {@link ShortUnaryOperator}.
      *
      * @param <T> The type of the first argument to the function
      * @param <U> The type of the second argument to the function
      * @param function The function which accepts the {@code third} parameter of this one
-     * @return Creates a {@code ToShortBiObjShortFunction} which uses the {@code third} parameter of this one as argument for
-     * the given {@code ShortUnaryOperator}.
+     * @return Creates a {@code ToShortBiObjShortFunction} which uses the {@code third} parameter of this one as
+     * argument for the given {@code ShortUnaryOperator}.
      * @throws NullPointerException If the given argument is {@code null}
      */
     static <T, U> ToShortBiObjShortFunction<T, U> onlyThird(final ShortUnaryOperator function) {

@@ -53,14 +53,14 @@ public interface ObjShortFunction<T, R> {
     }
 
     /**
-     * Creates a {@link ObjShortFunction} which uses the {@code first} parameter of this one as argument for the given {@link
-     * Function}.
+     * Creates a {@link ObjShortFunction} which uses the {@code first} parameter of this one as argument for the given
+     * {@link Function}.
      *
      * @param <T> The type of argument to the function
      * @param <R> The type of return value from the function
      * @param function The function which accepts the {@code first} parameter of this one
-     * @return Creates a {@code ObjShortFunction} which uses the {@code first} parameter of this one as argument for the given
-     * {@code Function}.
+     * @return Creates a {@code ObjShortFunction} which uses the {@code first} parameter of this one as argument for the
+     * given {@code Function}.
      * @throws NullPointerException If the given argument is {@code null}
      */
     static <T, R> ObjShortFunction<T, R> onlyFirst(final Function<? super T, ? extends R> function) {
@@ -69,14 +69,14 @@ public interface ObjShortFunction<T, R> {
     }
 
     /**
-     * Creates a {@link ObjShortFunction} which uses the {@code second} parameter of this one as argument for the given {@link
-     * ShortFunction}.
+     * Creates a {@link ObjShortFunction} which uses the {@code second} parameter of this one as argument for the given
+     * {@link ShortFunction}.
      *
      * @param <T> The type of argument to the function
      * @param <R> The type of return value from the function
      * @param function The function which accepts the {@code second} parameter of this one
-     * @return Creates a {@code ObjShortFunction} which uses the {@code second} parameter of this one as argument for the given
-     * {@code ShortFunction}.
+     * @return Creates a {@code ObjShortFunction} which uses the {@code second} parameter of this one as argument for
+     * the given {@code ShortFunction}.
      * @throws NullPointerException If the given argument is {@code null}
      */
     static <T, R> ObjShortFunction<T, R> onlySecond(final ShortFunction<? extends R> function) {

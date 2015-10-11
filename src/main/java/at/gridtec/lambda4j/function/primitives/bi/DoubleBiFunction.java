@@ -51,13 +51,13 @@ public interface DoubleBiFunction<R> {
     }
 
     /**
-     * Creates a {@link DoubleBiFunction} which uses the {@code first} parameter of this one as argument for the given {@link
-     * DoubleFunction}.
+     * Creates a {@link DoubleBiFunction} which uses the {@code first} parameter of this one as argument for the given
+     * {@link DoubleFunction}.
      *
      * @param <R> The type of return value from the function
      * @param function The function which accepts the {@code first} parameter of this one
-     * @return Creates a {@code DoubleBiFunction} which uses the {@code first} parameter of this one as argument for the given
-     * {@code DoubleFunction}.
+     * @return Creates a {@code DoubleBiFunction} which uses the {@code first} parameter of this one as argument for the
+     * given {@code DoubleFunction}.
      * @throws NullPointerException If the given argument is {@code null}
      */
     static <R> DoubleBiFunction<R> onlyFirst(final DoubleFunction<? extends R> function) {
@@ -66,13 +66,13 @@ public interface DoubleBiFunction<R> {
     }
 
     /**
-     * Creates a {@link DoubleBiFunction} which uses the {@code second} parameter of this one as argument for the given {@link
-     * DoubleFunction}.
+     * Creates a {@link DoubleBiFunction} which uses the {@code second} parameter of this one as argument for the given
+     * {@link DoubleFunction}.
      *
      * @param <R> The type of return value from the function
      * @param function The function which accepts the {@code second} parameter of this one
-     * @return Creates a {@code DoubleBiFunction} which uses the {@code second} parameter of this one as argument for the given
-     * {@code DoubleFunction}.
+     * @return Creates a {@code DoubleBiFunction} which uses the {@code second} parameter of this one as argument for
+     * the given {@code DoubleFunction}.
      * @throws NullPointerException If the given argument is {@code null}
      */
     static <R> DoubleBiFunction<R> onlySecond(final DoubleFunction<? extends R> function) {

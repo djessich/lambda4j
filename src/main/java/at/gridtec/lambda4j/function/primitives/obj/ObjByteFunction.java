@@ -53,14 +53,14 @@ public interface ObjByteFunction<T, R> {
     }
 
     /**
-     * Creates a {@link ObjByteFunction} which uses the {@code first} parameter of this one as argument for the given {@link
-     * Function}.
+     * Creates a {@link ObjByteFunction} which uses the {@code first} parameter of this one as argument for the given
+     * {@link Function}.
      *
      * @param <T> The type of argument to the function
      * @param <R> The type of return value from the function
      * @param function The function which accepts the {@code first} parameter of this one
-     * @return Creates a {@code ObjByteFunction} which uses the {@code first} parameter of this one as argument for the given
-     * {@code Function}.
+     * @return Creates a {@code ObjByteFunction} which uses the {@code first} parameter of this one as argument for the
+     * given {@code Function}.
      * @throws NullPointerException If the given argument is {@code null}
      */
     static <T, R> ObjByteFunction<T, R> onlyFirst(final Function<? super T, ? extends R> function) {
@@ -69,14 +69,14 @@ public interface ObjByteFunction<T, R> {
     }
 
     /**
-     * Creates a {@link ObjByteFunction} which uses the {@code second} parameter of this one as argument for the given {@link
-     * ByteFunction}.
+     * Creates a {@link ObjByteFunction} which uses the {@code second} parameter of this one as argument for the given
+     * {@link ByteFunction}.
      *
      * @param <T> The type of argument to the function
      * @param <R> The type of return value from the function
      * @param function The function which accepts the {@code second} parameter of this one
-     * @return Creates a {@code ObjByteFunction} which uses the {@code second} parameter of this one as argument for the given
-     * {@code ByteFunction}.
+     * @return Creates a {@code ObjByteFunction} which uses the {@code second} parameter of this one as argument for the
+     * given {@code ByteFunction}.
      * @throws NullPointerException If the given argument is {@code null}
      */
     static <T, R> ObjByteFunction<T, R> onlySecond(final ByteFunction<? extends R> function) {

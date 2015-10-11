@@ -81,12 +81,12 @@ public interface ThrowableBooleanTriConsumer extends BooleanTriConsumer {
     }
 
     /**
-     * Creates a {@link BooleanTriConsumer} which uses the {@code first} parameter of this one as argument for the given {@link
-     * BooleanConsumer}.
+     * Creates a {@link BooleanTriConsumer} which uses the {@code first} parameter of this one as argument for the given
+     * {@link BooleanConsumer}.
      *
      * @param consumer The consumer which accepts the {@code first} parameter of this one
-     * @return Creates a {@code BooleanTriConsumer} which uses the {@code first} parameter of this one as argument for the given
-     * {@code BooleanConsumer}.
+     * @return Creates a {@code BooleanTriConsumer} which uses the {@code first} parameter of this one as argument for
+     * the given {@code BooleanConsumer}.
      * @throws NullPointerException If the given argument is {@code null}
      */
     static BooleanTriConsumer onlyFirst(final BooleanConsumer consumer) {
@@ -95,12 +95,12 @@ public interface ThrowableBooleanTriConsumer extends BooleanTriConsumer {
     }
 
     /**
-     * Creates a {@link BooleanTriConsumer} which uses the {@code second} parameter of this one as argument for the given {@link
-     * BooleanConsumer}.
+     * Creates a {@link BooleanTriConsumer} which uses the {@code second} parameter of this one as argument for the
+     * given {@link BooleanConsumer}.
      *
      * @param consumer The consumer which accepts the {@code second} parameter of this one
-     * @return Creates a {@code BooleanTriConsumer} which uses the {@code second} parameter of this one as argument for the
-     * given {@code BooleanConsumer}.
+     * @return Creates a {@code BooleanTriConsumer} which uses the {@code second} parameter of this one as argument for
+     * the given {@code BooleanConsumer}.
      * @throws NullPointerException If the given argument is {@code null}
      */
     static BooleanTriConsumer onlySecond(final BooleanConsumer consumer) {
@@ -113,8 +113,8 @@ public interface ThrowableBooleanTriConsumer extends BooleanTriConsumer {
      * BooleanConsumer}.
      *
      * @param consumer The consumer which accepts the {@code third} parameter of this one
-     * @return Creates a {@code BooleanTriConsumer} which uses the {@code third} parameter as argument for the given {@code
-     * BooleanConsumer}.
+     * @return Creates a {@code BooleanTriConsumer} which uses the {@code third} parameter as argument for the given
+     * {@code BooleanConsumer}.
      * @throws NullPointerException If the given argument is {@code null}
      */
     static BooleanTriConsumer onlyThird(final BooleanConsumer consumer) {

@@ -153,8 +153,8 @@ public interface ThrowableFloatBinaryOperator extends FloatBinaryOperator {
      * FloatUnaryOperator}.
      *
      * @param operator The operator which accepts the {@code left} parameter of this one
-     * @return Creates a {@code FloatBinaryOperator} which uses the {@code left} parameter as argument for the given {@code
-     * FloatUnaryOperator}.
+     * @return Creates a {@code FloatBinaryOperator} which uses the {@code left} parameter as argument for the given
+     * {@code FloatUnaryOperator}.
      * @throws NullPointerException If the given argument is {@code null}
      */
     static FloatBinaryOperator onlyLeft(final FloatUnaryOperator operator) {
@@ -167,8 +167,8 @@ public interface ThrowableFloatBinaryOperator extends FloatBinaryOperator {
      * FloatUnaryOperator}.
      *
      * @param operator The operator which accepts the {@code right} parameter of this one
-     * @return Creates a {@code FloatBinaryOperator} which uses the {@code right} parameter as argument for the given {@code
-     * FloatUnaryOperator}.
+     * @return Creates a {@code FloatBinaryOperator} which uses the {@code right} parameter as argument for the given
+     * {@code FloatUnaryOperator}.
      * @throws NullPointerException If the given argument is {@code null}
      */
     static FloatBinaryOperator onlyRight(final FloatUnaryOperator operator) {

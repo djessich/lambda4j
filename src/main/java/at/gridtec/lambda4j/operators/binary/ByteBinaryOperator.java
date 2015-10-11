@@ -112,8 +112,8 @@ public interface ByteBinaryOperator {
      * ByteUnaryOperator}.
      *
      * @param operator The operator which accepts the {@code right} parameter of this one
-     * @return Creates a {@code ByteBinaryOperator} which uses the {@code right} parameter as argument for the given {@code
-     * ByteUnaryOperator}.
+     * @return Creates a {@code ByteBinaryOperator} which uses the {@code right} parameter as argument for the given
+     * {@code ByteUnaryOperator}.
      * @throws NullPointerException If the given argument is {@code null}
      */
     static ByteBinaryOperator onlyRight(final ByteUnaryOperator operator) {

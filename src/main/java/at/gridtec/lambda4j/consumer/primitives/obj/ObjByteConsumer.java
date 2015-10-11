@@ -39,13 +39,13 @@ import java.util.function.Function;
 public interface ObjByteConsumer<T> {
 
     /**
-     * Creates a {@link ObjByteConsumer} which uses the {@code first} parameter of this one as argument for the given {@link
-     * Consumer}.
+     * Creates a {@link ObjByteConsumer} which uses the {@code first} parameter of this one as argument for the given
+     * {@link Consumer}.
      *
      * @param <T> The type of the first argument to the operation
      * @param consumer The consumer which accepts the {@code first} parameter of this one
-     * @return Creates a {@code ObjByteConsumer} which uses the {@code first} parameter of this one as argument for the given
-     * {@code Consumer}.
+     * @return Creates a {@code ObjByteConsumer} which uses the {@code first} parameter of this one as argument for the
+     * given {@code Consumer}.
      * @throws NullPointerException If the given argument is {@code null}
      */
     static <T> ObjByteConsumer<T> onlyFirst(final Consumer<? super T> consumer) {
@@ -54,13 +54,13 @@ public interface ObjByteConsumer<T> {
     }
 
     /**
-     * Creates a {@link ObjByteConsumer} which uses the {@code second} parameter of this one as argument for the given {@link
-     * ByteConsumer}.
+     * Creates a {@link ObjByteConsumer} which uses the {@code second} parameter of this one as argument for the given
+     * {@link ByteConsumer}.
      *
      * @param <T> The type of the first argument to the operation
      * @param consumer The consumer which accepts the {@code second} parameter of this one
-     * @return Creates a {@code ObjByteConsumer} which uses the {@code second} parameter of this one as argument for the given
-     * {@code ByteConsumer}.
+     * @return Creates a {@code ObjByteConsumer} which uses the {@code second} parameter of this one as argument for the
+     * given {@code ByteConsumer}.
      * @throws NullPointerException If the given argument is {@code null}
      */
     static <T> ObjByteConsumer<T> onlySecond(final ByteConsumer consumer) {

@@ -40,14 +40,14 @@ import java.util.function.ToLongFunction;
 public interface BiObjLongConsumer<T, U> {
 
     /**
-     * Creates a {@link BiObjLongConsumer} which uses the {@code first} parameter of this one as argument for the given {@link
-     * Consumer}.
+     * Creates a {@link BiObjLongConsumer} which uses the {@code first} parameter of this one as argument for the given
+     * {@link Consumer}.
      *
      * @param <T> The type of the first argument to the operation
      * @param <U> The type of the second argument to the operation
      * @param consumer The consumer which accepts the {@code first} parameter of this one
-     * @return Creates a {@code BiObjLongConsumer} which uses the {@code first} parameter of this one as argument for the given
-     * {@code Consumer}.
+     * @return Creates a {@code BiObjLongConsumer} which uses the {@code first} parameter of this one as argument for
+     * the given {@code Consumer}.
      * @throws NullPointerException If the given argument is {@code null}
      */
     static <T, U> BiObjLongConsumer<T, U> onlyFirst(final Consumer<? super T> consumer) {
@@ -56,14 +56,14 @@ public interface BiObjLongConsumer<T, U> {
     }
 
     /**
-     * Creates a {@link BiObjLongConsumer} which uses the {@code second} parameter of this one as argument for the given {@link
-     * Consumer}.
+     * Creates a {@link BiObjLongConsumer} which uses the {@code second} parameter of this one as argument for the given
+     * {@link Consumer}.
      *
      * @param <T> The type of the first argument to the operation
      * @param <U> The type of the second argument to the operation
      * @param consumer The consumer which accepts the {@code second} parameter of this one
-     * @return Creates a {@code BiObjLongConsumer} which uses the {@code second} parameter of this one as argument for the given
-     * {@code Consumer}.
+     * @return Creates a {@code BiObjLongConsumer} which uses the {@code second} parameter of this one as argument for
+     * the given {@code Consumer}.
      * @throws NullPointerException If the given argument is {@code null}
      */
     static <T, U> BiObjLongConsumer<T, U> onlySecond(final Consumer<? super U> consumer) {
@@ -72,14 +72,14 @@ public interface BiObjLongConsumer<T, U> {
     }
 
     /**
-     * Creates a {@link BiObjLongConsumer} which uses the {@code third} parameter of this one as argument for the given {@link
-     * LongConsumer}.
+     * Creates a {@link BiObjLongConsumer} which uses the {@code third} parameter of this one as argument for the given
+     * {@link LongConsumer}.
      *
      * @param <T> The type of the first argument to the operation
      * @param <U> The type of the second argument to the operation
      * @param consumer The consumer which accepts the {@code third} parameter of this one
-     * @return Creates a {@code BiObjLongConsumer} which uses the {@code third} parameter of this one as argument for the given
-     * {@code LongConsumer}.
+     * @return Creates a {@code BiObjLongConsumer} which uses the {@code third} parameter of this one as argument for
+     * the given {@code LongConsumer}.
      * @throws NullPointerException If the given argument is {@code null}
      */
     static <T, U> BiObjLongConsumer<T, U> onlyThird(final LongConsumer consumer) {

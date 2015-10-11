@@ -154,8 +154,8 @@ public interface ThrowableDoubleBinaryOperator extends DoubleBinaryOperator {
      * DoubleUnaryOperator}.
      *
      * @param operator The operator which accepts the {@code short} parameter of this one
-     * @return Creates a {@code DoubleBinaryOperator} which uses the {@code left} parameter as argument for the given {@code
-     * DoubleUnaryOperator}.
+     * @return Creates a {@code DoubleBinaryOperator} which uses the {@code left} parameter as argument for the given
+     * {@code DoubleUnaryOperator}.
      * @throws NullPointerException If the given argument is {@code null}
      */
     static DoubleBinaryOperator onlyLeft(final DoubleUnaryOperator operator) {
@@ -168,8 +168,8 @@ public interface ThrowableDoubleBinaryOperator extends DoubleBinaryOperator {
      * DoubleUnaryOperator}.
      *
      * @param operator The operator which accepts the {@code right} parameter of this one
-     * @return Creates a {@code DoubleBinaryOperator} which uses the {@code right} parameter as argument for the given {@code
-     * DoubleUnaryOperator}.
+     * @return Creates a {@code DoubleBinaryOperator} which uses the {@code right} parameter as argument for the given
+     * {@code DoubleUnaryOperator}.
      * @throws NullPointerException If the given argument is {@code null}
      */
     static DoubleBinaryOperator onlyRight(final DoubleUnaryOperator operator) {

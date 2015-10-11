@@ -85,13 +85,13 @@ public interface ThrowableObjBooleanConsumer<T> extends ObjBooleanConsumer<T> {
     }
 
     /**
-     * Creates a {@link ObjBooleanConsumer} which uses the {@code first} parameter of this one as argument for the given {@link
-     * Consumer}.
+     * Creates a {@link ObjBooleanConsumer} which uses the {@code first} parameter of this one as argument for the given
+     * {@link Consumer}.
      *
      * @param <T> The type of the first argument to the operation
      * @param consumer The consumer which accepts the {@code first} parameter of this one
-     * @return Creates a {@code ObjBooleanConsumer} which uses the {@code first} parameter of this one as argument for the given
-     * {@code Consumer}.
+     * @return Creates a {@code ObjBooleanConsumer} which uses the {@code first} parameter of this one as argument for
+     * the given {@code Consumer}.
      * @throws NullPointerException If the given argument is {@code null}
      */
     static <T> ObjBooleanConsumer<T> onlyFirst(final Consumer<? super T> consumer) {
@@ -100,13 +100,13 @@ public interface ThrowableObjBooleanConsumer<T> extends ObjBooleanConsumer<T> {
     }
 
     /**
-     * Creates a {@link ObjBooleanConsumer} which uses the {@code second} parameter of this one as argument for the given {@link
-     * BooleanConsumer}.
+     * Creates a {@link ObjBooleanConsumer} which uses the {@code second} parameter of this one as argument for the
+     * given {@link BooleanConsumer}.
      *
      * @param <T> The type of the first argument to the operation
      * @param consumer The consumer which accepts the {@code second} parameter of this one
-     * @return Creates a {@code ObjBooleanConsumer} which uses the {@code second} parameter of this one as argument for the
-     * given {@code BooleanConsumer}.
+     * @return Creates a {@code ObjBooleanConsumer} which uses the {@code second} parameter of this one as argument for
+     * the given {@code BooleanConsumer}.
      * @throws NullPointerException If the given argument is {@code null}
      */
     static <T> ObjBooleanConsumer<T> onlySecond(final BooleanConsumer consumer) {

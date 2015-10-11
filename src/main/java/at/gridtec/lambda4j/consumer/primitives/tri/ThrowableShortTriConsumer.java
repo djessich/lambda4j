@@ -81,12 +81,12 @@ public interface ThrowableShortTriConsumer extends ShortTriConsumer {
     }
 
     /**
-     * Creates a {@link ShortTriConsumer} which uses the {@code first} parameter of this one as argument for the given {@link
-     * ShortConsumer}.
+     * Creates a {@link ShortTriConsumer} which uses the {@code first} parameter of this one as argument for the given
+     * {@link ShortConsumer}.
      *
      * @param consumer The consumer which accepts the {@code first} parameter of this one
-     * @return Creates a {@code ShortTriConsumer} which uses the {@code first} parameter of this one as argument for the given
-     * {@code ShortConsumer}.
+     * @return Creates a {@code ShortTriConsumer} which uses the {@code first} parameter of this one as argument for the
+     * given {@code ShortConsumer}.
      * @throws NullPointerException If the given argument is {@code null}
      */
     static ShortTriConsumer onlyFirst(final ShortConsumer consumer) {
@@ -95,12 +95,12 @@ public interface ThrowableShortTriConsumer extends ShortTriConsumer {
     }
 
     /**
-     * Creates a {@link ShortTriConsumer} which uses the {@code second} parameter of this one as argument for the given {@link
-     * ShortConsumer}.
+     * Creates a {@link ShortTriConsumer} which uses the {@code second} parameter of this one as argument for the given
+     * {@link ShortConsumer}.
      *
      * @param consumer The consumer which accepts the {@code second} parameter of this one
-     * @return Creates a {@code ShortTriConsumer} which uses the {@code second} parameter of this one as argument for the given
-     * {@code ShortConsumer}.
+     * @return Creates a {@code ShortTriConsumer} which uses the {@code second} parameter of this one as argument for
+     * the given {@code ShortConsumer}.
      * @throws NullPointerException If the given argument is {@code null}
      */
     static ShortTriConsumer onlySecond(final ShortConsumer consumer) {
@@ -113,8 +113,8 @@ public interface ThrowableShortTriConsumer extends ShortTriConsumer {
      * ShortConsumer}.
      *
      * @param consumer The consumer which accepts the {@code third} parameter of this one
-     * @return Creates a {@code ShortTriConsumer} which uses the {@code third} parameter as argument for the given {@code
-     * ShortConsumer}.
+     * @return Creates a {@code ShortTriConsumer} which uses the {@code third} parameter as argument for the given
+     * {@code ShortConsumer}.
      * @throws NullPointerException If the given argument is {@code null}
      */
     static ShortTriConsumer onlyThird(final ShortConsumer consumer) {

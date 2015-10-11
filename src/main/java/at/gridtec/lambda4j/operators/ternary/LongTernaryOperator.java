@@ -45,8 +45,8 @@ public interface LongTernaryOperator {
      * LongUnaryOperator}.
      *
      * @param operator The operator which accepts the {@code left} parameter of this one
-     * @return Creates a {@code LongTernaryOperator} which uses the {@code left} parameter as argument for the given {@code
-     * LongUnaryOperator}.
+     * @return Creates a {@code LongTernaryOperator} which uses the {@code left} parameter as argument for the given
+     * {@code LongUnaryOperator}.
      * @throws NullPointerException If the given argument is {@code null}
      */
     static LongTernaryOperator onlyLeft(final LongUnaryOperator operator) {
@@ -59,8 +59,8 @@ public interface LongTernaryOperator {
      * LongUnaryOperator}.
      *
      * @param operator The operator which accepts the {@code middle} parameter of this one
-     * @return Creates a {@code LongTernaryOperator} which uses the {@code middle} parameter as argument for the given {@code
-     * LongUnaryOperator}.
+     * @return Creates a {@code LongTernaryOperator} which uses the {@code middle} parameter as argument for the given
+     * {@code LongUnaryOperator}.
      * @throws NullPointerException If the given argument is {@code null}
      */
     static LongTernaryOperator onlyMiddle(final LongUnaryOperator operator) {
@@ -73,8 +73,8 @@ public interface LongTernaryOperator {
      * LongUnaryOperator}.
      *
      * @param operator The operator which accepts the {@code right} parameter of this one
-     * @return Creates a {@code LongTernaryOperator} which uses the {@code right} parameter as argument for the given {@code
-     * LongUnaryOperator}.
+     * @return Creates a {@code LongTernaryOperator} which uses the {@code right} parameter as argument for the given
+     * {@code LongUnaryOperator}.
      * @throws NullPointerException If the given argument is {@code null}
      */
     static LongTernaryOperator onlyRight(final LongUnaryOperator operator) {

@@ -55,14 +55,14 @@ public interface ToLongBiObjLongFunction<T, U> {
     }
 
     /**
-     * Creates a {@link ToLongBiObjLongFunction} which uses the {@code first} parameter of this one as argument for the given
-     * {@link ToLongFunction}.
+     * Creates a {@link ToLongBiObjLongFunction} which uses the {@code first} parameter of this one as argument for the
+     * given {@link ToLongFunction}.
      *
      * @param <T> The type of the first argument to the function
      * @param <U> The type of the second argument to the function
      * @param function The function which accepts the {@code first} parameter of this one
-     * @return Creates a {@code ToLongBiObjLongFunction} which uses the {@code first} parameter of this one as argument for the
-     * given {@code ToLongFunction}.
+     * @return Creates a {@code ToLongBiObjLongFunction} which uses the {@code first} parameter of this one as argument
+     * for the given {@code ToLongFunction}.
      * @throws NullPointerException If the given argument is {@code null}
      */
     static <T, U> ToLongBiObjLongFunction<T, U> onlyFirst(final ToLongFunction<? super T> function) {
@@ -71,14 +71,14 @@ public interface ToLongBiObjLongFunction<T, U> {
     }
 
     /**
-     * Creates a {@link ToLongBiObjLongFunction} which uses the {@code second} parameter of this one as argument for the given
-     * {@link ToLongFunction}.
+     * Creates a {@link ToLongBiObjLongFunction} which uses the {@code second} parameter of this one as argument for the
+     * given {@link ToLongFunction}.
      *
      * @param <T> The type of the first argument to the function
      * @param <U> The type of the second argument to the function
      * @param function The function which accepts the {@code second} parameter of this one
-     * @return Creates a {@code ToLongBiObjLongFunction} which uses the {@code second} parameter of this one as argument for the
-     * given {@code ToLongFunction}.
+     * @return Creates a {@code ToLongBiObjLongFunction} which uses the {@code second} parameter of this one as argument
+     * for the given {@code ToLongFunction}.
      * @throws NullPointerException If the given argument is {@code null}
      */
     static <T, U> ToLongBiObjLongFunction<T, U> onlySecond(final ToLongFunction<? super U> function) {
@@ -87,14 +87,14 @@ public interface ToLongBiObjLongFunction<T, U> {
     }
 
     /**
-     * Creates a {@link ToLongBiObjLongFunction} which uses the {@code third} parameter of this one as argument for the given
-     * {@link LongUnaryOperator}.
+     * Creates a {@link ToLongBiObjLongFunction} which uses the {@code third} parameter of this one as argument for the
+     * given {@link LongUnaryOperator}.
      *
      * @param <T> The type of the first argument to the function
      * @param <U> The type of the second argument to the function
      * @param function The function which accepts the {@code third} parameter of this one
-     * @return Creates a {@code ToLongBiObjLongFunction} which uses the {@code third} parameter of this one as argument for the
-     * given {@code LongUnaryOperator}.
+     * @return Creates a {@code ToLongBiObjLongFunction} which uses the {@code third} parameter of this one as argument
+     * for the given {@code LongUnaryOperator}.
      * @throws NullPointerException If the given argument is {@code null}
      */
     static <T, U> ToLongBiObjLongFunction<T, U> onlyThird(final LongUnaryOperator function) {

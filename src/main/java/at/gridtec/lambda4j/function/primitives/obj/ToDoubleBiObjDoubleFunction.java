@@ -55,14 +55,14 @@ public interface ToDoubleBiObjDoubleFunction<T, U> {
     }
 
     /**
-     * Creates a {@link ToDoubleBiObjDoubleFunction} which uses the {@code first} parameter of this one as argument for the
-     * given {@link ToDoubleFunction}.
+     * Creates a {@link ToDoubleBiObjDoubleFunction} which uses the {@code first} parameter of this one as argument for
+     * the given {@link ToDoubleFunction}.
      *
      * @param <T> The type of the first argument to the function
      * @param <U> The type of the second argument to the function
      * @param function The function which accepts the {@code first} parameter of this one
-     * @return Creates a {@code ToDoubleBiObjDoubleFunction} which uses the {@code first} parameter of this one as argument for
-     * the given {@code ToDoubleFunction}.
+     * @return Creates a {@code ToDoubleBiObjDoubleFunction} which uses the {@code first} parameter of this one as
+     * argument for the given {@code ToDoubleFunction}.
      * @throws NullPointerException If the given argument is {@code null}
      */
     static <T, U> ToDoubleBiObjDoubleFunction<T, U> onlyFirst(final ToDoubleFunction<? super T> function) {
@@ -71,14 +71,14 @@ public interface ToDoubleBiObjDoubleFunction<T, U> {
     }
 
     /**
-     * Creates a {@link ToDoubleBiObjDoubleFunction} which uses the {@code second} parameter of this one as argument for the
-     * given {@link ToDoubleFunction}.
+     * Creates a {@link ToDoubleBiObjDoubleFunction} which uses the {@code second} parameter of this one as argument for
+     * the given {@link ToDoubleFunction}.
      *
      * @param <T> The type of the first argument to the function
      * @param <U> The type of the second argument to the function
      * @param function The function which accepts the {@code second} parameter of this one
-     * @return Creates a {@code ToDoubleBiObjDoubleFunction} which uses the {@code second} parameter of this one as argument for
-     * the given {@code ToDoubleFunction}.
+     * @return Creates a {@code ToDoubleBiObjDoubleFunction} which uses the {@code second} parameter of this one as
+     * argument for the given {@code ToDoubleFunction}.
      * @throws NullPointerException If the given argument is {@code null}
      */
     static <T, U> ToDoubleBiObjDoubleFunction<T, U> onlySecond(final ToDoubleFunction<? super U> function) {
@@ -87,14 +87,14 @@ public interface ToDoubleBiObjDoubleFunction<T, U> {
     }
 
     /**
-     * Creates a {@link ToDoubleBiObjDoubleFunction} which uses the {@code third} parameter of this one as argument for the
-     * given {@link DoubleUnaryOperator}.
+     * Creates a {@link ToDoubleBiObjDoubleFunction} which uses the {@code third} parameter of this one as argument for
+     * the given {@link DoubleUnaryOperator}.
      *
      * @param <T> The type of the first argument to the function
      * @param <U> The type of the second argument to the function
      * @param function The function which accepts the {@code third} parameter of this one
-     * @return Creates a {@code ToDoubleBiObjDoubleFunction} which uses the {@code third} parameter of this one as argument for
-     * the given {@code DoubleUnaryOperator}.
+     * @return Creates a {@code ToDoubleBiObjDoubleFunction} which uses the {@code third} parameter of this one as
+     * argument for the given {@code DoubleUnaryOperator}.
      * @throws NullPointerException If the given argument is {@code null}
      */
     static <T, U> ToDoubleBiObjDoubleFunction<T, U> onlyThird(final DoubleUnaryOperator function) {

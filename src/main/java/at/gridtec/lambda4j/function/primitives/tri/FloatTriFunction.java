@@ -51,13 +51,13 @@ public interface FloatTriFunction<R> {
     }
 
     /**
-     * Creates a {@link FloatTriFunction} which uses the {@code first} parameter of this one as argument for the given {@link
-     * FloatFunction}.
+     * Creates a {@link FloatTriFunction} which uses the {@code first} parameter of this one as argument for the given
+     * {@link FloatFunction}.
      *
      * @param <R> The type of return value from the function
      * @param function The function which accepts the {@code first} parameter of this one
-     * @return Creates a {@code FloatTriFunction} which uses the {@code first} parameter of this one as argument for the given
-     * {@code FloatFunction}.
+     * @return Creates a {@code FloatTriFunction} which uses the {@code first} parameter of this one as argument for the
+     * given {@code FloatFunction}.
      * @throws NullPointerException If the given argument is {@code null}
      */
     static <R> FloatTriFunction<R> onlyFirst(final FloatFunction<? extends R> function) {
@@ -66,13 +66,13 @@ public interface FloatTriFunction<R> {
     }
 
     /**
-     * Creates a {@link FloatTriFunction} which uses the {@code second} parameter of this one as argument for the given {@link
-     * FloatFunction}.
+     * Creates a {@link FloatTriFunction} which uses the {@code second} parameter of this one as argument for the given
+     * {@link FloatFunction}.
      *
      * @param <R> The type of return value from the function
      * @param function The function which accepts the {@code second} parameter of this one
-     * @return Creates a {@code FloatTriFunction} which uses the {@code second} parameter of this one as argument for the given
-     * {@code FloatFunction}.
+     * @return Creates a {@code FloatTriFunction} which uses the {@code second} parameter of this one as argument for
+     * the given {@code FloatFunction}.
      * @throws NullPointerException If the given argument is {@code null}
      */
     static <R> FloatTriFunction<R> onlySecond(final FloatFunction<? extends R> function) {
@@ -81,13 +81,13 @@ public interface FloatTriFunction<R> {
     }
 
     /**
-     * Creates a {@link FloatTriFunction} which uses the {@code third} parameter of this one as argument for the given {@link
-     * FloatFunction}.
+     * Creates a {@link FloatTriFunction} which uses the {@code third} parameter of this one as argument for the given
+     * {@link FloatFunction}.
      *
      * @param <R> The type of return value from the function
      * @param function The function which accepts the {@code third} parameter of this one
-     * @return Creates a {@code FloatTriFunction} which uses the {@code third} parameter of this one as argument for the given
-     * {@code FloatFunction}.
+     * @return Creates a {@code FloatTriFunction} which uses the {@code third} parameter of this one as argument for the
+     * given {@code FloatFunction}.
      * @throws NullPointerException If the given argument is {@code null}
      */
     static <R> FloatTriFunction<R> onlyThird(final FloatFunction<? extends R> function) {

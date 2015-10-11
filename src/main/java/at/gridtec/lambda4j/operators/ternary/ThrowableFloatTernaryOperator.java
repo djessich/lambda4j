@@ -93,12 +93,12 @@ public interface ThrowableFloatTernaryOperator extends FloatTernaryOperator {
     }
 
     /**
-     * Creates a {@link ThrowableFloatTernaryOperator} which uses the {@code left} parameter as argument for the given {@link
-     * ThrowableFloatUnaryOperator}.
+     * Creates a {@link ThrowableFloatTernaryOperator} which uses the {@code left} parameter as argument for the given
+     * {@link ThrowableFloatUnaryOperator}.
      *
      * @param operator The operator which accepts the {@code left} parameter of this one
-     * @return Creates a {@code ThrowableFloatTernaryOperator} which uses the {@code left} parameter as argument for the given
-     * {@code ThrowableFloatUnaryOperator}.
+     * @return Creates a {@code ThrowableFloatTernaryOperator} which uses the {@code left} parameter as argument for the
+     * given {@code ThrowableFloatUnaryOperator}.
      * @throws NullPointerException If the given argument is {@code null}
      */
     static ThrowableFloatTernaryOperator onlyLeft(final ThrowableFloatUnaryOperator operator) {
@@ -107,12 +107,12 @@ public interface ThrowableFloatTernaryOperator extends FloatTernaryOperator {
     }
 
     /**
-     * Creates a {@link ThrowableFloatTernaryOperator} which uses the {@code middle} parameter as argument for the given {@link
-     * ThrowableFloatUnaryOperator}.
+     * Creates a {@link ThrowableFloatTernaryOperator} which uses the {@code middle} parameter as argument for the given
+     * {@link ThrowableFloatUnaryOperator}.
      *
      * @param operator The operator which accepts the {@code middle} parameter of this one
-     * @return Creates a {@code ThrowableFloatTernaryOperator} which uses the {@code middle} parameter as argument for the given
-     * {@code ThrowableFloatUnaryOperator}.
+     * @return Creates a {@code ThrowableFloatTernaryOperator} which uses the {@code middle} parameter as argument for
+     * the given {@code ThrowableFloatUnaryOperator}.
      * @throws NullPointerException If the given argument is {@code null}
      */
     static ThrowableFloatTernaryOperator onlyMiddle(final ThrowableFloatUnaryOperator operator) {
@@ -121,12 +121,12 @@ public interface ThrowableFloatTernaryOperator extends FloatTernaryOperator {
     }
 
     /**
-     * Creates a {@link ThrowableFloatTernaryOperator} which uses the {@code right} parameter as argument for the given {@link
-     * ThrowableFloatUnaryOperator}.
+     * Creates a {@link ThrowableFloatTernaryOperator} which uses the {@code right} parameter as argument for the given
+     * {@link ThrowableFloatUnaryOperator}.
      *
      * @param operator The operator which accepts the {@code right} parameter of this one
-     * @return Creates a {@code ThrowableFloatTernaryOperator} which uses the {@code right} parameter as argument for the given
-     * {@code ThrowableFloatUnaryOperator}.
+     * @return Creates a {@code ThrowableFloatTernaryOperator} which uses the {@code right} parameter as argument for
+     * the given {@code ThrowableFloatUnaryOperator}.
      * @throws NullPointerException If the given argument is {@code null}
      */
     static ThrowableFloatTernaryOperator onlyRight(final ThrowableFloatUnaryOperator operator) {

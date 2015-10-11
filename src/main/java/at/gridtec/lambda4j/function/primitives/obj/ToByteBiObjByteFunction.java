@@ -55,14 +55,14 @@ public interface ToByteBiObjByteFunction<T, U> {
     }
 
     /**
-     * Creates a {@link ToByteBiObjByteFunction} which uses the {@code first} parameter of this one as argument for the given
-     * {@link ToByteFunction}.
+     * Creates a {@link ToByteBiObjByteFunction} which uses the {@code first} parameter of this one as argument for the
+     * given {@link ToByteFunction}.
      *
      * @param <T> The type of the first argument to the function
      * @param <U> The type of the second argument to the function
      * @param function The function which accepts the {@code first} parameter of this one
-     * @return Creates a {@code ToByteBiObjByteFunction} which uses the {@code first} parameter of this one as argument for the
-     * given {@code ToByteFunction}.
+     * @return Creates a {@code ToByteBiObjByteFunction} which uses the {@code first} parameter of this one as argument
+     * for the given {@code ToByteFunction}.
      * @throws NullPointerException If the given argument is {@code null}
      */
     static <T, U> ToByteBiObjByteFunction<T, U> onlyFirst(final ToByteFunction<? super T> function) {
@@ -71,14 +71,14 @@ public interface ToByteBiObjByteFunction<T, U> {
     }
 
     /**
-     * Creates a {@link ToByteBiObjByteFunction} which uses the {@code second} parameter of this one as argument for the given
-     * {@link ToByteFunction}.
+     * Creates a {@link ToByteBiObjByteFunction} which uses the {@code second} parameter of this one as argument for the
+     * given {@link ToByteFunction}.
      *
      * @param <T> The type of the first argument to the function
      * @param <U> The type of the second argument to the function
      * @param function The function which accepts the {@code second} parameter of this one
-     * @return Creates a {@code ToByteBiObjByteFunction} which uses the {@code second} parameter of this one as argument for the
-     * given {@code ToByteFunction}.
+     * @return Creates a {@code ToByteBiObjByteFunction} which uses the {@code second} parameter of this one as argument
+     * for the given {@code ToByteFunction}.
      * @throws NullPointerException If the given argument is {@code null}
      */
     static <T, U> ToByteBiObjByteFunction<T, U> onlySecond(final ToByteFunction<? super U> function) {
@@ -87,14 +87,14 @@ public interface ToByteBiObjByteFunction<T, U> {
     }
 
     /**
-     * Creates a {@link ToByteBiObjByteFunction} which uses the {@code third} parameter of this one as argument for the given
-     * {@link ByteUnaryOperator}.
+     * Creates a {@link ToByteBiObjByteFunction} which uses the {@code third} parameter of this one as argument for the
+     * given {@link ByteUnaryOperator}.
      *
      * @param <T> The type of the first argument to the function
      * @param <U> The type of the second argument to the function
      * @param function The function which accepts the {@code third} parameter of this one
-     * @return Creates a {@code ToByteBiObjByteFunction} which uses the {@code third} parameter of this one as argument for the
-     * given {@code ByteUnaryOperator}.
+     * @return Creates a {@code ToByteBiObjByteFunction} which uses the {@code third} parameter of this one as argument
+     * for the given {@code ByteUnaryOperator}.
      * @throws NullPointerException If the given argument is {@code null}
      */
     static <T, U> ToByteBiObjByteFunction<T, U> onlyThird(final ByteUnaryOperator function) {

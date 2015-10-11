@@ -89,14 +89,14 @@ public interface ThrowableBiObjByteConsumer<T, U> extends BiObjByteConsumer<T, U
     }
 
     /**
-     * Creates a {@link ThrowableBiObjByteConsumer} which uses the {@code first} parameter of this one as argument for the given
-     * {@link Consumer}.
+     * Creates a {@link ThrowableBiObjByteConsumer} which uses the {@code first} parameter of this one as argument for
+     * the given {@link Consumer}.
      *
      * @param <T> The type of the first argument to the operation
      * @param <U> The type of the second argument to the operation
      * @param consumer The consumer which accepts the {@code first} parameter of this one
-     * @return Creates a {@code ThrowableBiObjByteConsumer} which uses the {@code first} parameter of this one as argument for
-     * the given {@code Consumer}.
+     * @return Creates a {@code ThrowableBiObjByteConsumer} which uses the {@code first} parameter of this one as
+     * argument for the given {@code Consumer}.
      * @throws NullPointerException If the given argument is {@code null}
      */
     static <T, U> ThrowableBiObjByteConsumer<T, U> onlyFirst(final Consumer<? super T> consumer) {
@@ -105,14 +105,14 @@ public interface ThrowableBiObjByteConsumer<T, U> extends BiObjByteConsumer<T, U
     }
 
     /**
-     * Creates a {@link ThrowableBiObjByteConsumer} which uses the {@code second} parameter of this one as argument for the
-     * given {@link Consumer}.
+     * Creates a {@link ThrowableBiObjByteConsumer} which uses the {@code second} parameter of this one as argument for
+     * the given {@link Consumer}.
      *
      * @param <T> The type of the first argument to the operation
      * @param <U> The type of the second argument to the operation
      * @param consumer The consumer which accepts the {@code second} parameter of this one
-     * @return Creates a {@code ThrowableBiObjByteConsumer} which uses the {@code second} parameter of this one as argument for
-     * the given {@code Consumer}.
+     * @return Creates a {@code ThrowableBiObjByteConsumer} which uses the {@code second} parameter of this one as
+     * argument for the given {@code Consumer}.
      * @throws NullPointerException If the given argument is {@code null}
      */
     static <T, U> ThrowableBiObjByteConsumer<T, U> onlySecond(final Consumer<? super U> consumer) {
@@ -121,14 +121,14 @@ public interface ThrowableBiObjByteConsumer<T, U> extends BiObjByteConsumer<T, U
     }
 
     /**
-     * Creates a {@link ThrowableBiObjByteConsumer} which uses the {@code third} parameter of this one as argument for the given
-     * {@link ByteConsumer}.
+     * Creates a {@link ThrowableBiObjByteConsumer} which uses the {@code third} parameter of this one as argument for
+     * the given {@link ByteConsumer}.
      *
      * @param <T> The type of the first argument to the operation
      * @param <U> The type of the second argument to the operation
      * @param consumer The consumer which accepts the {@code third} parameter of this one
-     * @return Creates a {@code ThrowableBiObjByteConsumer} which uses the {@code third} parameter of this one as argument for
-     * the given {@code ByteConsumer}.
+     * @return Creates a {@code ThrowableBiObjByteConsumer} which uses the {@code third} parameter of this one as
+     * argument for the given {@code ByteConsumer}.
      * @throws NullPointerException If the given argument is {@code null}
      */
     static <T, U> ThrowableBiObjByteConsumer<T, U> onlyThird(final ByteConsumer consumer) {

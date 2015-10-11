@@ -53,13 +53,13 @@ public interface ToCharObjCharFunction<T> {
     }
 
     /**
-     * Creates a {@link ToCharObjCharFunction} which uses the {@code first} parameter of this one as argument for the given
-     * {@link ToCharFunction}.
+     * Creates a {@link ToCharObjCharFunction} which uses the {@code first} parameter of this one as argument for the
+     * given {@link ToCharFunction}.
      *
      * @param <T> The type of argument to the function
      * @param function The function which accepts the {@code first} parameter of this one
-     * @return Creates a {@code ToCharObjCharFunction} which uses the {@code first} parameter of this one as argument for the
-     * given {@code ToCharFunction}.
+     * @return Creates a {@code ToCharObjCharFunction} which uses the {@code first} parameter of this one as argument
+     * for the given {@code ToCharFunction}.
      * @throws NullPointerException If the given argument is {@code null}
      */
     static <T> ToCharObjCharFunction<T> onlyFirst(final ToCharFunction<? super T> function) {
@@ -68,13 +68,13 @@ public interface ToCharObjCharFunction<T> {
     }
 
     /**
-     * Creates a {@link ToCharObjCharFunction} which uses the {@code second} parameter of this one as argument for the given
-     * {@link CharUnaryOperator}.
+     * Creates a {@link ToCharObjCharFunction} which uses the {@code second} parameter of this one as argument for the
+     * given {@link CharUnaryOperator}.
      *
      * @param <T> The type of argument to the function
      * @param function The function which accepts the {@code second} parameter of this one
-     * @return Creates a {@code ToCharObjCharFunction} which uses the {@code second} parameter of this one as argument for the
-     * given {@code CharUnaryOperator}.
+     * @return Creates a {@code ToCharObjCharFunction} which uses the {@code second} parameter of this one as argument
+     * for the given {@code CharUnaryOperator}.
      * @throws NullPointerException If the given argument is {@code null}
      */
     static <T> ToCharObjCharFunction<T> onlySecond(final CharUnaryOperator function) {

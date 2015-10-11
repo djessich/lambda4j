@@ -54,15 +54,15 @@ public interface BiObjCharFunction<T, U, R> {
     }
 
     /**
-     * Creates a {@link BiObjCharFunction} which uses the {@code first} parameter of this one as argument for the given {@link
-     * Function}.
+     * Creates a {@link BiObjCharFunction} which uses the {@code first} parameter of this one as argument for the given
+     * {@link Function}.
      *
      * @param <T> The type of the first argument to the function
      * @param <U> The type of the second argument to the function
      * @param <R> The type of return value from the function
      * @param function The function which accepts the {@code first} parameter of this one
-     * @return Creates a {@code BiObjCharFunction} which uses the {@code first} parameter of this one as argument for the given
-     * {@code Function}.
+     * @return Creates a {@code BiObjCharFunction} which uses the {@code first} parameter of this one as argument for
+     * the given {@code Function}.
      * @throws NullPointerException If the given argument is {@code null}
      */
     static <T, U, R> BiObjCharFunction<T, U, R> onlyFirst(final Function<? super T, ? extends R> function) {
@@ -71,15 +71,15 @@ public interface BiObjCharFunction<T, U, R> {
     }
 
     /**
-     * Creates a {@link BiObjCharFunction} which uses the {@code second} parameter of this one as argument for the given {@link
-     * Function}.
+     * Creates a {@link BiObjCharFunction} which uses the {@code second} parameter of this one as argument for the given
+     * {@link Function}.
      *
      * @param <T> The type of the first argument to the function
      * @param <U> The type of the second argument to the function
      * @param <R> The type of return value from the function
      * @param function The function which accepts the {@code second} parameter of this one
-     * @return Creates a {@code BiObjCharFunction} which uses the {@code second} parameter of this one as argument for the given
-     * {@code Function}.
+     * @return Creates a {@code BiObjCharFunction} which uses the {@code second} parameter of this one as argument for
+     * the given {@code Function}.
      * @throws NullPointerException If the given argument is {@code null}
      */
     static <T, U, R> BiObjCharFunction<T, U, R> onlySecond(final Function<? super U, ? extends R> function) {
@@ -88,15 +88,15 @@ public interface BiObjCharFunction<T, U, R> {
     }
 
     /**
-     * Creates a {@link BiObjCharFunction} which uses the {@code third} parameter of this one as argument for the given {@link
-     * CharFunction}.
+     * Creates a {@link BiObjCharFunction} which uses the {@code third} parameter of this one as argument for the given
+     * {@link CharFunction}.
      *
      * @param <T> The type of the first argument to the function
      * @param <U> The type of the second argument to the function
      * @param <R> The type of return value from the function
      * @param function The function which accepts the {@code third} parameter of this one
-     * @return Creates a {@code BiObjCharFunction} which uses the {@code third} parameter of this one as argument for the given
-     * {@code CharFunction}.
+     * @return Creates a {@code BiObjCharFunction} which uses the {@code third} parameter of this one as argument for
+     * the given {@code CharFunction}.
      * @throws NullPointerException If the given argument is {@code null}
      */
     static <T, U, R> BiObjCharFunction<T, U, R> onlyThird(final CharFunction<? extends R> function) {

@@ -81,12 +81,12 @@ public interface ThrowableShortBiConsumer extends ShortBiConsumer {
     }
 
     /**
-     * Creates a {@link ShortBiConsumer} which uses the {@code first} parameter of this one as argument for the given {@link
-     * ShortConsumer}.
+     * Creates a {@link ShortBiConsumer} which uses the {@code first} parameter of this one as argument for the given
+     * {@link ShortConsumer}.
      *
      * @param consumer The consumer which accepts the {@code first} parameter of this one
-     * @return Creates a {@code ShortBiConsumer} which uses the {@code first} parameter of this one as argument for the given
-     * {@code ShortConsumer}.
+     * @return Creates a {@code ShortBiConsumer} which uses the {@code first} parameter of this one as argument for the
+     * given {@code ShortConsumer}.
      * @throws NullPointerException If the given argument is {@code null}
      */
     static ShortBiConsumer onlyFirst(final ShortConsumer consumer) {
@@ -95,12 +95,12 @@ public interface ThrowableShortBiConsumer extends ShortBiConsumer {
     }
 
     /**
-     * Creates a {@link ShortBiConsumer} which uses the {@code second} parameter of this one as argument for the given {@link
-     * ShortConsumer}.
+     * Creates a {@link ShortBiConsumer} which uses the {@code second} parameter of this one as argument for the given
+     * {@link ShortConsumer}.
      *
      * @param consumer The consumer which accepts the {@code second} parameter of this one
-     * @return Creates a {@code ShortBiConsumer} which uses the {@code second} parameter of this one as argument for the given
-     * {@code ShortConsumer}.
+     * @return Creates a {@code ShortBiConsumer} which uses the {@code second} parameter of this one as argument for the
+     * given {@code ShortConsumer}.
      * @throws NullPointerException If the given argument is {@code null}
      */
     static ShortBiConsumer onlySecond(final ShortConsumer consumer) {

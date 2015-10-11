@@ -51,13 +51,13 @@ public interface BooleanBiFunction<R> {
     }
 
     /**
-     * Creates a {@link BooleanBiFunction} which uses the {@code first} parameter of this one as argument for the given {@link
-     * BooleanFunction}.
+     * Creates a {@link BooleanBiFunction} which uses the {@code first} parameter of this one as argument for the given
+     * {@link BooleanFunction}.
      *
      * @param <R> The type of return value from the function
      * @param function The function which accepts the {@code first} parameter of this one
-     * @return Creates a {@code BooleanBiFunction} which uses the {@code first} parameter of this one as argument for the given
-     * {@code BooleanFunction}.
+     * @return Creates a {@code BooleanBiFunction} which uses the {@code first} parameter of this one as argument for
+     * the given {@code BooleanFunction}.
      * @throws NullPointerException If the given argument is {@code null}
      */
     static <R> BooleanBiFunction<R> onlyFirst(final BooleanFunction<? extends R> function) {
@@ -66,13 +66,13 @@ public interface BooleanBiFunction<R> {
     }
 
     /**
-     * Creates a {@link BooleanBiFunction} which uses the {@code second} parameter of this one as argument for the given {@link
-     * BooleanFunction}.
+     * Creates a {@link BooleanBiFunction} which uses the {@code second} parameter of this one as argument for the given
+     * {@link BooleanFunction}.
      *
      * @param <R> The type of return value from the function
      * @param function The function which accepts the {@code second} parameter of this one
-     * @return Creates a {@code BooleanBiFunction} which uses the {@code second} parameter of this one as argument for the given
-     * {@code BooleanFunction}.
+     * @return Creates a {@code BooleanBiFunction} which uses the {@code second} parameter of this one as argument for
+     * the given {@code BooleanFunction}.
      * @throws NullPointerException If the given argument is {@code null}
      */
     static <R> BooleanBiFunction<R> onlySecond(final BooleanFunction<? extends R> function) {

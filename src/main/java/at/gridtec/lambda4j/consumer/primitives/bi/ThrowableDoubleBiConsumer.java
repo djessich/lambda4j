@@ -81,12 +81,12 @@ public interface ThrowableDoubleBiConsumer extends DoubleBiConsumer {
     }
 
     /**
-     * Creates a {@link DoubleBiConsumer} which uses the {@code first} parameter of this one as argument for the given {@link
-     * DoubleConsumer}.
+     * Creates a {@link DoubleBiConsumer} which uses the {@code first} parameter of this one as argument for the given
+     * {@link DoubleConsumer}.
      *
      * @param consumer The consumer which accepts the {@code first} parameter of this one
-     * @return Creates a {@code DoubleBiConsumer} which uses the {@code first} parameter of this one as argument for the given
-     * {@code DoubleConsumer}.
+     * @return Creates a {@code DoubleBiConsumer} which uses the {@code first} parameter of this one as argument for the
+     * given {@code DoubleConsumer}.
      * @throws NullPointerException If the given argument is {@code null}
      */
     static DoubleBiConsumer onlyFirst(final DoubleConsumer consumer) {
@@ -95,12 +95,12 @@ public interface ThrowableDoubleBiConsumer extends DoubleBiConsumer {
     }
 
     /**
-     * Creates a {@link DoubleBiConsumer} which uses the {@code second} parameter of this one as argument for the given {@link
-     * DoubleConsumer}.
+     * Creates a {@link DoubleBiConsumer} which uses the {@code second} parameter of this one as argument for the given
+     * {@link DoubleConsumer}.
      *
      * @param consumer The consumer which accepts the {@code second} parameter of this one
-     * @return Creates a {@code DoubleBiConsumer} which uses the {@code second} parameter of this one as argument for the given
-     * {@code DoubleConsumer}.
+     * @return Creates a {@code DoubleBiConsumer} which uses the {@code second} parameter of this one as argument for
+     * the given {@code DoubleConsumer}.
      * @throws NullPointerException If the given argument is {@code null}
      */
     static DoubleBiConsumer onlySecond(final DoubleConsumer consumer) {

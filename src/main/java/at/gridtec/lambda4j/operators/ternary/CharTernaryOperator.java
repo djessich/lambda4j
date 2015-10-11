@@ -46,8 +46,8 @@ public interface CharTernaryOperator {
      * CharUnaryOperator}.
      *
      * @param operator The operator which accepts the {@code left} parameter of this one
-     * @return Creates a {@code CharTernaryOperator} which uses the {@code left} parameter as argument for the given {@code
-     * CharUnaryOperator}.
+     * @return Creates a {@code CharTernaryOperator} which uses the {@code left} parameter as argument for the given
+     * {@code CharUnaryOperator}.
      * @throws NullPointerException If the given argument is {@code null}
      */
     static CharTernaryOperator onlyLeft(final CharUnaryOperator operator) {
@@ -60,8 +60,8 @@ public interface CharTernaryOperator {
      * CharUnaryOperator}.
      *
      * @param operator The operator which accepts the {@code middle} parameter of this one
-     * @return Creates a {@code CharTernaryOperator} which uses the {@code middle} parameter as argument for the given {@code
-     * CharUnaryOperator}.
+     * @return Creates a {@code CharTernaryOperator} which uses the {@code middle} parameter as argument for the given
+     * {@code CharUnaryOperator}.
      * @throws NullPointerException If the given argument is {@code null}
      */
     static CharTernaryOperator onlyMiddle(final CharUnaryOperator operator) {
@@ -74,8 +74,8 @@ public interface CharTernaryOperator {
      * CharUnaryOperator}.
      *
      * @param operator The operator which accepts the {@code right} parameter of this one
-     * @return Creates a {@code CharTernaryOperator} which uses the {@code right} parameter as argument for the given {@code
-     * CharUnaryOperator}.
+     * @return Creates a {@code CharTernaryOperator} which uses the {@code right} parameter as argument for the given
+     * {@code CharUnaryOperator}.
      * @throws NullPointerException If the given argument is {@code null}
      */
     static CharTernaryOperator onlyRight(final CharUnaryOperator operator) {

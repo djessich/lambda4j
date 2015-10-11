@@ -64,15 +64,15 @@ public interface ToFloatTriFunction<T, U, V> {
     }
 
     /**
-     * Creates a {@link ToFloatTriFunction} which uses the {@code first} parameter of this one as argument for the given {@link
-     * ToFloatFunction}.
+     * Creates a {@link ToFloatTriFunction} which uses the {@code first} parameter of this one as argument for the given
+     * {@link ToFloatFunction}.
      *
      * @param <T> The type of the first argument to the function
      * @param <U> The type of the second argument to the function
      * @param <V> The type of the third argument to the function
      * @param function The function which accepts the {@code first} parameter of this one
-     * @return Creates a {@code ToFloatTriFunction} which uses the {@code first} parameter of this one as argument for the given
-     * {@code ToFloatFunction}.
+     * @return Creates a {@code ToFloatTriFunction} which uses the {@code first} parameter of this one as argument for
+     * the given {@code ToFloatFunction}.
      * @throws NullPointerException If the given argument is {@code null}
      */
     static <T, U, V> ToFloatTriFunction<T, U, V> onlyFirst(final ToFloatFunction<? super T> function) {
@@ -81,15 +81,15 @@ public interface ToFloatTriFunction<T, U, V> {
     }
 
     /**
-     * Creates a {@link ToFloatTriFunction} which uses the {@code second} parameter of this one as argument for the given {@link
-     * ToFloatFunction}.
+     * Creates a {@link ToFloatTriFunction} which uses the {@code second} parameter of this one as argument for the
+     * given {@link ToFloatFunction}.
      *
      * @param <T> The type of the first argument to the function
      * @param <U> The type of the second argument to the function
      * @param <V> The type of the third argument to the function
      * @param function The consumer which accepts the {@code second} parameter of this one
-     * @return Creates a {@code ToFloatTriFunction} which uses the {@code second} parameter of this one as argument for the
-     * given {@code ToFloatFunction}.
+     * @return Creates a {@code ToFloatTriFunction} which uses the {@code second} parameter of this one as argument for
+     * the given {@code ToFloatFunction}.
      * @throws NullPointerException If the given argument is {@code null}
      */
     static <T, U, V> ToFloatTriFunction<T, U, V> onlySecond(final ToFloatFunction<? super U> function) {
@@ -98,15 +98,15 @@ public interface ToFloatTriFunction<T, U, V> {
     }
 
     /**
-     * Creates a {@link ToFloatTriFunction} which uses the {@code third} parameter of this one as argument for the given {@link
-     * ToFloatFunction}.
+     * Creates a {@link ToFloatTriFunction} which uses the {@code third} parameter of this one as argument for the given
+     * {@link ToFloatFunction}.
      *
      * @param <T> The type of the first argument to the function
      * @param <U> The type of the second argument to the function
      * @param <V> The type of the third argument to the function
      * @param function The consumer which accepts the {@code third} parameter of this one
-     * @return Creates a {@code ToFloatTriFunction} which uses the {@code third} parameter of this one as argument for the given
-     * {@code ToFloatFunction}.
+     * @return Creates a {@code ToFloatTriFunction} which uses the {@code third} parameter of this one as argument for
+     * the given {@code ToFloatFunction}.
      * @throws NullPointerException If the given argument is {@code null}
      */
     static <T, U, V> ToFloatTriFunction<T, U, V> onlyThird(final ToFloatFunction<? super V> function) {

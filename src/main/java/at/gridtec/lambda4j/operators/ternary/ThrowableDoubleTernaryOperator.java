@@ -93,12 +93,12 @@ public interface ThrowableDoubleTernaryOperator extends DoubleTernaryOperator {
     }
 
     /**
-     * Creates a {@link ThrowableDoubleTernaryOperator} which uses the {@code left} parameter as argument for the given {@link
-     * ThrowableDoubleUnaryOperator}.
+     * Creates a {@link ThrowableDoubleTernaryOperator} which uses the {@code left} parameter as argument for the given
+     * {@link ThrowableDoubleUnaryOperator}.
      *
      * @param operator The operator which accepts the {@code left} parameter of this one
-     * @return Creates a {@code ThrowableDoubleTernaryOperator} which uses the {@code left} parameter as argument for the given
-     * {@code ThrowableDoubleUnaryOperator}.
+     * @return Creates a {@code ThrowableDoubleTernaryOperator} which uses the {@code left} parameter as argument for
+     * the given {@code ThrowableDoubleUnaryOperator}.
      * @throws NullPointerException If the given argument is {@code null}
      */
     static ThrowableDoubleTernaryOperator onlyLeft(final ThrowableDoubleUnaryOperator operator) {
@@ -107,12 +107,12 @@ public interface ThrowableDoubleTernaryOperator extends DoubleTernaryOperator {
     }
 
     /**
-     * Creates a {@link ThrowableDoubleTernaryOperator} which uses the {@code middle} parameter as argument for the given {@link
-     * ThrowableDoubleUnaryOperator}.
+     * Creates a {@link ThrowableDoubleTernaryOperator} which uses the {@code middle} parameter as argument for the
+     * given {@link ThrowableDoubleUnaryOperator}.
      *
      * @param operator The operator which accepts the {@code middle} parameter of this one
-     * @return Creates a {@code ThrowableDoubleTernaryOperator} which uses the {@code middle} parameter as argument for the
-     * given {@code ThrowableDoubleUnaryOperator}.
+     * @return Creates a {@code ThrowableDoubleTernaryOperator} which uses the {@code middle} parameter as argument for
+     * the given {@code ThrowableDoubleUnaryOperator}.
      * @throws NullPointerException If the given argument is {@code null}
      */
     static ThrowableDoubleTernaryOperator onlyMiddle(final ThrowableDoubleUnaryOperator operator) {
@@ -121,12 +121,12 @@ public interface ThrowableDoubleTernaryOperator extends DoubleTernaryOperator {
     }
 
     /**
-     * Creates a {@link ThrowableDoubleTernaryOperator} which uses the {@code right} parameter as argument for the given {@link
-     * ThrowableDoubleUnaryOperator}.
+     * Creates a {@link ThrowableDoubleTernaryOperator} which uses the {@code right} parameter as argument for the given
+     * {@link ThrowableDoubleUnaryOperator}.
      *
      * @param operator The operator which accepts the {@code right} parameter of this one
-     * @return Creates a {@code ThrowableDoubleTernaryOperator} which uses the {@code right} parameter as argument for the given
-     * {@code ThrowableDoubleUnaryOperator}.
+     * @return Creates a {@code ThrowableDoubleTernaryOperator} which uses the {@code right} parameter as argument for
+     * the given {@code ThrowableDoubleUnaryOperator}.
      * @throws NullPointerException If the given argument is {@code null}
      */
     static ThrowableDoubleTernaryOperator onlyRight(final ThrowableDoubleUnaryOperator operator) {

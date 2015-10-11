@@ -40,14 +40,14 @@ import java.util.function.Function;
 public interface BiObjFloatConsumer<T, U> {
 
     /**
-     * Creates a {@link BiObjFloatConsumer} which uses the {@code first} parameter of this one as argument for the given {@link
-     * Consumer}.
+     * Creates a {@link BiObjFloatConsumer} which uses the {@code first} parameter of this one as argument for the given
+     * {@link Consumer}.
      *
      * @param <T> The type of the first argument to the operation
      * @param <U> The type of the second argument to the operation
      * @param consumer The consumer which accepts the {@code first} parameter of this one
-     * @return Creates a {@code BiObjFloatConsumer} which uses the {@code first} parameter of this one as argument for the given
-     * {@code Consumer}.
+     * @return Creates a {@code BiObjFloatConsumer} which uses the {@code first} parameter of this one as argument for
+     * the given {@code Consumer}.
      * @throws NullPointerException If the given argument is {@code null}
      */
     static <T, U> BiObjFloatConsumer<T, U> onlyFirst(final Consumer<? super T> consumer) {
@@ -56,14 +56,14 @@ public interface BiObjFloatConsumer<T, U> {
     }
 
     /**
-     * Creates a {@link BiObjFloatConsumer} which uses the {@code second} parameter of this one as argument for the given {@link
-     * Consumer}.
+     * Creates a {@link BiObjFloatConsumer} which uses the {@code second} parameter of this one as argument for the
+     * given {@link Consumer}.
      *
      * @param <T> The type of the first argument to the operation
      * @param <U> The type of the second argument to the operation
      * @param consumer The consumer which accepts the {@code second} parameter of this one
-     * @return Creates a {@code BiObjFloatConsumer} which uses the {@code second} parameter of this one as argument for the
-     * given {@code Consumer}.
+     * @return Creates a {@code BiObjFloatConsumer} which uses the {@code second} parameter of this one as argument for
+     * the given {@code Consumer}.
      * @throws NullPointerException If the given argument is {@code null}
      */
     static <T, U> BiObjFloatConsumer<T, U> onlySecond(final Consumer<? super U> consumer) {
@@ -72,14 +72,14 @@ public interface BiObjFloatConsumer<T, U> {
     }
 
     /**
-     * Creates a {@link BiObjFloatConsumer} which uses the {@code third} parameter of this one as argument for the given {@link
-     * FloatConsumer}.
+     * Creates a {@link BiObjFloatConsumer} which uses the {@code third} parameter of this one as argument for the given
+     * {@link FloatConsumer}.
      *
      * @param <T> The type of the first argument to the operation
      * @param <U> The type of the second argument to the operation
      * @param consumer The consumer which accepts the {@code third} parameter of this one
-     * @return Creates a {@code BiObjFloatConsumer} which uses the {@code third} parameter of this one as argument for the given
-     * {@code FloatConsumer}.
+     * @return Creates a {@code BiObjFloatConsumer} which uses the {@code third} parameter of this one as argument for
+     * the given {@code FloatConsumer}.
      * @throws NullPointerException If the given argument is {@code null}
      */
     static <T, U> BiObjFloatConsumer<T, U> onlyThird(final FloatConsumer consumer) {

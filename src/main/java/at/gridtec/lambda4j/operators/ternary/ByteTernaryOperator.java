@@ -46,8 +46,8 @@ public interface ByteTernaryOperator {
      * ByteUnaryOperator}.
      *
      * @param operator The operator which accepts the {@code left} parameter of this one
-     * @return Creates a {@code ByteTernaryOperator} which uses the {@code left} parameter as argument for the given {@code
-     * ByteUnaryOperator}.
+     * @return Creates a {@code ByteTernaryOperator} which uses the {@code left} parameter as argument for the given
+     * {@code ByteUnaryOperator}.
      * @throws NullPointerException If the given argument is {@code null}
      */
     static ByteTernaryOperator onlyLeft(final ByteUnaryOperator operator) {
@@ -60,8 +60,8 @@ public interface ByteTernaryOperator {
      * ByteUnaryOperator}.
      *
      * @param operator The operator which accepts the {@code middle} parameter of this one
-     * @return Creates a {@code ByteTernaryOperator} which uses the {@code middle} parameter as argument for the given {@code
-     * ByteUnaryOperator}.
+     * @return Creates a {@code ByteTernaryOperator} which uses the {@code middle} parameter as argument for the given
+     * {@code ByteUnaryOperator}.
      * @throws NullPointerException If the given argument is {@code null}
      */
     static ByteTernaryOperator onlyMiddle(final ByteUnaryOperator operator) {
@@ -74,8 +74,8 @@ public interface ByteTernaryOperator {
      * ByteUnaryOperator}.
      *
      * @param operator The operator which accepts the {@code right} parameter of this one
-     * @return Creates a {@code ByteTernaryOperator} which uses the {@code right} parameter as argument for the given {@code
-     * ByteUnaryOperator}.
+     * @return Creates a {@code ByteTernaryOperator} which uses the {@code right} parameter as argument for the given
+     * {@code ByteUnaryOperator}.
      * @throws NullPointerException If the given argument is {@code null}
      */
     static ByteTernaryOperator onlyRight(final ByteUnaryOperator operator) {

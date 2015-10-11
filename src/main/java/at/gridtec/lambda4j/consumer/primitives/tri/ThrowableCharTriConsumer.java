@@ -81,12 +81,12 @@ public interface ThrowableCharTriConsumer extends CharTriConsumer {
     }
 
     /**
-     * Creates a {@link CharTriConsumer} which uses the {@code first} parameter of this one as argument for the given {@link
-     * CharConsumer}.
+     * Creates a {@link CharTriConsumer} which uses the {@code first} parameter of this one as argument for the given
+     * {@link CharConsumer}.
      *
      * @param consumer The consumer which accepts the {@code first} parameter of this one
-     * @return Creates a {@code CharTriConsumer} which uses the {@code first} parameter of this one as argument for the given
-     * {@code CharConsumer}.
+     * @return Creates a {@code CharTriConsumer} which uses the {@code first} parameter of this one as argument for the
+     * given {@code CharConsumer}.
      * @throws NullPointerException If the given argument is {@code null}
      */
     static CharTriConsumer onlyFirst(final CharConsumer consumer) {
@@ -95,12 +95,12 @@ public interface ThrowableCharTriConsumer extends CharTriConsumer {
     }
 
     /**
-     * Creates a {@link CharTriConsumer} which uses the {@code second} parameter of this one as argument for the given {@link
-     * CharConsumer}.
+     * Creates a {@link CharTriConsumer} which uses the {@code second} parameter of this one as argument for the given
+     * {@link CharConsumer}.
      *
      * @param consumer The consumer which accepts the {@code second} parameter of this one
-     * @return Creates a {@code CharTriConsumer} which uses the {@code second} parameter of this one as argument for the given
-     * {@code CharConsumer}.
+     * @return Creates a {@code CharTriConsumer} which uses the {@code second} parameter of this one as argument for the
+     * given {@code CharConsumer}.
      * @throws NullPointerException If the given argument is {@code null}
      */
     static CharTriConsumer onlySecond(final CharConsumer consumer) {
@@ -109,7 +109,8 @@ public interface ThrowableCharTriConsumer extends CharTriConsumer {
     }
 
     /**
-     * Creates a {@link CharTriConsumer} which uses the {@code third} parameter as argument for the given {@link CharConsumer}.
+     * Creates a {@link CharTriConsumer} which uses the {@code third} parameter as argument for the given {@link
+     * CharConsumer}.
      *
      * @param consumer The consumer which accepts the {@code third} parameter of this one
      * @return Creates a {@code CharTriConsumer} which uses the {@code third} parameter as argument for the given {@code

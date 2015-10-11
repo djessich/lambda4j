@@ -36,12 +36,12 @@ import java.util.function.BiConsumer;
 public interface FloatBiConsumer {
 
     /**
-     * Creates a {@link FloatBiConsumer} which uses the {@code first} parameter of this one as argument for the given {@link
-     * FloatConsumer}.
+     * Creates a {@link FloatBiConsumer} which uses the {@code first} parameter of this one as argument for the given
+     * {@link FloatConsumer}.
      *
      * @param consumer The consumer which accepts the {@code first} parameter of this one
-     * @return Creates a {@code FloatBiConsumer} which uses the {@code first} parameter of this one as argument for the given
-     * {@code FloatConsumer}.
+     * @return Creates a {@code FloatBiConsumer} which uses the {@code first} parameter of this one as argument for the
+     * given {@code FloatConsumer}.
      * @throws NullPointerException If the given argument is {@code null}
      */
     static FloatBiConsumer onlyFirst(final FloatConsumer consumer) {
@@ -50,12 +50,12 @@ public interface FloatBiConsumer {
     }
 
     /**
-     * Creates a {@link FloatBiConsumer} which uses the {@code second} parameter of this one as argument for the given {@link
-     * FloatConsumer}.
+     * Creates a {@link FloatBiConsumer} which uses the {@code second} parameter of this one as argument for the given
+     * {@link FloatConsumer}.
      *
      * @param consumer The consumer which accepts the {@code second} parameter of this one
-     * @return Creates a {@code FloatBiConsumer} which uses the {@code second} parameter of this one as argument for the given
-     * {@code FloatConsumer}.
+     * @return Creates a {@code FloatBiConsumer} which uses the {@code second} parameter of this one as argument for the
+     * given {@code FloatConsumer}.
      * @throws NullPointerException If the given argument is {@code null}
      */
     static FloatBiConsumer onlySecond(final FloatConsumer consumer) {

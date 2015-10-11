@@ -51,13 +51,13 @@ public interface IntBiFunction<R> {
     }
 
     /**
-     * Creates a {@link IntBiFunction} which uses the {@code first} parameter of this one as argument for the given {@link
-     * IntFunction}.
+     * Creates a {@link IntBiFunction} which uses the {@code first} parameter of this one as argument for the given
+     * {@link IntFunction}.
      *
      * @param <R> The type of return value from the function
      * @param function The function which accepts the {@code first} parameter of this one
-     * @return Creates a {@code IntBiFunction} which uses the {@code first} parameter of this one as argument for the given
-     * {@code IntFunction}.
+     * @return Creates a {@code IntBiFunction} which uses the {@code first} parameter of this one as argument for the
+     * given {@code IntFunction}.
      * @throws NullPointerException If the given argument is {@code null}
      */
     static <R> IntBiFunction<R> onlyFirst(final IntFunction<? extends R> function) {
@@ -66,13 +66,13 @@ public interface IntBiFunction<R> {
     }
 
     /**
-     * Creates a {@link IntBiFunction} which uses the {@code second} parameter of this one as argument for the given {@link
-     * IntFunction}.
+     * Creates a {@link IntBiFunction} which uses the {@code second} parameter of this one as argument for the given
+     * {@link IntFunction}.
      *
      * @param <R> The type of return value from the function
      * @param function The function which accepts the {@code second} parameter of this one
-     * @return Creates a {@code IntBiFunction} which uses the {@code second} parameter of this one as argument for the given
-     * {@code IntFunction}.
+     * @return Creates a {@code IntBiFunction} which uses the {@code second} parameter of this one as argument for the
+     * given {@code IntFunction}.
      * @throws NullPointerException If the given argument is {@code null}
      */
     static <R> IntBiFunction<R> onlySecond(final IntFunction<? extends R> function) {

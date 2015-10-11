@@ -84,14 +84,14 @@ public interface ThrowableBiConsumer<T, U> extends BiConsumer<T, U> {
     }
 
     /**
-     * Creates a {@link ThrowableBiConsumer} which uses the {@code first} parameter of this one as argument for the given {@link
-     * ThrowableConsumer}.
+     * Creates a {@link ThrowableBiConsumer} which uses the {@code first} parameter of this one as argument for the
+     * given {@link ThrowableConsumer}.
      *
      * @param <T> The type of the first argument to the operation
      * @param <U> The type of the second argument to the operation
      * @param consumer The consumer which accepts the {@code first} parameter of this one
-     * @return Creates a {@code ThrowableBiConsumer} which uses the {@code first} parameter of this one as argument for the
-     * given {@code ThrowableConsumer}.
+     * @return Creates a {@code ThrowableBiConsumer} which uses the {@code first} parameter of this one as argument for
+     * the given {@code ThrowableConsumer}.
      * @throws NullPointerException If the given argument is {@code null}
      */
     static <T, U> ThrowableBiConsumer<T, U> onlyFirst(final ThrowableConsumer<? super T> consumer) {
@@ -100,14 +100,14 @@ public interface ThrowableBiConsumer<T, U> extends BiConsumer<T, U> {
     }
 
     /**
-     * Creates a {@link ThrowableBiConsumer} which uses the {@code second} parameter of this one as argument for the given
-     * {@link ThrowableConsumer}.
+     * Creates a {@link ThrowableBiConsumer} which uses the {@code second} parameter of this one as argument for the
+     * given {@link ThrowableConsumer}.
      *
      * @param <T> The type of the first argument to the operation
      * @param <U> The type of the second argument to the operation
      * @param consumer The consumer which accepts the {@code second} parameter of this one
-     * @return Creates a {@code ThrowableBiConsumer} which uses the {@code second} parameter of this one as argument for the
-     * given {@code ThrowableConsumer}.
+     * @return Creates a {@code ThrowableBiConsumer} which uses the {@code second} parameter of this one as argument for
+     * the given {@code ThrowableConsumer}.
      * @throws NullPointerException If the given argument is {@code null}
      */
     static <T, U> ThrowableBiConsumer<T, U> onlySecond(final ThrowableConsumer<? super U> consumer) {

@@ -64,14 +64,14 @@ public interface ToCharBiFunction<T, U> {
     }
 
     /**
-     * Creates a {@link ToCharBiFunction} which uses the {@code first} parameter of this one as argument for the given {@link
-     * ToCharFunction}.
+     * Creates a {@link ToCharBiFunction} which uses the {@code first} parameter of this one as argument for the given
+     * {@link ToCharFunction}.
      *
      * @param <T> The type of the first argument to the function
      * @param <U> The type of the second argument to the function
      * @param function The function which accepts the {@code first} parameter of this one
-     * @return Creates a {@code ToCharBiFunction} which uses the {@code first} parameter of this one as argument for the given
-     * {@code ToCharFunction}.
+     * @return Creates a {@code ToCharBiFunction} which uses the {@code first} parameter of this one as argument for the
+     * given {@code ToCharFunction}.
      * @throws NullPointerException If the given argument is {@code null}
      */
     static <T, U> ToCharBiFunction<T, U> onlyFirst(final ToCharFunction<? super T> function) {
@@ -80,14 +80,14 @@ public interface ToCharBiFunction<T, U> {
     }
 
     /**
-     * Creates a {@link ToCharBiFunction} which uses the {@code second} parameter of this one as argument for the given {@link
-     * ToCharFunction}.
+     * Creates a {@link ToCharBiFunction} which uses the {@code second} parameter of this one as argument for the given
+     * {@link ToCharFunction}.
      *
      * @param <T> The type of the first argument to the function
      * @param <U> The type of the second argument to the function
      * @param function The consumer which accepts the {@code second} parameter of this one
-     * @return Creates a {@code ToCharBiFunction} which uses the {@code second} parameter of this one as argument for the given
-     * {@code ToCharFunction}.
+     * @return Creates a {@code ToCharBiFunction} which uses the {@code second} parameter of this one as argument for
+     * the given {@code ToCharFunction}.
      * @throws NullPointerException If the given argument is {@code null}
      */
     static <T, U> ToCharBiFunction<T, U> onlySecond(final ToCharFunction<? super U> function) {

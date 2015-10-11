@@ -93,12 +93,12 @@ public interface ThrowableByteTernaryOperator extends ByteTernaryOperator {
     }
 
     /**
-     * Creates a {@link ThrowableByteTernaryOperator} which uses the {@code left} parameter as argument for the given {@link
-     * ThrowableByteUnaryOperator}.
+     * Creates a {@link ThrowableByteTernaryOperator} which uses the {@code left} parameter as argument for the given
+     * {@link ThrowableByteUnaryOperator}.
      *
      * @param operator The operator which accepts the {@code left} parameter of this one
-     * @return Creates a {@code ThrowableByteTernaryOperator} which uses the {@code left} parameter as argument for the given
-     * {@code ThrowableByteUnaryOperator}.
+     * @return Creates a {@code ThrowableByteTernaryOperator} which uses the {@code left} parameter as argument for the
+     * given {@code ThrowableByteUnaryOperator}.
      * @throws NullPointerException If the given argument is {@code null}
      */
     static ThrowableByteTernaryOperator onlyLeft(final ThrowableByteUnaryOperator operator) {
@@ -107,12 +107,12 @@ public interface ThrowableByteTernaryOperator extends ByteTernaryOperator {
     }
 
     /**
-     * Creates a {@link ThrowableByteTernaryOperator} which uses the {@code middle} parameter as argument for the given {@link
-     * ThrowableByteUnaryOperator}.
+     * Creates a {@link ThrowableByteTernaryOperator} which uses the {@code middle} parameter as argument for the given
+     * {@link ThrowableByteUnaryOperator}.
      *
      * @param operator The operator which accepts the {@code middle} parameter of this one
-     * @return Creates a {@code ThrowableByteTernaryOperator} which uses the {@code middle} parameter as argument for the given
-     * {@code ThrowableByteUnaryOperator}.
+     * @return Creates a {@code ThrowableByteTernaryOperator} which uses the {@code middle} parameter as argument for
+     * the given {@code ThrowableByteUnaryOperator}.
      * @throws NullPointerException If the given argument is {@code null}
      */
     static ThrowableByteTernaryOperator onlyMiddle(final ThrowableByteUnaryOperator operator) {
@@ -121,12 +121,12 @@ public interface ThrowableByteTernaryOperator extends ByteTernaryOperator {
     }
 
     /**
-     * Creates a {@link ThrowableByteTernaryOperator} which uses the {@code right} parameter as argument for the given {@link
-     * ThrowableByteUnaryOperator}.
+     * Creates a {@link ThrowableByteTernaryOperator} which uses the {@code right} parameter as argument for the given
+     * {@link ThrowableByteUnaryOperator}.
      *
      * @param operator The operator which accepts the {@code right} parameter of this one
-     * @return Creates a {@code ThrowableByteTernaryOperator} which uses the {@code right} parameter as argument for the given
-     * {@code ThrowableByteUnaryOperator}.
+     * @return Creates a {@code ThrowableByteTernaryOperator} which uses the {@code right} parameter as argument for the
+     * given {@code ThrowableByteUnaryOperator}.
      * @throws NullPointerException If the given argument is {@code null}
      */
     static ThrowableByteTernaryOperator onlyRight(final ThrowableByteUnaryOperator operator) {

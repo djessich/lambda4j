@@ -93,12 +93,12 @@ public interface ThrowableShortTernaryOperator extends ShortTernaryOperator {
     }
 
     /**
-     * Creates a {@link ThrowableShortTernaryOperator} which uses the {@code left} parameter as argument for the given {@link
-     * ThrowableShortUnaryOperator}.
+     * Creates a {@link ThrowableShortTernaryOperator} which uses the {@code left} parameter as argument for the given
+     * {@link ThrowableShortUnaryOperator}.
      *
      * @param operator The operator which accepts the {@code left} parameter of this one
-     * @return Creates a {@code ThrowableShortTernaryOperator} which uses the {@code left} parameter as argument for the given
-     * {@code ThrowableShortUnaryOperator}.
+     * @return Creates a {@code ThrowableShortTernaryOperator} which uses the {@code left} parameter as argument for the
+     * given {@code ThrowableShortUnaryOperator}.
      * @throws NullPointerException If the given argument is {@code null}
      */
     static ThrowableShortTernaryOperator onlyLeft(final ThrowableShortUnaryOperator operator) {
@@ -107,12 +107,12 @@ public interface ThrowableShortTernaryOperator extends ShortTernaryOperator {
     }
 
     /**
-     * Creates a {@link ThrowableShortTernaryOperator} which uses the {@code middle} parameter as argument for the given {@link
-     * ThrowableShortUnaryOperator}.
+     * Creates a {@link ThrowableShortTernaryOperator} which uses the {@code middle} parameter as argument for the given
+     * {@link ThrowableShortUnaryOperator}.
      *
      * @param operator The operator which accepts the {@code middle} parameter of this one
-     * @return Creates a {@code ThrowableShortTernaryOperator} which uses the {@code middle} parameter as argument for the given
-     * {@code ThrowableShortUnaryOperator}.
+     * @return Creates a {@code ThrowableShortTernaryOperator} which uses the {@code middle} parameter as argument for
+     * the given {@code ThrowableShortUnaryOperator}.
      * @throws NullPointerException If the given argument is {@code null}
      */
     static ThrowableShortTernaryOperator onlyMiddle(final ThrowableShortUnaryOperator operator) {
@@ -121,12 +121,12 @@ public interface ThrowableShortTernaryOperator extends ShortTernaryOperator {
     }
 
     /**
-     * Creates a {@link ThrowableShortTernaryOperator} which uses the {@code right} parameter as argument for the given {@link
-     * ThrowableShortUnaryOperator}.
+     * Creates a {@link ThrowableShortTernaryOperator} which uses the {@code right} parameter as argument for the given
+     * {@link ThrowableShortUnaryOperator}.
      *
      * @param operator The operator which accepts the {@code right} parameter of this one
-     * @return Creates a {@code ThrowableShortTernaryOperator} which uses the {@code right} parameter as argument for the given
-     * {@code ThrowableShortUnaryOperator}.
+     * @return Creates a {@code ThrowableShortTernaryOperator} which uses the {@code right} parameter as argument for
+     * the given {@code ThrowableShortUnaryOperator}.
      * @throws NullPointerException If the given argument is {@code null}
      */
     static ThrowableShortTernaryOperator onlyRight(final ThrowableShortUnaryOperator operator) {

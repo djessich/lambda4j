@@ -93,12 +93,12 @@ public interface ThrowableLongTernaryOperator extends LongTernaryOperator {
     }
 
     /**
-     * Creates a {@link ThrowableLongTernaryOperator} which uses the {@code left} parameter as argument for the given {@link
-     * ThrowableLongUnaryOperator}.
+     * Creates a {@link ThrowableLongTernaryOperator} which uses the {@code left} parameter as argument for the given
+     * {@link ThrowableLongUnaryOperator}.
      *
      * @param operator The operator which accepts the {@code left} parameter of this one
-     * @return Creates a {@code ThrowableLongTernaryOperator} which uses the {@code left} parameter as argument for the given
-     * {@code ThrowableLongUnaryOperator}.
+     * @return Creates a {@code ThrowableLongTernaryOperator} which uses the {@code left} parameter as argument for the
+     * given {@code ThrowableLongUnaryOperator}.
      * @throws NullPointerException If the given argument is {@code null}
      */
     static ThrowableLongTernaryOperator onlyLeft(final ThrowableLongUnaryOperator operator) {
@@ -107,12 +107,12 @@ public interface ThrowableLongTernaryOperator extends LongTernaryOperator {
     }
 
     /**
-     * Creates a {@link ThrowableLongTernaryOperator} which uses the {@code middle} parameter as argument for the given {@link
-     * ThrowableLongUnaryOperator}.
+     * Creates a {@link ThrowableLongTernaryOperator} which uses the {@code middle} parameter as argument for the given
+     * {@link ThrowableLongUnaryOperator}.
      *
      * @param operator The operator which accepts the {@code middle} parameter of this one
-     * @return Creates a {@code ThrowableLongTernaryOperator} which uses the {@code middle} parameter as argument for the given
-     * {@code ThrowableLongUnaryOperator}.
+     * @return Creates a {@code ThrowableLongTernaryOperator} which uses the {@code middle} parameter as argument for
+     * the given {@code ThrowableLongUnaryOperator}.
      * @throws NullPointerException If the given argument is {@code null}
      */
     static ThrowableLongTernaryOperator onlyMiddle(final ThrowableLongUnaryOperator operator) {
@@ -121,12 +121,12 @@ public interface ThrowableLongTernaryOperator extends LongTernaryOperator {
     }
 
     /**
-     * Creates a {@link ThrowableLongTernaryOperator} which uses the {@code right} parameter as argument for the given {@link
-     * ThrowableLongUnaryOperator}.
+     * Creates a {@link ThrowableLongTernaryOperator} which uses the {@code right} parameter as argument for the given
+     * {@link ThrowableLongUnaryOperator}.
      *
      * @param operator The operator which accepts the {@code right} parameter of this one
-     * @return Creates a {@code ThrowableLongTernaryOperator} which uses the {@code right} parameter as argument for the given
-     * {@code ThrowableLongUnaryOperator}.
+     * @return Creates a {@code ThrowableLongTernaryOperator} which uses the {@code right} parameter as argument for the
+     * given {@code ThrowableLongUnaryOperator}.
      * @throws NullPointerException If the given argument is {@code null}
      */
     static ThrowableLongTernaryOperator onlyRight(final ThrowableLongUnaryOperator operator) {
