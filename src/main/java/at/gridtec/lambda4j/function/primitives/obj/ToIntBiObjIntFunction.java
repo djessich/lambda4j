@@ -55,13 +55,13 @@ public interface ToIntBiObjIntFunction<T, U> {
     }
 
     /**
-     * Creates a {@link ToIntBiObjIntFunction} which uses the first parameter of this one as argument for the given
+     * Creates a {@link ToIntBiObjIntFunction} which uses the {@code first} parameter of this one as argument for the given
      * {@link ToIntFunction}.
      *
      * @param <T> The type of the first argument to the function
      * @param <U> The type of the second argument to the function
      * @param function The function which accepts the {@code first} parameter of this one
-     * @return Creates a {@code ToIntBiObjIntFunction} which uses the first parameter of this one as argument for the
+     * @return Creates a {@code ToIntBiObjIntFunction} which uses the {@code first} parameter of this one as argument for the
      * given {@code ToIntFunction}.
      * @throws NullPointerException If the given argument is {@code null}
      */
@@ -71,13 +71,13 @@ public interface ToIntBiObjIntFunction<T, U> {
     }
 
     /**
-     * Creates a {@link ToIntBiObjIntFunction} which uses the second parameter of this one as argument for the given
+     * Creates a {@link ToIntBiObjIntFunction} which uses the {@code second} parameter of this one as argument for the given
      * {@link ToIntFunction}.
      *
      * @param <T> The type of the first argument to the function
      * @param <U> The type of the second argument to the function
      * @param function The function which accepts the {@code second} parameter of this one
-     * @return Creates a {@code ToIntBiObjIntFunction} which uses the second parameter of this one as argument for the
+     * @return Creates a {@code ToIntBiObjIntFunction} which uses the {@code second} parameter of this one as argument for the
      * given {@code ToIntFunction}.
      * @throws NullPointerException If the given argument is {@code null}
      */
@@ -87,13 +87,13 @@ public interface ToIntBiObjIntFunction<T, U> {
     }
 
     /**
-     * Creates a {@link ToIntBiObjIntFunction} which uses the third parameter of this one as argument for the given
+     * Creates a {@link ToIntBiObjIntFunction} which uses the {@code third} parameter of this one as argument for the given
      * {@link IntUnaryOperator}.
      *
      * @param <T> The type of the first argument to the function
      * @param <U> The type of the second argument to the function
      * @param function The function which accepts the {@code third} parameter of this one
-     * @return Creates a {@code ToIntBiObjIntFunction} which uses the third parameter of this one as argument for the
+     * @return Creates a {@code ToIntBiObjIntFunction} which uses the {@code third} parameter of this one as argument for the
      * given {@code IntUnaryOperator}.
      * @throws NullPointerException If the given argument is {@code null}
      */

@@ -51,12 +51,12 @@ public interface IntTriFunction<R> {
     }
 
     /**
-     * Creates a {@link IntTriFunction} which uses the first parameter of this one as argument for the given {@link
+     * Creates a {@link IntTriFunction} which uses the {@code first} parameter of this one as argument for the given {@link
      * IntFunction}.
      *
-     * @param <R> The return value from the operation
+     * @param <R> The type of return value from the function
      * @param function The function which accepts the {@code first} parameter of this one
-     * @return Creates a {@code IntTriFunction} which uses the first parameter of this one as argument for the given
+     * @return Creates a {@code IntTriFunction} which uses the {@code first} parameter of this one as argument for the given
      * {@code IntFunction}.
      * @throws NullPointerException If the given argument is {@code null}
      */
@@ -66,12 +66,12 @@ public interface IntTriFunction<R> {
     }
 
     /**
-     * Creates a {@link IntTriFunction} which uses the second parameter of this one as argument for the given {@link
+     * Creates a {@link IntTriFunction} which uses the {@code second} parameter of this one as argument for the given {@link
      * IntFunction}.
      *
-     * @param <R> The return value from the operation
+     * @param <R> The type of return value from the function
      * @param function The function which accepts the {@code second} parameter of this one
-     * @return Creates a {@code IntTriFunction} which uses the second parameter of this one as argument for the given
+     * @return Creates a {@code IntTriFunction} which uses the {@code second} parameter of this one as argument for the given
      * {@code IntFunction}.
      * @throws NullPointerException If the given argument is {@code null}
      */
@@ -81,22 +81,22 @@ public interface IntTriFunction<R> {
     }
 
     /**
-     * Creates a {@link IntTriFunction} which uses the third parameter of this one as argument for the given {@link
+     * Creates a {@link IntTriFunction} which uses the {@code third} parameter of this one as argument for the given {@link
      * IntFunction}.
      *
-     * @param <R> The return value from the operation
+     * @param <R> The type of return value from the function
      * @param function The function which accepts the {@code third} parameter of this one
-     * @return Creates a {@code IntTriFunction} which uses the third parameter of this one as argument for the given
+     * @return Creates a {@code IntTriFunction} which uses the {@code third} parameter of this one as argument for the given
      * {@code IntFunction}.
      * @throws NullPointerException If the given argument is {@code null}
      */
     static <R> IntTriFunction<R> onlyThird(final IntFunction<? extends R> function) {
         Objects.requireNonNull(function);
-        return (value1, value2, value3) -> function.apply(value2);
+        return (value1, value2, value3) -> function.apply(value3);
     }
 
     /**
-     * Applies this function to the given arguments.
+     * Applies this {@link IntTriFunction} to the given argument.
      *
      * @param value1 The first argument to the function
      * @param value2 The second argument to the function

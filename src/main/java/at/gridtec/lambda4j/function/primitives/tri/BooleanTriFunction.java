@@ -51,12 +51,12 @@ public interface BooleanTriFunction<R> {
     }
 
     /**
-     * Creates a {@link BooleanTriFunction} which uses the first parameter of this one as argument for the given {@link
+     * Creates a {@link BooleanTriFunction} which uses the {@code first} parameter of this one as argument for the given {@link
      * BooleanFunction}.
      *
-     * @param <R> The return value from the operation
+     * @param <R> The type of return value from the function
      * @param function The function which accepts the {@code first} parameter of this one
-     * @return Creates a {@code BooleanTriFunction} which uses the first parameter of this one as argument for the given
+     * @return Creates a {@code BooleanTriFunction} which uses the {@code first} parameter of this one as argument for the given
      * {@code BooleanFunction}.
      * @throws NullPointerException If the given argument is {@code null}
      */
@@ -66,12 +66,12 @@ public interface BooleanTriFunction<R> {
     }
 
     /**
-     * Creates a {@link BooleanTriFunction} which uses the second parameter of this one as argument for the given {@link
+     * Creates a {@link BooleanTriFunction} which uses the {@code second} parameter of this one as argument for the given {@link
      * BooleanFunction}.
      *
-     * @param <R> The return value from the operation
+     * @param <R> The type of return value from the function
      * @param function The function which accepts the {@code second} parameter of this one
-     * @return Creates a {@code BooleanTriFunction} which uses the second parameter of this one as argument for the
+     * @return Creates a {@code BooleanTriFunction} which uses the {@code second} parameter of this one as argument for the
      * given {@code BooleanFunction}.
      * @throws NullPointerException If the given argument is {@code null}
      */
@@ -81,18 +81,18 @@ public interface BooleanTriFunction<R> {
     }
 
     /**
-     * Creates a {@link BooleanTriFunction} which uses the third parameter of this one as argument for the given {@link
+     * Creates a {@link BooleanTriFunction} which uses the {@code third} parameter of this one as argument for the given {@link
      * BooleanFunction}.
      *
-     * @param <R> The return value from the operation
+     * @param <R> The type of return value from the function
      * @param function The function which accepts the {@code third} parameter of this one
-     * @return Creates a {@code BooleanTriFunction} which uses the third parameter of this one as argument for the given
+     * @return Creates a {@code BooleanTriFunction} which uses the {@code third} parameter of this one as argument for the given
      * {@code BooleanFunction}.
      * @throws NullPointerException If the given argument is {@code null}
      */
     static <R> BooleanTriFunction<R> onlyThird(final BooleanFunction<? extends R> function) {
         Objects.requireNonNull(function);
-        return (value1, value2, value3) -> function.apply(value2);
+        return (value1, value2, value3) -> function.apply(value3);
     }
 
     /**

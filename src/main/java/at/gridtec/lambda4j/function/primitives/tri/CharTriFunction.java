@@ -51,13 +51,13 @@ public interface CharTriFunction<R> {
     }
 
     /**
-     * Creates a {@link CharTriFunction} which uses the first parameter of this one as argument for the given {@link
-     * CharFunction}.
+     * Creates a {@link CharTriFunction} which uses the {@code first} parameter of this one as argument for the given
+     * {@link CharFunction}.
      *
-     * @param <R> The return value from the operation
+     * @param <R> The type of return value from the function
      * @param function The function which accepts the {@code first} parameter of this one
-     * @return Creates a {@code CharTriFunction} which uses the first parameter of this one as argument for the given
-     * {@code CharFunction}.
+     * @return Creates a {@code CharTriFunction} which uses the {@code first} parameter of this one as argument for the
+     * given {@code CharFunction}.
      * @throws NullPointerException If the given argument is {@code null}
      */
     static <R> CharTriFunction<R> onlyFirst(final CharFunction<? extends R> function) {
@@ -66,12 +66,12 @@ public interface CharTriFunction<R> {
     }
 
     /**
-     * Creates a {@link CharTriFunction} which uses the second parameter of this one as argument for the given {@link
+     * Creates a {@link CharTriFunction} which uses the {@code second} parameter of this one as argument for the given {@link
      * CharFunction}.
      *
-     * @param <R> The return value from the operation
+     * @param <R> The type of return value from the function
      * @param function The function which accepts the {@code second} parameter of this one
-     * @return Creates a {@code CharTriFunction} which uses the second parameter of this one as argument for the given
+     * @return Creates a {@code CharTriFunction} which uses the {@code second} parameter of this one as argument for the given
      * {@code CharFunction}.
      * @throws NullPointerException If the given argument is {@code null}
      */
@@ -81,18 +81,18 @@ public interface CharTriFunction<R> {
     }
 
     /**
-     * Creates a {@link CharTriFunction} which uses the third parameter of this one as argument for the given {@link
+     * Creates a {@link CharTriFunction} which uses the {@code third} parameter of this one as argument for the given {@link
      * CharFunction}.
      *
-     * @param <R> The return value from the operation
+     * @param <R> The type of return value from the function
      * @param function The function which accepts the {@code third} parameter of this one
-     * @return Creates a {@code CharTriFunction} which uses the third parameter of this one as argument for the given
+     * @return Creates a {@code CharTriFunction} which uses the {@code third} parameter of this one as argument for the given
      * {@code CharFunction}.
      * @throws NullPointerException If the given argument is {@code null}
      */
     static <R> CharTriFunction<R> onlyThird(final CharFunction<? extends R> function) {
         Objects.requireNonNull(function);
-        return (value1, value2, value3) -> function.apply(value2);
+        return (value1, value2, value3) -> function.apply(value3);
     }
 
     /**

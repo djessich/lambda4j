@@ -51,12 +51,12 @@ public interface LongTriFunction<R> {
     }
 
     /**
-     * Creates a {@link LongTriFunction} which uses the first parameter of this one as argument for the given {@link
+     * Creates a {@link LongTriFunction} which uses the {@code first} parameter of this one as argument for the given {@link
      * LongFunction}.
      *
-     * @param <R> The return value from the operation
+     * @param <R> The type of return value from the function
      * @param function The function which accepts the {@code first} parameter of this one
-     * @return Creates a {@code LongTriFunction} which uses the first parameter of this one as argument for the given
+     * @return Creates a {@code LongTriFunction} which uses the {@code first} parameter of this one as argument for the given
      * {@code LongFunction}.
      * @throws NullPointerException If the given argument is {@code null}
      */
@@ -66,12 +66,12 @@ public interface LongTriFunction<R> {
     }
 
     /**
-     * Creates a {@link LongTriFunction} which uses the second parameter of this one as argument for the given {@link
+     * Creates a {@link LongTriFunction} which uses the {@code second} parameter of this one as argument for the given {@link
      * LongFunction}.
      *
-     * @param <R> The return value from the operation
+     * @param <R> The type of return value from the function
      * @param function The function which accepts the {@code second} parameter of this one
-     * @return Creates a {@code LongTriFunction} which uses the second parameter of this one as argument for the given
+     * @return Creates a {@code LongTriFunction} which uses the {@code second} parameter of this one as argument for the given
      * {@code LongFunction}.
      * @throws NullPointerException If the given argument is {@code null}
      */
@@ -81,18 +81,18 @@ public interface LongTriFunction<R> {
     }
 
     /**
-     * Creates a {@link LongTriFunction} which uses the third parameter of this one as argument for the given {@link
+     * Creates a {@link LongTriFunction} which uses the {@code third} parameter of this one as argument for the given {@link
      * LongFunction}.
      *
-     * @param <R> The return value from the operation
+     * @param <R> The type of return value from the function
      * @param function The function which accepts the {@code third} parameter of this one
-     * @return Creates a {@code LongTriFunction} which uses the third parameter of this one as argument for the given
+     * @return Creates a {@code LongTriFunction} which uses the {@code third} parameter of this one as argument for the given
      * {@code LongFunction}.
      * @throws NullPointerException If the given argument is {@code null}
      */
     static <R> LongTriFunction<R> onlyThird(final LongFunction<? extends R> function) {
         Objects.requireNonNull(function);
-        return (value1, value2, value3) -> function.apply(value2);
+        return (value1, value2, value3) -> function.apply(value3);
     }
 
     /**

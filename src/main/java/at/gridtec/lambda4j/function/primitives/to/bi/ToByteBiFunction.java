@@ -64,13 +64,13 @@ public interface ToByteBiFunction<T, U> {
     }
 
     /**
-     * Creates a {@link ToByteBiFunction} which uses the first parameter of this one as argument for the given {@link
+     * Creates a {@link ToByteBiFunction} which uses the {@code first} parameter of this one as argument for the given {@link
      * ToByteFunction}.
      *
-     * @param <T> The type of the first argument to the operation
-     * @param <U> The type of the second argument to the operation
+     * @param <T> The type of the first argument to the function
+     * @param <U> The type of the second argument to the function
      * @param function The function which accepts the {@code first} parameter of this one
-     * @return Creates a {@code ToByteBiFunction} which uses the first parameter of this one as argument for the given
+     * @return Creates a {@code ToByteBiFunction} which uses the {@code first} parameter of this one as argument for the given
      * {@code ToByteFunction}.
      * @throws NullPointerException If the given argument is {@code null}
      */
@@ -80,13 +80,13 @@ public interface ToByteBiFunction<T, U> {
     }
 
     /**
-     * Creates a {@link ToByteBiFunction} which uses the second parameter of this one as argument for the given {@link
+     * Creates a {@link ToByteBiFunction} which uses the {@code second} parameter of this one as argument for the given {@link
      * ToByteFunction}.
      *
-     * @param <T> The type of the first argument to the operation
-     * @param <U> The type of the second argument to the operation
+     * @param <T> The type of the first argument to the function
+     * @param <U> The type of the second argument to the function
      * @param function The consumer which accepts the {@code second} parameter of this one
-     * @return Creates a {@code ToByteBiFunction} which uses the second parameter of this one as argument for the given
+     * @return Creates a {@code ToByteBiFunction} which uses the {@code second} parameter of this one as argument for the given
      * {@code ToByteFunction}.
      * @throws NullPointerException If the given argument is {@code null}
      */

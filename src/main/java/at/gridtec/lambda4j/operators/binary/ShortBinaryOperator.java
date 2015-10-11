@@ -94,12 +94,12 @@ public interface ShortBinaryOperator {
     }
 
     /**
-     * Creates a {@link ShortBinaryOperator} which uses the left parameter as argument for the given {@link
+     * Creates a {@link ShortBinaryOperator} which uses the {@code left} parameter as argument for the given {@link
      * ShortUnaryOperator}.
      *
-     * @param operator The operator which accepts the {@code short} parameter of this one
-     * @return Creates a {@code ShortBinaryOperator} which uses the left parameter as argument for the given {@code
-     * ShortUnaryOperator}.
+     * @param operator The operator which accepts the {@code left} parameter of this one
+     * @return Creates a {@code ShortBinaryOperator} which uses the {@code left} parameter as argument for the given
+     * {@code ShortUnaryOperator}.
      * @throws NullPointerException If the given argument is {@code null}
      */
     static ShortBinaryOperator onlyLeft(final ShortUnaryOperator operator) {
@@ -108,12 +108,12 @@ public interface ShortBinaryOperator {
     }
 
     /**
-     * Creates a {@link ShortBinaryOperator} which uses the right parameter as argument for the given {@link
+     * Creates a {@link ShortBinaryOperator} which uses the {@code right} parameter as argument for the given {@link
      * ShortUnaryOperator}.
      *
      * @param operator The operator which accepts the {@code right} parameter of this one
-     * @return Creates a {@code ShortBinaryOperator} which uses the right parameter as argument for the given {@code
-     * ShortUnaryOperator}.
+     * @return Creates a {@code ShortBinaryOperator} which uses the {@code right} parameter as argument for the given
+     * {@code ShortUnaryOperator}.
      * @throws NullPointerException If the given argument is {@code null}
      */
     static ShortBinaryOperator onlyRight(final ShortUnaryOperator operator) {

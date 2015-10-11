@@ -89,13 +89,13 @@ public interface ThrowableBiObjBooleanConsumer<T, U> extends BiObjBooleanConsume
     }
 
     /**
-     * Creates a {@link ThrowableBiObjBooleanConsumer} which uses the first parameter of this one as argument for the
+     * Creates a {@link ThrowableBiObjBooleanConsumer} which uses the {@code first} parameter of this one as argument for the
      * given {@link Consumer}.
      *
      * @param <T> The type of the first argument to the operation
      * @param <U> The type of the second argument to the operation
      * @param consumer The consumer which accepts the {@code first} parameter of this one
-     * @return Creates a {@code ThrowableBiObjBooleanConsumer} which uses the first parameter of this one as argument
+     * @return Creates a {@code ThrowableBiObjBooleanConsumer} which uses the {@code first} parameter of this one as argument
      * for the given {@code Consumer}.
      * @throws NullPointerException If the given argument is {@code null}
      */
@@ -105,13 +105,13 @@ public interface ThrowableBiObjBooleanConsumer<T, U> extends BiObjBooleanConsume
     }
 
     /**
-     * Creates a {@link ThrowableBiObjBooleanConsumer} which uses the second parameter of this one as argument for the
+     * Creates a {@link ThrowableBiObjBooleanConsumer} which uses the {@code second} parameter of this one as argument for the
      * given {@link Consumer}.
      *
      * @param <T> The type of the first argument to the operation
      * @param <U> The type of the second argument to the operation
      * @param consumer The consumer which accepts the {@code second} parameter of this one
-     * @return Creates a {@code ThrowableBiObjBooleanConsumer} which uses the second parameter of this one as argument
+     * @return Creates a {@code ThrowableBiObjBooleanConsumer} which uses the {@code second} parameter of this one as argument
      * for the given {@code Consumer}.
      * @throws NullPointerException If the given argument is {@code null}
      */
@@ -121,13 +121,13 @@ public interface ThrowableBiObjBooleanConsumer<T, U> extends BiObjBooleanConsume
     }
 
     /**
-     * Creates a {@link ThrowableBiObjBooleanConsumer} which uses the third parameter of this one as argument for the
+     * Creates a {@link ThrowableBiObjBooleanConsumer} which uses the {@code third} parameter of this one as argument for the
      * given {@link BooleanConsumer}.
      *
      * @param <T> The type of the first argument to the operation
      * @param <U> The type of the second argument to the operation
      * @param consumer The consumer which accepts the {@code third} parameter of this one
-     * @return Creates a {@code ThrowableBiObjBooleanConsumer} which uses the third parameter of this one as argument
+     * @return Creates a {@code ThrowableBiObjBooleanConsumer} which uses the {@code third} parameter of this one as argument
      * for the given {@code BooleanConsumer}.
      * @throws NullPointerException If the given argument is {@code null}
      */

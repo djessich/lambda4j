@@ -85,12 +85,12 @@ public interface ThrowableObjCharConsumer<T> extends ObjCharConsumer<T> {
     }
 
     /**
-     * Creates a {@link ObjCharConsumer} which uses the first parameter of this one as argument for the given {@link
+     * Creates a {@link ObjCharConsumer} which uses the {@code first} parameter of this one as argument for the given {@link
      * Consumer}.
      *
      * @param <T> The type of the first argument to the operation
      * @param consumer The consumer which accepts the {@code first} parameter of this one
-     * @return Creates a {@code ObjCharConsumer} which uses the first parameter of this one as argument for the given
+     * @return Creates a {@code ObjCharConsumer} which uses the {@code first} parameter of this one as argument for the given
      * {@code Consumer}.
      * @throws NullPointerException If the given argument is {@code null}
      */
@@ -100,12 +100,12 @@ public interface ThrowableObjCharConsumer<T> extends ObjCharConsumer<T> {
     }
 
     /**
-     * Creates a {@link ObjCharConsumer} which uses the second parameter of this one as argument for the given {@link
+     * Creates a {@link ObjCharConsumer} which uses the {@code second} parameter of this one as argument for the given {@link
      * CharConsumer}.
      *
      * @param <T> The type of the first argument to the operation
      * @param consumer The consumer which accepts the {@code second} parameter of this one
-     * @return Creates a {@code ObjCharConsumer} which uses the second parameter of this one as argument for the given
+     * @return Creates a {@code ObjCharConsumer} which uses the {@code second} parameter of this one as argument for the given
      * {@code CharConsumer}.
      * @throws NullPointerException If the given argument is {@code null}
      */

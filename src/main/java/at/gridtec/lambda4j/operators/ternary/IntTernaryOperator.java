@@ -41,11 +41,11 @@ public interface IntTernaryOperator {
     }
 
     /**
-     * Creates a {@link IntTernaryOperator} which uses the left parameter as argument for the given {@link
+     * Creates a {@link IntTernaryOperator} which uses the {@code left} parameter as argument for the given {@link
      * IntUnaryOperator}.
      *
      * @param operator The operator which accepts the {@code left} parameter of this one
-     * @return Creates a {@code IntTernaryOperator} which uses the left parameter as argument for the given {@code
+     * @return Creates a {@code IntTernaryOperator} which uses the {@code left} parameter as argument for the given {@code
      * IntUnaryOperator}.
      * @throws NullPointerException If the given argument is {@code null}
      */
@@ -55,11 +55,11 @@ public interface IntTernaryOperator {
     }
 
     /**
-     * Creates a {@link IntTernaryOperator} which uses the middle parameter as argument for the given {@link
+     * Creates a {@link IntTernaryOperator} which uses the {@code middle} parameter as argument for the given {@link
      * IntUnaryOperator}.
      *
      * @param operator The operator which accepts the {@code middle} parameter of this one
-     * @return Creates a {@code IntTernaryOperator} which uses the middle parameter as argument for the given {@code
+     * @return Creates a {@code IntTernaryOperator} which uses the {@code middle} parameter as argument for the given {@code
      * IntUnaryOperator}.
      * @throws NullPointerException If the given argument is {@code null}
      */
@@ -69,11 +69,11 @@ public interface IntTernaryOperator {
     }
 
     /**
-     * Creates a {@link IntTernaryOperator} which uses the right parameter as argument for the given {@link
+     * Creates a {@link IntTernaryOperator} which uses the {@code right} parameter as argument for the given {@link
      * IntUnaryOperator}.
      *
      * @param operator The operator which accepts the {@code right} parameter of this one
-     * @return Creates a {@code IntTernaryOperator} which uses the right parameter as argument for the given {@code
+     * @return Creates a {@code IntTernaryOperator} which uses the {@code right} parameter as argument for the given {@code
      * IntUnaryOperator}.
      * @throws NullPointerException If the given argument is {@code null}
      */

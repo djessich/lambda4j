@@ -81,11 +81,11 @@ public interface ThrowableLongTriConsumer extends LongTriConsumer {
     }
 
     /**
-     * Creates a {@link LongTriConsumer} which uses the first parameter of this one as argument for the given {@link
+     * Creates a {@link LongTriConsumer} which uses the {@code first} parameter of this one as argument for the given {@link
      * LongConsumer}.
      *
      * @param consumer The consumer which accepts the {@code first} parameter of this one
-     * @return Creates a {@code LongTriConsumer} which uses the first parameter of this one as argument for the given
+     * @return Creates a {@code LongTriConsumer} which uses the {@code first} parameter of this one as argument for the given
      * {@code LongConsumer}.
      * @throws NullPointerException If the given argument is {@code null}
      */
@@ -95,11 +95,11 @@ public interface ThrowableLongTriConsumer extends LongTriConsumer {
     }
 
     /**
-     * Creates a {@link LongTriConsumer} which uses the second parameter of this one as argument for the given {@link
+     * Creates a {@link LongTriConsumer} which uses the {@code second} parameter of this one as argument for the given {@link
      * LongConsumer}.
      *
      * @param consumer The consumer which accepts the {@code second} parameter of this one
-     * @return Creates a {@code LongTriConsumer} which uses the second parameter of this one as argument for the given
+     * @return Creates a {@code LongTriConsumer} which uses the {@code second} parameter of this one as argument for the given
      * {@code LongConsumer}.
      * @throws NullPointerException If the given argument is {@code null}
      */
@@ -109,10 +109,10 @@ public interface ThrowableLongTriConsumer extends LongTriConsumer {
     }
 
     /**
-     * Creates a {@link LongTriConsumer} which uses the third parameter as argument for the given {@link LongConsumer}.
+     * Creates a {@link LongTriConsumer} which uses the {@code third} parameter as argument for the given {@link LongConsumer}.
      *
      * @param consumer The consumer which accepts the {@code third} parameter of this one
-     * @return Creates a {@code LongTriConsumer} which uses the third parameter as argument for the given {@code
+     * @return Creates a {@code LongTriConsumer} which uses the {@code third} parameter as argument for the given {@code
      * LongConsumer}.
      * @throws NullPointerException If the given argument is {@code null}
      */

@@ -51,12 +51,12 @@ public interface ToIntObjIntFunction<T> {
     }
 
     /**
-     * Creates a {@link ToIntObjIntFunction} which uses the first parameter of this one as argument for the given {@link
+     * Creates a {@link ToIntObjIntFunction} which uses the {@code first} parameter of this one as argument for the given {@link
      * ToIntFunction}.
      *
      * @param <T> The type of argument to the function
      * @param function The function which accepts the {@code first} parameter of this one
-     * @return Creates a {@code ToIntObjIntFunction} which uses the first parameter of this one as argument for the
+     * @return Creates a {@code ToIntObjIntFunction} which uses the {@code first} parameter of this one as argument for the
      * given {@code ToIntFunction}.
      * @throws NullPointerException If the given argument is {@code null}
      */
@@ -66,12 +66,12 @@ public interface ToIntObjIntFunction<T> {
     }
 
     /**
-     * Creates a {@link ToIntObjIntFunction} which uses the second parameter of this one as argument for the given
+     * Creates a {@link ToIntObjIntFunction} which uses the {@code second} parameter of this one as argument for the given
      * {@link IntUnaryOperator}.
      *
      * @param <T> The type of argument to the function
      * @param function The function which accepts the {@code second} parameter of this one
-     * @return Creates a {@code ToIntObjIntFunction} which uses the second parameter of this one as argument for the
+     * @return Creates a {@code ToIntObjIntFunction} which uses the {@code second} parameter of this one as argument for the
      * given {@code IntUnaryOperator}.
      * @throws NullPointerException If the given argument is {@code null}
      */

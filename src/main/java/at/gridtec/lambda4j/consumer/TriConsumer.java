@@ -36,14 +36,14 @@ import java.util.function.Function;
 public interface TriConsumer<T, U, V> {
 
     /**
-     * Creates a {@link TriConsumer} which uses the first parameter of this one as argument for the given {@link
+     * Creates a {@link TriConsumer} which uses the {@code first} parameter of this one as argument for the given {@link
      * Consumer}.
      *
      * @param <T> The type of the first argument to the operation
      * @param <U> The type of the second argument to the operation
      * @param <V> The type of the third argument to the operation
      * @param consumer The consumer which accepts the {@code first} parameter of this one
-     * @return Creates a {@code TriConsumer} which uses the first parameter of this one as argument for the given {@code
+     * @return Creates a {@code TriConsumer} which uses the {@code first} parameter of this one as argument for the given {@code
      * Consumer}.
      * @throws NullPointerException If the given argument is {@code null}
      */
@@ -53,14 +53,14 @@ public interface TriConsumer<T, U, V> {
     }
 
     /**
-     * Creates a {@link TriConsumer} which uses the second parameter of this one as argument for the given {@link
+     * Creates a {@link TriConsumer} which uses the {@code second} parameter of this one as argument for the given {@link
      * Consumer}.
      *
      * @param <T> The type of the first argument to the operation
      * @param <U> The type of the second argument to the operation
      * @param <V> The type of the third argument to the operation
      * @param consumer The consumer which accepts the {@code second} parameter of this one
-     * @return Creates a {@code TriConsumer} which uses the second parameter of this one as argument for the given
+     * @return Creates a {@code TriConsumer} which uses the {@code second} parameter of this one as argument for the given
      * {@code Consumer}.
      * @throws NullPointerException If the given argument is {@code null}
      */
@@ -70,14 +70,14 @@ public interface TriConsumer<T, U, V> {
     }
 
     /**
-     * Creates a {@link TriConsumer} which uses the third parameter of this one as argument for the given {@link
+     * Creates a {@link TriConsumer} which uses the {@code third} parameter of this one as argument for the given {@link
      * Consumer}.
      *
      * @param <T> The type of the first argument to the operation
      * @param <U> The type of the second argument to the operation
      * @param <V> The type of the third argument to the operation
      * @param consumer The consumer which accepts the {@code third} parameter of this one
-     * @return Creates a {@code TriConsumer} which uses the third parameter of this one as argument for the given {@code
+     * @return Creates a {@code TriConsumer} which uses the {@code third} parameter of this one as argument for the given {@code
      * Consumer}.
      * @throws NullPointerException If the given argument is {@code null}
      */

@@ -81,11 +81,11 @@ public interface ThrowableByteTriConsumer extends ByteTriConsumer {
     }
 
     /**
-     * Creates a {@link ByteTriConsumer} which uses the first parameter of this one as argument for the given {@link
+     * Creates a {@link ByteTriConsumer} which uses the {@code first} parameter of this one as argument for the given {@link
      * ByteConsumer}.
      *
      * @param consumer The consumer which accepts the {@code first} parameter of this one
-     * @return Creates a {@code ByteTriConsumer} which uses the first parameter of this one as argument for the given
+     * @return Creates a {@code ByteTriConsumer} which uses the {@code first} parameter of this one as argument for the given
      * {@code ByteConsumer}.
      * @throws NullPointerException If the given argument is {@code null}
      */
@@ -95,11 +95,11 @@ public interface ThrowableByteTriConsumer extends ByteTriConsumer {
     }
 
     /**
-     * Creates a {@link ByteTriConsumer} which uses the second parameter of this one as argument for the given {@link
+     * Creates a {@link ByteTriConsumer} which uses the {@code second} parameter of this one as argument for the given {@link
      * ByteConsumer}.
      *
      * @param consumer The consumer which accepts the {@code second} parameter of this one
-     * @return Creates a {@code ByteTriConsumer} which uses the second parameter of this one as argument for the given
+     * @return Creates a {@code ByteTriConsumer} which uses the {@code second} parameter of this one as argument for the given
      * {@code ByteConsumer}.
      * @throws NullPointerException If the given argument is {@code null}
      */
@@ -109,10 +109,10 @@ public interface ThrowableByteTriConsumer extends ByteTriConsumer {
     }
 
     /**
-     * Creates a {@link ByteTriConsumer} which uses the third parameter as argument for the given {@link ByteConsumer}.
+     * Creates a {@link ByteTriConsumer} which uses the {@code third} parameter as argument for the given {@link ByteConsumer}.
      *
      * @param consumer The consumer which accepts the {@code third} parameter of this one
-     * @return Creates a {@code ByteTriConsumer} which uses the third parameter as argument for the given {@code
+     * @return Creates a {@code ByteTriConsumer} which uses the {@code third} parameter as argument for the given {@code
      * ByteConsumer}.
      * @throws NullPointerException If the given argument is {@code null}
      */

@@ -89,13 +89,13 @@ public interface ThrowableBiObjByteConsumer<T, U> extends BiObjByteConsumer<T, U
     }
 
     /**
-     * Creates a {@link ThrowableBiObjByteConsumer} which uses the first parameter of this one as argument for the given
+     * Creates a {@link ThrowableBiObjByteConsumer} which uses the {@code first} parameter of this one as argument for the given
      * {@link Consumer}.
      *
      * @param <T> The type of the first argument to the operation
      * @param <U> The type of the second argument to the operation
      * @param consumer The consumer which accepts the {@code first} parameter of this one
-     * @return Creates a {@code ThrowableBiObjByteConsumer} which uses the first parameter of this one as argument for
+     * @return Creates a {@code ThrowableBiObjByteConsumer} which uses the {@code first} parameter of this one as argument for
      * the given {@code Consumer}.
      * @throws NullPointerException If the given argument is {@code null}
      */
@@ -105,13 +105,13 @@ public interface ThrowableBiObjByteConsumer<T, U> extends BiObjByteConsumer<T, U
     }
 
     /**
-     * Creates a {@link ThrowableBiObjByteConsumer} which uses the second parameter of this one as argument for the
+     * Creates a {@link ThrowableBiObjByteConsumer} which uses the {@code second} parameter of this one as argument for the
      * given {@link Consumer}.
      *
      * @param <T> The type of the first argument to the operation
      * @param <U> The type of the second argument to the operation
      * @param consumer The consumer which accepts the {@code second} parameter of this one
-     * @return Creates a {@code ThrowableBiObjByteConsumer} which uses the second parameter of this one as argument for
+     * @return Creates a {@code ThrowableBiObjByteConsumer} which uses the {@code second} parameter of this one as argument for
      * the given {@code Consumer}.
      * @throws NullPointerException If the given argument is {@code null}
      */
@@ -121,13 +121,13 @@ public interface ThrowableBiObjByteConsumer<T, U> extends BiObjByteConsumer<T, U
     }
 
     /**
-     * Creates a {@link ThrowableBiObjByteConsumer} which uses the third parameter of this one as argument for the given
+     * Creates a {@link ThrowableBiObjByteConsumer} which uses the {@code third} parameter of this one as argument for the given
      * {@link ByteConsumer}.
      *
      * @param <T> The type of the first argument to the operation
      * @param <U> The type of the second argument to the operation
      * @param consumer The consumer which accepts the {@code third} parameter of this one
-     * @return Creates a {@code ThrowableBiObjByteConsumer} which uses the third parameter of this one as argument for
+     * @return Creates a {@code ThrowableBiObjByteConsumer} which uses the {@code third} parameter of this one as argument for
      * the given {@code ByteConsumer}.
      * @throws NullPointerException If the given argument is {@code null}
      */

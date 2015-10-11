@@ -53,12 +53,12 @@ public interface ToFloatObjFloatFunction<T> {
     }
 
     /**
-     * Creates a {@link ToFloatObjFloatFunction} which uses the first parameter of this one as argument for the given
+     * Creates a {@link ToFloatObjFloatFunction} which uses the {@code first} parameter of this one as argument for the given
      * {@link ToFloatFunction}.
      *
      * @param <T> The type of argument to the function
      * @param function The function which accepts the {@code first} parameter of this one
-     * @return Creates a {@code ToFloatObjFloatFunction} which uses the first parameter of this one as argument for the
+     * @return Creates a {@code ToFloatObjFloatFunction} which uses the {@code first} parameter of this one as argument for the
      * given {@code ToFloatFunction}.
      * @throws NullPointerException If the given argument is {@code null}
      */
@@ -68,12 +68,12 @@ public interface ToFloatObjFloatFunction<T> {
     }
 
     /**
-     * Creates a {@link ToFloatObjFloatFunction} which uses the second parameter of this one as argument for the given
+     * Creates a {@link ToFloatObjFloatFunction} which uses the {@code second} parameter of this one as argument for the given
      * {@link FloatUnaryOperator}.
      *
      * @param <T> The type of argument to the function
      * @param function The function which accepts the {@code second} parameter of this one
-     * @return Creates a {@code ToFloatObjFloatFunction} which uses the second parameter of this one as argument for the
+     * @return Creates a {@code ToFloatObjFloatFunction} which uses the {@code second} parameter of this one as argument for the
      * given {@code FloatUnaryOperator}.
      * @throws NullPointerException If the given argument is {@code null}
      */

@@ -41,11 +41,11 @@ public interface LongTernaryOperator {
     }
 
     /**
-     * Creates a {@link LongTernaryOperator} which uses the left parameter as argument for the given {@link
+     * Creates a {@link LongTernaryOperator} which uses the {@code left} parameter as argument for the given {@link
      * LongUnaryOperator}.
      *
      * @param operator The operator which accepts the {@code left} parameter of this one
-     * @return Creates a {@code LongTernaryOperator} which uses the left parameter as argument for the given {@code
+     * @return Creates a {@code LongTernaryOperator} which uses the {@code left} parameter as argument for the given {@code
      * LongUnaryOperator}.
      * @throws NullPointerException If the given argument is {@code null}
      */
@@ -55,11 +55,11 @@ public interface LongTernaryOperator {
     }
 
     /**
-     * Creates a {@link LongTernaryOperator} which uses the middle parameter as argument for the given {@link
+     * Creates a {@link LongTernaryOperator} which uses the {@code middle} parameter as argument for the given {@link
      * LongUnaryOperator}.
      *
      * @param operator The operator which accepts the {@code middle} parameter of this one
-     * @return Creates a {@code LongTernaryOperator} which uses the middle parameter as argument for the given {@code
+     * @return Creates a {@code LongTernaryOperator} which uses the {@code middle} parameter as argument for the given {@code
      * LongUnaryOperator}.
      * @throws NullPointerException If the given argument is {@code null}
      */
@@ -69,11 +69,11 @@ public interface LongTernaryOperator {
     }
 
     /**
-     * Creates a {@link LongTernaryOperator} which uses the right parameter as argument for the given {@link
+     * Creates a {@link LongTernaryOperator} which uses the {@code right} parameter as argument for the given {@link
      * LongUnaryOperator}.
      *
      * @param operator The operator which accepts the {@code right} parameter of this one
-     * @return Creates a {@code LongTernaryOperator} which uses the right parameter as argument for the given {@code
+     * @return Creates a {@code LongTernaryOperator} which uses the {@code right} parameter as argument for the given {@code
      * LongUnaryOperator}.
      * @throws NullPointerException If the given argument is {@code null}
      */

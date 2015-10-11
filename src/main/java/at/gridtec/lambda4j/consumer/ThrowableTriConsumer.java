@@ -86,15 +86,15 @@ public interface ThrowableTriConsumer<T, U, V> extends TriConsumer<T, U, V> {
     }
 
     /**
-     * Creates a {@link ThrowableTriConsumer} which uses the first parameter of this one as argument for the given
-     * {@link ThrowableConsumer}.
+     * Creates a {@link ThrowableTriConsumer} which uses the {@code first} parameter of this one as argument for the
+     * given {@link ThrowableConsumer}.
      *
      * @param <T> The type of the first argument to the operation
      * @param <U> The type of the second argument to the operation
      * @param <V> The type of the third argument to the operation
      * @param consumer The consumer which accepts the {@code first} parameter of this one
-     * @return Creates a {@code ThrowableTriConsumer} which uses the first parameter of this one as argument for the
-     * given {@code ThrowableConsumer}.
+     * @return Creates a {@code ThrowableTriConsumer} which uses the {@code first} parameter of this one as argument for
+     * the given {@code ThrowableConsumer}.
      * @throws NullPointerException If the given argument is {@code null}
      */
     static <T, U, V> ThrowableTriConsumer<T, U, V> onlyFirst(final ThrowableConsumer<? super T> consumer) {
@@ -103,14 +103,14 @@ public interface ThrowableTriConsumer<T, U, V> extends TriConsumer<T, U, V> {
     }
 
     /**
-     * Creates a {@link ThrowableTriConsumer} which uses the second parameter of this one as argument for the given
+     * Creates a {@link ThrowableTriConsumer} which uses the {@code second} parameter of this one as argument for the given
      * {@link ThrowableConsumer}.
      *
      * @param <T> The type of the first argument to the operation
      * @param <U> The type of the second argument to the operation
      * @param <V> The type of the third argument to the operation
      * @param consumer The consumer which accepts the {@code second} parameter of this one
-     * @return Creates a {@code ThrowableTriConsumer} which uses the second parameter of this one as argument for the
+     * @return Creates a {@code ThrowableTriConsumer} which uses the {@code second} parameter of this one as argument for the
      * given {@code ThrowableConsumer}.
      * @throws NullPointerException If the given argument is {@code null}
      */
@@ -120,14 +120,14 @@ public interface ThrowableTriConsumer<T, U, V> extends TriConsumer<T, U, V> {
     }
 
     /**
-     * Creates a {@link ThrowableTriConsumer} which uses the third parameter of this one as argument for the given
+     * Creates a {@link ThrowableTriConsumer} which uses the {@code third} parameter of this one as argument for the given
      * {@link ThrowableConsumer}.
      *
      * @param <T> The type of the first argument to the operation
      * @param <U> The type of the second argument to the operation
      * @param <V> The type of the third argument to the operation
      * @param consumer The consumer which accepts the {@code third} parameter of this one
-     * @return Creates a {@code ThrowableTriConsumer} which uses the third parameter of this one as argument for the
+     * @return Creates a {@code ThrowableTriConsumer} which uses the {@code third} parameter of this one as argument for the
      * given {@code ThrowableConsumer}.
      * @throws NullPointerException If the given argument is {@code null}
      */

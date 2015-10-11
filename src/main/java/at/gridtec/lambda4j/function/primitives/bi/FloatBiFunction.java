@@ -51,12 +51,12 @@ public interface FloatBiFunction<R> {
     }
 
     /**
-     * Creates a {@link FloatBiFunction} which uses the first parameter of this one as argument for the given {@link
+     * Creates a {@link FloatBiFunction} which uses the {@code first} parameter of this one as argument for the given {@link
      * FloatFunction}.
      *
-     * @param <R> The return value from the operation
+     * @param <R> The type of return value from the function
      * @param function The function which accepts the {@code first} parameter of this one
-     * @return Creates a {@code FloatBiFunction} which uses the first parameter of this one as argument for the given
+     * @return Creates a {@code FloatBiFunction} which uses the {@code first} parameter of this one as argument for the given
      * {@code FloatFunction}.
      * @throws NullPointerException If the given argument is {@code null}
      */
@@ -66,12 +66,12 @@ public interface FloatBiFunction<R> {
     }
 
     /**
-     * Creates a {@link FloatBiFunction} which uses the second parameter of this one as argument for the given {@link
+     * Creates a {@link FloatBiFunction} which uses the {@code second} parameter of this one as argument for the given {@link
      * FloatFunction}.
      *
-     * @param <R> The return value from the operation
+     * @param <R> The type of return value from the function
      * @param function The function which accepts the {@code second} parameter of this one
-     * @return Creates a {@code FloatBiFunction} which uses the second parameter of this one as argument for the given
+     * @return Creates a {@code FloatBiFunction} which uses the {@code second} parameter of this one as argument for the given
      * {@code FloatFunction}.
      * @throws NullPointerException If the given argument is {@code null}
      */

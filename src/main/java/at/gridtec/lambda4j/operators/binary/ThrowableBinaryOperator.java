@@ -128,11 +128,12 @@ public interface ThrowableBinaryOperator<T> extends BinaryOperator<T> {
     }
 
     /**
-     * Creates a {@link BinaryOperator} which uses the left parameter as argument for the given {@link UnaryOperator}.
+     * Creates a {@link BinaryOperator} which uses the {@code left} parameter as argument for the given {@link
+     * UnaryOperator}.
      *
      * @param <T> The type of argument to the operator
-     * @param operator The operator which accepts the {@code short} parameter of this one
-     * @return Creates a {@code BinaryOperator} which uses the left parameter as argument for the given {@code
+     * @param operator The operator which accepts the {@code left} parameter of this one
+     * @return Creates a {@code BinaryOperator} which uses the {@code left} parameter as argument for the given {@code
      * UnaryOperator}.
      * @throws NullPointerException If the given argument is {@code null}
      */
@@ -142,11 +143,12 @@ public interface ThrowableBinaryOperator<T> extends BinaryOperator<T> {
     }
 
     /**
-     * Creates a {@link BinaryOperator} which uses the right parameter as argument for the given {@link UnaryOperator}.
+     * Creates a {@link BinaryOperator} which uses the {@code right} parameter as argument for the given {@link
+     * UnaryOperator}.
      *
      * @param <T> The type of argument to the operator
      * @param operator The operator which accepts the {@code right} parameter of this one
-     * @return Creates a {@code BinaryOperator} which uses the right parameter as argument for the given {@code
+     * @return Creates a {@code BinaryOperator} which uses the {@code right} parameter as argument for the given {@code
      * UnaryOperator}.
      * @throws NullPointerException If the given argument is {@code null}
      */

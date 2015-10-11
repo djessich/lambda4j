@@ -52,12 +52,12 @@ public interface ToDoubleObjDoubleFunction<T> {
     }
 
     /**
-     * Creates a {@link ToDoubleObjDoubleFunction} which uses the first parameter of this one as argument for the given
+     * Creates a {@link ToDoubleObjDoubleFunction} which uses the {@code first} parameter of this one as argument for the given
      * {@link ToDoubleFunction}.
      *
      * @param <T> The type of argument to the function
      * @param function The function which accepts the {@code first} parameter of this one
-     * @return Creates a {@code ToDoubleObjDoubleFunction} which uses the first parameter of this one as argument for
+     * @return Creates a {@code ToDoubleObjDoubleFunction} which uses the {@code first} parameter of this one as argument for
      * the given {@code ToDoubleFunction}.
      * @throws NullPointerException If the given argument is {@code null}
      */
@@ -67,12 +67,12 @@ public interface ToDoubleObjDoubleFunction<T> {
     }
 
     /**
-     * Creates a {@link ToDoubleObjDoubleFunction} which uses the second parameter of this one as argument for the given
+     * Creates a {@link ToDoubleObjDoubleFunction} which uses the {@code second} parameter of this one as argument for the given
      * {@link DoubleUnaryOperator}.
      *
      * @param <T> The type of argument to the function
      * @param function The function which accepts the {@code second} parameter of this one
-     * @return Creates a {@code ToDoubleObjDoubleFunction} which uses the second parameter of this one as argument for
+     * @return Creates a {@code ToDoubleObjDoubleFunction} which uses the {@code second} parameter of this one as argument for
      * the given {@code DoubleUnaryOperator}.
      * @throws NullPointerException If the given argument is {@code null}
      */

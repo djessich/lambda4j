@@ -37,11 +37,11 @@ import java.util.Objects;
 public interface ShortTriConsumer {
 
     /**
-     * Creates a {@link ShortTriConsumer} which uses the first parameter as argument for the given {@link
+     * Creates a {@link ShortTriConsumer} which uses the {@code first} parameter as argument for the given {@link
      * ShortConsumer}.
      *
      * @param consumer The consumer which accepts the {@code first} parameter of this one
-     * @return Creates a {@code ShortTriConsumer} which uses the first parameter as argument for the given {@code
+     * @return Creates a {@code ShortTriConsumer} which uses the {@code first} parameter as argument for the given {@code
      * ShortConsumer}.
      * @throws NullPointerException If the given argument is {@code null}
      */
@@ -51,11 +51,11 @@ public interface ShortTriConsumer {
     }
 
     /**
-     * Creates a {@link ShortTriConsumer} which uses the second parameter as argument for the given {@link
+     * Creates a {@link ShortTriConsumer} which uses the {@code second} parameter as argument for the given {@link
      * ShortConsumer}.
      *
      * @param consumer The consumer which accepts the {@code second} parameter of this one
-     * @return Creates a {@code ShortTriConsumer} which uses the second parameter as argument for the given {@code
+     * @return Creates a {@code ShortTriConsumer} which uses the {@code second} parameter as argument for the given {@code
      * ShortConsumer}.
      * @throws NullPointerException If the given argument is {@code null}
      */
@@ -65,11 +65,11 @@ public interface ShortTriConsumer {
     }
 
     /**
-     * Creates a {@link ShortTriConsumer} which uses the third parameter as argument for the given {@link
+     * Creates a {@link ShortTriConsumer} which uses the {@code third} parameter as argument for the given {@link
      * ShortConsumer}.
      *
      * @param consumer The consumer which accepts the {@code third} parameter of this one
-     * @return Creates a {@code ShortTriConsumer} which uses the third parameter as argument for the given {@code
+     * @return Creates a {@code ShortTriConsumer} which uses the {@code third} parameter as argument for the given {@code
      * ShortConsumer}.
      * @throws NullPointerException If the given argument is {@code null}
      */

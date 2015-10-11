@@ -87,12 +87,12 @@ public interface ThrowableObjLongConsumer<T> extends ObjLongConsumer<T> {
     }
 
     /**
-     * Creates a {@link ObjLongConsumer} which uses the first parameter of this one as argument for the given {@link
+     * Creates a {@link ObjLongConsumer} which uses the {@code first} parameter of this one as argument for the given {@link
      * Consumer}.
      *
      * @param <T> The type of the first argument to the operation
      * @param consumer The consumer which accepts the {@code first} parameter of this one
-     * @return Creates a {@code ObjLongConsumer} which uses the first parameter of this one as argument for the given
+     * @return Creates a {@code ObjLongConsumer} which uses the {@code first} parameter of this one as argument for the given
      * {@code Consumer}.
      * @throws NullPointerException If the given argument is {@code null}
      */
@@ -102,12 +102,12 @@ public interface ThrowableObjLongConsumer<T> extends ObjLongConsumer<T> {
     }
 
     /**
-     * Creates a {@link ObjLongConsumer} which uses the second parameter of this one as argument for the given {@link
+     * Creates a {@link ObjLongConsumer} which uses the {@code second} parameter of this one as argument for the given {@link
      * LongConsumer}.
      *
      * @param <T> The type of the first argument to the operation
      * @param consumer The consumer which accepts the {@code second} parameter of this one
-     * @return Creates a {@code ObjLongConsumer} which uses the second parameter of this one as argument for the given
+     * @return Creates a {@code ObjLongConsumer} which uses the {@code second} parameter of this one as argument for the given
      * {@code LongConsumer}.
      * @throws NullPointerException If the given argument is {@code null}
      */

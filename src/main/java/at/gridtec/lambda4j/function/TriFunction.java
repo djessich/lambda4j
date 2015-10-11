@@ -49,16 +49,16 @@ public interface TriFunction<T, U, V, R> {
     }
 
     /**
-     * Creates a {@link TriFunction} which uses the first parameter of this one as argument for the given {@link
+     * Creates a {@link TriFunction} which uses the {@code first} parameter of this one as argument for the given {@link
      * Function}.
      *
-     * @param <T> The type of the first argument to the operation
-     * @param <U> The type of the second argument to the operation
-     * @param <V> The type of the third argument to the operation
+     * @param <T> The type of the first argument to the function
+     * @param <U> The type of the second argument to the function
+     * @param <V> The type of the third argument to the function
      * @param <R> The type of return value from the function
      * @param function The function which accepts the {@code first} parameter of this one
-     * @return Creates a {@code TriFunction} which uses the first parameter of this one as argument for the given {@code
-     * Function}.
+     * @return Creates a {@code TriFunction} which uses the {@code first} parameter of this one as argument for the
+     * given {@code Function}.
      * @throws NullPointerException If the given argument is {@code null}
      */
     static <T, U, V, R> TriFunction<T, U, V, R> onlyFirst(final Function<? super T, ? extends R> function) {
@@ -67,16 +67,16 @@ public interface TriFunction<T, U, V, R> {
     }
 
     /**
-     * Creates a {@link TriFunction} which uses the second parameter of this one as argument for the given {@link
-     * Function}.
+     * Creates a {@link TriFunction} which uses the {@code second} parameter of this one as argument for the given
+     * {@link Function}.
      *
-     * @param <T> The type of the first argument to the operation
-     * @param <U> The type of the second argument to the operation
-     * @param <V> The type of the third argument to the operation
+     * @param <T> The type of the first argument to the function
+     * @param <U> The type of the second argument to the function
+     * @param <V> The type of the third argument to the function
      * @param <R> The type of return value from the function
      * @param function The consumer which accepts the {@code second} parameter of this one
-     * @return Creates a {@code TriFunction} which uses the second parameter of this one as argument for the given
-     * {@code Function}.
+     * @return Creates a {@code TriFunction} which uses the {@code second} parameter of this one as argument for the
+     * given {@code Function}.
      * @throws NullPointerException If the given argument is {@code null}
      */
     static <T, U, V, R> TriFunction<T, U, V, R> onlySecond(final Function<? super U, ? extends R> function) {
@@ -85,16 +85,16 @@ public interface TriFunction<T, U, V, R> {
     }
 
     /**
-     * Creates a {@link TriFunction} which uses the third parameter of this one as argument for the given {@link
+     * Creates a {@link TriFunction} which uses the {@code third} parameter of this one as argument for the given {@link
      * Function}.
      *
-     * @param <T> The type of the first argument to the operation
-     * @param <U> The type of the second argument to the operation
-     * @param <V> The type of the third argument to the operation
+     * @param <T> The type of the first argument to the function
+     * @param <U> The type of the second argument to the function
+     * @param <V> The type of the third argument to the function
      * @param <R> The type of return value from the function
      * @param function The consumer which accepts the {@code third} parameter of this one
-     * @return Creates a {@code TriFunction} which uses the third parameter of this one as argument for the given {@code
-     * Function}.
+     * @return Creates a {@code TriFunction} which uses the {@code third} parameter of this one as argument for the
+     * given {@code Function}.
      * @throws NullPointerException If the given argument is {@code null}
      */
     static <T, U, V, R> TriFunction<T, U, V, R> onlyThird(final Function<? super V, ? extends R> function) {

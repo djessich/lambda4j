@@ -64,15 +64,15 @@ public interface ToDoubleTriFunction<T, U, V> {
     }
 
     /**
-     * Creates a {@link ToDoubleTriFunction} which uses the first parameter of this one as argument for the given {@link
-     * ToDoubleFunction}.
+     * Creates a {@link ToDoubleTriFunction} which uses the {@code first} parameter of this one as argument for the
+     * given {@link ToDoubleFunction}.
      *
-     * @param <T> The type of the first argument to the operation
-     * @param <U> The type of the second argument to the operation
+     * @param <T> The type of the first argument to the function
+     * @param <U> The type of the second argument to the function
      * @param <V> The type of the third argument to the function
      * @param function The function which accepts the {@code first} parameter of this one
-     * @return Creates a {@code ToDoubleTriFunction} which uses the first parameter of this one as argument for the
-     * given {@code ToDoubleFunction}.
+     * @return Creates a {@code ToDoubleTriFunction} which uses the {@code first} parameter of this one as argument for
+     * the given {@code ToDoubleFunction}.
      * @throws NullPointerException If the given argument is {@code null}
      */
     static <T, U, V> ToDoubleTriFunction<T, U, V> onlyFirst(final ToDoubleFunction<? super T> function) {
@@ -81,14 +81,14 @@ public interface ToDoubleTriFunction<T, U, V> {
     }
 
     /**
-     * Creates a {@link ToDoubleTriFunction} which uses the second parameter of this one as argument for the given
+     * Creates a {@link ToDoubleTriFunction} which uses the {@code second} parameter of this one as argument for the given
      * {@link ToDoubleFunction}.
      *
-     * @param <T> The type of the first argument to the operation
-     * @param <U> The type of the second argument to the operation
+     * @param <T> The type of the first argument to the function
+     * @param <U> The type of the second argument to the function
      * @param <V> The type of the third argument to the function
      * @param function The consumer which accepts the {@code second} parameter of this one
-     * @return Creates a {@code ToDoubleTriFunction} which uses the second parameter of this one as argument for the
+     * @return Creates a {@code ToDoubleTriFunction} which uses the {@code second} parameter of this one as argument for the
      * given {@code ToDoubleFunction}.
      * @throws NullPointerException If the given argument is {@code null}
      */
@@ -98,14 +98,14 @@ public interface ToDoubleTriFunction<T, U, V> {
     }
 
     /**
-     * Creates a {@link ToDoubleTriFunction} which uses the third parameter of this one as argument for the given {@link
+     * Creates a {@link ToDoubleTriFunction} which uses the {@code third} parameter of this one as argument for the given {@link
      * ToDoubleFunction}.
      *
-     * @param <T> The type of the first argument to the operation
-     * @param <U> The type of the second argument to the operation
+     * @param <T> The type of the first argument to the function
+     * @param <U> The type of the second argument to the function
      * @param <V> The type of the third argument to the function
      * @param function The consumer which accepts the {@code third} parameter of this one
-     * @return Creates a {@code ToDoubleTriFunction} which uses the third parameter of this one as argument for the
+     * @return Creates a {@code ToDoubleTriFunction} which uses the {@code third} parameter of this one as argument for the
      * given {@code ToDoubleFunction}.
      * @throws NullPointerException If the given argument is {@code null}
      */

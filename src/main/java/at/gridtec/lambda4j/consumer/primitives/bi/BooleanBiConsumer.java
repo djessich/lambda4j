@@ -36,11 +36,11 @@ import java.util.function.Predicate;
 public interface BooleanBiConsumer {
 
     /**
-     * Creates a {@link BooleanBiConsumer} which uses the first parameter of this one as argument for the given {@link
+     * Creates a {@link BooleanBiConsumer} which uses the {@code first} parameter of this one as argument for the given {@link
      * BooleanConsumer}.
      *
      * @param consumer The consumer which accepts the {@code first} parameter of this one
-     * @return Creates a {@code BooleanBiConsumer} which uses the first parameter of this one as argument for the given
+     * @return Creates a {@code BooleanBiConsumer} which uses the {@code first} parameter of this one as argument for the given
      * {@code BooleanConsumer}.
      * @throws NullPointerException If the given argument is {@code null}
      */
@@ -50,11 +50,11 @@ public interface BooleanBiConsumer {
     }
 
     /**
-     * Creates a {@link BooleanBiConsumer} which uses the second parameter of this one as argument for the given {@link
+     * Creates a {@link BooleanBiConsumer} which uses the {@code second} parameter of this one as argument for the given {@link
      * BooleanConsumer}.
      *
      * @param consumer The consumer which accepts the {@code second} parameter of this one
-     * @return Creates a {@code BooleanBiConsumer} which uses the second parameter of this one as argument for the given
+     * @return Creates a {@code BooleanBiConsumer} which uses the {@code second} parameter of this one as argument for the given
      * {@code BooleanConsumer}.
      * @throws NullPointerException If the given argument is {@code null}
      */

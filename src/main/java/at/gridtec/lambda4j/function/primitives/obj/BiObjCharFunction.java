@@ -54,14 +54,14 @@ public interface BiObjCharFunction<T, U, R> {
     }
 
     /**
-     * Creates a {@link BiObjCharFunction} which uses the first parameter of this one as argument for the given {@link
+     * Creates a {@link BiObjCharFunction} which uses the {@code first} parameter of this one as argument for the given {@link
      * Function}.
      *
      * @param <T> The type of the first argument to the function
      * @param <U> The type of the second argument to the function
      * @param <R> The type of return value from the function
      * @param function The function which accepts the {@code first} parameter of this one
-     * @return Creates a {@code BiObjCharFunction} which uses the first parameter of this one as argument for the given
+     * @return Creates a {@code BiObjCharFunction} which uses the {@code first} parameter of this one as argument for the given
      * {@code Function}.
      * @throws NullPointerException If the given argument is {@code null}
      */
@@ -71,14 +71,14 @@ public interface BiObjCharFunction<T, U, R> {
     }
 
     /**
-     * Creates a {@link BiObjCharFunction} which uses the second parameter of this one as argument for the given {@link
+     * Creates a {@link BiObjCharFunction} which uses the {@code second} parameter of this one as argument for the given {@link
      * Function}.
      *
      * @param <T> The type of the first argument to the function
      * @param <U> The type of the second argument to the function
      * @param <R> The type of return value from the function
      * @param function The function which accepts the {@code second} parameter of this one
-     * @return Creates a {@code BiObjCharFunction} which uses the second parameter of this one as argument for the given
+     * @return Creates a {@code BiObjCharFunction} which uses the {@code second} parameter of this one as argument for the given
      * {@code Function}.
      * @throws NullPointerException If the given argument is {@code null}
      */
@@ -88,14 +88,14 @@ public interface BiObjCharFunction<T, U, R> {
     }
 
     /**
-     * Creates a {@link BiObjCharFunction} which uses the third parameter of this one as argument for the given {@link
+     * Creates a {@link BiObjCharFunction} which uses the {@code third} parameter of this one as argument for the given {@link
      * CharFunction}.
      *
      * @param <T> The type of the first argument to the function
      * @param <U> The type of the second argument to the function
      * @param <R> The type of return value from the function
      * @param function The function which accepts the {@code third} parameter of this one
-     * @return Creates a {@code BiObjCharFunction} which uses the third parameter of this one as argument for the given
+     * @return Creates a {@code BiObjCharFunction} which uses the {@code third} parameter of this one as argument for the given
      * {@code CharFunction}.
      * @throws NullPointerException If the given argument is {@code null}
      */

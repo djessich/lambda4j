@@ -55,13 +55,13 @@ public interface ToCharBiObjCharFunction<T, U> {
     }
 
     /**
-     * Creates a {@link ToCharBiObjCharFunction} which uses the first parameter of this one as argument for the given
+     * Creates a {@link ToCharBiObjCharFunction} which uses the {@code first} parameter of this one as argument for the given
      * {@link ToCharFunction}.
      *
      * @param <T> The type of the first argument to the function
      * @param <U> The type of the second argument to the function
      * @param function The function which accepts the {@code first} parameter of this one
-     * @return Creates a {@code ToCharBiObjCharFunction} which uses the first parameter of this one as argument for the
+     * @return Creates a {@code ToCharBiObjCharFunction} which uses the {@code first} parameter of this one as argument for the
      * given {@code ToCharFunction}.
      * @throws NullPointerException If the given argument is {@code null}
      */
@@ -71,13 +71,13 @@ public interface ToCharBiObjCharFunction<T, U> {
     }
 
     /**
-     * Creates a {@link ToCharBiObjCharFunction} which uses the second parameter of this one as argument for the given
+     * Creates a {@link ToCharBiObjCharFunction} which uses the {@code second} parameter of this one as argument for the given
      * {@link ToCharFunction}.
      *
      * @param <T> The type of the first argument to the function
      * @param <U> The type of the second argument to the function
      * @param function The function which accepts the {@code second} parameter of this one
-     * @return Creates a {@code ToCharBiObjCharFunction} which uses the second parameter of this one as argument for the
+     * @return Creates a {@code ToCharBiObjCharFunction} which uses the {@code second} parameter of this one as argument for the
      * given {@code ToCharFunction}.
      * @throws NullPointerException If the given argument is {@code null}
      */
@@ -87,13 +87,13 @@ public interface ToCharBiObjCharFunction<T, U> {
     }
 
     /**
-     * Creates a {@link ToCharBiObjCharFunction} which uses the third parameter of this one as argument for the given
+     * Creates a {@link ToCharBiObjCharFunction} which uses the {@code third} parameter of this one as argument for the given
      * {@link CharUnaryOperator}.
      *
      * @param <T> The type of the first argument to the function
      * @param <U> The type of the second argument to the function
      * @param function The function which accepts the {@code third} parameter of this one
-     * @return Creates a {@code ToCharBiObjCharFunction} which uses the third parameter of this one as argument for the
+     * @return Creates a {@code ToCharBiObjCharFunction} which uses the {@code third} parameter of this one as argument for the
      * given {@code CharUnaryOperator}.
      * @throws NullPointerException If the given argument is {@code null}
      */

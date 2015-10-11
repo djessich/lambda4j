@@ -55,13 +55,13 @@ public interface ToFloatBiObjFloatFunction<T, U> {
     }
 
     /**
-     * Creates a {@link ToFloatBiObjFloatFunction} which uses the first parameter of this one as argument for the given
+     * Creates a {@link ToFloatBiObjFloatFunction} which uses the {@code first} parameter of this one as argument for the given
      * {@link ToFloatFunction}.
      *
      * @param <T> The type of the first argument to the function
      * @param <U> The type of the second argument to the function
      * @param function The function which accepts the {@code first} parameter of this one
-     * @return Creates a {@code ToFloatBiObjFloatFunction} which uses the first parameter of this one as argument for
+     * @return Creates a {@code ToFloatBiObjFloatFunction} which uses the {@code first} parameter of this one as argument for
      * the given {@code ToFloatFunction}.
      * @throws NullPointerException If the given argument is {@code null}
      */
@@ -71,13 +71,13 @@ public interface ToFloatBiObjFloatFunction<T, U> {
     }
 
     /**
-     * Creates a {@link ToFloatBiObjFloatFunction} which uses the second parameter of this one as argument for the given
+     * Creates a {@link ToFloatBiObjFloatFunction} which uses the {@code second} parameter of this one as argument for the given
      * {@link ToFloatFunction}.
      *
      * @param <T> The type of the first argument to the function
      * @param <U> The type of the second argument to the function
      * @param function The function which accepts the {@code second} parameter of this one
-     * @return Creates a {@code ToFloatBiObjFloatFunction} which uses the second parameter of this one as argument for
+     * @return Creates a {@code ToFloatBiObjFloatFunction} which uses the {@code second} parameter of this one as argument for
      * the given {@code ToFloatFunction}.
      * @throws NullPointerException If the given argument is {@code null}
      */
@@ -87,13 +87,13 @@ public interface ToFloatBiObjFloatFunction<T, U> {
     }
 
     /**
-     * Creates a {@link ToFloatBiObjFloatFunction} which uses the third parameter of this one as argument for the given
+     * Creates a {@link ToFloatBiObjFloatFunction} which uses the {@code third} parameter of this one as argument for the given
      * {@link FloatUnaryOperator}.
      *
      * @param <T> The type of the first argument to the function
      * @param <U> The type of the second argument to the function
      * @param function The function which accepts the {@code third} parameter of this one
-     * @return Creates a {@code ToFloatBiObjFloatFunction} which uses the third parameter of this one as argument for
+     * @return Creates a {@code ToFloatBiObjFloatFunction} which uses the {@code third} parameter of this one as argument for
      * the given {@code FloatUnaryOperator}.
      * @throws NullPointerException If the given argument is {@code null}
      */

@@ -145,11 +145,11 @@ public interface ThrowableCharBinaryOperator extends CharBinaryOperator {
     }
 
     /**
-     * Creates a {@link CharBinaryOperator} which uses the left parameter as argument for the given {@link
+     * Creates a {@link CharBinaryOperator} which uses the {@code left} parameter as argument for the given {@link
      * CharUnaryOperator}.
      *
-     * @param operator The operator which accepts the {@code short} parameter of this one
-     * @return Creates a {@code CharBinaryOperator} which uses the left parameter as argument for the given {@code
+     * @param operator The operator which accepts the {@code left} parameter of this one
+     * @return Creates a {@code CharBinaryOperator} which uses the {@code left} parameter as argument for the given {@code
      * CharUnaryOperator}.
      * @throws NullPointerException If the given argument is {@code null}
      */
@@ -159,11 +159,11 @@ public interface ThrowableCharBinaryOperator extends CharBinaryOperator {
     }
 
     /**
-     * Creates a {@link CharBinaryOperator} which uses the right parameter as argument for the given {@link
+     * Creates a {@link CharBinaryOperator} which uses the {@code right} parameter as argument for the given {@link
      * CharUnaryOperator}.
      *
      * @param operator The operator which accepts the {@code right} parameter of this one
-     * @return Creates a {@code CharBinaryOperator} which uses the right parameter as argument for the given {@code
+     * @return Creates a {@code CharBinaryOperator} which uses the {@code right} parameter as argument for the given {@code
      * CharUnaryOperator}.
      * @throws NullPointerException If the given argument is {@code null}
      */

@@ -53,13 +53,13 @@ public interface ObjFloatFunction<T, R> {
     }
 
     /**
-     * Creates a {@link ObjFloatFunction} which uses the first parameter of this one as argument for the given {@link
+     * Creates a {@link ObjFloatFunction} which uses the {@code first} parameter of this one as argument for the given {@link
      * Function}.
      *
      * @param <T> The type of argument to the function
-     * @param <R> The return value from the operation
+     * @param <R> The type of return value from the function
      * @param function The function which accepts the {@code first} parameter of this one
-     * @return Creates a {@code ObjFloatFunction} which uses the first parameter of this one as argument for the given
+     * @return Creates a {@code ObjFloatFunction} which uses the {@code first} parameter of this one as argument for the given
      * {@code Function}.
      * @throws NullPointerException If the given argument is {@code null}
      */
@@ -69,13 +69,13 @@ public interface ObjFloatFunction<T, R> {
     }
 
     /**
-     * Creates a {@link ObjFloatFunction} which uses the second parameter of this one as argument for the given {@link
+     * Creates a {@link ObjFloatFunction} which uses the {@code second} parameter of this one as argument for the given {@link
      * FloatFunction}.
      *
      * @param <T> The type of argument to the function
-     * @param <R> The return value from the operation
+     * @param <R> The type of return value from the function
      * @param function The function which accepts the {@code second} parameter of this one
-     * @return Creates a {@code ObjFloatFunction} which uses the second parameter of this one as argument for the given
+     * @return Creates a {@code ObjFloatFunction} which uses the {@code second} parameter of this one as argument for the given
      * {@code FloatFunction}.
      * @throws NullPointerException If the given argument is {@code null}
      */

@@ -39,12 +39,12 @@ import java.util.function.Function;
 public interface ObjByteConsumer<T> {
 
     /**
-     * Creates a {@link ObjByteConsumer} which uses the first parameter of this one as argument for the given {@link
+     * Creates a {@link ObjByteConsumer} which uses the {@code first} parameter of this one as argument for the given {@link
      * Consumer}.
      *
      * @param <T> The type of the first argument to the operation
      * @param consumer The consumer which accepts the {@code first} parameter of this one
-     * @return Creates a {@code ObjByteConsumer} which uses the first parameter of this one as argument for the given
+     * @return Creates a {@code ObjByteConsumer} which uses the {@code first} parameter of this one as argument for the given
      * {@code Consumer}.
      * @throws NullPointerException If the given argument is {@code null}
      */
@@ -54,12 +54,12 @@ public interface ObjByteConsumer<T> {
     }
 
     /**
-     * Creates a {@link ObjByteConsumer} which uses the second parameter of this one as argument for the given {@link
+     * Creates a {@link ObjByteConsumer} which uses the {@code second} parameter of this one as argument for the given {@link
      * ByteConsumer}.
      *
      * @param <T> The type of the first argument to the operation
      * @param consumer The consumer which accepts the {@code second} parameter of this one
-     * @return Creates a {@code ObjByteConsumer} which uses the second parameter of this one as argument for the given
+     * @return Creates a {@code ObjByteConsumer} which uses the {@code second} parameter of this one as argument for the given
      * {@code ByteConsumer}.
      * @throws NullPointerException If the given argument is {@code null}
      */

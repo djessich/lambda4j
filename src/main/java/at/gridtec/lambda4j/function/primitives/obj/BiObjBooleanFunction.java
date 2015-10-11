@@ -55,15 +55,15 @@ public interface BiObjBooleanFunction<T, U, R> {
     }
 
     /**
-     * Creates a {@link BiObjBooleanFunction} which uses the first parameter of this one as argument for the given
-     * {@link Function}.
+     * Creates a {@link BiObjBooleanFunction} which uses the {@code first} parameter of this one as argument for the
+     * given {@link Function}.
      *
      * @param <T> The type of the first argument to the function
      * @param <U> The type of the second argument to the function
      * @param <R> The type of return value from the function
      * @param function The function which accepts the {@code first} parameter of this one
-     * @return Creates a {@code BiObjBooleanFunction} which uses the first parameter of this one as argument for the
-     * given {@code Function}.
+     * @return Creates a {@code BiObjBooleanFunction} which uses the {@code first} parameter of this one as argument for
+     * the given {@code Function}.
      * @throws NullPointerException If the given argument is {@code null}
      */
     static <T, U, R> BiObjBooleanFunction<T, U, R> onlyFirst(final Function<? super T, ? extends R> function) {
@@ -72,15 +72,15 @@ public interface BiObjBooleanFunction<T, U, R> {
     }
 
     /**
-     * Creates a {@link BiObjBooleanFunction} which uses the second parameter of this one as argument for the given
-     * {@link Function}.
+     * Creates a {@link BiObjBooleanFunction} which uses the {@code second} parameter of this one as argument for the
+     * given {@link Function}.
      *
      * @param <T> The type of the first argument to the function
      * @param <U> The type of the second argument to the function
      * @param <R> The type of return value from the function
      * @param function The function which accepts the {@code second} parameter of this one
-     * @return Creates a {@code BiObjBooleanFunction} which uses the second parameter of this one as argument for the
-     * given {@code Function}.
+     * @return Creates a {@code BiObjBooleanFunction} which uses the {@code second} parameter of this one as argument
+     * for the given {@code Function}.
      * @throws NullPointerException If the given argument is {@code null}
      */
     static <T, U, R> BiObjBooleanFunction<T, U, R> onlySecond(final Function<? super U, ? extends R> function) {
@@ -89,15 +89,15 @@ public interface BiObjBooleanFunction<T, U, R> {
     }
 
     /**
-     * Creates a {@link BiObjBooleanFunction} which uses the third parameter of this one as argument for the given
-     * {@link BooleanFunction}.
+     * Creates a {@link BiObjBooleanFunction} which uses the {@code third} parameter of this one as argument for the
+     * given {@link BooleanFunction}.
      *
      * @param <T> The type of the first argument to the function
      * @param <U> The type of the second argument to the function
      * @param <R> The type of return value from the function
      * @param function The function which accepts the {@code third} parameter of this one
-     * @return Creates a {@code BiObjBooleanFunction} which uses the third parameter of this one as argument for the
-     * given {@code BooleanFunction}.
+     * @return Creates a {@code BiObjBooleanFunction} which uses the {@code third} parameter of this one as argument for
+     * the given {@code BooleanFunction}.
      * @throws NullPointerException If the given argument is {@code null}
      */
     static <T, U, R> BiObjBooleanFunction<T, U, R> onlyThird(final BooleanFunction<? extends R> function) {

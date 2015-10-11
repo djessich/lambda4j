@@ -53,12 +53,12 @@ public interface ToByteObjByteFunction<T> {
     }
 
     /**
-     * Creates a {@link ToByteObjByteFunction} which uses the first parameter of this one as argument for the given
+     * Creates a {@link ToByteObjByteFunction} which uses the {@code first} parameter of this one as argument for the given
      * {@link ToByteFunction}.
      *
      * @param <T> The type of argument to the function
      * @param function The function which accepts the {@code first} parameter of this one
-     * @return Creates a {@code ToByteObjByteFunction} which uses the first parameter of this one as argument for the
+     * @return Creates a {@code ToByteObjByteFunction} which uses the {@code first} parameter of this one as argument for the
      * given {@code ToByteFunction}.
      * @throws NullPointerException If the given argument is {@code null}
      */
@@ -68,12 +68,12 @@ public interface ToByteObjByteFunction<T> {
     }
 
     /**
-     * Creates a {@link ToByteObjByteFunction} which uses the second parameter of this one as argument for the given
+     * Creates a {@link ToByteObjByteFunction} which uses the {@code second} parameter of this one as argument for the given
      * {@link ByteUnaryOperator}.
      *
      * @param <T> The type of argument to the function
      * @param function The function which accepts the {@code second} parameter of this one
-     * @return Creates a {@code ToByteObjByteFunction} which uses the second parameter of this one as argument for the
+     * @return Creates a {@code ToByteObjByteFunction} which uses the {@code second} parameter of this one as argument for the
      * given {@code ByteUnaryOperator}.
      * @throws NullPointerException If the given argument is {@code null}
      */

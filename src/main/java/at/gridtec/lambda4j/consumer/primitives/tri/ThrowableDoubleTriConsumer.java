@@ -81,11 +81,11 @@ public interface ThrowableDoubleTriConsumer extends DoubleTriConsumer {
     }
 
     /**
-     * Creates a {@link DoubleTriConsumer} which uses the first parameter of this one as argument for the given {@link
+     * Creates a {@link DoubleTriConsumer} which uses the {@code first} parameter of this one as argument for the given {@link
      * DoubleConsumer}.
      *
      * @param consumer The consumer which accepts the {@code first} parameter of this one
-     * @return Creates a {@code DoubleTriConsumer} which uses the first parameter of this one as argument for the given
+     * @return Creates a {@code DoubleTriConsumer} which uses the {@code first} parameter of this one as argument for the given
      * {@code DoubleConsumer}.
      * @throws NullPointerException If the given argument is {@code null}
      */
@@ -95,11 +95,11 @@ public interface ThrowableDoubleTriConsumer extends DoubleTriConsumer {
     }
 
     /**
-     * Creates a {@link DoubleTriConsumer} which uses the second parameter of this one as argument for the given {@link
+     * Creates a {@link DoubleTriConsumer} which uses the {@code second} parameter of this one as argument for the given {@link
      * DoubleConsumer}.
      *
      * @param consumer The consumer which accepts the {@code second} parameter of this one
-     * @return Creates a {@code DoubleTriConsumer} which uses the second parameter of this one as argument for the given
+     * @return Creates a {@code DoubleTriConsumer} which uses the {@code second} parameter of this one as argument for the given
      * {@code DoubleConsumer}.
      * @throws NullPointerException If the given argument is {@code null}
      */
@@ -109,11 +109,11 @@ public interface ThrowableDoubleTriConsumer extends DoubleTriConsumer {
     }
 
     /**
-     * Creates a {@link DoubleTriConsumer} which uses the third parameter as argument for the given {@link
+     * Creates a {@link DoubleTriConsumer} which uses the {@code third} parameter as argument for the given {@link
      * DoubleConsumer}.
      *
      * @param consumer The consumer which accepts the {@code third} parameter of this one
-     * @return Creates a {@code DoubleTriConsumer} which uses the third parameter as argument for the given {@code
+     * @return Creates a {@code DoubleTriConsumer} which uses the {@code third} parameter as argument for the given {@code
      * DoubleConsumer}.
      * @throws NullPointerException If the given argument is {@code null}
      */
