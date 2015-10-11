@@ -15,7 +15,17 @@
  */
 package at.gridtec.lambda4j.function.primitives.obj;
 
+import at.gridtec.lambda4j.consumer.primitives.obj.ObjBooleanConsumer;
+import at.gridtec.lambda4j.function.primitives.BooleanFunction;
+import at.gridtec.lambda4j.operators.binary.BooleanBinaryOperator;
+import at.gridtec.lambda4j.operators.unary.BooleanUnaryOperator;
+import at.gridtec.lambda4j.predicates.primitives.obj.ObjBooleanPredicate;
+
+import java.util.Objects;
 import java.util.function.BiFunction;
+import java.util.function.Consumer;
+import java.util.function.Function;
+import java.util.function.Predicate;
 
 /**
  * Represents a function that accepts an object-valued and a {@code boolean}-valued argument, and produces a result.
@@ -32,6 +42,50 @@ import java.util.function.BiFunction;
 public interface ObjBooleanFunction<T, R> {
 
     /**
+     * Creates a {@link ObjBooleanFunction} which always returns a given value.
+     *
+     * @param <T> The type of argument to the function
+     * @param <R> The type of return value from the function
+     * @param r The return value for the constant
+     * @return A {@code ObjBooleanFunction} which always returns a given value.
+     */
+    static <T, R> ObjBooleanFunction<T, R> constant(R r) {
+        return (value1, value2) -> r;
+    }
+
+    /**
+     * Creates a {@link ObjBooleanFunction} which uses the first parameter of this one as argument for the given {@link
+     * Function}.
+     *
+     * @param <T> The type of argument to the function
+     * @param <R> The return value from the operation
+     * @param function The function which accepts the {@code first} parameter of this one
+     * @return Creates a {@code ObjBooleanFunction} which uses the first parameter of this one as argument for the given
+     * {@code Function}.
+     * @throws NullPointerException If the given argument is {@code null}
+     */
+    static <T, R> ObjBooleanFunction<T, R> onlyFirst(final Function<? super T, ? extends R> function) {
+        Objects.requireNonNull(function);
+        return (value1, value2) -> function.apply(value1);
+    }
+
+    /**
+     * Creates a {@link ObjBooleanFunction} which uses the second parameter of this one as argument for the given {@link
+     * BooleanFunction}.
+     *
+     * @param <T> The type of argument to the function
+     * @param <R> The return value from the operation
+     * @param function The function which accepts the {@code second} parameter of this one
+     * @return Creates a {@code ObjBooleanFunction} which uses the second parameter of this one as argument for the
+     * given {@code BooleanFunction}.
+     * @throws NullPointerException If the given argument is {@code null}
+     */
+    static <T, R> ObjBooleanFunction<T, R> onlySecond(final BooleanFunction<? extends R> function) {
+        Objects.requireNonNull(function);
+        return (value1, value2) -> function.apply(value2);
+    }
+
+    /**
      * Performs this {@link ObjBooleanFunction} to the given arguments.
      *
      * @param t The first argument to the function
@@ -39,4 +93,106 @@ public interface ObjBooleanFunction<T, R> {
      * @return The return value from the function, which is its result.
      */
     R apply(T t, boolean value);
+
+    /**
+     * Returns a composed {@link ObjBooleanFunction} that first applies the {@code before} functions to its input, and
+     * then applies this operation to the result. If evaluation of either operation throws an exception, it is relayed
+     * to the caller of the composed function.
+     *
+     * @param <U> The type of the argument to the first before operation
+     * @param before1 The first {@code Function} to apply before this operation is applied
+     * @param before2 The second {@code BooleanUnaryOperator} to apply before this operation is applied
+     * @return A composed {@code ObjBooleanFunction} that first applies the {@code before} functions to its input, and
+     * then applies this operation to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @see #andThen(Function)
+     */
+    default <U> ObjBooleanFunction<U, R> compose(final Function<? super U, ? extends T> before1,
+            final BooleanUnaryOperator before2) {
+        Objects.requireNonNull(before1);
+        Objects.requireNonNull(before2);
+        return (u, v) -> apply(before1.apply(u), before2.applyAsBoolean(v));
+    }
+
+    /**
+     * Returns a composed {@link BiFunction} that applies the given {@code before} functions to its input, and then
+     * applies this operation to the result. If evaluation of either operation throws an exception, it is relayed to the
+     * caller of the composed function.
+     *
+     * @param <U> The type of the argument to the first before operation
+     * @param <V> The type of the argument to the second before operation
+     * @param before1 The first before {@code Function} to apply before this operation is applied
+     * @param before2 The second before {@code Predicate} to apply before this operation is applied
+     * @return A composed {@code BiFunction} that applies the given {@code before} functions to its input, and then
+     * applies this operation to the result.
+     * @throws NullPointerException If one of the given functions are {@code null}
+     * @see #andThen(Function)
+     */
+    default <U, V> BiFunction<U, V, R> compose(final Function<? super U, ? extends T> before1,
+            final Predicate<? super V> before2) {
+        Objects.requireNonNull(before1);
+        Objects.requireNonNull(before2);
+        return (u, v) -> apply(before1.apply(u), before2.test(v));
+    }
+
+    /**
+     * Returns a composed {@link BooleanBinaryOperator} that first applies this operation to its input, and then applies
+     * the {@code after} operation to the result. If evaluation of either operation throws an exception, it is relayed
+     * to the caller of the composed operation.
+     *
+     * @param after The {@code Predicate} to apply after this operation is applied
+     * @return A composed {@code BooleanBinaryOperator} that first applies this operation, and then applies the {@code
+     * after} operation to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @see #compose(Function, BooleanUnaryOperator)
+     * @see #compose(Function, Predicate)
+     */
+    default ObjBooleanPredicate<T> andThen(final Predicate<? super R> after) {
+        Objects.requireNonNull(after);
+        return (t, value) -> after.test(apply(t, value));
+    }
+
+    /**
+     * Returns a composed {@link ObjBooleanFunction} that first applies this operation to its input, and then applies
+     * the {@code after} operation to the result. If evaluation of either operation throws an exception, it is relayed
+     * to the caller of the composed operation.
+     *
+     * @param <S> The type of output of the {@code after} function, and of the composed function
+     * @param after The {@code Function} to apply after this operation is applied
+     * @return A composed {@code ObjBooleanFunction} that first applies this operation, and then applies the {@code
+     * after} operation to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @see #compose(Function, BooleanUnaryOperator)
+     * @see #compose(Function, Predicate)
+     */
+    default <S> ObjBooleanFunction<T, S> andThen(final Function<? super R, ? extends S> after) {
+        Objects.requireNonNull(after);
+        return (t, value) -> after.apply(apply(t, value));
+    }
+
+    /**
+     * Returns a composed {@link ObjBooleanConsumer} that fist applies this operation to its input, and then consumes
+     * the result using the given {@code Consumer}. If evaluation of either operator throws an exception, it is relayed
+     * to the caller of the composed operation.
+     *
+     * @param consumer The {@code Consumer} which consumes the result from this operation
+     * @return A composed {@code ObjBooleanConsumer} that first applies this operation to its input, and then consumes
+     * the result using the given {@code Consumer}.
+     * @throws NullPointerException If given argument is {@code null}
+     */
+    default ObjBooleanConsumer<T> consume(Consumer<? super R> consumer) {
+        Objects.requireNonNull(consumer);
+        return (t, value) -> consumer.accept(apply(t, value));
+    }
+
+    /**
+     * Returns a composed {@link BiFunction} which represents this {@link ObjBooleanFunction}. Thereby the primitive
+     * input argument for this operation is autoboxed. This method is just convenience to provide the ability to use
+     * this {@code ObjBooleanFunction} with JRE specific methods, only accepting {@code BiFunction}.
+     *
+     * @return A composed {@code BiFunction} which represents this {@code ObjBooleanFunction}.
+     */
+    default BiFunction<T, Boolean, R> boxed() {
+        return this::apply;
+    }
 }
