@@ -19,7 +19,13 @@ import at.gridtec.lambda4j.consumer.TriConsumer;
 import at.gridtec.lambda4j.consumer.primitives.FloatConsumer;
 import at.gridtec.lambda4j.function.TriFunction;
 import at.gridtec.lambda4j.function.primitives.FloatFunction;
-import at.gridtec.lambda4j.function.primitives.conversion.*;
+import at.gridtec.lambda4j.function.primitives.conversion.FloatToBooleanFunction;
+import at.gridtec.lambda4j.function.primitives.conversion.FloatToByteFunction;
+import at.gridtec.lambda4j.function.primitives.conversion.FloatToCharFunction;
+import at.gridtec.lambda4j.function.primitives.conversion.FloatToDoubleFunction;
+import at.gridtec.lambda4j.function.primitives.conversion.FloatToIntFunction;
+import at.gridtec.lambda4j.function.primitives.conversion.FloatToLongFunction;
+import at.gridtec.lambda4j.function.primitives.conversion.FloatToShortFunction;
 import at.gridtec.lambda4j.function.primitives.to.ToFloatFunction;
 import at.gridtec.lambda4j.function.primitives.to.bi.ToCharBiFunction;
 import at.gridtec.lambda4j.operators.unary.FloatUnaryOperator;
@@ -117,6 +123,15 @@ public interface ToFloatTriFunction<T, U, V> {
      * @return The return value from the function, which is its result.
      */
     float applyAsFloat(T t, U u, V v);
+
+    /**
+     * Returns the number of this operations arguments.
+     *
+     * @return The number of this operations arguments.
+     */
+    default int arity() {
+        return 3;
+    }
 
     /**
      * Returns a composed {@link ToFloatTriFunction} that first applies the {@code before} {@link UnaryOperator}s to its

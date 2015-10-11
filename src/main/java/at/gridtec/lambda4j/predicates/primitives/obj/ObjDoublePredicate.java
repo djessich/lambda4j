@@ -103,6 +103,15 @@ public interface ObjDoublePredicate<T> {
     boolean test(T t, double value);
 
     /**
+     * Returns the number of this operations arguments.
+     *
+     * @return The number of this operations arguments.
+     */
+    default int arity() {
+        return 2;
+    }
+
+    /**
      * Returns a {@link ObjDoublePredicate} that represents the logical negation of this one.
      *
      * @return A {@code ObjDoublePredicate} that represents the logical negation of this one.

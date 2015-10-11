@@ -100,6 +100,15 @@ public interface CharTriPredicate {
     boolean test(char value1, char value2, char value3);
 
     /**
+     * Returns the number of this operations arguments.
+     *
+     * @return The number of this operations arguments.
+     */
+    default int arity() {
+        return 3;
+    }
+
+    /**
      * Returns a {@link CharTriPredicate} that represents the logical negation of this one.
      *
      * @return A {@code CharTriPredicate} that represents the logical negation of this one.

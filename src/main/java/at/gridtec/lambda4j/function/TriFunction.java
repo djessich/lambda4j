@@ -113,6 +113,15 @@ public interface TriFunction<T, U, V, R> {
     R apply(T t, U u, V v);
 
     /**
+     * Returns the number of arguments for this operation.
+     *
+     * @return The number of arguments for this operation.
+     */
+    default int arity() {
+        return 3;
+    }
+
+    /**
      * Returns a composed {@link TriFunction} that applies the given {@code before} {@link Function}s to its input, and
      * then applies this function to the result. If evaluation of either of the given functions throws an exception, it
      * is relayed to the caller of the composed function.

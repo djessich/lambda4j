@@ -136,6 +136,15 @@ public interface TriPredicate<T, U, V> {
     }
 
     /**
+     * Returns the number of this operations arguments.
+     *
+     * @return The number of this operations arguments.
+     */
+    default int arity() {
+        return 3;
+    }
+
+    /**
      * Returns a composed {@link TriPredicate} that represents a short-circuiting logical AND of this predicate and
      * another.  When evaluating the composed predicate, if this predicate is {@code false}, then the {@code other}
      * predicate is not evaluated.

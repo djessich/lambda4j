@@ -20,7 +20,11 @@ import at.gridtec.lambda4j.function.TriFunction;
 import at.gridtec.lambda4j.operators.ternary.DoubleTernaryOperator;
 
 import java.util.Objects;
-import java.util.function.*;
+import java.util.function.Consumer;
+import java.util.function.DoubleFunction;
+import java.util.function.DoubleUnaryOperator;
+import java.util.function.Function;
+import java.util.function.ToDoubleFunction;
 
 /**
  * Represents a function that accepts three double-valued argument and produces a result. This is the {@code
@@ -100,6 +104,15 @@ public interface DoubleTriFunction<R> {
      * @return The return value from the function, which is its result.
      */
     R apply(double value1, double value2, double value3);
+
+    /**
+     * Returns the number of this operations arguments.
+     *
+     * @return The number of this operations arguments.
+     */
+    default int arity() {
+        return 3;
+    }
 
     /**
      * Returns a composed {@link DoubleTriFunction} that first applies the {@code before} {@link DoubleUnaryOperator}s

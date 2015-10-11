@@ -116,6 +116,15 @@ public interface BiObjLongPredicate<T, U> {
     boolean test(T t, U u, long value);
 
     /**
+     * Returns the number of this operations arguments.
+     *
+     * @return The number of this operations arguments.
+     */
+    default int arity() {
+        return 3;
+    }
+
+    /**
      * Returns a {@link BiObjLongPredicate} that represents the logical negation of this one.
      *
      * @return A {@code BiObjLongPredicate} that represents the logical negation of this one.

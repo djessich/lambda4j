@@ -103,6 +103,15 @@ public interface ObjShortPredicate<T> {
     boolean test(T t, short value);
 
     /**
+     * Returns the number of this operations arguments.
+     *
+     * @return The number of this operations arguments.
+     */
+    default int arity() {
+        return 2;
+    }
+
+    /**
      * Returns a {@link ObjShortPredicate} that represents the logical negation of this one.
      *
      * @return A {@code ObjShortPredicate} that represents the logical negation of this one.

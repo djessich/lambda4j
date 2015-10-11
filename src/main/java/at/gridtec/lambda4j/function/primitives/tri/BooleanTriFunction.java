@@ -106,6 +106,15 @@ public interface BooleanTriFunction<R> {
     R apply(boolean value1, boolean value2, boolean value3);
 
     /**
+     * Returns the number of this operations arguments.
+     *
+     * @return The number of this operations arguments.
+     */
+    default int arity() {
+        return 3;
+    }
+
+    /**
      * Returns a composed {@link BooleanTriFunction} that first applies the {@code before} {@link BooleanUnaryOperator}s
      * to its input, and then applies this operation to the result. If evaluation of either operation throws an
      * exception, it is relayed to the caller of the composed function.

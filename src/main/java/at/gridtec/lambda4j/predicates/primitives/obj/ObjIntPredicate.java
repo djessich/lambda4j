@@ -102,6 +102,15 @@ public interface ObjIntPredicate<T> {
     boolean test(T t, int value);
 
     /**
+     * Returns the number of this operations arguments.
+     *
+     * @return The number of this operations arguments.
+     */
+    default int arity() {
+        return 2;
+    }
+
+    /**
      * Returns a {@link ObjIntPredicate} that represents the logical negation of this one.
      *
      * @return A {@code ObjIntPredicate} that represents the logical negation of this one.

@@ -18,7 +18,11 @@ package at.gridtec.lambda4j.consumer.primitives.obj;
 import at.gridtec.lambda4j.consumer.TriConsumer;
 
 import java.util.Objects;
-import java.util.function.*;
+import java.util.function.Consumer;
+import java.util.function.Function;
+import java.util.function.LongConsumer;
+import java.util.function.LongUnaryOperator;
+import java.util.function.ToLongFunction;
 
 /**
  * Represents an operation that accepts two object-valued and a {@code long}-valued argument, and returns no result.
@@ -91,6 +95,15 @@ public interface BiObjLongConsumer<T, U> {
      * @param value The third argument to the operation
      */
     void accept(T t, U u, long value);
+
+    /**
+     * Returns the number of this operations arguments.
+     *
+     * @return The number of this operations arguments.
+     */
+    default int arity() {
+        return 3;
+    }
 
     /**
      * Returns a composed {@link BiObjLongConsumer} that applies the given {@code before} {@link Function}s and {@link

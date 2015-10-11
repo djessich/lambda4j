@@ -96,6 +96,15 @@ public interface ByteBiPredicate {
     boolean test(byte value1, byte value2);
 
     /**
+     * Returns the number of this operations arguments.
+     *
+     * @return The number of this operations arguments.
+     */
+    default int arity() {
+        return 2;
+    }
+
+    /**
      * Returns a {@link ByteBiPredicate} that represents the logical negation of this one.
      *
      * @return A {@code ByteBiPredicate} that represents the logical negation of this one.

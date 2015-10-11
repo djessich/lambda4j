@@ -100,6 +100,15 @@ public interface IntTriPredicate {
     boolean test(int value1, int value2, int value3);
 
     /**
+     * Returns the number of this operations arguments.
+     *
+     * @return The number of this operations arguments.
+     */
+    default int arity() {
+        return 3;
+    }
+
+    /**
      * Returns a {@link IntTriPredicate} that represents the logical negation of this one.
      *
      * @return A {@code IntTriPredicate} that represents the logical negation of this one.

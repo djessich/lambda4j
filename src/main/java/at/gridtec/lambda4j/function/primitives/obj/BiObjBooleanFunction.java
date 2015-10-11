@@ -116,6 +116,15 @@ public interface BiObjBooleanFunction<T, U, R> {
     R apply(T t, U u, boolean value);
 
     /**
+     * Returns the number of this operations arguments.
+     *
+     * @return The number of this operations arguments.
+     */
+    default int arity() {
+        return 3;
+    }
+
+    /**
      * Returns a composed {@link BiObjBooleanFunction} that first applies the {@code before} functions to its input, and
      * then applies this operation to the result. If evaluation of either operation throws an exception, it is relayed
      * to the caller of the composed function.

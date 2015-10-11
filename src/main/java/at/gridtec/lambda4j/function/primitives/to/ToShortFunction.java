@@ -17,11 +17,23 @@ package at.gridtec.lambda4j.function.primitives.to;
 
 import at.gridtec.lambda4j.consumer.primitives.ShortConsumer;
 import at.gridtec.lambda4j.function.primitives.ShortFunction;
-import at.gridtec.lambda4j.function.primitives.conversion.*;
+import at.gridtec.lambda4j.function.primitives.conversion.ShortToBooleanFunction;
+import at.gridtec.lambda4j.function.primitives.conversion.ShortToByteFunction;
+import at.gridtec.lambda4j.function.primitives.conversion.ShortToCharFunction;
+import at.gridtec.lambda4j.function.primitives.conversion.ShortToDoubleFunction;
+import at.gridtec.lambda4j.function.primitives.conversion.ShortToFloatFunction;
+import at.gridtec.lambda4j.function.primitives.conversion.ShortToIntFunction;
+import at.gridtec.lambda4j.function.primitives.conversion.ShortToLongFunction;
 import at.gridtec.lambda4j.operators.unary.ShortUnaryOperator;
 
 import java.util.Objects;
-import java.util.function.*;
+import java.util.function.Consumer;
+import java.util.function.Function;
+import java.util.function.Predicate;
+import java.util.function.ToDoubleFunction;
+import java.util.function.ToIntFunction;
+import java.util.function.ToLongFunction;
+import java.util.function.UnaryOperator;
 
 /**
  * Represents a function that produces a short-valued result from one argument. This is the {@code short}-producing
@@ -54,6 +66,15 @@ public interface ToShortFunction<T> {
      * @return The return value from the function, which is its result.
      */
     short applyAsShort(T t);
+
+    /**
+     * Returns the number of this operations arguments.
+     *
+     * @return The number of this operations arguments.
+     */
+    default int arity() {
+        return 1;
+    }
 
     /**
      * Returns a composed {@link ToShortFunction} that first applies the {@code before} {@link UnaryOperator} to its

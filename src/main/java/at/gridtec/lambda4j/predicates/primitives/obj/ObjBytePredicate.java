@@ -99,6 +99,15 @@ public interface ObjBytePredicate<T> {
     boolean test(T t, byte value);
 
     /**
+     * Returns the number of this operations arguments.
+     *
+     * @return The number of this operations arguments.
+     */
+    default int arity() {
+        return 2;
+    }
+
+    /**
      * Returns a {@link ObjBytePredicate} that represents the logical negation of this one.
      *
      * @return A {@code ObjBytePredicate} that represents the logical negation of this one.

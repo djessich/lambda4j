@@ -17,12 +17,23 @@ package at.gridtec.lambda4j.function.primitives.to.tri;
 
 import at.gridtec.lambda4j.consumer.TriConsumer;
 import at.gridtec.lambda4j.function.TriFunction;
-import at.gridtec.lambda4j.function.primitives.conversion.*;
+import at.gridtec.lambda4j.function.primitives.conversion.LongToBooleanFunction;
+import at.gridtec.lambda4j.function.primitives.conversion.LongToByteFunction;
+import at.gridtec.lambda4j.function.primitives.conversion.LongToCharFunction;
+import at.gridtec.lambda4j.function.primitives.conversion.LongToFloatFunction;
+import at.gridtec.lambda4j.function.primitives.conversion.LongToShortFunction;
 import at.gridtec.lambda4j.function.primitives.to.bi.ToCharBiFunction;
 import at.gridtec.lambda4j.predicates.TriPredicate;
 
 import java.util.Objects;
-import java.util.function.*;
+import java.util.function.Function;
+import java.util.function.LongConsumer;
+import java.util.function.LongFunction;
+import java.util.function.LongToDoubleFunction;
+import java.util.function.LongToIntFunction;
+import java.util.function.LongUnaryOperator;
+import java.util.function.ToLongFunction;
+import java.util.function.UnaryOperator;
 
 /**
  * Represents a function that produces a long-valued result from three arguments. This is the {@code long}-producing
@@ -112,6 +123,15 @@ public interface ToLongTriFunction<T, U, V> {
      * @return The return value from the function, which is its result.
      */
     long applyAsLong(T t, U u, V v);
+
+    /**
+     * Returns the number of this operations arguments.
+     *
+     * @return The number of this operations arguments.
+     */
+    default int arity() {
+        return 3;
+    }
 
     /**
      * Returns a composed {@link ToLongTriFunction} that first applies the {@code before} {@link UnaryOperator}s to its

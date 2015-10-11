@@ -17,12 +17,23 @@ package at.gridtec.lambda4j.function.primitives.to.tri;
 
 import at.gridtec.lambda4j.consumer.TriConsumer;
 import at.gridtec.lambda4j.function.TriFunction;
-import at.gridtec.lambda4j.function.primitives.conversion.*;
+import at.gridtec.lambda4j.function.primitives.conversion.IntToBooleanFunction;
+import at.gridtec.lambda4j.function.primitives.conversion.IntToByteFunction;
+import at.gridtec.lambda4j.function.primitives.conversion.IntToCharFunction;
+import at.gridtec.lambda4j.function.primitives.conversion.IntToFloatFunction;
+import at.gridtec.lambda4j.function.primitives.conversion.IntToShortFunction;
 import at.gridtec.lambda4j.function.primitives.to.bi.ToCharBiFunction;
 import at.gridtec.lambda4j.predicates.TriPredicate;
 
 import java.util.Objects;
-import java.util.function.*;
+import java.util.function.Function;
+import java.util.function.IntConsumer;
+import java.util.function.IntFunction;
+import java.util.function.IntToDoubleFunction;
+import java.util.function.IntToLongFunction;
+import java.util.function.IntUnaryOperator;
+import java.util.function.ToIntFunction;
+import java.util.function.UnaryOperator;
 
 /**
  * Represents a function that produces a int-valued result from three arguments. This is the {@code int}-producing
@@ -112,6 +123,15 @@ public interface ToIntTriFunction<T, U, V> {
      * @return The return value from the function, which is its result.
      */
     int applyAsInt(T t, U u, V v);
+
+    /**
+     * Returns the number of this operations arguments.
+     *
+     * @return The number of this operations arguments.
+     */
+    default int arity() {
+        return 3;
+    }
 
     /**
      * Returns a composed {@link ToIntTriFunction} that first applies the {@code before} {@link UnaryOperator}s to its

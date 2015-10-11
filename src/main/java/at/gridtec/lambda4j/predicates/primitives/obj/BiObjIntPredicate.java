@@ -116,6 +116,15 @@ public interface BiObjIntPredicate<T, U> {
     boolean test(T t, U u, int value);
 
     /**
+     * Returns the number of this operations arguments.
+     *
+     * @return The number of this operations arguments.
+     */
+    default int arity() {
+        return 3;
+    }
+
+    /**
      * Returns a {@link BiObjIntPredicate} that represents the logical negation of this one.
      *
      * @return A {@code BiObjIntPredicate} that represents the logical negation of this one.

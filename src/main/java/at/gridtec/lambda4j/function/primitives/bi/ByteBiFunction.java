@@ -90,6 +90,15 @@ public interface ByteBiFunction<R> {
     R apply(byte value1, byte value2);
 
     /**
+     * Returns the number of this operations arguments.
+     *
+     * @return The number of this operations arguments.
+     */
+    default int arity() {
+        return 2;
+    }
+
+    /**
      * Returns a composed {@link ByteBiFunction} that first applies the {@code before} {@link ByteUnaryOperator}s to its
      * input, and then applies this operation to the result. If evaluation of either operation throws an exception, it
      * is relayed to the caller of the composed function.

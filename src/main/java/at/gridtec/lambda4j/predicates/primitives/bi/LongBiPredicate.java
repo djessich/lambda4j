@@ -96,6 +96,15 @@ public interface LongBiPredicate {
     boolean test(long value1, long value2);
 
     /**
+     * Returns the number of this operations arguments.
+     *
+     * @return The number of this operations arguments.
+     */
+    default int arity() {
+        return 2;
+    }
+
+    /**
      * Returns a {@link LongBiPredicate} that represents the logical negation of this one.
      *
      * @return A {@code LongBiPredicate} that represents the logical negation of this one.

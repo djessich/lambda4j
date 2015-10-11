@@ -101,6 +101,15 @@ public interface ShortTriPredicate {
     boolean test(short value1, short value2, short value3);
 
     /**
+     * Returns the number of this operations arguments.
+     *
+     * @return The number of this operations arguments.
+     */
+    default int arity() {
+        return 3;
+    }
+
+    /**
      * Returns a {@link ShortTriPredicate} that represents the logical negation of this one.
      *
      * @return A {@code ShortTriPredicate} that represents the logical negation of this one.

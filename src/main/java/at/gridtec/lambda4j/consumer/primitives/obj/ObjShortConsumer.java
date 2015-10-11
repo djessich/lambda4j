@@ -77,6 +77,15 @@ public interface ObjShortConsumer<T> {
     void accept(T t, short value);
 
     /**
+     * Returns the number of this operations arguments.
+     *
+     * @return The number of this operations arguments.
+     */
+    default int arity() {
+        return 2;
+    }
+
+    /**
      * Returns a composed {@link ObjShortConsumer} that applies the given {@code before} {@link Function} and {@link
      * ShortUnaryOperator} to its input, and then applies this operation to the result. If evaluation of either of the
      * given operations throws an exception, it is relayed to the caller of the composed function.

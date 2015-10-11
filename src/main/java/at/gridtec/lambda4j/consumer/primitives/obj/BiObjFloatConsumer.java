@@ -86,6 +86,7 @@ public interface BiObjFloatConsumer<T, U> {
         Objects.requireNonNull(consumer);
         return (t, u, value) -> consumer.accept(value);
     }
+
     /**
      * Performs this operation on the given argument.
      *
@@ -94,6 +95,15 @@ public interface BiObjFloatConsumer<T, U> {
      * @param value The third argument to the operation
      */
     void accept(T t, U u, float value);
+
+    /**
+     * Returns the number of this operations arguments.
+     *
+     * @return The number of this operations arguments.
+     */
+    default int arity() {
+        return 3;
+    }
 
     /**
      * Returns a composed {@link BiObjFloatConsumer} that applies the given {@code before} {@link Function}s and {@link

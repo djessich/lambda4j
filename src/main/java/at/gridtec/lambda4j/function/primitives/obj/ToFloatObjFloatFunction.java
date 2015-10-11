@@ -92,6 +92,15 @@ public interface ToFloatObjFloatFunction<T> {
     float applyAsFloat(T t, float value);
 
     /**
+     * Returns the number of this operations arguments.
+     *
+     * @return The number of this operations arguments.
+     */
+    default int arity() {
+        return 2;
+    }
+
+    /**
      * Returns a composed {@link ToFloatObjFloatFunction} that first applies the {@code before} functions to its input,
      * and then applies this operation to the result. If evaluation of either operation throws an exception, it is
      * relayed to the caller of the composed function.

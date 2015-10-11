@@ -93,6 +93,15 @@ public interface CharPredicate {
     boolean test(char value);
 
     /**
+     * Returns the number of this operations arguments.
+     *
+     * @return The number of this operations arguments.
+     */
+    default int arity() {
+        return 1;
+    }
+
+    /**
      * Returns a {@link CharPredicate} that represents the logical negation of this one.
      *
      * @return A {@code CharPredicate} that represents the logical negation of this one.

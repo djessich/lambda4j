@@ -17,12 +17,25 @@ package at.gridtec.lambda4j.function.primitives.to.bi;
 
 import at.gridtec.lambda4j.consumer.primitives.ShortConsumer;
 import at.gridtec.lambda4j.function.primitives.ShortFunction;
-import at.gridtec.lambda4j.function.primitives.conversion.*;
+import at.gridtec.lambda4j.function.primitives.conversion.ShortToBooleanFunction;
+import at.gridtec.lambda4j.function.primitives.conversion.ShortToByteFunction;
+import at.gridtec.lambda4j.function.primitives.conversion.ShortToCharFunction;
+import at.gridtec.lambda4j.function.primitives.conversion.ShortToDoubleFunction;
+import at.gridtec.lambda4j.function.primitives.conversion.ShortToFloatFunction;
+import at.gridtec.lambda4j.function.primitives.conversion.ShortToIntFunction;
+import at.gridtec.lambda4j.function.primitives.conversion.ShortToLongFunction;
 import at.gridtec.lambda4j.function.primitives.to.ToShortFunction;
 import at.gridtec.lambda4j.operators.unary.ShortUnaryOperator;
 
 import java.util.Objects;
-import java.util.function.*;
+import java.util.function.BiConsumer;
+import java.util.function.BiFunction;
+import java.util.function.BiPredicate;
+import java.util.function.Function;
+import java.util.function.ToDoubleBiFunction;
+import java.util.function.ToIntBiFunction;
+import java.util.function.ToLongBiFunction;
+import java.util.function.UnaryOperator;
 
 /**
  * Represents a function that produces a short-valued result from two arguments. This is the {@code short}-producing
@@ -90,6 +103,15 @@ public interface ToShortBiFunction<T, U> {
      * @return The return value from the function, which is its result.
      */
     short applyAsShort(T t, U u);
+
+    /**
+     * Returns the number of this operations arguments.
+     *
+     * @return The number of this operations arguments.
+     */
+    default int arity() {
+        return 2;
+    }
 
     /**
      * Returns a composed {@link ToShortBiFunction} that first applies the {@code before} {@link UnaryOperator}s to its

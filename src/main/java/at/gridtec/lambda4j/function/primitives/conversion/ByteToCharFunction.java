@@ -36,4 +36,13 @@ public interface ByteToCharFunction {
      * @return The result from this function, which is its result.
      */
     char applyAsChar(byte value);
+
+    /**
+     * Returns the number of this operations arguments.
+     *
+     * @return The number of this operations arguments.
+     */
+    default int arity() {
+        return 1;
+    }
 }

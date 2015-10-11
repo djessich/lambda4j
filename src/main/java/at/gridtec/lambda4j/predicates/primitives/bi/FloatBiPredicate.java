@@ -96,6 +96,15 @@ public interface FloatBiPredicate {
     boolean test(float value1, float value2);
 
     /**
+     * Returns the number of this operations arguments.
+     *
+     * @return The number of this operations arguments.
+     */
+    default int arity() {
+        return 2;
+    }
+
+    /**
      * Returns a {@link FloatBiPredicate} that represents the logical negation of this one.
      *
      * @return A {@code FloatBiPredicate} that represents the logical negation of this one.

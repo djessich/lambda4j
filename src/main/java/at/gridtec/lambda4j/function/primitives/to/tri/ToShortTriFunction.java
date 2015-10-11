@@ -19,7 +19,13 @@ import at.gridtec.lambda4j.consumer.TriConsumer;
 import at.gridtec.lambda4j.consumer.primitives.ShortConsumer;
 import at.gridtec.lambda4j.function.TriFunction;
 import at.gridtec.lambda4j.function.primitives.ShortFunction;
-import at.gridtec.lambda4j.function.primitives.conversion.*;
+import at.gridtec.lambda4j.function.primitives.conversion.ShortToBooleanFunction;
+import at.gridtec.lambda4j.function.primitives.conversion.ShortToByteFunction;
+import at.gridtec.lambda4j.function.primitives.conversion.ShortToCharFunction;
+import at.gridtec.lambda4j.function.primitives.conversion.ShortToDoubleFunction;
+import at.gridtec.lambda4j.function.primitives.conversion.ShortToFloatFunction;
+import at.gridtec.lambda4j.function.primitives.conversion.ShortToIntFunction;
+import at.gridtec.lambda4j.function.primitives.conversion.ShortToLongFunction;
 import at.gridtec.lambda4j.function.primitives.to.ToShortFunction;
 import at.gridtec.lambda4j.function.primitives.to.bi.ToCharBiFunction;
 import at.gridtec.lambda4j.operators.unary.ShortUnaryOperator;
@@ -117,6 +123,15 @@ public interface ToShortTriFunction<T, U, V> {
      * @return The return value from the function, which is its result.
      */
     short applyAsShort(T t, U u, V v);
+
+    /**
+     * Returns the number of this operations arguments.
+     *
+     * @return The number of this operations arguments.
+     */
+    default int arity() {
+        return 3;
+    }
 
     /**
      * Returns a composed {@link ToShortTriFunction} that first applies the {@code before} {@link UnaryOperator}s to its

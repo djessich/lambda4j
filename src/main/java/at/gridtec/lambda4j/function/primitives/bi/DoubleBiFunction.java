@@ -18,7 +18,13 @@ package at.gridtec.lambda4j.function.primitives.bi;
 import at.gridtec.lambda4j.consumer.primitives.bi.DoubleBiConsumer;
 
 import java.util.Objects;
-import java.util.function.*;
+import java.util.function.BiFunction;
+import java.util.function.Consumer;
+import java.util.function.DoubleBinaryOperator;
+import java.util.function.DoubleFunction;
+import java.util.function.DoubleUnaryOperator;
+import java.util.function.Function;
+import java.util.function.ToDoubleFunction;
 
 /**
  * Represents a function that accepts two double-valued arguments and produces a result. This is the {@code
@@ -82,6 +88,15 @@ public interface DoubleBiFunction<R> {
      * @return The return value from the function, which is its result.
      */
     R apply(double value1, double value2);
+
+    /**
+     * Returns the number of this operations arguments.
+     *
+     * @return The number of this operations arguments.
+     */
+    default int arity() {
+        return 2;
+    }
 
     /**
      * Returns a composed {@link DoubleBiFunction} that first applies the {@code before} {@link DoubleUnaryOperator}s to

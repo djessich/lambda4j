@@ -18,7 +18,11 @@ package at.gridtec.lambda4j.consumer.primitives.obj;
 import at.gridtec.lambda4j.consumer.TriConsumer;
 
 import java.util.Objects;
-import java.util.function.*;
+import java.util.function.Consumer;
+import java.util.function.Function;
+import java.util.function.IntConsumer;
+import java.util.function.IntUnaryOperator;
+import java.util.function.ToIntFunction;
 
 /**
  * Represents an operation that accepts two object-valued and a {@code int}-valued argument, and returns no result. This
@@ -91,6 +95,15 @@ public interface BiObjIntConsumer<T, U> {
      * @param value The third argument to the operation
      */
     void accept(T t, U u, int value);
+
+    /**
+     * Returns the number of this operations arguments.
+     *
+     * @return The number of this operations arguments.
+     */
+    default int arity() {
+        return 3;
+    }
 
     /**
      * Returns a composed {@link BiObjIntConsumer} that applies the given {@code before} {@link Function}s and {@link

@@ -20,7 +20,11 @@ import at.gridtec.lambda4j.function.TriFunction;
 import at.gridtec.lambda4j.operators.ternary.IntTernaryOperator;
 
 import java.util.Objects;
-import java.util.function.*;
+import java.util.function.Consumer;
+import java.util.function.Function;
+import java.util.function.IntFunction;
+import java.util.function.IntUnaryOperator;
+import java.util.function.ToIntFunction;
 
 /**
  * Represents a function that accepts three int-valued argument and produces a result. This is the {@code int}-consuming
@@ -100,6 +104,15 @@ public interface IntTriFunction<R> {
      * @return The return value from the function, which is its result.
      */
     R apply(int value1, int value2, int value3);
+
+    /**
+     * Returns the number of this operations arguments.
+     *
+     * @return The number of this operations arguments.
+     */
+    default int arity() {
+        return 3;
+    }
 
     /**
      * Returns a composed {@link IntTriFunction} that first applies the {@code before} {@link IntUnaryOperator}s to its

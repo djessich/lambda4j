@@ -101,6 +101,15 @@ public interface DoubleTriPredicate {
     boolean test(double value1, double value2, double value3);
 
     /**
+     * Returns the number of this operations arguments.
+     *
+     * @return The number of this operations arguments.
+     */
+    default int arity() {
+        return 3;
+    }
+
+    /**
      * Returns a {@link DoubleTriPredicate} that represents the logical negation of this one.
      *
      * @return A {@code DoubleTriPredicate} that represents the logical negation of this one.

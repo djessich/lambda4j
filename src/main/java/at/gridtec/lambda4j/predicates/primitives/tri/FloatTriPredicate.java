@@ -101,6 +101,15 @@ public interface FloatTriPredicate {
     boolean test(float value1, float value2, float value3);
 
     /**
+     * Returns the number of this operations arguments.
+     *
+     * @return The number of this operations arguments.
+     */
+    default int arity() {
+        return 3;
+    }
+
+    /**
      * Returns a {@link FloatTriPredicate} that represents the logical negation of this one.
      *
      * @return A {@code FloatTriPredicate} that represents the logical negation of this one.

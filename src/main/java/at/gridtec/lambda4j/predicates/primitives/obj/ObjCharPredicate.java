@@ -102,6 +102,15 @@ public interface ObjCharPredicate<T> {
     boolean test(T t, char value);
 
     /**
+     * Returns the number of this operations arguments.
+     *
+     * @return The number of this operations arguments.
+     */
+    default int arity() {
+        return 2;
+    }
+
+    /**
      * Returns a {@link ObjCharPredicate} that represents the logical negation of this one.
      *
      * @return A {@code ObjCharPredicate} that represents the logical negation of this one.

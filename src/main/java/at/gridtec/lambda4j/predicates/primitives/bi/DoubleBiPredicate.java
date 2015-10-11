@@ -97,6 +97,15 @@ public interface DoubleBiPredicate {
     boolean test(double value1, double value2);
 
     /**
+     * Returns the number of this operations arguments.
+     *
+     * @return The number of this operations arguments.
+     */
+    default int arity() {
+        return 2;
+    }
+
+    /**
      * Returns a {@link DoubleBiPredicate} that represents the logical negation of this one.
      *
      * @return A {@code DoubleBiPredicate} that represents the logical negation of this one.

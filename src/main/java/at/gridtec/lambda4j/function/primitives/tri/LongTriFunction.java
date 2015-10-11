@@ -20,7 +20,11 @@ import at.gridtec.lambda4j.function.TriFunction;
 import at.gridtec.lambda4j.operators.ternary.LongTernaryOperator;
 
 import java.util.Objects;
-import java.util.function.*;
+import java.util.function.Consumer;
+import java.util.function.Function;
+import java.util.function.LongFunction;
+import java.util.function.LongUnaryOperator;
+import java.util.function.ToLongFunction;
 
 /**
  * Represents a function that accepts three long-valued argument and produces a result. This is the {@code
@@ -100,6 +104,15 @@ public interface LongTriFunction<R> {
      * @return The return value from the function, which is its result.
      */
     R apply(long value1, long value2, long value3);
+
+    /**
+     * Returns the number of this operations arguments.
+     *
+     * @return The number of this operations arguments.
+     */
+    default int arity() {
+        return 3;
+    }
 
     /**
      * Returns a composed {@link LongTriFunction} that first applies the {@code before} {@link LongUnaryOperator}s to

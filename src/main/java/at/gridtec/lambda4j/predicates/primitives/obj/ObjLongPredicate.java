@@ -102,6 +102,15 @@ public interface ObjLongPredicate<T> {
     boolean test(T t, long value);
 
     /**
+     * Returns the number of this operations arguments.
+     *
+     * @return The number of this operations arguments.
+     */
+    default int arity() {
+        return 2;
+    }
+
+    /**
      * Returns a {@link ObjLongPredicate} that represents the logical negation of this one.
      *
      * @return A {@code ObjLongPredicate} that represents the logical negation of this one.

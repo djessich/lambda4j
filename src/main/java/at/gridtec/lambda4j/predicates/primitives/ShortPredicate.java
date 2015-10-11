@@ -93,6 +93,15 @@ public interface ShortPredicate {
     boolean test(short value);
 
     /**
+     * Returns the number of this operations arguments.
+     *
+     * @return The number of this operations arguments.
+     */
+    default int arity() {
+        return 1;
+    }
+
+    /**
      * Returns a {@link ShortPredicate} that represents the logical negation of this one.
      *
      * @return A {@code ShortPredicate} that represents the logical negation of this one.

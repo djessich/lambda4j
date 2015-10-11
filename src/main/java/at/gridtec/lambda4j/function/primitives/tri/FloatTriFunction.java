@@ -106,6 +106,15 @@ public interface FloatTriFunction<R> {
     R apply(float value1, float value2, float value3);
 
     /**
+     * Returns the number of this operations arguments.
+     *
+     * @return The number of this operations arguments.
+     */
+    default int arity() {
+        return 3;
+    }
+
+    /**
      * Returns a composed {@link FloatTriFunction} that first applies the {@code before} {@link FloatUnaryOperator}s to
      * its input, and then applies this operation to the result. If evaluation of either operation throws an exception,
      * it is relayed to the caller of the composed function.

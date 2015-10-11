@@ -50,6 +50,15 @@ public interface FloatSupplier {
     float getAsFloat();
 
     /**
+     * Returns the number of this operations arguments.
+     *
+     * @return The number of this operations arguments.
+     */
+    default int arity() {
+        return 0;
+    }
+
+    /**
      * Returns a composed {@link Supplier} which represents this {@link FloatSupplier}. Thereby the primitive input
      * argument for this operation is autoboxed. This method is just convenience to provide the ability to use this
      * {@code FloatSupplier} with JRE specific methods, only accepting {@code Supplier}.

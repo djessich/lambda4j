@@ -86,6 +86,15 @@ public interface CharTriConsumer {
     void accept(char value1, char value2, char value3);
 
     /**
+     * Returns the number of this operations arguments.
+     *
+     * @return The number of this operations arguments.
+     */
+    default int arity() {
+        return 3;
+    }
+
+    /**
      * Returns a composed {@link CharTriConsumer} that applies the given {@code before} {@link CharUnaryOperator}s to
      * its input, and then applies this operation to the result. If evaluation of either of the given operations throws
      * an exception, it is relayed to the caller of the composed function.
