@@ -49,7 +49,7 @@ public interface ObjShortFunction<T, R> {
      * @return A {@code ObjShortFunction} which always returns a given value.
      */
     static <T, R> ObjShortFunction<T, R> constant(R r) {
-        return (value1, value2) -> r;
+        return (t, value) -> r;
     }
 
     /**
@@ -65,7 +65,7 @@ public interface ObjShortFunction<T, R> {
      */
     static <T, R> ObjShortFunction<T, R> onlyFirst(final Function<? super T, ? extends R> function) {
         Objects.requireNonNull(function);
-        return (value1, value2) -> function.apply(value1);
+        return (t, value) -> function.apply(t);
     }
 
     /**
@@ -81,7 +81,7 @@ public interface ObjShortFunction<T, R> {
      */
     static <T, R> ObjShortFunction<T, R> onlySecond(final ShortFunction<? extends R> function) {
         Objects.requireNonNull(function);
-        return (value1, value2) -> function.apply(value2);
+        return (t, value) -> function.apply(value);
     }
 
     /**

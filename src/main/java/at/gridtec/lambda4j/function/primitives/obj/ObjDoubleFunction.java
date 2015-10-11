@@ -41,7 +41,7 @@ public interface ObjDoubleFunction<T, R> {
      * @return A {@code ObjDoubleFunction} which always returns a given value.
      */
     static <T, R> ObjDoubleFunction<T, R> constant(R r) {
-        return (value1, value2) -> r;
+        return (t, value) -> r;
     }
 
     /**
@@ -57,7 +57,7 @@ public interface ObjDoubleFunction<T, R> {
      */
     static <T, R> ObjDoubleFunction<T, R> onlyFirst(final Function<? super T, ? extends R> function) {
         Objects.requireNonNull(function);
-        return (value1, value2) -> function.apply(value1);
+        return (t, value) -> function.apply(t);
     }
 
     /**
@@ -73,7 +73,7 @@ public interface ObjDoubleFunction<T, R> {
      */
     static <T, R> ObjDoubleFunction<T, R> onlySecond(final DoubleFunction<? extends R> function) {
         Objects.requireNonNull(function);
-        return (value1, value2) -> function.apply(value2);
+        return (t, value) -> function.apply(value);
     }
 
     /**
