@@ -17,6 +17,7 @@ package at.gridtec.lambda4j.operators.binary;
 
 import at.gridtec.lambda4j.operators.unary.BooleanUnaryOperator;
 
+import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import java.util.Comparator;
 import java.util.Objects;
@@ -190,6 +191,15 @@ public interface BooleanBinaryOperator {
      */
     boolean applyAsBoolean(boolean left, boolean right);
 
+    /**
+     * Returns the number of arguments for this operation.
+     *
+     * @return The number of arguments for this operation.
+     */
+    @Nonnegative
+    default int arity() {
+        return 2;
+    }
     /**
      * Returns a {@link BooleanBinaryOperator} that represents the logical negation of this one.
      *

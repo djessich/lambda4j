@@ -25,6 +25,7 @@ import at.gridtec.lambda4j.function.primitives.conversion.DoubleToShortFunction;
 import at.gridtec.lambda4j.function.primitives.to.bi.ToCharBiFunction;
 import at.gridtec.lambda4j.predicates.TriPredicate;
 
+import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import java.util.Objects;
 import java.util.function.DoubleConsumer;
@@ -134,6 +135,7 @@ public interface ToDoubleTriFunction<T, U, V> {
      *
      * @return The number of this operations arguments.
      */
+    @Nonnegative
     default int arity() {
         return 3;
     }

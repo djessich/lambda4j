@@ -23,6 +23,7 @@ import at.gridtec.lambda4j.function.primitives.to.ToFloatFunction;
 import at.gridtec.lambda4j.function.primitives.to.tri.ToFloatTriFunction;
 import at.gridtec.lambda4j.operators.unary.FloatUnaryOperator;
 
+import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import java.util.Objects;
 import java.util.function.Function;
@@ -121,6 +122,7 @@ public interface ToFloatBiObjFloatFunction<T, U> {
      *
      * @return The number of this operations arguments.
      */
+    @Nonnegative
     default int arity() {
         return 3;
     }
@@ -224,8 +226,8 @@ public interface ToFloatBiObjFloatFunction<T, U> {
     }
 
     /**
-     * Returns a composed {@link TriFunction} which represents this {@link ObjFloatFunction}. Thereby the primitive input
-     * argument for this function is autoboxed.
+     * Returns a composed {@link TriFunction} which represents this {@link ObjFloatFunction}. Thereby the primitive
+     * input argument for this function is autoboxed.
      *
      * @return A composed {@code TriFunction} which represents this {@code ObjFloatFunction}.
      */

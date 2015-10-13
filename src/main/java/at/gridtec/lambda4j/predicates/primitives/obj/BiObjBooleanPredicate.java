@@ -17,6 +17,7 @@ package at.gridtec.lambda4j.predicates.primitives.obj;
 
 import at.gridtec.lambda4j.predicates.TriPredicate;
 
+import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import java.util.Objects;
 import java.util.function.BiPredicate;
@@ -123,6 +124,7 @@ public interface BiObjBooleanPredicate<T, U> {
      *
      * @return The number of this operations arguments.
      */
+    @Nonnegative
     default int arity() {
         return 3;
     }

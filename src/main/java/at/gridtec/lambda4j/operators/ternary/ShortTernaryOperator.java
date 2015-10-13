@@ -17,6 +17,7 @@ package at.gridtec.lambda4j.operators.ternary;
 
 import at.gridtec.lambda4j.operators.unary.ShortUnaryOperator;
 
+import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import java.util.Objects;
 
@@ -98,6 +99,15 @@ public interface ShortTernaryOperator {
      */
     short applyAsShort(short left, short middle, short right);
 
+    /**
+     * Returns the number of arguments for this operation.
+     *
+     * @return The number of arguments for this operation.
+     */
+    @Nonnegative
+    default int arity() {
+        return 3;
+    }
     /**
      * Returns a composed {@link ShortTernaryOperator} that first applies the given {@code before} operators to its
      * input, and then applies this operator to the result. If evaluation of either operator throws an exception, it is

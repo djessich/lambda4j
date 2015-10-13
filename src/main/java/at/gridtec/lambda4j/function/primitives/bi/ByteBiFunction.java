@@ -21,6 +21,7 @@ import at.gridtec.lambda4j.function.primitives.to.ToByteFunction;
 import at.gridtec.lambda4j.operators.binary.ByteBinaryOperator;
 import at.gridtec.lambda4j.operators.unary.ByteUnaryOperator;
 
+import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import java.util.Objects;
 import java.util.function.BiFunction;
@@ -98,6 +99,7 @@ public interface ByteBiFunction<R> {
      *
      * @return The number of this operations arguments.
      */
+    @Nonnegative
     default int arity() {
         return 2;
     }

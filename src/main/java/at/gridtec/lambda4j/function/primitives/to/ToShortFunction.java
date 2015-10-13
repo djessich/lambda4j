@@ -26,6 +26,7 @@ import at.gridtec.lambda4j.function.primitives.conversion.ShortToIntFunction;
 import at.gridtec.lambda4j.function.primitives.conversion.ShortToLongFunction;
 import at.gridtec.lambda4j.operators.unary.ShortUnaryOperator;
 
+import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import java.util.Objects;
 import java.util.function.Consumer;
@@ -74,6 +75,7 @@ public interface ToShortFunction<T> {
      *
      * @return The number of this operations arguments.
      */
+    @Nonnegative
     default int arity() {
         return 1;
     }

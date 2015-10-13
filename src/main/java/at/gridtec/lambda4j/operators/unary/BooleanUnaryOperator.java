@@ -15,6 +15,7 @@
  */
 package at.gridtec.lambda4j.operators.unary;
 
+import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import java.util.Objects;
 import java.util.function.Predicate;
@@ -104,6 +105,15 @@ public interface BooleanUnaryOperator {
      */
     boolean applyAsBoolean(boolean operand);
 
+    /**
+     * Returns the number of arguments for this operation.
+     *
+     * @return The number of arguments for this operation.
+     */
+    @Nonnegative
+    default int arity() {
+        return 1;
+    }
     /**
      * Returns a {@link BooleanUnaryOperator} that represents the logical negation of this one.
      *

@@ -30,6 +30,7 @@ import at.gridtec.lambda4j.function.primitives.to.ToCharFunction;
 import at.gridtec.lambda4j.operators.unary.CharUnaryOperator;
 import at.gridtec.lambda4j.predicates.TriPredicate;
 
+import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import java.util.Objects;
 import java.util.function.Function;
@@ -133,6 +134,7 @@ public interface ToCharTriFunction<T, U, V> {
      *
      * @return The number of this operations arguments.
      */
+    @Nonnegative
     default int arity() {
         return 3;
     }
@@ -343,6 +345,7 @@ public interface ToCharTriFunction<T, U, V> {
     /**
      * Returns a composed {@link TriFunction} which represents this {@link ToCharTriFunction}. Thereby the primitive
      * input argument for this function is autoboxed.
+     *
      * @return A composed {@code TriFunction} which represents this {@code ToCharTriFunction}.
      */
     @Nonnull

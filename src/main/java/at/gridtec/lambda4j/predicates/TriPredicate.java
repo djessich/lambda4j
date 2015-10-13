@@ -15,6 +15,7 @@
  */
 package at.gridtec.lambda4j.predicates;
 
+import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import java.util.Objects;
 import java.util.function.Predicate;
@@ -129,21 +130,22 @@ public interface TriPredicate<T, U, V> {
     boolean test(T t, U u, V v);
 
     /**
+     * Returns the number of this operations arguments.
+     *
+     * @return The number of this operations arguments.
+     */
+    @Nonnegative
+    default int arity() {
+        return 3;
+    }
+
+    /**
      * Returns a {@link TriPredicate} that represents the logical negation of this one.
      *
      * @return A {@code TriPredicate} that represents the logical negation of this one.
      */
     default TriPredicate<T, U, V> negate() {
         return (t, u, v) -> !test(t, u, v);
-    }
-
-    /**
-     * Returns the number of this operations arguments.
-     *
-     * @return The number of this operations arguments.
-     */
-    default int arity() {
-        return 3;
     }
 
     /**

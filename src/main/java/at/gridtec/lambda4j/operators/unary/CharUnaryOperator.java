@@ -15,6 +15,7 @@
  */
 package at.gridtec.lambda4j.operators.unary;
 
+import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import java.util.Objects;
 import java.util.function.UnaryOperator;
@@ -58,6 +59,15 @@ public interface CharUnaryOperator {
      * @return The result of this operator.
      */
     char applyAsChar(char operand);
+    /**
+     * Returns the number of arguments for this operation.
+     *
+     * @return The number of arguments for this operation.
+     */
+    @Nonnegative
+    default int arity() {
+        return 1;
+    }
 
     /**
      * Returns a composed {@link CharUnaryOperator} that first applies the {@code before} operator to its input, and
@@ -93,8 +103,8 @@ public interface CharUnaryOperator {
 
     /**
      * Returns a composed {@link UnaryOperator} which represents this {@link CharUnaryOperator}. Thereby the primitive
-     * input argument for this operator is autoboxed. This method is just convenience to provide the ability to use
-     * this {@code CharUnaryOperator} with JRE specific methods, only accepting {@code UnaryOperator}.
+     * input argument for this operator is autoboxed. This method is just convenience to provide the ability to use this
+     * {@code CharUnaryOperator} with JRE specific methods, only accepting {@code UnaryOperator}.
      *
      * @return A composed {@code UnaryOperator} which represents this {@code CharUnaryOperator}.
      */

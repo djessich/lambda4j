@@ -17,6 +17,7 @@ package at.gridtec.lambda4j.predicates.primitives.obj;
 
 import at.gridtec.lambda4j.predicates.TriPredicate;
 
+import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import java.util.Objects;
 import java.util.function.BiPredicate;
@@ -122,6 +123,7 @@ public interface BiObjCharPredicate<T, U> {
      *
      * @return The number of this operations arguments.
      */
+    @Nonnegative
     default int arity() {
         return 3;
     }
@@ -201,6 +203,7 @@ public interface BiObjCharPredicate<T, U> {
     /**
      * Returns a composed {@link TriPredicate} which represents this {@link BiObjCharPredicate}. Thereby the primitive
      * input argument for this predicate is autoboxed.
+     *
      * @return A composed {@code TriPredicate} which represents this {@code BiObjCharPredicate}.
      */
     @Nonnull

@@ -15,6 +15,7 @@
  */
 package at.gridtec.lambda4j.operators.unary;
 
+import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import java.util.Objects;
 import java.util.function.UnaryOperator;
@@ -60,6 +61,16 @@ public interface ByteUnaryOperator {
     byte applyAsByte(byte operand);
 
     /**
+     * Returns the number of arguments for this operation.
+     *
+     * @return The number of arguments for this operation.
+     */
+    @Nonnegative
+    default int arity() {
+        return 1;
+    }
+
+    /**
      * Returns a composed {@link ByteUnaryOperator} that first applies the {@code before} operator to its input, and
      * then applies this operator to the result. If evaluation of either operator throws an exception, it is relayed to
      * the caller of the composed operator.
@@ -93,8 +104,8 @@ public interface ByteUnaryOperator {
 
     /**
      * Returns a composed {@link UnaryOperator} which represents this {@link ByteUnaryOperator}. Thereby the primitive
-     * input argument for this operator is autoboxed. This method is just convenience to provide the ability to use
-     * this {@code ByteUnaryOperator} with JRE specific methods, only accepting {@code UnaryOperator}.
+     * input argument for this operator is autoboxed. This method is just convenience to provide the ability to use this
+     * {@code ByteUnaryOperator} with JRE specific methods, only accepting {@code UnaryOperator}.
      *
      * @return A composed {@code UnaryOperator} which represents this {@code ByteUnaryOperator}.
      */

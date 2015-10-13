@@ -22,6 +22,7 @@ import at.gridtec.lambda4j.function.primitives.to.ToByteFunction;
 import at.gridtec.lambda4j.operators.ternary.ByteTernaryOperator;
 import at.gridtec.lambda4j.operators.unary.ByteUnaryOperator;
 
+import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import java.util.Objects;
 import java.util.function.Consumer;
@@ -115,6 +116,7 @@ public interface ByteTriFunction<R> {
      *
      * @return The number of this operations arguments.
      */
+    @Nonnegative
     default int arity() {
         return 3;
     }

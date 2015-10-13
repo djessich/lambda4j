@@ -15,6 +15,7 @@
  */
 package at.gridtec.lambda4j.function;
 
+import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import java.util.Objects;
 import java.util.function.Function;
@@ -122,6 +123,7 @@ public interface TriFunction<T, U, V, R> {
      *
      * @return The number of arguments for this operation.
      */
+    @Nonnegative
     default int arity() {
         return 3;
     }

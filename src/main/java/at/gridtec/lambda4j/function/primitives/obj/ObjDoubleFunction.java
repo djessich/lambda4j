@@ -15,6 +15,7 @@
  */
 package at.gridtec.lambda4j.function.primitives.obj;
 
+import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import java.util.Objects;
 import java.util.function.BiFunction;
@@ -101,6 +102,7 @@ public interface ObjDoubleFunction<T, R> {
      *
      * @return The number of this operations arguments.
      */
+    @Nonnegative
     default int arity() {
         return 2;
     }
@@ -198,8 +200,8 @@ public interface ObjDoubleFunction<T, R> {
 
     /**
      * Returns a composed {@link BiFunction} which represents this {@link ObjDoubleFunction}. Thereby the primitive
-     * input argument for this function is autoboxed. This method is just convenience to provide the ability to use
-     * this {@code ObjDoubleFunction} with JRE specific methods, only accepting {@code BiFunction}.
+     * input argument for this function is autoboxed. This method is just convenience to provide the ability to use this
+     * {@code ObjDoubleFunction} with JRE specific methods, only accepting {@code BiFunction}.
      *
      * @return A composed {@code BiFunction} which represents this {@code ObjDoubleFunction}.
      */

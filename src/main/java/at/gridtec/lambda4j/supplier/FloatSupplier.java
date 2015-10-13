@@ -15,6 +15,7 @@
  */
 package at.gridtec.lambda4j.supplier;
 
+import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import java.util.function.Supplier;
 
@@ -55,6 +56,7 @@ public interface FloatSupplier {
      *
      * @return The number of this operations arguments.
      */
+    @Nonnegative
     default int arity() {
         return 0;
     }

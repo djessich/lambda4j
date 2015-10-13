@@ -17,6 +17,7 @@ package at.gridtec.lambda4j.operators.binary;
 
 import at.gridtec.lambda4j.operators.unary.CharUnaryOperator;
 
+import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import java.util.Comparator;
 import java.util.Objects;
@@ -135,6 +136,15 @@ public interface CharBinaryOperator {
     char applyAsChar(char left, char right);
 
     /**
+     * Returns the number of arguments for this operation.
+     *
+     * @return The number of arguments for this operation.
+     */
+    @Nonnegative
+    default int arity() {
+        return 2;
+    }
+    /**
      * Returns a composed {@link CharBinaryOperator} that first applies the given {@code before} operators to its input,
      * and then applies this operator to the result. If evaluation of either operator throws an exception, it is relayed
      * to the caller of the composed operator.
@@ -170,8 +180,8 @@ public interface CharBinaryOperator {
 
     /**
      * Returns a composed {@link BinaryOperator} which represents this {@link CharBinaryOperator}. Thereby the primitive
-     * input argument for this operator is autoboxed. This method is just convenience to provide the ability to use
-     * this {@code CharBinaryOperator} with JRE specific methods, only accepting {@code BinaryOperator}.
+     * input argument for this operator is autoboxed. This method is just convenience to provide the ability to use this
+     * {@code CharBinaryOperator} with JRE specific methods, only accepting {@code BinaryOperator}.
      *
      * @return A composed {@code BinaryOperator} which represents this {@code CharBinaryOperator}.
      */

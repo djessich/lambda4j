@@ -18,6 +18,7 @@ package at.gridtec.lambda4j.consumer.primitives;
 import at.gridtec.lambda4j.function.primitives.to.ToFloatFunction;
 import at.gridtec.lambda4j.operators.unary.FloatUnaryOperator;
 
+import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import java.util.Objects;
 import java.util.function.Consumer;
@@ -47,6 +48,7 @@ public interface FloatConsumer {
      *
      * @return The number of this operations arguments.
      */
+    @Nonnegative
     default int arity() {
         return 1;
     }

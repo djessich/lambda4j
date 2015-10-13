@@ -17,6 +17,7 @@ package at.gridtec.lambda4j.operators.binary;
 
 import at.gridtec.lambda4j.operators.unary.FloatUnaryOperator;
 
+import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import java.util.Comparator;
 import java.util.Objects;
@@ -138,6 +139,15 @@ public interface FloatBinaryOperator {
      */
     float applyAsFloat(float left, float right);
 
+    /**
+     * Returns the number of arguments for this operation.
+     *
+     * @return The number of arguments for this operation.
+     */
+    @Nonnegative
+    default int arity() {
+        return 2;
+    }
     /**
      * Returns a composed {@link FloatBinaryOperator} that first applies the given {@code before} operators to its
      * input, and then applies this operator to the result. If evaluation of either operator throws an exception, it is

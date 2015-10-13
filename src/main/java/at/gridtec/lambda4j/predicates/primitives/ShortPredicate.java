@@ -15,6 +15,7 @@
  */
 package at.gridtec.lambda4j.predicates.primitives;
 
+import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import java.util.Objects;
 import java.util.function.Predicate;
@@ -99,6 +100,7 @@ public interface ShortPredicate {
      *
      * @return The number of this operations arguments.
      */
+    @Nonnegative
     default int arity() {
         return 1;
     }

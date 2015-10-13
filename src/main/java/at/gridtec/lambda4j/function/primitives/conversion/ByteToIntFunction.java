@@ -15,6 +15,7 @@
  */
 package at.gridtec.lambda4j.function.primitives.conversion;
 
+import javax.annotation.Nonnegative;
 import java.util.function.Function;
 
 /**
@@ -42,6 +43,7 @@ public interface ByteToIntFunction {
      *
      * @return The number of this operations arguments.
      */
+    @Nonnegative
     default int arity() {
         return 1;
     }

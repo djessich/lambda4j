@@ -18,6 +18,7 @@ package at.gridtec.lambda4j.operators.ternary;
 import at.gridtec.lambda4j.operators.unary.BooleanUnaryOperator;
 import at.gridtec.lambda4j.predicates.TriPredicate;
 
+import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import java.util.Objects;
 
@@ -179,6 +180,15 @@ public interface BooleanTernaryOperator {
      */
     boolean applyAsBoolean(boolean left, boolean middle, boolean right);
 
+    /**
+     * Returns the number of arguments for this operation.
+     *
+     * @return The number of arguments for this operation.
+     */
+    @Nonnegative
+    default int arity() {
+        return 3;
+    }
     /**
      * Returns a {@link BooleanTernaryOperator} that represents the logical negation of this one.
      *

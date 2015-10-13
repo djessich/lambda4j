@@ -19,6 +19,7 @@ import at.gridtec.lambda4j.consumer.primitives.obj.BiObjDoubleConsumer;
 import at.gridtec.lambda4j.function.TriFunction;
 import at.gridtec.lambda4j.function.primitives.to.tri.ToDoubleTriFunction;
 
+import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import java.util.Objects;
 import java.util.function.DoubleConsumer;
@@ -121,6 +122,7 @@ public interface ToDoubleBiObjDoubleFunction<T, U> {
      *
      * @return The number of this operations arguments.
      */
+    @Nonnegative
     default int arity() {
         return 3;
     }
@@ -226,6 +228,7 @@ public interface ToDoubleBiObjDoubleFunction<T, U> {
     /**
      * Returns a composed {@link TriFunction} which represents this {@link ObjDoubleFunction}. Thereby the primitive
      * input argument for this function is autoboxed.
+     *
      * @return A composed {@code TriFunction} which represents this {@code ObjDoubleFunction}.
      */
     @Nonnull

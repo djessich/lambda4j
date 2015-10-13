@@ -21,6 +21,7 @@ import at.gridtec.lambda4j.function.primitives.ByteFunction;
 import at.gridtec.lambda4j.function.primitives.to.ToByteFunction;
 import at.gridtec.lambda4j.operators.unary.ByteUnaryOperator;
 
+import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import java.util.Objects;
 import java.util.function.Consumer;
@@ -124,6 +125,7 @@ public interface BiObjByteFunction<T, U, R> {
      *
      * @return The number of this operations arguments.
      */
+    @Nonnegative
     default int arity() {
         return 3;
     }
@@ -230,6 +232,7 @@ public interface BiObjByteFunction<T, U, R> {
     /**
      * Returns a composed {@link TriFunction} which represents this {@link ObjByteFunction}. Thereby the primitive input
      * argument for this function is autoboxed.
+     *
      * @return A composed {@code TriFunction} which represents this {@code ObjByteFunction}.
      */
     @Nonnull
