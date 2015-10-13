@@ -39,6 +39,7 @@ public interface ObjCharPredicate<T> {
      * @param ret The return value for the constant
      * @return A {@code ObjCharPredicate} which always returns a given value.
      */
+    @Nonnull
     static <T> ObjCharPredicate<T> constant(boolean ret) {
         return (t, value) -> ret;
     }

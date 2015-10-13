@@ -40,6 +40,7 @@ public interface ByteBinaryOperator {
      * @param ret The return value for the constant
      * @return A {@code ByteBinaryOperator} which always returns a given value.
      */
+    @Nonnull
     static ByteBinaryOperator constant(byte ret) {
         return (left, right) -> ret;
     }

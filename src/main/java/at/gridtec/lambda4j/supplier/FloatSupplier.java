@@ -38,6 +38,7 @@ public interface FloatSupplier {
      * @param ret The return value for the constant
      * @return A {@code FloatSupplier} which always returns a given value.
      */
+    @Nonnull
     static FloatSupplier constant(float ret) {
         return () -> ret;
     }

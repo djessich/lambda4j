@@ -41,6 +41,7 @@ public interface TernaryOperator<T> extends TriFunction<T, T, T, T> {
      * @param r The return value for the constant
      * @return A {@code TernaryOperator} which always returns a given value.
      */
+    @Nonnull
     static <T> TernaryOperator<T> constant(T r) {
         return (t, u, v) -> r;
     }

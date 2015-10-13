@@ -37,6 +37,7 @@ public interface ShortUnaryOperator {
      * @param ret The return value for the constant
      * @return A {@code ShortUnaryOperator} which always returns a given value.
      */
+    @Nonnull
     static ShortUnaryOperator constant(short ret) {
         return operand -> ret;
     }

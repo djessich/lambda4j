@@ -35,11 +35,12 @@ public interface CharTernaryOperator {
     /**
      * Creates a {@link CharTernaryOperator} which always returns a given value.
      *
-     * @param r The return value for the constant
+     * @param ret The return value for the constant
      * @return A {@code CharTernaryOperator} which always returns a given value.
      */
-    static CharTernaryOperator constant(char r) {
-        return (left, middle, right) -> r;
+    @Nonnull
+    static CharTernaryOperator constant(char ret) {
+        return (left, middle, right) -> ret;
     }
 
     /**

@@ -56,11 +56,12 @@ public interface ToCharTriFunction<T, U, V> {
      * @param <T> The type of the first argument to the function
      * @param <U> The type of the second argument to the function
      * @param <V> The type of the third argument to the function
-     * @param value The return value for the constant
+     * @param ret The return value for the constant
      * @return A {@code ToCharTriFunction} which always returns a given value.
      */
-    static <T, U, V> ToCharTriFunction<T, U, V> constant(char value) {
-        return (t, u, v) -> value;
+    @Nonnull
+    static <T, U, V> ToCharTriFunction<T, U, V> constant(char ret) {
+        return (t, u, v) -> ret;
     }
 
     /**

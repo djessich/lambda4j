@@ -41,6 +41,7 @@ public interface BooleanBinaryOperator {
      * @param ret The return value for the constant
      * @return A {@code BooleanBinaryOperator} which always returns a given value.
      */
+    @Nonnull
     static BooleanBinaryOperator constant(boolean ret) {
         return (left, right) -> ret;
     }

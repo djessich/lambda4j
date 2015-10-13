@@ -15,6 +15,7 @@
  */
 package at.gridtec.lambda4j.predicates;
 
+import javax.annotation.Nonnull;
 import java.util.Objects;
 import java.util.function.Predicate;
 
@@ -42,6 +43,7 @@ public interface TriPredicate<T, U, V> {
      * @param ret The return value for the constant
      * @return A {@code TriPredicate} which always returns a given value.
      */
+    @Nonnull
     static <T, U, V> TriPredicate<T, U, V> constant(boolean ret) {
         return (t, v, u) -> ret;
     }

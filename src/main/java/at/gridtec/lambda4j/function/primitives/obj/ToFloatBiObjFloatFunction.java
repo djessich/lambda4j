@@ -50,6 +50,7 @@ public interface ToFloatBiObjFloatFunction<T, U> {
      * @param ret The return value for the constant
      * @return A {@code ToFloatBiObjFloatFunction} which always returns a given value.
      */
+    @Nonnull
     static <T, U> ToFloatBiObjFloatFunction<T, U> constant(float ret) {
         return (t, u, value) -> ret;
     }

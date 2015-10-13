@@ -39,6 +39,7 @@ public interface ObjLongPredicate<T> {
      * @param ret The return value for the constant
      * @return A {@code ObjLongPredicate} which always returns a given value.
      */
+    @Nonnull
     static <T> ObjLongPredicate<T> constant(boolean ret) {
         return (t, value) -> ret;
     }

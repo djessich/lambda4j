@@ -37,6 +37,7 @@ public interface ShortBiPredicate {
      * @param ret The return value for the constant
      * @return A {@code ShortBiPredicate} which always returns a given value.
      */
+    @Nonnull
     static ShortBiPredicate constant(boolean ret) {
         return (value1, value2) -> ret;
     }

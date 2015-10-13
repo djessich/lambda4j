@@ -53,11 +53,12 @@ public interface ToFloatFunction<T> {
      * Creates a {@link ToFloatFunction} which always returns a given value.
      *
      * @param <T> The type of argument to the function
-     * @param value The return value for the constant
+     * @param ret The return value for the constant
      * @return A {@code ToFloatFunction} which always returns a given value.
      */
-    static <T> ToFloatFunction<T> constant(float value) {
-        return t -> value;
+    @Nonnull
+    static <T> ToFloatFunction<T> constant(float ret) {
+        return t -> ret;
     }
 
     /**

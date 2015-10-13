@@ -50,6 +50,7 @@ public interface BiObjByteFunction<T, U, R> {
      * @param r The return value for the constant
      * @return A {@code BiObjByteFunction} which always returns a given value.
      */
+    @Nonnull
     static <T, U, R> BiObjByteFunction<T, U, R> constant(R r) {
         return (t, u, value) -> r;
     }

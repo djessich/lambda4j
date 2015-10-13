@@ -37,6 +37,7 @@ public interface CharPredicate {
      * @param ret The return value for the constant
      * @return A {@code CharPredicate} which always returns a given value.
      */
+    @Nonnull
     static CharPredicate constant(boolean ret) {
         return value -> ret;
     }

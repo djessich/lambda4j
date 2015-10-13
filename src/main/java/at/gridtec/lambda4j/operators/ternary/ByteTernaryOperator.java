@@ -35,11 +35,12 @@ public interface ByteTernaryOperator {
     /**
      * Creates a {@link ByteTernaryOperator} which always returns a given value.
      *
-     * @param r The return value for the constant
+     * @param ret The return value for the constant
      * @return A {@code ByteTernaryOperator} which always returns a given value.
      */
-    static ByteTernaryOperator constant(byte r) {
-        return (left, middle, right) -> r;
+    @Nonnull
+    static ByteTernaryOperator constant(byte ret) {
+        return (left, middle, right) -> ret;
     }
 
     /**

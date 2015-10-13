@@ -37,6 +37,7 @@ public interface ByteUnaryOperator {
      * @param ret The return value for the constant
      * @return A {@code ByteUnaryOperator} which always returns a given value.
      */
+    @Nonnull
     static ByteUnaryOperator constant(byte ret) {
         return operand -> ret;
     }

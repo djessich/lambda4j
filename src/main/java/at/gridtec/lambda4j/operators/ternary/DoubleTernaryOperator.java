@@ -34,11 +34,12 @@ public interface DoubleTernaryOperator {
     /**
      * Creates a {@link DoubleTernaryOperator} which always returns a given value.
      *
-     * @param r The return value for the constant
+     * @param ret The return value for the constant
      * @return A {@code DoubleTernaryOperator} which always returns a given value.
      */
-    static DoubleTernaryOperator constant(double r) {
-        return (left, middle, right) -> r;
+    @Nonnull
+    static DoubleTernaryOperator constant(double ret) {
+        return (left, middle, right) -> ret;
     }
 
     /**

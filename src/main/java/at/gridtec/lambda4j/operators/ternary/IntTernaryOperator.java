@@ -34,11 +34,12 @@ public interface IntTernaryOperator {
     /**
      * Creates a {@link IntTernaryOperator} which always returns a given value.
      *
-     * @param r The return value for the constant
+     * @param ret The return value for the constant
      * @return A {@code IntTernaryOperator} which always returns a given value.
      */
-    static IntTernaryOperator constant(int r) {
-        return (left, middle, right) -> r;
+    @Nonnull
+    static IntTernaryOperator constant(int ret) {
+        return (left, middle, right) -> ret;
     }
 
     /**

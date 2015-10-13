@@ -57,11 +57,12 @@ public interface ToFloatTriFunction<T, U, V> {
      * @param <T> The type of the first argument to the function
      * @param <U> The type of the second argument to the function
      * @param <V> The type of the third argument to the function
-     * @param value The return value for the constant
+     * @param ret The return value for the constant
      * @return A {@code ToFloatTriFunction} which always returns a given value.
      */
-    static <T, U, V> ToFloatTriFunction<T, U, V> constant(byte value) {
-        return (t, u, v) -> value;
+    @Nonnull
+    static <T, U, V> ToFloatTriFunction<T, U, V> constant(byte ret) {
+        return (t, u, v) -> ret;
     }
 
     /**
@@ -343,6 +344,7 @@ public interface ToFloatTriFunction<T, U, V> {
     /**
      * Returns a composed {@link TriFunction} which represents this {@link ToFloatTriFunction}. Thereby the primitive
      * input argument for this function is autoboxed.
+     *
      * @return A composed {@code TriFunction} which represents this {@code ToFloatTriFunction}.
      */
     @Nonnull

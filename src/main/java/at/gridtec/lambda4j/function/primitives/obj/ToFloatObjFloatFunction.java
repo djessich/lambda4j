@@ -49,6 +49,7 @@ public interface ToFloatObjFloatFunction<T> {
      * @param ret The return value for the constant
      * @return A {@code ToFloatObjFloatFunction} which always returns a given value.
      */
+    @Nonnull
     static <T> ToFloatObjFloatFunction<T> constant(float ret) {
         return (t, value) -> ret;
     }

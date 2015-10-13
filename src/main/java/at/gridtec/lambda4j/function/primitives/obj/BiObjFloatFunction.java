@@ -50,6 +50,7 @@ public interface BiObjFloatFunction<T, U, R> {
      * @param r The return value for the constant
      * @return A {@code BiObjFloatFunction} which always returns a given value.
      */
+    @Nonnull
     static <T, U, R> BiObjFloatFunction<T, U, R> constant(R r) {
         return (t, u, value) -> r;
     }

@@ -39,6 +39,7 @@ public interface ByteSupplier {
      * @param ret The return value for the constant
      * @return A {@code ByteSupplier} which always returns a given value.
      */
+    @Nonnull
     static ByteSupplier constant(byte ret) {
         return () -> ret;
     }

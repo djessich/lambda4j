@@ -50,6 +50,7 @@ public interface ToLongBiObjLongFunction<T, U> {
      * @param ret The return value for the constant
      * @return A {@code ToLongBiObjLongFunction} which always returns a given value.
      */
+    @Nonnull
     static <T, U> ToLongBiObjLongFunction<T, U> constant(long ret) {
         return (t, u, value) -> ret;
     }

@@ -45,6 +45,7 @@ public interface TriFunction<T, U, V, R> {
      * @param r The return value for the constant
      * @return A {@code TriFunction} which always returns a given value.
      */
+    @Nonnull
     static <T, U, V, R> TriFunction<T, U, V, R> constant(R r) {
         return (t, u, v) -> r;
     }

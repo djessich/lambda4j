@@ -49,6 +49,7 @@ public interface ToShortObjShortFunction<T> {
      * @param ret The return value for the constant
      * @return A {@code ToShortObjShortFunction} which always returns a given value.
      */
+    @Nonnull
     static <T> ToShortObjShortFunction<T> constant(short ret) {
         return (t, value) -> ret;
     }

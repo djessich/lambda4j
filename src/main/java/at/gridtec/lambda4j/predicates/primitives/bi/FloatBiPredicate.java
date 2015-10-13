@@ -37,6 +37,7 @@ public interface FloatBiPredicate {
      * @param ret The return value for the constant
      * @return A {@code FloatBiPredicate} which always returns a given value.
      */
+    @Nonnull
     static FloatBiPredicate constant(boolean ret) {
         return (value1, value2) -> ret;
     }

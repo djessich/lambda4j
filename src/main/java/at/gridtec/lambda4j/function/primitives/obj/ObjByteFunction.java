@@ -49,6 +49,7 @@ public interface ObjByteFunction<T, R> {
      * @param r The return value for the constant
      * @return A {@code ObjByteFunction} which always returns a given value.
      */
+    @Nonnull
     static <T, R> ObjByteFunction<T, R> constant(R r) {
         return (t, value) -> r;
     }

@@ -37,6 +37,7 @@ public interface FloatUnaryOperator {
      * @param ret The return value for the constant
      * @return A {@code FloatUnaryOperator} which always returns a given value.
      */
+    @Nonnull
     static FloatUnaryOperator constant(float ret) {
         return operand -> ret;
     }

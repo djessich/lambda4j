@@ -38,6 +38,7 @@ public interface CharTriPredicate {
      * @param ret The return value for the constant
      * @return A {@code CharTriPredicate} which always returns a given value.
      */
+    @Nonnull
     static CharTriPredicate constant(boolean ret) {
         return (value1, value2, value3) -> ret;
     }

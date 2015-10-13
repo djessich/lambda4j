@@ -58,6 +58,7 @@ public interface FloatFunction<R> {
      * @param r The return value for the constant
      * @return A {@code FloatFunction} which always returns a given value.
      */
+    @Nonnull
     static <R> FloatFunction<R> constant(R r) {
         return value -> r;
     }

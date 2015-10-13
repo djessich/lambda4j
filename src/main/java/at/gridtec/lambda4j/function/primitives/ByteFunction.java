@@ -58,6 +58,7 @@ public interface ByteFunction<R> {
      * @param r The return value for the constant
      * @return A {@code ByteFunction} which always returns a given value.
      */
+    @Nonnull
     static <R> ByteFunction<R> constant(R r) {
         return value -> r;
     }

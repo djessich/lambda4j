@@ -48,6 +48,7 @@ public interface ObjLongFunction<T, R> {
      * @param r The return value for the constant
      * @return A {@code ObjLongFunction} which always returns a given value.
      */
+    @Nonnull
     static <T, R> ObjLongFunction<T, R> constant(R r) {
         return (t, value) -> r;
     }

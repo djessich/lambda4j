@@ -47,6 +47,7 @@ public interface FloatTriFunction<R> {
      * @param r The return value for the constant
      * @return A {@code FloatTriFunction} which always returns a given value.
      */
+    @Nonnull
     static <R> FloatTriFunction<R> constant(R r) {
         return (value1, value2, value3) -> r;
     }

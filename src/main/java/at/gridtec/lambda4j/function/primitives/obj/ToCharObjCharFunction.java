@@ -49,6 +49,7 @@ public interface ToCharObjCharFunction<T> {
      * @param ret The return value for the constant
      * @return A {@code ToCharObjCharFunction} which always returns a given value.
      */
+    @Nonnull
     static <T> ToCharObjCharFunction<T> constant(char ret) {
         return (t, value) -> ret;
     }

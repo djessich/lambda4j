@@ -43,6 +43,7 @@ public interface BiObjFloatPredicate<T, U> {
      * @param ret The return value for the constant
      * @return A {@code BiObjFloatPredicate} which always returns a given value.
      */
+    @Nonnull
     static <T, U> BiObjFloatPredicate<T, U> constant(boolean ret) {
         return (t, u, value) -> ret;
     }

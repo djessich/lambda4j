@@ -35,11 +35,12 @@ public interface ShortTernaryOperator {
     /**
      * Creates a {@link ShortTernaryOperator} which always returns a given value.
      *
-     * @param r The return value for the constant
+     * @param ret The return value for the constant
      * @return A {@code ShortTernaryOperator} which always returns a given value.
      */
-    static ShortTernaryOperator constant(short r) {
-        return (left, middle, right) -> r;
+    @Nonnull
+    static ShortTernaryOperator constant(short ret) {
+        return (left, middle, right) -> ret;
     }
 
     /**

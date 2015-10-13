@@ -53,11 +53,12 @@ public interface ToShortFunction<T> {
      * Creates a {@link ToShortFunction} which always returns a given value.
      *
      * @param <T> The type of argument to the function
-     * @param value The return value for the constant
+     * @param ret The return value for the constant
      * @return A {@code ToShortFunction} which always returns a given value.
      */
-    static <T> ToShortFunction<T> constant(short value) {
-        return t -> value;
+    @Nonnull
+    static <T> ToShortFunction<T> constant(short ret) {
+        return t -> ret;
     }
 
     /**

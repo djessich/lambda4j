@@ -34,11 +34,12 @@ public interface LongTernaryOperator {
     /**
      * Creates a {@link LongTernaryOperator} which always returns a given value.
      *
-     * @param r The return value for the constant
+     * @param ret The return value for the constant
      * @return A {@code LongTernaryOperator} which always returns a given value.
      */
-    static LongTernaryOperator constant(long r) {
-        return (left, middle, right) -> r;
+    @Nonnull
+    static LongTernaryOperator constant(long ret) {
+        return (left, middle, right) -> ret;
     }
 
     /**

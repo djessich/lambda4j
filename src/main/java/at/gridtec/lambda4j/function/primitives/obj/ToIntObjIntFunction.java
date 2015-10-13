@@ -47,6 +47,7 @@ public interface ToIntObjIntFunction<T> {
      * @param ret The return value for the constant
      * @return A {@code ToIntObjIntFunction} which always returns a given value.
      */
+    @Nonnull
     static <T> ToIntObjIntFunction<T> constant(int ret) {
         return (t, value) -> ret;
     }

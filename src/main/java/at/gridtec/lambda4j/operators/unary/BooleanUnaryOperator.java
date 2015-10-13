@@ -38,6 +38,7 @@ public interface BooleanUnaryOperator {
      * @param ret The return value for the constant
      * @return A {@code BooleanUnaryOperator} which always returns a given value.
      */
+    @Nonnull
     static BooleanUnaryOperator constant(boolean ret) {
         return operand -> ret;
     }

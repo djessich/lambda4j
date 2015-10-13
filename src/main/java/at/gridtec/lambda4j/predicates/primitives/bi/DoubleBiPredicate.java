@@ -37,6 +37,7 @@ public interface DoubleBiPredicate {
      * @param ret The return value for the constant
      * @return A {@code DoubleBiPredicate} which always returns a given value.
      */
+    @Nonnull
     static DoubleBiPredicate constant(boolean ret) {
         return (value1, value2) -> ret;
     }

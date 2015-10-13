@@ -53,11 +53,12 @@ public interface ToByteFunction<T> {
      * Creates a {@link ToByteFunction} which always returns a given value.
      *
      * @param <T> The type of argument to the function
-     * @param value The return value for the constant
+     * @param ret The return value for the constant
      * @return A {@code ToByteFunction} which always returns a given value.
      */
-    static <T> ToByteFunction<T> constant(byte value) {
-        return t -> value;
+    @Nonnull
+    static <T> ToByteFunction<T> constant(byte ret) {
+        return t -> ret;
     }
 
     /**

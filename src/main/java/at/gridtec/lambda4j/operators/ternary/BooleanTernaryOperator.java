@@ -36,11 +36,12 @@ public interface BooleanTernaryOperator {
     /**
      * Creates a {@link BooleanTernaryOperator} which always returns a given value.
      *
-     * @param r The return value for the constant
+     * @param ret The return value for the constant
      * @return A {@code BooleanTernaryOperator} which always returns a given value.
      */
-    static BooleanTernaryOperator constant(boolean r) {
-        return (left, middle, right) -> r;
+    @Nonnull
+    static BooleanTernaryOperator constant(boolean ret) {
+        return (left, middle, right) -> ret;
     }
 
     /**

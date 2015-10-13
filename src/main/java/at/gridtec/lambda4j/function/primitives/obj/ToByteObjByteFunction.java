@@ -49,6 +49,7 @@ public interface ToByteObjByteFunction<T> {
      * @param ret The return value for the constant
      * @return A {@code ToByteObjByteFunction} which always returns a given value.
      */
+    @Nonnull
     static <T> ToByteObjByteFunction<T> constant(byte ret) {
         return (t, value) -> ret;
     }

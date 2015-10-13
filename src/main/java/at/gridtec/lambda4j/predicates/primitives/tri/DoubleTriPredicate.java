@@ -38,6 +38,7 @@ public interface DoubleTriPredicate {
      * @param ret The return value for the constant
      * @return A {@code ShortTriPredicate} which always returns a given value.
      */
+    @Nonnull
     static ShortTriPredicate constant(boolean ret) {
         return (value1, value2, value3) -> ret;
     }

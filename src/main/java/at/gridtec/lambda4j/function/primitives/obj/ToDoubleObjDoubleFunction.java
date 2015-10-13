@@ -48,6 +48,7 @@ public interface ToDoubleObjDoubleFunction<T> {
      * @param ret The return value for the constant
      * @return A {@code ToDoubleObjDoubleFunction} which always returns a given value.
      */
+    @Nonnull
     static <T> ToDoubleObjDoubleFunction<T> constant(double ret) {
         return (t, value) -> ret;
     }

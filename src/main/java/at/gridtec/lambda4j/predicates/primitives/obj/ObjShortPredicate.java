@@ -39,6 +39,7 @@ public interface ObjShortPredicate<T> {
      * @param ret The return value for the constant
      * @return A {@code ObjShortPredicate} which always returns a given value.
      */
+    @Nonnull
     static <T> ObjShortPredicate<T> constant(boolean ret) {
         return (t, value) -> ret;
     }

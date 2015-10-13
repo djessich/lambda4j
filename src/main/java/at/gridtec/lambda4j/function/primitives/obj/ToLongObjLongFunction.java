@@ -47,6 +47,7 @@ public interface ToLongObjLongFunction<T> {
      * @param ret The return value for the constant
      * @return A {@code ToLongObjLongFunction} which always returns a given value.
      */
+    @Nonnull
     static <T> ToLongObjLongFunction<T> constant(byte ret) {
         return (t, value) -> ret;
     }

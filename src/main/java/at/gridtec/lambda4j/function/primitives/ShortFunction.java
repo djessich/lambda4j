@@ -58,6 +58,7 @@ public interface ShortFunction<R> {
      * @param r The return value for the constant
      * @return A {@code ShortFunction} which always returns a given value.
      */
+    @Nonnull
     static <R> ShortFunction<R> constant(R r) {
         return value -> r;
     }

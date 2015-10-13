@@ -57,11 +57,12 @@ public interface ToShortTriFunction<T, U, V> {
      * @param <T> The type of the first argument to the function
      * @param <U> The type of the second argument to the function
      * @param <V> The type of the third argument to the function
-     * @param value The return value for the constant
+     * @param ret The return value for the constant
      * @return A {@code ToShortTriFunction} which always returns a given value.
      */
-    static <T, U, V> ToShortTriFunction<T, U, V> constant(byte value) {
-        return (t, u, v) -> value;
+    @Nonnull
+    static <T, U, V> ToShortTriFunction<T, U, V> constant(byte ret) {
+        return (t, u, v) -> ret;
     }
 
     /**

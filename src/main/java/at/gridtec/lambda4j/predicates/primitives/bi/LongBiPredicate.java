@@ -37,6 +37,7 @@ public interface LongBiPredicate {
      * @param ret The return value for the constant
      * @return A {@code LongBiPredicate} which always returns a given value.
      */
+    @Nonnull
     static LongBiPredicate constant(boolean ret) {
         return (value1, value2) -> ret;
     }

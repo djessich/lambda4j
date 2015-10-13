@@ -37,6 +37,7 @@ public interface CharUnaryOperator {
      * @param ret The return value for the constant
      * @return A {@code CharUnaryOperator} which always returns a given value.
      */
+    @Nonnull
     static CharUnaryOperator constant(char ret) {
         return operand -> ret;
     }

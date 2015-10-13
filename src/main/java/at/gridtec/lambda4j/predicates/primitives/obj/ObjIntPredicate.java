@@ -39,6 +39,7 @@ public interface ObjIntPredicate<T> {
      * @param ret The return value for the constant
      * @return A {@code ObjIntPredicate} which always returns a given value.
      */
+    @Nonnull
     static <T> ObjIntPredicate<T> constant(boolean ret) {
         return (t, value) -> ret;
     }

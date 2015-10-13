@@ -47,6 +47,7 @@ public interface DoubleBiFunction<R> {
      * @param r The return value for the constant
      * @return A {@code DoubleBiFunction} which always returns a given value.
      */
+    @Nonnull
     static <R> DoubleBiFunction<R> constant(R r) {
         return (value1, value2) -> r;
     }

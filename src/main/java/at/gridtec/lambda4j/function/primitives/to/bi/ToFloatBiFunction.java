@@ -57,11 +57,12 @@ public interface ToFloatBiFunction<T, U> {
      *
      * @param <T> The type of the first argument to the function
      * @param <U> The type of the second argument to the function
-     * @param value The return value for the constant
+     * @param ret The return value for the constant
      * @return A {@code ToFloatBiFunction} which always returns a given value.
      */
-    static <T, U> ToFloatBiFunction<T, U> constant(float value) {
-        return (t, u) -> value;
+    @Nonnull
+    static <T, U> ToFloatBiFunction<T, U> constant(float ret) {
+        return (t, u) -> ret;
     }
 
     /**

@@ -40,6 +40,7 @@ public interface ShortBinaryOperator {
      * @param ret The return value for the constant
      * @return A {@code ShortBinaryOperator} which always returns a given value.
      */
+    @Nonnull
     static ShortBinaryOperator constant(short ret) {
         return (left, right) -> ret;
     }

@@ -49,6 +49,7 @@ public interface ObjFloatFunction<T, R> {
      * @param r The return value for the constant
      * @return A {@code ObjFloatFunction} which always returns a given value.
      */
+    @Nonnull
     static <T, R> ObjFloatFunction<T, R> constant(R r) {
         return (t, value) -> r;
     }

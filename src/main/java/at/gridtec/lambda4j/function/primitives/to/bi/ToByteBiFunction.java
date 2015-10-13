@@ -57,11 +57,12 @@ public interface ToByteBiFunction<T, U> {
      *
      * @param <T> The type of the first argument to the function
      * @param <U> The type of the second argument to the function
-     * @param value The return value for the constant
+     * @param ret The return value for the constant
      * @return A {@code ToByteBiFunction} which always returns a given value.
      */
-    static <T, U> ToByteBiFunction<T, U> constant(byte value) {
-        return (t, u) -> value;
+    @Nonnull
+    static <T, U> ToByteBiFunction<T, U> constant(byte ret) {
+        return (t, u) -> ret;
     }
 
     /**

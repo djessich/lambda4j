@@ -50,6 +50,7 @@ public interface BiObjShortFunction<T, U, R> {
      * @param r The return value for the constant
      * @return A {@code BiObjShortFunction} which always returns a given value.
      */
+    @Nonnull
     static <T, U, R> BiObjShortFunction<T, U, R> constant(R r) {
         return (t, u, value) -> r;
     }

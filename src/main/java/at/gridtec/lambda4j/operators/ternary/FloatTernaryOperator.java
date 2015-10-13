@@ -35,11 +35,12 @@ public interface FloatTernaryOperator {
     /**
      * Creates a {@link FloatTernaryOperator} which always returns a given value.
      *
-     * @param r The return value for the constant
+     * @param ret The return value for the constant
      * @return A {@code FloatTernaryOperator} which always returns a given value.
      */
-    static FloatTernaryOperator constant(float r) {
-        return (left, middle, right) -> r;
+    @Nonnull
+    static FloatTernaryOperator constant(float ret) {
+        return (left, middle, right) -> ret;
     }
 
     /**

@@ -48,6 +48,7 @@ public interface ObjDoubleFunction<T, R> {
      * @param r The return value for the constant
      * @return A {@code ObjDoubleFunction} which always returns a given value.
      */
+    @Nonnull
     static <T, R> ObjDoubleFunction<T, R> constant(R r) {
         return (t, value) -> r;
     }

@@ -47,6 +47,7 @@ public interface LongBiFunction<R> {
      * @param r The return value for the constant
      * @return A {@code LongBiFunction} which always returns a given value.
      */
+    @Nonnull
     static <R> LongBiFunction<R> constant(R r) {
         return (value1, value2) -> r;
     }

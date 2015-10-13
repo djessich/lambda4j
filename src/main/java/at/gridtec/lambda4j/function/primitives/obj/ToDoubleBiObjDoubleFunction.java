@@ -50,6 +50,7 @@ public interface ToDoubleBiObjDoubleFunction<T, U> {
      * @param ret The return value for the constant
      * @return A {@code ToDoubleBiObjDoubleFunction} which always returns a given value.
      */
+    @Nonnull
     static <T, U> ToDoubleBiObjDoubleFunction<T, U> constant(double ret) {
         return (t, u, value) -> ret;
     }

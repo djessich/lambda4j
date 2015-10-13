@@ -40,6 +40,7 @@ public interface FloatBinaryOperator {
      * @param ret The return value for the constant
      * @return A {@code FloatBinaryOperator} which always returns a given value.
      */
+    @Nonnull
     static FloatBinaryOperator constant(float ret) {
         return (left, right) -> ret;
     }

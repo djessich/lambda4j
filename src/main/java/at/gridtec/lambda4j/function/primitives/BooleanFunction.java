@@ -58,6 +58,7 @@ public interface BooleanFunction<R> {
      * @param r The return value for the constant
      * @return A {@code BooleanFunction} which always returns a given value.
      */
+    @Nonnull
     static <R> BooleanFunction<R> constant(R r) {
         return value -> r;
     }
