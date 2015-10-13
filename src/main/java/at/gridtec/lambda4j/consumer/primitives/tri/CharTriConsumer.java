@@ -46,7 +46,8 @@ public interface CharTriConsumer {
      * ByteConsumer}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static ByteTriConsumer onlyFirst(final ByteConsumer consumer) {
+    @Nonnull
+    static ByteTriConsumer onlyFirst(@Nonnull final ByteConsumer consumer) {
         Objects.requireNonNull(consumer);
         return (value1, value2, value3) -> consumer.accept(value1);
     }
@@ -60,7 +61,8 @@ public interface CharTriConsumer {
      * {@code ByteConsumer}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static ByteTriConsumer onlySecond(final ByteConsumer consumer) {
+    @Nonnull
+    static ByteTriConsumer onlySecond(@Nonnull final ByteConsumer consumer) {
         Objects.requireNonNull(consumer);
         return (value1, value2, value3) -> consumer.accept(value2);
     }
@@ -74,7 +76,8 @@ public interface CharTriConsumer {
      * ByteConsumer}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static ByteTriConsumer onlyThird(final ByteConsumer consumer) {
+    @Nonnull
+    static ByteTriConsumer onlyThird(@Nonnull final ByteConsumer consumer) {
         Objects.requireNonNull(consumer);
         return (value1, value2, value3) -> consumer.accept(value3);
     }

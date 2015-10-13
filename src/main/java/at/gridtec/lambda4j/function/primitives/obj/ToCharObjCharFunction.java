@@ -63,7 +63,8 @@ public interface ToCharObjCharFunction<T> {
      * for the given {@code ToCharFunction}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static <T> ToCharObjCharFunction<T> onlyFirst(final ToCharFunction<? super T> function) {
+    @Nonnull
+    static <T> ToCharObjCharFunction<T> onlyFirst(@Nonnull final ToCharFunction<? super T> function) {
         Objects.requireNonNull(function);
         return (t, value) -> function.applyAsChar(t);
     }
@@ -78,7 +79,8 @@ public interface ToCharObjCharFunction<T> {
      * for the given {@code CharUnaryOperator}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static <T> ToCharObjCharFunction<T> onlySecond(final CharUnaryOperator function) {
+    @Nonnull
+    static <T> ToCharObjCharFunction<T> onlySecond(@Nonnull final CharUnaryOperator function) {
         Objects.requireNonNull(function);
         return (t, value) -> function.applyAsChar(value);
     }

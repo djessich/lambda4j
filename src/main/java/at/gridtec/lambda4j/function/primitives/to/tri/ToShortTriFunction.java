@@ -76,7 +76,8 @@ public interface ToShortTriFunction<T, U, V> {
      * the given {@code ToShortFunction}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static <T, U, V> ToShortTriFunction<T, U, V> onlyFirst(final ToShortFunction<? super T> function) {
+    @Nonnull
+    static <T, U, V> ToShortTriFunction<T, U, V> onlyFirst(@Nonnull final ToShortFunction<? super T> function) {
         Objects.requireNonNull(function);
         return (t, u, v) -> function.applyAsShort(t);
     }
@@ -93,7 +94,8 @@ public interface ToShortTriFunction<T, U, V> {
      * the given {@code ToShortFunction}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static <T, U, V> ToShortTriFunction<T, U, V> onlySecond(final ToShortFunction<? super U> function) {
+    @Nonnull
+    static <T, U, V> ToShortTriFunction<T, U, V> onlySecond(@Nonnull final ToShortFunction<? super U> function) {
         Objects.requireNonNull(function);
         return (t, u, v) -> function.applyAsShort(u);
     }
@@ -110,7 +112,8 @@ public interface ToShortTriFunction<T, U, V> {
      * the given {@code ToShortFunction}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static <T, U, V> ToShortTriFunction<T, U, V> onlyThird(final ToShortFunction<? super V> function) {
+    @Nonnull
+    static <T, U, V> ToShortTriFunction<T, U, V> onlyThird(@Nonnull final ToShortFunction<? super V> function) {
         Objects.requireNonNull(function);
         return (t, u, v) -> function.applyAsShort(v);
     }
@@ -340,6 +343,7 @@ public interface ToShortTriFunction<T, U, V> {
     /**
      * Returns a composed {@link TriFunction} which represents this {@link ToShortTriFunction}. Thereby the primitive
      * input argument for this function is autoboxed.
+     *
      * @return A composed {@code TriFunction} which represents this {@code ToShortTriFunction}.
      */
     @Nonnull

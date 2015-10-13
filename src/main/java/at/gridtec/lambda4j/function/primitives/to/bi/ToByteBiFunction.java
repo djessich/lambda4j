@@ -75,7 +75,8 @@ public interface ToByteBiFunction<T, U> {
      * given {@code ToByteFunction}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static <T, U> ToByteBiFunction<T, U> onlyFirst(final ToByteFunction<? super T> function) {
+    @Nonnull
+    static <T, U> ToByteBiFunction<T, U> onlyFirst(@Nonnull final ToByteFunction<? super T> function) {
         Objects.requireNonNull(function);
         return (t, u) -> function.applyAsByte(t);
     }
@@ -91,7 +92,8 @@ public interface ToByteBiFunction<T, U> {
      * the given {@code ToByteFunction}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static <T, U> ToByteBiFunction<T, U> onlySecond(final ToByteFunction<? super U> function) {
+    @Nonnull
+    static <T, U> ToByteBiFunction<T, U> onlySecond(@Nonnull final ToByteFunction<? super U> function) {
         Objects.requireNonNull(function);
         return (t, u) -> function.applyAsByte(u);
     }

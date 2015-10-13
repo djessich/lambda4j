@@ -63,7 +63,8 @@ public interface ToShortObjShortFunction<T> {
      * for the given {@code ToShortFunction}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static <T> ToShortObjShortFunction<T> onlyFirst(final ToShortFunction<? super T> function) {
+    @Nonnull
+    static <T> ToShortObjShortFunction<T> onlyFirst(@Nonnull final ToShortFunction<? super T> function) {
         Objects.requireNonNull(function);
         return (t, value) -> function.applyAsShort(t);
     }
@@ -78,7 +79,8 @@ public interface ToShortObjShortFunction<T> {
      * for the given {@code ShortUnaryOperator}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static <T> ToShortObjShortFunction<T> onlySecond(final ShortUnaryOperator function) {
+    @Nonnull
+    static <T> ToShortObjShortFunction<T> onlySecond(@Nonnull final ShortUnaryOperator function) {
         Objects.requireNonNull(function);
         return (t, value) -> function.applyAsShort(value);
     }

@@ -75,7 +75,8 @@ public interface ToFloatBiFunction<T, U> {
      * the given {@code ToFloatFunction}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static <T, U> ToFloatBiFunction<T, U> onlyFirst(final ToFloatFunction<? super T> function) {
+    @Nonnull
+    static <T, U> ToFloatBiFunction<T, U> onlyFirst(@Nonnull final ToFloatFunction<? super T> function) {
         Objects.requireNonNull(function);
         return (t, u) -> function.applyAsFloat(t);
     }
@@ -91,7 +92,8 @@ public interface ToFloatBiFunction<T, U> {
      * the given {@code ToFloatFunction}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static <T, U> ToFloatBiFunction<T, U> onlySecond(final ToFloatFunction<? super U> function) {
+    @Nonnull
+    static <T, U> ToFloatBiFunction<T, U> onlySecond(@Nonnull final ToFloatFunction<? super U> function) {
         Objects.requireNonNull(function);
         return (t, u) -> function.applyAsFloat(u);
     }

@@ -61,7 +61,8 @@ public interface DoubleTriFunction<R> {
      * the given {@code DoubleFunction}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static <R> DoubleTriFunction<R> onlyFirst(final DoubleFunction<? extends R> function) {
+    @Nonnull
+    static <R> DoubleTriFunction<R> onlyFirst(@Nonnull final DoubleFunction<? extends R> function) {
         Objects.requireNonNull(function);
         return (value1, value2, value3) -> function.apply(value1);
     }
@@ -76,7 +77,8 @@ public interface DoubleTriFunction<R> {
      * the given {@code DoubleFunction}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static <R> DoubleTriFunction<R> onlySecond(final DoubleFunction<? extends R> function) {
+    @Nonnull
+    static <R> DoubleTriFunction<R> onlySecond(@Nonnull final DoubleFunction<? extends R> function) {
         Objects.requireNonNull(function);
         return (value1, value2, value3) -> function.apply(value2);
     }
@@ -91,7 +93,8 @@ public interface DoubleTriFunction<R> {
      * the given {@code DoubleFunction}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static <R> DoubleTriFunction<R> onlyThird(final DoubleFunction<? extends R> function) {
+    @Nonnull
+    static <R> DoubleTriFunction<R> onlyThird(@Nonnull final DoubleFunction<? extends R> function) {
         Objects.requireNonNull(function);
         return (value1, value2, value3) -> function.apply(value3);
     }

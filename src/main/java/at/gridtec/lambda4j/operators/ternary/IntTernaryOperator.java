@@ -50,7 +50,8 @@ public interface IntTernaryOperator {
      * {@code IntUnaryOperator}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static IntTernaryOperator onlyLeft(final IntUnaryOperator operator) {
+    @Nonnull
+    static IntTernaryOperator onlyLeft(@Nonnull final IntUnaryOperator operator) {
         Objects.requireNonNull(operator);
         return (left, middle, right) -> operator.applyAsInt(left);
     }
@@ -64,7 +65,8 @@ public interface IntTernaryOperator {
      * {@code IntUnaryOperator}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static IntTernaryOperator onlyMiddle(final IntUnaryOperator operator) {
+    @Nonnull
+    static IntTernaryOperator onlyMiddle(@Nonnull final IntUnaryOperator operator) {
         Objects.requireNonNull(operator);
         return (left, middle, right) -> operator.applyAsInt(middle);
     }
@@ -78,7 +80,8 @@ public interface IntTernaryOperator {
      * {@code IntUnaryOperator}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static IntTernaryOperator onlyRight(final IntUnaryOperator operator) {
+    @Nonnull
+    static IntTernaryOperator onlyRight(@Nonnull final IntUnaryOperator operator) {
         Objects.requireNonNull(operator);
         return (left, middle, right) -> operator.applyAsInt(right);
     }

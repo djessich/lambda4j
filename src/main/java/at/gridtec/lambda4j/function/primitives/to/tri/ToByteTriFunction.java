@@ -76,7 +76,8 @@ public interface ToByteTriFunction<T, U, V> {
      * the given {@code ToByteFunction}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static <T, U, V> ToByteTriFunction<T, U, V> onlyFirst(final ToByteFunction<? super T> function) {
+    @Nonnull
+    static <T, U, V> ToByteTriFunction<T, U, V> onlyFirst(@Nonnull final ToByteFunction<? super T> function) {
         Objects.requireNonNull(function);
         return (t, u, v) -> function.applyAsByte(t);
     }
@@ -93,7 +94,8 @@ public interface ToByteTriFunction<T, U, V> {
      * the given {@code ToByteFunction}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static <T, U, V> ToByteTriFunction<T, U, V> onlySecond(final ToByteFunction<? super U> function) {
+    @Nonnull
+    static <T, U, V> ToByteTriFunction<T, U, V> onlySecond(@Nonnull final ToByteFunction<? super U> function) {
         Objects.requireNonNull(function);
         return (t, u, v) -> function.applyAsByte(u);
     }
@@ -110,7 +112,8 @@ public interface ToByteTriFunction<T, U, V> {
      * the given {@code ToByteFunction}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static <T, U, V> ToByteTriFunction<T, U, V> onlyThird(final ToByteFunction<? super V> function) {
+    @Nonnull
+    static <T, U, V> ToByteTriFunction<T, U, V> onlyThird(@Nonnull final ToByteFunction<? super V> function) {
         Objects.requireNonNull(function);
         return (t, u, v) -> function.applyAsByte(v);
     }

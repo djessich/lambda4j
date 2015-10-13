@@ -61,7 +61,8 @@ public interface BooleanTriFunction<R> {
      * the given {@code BooleanFunction}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static <R> BooleanTriFunction<R> onlyFirst(final BooleanFunction<? extends R> function) {
+    @Nonnull
+    static <R> BooleanTriFunction<R> onlyFirst(@Nonnull final BooleanFunction<? extends R> function) {
         Objects.requireNonNull(function);
         return (value1, value2, value3) -> function.apply(value1);
     }
@@ -76,7 +77,8 @@ public interface BooleanTriFunction<R> {
      * the given {@code BooleanFunction}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static <R> BooleanTriFunction<R> onlySecond(final BooleanFunction<? extends R> function) {
+    @Nonnull
+    static <R> BooleanTriFunction<R> onlySecond(@Nonnull final BooleanFunction<? extends R> function) {
         Objects.requireNonNull(function);
         return (value1, value2, value3) -> function.apply(value2);
     }
@@ -91,7 +93,8 @@ public interface BooleanTriFunction<R> {
      * the given {@code BooleanFunction}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static <R> BooleanTriFunction<R> onlyThird(final BooleanFunction<? extends R> function) {
+    @Nonnull
+    static <R> BooleanTriFunction<R> onlyThird(@Nonnull final BooleanFunction<? extends R> function) {
         Objects.requireNonNull(function);
         return (value1, value2, value3) -> function.apply(value3);
     }

@@ -65,7 +65,8 @@ public interface ToByteBiObjByteFunction<T, U> {
      * for the given {@code ToByteFunction}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static <T, U> ToByteBiObjByteFunction<T, U> onlyFirst(final ToByteFunction<? super T> function) {
+    @Nonnull
+    static <T, U> ToByteBiObjByteFunction<T, U> onlyFirst(@Nonnull final ToByteFunction<? super T> function) {
         Objects.requireNonNull(function);
         return (t, u, value) -> function.applyAsByte(t);
     }
@@ -81,7 +82,8 @@ public interface ToByteBiObjByteFunction<T, U> {
      * for the given {@code ToByteFunction}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static <T, U> ToByteBiObjByteFunction<T, U> onlySecond(final ToByteFunction<? super U> function) {
+    @Nonnull
+    static <T, U> ToByteBiObjByteFunction<T, U> onlySecond(@Nonnull final ToByteFunction<? super U> function) {
         Objects.requireNonNull(function);
         return (t, u, value) -> function.applyAsByte(u);
     }
@@ -97,7 +99,8 @@ public interface ToByteBiObjByteFunction<T, U> {
      * for the given {@code ByteUnaryOperator}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static <T, U> ToByteBiObjByteFunction<T, U> onlyThird(final ByteUnaryOperator function) {
+    @Nonnull
+    static <T, U> ToByteBiObjByteFunction<T, U> onlyThird(@Nonnull final ByteUnaryOperator function) {
         Objects.requireNonNull(function);
         return (t, u, value) -> function.applyAsByte(value);
     }

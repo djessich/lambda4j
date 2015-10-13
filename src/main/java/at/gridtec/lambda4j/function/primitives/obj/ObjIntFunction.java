@@ -63,7 +63,8 @@ public interface ObjIntFunction<T, R> {
      * given {@code Function}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static <T, R> ObjIntFunction<T, R> onlyFirst(final Function<? super T, ? extends R> function) {
+    @Nonnull
+    static <T, R> ObjIntFunction<T, R> onlyFirst(@Nonnull final Function<? super T, ? extends R> function) {
         Objects.requireNonNull(function);
         return (t, value) -> function.apply(t);
     }
@@ -79,7 +80,8 @@ public interface ObjIntFunction<T, R> {
      * given {@code IntFunction}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static <T, R> ObjIntFunction<T, R> onlySecond(final IntFunction<? extends R> function) {
+    @Nonnull
+    static <T, R> ObjIntFunction<T, R> onlySecond(@Nonnull final IntFunction<? extends R> function) {
         Objects.requireNonNull(function);
         return (t, value) -> function.apply(value);
     }

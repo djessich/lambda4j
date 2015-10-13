@@ -50,7 +50,8 @@ public interface DoubleTernaryOperator {
      * {@code DoubleUnaryOperator}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static DoubleTernaryOperator onlyLeft(final DoubleUnaryOperator operator) {
+    @Nonnull
+    static DoubleTernaryOperator onlyLeft(@Nonnull final DoubleUnaryOperator operator) {
         Objects.requireNonNull(operator);
         return (left, middle, right) -> operator.applyAsDouble(left);
     }
@@ -64,7 +65,8 @@ public interface DoubleTernaryOperator {
      * {@code DoubleUnaryOperator}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static DoubleTernaryOperator onlyMiddle(final DoubleUnaryOperator operator) {
+    @Nonnull
+    static DoubleTernaryOperator onlyMiddle(@Nonnull final DoubleUnaryOperator operator) {
         Objects.requireNonNull(operator);
         return (left, middle, right) -> operator.applyAsDouble(middle);
     }
@@ -78,7 +80,8 @@ public interface DoubleTernaryOperator {
      * {@code DoubleUnaryOperator}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static DoubleTernaryOperator onlyRight(final DoubleUnaryOperator operator) {
+    @Nonnull
+    static DoubleTernaryOperator onlyRight(@Nonnull final DoubleUnaryOperator operator) {
         Objects.requireNonNull(operator);
         return (left, middle, right) -> operator.applyAsDouble(right);
     }

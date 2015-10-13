@@ -46,7 +46,8 @@ public interface IntTriConsumer {
      * IntConsumer}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static IntTriConsumer onlyFirst(final IntConsumer consumer) {
+    @Nonnull
+    static IntTriConsumer onlyFirst(@Nonnull final IntConsumer consumer) {
         Objects.requireNonNull(consumer);
         return (value1, value2, value3) -> consumer.accept(value1);
     }
@@ -60,7 +61,8 @@ public interface IntTriConsumer {
      * IntConsumer}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static IntTriConsumer onlySecond(final IntConsumer consumer) {
+    @Nonnull
+    static IntTriConsumer onlySecond(@Nonnull final IntConsumer consumer) {
         Objects.requireNonNull(consumer);
         return (value1, value2, value3) -> consumer.accept(value2);
     }
@@ -74,7 +76,8 @@ public interface IntTriConsumer {
      * IntConsumer}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static IntTriConsumer onlyThird(final IntConsumer consumer) {
+    @Nonnull
+    static IntTriConsumer onlyThird(@Nonnull final IntConsumer consumer) {
         Objects.requireNonNull(consumer);
         return (value1, value2, value3) -> consumer.accept(value3);
     }

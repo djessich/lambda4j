@@ -63,7 +63,8 @@ public interface ToFloatObjFloatFunction<T> {
      * for the given {@code ToFloatFunction}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static <T> ToFloatObjFloatFunction<T> onlyFirst(final ToFloatFunction<? super T> function) {
+    @Nonnull
+    static <T> ToFloatObjFloatFunction<T> onlyFirst(@Nonnull final ToFloatFunction<? super T> function) {
         Objects.requireNonNull(function);
         return (t, value) -> function.applyAsFloat(t);
     }
@@ -78,7 +79,8 @@ public interface ToFloatObjFloatFunction<T> {
      * for the given {@code FloatUnaryOperator}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static <T> ToFloatObjFloatFunction<T> onlySecond(final FloatUnaryOperator function) {
+    @Nonnull
+    static <T> ToFloatObjFloatFunction<T> onlySecond(@Nonnull final FloatUnaryOperator function) {
         Objects.requireNonNull(function);
         return (t, value) -> function.applyAsFloat(value);
     }

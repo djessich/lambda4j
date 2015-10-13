@@ -64,7 +64,8 @@ public interface ObjCharFunction<T, R> {
      * given {@code Function}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static <T, R> ObjCharFunction<T, R> onlyFirst(final Function<? super T, ? extends R> function) {
+    @Nonnull
+    static <T, R> ObjCharFunction<T, R> onlyFirst(@Nonnull final Function<? super T, ? extends R> function) {
         Objects.requireNonNull(function);
         return (t, value) -> function.apply(t);
     }
@@ -80,7 +81,8 @@ public interface ObjCharFunction<T, R> {
      * given {@code CharFunction}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static <T, R> ObjCharFunction<T, R> onlySecond(final CharFunction<? extends R> function) {
+    @Nonnull
+    static <T, R> ObjCharFunction<T, R> onlySecond(@Nonnull final CharFunction<? extends R> function) {
         Objects.requireNonNull(function);
         return (t, value) -> function.apply(value);
     }

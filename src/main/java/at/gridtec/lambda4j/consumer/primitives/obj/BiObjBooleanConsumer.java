@@ -51,7 +51,8 @@ public interface BiObjBooleanConsumer<T, U> {
      * the given {@code Consumer}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static <T, U> BiObjBooleanConsumer<T, U> onlyFirst(final Consumer<? super T> consumer) {
+    @Nonnull
+    static <T, U> BiObjBooleanConsumer<T, U> onlyFirst(@Nonnull final Consumer<? super T> consumer) {
         Objects.requireNonNull(consumer);
         return (t, u, value) -> consumer.accept(t);
     }
@@ -67,7 +68,8 @@ public interface BiObjBooleanConsumer<T, U> {
      * for the given {@code Consumer}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static <T, U> BiObjBooleanConsumer<T, U> onlySecond(final Consumer<? super U> consumer) {
+    @Nonnull
+    static <T, U> BiObjBooleanConsumer<T, U> onlySecond(@Nonnull final Consumer<? super U> consumer) {
         Objects.requireNonNull(consumer);
         return (t, u, value) -> consumer.accept(u);
     }
@@ -83,7 +85,8 @@ public interface BiObjBooleanConsumer<T, U> {
      * the given {@code BooleanConsumer}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static <T, U> BiObjBooleanConsumer<T, U> onlyThird(final BooleanConsumer consumer) {
+    @Nonnull
+    static <T, U> BiObjBooleanConsumer<T, U> onlyThird(@Nonnull final BooleanConsumer consumer) {
         Objects.requireNonNull(consumer);
         return (t, u, value) -> consumer.accept(value);
     }

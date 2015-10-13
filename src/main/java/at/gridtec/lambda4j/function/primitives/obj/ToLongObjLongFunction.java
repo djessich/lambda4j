@@ -61,7 +61,8 @@ public interface ToLongObjLongFunction<T> {
      * for the given {@code ToLongFunction}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static <T> ToLongObjLongFunction<T> onlyFirst(final ToLongFunction<? super T> function) {
+    @Nonnull
+    static <T> ToLongObjLongFunction<T> onlyFirst(@Nonnull final ToLongFunction<? super T> function) {
         Objects.requireNonNull(function);
         return (t, value) -> function.applyAsLong(t);
     }
@@ -76,7 +77,8 @@ public interface ToLongObjLongFunction<T> {
      * for the given {@code LongUnaryOperator}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static <T> ToLongObjLongFunction<T> onlySecond(final LongUnaryOperator function) {
+    @Nonnull
+    static <T> ToLongObjLongFunction<T> onlySecond(@Nonnull final LongUnaryOperator function) {
         Objects.requireNonNull(function);
         return (t, value) -> function.applyAsLong(value);
     }

@@ -64,7 +64,8 @@ public interface ObjShortFunction<T, R> {
      * given {@code Function}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static <T, R> ObjShortFunction<T, R> onlyFirst(final Function<? super T, ? extends R> function) {
+    @Nonnull
+    static <T, R> ObjShortFunction<T, R> onlyFirst(@Nonnull final Function<? super T, ? extends R> function) {
         Objects.requireNonNull(function);
         return (t, value) -> function.apply(t);
     }
@@ -80,7 +81,8 @@ public interface ObjShortFunction<T, R> {
      * the given {@code ShortFunction}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static <T, R> ObjShortFunction<T, R> onlySecond(final ShortFunction<? extends R> function) {
+    @Nonnull
+    static <T, R> ObjShortFunction<T, R> onlySecond(@Nonnull final ShortFunction<? extends R> function) {
         Objects.requireNonNull(function);
         return (t, value) -> function.apply(value);
     }

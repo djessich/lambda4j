@@ -49,7 +49,8 @@ public interface ObjCharConsumer<T> {
      * given {@code Consumer}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static <T> ObjCharConsumer<T> onlyFirst(final Consumer<? super T> consumer) {
+    @Nonnull
+    static <T> ObjCharConsumer<T> onlyFirst(@Nonnull final Consumer<? super T> consumer) {
         Objects.requireNonNull(consumer);
         return (t, value) -> consumer.accept(t);
     }
@@ -64,7 +65,8 @@ public interface ObjCharConsumer<T> {
      * given {@code CharConsumer}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static <T> ObjCharConsumer<T> onlySecond(final CharConsumer consumer) {
+    @Nonnull
+    static <T> ObjCharConsumer<T> onlySecond(@Nonnull final CharConsumer consumer) {
         Objects.requireNonNull(consumer);
         return (t, value) -> consumer.accept(value);
     }

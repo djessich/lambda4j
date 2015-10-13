@@ -62,7 +62,8 @@ public interface ToDoubleObjDoubleFunction<T> {
      * argument for the given {@code ToDoubleFunction}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static <T> ToDoubleObjDoubleFunction<T> onlyFirst(final ToDoubleFunction<? super T> function) {
+    @Nonnull
+    static <T> ToDoubleObjDoubleFunction<T> onlyFirst(@Nonnull final ToDoubleFunction<? super T> function) {
         Objects.requireNonNull(function);
         return (t, value) -> function.applyAsDouble(t);
     }
@@ -77,7 +78,8 @@ public interface ToDoubleObjDoubleFunction<T> {
      * argument for the given {@code DoubleUnaryOperator}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static <T> ToDoubleObjDoubleFunction<T> onlySecond(final DoubleUnaryOperator function) {
+    @Nonnull
+    static <T> ToDoubleObjDoubleFunction<T> onlySecond(@Nonnull final DoubleUnaryOperator function) {
         Objects.requireNonNull(function);
         return (t, value) -> function.applyAsDouble(value);
     }

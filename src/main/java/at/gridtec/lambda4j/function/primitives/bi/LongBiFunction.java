@@ -61,7 +61,8 @@ public interface LongBiFunction<R> {
      * given {@code LongFunction}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static <R> LongBiFunction<R> onlyFirst(final LongFunction<? extends R> function) {
+    @Nonnull
+    static <R> LongBiFunction<R> onlyFirst(@Nonnull final LongFunction<? extends R> function) {
         Objects.requireNonNull(function);
         return (value1, value2) -> function.apply(value1);
     }
@@ -76,7 +77,8 @@ public interface LongBiFunction<R> {
      * given {@code LongFunction}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static <R> LongBiFunction<R> onlySecond(final LongFunction<? extends R> function) {
+    @Nonnull
+    static <R> LongBiFunction<R> onlySecond(@Nonnull final LongFunction<? extends R> function) {
         Objects.requireNonNull(function);
         return (value1, value2) -> function.apply(value2);
     }

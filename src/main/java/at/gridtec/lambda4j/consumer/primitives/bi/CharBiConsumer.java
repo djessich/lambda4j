@@ -45,7 +45,8 @@ public interface CharBiConsumer {
      * given {@code CharConsumer}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static CharBiConsumer onlyFirst(final CharConsumer consumer) {
+    @Nonnull
+    static CharBiConsumer onlyFirst(@Nonnull final CharConsumer consumer) {
         Objects.requireNonNull(consumer);
         return (value1, value2) -> consumer.accept(value1);
     }
@@ -59,7 +60,8 @@ public interface CharBiConsumer {
      * given {@code CharConsumer}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static CharBiConsumer onlySecond(final CharConsumer consumer) {
+    @Nonnull
+    static CharBiConsumer onlySecond(@Nonnull final CharConsumer consumer) {
         Objects.requireNonNull(consumer);
         return (value1, value2) -> consumer.accept(value2);
     }

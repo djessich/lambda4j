@@ -61,7 +61,8 @@ public interface CharTriFunction<R> {
      * given {@code CharFunction}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static <R> CharTriFunction<R> onlyFirst(final CharFunction<? extends R> function) {
+    @Nonnull
+    static <R> CharTriFunction<R> onlyFirst(@Nonnull final CharFunction<? extends R> function) {
         Objects.requireNonNull(function);
         return (value1, value2, value3) -> function.apply(value1);
     }
@@ -76,7 +77,8 @@ public interface CharTriFunction<R> {
      * given {@code CharFunction}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static <R> CharTriFunction<R> onlySecond(final CharFunction<? extends R> function) {
+    @Nonnull
+    static <R> CharTriFunction<R> onlySecond(@Nonnull final CharFunction<? extends R> function) {
         Objects.requireNonNull(function);
         return (value1, value2, value3) -> function.apply(value2);
     }
@@ -91,7 +93,8 @@ public interface CharTriFunction<R> {
      * given {@code CharFunction}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static <R> CharTriFunction<R> onlyThird(final CharFunction<? extends R> function) {
+    @Nonnull
+    static <R> CharTriFunction<R> onlyThird(@Nonnull final CharFunction<? extends R> function) {
         Objects.requireNonNull(function);
         return (value1, value2, value3) -> function.apply(value3);
     }

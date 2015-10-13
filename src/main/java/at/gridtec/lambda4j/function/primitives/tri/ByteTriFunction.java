@@ -61,7 +61,8 @@ public interface ByteTriFunction<R> {
      * given {@code ByteFunction}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static <R> ByteTriFunction<R> onlyFirst(final ByteFunction<? extends R> function) {
+    @Nonnull
+    static <R> ByteTriFunction<R> onlyFirst(@Nonnull final ByteFunction<? extends R> function) {
         Objects.requireNonNull(function);
         return (value1, value2, value3) -> function.apply(value1);
     }
@@ -76,7 +77,8 @@ public interface ByteTriFunction<R> {
      * given {@code ByteFunction}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static <R> ByteTriFunction<R> onlySecond(final ByteFunction<? extends R> function) {
+    @Nonnull
+    static <R> ByteTriFunction<R> onlySecond(@Nonnull final ByteFunction<? extends R> function) {
         Objects.requireNonNull(function);
         return (value1, value2, value3) -> function.apply(value2);
     }
@@ -91,7 +93,8 @@ public interface ByteTriFunction<R> {
      * given {@code ByteFunction}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static <R> ByteTriFunction<R> onlyThird(final ByteFunction<? extends R> function) {
+    @Nonnull
+    static <R> ByteTriFunction<R> onlyThird(@Nonnull final ByteFunction<? extends R> function) {
         Objects.requireNonNull(function);
         return (value1, value2, value3) -> function.apply(value3);
     }

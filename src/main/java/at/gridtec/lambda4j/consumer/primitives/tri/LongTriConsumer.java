@@ -46,7 +46,8 @@ public interface LongTriConsumer {
      * LongConsumer}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static LongTriConsumer onlyFirst(final LongConsumer consumer) {
+    @Nonnull
+    static LongTriConsumer onlyFirst(@Nonnull final LongConsumer consumer) {
         Objects.requireNonNull(consumer);
         return (value1, value2, value3) -> consumer.accept(value1);
     }
@@ -60,7 +61,8 @@ public interface LongTriConsumer {
      * {@code LongConsumer}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static LongTriConsumer onlySecond(final LongConsumer consumer) {
+    @Nonnull
+    static LongTriConsumer onlySecond(@Nonnull final LongConsumer consumer) {
         Objects.requireNonNull(consumer);
         return (value1, value2, value3) -> consumer.accept(value2);
     }
@@ -74,7 +76,8 @@ public interface LongTriConsumer {
      * LongConsumer}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static LongTriConsumer onlyThird(final LongConsumer consumer) {
+    @Nonnull
+    static LongTriConsumer onlyThird(@Nonnull final LongConsumer consumer) {
         Objects.requireNonNull(consumer);
         return (value1, value2, value3) -> consumer.accept(value3);
     }

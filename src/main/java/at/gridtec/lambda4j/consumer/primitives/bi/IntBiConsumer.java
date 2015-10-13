@@ -44,7 +44,8 @@ public interface IntBiConsumer {
      * given {@code IntConsumer}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static IntBiConsumer onlyFirst(final IntConsumer consumer) {
+    @Nonnull
+    static IntBiConsumer onlyFirst(@Nonnull final IntConsumer consumer) {
         Objects.requireNonNull(consumer);
         return (value1, value2) -> consumer.accept(value1);
     }
@@ -58,7 +59,8 @@ public interface IntBiConsumer {
      * given {@code IntConsumer}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static IntBiConsumer onlySecond(final IntConsumer consumer) {
+    @Nonnull
+    static IntBiConsumer onlySecond(@Nonnull final IntConsumer consumer) {
         Objects.requireNonNull(consumer);
         return (value1, value2) -> consumer.accept(value2);
     }

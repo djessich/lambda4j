@@ -49,7 +49,8 @@ public interface ObjBooleanConsumer<T> {
      * the given {@code Consumer}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static <T> ObjBooleanConsumer<T> onlyFirst(final Consumer<? super T> consumer) {
+    @Nonnull
+    static <T> ObjBooleanConsumer<T> onlyFirst(@Nonnull final Consumer<? super T> consumer) {
         Objects.requireNonNull(consumer);
         return (t, value) -> consumer.accept(t);
     }
@@ -64,7 +65,8 @@ public interface ObjBooleanConsumer<T> {
      * the given {@code BooleanConsumer}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static <T> ObjBooleanConsumer<T> onlySecond(final BooleanConsumer consumer) {
+    @Nonnull
+    static <T> ObjBooleanConsumer<T> onlySecond(@Nonnull final BooleanConsumer consumer) {
         Objects.requireNonNull(consumer);
         return (t, value) -> consumer.accept(value);
     }

@@ -52,7 +52,8 @@ public interface BooleanTernaryOperator {
      * {@code BooleanUnaryOperator}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static BooleanTernaryOperator onlyLeft(final BooleanUnaryOperator operator) {
+    @Nonnull
+    static BooleanTernaryOperator onlyLeft(@Nonnull final BooleanUnaryOperator operator) {
         Objects.requireNonNull(operator);
         return (left, middle, right) -> operator.applyAsBoolean(left);
     }
@@ -66,7 +67,8 @@ public interface BooleanTernaryOperator {
      * given {@code BooleanUnaryOperator}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static BooleanTernaryOperator onlyMiddle(final BooleanUnaryOperator operator) {
+    @Nonnull
+    static BooleanTernaryOperator onlyMiddle(@Nonnull final BooleanUnaryOperator operator) {
         Objects.requireNonNull(operator);
         return (left, middle, right) -> operator.applyAsBoolean(middle);
     }
@@ -80,7 +82,8 @@ public interface BooleanTernaryOperator {
      * {@code BooleanUnaryOperator}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static BooleanTernaryOperator onlyRight(final BooleanUnaryOperator operator) {
+    @Nonnull
+    static BooleanTernaryOperator onlyRight(@Nonnull final BooleanUnaryOperator operator) {
         Objects.requireNonNull(operator);
         return (left, middle, right) -> operator.applyAsBoolean(right);
     }

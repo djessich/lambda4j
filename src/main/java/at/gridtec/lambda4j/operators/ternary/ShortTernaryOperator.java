@@ -51,7 +51,8 @@ public interface ShortTernaryOperator {
      * {@code ShortUnaryOperator}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static ShortTernaryOperator onlyLeft(final ShortUnaryOperator operator) {
+    @Nonnull
+    static ShortTernaryOperator onlyLeft(@Nonnull final ShortUnaryOperator operator) {
         Objects.requireNonNull(operator);
         return (left, middle, right) -> operator.applyAsShort(left);
     }
@@ -65,7 +66,8 @@ public interface ShortTernaryOperator {
      * {@code ShortUnaryOperator}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static ShortTernaryOperator onlyMiddle(final ShortUnaryOperator operator) {
+    @Nonnull
+    static ShortTernaryOperator onlyMiddle(@Nonnull final ShortUnaryOperator operator) {
         Objects.requireNonNull(operator);
         return (left, middle, right) -> operator.applyAsShort(middle);
     }
@@ -79,7 +81,8 @@ public interface ShortTernaryOperator {
      * {@code ShortUnaryOperator}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static ShortTernaryOperator onlyRight(final ShortUnaryOperator operator) {
+    @Nonnull
+    static ShortTernaryOperator onlyRight(@Nonnull final ShortUnaryOperator operator) {
         Objects.requireNonNull(operator);
         return (left, middle, right) -> operator.applyAsShort(right);
     }

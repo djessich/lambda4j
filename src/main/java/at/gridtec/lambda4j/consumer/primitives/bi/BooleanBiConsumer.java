@@ -45,7 +45,8 @@ public interface BooleanBiConsumer {
      * the given {@code BooleanConsumer}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static BooleanBiConsumer onlyFirst(final BooleanConsumer consumer) {
+    @Nonnull
+    static BooleanBiConsumer onlyFirst(@Nonnull final BooleanConsumer consumer) {
         Objects.requireNonNull(consumer);
         return (value1, value2) -> consumer.accept(value1);
     }
@@ -59,7 +60,8 @@ public interface BooleanBiConsumer {
      * the given {@code BooleanConsumer}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static BooleanBiConsumer onlySecond(final BooleanConsumer consumer) {
+    @Nonnull
+    static BooleanBiConsumer onlySecond(@Nonnull final BooleanConsumer consumer) {
         Objects.requireNonNull(consumer);
         return (value1, value2) -> consumer.accept(value2);
     }
@@ -142,8 +144,8 @@ public interface BooleanBiConsumer {
 
     /**
      * Returns a composed {@link BiConsumer} which represents this {@link BooleanBiConsumer}. Thereby the primitive
-     * input argument for this consumer is autoboxed. This method is just convenience to provide the ability to use
-     * this {@code BooleanBiConsumer} with JRE specific methods, only accepting {@code BiConsumer}.
+     * input argument for this consumer is autoboxed. This method is just convenience to provide the ability to use this
+     * {@code BooleanBiConsumer} with JRE specific methods, only accepting {@code BiConsumer}.
      *
      * @return A composed {@code BiConsumer} which represents this {@code BooleanBiConsumer}.
      */

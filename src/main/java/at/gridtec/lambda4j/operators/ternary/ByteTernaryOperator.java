@@ -51,7 +51,8 @@ public interface ByteTernaryOperator {
      * {@code ByteUnaryOperator}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static ByteTernaryOperator onlyLeft(final ByteUnaryOperator operator) {
+    @Nonnull
+    static ByteTernaryOperator onlyLeft(@Nonnull final ByteUnaryOperator operator) {
         Objects.requireNonNull(operator);
         return (left, middle, right) -> operator.applyAsByte(left);
     }
@@ -65,7 +66,8 @@ public interface ByteTernaryOperator {
      * {@code ByteUnaryOperator}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static ByteTernaryOperator onlyMiddle(final ByteUnaryOperator operator) {
+    @Nonnull
+    static ByteTernaryOperator onlyMiddle(@Nonnull final ByteUnaryOperator operator) {
         Objects.requireNonNull(operator);
         return (left, middle, right) -> operator.applyAsByte(middle);
     }
@@ -79,7 +81,8 @@ public interface ByteTernaryOperator {
      * {@code ByteUnaryOperator}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static ByteTernaryOperator onlyRight(final ByteUnaryOperator operator) {
+    @Nonnull
+    static ByteTernaryOperator onlyRight(@Nonnull final ByteUnaryOperator operator) {
         Objects.requireNonNull(operator);
         return (left, middle, right) -> operator.applyAsByte(right);
     }

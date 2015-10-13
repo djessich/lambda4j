@@ -66,7 +66,8 @@ public interface BiObjByteFunction<T, U, R> {
      * the given {@code Function}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static <T, U, R> BiObjByteFunction<T, U, R> onlyFirst(final Function<? super T, ? extends R> function) {
+    @Nonnull
+    static <T, U, R> BiObjByteFunction<T, U, R> onlyFirst(@Nonnull final Function<? super T, ? extends R> function) {
         Objects.requireNonNull(function);
         return (t, u, value) -> function.apply(t);
     }
@@ -83,7 +84,8 @@ public interface BiObjByteFunction<T, U, R> {
      * the given {@code Function}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static <T, U, R> BiObjByteFunction<T, U, R> onlySecond(final Function<? super U, ? extends R> function) {
+    @Nonnull
+    static <T, U, R> BiObjByteFunction<T, U, R> onlySecond(@Nonnull final Function<? super U, ? extends R> function) {
         Objects.requireNonNull(function);
         return (t, u, value) -> function.apply(u);
     }
@@ -100,7 +102,8 @@ public interface BiObjByteFunction<T, U, R> {
      * the given {@code ByteFunction}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static <T, U, R> BiObjByteFunction<T, U, R> onlyThird(final ByteFunction<? extends R> function) {
+    @Nonnull
+    static <T, U, R> BiObjByteFunction<T, U, R> onlyThird(@Nonnull final ByteFunction<? extends R> function) {
         Objects.requireNonNull(function);
         return (t, u, value) -> function.apply(value);
     }

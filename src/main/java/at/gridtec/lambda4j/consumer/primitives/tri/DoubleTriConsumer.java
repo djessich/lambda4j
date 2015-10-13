@@ -46,7 +46,8 @@ public interface DoubleTriConsumer {
      * {@code DoubleConsumer}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static DoubleTriConsumer onlyFirst(final DoubleConsumer consumer) {
+    @Nonnull
+    static DoubleTriConsumer onlyFirst(@Nonnull final DoubleConsumer consumer) {
         Objects.requireNonNull(consumer);
         return (value1, value2, value3) -> consumer.accept(value1);
     }
@@ -60,7 +61,8 @@ public interface DoubleTriConsumer {
      * {@code DoubleConsumer}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static DoubleTriConsumer onlySecond(final DoubleConsumer consumer) {
+    @Nonnull
+    static DoubleTriConsumer onlySecond(@Nonnull final DoubleConsumer consumer) {
         Objects.requireNonNull(consumer);
         return (value1, value2, value3) -> consumer.accept(value2);
     }
@@ -74,7 +76,8 @@ public interface DoubleTriConsumer {
      * {@code DoubleConsumer}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static DoubleTriConsumer onlyThird(final DoubleConsumer consumer) {
+    @Nonnull
+    static DoubleTriConsumer onlyThird(@Nonnull final DoubleConsumer consumer) {
         Objects.requireNonNull(consumer);
         return (value1, value2, value3) -> consumer.accept(value3);
     }

@@ -103,7 +103,8 @@ public interface ShortBinaryOperator {
      * {@code ShortUnaryOperator}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static ShortBinaryOperator onlyLeft(final ShortUnaryOperator operator) {
+    @Nonnull
+    static ShortBinaryOperator onlyLeft(@Nonnull final ShortUnaryOperator operator) {
         Objects.requireNonNull(operator);
         return (left, right) -> operator.applyAsShort(left);
     }
@@ -117,7 +118,8 @@ public interface ShortBinaryOperator {
      * {@code ShortUnaryOperator}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static ShortBinaryOperator onlyRight(final ShortUnaryOperator operator) {
+    @Nonnull
+    static ShortBinaryOperator onlyRight(@Nonnull final ShortUnaryOperator operator) {
         Objects.requireNonNull(operator);
         return (left, right) -> operator.applyAsShort(right);
     }

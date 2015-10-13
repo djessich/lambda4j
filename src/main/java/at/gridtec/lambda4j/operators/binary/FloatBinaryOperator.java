@@ -107,7 +107,8 @@ public interface FloatBinaryOperator {
      * {@code FloatUnaryOperator}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static FloatBinaryOperator onlyLeft(final FloatUnaryOperator operator) {
+    @Nonnull
+    static FloatBinaryOperator onlyLeft(@Nonnull final FloatUnaryOperator operator) {
         Objects.requireNonNull(operator);
         return (left, right) -> operator.applyAsFloat(left);
     }
@@ -121,7 +122,8 @@ public interface FloatBinaryOperator {
      * {@code FloatUnaryOperator}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static FloatBinaryOperator onlyRight(final FloatUnaryOperator operator) {
+    @Nonnull
+    static FloatBinaryOperator onlyRight(@Nonnull final FloatUnaryOperator operator) {
         Objects.requireNonNull(operator);
         return (left, right) -> operator.applyAsFloat(right);
     }

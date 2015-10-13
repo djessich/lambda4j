@@ -65,7 +65,8 @@ public interface ToFloatBiObjFloatFunction<T, U> {
      * argument for the given {@code ToFloatFunction}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static <T, U> ToFloatBiObjFloatFunction<T, U> onlyFirst(final ToFloatFunction<? super T> function) {
+    @Nonnull
+    static <T, U> ToFloatBiObjFloatFunction<T, U> onlyFirst(@Nonnull final ToFloatFunction<? super T> function) {
         Objects.requireNonNull(function);
         return (t, u, value) -> function.applyAsFloat(t);
     }
@@ -81,7 +82,8 @@ public interface ToFloatBiObjFloatFunction<T, U> {
      * argument for the given {@code ToFloatFunction}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static <T, U> ToFloatBiObjFloatFunction<T, U> onlySecond(final ToFloatFunction<? super U> function) {
+    @Nonnull
+    static <T, U> ToFloatBiObjFloatFunction<T, U> onlySecond(@Nonnull final ToFloatFunction<? super U> function) {
         Objects.requireNonNull(function);
         return (t, u, value) -> function.applyAsFloat(u);
     }
@@ -97,7 +99,8 @@ public interface ToFloatBiObjFloatFunction<T, U> {
      * argument for the given {@code FloatUnaryOperator}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static <T, U> ToFloatBiObjFloatFunction<T, U> onlyThird(final FloatUnaryOperator function) {
+    @Nonnull
+    static <T, U> ToFloatBiObjFloatFunction<T, U> onlyThird(@Nonnull final FloatUnaryOperator function) {
         Objects.requireNonNull(function);
         return (t, u, value) -> function.applyAsFloat(value);
     }

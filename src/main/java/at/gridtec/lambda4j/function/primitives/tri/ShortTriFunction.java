@@ -61,7 +61,8 @@ public interface ShortTriFunction<R> {
      * given {@code ShortFunction}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static <R> ShortTriFunction<R> onlyFirst(final ShortFunction<? extends R> function) {
+    @Nonnull
+    static <R> ShortTriFunction<R> onlyFirst(@Nonnull final ShortFunction<? extends R> function) {
         Objects.requireNonNull(function);
         return (value1, value2, value3) -> function.apply(value1);
     }
@@ -76,7 +77,8 @@ public interface ShortTriFunction<R> {
      * the given {@code ShortFunction}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static <R> ShortTriFunction<R> onlySecond(final ShortFunction<? extends R> function) {
+    @Nonnull
+    static <R> ShortTriFunction<R> onlySecond(@Nonnull final ShortFunction<? extends R> function) {
         Objects.requireNonNull(function);
         return (value1, value2, value3) -> function.apply(value2);
     }
@@ -91,7 +93,8 @@ public interface ShortTriFunction<R> {
      * given {@code ShortFunction}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static <R> ShortTriFunction<R> onlyThird(final ShortFunction<? extends R> function) {
+    @Nonnull
+    static <R> ShortTriFunction<R> onlyThird(@Nonnull final ShortFunction<? extends R> function) {
         Objects.requireNonNull(function);
         return (value1, value2, value3) -> function.apply(value3);
     }

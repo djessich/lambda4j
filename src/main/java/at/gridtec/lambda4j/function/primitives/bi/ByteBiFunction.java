@@ -61,7 +61,8 @@ public interface ByteBiFunction<R> {
      * given {@code ByteFunction}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static <R> ByteBiFunction<R> onlyFirst(final ByteFunction<? extends R> function) {
+    @Nonnull
+    static <R> ByteBiFunction<R> onlyFirst(@Nonnull final ByteFunction<? extends R> function) {
         Objects.requireNonNull(function);
         return (value1, value2) -> function.apply(value1);
     }
@@ -76,7 +77,8 @@ public interface ByteBiFunction<R> {
      * given {@code ByteFunction}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static <R> ByteBiFunction<R> onlySecond(final ByteFunction<? extends R> function) {
+    @Nonnull
+    static <R> ByteBiFunction<R> onlySecond(@Nonnull final ByteFunction<? extends R> function) {
         Objects.requireNonNull(function);
         return (value1, value2) -> function.apply(value2);
     }

@@ -75,7 +75,8 @@ public interface ToCharBiFunction<T, U> {
      * given {@code ToCharFunction}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static <T, U> ToCharBiFunction<T, U> onlyFirst(final ToCharFunction<? super T> function) {
+    @Nonnull
+    static <T, U> ToCharBiFunction<T, U> onlyFirst(@Nonnull final ToCharFunction<? super T> function) {
         Objects.requireNonNull(function);
         return (t, u) -> function.applyAsChar(t);
     }
@@ -91,7 +92,8 @@ public interface ToCharBiFunction<T, U> {
      * the given {@code ToCharFunction}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static <T, U> ToCharBiFunction<T, U> onlySecond(final ToCharFunction<? super U> function) {
+    @Nonnull
+    static <T, U> ToCharBiFunction<T, U> onlySecond(@Nonnull final ToCharFunction<? super U> function) {
         Objects.requireNonNull(function);
         return (t, u) -> function.applyAsChar(u);
     }

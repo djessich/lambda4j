@@ -63,7 +63,8 @@ public interface ObjLongFunction<T, R> {
      * given {@code Function}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static <T, R> ObjLongFunction<T, R> onlyFirst(final Function<? super T, ? extends R> function) {
+    @Nonnull
+    static <T, R> ObjLongFunction<T, R> onlyFirst(@Nonnull final Function<? super T, ? extends R> function) {
         Objects.requireNonNull(function);
         return (t, value) -> function.apply(t);
     }
@@ -79,7 +80,8 @@ public interface ObjLongFunction<T, R> {
      * given {@code LongFunction}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static <T, R> ObjLongFunction<T, R> onlySecond(final LongFunction<? extends R> function) {
+    @Nonnull
+    static <T, R> ObjLongFunction<T, R> onlySecond(@Nonnull final LongFunction<? extends R> function) {
         Objects.requireNonNull(function);
         return (t, value) -> function.apply(value);
     }

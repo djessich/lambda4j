@@ -17,6 +17,7 @@ package at.gridtec.lambda4j.operators.ternary;
 
 import at.gridtec.lambda4j.function.TriFunction;
 
+import javax.annotation.Nonnull;
 import java.util.Objects;
 import java.util.function.UnaryOperator;
 
@@ -54,7 +55,8 @@ public interface TernaryOperator<T> extends TriFunction<T, T, T, T> {
      * UnaryOperator}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static <T> TernaryOperator<T> onlyLeft(final UnaryOperator<T> operator) {
+    @Nonnull
+    static <T> TernaryOperator<T> onlyLeft(@Nonnull final UnaryOperator<T> operator) {
         Objects.requireNonNull(operator);
         return (t, u, v) -> operator.apply(t);
     }
@@ -69,7 +71,8 @@ public interface TernaryOperator<T> extends TriFunction<T, T, T, T> {
      * {@code UnaryOperator}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static <T> TernaryOperator<T> onlyMiddle(final UnaryOperator<T> operator) {
+    @Nonnull
+    static <T> TernaryOperator<T> onlyMiddle(@Nonnull final UnaryOperator<T> operator) {
         Objects.requireNonNull(operator);
         return (t, u, v) -> operator.apply(u);
     }
@@ -84,7 +87,8 @@ public interface TernaryOperator<T> extends TriFunction<T, T, T, T> {
      * UnaryOperator}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static <T> TernaryOperator<T> onlyRight(final UnaryOperator<T> operator) {
+    @Nonnull
+    static <T> TernaryOperator<T> onlyRight(@Nonnull final UnaryOperator<T> operator) {
         Objects.requireNonNull(operator);
         return (t, u, v) -> operator.apply(v);
     }

@@ -61,7 +61,8 @@ public interface FloatBiFunction<R> {
      * given {@code FloatFunction}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static <R> FloatBiFunction<R> onlyFirst(final FloatFunction<? extends R> function) {
+    @Nonnull
+    static <R> FloatBiFunction<R> onlyFirst(@Nonnull final FloatFunction<? extends R> function) {
         Objects.requireNonNull(function);
         return (value1, value2) -> function.apply(value1);
     }
@@ -76,7 +77,8 @@ public interface FloatBiFunction<R> {
      * given {@code FloatFunction}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static <R> FloatBiFunction<R> onlySecond(final FloatFunction<? extends R> function) {
+    @Nonnull
+    static <R> FloatBiFunction<R> onlySecond(@Nonnull final FloatFunction<? extends R> function) {
         Objects.requireNonNull(function);
         return (value1, value2) -> function.apply(value2);
     }

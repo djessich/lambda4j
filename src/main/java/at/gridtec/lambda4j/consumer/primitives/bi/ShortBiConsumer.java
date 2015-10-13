@@ -45,7 +45,8 @@ public interface ShortBiConsumer {
      * given {@code ShortConsumer}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static ShortBiConsumer onlyFirst(final ShortConsumer consumer) {
+    @Nonnull
+    static ShortBiConsumer onlyFirst(@Nonnull final ShortConsumer consumer) {
         Objects.requireNonNull(consumer);
         return (value1, value2) -> consumer.accept(value1);
     }
@@ -59,7 +60,8 @@ public interface ShortBiConsumer {
      * given {@code ShortConsumer}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static ShortBiConsumer onlySecond(final ShortConsumer consumer) {
+    @Nonnull
+    static ShortBiConsumer onlySecond(@Nonnull final ShortConsumer consumer) {
         Objects.requireNonNull(consumer);
         return (value1, value2) -> consumer.accept(value2);
     }

@@ -45,7 +45,8 @@ public interface FloatBiConsumer {
      * given {@code FloatConsumer}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static FloatBiConsumer onlyFirst(final FloatConsumer consumer) {
+    @Nonnull
+    static FloatBiConsumer onlyFirst(@Nonnull final FloatConsumer consumer) {
         Objects.requireNonNull(consumer);
         return (value1, value2) -> consumer.accept(value1);
     }
@@ -59,7 +60,8 @@ public interface FloatBiConsumer {
      * given {@code FloatConsumer}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static FloatBiConsumer onlySecond(final FloatConsumer consumer) {
+    @Nonnull
+    static FloatBiConsumer onlySecond(@Nonnull final FloatConsumer consumer) {
         Objects.requireNonNull(consumer);
         return (value1, value2) -> consumer.accept(value2);
     }

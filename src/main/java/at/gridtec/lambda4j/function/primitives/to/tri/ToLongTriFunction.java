@@ -76,7 +76,8 @@ public interface ToLongTriFunction<T, U, V> {
      * the given {@code ToLongFunction}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static <T, U, V> ToLongTriFunction<T, U, V> onlyFirst(final ToLongFunction<? super T> function) {
+    @Nonnull
+    static <T, U, V> ToLongTriFunction<T, U, V> onlyFirst(@Nonnull final ToLongFunction<? super T> function) {
         Objects.requireNonNull(function);
         return (t, u, v) -> function.applyAsLong(t);
     }
@@ -93,7 +94,8 @@ public interface ToLongTriFunction<T, U, V> {
      * the given {@code ToLongFunction}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static <T, U, V> ToLongTriFunction<T, U, V> onlySecond(final ToLongFunction<? super U> function) {
+    @Nonnull
+    static <T, U, V> ToLongTriFunction<T, U, V> onlySecond(@Nonnull final ToLongFunction<? super U> function) {
         Objects.requireNonNull(function);
         return (t, u, v) -> function.applyAsLong(u);
     }
@@ -110,7 +112,8 @@ public interface ToLongTriFunction<T, U, V> {
      * the given {@code ToLongFunction}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static <T, U, V> ToLongTriFunction<T, U, V> onlyThird(final ToLongFunction<? super V> function) {
+    @Nonnull
+    static <T, U, V> ToLongTriFunction<T, U, V> onlyThird(@Nonnull final ToLongFunction<? super V> function) {
         Objects.requireNonNull(function);
         return (t, u, v) -> function.applyAsLong(v);
     }

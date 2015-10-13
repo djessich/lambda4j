@@ -46,7 +46,8 @@ public interface FloatTriConsumer {
      * {@code FloatConsumer}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static FloatTriConsumer onlyFirst(final FloatConsumer consumer) {
+    @Nonnull
+    static FloatTriConsumer onlyFirst(@Nonnull final FloatConsumer consumer) {
         Objects.requireNonNull(consumer);
         return (value1, value2, value3) -> consumer.accept(value1);
     }
@@ -60,7 +61,8 @@ public interface FloatTriConsumer {
      * {@code FloatConsumer}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static FloatTriConsumer onlySecond(final FloatConsumer consumer) {
+    @Nonnull
+    static FloatTriConsumer onlySecond(@Nonnull final FloatConsumer consumer) {
         Objects.requireNonNull(consumer);
         return (value1, value2, value3) -> consumer.accept(value2);
     }
@@ -74,7 +76,8 @@ public interface FloatTriConsumer {
      * {@code FloatConsumer}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static FloatTriConsumer onlyThird(final FloatConsumer consumer) {
+    @Nonnull
+    static FloatTriConsumer onlyThird(@Nonnull final FloatConsumer consumer) {
         Objects.requireNonNull(consumer);
         return (value1, value2, value3) -> consumer.accept(value3);
     }

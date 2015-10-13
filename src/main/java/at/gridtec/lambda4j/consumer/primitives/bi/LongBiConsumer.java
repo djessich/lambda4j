@@ -44,7 +44,8 @@ public interface LongBiConsumer {
      * given {@code LongConsumer}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static LongBiConsumer onlyFirst(final LongConsumer consumer) {
+    @Nonnull
+    static LongBiConsumer onlyFirst(@Nonnull final LongConsumer consumer) {
         Objects.requireNonNull(consumer);
         return (value1, value2) -> consumer.accept(value1);
     }
@@ -58,7 +59,8 @@ public interface LongBiConsumer {
      * given {@code LongConsumer}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static LongBiConsumer onlySecond(final LongConsumer consumer) {
+    @Nonnull
+    static LongBiConsumer onlySecond(@Nonnull final LongConsumer consumer) {
         Objects.requireNonNull(consumer);
         return (value1, value2) -> consumer.accept(value2);
     }

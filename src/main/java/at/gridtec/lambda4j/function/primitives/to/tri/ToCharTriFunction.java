@@ -75,7 +75,8 @@ public interface ToCharTriFunction<T, U, V> {
      * the given {@code ToCharFunction}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static <T, U, V> ToCharTriFunction<T, U, V> onlyFirst(final ToCharFunction<? super T> function) {
+    @Nonnull
+    static <T, U, V> ToCharTriFunction<T, U, V> onlyFirst(@Nonnull final ToCharFunction<? super T> function) {
         Objects.requireNonNull(function);
         return (t, u, v) -> function.applyAsChar(t);
     }
@@ -92,7 +93,8 @@ public interface ToCharTriFunction<T, U, V> {
      * the given {@code ToCharFunction}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static <T, U, V> ToCharTriFunction<T, U, V> onlySecond(final ToCharFunction<? super U> function) {
+    @Nonnull
+    static <T, U, V> ToCharTriFunction<T, U, V> onlySecond(@Nonnull final ToCharFunction<? super U> function) {
         Objects.requireNonNull(function);
         return (t, u, v) -> function.applyAsChar(u);
     }
@@ -109,7 +111,8 @@ public interface ToCharTriFunction<T, U, V> {
      * the given {@code ToCharFunction}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static <T, U, V> ToCharTriFunction<T, U, V> onlyThird(final ToCharFunction<? super V> function) {
+    @Nonnull
+    static <T, U, V> ToCharTriFunction<T, U, V> onlyThird(@Nonnull final ToCharFunction<? super V> function) {
         Objects.requireNonNull(function);
         return (t, u, v) -> function.applyAsChar(v);
     }

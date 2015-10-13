@@ -61,7 +61,8 @@ public interface CharBiFunction<R> {
      * given {@code CharFunction}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static <R> CharBiFunction<R> onlyFirst(final CharFunction<? extends R> function) {
+    @Nonnull
+    static <R> CharBiFunction<R> onlyFirst(@Nonnull final CharFunction<? extends R> function) {
         Objects.requireNonNull(function);
         return (value1, value2) -> function.apply(value1);
     }
@@ -76,7 +77,8 @@ public interface CharBiFunction<R> {
      * given {@code CharFunction}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static <R> CharBiFunction<R> onlySecond(final CharFunction<? extends R> function) {
+    @Nonnull
+    static <R> CharBiFunction<R> onlySecond(@Nonnull final CharFunction<? extends R> function) {
         Objects.requireNonNull(function);
         return (value1, value2) -> function.apply(value2);
     }

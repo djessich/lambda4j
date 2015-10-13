@@ -76,7 +76,8 @@ public interface ToDoubleTriFunction<T, U, V> {
      * the given {@code ToDoubleFunction}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static <T, U, V> ToDoubleTriFunction<T, U, V> onlyFirst(final ToDoubleFunction<? super T> function) {
+    @Nonnull
+    static <T, U, V> ToDoubleTriFunction<T, U, V> onlyFirst(@Nonnull final ToDoubleFunction<? super T> function) {
         Objects.requireNonNull(function);
         return (t, u, v) -> function.applyAsDouble(t);
     }
@@ -93,7 +94,8 @@ public interface ToDoubleTriFunction<T, U, V> {
      * the given {@code ToDoubleFunction}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static <T, U, V> ToDoubleTriFunction<T, U, V> onlySecond(final ToDoubleFunction<? super U> function) {
+    @Nonnull
+    static <T, U, V> ToDoubleTriFunction<T, U, V> onlySecond(@Nonnull final ToDoubleFunction<? super U> function) {
         Objects.requireNonNull(function);
         return (t, u, v) -> function.applyAsDouble(u);
     }
@@ -110,7 +112,8 @@ public interface ToDoubleTriFunction<T, U, V> {
      * the given {@code ToDoubleFunction}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static <T, U, V> ToDoubleTriFunction<T, U, V> onlyThird(final ToDoubleFunction<? super V> function) {
+    @Nonnull
+    static <T, U, V> ToDoubleTriFunction<T, U, V> onlyThird(@Nonnull final ToDoubleFunction<? super V> function) {
         Objects.requireNonNull(function);
         return (t, u, v) -> function.applyAsDouble(v);
     }
@@ -340,6 +343,7 @@ public interface ToDoubleTriFunction<T, U, V> {
     /**
      * Returns a composed {@link TriFunction} which represents this {@link ToDoubleTriFunction}. Thereby the primitive
      * input argument for this function is autoboxed.
+     *
      * @return A composed {@code TriFunction} which represents this {@code ToDoubleTriFunction}.
      */
     @Nonnull

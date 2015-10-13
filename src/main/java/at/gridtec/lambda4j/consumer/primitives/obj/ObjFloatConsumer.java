@@ -49,7 +49,8 @@ public interface ObjFloatConsumer<T> {
      * given {@code Consumer}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static <T> ObjFloatConsumer<T> onlyFirst(final Consumer<? super T> consumer) {
+    @Nonnull
+    static <T> ObjFloatConsumer<T> onlyFirst(@Nonnull final Consumer<? super T> consumer) {
         Objects.requireNonNull(consumer);
         return (t, value) -> consumer.accept(t);
     }
@@ -64,7 +65,8 @@ public interface ObjFloatConsumer<T> {
      * the given {@code FloatConsumer}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static <T> ObjFloatConsumer<T> onlySecond(final FloatConsumer consumer) {
+    @Nonnull
+    static <T> ObjFloatConsumer<T> onlySecond(@Nonnull final FloatConsumer consumer) {
         Objects.requireNonNull(consumer);
         return (t, value) -> consumer.accept(value);
     }

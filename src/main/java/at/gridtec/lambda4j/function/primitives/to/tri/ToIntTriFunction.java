@@ -76,7 +76,8 @@ public interface ToIntTriFunction<T, U, V> {
      * given {@code ToIntFunction}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static <T, U, V> ToIntTriFunction<T, U, V> onlyFirst(final ToIntFunction<? super T> function) {
+    @Nonnull
+    static <T, U, V> ToIntTriFunction<T, U, V> onlyFirst(@Nonnull final ToIntFunction<? super T> function) {
         Objects.requireNonNull(function);
         return (t, u, v) -> function.applyAsInt(t);
     }
@@ -93,7 +94,8 @@ public interface ToIntTriFunction<T, U, V> {
      * the given {@code ToIntFunction}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static <T, U, V> ToIntTriFunction<T, U, V> onlySecond(final ToIntFunction<? super U> function) {
+    @Nonnull
+    static <T, U, V> ToIntTriFunction<T, U, V> onlySecond(@Nonnull final ToIntFunction<? super U> function) {
         Objects.requireNonNull(function);
         return (t, u, v) -> function.applyAsInt(u);
     }
@@ -110,7 +112,8 @@ public interface ToIntTriFunction<T, U, V> {
      * given {@code ToIntFunction}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static <T, U, V> ToIntTriFunction<T, U, V> onlyThird(final ToIntFunction<? super V> function) {
+    @Nonnull
+    static <T, U, V> ToIntTriFunction<T, U, V> onlyThird(@Nonnull final ToIntFunction<? super V> function) {
         Objects.requireNonNull(function);
         return (t, u, v) -> function.applyAsInt(v);
     }

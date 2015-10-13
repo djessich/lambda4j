@@ -65,7 +65,8 @@ public interface ToCharBiObjCharFunction<T, U> {
      * for the given {@code ToCharFunction}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static <T, U> ToCharBiObjCharFunction<T, U> onlyFirst(final ToCharFunction<? super T> function) {
+    @Nonnull
+    static <T, U> ToCharBiObjCharFunction<T, U> onlyFirst(@Nonnull final ToCharFunction<? super T> function) {
         Objects.requireNonNull(function);
         return (t, u, value) -> function.applyAsChar(t);
     }
@@ -81,7 +82,8 @@ public interface ToCharBiObjCharFunction<T, U> {
      * for the given {@code ToCharFunction}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static <T, U> ToCharBiObjCharFunction<T, U> onlySecond(final ToCharFunction<? super U> function) {
+    @Nonnull
+    static <T, U> ToCharBiObjCharFunction<T, U> onlySecond(@Nonnull final ToCharFunction<? super U> function) {
         Objects.requireNonNull(function);
         return (t, u, value) -> function.applyAsChar(u);
     }
@@ -97,7 +99,8 @@ public interface ToCharBiObjCharFunction<T, U> {
      * for the given {@code CharUnaryOperator}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static <T, U> ToCharBiObjCharFunction<T, U> onlyThird(final CharUnaryOperator function) {
+    @Nonnull
+    static <T, U> ToCharBiObjCharFunction<T, U> onlyThird(@Nonnull final CharUnaryOperator function) {
         Objects.requireNonNull(function);
         return (t, u, value) -> function.applyAsChar(value);
     }

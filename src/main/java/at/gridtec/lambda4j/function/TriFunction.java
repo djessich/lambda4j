@@ -15,6 +15,7 @@
  */
 package at.gridtec.lambda4j.function;
 
+import javax.annotation.Nonnull;
 import java.util.Objects;
 import java.util.function.Function;
 
@@ -61,7 +62,8 @@ public interface TriFunction<T, U, V, R> {
      * given {@code Function}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static <T, U, V, R> TriFunction<T, U, V, R> onlyFirst(final Function<? super T, ? extends R> function) {
+    @Nonnull
+    static <T, U, V, R> TriFunction<T, U, V, R> onlyFirst(@Nonnull final Function<? super T, ? extends R> function) {
         Objects.requireNonNull(function);
         return (t, u, v) -> function.apply(t);
     }
@@ -79,7 +81,8 @@ public interface TriFunction<T, U, V, R> {
      * given {@code Function}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static <T, U, V, R> TriFunction<T, U, V, R> onlySecond(final Function<? super U, ? extends R> function) {
+    @Nonnull
+    static <T, U, V, R> TriFunction<T, U, V, R> onlySecond(@Nonnull final Function<? super U, ? extends R> function) {
         Objects.requireNonNull(function);
         return (t, u, v) -> function.apply(u);
     }
@@ -97,7 +100,8 @@ public interface TriFunction<T, U, V, R> {
      * given {@code Function}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static <T, U, V, R> TriFunction<T, U, V, R> onlyThird(final Function<? super V, ? extends R> function) {
+    @Nonnull
+    static <T, U, V, R> TriFunction<T, U, V, R> onlyThird(@Nonnull final Function<? super V, ? extends R> function) {
         Objects.requireNonNull(function);
         return (t, u, v) -> function.apply(v);
     }

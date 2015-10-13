@@ -51,7 +51,8 @@ public interface BiObjShortConsumer<T, U> {
      * the given {@code Consumer}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static <T, U> BiObjShortConsumer<T, U> onlyFirst(final Consumer<? super T> consumer) {
+    @Nonnull
+    static <T, U> BiObjShortConsumer<T, U> onlyFirst(@Nonnull final Consumer<? super T> consumer) {
         Objects.requireNonNull(consumer);
         return (t, u, value) -> consumer.accept(t);
     }
@@ -67,7 +68,8 @@ public interface BiObjShortConsumer<T, U> {
      * the given {@code Consumer}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static <T, U> BiObjShortConsumer<T, U> onlySecond(final Consumer<? super U> consumer) {
+    @Nonnull
+    static <T, U> BiObjShortConsumer<T, U> onlySecond(@Nonnull final Consumer<? super U> consumer) {
         Objects.requireNonNull(consumer);
         return (t, u, value) -> consumer.accept(u);
     }
@@ -83,7 +85,8 @@ public interface BiObjShortConsumer<T, U> {
      * the given {@code ShortConsumer}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static <T, U> BiObjShortConsumer<T, U> onlyThird(final ShortConsumer consumer) {
+    @Nonnull
+    static <T, U> BiObjShortConsumer<T, U> onlyThird(@Nonnull final ShortConsumer consumer) {
         Objects.requireNonNull(consumer);
         return (t, u, value) -> consumer.accept(value);
     }

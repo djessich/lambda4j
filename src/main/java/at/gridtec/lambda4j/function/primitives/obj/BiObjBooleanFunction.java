@@ -67,7 +67,8 @@ public interface BiObjBooleanFunction<T, U, R> {
      * the given {@code Function}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static <T, U, R> BiObjBooleanFunction<T, U, R> onlyFirst(final Function<? super T, ? extends R> function) {
+    @Nonnull
+    static <T, U, R> BiObjBooleanFunction<T, U, R> onlyFirst(@Nonnull final Function<? super T, ? extends R> function) {
         Objects.requireNonNull(function);
         return (t, u, value) -> function.apply(t);
     }
@@ -84,7 +85,9 @@ public interface BiObjBooleanFunction<T, U, R> {
      * for the given {@code Function}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static <T, U, R> BiObjBooleanFunction<T, U, R> onlySecond(final Function<? super U, ? extends R> function) {
+    @Nonnull
+    static <T, U, R> BiObjBooleanFunction<T, U, R> onlySecond(
+            @Nonnull final Function<? super U, ? extends R> function) {
         Objects.requireNonNull(function);
         return (t, u, value) -> function.apply(u);
     }
@@ -101,7 +104,8 @@ public interface BiObjBooleanFunction<T, U, R> {
      * the given {@code BooleanFunction}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static <T, U, R> BiObjBooleanFunction<T, U, R> onlyThird(final BooleanFunction<? extends R> function) {
+    @Nonnull
+    static <T, U, R> BiObjBooleanFunction<T, U, R> onlyThird(@Nonnull final BooleanFunction<? extends R> function) {
         Objects.requireNonNull(function);
         return (t, u, value) -> function.apply(value);
     }

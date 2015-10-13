@@ -51,7 +51,8 @@ public interface FloatTernaryOperator {
      * {@code FloatUnaryOperator}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static FloatTernaryOperator onlyLeft(final FloatUnaryOperator operator) {
+    @Nonnull
+    static FloatTernaryOperator onlyLeft(@Nonnull final FloatUnaryOperator operator) {
         Objects.requireNonNull(operator);
         return (left, middle, right) -> operator.applyAsFloat(left);
     }
@@ -65,7 +66,8 @@ public interface FloatTernaryOperator {
      * {@code FloatUnaryOperator}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static FloatTernaryOperator onlyMiddle(final FloatUnaryOperator operator) {
+    @Nonnull
+    static FloatTernaryOperator onlyMiddle(@Nonnull final FloatUnaryOperator operator) {
         Objects.requireNonNull(operator);
         return (left, middle, right) -> operator.applyAsFloat(middle);
     }
@@ -79,7 +81,8 @@ public interface FloatTernaryOperator {
      * {@code FloatUnaryOperator}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static FloatTernaryOperator onlyRight(final FloatUnaryOperator operator) {
+    @Nonnull
+    static FloatTernaryOperator onlyRight(@Nonnull final FloatUnaryOperator operator) {
         Objects.requireNonNull(operator);
         return (left, middle, right) -> operator.applyAsFloat(right);
     }

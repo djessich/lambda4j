@@ -76,7 +76,8 @@ public interface ToFloatTriFunction<T, U, V> {
      * the given {@code ToFloatFunction}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static <T, U, V> ToFloatTriFunction<T, U, V> onlyFirst(final ToFloatFunction<? super T> function) {
+    @Nonnull
+    static <T, U, V> ToFloatTriFunction<T, U, V> onlyFirst(@Nonnull final ToFloatFunction<? super T> function) {
         Objects.requireNonNull(function);
         return (t, u, v) -> function.applyAsFloat(t);
     }
@@ -93,7 +94,8 @@ public interface ToFloatTriFunction<T, U, V> {
      * the given {@code ToFloatFunction}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static <T, U, V> ToFloatTriFunction<T, U, V> onlySecond(final ToFloatFunction<? super U> function) {
+    @Nonnull
+    static <T, U, V> ToFloatTriFunction<T, U, V> onlySecond(@Nonnull final ToFloatFunction<? super U> function) {
         Objects.requireNonNull(function);
         return (t, u, v) -> function.applyAsFloat(u);
     }
@@ -110,7 +112,8 @@ public interface ToFloatTriFunction<T, U, V> {
      * the given {@code ToFloatFunction}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static <T, U, V> ToFloatTriFunction<T, U, V> onlyThird(final ToFloatFunction<? super V> function) {
+    @Nonnull
+    static <T, U, V> ToFloatTriFunction<T, U, V> onlyThird(@Nonnull final ToFloatFunction<? super V> function) {
         Objects.requireNonNull(function);
         return (t, u, v) -> function.applyAsFloat(v);
     }

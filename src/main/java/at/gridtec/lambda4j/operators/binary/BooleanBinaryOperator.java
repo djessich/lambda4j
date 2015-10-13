@@ -82,7 +82,8 @@ public interface BooleanBinaryOperator {
      * {@code BooleanUnaryOperator}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static BooleanBinaryOperator onlyLeft(final BooleanUnaryOperator operator) {
+    @Nonnull
+    static BooleanBinaryOperator onlyLeft(@Nonnull final BooleanUnaryOperator operator) {
         Objects.requireNonNull(operator);
         return (left, right) -> operator.applyAsBoolean(left);
     }
@@ -96,7 +97,8 @@ public interface BooleanBinaryOperator {
      * {@code BooleanUnaryOperator}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static BooleanBinaryOperator onlyRight(final BooleanUnaryOperator operator) {
+    @Nonnull
+    static BooleanBinaryOperator onlyRight(@Nonnull final BooleanUnaryOperator operator) {
         Objects.requireNonNull(operator);
         return (left, right) -> operator.applyAsBoolean(right);
     }

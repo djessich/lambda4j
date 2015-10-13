@@ -46,7 +46,8 @@ public interface ShortTriConsumer {
      * {@code ShortConsumer}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static ShortTriConsumer onlyFirst(final ShortConsumer consumer) {
+    @Nonnull
+    static ShortTriConsumer onlyFirst(@Nonnull final ShortConsumer consumer) {
         Objects.requireNonNull(consumer);
         return (value1, value2, value3) -> consumer.accept(value1);
     }
@@ -60,7 +61,8 @@ public interface ShortTriConsumer {
      * {@code ShortConsumer}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static ShortTriConsumer onlySecond(final ShortConsumer consumer) {
+    @Nonnull
+    static ShortTriConsumer onlySecond(@Nonnull final ShortConsumer consumer) {
         Objects.requireNonNull(consumer);
         return (value1, value2, value3) -> consumer.accept(value2);
     }
@@ -74,7 +76,8 @@ public interface ShortTriConsumer {
      * {@code ShortConsumer}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static ShortTriConsumer onlyThird(final ShortConsumer consumer) {
+    @Nonnull
+    static ShortTriConsumer onlyThird(@Nonnull final ShortConsumer consumer) {
         Objects.requireNonNull(consumer);
         return (value1, value2, value3) -> consumer.accept(value3);
     }

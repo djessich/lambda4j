@@ -63,7 +63,8 @@ public interface ToByteObjByteFunction<T> {
      * for the given {@code ToByteFunction}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static <T> ToByteObjByteFunction<T> onlyFirst(final ToByteFunction<? super T> function) {
+    @Nonnull
+    static <T> ToByteObjByteFunction<T> onlyFirst(@Nonnull final ToByteFunction<? super T> function) {
         Objects.requireNonNull(function);
         return (t, value) -> function.applyAsByte(t);
     }
@@ -78,7 +79,8 @@ public interface ToByteObjByteFunction<T> {
      * for the given {@code ByteUnaryOperator}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static <T> ToByteObjByteFunction<T> onlySecond(final ByteUnaryOperator function) {
+    @Nonnull
+    static <T> ToByteObjByteFunction<T> onlySecond(@Nonnull final ByteUnaryOperator function) {
         Objects.requireNonNull(function);
         return (t, value) -> function.applyAsByte(value);
     }

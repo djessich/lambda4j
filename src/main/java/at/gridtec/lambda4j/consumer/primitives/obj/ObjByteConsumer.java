@@ -49,7 +49,8 @@ public interface ObjByteConsumer<T> {
      * given {@code Consumer}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static <T> ObjByteConsumer<T> onlyFirst(final Consumer<? super T> consumer) {
+    @Nonnull
+    static <T> ObjByteConsumer<T> onlyFirst(@Nonnull final Consumer<? super T> consumer) {
         Objects.requireNonNull(consumer);
         return (t, value) -> consumer.accept(t);
     }
@@ -64,7 +65,8 @@ public interface ObjByteConsumer<T> {
      * given {@code ByteConsumer}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static <T> ObjByteConsumer<T> onlySecond(final ByteConsumer consumer) {
+    @Nonnull
+    static <T> ObjByteConsumer<T> onlySecond(@Nonnull final ByteConsumer consumer) {
         Objects.requireNonNull(consumer);
         return (t, value) -> consumer.accept(value);
     }

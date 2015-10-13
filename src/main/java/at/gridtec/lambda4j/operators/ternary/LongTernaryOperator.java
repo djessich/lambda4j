@@ -50,7 +50,8 @@ public interface LongTernaryOperator {
      * {@code LongUnaryOperator}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static LongTernaryOperator onlyLeft(final LongUnaryOperator operator) {
+    @Nonnull
+    static LongTernaryOperator onlyLeft(@Nonnull final LongUnaryOperator operator) {
         Objects.requireNonNull(operator);
         return (left, middle, right) -> operator.applyAsLong(left);
     }
@@ -64,7 +65,8 @@ public interface LongTernaryOperator {
      * {@code LongUnaryOperator}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static LongTernaryOperator onlyMiddle(final LongUnaryOperator operator) {
+    @Nonnull
+    static LongTernaryOperator onlyMiddle(@Nonnull final LongUnaryOperator operator) {
         Objects.requireNonNull(operator);
         return (left, middle, right) -> operator.applyAsLong(middle);
     }
@@ -78,7 +80,8 @@ public interface LongTernaryOperator {
      * {@code LongUnaryOperator}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static LongTernaryOperator onlyRight(final LongUnaryOperator operator) {
+    @Nonnull
+    static LongTernaryOperator onlyRight(@Nonnull final LongUnaryOperator operator) {
         Objects.requireNonNull(operator);
         return (left, middle, right) -> operator.applyAsLong(right);
     }

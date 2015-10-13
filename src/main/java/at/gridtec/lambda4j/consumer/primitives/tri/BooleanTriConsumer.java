@@ -46,7 +46,8 @@ public interface BooleanTriConsumer {
      * {@code BooleanConsumer}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static BooleanTriConsumer onlyFirst(final BooleanConsumer consumer) {
+    @Nonnull
+    static BooleanTriConsumer onlyFirst(@Nonnull final BooleanConsumer consumer) {
         Objects.requireNonNull(consumer);
         return (value1, value2, value3) -> consumer.accept(value1);
     }
@@ -60,7 +61,8 @@ public interface BooleanTriConsumer {
      * {@code BooleanConsumer}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static BooleanTriConsumer onlySecond(final BooleanConsumer consumer) {
+    @Nonnull
+    static BooleanTriConsumer onlySecond(@Nonnull final BooleanConsumer consumer) {
         Objects.requireNonNull(consumer);
         return (value1, value2, value3) -> consumer.accept(value2);
     }
@@ -74,7 +76,8 @@ public interface BooleanTriConsumer {
      * {@code BooleanConsumer}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static BooleanTriConsumer onlyThird(final BooleanConsumer consumer) {
+    @Nonnull
+    static BooleanTriConsumer onlyThird(@Nonnull final BooleanConsumer consumer) {
         Objects.requireNonNull(consumer);
         return (value1, value2, value3) -> consumer.accept(value3);
     }

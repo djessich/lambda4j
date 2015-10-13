@@ -65,7 +65,8 @@ public interface ToDoubleBiObjDoubleFunction<T, U> {
      * argument for the given {@code ToDoubleFunction}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static <T, U> ToDoubleBiObjDoubleFunction<T, U> onlyFirst(final ToDoubleFunction<? super T> function) {
+    @Nonnull
+    static <T, U> ToDoubleBiObjDoubleFunction<T, U> onlyFirst(@Nonnull final ToDoubleFunction<? super T> function) {
         Objects.requireNonNull(function);
         return (t, u, value) -> function.applyAsDouble(t);
     }
@@ -81,7 +82,8 @@ public interface ToDoubleBiObjDoubleFunction<T, U> {
      * argument for the given {@code ToDoubleFunction}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static <T, U> ToDoubleBiObjDoubleFunction<T, U> onlySecond(final ToDoubleFunction<? super U> function) {
+    @Nonnull
+    static <T, U> ToDoubleBiObjDoubleFunction<T, U> onlySecond(@Nonnull final ToDoubleFunction<? super U> function) {
         Objects.requireNonNull(function);
         return (t, u, value) -> function.applyAsDouble(u);
     }
@@ -97,7 +99,8 @@ public interface ToDoubleBiObjDoubleFunction<T, U> {
      * argument for the given {@code DoubleUnaryOperator}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static <T, U> ToDoubleBiObjDoubleFunction<T, U> onlyThird(final DoubleUnaryOperator function) {
+    @Nonnull
+    static <T, U> ToDoubleBiObjDoubleFunction<T, U> onlyThird(@Nonnull final DoubleUnaryOperator function) {
         Objects.requireNonNull(function);
         return (t, u, value) -> function.applyAsDouble(value);
     }

@@ -15,6 +15,7 @@
  */
 package at.gridtec.lambda4j.consumer;
 
+import javax.annotation.Nonnull;
 import java.util.Objects;
 import java.util.function.Consumer;
 import java.util.function.Function;
@@ -47,7 +48,8 @@ public interface TriConsumer<T, U, V> {
      * given {@code Consumer}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static <T, U, V> TriConsumer<T, U, V> onlyFirst(final Consumer<? super T> consumer) {
+    @Nonnull
+    static <T, U, V> TriConsumer<T, U, V> onlyFirst(@Nonnull final Consumer<? super T> consumer) {
         Objects.requireNonNull(consumer);
         return (t, u, v) -> consumer.accept(t);
     }
@@ -64,7 +66,8 @@ public interface TriConsumer<T, U, V> {
      * given {@code Consumer}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static <T, U, V> TriConsumer<T, U, V> onlySecond(final Consumer<? super U> consumer) {
+    @Nonnull
+    static <T, U, V> TriConsumer<T, U, V> onlySecond(@Nonnull final Consumer<? super U> consumer) {
         Objects.requireNonNull(consumer);
         return (t, u, v) -> consumer.accept(u);
     }
@@ -81,7 +84,8 @@ public interface TriConsumer<T, U, V> {
      * given {@code Consumer}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static <T, U, V> TriConsumer<T, U, V> onlyThird(final Consumer<? super V> consumer) {
+    @Nonnull
+    static <T, U, V> TriConsumer<T, U, V> onlyThird(@Nonnull final Consumer<? super V> consumer) {
         Objects.requireNonNull(consumer);
         return (t, u, v) -> consumer.accept(v);
     }

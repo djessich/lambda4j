@@ -61,7 +61,8 @@ public interface BooleanBiFunction<R> {
      * the given {@code BooleanFunction}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static <R> BooleanBiFunction<R> onlyFirst(final BooleanFunction<? extends R> function) {
+    @Nonnull
+    static <R> BooleanBiFunction<R> onlyFirst(@Nonnull final BooleanFunction<? extends R> function) {
         Objects.requireNonNull(function);
         return (value1, value2) -> function.apply(value1);
     }
@@ -76,7 +77,8 @@ public interface BooleanBiFunction<R> {
      * the given {@code BooleanFunction}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static <R> BooleanBiFunction<R> onlySecond(final BooleanFunction<? extends R> function) {
+    @Nonnull
+    static <R> BooleanBiFunction<R> onlySecond(@Nonnull final BooleanFunction<? extends R> function) {
         Objects.requireNonNull(function);
         return (value1, value2) -> function.apply(value2);
     }

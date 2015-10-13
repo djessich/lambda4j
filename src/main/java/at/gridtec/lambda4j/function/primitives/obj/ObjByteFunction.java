@@ -64,7 +64,8 @@ public interface ObjByteFunction<T, R> {
      * given {@code Function}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static <T, R> ObjByteFunction<T, R> onlyFirst(final Function<? super T, ? extends R> function) {
+    @Nonnull
+    static <T, R> ObjByteFunction<T, R> onlyFirst(@Nonnull final Function<? super T, ? extends R> function) {
         Objects.requireNonNull(function);
         return (t, value) -> function.apply(t);
     }
@@ -80,7 +81,8 @@ public interface ObjByteFunction<T, R> {
      * given {@code ByteFunction}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static <T, R> ObjByteFunction<T, R> onlySecond(final ByteFunction<? extends R> function) {
+    @Nonnull
+    static <T, R> ObjByteFunction<T, R> onlySecond(@Nonnull final ByteFunction<? extends R> function) {
         Objects.requireNonNull(function);
         return (t, value) -> function.apply(value);
     }

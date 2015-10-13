@@ -63,7 +63,8 @@ public interface ObjDoubleFunction<T, R> {
      * the given {@code Function}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static <T, R> ObjDoubleFunction<T, R> onlyFirst(final Function<? super T, ? extends R> function) {
+    @Nonnull
+    static <T, R> ObjDoubleFunction<T, R> onlyFirst(@Nonnull final Function<? super T, ? extends R> function) {
         Objects.requireNonNull(function);
         return (t, value) -> function.apply(t);
     }
@@ -79,7 +80,8 @@ public interface ObjDoubleFunction<T, R> {
      * the given {@code DoubleFunction}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static <T, R> ObjDoubleFunction<T, R> onlySecond(final DoubleFunction<? extends R> function) {
+    @Nonnull
+    static <T, R> ObjDoubleFunction<T, R> onlySecond(@Nonnull final DoubleFunction<? extends R> function) {
         Objects.requireNonNull(function);
         return (t, value) -> function.apply(value);
     }

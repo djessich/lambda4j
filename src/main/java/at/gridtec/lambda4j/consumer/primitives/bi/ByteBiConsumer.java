@@ -45,7 +45,8 @@ public interface ByteBiConsumer {
      * given {@code ByteConsumer}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static ByteBiConsumer onlyFirst(final ByteConsumer consumer) {
+    @Nonnull
+    static ByteBiConsumer onlyFirst(@Nonnull final ByteConsumer consumer) {
         Objects.requireNonNull(consumer);
         return (value1, value2) -> consumer.accept(value1);
     }
@@ -59,7 +60,8 @@ public interface ByteBiConsumer {
      * given {@code ByteConsumer}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static ByteBiConsumer onlySecond(final ByteConsumer consumer) {
+    @Nonnull
+    static ByteBiConsumer onlySecond(@Nonnull final ByteConsumer consumer) {
         Objects.requireNonNull(consumer);
         return (value1, value2) -> consumer.accept(value2);
     }

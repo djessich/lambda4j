@@ -64,7 +64,8 @@ public interface ObjFloatFunction<T, R> {
      * given {@code Function}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static <T, R> ObjFloatFunction<T, R> onlyFirst(final Function<? super T, ? extends R> function) {
+    @Nonnull
+    static <T, R> ObjFloatFunction<T, R> onlyFirst(@Nonnull final Function<? super T, ? extends R> function) {
         Objects.requireNonNull(function);
         return (t, value) -> function.apply(t);
     }
@@ -80,7 +81,8 @@ public interface ObjFloatFunction<T, R> {
      * the given {@code FloatFunction}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static <T, R> ObjFloatFunction<T, R> onlySecond(final FloatFunction<? extends R> function) {
+    @Nonnull
+    static <T, R> ObjFloatFunction<T, R> onlySecond(@Nonnull final FloatFunction<? extends R> function) {
         Objects.requireNonNull(function);
         return (t, value) -> function.apply(value);
     }

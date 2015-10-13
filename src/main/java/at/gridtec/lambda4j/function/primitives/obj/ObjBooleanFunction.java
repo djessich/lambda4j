@@ -65,7 +65,8 @@ public interface ObjBooleanFunction<T, R> {
      * the given {@code Function}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static <T, R> ObjBooleanFunction<T, R> onlyFirst(final Function<? super T, ? extends R> function) {
+    @Nonnull
+    static <T, R> ObjBooleanFunction<T, R> onlyFirst(@Nonnull final Function<? super T, ? extends R> function) {
         Objects.requireNonNull(function);
         return (t, value) -> function.apply(t);
     }
@@ -81,7 +82,8 @@ public interface ObjBooleanFunction<T, R> {
      * the given {@code BooleanFunction}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static <T, R> ObjBooleanFunction<T, R> onlySecond(final BooleanFunction<? extends R> function) {
+    @Nonnull
+    static <T, R> ObjBooleanFunction<T, R> onlySecond(@Nonnull final BooleanFunction<? extends R> function) {
         Objects.requireNonNull(function);
         return (t, value) -> function.apply(value);
     }

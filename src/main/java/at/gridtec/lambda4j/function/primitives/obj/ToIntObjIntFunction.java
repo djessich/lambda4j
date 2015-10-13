@@ -61,7 +61,8 @@ public interface ToIntObjIntFunction<T> {
      * the given {@code ToIntFunction}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static <T> ToIntObjIntFunction<T> onlyFirst(final ToIntFunction<? super T> function) {
+    @Nonnull
+    static <T> ToIntObjIntFunction<T> onlyFirst(@Nonnull final ToIntFunction<? super T> function) {
         Objects.requireNonNull(function);
         return (t, value) -> function.applyAsInt(t);
     }
@@ -76,7 +77,8 @@ public interface ToIntObjIntFunction<T> {
      * the given {@code IntUnaryOperator}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static <T> ToIntObjIntFunction<T> onlySecond(final IntUnaryOperator function) {
+    @Nonnull
+    static <T> ToIntObjIntFunction<T> onlySecond(@Nonnull final IntUnaryOperator function) {
         Objects.requireNonNull(function);
         return (t, value) -> function.applyAsInt(value);
     }

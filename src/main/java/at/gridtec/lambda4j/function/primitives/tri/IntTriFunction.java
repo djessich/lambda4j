@@ -61,7 +61,8 @@ public interface IntTriFunction<R> {
      * given {@code IntFunction}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static <R> IntTriFunction<R> onlyFirst(final IntFunction<? extends R> function) {
+    @Nonnull
+    static <R> IntTriFunction<R> onlyFirst(@Nonnull final IntFunction<? extends R> function) {
         Objects.requireNonNull(function);
         return (value1, value2, value3) -> function.apply(value1);
     }
@@ -76,7 +77,8 @@ public interface IntTriFunction<R> {
      * given {@code IntFunction}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static <R> IntTriFunction<R> onlySecond(final IntFunction<? extends R> function) {
+    @Nonnull
+    static <R> IntTriFunction<R> onlySecond(@Nonnull final IntFunction<? extends R> function) {
         Objects.requireNonNull(function);
         return (value1, value2, value3) -> function.apply(value2);
     }
@@ -91,7 +93,8 @@ public interface IntTriFunction<R> {
      * given {@code IntFunction}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static <R> IntTriFunction<R> onlyThird(final IntFunction<? extends R> function) {
+    @Nonnull
+    static <R> IntTriFunction<R> onlyThird(@Nonnull final IntFunction<? extends R> function) {
         Objects.requireNonNull(function);
         return (value1, value2, value3) -> function.apply(value3);
     }

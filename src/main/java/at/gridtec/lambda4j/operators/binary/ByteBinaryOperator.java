@@ -103,7 +103,8 @@ public interface ByteBinaryOperator {
      * {@code ByteUnaryOperator}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static ByteBinaryOperator onlyLeft(final ByteUnaryOperator operator) {
+    @Nonnull
+    static ByteBinaryOperator onlyLeft(@Nonnull final ByteUnaryOperator operator) {
         Objects.requireNonNull(operator);
         return (left, right) -> operator.applyAsByte(left);
     }
@@ -117,7 +118,8 @@ public interface ByteBinaryOperator {
      * {@code ByteUnaryOperator}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static ByteBinaryOperator onlyRight(final ByteUnaryOperator operator) {
+    @Nonnull
+    static ByteBinaryOperator onlyRight(@Nonnull final ByteUnaryOperator operator) {
         Objects.requireNonNull(operator);
         return (left, right) -> operator.applyAsByte(right);
     }

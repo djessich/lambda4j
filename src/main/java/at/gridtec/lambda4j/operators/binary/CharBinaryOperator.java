@@ -103,7 +103,8 @@ public interface CharBinaryOperator {
      * {@code CharUnaryOperator}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static CharBinaryOperator onlyLeft(final CharUnaryOperator operator) {
+    @Nonnull
+    static CharBinaryOperator onlyLeft(@Nonnull final CharUnaryOperator operator) {
         Objects.requireNonNull(operator);
         return (left, right) -> operator.applyAsChar(left);
     }
@@ -117,7 +118,8 @@ public interface CharBinaryOperator {
      * {@code CharUnaryOperator}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static CharBinaryOperator onlyRight(final CharUnaryOperator operator) {
+    @Nonnull
+    static CharBinaryOperator onlyRight(@Nonnull final CharUnaryOperator operator) {
         Objects.requireNonNull(operator);
         return (left, right) -> operator.applyAsChar(right);
     }

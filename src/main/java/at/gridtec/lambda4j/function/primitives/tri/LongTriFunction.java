@@ -61,7 +61,8 @@ public interface LongTriFunction<R> {
      * given {@code LongFunction}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static <R> LongTriFunction<R> onlyFirst(final LongFunction<? extends R> function) {
+    @Nonnull
+    static <R> LongTriFunction<R> onlyFirst(@Nonnull final LongFunction<? extends R> function) {
         Objects.requireNonNull(function);
         return (value1, value2, value3) -> function.apply(value1);
     }
@@ -76,7 +77,8 @@ public interface LongTriFunction<R> {
      * given {@code LongFunction}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static <R> LongTriFunction<R> onlySecond(final LongFunction<? extends R> function) {
+    @Nonnull
+    static <R> LongTriFunction<R> onlySecond(@Nonnull final LongFunction<? extends R> function) {
         Objects.requireNonNull(function);
         return (value1, value2, value3) -> function.apply(value2);
     }
@@ -91,7 +93,8 @@ public interface LongTriFunction<R> {
      * given {@code LongFunction}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static <R> LongTriFunction<R> onlyThird(final LongFunction<? extends R> function) {
+    @Nonnull
+    static <R> LongTriFunction<R> onlyThird(@Nonnull final LongFunction<? extends R> function) {
         Objects.requireNonNull(function);
         return (value1, value2, value3) -> function.apply(value3);
     }

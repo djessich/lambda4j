@@ -61,7 +61,8 @@ public interface ShortBiFunction<R> {
      * given {@code ShortFunction}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static <R> ShortBiFunction<R> onlyFirst(final ShortFunction<? extends R> function) {
+    @Nonnull
+    static <R> ShortBiFunction<R> onlyFirst(@Nonnull final ShortFunction<? extends R> function) {
         Objects.requireNonNull(function);
         return (value1, value2) -> function.apply(value1);
     }
@@ -76,7 +77,8 @@ public interface ShortBiFunction<R> {
      * given {@code ShortFunction}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static <R> ShortBiFunction<R> onlySecond(final ShortFunction<? extends R> function) {
+    @Nonnull
+    static <R> ShortBiFunction<R> onlySecond(@Nonnull final ShortFunction<? extends R> function) {
         Objects.requireNonNull(function);
         return (value1, value2) -> function.apply(value2);
     }

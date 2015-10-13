@@ -75,7 +75,8 @@ public interface ToShortBiFunction<T, U> {
      * the given {@code ToShortFunction}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static <T, U> ToShortBiFunction<T, U> onlyFirst(final ToShortFunction<? super T> function) {
+    @Nonnull
+    static <T, U> ToShortBiFunction<T, U> onlyFirst(@Nonnull final ToShortFunction<? super T> function) {
         Objects.requireNonNull(function);
         return (t, u) -> function.applyAsShort(t);
     }
@@ -91,7 +92,8 @@ public interface ToShortBiFunction<T, U> {
      * the given {@code ToShortFunction}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static <T, U> ToShortBiFunction<T, U> onlySecond(final ToShortFunction<? super U> function) {
+    @Nonnull
+    static <T, U> ToShortBiFunction<T, U> onlySecond(@Nonnull final ToShortFunction<? super U> function) {
         Objects.requireNonNull(function);
         return (t, u) -> function.applyAsShort(u);
     }
@@ -313,8 +315,8 @@ public interface ToShortBiFunction<T, U> {
 
     /**
      * Returns a composed {@link BiFunction} which represents this {@link ToShortBiFunction}. Thereby the primitive
-     * input argument for this function is autoboxed. This method is just convenience to provide the ability to use
-     * this {@code ToShortBiFunction} with JRE specific methods, only accepting {@code BiFunction}.
+     * input argument for this function is autoboxed. This method is just convenience to provide the ability to use this
+     * {@code ToShortBiFunction} with JRE specific methods, only accepting {@code BiFunction}.
      *
      * @return A composed {@code BiFunction} which represents this {@code ToShortBiFunction}.
      */

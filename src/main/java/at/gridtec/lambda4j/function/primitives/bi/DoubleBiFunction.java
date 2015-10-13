@@ -61,7 +61,8 @@ public interface DoubleBiFunction<R> {
      * given {@code DoubleFunction}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static <R> DoubleBiFunction<R> onlyFirst(final DoubleFunction<? extends R> function) {
+    @Nonnull
+    static <R> DoubleBiFunction<R> onlyFirst(@Nonnull final DoubleFunction<? extends R> function) {
         Objects.requireNonNull(function);
         return (value1, value2) -> function.apply(value1);
     }
@@ -76,7 +77,8 @@ public interface DoubleBiFunction<R> {
      * the given {@code DoubleFunction}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static <R> DoubleBiFunction<R> onlySecond(final DoubleFunction<? extends R> function) {
+    @Nonnull
+    static <R> DoubleBiFunction<R> onlySecond(@Nonnull final DoubleFunction<? extends R> function) {
         Objects.requireNonNull(function);
         return (value1, value2) -> function.apply(value2);
     }

@@ -61,7 +61,8 @@ public interface IntBiFunction<R> {
      * given {@code IntFunction}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static <R> IntBiFunction<R> onlyFirst(final IntFunction<? extends R> function) {
+    @Nonnull
+    static <R> IntBiFunction<R> onlyFirst(@Nonnull final IntFunction<? extends R> function) {
         Objects.requireNonNull(function);
         return (value1, value2) -> function.apply(value1);
     }
@@ -76,7 +77,8 @@ public interface IntBiFunction<R> {
      * given {@code IntFunction}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static <R> IntBiFunction<R> onlySecond(final IntFunction<? extends R> function) {
+    @Nonnull
+    static <R> IntBiFunction<R> onlySecond(@Nonnull final IntFunction<? extends R> function) {
         Objects.requireNonNull(function);
         return (value1, value2) -> function.apply(value2);
     }

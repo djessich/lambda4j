@@ -49,7 +49,8 @@ public interface ObjShortConsumer<T> {
      * given {@code Consumer}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static <T> ObjShortConsumer<T> onlyFirst(final Consumer<? super T> consumer) {
+    @Nonnull
+    static <T> ObjShortConsumer<T> onlyFirst(@Nonnull final Consumer<? super T> consumer) {
         Objects.requireNonNull(consumer);
         return (t, value) -> consumer.accept(t);
     }
@@ -64,7 +65,8 @@ public interface ObjShortConsumer<T> {
      * the given {@code ShortConsumer}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static <T> ObjShortConsumer<T> onlySecond(final ShortConsumer consumer) {
+    @Nonnull
+    static <T> ObjShortConsumer<T> onlySecond(@Nonnull final ShortConsumer consumer) {
         Objects.requireNonNull(consumer);
         return (t, value) -> consumer.accept(value);
     }

@@ -61,7 +61,8 @@ public interface FloatTriFunction<R> {
      * given {@code FloatFunction}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static <R> FloatTriFunction<R> onlyFirst(final FloatFunction<? extends R> function) {
+    @Nonnull
+    static <R> FloatTriFunction<R> onlyFirst(@Nonnull final FloatFunction<? extends R> function) {
         Objects.requireNonNull(function);
         return (value1, value2, value3) -> function.apply(value1);
     }
@@ -76,7 +77,8 @@ public interface FloatTriFunction<R> {
      * the given {@code FloatFunction}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static <R> FloatTriFunction<R> onlySecond(final FloatFunction<? extends R> function) {
+    @Nonnull
+    static <R> FloatTriFunction<R> onlySecond(@Nonnull final FloatFunction<? extends R> function) {
         Objects.requireNonNull(function);
         return (value1, value2, value3) -> function.apply(value2);
     }
@@ -91,7 +93,8 @@ public interface FloatTriFunction<R> {
      * given {@code FloatFunction}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static <R> FloatTriFunction<R> onlyThird(final FloatFunction<? extends R> function) {
+    @Nonnull
+    static <R> FloatTriFunction<R> onlyThird(@Nonnull final FloatFunction<? extends R> function) {
         Objects.requireNonNull(function);
         return (value1, value2, value3) -> function.apply(value3);
     }

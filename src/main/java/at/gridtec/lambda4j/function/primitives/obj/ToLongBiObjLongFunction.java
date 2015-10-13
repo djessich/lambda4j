@@ -19,6 +19,7 @@ import at.gridtec.lambda4j.consumer.primitives.obj.BiObjLongConsumer;
 import at.gridtec.lambda4j.function.TriFunction;
 import at.gridtec.lambda4j.function.primitives.to.tri.ToLongTriFunction;
 
+import javax.annotation.Nonnull;
 import java.util.Objects;
 import java.util.function.Function;
 import java.util.function.LongConsumer;
@@ -64,7 +65,8 @@ public interface ToLongBiObjLongFunction<T, U> {
      * for the given {@code ToLongFunction}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static <T, U> ToLongBiObjLongFunction<T, U> onlyFirst(final ToLongFunction<? super T> function) {
+    @Nonnull
+    static <T, U> ToLongBiObjLongFunction<T, U> onlyFirst(@Nonnull final ToLongFunction<? super T> function) {
         Objects.requireNonNull(function);
         return (t, u, value) -> function.applyAsLong(t);
     }
@@ -80,7 +82,8 @@ public interface ToLongBiObjLongFunction<T, U> {
      * for the given {@code ToLongFunction}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static <T, U> ToLongBiObjLongFunction<T, U> onlySecond(final ToLongFunction<? super U> function) {
+    @Nonnull
+    static <T, U> ToLongBiObjLongFunction<T, U> onlySecond(@Nonnull final ToLongFunction<? super U> function) {
         Objects.requireNonNull(function);
         return (t, u, value) -> function.applyAsLong(u);
     }
@@ -96,7 +99,8 @@ public interface ToLongBiObjLongFunction<T, U> {
      * for the given {@code LongUnaryOperator}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static <T, U> ToLongBiObjLongFunction<T, U> onlyThird(final LongUnaryOperator function) {
+    @Nonnull
+    static <T, U> ToLongBiObjLongFunction<T, U> onlyThird(@Nonnull final LongUnaryOperator function) {
         Objects.requireNonNull(function);
         return (t, u, value) -> function.applyAsLong(value);
     }
@@ -221,6 +225,7 @@ public interface ToLongBiObjLongFunction<T, U> {
     /**
      * Returns a composed {@link TriFunction} which represents this {@link ObjLongFunction}. Thereby the primitive input
      * argument for this function is autoboxed.
+     *
      * @return A composed {@code TriFunction} which represents this {@code ObjLongFunction}.
      */
     default TriFunction<T, U, Long, Long> boxed() {

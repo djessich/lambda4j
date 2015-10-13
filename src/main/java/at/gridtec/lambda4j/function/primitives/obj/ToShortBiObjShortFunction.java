@@ -65,7 +65,8 @@ public interface ToShortBiObjShortFunction<T, U> {
      * argument for the given {@code ToShortFunction}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static <T, U> ToShortBiObjShortFunction<T, U> onlyFirst(final ToShortFunction<? super T> function) {
+    @Nonnull
+    static <T, U> ToShortBiObjShortFunction<T, U> onlyFirst(@Nonnull final ToShortFunction<? super T> function) {
         Objects.requireNonNull(function);
         return (t, u, value) -> function.applyAsShort(t);
     }
@@ -81,7 +82,8 @@ public interface ToShortBiObjShortFunction<T, U> {
      * argument for the given {@code ToShortFunction}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static <T, U> ToShortBiObjShortFunction<T, U> onlySecond(final ToShortFunction<? super U> function) {
+    @Nonnull
+    static <T, U> ToShortBiObjShortFunction<T, U> onlySecond(@Nonnull final ToShortFunction<? super U> function) {
         Objects.requireNonNull(function);
         return (t, u, value) -> function.applyAsShort(u);
     }
@@ -97,7 +99,8 @@ public interface ToShortBiObjShortFunction<T, U> {
      * argument for the given {@code ShortUnaryOperator}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static <T, U> ToShortBiObjShortFunction<T, U> onlyThird(final ShortUnaryOperator function) {
+    @Nonnull
+    static <T, U> ToShortBiObjShortFunction<T, U> onlyThird(@Nonnull final ShortUnaryOperator function) {
         Objects.requireNonNull(function);
         return (t, u, value) -> function.applyAsShort(value);
     }

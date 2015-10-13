@@ -19,6 +19,7 @@ import at.gridtec.lambda4j.consumer.primitives.obj.BiObjIntConsumer;
 import at.gridtec.lambda4j.function.TriFunction;
 import at.gridtec.lambda4j.function.primitives.to.tri.ToIntTriFunction;
 
+import javax.annotation.Nonnull;
 import java.util.Objects;
 import java.util.function.Function;
 import java.util.function.IntConsumer;
@@ -64,7 +65,8 @@ public interface ToIntBiObjIntFunction<T, U> {
      * for the given {@code ToIntFunction}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static <T, U> ToIntBiObjIntFunction<T, U> onlyFirst(final ToIntFunction<? super T> function) {
+    @Nonnull
+    static <T, U> ToIntBiObjIntFunction<T, U> onlyFirst(@Nonnull final ToIntFunction<? super T> function) {
         Objects.requireNonNull(function);
         return (t, u, value) -> function.applyAsInt(t);
     }
@@ -80,7 +82,8 @@ public interface ToIntBiObjIntFunction<T, U> {
      * for the given {@code ToIntFunction}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static <T, U> ToIntBiObjIntFunction<T, U> onlySecond(final ToIntFunction<? super U> function) {
+    @Nonnull
+    static <T, U> ToIntBiObjIntFunction<T, U> onlySecond(@Nonnull final ToIntFunction<? super U> function) {
         Objects.requireNonNull(function);
         return (t, u, value) -> function.applyAsInt(u);
     }
@@ -96,7 +99,8 @@ public interface ToIntBiObjIntFunction<T, U> {
      * for the given {@code IntUnaryOperator}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static <T, U> ToIntBiObjIntFunction<T, U> onlyThird(final IntUnaryOperator function) {
+    @Nonnull
+    static <T, U> ToIntBiObjIntFunction<T, U> onlyThird(@Nonnull final IntUnaryOperator function) {
         Objects.requireNonNull(function);
         return (t, u, value) -> function.applyAsInt(value);
     }
@@ -221,6 +225,7 @@ public interface ToIntBiObjIntFunction<T, U> {
     /**
      * Returns a composed {@link TriFunction} which represents this {@link ObjIntFunction}. Thereby the primitive input
      * argument for this function is autoboxed.
+     *
      * @return A composed {@code TriFunction} which represents this {@code ObjIntFunction}.
      */
     default TriFunction<T, U, Integer, Integer> boxed() {
