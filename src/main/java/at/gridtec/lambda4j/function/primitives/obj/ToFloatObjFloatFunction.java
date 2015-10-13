@@ -185,16 +185,17 @@ public interface ToFloatObjFloatFunction<T> {
     }
 
     /**
-     * Returns a composed {@link ObjFloatConsumer} that fist applies this operation to its input, and then consumes the
-     * result using the given {@code Consumer}. If evaluation of either operator throws an exception, it is relayed to
-     * the caller of the composed operation.
+     * Returns a composed {@link ObjFloatConsumer} that fist applies this operation to its input, and then consumes
+     * the result using the given {@link FloatConsumer}. If evaluation of either operation throws an exception, it is relayed
+     * to the caller of the composed operation.
      *
-     * @param consumer The {@code Consumer} which consumes the result from this operation
-     * @return A composed {@code ObjFloatConsumer} that first applies this operation to its input, and then consumes the
-     * result using the given {@code Consumer}.
+     * @param consumer The operation which consumes the result from this operation
+     * @return A composed {@code ObjFloatConsumer} that first applies this operation to its input, and then consumes
+     * the result using the given {@code FloatConsumer}.
      * @throws NullPointerException If given argument is {@code null}
      */
-    default ObjFloatConsumer<T> consume(FloatConsumer consumer) {
+    @Nonnull
+    default ObjFloatConsumer<T> consume(@Nonnull final FloatConsumer consumer) {
         Objects.requireNonNull(consumer);
         return (t, value) -> consumer.accept(applyAsFloat(t, value));
     }

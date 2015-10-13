@@ -200,6 +200,7 @@ public interface BooleanBinaryOperator {
     default int arity() {
         return 2;
     }
+
     /**
      * Returns a {@link BooleanBinaryOperator} that represents the logical negation of this one.
      *

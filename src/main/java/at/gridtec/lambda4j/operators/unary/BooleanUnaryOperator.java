@@ -114,6 +114,7 @@ public interface BooleanUnaryOperator {
     default int arity() {
         return 1;
     }
+
     /**
      * Returns a {@link BooleanUnaryOperator} that represents the logical negation of this one.
      *

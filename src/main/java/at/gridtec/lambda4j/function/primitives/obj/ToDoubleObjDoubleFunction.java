@@ -184,16 +184,17 @@ public interface ToDoubleObjDoubleFunction<T> {
     }
 
     /**
-     * Returns a composed {@link ObjDoubleConsumer} that fist applies this operation to its input, and then consumes the
-     * result using the given {@code Consumer}. If evaluation of either operator throws an exception, it is relayed to
-     * the caller of the composed operation.
+     * Returns a composed {@link ObjDoubleConsumer} that fist applies this operation to its input, and then consumes
+     * the result using the given {@link DoubleConsumer}. If evaluation of either operation throws an exception, it is relayed
+     * to the caller of the composed operation.
      *
-     * @param consumer The {@code Consumer} which consumes the result from this operation
+     * @param consumer The operation which consumes the result from this operation
      * @return A composed {@code ObjDoubleConsumer} that first applies this operation to its input, and then consumes
-     * the result using the given {@code Consumer}.
+     * the result using the given {@code DoubleConsumer}.
      * @throws NullPointerException If given argument is {@code null}
      */
-    default ObjDoubleConsumer<T> consume(DoubleConsumer consumer) {
+    @Nonnull
+    default ObjDoubleConsumer<T> consume(@Nonnull final DoubleConsumer consumer) {
         Objects.requireNonNull(consumer);
         return (t, value) -> consumer.accept(applyAsDouble(t, value));
     }

@@ -216,15 +216,16 @@ public interface BiObjCharFunction<T, U, R> {
 
     /**
      * Returns a composed {@link BiObjCharConsumer} that fist applies this operation to its input, and then consumes the
-     * result using the given {@code Consumer}. If evaluation of either operator throws an exception, it is relayed to
+     * result using the given {@link Consumer}. If evaluation of either operation throws an exception, it is relayed to
      * the caller of the composed operation.
      *
-     * @param consumer The {@code Consumer} which consumes the result from this operation
-     * @return A composed {@code BiObjCharConsumer} that first applies this operation to its input, and then consumes
-     * the result using the given {@code Consumer}.
+     * @param consumer The operation which consumes the result from this operation
+     * @return A composed {@code BiObjCharConsumer} that first applies this operation to its input, and then consumes the
+     * result using the given {@code Consumer}.
      * @throws NullPointerException If given argument is {@code null}
      */
-    default BiObjCharConsumer<T, U> consume(Consumer<? super R> consumer) {
+    @Nonnull
+    default BiObjCharConsumer<T, U> consume(@Nonnull final Consumer<? super R> consumer) {
         Objects.requireNonNull(consumer);
         return (t, u, value) -> consumer.accept(apply(t, u, value));
     }

@@ -257,16 +257,17 @@ public interface ToShortFunction<T> {
     }
 
     /**
-     * Returns a composed {@link Consumer} that fist applies this operation to its input, and then consumes the result
-     * using the given {@code ShortConsumer}. If evaluation of either operator throws an exception, it is relayed to the
-     * caller of the composed operation.
+     * Returns a composed {@link Consumer} that fist applies this operation to its input, and then consumes
+     * the result using the given {@link ShortConsumer}. If evaluation of either operation throws an exception, it is relayed
+     * to the caller of the composed operation.
      *
-     * @param consumer The {@code ShortConsumer} which consumes the result from this operation
-     * @return A composed {@code Consumer} that first applies this operation to its input, and then consumes the result
-     * using the given {@code ShortConsumer}.
+     * @param consumer The operation which consumes the result from this operation
+     * @return A composed {@code Consumer} that first applies this operation to its input, and then consumes
+     * the result using the given {@code ShortConsumer}.
      * @throws NullPointerException If given argument is {@code null}
      */
-    default Consumer<T> consume(ShortConsumer consumer) {
+    @Nonnull
+    default Consumer<T> consume(@Nonnull final ShortConsumer consumer) {
         Objects.requireNonNull(consumer);
         return t -> consumer.accept(this.applyAsShort(t));
     }

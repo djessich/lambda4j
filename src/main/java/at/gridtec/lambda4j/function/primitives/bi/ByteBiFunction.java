@@ -180,15 +180,16 @@ public interface ByteBiFunction<R> {
 
     /**
      * Returns a composed {@link ByteBiConsumer} that fist applies this operation to its input, and then consumes the
-     * result using the given {@code Consumer}. If evaluation of either operator throws an exception, it is relayed to
+     * result using the given {@link Consumer}. If evaluation of either operation throws an exception, it is relayed to
      * the caller of the composed operation.
      *
-     * @param consumer The {@code Consumer} which consumes the result from this operation
+     * @param consumer The operation which consumes the result from this operation
      * @return A composed {@code ByteBiConsumer} that first applies this operation to its input, and then consumes the
      * result using the given {@code Consumer}.
      * @throws NullPointerException If given argument is {@code null}
      */
-    default ByteBiConsumer consume(Consumer<? super R> consumer) {
+    @Nonnull
+    default ByteBiConsumer consume(@Nonnull final Consumer<? super R> consumer) {
         Objects.requireNonNull(consumer);
         return (value1, value2) -> consumer.accept(this.apply(value1, value2));
     }

@@ -329,16 +329,17 @@ public interface ToIntTriFunction<T, U, V> {
     }
 
     /**
-     * Returns a composed {@link TriConsumer} that fist applies this operation to its input, and then consumes the
-     * result using the given {@code IntConsumer}. If evaluation of either operator throws an exception, it is relayed
-     * to the caller of the composed operation.
+     * Returns a composed {@link TriConsumer} that fist applies this operation to its input, and then consumes the result
+     * using the given {@link IntConsumer}. If evaluation of either operation throws an exception, it is relayed to the
+     * caller of the composed operation.
      *
-     * @param consumer The {@code IntConsumer} which consumes the result from this operation
-     * @return A composed {@code TriConsumer} that first applies this operation to its input, and then consumes the
-     * result using the given {@code IntConsumer}.
+     * @param consumer The operation which consumes the result from this operation
+     * @return A composed {@code TriConsumer} that first applies this operation to its input, and then consumes the result
+     * using the given {@code IntConsumer}.
      * @throws NullPointerException If given argument is {@code null}
      */
-    default TriConsumer<T, U, V> consume(IntConsumer consumer) {
+    @Nonnull
+    default TriConsumer<T, U, V> consume(@Nonnull final IntConsumer consumer) {
         Objects.requireNonNull(consumer);
         return (t, u, v) -> consumer.accept(applyAsInt(t, u, v));
     }

@@ -212,15 +212,16 @@ public interface ToDoubleBiObjDoubleFunction<T, U> {
 
     /**
      * Returns a composed {@link BiObjDoubleConsumer} that fist applies this operation to its input, and then consumes
-     * the result using the given {@code DoubleConsumer}. If evaluation of either operator throws an exception, it is
-     * relayed to the caller of the composed operation.
+     * the result using the given {@link DoubleConsumer}. If evaluation of either operation throws an exception, it is relayed
+     * to the caller of the composed operation.
      *
-     * @param consumer The {@code DoubleConsumer} which consumes the result from this operation
+     * @param consumer The operation which consumes the result from this operation
      * @return A composed {@code BiObjDoubleConsumer} that first applies this operation to its input, and then consumes
      * the result using the given {@code DoubleConsumer}.
      * @throws NullPointerException If given argument is {@code null}
      */
-    default BiObjDoubleConsumer<T, U> consume(DoubleConsumer consumer) {
+    @Nonnull
+    default BiObjDoubleConsumer<T, U> consume(@Nonnull final DoubleConsumer consumer) {
         Objects.requireNonNull(consumer);
         return (t, u, value) -> consumer.accept(applyAsDouble(t, u, value));
     }

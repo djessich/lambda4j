@@ -59,6 +59,7 @@ public interface CharUnaryOperator {
      * @return The result of this operator.
      */
     char applyAsChar(char operand);
+
     /**
      * Returns the number of arguments for this operation.
      *

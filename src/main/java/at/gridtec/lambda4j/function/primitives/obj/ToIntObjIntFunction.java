@@ -183,16 +183,17 @@ public interface ToIntObjIntFunction<T> {
     }
 
     /**
-     * Returns a composed {@link ObjIntConsumer} that fist applies this operation to its input, and then consumes the
-     * result using the given {@code Consumer}. If evaluation of either operator throws an exception, it is relayed to
-     * the caller of the composed operation.
+     * Returns a composed {@link ObjIntConsumer} that fist applies this operation to its input, and then consumes
+     * the result using the given {@link IntConsumer}. If evaluation of either operation throws an exception, it is relayed
+     * to the caller of the composed operation.
      *
-     * @param consumer The {@code Consumer} which consumes the result from this operation
-     * @return A composed {@code ObjIntConsumer} that first applies this operation to its input, and then consumes the
-     * result using the given {@code Consumer}.
+     * @param consumer The operation which consumes the result from this operation
+     * @return A composed {@code ObjIntConsumer} that first applies this operation to its input, and then consumes
+     * the result using the given {@code IntConsumer}.
      * @throws NullPointerException If given argument is {@code null}
      */
-    default ObjIntConsumer<T> consume(IntConsumer consumer) {
+    @Nonnull
+    default ObjIntConsumer<T> consume(@Nonnull final IntConsumer consumer) {
         Objects.requireNonNull(consumer);
         return (t, value) -> consumer.accept(applyAsInt(t, value));
     }

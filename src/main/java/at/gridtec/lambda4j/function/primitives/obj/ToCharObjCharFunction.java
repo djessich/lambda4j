@@ -185,16 +185,17 @@ public interface ToCharObjCharFunction<T> {
     }
 
     /**
-     * Returns a composed {@link ObjCharConsumer} that fist applies this operation to its input, and then consumes the
-     * result using the given {@code Consumer}. If evaluation of either operator throws an exception, it is relayed to
-     * the caller of the composed operation.
+     * Returns a composed {@link ObjCharConsumer} that fist applies this operation to its input, and then consumes
+     * the result using the given {@link CharConsumer}. If evaluation of either operation throws an exception, it is relayed
+     * to the caller of the composed operation.
      *
-     * @param consumer The {@code Consumer} which consumes the result from this operation
-     * @return A composed {@code ObjCharConsumer} that first applies this operation to its input, and then consumes the
-     * result using the given {@code Consumer}.
+     * @param consumer The operation which consumes the result from this operation
+     * @return A composed {@code ObjCharConsumer} that first applies this operation to its input, and then consumes
+     * the result using the given {@code CharConsumer}.
      * @throws NullPointerException If given argument is {@code null}
      */
-    default ObjCharConsumer<T> consume(CharConsumer consumer) {
+    @Nonnull
+    default ObjCharConsumer<T> consume(@Nonnull final CharConsumer consumer) {
         Objects.requireNonNull(consumer);
         return (t, value) -> consumer.accept(applyAsChar(t, value));
     }

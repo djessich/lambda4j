@@ -303,15 +303,16 @@ public interface ToShortBiFunction<T, U> {
 
     /**
      * Returns a composed {@link BiConsumer} that fist applies this operation to its input, and then consumes the result
-     * using the given {@code ShortConsumer}. If evaluation of either operator throws an exception, it is relayed to the
-     * caller of the composed operation.
+     * using the given {@link ShortConsumer}. If evaluation of either operation throws an exception, it is relayed to
+     * the caller of the composed operation.
      *
-     * @param consumer The {@code ShortConsumer} which consumes the result from this operation
+     * @param consumer The operation which consumes the result from this operation
      * @return A composed {@code BiConsumer} that first applies this operation to its input, and then consumes the
      * result using the given {@code ShortConsumer}.
      * @throws NullPointerException If given argument is {@code null}
      */
-    default BiConsumer<T, U> consume(ShortConsumer consumer) {
+    @Nonnull
+    default BiConsumer<T, U> consume(@Nonnull final ShortConsumer consumer) {
         Objects.requireNonNull(consumer);
         return (t, u) -> consumer.accept(applyAsShort(t, u));
     }

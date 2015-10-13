@@ -108,6 +108,7 @@ public interface FloatTernaryOperator {
     default int arity() {
         return 3;
     }
+
     /**
      * Returns a composed {@link FloatTernaryOperator} that first applies the given {@code before} operators to its
      * input, and then applies this operator to the result. If evaluation of either operator throws an exception, it is

@@ -328,16 +328,17 @@ public interface ToLongTriFunction<T, U, V> {
     }
 
     /**
-     * Returns a composed {@link TriConsumer} that fist applies this operation to its input, and then consumes the
-     * result using the given {@code LongConsumer}. If evaluation of either operator throws an exception, it is relayed
+     * Returns a composed {@link TriConsumer} that fist applies this operation to its input, and then consumes
+     * the result using the given {@link LongConsumer}. If evaluation of either operation throws an exception, it is relayed
      * to the caller of the composed operation.
      *
-     * @param consumer The {@code LongConsumer} which consumes the result from this operation
-     * @return A composed {@code TriConsumer} that first applies this operation to its input, and then consumes the
-     * result using the given {@code LongConsumer}.
+     * @param consumer The operation which consumes the result from this operation
+     * @return A composed {@code TriConsumer} that first applies this operation to its input, and then consumes
+     * the result using the given {@code LongConsumer}.
      * @throws NullPointerException If given argument is {@code null}
      */
-    default TriConsumer<T, U, V> consume(LongConsumer consumer) {
+    @Nonnull
+    default TriConsumer<T, U, V> consume(@Nonnull final LongConsumer consumer) {
         Objects.requireNonNull(consumer);
         return (t, u, v) -> consumer.accept(applyAsLong(t, u, v));
     }

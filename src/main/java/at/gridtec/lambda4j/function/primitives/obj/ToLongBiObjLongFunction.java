@@ -211,16 +211,17 @@ public interface ToLongBiObjLongFunction<T, U> {
     }
 
     /**
-     * Returns a composed {@link BiObjLongConsumer} that fist applies this operation to its input, and then consumes the
-     * result using the given {@code LongConsumer}. If evaluation of either operator throws an exception, it is relayed
+     * Returns a composed {@link BiObjLongConsumer} that fist applies this operation to its input, and then consumes
+     * the result using the given {@link LongConsumer}. If evaluation of either operation throws an exception, it is relayed
      * to the caller of the composed operation.
      *
-     * @param consumer The {@code LongConsumer} which consumes the result from this operation
+     * @param consumer The operation which consumes the result from this operation
      * @return A composed {@code BiObjLongConsumer} that first applies this operation to its input, and then consumes
      * the result using the given {@code LongConsumer}.
      * @throws NullPointerException If given argument is {@code null}
      */
-    default BiObjLongConsumer<T, U> consume(LongConsumer consumer) {
+    @Nonnull
+    default BiObjLongConsumer<T, U> consume(@Nonnull final LongConsumer consumer) {
         Objects.requireNonNull(consumer);
         return (t, u, value) -> consumer.accept(applyAsLong(t, u, value));
     }

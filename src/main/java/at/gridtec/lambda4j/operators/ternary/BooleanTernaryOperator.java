@@ -189,6 +189,7 @@ public interface BooleanTernaryOperator {
     default int arity() {
         return 3;
     }
+
     /**
      * Returns a {@link BooleanTernaryOperator} that represents the logical negation of this one.
      *

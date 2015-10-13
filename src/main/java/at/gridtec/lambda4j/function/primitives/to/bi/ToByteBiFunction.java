@@ -302,16 +302,17 @@ public interface ToByteBiFunction<T, U> {
     }
 
     /**
-     * Returns a composed {@link BiConsumer} that fist applies this operation to its input, and then consumes the result
-     * using the given {@code ByteConsumer}. If evaluation of either operator throws an exception, it is relayed to the
-     * caller of the composed operation.
+     * Returns a composed {@link BiConsumer} that fist applies this operation to its input, and then consumes
+     * the result using the given {@link ByteConsumer}. If evaluation of either operation throws an exception, it is relayed
+     * to the caller of the composed operation.
      *
-     * @param consumer The {@code ByteConsumer} which consumes the result from this operation
-     * @return A composed {@code BiConsumer} that first applies this operation to its input, and then consumes the
-     * result using the given {@code ByteConsumer}.
+     * @param consumer The operation which consumes the result from this operation
+     * @return A composed {@code BiConsumer} that first applies this operation to its input, and then consumes
+     * the result using the given {@code ByteConsumer}.
      * @throws NullPointerException If given argument is {@code null}
      */
-    default BiConsumer<T, U> consume(ByteConsumer consumer) {
+    @Nonnull
+    default BiConsumer<T, U> consume(@Nonnull final ByteConsumer consumer) {
         Objects.requireNonNull(consumer);
         return (t, u) -> consumer.accept(applyAsByte(t, u));
     }

@@ -329,16 +329,17 @@ public interface ToShortTriFunction<T, U, V> {
     }
 
     /**
-     * Returns a composed {@link TriConsumer} that fist applies this operation to its input, and then consumes the
-     * result using the given {@code ShortConsumer}. If evaluation of either operator throws an exception, it is relayed
+     * Returns a composed {@link TriConsumer} that fist applies this operation to its input, and then consumes
+     * the result using the given {@link ShortConsumer}. If evaluation of either operation throws an exception, it is relayed
      * to the caller of the composed operation.
      *
-     * @param consumer The {@code ShortConsumer} which consumes the result from this operation
-     * @return A composed {@code TriConsumer} that first applies this operation to its input, and then consumes the
-     * result using the given {@code ShortConsumer}.
+     * @param consumer The operation which consumes the result from this operation
+     * @return A composed {@code TriConsumer} that first applies this operation to its input, and then consumes
+     * the result using the given {@code ShortConsumer}.
      * @throws NullPointerException If given argument is {@code null}
      */
-    default TriConsumer<T, U, V> consume(ShortConsumer consumer) {
+    @Nonnull
+    default TriConsumer<T, U, V> consume(@Nonnull final ShortConsumer consumer) {
         Objects.requireNonNull(consumer);
         return (t, u, v) -> consumer.accept(applyAsShort(t, u, v));
     }

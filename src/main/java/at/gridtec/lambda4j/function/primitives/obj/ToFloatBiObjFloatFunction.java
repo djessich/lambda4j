@@ -212,15 +212,16 @@ public interface ToFloatBiObjFloatFunction<T, U> {
 
     /**
      * Returns a composed {@link BiObjFloatConsumer} that fist applies this operation to its input, and then consumes
-     * the result using the given {@code FloatConsumer}. If evaluation of either operator throws an exception, it is
-     * relayed to the caller of the composed operation.
+     * the result using the given {@link FloatConsumer}. If evaluation of either operation throws an exception, it is relayed
+     * to the caller of the composed operation.
      *
-     * @param consumer The {@code FloatConsumer} which consumes the result from this operation
+     * @param consumer The operation which consumes the result from this operation
      * @return A composed {@code BiObjFloatConsumer} that first applies this operation to its input, and then consumes
      * the result using the given {@code FloatConsumer}.
      * @throws NullPointerException If given argument is {@code null}
      */
-    default BiObjFloatConsumer<T, U> consume(FloatConsumer consumer) {
+    @Nonnull
+    default BiObjFloatConsumer<T, U> consume(@Nonnull final FloatConsumer consumer) {
         Objects.requireNonNull(consumer);
         return (t, u, value) -> consumer.accept(applyAsFloat(t, u, value));
     }
