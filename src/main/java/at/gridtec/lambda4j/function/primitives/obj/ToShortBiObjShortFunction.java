@@ -23,8 +23,8 @@ import at.gridtec.lambda4j.function.primitives.to.ToShortFunction;
 import at.gridtec.lambda4j.function.primitives.to.tri.ToShortTriFunction;
 import at.gridtec.lambda4j.operators.unary.ShortUnaryOperator;
 
+import javax.annotation.Nonnull;
 import java.util.Objects;
-import java.util.function.BiFunction;
 import java.util.function.Function;
 
 /**
@@ -220,12 +220,12 @@ public interface ToShortBiObjShortFunction<T, U> {
     }
 
     /**
-     * Returns a composed {@link BiFunction} which represents this {@link ObjShortFunction}. Thereby the primitive input
-     * argument for this operation is autoboxed. This method is just convenience to provide the ability to use this
-     * {@code ObjShortFunction} with JRE specific methods, only accepting {@code BiFunction}.
+     * Returns a composed {@link TriFunction} which represents this {@link ObjShortFunction}. Thereby the primitive
+     * input argument for this function is autoboxed.
      *
-     * @return A composed {@code BiFunction} which represents this {@code ObjShortFunction}.
+     * @return A composed {@code TriFunction} which represents this {@code ObjShortFunction}.
      */
+    @Nonnull
     default TriFunction<T, U, Short, Short> boxed() {
         return this::applyAsShort;
     }

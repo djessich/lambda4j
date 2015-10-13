@@ -21,6 +21,7 @@ import at.gridtec.lambda4j.function.primitives.CharFunction;
 import at.gridtec.lambda4j.function.primitives.to.ToCharFunction;
 import at.gridtec.lambda4j.operators.unary.CharUnaryOperator;
 
+import javax.annotation.Nonnull;
 import java.util.Objects;
 import java.util.function.Consumer;
 import java.util.function.Function;
@@ -224,10 +225,11 @@ public interface BiObjCharFunction<T, U, R> {
 
     /**
      * Returns a composed {@link TriFunction} which represents this {@link ObjCharFunction}. Thereby the primitive input
-     * argument for this operation is autoboxed.
+     * argument for this function is autoboxed.
      *
-     * @return A composed {@code BiFunction} which represents this {@code ObjCharFunction}.
+     * @return A composed {@code TriFunction} which represents this {@code ObjCharFunction}.
      */
+    @Nonnull
     default TriFunction<T, U, Character, R> boxed() {
         return this::apply;
     }

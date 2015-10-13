@@ -15,6 +15,7 @@
  */
 package at.gridtec.lambda4j.function.primitives.obj;
 
+import javax.annotation.Nonnull;
 import java.util.Objects;
 import java.util.function.BiFunction;
 import java.util.function.Function;
@@ -193,11 +194,12 @@ public interface ToLongObjLongFunction<T> {
 
     /**
      * Returns a composed {@link BiFunction} which represents this {@link ObjLongFunction}. Thereby the primitive input
-     * argument for this operation is autoboxed. This method is just convenience to provide the ability to use this
+     * argument for this function is autoboxed. This method is just convenience to provide the ability to use this
      * {@code ObjLongFunction} with JRE specific methods, only accepting {@code BiFunction}.
      *
      * @return A composed {@code BiFunction} which represents this {@code ObjLongFunction}.
      */
+    @Nonnull
     default BiFunction<T, Long, Long> boxed() {
         return this::applyAsLong;
     }

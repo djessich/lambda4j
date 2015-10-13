@@ -17,6 +17,7 @@ package at.gridtec.lambda4j.operators.ternary;
 
 import at.gridtec.lambda4j.operators.unary.CharUnaryOperator;
 
+import javax.annotation.Nonnull;
 import java.util.Objects;
 
 /**
@@ -133,10 +134,11 @@ public interface CharTernaryOperator {
 
     /**
      * Returns a composed {@link TernaryOperator} which represents this {@link CharTernaryOperator}. Thereby the
-     * primitive input argument for this operation is autoboxed.
+     * primitive input argument for this operator is autoboxed.
      *
      * @return A composed {@code TernaryOperator} which represents this {@code CharTernaryOperator}.
      */
+    @Nonnull
     default TernaryOperator<Character> boxed() {
         return this::applyAsChar;
     }

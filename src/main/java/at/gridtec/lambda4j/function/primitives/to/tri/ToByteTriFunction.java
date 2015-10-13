@@ -31,6 +31,7 @@ import at.gridtec.lambda4j.function.primitives.to.bi.ToCharBiFunction;
 import at.gridtec.lambda4j.operators.unary.ByteUnaryOperator;
 import at.gridtec.lambda4j.predicates.TriPredicate;
 
+import javax.annotation.Nonnull;
 import java.util.Objects;
 import java.util.function.Function;
 import java.util.function.UnaryOperator;
@@ -338,11 +339,10 @@ public interface ToByteTriFunction<T, U, V> {
 
     /**
      * Returns a composed {@link TriFunction} which represents this {@link ToByteTriFunction}. Thereby the primitive
-     * input argument for this operation is autoboxed. This method is just convenience to provide the ability to use
-     * this {@code ToByteTriFunction} with JRE specific methods, only accepting {@code TriFunction}.
-     *
+     * input argument for this function is autoboxed.
      * @return A composed {@code TriFunction} which represents this {@code ToByteTriFunction}.
      */
+    @Nonnull
     default TriFunction<T, U, V, Byte> boxed() {
         return this::applyAsByte;
     }

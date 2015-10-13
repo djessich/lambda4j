@@ -17,6 +17,7 @@ package at.gridtec.lambda4j.predicates.primitives.tri;
 
 import at.gridtec.lambda4j.predicates.TriPredicate;
 
+import javax.annotation.Nonnull;
 import java.util.Objects;
 
 /**
@@ -188,6 +189,7 @@ public interface FloatTriPredicate {
      *
      * @return A composed {@code TriPredicate} which represents this {@code FloatTriPredicate}.
      */
+    @Nonnull
     default TriPredicate<Float, Float, Float> boxed() {
         return this::test;
     }

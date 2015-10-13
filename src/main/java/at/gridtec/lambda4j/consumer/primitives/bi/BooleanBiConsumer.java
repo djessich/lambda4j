@@ -18,6 +18,7 @@ package at.gridtec.lambda4j.consumer.primitives.bi;
 import at.gridtec.lambda4j.consumer.primitives.BooleanConsumer;
 import at.gridtec.lambda4j.operators.unary.BooleanUnaryOperator;
 
+import javax.annotation.Nonnull;
 import java.util.Objects;
 import java.util.function.BiConsumer;
 import java.util.function.Predicate;
@@ -141,11 +142,12 @@ public interface BooleanBiConsumer {
 
     /**
      * Returns a composed {@link BiConsumer} which represents this {@link BooleanBiConsumer}. Thereby the primitive
-     * input argument for this predicate is autoboxed. This method is just convenience to provide the ability to use
+     * input argument for this consumer is autoboxed. This method is just convenience to provide the ability to use
      * this {@code BooleanBiConsumer} with JRE specific methods, only accepting {@code BiConsumer}.
      *
      * @return A composed {@code BiConsumer} which represents this {@code BooleanBiConsumer}.
      */
+    @Nonnull
     default BiConsumer<Boolean, Boolean> boxed() {
         return this::accept;
     }

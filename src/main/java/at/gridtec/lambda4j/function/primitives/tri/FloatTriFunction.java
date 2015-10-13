@@ -22,6 +22,7 @@ import at.gridtec.lambda4j.function.primitives.to.ToFloatFunction;
 import at.gridtec.lambda4j.operators.ternary.FloatTernaryOperator;
 import at.gridtec.lambda4j.operators.unary.FloatUnaryOperator;
 
+import javax.annotation.Nonnull;
 import java.util.Objects;
 import java.util.function.Consumer;
 import java.util.function.Function;
@@ -211,10 +212,11 @@ public interface FloatTriFunction<R> {
 
     /**
      * Returns a composed {@link TriFunction} which represents this {@link FloatTriFunction}. Thereby the primitive
-     * input argument for this operation is autoboxed.
+     * input argument for this function is autoboxed.
      *
      * @return A composed {@code TriFunction} which represents this {@code FloatTriFunction}.
      */
+    @Nonnull
     default TriFunction<Float, Float, Float, R> boxed() {
         return this::apply;
     }

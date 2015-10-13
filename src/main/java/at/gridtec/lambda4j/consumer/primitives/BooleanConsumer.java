@@ -17,6 +17,7 @@ package at.gridtec.lambda4j.consumer.primitives;
 
 import at.gridtec.lambda4j.operators.unary.BooleanUnaryOperator;
 
+import javax.annotation.Nonnull;
 import java.util.Objects;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
@@ -106,11 +107,12 @@ public interface BooleanConsumer {
 
     /**
      * Returns a composed {@link Consumer} which represents this {@link BooleanConsumer}. Thereby the primitive input
-     * argument for this predicate is autoboxed. This method is just convenience to provide the ability to use this
+     * argument for this consumer is autoboxed. This method is just convenience to provide the ability to use this
      * {@code BooleanConsumer} with JRE specific methods, only accepting {@code Consumer}.
      *
      * @return A composed {@code Consumer} which represents this {@code BooleanConsumer}.
      */
+    @Nonnull
     default Consumer<Boolean> boxed() {
         return this::accept;
     }

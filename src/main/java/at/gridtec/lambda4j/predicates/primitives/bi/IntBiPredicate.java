@@ -15,6 +15,7 @@
  */
 package at.gridtec.lambda4j.predicates.primitives.bi;
 
+import javax.annotation.Nonnull;
 import java.util.Objects;
 import java.util.function.BiPredicate;
 
@@ -180,6 +181,7 @@ public interface IntBiPredicate {
      *
      * @return A composed {@code BiPredicate} which represents this {@code IntBiPredicate}.
      */
+    @Nonnull
     default BiPredicate<Integer, Integer> boxed() {
         return this::test;
     }

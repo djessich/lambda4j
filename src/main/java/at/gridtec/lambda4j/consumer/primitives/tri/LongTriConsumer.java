@@ -18,6 +18,7 @@ package at.gridtec.lambda4j.consumer.primitives.tri;
 
 import at.gridtec.lambda4j.consumer.TriConsumer;
 
+import javax.annotation.Nonnull;
 import java.util.Objects;
 import java.util.function.LongConsumer;
 import java.util.function.LongUnaryOperator;
@@ -166,10 +167,11 @@ public interface LongTriConsumer {
 
     /**
      * Returns a composed {@link TriConsumer} which represents this {@link LongTriConsumer}. Thereby the primitive input
-     * argument for this predicate is autoboxed.
+     * argument for this consumer is autoboxed.
      *
      * @return A composed {@code TriConsumer} which represents this {@code LongTriConsumer}.
      */
+    @Nonnull
     default TriConsumer<Long, Long, Long> boxed() {
         return this::accept;
     }

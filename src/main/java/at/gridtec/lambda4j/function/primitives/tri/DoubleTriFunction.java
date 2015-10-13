@@ -19,6 +19,7 @@ import at.gridtec.lambda4j.consumer.primitives.tri.DoubleTriConsumer;
 import at.gridtec.lambda4j.function.TriFunction;
 import at.gridtec.lambda4j.operators.ternary.DoubleTernaryOperator;
 
+import javax.annotation.Nonnull;
 import java.util.Objects;
 import java.util.function.Consumer;
 import java.util.function.DoubleFunction;
@@ -211,10 +212,11 @@ public interface DoubleTriFunction<R> {
 
     /**
      * Returns a composed {@link TriFunction} which represents this {@link DoubleTriFunction}. Thereby the primitive
-     * input argument for this operation is autoboxed.
+     * input argument for this function is autoboxed.
      *
      * @return A composed {@code TriFunction} which represents this {@code DoubleTriFunction}.
      */
+    @Nonnull
     default TriFunction<Double, Double, Double, R> boxed() {
         return this::apply;
     }

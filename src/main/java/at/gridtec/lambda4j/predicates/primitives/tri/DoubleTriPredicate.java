@@ -17,6 +17,7 @@ package at.gridtec.lambda4j.predicates.primitives.tri;
 
 import at.gridtec.lambda4j.predicates.TriPredicate;
 
+import javax.annotation.Nonnull;
 import java.util.Objects;
 
 /**
@@ -188,6 +189,7 @@ public interface DoubleTriPredicate {
      *
      * @return A composed {@code TriPredicate} which represents this {@code DoubleTriPredicate}.
      */
+    @Nonnull
     default TriPredicate<Double, Double, Double> boxed() {
         return this::test;
     }

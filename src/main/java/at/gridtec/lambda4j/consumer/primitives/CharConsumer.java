@@ -18,6 +18,7 @@ package at.gridtec.lambda4j.consumer.primitives;
 import at.gridtec.lambda4j.function.primitives.to.ToCharFunction;
 import at.gridtec.lambda4j.operators.unary.CharUnaryOperator;
 
+import javax.annotation.Nonnull;
 import java.util.Objects;
 import java.util.function.Consumer;
 
@@ -105,11 +106,12 @@ public interface CharConsumer {
 
     /**
      * Returns a composed {@link Consumer} which represents this {@link CharConsumer}. Thereby the primitive input
-     * argument for this predicate is autoboxed. This method is just convenience to provide the ability to use this
+     * argument for this consumer is autoboxed. This method is just convenience to provide the ability to use this
      * {@code CharConsumer} with JRE specific methods, only accepting {@code Consumer}.
      *
      * @return A composed {@code Consumer} which represents this {@code CharConsumer}.
      */
+    @Nonnull
     default Consumer<Character> boxed() {
         return this::accept;
     }

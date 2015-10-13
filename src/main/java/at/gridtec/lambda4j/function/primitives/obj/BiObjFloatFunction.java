@@ -21,6 +21,7 @@ import at.gridtec.lambda4j.function.primitives.FloatFunction;
 import at.gridtec.lambda4j.function.primitives.to.ToFloatFunction;
 import at.gridtec.lambda4j.operators.unary.FloatUnaryOperator;
 
+import javax.annotation.Nonnull;
 import java.util.Objects;
 import java.util.function.Consumer;
 import java.util.function.Function;
@@ -224,10 +225,11 @@ public interface BiObjFloatFunction<T, U, R> {
 
     /**
      * Returns a composed {@link TriFunction} which represents this {@link ObjFloatFunction}. Thereby the primitive
-     * input argument for this operation is autoboxed.
+     * input argument for this function is autoboxed.
      *
-     * @return A composed {@code BiFunction} which represents this {@code ObjFloatFunction}.
+     * @return A composed {@code TriFunction} which represents this {@code ObjFloatFunction}.
      */
+    @Nonnull
     default TriFunction<T, U, Float, R> boxed() {
         return this::apply;
     }

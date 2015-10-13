@@ -21,6 +21,7 @@ import at.gridtec.lambda4j.function.primitives.to.ToShortFunction;
 import at.gridtec.lambda4j.operators.binary.ShortBinaryOperator;
 import at.gridtec.lambda4j.operators.unary.ShortUnaryOperator;
 
+import javax.annotation.Nonnull;
 import java.util.Objects;
 import java.util.function.BiFunction;
 import java.util.function.Consumer;
@@ -189,11 +190,12 @@ public interface ShortBiFunction<R> {
 
     /**
      * Returns a composed {@link BiFunction} which represents this {@link ShortBiFunction}. Thereby the primitive input
-     * argument for this operation is autoboxed. This method is just convenience to provide the ability to use this
+     * argument for this function is autoboxed. This method is just convenience to provide the ability to use this
      * {@code ShortBiFunction} with JRE specific methods, only accepting {@code BiFunction}.
      *
      * @return A composed {@code BiFunction} which represents this {@code ShortBiFunction}.
      */
+    @Nonnull
     default BiFunction<Short, Short, R> boxed() {
         return this::apply;
     }

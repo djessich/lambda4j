@@ -20,6 +20,7 @@ import at.gridtec.lambda4j.consumer.primitives.CharConsumer;
 import at.gridtec.lambda4j.function.primitives.to.ToCharFunction;
 import at.gridtec.lambda4j.operators.unary.CharUnaryOperator;
 
+import javax.annotation.Nonnull;
 import java.util.Objects;
 import java.util.function.Consumer;
 import java.util.function.Function;
@@ -175,10 +176,11 @@ public interface BiObjCharConsumer<T, U> {
 
     /**
      * Returns a composed {@link TriConsumer} which represents this {@link BiObjCharConsumer}. Thereby the primitive
-     * input argument for this predicate is autoboxed.
+     * input argument for this consumer is autoboxed.
      *
      * @return A composed {@code TriConsumer} which represents this {@code BiObjCharConsumer}.
      */
+    @Nonnull
     default TriConsumer<T, U, Character> boxed() {
         return this::accept;
     }

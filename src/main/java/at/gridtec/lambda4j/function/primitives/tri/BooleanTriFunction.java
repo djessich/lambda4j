@@ -21,6 +21,7 @@ import at.gridtec.lambda4j.function.primitives.BooleanFunction;
 import at.gridtec.lambda4j.operators.ternary.BooleanTernaryOperator;
 import at.gridtec.lambda4j.operators.unary.BooleanUnaryOperator;
 
+import javax.annotation.Nonnull;
 import java.util.Objects;
 import java.util.function.Consumer;
 import java.util.function.Function;
@@ -210,10 +211,11 @@ public interface BooleanTriFunction<R> {
 
     /**
      * Returns a composed {@link TriFunction} which represents this {@link BooleanTriFunction}. Thereby the primitive
-     * input argument for this operation is autoboxed.
+     * input argument for this function is autoboxed.
      *
      * @return A composed {@code TriFunction} which represents this {@code BooleanTriFunction}.
      */
+    @Nonnull
     default TriFunction<Boolean, Boolean, Boolean, R> boxed() {
         return this::apply;
     }

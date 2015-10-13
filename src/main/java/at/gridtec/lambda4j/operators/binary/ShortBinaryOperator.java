@@ -17,6 +17,7 @@ package at.gridtec.lambda4j.operators.binary;
 
 import at.gridtec.lambda4j.operators.unary.ShortUnaryOperator;
 
+import javax.annotation.Nonnull;
 import java.util.Comparator;
 import java.util.Objects;
 import java.util.function.BinaryOperator;
@@ -166,11 +167,12 @@ public interface ShortBinaryOperator {
 
     /**
      * Returns a composed {@link BinaryOperator} which represents this {@link ShortBinaryOperator}. Thereby the
-     * primitive input argument for this operation is autoboxed. This method is just convenience to provide the ability
+     * primitive input argument for this operator is autoboxed. This method is just convenience to provide the ability
      * to use this {@code ShortBinaryOperator} with JRE specific methods, only accepting {@code BinaryOperator}.
      *
      * @return A composed {@code BinaryOperator} which represents this {@code ShortBinaryOperator}.
      */
+    @Nonnull
     default BinaryOperator<Short> boxed() {
         return this::applyAsShort;
     }

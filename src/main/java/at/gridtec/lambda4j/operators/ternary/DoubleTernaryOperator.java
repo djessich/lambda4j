@@ -15,6 +15,7 @@
  */
 package at.gridtec.lambda4j.operators.ternary;
 
+import javax.annotation.Nonnull;
 import java.util.Objects;
 import java.util.function.DoubleUnaryOperator;
 
@@ -132,10 +133,11 @@ public interface DoubleTernaryOperator {
 
     /**
      * Returns a composed {@link TernaryOperator} which represents this {@link DoubleTernaryOperator}. Thereby the
-     * primitive input argument for this operation is autoboxed.
+     * primitive input argument for this operator is autoboxed.
      *
      * @return A composed {@code TernaryOperator} which represents this {@code DoubleTernaryOperator}.
      */
+    @Nonnull
     default TernaryOperator<Double> boxed() {
         return this::applyAsDouble;
     }

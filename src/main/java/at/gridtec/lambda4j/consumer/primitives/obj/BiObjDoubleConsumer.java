@@ -17,6 +17,7 @@ package at.gridtec.lambda4j.consumer.primitives.obj;
 
 import at.gridtec.lambda4j.consumer.TriConsumer;
 
+import javax.annotation.Nonnull;
 import java.util.Objects;
 import java.util.function.Consumer;
 import java.util.function.DoubleConsumer;
@@ -175,10 +176,11 @@ public interface BiObjDoubleConsumer<T, U> {
 
     /**
      * Returns a composed {@link TriConsumer} which represents this {@link BiObjDoubleConsumer}. Thereby the primitive
-     * input argument for this predicate is autoboxed.
+     * input argument for this consumer is autoboxed.
      *
      * @return A composed {@code TriConsumer} which represents this {@code BiObjDoubleConsumer}.
      */
+    @Nonnull
     default TriConsumer<T, U, Double> boxed() {
         return this::accept;
     }

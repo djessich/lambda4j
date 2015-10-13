@@ -21,6 +21,7 @@ import at.gridtec.lambda4j.function.primitives.to.ToCharFunction;
 import at.gridtec.lambda4j.operators.binary.CharBinaryOperator;
 import at.gridtec.lambda4j.operators.unary.CharUnaryOperator;
 
+import javax.annotation.Nonnull;
 import java.util.Objects;
 import java.util.function.BiFunction;
 import java.util.function.Consumer;
@@ -189,11 +190,12 @@ public interface CharBiFunction<R> {
 
     /**
      * Returns a composed {@link BiFunction} which represents this {@link CharBiFunction}. Thereby the primitive input
-     * argument for this operation is autoboxed. This method is just convenience to provide the ability to use this
+     * argument for this function is autoboxed. This method is just convenience to provide the ability to use this
      * {@code CharBiFunction} with JRE specific methods, only accepting {@code BiFunction}.
      *
      * @return A composed {@code BiFunction} which represents this {@code CharBiFunction}.
      */
+    @Nonnull
     default BiFunction<Character, Character, R> boxed() {
         return this::apply;
     }

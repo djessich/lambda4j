@@ -26,6 +26,7 @@ import at.gridtec.lambda4j.function.primitives.conversion.ShortToIntFunction;
 import at.gridtec.lambda4j.function.primitives.conversion.ShortToLongFunction;
 import at.gridtec.lambda4j.operators.unary.ShortUnaryOperator;
 
+import javax.annotation.Nonnull;
 import java.util.Objects;
 import java.util.function.Consumer;
 import java.util.function.Function;
@@ -269,11 +270,12 @@ public interface ToShortFunction<T> {
 
     /**
      * Returns a composed {@link Function} which represents this {@link ToShortFunction}. Thereby the primitive input
-     * argument for this operation is autoboxed. This method is just convenience to provide the ability to use this
+     * argument for this function is autoboxed. This method is just convenience to provide the ability to use this
      * {@code ToShortFunction} with JRE specific methods, only accepting {@code Function}.
      *
      * @return A composed {@code Function} which represents this {@code ToShortFunction}.
      */
+    @Nonnull
     default Function<T, Short> boxed() {
         return this::applyAsShort;
     }

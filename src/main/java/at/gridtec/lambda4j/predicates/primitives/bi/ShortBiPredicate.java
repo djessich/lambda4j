@@ -15,6 +15,7 @@
  */
 package at.gridtec.lambda4j.predicates.primitives.bi;
 
+import javax.annotation.Nonnull;
 import java.util.Objects;
 import java.util.function.BiPredicate;
 
@@ -181,6 +182,7 @@ public interface ShortBiPredicate {
      *
      * @return A composed {@code BiPredicate} which represents this {@code ShortBiPredicate}.
      */
+    @Nonnull
     default BiPredicate<Short, Short> boxed() {
         return this::test;
     }

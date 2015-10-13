@@ -20,7 +20,6 @@ import at.gridtec.lambda4j.function.TriFunction;
 import at.gridtec.lambda4j.function.primitives.to.tri.ToIntTriFunction;
 
 import java.util.Objects;
-import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.function.IntConsumer;
 import java.util.function.IntFunction;
@@ -220,11 +219,9 @@ public interface ToIntBiObjIntFunction<T, U> {
     }
 
     /**
-     * Returns a composed {@link BiFunction} which represents this {@link ObjIntFunction}. Thereby the primitive input
-     * argument for this operation is autoboxed. This method is just convenience to provide the ability to use this
-     * {@code ObjIntFunction} with JRE specific methods, only accepting {@code BiFunction}.
-     *
-     * @return A composed {@code BiFunction} which represents this {@code ObjIntFunction}.
+     * Returns a composed {@link TriFunction} which represents this {@link ObjIntFunction}. Thereby the primitive input
+     * argument for this function is autoboxed.
+     * @return A composed {@code TriFunction} which represents this {@code ObjIntFunction}.
      */
     default TriFunction<T, U, Integer, Integer> boxed() {
         return this::applyAsInt;

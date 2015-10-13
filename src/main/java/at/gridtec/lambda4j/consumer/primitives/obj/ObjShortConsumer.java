@@ -19,6 +19,7 @@ import at.gridtec.lambda4j.consumer.primitives.ShortConsumer;
 import at.gridtec.lambda4j.function.primitives.to.ToShortFunction;
 import at.gridtec.lambda4j.operators.unary.ShortUnaryOperator;
 
+import javax.annotation.Nonnull;
 import java.util.Objects;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
@@ -149,11 +150,12 @@ public interface ObjShortConsumer<T> {
 
     /**
      * Returns a composed {@link BiConsumer} which represents this {@link ObjShortConsumer}. Thereby the primitive input
-     * argument for this predicate is autoboxed. This method is just convenience to provide the ability to use this
+     * argument for this consumer is autoboxed. This method is just convenience to provide the ability to use this
      * {@code ObjShortConsumer} with JRE specific methods, only accepting {@code BiConsumer}.
      *
      * @return A composed {@code BiConsumer} which represents this {@code ObjShortConsumer}.
      */
+    @Nonnull
     default BiConsumer<T, Short> boxed() {
         return this::accept;
     }

@@ -15,6 +15,7 @@
  */
 package at.gridtec.lambda4j.consumer.primitives.bi;
 
+import javax.annotation.Nonnull;
 import java.util.Objects;
 import java.util.function.BiConsumer;
 import java.util.function.IntConsumer;
@@ -140,11 +141,12 @@ public interface IntBiConsumer {
 
     /**
      * Returns a composed {@link BiConsumer} which represents this {@link IntBiConsumer}. Thereby the primitive input
-     * argument for this predicate is autoboxed. This method is just convenience to provide the ability to use this
+     * argument for this consumer is autoboxed. This method is just convenience to provide the ability to use this
      * {@code IntBiConsumer} with JRE specific methods, only accepting {@code BiConsumer}.
      *
      * @return A composed {@code BiConsumer} which represents this {@code IntBiConsumer}.
      */
+    @Nonnull
     default BiConsumer<Integer, Integer> boxed() {
         return this::accept;
     }

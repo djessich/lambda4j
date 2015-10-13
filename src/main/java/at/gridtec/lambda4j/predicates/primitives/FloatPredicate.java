@@ -15,6 +15,7 @@
  */
 package at.gridtec.lambda4j.predicates.primitives;
 
+import javax.annotation.Nonnull;
 import java.util.Objects;
 import java.util.function.Predicate;
 
@@ -177,6 +178,7 @@ public interface FloatPredicate {
      *
      * @return A composed {@code Predicate} which represents this {@code FloatPredicate}.
      */
+    @Nonnull
     default Predicate<Float> boxed() {
         return this::test;
     }

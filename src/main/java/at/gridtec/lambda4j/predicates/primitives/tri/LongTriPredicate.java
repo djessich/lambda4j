@@ -17,6 +17,7 @@ package at.gridtec.lambda4j.predicates.primitives.tri;
 
 import at.gridtec.lambda4j.predicates.TriPredicate;
 
+import javax.annotation.Nonnull;
 import java.util.Objects;
 
 /**
@@ -185,6 +186,7 @@ public interface LongTriPredicate {
      *
      * @return A composed {@code TriPredicate} which represents this {@code LongTriPredicate}.
      */
+    @Nonnull
     default TriPredicate<Long, Long, Long> boxed() {
         return this::test;
     }

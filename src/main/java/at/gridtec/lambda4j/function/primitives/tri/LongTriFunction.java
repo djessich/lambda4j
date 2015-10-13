@@ -19,6 +19,7 @@ import at.gridtec.lambda4j.consumer.primitives.tri.LongTriConsumer;
 import at.gridtec.lambda4j.function.TriFunction;
 import at.gridtec.lambda4j.operators.ternary.LongTernaryOperator;
 
+import javax.annotation.Nonnull;
 import java.util.Objects;
 import java.util.function.Consumer;
 import java.util.function.Function;
@@ -211,10 +212,11 @@ public interface LongTriFunction<R> {
 
     /**
      * Returns a composed {@link TriFunction} which represents this {@link LongTriFunction}. Thereby the primitive input
-     * argument for this operation is autoboxed.
+     * argument for this function is autoboxed.
      *
      * @return A composed {@code TriFunction} which represents this {@code LongTriFunction}.
      */
+    @Nonnull
     default TriFunction<Long, Long, Long, R> boxed() {
         return this::apply;
     }

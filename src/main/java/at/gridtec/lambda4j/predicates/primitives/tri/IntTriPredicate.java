@@ -17,6 +17,7 @@ package at.gridtec.lambda4j.predicates.primitives.tri;
 
 import at.gridtec.lambda4j.predicates.TriPredicate;
 
+import javax.annotation.Nonnull;
 import java.util.Objects;
 
 /**
@@ -185,6 +186,7 @@ public interface IntTriPredicate {
      *
      * @return A composed {@code TriPredicate} which represents this {@code IntTriPredicate}.
      */
+    @Nonnull
     default TriPredicate<Integer, Integer, Integer> boxed() {
         return this::test;
     }

@@ -19,6 +19,7 @@ import at.gridtec.lambda4j.consumer.primitives.ByteConsumer;
 import at.gridtec.lambda4j.function.primitives.to.ToByteFunction;
 import at.gridtec.lambda4j.operators.unary.ByteUnaryOperator;
 
+import javax.annotation.Nonnull;
 import java.util.Objects;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
@@ -149,11 +150,12 @@ public interface ObjByteConsumer<T> {
 
     /**
      * Returns a composed {@link BiConsumer} which represents this {@link ObjByteConsumer}. Thereby the primitive input
-     * argument for this predicate is autoboxed. This method is just convenience to provide the ability to use this
+     * argument for this consumer is autoboxed. This method is just convenience to provide the ability to use this
      * {@code ObjByteConsumer} with JRE specific methods, only accepting {@code BiConsumer}.
      *
      * @return A composed {@code BiConsumer} which represents this {@code ObjByteConsumer}.
      */
+    @Nonnull
     default BiConsumer<T, Byte> boxed() {
         return this::accept;
     }

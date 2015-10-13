@@ -21,6 +21,7 @@ import at.gridtec.lambda4j.function.primitives.to.ToByteFunction;
 import at.gridtec.lambda4j.operators.binary.ByteBinaryOperator;
 import at.gridtec.lambda4j.operators.unary.ByteUnaryOperator;
 
+import javax.annotation.Nonnull;
 import java.util.Objects;
 import java.util.function.BiFunction;
 import java.util.function.Consumer;
@@ -189,11 +190,12 @@ public interface ByteBiFunction<R> {
 
     /**
      * Returns a composed {@link BiFunction} which represents this {@link ByteBiFunction}. Thereby the primitive input
-     * argument for this operation is autoboxed. This method is just convenience to provide the ability to use this
+     * argument for this function is autoboxed. This method is just convenience to provide the ability to use this
      * {@code ByteBiFunction} with JRE specific methods, only accepting {@code BiFunction}.
      *
      * @return A composed {@code BiFunction} which represents this {@code ByteBiFunction}.
      */
+    @Nonnull
     default BiFunction<Byte, Byte, R> boxed() {
         return this::apply;
     }

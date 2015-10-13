@@ -19,8 +19,8 @@ import at.gridtec.lambda4j.consumer.primitives.obj.BiObjDoubleConsumer;
 import at.gridtec.lambda4j.function.TriFunction;
 import at.gridtec.lambda4j.function.primitives.to.tri.ToDoubleTriFunction;
 
+import javax.annotation.Nonnull;
 import java.util.Objects;
-import java.util.function.BiFunction;
 import java.util.function.DoubleConsumer;
 import java.util.function.DoubleFunction;
 import java.util.function.DoubleUnaryOperator;
@@ -220,12 +220,11 @@ public interface ToDoubleBiObjDoubleFunction<T, U> {
     }
 
     /**
-     * Returns a composed {@link BiFunction} which represents this {@link ObjDoubleFunction}. Thereby the primitive
-     * input argument for this operation is autoboxed. This method is just convenience to provide the ability to use
-     * this {@code ObjDoubleFunction} with JRE specific methods, only accepting {@code BiFunction}.
-     *
-     * @return A composed {@code BiFunction} which represents this {@code ObjDoubleFunction}.
+     * Returns a composed {@link TriFunction} which represents this {@link ObjDoubleFunction}. Thereby the primitive
+     * input argument for this function is autoboxed.
+     * @return A composed {@code TriFunction} which represents this {@code ObjDoubleFunction}.
      */
+    @Nonnull
     default TriFunction<T, U, Double, Double> boxed() {
         return this::applyAsDouble;
     }

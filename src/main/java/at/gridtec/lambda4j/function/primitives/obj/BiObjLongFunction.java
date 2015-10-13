@@ -18,6 +18,7 @@ package at.gridtec.lambda4j.function.primitives.obj;
 import at.gridtec.lambda4j.consumer.primitives.obj.BiObjLongConsumer;
 import at.gridtec.lambda4j.function.TriFunction;
 
+import javax.annotation.Nonnull;
 import java.util.Objects;
 import java.util.function.Consumer;
 import java.util.function.Function;
@@ -224,10 +225,11 @@ public interface BiObjLongFunction<T, U, R> {
 
     /**
      * Returns a composed {@link TriFunction} which represents this {@link ObjLongFunction}. Thereby the primitive input
-     * argument for this operation is autoboxed.
+     * argument for this function is autoboxed.
      *
-     * @return A composed {@code BiFunction} which represents this {@code ObjLongFunction}.
+     * @return A composed {@code TriFunction} which represents this {@code ObjLongFunction}.
      */
+    @Nonnull
     default TriFunction<T, U, Long, R> boxed() {
         return this::apply;
     }

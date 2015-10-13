@@ -20,6 +20,7 @@ import at.gridtec.lambda4j.consumer.TriConsumer;
 import at.gridtec.lambda4j.consumer.primitives.BooleanConsumer;
 import at.gridtec.lambda4j.operators.unary.BooleanUnaryOperator;
 
+import javax.annotation.Nonnull;
 import java.util.Objects;
 import java.util.function.Predicate;
 
@@ -165,10 +166,11 @@ public interface BooleanTriConsumer {
 
     /**
      * Returns a composed {@link TriConsumer} which represents this {@link BooleanTriConsumer}. Thereby the primitive
-     * input argument for this predicate is autoboxed.
+     * input argument for this consumer is autoboxed.
      *
      * @return A composed {@code TriConsumer} which represents this {@code BooleanTriConsumer}.
      */
+    @Nonnull
     default TriConsumer<Boolean, Boolean, Boolean> boxed() {
         return this::accept;
     }

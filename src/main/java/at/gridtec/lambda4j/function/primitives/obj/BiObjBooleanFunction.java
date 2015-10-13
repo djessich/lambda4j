@@ -21,6 +21,7 @@ import at.gridtec.lambda4j.function.primitives.BooleanFunction;
 import at.gridtec.lambda4j.operators.unary.BooleanUnaryOperator;
 import at.gridtec.lambda4j.predicates.primitives.obj.BiObjBooleanPredicate;
 
+import javax.annotation.Nonnull;
 import java.util.Objects;
 import java.util.function.Consumer;
 import java.util.function.Function;
@@ -225,11 +226,10 @@ public interface BiObjBooleanFunction<T, U, R> {
 
     /**
      * Returns a composed {@link TriFunction} which represents this {@link ObjBooleanFunction}. Thereby the primitive
-     * input argument for this operation is autoboxed. This method is just convenience to provide the ability to use
-     * this {@code ObjBooleanFunction} with JRE specific methods, only accepting {@code BiFunction}.
-     *
-     * @return A composed {@code BiFunction} which represents this {@code ObjBooleanFunction}.
+     * input argument for this function is autoboxed.
+     * @return A composed {@code TriFunction} which represents this {@code ObjBooleanFunction}.
      */
+    @Nonnull
     default TriFunction<T, U, Boolean, R> boxed() {
         return this::apply;
     }

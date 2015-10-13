@@ -18,6 +18,7 @@ package at.gridtec.lambda4j.function.primitives.obj;
 import at.gridtec.lambda4j.consumer.primitives.obj.BiObjDoubleConsumer;
 import at.gridtec.lambda4j.function.TriFunction;
 
+import javax.annotation.Nonnull;
 import java.util.Objects;
 import java.util.function.Consumer;
 import java.util.function.DoubleFunction;
@@ -224,10 +225,11 @@ public interface BiObjDoubleFunction<T, U, R> {
 
     /**
      * Returns a composed {@link TriFunction} which represents this {@link ObjDoubleFunction}. Thereby the primitive
-     * input argument for this operation is autoboxed.
+     * input argument for this function is autoboxed.
      *
-     * @return A composed {@code BiFunction} which represents this {@code ObjDoubleFunction}.
+     * @return A composed {@code TriFunction} which represents this {@code ObjDoubleFunction}.
      */
+    @Nonnull
     default TriFunction<T, U, Double, R> boxed() {
         return this::apply;
     }

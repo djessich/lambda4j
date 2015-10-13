@@ -15,6 +15,7 @@
  */
 package at.gridtec.lambda4j.predicates.primitives;
 
+import javax.annotation.Nonnull;
 import java.util.Objects;
 import java.util.function.Predicate;
 
@@ -177,6 +178,7 @@ public interface BytePredicate {
      *
      * @return A composed {@code Predicate} which represents this {@code BytePredicate}.
      */
+    @Nonnull
     default Predicate<Byte> boxed() {
         return this::test;
     }

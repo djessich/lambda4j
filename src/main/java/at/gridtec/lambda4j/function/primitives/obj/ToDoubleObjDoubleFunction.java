@@ -15,6 +15,7 @@
  */
 package at.gridtec.lambda4j.function.primitives.obj;
 
+import javax.annotation.Nonnull;
 import java.util.Objects;
 import java.util.function.BiFunction;
 import java.util.function.DoubleBinaryOperator;
@@ -194,11 +195,12 @@ public interface ToDoubleObjDoubleFunction<T> {
 
     /**
      * Returns a composed {@link BiFunction} which represents this {@link ObjDoubleFunction}. Thereby the primitive
-     * input argument for this operation is autoboxed. This method is just convenience to provide the ability to use
+     * input argument for this function is autoboxed. This method is just convenience to provide the ability to use
      * this {@code ObjDoubleFunction} with JRE specific methods, only accepting {@code BiFunction}.
      *
      * @return A composed {@code BiFunction} which represents this {@code ObjDoubleFunction}.
      */
+    @Nonnull
     default BiFunction<T, Double, Double> boxed() {
         return this::applyAsDouble;
     }

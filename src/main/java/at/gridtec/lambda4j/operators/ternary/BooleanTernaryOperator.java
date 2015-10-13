@@ -18,6 +18,7 @@ package at.gridtec.lambda4j.operators.ternary;
 import at.gridtec.lambda4j.operators.unary.BooleanUnaryOperator;
 import at.gridtec.lambda4j.predicates.TriPredicate;
 
+import javax.annotation.Nonnull;
 import java.util.Objects;
 
 /**
@@ -292,10 +293,11 @@ public interface BooleanTernaryOperator {
 
     /**
      * Returns a composed {@link TernaryOperator} which represents this {@link BooleanTernaryOperator}. Thereby the
-     * primitive input argument for this operation is autoboxed.
+     * primitive input argument for this operator is autoboxed.
      *
      * @return A composed {@code TernaryOperator} which represents this {@code BooleanTernaryOperator}.
      */
+    @Nonnull
     default TernaryOperator<Boolean> boxed() {
         return this::applyAsBoolean;
     }

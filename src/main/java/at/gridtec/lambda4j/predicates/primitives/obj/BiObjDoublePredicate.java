@@ -17,6 +17,7 @@ package at.gridtec.lambda4j.predicates.primitives.obj;
 
 import at.gridtec.lambda4j.predicates.TriPredicate;
 
+import javax.annotation.Nonnull;
 import java.util.Objects;
 import java.util.function.BiPredicate;
 
@@ -198,11 +199,10 @@ public interface BiObjDoublePredicate<T, U> {
 
     /**
      * Returns a composed {@link TriPredicate} which represents this {@link BiObjDoublePredicate}. Thereby the primitive
-     * input argument for this predicate is autoboxed. This method is just convenience to provide the ability to use
-     * this {@code BiObjDoublePredicate} with JRE specific methods, only accepting {@code TriPredicate}.
-     *
+     * input argument for this predicate is autoboxed.
      * @return A composed {@code TriPredicate} which represents this {@code BiObjDoublePredicate}.
      */
+    @Nonnull
     default TriPredicate<T, U, Double> boxed() {
         return this::test;
     }

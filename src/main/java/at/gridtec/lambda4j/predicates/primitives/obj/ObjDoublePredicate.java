@@ -15,6 +15,7 @@
  */
 package at.gridtec.lambda4j.predicates.primitives.obj;
 
+import javax.annotation.Nonnull;
 import java.util.Objects;
 import java.util.function.BiPredicate;
 
@@ -193,6 +194,7 @@ public interface ObjDoublePredicate<T> {
      *
      * @return A composed {@code BiPredicate} which represents this {@code ObjDoublePredicate}.
      */
+    @Nonnull
     default BiPredicate<T, Double> boxed() {
         return this::test;
     }

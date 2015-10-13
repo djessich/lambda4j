@@ -17,6 +17,7 @@ package at.gridtec.lambda4j.operators.binary;
 
 import at.gridtec.lambda4j.operators.unary.BooleanUnaryOperator;
 
+import javax.annotation.Nonnull;
 import java.util.Comparator;
 import java.util.Objects;
 import java.util.function.BiPredicate;
@@ -294,11 +295,12 @@ public interface BooleanBinaryOperator {
 
     /**
      * Returns a composed {@link BinaryOperator} which represents this {@link BooleanBinaryOperator}. Thereby the
-     * primitive input argument for this operation is autoboxed. This method is just convenience to provide the ability
+     * primitive input argument for this operator is autoboxed. This method is just convenience to provide the ability
      * to use this {@code BooleanBinaryOperator} with JRE specific methods, only accepting {@code BinaryOperator}.
      *
      * @return A composed {@code BinaryOperator} which represents this {@code BooleanBinaryOperator}.
      */
+    @Nonnull
     default BinaryOperator<Boolean> boxed() {
         return this::applyAsBoolean;
     }

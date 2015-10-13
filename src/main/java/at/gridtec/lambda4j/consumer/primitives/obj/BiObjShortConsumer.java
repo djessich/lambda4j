@@ -20,6 +20,7 @@ import at.gridtec.lambda4j.consumer.primitives.ShortConsumer;
 import at.gridtec.lambda4j.function.primitives.to.ToShortFunction;
 import at.gridtec.lambda4j.operators.unary.ShortUnaryOperator;
 
+import javax.annotation.Nonnull;
 import java.util.Objects;
 import java.util.function.Consumer;
 import java.util.function.Function;
@@ -175,10 +176,11 @@ public interface BiObjShortConsumer<T, U> {
 
     /**
      * Returns a composed {@link TriConsumer} which represents this {@link BiObjShortConsumer}. Thereby the primitive
-     * input argument for this predicate is autoboxed.
+     * input argument for this consumer is autoboxed.
      *
      * @return A composed {@code TriConsumer} which represents this {@code BiObjShortConsumer}.
      */
+    @Nonnull
     default TriConsumer<T, U, Short> boxed() {
         return this::accept;
     }

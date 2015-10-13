@@ -18,6 +18,7 @@ package at.gridtec.lambda4j.consumer.primitives;
 import at.gridtec.lambda4j.function.primitives.to.ToFloatFunction;
 import at.gridtec.lambda4j.operators.unary.FloatUnaryOperator;
 
+import javax.annotation.Nonnull;
 import java.util.Objects;
 import java.util.function.Consumer;
 
@@ -105,11 +106,12 @@ public interface FloatConsumer {
 
     /**
      * Returns a composed {@link Consumer} which represents this {@link FloatConsumer}. Thereby the primitive input
-     * argument for this predicate is autoboxed. This method is just convenience to provide the ability to use this
+     * argument for this consumer is autoboxed. This method is just convenience to provide the ability to use this
      * {@code FloatConsumer} with JRE specific methods, only accepting {@code Consumer}.
      *
      * @return A composed {@code Consumer} which represents this {@code FloatConsumer}.
      */
+    @Nonnull
     default Consumer<Float> boxed() {
         return this::accept;
     }

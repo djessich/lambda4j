@@ -15,6 +15,7 @@
  */
 package at.gridtec.lambda4j.operators.ternary;
 
+import javax.annotation.Nonnull;
 import java.util.Objects;
 import java.util.function.IntUnaryOperator;
 
@@ -132,10 +133,11 @@ public interface IntTernaryOperator {
 
     /**
      * Returns a composed {@link TernaryOperator} which represents this {@link IntTernaryOperator}. Thereby the
-     * primitive input argument for this operation is autoboxed.
+     * primitive input argument for this operator is autoboxed.
      *
      * @return A composed {@code TernaryOperator} which represents this {@code IntTernaryOperator}.
      */
+    @Nonnull
     default TernaryOperator<Integer> boxed() {
         return this::applyAsInt;
     }

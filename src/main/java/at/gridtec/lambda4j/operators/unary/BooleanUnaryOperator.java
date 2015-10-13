@@ -15,6 +15,7 @@
  */
 package at.gridtec.lambda4j.operators.unary;
 
+import javax.annotation.Nonnull;
 import java.util.Objects;
 import java.util.function.Predicate;
 import java.util.function.UnaryOperator;
@@ -208,11 +209,12 @@ public interface BooleanUnaryOperator {
 
     /**
      * Returns a composed {@link UnaryOperator} which represents this {@link BooleanUnaryOperator}. Thereby the
-     * primitive input argument for this operation is autoboxed. This method is just convenience to provide the ability
+     * primitive input argument for this operator is autoboxed. This method is just convenience to provide the ability
      * to use this {@code BooleanUnaryOperator} with JRE specific methods, only accepting {@code UnaryOperator}.
      *
      * @return A composed {@code UnaryOperator} which represents this {@code BooleanUnaryOperator}.
      */
+    @Nonnull
     default UnaryOperator<Boolean> boxed() {
         return this::applyAsBoolean;
     }

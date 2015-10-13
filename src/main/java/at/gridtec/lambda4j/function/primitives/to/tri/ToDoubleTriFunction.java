@@ -25,6 +25,7 @@ import at.gridtec.lambda4j.function.primitives.conversion.DoubleToShortFunction;
 import at.gridtec.lambda4j.function.primitives.to.bi.ToCharBiFunction;
 import at.gridtec.lambda4j.predicates.TriPredicate;
 
+import javax.annotation.Nonnull;
 import java.util.Objects;
 import java.util.function.DoubleConsumer;
 import java.util.function.DoubleFunction;
@@ -338,11 +339,10 @@ public interface ToDoubleTriFunction<T, U, V> {
 
     /**
      * Returns a composed {@link TriFunction} which represents this {@link ToDoubleTriFunction}. Thereby the primitive
-     * input argument for this operation is autoboxed. This method is just convenience to provide the ability to use
-     * this {@code ToDoubleTriFunction} with JRE specific methods, only accepting {@code TriFunction}.
-     *
+     * input argument for this function is autoboxed.
      * @return A composed {@code TriFunction} which represents this {@code ToDoubleTriFunction}.
      */
+    @Nonnull
     default TriFunction<T, U, V, Double> boxed() {
         return this::applyAsDouble;
     }

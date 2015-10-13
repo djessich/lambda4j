@@ -19,6 +19,7 @@ import at.gridtec.lambda4j.consumer.primitives.FloatConsumer;
 import at.gridtec.lambda4j.function.primitives.to.ToFloatFunction;
 import at.gridtec.lambda4j.operators.unary.FloatUnaryOperator;
 
+import javax.annotation.Nonnull;
 import java.util.Objects;
 import java.util.function.BiConsumer;
 
@@ -142,11 +143,12 @@ public interface FloatBiConsumer {
 
     /**
      * Returns a composed {@link BiConsumer} which represents this {@link FloatBiConsumer}. Thereby the primitive input
-     * argument for this predicate is autoboxed. This method is just convenience to provide the ability to use this
+     * argument for this consumer is autoboxed. This method is just convenience to provide the ability to use this
      * {@code FloatBiConsumer} with JRE specific methods, only accepting {@code BiConsumer}.
      *
      * @return A composed {@code BiConsumer} which represents this {@code FloatBiConsumer}.
      */
+    @Nonnull
     default BiConsumer<Float, Float> boxed() {
         return this::accept;
     }

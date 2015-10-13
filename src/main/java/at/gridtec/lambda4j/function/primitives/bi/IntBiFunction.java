@@ -17,6 +17,7 @@ package at.gridtec.lambda4j.function.primitives.bi;
 
 import at.gridtec.lambda4j.consumer.primitives.bi.IntBiConsumer;
 
+import javax.annotation.Nonnull;
 import java.util.Objects;
 import java.util.function.BiFunction;
 import java.util.function.Consumer;
@@ -189,11 +190,12 @@ public interface IntBiFunction<R> {
 
     /**
      * Returns a composed {@link BiFunction} which represents this {@link IntBiFunction}. Thereby the primitive input
-     * argument for this operation is autoboxed. This method is just convenience to provide the ability to use this
+     * argument for this function is autoboxed. This method is just convenience to provide the ability to use this
      * {@code IntBiFunction} with JRE specific methods, only accepting {@code BiFunction}.
      *
      * @return A composed {@code BiFunction} which represents this {@code IntBiFunction}.
      */
+    @Nonnull
     default BiFunction<Integer, Integer, R> boxed() {
         return this::apply;
     }
