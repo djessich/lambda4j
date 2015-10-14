@@ -98,6 +98,8 @@ public interface ByteSupplier {
      * @return A composed {@code ByteSupplier} that first gets the result from this operation, and then applies the
      * {@code after} operation to the result.
      * @throws NullPointerException If given argument is {@code null}
+     * @implNote The result of this method is the primitive specialization of {@link Supplier}. Therefore the returned
+     * operation handles primitive types. In this case this is {@code byte}.
      */
     @Nonnull
     default ByteSupplier andThen(@Nonnull final ByteUnaryOperator after) {
@@ -115,6 +117,7 @@ public interface ByteSupplier {
      * @return A composed {@code Supplier} that first gets the result from this operation, and then applies the {@code
      * after} operation to the result.
      * @throws NullPointerException If given argument is {@code null}
+     * @implNote The returned operation is able to handle every type.
      */
     @Nonnull
     default <R> Supplier<R> andThen(@Nonnull final ByteFunction<? extends R> after) {

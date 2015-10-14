@@ -98,6 +98,8 @@ public interface ShortSupplier {
      * @return A composed {@code ShortSupplier} that first gets the result from this operation, and then applies the
      * {@code after} operation to the result.
      * @throws NullPointerException If given argument is {@code null}
+     * @implNote The result of this method is the primitive specialization of {@link Supplier}. Therefore the returned
+     * operation handles primitive types. In this case this is {@code short}.
      */
     @Nonnull
     default ShortSupplier andThen(@Nonnull final ShortUnaryOperator after) {
@@ -115,6 +117,7 @@ public interface ShortSupplier {
      * @return A composed {@code Supplier} that first gets the result from this operation, and then applies the {@code
      * after} operation to the result.
      * @throws NullPointerException If given argument is {@code null}
+     * @implNote The returned operation is able to handle every type.
      */
     @Nonnull
     default <R> Supplier<R> andThen(@Nonnull final ShortFunction<? extends R> after) {
