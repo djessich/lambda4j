@@ -113,6 +113,7 @@ public interface ToByteBiFunction<T, U> {
      * Returns the number of this operations arguments.
      *
      * @return The number of this operations arguments.
+     * @implSpec The default implementation always returns {@code 2}.
      */
     @Nonnegative
     default int arity() {
@@ -302,13 +303,13 @@ public interface ToByteBiFunction<T, U> {
     }
 
     /**
-     * Returns a composed {@link BiConsumer} that fist applies this operation to its input, and then consumes
-     * the result using the given {@link ByteConsumer}. If evaluation of either operation throws an exception, it is relayed
-     * to the caller of the composed operation.
+     * Returns a composed {@link BiConsumer} that fist applies this operation to its input, and then consumes the result
+     * using the given {@link ByteConsumer}. If evaluation of either operation throws an exception, it is relayed to the
+     * caller of the composed operation.
      *
      * @param consumer The operation which consumes the result from this operation
-     * @return A composed {@code BiConsumer} that first applies this operation to its input, and then consumes
-     * the result using the given {@code ByteConsumer}.
+     * @return A composed {@code BiConsumer} that first applies this operation to its input, and then consumes the
+     * result using the given {@code ByteConsumer}.
      * @throws NullPointerException If given argument is {@code null}
      */
     @Nonnull

@@ -126,6 +126,7 @@ public interface BiObjBooleanFunction<T, U, R> {
      * Returns the number of this operations arguments.
      *
      * @return The number of this operations arguments.
+     * @implSpec The default implementation always returns {@code 3}.
      */
     @Nonnegative
     default int arity() {
@@ -217,13 +218,13 @@ public interface BiObjBooleanFunction<T, U, R> {
     }
 
     /**
-     * Returns a composed {@link BiObjBooleanConsumer} that fist applies this operation to its input, and then consumes the
-     * result using the given {@link Consumer}. If evaluation of either operation throws an exception, it is relayed to
-     * the caller of the composed operation.
+     * Returns a composed {@link BiObjBooleanConsumer} that fist applies this operation to its input, and then consumes
+     * the result using the given {@link Consumer}. If evaluation of either operation throws an exception, it is relayed
+     * to the caller of the composed operation.
      *
      * @param consumer The operation which consumes the result from this operation
-     * @return A composed {@code BiObjBooleanConsumer} that first applies this operation to its input, and then consumes the
-     * result using the given {@code Consumer}.
+     * @return A composed {@code BiObjBooleanConsumer} that first applies this operation to its input, and then consumes
+     * the result using the given {@code Consumer}.
      * @throws NullPointerException If given argument is {@code null}
      */
     @Nonnull

@@ -115,6 +115,7 @@ public interface BooleanTriFunction<R> {
      * Returns the number of this operations arguments.
      *
      * @return The number of this operations arguments.
+     * @implSpec The default implementation always returns {@code 3}.
      */
     @Nonnegative
     default int arity() {

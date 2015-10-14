@@ -121,6 +121,7 @@ public interface ToIntBiObjIntFunction<T, U> {
      * Returns the number of this operations arguments.
      *
      * @return The number of this operations arguments.
+     * @implSpec The default implementation always returns {@code 3}.
      */
     @Nonnegative
     default int arity() {
@@ -211,13 +212,13 @@ public interface ToIntBiObjIntFunction<T, U> {
     }
 
     /**
-     * Returns a composed {@link BiObjIntConsumer} that fist applies this operation to its input, and then consumes
-     * the result using the given {@link IntConsumer}. If evaluation of either operation throws an exception, it is relayed
+     * Returns a composed {@link BiObjIntConsumer} that fist applies this operation to its input, and then consumes the
+     * result using the given {@link IntConsumer}. If evaluation of either operation throws an exception, it is relayed
      * to the caller of the composed operation.
      *
      * @param consumer The operation which consumes the result from this operation
-     * @return A composed {@code BiObjIntConsumer} that first applies this operation to its input, and then consumes
-     * the result using the given {@code IntConsumer}.
+     * @return A composed {@code BiObjIntConsumer} that first applies this operation to its input, and then consumes the
+     * result using the given {@code IntConsumer}.
      * @throws NullPointerException If given argument is {@code null}
      */
     @Nonnull

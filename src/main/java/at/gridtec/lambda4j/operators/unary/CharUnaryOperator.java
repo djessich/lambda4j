@@ -64,6 +64,7 @@ public interface CharUnaryOperator {
      * Returns the number of arguments for this operation.
      *
      * @return The number of arguments for this operation.
+     * @implSpec The default implementation always returns {@code 1}.
      */
     @Nonnegative
     default int arity() {

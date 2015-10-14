@@ -100,6 +100,7 @@ public interface ToShortObjShortFunction<T> {
      * Returns the number of this operations arguments.
      *
      * @return The number of this operations arguments.
+     * @implSpec The default implementation always returns {@code 2}.
      */
     @Nonnegative
     default int arity() {
@@ -185,13 +186,13 @@ public interface ToShortObjShortFunction<T> {
     }
 
     /**
-     * Returns a composed {@link ObjShortConsumer} that fist applies this operation to its input, and then consumes
-     * the result using the given {@link ShortConsumer}. If evaluation of either operation throws an exception, it is relayed
-     * to the caller of the composed operation.
+     * Returns a composed {@link ObjShortConsumer} that fist applies this operation to its input, and then consumes the
+     * result using the given {@link ShortConsumer}. If evaluation of either operation throws an exception, it is
+     * relayed to the caller of the composed operation.
      *
      * @param consumer The operation which consumes the result from this operation
-     * @return A composed {@code ObjShortConsumer} that first applies this operation to its input, and then consumes
-     * the result using the given {@code ShortConsumer}.
+     * @return A composed {@code ObjShortConsumer} that first applies this operation to its input, and then consumes the
+     * result using the given {@code ShortConsumer}.
      * @throws NullPointerException If given argument is {@code null}
      */
     @Nonnull
