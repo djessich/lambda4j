@@ -185,7 +185,7 @@ public interface TriFunction<T, U, V, R> {
     @Nonnull
     default TriConsumer<T, U, V> consume(@Nonnull final Consumer<? super R> consumer) {
         Objects.requireNonNull(consumer);
-        return (t, u, v) -> consumer.accept(this.apply(t, u, v));
+        return (t, u, v) -> consumer.accept(apply(t, u, v));
     }
 
     /**

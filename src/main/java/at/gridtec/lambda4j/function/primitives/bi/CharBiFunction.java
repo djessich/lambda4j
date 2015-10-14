@@ -191,7 +191,7 @@ public interface CharBiFunction<R> {
     @Nonnull
     default CharBiConsumer consume(@Nonnull final Consumer<? super R> consumer) {
         Objects.requireNonNull(consumer);
-        return (value1, value2) -> consumer.accept(this.apply(value1, value2));
+        return (value1, value2) -> consumer.accept(apply(value1, value2));
     }
 
     /**

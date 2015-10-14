@@ -269,7 +269,7 @@ public interface ToCharFunction<T> {
     @Nonnull
     default Consumer<T> consume(@Nonnull final CharConsumer consumer) {
         Objects.requireNonNull(consumer);
-        return t -> consumer.accept(this.applyAsChar(t));
+        return t -> consumer.accept(applyAsChar(t));
     }
 
     /**

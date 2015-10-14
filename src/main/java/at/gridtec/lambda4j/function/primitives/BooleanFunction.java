@@ -270,7 +270,7 @@ public interface BooleanFunction<R> {
     @Nonnull
     default BooleanConsumer consume(@Nonnull final Consumer<? super R> consumer) {
         Objects.requireNonNull(consumer);
-        return value -> consumer.accept(this.apply(value));
+        return value -> consumer.accept(apply(value));
     }
 
     /**

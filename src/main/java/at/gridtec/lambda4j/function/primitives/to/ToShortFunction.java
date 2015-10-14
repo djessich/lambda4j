@@ -269,7 +269,7 @@ public interface ToShortFunction<T> {
     @Nonnull
     default Consumer<T> consume(@Nonnull final ShortConsumer consumer) {
         Objects.requireNonNull(consumer);
-        return t -> consumer.accept(this.applyAsShort(t));
+        return t -> consumer.accept(applyAsShort(t));
     }
 
     /**

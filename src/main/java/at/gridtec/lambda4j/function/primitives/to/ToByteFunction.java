@@ -269,7 +269,7 @@ public interface ToByteFunction<T> {
     @Nonnull
     default Consumer<T> consume(@Nonnull final ByteConsumer consumer) {
         Objects.requireNonNull(consumer);
-        return t -> consumer.accept(this.applyAsByte(t));
+        return t -> consumer.accept(applyAsByte(t));
     }
 
     /**

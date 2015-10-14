@@ -214,7 +214,7 @@ public interface LongTriFunction<R> {
     @Nonnull
     default LongTriConsumer consume(@Nonnull final Consumer<? super R> consumer) {
         Objects.requireNonNull(consumer);
-        return (value1, value2, value3) -> consumer.accept(this.apply(value1, value2, value3));
+        return (value1, value2, value3) -> consumer.accept(apply(value1, value2, value3));
     }
 
     /**

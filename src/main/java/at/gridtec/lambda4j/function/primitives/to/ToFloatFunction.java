@@ -269,7 +269,7 @@ public interface ToFloatFunction<T> {
     @Nonnull
     default Consumer<T> consume(@Nonnull final FloatConsumer consumer) {
         Objects.requireNonNull(consumer);
-        return t -> consumer.accept(this.applyAsFloat(t));
+        return t -> consumer.accept(applyAsFloat(t));
     }
 
     /**
