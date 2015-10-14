@@ -66,7 +66,7 @@ public interface FloatSupplier {
      * @param supplier The supplier to be called
      * @return The result of the given {@code FloatSupplier}.
      */
-    static float call(final @Nonnull FloatSupplier supplier) {
+    static float call(@Nonnull final FloatSupplier supplier) {
         Objects.requireNonNull(supplier);
         return supplier.getAsFloat();
     }

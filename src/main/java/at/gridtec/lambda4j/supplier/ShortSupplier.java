@@ -66,7 +66,7 @@ public interface ShortSupplier {
      * @param supplier The supplier to be called
      * @return The result of the given {@code ShortSupplier}.
      */
-    static short call(final @Nonnull ShortSupplier supplier) {
+    static short call(@Nonnull final ShortSupplier supplier) {
         Objects.requireNonNull(supplier);
         return supplier.getAsShort();
     }

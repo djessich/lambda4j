@@ -67,7 +67,7 @@ public interface ByteSupplier {
      * @param supplier The supplier to be called
      * @return The result of the given {@code ByteSupplier}.
      */
-    static byte call(final @Nonnull ByteSupplier supplier) {
+    static byte call(@Nonnull final ByteSupplier supplier) {
         Objects.requireNonNull(supplier);
         return supplier.getAsByte();
     }

@@ -67,7 +67,7 @@ public interface CharSupplier {
      * @param supplier The supplier to be called
      * @return The result of the given {@code CharSupplier}.
      */
-    static char call(final @Nonnull CharSupplier supplier) {
+    static char call(@Nonnull final CharSupplier supplier) {
         Objects.requireNonNull(supplier);
         return supplier.getAsChar();
     }
