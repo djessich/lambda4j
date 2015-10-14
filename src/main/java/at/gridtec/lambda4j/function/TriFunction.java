@@ -15,9 +15,12 @@
  */
 package at.gridtec.lambda4j.function;
 
+import at.gridtec.lambda4j.consumer.TriConsumer;
+
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import java.util.Objects;
+import java.util.function.Consumer;
 import java.util.function.Function;
 
 /**
@@ -167,6 +170,22 @@ public interface TriFunction<T, U, V, R> {
     default <S> TriFunction<T, U, V, S> andThen(final Function<? super R, ? extends S> after) {
         Objects.requireNonNull(after);
         return (t, u, v) -> after.apply(apply(t, u, v));
+    }
+
+    /**
+     * Returns a composed {@link TriConsumer} that fist applies this operation to its input, and then consumes the
+     * result using the given {@link Consumer}. If evaluation of either operation throws an exception, it is relayed to
+     * the caller of the composed operation.
+     *
+     * @param consumer The operation which consumes the result from this operation
+     * @return A composed {@code TriConsumer} that first applies this operation to its input, and then consumes the
+     * result using the given {@code Consumer}.
+     * @throws NullPointerException If given argument is {@code null}
+     */
+    @Nonnull
+    default TriConsumer<T, U, V> consume(@Nonnull final Consumer<? super R> consumer) {
+        Objects.requireNonNull(consumer);
+        return (t, u, v) -> consumer.accept(this.apply(t, u, v));
     }
 
     /**
