@@ -15,6 +15,7 @@
  */
 package at.gridtec.lambda4j.supplier;
 
+import at.gridtec.lambda4j.consumer.primitives.FloatConsumer;
 import at.gridtec.lambda4j.function.primitives.FloatFunction;
 import at.gridtec.lambda4j.function.primitives.conversion.FloatToBooleanFunction;
 import at.gridtec.lambda4j.function.primitives.conversion.FloatToByteFunction;
@@ -29,6 +30,7 @@ import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import java.util.Objects;
 import java.util.function.BooleanSupplier;
+import java.util.function.Consumer;
 import java.util.function.DoubleSupplier;
 import java.util.function.IntSupplier;
 import java.util.function.LongSupplier;
@@ -243,6 +245,26 @@ public interface FloatSupplier {
     default ShortSupplier toShort(@Nonnull final FloatToShortFunction after) {
         Objects.requireNonNull(after);
         return () -> after.applyAsShort(getAsFloat());
+    }
+
+    /**
+     * Returns a composed {@link Consumer} that first gets the result from this operation, and then consumes the result
+     * using the given {@link FloatConsumer}. If evaluation of either operation throws an exception, it is relayed to
+     * the caller of the composed operation.
+     *
+     * @param consumer The operation which consumes the result from this operation
+     * @return A composed {@code Consumer} that first gets the result from this operation, and then consumes the result
+     * using the given {@code FloatConsumer}.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implNote Due to the fact that a {@link Supplier} receives no input, we do not need to pass an argument of a
+     * particular type to the resulting {@code Consumer}. As a result, this method returns a {@code Consumer} of {@link
+     * Void}, whose argument is ignored. Therefore, the input parameter will always be {@code null} when the resulting
+     * consumer is called with {@code Consumer#accept(Object)}.
+     */
+    @Nonnull
+    default Consumer<Void> consume(@Nonnull final FloatConsumer consumer) {
+        Objects.requireNonNull(consumer);
+        return ignored -> consumer.accept(getAsFloat());
     }
 
     /**
