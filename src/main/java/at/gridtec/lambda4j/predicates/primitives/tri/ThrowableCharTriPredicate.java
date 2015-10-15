@@ -120,9 +120,9 @@ public interface ThrowableCharTriPredicate extends CharTriPredicate {
     }
 
     /**
-     * Returns a {@link ThrowableCharTriPredicate} the always returns {@code true}.
+     * Returns a {@link ThrowableCharTriPredicate} that always returns {@code true}.
      *
-     * @return A {@link ThrowableCharTriPredicate} the always returns {@code true}.
+     * @return A {@link ThrowableCharTriPredicate} that always returns {@code true}.
      * @see #alwaysFalse()
      */
     static ThrowableCharTriPredicate alwaysTrue() {

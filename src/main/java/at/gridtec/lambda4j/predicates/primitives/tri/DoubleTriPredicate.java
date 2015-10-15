@@ -74,11 +74,12 @@ public interface DoubleTriPredicate {
     }
 
     /**
-     * Returns a {@link ShortTriPredicate} the always returns {@code true}.
+     * Returns a {@link ShortTriPredicate} that always returns {@code true}.
      *
-     * @return A {@link ShortTriPredicate} the always returns {@code true}.
+     * @return A {@link ShortTriPredicate} that always returns {@code true}.
      * @see #alwaysFalse()
      */
+    @Nonnull
     static ShortTriPredicate alwaysTrue() {
         return (value1, value2, value3) -> true;
     }
@@ -89,6 +90,7 @@ public interface DoubleTriPredicate {
      * @return A {@link ShortTriPredicate} the always returns {@code false}.
      * @see #alwaysTrue()
      */
+    @Nonnull
     static ShortTriPredicate alwaysFalse() {
         return (value1, value2, value3) -> false;
     }

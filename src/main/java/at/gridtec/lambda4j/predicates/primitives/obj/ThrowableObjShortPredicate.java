@@ -124,10 +124,10 @@ public interface ThrowableObjShortPredicate<T> extends ObjShortPredicate<T> {
     }
 
     /**
-     * Returns a {@link ThrowableObjShortPredicate} the always returns {@code true}.
+     * Returns a {@link ThrowableObjShortPredicate} that always returns {@code true}.
      *
      * @param <T> The type of argument to the predicate
-     * @return A {@link ThrowableObjShortPredicate} the always returns {@code true}.
+     * @return A {@link ThrowableObjShortPredicate} that always returns {@code true}.
      * @see #alwaysFalse()
      */
     static <T> ThrowableObjShortPredicate<T> alwaysTrue() {

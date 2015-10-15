@@ -68,11 +68,12 @@ public interface CharPredicate {
     }
 
     /**
-     * Returns a {@link CharPredicate} the always returns {@code true}.
+     * Returns a {@link CharPredicate} that always returns {@code true}.
      *
-     * @return A {@link CharPredicate} the always returns {@code true}.
+     * @return A {@link CharPredicate} that always returns {@code true}.
      * @see #alwaysFalse()
      */
+    @Nonnull
     static CharPredicate alwaysTrue() {
         return value -> true;
     }
@@ -83,6 +84,7 @@ public interface CharPredicate {
      * @return A {@link CharPredicate} the always returns {@code false}.
      * @see #alwaysTrue()
      */
+    @Nonnull
     static CharPredicate alwaysFalse() {
         return value -> false;
     }

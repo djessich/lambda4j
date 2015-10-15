@@ -94,14 +94,15 @@ public interface TriPredicate<T, U, V> {
     //@formatter:on
 
     /**
-     * Returns a {@link TriPredicate} the always returns {@code true}.
+     * Returns a {@link TriPredicate} that always returns {@code true}.
      *
      * @param <T> The type of the first argument to the predicate
      * @param <U> The type of the second argument to the predicate
      * @param <V> The type of the third argument to the predicate
-     * @return A {@link TriPredicate} the always returns {@code true}.
+     * @return A {@link TriPredicate} that always returns {@code true}.
      * @see #alwaysFalse()
      */
+    @Nonnull
     static <T, U, V> TriPredicate<T, U, V> alwaysTrue() {
         return (t, u, v) -> true;
     }
@@ -115,6 +116,7 @@ public interface TriPredicate<T, U, V> {
      * @return A {@link TriPredicate} the always returns {@code false}.
      * @see #alwaysTrue()
      */
+    @Nonnull
     static <T, U, V> TriPredicate<T, U, V> alwaysFalse() {
         return (t, u, v) -> false;
     }

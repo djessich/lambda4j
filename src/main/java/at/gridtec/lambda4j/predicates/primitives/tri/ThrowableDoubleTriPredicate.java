@@ -120,9 +120,9 @@ public interface ThrowableDoubleTriPredicate extends DoubleTriPredicate {
     }
 
     /**
-     * Returns a {@link ThrowableDoubleTriPredicate} the always returns {@code true}.
+     * Returns a {@link ThrowableDoubleTriPredicate} that always returns {@code true}.
      *
-     * @return A {@link ThrowableDoubleTriPredicate} the always returns {@code true}.
+     * @return A {@link ThrowableDoubleTriPredicate} that always returns {@code true}.
      * @see #alwaysFalse()
      */
     static ThrowableDoubleTriPredicate alwaysTrue() {

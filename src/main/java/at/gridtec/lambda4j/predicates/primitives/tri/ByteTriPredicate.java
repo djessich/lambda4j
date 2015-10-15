@@ -73,11 +73,12 @@ public interface ByteTriPredicate {
     }
 
     /**
-     * Returns a {@link ByteTriPredicate} the always returns {@code true}.
+     * Returns a {@link ByteTriPredicate} that always returns {@code true}.
      *
-     * @return A {@link ByteTriPredicate} the always returns {@code true}.
+     * @return A {@link ByteTriPredicate} that always returns {@code true}.
      * @see #alwaysFalse()
      */
+    @Nonnull
     static ByteTriPredicate alwaysTrue() {
         return (value1, value2, value3) -> true;
     }
@@ -88,6 +89,7 @@ public interface ByteTriPredicate {
      * @return A {@link ByteTriPredicate} the always returns {@code false}.
      * @see #alwaysTrue()
      */
+    @Nonnull
     static ByteTriPredicate alwaysFalse() {
         return (value1, value2, value3) -> false;
     }

@@ -124,10 +124,10 @@ public interface ThrowableObjDoublePredicate<T> extends ObjDoublePredicate<T> {
     }
 
     /**
-     * Returns a {@link ThrowableObjDoublePredicate} the always returns {@code true}.
+     * Returns a {@link ThrowableObjDoublePredicate} that always returns {@code true}.
      *
      * @param <T> The type of argument to the predicate
-     * @return A {@link ThrowableObjDoublePredicate} the always returns {@code true}.
+     * @return A {@link ThrowableObjDoublePredicate} that always returns {@code true}.
      * @see #alwaysFalse()
      */
     static <T> ThrowableObjDoublePredicate<T> alwaysTrue() {

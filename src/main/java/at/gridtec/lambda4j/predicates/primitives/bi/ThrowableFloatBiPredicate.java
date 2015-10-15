@@ -118,9 +118,9 @@ public interface ThrowableFloatBiPredicate extends FloatBiPredicate {
     }
 
     /**
-     * Returns a {@link ThrowableFloatBiPredicate} the always returns {@code true}.
+     * Returns a {@link ThrowableFloatBiPredicate} that always returns {@code true}.
      *
-     * @return A {@link ThrowableFloatBiPredicate} the always returns {@code true}.
+     * @return A {@link ThrowableFloatBiPredicate} that always returns {@code true}.
      * @see #alwaysFalse()
      */
     static ThrowableFloatBiPredicate alwaysTrue() {

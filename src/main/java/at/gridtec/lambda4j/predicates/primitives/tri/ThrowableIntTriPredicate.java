@@ -120,9 +120,9 @@ public interface ThrowableIntTriPredicate extends IntTriPredicate {
     }
 
     /**
-     * Returns a {@link ThrowableIntTriPredicate} the always returns {@code true}.
+     * Returns a {@link ThrowableIntTriPredicate} that always returns {@code true}.
      *
-     * @return A {@link ThrowableIntTriPredicate} the always returns {@code true}.
+     * @return A {@link ThrowableIntTriPredicate} that always returns {@code true}.
      * @see #alwaysFalse()
      */
     static ThrowableIntTriPredicate alwaysTrue() {

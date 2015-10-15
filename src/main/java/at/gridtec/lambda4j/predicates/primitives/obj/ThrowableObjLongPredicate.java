@@ -124,10 +124,10 @@ public interface ThrowableObjLongPredicate<T> extends ObjLongPredicate<T> {
     }
 
     /**
-     * Returns a {@link ThrowableObjLongPredicate} the always returns {@code true}.
+     * Returns a {@link ThrowableObjLongPredicate} that always returns {@code true}.
      *
      * @param <T> The type of argument to the predicate
-     * @return A {@link ThrowableObjLongPredicate} the always returns {@code true}.
+     * @return A {@link ThrowableObjLongPredicate} that always returns {@code true}.
      * @see #alwaysFalse()
      */
     static <T> ThrowableObjLongPredicate<T> alwaysTrue() {

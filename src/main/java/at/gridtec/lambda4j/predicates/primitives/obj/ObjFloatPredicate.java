@@ -75,12 +75,13 @@ public interface ObjFloatPredicate<T> {
     }
 
     /**
-     * Returns a {@link ObjFloatPredicate} the always returns {@code true}.
+     * Returns a {@link ObjFloatPredicate} that always returns {@code true}.
      *
      * @param <T> The type of argument to the predicate
-     * @return A {@link ObjFloatPredicate} the always returns {@code true}.
+     * @return A {@link ObjFloatPredicate} that always returns {@code true}.
      * @see #alwaysFalse()
      */
+    @Nonnull
     static <T> ObjFloatPredicate<T> alwaysTrue() {
         return (t, value) -> true;
     }
@@ -92,6 +93,7 @@ public interface ObjFloatPredicate<T> {
      * @return A {@link ObjFloatPredicate} the always returns {@code false}.
      * @see #alwaysTrue()
      */
+    @Nonnull
     static <T> ObjFloatPredicate<T> alwaysFalse() {
         return (t, value) -> false;
     }

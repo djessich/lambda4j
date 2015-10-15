@@ -74,11 +74,12 @@ public interface FloatTriPredicate {
     }
 
     /**
-     * Returns a {@link FloatTriPredicate} the always returns {@code true}.
+     * Returns a {@link FloatTriPredicate} that always returns {@code true}.
      *
-     * @return A {@link FloatTriPredicate} the always returns {@code true}.
+     * @return A {@link FloatTriPredicate} that always returns {@code true}.
      * @see #alwaysFalse()
      */
+    @Nonnull
     static FloatTriPredicate alwaysTrue() {
         return (value1, value2, value3) -> true;
     }
@@ -89,6 +90,7 @@ public interface FloatTriPredicate {
      * @return A {@link FloatTriPredicate} the always returns {@code false}.
      * @see #alwaysTrue()
      */
+    @Nonnull
     static FloatTriPredicate alwaysFalse() {
         return (value1, value2, value3) -> false;
     }

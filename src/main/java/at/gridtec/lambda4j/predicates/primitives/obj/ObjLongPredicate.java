@@ -74,12 +74,13 @@ public interface ObjLongPredicate<T> {
     }
 
     /**
-     * Returns a {@link ObjLongPredicate} the always returns {@code true}.
+     * Returns a {@link ObjLongPredicate} that always returns {@code true}.
      *
      * @param <T> The type of argument to the predicate
-     * @return A {@link ObjLongPredicate} the always returns {@code true}.
+     * @return A {@link ObjLongPredicate} that always returns {@code true}.
      * @see #alwaysFalse()
      */
+    @Nonnull
     static <T> ObjLongPredicate<T> alwaysTrue() {
         return (t, value) -> true;
     }
@@ -91,6 +92,7 @@ public interface ObjLongPredicate<T> {
      * @return A {@link ObjLongPredicate} the always returns {@code false}.
      * @see #alwaysTrue()
      */
+    @Nonnull
     static <T> ObjLongPredicate<T> alwaysFalse() {
         return (t, value) -> false;
     }

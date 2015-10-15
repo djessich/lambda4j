@@ -116,9 +116,9 @@ public interface ThrowableLongPredicate extends LongPredicate {
     }
 
     /**
-     * Returns a {@link ThrowableLongPredicate} the always returns {@code true}.
+     * Returns a {@link ThrowableLongPredicate} that always returns {@code true}.
      *
-     * @return A {@link ThrowableLongPredicate} the always returns {@code true}.
+     * @return A {@link ThrowableLongPredicate} that always returns {@code true}.
      * @see #alwaysFalse()
      */
     static ThrowableLongPredicate alwaysTrue() {

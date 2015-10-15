@@ -119,10 +119,10 @@ public interface ThrowablePredicate<T> extends Predicate<T> {
     }
 
     /**
-     * Returns a {@link ThrowablePredicate} the always returns {@code true}.
+     * Returns a {@link ThrowablePredicate} that always returns {@code true}.
      *
      * @param <T> The type of argument to the predicate
-     * @return A {@link ThrowablePredicate} the always returns {@code true}.
+     * @return A {@link ThrowablePredicate} that always returns {@code true}.
      * @see #alwaysFalse()
      */
     static <T> ThrowablePredicate<T> alwaysTrue() {

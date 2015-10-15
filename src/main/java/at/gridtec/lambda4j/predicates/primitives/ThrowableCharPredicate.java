@@ -114,9 +114,9 @@ public interface ThrowableCharPredicate extends CharPredicate {
     }
 
     /**
-     * Returns a {@link ThrowableCharPredicate} the always returns {@code true}.
+     * Returns a {@link ThrowableCharPredicate} that always returns {@code true}.
      *
-     * @return A {@link ThrowableCharPredicate} the always returns {@code true}.
+     * @return A {@link ThrowableCharPredicate} that always returns {@code true}.
      * @see #alwaysFalse()
      */
     static ThrowableCharPredicate alwaysTrue() {

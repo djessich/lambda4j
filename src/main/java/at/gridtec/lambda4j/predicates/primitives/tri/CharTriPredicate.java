@@ -73,11 +73,12 @@ public interface CharTriPredicate {
     }
 
     /**
-     * Returns a {@link CharTriPredicate} the always returns {@code true}.
+     * Returns a {@link CharTriPredicate} that always returns {@code true}.
      *
-     * @return A {@link CharTriPredicate} the always returns {@code true}.
+     * @return A {@link CharTriPredicate} that always returns {@code true}.
      * @see #alwaysFalse()
      */
+    @Nonnull
     static CharTriPredicate alwaysTrue() {
         return (value1, value2, value3) -> true;
     }
@@ -88,6 +89,7 @@ public interface CharTriPredicate {
      * @return A {@link CharTriPredicate} the always returns {@code false}.
      * @see #alwaysTrue()
      */
+    @Nonnull
     static CharTriPredicate alwaysFalse() {
         return (value1, value2, value3) -> false;
     }

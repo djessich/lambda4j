@@ -71,11 +71,12 @@ public interface DoubleBiPredicate {
     }
 
     /**
-     * Returns a {@link DoubleBiPredicate} the always returns {@code true}.
+     * Returns a {@link DoubleBiPredicate} that always returns {@code true}.
      *
-     * @return A {@link DoubleBiPredicate} the always returns {@code true}.
+     * @return A {@link DoubleBiPredicate} that always returns {@code true}.
      * @see #alwaysFalse()
      */
+    @Nonnull
     static DoubleBiPredicate alwaysTrue() {
         return (value1, value2) -> true;
     }
@@ -86,6 +87,7 @@ public interface DoubleBiPredicate {
      * @return A {@link DoubleBiPredicate} the always returns {@code false}.
      * @see #alwaysTrue()
      */
+    @Nonnull
     static DoubleBiPredicate alwaysFalse() {
         return (value1, value2) -> false;
     }

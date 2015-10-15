@@ -118,9 +118,9 @@ public interface ThrowableLongBiPredicate extends LongBiPredicate {
     }
 
     /**
-     * Returns a {@link ThrowableLongBiPredicate} the always returns {@code true}.
+     * Returns a {@link ThrowableLongBiPredicate} that always returns {@code true}.
      *
-     * @return A {@link ThrowableLongBiPredicate} the always returns {@code true}.
+     * @return A {@link ThrowableLongBiPredicate} that always returns {@code true}.
      * @see #alwaysFalse()
      */
     static ThrowableLongBiPredicate alwaysTrue() {

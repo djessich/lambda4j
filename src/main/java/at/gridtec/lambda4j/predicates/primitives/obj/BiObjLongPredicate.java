@@ -85,13 +85,14 @@ public interface BiObjLongPredicate<T, U> {
     }
 
     /**
-     * Returns a {@link BiObjLongPredicate} the always returns {@code true}.
+     * Returns a {@link BiObjLongPredicate} that always returns {@code true}.
      *
      * @param <T> The type of the first argument to the predicate
      * @param <U> The type of the second argument to the predicate
-     * @return A {@link BiObjLongPredicate} the always returns {@code true}.
+     * @return A {@link BiObjLongPredicate} that always returns {@code true}.
      * @see #alwaysFalse()
      */
+    @Nonnull
     static <T, U> BiObjLongPredicate<T, U> alwaysTrue() {
         return (t, u, value) -> true;
     }
@@ -104,6 +105,7 @@ public interface BiObjLongPredicate<T, U> {
      * @return A {@link BiObjLongPredicate} the always returns {@code false}.
      * @see #alwaysTrue()
      */
+    @Nonnull
     static <T, U> BiObjLongPredicate<T, U> alwaysFalse() {
         return (t, u, value) -> false;
     }

@@ -70,11 +70,12 @@ public interface IntBiPredicate {
     }
 
     /**
-     * Returns a {@link IntBiPredicate} the always returns {@code true}.
+     * Returns a {@link IntBiPredicate} that always returns {@code true}.
      *
-     * @return A {@link IntBiPredicate} the always returns {@code true}.
+     * @return A {@link IntBiPredicate} that always returns {@code true}.
      * @see #alwaysFalse()
      */
+    @Nonnull
     static IntBiPredicate alwaysTrue() {
         return (value1, value2) -> true;
     }
@@ -85,6 +86,7 @@ public interface IntBiPredicate {
      * @return A {@link IntBiPredicate} the always returns {@code false}.
      * @see #alwaysTrue()
      */
+    @Nonnull
     static IntBiPredicate alwaysFalse() {
         return (value1, value2) -> false;
     }

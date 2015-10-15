@@ -75,12 +75,13 @@ public interface ObjBooleanPredicate<T> {
     }
 
     /**
-     * Returns a {@link ObjBooleanPredicate} the always returns {@code true}.
+     * Returns a {@link ObjBooleanPredicate} that always returns {@code true}.
      *
      * @param <T> The type of argument to the predicate
-     * @return A {@link ObjBooleanPredicate} the always returns {@code true}.
+     * @return A {@link ObjBooleanPredicate} that always returns {@code true}.
      * @see #alwaysFalse()
      */
+    @Nonnull
     static <T> ObjBooleanPredicate<T> alwaysTrue() {
         return (t, value) -> true;
     }
@@ -92,6 +93,7 @@ public interface ObjBooleanPredicate<T> {
      * @return A {@link ObjBooleanPredicate} the always returns {@code false}.
      * @see #alwaysTrue()
      */
+    @Nonnull
     static <T> ObjBooleanPredicate<T> alwaysFalse() {
         return (t, value) -> false;
     }

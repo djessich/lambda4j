@@ -70,11 +70,12 @@ public interface LongBiPredicate {
     }
 
     /**
-     * Returns a {@link LongBiPredicate} the always returns {@code true}.
+     * Returns a {@link LongBiPredicate} that always returns {@code true}.
      *
-     * @return A {@link LongBiPredicate} the always returns {@code true}.
+     * @return A {@link LongBiPredicate} that always returns {@code true}.
      * @see #alwaysFalse()
      */
+    @Nonnull
     static LongBiPredicate alwaysTrue() {
         return (value1, value2) -> true;
     }
@@ -85,6 +86,7 @@ public interface LongBiPredicate {
      * @return A {@link LongBiPredicate} the always returns {@code false}.
      * @see #alwaysTrue()
      */
+    @Nonnull
     static LongBiPredicate alwaysFalse() {
         return (value1, value2) -> false;
     }

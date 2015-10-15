@@ -135,11 +135,11 @@ public interface ThrowableBiObjShortPredicate<T, U> extends BiObjShortPredicate<
     }
 
     /**
-     * Returns a {@link ThrowableBiObjShortPredicate} the always returns {@code true}.
+     * Returns a {@link ThrowableBiObjShortPredicate} that always returns {@code true}.
      *
      * @param <T> The type of the first argument to the predicate
      * @param <U> The type of the second argument to the predicate
-     * @return A {@link ThrowableBiObjShortPredicate} the always returns {@code true}.
+     * @return A {@link ThrowableBiObjShortPredicate} that always returns {@code true}.
      * @see #alwaysFalse()
      */
     static <T, U> ThrowableBiObjShortPredicate<T, U> alwaysTrue() {

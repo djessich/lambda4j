@@ -74,12 +74,13 @@ public interface ObjIntPredicate<T> {
     }
 
     /**
-     * Returns a {@link ObjIntPredicate} the always returns {@code true}.
+     * Returns a {@link ObjIntPredicate} that always returns {@code true}.
      *
      * @param <T> The type of argument to the predicate
-     * @return A {@link ObjIntPredicate} the always returns {@code true}.
+     * @return A {@link ObjIntPredicate} that always returns {@code true}.
      * @see #alwaysFalse()
      */
+    @Nonnull
     static <T> ObjIntPredicate<T> alwaysTrue() {
         return (t, value) -> true;
     }
@@ -91,6 +92,7 @@ public interface ObjIntPredicate<T> {
      * @return A {@link ObjIntPredicate} the always returns {@code false}.
      * @see #alwaysTrue()
      */
+    @Nonnull
     static <T> ObjIntPredicate<T> alwaysFalse() {
         return (t, value) -> false;
     }

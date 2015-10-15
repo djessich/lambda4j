@@ -68,11 +68,12 @@ public interface BytePredicate {
     }
 
     /**
-     * Returns a {@link BytePredicate} the always returns {@code true}.
+     * Returns a {@link BytePredicate} that always returns {@code true}.
      *
-     * @return A {@link BytePredicate} the always returns {@code true}.
+     * @return A {@link BytePredicate} that always returns {@code true}.
      * @see #alwaysFalse()
      */
+    @Nonnull
     static BytePredicate alwaysTrue() {
         return value -> true;
     }
@@ -83,6 +84,7 @@ public interface BytePredicate {
      * @return A {@link BytePredicate} the always returns {@code false}.
      * @see #alwaysTrue()
      */
+    @Nonnull
     static BytePredicate alwaysFalse() {
         return value -> false;
     }

@@ -118,9 +118,9 @@ public interface ThrowableDoublePredicate extends DoublePredicate {
     }
 
     /**
-     * Returns a {@link ThrowableDoublePredicate} the always returns {@code true}.
+     * Returns a {@link ThrowableDoublePredicate} that always returns {@code true}.
      *
-     * @return A {@link ThrowableDoublePredicate} the always returns {@code true}.
+     * @return A {@link ThrowableDoublePredicate} that always returns {@code true}.
      * @see #alwaysFalse()
      */
     static ThrowableDoublePredicate alwaysTrue() {

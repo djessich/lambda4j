@@ -85,13 +85,14 @@ public interface BiObjShortPredicate<T, U> {
     }
 
     /**
-     * Returns a {@link BiObjShortPredicate} the always returns {@code true}.
+     * Returns a {@link BiObjShortPredicate} that always returns {@code true}.
      *
      * @param <T> The type of the first argument to the predicate
      * @param <U> The type of the second argument to the predicate
-     * @return A {@link BiObjShortPredicate} the always returns {@code true}.
+     * @return A {@link BiObjShortPredicate} that always returns {@code true}.
      * @see #alwaysFalse()
      */
+    @Nonnull
     static <T, U> BiObjShortPredicate<T, U> alwaysTrue() {
         return (t, u, value) -> true;
     }
@@ -104,6 +105,7 @@ public interface BiObjShortPredicate<T, U> {
      * @return A {@link BiObjShortPredicate} the always returns {@code false}.
      * @see #alwaysTrue()
      */
+    @Nonnull
     static <T, U> BiObjShortPredicate<T, U> alwaysFalse() {
         return (t, u, value) -> false;
     }

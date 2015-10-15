@@ -68,11 +68,12 @@ public interface ShortPredicate {
     }
 
     /**
-     * Returns a {@link ShortPredicate} the always returns {@code true}.
+     * Returns a {@link ShortPredicate} that always returns {@code true}.
      *
-     * @return A {@link ShortPredicate} the always returns {@code true}.
+     * @return A {@link ShortPredicate} that always returns {@code true}.
      * @see #alwaysFalse()
      */
+    @Nonnull
     static ShortPredicate alwaysTrue() {
         return value -> true;
     }
@@ -83,6 +84,7 @@ public interface ShortPredicate {
      * @return A {@link ShortPredicate} the always returns {@code false}.
      * @see #alwaysTrue()
      */
+    @Nonnull
     static ShortPredicate alwaysFalse() {
         return value -> false;
     }

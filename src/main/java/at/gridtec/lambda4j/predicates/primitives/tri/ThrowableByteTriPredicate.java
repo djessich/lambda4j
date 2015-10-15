@@ -120,9 +120,9 @@ public interface ThrowableByteTriPredicate extends ByteTriPredicate {
     }
 
     /**
-     * Returns a {@link ThrowableByteTriPredicate} the always returns {@code true}.
+     * Returns a {@link ThrowableByteTriPredicate} that always returns {@code true}.
      *
-     * @return A {@link ThrowableByteTriPredicate} the always returns {@code true}.
+     * @return A {@link ThrowableByteTriPredicate} that always returns {@code true}.
      * @see #alwaysFalse()
      */
     static ThrowableByteTriPredicate alwaysTrue() {

@@ -124,10 +124,10 @@ public interface ThrowableObjBooleanPredicate<T> extends ObjBooleanPredicate<T> 
     }
 
     /**
-     * Returns a {@link ThrowableObjBooleanPredicate} the always returns {@code true}.
+     * Returns a {@link ThrowableObjBooleanPredicate} that always returns {@code true}.
      *
      * @param <T> The type of argument to the predicate
-     * @return A {@link ThrowableObjBooleanPredicate} the always returns {@code true}.
+     * @return A {@link ThrowableObjBooleanPredicate} that always returns {@code true}.
      * @see #alwaysFalse()
      */
     static <T> ThrowableObjBooleanPredicate<T> alwaysTrue() {

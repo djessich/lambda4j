@@ -74,11 +74,12 @@ public interface ObjBytePredicate<T> {
     }
 
     /**
-     * Returns a {@link ObjBytePredicate} the always returns {@code true}.
+     * Returns a {@link ObjBytePredicate} that always returns {@code true}.
      *
-     * @return A {@link ObjBytePredicate} the always returns {@code true}.
+     * @return A {@link ObjBytePredicate} that always returns {@code true}.
      * @see #alwaysFalse()
      */
+    @Nonnull
     static ObjBytePredicate alwaysTrue() {
         return (t, value) -> true;
     }
@@ -89,6 +90,7 @@ public interface ObjBytePredicate<T> {
      * @return A {@link ObjBytePredicate} the always returns {@code false}.
      * @see #alwaysTrue()
      */
+    @Nonnull
     static ObjBytePredicate alwaysFalse() {
         return (t, value) -> false;
     }

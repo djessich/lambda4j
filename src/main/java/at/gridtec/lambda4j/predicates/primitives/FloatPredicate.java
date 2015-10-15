@@ -68,11 +68,12 @@ public interface FloatPredicate {
     }
 
     /**
-     * Returns a {@link FloatPredicate} the always returns {@code true}.
+     * Returns a {@link FloatPredicate} that always returns {@code true}.
      *
-     * @return A {@link FloatPredicate} the always returns {@code true}.
+     * @return A {@link FloatPredicate} that always returns {@code true}.
      * @see #alwaysFalse()
      */
+    @Nonnull
     static FloatPredicate alwaysTrue() {
         return value -> true;
     }
@@ -83,6 +84,7 @@ public interface FloatPredicate {
      * @return A {@link FloatPredicate} the always returns {@code false}.
      * @see #alwaysTrue()
      */
+    @Nonnull
     static FloatPredicate alwaysFalse() {
         return value -> false;
     }

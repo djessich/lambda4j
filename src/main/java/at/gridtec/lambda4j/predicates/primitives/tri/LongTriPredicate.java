@@ -73,11 +73,12 @@ public interface LongTriPredicate {
     }
 
     /**
-     * Returns a {@link LongTriPredicate} the always returns {@code true}.
+     * Returns a {@link LongTriPredicate} that always returns {@code true}.
      *
-     * @return A {@link LongTriPredicate} the always returns {@code true}.
+     * @return A {@link LongTriPredicate} that always returns {@code true}.
      * @see #alwaysFalse()
      */
+    @Nonnull
     static LongTriPredicate alwaysTrue() {
         return (value1, value2, value3) -> true;
     }
@@ -88,6 +89,7 @@ public interface LongTriPredicate {
      * @return A {@link LongTriPredicate} the always returns {@code false}.
      * @see #alwaysTrue()
      */
+    @Nonnull
     static LongTriPredicate alwaysFalse() {
         return (value1, value2, value3) -> false;
     }

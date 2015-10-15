@@ -70,11 +70,12 @@ public interface CharBiPredicate {
     }
 
     /**
-     * Returns a {@link CharBiPredicate} the always returns {@code true}.
+     * Returns a {@link CharBiPredicate} that always returns {@code true}.
      *
-     * @return A {@link CharBiPredicate} the always returns {@code true}.
+     * @return A {@link CharBiPredicate} that always returns {@code true}.
      * @see #alwaysFalse()
      */
+    @Nonnull
     static CharBiPredicate alwaysTrue() {
         return (value1, value2) -> true;
     }
@@ -85,6 +86,7 @@ public interface CharBiPredicate {
      * @return A {@link CharBiPredicate} the always returns {@code false}.
      * @see #alwaysTrue()
      */
+    @Nonnull
     static CharBiPredicate alwaysFalse() {
         return (value1, value2) -> false;
     }

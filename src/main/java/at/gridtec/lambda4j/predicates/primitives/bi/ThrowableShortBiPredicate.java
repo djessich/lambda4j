@@ -118,9 +118,9 @@ public interface ThrowableShortBiPredicate extends ShortBiPredicate {
     }
 
     /**
-     * Returns a {@link ThrowableShortBiPredicate} the always returns {@code true}.
+     * Returns a {@link ThrowableShortBiPredicate} that always returns {@code true}.
      *
-     * @return A {@link ThrowableShortBiPredicate} the always returns {@code true}.
+     * @return A {@link ThrowableShortBiPredicate} that always returns {@code true}.
      * @see #alwaysFalse()
      */
     static ThrowableShortBiPredicate alwaysTrue() {

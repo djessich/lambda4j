@@ -124,10 +124,10 @@ public interface ThrowableObjCharPredicate<T> extends ObjCharPredicate<T> {
     }
 
     /**
-     * Returns a {@link ThrowableObjCharPredicate} the always returns {@code true}.
+     * Returns a {@link ThrowableObjCharPredicate} that always returns {@code true}.
      *
      * @param <T> The type of argument to the predicate
-     * @return A {@link ThrowableObjCharPredicate} the always returns {@code true}.
+     * @return A {@link ThrowableObjCharPredicate} that always returns {@code true}.
      * @see #alwaysFalse()
      */
     static <T> ThrowableObjCharPredicate<T> alwaysTrue() {

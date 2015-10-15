@@ -114,9 +114,9 @@ public interface ThrowableFloatPredicate extends FloatPredicate {
     }
 
     /**
-     * Returns a {@link ThrowableFloatPredicate} the always returns {@code true}.
+     * Returns a {@link ThrowableFloatPredicate} that always returns {@code true}.
      *
-     * @return A {@link ThrowableFloatPredicate} the always returns {@code true}.
+     * @return A {@link ThrowableFloatPredicate} that always returns {@code true}.
      * @see #alwaysFalse()
      */
     static ThrowableFloatPredicate alwaysTrue() {

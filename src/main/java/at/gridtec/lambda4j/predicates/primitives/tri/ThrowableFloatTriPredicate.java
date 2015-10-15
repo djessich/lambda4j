@@ -120,9 +120,9 @@ public interface ThrowableFloatTriPredicate extends FloatTriPredicate {
     }
 
     /**
-     * Returns a {@link ThrowableFloatTriPredicate} the always returns {@code true}.
+     * Returns a {@link ThrowableFloatTriPredicate} that always returns {@code true}.
      *
-     * @return A {@link ThrowableFloatTriPredicate} the always returns {@code true}.
+     * @return A {@link ThrowableFloatTriPredicate} that always returns {@code true}.
      * @see #alwaysFalse()
      */
     static ThrowableFloatTriPredicate alwaysTrue() {

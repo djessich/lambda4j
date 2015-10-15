@@ -70,11 +70,12 @@ public interface FloatBiPredicate {
     }
 
     /**
-     * Returns a {@link FloatBiPredicate} the always returns {@code true}.
+     * Returns a {@link FloatBiPredicate} that always returns {@code true}.
      *
-     * @return A {@link FloatBiPredicate} the always returns {@code true}.
+     * @return A {@link FloatBiPredicate} that always returns {@code true}.
      * @see #alwaysFalse()
      */
+    @Nonnull
     static FloatBiPredicate alwaysTrue() {
         return (value1, value2) -> true;
     }
@@ -85,6 +86,7 @@ public interface FloatBiPredicate {
      * @return A {@link FloatBiPredicate} the always returns {@code false}.
      * @see #alwaysTrue()
      */
+    @Nonnull
     static FloatBiPredicate alwaysFalse() {
         return (value1, value2) -> false;
     }

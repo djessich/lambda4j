@@ -73,11 +73,12 @@ public interface IntTriPredicate {
     }
 
     /**
-     * Returns a {@link IntTriPredicate} the always returns {@code true}.
+     * Returns a {@link IntTriPredicate} that always returns {@code true}.
      *
-     * @return A {@link IntTriPredicate} the always returns {@code true}.
+     * @return A {@link IntTriPredicate} that always returns {@code true}.
      * @see #alwaysFalse()
      */
+    @Nonnull
     static IntTriPredicate alwaysTrue() {
         return (value1, value2, value3) -> true;
     }
@@ -88,6 +89,7 @@ public interface IntTriPredicate {
      * @return A {@link IntTriPredicate} the always returns {@code false}.
      * @see #alwaysTrue()
      */
+    @Nonnull
     static IntTriPredicate alwaysFalse() {
         return (value1, value2, value3) -> false;
     }

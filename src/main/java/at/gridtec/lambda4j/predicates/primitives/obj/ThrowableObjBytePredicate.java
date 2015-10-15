@@ -124,10 +124,10 @@ public interface ThrowableObjBytePredicate<T> extends ObjBytePredicate<T> {
     }
 
     /**
-     * Returns a {@link ThrowableObjBytePredicate} the always returns {@code true}.
+     * Returns a {@link ThrowableObjBytePredicate} that always returns {@code true}.
      *
      * @param <T> The type of argument to the predicate
-     * @return A {@link ThrowableObjBytePredicate} the always returns {@code true}.
+     * @return A {@link ThrowableObjBytePredicate} that always returns {@code true}.
      * @see #alwaysFalse()
      */
     static <T> ThrowableObjBytePredicate<T> alwaysTrue() {

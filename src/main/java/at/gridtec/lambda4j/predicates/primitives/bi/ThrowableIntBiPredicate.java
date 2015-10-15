@@ -117,9 +117,9 @@ public interface ThrowableIntBiPredicate extends IntBiPredicate {
     }
 
     /**
-     * Returns a {@link ThrowableIntBiPredicate} the always returns {@code true}.
+     * Returns a {@link ThrowableIntBiPredicate} that always returns {@code true}.
      *
-     * @return A {@link ThrowableIntBiPredicate} the always returns {@code true}.
+     * @return A {@link ThrowableIntBiPredicate} that always returns {@code true}.
      * @see #alwaysFalse()
      */
     static ThrowableIntBiPredicate alwaysTrue() {

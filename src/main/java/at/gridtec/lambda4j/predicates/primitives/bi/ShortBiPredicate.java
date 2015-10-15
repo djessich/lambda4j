@@ -70,11 +70,12 @@ public interface ShortBiPredicate {
     }
 
     /**
-     * Returns a {@link ShortBiPredicate} the always returns {@code true}.
+     * Returns a {@link ShortBiPredicate} that always returns {@code true}.
      *
-     * @return A {@link ShortBiPredicate} the always returns {@code true}.
+     * @return A {@link ShortBiPredicate} that always returns {@code true}.
      * @see #alwaysFalse()
      */
+    @Nonnull
     static ShortBiPredicate alwaysTrue() {
         return (value1, value2) -> true;
     }
@@ -85,6 +86,7 @@ public interface ShortBiPredicate {
      * @return A {@link ShortBiPredicate} the always returns {@code false}.
      * @see #alwaysTrue()
      */
+    @Nonnull
     static ShortBiPredicate alwaysFalse() {
         return (value1, value2) -> false;
     }

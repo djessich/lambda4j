@@ -118,9 +118,9 @@ public interface ThrowableCharBiPredicate extends CharBiPredicate {
     }
 
     /**
-     * Returns a {@link ThrowableCharBiPredicate} the always returns {@code true}.
+     * Returns a {@link ThrowableCharBiPredicate} that always returns {@code true}.
      *
-     * @return A {@link ThrowableCharBiPredicate} the always returns {@code true}.
+     * @return A {@link ThrowableCharBiPredicate} that always returns {@code true}.
      * @see #alwaysFalse()
      */
     static ThrowableCharBiPredicate alwaysTrue() {

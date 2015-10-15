@@ -75,12 +75,13 @@ public interface ObjShortPredicate<T> {
     }
 
     /**
-     * Returns a {@link ObjShortPredicate} the always returns {@code true}.
+     * Returns a {@link ObjShortPredicate} that always returns {@code true}.
      *
      * @param <T> The type of argument to the predicate
-     * @return A {@link ObjShortPredicate} the always returns {@code true}.
+     * @return A {@link ObjShortPredicate} that always returns {@code true}.
      * @see #alwaysFalse()
      */
+    @Nonnull
     static <T> ObjShortPredicate<T> alwaysTrue() {
         return (t, value) -> true;
     }
@@ -92,6 +93,7 @@ public interface ObjShortPredicate<T> {
      * @return A {@link ObjShortPredicate} the always returns {@code false}.
      * @see #alwaysTrue()
      */
+    @Nonnull
     static <T> ObjShortPredicate<T> alwaysFalse() {
         return (t, value) -> false;
     }

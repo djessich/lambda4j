@@ -75,12 +75,13 @@ public interface ObjDoublePredicate<T> {
     }
 
     /**
-     * Returns a {@link ObjDoublePredicate} the always returns {@code true}.
+     * Returns a {@link ObjDoublePredicate} that always returns {@code true}.
      *
      * @param <T> The type of argument to the predicate
-     * @return A {@link ObjDoublePredicate} the always returns {@code true}.
+     * @return A {@link ObjDoublePredicate} that always returns {@code true}.
      * @see #alwaysFalse()
      */
+    @Nonnull
     static <T> ObjDoublePredicate<T> alwaysTrue() {
         return (t, value) -> true;
     }
@@ -92,6 +93,7 @@ public interface ObjDoublePredicate<T> {
      * @return A {@link ObjDoublePredicate} the always returns {@code false}.
      * @see #alwaysTrue()
      */
+    @Nonnull
     static <T> ObjDoublePredicate<T> alwaysFalse() {
         return (t, value) -> false;
     }

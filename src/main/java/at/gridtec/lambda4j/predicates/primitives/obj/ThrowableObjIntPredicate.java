@@ -124,10 +124,10 @@ public interface ThrowableObjIntPredicate<T> extends ObjIntPredicate<T> {
     }
 
     /**
-     * Returns a {@link ThrowableObjIntPredicate} the always returns {@code true}.
+     * Returns a {@link ThrowableObjIntPredicate} that always returns {@code true}.
      *
      * @param <T> The type of argument to the predicate
-     * @return A {@link ThrowableObjIntPredicate} the always returns {@code true}.
+     * @return A {@link ThrowableObjIntPredicate} that always returns {@code true}.
      * @see #alwaysFalse()
      */
     static <T> ThrowableObjIntPredicate<T> alwaysTrue() {

@@ -135,11 +135,11 @@ public interface ThrowableBiObjFloatPredicate<T, U> extends BiObjFloatPredicate<
     }
 
     /**
-     * Returns a {@link ThrowableBiObjFloatPredicate} the always returns {@code true}.
+     * Returns a {@link ThrowableBiObjFloatPredicate} that always returns {@code true}.
      *
      * @param <T> The type of the first argument to the predicate
      * @param <U> The type of the second argument to the predicate
-     * @return A {@link ThrowableBiObjFloatPredicate} the always returns {@code true}.
+     * @return A {@link ThrowableBiObjFloatPredicate} that always returns {@code true}.
      * @see #alwaysFalse()
      */
     static <T, U> ThrowableBiObjFloatPredicate<T, U> alwaysTrue() {

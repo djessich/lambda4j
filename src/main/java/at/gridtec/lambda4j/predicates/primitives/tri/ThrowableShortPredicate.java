@@ -120,9 +120,9 @@ public interface ThrowableShortPredicate extends ShortTriPredicate {
     }
 
     /**
-     * Returns a {@link ThrowableShortPredicate} the always returns {@code true}.
+     * Returns a {@link ThrowableShortPredicate} that always returns {@code true}.
      *
-     * @return A {@link ThrowableShortPredicate} the always returns {@code true}.
+     * @return A {@link ThrowableShortPredicate} that always returns {@code true}.
      * @see #alwaysFalse()
      */
     static ThrowableShortPredicate alwaysTrue() {
