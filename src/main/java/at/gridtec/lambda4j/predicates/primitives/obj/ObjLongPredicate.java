@@ -118,11 +118,12 @@ public interface ObjLongPredicate<T> {
     }
 
     /**
-     * Returns a {@link ObjLongPredicate} that represents the logical negation of this one.
+     * Returns an {@link ObjLongPredicate} that represents the logical negation of this one.
      *
-     * @return A {@code ObjLongPredicate} that represents the logical negation of this one.
+     * @return An {@code ObjLongPredicate} that represents the logical negation of this one.
      * @see BiPredicate#negate()
      */
+    @Nonnull
     default ObjLongPredicate<T> negate() {
         return (t, value) -> !test(t, value);
     }

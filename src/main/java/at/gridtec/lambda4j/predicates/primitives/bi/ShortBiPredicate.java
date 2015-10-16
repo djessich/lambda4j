@@ -117,6 +117,7 @@ public interface ShortBiPredicate {
      * @return A {@code ShortBiPredicate} that represents the logical negation of this one.
      * @see BiPredicate#negate()
      */
+    @Nonnull
     default ShortBiPredicate negate() {
         return (value1, value2) -> !test(value1, value2);
     }

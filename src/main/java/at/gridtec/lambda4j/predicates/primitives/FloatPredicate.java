@@ -114,6 +114,7 @@ public interface FloatPredicate {
      * @return A {@code FloatPredicate} that represents the logical negation of this one.
      * @see Predicate#negate()
      */
+    @Nonnull
     default FloatPredicate negate() {
         return value -> !test(value);
     }

@@ -114,6 +114,7 @@ public interface CharPredicate {
      * @return A {@code CharPredicate} that represents the logical negation of this one.
      * @see Predicate#negate()
      */
+    @Nonnull
     default CharPredicate negate() {
         return value -> !test(value);
     }

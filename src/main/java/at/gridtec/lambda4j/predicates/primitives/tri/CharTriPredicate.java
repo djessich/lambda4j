@@ -121,6 +121,7 @@ public interface CharTriPredicate {
      * @return A {@code CharTriPredicate} that represents the logical negation of this one.
      * @see TriPredicate#negate()
      */
+    @Nonnull
     default CharTriPredicate negate() {
         return (value1, value2, value3) -> !test(value1, value2, value3);
     }

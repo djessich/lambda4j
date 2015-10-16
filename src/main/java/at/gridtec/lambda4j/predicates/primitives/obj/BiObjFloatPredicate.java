@@ -135,8 +135,9 @@ public interface BiObjFloatPredicate<T, U> {
      * Returns a {@link BiObjFloatPredicate} that represents the logical negation of this one.
      *
      * @return A {@code BiObjFloatPredicate} that represents the logical negation of this one.
-     * @see BiPredicate#negate()
+     * @see TriPredicate#negate()
      */
+    @Nonnull
     default BiObjFloatPredicate<T, U> negate() {
         return (t, u, value) -> !test(t, u, value);
     }

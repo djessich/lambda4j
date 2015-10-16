@@ -118,11 +118,12 @@ public interface ObjCharPredicate<T> {
     }
 
     /**
-     * Returns a {@link ObjCharPredicate} that represents the logical negation of this one.
+     * Returns an {@link ObjCharPredicate} that represents the logical negation of this one.
      *
-     * @return A {@code ObjCharPredicate} that represents the logical negation of this one.
+     * @return An {@code ObjCharPredicate} that represents the logical negation of this one.
      * @see BiPredicate#negate()
      */
+    @Nonnull
     default ObjCharPredicate<T> negate() {
         return (t, value) -> !test(t, value);
     }

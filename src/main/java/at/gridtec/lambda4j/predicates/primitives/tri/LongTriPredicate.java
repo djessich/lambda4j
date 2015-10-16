@@ -121,6 +121,7 @@ public interface LongTriPredicate {
      * @return A {@code LongTriPredicate} that represents the logical negation of this one.
      * @see TriPredicate#negate()
      */
+    @Nonnull
     default LongTriPredicate negate() {
         return (value1, value2, value3) -> !test(value1, value2, value3);
     }

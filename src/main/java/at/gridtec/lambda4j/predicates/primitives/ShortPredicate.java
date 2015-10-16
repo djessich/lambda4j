@@ -114,6 +114,7 @@ public interface ShortPredicate {
      * @return A {@code ShortPredicate} that represents the logical negation of this one.
      * @see Predicate#negate()
      */
+    @Nonnull
     default ShortPredicate negate() {
         return value -> !test(value);
     }

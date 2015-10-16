@@ -117,6 +117,7 @@ public interface CharBiPredicate {
      * @return A {@code CharBiPredicate} that represents the logical negation of this one.
      * @see BiPredicate#negate()
      */
+    @Nonnull
     default CharBiPredicate negate() {
         return (value1, value2) -> !test(value1, value2);
     }

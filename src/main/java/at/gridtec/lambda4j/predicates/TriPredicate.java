@@ -147,6 +147,7 @@ public interface TriPredicate<T, U, V> {
      *
      * @return A {@code TriPredicate} that represents the logical negation of this one.
      */
+    @Nonnull
     default TriPredicate<T, U, V> negate() {
         return (t, u, v) -> !test(t, u, v);
     }

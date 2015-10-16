@@ -119,11 +119,12 @@ public interface ObjShortPredicate<T> {
     }
 
     /**
-     * Returns a {@link ObjShortPredicate} that represents the logical negation of this one.
+     * Returns an {@link ObjShortPredicate} that represents the logical negation of this one.
      *
-     * @return A {@code ObjShortPredicate} that represents the logical negation of this one.
+     * @return An {@code ObjShortPredicate} that represents the logical negation of this one.
      * @see BiPredicate#negate()
      */
+    @Nonnull
     default ObjShortPredicate<T> negate() {
         return (t, value) -> !test(t, value);
     }

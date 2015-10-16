@@ -118,11 +118,12 @@ public interface ObjIntPredicate<T> {
     }
 
     /**
-     * Returns a {@link ObjIntPredicate} that represents the logical negation of this one.
+     * Returns an {@link ObjIntPredicate} that represents the logical negation of this one.
      *
-     * @return A {@code ObjIntPredicate} that represents the logical negation of this one.
+     * @return An {@code ObjIntPredicate} that represents the logical negation of this one.
      * @see BiPredicate#negate()
      */
+    @Nonnull
     default ObjIntPredicate<T> negate() {
         return (t, value) -> !test(t, value);
     }

@@ -135,8 +135,9 @@ public interface BiObjBytePredicate<T, U> {
      * Returns a {@link BiObjBytePredicate} that represents the logical negation of this one.
      *
      * @return A {@code BiObjBytePredicate} that represents the logical negation of this one.
-     * @see BiPredicate#negate()
+     * @see TriPredicate#negate()
      */
+    @Nonnull
     default BiObjBytePredicate<T, U> negate() {
         return (t, u, value) -> !test(t, u, value);
     }

@@ -122,6 +122,7 @@ public interface DoubleTriPredicate {
      * @return A {@code DoubleTriPredicate} that represents the logical negation of this one.
      * @see TriPredicate#negate()
      */
+    @Nonnull
     default DoubleTriPredicate negate() {
         return (value1, value2, value3) -> !test(value1, value2, value3);
     }

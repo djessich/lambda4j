@@ -119,11 +119,12 @@ public interface ObjFloatPredicate<T> {
     }
 
     /**
-     * Returns a {@link ObjFloatPredicate} that represents the logical negation of this one.
+     * Returns an {@link ObjFloatPredicate} that represents the logical negation of this one.
      *
-     * @return A {@code ObjFloatPredicate} that represents the logical negation of this one.
+     * @return An {@code ObjFloatPredicate} that represents the logical negation of this one.
      * @see BiPredicate#negate()
      */
+    @Nonnull
     default ObjFloatPredicate<T> negate() {
         return (t, value) -> !test(t, value);
     }

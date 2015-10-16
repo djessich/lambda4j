@@ -114,6 +114,7 @@ public interface BytePredicate {
      * @return A {@code BytePredicate} that represents the logical negation of this one.
      * @see Predicate#negate()
      */
+    @Nonnull
     default BytePredicate negate() {
         return value -> !test(value);
     }

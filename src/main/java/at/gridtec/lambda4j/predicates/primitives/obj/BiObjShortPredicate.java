@@ -135,8 +135,9 @@ public interface BiObjShortPredicate<T, U> {
      * Returns a {@link BiObjShortPredicate} that represents the logical negation of this one.
      *
      * @return A {@code BiObjShortPredicate} that represents the logical negation of this one.
-     * @see BiPredicate#negate()
+     * @see TriPredicate#negate()
      */
+    @Nonnull
     default BiObjShortPredicate<T, U> negate() {
         return (t, u, value) -> !test(t, u, value);
     }

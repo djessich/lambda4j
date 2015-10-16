@@ -117,6 +117,7 @@ public interface LongBiPredicate {
      * @return A {@code LongBiPredicate} that represents the logical negation of this one.
      * @see BiPredicate#negate()
      */
+    @Nonnull
     default LongBiPredicate negate() {
         return (value1, value2) -> !test(value1, value2);
     }

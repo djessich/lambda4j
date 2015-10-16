@@ -135,8 +135,9 @@ public interface BiObjLongPredicate<T, U> {
      * Returns a {@link BiObjLongPredicate} that represents the logical negation of this one.
      *
      * @return A {@code BiObjLongPredicate} that represents the logical negation of this one.
-     * @see BiPredicate#negate()
+     * @see TriPredicate#negate()
      */
+    @Nonnull
     default BiObjLongPredicate<T, U> negate() {
         return (t, u, value) -> !test(t, u, value);
     }

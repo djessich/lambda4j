@@ -119,11 +119,12 @@ public interface ObjBooleanPredicate<T> {
     }
 
     /**
-     * Returns a {@link ObjBooleanPredicate} that represents the logical negation of this one.
+     * Returns an {@link ObjBooleanPredicate} that represents the logical negation of this one.
      *
-     * @return A {@code ObjBooleanPredicate} that represents the logical negation of this one.
+     * @return An {@code ObjBooleanPredicate} that represents the logical negation of this one.
      * @see BiPredicate#negate()
      */
+    @Nonnull
     default ObjBooleanPredicate<T> negate() {
         return (t, value) -> !test(t, value);
     }

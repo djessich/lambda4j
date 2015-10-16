@@ -122,6 +122,7 @@ public interface ShortTriPredicate {
      * @return A {@code ShortTriPredicate} that represents the logical negation of this one.
      * @see TriPredicate#negate()
      */
+    @Nonnull
     default ShortTriPredicate negate() {
         return (value1, value2, value3) -> !test(value1, value2, value3);
     }

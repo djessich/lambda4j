@@ -135,8 +135,9 @@ public interface BiObjDoublePredicate<T, U> {
      * Returns a {@link BiObjDoublePredicate} that represents the logical negation of this one.
      *
      * @return A {@code BiObjDoublePredicate} that represents the logical negation of this one.
-     * @see BiPredicate#negate()
+     * @see TriPredicate#negate()
      */
+    @Nonnull
     default BiObjDoublePredicate<T, U> negate() {
         return (t, u, value) -> !test(t, u, value);
     }

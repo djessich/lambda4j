@@ -117,6 +117,7 @@ public interface ByteBiPredicate {
      * @return A {@code ByteBiPredicate} that represents the logical negation of this one.
      * @see BiPredicate#negate()
      */
+    @Nonnull
     default ByteBiPredicate negate() {
         return (value1, value2) -> !test(value1, value2);
     }

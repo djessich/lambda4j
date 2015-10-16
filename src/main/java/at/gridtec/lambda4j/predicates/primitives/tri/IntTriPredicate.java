@@ -116,11 +116,12 @@ public interface IntTriPredicate {
     }
 
     /**
-     * Returns a {@link IntTriPredicate} that represents the logical negation of this one.
+     * Returns an {@link IntTriPredicate} that represents the logical negation of this one.
      *
-     * @return A {@code IntTriPredicate} that represents the logical negation of this one.
+     * @return An {@code IntTriPredicate} that represents the logical negation of this one.
      * @see TriPredicate#negate()
      */
+    @Nonnull
     default IntTriPredicate negate() {
         return (value1, value2, value3) -> !test(value1, value2, value3);
     }
