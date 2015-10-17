@@ -15,11 +15,14 @@
  */
 package at.gridtec.lambda4j.predicates.primitives.obj;
 
+import at.gridtec.lambda4j.predicates.primitives.ShortPredicate;
+
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.Objects;
 import java.util.function.BiPredicate;
+import java.util.function.Predicate;
 
 /**
  * Represents a predicate (boolean-valued function) of an object-valued and a {@code short}-valued argument. This is the
@@ -44,6 +47,38 @@ public interface ObjShortPredicate<T> {
     @Nonnull
     static <T> ObjShortPredicate<T> constant(boolean ret) {
         return (t, value) -> ret;
+    }
+
+    /**
+     * Creates a {@link ObjShortPredicate} which uses the {@code first} parameter of this one as argument for the given
+     * {@link Predicate}.
+     *
+     * @param <T> The type of argument to the predicate
+     * @param predicate The predicate which accepts the {@code first} parameter of this one
+     * @return Creates a {@code ObjShortPredicate} which uses the {@code first} parameter of this one as argument for
+     * the given {@code Predicate}.
+     * @throws NullPointerException If the given argument is {@code null}
+     */
+    @Nonnull
+    static <T> ObjShortPredicate<T> onlyFirst(@Nonnull final Predicate<? super T> predicate) {
+        Objects.requireNonNull(predicate);
+        return (t, value) -> predicate.test(t);
+    }
+
+    /**
+     * Creates a {@link ObjShortPredicate} which uses the {@code second} parameter of this one as argument for the given
+     * {@link ShortPredicate}.
+     *
+     * @param <T> The type of argument to the predicate
+     * @param predicate The predicate which accepts the {@code second} parameter of this one
+     * @return Creates a {@code ObjShortPredicate} which uses the {@code second} parameter of this one as argument for
+     * the given {@code ShortPredicate}.
+     * @throws NullPointerException If the given argument is {@code null}
+     */
+    @Nonnull
+    static <T> ObjShortPredicate<T> onlySecond(@Nonnull final ShortPredicate predicate) {
+        Objects.requireNonNull(predicate);
+        return (t, value) -> predicate.test(value);
     }
 
     /**
@@ -149,7 +184,7 @@ public interface ObjShortPredicate<T> {
      * @see BiPredicate#and(BiPredicate)
      */
     @Nonnull
-    default ObjShortPredicate<T> and(@Nonnull final ObjShortPredicate<T> other) {
+    default ObjShortPredicate<T> and(@Nonnull final ObjShortPredicate<? super T> other) {
         Objects.requireNonNull(other);
         return (t, value) -> test(t, value) && other.test(t, value);
     }
@@ -171,7 +206,7 @@ public interface ObjShortPredicate<T> {
      * @see BiPredicate#or(BiPredicate)
      */
     @Nonnull
-    default ObjShortPredicate<T> or(@Nonnull final ObjShortPredicate<T> other) {
+    default ObjShortPredicate<T> or(@Nonnull final ObjShortPredicate<? super T> other) {
         Objects.requireNonNull(other);
         return (t, value) -> test(t, value) && other.test(t, value);
     }
@@ -189,7 +224,7 @@ public interface ObjShortPredicate<T> {
      * @see #or(ObjShortPredicate)
      */
     @Nonnull
-    default ObjShortPredicate<T> xor(@Nonnull final ObjShortPredicate<T> other) {
+    default ObjShortPredicate<T> xor(@Nonnull final ObjShortPredicate<? super T> other) {
         Objects.requireNonNull(other);
         return (t, value) -> test(t, value) ^ other.test(t, value);
     }

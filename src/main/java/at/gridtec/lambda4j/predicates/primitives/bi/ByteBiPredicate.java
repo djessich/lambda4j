@@ -15,6 +15,8 @@
  */
 package at.gridtec.lambda4j.predicates.primitives.bi;
 
+import at.gridtec.lambda4j.predicates.primitives.BytePredicate;
+
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import java.util.Objects;
@@ -41,6 +43,36 @@ public interface ByteBiPredicate {
     @Nonnull
     static ByteBiPredicate constant(boolean ret) {
         return (value1, value2) -> ret;
+    }
+
+    /**
+     * Creates a {@link ByteBiPredicate} which uses the {@code first} parameter of this one as argument for the given
+     * {@link BytePredicate}.
+     *
+     * @param predicate The predicate which accepts the {@code first} parameter of this one
+     * @return Creates a {@code ByteBiPredicate} which uses the {@code first} parameter of this one as argument for the
+     * given {@code BytePredicate}.
+     * @throws NullPointerException If the given argument is {@code null}
+     */
+    @Nonnull
+    static ByteBiPredicate onlyFirst(@Nonnull final BytePredicate predicate) {
+        Objects.requireNonNull(predicate);
+        return (value1, value2) -> predicate.test(value1);
+    }
+
+    /**
+     * Creates a {@link ByteBiPredicate} which uses the {@code second} parameter of this one as argument for the given
+     * {@link BytePredicate}.
+     *
+     * @param predicate The predicate which accepts the {@code second} parameter of this one
+     * @return Creates a {@code ByteBiPredicate} which uses the {@code second} parameter of this one as argument for the
+     * given {@code BytePredicate}.
+     * @throws NullPointerException If the given argument is {@code null}
+     */
+    @Nonnull
+    static ByteBiPredicate onlySecond(@Nonnull final BytePredicate predicate) {
+        Objects.requireNonNull(predicate);
+        return (value1, value2) -> predicate.test(value2);
     }
 
     /**

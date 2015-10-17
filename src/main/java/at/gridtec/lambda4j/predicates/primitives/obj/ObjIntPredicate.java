@@ -20,6 +20,8 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.Objects;
 import java.util.function.BiPredicate;
+import java.util.function.IntPredicate;
+import java.util.function.Predicate;
 
 /**
  * Represents a predicate (boolean-valued function) of an object-valued and a {@code int}-valued argument. This is the
@@ -44,6 +46,38 @@ public interface ObjIntPredicate<T> {
     @Nonnull
     static <T> ObjIntPredicate<T> constant(boolean ret) {
         return (t, value) -> ret;
+    }
+
+    /**
+     * Creates a {@link ObjIntPredicate} which uses the {@code first} parameter of this one as argument for the given
+     * {@link Predicate}.
+     *
+     * @param <T> The type of argument to the predicate
+     * @param predicate The predicate which accepts the {@code first} parameter of this one
+     * @return Creates a {@code ObjIntPredicate} which uses the {@code first} parameter of this one as argument for the
+     * given {@code Predicate}.
+     * @throws NullPointerException If the given argument is {@code null}
+     */
+    @Nonnull
+    static <T> ObjIntPredicate<T> onlyFirst(@Nonnull final Predicate<? super T> predicate) {
+        Objects.requireNonNull(predicate);
+        return (t, value) -> predicate.test(t);
+    }
+
+    /**
+     * Creates a {@link ObjIntPredicate} which uses the {@code second} parameter of this one as argument for the given
+     * {@link IntPredicate}.
+     *
+     * @param <T> The type of argument to the predicate
+     * @param predicate The predicate which accepts the {@code second} parameter of this one
+     * @return Creates a {@code ObjIntPredicate} which uses the {@code second} parameter of this one as argument for the
+     * given {@code IntPredicate}.
+     * @throws NullPointerException If the given argument is {@code null}
+     */
+    @Nonnull
+    static <T> ObjIntPredicate<T> onlySecond(@Nonnull final IntPredicate predicate) {
+        Objects.requireNonNull(predicate);
+        return (t, value) -> predicate.test(value);
     }
 
     /**
@@ -148,7 +182,7 @@ public interface ObjIntPredicate<T> {
      * @see BiPredicate#and(BiPredicate)
      */
     @Nonnull
-    default ObjIntPredicate<T> and(@Nonnull final ObjIntPredicate<T> other) {
+    default ObjIntPredicate<T> and(@Nonnull final ObjIntPredicate<? super T> other) {
         Objects.requireNonNull(other);
         return (t, value) -> test(t, value) && other.test(t, value);
     }
@@ -170,7 +204,7 @@ public interface ObjIntPredicate<T> {
      * @see BiPredicate#or(BiPredicate)
      */
     @Nonnull
-    default ObjIntPredicate<T> or(@Nonnull final ObjIntPredicate<T> other) {
+    default ObjIntPredicate<T> or(@Nonnull final ObjIntPredicate<? super T> other) {
         Objects.requireNonNull(other);
         return (t, value) -> test(t, value) && other.test(t, value);
     }
@@ -188,7 +222,7 @@ public interface ObjIntPredicate<T> {
      * @see #or(ObjIntPredicate)
      */
     @Nonnull
-    default ObjIntPredicate<T> xor(@Nonnull final ObjIntPredicate<T> other) {
+    default ObjIntPredicate<T> xor(@Nonnull final ObjIntPredicate<? super T> other) {
         Objects.requireNonNull(other);
         return (t, value) -> test(t, value) ^ other.test(t, value);
     }

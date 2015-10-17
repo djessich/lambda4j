@@ -20,6 +20,8 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.Objects;
 import java.util.function.BiPredicate;
+import java.util.function.DoublePredicate;
+import java.util.function.Predicate;
 
 /**
  * Represents a predicate (boolean-valued function) of an object-valued and a {@code double}-valued argument. This is
@@ -44,6 +46,38 @@ public interface ObjDoublePredicate<T> {
     @Nonnull
     static <T> ObjDoublePredicate<T> constant(boolean ret) {
         return (t, value) -> ret;
+    }
+
+    /**
+     * Creates a {@link ObjDoublePredicate} which uses the {@code first} parameter of this one as argument for the given
+     * {@link Predicate}.
+     *
+     * @param <T> The type of argument to the predicate
+     * @param predicate The predicate which accepts the {@code first} parameter of this one
+     * @return Creates a {@code ObjDoublePredicate} which uses the {@code first} parameter of this one as argument for
+     * the given {@code Predicate}.
+     * @throws NullPointerException If the given argument is {@code null}
+     */
+    @Nonnull
+    static <T> ObjDoublePredicate<T> onlyFirst(@Nonnull final Predicate<? super T> predicate) {
+        Objects.requireNonNull(predicate);
+        return (t, value) -> predicate.test(t);
+    }
+
+    /**
+     * Creates a {@link ObjDoublePredicate} which uses the {@code second} parameter of this one as argument for the
+     * given {@link DoublePredicate}.
+     *
+     * @param <T> The type of argument to the predicate
+     * @param predicate The predicate which accepts the {@code second} parameter of this one
+     * @return Creates a {@code ObjDoublePredicate} which uses the {@code second} parameter of this one as argument for
+     * the given {@code DoublePredicate}.
+     * @throws NullPointerException If the given argument is {@code null}
+     */
+    @Nonnull
+    static <T> ObjDoublePredicate<T> onlySecond(@Nonnull final DoublePredicate predicate) {
+        Objects.requireNonNull(predicate);
+        return (t, value) -> predicate.test(value);
     }
 
     /**
@@ -149,7 +183,7 @@ public interface ObjDoublePredicate<T> {
      * @see BiPredicate#and(BiPredicate)
      */
     @Nonnull
-    default ObjDoublePredicate<T> and(@Nonnull final ObjDoublePredicate<T> other) {
+    default ObjDoublePredicate<T> and(@Nonnull final ObjDoublePredicate<? super T> other) {
         Objects.requireNonNull(other);
         return (t, value) -> test(t, value) && other.test(t, value);
     }
@@ -171,7 +205,7 @@ public interface ObjDoublePredicate<T> {
      * @see BiPredicate#or(BiPredicate)
      */
     @Nonnull
-    default ObjDoublePredicate<T> or(@Nonnull final ObjDoublePredicate<T> other) {
+    default ObjDoublePredicate<T> or(@Nonnull final ObjDoublePredicate<? super T> other) {
         Objects.requireNonNull(other);
         return (t, value) -> test(t, value) && other.test(t, value);
     }
@@ -192,7 +226,7 @@ public interface ObjDoublePredicate<T> {
      * @see #or(ObjDoublePredicate)
      */
     @Nonnull
-    default ObjDoublePredicate<T> xor(@Nonnull final ObjDoublePredicate<T> other) {
+    default ObjDoublePredicate<T> xor(@Nonnull final ObjDoublePredicate<? super T> other) {
         Objects.requireNonNull(other);
         return (t, value) -> test(t, value) ^ other.test(t, value);
     }

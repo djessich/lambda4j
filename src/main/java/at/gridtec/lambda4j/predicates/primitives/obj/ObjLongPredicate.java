@@ -20,6 +20,8 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.Objects;
 import java.util.function.BiPredicate;
+import java.util.function.LongPredicate;
+import java.util.function.Predicate;
 
 /**
  * Represents a predicate (boolean-valued function) of an object-valued and a {@code long}-valued argument. This is the
@@ -44,6 +46,38 @@ public interface ObjLongPredicate<T> {
     @Nonnull
     static <T> ObjLongPredicate<T> constant(boolean ret) {
         return (t, value) -> ret;
+    }
+
+    /**
+     * Creates a {@link ObjLongPredicate} which uses the {@code first} parameter of this one as argument for the given
+     * {@link Predicate}.
+     *
+     * @param <T> The type of argument to the predicate
+     * @param predicate The predicate which accepts the {@code first} parameter of this one
+     * @return Creates a {@code ObjLongPredicate} which uses the {@code first} parameter of this one as argument for the
+     * given {@code Predicate}.
+     * @throws NullPointerException If the given argument is {@code null}
+     */
+    @Nonnull
+    static <T> ObjLongPredicate<T> onlyFirst(@Nonnull final Predicate<? super T> predicate) {
+        Objects.requireNonNull(predicate);
+        return (t, value) -> predicate.test(t);
+    }
+
+    /**
+     * Creates a {@link ObjLongPredicate} which uses the {@code second} parameter of this one as argument for the given
+     * {@link LongPredicate}.
+     *
+     * @param <T> The type of argument to the predicate
+     * @param predicate The predicate which accepts the {@code second} parameter of this one
+     * @return Creates a {@code ObjLongPredicate} which uses the {@code second} parameter of this one as argument for
+     * the given {@code LongPredicate}.
+     * @throws NullPointerException If the given argument is {@code null}
+     */
+    @Nonnull
+    static <T> ObjLongPredicate<T> onlySecond(@Nonnull final LongPredicate predicate) {
+        Objects.requireNonNull(predicate);
+        return (t, value) -> predicate.test(value);
     }
 
     /**
@@ -148,7 +182,7 @@ public interface ObjLongPredicate<T> {
      * @see BiPredicate#and(BiPredicate)
      */
     @Nonnull
-    default ObjLongPredicate<T> and(@Nonnull final ObjLongPredicate<T> other) {
+    default ObjLongPredicate<T> and(@Nonnull final ObjLongPredicate<? super T> other) {
         Objects.requireNonNull(other);
         return (t, value) -> test(t, value) && other.test(t, value);
     }
@@ -170,7 +204,7 @@ public interface ObjLongPredicate<T> {
      * @see BiPredicate#or(BiPredicate)
      */
     @Nonnull
-    default ObjLongPredicate<T> or(@Nonnull final ObjLongPredicate<T> other) {
+    default ObjLongPredicate<T> or(@Nonnull final ObjLongPredicate<? super T> other) {
         Objects.requireNonNull(other);
         return (t, value) -> test(t, value) && other.test(t, value);
     }
@@ -188,7 +222,7 @@ public interface ObjLongPredicate<T> {
      * @see #or(ObjLongPredicate)
      */
     @Nonnull
-    default ObjLongPredicate<T> xor(@Nonnull final ObjLongPredicate<T> other) {
+    default ObjLongPredicate<T> xor(@Nonnull final ObjLongPredicate<? super T> other) {
         Objects.requireNonNull(other);
         return (t, value) -> test(t, value) ^ other.test(t, value);
     }

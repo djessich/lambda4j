@@ -20,6 +20,7 @@ import at.gridtec.lambda4j.predicates.TriPredicate;
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import java.util.Objects;
+import java.util.function.IntPredicate;
 
 /**
  * Represents a predicate (boolean-valued function) of three {@code int}-valued argument. This is the {@code
@@ -42,6 +43,51 @@ public interface IntTriPredicate {
     @Nonnull
     static IntTriPredicate constant(boolean ret) {
         return (value1, value2, value3) -> ret;
+    }
+
+    /**
+     * Creates a {@link IntTriPredicate} which uses the {@code first} parameter of this one as argument for the given
+     * {@link IntPredicate}.
+     *
+     * @param predicate The predicate which accepts the {@code first} parameter of this one
+     * @return Creates a {@code IntTriPredicate} which uses the {@code first} parameter of this one as argument for the
+     * given {@code IntPredicate}.
+     * @throws NullPointerException If the given argument is {@code null}
+     */
+    @Nonnull
+    static IntTriPredicate onlyFirst(@Nonnull final IntPredicate predicate) {
+        Objects.requireNonNull(predicate);
+        return (value1, value2, value3) -> predicate.test(value1);
+    }
+
+    /**
+     * Creates a {@link IntTriPredicate} which uses the {@code second} parameter of this one as argument for the given
+     * {@link IntPredicate}.
+     *
+     * @param predicate The predicate which accepts the {@code second} parameter of this one
+     * @return Creates a {@code IntTriPredicate} which uses the {@code second} parameter of this one as argument for the
+     * given {@code IntPredicate}.
+     * @throws NullPointerException If the given argument is {@code null}
+     */
+    @Nonnull
+    static IntTriPredicate onlySecond(@Nonnull final IntPredicate predicate) {
+        Objects.requireNonNull(predicate);
+        return (value1, value2, value3) -> predicate.test(value2);
+    }
+
+    /**
+     * Creates a {@link IntTriPredicate} which uses the {@code third} parameter of this one as argument for the given
+     * {@link IntPredicate}.
+     *
+     * @param predicate The predicate which accepts the {@code third} parameter of this one
+     * @return Creates a {@code IntTriPredicate} which uses the {@code third} parameter of this one as argument for the
+     * given {@code IntPredicate}.
+     * @throws NullPointerException If the given argument is {@code null}
+     */
+    @Nonnull
+    static IntTriPredicate onlyThird(@Nonnull final IntPredicate predicate) {
+        Objects.requireNonNull(predicate);
+        return (value1, value2, value3) -> predicate.test(value3);
     }
 
     /**

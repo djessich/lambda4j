@@ -16,6 +16,7 @@
 package at.gridtec.lambda4j.predicates.primitives.tri;
 
 import at.gridtec.lambda4j.predicates.TriPredicate;
+import at.gridtec.lambda4j.predicates.primitives.ShortPredicate;
 
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
@@ -42,6 +43,51 @@ public interface ShortTriPredicate {
     @Nonnull
     static ShortTriPredicate constant(boolean ret) {
         return (value1, value2, value3) -> ret;
+    }
+
+    /**
+     * Creates a {@link ShortTriPredicate} which uses the {@code first} parameter of this one as argument for the given
+     * {@link ShortPredicate}.
+     *
+     * @param predicate The predicate which accepts the {@code first} parameter of this one
+     * @return Creates a {@code ShortTriPredicate} which uses the {@code first} parameter of this one as argument for
+     * the given {@code ShortPredicate}.
+     * @throws NullPointerException If the given argument is {@code null}
+     */
+    @Nonnull
+    static ShortTriPredicate onlyFirst(@Nonnull final ShortPredicate predicate) {
+        Objects.requireNonNull(predicate);
+        return (value1, value2, value3) -> predicate.test(value1);
+    }
+
+    /**
+     * Creates a {@link ShortTriPredicate} which uses the {@code second} parameter of this one as argument for the given
+     * {@link ShortPredicate}.
+     *
+     * @param predicate The predicate which accepts the {@code second} parameter of this one
+     * @return Creates a {@code ShortTriPredicate} which uses the {@code second} parameter of this one as argument for
+     * the given {@code ShortPredicate}.
+     * @throws NullPointerException If the given argument is {@code null}
+     */
+    @Nonnull
+    static ShortTriPredicate onlySecond(@Nonnull final ShortPredicate predicate) {
+        Objects.requireNonNull(predicate);
+        return (value1, value2, value3) -> predicate.test(value2);
+    }
+
+    /**
+     * Creates a {@link ShortTriPredicate} which uses the {@code third} parameter of this one as argument for the given
+     * {@link ShortPredicate}.
+     *
+     * @param predicate The predicate which accepts the {@code third} parameter of this one
+     * @return Creates a {@code ShortTriPredicate} which uses the {@code third} parameter of this one as argument for
+     * the given {@code ShortPredicate}.
+     * @throws NullPointerException If the given argument is {@code null}
+     */
+    @Nonnull
+    static ShortTriPredicate onlyThird(@Nonnull final ShortPredicate predicate) {
+        Objects.requireNonNull(predicate);
+        return (value1, value2, value3) -> predicate.test(value3);
     }
 
     /**

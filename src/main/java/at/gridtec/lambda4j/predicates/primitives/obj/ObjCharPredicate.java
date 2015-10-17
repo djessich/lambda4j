@@ -15,11 +15,14 @@
  */
 package at.gridtec.lambda4j.predicates.primitives.obj;
 
+import at.gridtec.lambda4j.predicates.primitives.CharPredicate;
+
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.Objects;
 import java.util.function.BiPredicate;
+import java.util.function.Predicate;
 
 /**
  * Represents a predicate (char-valued function) of an object-valued and a {@code char}-valued argument. This is the
@@ -44,6 +47,38 @@ public interface ObjCharPredicate<T> {
     @Nonnull
     static <T> ObjCharPredicate<T> constant(boolean ret) {
         return (t, value) -> ret;
+    }
+
+    /**
+     * Creates a {@link ObjCharPredicate} which uses the {@code first} parameter of this one as argument for the given
+     * {@link Predicate}.
+     *
+     * @param <T> The type of argument to the predicate
+     * @param predicate The predicate which accepts the {@code first} parameter of this one
+     * @return Creates a {@code ObjCharPredicate} which uses the {@code first} parameter of this one as argument for the
+     * given {@code Predicate}.
+     * @throws NullPointerException If the given argument is {@code null}
+     */
+    @Nonnull
+    static <T> ObjCharPredicate<T> onlyFirst(@Nonnull final Predicate<? super T> predicate) {
+        Objects.requireNonNull(predicate);
+        return (t, value) -> predicate.test(t);
+    }
+
+    /**
+     * Creates a {@link ObjCharPredicate} which uses the {@code second} parameter of this one as argument for the given
+     * {@link CharPredicate}.
+     *
+     * @param <T> The type of argument to the predicate
+     * @param predicate The predicate which accepts the {@code second} parameter of this one
+     * @return Creates a {@code ObjCharPredicate} which uses the {@code second} parameter of this one as argument for
+     * the given {@code CharPredicate}.
+     * @throws NullPointerException If the given argument is {@code null}
+     */
+    @Nonnull
+    static <T> ObjCharPredicate<T> onlySecond(@Nonnull final CharPredicate predicate) {
+        Objects.requireNonNull(predicate);
+        return (t, value) -> predicate.test(value);
     }
 
     /**
@@ -148,7 +183,7 @@ public interface ObjCharPredicate<T> {
      * @see BiPredicate#and(BiPredicate)
      */
     @Nonnull
-    default ObjCharPredicate<T> and(@Nonnull final ObjCharPredicate<T> other) {
+    default ObjCharPredicate<T> and(@Nonnull final ObjCharPredicate<? super T> other) {
         Objects.requireNonNull(other);
         return (t, value) -> test(t, value) && other.test(t, value);
     }
@@ -170,7 +205,7 @@ public interface ObjCharPredicate<T> {
      * @see BiPredicate#or(BiPredicate)
      */
     @Nonnull
-    default ObjCharPredicate<T> or(@Nonnull final ObjCharPredicate<T> other) {
+    default ObjCharPredicate<T> or(@Nonnull final ObjCharPredicate<? super T> other) {
         Objects.requireNonNull(other);
         return (t, value) -> test(t, value) && other.test(t, value);
     }
@@ -188,7 +223,7 @@ public interface ObjCharPredicate<T> {
      * @see #or(ObjCharPredicate)
      */
     @Nonnull
-    default ObjCharPredicate<T> xor(@Nonnull final ObjCharPredicate<T> other) {
+    default ObjCharPredicate<T> xor(@Nonnull final ObjCharPredicate<? super T> other) {
         Objects.requireNonNull(other);
         return (t, value) -> test(t, value) ^ other.test(t, value);
     }

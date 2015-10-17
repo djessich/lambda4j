@@ -15,6 +15,8 @@
  */
 package at.gridtec.lambda4j.predicates.primitives.bi;
 
+import at.gridtec.lambda4j.predicates.primitives.ShortPredicate;
+
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import java.util.Objects;
@@ -41,6 +43,36 @@ public interface ShortBiPredicate {
     @Nonnull
     static ShortBiPredicate constant(boolean ret) {
         return (value1, value2) -> ret;
+    }
+
+    /**
+     * Creates a {@link ShortBiPredicate} which uses the {@code first} parameter of this one as argument for the given
+     * {@link ShortPredicate}.
+     *
+     * @param predicate The predicate which accepts the {@code first} parameter of this one
+     * @return Creates a {@code ShortBiPredicate} which uses the {@code first} parameter of this one as argument for the
+     * given {@code ShortPredicate}.
+     * @throws NullPointerException If the given argument is {@code null}
+     */
+    @Nonnull
+    static ShortBiPredicate onlyFirst(@Nonnull final ShortPredicate predicate) {
+        Objects.requireNonNull(predicate);
+        return (value1, value2) -> predicate.test(value1);
+    }
+
+    /**
+     * Creates a {@link ShortBiPredicate} which uses the {@code second} parameter of this one as argument for the given
+     * {@link ShortPredicate}.
+     *
+     * @param predicate The predicate which accepts the {@code second} parameter of this one
+     * @return Creates a {@code ShortBiPredicate} which uses the {@code second} parameter of this one as argument for
+     * the given {@code ShortPredicate}.
+     * @throws NullPointerException If the given argument is {@code null}
+     */
+    @Nonnull
+    static ShortBiPredicate onlySecond(@Nonnull final ShortPredicate predicate) {
+        Objects.requireNonNull(predicate);
+        return (value1, value2) -> predicate.test(value2);
     }
 
     /**

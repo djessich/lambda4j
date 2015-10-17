@@ -149,7 +149,7 @@ public interface ObjBooleanPredicate<T> {
      * @see BiPredicate#and(BiPredicate)
      */
     @Nonnull
-    default ObjBooleanPredicate<T> and(@Nonnull final ObjBooleanPredicate<T> other) {
+    default ObjBooleanPredicate<T> and(@Nonnull final ObjBooleanPredicate<? super T> other) {
         Objects.requireNonNull(other);
         return (t, value) -> test(t, value) && other.test(t, value);
     }
@@ -171,7 +171,7 @@ public interface ObjBooleanPredicate<T> {
      * @see BiPredicate#or(BiPredicate)
      */
     @Nonnull
-    default ObjBooleanPredicate<T> or(@Nonnull final ObjBooleanPredicate<T> other) {
+    default ObjBooleanPredicate<T> or(@Nonnull final ObjBooleanPredicate<? super T> other) {
         Objects.requireNonNull(other);
         return (t, value) -> test(t, value) && other.test(t, value);
     }
@@ -189,7 +189,7 @@ public interface ObjBooleanPredicate<T> {
      * @see #or(ObjBooleanPredicate)
      */
     @Nonnull
-    default ObjBooleanPredicate<T> xor(@Nonnull final ObjBooleanPredicate<T> other) {
+    default ObjBooleanPredicate<T> xor(@Nonnull final ObjBooleanPredicate<? super T> other) {
         Objects.requireNonNull(other);
         return (t, value) -> test(t, value) ^ other.test(t, value);
     }

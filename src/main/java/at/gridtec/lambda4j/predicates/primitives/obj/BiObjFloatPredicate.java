@@ -16,12 +16,14 @@
 package at.gridtec.lambda4j.predicates.primitives.obj;
 
 import at.gridtec.lambda4j.predicates.TriPredicate;
+import at.gridtec.lambda4j.predicates.primitives.FloatPredicate;
 
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.Objects;
 import java.util.function.BiPredicate;
+import java.util.function.Predicate;
 
 /**
  * Represents a predicate (boolean-valued function) of two object-valued and a {@code float}-valued argument. This is
@@ -48,6 +50,57 @@ public interface BiObjFloatPredicate<T, U> {
     @Nonnull
     static <T, U> BiObjFloatPredicate<T, U> constant(boolean ret) {
         return (t, u, value) -> ret;
+    }
+
+    /**
+     * Creates a {@link BiObjFloatPredicate} which uses the {@code first} parameter of this one as argument for the
+     * given {@link Predicate}.
+     *
+     * @param <T> The type of the first argument to the predicate
+     * @param <U> The type of the second argument to the predicate
+     * @param predicate The predicate which accepts the {@code first} parameter of this one
+     * @return Creates a {@code BiObjFloatPredicate} which uses the {@code first} parameter of this one as argument for
+     * the given {@code Predicate}.
+     * @throws NullPointerException If the given argument is {@code null}
+     */
+    @Nonnull
+    static <T, U> BiObjFloatPredicate<T, U> onlyFirst(@Nonnull final Predicate<? super T> predicate) {
+        Objects.requireNonNull(predicate);
+        return (t, u, value) -> predicate.test(t);
+    }
+
+    /**
+     * Creates a {@link BiObjFloatPredicate} which uses the {@code second} parameter of this one as argument for the
+     * given {@link Predicate}.
+     *
+     * @param <T> The type of the first argument to the predicate
+     * @param <U> The type of the second argument to the predicate
+     * @param predicate The predicate which accepts the {@code second} parameter of this one
+     * @return Creates a {@code BiObjFloatPredicate} which uses the {@code second} parameter of this one as argument for
+     * the given {@code Predicate}.
+     * @throws NullPointerException If the given argument is {@code null}
+     */
+    @Nonnull
+    static <T, U> BiObjFloatPredicate<T, U> onlySecond(@Nonnull final Predicate<? super U> predicate) {
+        Objects.requireNonNull(predicate);
+        return (t, u, value) -> predicate.test(u);
+    }
+
+    /**
+     * Creates a {@link BiObjFloatPredicate} which uses the {@code third} parameter of this one as argument for the
+     * given {@link FloatPredicate}.
+     *
+     * @param <T> The type of the first argument to the predicate
+     * @param <U> The type of the second argument to the predicate
+     * @param predicate The predicate which accepts the {@code third} parameter of this one
+     * @return Creates a {@code BiObjFloatPredicate} which uses the {@code third} parameter of this one as argument for
+     * the given {@code FloatPredicate}.
+     * @throws NullPointerException If the given argument is {@code null}
+     */
+    @Nonnull
+    static <T, U> BiObjFloatPredicate<T, U> onlyThird(@Nonnull final FloatPredicate predicate) {
+        Objects.requireNonNull(predicate);
+        return (t, u, value) -> predicate.test(value);
     }
 
     /**
@@ -164,7 +217,7 @@ public interface BiObjFloatPredicate<T, U> {
      * @see BiPredicate#and(BiPredicate)
      */
     @Nonnull
-    default BiObjFloatPredicate<T, U> and(@Nonnull final BiObjFloatPredicate<T, U> other) {
+    default BiObjFloatPredicate<T, U> and(@Nonnull final BiObjFloatPredicate<? super T, ? super U> other) {
         Objects.requireNonNull(other);
         return (t, u, value) -> test(t, u, value) && other.test(t, u, value);
     }
@@ -186,7 +239,7 @@ public interface BiObjFloatPredicate<T, U> {
      * @see BiPredicate#or(BiPredicate)
      */
     @Nonnull
-    default BiObjFloatPredicate<T, U> or(@Nonnull final BiObjFloatPredicate<T, U> other) {
+    default BiObjFloatPredicate<T, U> or(@Nonnull final BiObjFloatPredicate<? super T, ? super U> other) {
         Objects.requireNonNull(other);
         return (t, u, value) -> test(t, u, value) && other.test(t, u, value);
     }
@@ -204,7 +257,7 @@ public interface BiObjFloatPredicate<T, U> {
      * @see #or(BiObjFloatPredicate)
      */
     @Nonnull
-    default BiObjFloatPredicate<T, U> xor(@Nonnull final BiObjFloatPredicate<T, U> other) {
+    default BiObjFloatPredicate<T, U> xor(@Nonnull final BiObjFloatPredicate<? super T, ? super U> other) {
         Objects.requireNonNull(other);
         return (t, u, value) -> test(t, u, value) ^ other.test(t, u, value);
     }

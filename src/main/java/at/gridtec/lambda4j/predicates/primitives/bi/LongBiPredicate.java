@@ -19,6 +19,7 @@ import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import java.util.Objects;
 import java.util.function.BiPredicate;
+import java.util.function.LongPredicate;
 
 /**
  * Represents a predicate (boolean-valued function) of two {@code long}-valued argument. This is the {@code
@@ -41,6 +42,36 @@ public interface LongBiPredicate {
     @Nonnull
     static LongBiPredicate constant(boolean ret) {
         return (value1, value2) -> ret;
+    }
+
+    /**
+     * Creates a {@link LongBiPredicate} which uses the {@code first} parameter of this one as argument for the given
+     * {@link LongPredicate}.
+     *
+     * @param predicate The predicate which accepts the {@code first} parameter of this one
+     * @return Creates a {@code LongBiPredicate} which uses the {@code first} parameter of this one as argument for the
+     * given {@code LongPredicate}.
+     * @throws NullPointerException If the given argument is {@code null}
+     */
+    @Nonnull
+    static LongBiPredicate onlyFirst(@Nonnull final LongPredicate predicate) {
+        Objects.requireNonNull(predicate);
+        return (value1, value2) -> predicate.test(value1);
+    }
+
+    /**
+     * Creates a {@link LongBiPredicate} which uses the {@code second} parameter of this one as argument for the given
+     * {@link LongPredicate}.
+     *
+     * @param predicate The predicate which accepts the {@code second} parameter of this one
+     * @return Creates a {@code LongBiPredicate} which uses the {@code second} parameter of this one as argument for the
+     * given {@code LongPredicate}.
+     * @throws NullPointerException If the given argument is {@code null}
+     */
+    @Nonnull
+    static LongBiPredicate onlySecond(@Nonnull final LongPredicate predicate) {
+        Objects.requireNonNull(predicate);
+        return (value1, value2) -> predicate.test(value2);
     }
 
     /**

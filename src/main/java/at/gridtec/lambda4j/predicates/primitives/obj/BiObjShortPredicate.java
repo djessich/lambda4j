@@ -16,12 +16,14 @@
 package at.gridtec.lambda4j.predicates.primitives.obj;
 
 import at.gridtec.lambda4j.predicates.TriPredicate;
+import at.gridtec.lambda4j.predicates.primitives.ShortPredicate;
 
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.Objects;
 import java.util.function.BiPredicate;
+import java.util.function.Predicate;
 
 /**
  * Represents a predicate (boolean-valued function) of two object-valued and a {@code short}-valued argument. This is
@@ -48,6 +50,57 @@ public interface BiObjShortPredicate<T, U> {
     @Nonnull
     static <T, U> BiObjShortPredicate<T, U> constant(boolean ret) {
         return (t, u, value) -> ret;
+    }
+
+    /**
+     * Creates a {@link BiObjShortPredicate} which uses the {@code first} parameter of this one as argument for the
+     * given {@link Predicate}.
+     *
+     * @param <T> The type of the first argument to the predicate
+     * @param <U> The type of the second argument to the predicate
+     * @param predicate The predicate which accepts the {@code first} parameter of this one
+     * @return Creates a {@code BiObjShortPredicate} which uses the {@code first} parameter of this one as argument for
+     * the given {@code Predicate}.
+     * @throws NullPointerException If the given argument is {@code null}
+     */
+    @Nonnull
+    static <T, U> BiObjShortPredicate<T, U> onlyFirst(@Nonnull final Predicate<? super T> predicate) {
+        Objects.requireNonNull(predicate);
+        return (t, u, value) -> predicate.test(t);
+    }
+
+    /**
+     * Creates a {@link BiObjShortPredicate} which uses the {@code second} parameter of this one as argument for the
+     * given {@link Predicate}.
+     *
+     * @param <T> The type of the first argument to the predicate
+     * @param <U> The type of the second argument to the predicate
+     * @param predicate The predicate which accepts the {@code second} parameter of this one
+     * @return Creates a {@code BiObjShortPredicate} which uses the {@code second} parameter of this one as argument for
+     * the given {@code Predicate}.
+     * @throws NullPointerException If the given argument is {@code null}
+     */
+    @Nonnull
+    static <T, U> BiObjShortPredicate<T, U> onlySecond(@Nonnull final Predicate<? super U> predicate) {
+        Objects.requireNonNull(predicate);
+        return (t, u, value) -> predicate.test(u);
+    }
+
+    /**
+     * Creates a {@link BiObjShortPredicate} which uses the {@code third} parameter of this one as argument for the
+     * given {@link ShortPredicate}.
+     *
+     * @param <T> The type of the first argument to the predicate
+     * @param <U> The type of the second argument to the predicate
+     * @param predicate The predicate which accepts the {@code third} parameter of this one
+     * @return Creates a {@code BiObjShortPredicate} which uses the {@code third} parameter of this one as argument for
+     * the given {@code ShortPredicate}.
+     * @throws NullPointerException If the given argument is {@code null}
+     */
+    @Nonnull
+    static <T, U> BiObjShortPredicate<T, U> onlyThird(@Nonnull final ShortPredicate predicate) {
+        Objects.requireNonNull(predicate);
+        return (t, u, value) -> predicate.test(value);
     }
 
     /**
@@ -164,7 +217,7 @@ public interface BiObjShortPredicate<T, U> {
      * @see BiPredicate#and(BiPredicate)
      */
     @Nonnull
-    default BiObjShortPredicate<T, U> and(@Nonnull final BiObjShortPredicate<T, U> other) {
+    default BiObjShortPredicate<T, U> and(@Nonnull final BiObjShortPredicate<? super T, ? super U> other) {
         Objects.requireNonNull(other);
         return (t, u, value) -> test(t, u, value) && other.test(t, u, value);
     }
@@ -186,7 +239,7 @@ public interface BiObjShortPredicate<T, U> {
      * @see BiPredicate#or(BiPredicate)
      */
     @Nonnull
-    default BiObjShortPredicate<T, U> or(@Nonnull final BiObjShortPredicate<T, U> other) {
+    default BiObjShortPredicate<T, U> or(@Nonnull final BiObjShortPredicate<? super T, ? super U> other) {
         Objects.requireNonNull(other);
         return (t, u, value) -> test(t, u, value) && other.test(t, u, value);
     }
@@ -204,7 +257,7 @@ public interface BiObjShortPredicate<T, U> {
      * @see #or(BiObjShortPredicate)
      */
     @Nonnull
-    default BiObjShortPredicate<T, U> xor(@Nonnull final BiObjShortPredicate<T, U> other) {
+    default BiObjShortPredicate<T, U> xor(@Nonnull final BiObjShortPredicate<? super T, ? super U> other) {
         Objects.requireNonNull(other);
         return (t, u, value) -> test(t, u, value) ^ other.test(t, u, value);
     }

@@ -15,11 +15,14 @@
  */
 package at.gridtec.lambda4j.predicates.primitives.obj;
 
+import at.gridtec.lambda4j.predicates.primitives.BytePredicate;
+
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.Objects;
 import java.util.function.BiPredicate;
+import java.util.function.Predicate;
 
 /**
  * Represents a predicate (boolean-valued function) of an object-valued and a {@code byte}-valued argument. This is the
@@ -44,6 +47,38 @@ public interface ObjBytePredicate<T> {
     @Nonnull
     static <T> ObjBytePredicate<T> constant(boolean ret) {
         return (t, value) -> ret;
+    }
+
+    /**
+     * Creates a {@link ObjBytePredicate} which uses the {@code first} parameter of this one as argument for the given
+     * {@link Predicate}.
+     *
+     * @param <T> The type of argument to the predicate
+     * @param predicate The predicate which accepts the {@code first} parameter of this one
+     * @return Creates a {@code ObjBytePredicate} which uses the {@code first} parameter of this one as argument for the
+     * given {@code Predicate}.
+     * @throws NullPointerException If the given argument is {@code null}
+     */
+    @Nonnull
+    static <T> ObjBytePredicate<T> onlyFirst(@Nonnull final Predicate<? super T> predicate) {
+        Objects.requireNonNull(predicate);
+        return (t, value) -> predicate.test(t);
+    }
+
+    /**
+     * Creates a {@link ObjBytePredicate} which uses the {@code second} parameter of this one as argument for the given
+     * {@link BytePredicate}.
+     *
+     * @param <T> The type of argument to the predicate
+     * @param predicate The predicate which accepts the {@code second} parameter of this one
+     * @return Creates a {@code ObjBytePredicate} which uses the {@code second} parameter of this one as argument for
+     * the given {@code BytePredicate}.
+     * @throws NullPointerException If the given argument is {@code null}
+     */
+    @Nonnull
+    static <T> ObjBytePredicate<T> onlySecond(@Nonnull final BytePredicate predicate) {
+        Objects.requireNonNull(predicate);
+        return (t, value) -> predicate.test(value);
     }
 
     /**
@@ -146,7 +181,7 @@ public interface ObjBytePredicate<T> {
      * @see BiPredicate#and(BiPredicate)
      */
     @Nonnull
-    default ObjBytePredicate<T> and(@Nonnull final ObjBytePredicate<T> other) {
+    default ObjBytePredicate<T> and(@Nonnull final ObjBytePredicate<? super T> other) {
         Objects.requireNonNull(other);
         return (t, value) -> test(t, value) && other.test(t, value);
     }
@@ -168,7 +203,7 @@ public interface ObjBytePredicate<T> {
      * @see BiPredicate#or(BiPredicate)
      */
     @Nonnull
-    default ObjBytePredicate<T> or(@Nonnull final ObjBytePredicate<T> other) {
+    default ObjBytePredicate<T> or(@Nonnull final ObjBytePredicate<? super T> other) {
         Objects.requireNonNull(other);
         return (t, value) -> test(t, value) && other.test(t, value);
     }
@@ -186,7 +221,7 @@ public interface ObjBytePredicate<T> {
      * @see #or(ObjBytePredicate)
      */
     @Nonnull
-    default ObjBytePredicate<T> xor(@Nonnull final ObjBytePredicate<T> other) {
+    default ObjBytePredicate<T> xor(@Nonnull final ObjBytePredicate<? super T> other) {
         Objects.requireNonNull(other);
         return (t, value) -> test(t, value) ^ other.test(t, value);
     }

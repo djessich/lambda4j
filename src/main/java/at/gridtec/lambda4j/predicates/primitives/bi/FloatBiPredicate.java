@@ -15,6 +15,8 @@
  */
 package at.gridtec.lambda4j.predicates.primitives.bi;
 
+import at.gridtec.lambda4j.predicates.primitives.FloatPredicate;
+
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import java.util.Objects;
@@ -41,6 +43,36 @@ public interface FloatBiPredicate {
     @Nonnull
     static FloatBiPredicate constant(boolean ret) {
         return (value1, value2) -> ret;
+    }
+
+    /**
+     * Creates a {@link FloatBiPredicate} which uses the {@code first} parameter of this one as argument for the given
+     * {@link FloatPredicate}.
+     *
+     * @param predicate The predicate which accepts the {@code first} parameter of this one
+     * @return Creates a {@code FloatBiPredicate} which uses the {@code first} parameter of this one as argument for the
+     * given {@code FloatPredicate}.
+     * @throws NullPointerException If the given argument is {@code null}
+     */
+    @Nonnull
+    static FloatBiPredicate onlyFirst(@Nonnull final FloatPredicate predicate) {
+        Objects.requireNonNull(predicate);
+        return (value1, value2) -> predicate.test(value1);
+    }
+
+    /**
+     * Creates a {@link FloatBiPredicate} which uses the {@code second} parameter of this one as argument for the given
+     * {@link FloatPredicate}.
+     *
+     * @param predicate The predicate which accepts the {@code second} parameter of this one
+     * @return Creates a {@code FloatBiPredicate} which uses the {@code second} parameter of this one as argument for
+     * the given {@code FloatPredicate}.
+     * @throws NullPointerException If the given argument is {@code null}
+     */
+    @Nonnull
+    static FloatBiPredicate onlySecond(@Nonnull final FloatPredicate predicate) {
+        Objects.requireNonNull(predicate);
+        return (value1, value2) -> predicate.test(value2);
     }
 
     /**

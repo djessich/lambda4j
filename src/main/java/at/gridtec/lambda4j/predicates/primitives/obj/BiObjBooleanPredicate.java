@@ -15,6 +15,7 @@
  */
 package at.gridtec.lambda4j.predicates.primitives.obj;
 
+import at.gridtec.lambda4j.operators.unary.BooleanUnaryOperator;
 import at.gridtec.lambda4j.predicates.TriPredicate;
 
 import javax.annotation.Nonnegative;
@@ -22,6 +23,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.Objects;
 import java.util.function.BiPredicate;
+import java.util.function.Predicate;
 
 /**
  * Represents a predicate (boolean-valued function) of two object-valued and a {@code boolean}-valued argument. This is
@@ -48,6 +50,57 @@ public interface BiObjBooleanPredicate<T, U> {
     @Nonnull
     static <T, U> BiObjBooleanPredicate<T, U> constant(boolean ret) {
         return (t, u, value) -> ret;
+    }
+
+    /**
+     * Creates a {@link BiObjBooleanPredicate} which uses the {@code first} parameter of this one as argument for the
+     * given {@link Predicate}.
+     *
+     * @param <T> The type of the first argument to the predicate
+     * @param <U> The type of the second argument to the predicate
+     * @param predicate The predicate which accepts the {@code first} parameter of this one
+     * @return Creates a {@code BiObjBooleanPredicate} which uses the {@code first} parameter of this one as argument
+     * for the given {@code Predicate}.
+     * @throws NullPointerException If the given argument is {@code null}
+     */
+    @Nonnull
+    static <T, U> BiObjBooleanPredicate<T, U> onlyFirst(@Nonnull final Predicate<? super T> predicate) {
+        Objects.requireNonNull(predicate);
+        return (t, u, value) -> predicate.test(t);
+    }
+
+    /**
+     * Creates a {@link BiObjBooleanPredicate} which uses the {@code second} parameter of this one as argument for the
+     * given {@link Predicate}.
+     *
+     * @param <T> The type of the first argument to the predicate
+     * @param <U> The type of the second argument to the predicate
+     * @param predicate The predicate which accepts the {@code second} parameter of this one
+     * @return Creates a {@code BiObjBooleanPredicate} which uses the {@code second} parameter of this one as argument
+     * for the given {@code Predicate}.
+     * @throws NullPointerException If the given argument is {@code null}
+     */
+    @Nonnull
+    static <T, U> BiObjBooleanPredicate<T, U> onlySecond(@Nonnull final Predicate<? super U> predicate) {
+        Objects.requireNonNull(predicate);
+        return (t, u, value) -> predicate.test(u);
+    }
+
+    /**
+     * Creates a {@link BiObjBooleanPredicate} which uses the {@code third} parameter of this one as argument for the
+     * given {@link BooleanUnaryOperator}.
+     *
+     * @param <T> The type of the first argument to the predicate
+     * @param <U> The type of the second argument to the predicate
+     * @param predicate The predicate which accepts the {@code third} parameter of this one
+     * @return Creates a {@code BiObjBooleanPredicate} which uses the {@code third} parameter of this one as argument
+     * for the given {@code BooleanUnaryOperator}.
+     * @throws NullPointerException If the given argument is {@code null}
+     */
+    @Nonnull
+    static <T, U> BiObjBooleanPredicate<T, U> onlyThird(@Nonnull final BooleanUnaryOperator predicate) {
+        Objects.requireNonNull(predicate);
+        return (t, u, value) -> predicate.applyAsBoolean(value);
     }
 
     /**
@@ -165,7 +218,7 @@ public interface BiObjBooleanPredicate<T, U> {
      * @see BiPredicate#and(BiPredicate)
      */
     @Nonnull
-    default BiObjBooleanPredicate<T, U> and(@Nonnull final BiObjBooleanPredicate<T, U> other) {
+    default BiObjBooleanPredicate<T, U> and(@Nonnull final BiObjBooleanPredicate<? super T, ? super U> other) {
         Objects.requireNonNull(other);
         return (t, u, value) -> test(t, u, value) && other.test(t, u, value);
     }
@@ -187,7 +240,7 @@ public interface BiObjBooleanPredicate<T, U> {
      * @see BiPredicate#or(BiPredicate)
      */
     @Nonnull
-    default BiObjBooleanPredicate<T, U> or(@Nonnull final BiObjBooleanPredicate<T, U> other) {
+    default BiObjBooleanPredicate<T, U> or(@Nonnull final BiObjBooleanPredicate<? super T, ? super U> other) {
         Objects.requireNonNull(other);
         return (t, u, value) -> test(t, u, value) && other.test(t, u, value);
     }
@@ -205,7 +258,7 @@ public interface BiObjBooleanPredicate<T, U> {
      * @see #or(BiObjBooleanPredicate)
      */
     @Nonnull
-    default BiObjBooleanPredicate<T, U> xor(@Nonnull final BiObjBooleanPredicate<T, U> other) {
+    default BiObjBooleanPredicate<T, U> xor(@Nonnull final BiObjBooleanPredicate<? super T, ? super U> other) {
         Objects.requireNonNull(other);
         return (t, u, value) -> test(t, u, value) ^ other.test(t, u, value);
     }

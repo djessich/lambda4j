@@ -22,6 +22,8 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.Objects;
 import java.util.function.BiPredicate;
+import java.util.function.LongPredicate;
+import java.util.function.Predicate;
 
 /**
  * Represents a predicate (boolean-valued function) of two object-valued and a {@code long}-valued argument. This is the
@@ -48,6 +50,57 @@ public interface BiObjLongPredicate<T, U> {
     @Nonnull
     static <T, U> BiObjLongPredicate<T, U> constant(boolean ret) {
         return (t, u, value) -> ret;
+    }
+
+    /**
+     * Creates a {@link BiObjLongPredicate} which uses the {@code first} parameter of this one as argument for the given
+     * {@link Predicate}.
+     *
+     * @param <T> The type of the first argument to the predicate
+     * @param <U> The type of the second argument to the predicate
+     * @param predicate The predicate which accepts the {@code first} parameter of this one
+     * @return Creates a {@code BiObjLongPredicate} which uses the {@code first} parameter of this one as argument for
+     * the given {@code Predicate}.
+     * @throws NullPointerException If the given argument is {@code null}
+     */
+    @Nonnull
+    static <T, U> BiObjLongPredicate<T, U> onlyFirst(@Nonnull final Predicate<? super T> predicate) {
+        Objects.requireNonNull(predicate);
+        return (t, u, value) -> predicate.test(t);
+    }
+
+    /**
+     * Creates a {@link BiObjLongPredicate} which uses the {@code second} parameter of this one as argument for the
+     * given {@link Predicate}.
+     *
+     * @param <T> The type of the first argument to the predicate
+     * @param <U> The type of the second argument to the predicate
+     * @param predicate The predicate which accepts the {@code second} parameter of this one
+     * @return Creates a {@code BiObjLongPredicate} which uses the {@code second} parameter of this one as argument for
+     * the given {@code Predicate}.
+     * @throws NullPointerException If the given argument is {@code null}
+     */
+    @Nonnull
+    static <T, U> BiObjLongPredicate<T, U> onlySecond(@Nonnull final Predicate<? super U> predicate) {
+        Objects.requireNonNull(predicate);
+        return (t, u, value) -> predicate.test(u);
+    }
+
+    /**
+     * Creates a {@link BiObjLongPredicate} which uses the {@code third} parameter of this one as argument for the given
+     * {@link LongPredicate}.
+     *
+     * @param <T> The type of the first argument to the predicate
+     * @param <U> The type of the second argument to the predicate
+     * @param predicate The predicate which accepts the {@code third} parameter of this one
+     * @return Creates a {@code BiObjLongPredicate} which uses the {@code third} parameter of this one as argument for
+     * the given {@code LongPredicate}.
+     * @throws NullPointerException If the given argument is {@code null}
+     */
+    @Nonnull
+    static <T, U> BiObjLongPredicate<T, U> onlyThird(@Nonnull final LongPredicate predicate) {
+        Objects.requireNonNull(predicate);
+        return (t, u, value) -> predicate.test(value);
     }
 
     /**
@@ -164,7 +217,7 @@ public interface BiObjLongPredicate<T, U> {
      * @see BiPredicate#and(BiPredicate)
      */
     @Nonnull
-    default BiObjLongPredicate<T, U> and(@Nonnull final BiObjLongPredicate<T, U> other) {
+    default BiObjLongPredicate<T, U> and(@Nonnull final BiObjLongPredicate<? super T, ? super U> other) {
         Objects.requireNonNull(other);
         return (t, u, value) -> test(t, u, value) && other.test(t, u, value);
     }
@@ -186,7 +239,7 @@ public interface BiObjLongPredicate<T, U> {
      * @see BiPredicate#or(BiPredicate)
      */
     @Nonnull
-    default BiObjLongPredicate<T, U> or(@Nonnull final BiObjLongPredicate<T, U> other) {
+    default BiObjLongPredicate<T, U> or(@Nonnull final BiObjLongPredicate<? super T, ? super U> other) {
         Objects.requireNonNull(other);
         return (t, u, value) -> test(t, u, value) && other.test(t, u, value);
     }
@@ -204,7 +257,7 @@ public interface BiObjLongPredicate<T, U> {
      * @see #or(BiObjLongPredicate)
      */
     @Nonnull
-    default BiObjLongPredicate<T, U> xor(@Nonnull final BiObjLongPredicate<T, U> other) {
+    default BiObjLongPredicate<T, U> xor(@Nonnull final BiObjLongPredicate<? super T, ? super U> other) {
         Objects.requireNonNull(other);
         return (t, u, value) -> test(t, u, value) ^ other.test(t, u, value);
     }

@@ -16,12 +16,14 @@
 package at.gridtec.lambda4j.predicates.primitives.obj;
 
 import at.gridtec.lambda4j.predicates.TriPredicate;
+import at.gridtec.lambda4j.predicates.primitives.BytePredicate;
 
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.Objects;
 import java.util.function.BiPredicate;
+import java.util.function.Predicate;
 
 /**
  * Represents a predicate (byte-valued function) of two object-valued and a {@code byte}-valued argument. This is the
@@ -48,6 +50,57 @@ public interface BiObjBytePredicate<T, U> {
     @Nonnull
     static <T, U> BiObjBytePredicate<T, U> constant(boolean ret) {
         return (t, u, value) -> ret;
+    }
+
+    /**
+     * Creates a {@link BiObjBytePredicate} which uses the {@code first} parameter of this one as argument for the given
+     * {@link Predicate}.
+     *
+     * @param <T> The type of the first argument to the predicate
+     * @param <U> The type of the second argument to the predicate
+     * @param predicate The predicate which accepts the {@code first} parameter of this one
+     * @return Creates a {@code BiObjBytePredicate} which uses the {@code first} parameter of this one as argument for
+     * the given {@code Predicate}.
+     * @throws NullPointerException If the given argument is {@code null}
+     */
+    @Nonnull
+    static <T, U> BiObjBytePredicate<T, U> onlyFirst(@Nonnull final Predicate<? super T> predicate) {
+        Objects.requireNonNull(predicate);
+        return (t, u, value) -> predicate.test(t);
+    }
+
+    /**
+     * Creates a {@link BiObjBytePredicate} which uses the {@code second} parameter of this one as argument for the
+     * given {@link Predicate}.
+     *
+     * @param <T> The type of the first argument to the predicate
+     * @param <U> The type of the second argument to the predicate
+     * @param predicate The predicate which accepts the {@code second} parameter of this one
+     * @return Creates a {@code BiObjBytePredicate} which uses the {@code second} parameter of this one as argument for
+     * the given {@code Predicate}.
+     * @throws NullPointerException If the given argument is {@code null}
+     */
+    @Nonnull
+    static <T, U> BiObjBytePredicate<T, U> onlySecond(@Nonnull final Predicate<? super U> predicate) {
+        Objects.requireNonNull(predicate);
+        return (t, u, value) -> predicate.test(u);
+    }
+
+    /**
+     * Creates a {@link BiObjBytePredicate} which uses the {@code third} parameter of this one as argument for the given
+     * {@link BytePredicate}.
+     *
+     * @param <T> The type of the first argument to the predicate
+     * @param <U> The type of the second argument to the predicate
+     * @param predicate The predicate which accepts the {@code third} parameter of this one
+     * @return Creates a {@code BiObjBytePredicate} which uses the {@code third} parameter of this one as argument for
+     * the given {@code BytePredicate}.
+     * @throws NullPointerException If the given argument is {@code null}
+     */
+    @Nonnull
+    static <T, U> BiObjBytePredicate<T, U> onlyThird(@Nonnull final BytePredicate predicate) {
+        Objects.requireNonNull(predicate);
+        return (t, u, value) -> predicate.test(value);
     }
 
     /**
@@ -159,12 +212,13 @@ public interface BiObjBytePredicate<T, U> {
      * @return A composed {@code BiObjBytePredicate} that represents the short-circuiting logical AND of this predicate
      * and the {@code other} predicate.
      * @throws NullPointerException If the given argument is {@code null}
+     * @implNote Applies the input arguments from this predicate to the {@code other} predicate.
      * @see #or(BiObjBytePredicate)
      * @see #xor(BiObjBytePredicate)
      * @see BiPredicate#and(BiPredicate)
      */
     @Nonnull
-    default BiObjBytePredicate<T, U> and(@Nonnull final BiObjBytePredicate<T, U> other) {
+    default BiObjBytePredicate<T, U> and(@Nonnull final BiObjBytePredicate<? super T, ? super U> other) {
         Objects.requireNonNull(other);
         return (t, u, value) -> test(t, u, value) && other.test(t, u, value);
     }
@@ -186,7 +240,7 @@ public interface BiObjBytePredicate<T, U> {
      * @see BiPredicate#or(BiPredicate)
      */
     @Nonnull
-    default BiObjBytePredicate<T, U> or(@Nonnull final BiObjBytePredicate<T, U> other) {
+    default BiObjBytePredicate<T, U> or(@Nonnull final BiObjBytePredicate<? super T, ? super U> other) {
         Objects.requireNonNull(other);
         return (t, u, value) -> test(t, u, value) && other.test(t, u, value);
     }
@@ -204,7 +258,7 @@ public interface BiObjBytePredicate<T, U> {
      * @see #or(BiObjBytePredicate)
      */
     @Nonnull
-    default BiObjBytePredicate<T, U> xor(@Nonnull final BiObjBytePredicate<T, U> other) {
+    default BiObjBytePredicate<T, U> xor(@Nonnull final BiObjBytePredicate<? super T, ? super U> other) {
         Objects.requireNonNull(other);
         return (t, u, value) -> test(t, u, value) ^ other.test(t, u, value);
     }

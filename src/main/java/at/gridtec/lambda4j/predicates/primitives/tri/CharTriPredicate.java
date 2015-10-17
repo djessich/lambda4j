@@ -16,6 +16,7 @@
 package at.gridtec.lambda4j.predicates.primitives.tri;
 
 import at.gridtec.lambda4j.predicates.TriPredicate;
+import at.gridtec.lambda4j.predicates.primitives.CharPredicate;
 
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
@@ -42,6 +43,51 @@ public interface CharTriPredicate {
     @Nonnull
     static CharTriPredicate constant(boolean ret) {
         return (value1, value2, value3) -> ret;
+    }
+
+    /**
+     * Creates a {@link CharTriPredicate} which uses the {@code first} parameter of this one as argument for the given
+     * {@link CharPredicate}.
+     *
+     * @param predicate The predicate which accepts the {@code first} parameter of this one
+     * @return Creates a {@code CharTriPredicate} which uses the {@code first} parameter of this one as argument for the
+     * given {@code CharPredicate}.
+     * @throws NullPointerException If the given argument is {@code null}
+     */
+    @Nonnull
+    static CharTriPredicate onlyFirst(@Nonnull final CharPredicate predicate) {
+        Objects.requireNonNull(predicate);
+        return (value1, value2, value3) -> predicate.test(value1);
+    }
+
+    /**
+     * Creates a {@link CharTriPredicate} which uses the {@code second} parameter of this one as argument for the given
+     * {@link CharPredicate}.
+     *
+     * @param predicate The predicate which accepts the {@code second} parameter of this one
+     * @return Creates a {@code CharTriPredicate} which uses the {@code second} parameter of this one as argument for
+     * the given {@code CharPredicate}.
+     * @throws NullPointerException If the given argument is {@code null}
+     */
+    @Nonnull
+    static CharTriPredicate onlySecond(@Nonnull final CharPredicate predicate) {
+        Objects.requireNonNull(predicate);
+        return (value1, value2, value3) -> predicate.test(value2);
+    }
+
+    /**
+     * Creates a {@link CharTriPredicate} which uses the {@code third} parameter of this one as argument for the given
+     * {@link CharPredicate}.
+     *
+     * @param predicate The predicate which accepts the {@code third} parameter of this one
+     * @return Creates a {@code CharTriPredicate} which uses the {@code third} parameter of this one as argument for the
+     * given {@code CharPredicate}.
+     * @throws NullPointerException If the given argument is {@code null}
+     */
+    @Nonnull
+    static CharTriPredicate onlyThird(@Nonnull final CharPredicate predicate) {
+        Objects.requireNonNull(predicate);
+        return (value1, value2, value3) -> predicate.test(value3);
     }
 
     /**

@@ -20,6 +20,7 @@ import at.gridtec.lambda4j.predicates.TriPredicate;
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import java.util.Objects;
+import java.util.function.DoublePredicate;
 
 /**
  * Represents a predicate (boolean-valued function) of three {@code double}-valued argument. This is the {@code
@@ -42,6 +43,51 @@ public interface DoubleTriPredicate {
     @Nonnull
     static ShortTriPredicate constant(boolean ret) {
         return (value1, value2, value3) -> ret;
+    }
+
+    /**
+     * Creates a {@link DoubleTriPredicate} which uses the {@code first} parameter of this one as argument for the given
+     * {@link DoublePredicate}.
+     *
+     * @param predicate The predicate which accepts the {@code first} parameter of this one
+     * @return Creates a {@code DoubleTriPredicate} which uses the {@code first} parameter of this one as argument for
+     * the given {@code DoublePredicate}.
+     * @throws NullPointerException If the given argument is {@code null}
+     */
+    @Nonnull
+    static DoubleTriPredicate onlyFirst(@Nonnull final DoublePredicate predicate) {
+        Objects.requireNonNull(predicate);
+        return (value1, value2, value3) -> predicate.test(value1);
+    }
+
+    /**
+     * Creates a {@link DoubleTriPredicate} which uses the {@code second} parameter of this one as argument for the
+     * given {@link DoublePredicate}.
+     *
+     * @param predicate The predicate which accepts the {@code second} parameter of this one
+     * @return Creates a {@code DoubleTriPredicate} which uses the {@code second} parameter of this one as argument for
+     * the given {@code DoublePredicate}.
+     * @throws NullPointerException If the given argument is {@code null}
+     */
+    @Nonnull
+    static DoubleTriPredicate onlySecond(@Nonnull final DoublePredicate predicate) {
+        Objects.requireNonNull(predicate);
+        return (value1, value2, value3) -> predicate.test(value2);
+    }
+
+    /**
+     * Creates a {@link DoubleTriPredicate} which uses the {@code third} parameter of this one as argument for the given
+     * {@link DoublePredicate}.
+     *
+     * @param predicate The predicate which accepts the {@code third} parameter of this one
+     * @return Creates a {@code DoubleTriPredicate} which uses the {@code third} parameter of this one as argument for
+     * the given {@code DoublePredicate}.
+     * @throws NullPointerException If the given argument is {@code null}
+     */
+    @Nonnull
+    static DoubleTriPredicate onlyThird(@Nonnull final DoublePredicate predicate) {
+        Objects.requireNonNull(predicate);
+        return (value1, value2, value3) -> predicate.test(value3);
     }
 
     /**

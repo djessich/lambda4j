@@ -51,6 +51,60 @@ public interface TriPredicate<T, U, V> {
     }
 
     /**
+     * Creates a {@link TriPredicate} which uses the {@code first} parameter of this one as argument for the given
+     * {@link Predicate}.
+     *
+     * @param <T> The type of the first argument to the predicate
+     * @param <U> The type of the second argument to the predicate
+     * @param <V> The type of the third argument to the predicate
+     * @param predicate The predicate which accepts the {@code first} parameter of this one
+     * @return Creates a {@code TriPredicate} which uses the {@code first} parameter of this one as argument for the
+     * given {@code Predicate}.
+     * @throws NullPointerException If the given argument is {@code null}
+     */
+    @Nonnull
+    static <T, U, V> TriPredicate<T, U, V> onlyFirst(@Nonnull final Predicate<? super T> predicate) {
+        Objects.requireNonNull(predicate);
+        return (t, u, v) -> predicate.test(t);
+    }
+
+    /**
+     * Creates a {@link TriPredicate} which uses the {@code second} parameter of this one as argument for the given
+     * {@link Predicate}.
+     *
+     * @param <T> The type of the first argument to the predicate
+     * @param <U> The type of the second argument to the predicate
+     * @param <V> The type of the third argument to the predicate
+     * @param predicate The predicate which accepts the {@code second} parameter of this one
+     * @return Creates a {@code TriPredicate} which uses the {@code second} parameter of this one as argument for the
+     * given {@code Predicate}.
+     * @throws NullPointerException If the given argument is {@code null}
+     */
+    @Nonnull
+    static <T, U, V> TriPredicate<T, U, V> onlySecond(@Nonnull final Predicate<? super U> predicate) {
+        Objects.requireNonNull(predicate);
+        return (t, u, v) -> predicate.test(u);
+    }
+
+    /**
+     * Creates a {@link TriPredicate} which uses the {@code third} parameter of this one as argument for the given
+     * {@link Predicate}.
+     *
+     * @param <T> The type of the first argument to the predicate
+     * @param <U> The type of the second argument to the predicate
+     * @param <V> The type of the third argument to the predicate
+     * @param predicate The predicate which accepts the {@code third} parameter of this one
+     * @return Creates a {@code TriPredicate} which uses the {@code third} parameter of this one as argument for the
+     * given {@code Predicate}.
+     * @throws NullPointerException If the given argument is {@code null}
+     */
+    @Nonnull
+    static <T, U, V> TriPredicate<T, U, V> onlyThird(@Nonnull final Predicate<? super V> predicate) {
+        Objects.requireNonNull(predicate);
+        return (t, u, v) -> predicate.test(v);
+    }
+
+    /**
      * Returns a {@link TriPredicate} that tests if the given arguments are equal to the ones of this predicate
      * according to {@link Objects#equals(Object)} method.
      *

@@ -16,6 +16,7 @@
 package at.gridtec.lambda4j.predicates.primitives.tri;
 
 import at.gridtec.lambda4j.predicates.TriPredicate;
+import at.gridtec.lambda4j.predicates.primitives.BytePredicate;
 
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
@@ -42,6 +43,51 @@ public interface ByteTriPredicate {
     @Nonnull
     static ByteTriPredicate constant(boolean ret) {
         return (value1, value2, value3) -> ret;
+    }
+
+    /**
+     * Creates a {@link ByteTriPredicate} which uses the {@code first} parameter of this one as argument for the given
+     * {@link BytePredicate}.
+     *
+     * @param predicate The predicate which accepts the {@code first} parameter of this one
+     * @return Creates a {@code ByteTriPredicate} which uses the {@code first} parameter of this one as argument for the
+     * given {@code BytePredicate}.
+     * @throws NullPointerException If the given argument is {@code null}
+     */
+    @Nonnull
+    static ByteTriPredicate onlyFirst(@Nonnull final BytePredicate predicate) {
+        Objects.requireNonNull(predicate);
+        return (value1, value2, value3) -> predicate.test(value1);
+    }
+
+    /**
+     * Creates a {@link ByteTriPredicate} which uses the {@code second} parameter of this one as argument for the given
+     * {@link BytePredicate}.
+     *
+     * @param predicate The predicate which accepts the {@code second} parameter of this one
+     * @return Creates a {@code ByteTriPredicate} which uses the {@code second} parameter of this one as argument for
+     * the given {@code BytePredicate}.
+     * @throws NullPointerException If the given argument is {@code null}
+     */
+    @Nonnull
+    static ByteTriPredicate onlySecond(@Nonnull final BytePredicate predicate) {
+        Objects.requireNonNull(predicate);
+        return (value1, value2, value3) -> predicate.test(value2);
+    }
+
+    /**
+     * Creates a {@link ByteTriPredicate} which uses the {@code third} parameter of this one as argument for the given
+     * {@link BytePredicate}.
+     *
+     * @param predicate The predicate which accepts the {@code third} parameter of this one
+     * @return Creates a {@code ByteTriPredicate} which uses the {@code third} parameter of this one as argument for the
+     * given {@code BytePredicate}.
+     * @throws NullPointerException If the given argument is {@code null}
+     */
+    @Nonnull
+    static ByteTriPredicate onlyThird(@Nonnull final BytePredicate predicate) {
+        Objects.requireNonNull(predicate);
+        return (value1, value2, value3) -> predicate.test(value3);
     }
 
     /**

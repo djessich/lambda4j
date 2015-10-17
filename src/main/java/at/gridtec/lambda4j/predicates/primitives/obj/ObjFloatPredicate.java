@@ -15,11 +15,14 @@
  */
 package at.gridtec.lambda4j.predicates.primitives.obj;
 
+import at.gridtec.lambda4j.predicates.primitives.FloatPredicate;
+
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.Objects;
 import java.util.function.BiPredicate;
+import java.util.function.Predicate;
 
 /**
  * Represents a predicate (boolean-valued function) of an object-valued and a {@code float}-valued argument. This is the
@@ -44,6 +47,38 @@ public interface ObjFloatPredicate<T> {
     @Nonnull
     static <T> ObjFloatPredicate<T> constant(boolean ret) {
         return (t, value) -> ret;
+    }
+
+    /**
+     * Creates a {@link ObjFloatPredicate} which uses the {@code first} parameter of this one as argument for the given
+     * {@link Predicate}.
+     *
+     * @param <T> The type of argument to the predicate
+     * @param predicate The predicate which accepts the {@code first} parameter of this one
+     * @return Creates a {@code ObjFloatPredicate} which uses the {@code first} parameter of this one as argument for
+     * the given {@code Predicate}.
+     * @throws NullPointerException If the given argument is {@code null}
+     */
+    @Nonnull
+    static <T> ObjFloatPredicate<T> onlyFirst(@Nonnull final Predicate<? super T> predicate) {
+        Objects.requireNonNull(predicate);
+        return (t, value) -> predicate.test(t);
+    }
+
+    /**
+     * Creates a {@link ObjFloatPredicate} which uses the {@code second} parameter of this one as argument for the given
+     * {@link FloatPredicate}.
+     *
+     * @param <T> The type of argument to the predicate
+     * @param predicate The predicate which accepts the {@code second} parameter of this one
+     * @return Creates a {@code ObjFloatPredicate} which uses the {@code second} parameter of this one as argument for
+     * the given {@code FloatPredicate}.
+     * @throws NullPointerException If the given argument is {@code null}
+     */
+    @Nonnull
+    static <T> ObjFloatPredicate<T> onlySecond(@Nonnull final FloatPredicate predicate) {
+        Objects.requireNonNull(predicate);
+        return (t, value) -> predicate.test(value);
     }
 
     /**
@@ -149,7 +184,7 @@ public interface ObjFloatPredicate<T> {
      * @see BiPredicate#and(BiPredicate)
      */
     @Nonnull
-    default ObjFloatPredicate<T> and(@Nonnull final ObjFloatPredicate<T> other) {
+    default ObjFloatPredicate<T> and(@Nonnull final ObjFloatPredicate<? super T> other) {
         Objects.requireNonNull(other);
         return (t, value) -> test(t, value) && other.test(t, value);
     }
@@ -171,7 +206,7 @@ public interface ObjFloatPredicate<T> {
      * @see BiPredicate#or(BiPredicate)
      */
     @Nonnull
-    default ObjFloatPredicate<T> or(@Nonnull final ObjFloatPredicate<T> other) {
+    default ObjFloatPredicate<T> or(@Nonnull final ObjFloatPredicate<? super T> other) {
         Objects.requireNonNull(other);
         return (t, value) -> test(t, value) && other.test(t, value);
     }
@@ -189,7 +224,7 @@ public interface ObjFloatPredicate<T> {
      * @see #or(ObjFloatPredicate)
      */
     @Nonnull
-    default ObjFloatPredicate<T> xor(@Nonnull final ObjFloatPredicate<T> other) {
+    default ObjFloatPredicate<T> xor(@Nonnull final ObjFloatPredicate<? super T> other) {
         Objects.requireNonNull(other);
         return (t, value) -> test(t, value) ^ other.test(t, value);
     }
