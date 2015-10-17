@@ -22,6 +22,7 @@ import java.util.function.BiConsumer;
 import java.util.function.LongConsumer;
 import java.util.function.LongUnaryOperator;
 import java.util.function.ToLongFunction;
+import java.util.function.UnaryOperator;
 
 /**
  * Represents an operation that accepts two {@code long}-valued arguments and returns no result. This is the primitive
@@ -86,48 +87,53 @@ public interface LongBiConsumer {
     }
 
     /**
-     * Returns a composed {@link LongBiConsumer} that applies the given {@code before} {@link LongUnaryOperator}s to its
-     * input, and then applies this operation to the result. If evaluation of either of the given operations throws an
-     * exception, it is relayed to the caller of the composed function.
+     * Returns a composed {@link LongBiConsumer} that first applies the {@code before} operations to its input, and then
+     * applies this operation to the result. If evaluation of either operation throws an exception, it is relayed to the
+     * caller of the composed operation.
      *
-     * @param before1 The first before {@code LongUnaryOperator} to apply before this operation is applied
-     * @param before2 The second before {@code LongUnaryOperator} to apply before this operation is applied
-     * @return A composed {@code LongBiConsumer} that applies the given {@code before} {@code LongUnaryOperator}s to its
-     * input, and then applies this operation to the result.
-     * @throws NullPointerException If one of the given functions are {@code null}
+     * @param before1 The first operation to apply before this operation is applied
+     * @param before2 The second operation to apply before this operation is applied
+     * @return A composed {@link LongBiConsumer} that first applies the {@code before} operations to its input, and then
+     * applies this operation to the result.
+     * @throws NullPointerException If one of the given operations are {@code null}
+     * @implNote The input arguments of this method are primitive specializations of {@link UnaryOperator}. Therefore
+     * the given operations handle primitive types. In this case this is {@code long}.
      * @see #andThen(LongBiConsumer)
      */
-    default LongBiConsumer compose(final LongUnaryOperator before1, final LongUnaryOperator before2) {
+    @Nonnull
+    default LongBiConsumer compose(@Nonnull final LongUnaryOperator before1, @Nonnull final LongUnaryOperator before2) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         return (value1, value2) -> accept(before1.applyAsLong(value1), before2.applyAsLong(value2));
     }
 
     /**
-     * Returns a composed {@link BiConsumer} that applies the given {@code before} {@link ToLongFunction}s to its input,
-     * and then applies this operation to the result. If evaluation of either of the given operations throws an
-     * exception, it is relayed to the caller of the composed function.
+     * Returns a composed {@link BiConsumer} that first applies the {@code before} operations to its input, and then
+     * applies this operation to the result. If evaluation of either operation throws an exception, it is relayed to the
+     * caller of the composed operation.
      *
      * @param <T> The type of the argument to the first before operation
      * @param <U> The type of the argument to the second before operation
-     * @param before1 The first before {@code ToLongFunction} to apply before this operation is applied
-     * @param before2 The second before {@code ToLongFunction} to apply before this operation is applied
-     * @return A composed {@code BiConsumer} that applies the given {@code before} {@code ToLongFunction}s to its input,
-     * and then applies this operation to the result.
-     * @throws NullPointerException If one of the given functions are {@code null}
+     * @param before1 The first operation to apply before this operation is applied
+     * @param before2 The second operation to apply before this operation is applied
+     * @return A composed {@link BiConsumer} that first applies the {@code before} operations to its input, and then
+     * applies this operation to the result.
+     * @throws NullPointerException If one of the given operations are {@code null}
+     * @implNote The input arguments of this method are able to handle every type.
      * @see #andThen(LongBiConsumer)
      */
-    default <T, U> BiConsumer<T, U> compose(final ToLongFunction<? super T> before1,
-            final ToLongFunction<? super U> before2) {
+    @Nonnull
+    default <T, U> BiConsumer<T, U> compose(@Nonnull final ToLongFunction<? super T> before1,
+            @Nonnull final ToLongFunction<? super U> before2) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
-        return (value1, value2) -> accept(before1.applyAsLong(value1), before2.applyAsLong(value2));
+        return (t, u) -> accept(before1.applyAsLong(t), before2.applyAsLong(u));
     }
 
     /**
      * Returns a composed {@link LongBiConsumer} that performs, in sequence, this operation followed by the {@code
      * after} operation. If evaluation of either operation throws an exception, it is relayed to the caller of the
-     * composed function. If performing this operation throws an exception, the {@code after} operation will not be
+     * composed operation. If performing this operation throws an exception, the {@code after} operation will not be
      * performed.
      *
      * @param after The operation to apply after this operation is applied
@@ -137,7 +143,8 @@ public interface LongBiConsumer {
      * @see #compose(LongUnaryOperator, LongUnaryOperator)
      * @see #compose(ToLongFunction, ToLongFunction)
      */
-    default LongBiConsumer andThen(final LongBiConsumer after) {
+    @Nonnull
+    default LongBiConsumer andThen(@Nonnull final LongBiConsumer after) {
         Objects.requireNonNull(after);
         return (value1, value2) -> {
             accept(value1, value2);

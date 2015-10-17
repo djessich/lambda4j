@@ -22,6 +22,7 @@ import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import java.util.Objects;
 import java.util.function.Consumer;
+import java.util.function.UnaryOperator;
 
 /**
  * Represents an operation that accepts a single {@code char}-valued argument and returns no result. This is the
@@ -55,51 +56,57 @@ public interface CharConsumer {
     }
 
     /**
-     * Returns a composed {@link CharConsumer} that applies the given {@code before} {@link CharUnaryOperator} to its
-     * input, and then applies this operation to the result. If evaluation of either of the given operations throws an
-     * exception, it is relayed to the caller of the composed function.
+     * Returns a composed {@link CharConsumer} that first applies the {@code before} operation to its input, and then
+     * applies this operation to the result. If evaluation of either operation throws an exception, it is relayed to the
+     * caller of the composed operation.
      *
-     * @param before The before {@code CharUnaryOperator} to apply before this operation is applied
-     * @return A composed {@code CharConsumer} that applies the given {@code before} {@code CharUnaryOperator} to its
-     * input, and then applies this operation to the result.
-     * @throws NullPointerException If one of the given functions are {@code null}
+     * @param before The operation to apply before this operator is applied
+     * @return A composed {@link CharConsumer} that first applies the {@code before} operation to its input, and then
+     * applies this operation to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implNote The input argument of this method is the primitive specialization of {@link UnaryOperator}. Therefore
+     * the given operation handles primitive types. In this case this is {@code char}.
      * @see #andThen(CharConsumer)
      */
-    default CharConsumer compose(final CharUnaryOperator before) {
+    @Nonnull
+    default CharConsumer compose(@Nonnull final CharUnaryOperator before) {
         Objects.requireNonNull(before);
         return value -> accept(before.applyAsChar(value));
     }
 
     /**
-     * Returns a composed {@link Consumer} that applies the given {@code before} {@link ToCharFunction} to its input,
-     * and then applies this operation to the result. If evaluation of either of the given operations throws an
-     * exception, it is relayed to the caller of the composed function.
+     * Returns a composed {@link Consumer} that first applies the {@code before} operation to its input, and then
+     * applies this operation to the result. If evaluation of either operation throws an exception, it is relayed to the
+     * caller of the composed operation.
      *
      * @param <T> The type of the argument to the before operation
-     * @param before The before {@code ToCharFunction} to apply before this operation is applied
-     * @return A composed {@code Consumer} that applies the given {@code before} {@code ToCharFunction} to its input,
-     * and then applies this operation to the result.
-     * @throws NullPointerException If one of the given functions are {@code null}
+     * @param before The operation to apply before this operation is applied
+     * @return A composed {@link Consumer} that first applies the {@code before} operation to its input, and then
+     * applies this operation to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implNote The input arguments of this method are able to handle every type.
      * @see #andThen(CharConsumer)
      */
-    default <T> Consumer<T> compose(final ToCharFunction<? super T> before) {
+    @Nonnull
+    default <T> Consumer<T> compose(@Nonnull final ToCharFunction<? super T> before) {
         Objects.requireNonNull(before);
-        return value -> accept(before.applyAsChar(value));
+        return t -> accept(before.applyAsChar(t));
     }
 
     /**
      * Returns a composed {@link CharConsumer} that performs, in sequence, this operation followed by the {@code after}
      * operation. If evaluation of either operation throws an exception, it is relayed to the caller of the composed
-     * function. If performing this operation throws an exception, the {@code after} operation will not be performed.
+     * operation. If performing this operation throws an exception, the {@code after} operation will not be performed.
      *
      * @param after The operation to apply after this operation is applied
      * @return A composed {@link CharConsumer} that performs, in sequence, this operation followed by the {@code after}
      * operation.
-     * @throws NullPointerException If given after operation is {@code null}
+     * @throws NullPointerException If given argument is {@code null}
      * @see #compose(CharUnaryOperator)
      * @see #compose(ToCharFunction)
      */
-    default CharConsumer andThen(final CharConsumer after) {
+    @Nonnull
+    default CharConsumer andThen(@Nonnull final CharConsumer after) {
         Objects.requireNonNull(after);
         return value -> {
             accept(value);

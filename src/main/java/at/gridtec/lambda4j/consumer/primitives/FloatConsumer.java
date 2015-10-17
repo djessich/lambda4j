@@ -22,6 +22,7 @@ import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import java.util.Objects;
 import java.util.function.Consumer;
+import java.util.function.UnaryOperator;
 
 /**
  * Represents an operation that accepts a single {@code float}-valued argument and returns no result. This is the
@@ -55,51 +56,57 @@ public interface FloatConsumer {
     }
 
     /**
-     * Returns a composed {@link FloatConsumer} that applies the given {@code before} {@link FloatUnaryOperator} to its
-     * input, and then applies this operation to the result. If evaluation of either of the given operations throws an
-     * exception, it is relayed to the caller of the composed function.
+     * Returns a composed {@link FloatConsumer} that first applies the {@code before} operation to its input, and then
+     * applies this operation to the result. If evaluation of either operation throws an exception, it is relayed to the
+     * caller of the composed operation.
      *
-     * @param before The before {@code FloatUnaryOperator} to apply before this operation is applied
-     * @return A composed {@code FloatConsumer} that applies the given {@code before} {@code FloatUnaryOperator} to its
-     * input, and then applies this operation to the result.
-     * @throws NullPointerException If one of the given functions are {@code null}
+     * @param before The operation to apply before this operator is applied
+     * @return A composed {@link FloatConsumer} that first applies the {@code before} operation to its input, and then
+     * applies this operation to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implNote The input argument of this method is the primitive specialization of {@link UnaryOperator}. Therefore
+     * the given operation handles primitive types. In this case this is {@code float}.
      * @see #andThen(FloatConsumer)
      */
-    default FloatConsumer compose(final FloatUnaryOperator before) {
+    @Nonnull
+    default FloatConsumer compose(@Nonnull final FloatUnaryOperator before) {
         Objects.requireNonNull(before);
         return value -> accept(before.applyAsFloat(value));
     }
 
     /**
-     * Returns a composed {@link Consumer} that applies the given {@code before} {@link ToFloatFunction} to its input,
-     * and then applies this operation to the result. If evaluation of either of the given operations throws an
-     * exception, it is relayed to the caller of the composed function.
+     * Returns a composed {@link Consumer} that first applies the {@code before} operation to its input, and then
+     * applies this operation to the result. If evaluation of either operation throws an exception, it is relayed to the
+     * caller of the composed operation.
      *
      * @param <T> The type of the argument to the before operation
-     * @param before The before {@code ToFloatFunction} to apply before this operation is applied
-     * @return A composed {@code Consumer} that applies the given {@code before} {@code ToFloatFunction} to its input,
-     * and then applies this operation to the result.
-     * @throws NullPointerException If one of the given functions are {@code null}
+     * @param before The operation to apply before this operation is applied
+     * @return A composed {@link Consumer} that first applies the {@code before} operation to its input, and then
+     * applies this operation to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implNote The input arguments of this method are able to handle every type.
      * @see #andThen(FloatConsumer)
      */
-    default <T> Consumer<T> compose(final ToFloatFunction<? super T> before) {
+    @Nonnull
+    default <T> Consumer<T> compose(@Nonnull final ToFloatFunction<? super T> before) {
         Objects.requireNonNull(before);
-        return value -> accept(before.applyAsFloat(value));
+        return t -> accept(before.applyAsFloat(t));
     }
 
     /**
      * Returns a composed {@link FloatConsumer} that performs, in sequence, this operation followed by the {@code after}
      * operation. If evaluation of either operation throws an exception, it is relayed to the caller of the composed
-     * function. If performing this operation throws an exception, the {@code after} operation will not be performed.
+     * operation. If performing this operation throws an exception, the {@code after} operation will not be performed.
      *
      * @param after The operation to apply after this operation is applied
      * @return A composed {@link FloatConsumer} that performs, in sequence, this operation followed by the {@code after}
      * operation.
-     * @throws NullPointerException If given after operation is {@code null}
+     * @throws NullPointerException If given argument is {@code null}
      * @see #compose(FloatUnaryOperator)
      * @see #compose(ToFloatFunction)
      */
-    default FloatConsumer andThen(final FloatConsumer after) {
+    @Nonnull
+    default FloatConsumer andThen(@Nonnull final FloatConsumer after) {
         Objects.requireNonNull(after);
         return value -> {
             accept(value);

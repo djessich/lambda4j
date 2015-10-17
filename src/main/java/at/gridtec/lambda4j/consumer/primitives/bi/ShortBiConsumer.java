@@ -23,6 +23,7 @@ import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import java.util.Objects;
 import java.util.function.BiConsumer;
+import java.util.function.UnaryOperator;
 
 /**
  * Represents an operation that accepts two {@code short}-valued arguments and returns no result. This is the primitive
@@ -87,48 +88,54 @@ public interface ShortBiConsumer {
     }
 
     /**
-     * Returns a composed {@link ShortBiConsumer} that applies the given {@code before} {@link ShortUnaryOperator}s to
-     * its input, and then applies this operation to the result. If evaluation of either of the given operations throws
-     * an exception, it is relayed to the caller of the composed function.
+     * Returns a composed {@link ShortBiConsumer} that first applies the {@code before} operations to its input, and
+     * then applies this operation to the result. If evaluation of either operation throws an exception, it is relayed
+     * to the caller of the composed operation.
      *
-     * @param before1 The first before {@code ShortUnaryOperator} to apply before this operation is applied
-     * @param before2 The second before {@code ShortUnaryOperator} to apply before this operation is applied
-     * @return A composed {@code ShortBiConsumer} that applies the given {@code before} {@code ShortUnaryOperator}s to
-     * its input, and then applies this operation to the result.
-     * @throws NullPointerException If one of the given functions are {@code null}
+     * @param before1 The first operation to apply before this operation is applied
+     * @param before2 The second operation to apply before this operation is applied
+     * @return A composed {@link ShortBiConsumer} that first applies the {@code before} operations to its input, and
+     * then applies this operation to the result.
+     * @throws NullPointerException If one of the given operations are {@code null}
+     * @implNote The input arguments of this method are primitive specializations of {@link UnaryOperator}. Therefore
+     * the given operations handle primitive types. In this case this is {@code short}.
      * @see #andThen(ShortBiConsumer)
      */
-    default ShortBiConsumer compose(final ShortUnaryOperator before1, final ShortUnaryOperator before2) {
+    @Nonnull
+    default ShortBiConsumer compose(@Nonnull final ShortUnaryOperator before1,
+            @Nonnull final ShortUnaryOperator before2) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         return (value1, value2) -> accept(before1.applyAsShort(value1), before2.applyAsShort(value2));
     }
 
     /**
-     * Returns a composed {@link BiConsumer} that applies the given {@code before} {@link ToShortFunction}s to its
-     * input, and then applies this operation to the result. If evaluation of either of the given operations throws an
-     * exception, it is relayed to the caller of the composed function.
+     * Returns a composed {@link BiConsumer} that first applies the {@code before} operations to its input, and then
+     * applies this operation to the result. If evaluation of either operation throws an exception, it is relayed to the
+     * caller of the composed operation.
      *
      * @param <T> The type of the argument to the first before operation
      * @param <U> The type of the argument to the second before operation
-     * @param before1 The first before {@code ToShortFunction} to apply before this operation is applied
-     * @param before2 The second before {@code ToShortFunction} to apply before this operation is applied
-     * @return A composed {@code TriConsumer} that applies the given {@code before} {@code ToShortFunction}s to its
-     * input, and then applies this operation to the result.
-     * @throws NullPointerException If one of the given functions are {@code null}
+     * @param before1 The first operation to apply before this operation is applied
+     * @param before2 The second operation to apply before this operation is applied
+     * @return A composed {@link BiConsumer} that first applies the {@code before} operations to its input, and then
+     * applies this operation to the result.
+     * @throws NullPointerException If one of the given operations are {@code null}
+     * @implNote The input arguments of this method are able to handle every type.
      * @see #andThen(ShortBiConsumer)
      */
-    default <T, U> BiConsumer<T, U> compose(final ToShortFunction<? super T> before1,
-            final ToShortFunction<? super U> before2) {
+    @Nonnull
+    default <T, U> BiConsumer<T, U> compose(@Nonnull final ToShortFunction<? super T> before1,
+            @Nonnull final ToShortFunction<? super U> before2) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
-        return (value1, value2) -> accept(before1.applyAsShort(value1), before2.applyAsShort(value2));
+        return (t, u) -> accept(before1.applyAsShort(t), before2.applyAsShort(u));
     }
 
     /**
      * Returns a composed {@link ShortBiConsumer} that performs, in sequence, this operation followed by the {@code
      * after} operation. If evaluation of either operation throws an exception, it is relayed to the caller of the
-     * composed function. If performing this operation throws an exception, the {@code after} operation will not be
+     * composed operation. If performing this operation throws an exception, the {@code after} operation will not be
      * performed.
      *
      * @param after The operation to apply after this operation is applied
@@ -138,7 +145,8 @@ public interface ShortBiConsumer {
      * @see #compose(ShortUnaryOperator, ShortUnaryOperator)
      * @see #compose(ToShortFunction, ToShortFunction)
      */
-    default ShortBiConsumer andThen(final ShortBiConsumer after) {
+    @Nonnull
+    default ShortBiConsumer andThen(@Nonnull final ShortBiConsumer after) {
         Objects.requireNonNull(after);
         return (value1, value2) -> {
             accept(value1, value2);

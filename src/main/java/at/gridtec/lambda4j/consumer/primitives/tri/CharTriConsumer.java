@@ -17,13 +17,14 @@
 package at.gridtec.lambda4j.consumer.primitives.tri;
 
 import at.gridtec.lambda4j.consumer.TriConsumer;
-import at.gridtec.lambda4j.consumer.primitives.ByteConsumer;
+import at.gridtec.lambda4j.consumer.primitives.CharConsumer;
 import at.gridtec.lambda4j.function.primitives.to.ToCharFunction;
 import at.gridtec.lambda4j.operators.unary.CharUnaryOperator;
 
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import java.util.Objects;
+import java.util.function.UnaryOperator;
 
 /**
  * Represents an operation that accepts three {@code char}-valued arguments and returns no result. This is the primitive
@@ -39,46 +40,46 @@ import java.util.Objects;
 public interface CharTriConsumer {
 
     /**
-     * Creates a {@link ByteTriConsumer} which uses the {@code first} parameter as argument for the given {@link
-     * ByteConsumer}.
+     * Creates a {@link CharTriConsumer} which uses the {@code first} parameter as argument for the given {@link
+     * CharConsumer}.
      *
      * @param consumer The consumer which accepts the {@code first} parameter of this one
-     * @return Creates a {@code ByteTriConsumer} which uses the {@code first} parameter as argument for the given {@code
-     * ByteConsumer}.
+     * @return Creates a {@code CharTriConsumer} which uses the {@code first} parameter as argument for the given {@code
+     * CharConsumer}.
      * @throws NullPointerException If the given argument is {@code null}
      */
     @Nonnull
-    static ByteTriConsumer onlyFirst(@Nonnull final ByteConsumer consumer) {
+    static CharTriConsumer onlyFirst(@Nonnull final CharConsumer consumer) {
         Objects.requireNonNull(consumer);
         return (value1, value2, value3) -> consumer.accept(value1);
     }
 
     /**
-     * Creates a {@link ByteTriConsumer} which uses the {@code second} parameter as argument for the given {@link
-     * ByteConsumer}.
+     * Creates a {@link CharTriConsumer} which uses the {@code second} parameter as argument for the given {@link
+     * CharConsumer}.
      *
      * @param consumer The consumer which accepts the {@code second} parameter of this one
-     * @return Creates a {@code ByteTriConsumer} which uses the {@code second} parameter as argument for the given
-     * {@code ByteConsumer}.
+     * @return Creates a {@code CharTriConsumer} which uses the {@code second} parameter as argument for the given
+     * {@code CharConsumer}.
      * @throws NullPointerException If the given argument is {@code null}
      */
     @Nonnull
-    static ByteTriConsumer onlySecond(@Nonnull final ByteConsumer consumer) {
+    static CharTriConsumer onlySecond(@Nonnull final CharConsumer consumer) {
         Objects.requireNonNull(consumer);
         return (value1, value2, value3) -> consumer.accept(value2);
     }
 
     /**
-     * Creates a {@link ByteTriConsumer} which uses the {@code third} parameter as argument for the given {@link
-     * ByteConsumer}.
+     * Creates a {@link CharTriConsumer} which uses the {@code third} parameter as argument for the given {@link
+     * CharConsumer}.
      *
      * @param consumer The consumer which accepts the {@code third} parameter of this one
-     * @return Creates a {@code ByteTriConsumer} which uses the {@code third} parameter as argument for the given {@code
-     * ByteConsumer}.
+     * @return Creates a {@code CharTriConsumer} which uses the {@code third} parameter as argument for the given {@code
+     * CharConsumer}.
      * @throws NullPointerException If the given argument is {@code null}
      */
     @Nonnull
-    static ByteTriConsumer onlyThird(@Nonnull final ByteConsumer consumer) {
+    static CharTriConsumer onlyThird(@Nonnull final CharConsumer consumer) {
         Objects.requireNonNull(consumer);
         return (value1, value2, value3) -> consumer.accept(value3);
     }
@@ -104,20 +105,23 @@ public interface CharTriConsumer {
     }
 
     /**
-     * Returns a composed {@link CharTriConsumer} that applies the given {@code before} {@link CharUnaryOperator}s to
-     * its input, and then applies this operation to the result. If evaluation of either of the given operations throws
-     * an exception, it is relayed to the caller of the composed function.
+     * Returns a composed {@link CharTriConsumer} that first applies the {@code before} operations to its input, and
+     * then applies this operation to the result. If evaluation of either operation throws an exception, it is relayed
+     * to the caller of the composed operation.
      *
-     * @param before1 The first before {@code CharUnaryOperator} to apply before this operation is applied
-     * @param before2 The second before {@code CharUnaryOperator} to apply before this operation is applied
-     * @param before3 The third before {@code CharUnaryOperator} to apply before this operation is applied
-     * @return A composed {@code CharTriConsumer} that applies the given {@code before} {@code CharUnaryOperator}s to
-     * its input, and then applies this operation to the result.
-     * @throws NullPointerException If one of the given functions are {@code null}
+     * @param before1 The first operation to apply before this operation is applied
+     * @param before2 The second operation to apply before this operation is applied
+     * @param before3 The third operation to apply before this operation is applied
+     * @return A composed {@link CharTriConsumer} that first applies the {@code before} operations to its input, and
+     * then applies this operation to the result.
+     * @throws NullPointerException If one of the given operations are {@code null}
+     * @implNote The input arguments of this method are primitive specializations of {@link UnaryOperator}. Therefore
+     * the given operations handle primitive types. In this case this is {@code char}.
      * @see #andThen(CharTriConsumer)
      */
-    default CharTriConsumer compose(final CharUnaryOperator before1, final CharUnaryOperator before2,
-            final CharUnaryOperator before3) {
+    @Nonnull
+    default CharTriConsumer compose(@Nonnull final CharUnaryOperator before1, @Nonnull final CharUnaryOperator before2,
+            @Nonnull final CharUnaryOperator before3) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         Objects.requireNonNull(before3);
@@ -126,34 +130,35 @@ public interface CharTriConsumer {
     }
 
     /**
-     * Returns a composed {@link TriConsumer} that applies the given {@code before} {@link ToCharFunction}s to its
-     * input, and then applies this operation to the result. If evaluation of either of the given operations throws an
-     * exception, it is relayed to the caller of the composed function.
+     * Returns a composed {@link TriConsumer} that first applies the {@code before} operations to its input, and then
+     * applies this operation to the result. If evaluation of either operation throws an exception, it is relayed to the
+     * caller of the composed operation.
      *
      * @param <T> The type of the argument to the first before operation
      * @param <U> The type of the argument to the second before operation
      * @param <V> The type of the argument to the third before operation
-     * @param before1 The first before {@code ToCharFunction} to apply before this operation is applied
-     * @param before2 The second before {@code ToCharFunction} to apply before this operation is applied
-     * @param before3 The third before {@code ToCharFunction} to apply before this operation is applied
-     * @return A composed {@code TriConsumer} that applies the given {@code before} {@code ToCharFunction}s to its
-     * input, and then applies this operation to the result.
-     * @throws NullPointerException If one of the given functions are {@code null}
+     * @param before1 The first operation to apply before this operation is applied
+     * @param before2 The second operation to apply before this operation is applied
+     * @param before3 The third operation to apply before this operation is applied
+     * @return A composed {@link TriConsumer} that first applies the {@code before} operations to its input, and then
+     * applies this operation to the result.
+     * @throws NullPointerException If one of the given operations are {@code null}
+     * @implNote The input arguments of this method are able to handle every type.
      * @see #andThen(CharTriConsumer)
      */
-    default <T, U, V> TriConsumer<T, U, V> compose(final ToCharFunction<? super T> before1,
-            final ToCharFunction<? super U> before2, final ToCharFunction<? super V> before3) {
+    @Nonnull
+    default <T, U, V> TriConsumer<T, U, V> compose(@Nonnull final ToCharFunction<? super T> before1,
+            @Nonnull final ToCharFunction<? super U> before2, @Nonnull final ToCharFunction<? super V> before3) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         Objects.requireNonNull(before3);
-        return (value1, value2, value3) -> accept(before1.applyAsChar(value1), before2.applyAsChar(value2),
-                                                  before3.applyAsChar(value3));
+        return (t, u, v) -> accept(before1.applyAsChar(t), before2.applyAsChar(u), before3.applyAsChar(v));
     }
 
     /**
      * Returns a composed {@link CharTriConsumer} that performs, in sequence, this operation followed by the {@code
      * after} operation. If evaluation of either operation throws an exception, it is relayed to the caller of the
-     * composed function. If performing this operation throws an exception, the {@code after} operation will not be
+     * composed operation. If performing this operation throws an exception, the {@code after} operation will not be
      * performed.
      *
      * @param after The operation to apply after this operation is applied
@@ -163,7 +168,8 @@ public interface CharTriConsumer {
      * @see #compose(CharUnaryOperator, CharUnaryOperator, CharUnaryOperator)
      * @see #compose(ToCharFunction, ToCharFunction, ToCharFunction)
      */
-    default CharTriConsumer andThen(final CharTriConsumer after) {
+    @Nonnull
+    default CharTriConsumer andThen(@Nonnull final CharTriConsumer after) {
         Objects.requireNonNull(after);
         return (value1, value2, value3) -> {
             accept(value1, value2, value3);

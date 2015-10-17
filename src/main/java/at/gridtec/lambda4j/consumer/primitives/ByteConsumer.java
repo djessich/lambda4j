@@ -22,6 +22,7 @@ import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import java.util.Objects;
 import java.util.function.Consumer;
+import java.util.function.UnaryOperator;
 
 /**
  * Represents an operation that accepts a single {@code byte}-valued argument and returns no result. This is the
@@ -55,51 +56,57 @@ public interface ByteConsumer {
     }
 
     /**
-     * Returns a composed {@link ByteConsumer} that applies the given {@code before} {@link ByteUnaryOperator} to its
-     * input, and then applies this operation to the result. If evaluation of either of the given operations throws an
-     * exception, it is relayed to the caller of the composed function.
+     * Returns a composed {@link ByteConsumer} that first applies the {@code before} operation to its input, and then
+     * applies this operation to the result. If evaluation of either operation throws an exception, it is relayed to the
+     * caller of the composed operation.
      *
-     * @param before The before {@code ByteUnaryOperator} to apply before this operation is applied
-     * @return A composed {@code ByteConsumer} that applies the given {@code before} {@code Function} to its input, and
-     * then applies this operation to the result.
-     * @throws NullPointerException If one of the given functions are {@code null}
+     * @param before The operation to apply before this operator is applied
+     * @return A composed {@link ByteConsumer} that first applies the {@code before} operation to its input, and then
+     * applies this operation to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implNote The input argument of this method is the primitive specialization of {@link UnaryOperator}. Therefore
+     * the given operation handles primitive types. In this case this is {@code byte}.
      * @see #andThen(ByteConsumer)
      */
-    default ByteConsumer compose(final ByteUnaryOperator before) {
+    @Nonnull
+    default ByteConsumer compose(@Nonnull final ByteUnaryOperator before) {
         Objects.requireNonNull(before);
         return value -> accept(before.applyAsByte(value));
     }
 
     /**
-     * Returns a composed {@link Consumer} that applies the given {@code before} {@link ToByteFunction} to its input,
-     * and then applies this operation to the result. If evaluation of either of the given operations throws an
-     * exception, it is relayed to the caller of the composed function.
+     * Returns a composed {@link Consumer} that first applies the {@code before} operation to its input, and then
+     * applies this operation to the result. If evaluation of either operation throws an exception, it is relayed to the
+     * caller of the composed operation.
      *
      * @param <T> The type of the argument to the before operation
-     * @param before The before {@code ToByteFunction} to apply before this operation is applied
-     * @return A composed {@code Consumer} that applies the given {@code before} {@code ToByteFunction} to its input,
-     * and then applies this operation to the result.
-     * @throws NullPointerException If one of the given functions are {@code null}
+     * @param before The operation to apply before this operation is applied
+     * @return A composed {@link Consumer} that first applies the {@code before} operation to its input, and then
+     * applies this operation to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implNote The input arguments of this method are able to handle every type.
      * @see #andThen(ByteConsumer)
      */
-    default <T> Consumer<T> compose(final ToByteFunction<? super T> before) {
+    @Nonnull
+    default <T> Consumer<T> compose(@Nonnull final ToByteFunction<? super T> before) {
         Objects.requireNonNull(before);
-        return value -> accept(before.applyAsByte(value));
+        return t -> accept(before.applyAsByte(t));
     }
 
     /**
      * Returns a composed {@link ByteConsumer} that performs, in sequence, this operation followed by the {@code after}
      * operation. If evaluation of either operation throws an exception, it is relayed to the caller of the composed
-     * function. If performing this operation throws an exception, the {@code after} operation will not be performed.
+     * operation. If performing this operation throws an exception, the {@code after} operation will not be performed.
      *
      * @param after The operation to apply after this operation is applied
      * @return A composed {@link ByteConsumer} that performs, in sequence, this operation followed by the {@code after}
      * operation.
-     * @throws NullPointerException If given after operation is {@code null}
+     * @throws NullPointerException If given argument is {@code null}
      * @see #compose(ByteUnaryOperator)
      * @see #compose(ToByteFunction)
      */
-    default ByteConsumer andThen(final ByteConsumer after) {
+    @Nonnull
+    default ByteConsumer andThen(@Nonnull final ByteConsumer after) {
         Objects.requireNonNull(after);
         return value -> {
             accept(value);

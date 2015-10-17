@@ -22,6 +22,7 @@ import java.util.function.BiConsumer;
 import java.util.function.IntConsumer;
 import java.util.function.IntUnaryOperator;
 import java.util.function.ToIntFunction;
+import java.util.function.UnaryOperator;
 
 /**
  * Represents an operation that accepts two {@code int}-valued arguments and returns no result. This is the primitive
@@ -86,48 +87,53 @@ public interface IntBiConsumer {
     }
 
     /**
-     * Returns a composed {@link IntBiConsumer} that applies the given {@code before} {@link IntUnaryOperator}s to its
-     * input, and then applies this operation to the result. If evaluation of either of the given operations throws an
-     * exception, it is relayed to the caller of the composed function.
+     * Returns a composed {@link IntBiConsumer} that first applies the {@code before} operations to its input, and then
+     * applies this operation to the result. If evaluation of either operation throws an exception, it is relayed to the
+     * caller of the composed operation.
      *
-     * @param before1 The first before {@code IntUnaryOperator} to apply before this operation is applied
-     * @param before2 The second before {@code IntUnaryOperator} to apply before this operation is applied
-     * @return A composed {@code IntBiConsumer} that applies the given {@code before} {@code IntUnaryOperator}s to its
-     * input, and then applies this operation to the result.
-     * @throws NullPointerException If one of the given functions are {@code null}
+     * @param before1 The first operation to apply before this operation is applied
+     * @param before2 The second operation to apply before this operation is applied
+     * @return A composed {@link IntBiConsumer} that first applies the {@code before} operations to its input, and then
+     * applies this operation to the result.
+     * @throws NullPointerException If one of the given operations are {@code null}
+     * @implNote The input arguments of this method are primitive specializations of {@link UnaryOperator}. Therefore
+     * the given operations handle primitive types. In this case this is {@code int}.
      * @see #andThen(IntBiConsumer)
      */
-    default IntBiConsumer compose(final IntUnaryOperator before1, final IntUnaryOperator before2) {
+    @Nonnull
+    default IntBiConsumer compose(@Nonnull final IntUnaryOperator before1, @Nonnull final IntUnaryOperator before2) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         return (value1, value2) -> accept(before1.applyAsInt(value1), before2.applyAsInt(value2));
     }
 
     /**
-     * Returns a composed {@link BiConsumer} that applies the given {@code before} {@link ToIntFunction}s to its input,
-     * and then applies this operation to the result. If evaluation of either of the given operations throws an
-     * exception, it is relayed to the caller of the composed function.
+     * Returns a composed {@link BiConsumer} that first applies the {@code before} operations to its input, and then
+     * applies this operation to the result. If evaluation of either operation throws an exception, it is relayed to the
+     * caller of the composed operation.
      *
      * @param <T> The type of the argument to the first before operation
      * @param <U> The type of the argument to the second before operation
-     * @param before1 The first before {@code ToIntFunction} to apply before this operation is applied
-     * @param before2 The second before {@code ToIntFunction} to apply before this operation is applied
-     * @return A composed {@code BiConsumer} that applies the given {@code before} {@code ToIntFunction}s to its input,
-     * and then applies this operation to the result.
-     * @throws NullPointerException If one of the given functions are {@code null}
+     * @param before1 The first operation to apply before this operation is applied
+     * @param before2 The second operation to apply before this operation is applied
+     * @return A composed {@link BiConsumer} that first applies the {@code before} operations to its input, and then
+     * applies this operation to the result.
+     * @throws NullPointerException If one of the given operations are {@code null}
+     * @implNote The input arguments of this method are able to handle every type.
      * @see #andThen(IntBiConsumer)
      */
-    default <T, U> BiConsumer<T, U> compose(final ToIntFunction<? super T> before1,
-            final ToIntFunction<? super U> before2) {
+    @Nonnull
+    default <T, U> BiConsumer<T, U> compose(@Nonnull final ToIntFunction<? super T> before1,
+            @Nonnull final ToIntFunction<? super U> before2) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
-        return (value1, value2) -> accept(before1.applyAsInt(value1), before2.applyAsInt(value2));
+        return (t, u) -> accept(before1.applyAsInt(t), before2.applyAsInt(u));
     }
 
     /**
      * Returns a composed {@link IntBiConsumer} that performs, in sequence, this operation followed by the {@code after}
      * operation. If evaluation of either operation throws an exception, it is relayed to the caller of the composed
-     * function. If performing this operation throws an exception, the {@code after} operation will not be performed.
+     * operation. If performing this operation throws an exception, the {@code after} operation will not be performed.
      *
      * @param after The operation to apply after this operation is applied
      * @return A composed {@link IntBiConsumer} that performs, in sequence, this operation followed by the {@code after}
@@ -136,7 +142,8 @@ public interface IntBiConsumer {
      * @see #compose(IntUnaryOperator, IntUnaryOperator)
      * @see #compose(ToIntFunction, ToIntFunction)
      */
-    default IntBiConsumer andThen(final IntBiConsumer after) {
+    @Nonnull
+    default IntBiConsumer andThen(@Nonnull final IntBiConsumer after) {
         Objects.requireNonNull(after);
         return (value1, value2) -> {
             accept(value1, value2);

@@ -24,6 +24,7 @@ import java.util.Objects;
 import java.util.function.LongConsumer;
 import java.util.function.LongUnaryOperator;
 import java.util.function.ToLongFunction;
+import java.util.function.UnaryOperator;
 
 /**
  * Represents an operation that accepts three {@code long}-valued arguments and returns no result. This is the primitive
@@ -104,20 +105,23 @@ public interface LongTriConsumer {
     }
 
     /**
-     * Returns a composed {@link LongTriConsumer} that applies the given {@code before} {@link LongUnaryOperator}s to
-     * its input, and then applies this operation to the result. If evaluation of either of the given operations throws
-     * an exception, it is relayed to the caller of the composed function.
+     * Returns a composed {@link LongTriConsumer} that first applies the {@code before} operations to its input, and
+     * then applies this operation to the result. If evaluation of either operation throws an exception, it is relayed
+     * to the caller of the composed operation.
      *
-     * @param before1 The first before {@code LongUnaryOperator} to apply before this operation is applied
-     * @param before2 The second before {@code LongUnaryOperator} to apply before this operation is applied
-     * @param before3 The third before {@code LongUnaryOperator} to apply before this operation is applied
-     * @return A composed {@code LongTriConsumer} that applies the given {@code before} {@code LongUnaryOperator}s to
-     * its input, and then applies this operation to the result.
-     * @throws NullPointerException If one of the given functions are {@code null}
+     * @param before1 The first operation to apply before this operation is applied
+     * @param before2 The second operation to apply before this operation is applied
+     * @param before3 The third operation to apply before this operation is applied
+     * @return A composed {@link LongTriConsumer} that first applies the {@code before} operations to its input, and
+     * then applies this operation to the result.
+     * @throws NullPointerException If one of the given operations are {@code null}
+     * @implNote The input arguments of this method are primitive specializations of {@link UnaryOperator}. Therefore
+     * the given operations handle primitive types. In this case this is {@code long}.
      * @see #andThen(LongTriConsumer)
      */
-    default LongTriConsumer compose(final LongUnaryOperator before1, final LongUnaryOperator before2,
-            final LongUnaryOperator before3) {
+    @Nonnull
+    default LongTriConsumer compose(@Nonnull final LongUnaryOperator before1, @Nonnull final LongUnaryOperator before2,
+            @Nonnull final LongUnaryOperator before3) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         Objects.requireNonNull(before3);
@@ -126,34 +130,35 @@ public interface LongTriConsumer {
     }
 
     /**
-     * Returns a composed {@link TriConsumer} that applies the given {@code before} {@link ToLongFunction}s to its
-     * input, and then applies this operation to the result. If evaluation of either of the given operations throws an
-     * exception, it is relayed to the caller of the composed function.
+     * Returns a composed {@link TriConsumer} that first applies the {@code before} operations to its input, and then
+     * applies this operation to the result. If evaluation of either operation throws an exception, it is relayed to the
+     * caller of the composed operation.
      *
      * @param <T> The type of the argument to the first before operation
      * @param <U> The type of the argument to the second before operation
      * @param <V> The type of the argument to the third before operation
-     * @param before1 The first before {@code ToLongFunction} to apply before this operation is applied
-     * @param before2 The second before {@code ToLongFunction} to apply before this operation is applied
-     * @param before3 The third before {@code ToLongFunction} to apply before this operation is applied
-     * @return A composed {@code TriConsumer} that applies the given {@code before} {@code ToLongFunction}s to its
-     * input, and then applies this operation to the result.
-     * @throws NullPointerException If one of the given functions are {@code null}
+     * @param before1 The first operation to apply before this operation is applied
+     * @param before2 The second operation to apply before this operation is applied
+     * @param before3 The third operation to apply before this operation is applied
+     * @return A composed {@link TriConsumer} that first applies the {@code before} operations to its input, and then
+     * applies this operation to the result.
+     * @throws NullPointerException If one of the given operations are {@code null}
+     * @implNote The input arguments of this method are able to handle every type.
      * @see #andThen(LongTriConsumer)
      */
-    default <T, U, V> TriConsumer<T, U, V> compose(final ToLongFunction<? super T> before1,
-            final ToLongFunction<? super U> before2, final ToLongFunction<? super V> before3) {
+    @Nonnull
+    default <T, U, V> TriConsumer<T, U, V> compose(@Nonnull final ToLongFunction<? super T> before1,
+            @Nonnull final ToLongFunction<? super U> before2, @Nonnull final ToLongFunction<? super V> before3) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         Objects.requireNonNull(before3);
-        return (value1, value2, value3) -> accept(before1.applyAsLong(value1), before2.applyAsLong(value2),
-                                                  before3.applyAsLong(value3));
+        return (t, u, v) -> accept(before1.applyAsLong(t), before2.applyAsLong(u), before3.applyAsLong(v));
     }
 
     /**
      * Returns a composed {@link LongTriConsumer} that performs, in sequence, this operation followed by the {@code
      * after} operation. If evaluation of either operation throws an exception, it is relayed to the caller of the
-     * composed function. If performing this operation throws an exception, the {@code after} operation will not be
+     * composed operation. If performing this operation throws an exception, the {@code after} operation will not be
      * performed.
      *
      * @param after The operation to apply after this operation is applied
@@ -163,7 +168,8 @@ public interface LongTriConsumer {
      * @see #compose(LongUnaryOperator, LongUnaryOperator, LongUnaryOperator)
      * @see #compose(ToLongFunction, ToLongFunction, ToLongFunction)
      */
-    default LongTriConsumer andThen(final LongTriConsumer after) {
+    @Nonnull
+    default LongTriConsumer andThen(@Nonnull final LongTriConsumer after) {
         Objects.requireNonNull(after);
         return (value1, value2, value3) -> {
             accept(value1, value2, value3);

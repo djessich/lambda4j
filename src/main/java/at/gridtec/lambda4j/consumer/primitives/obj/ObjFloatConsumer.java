@@ -25,6 +25,7 @@ import java.util.Objects;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 import java.util.function.Function;
+import java.util.function.UnaryOperator;
 
 /**
  * Represents an operation that accepts an object-valued and a {@code float}-valued argument, and returns no result.
@@ -92,41 +93,46 @@ public interface ObjFloatConsumer<T> {
     }
 
     /**
-     * Returns a composed {@link ObjFloatConsumer} that applies the given {@code before} {@link Function} and {@link
-     * FloatUnaryOperator} to its input, and then applies this operation to the result. If evaluation of either of the
-     * given operations throws an exception, it is relayed to the caller of the composed function.
+     * Returns a composed {@link ObjFloatConsumer} that first applies the {@code before} operations to its input, and
+     * then applies this operation to the result. If evaluation of either operation throws an exception, it is relayed
+     * to the caller of the composed operation.
      *
      * @param <U> The type of the argument to the first before operation
-     * @param before1 The {@code Function} to apply before this operation is applied
-     * @param before2 The {@code FloatUnaryOperator} to apply before this operation is applied
-     * @return A composed {@code ObjFloatConsumer} that applies the given {@code before} {@code Function} and {@code
-     * FloatUnaryOperator} to its input, and then applies this operation to the result.
-     * @throws NullPointerException If one of the given functions are {@code null}
+     * @param before1 The first operation to apply before this operation is applied
+     * @param before2 The second operation to apply before this operation is applied
+     * @return A composed {@link ObjFloatConsumer} that first applies the {@code before} operations to its input, and
+     * then applies this operation to the result.
+     * @throws NullPointerException If one of the given operations are {@code null}
+     * @implNote The second input argument of this method is the primitive specialization of {@link UnaryOperator}.
+     * Therefore the operation handles a primitive type. In this case this is {@code float}.
      * @see #andThen(ObjFloatConsumer)
      */
-    default <U> ObjFloatConsumer<U> compose(final Function<? super U, ? extends T> before1,
-            final FloatUnaryOperator before2) {
+    @Nonnull
+    default <U> ObjFloatConsumer<U> compose(@Nonnull final Function<? super U, ? extends T> before1,
+            @Nonnull final FloatUnaryOperator before2) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         return (u, value) -> accept(before1.apply(u), before2.applyAsFloat(value));
     }
 
     /**
-     * Returns a composed {@link BiConsumer} that applies the given {@code before} {@link Function} and {@link
-     * ToFloatFunction} to its input, and then applies this operation to the result. If evaluation of either of the
-     * given operations throws an exception, it is relayed to the caller of the composed function.
+     * Returns a composed {@link BiConsumer} that first applies the {@code before} operations to its input, and then
+     * applies this operation to the result. If evaluation of either operation throws an exception, it is relayed to the
+     * caller of the composed operation.
      *
      * @param <U> The type of the argument to the first before operation
      * @param <V> The type of the argument to the second before operation
-     * @param before1 The {@code Function} to apply after this operation is applied
-     * @param before2 The {@code ToFloatFunction} to apply after this operation is applied
-     * @return A composed {@code BiConsumer} that applies the given {@code before} {@code Function} and {@code
-     * ToFloatFunction} to its input, and then applies this operation to the result.
-     * @throws NullPointerException If one of the given functions are {@code null}
+     * @param before1 The first operation to apply before this operation is applied
+     * @param before2 The second operation to apply before this operation is applied
+     * @return A composed {@link BiConsumer} that first applies the {@code before} operations to its input, and then
+     * applies this operation to the result.
+     * @throws NullPointerException If one of the given operations are {@code null}
+     * @implNote The input arguments of this method are able to handle every type.
      * @see #andThen(ObjFloatConsumer)
      */
-    default <U, V> BiConsumer<U, V> compose(final Function<? super U, ? extends T> before1,
-            final ToFloatFunction<? super V> before2) {
+    @Nonnull
+    default <U, V> BiConsumer<U, V> compose(@Nonnull final Function<? super U, ? extends T> before1,
+            @Nonnull final ToFloatFunction<? super V> before2) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         return (u, v) -> accept(before1.apply(u), before2.applyAsFloat(v));
@@ -135,7 +141,7 @@ public interface ObjFloatConsumer<T> {
     /**
      * Returns a composed {@link ObjFloatConsumer} that performs, in sequence, this operation followed by the {@code
      * after} operation. If evaluation of either operation throws an exception, it is relayed to the caller of the
-     * composed function. If performing this operation throws an exception, the {@code after} operation will not be
+     * composed operation. If performing this operation throws an exception, the {@code after} operation will not be
      * performed.
      *
      * @param after The operation to apply after this operation is applied
@@ -145,7 +151,8 @@ public interface ObjFloatConsumer<T> {
      * @see #compose(Function, FloatUnaryOperator)
      * @see #compose(Function, ToFloatFunction)
      */
-    default ObjFloatConsumer<T> andThen(final ObjFloatConsumer<? super T> after) {
+    @Nonnull
+    default ObjFloatConsumer<T> andThen(@Nonnull final ObjFloatConsumer<? super T> after) {
         Objects.requireNonNull(after);
         return (t, value) -> {
             accept(t, value);

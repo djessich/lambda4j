@@ -24,6 +24,7 @@ import at.gridtec.lambda4j.operators.unary.ShortUnaryOperator;
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import java.util.Objects;
+import java.util.function.UnaryOperator;
 
 /**
  * Represents an operation that accepts three {@code short}-valued arguments and returns no result. This is the
@@ -104,20 +105,23 @@ public interface ShortTriConsumer {
     }
 
     /**
-     * Returns a composed {@link ShortTriConsumer} that applies the given {@code before} {@link ShortUnaryOperator}s to
-     * its input, and then applies this operation to the result. If evaluation of either of the given operations throws
-     * an exception, it is relayed to the caller of the composed function.
+     * Returns a composed {@link ShortTriConsumer} that first applies the {@code before} operations to its input, and
+     * then applies this operation to the result. If evaluation of either operation throws an exception, it is relayed
+     * to the caller of the composed operation.
      *
-     * @param before1 The first before {@code ShortUnaryOperator} to apply before this operation is applied
-     * @param before2 The second before {@code ShortUnaryOperator} to apply before this operation is applied
-     * @param before3 The third before {@code ShortUnaryOperator} to apply before this operation is applied
-     * @return A composed {@code ShortTriConsumer} that applies the given {@code before} {@code ShortUnaryOperator}s to
-     * its input, and then applies this operation to the result.
-     * @throws NullPointerException If one of the given functions are {@code null}
+     * @param before1 The first operation to apply before this operation is applied
+     * @param before2 The second operation to apply before this operation is applied
+     * @param before3 The third operation to apply before this operation is applied
+     * @return A composed {@link ShortTriConsumer} that first applies the {@code before} operations to its input, and
+     * then applies this operation to the result.
+     * @throws NullPointerException If one of the given operations are {@code null}
+     * @implNote The input arguments of this method are primitive specializations of {@link UnaryOperator}. Therefore
+     * the given operations handle primitive types. In this case this is {@code short}.
      * @see #andThen(ShortTriConsumer)
      */
-    default ShortTriConsumer compose(final ShortUnaryOperator before1, final ShortUnaryOperator before2,
-            final ShortUnaryOperator before3) {
+    @Nonnull
+    default ShortTriConsumer compose(@Nonnull final ShortUnaryOperator before1,
+            @Nonnull final ShortUnaryOperator before2, @Nonnull final ShortUnaryOperator before3) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         Objects.requireNonNull(before3);
@@ -126,34 +130,35 @@ public interface ShortTriConsumer {
     }
 
     /**
-     * Returns a composed {@link TriConsumer} that applies the given {@code before} {@link ToShortFunction}s to its
-     * input, and then applies this operation to the result. If evaluation of either of the given operations throws an
-     * exception, it is relayed to the caller of the composed function.
+     * Returns a composed {@link TriConsumer} that first applies the {@code before} operations to its input, and then
+     * applies this operation to the result. If evaluation of either operation throws an exception, it is relayed to the
+     * caller of the composed operation.
      *
      * @param <T> The type of the argument to the first before operation
      * @param <U> The type of the argument to the second before operation
      * @param <V> The type of the argument to the third before operation
-     * @param before1 The first before {@code ToShortFunction} to apply before this operation is applied
-     * @param before2 The second before {@code ToShortFunction} to apply before this operation is applied
-     * @param before3 The third before {@code ToShortFunction} to apply before this operation is applied
-     * @return A composed {@code TriConsumer} that applies the given {@code before} {@code ToShortFunction}s to its
-     * input, and then applies this operation to the result.
-     * @throws NullPointerException If one of the given functions are {@code null}
+     * @param before1 The first operation to apply before this operation is applied
+     * @param before2 The second operation to apply before this operation is applied
+     * @param before3 The third operation to apply before this operation is applied
+     * @return A composed {@link TriConsumer} that first applies the {@code before} operations to its input, and then
+     * applies this operation to the result.
+     * @throws NullPointerException If one of the given operations are {@code null}
+     * @implNote The input arguments of this method are able to handle every type.
      * @see #andThen(ShortTriConsumer)
      */
-    default <T, U, V> TriConsumer<T, U, V> compose(final ToShortFunction<? super T> before1,
-            final ToShortFunction<? super U> before2, final ToShortFunction<? super V> before3) {
+    @Nonnull
+    default <T, U, V> TriConsumer<T, U, V> compose(@Nonnull final ToShortFunction<? super T> before1,
+            @Nonnull final ToShortFunction<? super U> before2, @Nonnull final ToShortFunction<? super V> before3) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         Objects.requireNonNull(before3);
-        return (value1, value2, value3) -> accept(before1.applyAsShort(value1), before2.applyAsShort(value2),
-                                                  before3.applyAsShort(value3));
+        return (t, u, v) -> accept(before1.applyAsShort(t), before2.applyAsShort(u), before3.applyAsShort(v));
     }
 
     /**
      * Returns a composed {@link ShortTriConsumer} that performs, in sequence, this operation followed by the {@code
      * after} operation. If evaluation of either operation throws an exception, it is relayed to the caller of the
-     * composed function. If performing this operation throws an exception, the {@code after} operation will not be
+     * composed operation. If performing this operation throws an exception, the {@code after} operation will not be
      * performed.
      *
      * @param after The operation to apply after this operation is applied
@@ -163,7 +168,8 @@ public interface ShortTriConsumer {
      * @see #compose(ShortUnaryOperator, ShortUnaryOperator, ShortUnaryOperator)
      * @see #compose(ToShortFunction, ToShortFunction, ToShortFunction)
      */
-    default ShortTriConsumer andThen(final ShortTriConsumer after) {
+    @Nonnull
+    default ShortTriConsumer andThen(@Nonnull final ShortTriConsumer after) {
         Objects.requireNonNull(after);
         return (value1, value2, value3) -> {
             accept(value1, value2, value3);

@@ -23,6 +23,7 @@ import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import java.util.Objects;
 import java.util.function.BiConsumer;
+import java.util.function.UnaryOperator;
 
 /**
  * Represents an operation that accepts two {@code byte}-valued arguments and returns no result. This is the primitive
@@ -87,48 +88,53 @@ public interface ByteBiConsumer {
     }
 
     /**
-     * Returns a composed {@link ByteBiConsumer} that applies the given {@code before} {@link ByteUnaryOperator}s to its
-     * input, and then applies this operation to the result. If evaluation of either of the given operations throws an
-     * exception, it is relayed to the caller of the composed function.
+     * Returns a composed {@link ByteBiConsumer} that first applies the {@code before} operations to its input, and then
+     * applies this operation to the result. If evaluation of either operation throws an exception, it is relayed to the
+     * caller of the composed operation.
      *
-     * @param before1 The first before {@code ByteUnaryOperator} to apply before this operation is applied
-     * @param before2 The second before {@code ByteUnaryOperator} to apply before this operation is applied
-     * @return A composed {@code ByteBiConsumer} that applies the given {@code before} {@code ByteUnaryOperator}s to its
-     * input, and then applies this operation to the result.
-     * @throws NullPointerException If one of the given functions are {@code null}
+     * @param before1 The first operation to apply before this operation is applied
+     * @param before2 The second operation to apply before this operation is applied
+     * @return A composed {@link ByteBiConsumer} that first applies the {@code before} operations to its input, and then
+     * applies this operation to the result.
+     * @throws NullPointerException If one of the given operations are {@code null}
+     * @implNote The input arguments of this method are primitive specializations of {@link UnaryOperator}. Therefore
+     * the given operations handle primitive types. In this case this is {@code byte}.
      * @see #andThen(ByteBiConsumer)
      */
-    default ByteBiConsumer compose(final ByteUnaryOperator before1, final ByteUnaryOperator before2) {
+    @Nonnull
+    default ByteBiConsumer compose(@Nonnull final ByteUnaryOperator before1, @Nonnull final ByteUnaryOperator before2) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         return (value1, value2) -> accept(before1.applyAsByte(value1), before2.applyAsByte(value2));
     }
 
     /**
-     * Returns a composed {@link BiConsumer} that applies the given {@code before} {@link ToByteFunction}s to its input,
-     * and then applies this operation to the result. If evaluation of either of the given operations throws an
-     * exception, it is relayed to the caller of the composed function.
+     * Returns a composed {@link BiConsumer} that first applies the {@code before} operations to its input, and then
+     * applies this operation to the result. If evaluation of either operation throws an exception, it is relayed to the
+     * caller of the composed operation.
      *
      * @param <T> The type of the argument to the first before operation
      * @param <U> The type of the argument to the second before operation
-     * @param before1 The first before {@code ToByteFunction} to apply before this operation is applied
-     * @param before2 The second before {@code ToByteFunction} to apply before this operation is applied
-     * @return A composed {@code BiConsumer} that applies the given {@code before} {@code ToByteFunction}s to its input,
-     * and then applies this operation to the result.
-     * @throws NullPointerException If one of the given functions are {@code null}
+     * @param before1 The first operation to apply before this operation is applied
+     * @param before2 The second operation to apply before this operation is applied
+     * @return A composed {@link BiConsumer} that first applies the {@code before} operations to its input, and then
+     * applies this operation to the result.
+     * @throws NullPointerException If one of the given operations are {@code null}
+     * @implNote The input arguments of this method are able to handle every type.
      * @see #andThen(ByteBiConsumer)
      */
-    default <T, U> BiConsumer<T, U> compose(final ToByteFunction<? super T> before1,
-            final ToByteFunction<? super U> before2) {
+    @Nonnull
+    default <T, U> BiConsumer<T, U> compose(@Nonnull final ToByteFunction<? super T> before1,
+            @Nonnull final ToByteFunction<? super U> before2) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
-        return (value1, value2) -> accept(before1.applyAsByte(value1), before2.applyAsByte(value2));
+        return (t, u) -> accept(before1.applyAsByte(t), before2.applyAsByte(u));
     }
 
     /**
      * Returns a composed {@link ByteBiConsumer} that performs, in sequence, this operation followed by the {@code
      * after} operation. If evaluation of either operation throws an exception, it is relayed to the caller of the
-     * composed function. If performing this operation throws an exception, the {@code after} operation will not be
+     * composed operation. If performing this operation throws an exception, the {@code after} operation will not be
      * performed.
      *
      * @param after The operation to apply after this operation is applied
@@ -138,7 +144,8 @@ public interface ByteBiConsumer {
      * @see #compose(ByteUnaryOperator, ByteUnaryOperator)
      * @see #compose(ToByteFunction, ToByteFunction)
      */
-    default ByteBiConsumer andThen(final ByteBiConsumer after) {
+    @Nonnull
+    default ByteBiConsumer andThen(@Nonnull final ByteBiConsumer after) {
         Objects.requireNonNull(after);
         return (value1, value2) -> {
             accept(value1, value2);

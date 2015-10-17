@@ -24,6 +24,7 @@ import java.util.Objects;
 import java.util.function.DoubleConsumer;
 import java.util.function.DoubleUnaryOperator;
 import java.util.function.ToDoubleFunction;
+import java.util.function.UnaryOperator;
 
 /**
  * Represents an operation that accepts three {@code double}-valued arguments and returns no result. This is the
@@ -104,20 +105,23 @@ public interface DoubleTriConsumer {
     }
 
     /**
-     * Returns a composed {@link DoubleTriConsumer} that applies the given {@code before} {@link DoubleUnaryOperator}s
-     * to its input, and then applies this operation to the result. If evaluation of either of the given operations
-     * throws an exception, it is relayed to the caller of the composed function.
+     * Returns a composed {@link DoubleTriConsumer} that first applies the {@code before} operations to its input, and
+     * then applies this operation to the result. If evaluation of either operation throws an exception, it is relayed
+     * to the caller of the composed operation.
      *
-     * @param before1 The first before {@code DoubleUnaryOperator} to apply before this operation is applied
-     * @param before2 The second before {@code DoubleUnaryOperator} to apply before this operation is applied
-     * @param before3 The third before {@code DoubleUnaryOperator} to apply before this operation is applied
-     * @return A composed {@code DoubleTriConsumer} that applies the given {@code before} {@code DoubleUnaryOperator}s
-     * to its input, and then applies this operation to the result.
-     * @throws NullPointerException If one of the given functions are {@code null}
+     * @param before1 The first operation to apply before this operation is applied
+     * @param before2 The second operation to apply before this operation is applied
+     * @param before3 The third operation to apply before this operation is applied
+     * @return A composed {@link DoubleTriConsumer} that first applies the {@code before} operations to its input, and
+     * then applies this operation to the result.
+     * @throws NullPointerException If one of the given operations are {@code null}
+     * @implNote The input arguments of this method are primitive specializations of {@link UnaryOperator}. Therefore
+     * the given operations handle primitive types. In this case this is {@code double}.
      * @see #andThen(DoubleTriConsumer)
      */
-    default DoubleTriConsumer compose(final DoubleUnaryOperator before1, final DoubleUnaryOperator before2,
-            final DoubleUnaryOperator before3) {
+    @Nonnull
+    default DoubleTriConsumer compose(@Nonnull final DoubleUnaryOperator before1,
+            @Nonnull final DoubleUnaryOperator before2, @Nonnull final DoubleUnaryOperator before3) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         Objects.requireNonNull(before3);
@@ -126,34 +130,35 @@ public interface DoubleTriConsumer {
     }
 
     /**
-     * Returns a composed {@link TriConsumer} that applies the given {@code before} {@link ToDoubleFunction}s to its
-     * input, and then applies this operation to the result. If evaluation of either of the given operations throws an
-     * exception, it is relayed to the caller of the composed function.
+     * Returns a composed {@link TriConsumer} that first applies the {@code before} operations to its input, and then
+     * applies this operation to the result. If evaluation of either operation throws an exception, it is relayed to the
+     * caller of the composed operation.
      *
      * @param <T> The type of the argument to the first before operation
      * @param <U> The type of the argument to the second before operation
      * @param <V> The type of the argument to the third before operation
-     * @param before1 The first before {@code ToDoubleFunction} to apply before this operation is applied
-     * @param before2 The second before {@code ToDoubleFunction} to apply before this operation is applied
-     * @param before3 The third before {@code ToDoubleFunction} to apply before this operation is applied
-     * @return A composed {@code TriConsumer} that applies the given {@code before} {@code ToDoubleFunction}s to its
-     * input, and then applies this operation to the result.
-     * @throws NullPointerException If one of the given functions are {@code null}
+     * @param before1 The first operation to apply before this operation is applied
+     * @param before2 The second operation to apply before this operation is applied
+     * @param before3 The third operation to apply before this operation is applied
+     * @return A composed {@link TriConsumer} that first applies the {@code before} operations to its input, and then
+     * applies this operation to the result.
+     * @throws NullPointerException If one of the given operations are {@code null}
+     * @implNote The input arguments of this method are able to handle every type.
      * @see #andThen(DoubleTriConsumer)
      */
-    default <T, U, V> TriConsumer<T, U, V> compose(final ToDoubleFunction<? super T> before1,
-            final ToDoubleFunction<? super U> before2, final ToDoubleFunction<? super V> before3) {
+    @Nonnull
+    default <T, U, V> TriConsumer<T, U, V> compose(@Nonnull final ToDoubleFunction<? super T> before1,
+            @Nonnull final ToDoubleFunction<? super U> before2, @Nonnull final ToDoubleFunction<? super V> before3) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         Objects.requireNonNull(before3);
-        return (value1, value2, value3) -> accept(before1.applyAsDouble(value1), before2.applyAsDouble(value2),
-                                                  before3.applyAsDouble(value3));
+        return (t, u, v) -> accept(before1.applyAsDouble(t), before2.applyAsDouble(u), before3.applyAsDouble(v));
     }
 
     /**
      * Returns a composed {@link DoubleTriConsumer} that performs, in sequence, this operation followed by the {@code
      * after} operation. If evaluation of either operation throws an exception, it is relayed to the caller of the
-     * composed function. If performing this operation throws an exception, the {@code after} operation will not be
+     * composed operation. If performing this operation throws an exception, the {@code after} operation will not be
      * performed.
      *
      * @param after The operation to apply after this operation is applied
@@ -163,7 +168,8 @@ public interface DoubleTriConsumer {
      * @see #compose(DoubleUnaryOperator, DoubleUnaryOperator, DoubleUnaryOperator)
      * @see #compose(ToDoubleFunction, ToDoubleFunction, ToDoubleFunction)
      */
-    default DoubleTriConsumer andThen(final DoubleTriConsumer after) {
+    @Nonnull
+    default DoubleTriConsumer andThen(@Nonnull final DoubleTriConsumer after) {
         Objects.requireNonNull(after);
         return (value1, value2, value3) -> {
             accept(value1, value2, value3);
