@@ -175,8 +175,7 @@ public interface BiObjShortPredicate<T, U> {
      * predicate is not evaluated.
      * <p>
      * Any exceptions thrown during evaluation of either predicate are relayed to the caller; if evaluation of this
-     * {@code BiObjShortPredicate} throws an exception, the {@code other} {@code BiObjShortPredicate} will not be
-     * evaluated.
+     * {@code BiObjShortPredicate} throws an exception, the {@code other} predicate will not be evaluated.
      *
      * @param other A {@code BiObjShortPredicate} that will be logically-ORed with this one
      * @return A composed {@code BiObjShortPredicate} that represents the short-circuiting logical OR of this predicate
@@ -186,7 +185,8 @@ public interface BiObjShortPredicate<T, U> {
      * @see #xor(BiObjShortPredicate)
      * @see BiPredicate#or(BiPredicate)
      */
-    default BiObjShortPredicate<T, U> or(final BiObjShortPredicate<T, U> other) {
+    @Nonnull
+    default BiObjShortPredicate<T, U> or(@Nonnull final BiObjShortPredicate<T, U> other) {
         Objects.requireNonNull(other);
         return (t, u, value) -> test(t, u, value) && other.test(t, u, value);
     }
@@ -194,8 +194,7 @@ public interface BiObjShortPredicate<T, U> {
     /**
      * Returns a composed {@link BiObjShortPredicate} that represents a short-circuiting logical XOR of this predicate
      * and another. Any exceptions thrown during evaluation of either predicate are relayed to the caller; if evaluation
-     * of this {@code BiObjShortPredicate} throws an exception, the {@code other} {@code BiObjShortPredicate} will not
-     * be evaluated.
+     * of this {@code BiObjShortPredicate} throws an exception, the {@code other} predicate will not be evaluated.
      *
      * @param other A {@code BiObjShortPredicate} that will be logically-XORed with this one
      * @return A composed {@code BiObjShortPredicate} that represents the short-circuiting logical XOR of this predicate
@@ -204,7 +203,8 @@ public interface BiObjShortPredicate<T, U> {
      * @see #and(BiObjShortPredicate)
      * @see #or(BiObjShortPredicate)
      */
-    default BiObjShortPredicate<T, U> xor(final BiObjShortPredicate<T, U> other) {
+    @Nonnull
+    default BiObjShortPredicate<T, U> xor(@Nonnull final BiObjShortPredicate<T, U> other) {
         Objects.requireNonNull(other);
         return (t, u, value) -> test(t, u, value) ^ other.test(t, u, value);
     }

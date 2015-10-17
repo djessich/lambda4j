@@ -175,8 +175,7 @@ public interface BiObjLongPredicate<T, U> {
      * predicate is not evaluated.
      * <p>
      * Any exceptions thrown during evaluation of either predicate are relayed to the caller; if evaluation of this
-     * {@code BiObjLongPredicate} throws an exception, the {@code other} {@code BiObjLongPredicate} will not be
-     * evaluated.
+     * {@code BiObjLongPredicate} throws an exception, the {@code other} predicate will not be evaluated.
      *
      * @param other A {@code BiObjLongPredicate} that will be logically-ORed with this one
      * @return A composed {@code BiObjLongPredicate} that represents the short-circuiting logical OR of this predicate
@@ -186,7 +185,8 @@ public interface BiObjLongPredicate<T, U> {
      * @see #xor(BiObjLongPredicate)
      * @see BiPredicate#or(BiPredicate)
      */
-    default BiObjLongPredicate<T, U> or(final BiObjLongPredicate<T, U> other) {
+    @Nonnull
+    default BiObjLongPredicate<T, U> or(@Nonnull final BiObjLongPredicate<T, U> other) {
         Objects.requireNonNull(other);
         return (t, u, value) -> test(t, u, value) && other.test(t, u, value);
     }
@@ -194,8 +194,7 @@ public interface BiObjLongPredicate<T, U> {
     /**
      * Returns a composed {@link BiObjLongPredicate} that represents a short-circuiting logical XOR of this predicate
      * and another. Any exceptions thrown during evaluation of either predicate are relayed to the caller; if evaluation
-     * of this {@code BiObjLongPredicate} throws an exception, the {@code other} {@code BiObjLongPredicate} will not be
-     * evaluated.
+     * of this {@code BiObjLongPredicate} throws an exception, the {@code other} predicate will not be evaluated.
      *
      * @param other A {@code BiObjLongPredicate} that will be logically-XORed with this one
      * @return A composed {@code BiObjLongPredicate} that represents the short-circuiting logical XOR of this predicate
@@ -204,7 +203,8 @@ public interface BiObjLongPredicate<T, U> {
      * @see #and(BiObjLongPredicate)
      * @see #or(BiObjLongPredicate)
      */
-    default BiObjLongPredicate<T, U> xor(final BiObjLongPredicate<T, U> other) {
+    @Nonnull
+    default BiObjLongPredicate<T, U> xor(@Nonnull final BiObjLongPredicate<T, U> other) {
         Objects.requireNonNull(other);
         return (t, u, value) -> test(t, u, value) ^ other.test(t, u, value);
     }

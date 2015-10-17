@@ -138,8 +138,7 @@ public interface ObjFloatPredicate<T> {
      * predicate is not evaluated.
      * <p>
      * Any exceptions thrown during evaluation of either predicate are relayed to the caller; if evaluation of this
-     * {@code ObjFloatPredicate} throws an exception, the {@code other} predicate will not be
-     * evaluated.
+     * {@code ObjFloatPredicate} throws an exception, the {@code other} predicate will not be evaluated.
      *
      * @param other A {@code ObjFloatPredicate} that will be logically-ANDed with this one
      * @return A composed {@code ObjFloatPredicate} that represents the short-circuiting logical AND of this predicate
@@ -161,8 +160,7 @@ public interface ObjFloatPredicate<T> {
      * predicate is not evaluated.
      * <p>
      * Any exceptions thrown during evaluation of either predicate are relayed to the caller; if evaluation of this
-     * {@code ObjFloatPredicate} throws an exception, the {@code other} {@code ObjFloatPredicate} will not be
-     * evaluated.
+     * {@code ObjFloatPredicate} throws an exception, the {@code other} predicate will not be evaluated.
      *
      * @param other A {@code ObjFloatPredicate} that will be logically-ORed with this one
      * @return A composed {@code ObjFloatPredicate} that represents the short-circuiting logical OR of this predicate
@@ -172,7 +170,8 @@ public interface ObjFloatPredicate<T> {
      * @see #xor(ObjFloatPredicate)
      * @see BiPredicate#or(BiPredicate)
      */
-    default ObjFloatPredicate<T> or(final ObjFloatPredicate<T> other) {
+    @Nonnull
+    default ObjFloatPredicate<T> or(@Nonnull final ObjFloatPredicate<T> other) {
         Objects.requireNonNull(other);
         return (t, value) -> test(t, value) && other.test(t, value);
     }
@@ -180,8 +179,7 @@ public interface ObjFloatPredicate<T> {
     /**
      * Returns a composed {@link ObjFloatPredicate} that represents a short-circuiting logical XOR of this predicate and
      * another. Any exceptions thrown during evaluation of either predicate are relayed to the caller; if evaluation of
-     * this {@code ObjFloatPredicate} throws an exception, the {@code other} {@code ObjFloatPredicate} will not be
-     * evaluated.
+     * this {@code ObjFloatPredicate} throws an exception, the {@code other} predicate will not be evaluated.
      *
      * @param other A {@code ObjFloatPredicate} that will be logically-XORed with this one
      * @return A composed {@code ObjFloatPredicate} that represents the short-circuiting logical XOR of this predicate
@@ -190,7 +188,8 @@ public interface ObjFloatPredicate<T> {
      * @see #and(ObjFloatPredicate)
      * @see #or(ObjFloatPredicate)
      */
-    default ObjFloatPredicate<T> xor(final ObjFloatPredicate<T> other) {
+    @Nonnull
+    default ObjFloatPredicate<T> xor(@Nonnull final ObjFloatPredicate<T> other) {
         Objects.requireNonNull(other);
         return (t, value) -> test(t, value) ^ other.test(t, value);
     }

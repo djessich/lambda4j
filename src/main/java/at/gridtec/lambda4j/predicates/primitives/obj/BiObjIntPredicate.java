@@ -175,8 +175,7 @@ public interface BiObjIntPredicate<T, U> {
      * predicate is not evaluated.
      * <p>
      * Any exceptions thrown during evaluation of either predicate are relayed to the caller; if evaluation of this
-     * {@code BiObjIntPredicate} throws an exception, the {@code other} {@code BiObjIntPredicate} will not be
-     * evaluated.
+     * {@code BiObjIntPredicate} throws an exception, the {@code other} predicate will not be evaluated.
      *
      * @param other A {@code BiObjIntPredicate} that will be logically-ORed with this one
      * @return A composed {@code BiObjIntPredicate} that represents the short-circuiting logical OR of this predicate
@@ -186,7 +185,8 @@ public interface BiObjIntPredicate<T, U> {
      * @see #xor(BiObjIntPredicate)
      * @see BiPredicate#or(BiPredicate)
      */
-    default BiObjIntPredicate<T, U> or(final BiObjIntPredicate<T, U> other) {
+    @Nonnull
+    default BiObjIntPredicate<T, U> or(@Nonnull final BiObjIntPredicate<T, U> other) {
         Objects.requireNonNull(other);
         return (t, u, value) -> test(t, u, value) && other.test(t, u, value);
     }
@@ -194,8 +194,7 @@ public interface BiObjIntPredicate<T, U> {
     /**
      * Returns a composed {@link BiObjIntPredicate} that represents a short-circuiting logical XOR of this predicate and
      * another. Any exceptions thrown during evaluation of either predicate are relayed to the caller; if evaluation of
-     * this {@code BiObjIntPredicate} throws an exception, the {@code other} {@code BiObjIntPredicate} will not be
-     * evaluated.
+     * this {@code BiObjIntPredicate} throws an exception, the {@code other} predicate will not be evaluated.
      *
      * @param other A {@code BiObjIntPredicate} that will be logically-XORed with this one
      * @return A composed {@code BiObjIntPredicate} that represents the short-circuiting logical XOR of this predicate
@@ -204,7 +203,8 @@ public interface BiObjIntPredicate<T, U> {
      * @see #and(BiObjIntPredicate)
      * @see #or(BiObjIntPredicate)
      */
-    default BiObjIntPredicate<T, U> xor(final BiObjIntPredicate<T, U> other) {
+    @Nonnull
+    default BiObjIntPredicate<T, U> xor(@Nonnull final BiObjIntPredicate<T, U> other) {
         Objects.requireNonNull(other);
         return (t, u, value) -> test(t, u, value) ^ other.test(t, u, value);
     }

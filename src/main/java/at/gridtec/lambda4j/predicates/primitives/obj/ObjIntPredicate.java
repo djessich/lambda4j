@@ -159,7 +159,7 @@ public interface ObjIntPredicate<T> {
      * predicate is not evaluated.
      * <p>
      * Any exceptions thrown during evaluation of either predicate are relayed to the caller; if evaluation of this
-     * {@code ObjIntPredicate} throws an exception, the {@code other} {@code ObjIntPredicate} will not be evaluated.
+     * {@code ObjIntPredicate} throws an exception, the {@code other} predicate will not be evaluated.
      *
      * @param other A {@code ObjIntPredicate} that will be logically-ORed with this one
      * @return A composed {@code ObjIntPredicate} that represents the short-circuiting logical OR of this predicate and
@@ -169,7 +169,8 @@ public interface ObjIntPredicate<T> {
      * @see #xor(ObjIntPredicate)
      * @see BiPredicate#or(BiPredicate)
      */
-    default ObjIntPredicate<T> or(final ObjIntPredicate<T> other) {
+    @Nonnull
+    default ObjIntPredicate<T> or(@Nonnull final ObjIntPredicate<T> other) {
         Objects.requireNonNull(other);
         return (t, value) -> test(t, value) && other.test(t, value);
     }
@@ -177,8 +178,7 @@ public interface ObjIntPredicate<T> {
     /**
      * Returns a composed {@link ObjIntPredicate} that represents a short-circuiting logical XOR of this predicate and
      * another. Any exceptions thrown during evaluation of either predicate are relayed to the caller; if evaluation of
-     * this {@code ObjIntPredicate} throws an exception, the {@code other} {@code ObjIntPredicate} will not be
-     * evaluated.
+     * this {@code ObjIntPredicate} throws an exception, the {@code other} predicate will not be evaluated.
      *
      * @param other A {@code ObjIntPredicate} that will be logically-XORed with this one
      * @return A composed {@code ObjIntPredicate} that represents the short-circuiting logical XOR of this predicate and
@@ -187,7 +187,8 @@ public interface ObjIntPredicate<T> {
      * @see #and(ObjIntPredicate)
      * @see #or(ObjIntPredicate)
      */
-    default ObjIntPredicate<T> xor(final ObjIntPredicate<T> other) {
+    @Nonnull
+    default ObjIntPredicate<T> xor(@Nonnull final ObjIntPredicate<T> other) {
         Objects.requireNonNull(other);
         return (t, value) -> test(t, value) ^ other.test(t, value);
     }

@@ -152,7 +152,7 @@ public interface FloatBiPredicate {
      * predicate is not evaluated.
      * <p>
      * Any exceptions thrown during evaluation of either predicate are relayed to the caller; if evaluation of this
-     * {@code FloatBiPredicate} throws an exception, the {@code other} {@code FloatBiPredicate} will not be evaluated.
+     * {@code FloatBiPredicate} throws an exception, the {@code other} predicate will not be evaluated.
      *
      * @param other A {@code FloatBiPredicate} that will be logically-ORed with this one
      * @return A composed {@code FloatBiPredicate} that represents the short-circuiting logical OR of this predicate and
@@ -162,7 +162,8 @@ public interface FloatBiPredicate {
      * @see #xor(FloatBiPredicate)
      * @see BiPredicate#or(BiPredicate)
      */
-    default FloatBiPredicate or(final FloatBiPredicate other) {
+    @Nonnull
+    default FloatBiPredicate or(@Nonnull final FloatBiPredicate other) {
         Objects.requireNonNull(other);
         return (value1, value2) -> test(value1, value2) && other.test(value1, value2);
     }
@@ -170,8 +171,7 @@ public interface FloatBiPredicate {
     /**
      * Returns a composed {@link FloatBiPredicate} that represents a short-circuiting logical XOR of this predicate and
      * another. Any exceptions thrown during evaluation of either predicate are relayed to the caller; if evaluation of
-     * this {@code FloatBiPredicate} throws an exception, the {@code other} {@code FloatBiPredicate} will not be
-     * evaluated.
+     * this {@code FloatBiPredicate} throws an exception, the {@code other} predicate will not be evaluated.
      *
      * @param other A {@code FloatBiPredicate} that will be logically-XORed with this one
      * @return A composed {@code FloatBiPredicate} that represents the short-circuiting logical XOR of this predicate
@@ -180,7 +180,8 @@ public interface FloatBiPredicate {
      * @see #and(FloatBiPredicate)
      * @see #or(FloatBiPredicate)
      */
-    default FloatBiPredicate xor(final FloatBiPredicate other) {
+    @Nonnull
+    default FloatBiPredicate xor(@Nonnull final FloatBiPredicate other) {
         Objects.requireNonNull(other);
         return (value1, value2) -> test(value1, value2) ^ other.test(value1, value2);
     }

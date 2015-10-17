@@ -157,8 +157,7 @@ public interface ShortTriPredicate {
      * predicate is not evaluated.
      * <p>
      * Any exceptions thrown during evaluation of either predicate are relayed to the caller; if evaluation of this
-     * {@code ShortTriPredicate} throws an exception, the {@code other} {@code ShortTriPredicate} will not be
-     * evaluated.
+     * {@code ShortTriPredicate} throws an exception, the {@code other} predicate will not be evaluated.
      *
      * @param other A {@code ShortTriPredicate} that will be logically-ORed with this one
      * @return A composed {@code ShortTriPredicate} that represents the short-circuiting logical OR of this predicate
@@ -168,7 +167,8 @@ public interface ShortTriPredicate {
      * @see #xor(ShortTriPredicate)
      * @see TriPredicate#or(TriPredicate)
      */
-    default ShortTriPredicate or(final ShortTriPredicate other) {
+    @Nonnull
+    default ShortTriPredicate or(@Nonnull final ShortTriPredicate other) {
         Objects.requireNonNull(other);
         return (value1, value2, value3) -> test(value1, value2, value3) && other.test(value1, value2, value3);
     }
@@ -176,8 +176,7 @@ public interface ShortTriPredicate {
     /**
      * Returns a composed {@link ShortTriPredicate} that represents a short-circuiting logical XOR of this predicate and
      * another. Any exceptions thrown during evaluation of either predicate are relayed to the caller; if evaluation of
-     * this {@code ShortTriPredicate} throws an exception, the {@code other} {@code ShortTriPredicate} will not be
-     * evaluated.
+     * this {@code ShortTriPredicate} throws an exception, the {@code other} predicate will not be evaluated.
      *
      * @param other A {@code ShortTriPredicate} that will be logically-XORed with this one
      * @return A composed {@code ShortTriPredicate} that represents the short-circuiting logical XOR of this predicate
@@ -187,7 +186,8 @@ public interface ShortTriPredicate {
      * @see #or(ShortTriPredicate)
      * @see TriPredicate#xor(TriPredicate)
      */
-    default ShortTriPredicate xor(final ShortTriPredicate other) {
+    @Nonnull
+    default ShortTriPredicate xor(@Nonnull final ShortTriPredicate other) {
         Objects.requireNonNull(other);
         return (value1, value2, value3) -> test(value1, value2, value3) ^ other.test(value1, value2, value3);
     }

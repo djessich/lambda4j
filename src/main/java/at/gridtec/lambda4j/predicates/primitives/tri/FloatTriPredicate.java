@@ -157,8 +157,7 @@ public interface FloatTriPredicate {
      * predicate is not evaluated.
      * <p>
      * Any exceptions thrown during evaluation of either predicate are relayed to the caller; if evaluation of this
-     * {@code FloatTriPredicate} throws an exception, the {@code other} {@code FloatTriPredicate} will not be
-     * evaluated.
+     * {@code FloatTriPredicate} throws an exception, the {@code other} predicate will not be evaluated.
      *
      * @param other A {@code FloatTriPredicate} that will be logically-ORed with this one
      * @return A composed {@code FloatTriPredicate} that represents the short-circuiting logical OR of this predicate
@@ -168,7 +167,8 @@ public interface FloatTriPredicate {
      * @see #xor(FloatTriPredicate)
      * @see TriPredicate#or(TriPredicate)
      */
-    default FloatTriPredicate or(final FloatTriPredicate other) {
+    @Nonnull
+    default FloatTriPredicate or(@Nonnull final FloatTriPredicate other) {
         Objects.requireNonNull(other);
         return (value1, value2, value3) -> test(value1, value2, value3) && other.test(value1, value2, value3);
     }
@@ -176,8 +176,7 @@ public interface FloatTriPredicate {
     /**
      * Returns a composed {@link FloatTriPredicate} that represents a short-circuiting logical XOR of this predicate and
      * another. Any exceptions thrown during evaluation of either predicate are relayed to the caller; if evaluation of
-     * this {@code FloatTriPredicate} throws an exception, the {@code other} {@code FloatTriPredicate} will not be
-     * evaluated.
+     * this {@code FloatTriPredicate} throws an exception, the {@code other} predicate will not be evaluated.
      *
      * @param other A {@code FloatTriPredicate} that will be logically-XORed with this one
      * @return A composed {@code FloatTriPredicate} that represents the short-circuiting logical XOR of this predicate
@@ -187,7 +186,8 @@ public interface FloatTriPredicate {
      * @see #or(FloatTriPredicate)
      * @see TriPredicate#xor(TriPredicate)
      */
-    default FloatTriPredicate xor(final FloatTriPredicate other) {
+    @Nonnull
+    default FloatTriPredicate xor(@Nonnull final FloatTriPredicate other) {
         Objects.requireNonNull(other);
         return (value1, value2, value3) -> test(value1, value2, value3) ^ other.test(value1, value2, value3);
     }

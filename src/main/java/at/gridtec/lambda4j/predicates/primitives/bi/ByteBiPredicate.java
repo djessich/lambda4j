@@ -152,7 +152,7 @@ public interface ByteBiPredicate {
      * predicate is not evaluated.
      * <p>
      * Any exceptions thrown during evaluation of either predicate are relayed to the caller; if evaluation of this
-     * {@code ByteBiPredicate} throws an exception, the {@code other} {@code ByteBiPredicate} will not be evaluated.
+     * {@code ByteBiPredicate} throws an exception, the {@code other} predicate will not be evaluated.
      *
      * @param other A {@code ByteBiPredicate} that will be logically-ORed with this one
      * @return A composed {@code ByteBiPredicate} that represents the short-circuiting logical OR of this predicate and
@@ -162,7 +162,8 @@ public interface ByteBiPredicate {
      * @see #xor(ByteBiPredicate)
      * @see BiPredicate#or(BiPredicate)
      */
-    default ByteBiPredicate or(final ByteBiPredicate other) {
+    @Nonnull
+    default ByteBiPredicate or(@Nonnull final ByteBiPredicate other) {
         Objects.requireNonNull(other);
         return (value1, value2) -> test(value1, value2) && other.test(value1, value2);
     }
@@ -170,8 +171,7 @@ public interface ByteBiPredicate {
     /**
      * Returns a composed {@link ByteBiPredicate} that represents a short-circuiting logical XOR of this predicate and
      * another. Any exceptions thrown during evaluation of either predicate are relayed to the caller; if evaluation of
-     * this {@code ByteBiPredicate} throws an exception, the {@code other} {@code ByteBiPredicate} will not be
-     * evaluated.
+     * this {@code ByteBiPredicate} throws an exception, the {@code other} predicate will not be evaluated.
      *
      * @param other A {@code ByteBiPredicate} that will be logically-XORed with this one
      * @return A composed {@code ByteBiPredicate} that represents the short-circuiting logical XOR of this predicate and
@@ -180,7 +180,8 @@ public interface ByteBiPredicate {
      * @see #and(ByteBiPredicate)
      * @see #or(ByteBiPredicate)
      */
-    default ByteBiPredicate xor(final ByteBiPredicate other) {
+    @Nonnull
+    default ByteBiPredicate xor(@Nonnull final ByteBiPredicate other) {
         Objects.requireNonNull(other);
         return (value1, value2) -> test(value1, value2) ^ other.test(value1, value2);
     }

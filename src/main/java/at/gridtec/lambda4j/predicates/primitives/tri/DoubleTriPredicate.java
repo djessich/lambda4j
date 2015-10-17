@@ -157,8 +157,7 @@ public interface DoubleTriPredicate {
      * predicate is not evaluated.
      * <p>
      * Any exceptions thrown during evaluation of either predicate are relayed to the caller; if evaluation of this
-     * {@code DoubleTriPredicate} throws an exception, the {@code other} {@code DoubleTriPredicate} will not be
-     * evaluated.
+     * {@code DoubleTriPredicate} throws an exception, the {@code other} predicate will not be evaluated.
      *
      * @param other A {@code DoubleTriPredicate} that will be logically-ORed with this one
      * @return A composed {@code DoubleTriPredicate} that represents the short-circuiting logical OR of this predicate
@@ -168,7 +167,8 @@ public interface DoubleTriPredicate {
      * @see #xor(DoubleTriPredicate)
      * @see TriPredicate#or(TriPredicate)
      */
-    default DoubleTriPredicate or(final DoubleTriPredicate other) {
+    @Nonnull
+    default DoubleTriPredicate or(@Nonnull final DoubleTriPredicate other) {
         Objects.requireNonNull(other);
         return (value1, value2, value3) -> test(value1, value2, value3) && other.test(value1, value2, value3);
     }
@@ -176,8 +176,7 @@ public interface DoubleTriPredicate {
     /**
      * Returns a composed {@link DoubleTriPredicate} that represents a short-circuiting logical XOR of this predicate
      * and another. Any exceptions thrown during evaluation of either predicate are relayed to the caller; if evaluation
-     * of this {@code DoubleTriPredicate} throws an exception, the {@code other} {@code DoubleTriPredicate} will not be
-     * evaluated.
+     * of this {@code DoubleTriPredicate} throws an exception, the {@code other} predicate will not be evaluated.
      *
      * @param other A {@code DoubleTriPredicate} that will be logically-XORed with this one
      * @return A composed {@code DoubleTriPredicate} that represents the short-circuiting logical XOR of this predicate
@@ -187,7 +186,8 @@ public interface DoubleTriPredicate {
      * @see #or(DoubleTriPredicate)
      * @see TriPredicate#xor(TriPredicate)
      */
-    default DoubleTriPredicate xor(final DoubleTriPredicate other) {
+    @Nonnull
+    default DoubleTriPredicate xor(@Nonnull final DoubleTriPredicate other) {
         Objects.requireNonNull(other);
         return (value1, value2, value3) -> test(value1, value2, value3) ^ other.test(value1, value2, value3);
     }

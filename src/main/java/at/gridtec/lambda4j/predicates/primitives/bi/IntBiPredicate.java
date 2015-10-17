@@ -152,7 +152,7 @@ public interface IntBiPredicate {
      * predicate is not evaluated.
      * <p>
      * Any exceptions thrown during evaluation of either predicate are relayed to the caller; if evaluation of this
-     * {@code IntBiPredicate} throws an exception, the {@code other} {@code IntBiPredicate} will not be evaluated.
+     * {@code IntBiPredicate} throws an exception, the {@code other} predicate will not be evaluated.
      *
      * @param other A {@code IntBiPredicate} that will be logically-ORed with this one
      * @return A composed {@code IntBiPredicate} that represents the short-circuiting logical OR of this predicate and
@@ -162,7 +162,8 @@ public interface IntBiPredicate {
      * @see #xor(IntBiPredicate)
      * @see BiPredicate#or(BiPredicate)
      */
-    default IntBiPredicate or(final IntBiPredicate other) {
+    @Nonnull
+    default IntBiPredicate or(@Nonnull final IntBiPredicate other) {
         Objects.requireNonNull(other);
         return (value1, value2) -> test(value1, value2) && other.test(value1, value2);
     }
@@ -170,7 +171,7 @@ public interface IntBiPredicate {
     /**
      * Returns a composed {@link IntBiPredicate} that represents a short-circuiting logical XOR of this predicate and
      * another. Any exceptions thrown during evaluation of either predicate are relayed to the caller; if evaluation of
-     * this {@code IntBiPredicate} throws an exception, the {@code other} {@code IntBiPredicate} will not be evaluated.
+     * this {@code IntBiPredicate} throws an exception, the {@code other} predicate will not be evaluated.
      *
      * @param other A {@code IntBiPredicate} that will be logically-XORed with this one
      * @return A composed {@code IntBiPredicate} that represents the short-circuiting logical XOR of this predicate and
@@ -179,7 +180,8 @@ public interface IntBiPredicate {
      * @see #and(IntBiPredicate)
      * @see #or(IntBiPredicate)
      */
-    default IntBiPredicate xor(final IntBiPredicate other) {
+    @Nonnull
+    default IntBiPredicate xor(@Nonnull final IntBiPredicate other) {
         Objects.requireNonNull(other);
         return (value1, value2) -> test(value1, value2) ^ other.test(value1, value2);
     }

@@ -182,7 +182,7 @@ public interface TriPredicate<T, U, V> {
      * predicate is not evaluated.
      * <p>
      * Any exceptions thrown during evaluation of either predicate are relayed to the caller; if evaluation of this
-     * {@code TriPredicate} throws an exception, the {@code other} {@code TriPredicate} will not be evaluated.
+     * {@code TriPredicate} throws an exception, the {@code other} predicate will not be evaluated.
      *
      * @param other A {@code TriPredicate} that will be logically-ORed with this one
      * @return A composed {@code TriPredicate} that represents the short-circuiting logical OR of this predicate and the
@@ -191,7 +191,8 @@ public interface TriPredicate<T, U, V> {
      * @see #and(TriPredicate)
      * @see #xor(TriPredicate)
      */
-    default TriPredicate<T, U, V> or(final TriPredicate<? super T, ? super U, ? super V> other) {
+    @Nonnull
+    default TriPredicate<T, U, V> or(@Nonnull final TriPredicate<? super T, ? super U, ? super V> other) {
         Objects.requireNonNull(other);
         return (t, u, v) -> test(t, u, v) && other.test(t, u, v);
     }
@@ -199,7 +200,7 @@ public interface TriPredicate<T, U, V> {
     /**
      * Returns a composed {@link TriPredicate} that represents a short-circuiting logical XOR of this predicate and
      * another. Any exceptions thrown during evaluation of either predicate are relayed to the caller; if evaluation of
-     * this {@code TriPredicate} throws an exception, the {@code other} {@code TriPredicate} will not be evaluated.
+     * this {@code TriPredicate} throws an exception, the {@code other} predicate will not be evaluated.
      *
      * @param other A {@code TriPredicate} that will be logically-XORed with this one
      * @return A composed {@code TriPredicate} that represents the short-circuiting logical XOR of this predicate and
@@ -208,7 +209,8 @@ public interface TriPredicate<T, U, V> {
      * @see #and(TriPredicate)
      * @see #or(TriPredicate)
      */
-    default TriPredicate<T, U, V> xor(final TriPredicate<? super T, ? super U, ? super V> other) {
+    @Nonnull
+    default TriPredicate<T, U, V> xor(@Nonnull final TriPredicate<? super T, ? super U, ? super V> other) {
         Objects.requireNonNull(other);
         return (t, u, v) -> test(t, u, v) ^ other.test(t, u, v);
     }

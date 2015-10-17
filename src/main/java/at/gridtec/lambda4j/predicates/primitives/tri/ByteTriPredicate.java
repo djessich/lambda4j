@@ -156,7 +156,7 @@ public interface ByteTriPredicate {
      * predicate is not evaluated.
      * <p>
      * Any exceptions thrown during evaluation of either predicate are relayed to the caller; if evaluation of this
-     * {@code ByteTriPredicate} throws an exception, the {@code other} {@code ByteTriPredicate} will not be evaluated.
+     * {@code ByteTriPredicate} throws an exception, the {@code other} predicate will not be evaluated.
      *
      * @param other A {@code ByteTriPredicate} that will be logically-ORed with this one
      * @return A composed {@code ByteTriPredicate} that represents the short-circuiting logical OR of this predicate and
@@ -166,7 +166,8 @@ public interface ByteTriPredicate {
      * @see #xor(ByteTriPredicate)
      * @see TriPredicate#or(TriPredicate)
      */
-    default ByteTriPredicate or(final ByteTriPredicate other) {
+    @Nonnull
+    default ByteTriPredicate or(@Nonnull final ByteTriPredicate other) {
         Objects.requireNonNull(other);
         return (value1, value2, value3) -> test(value1, value2, value3) && other.test(value1, value2, value3);
     }
@@ -174,8 +175,7 @@ public interface ByteTriPredicate {
     /**
      * Returns a composed {@link ByteTriPredicate} that represents a short-circuiting logical XOR of this predicate and
      * another. Any exceptions thrown during evaluation of either predicate are relayed to the caller; if evaluation of
-     * this {@code ByteTriPredicate} throws an exception, the {@code other} {@code ByteTriPredicate} will not be
-     * evaluated.
+     * this {@code ByteTriPredicate} throws an exception, the {@code other} predicate will not be evaluated.
      *
      * @param other A {@code ByteTriPredicate} that will be logically-XORed with this one
      * @return A composed {@code ByteTriPredicate} that represents the short-circuiting logical XOR of this predicate
@@ -185,7 +185,8 @@ public interface ByteTriPredicate {
      * @see #or(ByteTriPredicate)
      * @see TriPredicate#xor(TriPredicate)
      */
-    default ByteTriPredicate xor(final ByteTriPredicate other) {
+    @Nonnull
+    default ByteTriPredicate xor(@Nonnull final ByteTriPredicate other) {
         Objects.requireNonNull(other);
         return (value1, value2, value3) -> test(value1, value2, value3) ^ other.test(value1, value2, value3);
     }

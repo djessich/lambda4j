@@ -175,8 +175,7 @@ public interface BiObjFloatPredicate<T, U> {
      * predicate is not evaluated.
      * <p>
      * Any exceptions thrown during evaluation of either predicate are relayed to the caller; if evaluation of this
-     * {@code BiObjFloatPredicate} throws an exception, the {@code other} {@code BiObjFloatPredicate} will not be
-     * evaluated.
+     * {@code BiObjFloatPredicate} throws an exception, the {@code other} predicate will not be evaluated.
      *
      * @param other A {@code BiObjFloatPredicate} that will be logically-ORed with this one
      * @return A composed {@code BiObjFloatPredicate} that represents the short-circuiting logical OR of this predicate
@@ -186,7 +185,8 @@ public interface BiObjFloatPredicate<T, U> {
      * @see #xor(BiObjFloatPredicate)
      * @see BiPredicate#or(BiPredicate)
      */
-    default BiObjFloatPredicate<T, U> or(final BiObjFloatPredicate<T, U> other) {
+    @Nonnull
+    default BiObjFloatPredicate<T, U> or(@Nonnull final BiObjFloatPredicate<T, U> other) {
         Objects.requireNonNull(other);
         return (t, u, value) -> test(t, u, value) && other.test(t, u, value);
     }
@@ -194,8 +194,7 @@ public interface BiObjFloatPredicate<T, U> {
     /**
      * Returns a composed {@link BiObjFloatPredicate} that represents a short-circuiting logical XOR of this predicate
      * and another. Any exceptions thrown during evaluation of either predicate are relayed to the caller; if evaluation
-     * of this {@code BiObjFloatPredicate} throws an exception, the {@code other} {@code BiObjFloatPredicate} will not
-     * be evaluated.
+     * of this {@code BiObjFloatPredicate} throws an exception, the {@code other} predicate will not be evaluated.
      *
      * @param other A {@code BiObjFloatPredicate} that will be logically-XORed with this one
      * @return A composed {@code BiObjFloatPredicate} that represents the short-circuiting logical XOR of this predicate
@@ -204,7 +203,8 @@ public interface BiObjFloatPredicate<T, U> {
      * @see #and(BiObjFloatPredicate)
      * @see #or(BiObjFloatPredicate)
      */
-    default BiObjFloatPredicate<T, U> xor(final BiObjFloatPredicate<T, U> other) {
+    @Nonnull
+    default BiObjFloatPredicate<T, U> xor(@Nonnull final BiObjFloatPredicate<T, U> other) {
         Objects.requireNonNull(other);
         return (t, u, value) -> test(t, u, value) ^ other.test(t, u, value);
     }

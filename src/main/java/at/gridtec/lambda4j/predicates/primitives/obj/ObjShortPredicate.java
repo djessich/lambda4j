@@ -160,8 +160,7 @@ public interface ObjShortPredicate<T> {
      * predicate is not evaluated.
      * <p>
      * Any exceptions thrown during evaluation of either predicate are relayed to the caller; if evaluation of this
-     * {@code ObjShortPredicate} throws an exception, the {@code other} {@code ObjShortPredicate} will not be
-     * evaluated.
+     * {@code ObjShortPredicate} throws an exception, the {@code other} predicate will not be evaluated.
      *
      * @param other A {@code ObjShortPredicate} that will be logically-ORed with this one
      * @return A composed {@code ObjShortPredicate} that represents the short-circuiting logical OR of this predicate
@@ -171,7 +170,8 @@ public interface ObjShortPredicate<T> {
      * @see #xor(ObjShortPredicate)
      * @see BiPredicate#or(BiPredicate)
      */
-    default ObjShortPredicate<T> or(final ObjShortPredicate<T> other) {
+    @Nonnull
+    default ObjShortPredicate<T> or(@Nonnull final ObjShortPredicate<T> other) {
         Objects.requireNonNull(other);
         return (t, value) -> test(t, value) && other.test(t, value);
     }
@@ -179,8 +179,7 @@ public interface ObjShortPredicate<T> {
     /**
      * Returns a composed {@link ObjShortPredicate} that represents a short-circuiting logical XOR of this predicate and
      * another. Any exceptions thrown during evaluation of either predicate are relayed to the caller; if evaluation of
-     * this {@code ObjShortPredicate} throws an exception, the {@code other} {@code ObjShortPredicate} will not be
-     * evaluated.
+     * this {@code ObjShortPredicate} throws an exception, the {@code other} predicate will not be evaluated.
      *
      * @param other A {@code ObjShortPredicate} that will be logically-XORed with this one
      * @return A composed {@code ObjShortPredicate} that represents the short-circuiting logical XOR of this predicate
@@ -189,7 +188,8 @@ public interface ObjShortPredicate<T> {
      * @see #and(ObjShortPredicate)
      * @see #or(ObjShortPredicate)
      */
-    default ObjShortPredicate<T> xor(final ObjShortPredicate<T> other) {
+    @Nonnull
+    default ObjShortPredicate<T> xor(@Nonnull final ObjShortPredicate<T> other) {
         Objects.requireNonNull(other);
         return (t, value) -> test(t, value) ^ other.test(t, value);
     }

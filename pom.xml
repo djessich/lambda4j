@@ -62,11 +62,11 @@
     </pluginRepositories>
 
     <dependencies>
-        <dependency>
+        <!--<dependency>
             <groupId>org.jetbrains</groupId>
             <artifactId>annotations</artifactId>
             <version>13.0</version>
-        </dependency>
+        </dependency>-->
         <dependency>
             <groupId>com.google.code.findbugs</groupId>
             <artifactId>jsr305</artifactId>

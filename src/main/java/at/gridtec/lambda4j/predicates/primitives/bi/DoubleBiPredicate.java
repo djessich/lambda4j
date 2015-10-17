@@ -153,8 +153,7 @@ public interface DoubleBiPredicate {
      * predicate is not evaluated.
      * <p>
      * Any exceptions thrown during evaluation of either predicate are relayed to the caller; if evaluation of this
-     * {@code DoubleBiPredicate} throws an exception, the {@code other} {@code DoubleBiPredicate} will not be
-     * evaluated.
+     * {@code DoubleBiPredicate} throws an exception, the {@code other} predicate will not be evaluated.
      *
      * @param other A {@code DoubleBiPredicate} that will be logically-ORed with this one
      * @return A composed {@code DoubleBiPredicate} that represents the short-circuiting logical OR of this predicate
@@ -164,7 +163,8 @@ public interface DoubleBiPredicate {
      * @see #xor(DoubleBiPredicate)
      * @see BiPredicate#or(BiPredicate)
      */
-    default DoubleBiPredicate or(final DoubleBiPredicate other) {
+    @Nonnull
+    default DoubleBiPredicate or(@Nonnull final DoubleBiPredicate other) {
         Objects.requireNonNull(other);
         return (value1, value2) -> test(value1, value2) && other.test(value1, value2);
     }
@@ -172,8 +172,7 @@ public interface DoubleBiPredicate {
     /**
      * Returns a composed {@link DoubleBiPredicate} that represents a short-circuiting logical XOR of this predicate and
      * another. Any exceptions thrown during evaluation of either predicate are relayed to the caller; if evaluation of
-     * this {@code DoubleBiPredicate} throws an exception, the {@code other} {@code DoubleBiPredicate} will not be
-     * evaluated.
+     * this {@code DoubleBiPredicate} throws an exception, the {@code other} predicate will not be evaluated.
      *
      * @param other A {@code DoubleBiPredicate} that will be logically-XORed with this one
      * @return A composed {@code DoubleBiPredicate} that represents the short-circuiting logical XOR of this predicate
@@ -182,7 +181,8 @@ public interface DoubleBiPredicate {
      * @see #and(DoubleBiPredicate)
      * @see #or(DoubleBiPredicate)
      */
-    default DoubleBiPredicate xor(final DoubleBiPredicate other) {
+    @Nonnull
+    default DoubleBiPredicate xor(@Nonnull final DoubleBiPredicate other) {
         Objects.requireNonNull(other);
         return (value1, value2) -> test(value1, value2) ^ other.test(value1, value2);
     }

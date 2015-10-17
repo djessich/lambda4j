@@ -149,7 +149,7 @@ public interface BytePredicate {
      * predicate is not evaluated.
      * <p>
      * Any exceptions thrown during evaluation of either predicate are relayed to the caller; if evaluation of this
-     * {@code BytePredicate} throws an exception, the {@code other} {@code BytePredicate} will not be evaluated.
+     * {@code BytePredicate} throws an exception, the {@code other} predicate will not be evaluated.
      *
      * @param other A {@code BytePredicate} that will be logically-ORed with this one
      * @return A composed {@code BytePredicate} that represents the short-circuiting logical OR of this predicate and
@@ -159,7 +159,8 @@ public interface BytePredicate {
      * @see #xor(BytePredicate)
      * @see Predicate#or(Predicate)
      */
-    default BytePredicate or(final BytePredicate other) {
+    @Nonnull
+    default BytePredicate or(@Nonnull final BytePredicate other) {
         Objects.requireNonNull(other);
         return value -> test(value) && other.test(value);
     }
@@ -167,7 +168,7 @@ public interface BytePredicate {
     /**
      * Returns a composed {@link BytePredicate} that represents a short-circuiting logical XOR of this predicate and
      * another. Any exceptions thrown during evaluation of either predicate are relayed to the caller; if evaluation of
-     * this {@code BytePredicate} throws an exception, the {@code other} {@code BytePredicate} will not be evaluated.
+     * this {@code BytePredicate} throws an exception, the {@code other} predicate will not be evaluated.
      *
      * @param other A {@code BytePredicate} that will be logically-XORed with this one
      * @return A composed {@code BytePredicate} that represents the short-circuiting logical XOR of this predicate and
@@ -176,7 +177,8 @@ public interface BytePredicate {
      * @see #and(BytePredicate)
      * @see #or(BytePredicate)
      */
-    default BytePredicate xor(final BytePredicate other) {
+    @Nonnull
+    default BytePredicate xor(@Nonnull final BytePredicate other) {
         Objects.requireNonNull(other);
         return value -> test(value) ^ other.test(value);
     }

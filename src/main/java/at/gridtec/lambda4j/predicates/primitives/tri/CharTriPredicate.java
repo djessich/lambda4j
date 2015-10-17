@@ -156,7 +156,7 @@ public interface CharTriPredicate {
      * predicate is not evaluated.
      * <p>
      * Any exceptions thrown during evaluation of either predicate are relayed to the caller; if evaluation of this
-     * {@code CharTriPredicate} throws an exception, the {@code other} {@code CharTriPredicate} will not be evaluated.
+     * {@code CharTriPredicate} throws an exception, the {@code other} predicate will not be evaluated.
      *
      * @param other A {@code CharTriPredicate} that will be logically-ORed with this one
      * @return A composed {@code CharTriPredicate} that represents the short-circuiting logical OR of this predicate and
@@ -166,7 +166,8 @@ public interface CharTriPredicate {
      * @see #xor(CharTriPredicate)
      * @see TriPredicate#or(TriPredicate)
      */
-    default CharTriPredicate or(final CharTriPredicate other) {
+    @Nonnull
+    default CharTriPredicate or(@Nonnull final CharTriPredicate other) {
         Objects.requireNonNull(other);
         return (value1, value2, value3) -> test(value1, value2, value3) && other.test(value1, value2, value3);
     }
@@ -174,8 +175,7 @@ public interface CharTriPredicate {
     /**
      * Returns a composed {@link CharTriPredicate} that represents a short-circuiting logical XOR of this predicate and
      * another. Any exceptions thrown during evaluation of either predicate are relayed to the caller; if evaluation of
-     * this {@code CharTriPredicate} throws an exception, the {@code other} {@code CharTriPredicate} will not be
-     * evaluated.
+     * this {@code CharTriPredicate} throws an exception, the {@code other} predicate will not be evaluated.
      *
      * @param other A {@code CharTriPredicate} that will be logically-XORed with this one
      * @return A composed {@code CharTriPredicate} that represents the short-circuiting logical XOR of this predicate
@@ -185,7 +185,8 @@ public interface CharTriPredicate {
      * @see #or(CharTriPredicate)
      * @see TriPredicate#xor(TriPredicate)
      */
-    default CharTriPredicate xor(final CharTriPredicate other) {
+    @Nonnull
+    default CharTriPredicate xor(@Nonnull final CharTriPredicate other) {
         Objects.requireNonNull(other);
         return (value1, value2, value3) -> test(value1, value2, value3) ^ other.test(value1, value2, value3);
     }

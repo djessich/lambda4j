@@ -156,7 +156,7 @@ public interface IntTriPredicate {
      * predicate is not evaluated.
      * <p>
      * Any exceptions thrown during evaluation of either predicate are relayed to the caller; if evaluation of this
-     * {@code IntTriPredicate} throws an exception, the {@code other} {@code IntTriPredicate} will not be evaluated.
+     * {@code IntTriPredicate} throws an exception, the {@code other} predicate will not be evaluated.
      *
      * @param other A {@code IntTriPredicate} that will be logically-ORed with this one
      * @return A composed {@code IntTriPredicate} that represents the short-circuiting logical OR of this predicate and
@@ -166,7 +166,8 @@ public interface IntTriPredicate {
      * @see #xor(IntTriPredicate)
      * @see TriPredicate#or(TriPredicate)
      */
-    default IntTriPredicate or(final IntTriPredicate other) {
+    @Nonnull
+    default IntTriPredicate or(@Nonnull final IntTriPredicate other) {
         Objects.requireNonNull(other);
         return (value1, value2, value3) -> test(value1, value2, value3) && other.test(value1, value2, value3);
     }
@@ -174,8 +175,7 @@ public interface IntTriPredicate {
     /**
      * Returns a composed {@link IntTriPredicate} that represents a short-circuiting logical XOR of this predicate and
      * another. Any exceptions thrown during evaluation of either predicate are relayed to the caller; if evaluation of
-     * this {@code IntTriPredicate} throws an exception, the {@code other} {@code IntTriPredicate} will not be
-     * evaluated.
+     * this {@code IntTriPredicate} throws an exception, the {@code other} predicate will not be evaluated.
      *
      * @param other A {@code IntTriPredicate} that will be logically-XORed with this one
      * @return A composed {@code IntTriPredicate} that represents the short-circuiting logical XOR of this predicate and
@@ -185,7 +185,8 @@ public interface IntTriPredicate {
      * @see #or(IntTriPredicate)
      * @see TriPredicate#xor(TriPredicate)
      */
-    default IntTriPredicate xor(final IntTriPredicate other) {
+    @Nonnull
+    default IntTriPredicate xor(@Nonnull final IntTriPredicate other) {
         Objects.requireNonNull(other);
         return (value1, value2, value3) -> test(value1, value2, value3) ^ other.test(value1, value2, value3);
     }

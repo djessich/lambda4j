@@ -160,8 +160,7 @@ public interface ObjDoublePredicate<T> {
      * predicate is not evaluated.
      * <p>
      * Any exceptions thrown during evaluation of either predicate are relayed to the caller; if evaluation of this
-     * {@code ObjDoublePredicate} throws an exception, the {@code other} {@code ObjDoublePredicate} will not be
-     * evaluated.
+     * {@code ObjDoublePredicate} throws an exception, the {@code other} predicate will not be evaluated.
      *
      * @param other A {@code ObjDoublePredicate} that will be logically-ORed with this one
      * @return A composed {@code ObjDoublePredicate} that represents the short-circuiting logical OR of this predicate
@@ -171,7 +170,8 @@ public interface ObjDoublePredicate<T> {
      * @see #xor(ObjDoublePredicate)
      * @see BiPredicate#or(BiPredicate)
      */
-    default ObjDoublePredicate<T> or(final ObjDoublePredicate<T> other) {
+    @Nonnull
+    default ObjDoublePredicate<T> or(@Nonnull final ObjDoublePredicate<T> other) {
         Objects.requireNonNull(other);
         return (t, value) -> test(t, value) && other.test(t, value);
     }
@@ -182,8 +182,7 @@ public interface ObjDoublePredicate<T> {
      * predicate is not evaluated.
      * <p>
      * Any exceptions thrown during evaluation of either predicate are relayed to the caller; if evaluation of this
-     * {@code ObjDoublePredicate} throws an exception, the {@code other} {@code ObjDoublePredicate} will not be
-     * evaluated.
+     * {@code ObjDoublePredicate} throws an exception, the {@code other} predicate will not be evaluated.
      *
      * @param other A {@code ObjDoublePredicate} that will be logically-XORed with this one
      * @return A composed {@code ObjDoublePredicate} that represents the short-circuiting logical XOR of this predicate
@@ -192,7 +191,8 @@ public interface ObjDoublePredicate<T> {
      * @see #and(ObjDoublePredicate)
      * @see #or(ObjDoublePredicate)
      */
-    default ObjDoublePredicate<T> xor(final ObjDoublePredicate<T> other) {
+    @Nonnull
+    default ObjDoublePredicate<T> xor(@Nonnull final ObjDoublePredicate<T> other) {
         Objects.requireNonNull(other);
         return (t, value) -> test(t, value) ^ other.test(t, value);
     }

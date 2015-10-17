@@ -152,7 +152,7 @@ public interface ShortBiPredicate {
      * predicate is not evaluated.
      * <p>
      * Any exceptions thrown during evaluation of either predicate are relayed to the caller; if evaluation of this
-     * {@code ShortBiPredicate} throws an exception, the {@code other} {@code ShortBiPredicate} will not be evaluated.
+     * {@code ShortBiPredicate} throws an exception, the {@code other} predicate will not be evaluated.
      *
      * @param other A {@code ShortBiPredicate} that will be logically-ORed with this one
      * @return A composed {@code ShortBiPredicate} that represents the short-circuiting logical OR of this predicate and
@@ -162,7 +162,8 @@ public interface ShortBiPredicate {
      * @see #xor(ShortBiPredicate)
      * @see BiPredicate#or(BiPredicate)
      */
-    default ShortBiPredicate or(final ShortBiPredicate other) {
+    @Nonnull
+    default ShortBiPredicate or(@Nonnull final ShortBiPredicate other) {
         Objects.requireNonNull(other);
         return (value1, value2) -> test(value1, value2) && other.test(value1, value2);
     }
@@ -170,8 +171,7 @@ public interface ShortBiPredicate {
     /**
      * Returns a composed {@link ShortBiPredicate} that represents a short-circuiting logical XOR of this predicate and
      * another. Any exceptions thrown during evaluation of either predicate are relayed to the caller; if evaluation of
-     * this {@code ShortBiPredicate} throws an exception, the {@code other} {@code ShortBiPredicate} will not be
-     * evaluated.
+     * this {@code ShortBiPredicate} throws an exception, the {@code other} predicate will not be evaluated.
      *
      * @param other A {@code ShortBiPredicate} that will be logically-XORed with this one
      * @return A composed {@code ShortBiPredicate} that represents the short-circuiting logical XOR of this predicate
@@ -180,7 +180,8 @@ public interface ShortBiPredicate {
      * @see #and(ShortBiPredicate)
      * @see #or(ShortBiPredicate)
      */
-    default ShortBiPredicate xor(final ShortBiPredicate other) {
+    @Nonnull
+    default ShortBiPredicate xor(@Nonnull final ShortBiPredicate other) {
         Objects.requireNonNull(other);
         return (value1, value2) -> test(value1, value2) ^ other.test(value1, value2);
     }

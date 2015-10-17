@@ -156,7 +156,7 @@ public interface LongTriPredicate {
      * predicate is not evaluated.
      * <p>
      * Any exceptions thrown during evaluation of either predicate are relayed to the caller; if evaluation of this
-     * {@code LongTriPredicate} throws an exception, the {@code other} {@code LongTriPredicate} will not be evaluated.
+     * {@code LongTriPredicate} throws an exception, the {@code other} predicate will not be evaluated.
      *
      * @param other A {@code LongTriPredicate} that will be logically-ORed with this one
      * @return A composed {@code LongTriPredicate} that represents the short-circuiting logical OR of this predicate and
@@ -166,7 +166,8 @@ public interface LongTriPredicate {
      * @see #xor(LongTriPredicate)
      * @see TriPredicate#or(TriPredicate)
      */
-    default LongTriPredicate or(final LongTriPredicate other) {
+    @Nonnull
+    default LongTriPredicate or(@Nonnull final LongTriPredicate other) {
         Objects.requireNonNull(other);
         return (value1, value2, value3) -> test(value1, value2, value3) && other.test(value1, value2, value3);
     }
@@ -174,8 +175,7 @@ public interface LongTriPredicate {
     /**
      * Returns a composed {@link LongTriPredicate} that represents a short-circuiting logical XOR of this predicate and
      * another. Any exceptions thrown during evaluation of either predicate are relayed to the caller; if evaluation of
-     * this {@code LongTriPredicate} throws an exception, the {@code other} {@code LongTriPredicate} will not be
-     * evaluated.
+     * this {@code LongTriPredicate} throws an exception, the {@code other} predicate will not be evaluated.
      *
      * @param other A {@code LongTriPredicate} that will be logically-XORed with this one
      * @return A composed {@code LongTriPredicate} that represents the short-circuiting logical XOR of this predicate
@@ -185,7 +185,8 @@ public interface LongTriPredicate {
      * @see #or(LongTriPredicate)
      * @see TriPredicate#xor(TriPredicate)
      */
-    default LongTriPredicate xor(final LongTriPredicate other) {
+    @Nonnull
+    default LongTriPredicate xor(@Nonnull final LongTriPredicate other) {
         Objects.requireNonNull(other);
         return (value1, value2, value3) -> test(value1, value2, value3) ^ other.test(value1, value2, value3);
     }

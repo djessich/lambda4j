@@ -149,7 +149,7 @@ public interface FloatPredicate {
      * predicate is not evaluated.
      * <p>
      * Any exceptions thrown during evaluation of either predicate are relayed to the caller; if evaluation of this
-     * {@code FloatPredicate} throws an exception, the {@code other} {@code FloatPredicate} will not be evaluated.
+     * {@code FloatPredicate} throws an exception, the {@code other} predicate will not be evaluated.
      *
      * @param other A {@code FloatPredicate} that will be logically-ORed with this one
      * @return A composed {@code FloatPredicate} that represents the short-circuiting logical OR of this predicate and
@@ -159,7 +159,8 @@ public interface FloatPredicate {
      * @see #xor(FloatPredicate)
      * @see Predicate#or(Predicate)
      */
-    default FloatPredicate or(final FloatPredicate other) {
+    @Nonnull
+    default FloatPredicate or(@Nonnull final FloatPredicate other) {
         Objects.requireNonNull(other);
         return value -> test(value) && other.test(value);
     }
@@ -167,7 +168,7 @@ public interface FloatPredicate {
     /**
      * Returns a composed {@link FloatPredicate} that represents a short-circuiting logical XOR of this predicate and
      * another. Any exceptions thrown during evaluation of either predicate are relayed to the caller; if evaluation of
-     * this {@code FloatPredicate} throws an exception, the {@code other} {@code FloatPredicate} will not be evaluated.
+     * this {@code FloatPredicate} throws an exception, the {@code other} predicate will not be evaluated.
      *
      * @param other A {@code FloatPredicate} that will be logically-XORed with this one
      * @return A composed {@code FloatPredicate} that represents the short-circuiting logical XOR of this predicate and
@@ -176,7 +177,8 @@ public interface FloatPredicate {
      * @see #and(FloatPredicate)
      * @see #or(FloatPredicate)
      */
-    default FloatPredicate xor(final FloatPredicate other) {
+    @Nonnull
+    default FloatPredicate xor(@Nonnull final FloatPredicate other) {
         Objects.requireNonNull(other);
         return value -> test(value) ^ other.test(value);
     }

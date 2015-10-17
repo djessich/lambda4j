@@ -160,8 +160,7 @@ public interface ObjBooleanPredicate<T> {
      * predicate is not evaluated.
      * <p>
      * Any exceptions thrown during evaluation of either predicate are relayed to the caller; if evaluation of this
-     * {@code ObjBooleanPredicate} throws an exception, the {@code other} {@code ObjBooleanPredicate} will not be
-     * evaluated.
+     * {@code ObjBooleanPredicate} throws an exception, the {@code other} predicate will not be evaluated.
      *
      * @param other A {@code ObjBooleanPredicate} that will be logically-ORed with this one
      * @return A composed {@code ObjBooleanPredicate} that represents the short-circuiting logical OR of this predicate
@@ -171,7 +170,8 @@ public interface ObjBooleanPredicate<T> {
      * @see #xor(ObjBooleanPredicate)
      * @see BiPredicate#or(BiPredicate)
      */
-    default ObjBooleanPredicate<T> or(final ObjBooleanPredicate<T> other) {
+    @Nonnull
+    default ObjBooleanPredicate<T> or(@Nonnull final ObjBooleanPredicate<T> other) {
         Objects.requireNonNull(other);
         return (t, value) -> test(t, value) && other.test(t, value);
     }
@@ -179,8 +179,7 @@ public interface ObjBooleanPredicate<T> {
     /**
      * Returns a composed {@link ObjBooleanPredicate} that represents a short-circuiting logical XOR of this predicate
      * and another. Any exceptions thrown during evaluation of either predicate are relayed to the caller; if evaluation
-     * of this {@code ObjBooleanPredicate} throws an exception, the {@code other} {@code ObjBooleanPredicate} will not
-     * be evaluated.
+     * of this {@code ObjBooleanPredicate} throws an exception, the {@code other} predicate will not be evaluated.
      *
      * @param other A {@code ObjBooleanPredicate} that will be logically-XORed with this one
      * @return A composed {@code ObjBooleanPredicate} that represents the short-circuiting logical XOR of this predicate
@@ -189,7 +188,8 @@ public interface ObjBooleanPredicate<T> {
      * @see #and(ObjBooleanPredicate)
      * @see #or(ObjBooleanPredicate)
      */
-    default ObjBooleanPredicate<T> xor(final ObjBooleanPredicate<T> other) {
+    @Nonnull
+    default ObjBooleanPredicate<T> xor(@Nonnull final ObjBooleanPredicate<T> other) {
         Objects.requireNonNull(other);
         return (t, value) -> test(t, value) ^ other.test(t, value);
     }

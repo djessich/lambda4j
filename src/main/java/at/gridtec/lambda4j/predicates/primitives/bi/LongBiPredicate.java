@@ -152,7 +152,7 @@ public interface LongBiPredicate {
      * predicate is not evaluated.
      * <p>
      * Any exceptions thrown during evaluation of either predicate are relayed to the caller; if evaluation of this
-     * {@code LongBiPredicate} throws an exception, the {@code other} {@code LongBiPredicate} will not be evaluated.
+     * {@code LongBiPredicate} throws an exception, the {@code other} predicate will not be evaluated.
      *
      * @param other A {@code LongBiPredicate} that will be logically-ORed with this one
      * @return A composed {@code LongBiPredicate} that represents the short-circuiting logical OR of this predicate and
@@ -162,7 +162,8 @@ public interface LongBiPredicate {
      * @see #xor(LongBiPredicate)
      * @see BiPredicate#or(BiPredicate)
      */
-    default LongBiPredicate or(final LongBiPredicate other) {
+    @Nonnull
+    default LongBiPredicate or(@Nonnull final LongBiPredicate other) {
         Objects.requireNonNull(other);
         return (value1, value2) -> test(value1, value2) && other.test(value1, value2);
     }
@@ -170,8 +171,7 @@ public interface LongBiPredicate {
     /**
      * Returns a composed {@link LongBiPredicate} that represents a short-circuiting logical XOR of this predicate and
      * another. Any exceptions thrown during evaluation of either predicate are relayed to the caller; if evaluation of
-     * this {@code LongBiPredicate} throws an exception, the {@code other} {@code LongBiPredicate} will not be
-     * evaluated.
+     * this {@code LongBiPredicate} throws an exception, the {@code other} predicate will not be evaluated.
      *
      * @param other A {@code LongBiPredicate} that will be logically-XORed with this one
      * @return A composed {@code LongBiPredicate} that represents the short-circuiting logical XOR of this predicate and
@@ -180,7 +180,8 @@ public interface LongBiPredicate {
      * @see #and(LongBiPredicate)
      * @see #or(LongBiPredicate)
      */
-    default LongBiPredicate xor(final LongBiPredicate other) {
+    @Nonnull
+    default LongBiPredicate xor(@Nonnull final LongBiPredicate other) {
         Objects.requireNonNull(other);
         return (value1, value2) -> test(value1, value2) ^ other.test(value1, value2);
     }

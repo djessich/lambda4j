@@ -152,7 +152,7 @@ public interface CharBiPredicate {
      * predicate is not evaluated.
      * <p>
      * Any exceptions thrown during evaluation of either predicate are relayed to the caller; if evaluation of this
-     * {@code CharBiPredicate} throws an exception, the {@code other} {@code CharBiPredicate} will not be evaluated.
+     * {@code CharBiPredicate} throws an exception, the {@code other} predicate will not be evaluated.
      *
      * @param other A {@code CharBiPredicate} that will be logically-ORed with this one
      * @return A composed {@code CharBiPredicate} that represents the short-circuiting logical OR of this predicate and
@@ -162,7 +162,8 @@ public interface CharBiPredicate {
      * @see #xor(CharBiPredicate)
      * @see BiPredicate#or(BiPredicate)
      */
-    default CharBiPredicate or(final CharBiPredicate other) {
+    @Nonnull
+    default CharBiPredicate or(@Nonnull final CharBiPredicate other) {
         Objects.requireNonNull(other);
         return (value1, value2) -> test(value1, value2) && other.test(value1, value2);
     }
@@ -170,8 +171,7 @@ public interface CharBiPredicate {
     /**
      * Returns a composed {@link CharBiPredicate} that represents a short-circuiting logical XOR of this predicate and
      * another. Any exceptions thrown during evaluation of either predicate are relayed to the caller; if evaluation of
-     * this {@code CharBiPredicate} throws an exception, the {@code other} {@code CharBiPredicate} will not be
-     * evaluated.
+     * this {@code CharBiPredicate} throws an exception, the {@code other} predicate will not be evaluated.
      *
      * @param other A {@code CharBiPredicate} that will be logically-XORed with this one
      * @return A composed {@code CharBiPredicate} that represents the short-circuiting logical XOR of this predicate and
@@ -180,7 +180,8 @@ public interface CharBiPredicate {
      * @see #and(CharBiPredicate)
      * @see #or(CharBiPredicate)
      */
-    default CharBiPredicate xor(final CharBiPredicate other) {
+    @Nonnull
+    default CharBiPredicate xor(@Nonnull final CharBiPredicate other) {
         Objects.requireNonNull(other);
         return (value1, value2) -> test(value1, value2) ^ other.test(value1, value2);
     }
