@@ -15,10 +15,18 @@
  */
 package at.gridtec.lambda4j.operators.ternary;
 
+import at.gridtec.lambda4j.consumer.primitives.tri.IntTriConsumer;
+import at.gridtec.lambda4j.function.primitives.to.tri.ToIntTriFunction;
+import at.gridtec.lambda4j.function.primitives.tri.IntTriFunction;
+
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import java.util.Objects;
+import java.util.function.IntConsumer;
+import java.util.function.IntFunction;
 import java.util.function.IntUnaryOperator;
+import java.util.function.ToIntFunction;
+import java.util.function.UnaryOperator;
 
 /**
  * Represents an operation on a two {@code int}-valued operands and producing a {@code int}-valued result. This is the
@@ -110,20 +118,24 @@ public interface IntTernaryOperator {
     }
 
     /**
-     * Returns a composed {@link IntTernaryOperator} that first applies the given {@code before} operators to its input,
-     * and then applies this operator to the result. If evaluation of either operator throws an exception, it is relayed
-     * to the caller of the composed operator.
+     * Returns a composed {@link IntTernaryOperator} that first applies the {@code before} operators to its input, and
+     * then applies this operator to the result. If evaluation of either operator throws an exception, it is relayed to
+     * the caller of the composed operator.
      *
-     * @param before1 The first {@code IntUnaryOperator} to apply before this operator is applied
-     * @param before2 The second {@code IntUnaryOperator} to apply before this operator is applied
-     * @param before3 The third {@code IntUnaryOperator} to apply before this operator is applied
-     * @return A composed {@code IntTernaryOperator} that first applies the given {@code before} operators and then
-     * applies this operator.
-     * @throws NullPointerException If one of the given operators are {@code null}
+     * @param before1 The first operator to apply before this operator is applied
+     * @param before2 The second operator to apply before this operator is applied
+     * @param before3 The third operator to apply before this operator is applied
+     * @return A composed {@link IntTernaryOperator} that first applies the {@code before} operators to its input, and
+     * then applies this operator to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implNote The input arguments of this method are primitive specializations of {@link UnaryOperator}. Therefore
+     * the given operations handle primitive types. In this case this is {@code int}.
      * @see #andThen(IntUnaryOperator)
+     * @see #andThen(IntFunction)
      */
-    default IntTernaryOperator compose(final IntUnaryOperator before1, final IntUnaryOperator before2,
-            final IntUnaryOperator before3) {
+    @Nonnull
+    default IntTernaryOperator compose(@Nonnull final IntUnaryOperator before1, @Nonnull final IntUnaryOperator before2,
+            @Nonnull final IntUnaryOperator before3) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         Objects.requireNonNull(before3);
@@ -132,19 +144,86 @@ public interface IntTernaryOperator {
     }
 
     /**
+     * Returns a composed {@link ToIntTriFunction} that first applies the {@code before} operations to its input, and
+     * then applies this operator to the result. If evaluation of either operation throws an exception, it is relayed to
+     * the caller of the composed operation.
+     *
+     * @param <T> The type of the argument to the first before operation
+     * @param <U> The type of the argument to the second before operation
+     * @param <V> The type of the argument to the third before operation
+     * @param before1 The first operation to apply before this operator is applied
+     * @param before2 The second operation to apply before this operator is applied
+     * @param before3 The third operation to apply before this operator is applied
+     * @return A composed {@link ToIntTriFunction} that first applies the {@code before} operations to its input, and
+     * then applies this operator to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implNote The input arguments of this method are able to handle every type.
+     * @see #andThen(IntUnaryOperator)
+     * @see #andThen(IntFunction)
+     */
+    @Nonnull
+    default <T, U, V> ToIntTriFunction<T, U, V> compose(@Nonnull final ToIntFunction<? super T> before1,
+            @Nonnull final ToIntFunction<? super U> before2, @Nonnull final ToIntFunction<? super V> before3) {
+        Objects.requireNonNull(before1);
+        Objects.requireNonNull(before2);
+        Objects.requireNonNull(before3);
+        return (t, u, v) -> applyAsInt(before1.applyAsInt(t), before2.applyAsInt(u), before3.applyAsInt(v));
+    }
+
+    /**
      * Returns a composed {@link IntTernaryOperator} that first applies this operator to its input, and then applies the
      * {@code after} operator to the result. If evaluation of either operator throws an exception, it is relayed to the
      * caller of the composed operator.
      *
-     * @param after The {@code IntUnaryOperator} to apply after this operator is applied
-     * @return A composed {@code IntTernaryOperator} that first applies this operator and then applies the {@code after}
-     * operator.
-     * @throws NullPointerException If one of the given operators are {@code null}
+     * @param after The operator to apply after this operator is applied
+     * @return A composed {@link IntTernaryOperator} that first applies this operator to its input, and then applies the
+     * {@code after} operator to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implNote The result of this method is the primitive specialization of {@link TernaryOperator}. Therefore the
+     * returned operation handles primitive types. In this case this is {@code int}.
      * @see #compose(IntUnaryOperator, IntUnaryOperator, IntUnaryOperator)
+     * @see #compose(ToIntFunction, ToIntFunction, ToIntFunction)
      */
-    default IntTernaryOperator andThen(IntUnaryOperator after) {
+    @Nonnull
+    default IntTernaryOperator andThen(@Nonnull final IntUnaryOperator after) {
         Objects.requireNonNull(after);
         return (left, middle, right) -> after.applyAsInt(applyAsInt(left, middle, right));
+    }
+
+    /**
+     * Returns a composed {@link IntTriFunction} that first applies this operator to its input, and then applies the
+     * {@code after} operation to the result. If evaluation of either operation throws an exception, it is relayed to
+     * the caller of the composed operation.
+     *
+     * @param <R> The type of return value from the {@code after} operation, and of the composed operation
+     * @param after The operation to apply after this operator is applied
+     * @return A composed {@code IntTriFunction} that first applies this operator to its input, and then applies the
+     * {@code after} operation to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implNote The returned operation is able to handle every type.
+     * @see #compose(IntUnaryOperator, IntUnaryOperator, IntUnaryOperator)
+     * @see #compose(ToIntFunction, ToIntFunction, ToIntFunction)
+     */
+    @Nonnull
+    default <R> IntTriFunction<R> andThen(@Nonnull final IntFunction<? extends R> after) {
+        Objects.requireNonNull(after);
+        return (value1, value2, value3) -> after.apply(applyAsInt(value1, value2, value3));
+    }
+
+    /**
+     * Returns a composed {@link IntTriConsumer} that fist applies this operator to its input, and then consumes the
+     * result using the given {@code IntConsumer}. If evaluation of either operation throws an exception, it is relayed
+     * to the caller of the composed operation.
+     *
+     * @param consumer The operation which consumes the result from this operation
+     * @return A composed {@code IntTriConsumer} that first applies this operation to its input, and then consumes the
+     * result using the given {@code IntConsumer}.
+     * @throws NullPointerException If given argument is {@code null}
+     */
+    @Nonnull
+    default IntTriConsumer consume(@Nonnull final IntConsumer consumer) {
+        Objects.requireNonNull(consumer);
+        return (value1, value2, value3) -> consumer.accept(applyAsInt(value1, value2, value3));
     }
 
     /**

@@ -15,11 +15,18 @@
  */
 package at.gridtec.lambda4j.operators.ternary;
 
+import at.gridtec.lambda4j.consumer.primitives.CharConsumer;
+import at.gridtec.lambda4j.consumer.primitives.tri.CharTriConsumer;
+import at.gridtec.lambda4j.function.primitives.CharFunction;
+import at.gridtec.lambda4j.function.primitives.to.ToCharFunction;
+import at.gridtec.lambda4j.function.primitives.to.tri.ToCharTriFunction;
+import at.gridtec.lambda4j.function.primitives.tri.CharTriFunction;
 import at.gridtec.lambda4j.operators.unary.CharUnaryOperator;
 
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import java.util.Objects;
+import java.util.function.UnaryOperator;
 
 /**
  * Represents an operation on a two {@code char}-valued operands and producing a {@code char}-valued result. This is the
@@ -111,20 +118,24 @@ public interface CharTernaryOperator {
     }
 
     /**
-     * Returns a composed {@link CharTernaryOperator} that first applies the given {@code before} operators to its
-     * input, and then applies this operator to the result. If evaluation of either operator throws an exception, it is
-     * relayed to the caller of the composed operator.
+     * Returns a composed {@link CharTernaryOperator} that first applies the {@code before} operators to its input, and
+     * then applies this operator to the result. If evaluation of either operator throws an exception, it is relayed to
+     * the caller of the composed operator.
      *
-     * @param before1 The first {@code CharUnaryOperator} to apply before this operator is applied
-     * @param before2 The second {@code CharUnaryOperator} to apply before this operator is applied
-     * @param before3 The third {@code CharUnaryOperator} to apply before this operator is applied
-     * @return A composed {@code CharTernaryOperator} that first applies the given {@code before} operators and then
-     * applies this operator.
-     * @throws NullPointerException If one of the given operators are {@code null}
+     * @param before1 The first operator to apply before this operator is applied
+     * @param before2 The second operator to apply before this operator is applied
+     * @param before3 The third operator to apply before this operator is applied
+     * @return A composed {@link CharTernaryOperator} that first applies the {@code before} operators to its input, and
+     * then applies this operator to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implNote The input arguments of this method are primitive specializations of {@link UnaryOperator}. Therefore
+     * the given operations handle primitive types. In this case this is {@code char}.
      * @see #andThen(CharUnaryOperator)
+     * @see #andThen(CharFunction)
      */
-    default CharTernaryOperator compose(final CharUnaryOperator before1, final CharUnaryOperator before2,
-            final CharUnaryOperator before3) {
+    @Nonnull
+    default CharTernaryOperator compose(@Nonnull final CharUnaryOperator before1,
+            @Nonnull final CharUnaryOperator before2, @Nonnull final CharUnaryOperator before3) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         Objects.requireNonNull(before3);
@@ -133,19 +144,86 @@ public interface CharTernaryOperator {
     }
 
     /**
+     * Returns a composed {@link ToCharTriFunction} that first applies the {@code before} operations to its input, and
+     * then applies this operator to the result. If evaluation of either operation throws an exception, it is relayed to
+     * the caller of the composed operation.
+     *
+     * @param <T> The type of the argument to the first before operation
+     * @param <U> The type of the argument to the second before operation
+     * @param <V> The type of the argument to the third before operation
+     * @param before1 The first operation to apply before this operator is applied
+     * @param before2 The second operation to apply before this operator is applied
+     * @param before3 The third operation to apply before this operator is applied
+     * @return A composed {@link ToCharTriFunction} that first applies the {@code before} operations to its input, and
+     * then applies this operator to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implNote The input arguments of this method are able to handle every type.
+     * @see #andThen(CharUnaryOperator)
+     * @see #andThen(CharFunction)
+     */
+    @Nonnull
+    default <T, U, V> ToCharTriFunction<T, U, V> compose(@Nonnull final ToCharFunction<? super T> before1,
+            @Nonnull final ToCharFunction<? super U> before2, @Nonnull final ToCharFunction<? super V> before3) {
+        Objects.requireNonNull(before1);
+        Objects.requireNonNull(before2);
+        Objects.requireNonNull(before3);
+        return (t, u, v) -> applyAsChar(before1.applyAsChar(t), before2.applyAsChar(u), before3.applyAsChar(v));
+    }
+
+    /**
      * Returns a composed {@link CharTernaryOperator} that first applies this operator to its input, and then applies
      * the {@code after} operator to the result. If evaluation of either operator throws an exception, it is relayed to
      * the caller of the composed operator.
      *
-     * @param after The {@code CharUnaryOperator} to apply after this operator is applied
-     * @return A composed {@code CharTernaryOperator} that first applies this operator and then applies the {@code
-     * after} operator.
-     * @throws NullPointerException If one of the given operators are {@code null}
+     * @param after The operator to apply after this operator is applied
+     * @return A composed {@link CharTernaryOperator} that first applies this operator to its input, and then applies
+     * the {@code after} operator to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implNote The result of this method is the primitive specialization of {@link TernaryOperator}. Therefore the
+     * returned operation handles primitive types. In this case this is {@code char}.
      * @see #compose(CharUnaryOperator, CharUnaryOperator, CharUnaryOperator)
+     * @see #compose(ToCharFunction, ToCharFunction, ToCharFunction)
      */
-    default CharTernaryOperator andThen(CharUnaryOperator after) {
+    @Nonnull
+    default CharTernaryOperator andThen(@Nonnull final CharUnaryOperator after) {
         Objects.requireNonNull(after);
         return (left, middle, right) -> after.applyAsChar(applyAsChar(left, middle, right));
+    }
+
+    /**
+     * Returns a composed {@link CharTriFunction} that first applies this operator to its input, and then applies the
+     * {@code after} operation to the result. If evaluation of either operation throws an exception, it is relayed to
+     * the caller of the composed operation.
+     *
+     * @param <R> The type of return value from the {@code after} operation, and of the composed operation
+     * @param after The operation to apply after this operator is applied
+     * @return A composed {@code CharTriFunction} that first applies this operator to its input, and then applies the
+     * {@code after} operation to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implNote The returned operation is able to handle every type.
+     * @see #compose(CharUnaryOperator, CharUnaryOperator, CharUnaryOperator)
+     * @see #compose(ToCharFunction, ToCharFunction, ToCharFunction)
+     */
+    @Nonnull
+    default <R> CharTriFunction<R> andThen(@Nonnull final CharFunction<? extends R> after) {
+        Objects.requireNonNull(after);
+        return (value1, value2, value3) -> after.apply(applyAsChar(value1, value2, value3));
+    }
+
+    /**
+     * Returns a composed {@link CharTriConsumer} that fist applies this operator to its input, and then consumes the
+     * result using the given {@code CharConsumer}. If evaluation of either operation throws an exception, it is relayed
+     * to the caller of the composed operation.
+     *
+     * @param consumer The operation which consumes the result from this operation
+     * @return A composed {@code CharTriConsumer} that first applies this operation to its input, and then consumes the
+     * result using the given {@code CharConsumer}.
+     * @throws NullPointerException If given argument is {@code null}
+     */
+    @Nonnull
+    default CharTriConsumer consume(@Nonnull final CharConsumer consumer) {
+        Objects.requireNonNull(consumer);
+        return (value1, value2, value3) -> consumer.accept(applyAsChar(value1, value2, value3));
     }
 
     /**

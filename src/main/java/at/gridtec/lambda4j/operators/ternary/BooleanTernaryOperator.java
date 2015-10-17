@@ -15,12 +15,18 @@
  */
 package at.gridtec.lambda4j.operators.ternary;
 
+import at.gridtec.lambda4j.consumer.primitives.BooleanConsumer;
+import at.gridtec.lambda4j.consumer.primitives.tri.BooleanTriConsumer;
+import at.gridtec.lambda4j.function.primitives.BooleanFunction;
+import at.gridtec.lambda4j.function.primitives.tri.BooleanTriFunction;
 import at.gridtec.lambda4j.operators.unary.BooleanUnaryOperator;
 import at.gridtec.lambda4j.predicates.TriPredicate;
 
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import java.util.Objects;
+import java.util.function.Predicate;
+import java.util.function.UnaryOperator;
 
 /**
  * Represents an operation on a two {@code boolean}-valued operands and producing a {@code boolean}-valued result. This
@@ -270,20 +276,24 @@ public interface BooleanTernaryOperator {
     }
 
     /**
-     * Returns a composed {@link BooleanTernaryOperator} that first applies the given {@code before} operators to its
-     * input, and then applies this operator to the result. If evaluation of either operator throws an exception, it is
-     * relayed to the caller of the composed operator.
+     * Returns a composed {@link BooleanTernaryOperator} that first applies the {@code before} operators to its input,
+     * and then applies this operator to the result. If evaluation of either operator throws an exception, it is relayed
+     * to the caller of the composed operator.
      *
-     * @param before1 The first {@code BooleanUnaryOperator} to apply before this operator is applied
-     * @param before2 The second {@code BooleanUnaryOperator} to apply before this operator is applied
-     * @param before3 The third {@code BooleanUnaryOperator} to apply before this operator is applied
-     * @return A composed {@code BooleanTernaryOperator} that first applies the given {@code before} operators and then
-     * applies this operator.
-     * @throws NullPointerException If one of the given operators are {@code null}
+     * @param before1 The first operator to apply before this operator is applied
+     * @param before2 The second operator to apply before this operator is applied
+     * @param before3 The third operator to apply before this operator is applied
+     * @return A composed {@link BooleanTernaryOperator} that first applies the {@code before} operators to its input,
+     * and then applies this operator to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implNote The input arguments of this method are primitive specializations of {@link UnaryOperator}. Therefore
+     * the given operations handle primitive types. In this case this is {@code boolean}.
      * @see #andThen(BooleanUnaryOperator)
+     * @see #andThen(BooleanFunction)
      */
-    default BooleanTernaryOperator compose(final BooleanUnaryOperator before1, final BooleanUnaryOperator before2,
-            final BooleanUnaryOperator before3) {
+    @Nonnull
+    default BooleanTernaryOperator compose(@Nonnull final BooleanUnaryOperator before1,
+            @Nonnull final BooleanUnaryOperator before2, @Nonnull final BooleanUnaryOperator before3) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         Objects.requireNonNull(before3);
@@ -292,19 +302,86 @@ public interface BooleanTernaryOperator {
     }
 
     /**
+     * Returns a composed {@link TriPredicate} that first applies the {@code before} operations to its input, and then
+     * applies this operator to the result. If evaluation of either operation throws an exception, it is relayed to the
+     * caller of the composed operation.
+     *
+     * @param <T> The type of the argument to the first before operation
+     * @param <U> The type of the argument to the second before operation
+     * @param <V> The type of the argument to the third before operation
+     * @param before1 The first operation to apply before this operator is applied
+     * @param before2 The second operation to apply before this operator is applied
+     * @param before3 The third operation to apply before this operator is applied
+     * @return A composed {@link TriPredicate} that first applies the {@code before} operations to its input, and then
+     * applies this operator to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implNote The input arguments of this method are able to handle every type.
+     * @see #andThen(BooleanUnaryOperator)
+     * @see #andThen(BooleanFunction)
+     */
+    @Nonnull
+    default <T, U, V> TriPredicate<T, U, V> compose(@Nonnull final Predicate<? super T> before1,
+            @Nonnull final Predicate<? super U> before2, @Nonnull final Predicate<? super V> before3) {
+        Objects.requireNonNull(before1);
+        Objects.requireNonNull(before2);
+        Objects.requireNonNull(before3);
+        return (t, u, v) -> applyAsBoolean(before1.test(t), before2.test(u), before3.test(v));
+    }
+
+    /**
      * Returns a composed {@link BooleanTernaryOperator} that first applies this operator to its input, and then applies
      * the {@code after} operator to the result. If evaluation of either operator throws an exception, it is relayed to
      * the caller of the composed operator.
      *
-     * @param after The {@code BooleanUnaryOperator} to apply after this operator is applied
-     * @return A composed {@code BooleanTernaryOperator} that first applies this operator and then applies the {@code
-     * after} operator.
-     * @throws NullPointerException If one of the given operators are {@code null}
+     * @param after The operator to apply after this operator is applied
+     * @return A composed {@link BooleanTernaryOperator} that first applies this operator to its input, and then applies
+     * the {@code after} operator to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implNote The result of this method is the primitive specialization of {@link TernaryOperator}. Therefore the
+     * returned operation handles primitive types. In this case this is {@code boolean}.
      * @see #compose(BooleanUnaryOperator, BooleanUnaryOperator, BooleanUnaryOperator)
+     * @see #compose(Predicate, Predicate, Predicate)
      */
-    default BooleanTernaryOperator andThen(BooleanUnaryOperator after) {
+    @Nonnull
+    default BooleanTernaryOperator andThen(@Nonnull final BooleanUnaryOperator after) {
         Objects.requireNonNull(after);
         return (left, middle, right) -> after.applyAsBoolean(applyAsBoolean(left, middle, right));
+    }
+
+    /**
+     * Returns a composed {@link BooleanTriFunction} that first applies this operator to its input, and then applies the
+     * {@code after} operation to the result. If evaluation of either operation throws an exception, it is relayed to
+     * the caller of the composed operation.
+     *
+     * @param <R> The type of return value from the {@code after} operation, and of the composed operation
+     * @param after The operation to apply after this operator is applied
+     * @return A composed {@code BooleanTriFunction} that first applies this operator to its input, and then applies the
+     * {@code after} operation to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implNote The returned operation is able to handle every type.
+     * @see #compose(BooleanUnaryOperator, BooleanUnaryOperator, BooleanUnaryOperator)
+     * @see #compose(Predicate, Predicate, Predicate)
+     */
+    @Nonnull
+    default <R> BooleanTriFunction<R> andThen(@Nonnull final BooleanFunction<? extends R> after) {
+        Objects.requireNonNull(after);
+        return (value1, value2, value3) -> after.apply(applyAsBoolean(value1, value2, value3));
+    }
+
+    /**
+     * Returns a composed {@link BooleanTriConsumer} that fist applies this operator to its input, and then consumes the
+     * result using the given {@code BooleanConsumer}. If evaluation of either operation throws an exception, it is
+     * relayed to the caller of the composed operation.
+     *
+     * @param consumer The operation which consumes the result from this operation
+     * @return A composed {@code BooleanTriConsumer} that first applies this operation to its input, and then consumes
+     * the result using the given {@code BooleanConsumer}.
+     * @throws NullPointerException If given argument is {@code null}
+     */
+    @Nonnull
+    default BooleanTriConsumer consume(@Nonnull final BooleanConsumer consumer) {
+        Objects.requireNonNull(consumer);
+        return (value1, value2, value3) -> consumer.accept(applyAsBoolean(value1, value2, value3));
     }
 
     /**

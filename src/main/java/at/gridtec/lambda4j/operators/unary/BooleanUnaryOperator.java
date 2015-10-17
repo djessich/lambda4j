@@ -206,8 +206,8 @@ public interface BooleanUnaryOperator {
      * the caller of the composed operator.
      *
      * @param before The operator to apply before this operator is applied
-     * @return A composed {@code BooleanUnaryOperator} that first applies the {@code before} operator and then applies
-     * this operator to the result.
+     * @return A composed {@link BooleanUnaryOperator} that first applies the {@code before} operator to its input, and
+     * then applies this operator to the result.
      * @throws NullPointerException If given argument is {@code null}
      * @implNote The input argument of this method is the primitive specialization of {@link UnaryOperator}. Therefore
      * the given operation handles primitive types. In this case this is {@code boolean}.
@@ -222,13 +222,13 @@ public interface BooleanUnaryOperator {
 
     /**
      * Returns a composed {@link Predicate} that first applies the {@code before} operation to its input, and then
-     * applies this operator to the result. If evaluation of either operator throws an exception, it is relayed to the
-     * caller of the composed operator.
+     * applies this operator to the result. If evaluation of either operation throws an exception, it is relayed to the
+     * caller of the composed operation.
      *
      * @param <T> The type of the argument to the before operation
-     * @param before The operator to apply before this operator is applied
-     * @return A composed {@code Predicate} that first applies the {@code before} operation and then applies this
-     * operator to the result.
+     * @param before The operation to apply before this operator is applied
+     * @return A composed {@link Predicate} that first applies the {@code before} operation to its input, and then
+     * applies this operator to the result.
      * @throws NullPointerException If given argument is {@code null}
      * @implNote The input argument of this method is able to handle every type.
      * @see #andThen(BooleanUnaryOperator)
@@ -262,13 +262,13 @@ public interface BooleanUnaryOperator {
 
     /**
      * Returns a composed {@link BooleanFunction} that first applies this operator to its input, and then applies the
-     * {@code after} operator to the result. If evaluation of either operation throws an exception, it is relayed to the
-     * caller of the composed operation.
+     * {@code after} operation to the result. If evaluation of either operation throws an exception, it is relayed to
+     * the caller of the composed operation.
      *
      * @param <R> The type of return value from the {@code after} operation, and of the composed operation
-     * @param after The operator to apply after this operator is applied
+     * @param after The operation to apply after this operator is applied
      * @return A composed {@code BooleanFunction} that first applies this operator to its input, and then applies the
-     * {@code after} operator to the result.
+     * {@code after} operation to the result.
      * @throws NullPointerException If given argument is {@code null}
      * @implNote The returned operation is able to handle every type.
      * @see #compose(BooleanUnaryOperator)

@@ -15,11 +15,18 @@
  */
 package at.gridtec.lambda4j.operators.ternary;
 
+import at.gridtec.lambda4j.consumer.primitives.ShortConsumer;
+import at.gridtec.lambda4j.consumer.primitives.tri.ShortTriConsumer;
+import at.gridtec.lambda4j.function.primitives.ShortFunction;
+import at.gridtec.lambda4j.function.primitives.to.ToShortFunction;
+import at.gridtec.lambda4j.function.primitives.to.tri.ToShortTriFunction;
+import at.gridtec.lambda4j.function.primitives.tri.ShortTriFunction;
 import at.gridtec.lambda4j.operators.unary.ShortUnaryOperator;
 
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import java.util.Objects;
+import java.util.function.UnaryOperator;
 
 /**
  * Represents an operation on a two {@code short}-valued operands and producing a {@code short}-valued result. This is
@@ -111,20 +118,24 @@ public interface ShortTernaryOperator {
     }
 
     /**
-     * Returns a composed {@link ShortTernaryOperator} that first applies the given {@code before} operators to its
-     * input, and then applies this operator to the result. If evaluation of either operator throws an exception, it is
-     * relayed to the caller of the composed operator.
+     * Returns a composed {@link ShortTernaryOperator} that first applies the {@code before} operators to its input, and
+     * then applies this operator to the result. If evaluation of either operator throws an exception, it is relayed to
+     * the caller of the composed operator.
      *
-     * @param before1 The first {@code ShortUnaryOperator} to apply before this operator is applied
-     * @param before2 The second {@code ShortUnaryOperator} to apply before this operator is applied
-     * @param before3 The third {@code ShortUnaryOperator} to apply before this operator is applied
-     * @return A composed {@code ShortTernaryOperator} that first applies the given {@code before} operators and then
-     * applies this operator.
-     * @throws NullPointerException If one of the given operators are {@code null}
+     * @param before1 The first operator to apply before this operator is applied
+     * @param before2 The second operator to apply before this operator is applied
+     * @param before3 The third operator to apply before this operator is applied
+     * @return A composed {@link ShortTernaryOperator} that first applies the {@code before} operators to its input, and
+     * then applies this operator to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implNote The input arguments of this method are primitive specializations of {@link UnaryOperator}. Therefore
+     * the given operations handle primitive types. In this case this is {@code short}.
      * @see #andThen(ShortUnaryOperator)
+     * @see #andThen(ShortFunction)
      */
-    default ShortTernaryOperator compose(final ShortUnaryOperator before1, final ShortUnaryOperator before2,
-            final ShortUnaryOperator before3) {
+    @Nonnull
+    default ShortTernaryOperator compose(@Nonnull final ShortUnaryOperator before1,
+            @Nonnull final ShortUnaryOperator before2, @Nonnull final ShortUnaryOperator before3) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         Objects.requireNonNull(before3);
@@ -133,19 +144,86 @@ public interface ShortTernaryOperator {
     }
 
     /**
+     * Returns a composed {@link ToShortTriFunction} that first applies the {@code before} operations to its input, and
+     * then applies this operator to the result. If evaluation of either operation throws an exception, it is relayed to
+     * the caller of the composed operation.
+     *
+     * @param <T> The type of the argument to the first before operation
+     * @param <U> The type of the argument to the second before operation
+     * @param <V> The type of the argument to the third before operation
+     * @param before1 The first operation to apply before this operator is applied
+     * @param before2 The second operation to apply before this operator is applied
+     * @param before3 The third operation to apply before this operator is applied
+     * @return A composed {@link ToShortTriFunction} that first applies the {@code before} operations to its input, and
+     * then applies this operator to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implNote The input arguments of this method are able to handle every type.
+     * @see #andThen(ShortUnaryOperator)
+     * @see #andThen(ShortFunction)
+     */
+    @Nonnull
+    default <T, U, V> ToShortTriFunction<T, U, V> compose(@Nonnull final ToShortFunction<? super T> before1,
+            @Nonnull final ToShortFunction<? super U> before2, @Nonnull final ToShortFunction<? super V> before3) {
+        Objects.requireNonNull(before1);
+        Objects.requireNonNull(before2);
+        Objects.requireNonNull(before3);
+        return (t, u, v) -> applyAsShort(before1.applyAsShort(t), before2.applyAsShort(u), before3.applyAsShort(v));
+    }
+
+    /**
      * Returns a composed {@link ShortTernaryOperator} that first applies this operator to its input, and then applies
      * the {@code after} operator to the result. If evaluation of either operator throws an exception, it is relayed to
      * the caller of the composed operator.
      *
-     * @param after The {@code ShortUnaryOperator} to apply after this operator is applied
-     * @return A composed {@code ShortTernaryOperator} that first applies this operator and then applies the {@code
-     * after} operator.
-     * @throws NullPointerException If one of the given operators are {@code null}
+     * @param after The operator to apply after this operator is applied
+     * @return A composed {@link ShortTernaryOperator} that first applies this operator to its input, and then applies
+     * the {@code after} operator to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implNote The result of this method is the primitive specialization of {@link TernaryOperator}. Therefore the
+     * returned operation handles primitive types. In this case this is {@code short}.
      * @see #compose(ShortUnaryOperator, ShortUnaryOperator, ShortUnaryOperator)
+     * @see #compose(ToShortFunction, ToShortFunction, ToShortFunction)
      */
-    default ShortTernaryOperator andThen(ShortUnaryOperator after) {
+    @Nonnull
+    default ShortTernaryOperator andThen(@Nonnull final ShortUnaryOperator after) {
         Objects.requireNonNull(after);
         return (left, middle, right) -> after.applyAsShort(applyAsShort(left, middle, right));
+    }
+
+    /**
+     * Returns a composed {@link ShortTriFunction} that first applies this operator to its input, and then applies the
+     * {@code after} operation to the result. If evaluation of either operation throws an exception, it is relayed to
+     * the caller of the composed operation.
+     *
+     * @param <R> The type of return value from the {@code after} operation, and of the composed operation
+     * @param after The operation to apply after this operator is applied
+     * @return A composed {@code ShortTriFunction} that first applies this operator to its input, and then applies the
+     * {@code after} operation to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implNote The returned operation is able to handle every type.
+     * @see #compose(ShortUnaryOperator, ShortUnaryOperator, ShortUnaryOperator)
+     * @see #compose(ToShortFunction, ToShortFunction, ToShortFunction)
+     */
+    @Nonnull
+    default <R> ShortTriFunction<R> andThen(@Nonnull final ShortFunction<? extends R> after) {
+        Objects.requireNonNull(after);
+        return (value1, value2, value3) -> after.apply(applyAsShort(value1, value2, value3));
+    }
+
+    /**
+     * Returns a composed {@link ShortTriConsumer} that fist applies this operator to its input, and then consumes the
+     * result using the given {@code ShortConsumer}. If evaluation of either operation throws an exception, it is
+     * relayed to the caller of the composed operation.
+     *
+     * @param consumer The operation which consumes the result from this operation
+     * @return A composed {@code ShortTriConsumer} that first applies this operation to its input, and then consumes the
+     * result using the given {@code ShortConsumer}.
+     * @throws NullPointerException If given argument is {@code null}
+     */
+    @Nonnull
+    default ShortTriConsumer consume(@Nonnull final ShortConsumer consumer) {
+        Objects.requireNonNull(consumer);
+        return (value1, value2, value3) -> consumer.accept(applyAsShort(value1, value2, value3));
     }
 
     /**

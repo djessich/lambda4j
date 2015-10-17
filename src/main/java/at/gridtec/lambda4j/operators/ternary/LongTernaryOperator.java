@@ -15,10 +15,18 @@
  */
 package at.gridtec.lambda4j.operators.ternary;
 
+import at.gridtec.lambda4j.consumer.primitives.tri.LongTriConsumer;
+import at.gridtec.lambda4j.function.primitives.to.tri.ToLongTriFunction;
+import at.gridtec.lambda4j.function.primitives.tri.LongTriFunction;
+
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import java.util.Objects;
+import java.util.function.LongConsumer;
+import java.util.function.LongFunction;
 import java.util.function.LongUnaryOperator;
+import java.util.function.ToLongFunction;
+import java.util.function.UnaryOperator;
 
 /**
  * Represents an operation on a two {@code long}-valued operands and producing a {@code long}-valued result. This is the
@@ -110,20 +118,24 @@ public interface LongTernaryOperator {
     }
 
     /**
-     * Returns a composed {@link LongTernaryOperator} that first applies the given {@code before} operators to its
-     * input, and then applies this operator to the result. If evaluation of either operator throws an exception, it is
-     * relayed to the caller of the composed operator.
+     * Returns a composed {@link LongTernaryOperator} that first applies the {@code before} operators to its input, and
+     * then applies this operator to the result. If evaluation of either operator throws an exception, it is relayed to
+     * the caller of the composed operator.
      *
-     * @param before1 The first {@code LongUnaryOperator} to apply before this operator is applied
-     * @param before2 The second {@code LongUnaryOperator} to apply before this operator is applied
-     * @param before3 The third {@code LongUnaryOperator} to apply before this operator is applied
-     * @return A composed {@code LongTernaryOperator} that first applies the given {@code before} operators and then
-     * applies this operator.
-     * @throws NullPointerException If one of the given operators are {@code null}
+     * @param before1 The first operator to apply before this operator is applied
+     * @param before2 The second operator to apply before this operator is applied
+     * @param before3 The third operator to apply before this operator is applied
+     * @return A composed {@link LongTernaryOperator} that first applies the {@code before} operators to its input, and
+     * then applies this operator to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implNote The input arguments of this method are primitive specializations of {@link UnaryOperator}. Therefore
+     * the given operations handle primitive types. In this case this is {@code long}.
      * @see #andThen(LongUnaryOperator)
+     * @see #andThen(LongFunction)
      */
-    default LongTernaryOperator compose(final LongUnaryOperator before1, final LongUnaryOperator before2,
-            final LongUnaryOperator before3) {
+    @Nonnull
+    default LongTernaryOperator compose(@Nonnull final LongUnaryOperator before1,
+            @Nonnull final LongUnaryOperator before2, @Nonnull final LongUnaryOperator before3) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         Objects.requireNonNull(before3);
@@ -132,19 +144,86 @@ public interface LongTernaryOperator {
     }
 
     /**
+     * Returns a composed {@link ToLongTriFunction} that first applies the {@code before} operations to its input, and
+     * then applies this operator to the result. If evaluation of either operation throws an exception, it is relayed to
+     * the caller of the composed operation.
+     *
+     * @param <T> The type of the argument to the first before operation
+     * @param <U> The type of the argument to the second before operation
+     * @param <V> The type of the argument to the third before operation
+     * @param before1 The first operation to apply before this operator is applied
+     * @param before2 The second operation to apply before this operator is applied
+     * @param before3 The third operation to apply before this operator is applied
+     * @return A composed {@link ToLongTriFunction} that first applies the {@code before} operations to its input, and
+     * then applies this operator to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implNote The input arguments of this method are able to handle every type.
+     * @see #andThen(LongUnaryOperator)
+     * @see #andThen(LongFunction)
+     */
+    @Nonnull
+    default <T, U, V> ToLongTriFunction<T, U, V> compose(@Nonnull final ToLongFunction<? super T> before1,
+            @Nonnull final ToLongFunction<? super U> before2, @Nonnull final ToLongFunction<? super V> before3) {
+        Objects.requireNonNull(before1);
+        Objects.requireNonNull(before2);
+        Objects.requireNonNull(before3);
+        return (t, u, v) -> applyAsLong(before1.applyAsLong(t), before2.applyAsLong(u), before3.applyAsLong(v));
+    }
+
+    /**
      * Returns a composed {@link LongTernaryOperator} that first applies this operator to its input, and then applies
      * the {@code after} operator to the result. If evaluation of either operator throws an exception, it is relayed to
      * the caller of the composed operator.
      *
-     * @param after The {@code LongUnaryOperator} to apply after this operator is applied
-     * @return A composed {@code LongTernaryOperator} that first applies this operator and then applies the {@code
-     * after} operator.
-     * @throws NullPointerException If one of the given operators are {@code null}
+     * @param after The operator to apply after this operator is applied
+     * @return A composed {@link LongTernaryOperator} that first applies this operator to its input, and then applies
+     * the {@code after} operator to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implNote The result of this method is the primitive specialization of {@link TernaryOperator}. Therefore the
+     * returned operation handles primitive types. In this case this is {@code long}.
      * @see #compose(LongUnaryOperator, LongUnaryOperator, LongUnaryOperator)
+     * @see #compose(ToLongFunction, ToLongFunction, ToLongFunction)
      */
-    default LongTernaryOperator andThen(LongUnaryOperator after) {
+    @Nonnull
+    default LongTernaryOperator andThen(@Nonnull final LongUnaryOperator after) {
         Objects.requireNonNull(after);
         return (left, middle, right) -> after.applyAsLong(applyAsLong(left, middle, right));
+    }
+
+    /**
+     * Returns a composed {@link LongTriFunction} that first applies this operator to its input, and then applies the
+     * {@code after} operation to the result. If evaluation of either operation throws an exception, it is relayed to
+     * the caller of the composed operation.
+     *
+     * @param <R> The type of return value from the {@code after} operation, and of the composed operation
+     * @param after The operation to apply after this operator is applied
+     * @return A composed {@code LongTriFunction} that first applies this operator to its input, and then applies the
+     * {@code after} operation to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implNote The returned operation is able to handle every type.
+     * @see #compose(LongUnaryOperator, LongUnaryOperator, LongUnaryOperator)
+     * @see #compose(ToLongFunction, ToLongFunction, ToLongFunction)
+     */
+    @Nonnull
+    default <R> LongTriFunction<R> andThen(@Nonnull final LongFunction<? extends R> after) {
+        Objects.requireNonNull(after);
+        return (value1, value2, value3) -> after.apply(applyAsLong(value1, value2, value3));
+    }
+
+    /**
+     * Returns a composed {@link LongTriConsumer} that fist applies this operator to its input, and then consumes the
+     * result using the given {@code LongConsumer}. If evaluation of either operation throws an exception, it is relayed
+     * to the caller of the composed operation.
+     *
+     * @param consumer The operation which consumes the result from this operation
+     * @return A composed {@code LongTriConsumer} that first applies this operation to its input, and then consumes the
+     * result using the given {@code LongConsumer}.
+     * @throws NullPointerException If given argument is {@code null}
+     */
+    @Nonnull
+    default LongTriConsumer consume(@Nonnull final LongConsumer consumer) {
+        Objects.requireNonNull(consumer);
+        return (value1, value2, value3) -> consumer.accept(applyAsLong(value1, value2, value3));
     }
 
     /**

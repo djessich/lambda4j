@@ -158,14 +158,14 @@ public interface CharBinaryOperator {
     }
 
     /**
-     * Returns a composed {@link CharUnaryOperator} that first applies the {@code before} operators to its input, and
+     * Returns a composed {@link CharBinaryOperator} that first applies the {@code before} operators to its input, and
      * then applies this operator to the result. If evaluation of either operator throws an exception, it is relayed to
      * the caller of the composed operator.
      *
      * @param before1 The first operator to apply before this operator is applied
      * @param before2 The second operator to apply before this operator is applied
-     * @return A composed {@code CharUnaryOperator} that first applies the {@code before} operators and then applies
-     * this operator to the result.
+     * @return A composed {@link CharBinaryOperator} that first applies the {@code before} operators to its input, and
+     * then applies this operator to the result.
      * @throws NullPointerException If given argument is {@code null}
      * @implNote The input arguments of this method are primitive specializations of {@link UnaryOperator}. Therefore
      * the given operations handle primitive types. In this case this is {@code char}.
@@ -182,15 +182,15 @@ public interface CharBinaryOperator {
 
     /**
      * Returns a composed {@link ToCharBiFunction} that first applies the {@code before} operations to its input, and
-     * then applies this operator to the result. If evaluation of either operator throws an exception, it is relayed to
-     * the caller of the composed operator.
+     * then applies this operator to the result. If evaluation of either operation throws an exception, it is relayed to
+     * the caller of the composed operation.
      *
      * @param <T> The type of the argument to the first before operation
      * @param <U> The type of the argument to the second before operation
-     * @param before1 The first operator to apply before this operator is applied
-     * @param before2 The second operator to apply before this operator is applied
-     * @return A composed {@code ToCharBiFunction} that first applies the {@code before} operation and then applies this
-     * operator to the result.
+     * @param before1 The first operation to apply before this operator is applied
+     * @param before2 The second operation to apply before this operator is applied
+     * @return A composed {@link ToCharBiFunction} that first applies the {@code before} operations to its input, and
+     * then applies this operator to the result.
      * @throws NullPointerException If given argument is {@code null}
      * @implNote The input arguments of this method are able to handle every type.
      * @see #andThen(CharUnaryOperator)
@@ -226,13 +226,13 @@ public interface CharBinaryOperator {
 
     /**
      * Returns a composed {@link CharBiFunction} that first applies this operator to its input, and then applies the
-     * {@code after} operator to the result. If evaluation of either operation throws an exception, it is relayed to the
+     * {@code after} operation to the result. If evaluation of either operation throws an exception, it is relayed to the
      * caller of the composed operation.
      *
      * @param <R> The type of return value from the {@code after} operation, and of the composed operation
-     * @param after The operator to apply after this operator is applied
+     * @param after The operation to apply after this operator is applied
      * @return A composed {@code CharBiFunction} that first applies this operator to its input, and then applies the
-     * {@code after} operator to the result.
+     * {@code after} operation to the result.
      * @throws NullPointerException If given argument is {@code null}
      * @implNote The returned operation is able to handle every type.
      * @see #compose(CharUnaryOperator, CharUnaryOperator)

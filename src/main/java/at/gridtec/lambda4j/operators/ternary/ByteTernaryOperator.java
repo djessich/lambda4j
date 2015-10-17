@@ -15,11 +15,18 @@
  */
 package at.gridtec.lambda4j.operators.ternary;
 
+import at.gridtec.lambda4j.consumer.primitives.ByteConsumer;
+import at.gridtec.lambda4j.consumer.primitives.tri.ByteTriConsumer;
+import at.gridtec.lambda4j.function.primitives.ByteFunction;
+import at.gridtec.lambda4j.function.primitives.to.ToByteFunction;
+import at.gridtec.lambda4j.function.primitives.to.tri.ToByteTriFunction;
+import at.gridtec.lambda4j.function.primitives.tri.ByteTriFunction;
 import at.gridtec.lambda4j.operators.unary.ByteUnaryOperator;
 
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import java.util.Objects;
+import java.util.function.UnaryOperator;
 
 /**
  * Represents an operation on a two {@code byte}-valued operands and producing a {@code byte}-valued result. This is the
@@ -111,20 +118,24 @@ public interface ByteTernaryOperator {
     }
 
     /**
-     * Returns a composed {@link ByteTernaryOperator} that first applies the given {@code before} operators to its
-     * input, and then applies this operator to the result. If evaluation of either operator throws an exception, it is
-     * relayed to the caller of the composed operator.
+     * Returns a composed {@link ByteTernaryOperator} that first applies the {@code before} operators to its input, and
+     * then applies this operator to the result. If evaluation of either operator throws an exception, it is relayed to
+     * the caller of the composed operator.
      *
-     * @param before1 The first {@code ByteUnaryOperator} to apply before this operator is applied
-     * @param before2 The second {@code ByteUnaryOperator} to apply before this operator is applied
-     * @param before3 The third {@code ByteUnaryOperator} to apply before this operator is applied
-     * @return A composed {@code ByteTernaryOperator} that first applies the given {@code before} operators and then
-     * applies this operator.
-     * @throws NullPointerException If one of the given operators are {@code null}
+     * @param before1 The first operator to apply before this operator is applied
+     * @param before2 The second operator to apply before this operator is applied
+     * @param before3 The third operator to apply before this operator is applied
+     * @return A composed {@link ByteTernaryOperator} that first applies the {@code before} operators to its input, and
+     * then applies this operator to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implNote The input arguments of this method are primitive specializations of {@link UnaryOperator}. Therefore
+     * the given operations handle primitive types. In this case this is {@code byte}.
      * @see #andThen(ByteUnaryOperator)
+     * @see #andThen(ByteFunction)
      */
-    default ByteTernaryOperator compose(final ByteUnaryOperator before1, final ByteUnaryOperator before2,
-            final ByteUnaryOperator before3) {
+    @Nonnull
+    default ByteTernaryOperator compose(@Nonnull final ByteUnaryOperator before1,
+            @Nonnull final ByteUnaryOperator before2, @Nonnull final ByteUnaryOperator before3) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         Objects.requireNonNull(before3);
@@ -133,19 +144,86 @@ public interface ByteTernaryOperator {
     }
 
     /**
+     * Returns a composed {@link ToByteTriFunction} that first applies the {@code before} operations to its input, and
+     * then applies this operator to the result. If evaluation of either operation throws an exception, it is relayed to
+     * the caller of the composed operation.
+     *
+     * @param <T> The type of the argument to the first before operation
+     * @param <U> The type of the argument to the second before operation
+     * @param <V> The type of the argument to the third before operation
+     * @param before1 The first operation to apply before this operator is applied
+     * @param before2 The second operation to apply before this operator is applied
+     * @param before3 The third operation to apply before this operator is applied
+     * @return A composed {@link ToByteTriFunction} that first applies the {@code before} operations to its input, and
+     * then applies this operator to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implNote The input arguments of this method are able to handle every type.
+     * @see #andThen(ByteUnaryOperator)
+     * @see #andThen(ByteFunction)
+     */
+    @Nonnull
+    default <T, U, V> ToByteTriFunction<T, U, V> compose(@Nonnull final ToByteFunction<? super T> before1,
+            @Nonnull final ToByteFunction<? super U> before2, @Nonnull final ToByteFunction<? super V> before3) {
+        Objects.requireNonNull(before1);
+        Objects.requireNonNull(before2);
+        Objects.requireNonNull(before3);
+        return (t, u, v) -> applyAsByte(before1.applyAsByte(t), before2.applyAsByte(u), before3.applyAsByte(v));
+    }
+
+    /**
      * Returns a composed {@link ByteTernaryOperator} that first applies this operator to its input, and then applies
      * the {@code after} operator to the result. If evaluation of either operator throws an exception, it is relayed to
      * the caller of the composed operator.
      *
-     * @param after The {@code ByteUnaryOperator} to apply after this operator is applied
-     * @return A composed {@code ByteTernaryOperator} that first applies this operator and then applies the {@code
-     * after} operator.
-     * @throws NullPointerException If one of the given operators are {@code null}
+     * @param after The operator to apply after this operator is applied
+     * @return A composed {@link ByteTernaryOperator} that first applies this operator to its input, and then applies
+     * the {@code after} operator to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implNote The result of this method is the primitive specialization of {@link TernaryOperator}. Therefore the
+     * returned operation handles primitive types. In this case this is {@code byte}.
      * @see #compose(ByteUnaryOperator, ByteUnaryOperator, ByteUnaryOperator)
+     * @see #compose(ToByteFunction, ToByteFunction, ToByteFunction)
      */
-    default ByteTernaryOperator andThen(ByteUnaryOperator after) {
+    @Nonnull
+    default ByteTernaryOperator andThen(@Nonnull final ByteUnaryOperator after) {
         Objects.requireNonNull(after);
         return (left, middle, right) -> after.applyAsByte(applyAsByte(left, middle, right));
+    }
+
+    /**
+     * Returns a composed {@link ByteTriFunction} that first applies this operator to its input, and then applies the
+     * {@code after} operation to the result. If evaluation of either operation throws an exception, it is relayed to
+     * the caller of the composed operation.
+     *
+     * @param <R> The type of return value from the {@code after} operation, and of the composed operation
+     * @param after The operation to apply after this operator is applied
+     * @return A composed {@code ByteTriFunction} that first applies this operator to its input, and then applies the
+     * {@code after} operation to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implNote The returned operation is able to handle every type.
+     * @see #compose(ByteUnaryOperator, ByteUnaryOperator, ByteUnaryOperator)
+     * @see #compose(ToByteFunction, ToByteFunction, ToByteFunction)
+     */
+    @Nonnull
+    default <R> ByteTriFunction<R> andThen(@Nonnull final ByteFunction<? extends R> after) {
+        Objects.requireNonNull(after);
+        return (value1, value2, value3) -> after.apply(applyAsByte(value1, value2, value3));
+    }
+
+    /**
+     * Returns a composed {@link ByteTriConsumer} that fist applies this operator to its input, and then consumes the
+     * result using the given {@code ByteConsumer}. If evaluation of either operation throws an exception, it is relayed
+     * to the caller of the composed operation.
+     *
+     * @param consumer The operation which consumes the result from this operation
+     * @return A composed {@code ByteTriConsumer} that first applies this operation to its input, and then consumes the
+     * result using the given {@code ByteConsumer}.
+     * @throws NullPointerException If given argument is {@code null}
+     */
+    @Nonnull
+    default ByteTriConsumer consume(@Nonnull final ByteConsumer consumer) {
+        Objects.requireNonNull(consumer);
+        return (value1, value2, value3) -> consumer.accept(applyAsByte(value1, value2, value3));
     }
 
     /**
