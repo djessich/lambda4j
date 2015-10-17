@@ -15,6 +15,10 @@
  */
 package at.gridtec.lambda4j.operators.binary;
 
+import at.gridtec.lambda4j.consumer.primitives.BooleanConsumer;
+import at.gridtec.lambda4j.consumer.primitives.bi.BooleanBiConsumer;
+import at.gridtec.lambda4j.function.primitives.BooleanFunction;
+import at.gridtec.lambda4j.function.primitives.bi.BooleanBiFunction;
 import at.gridtec.lambda4j.operators.unary.BooleanUnaryOperator;
 
 import javax.annotation.Nonnegative;
@@ -23,6 +27,8 @@ import java.util.Comparator;
 import java.util.Objects;
 import java.util.function.BiPredicate;
 import java.util.function.BinaryOperator;
+import java.util.function.Predicate;
+import java.util.function.UnaryOperator;
 
 /**
  * Represents an operation on a two {@code boolean}-valued operands and producing a {@code boolean}-valued result. This
@@ -45,34 +51,6 @@ public interface BooleanBinaryOperator {
     @Nonnull
     static BooleanBinaryOperator constant(boolean ret) {
         return (left, right) -> ret;
-    }
-
-    /**
-     * Returns a {@link BooleanBinaryOperator} which returns the lesser of two elements, according to the specified
-     * {@code Comparator}.
-     *
-     * @param comparator A {@code Comparator} for comparing the operators operands
-     * @return A {@code BooleanBinaryOperator} which returns the lesser of two elements, according to the supplied
-     * {@code Comparator}.
-     * @throws NullPointerException If the given argument is {@code null}
-     */
-    static BooleanBinaryOperator minBy(final Comparator<? super Boolean> comparator) {
-        Objects.requireNonNull(comparator);
-        return (a, b) -> comparator.compare(a, b) <= 0 ? a : b;
-    }
-
-    /**
-     * Returns a {@link BooleanBinaryOperator} which returns the greater of two elements, according to the specified
-     * {@code Comparator}.
-     *
-     * @param comparator A {@code Comparator} for comparing the operators operands
-     * @return A {@code BooleanBinaryOperator} which returns the greater of two elements, according to the supplied
-     * {@code Comparator}.
-     * @throws NullPointerException If the given argument is {@code null}
-     */
-    static BooleanBinaryOperator maxBy(final Comparator<? super Boolean> comparator) {
-        Objects.requireNonNull(comparator);
-        return (a, b) -> comparator.compare(a, b) >= 0 ? a : b;
     }
 
     /**
@@ -103,6 +81,38 @@ public interface BooleanBinaryOperator {
     static BooleanBinaryOperator onlyRight(@Nonnull final BooleanUnaryOperator operator) {
         Objects.requireNonNull(operator);
         return (left, right) -> operator.applyAsBoolean(right);
+    }
+
+    /**
+     * Returns a {@link BooleanBinaryOperator} which returns the lesser of two elements, according to the specified
+     * {@link Comparator}.
+     *
+     * @param comparator A {@code Comparator} for comparing the operators operands
+     * @return A {@code BooleanBinaryOperator} which returns the lesser of two elements, according to the specified
+     * {@code Comparator}.
+     * @throws NullPointerException If the given argument is {@code null}
+     * @see BinaryOperator#minBy(Comparator)
+     */
+    @Nonnull
+    static BooleanBinaryOperator minBy(@Nonnull final Comparator<? super Boolean> comparator) {
+        Objects.requireNonNull(comparator);
+        return (a, b) -> comparator.compare(a, b) <= 0 ? a : b;
+    }
+
+    /**
+     * Returns a {@link BooleanBinaryOperator} which returns the greater of two elements, according to the specified
+     * {@link Comparator}.
+     *
+     * @param comparator A {@code Comparator} for comparing the operators operands
+     * @return A {@code BooleanBinaryOperator} which returns the greater of two elements, according to the specified
+     * {@code Comparator}.
+     * @throws NullPointerException If the given argument is {@code null}
+     * @see BinaryOperator#maxBy(Comparator)
+     */
+    @Nonnull
+    static BooleanBinaryOperator maxBy(@Nonnull final Comparator<? super Boolean> comparator) {
+        Objects.requireNonNull(comparator);
+        return (a, b) -> comparator.compare(a, b) >= 0 ? a : b;
     }
 
     /**
@@ -275,21 +285,50 @@ public interface BooleanBinaryOperator {
     }
 
     /**
-     * Returns a composed {@link BooleanBinaryOperator} that first applies the given {@code before} operators to its
-     * input, and then applies this operator to the result. If evaluation of either operator throws an exception, it is
-     * relayed to the caller of the composed operator.
+     * Returns a composed {@link BooleanUnaryOperator} that first applies the {@code before} operators to its input, and
+     * then applies this operator to the result. If evaluation of either operator throws an exception, it is relayed to
+     * the caller of the composed operator.
      *
-     * @param before1 The first {@code BooleanUnaryOperator} to apply before this operator is applied
-     * @param before2 The second {@code BooleanUnaryOperator} to apply before this operator is applied
-     * @return A composed {@code BooleanBinaryOperator} that first applies the given {@code before} operators and then
-     * applies this operator.
-     * @throws NullPointerException If one of the given operators are {@code null}
+     * @param before1 The first operator to apply before this operator is applied
+     * @param before2 The second operator to apply before this operator is applied
+     * @return A composed {@code BooleanUnaryOperator} that first applies the {@code before} operators and then applies
+     * this operator to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implNote The input arguments of this method are primitive specializations of {@link UnaryOperator}. Therefore
+     * the given operations handle primitive types. In this case this is {@code boolean}.
      * @see #andThen(BooleanUnaryOperator)
+     * @see #andThen(BooleanFunction)
      */
-    default BooleanBinaryOperator compose(final BooleanUnaryOperator before1, final BooleanUnaryOperator before2) {
+    @Nonnull
+    default BooleanBinaryOperator compose(@Nonnull final BooleanUnaryOperator before1,
+            @Nonnull final BooleanUnaryOperator before2) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         return (left, right) -> applyAsBoolean(before1.applyAsBoolean(left), before2.applyAsBoolean(right));
+    }
+
+    /**
+     * Returns a composed {@link BiPredicate} that first applies the {@code before} operations to its input, and then
+     * applies this operator to the result. If evaluation of either operator throws an exception, it is relayed to the
+     * caller of the composed operator.
+     *
+     * @param <T> The type of the argument to the first before operation
+     * @param <U> The type of the argument to the second before operation
+     * @param before1 The first operator to apply before this operator is applied
+     * @param before2 The second operator to apply before this operator is applied
+     * @return A composed {@code BiPredicate} that first applies the {@code before} operation and then applies this
+     * operator to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implNote The input arguments of this method are able to handle every type.
+     * @see #andThen(BooleanUnaryOperator)
+     * @see #andThen(BooleanFunction)
+     */
+    @Nonnull
+    default <T, U> BiPredicate<T, U> compose(@Nonnull final Predicate<? super T> before1,
+            @Nonnull final Predicate<? super U> before2) {
+        Objects.requireNonNull(before1);
+        Objects.requireNonNull(before2);
+        return (t, u) -> applyAsBoolean(before1.test(t), before2.test(u));
     }
 
     /**
@@ -297,15 +336,55 @@ public interface BooleanBinaryOperator {
      * the {@code after} operator to the result. If evaluation of either operator throws an exception, it is relayed to
      * the caller of the composed operator.
      *
-     * @param after The {@code BooleanUnaryOperator} to apply after this operator is applied
-     * @return A composed {@code BooleanBinaryOperator} that first applies this operator and then applies the {@code
-     * after} operator.
-     * @throws NullPointerException If one of the given operators are {@code null}
+     * @param after The operator to apply after this operator is applied
+     * @return A composed {@code BooleanBinaryOperator} that first applies this operator to its input, and then applies
+     * the {@code after} operator to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implNote The result of this method is the primitive specialization of {@link BinaryOperator}. Therefore the
+     * returned operation handles primitive types. In this case this is {@code boolean}.
      * @see #compose(BooleanUnaryOperator, BooleanUnaryOperator)
+     * @see #compose(Predicate, Predicate)
      */
-    default BooleanBinaryOperator andThen(BooleanUnaryOperator after) {
+    @Nonnull
+    default BooleanBinaryOperator andThen(@Nonnull final BooleanUnaryOperator after) {
         Objects.requireNonNull(after);
         return (left, right) -> after.applyAsBoolean(applyAsBoolean(left, right));
+    }
+
+    /**
+     * Returns a composed {@link BooleanBiFunction} that first applies this operator to its input, and then applies the
+     * {@code after} operator to the result. If evaluation of either operation throws an exception, it is relayed to the
+     * caller of the composed operation.
+     *
+     * @param <R> The type of return value from the {@code after} operation, and of the composed operation
+     * @param after The operator to apply after this operator is applied
+     * @return A composed {@code BooleanBiFunction} that first applies this operator to its input, and then applies the
+     * {@code after} operator to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implNote The returned operation is able to handle every type.
+     * @see #compose(BooleanUnaryOperator, BooleanUnaryOperator)
+     * @see #compose(Predicate, Predicate)
+     */
+    @Nonnull
+    default <R> BooleanBiFunction<R> andThen(@Nonnull final BooleanFunction<? extends R> after) {
+        Objects.requireNonNull(after);
+        return (value1, value2) -> after.apply(applyAsBoolean(value1, value2));
+    }
+
+    /**
+     * Returns a composed {@link BooleanBiConsumer} that fist applies this operator to its input, and then consumes the
+     * result using the given {@code BooleanConsumer}. If evaluation of either operation throws an exception, it is
+     * relayed to the caller of the composed operation.
+     *
+     * @param consumer The operation which consumes the result from this operation
+     * @return A composed {@code BooleanBiConsumer} that first applies this operation to its input, and then consumes
+     * the result using the given {@code BooleanConsumer}.
+     * @throws NullPointerException If given argument is {@code null}
+     */
+    @Nonnull
+    default BooleanBiConsumer consume(@Nonnull final BooleanConsumer consumer) {
+        Objects.requireNonNull(consumer);
+        return (value1, value2) -> consumer.accept(applyAsBoolean(value1, value2));
     }
 
     /**

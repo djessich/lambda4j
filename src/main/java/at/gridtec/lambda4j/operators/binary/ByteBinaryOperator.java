@@ -15,6 +15,12 @@
  */
 package at.gridtec.lambda4j.operators.binary;
 
+import at.gridtec.lambda4j.consumer.primitives.ByteConsumer;
+import at.gridtec.lambda4j.consumer.primitives.bi.ByteBiConsumer;
+import at.gridtec.lambda4j.function.primitives.ByteFunction;
+import at.gridtec.lambda4j.function.primitives.bi.ByteBiFunction;
+import at.gridtec.lambda4j.function.primitives.to.ToByteFunction;
+import at.gridtec.lambda4j.function.primitives.to.bi.ToByteBiFunction;
 import at.gridtec.lambda4j.operators.unary.ByteUnaryOperator;
 
 import javax.annotation.Nonnegative;
@@ -22,6 +28,7 @@ import javax.annotation.Nonnull;
 import java.util.Comparator;
 import java.util.Objects;
 import java.util.function.BinaryOperator;
+import java.util.function.UnaryOperator;
 
 /**
  * Represents an operation on a two {@code byte}-valued operands and producing a {@code byte}-valued result. This is the
@@ -44,56 +51,6 @@ public interface ByteBinaryOperator {
     @Nonnull
     static ByteBinaryOperator constant(byte ret) {
         return (left, right) -> ret;
-    }
-
-    /**
-     * Returns a {@link ByteBinaryOperator} which returns the lesser of two elements, according to the specified {@code
-     * Comparator}.
-     *
-     * @param comparator A {@code Comparator} for comparing the operators operands
-     * @return A {@code ByteBinaryOperator} which returns the lesser of two elements, according to the supplied {@code
-     * Comparator}.
-     * @throws NullPointerException If the given argument is {@code null}
-     */
-    static ByteBinaryOperator minBy(final Comparator<? super Byte> comparator) {
-        Objects.requireNonNull(comparator);
-        return (a, b) -> comparator.compare(a, b) <= 0 ? a : b;
-    }
-
-    /**
-     * Returns a {@link ByteBinaryOperator} which returns the greater of two elements, according to the specified {@code
-     * Comparator}.
-     *
-     * @param comparator A {@code Comparator} for comparing the operators operands
-     * @return A {@code ByteBinaryOperator} which returns the greater of two elements, according to the supplied {@code
-     * Comparator}.
-     * @throws NullPointerException If the given argument is {@code null}
-     */
-    static ByteBinaryOperator maxBy(final Comparator<? super Byte> comparator) {
-        Objects.requireNonNull(comparator);
-        return (a, b) -> comparator.compare(a, b) >= 0 ? a : b;
-    }
-
-    /**
-     * Returns a {@link ByteBinaryOperator} which returns the lesser of two elements according to {@code left &lt;=
-     * right} operation.
-     *
-     * @return A {@code ByteBinaryOperator} which returns the lesser of two elements.
-     * @see BinaryOperator#minBy(Comparator)
-     */
-    static ByteBinaryOperator min() {
-        return (left, right) -> (left <= right) ? left : right;
-    }
-
-    /**
-     * Returns a {@link ByteBinaryOperator} which returns the greater of two elements according to {@code left &gt;=
-     * right} operation.
-     *
-     * @return A {@code ByteBinaryOperator} which returns the greater of two elements.
-     * @see BinaryOperator#maxBy(Comparator)
-     */
-    static ByteBinaryOperator max() {
-        return (left, right) -> (left >= right) ? left : right;
     }
 
     /**
@@ -127,6 +84,60 @@ public interface ByteBinaryOperator {
     }
 
     /**
+     * Returns a {@link ByteBinaryOperator} which returns the lesser of two elements according to {@code left &lt;=
+     * right} operation.
+     *
+     * @return A {@code ByteBinaryOperator} which returns the lesser of two elements.
+     */
+    @Nonnull
+    static ByteBinaryOperator min() {
+        return (left, right) -> (left <= right) ? left : right;
+    }
+
+    /**
+     * Returns a {@link ByteBinaryOperator} which returns the greater of two elements according to {@code left &gt;=
+     * right} operation.
+     *
+     * @return A {@code ByteBinaryOperator} which returns the greater of two elements.
+     */
+    @Nonnull
+    static ByteBinaryOperator max() {
+        return (left, right) -> (left >= right) ? left : right;
+    }
+
+    /**
+     * Returns a {@link ByteBinaryOperator} which returns the lesser of two elements, according to the specified {@link
+     * Comparator}.
+     *
+     * @param comparator A {@code Comparator} for comparing the operators operands
+     * @return A {@code ByteBinaryOperator} which returns the lesser of two elements, according to the specified {@code
+     * Comparator}.
+     * @throws NullPointerException If the given argument is {@code null}
+     * @see BinaryOperator#minBy(Comparator)
+     */
+    @Nonnull
+    static ByteBinaryOperator minBy(@Nonnull final Comparator<? super Byte> comparator) {
+        Objects.requireNonNull(comparator);
+        return (a, b) -> comparator.compare(a, b) <= 0 ? a : b;
+    }
+
+    /**
+     * Returns a {@link ByteBinaryOperator} which returns the greater of two elements, according to the specified {@link
+     * Comparator}.
+     *
+     * @param comparator A {@code Comparator} for comparing the operators operands
+     * @return A {@code ByteBinaryOperator} which returns the greater of two elements, according to the specified {@code
+     * Comparator}.
+     * @throws NullPointerException If the given argument is {@code null}
+     * @see BinaryOperator#maxBy(Comparator)
+     */
+    @Nonnull
+    static ByteBinaryOperator maxBy(@Nonnull final Comparator<? super Byte> comparator) {
+        Objects.requireNonNull(comparator);
+        return (a, b) -> comparator.compare(a, b) >= 0 ? a : b;
+    }
+
+    /**
      * Applies this operator to the given arguments.
      *
      * @param left The first argument to the operator (left input)
@@ -147,21 +158,50 @@ public interface ByteBinaryOperator {
     }
 
     /**
-     * Returns a composed {@link ByteBinaryOperator} that first applies the given {@code before} operators to its input,
-     * and then applies this operator to the result. If evaluation of either operator throws an exception, it is relayed
-     * to the caller of the composed operator.
+     * Returns a composed {@link ByteUnaryOperator} that first applies the {@code before} operators to its input, and
+     * then applies this operator to the result. If evaluation of either operator throws an exception, it is relayed to
+     * the caller of the composed operator.
      *
-     * @param before1 The first {@code ByteUnaryOperator} to apply before this operator is applied
-     * @param before2 The second {@code ByteUnaryOperator} to apply before this operator is applied
-     * @return A composed {@code ByteBinaryOperator} that first applies the given {@code before} operators and then
-     * applies this operator.
-     * @throws NullPointerException If one of the given operators are {@code null}
+     * @param before1 The first operator to apply before this operator is applied
+     * @param before2 The second operator to apply before this operator is applied
+     * @return A composed {@code ByteUnaryOperator} that first applies the {@code before} operators and then applies
+     * this operator to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implNote The input arguments of this method are primitive specializations of {@link UnaryOperator}. Therefore
+     * the given operations handle primitive types. In this case this is {@code byte}.
      * @see #andThen(ByteUnaryOperator)
+     * @see #andThen(ByteFunction)
      */
-    default ByteBinaryOperator compose(final ByteUnaryOperator before1, final ByteUnaryOperator before2) {
+    @Nonnull
+    default ByteBinaryOperator compose(@Nonnull final ByteUnaryOperator before1,
+            @Nonnull final ByteUnaryOperator before2) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         return (left, right) -> applyAsByte(before1.applyAsByte(left), before2.applyAsByte(right));
+    }
+
+    /**
+     * Returns a composed {@link ToByteBiFunction} that first applies the {@code before} operations to its input, and
+     * then applies this operator to the result. If evaluation of either operator throws an exception, it is relayed to
+     * the caller of the composed operator.
+     *
+     * @param <T> The type of the argument to the first before operation
+     * @param <U> The type of the argument to the second before operation
+     * @param before1 The first operator to apply before this operator is applied
+     * @param before2 The second operator to apply before this operator is applied
+     * @return A composed {@code ToByteBiFunction} that first applies the {@code before} operation and then applies this
+     * operator to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implNote The input arguments of this method are able to handle every type.
+     * @see #andThen(ByteUnaryOperator)
+     * @see #andThen(ByteFunction)
+     */
+    @Nonnull
+    default <T, U> ToByteBiFunction<T, U> compose(@Nonnull final ToByteFunction<? super T> before1,
+            @Nonnull final ToByteFunction<? super U> before2) {
+        Objects.requireNonNull(before1);
+        Objects.requireNonNull(before2);
+        return (t, u) -> applyAsByte(before1.applyAsByte(t), before2.applyAsByte(u));
     }
 
     /**
@@ -169,15 +209,55 @@ public interface ByteBinaryOperator {
      * {@code after} operator to the result. If evaluation of either operator throws an exception, it is relayed to the
      * caller of the composed operator.
      *
-     * @param after The {@code ByteUnaryOperator} to apply after this operator is applied
-     * @return A composed {@code ByteBinaryOperator} that first applies this operator and then applies the {@code after}
-     * operator.
-     * @throws NullPointerException If one of the given operators are {@code null}
+     * @param after The operator to apply after this operator is applied
+     * @return A composed {@code ByteBinaryOperator} that first applies this operator to its input, and then applies the
+     * {@code after} operator to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implNote The result of this method is the primitive specialization of {@link BinaryOperator}. Therefore the
+     * returned operation handles primitive types. In this case this is {@code byte}.
      * @see #compose(ByteUnaryOperator, ByteUnaryOperator)
+     * @see #compose(ToByteFunction, ToByteFunction)
      */
-    default ByteBinaryOperator andThen(ByteUnaryOperator after) {
+    @Nonnull
+    default ByteBinaryOperator andThen(@Nonnull final ByteUnaryOperator after) {
         Objects.requireNonNull(after);
         return (left, right) -> after.applyAsByte(applyAsByte(left, right));
+    }
+
+    /**
+     * Returns a composed {@link ByteBiFunction} that first applies this operator to its input, and then applies the
+     * {@code after} operator to the result. If evaluation of either operation throws an exception, it is relayed to the
+     * caller of the composed operation.
+     *
+     * @param <R> The type of return value from the {@code after} operation, and of the composed operation
+     * @param after The operator to apply after this operator is applied
+     * @return A composed {@code ByteBiFunction} that first applies this operator to its input, and then applies the
+     * {@code after} operator to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implNote The returned operation is able to handle every type.
+     * @see #compose(ByteUnaryOperator, ByteUnaryOperator)
+     * @see #compose(ToByteFunction, ToByteFunction)
+     */
+    @Nonnull
+    default <R> ByteBiFunction<R> andThen(@Nonnull final ByteFunction<? extends R> after) {
+        Objects.requireNonNull(after);
+        return (value1, value2) -> after.apply(applyAsByte(value1, value2));
+    }
+
+    /**
+     * Returns a composed {@link ByteBiConsumer} that fist applies this operator to its input, and then consumes the
+     * result using the given {@code ByteConsumer}. If evaluation of either operation throws an exception, it is relayed
+     * to the caller of the composed operation.
+     *
+     * @param consumer The operation which consumes the result from this operation
+     * @return A composed {@code ByteBiConsumer} that first applies this operation to its input, and then consumes the
+     * result using the given {@code ByteConsumer}.
+     * @throws NullPointerException If given argument is {@code null}
+     */
+    @Nonnull
+    default ByteBiConsumer consume(@Nonnull final ByteConsumer consumer) {
+        Objects.requireNonNull(consumer);
+        return (value1, value2) -> consumer.accept(applyAsByte(value1, value2));
     }
 
     /**
