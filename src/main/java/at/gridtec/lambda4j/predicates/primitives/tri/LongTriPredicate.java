@@ -54,6 +54,7 @@ public interface LongTriPredicate {
      * @return A {@code LongTriPredicate} that tests if the given arguments are equal to the ones of this predicate.
      * @see #isNotEqual(long, long, long)
      */
+    @Nonnull
     static LongTriPredicate isEqual(long target1, long target2, long target3) {
         return (value1, value2, value3) -> (value1 == target1) && (value2 == target2) && (value3 == target3);
     }
@@ -68,6 +69,7 @@ public interface LongTriPredicate {
      * @return A {@code LongTriPredicate} that tests if the given arguments are not equal to the ones of this predicate.
      * @see #isEqual(long, long, long)
      */
+    @Nonnull
     static LongTriPredicate isNotEqual(long target1, long target2, long target3) {
         return (value1, value2, value3) -> (value1 != target1) && (value2 != target2) && (value3 != target3);
     }
@@ -132,7 +134,7 @@ public interface LongTriPredicate {
      * predicate is not evaluated.
      * <p>
      * Any exceptions thrown during evaluation of either predicate are relayed to the caller; if evaluation of this
-     * {@code LongTriPredicate} throws an exception, the {@code other} {@code LongTriPredicate} will not be evaluated.
+     * {@code LongTriPredicate} throws an exception, the {@code other} predicate will not be evaluated.
      *
      * @param other A {@code LongTriPredicate} that will be logically-ANDed with this one
      * @return A composed {@code LongTriPredicate} that represents the short-circuiting logical AND of this predicate
@@ -142,7 +144,8 @@ public interface LongTriPredicate {
      * @see #xor(LongTriPredicate)
      * @see TriPredicate#and(TriPredicate)
      */
-    default LongTriPredicate and(final LongTriPredicate other) {
+    @Nonnull
+    default LongTriPredicate and(@Nonnull final LongTriPredicate other) {
         Objects.requireNonNull(other);
         return (value1, value2, value3) -> test(value1, value2, value3) && other.test(value1, value2, value3);
     }

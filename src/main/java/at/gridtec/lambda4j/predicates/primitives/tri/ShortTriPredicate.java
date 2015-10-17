@@ -54,6 +54,7 @@ public interface ShortTriPredicate {
      * @return A {@code ShortTriPredicate} that tests if the given arguments are equal to the ones of this predicate.
      * @see #isNotEqual(short, short, short)
      */
+    @Nonnull
     static ShortTriPredicate isEqual(short target1, short target2, short target3) {
         return (value1, value2, value3) -> (value1 == target1) && (value2 == target2) && (value3 == target3);
     }
@@ -69,6 +70,7 @@ public interface ShortTriPredicate {
      * predicate.
      * @see #isEqual(short, short, short)
      */
+    @Nonnull
     static ShortTriPredicate isNotEqual(short target1, short target2, short target3) {
         return (value1, value2, value3) -> (value1 != target1) && (value2 != target2) && (value3 != target3);
     }
@@ -133,8 +135,7 @@ public interface ShortTriPredicate {
      * predicate is not evaluated.
      * <p>
      * Any exceptions thrown during evaluation of either predicate are relayed to the caller; if evaluation of this
-     * {@code ShortTriPredicate} throws an exception, the {@code other} {@code ShortTriPredicate} will not be
-     * evaluated.
+     * {@code ShortTriPredicate} throws an exception, the {@code other} predicate will not be evaluated.
      *
      * @param other A {@code ShortTriPredicate} that will be logically-ANDed with this one
      * @return A composed {@code ShortTriPredicate} that represents the short-circuiting logical AND of this predicate
@@ -144,7 +145,8 @@ public interface ShortTriPredicate {
      * @see #xor(ShortTriPredicate)
      * @see TriPredicate#and(TriPredicate)
      */
-    default ShortTriPredicate and(final ShortTriPredicate other) {
+    @Nonnull
+    default ShortTriPredicate and(@Nonnull final ShortTriPredicate other) {
         Objects.requireNonNull(other);
         return (value1, value2, value3) -> test(value1, value2, value3) && other.test(value1, value2, value3);
     }

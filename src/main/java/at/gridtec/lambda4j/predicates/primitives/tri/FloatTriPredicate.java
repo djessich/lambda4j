@@ -54,6 +54,7 @@ public interface FloatTriPredicate {
      * @return A {@code FloatTriPredicate} that tests if the given arguments are equal to the ones of this predicate.
      * @see #isNotEqual(float, float, float)
      */
+    @Nonnull
     static FloatTriPredicate isEqual(float target1, float target2, float target3) {
         return (value1, value2, value3) -> (value1 == target1) && (value2 == target2) && (value3 == target3);
     }
@@ -69,6 +70,7 @@ public interface FloatTriPredicate {
      * predicate.
      * @see #isEqual(float, float, float)
      */
+    @Nonnull
     static FloatTriPredicate isNotEqual(float target1, float target2, float target3) {
         return (value1, value2, value3) -> (value1 != target1) && (value2 != target2) && (value3 != target3);
     }
@@ -133,8 +135,7 @@ public interface FloatTriPredicate {
      * predicate is not evaluated.
      * <p>
      * Any exceptions thrown during evaluation of either predicate are relayed to the caller; if evaluation of this
-     * {@code FloatTriPredicate} throws an exception, the {@code other} {@code FloatTriPredicate} will not be
-     * evaluated.
+     * {@code FloatTriPredicate} throws an exception, the {@code other} predicate will not be evaluated.
      *
      * @param other A {@code FloatTriPredicate} that will be logically-ANDed with this one
      * @return A composed {@code FloatTriPredicate} that represents the short-circuiting logical AND of this predicate
@@ -144,7 +145,8 @@ public interface FloatTriPredicate {
      * @see #xor(FloatTriPredicate)
      * @see TriPredicate#and(TriPredicate)
      */
-    default FloatTriPredicate and(final FloatTriPredicate other) {
+    @Nonnull
+    default FloatTriPredicate and(@Nonnull final FloatTriPredicate other) {
         Objects.requireNonNull(other);
         return (value1, value2, value3) -> test(value1, value2, value3) && other.test(value1, value2, value3);
     }

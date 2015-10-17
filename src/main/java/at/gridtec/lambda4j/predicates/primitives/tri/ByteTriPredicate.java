@@ -54,6 +54,7 @@ public interface ByteTriPredicate {
      * @return A {@code ByteTriPredicate} that tests if the given arguments are equal to the ones of this predicate.
      * @see #isNotEqual(byte, byte, byte)
      */
+    @Nonnull
     static ByteTriPredicate isEqual(byte target1, byte target2, byte target3) {
         return (value1, value2, value3) -> (value1 == target1) && (value2 == target2) && (value3 == target3);
     }
@@ -68,6 +69,7 @@ public interface ByteTriPredicate {
      * @return A {@code ByteTriPredicate} that tests if the given arguments are not equal to the ones of this predicate.
      * @see #isEqual(byte, byte, byte)
      */
+    @Nonnull
     static ByteTriPredicate isNotEqual(byte target1, byte target2, byte target3) {
         return (value1, value2, value3) -> (value1 != target1) && (value2 != target2) && (value3 != target3);
     }
@@ -132,7 +134,7 @@ public interface ByteTriPredicate {
      * predicate is not evaluated.
      * <p>
      * Any exceptions thrown during evaluation of either predicate are relayed to the caller; if evaluation of this
-     * {@code ByteTriPredicate} throws an exception, the {@code other} {@code ByteTriPredicate} will not be evaluated.
+     * {@code ByteTriPredicate} throws an exception, the {@code other} predicate will not be evaluated.
      *
      * @param other A {@code ByteTriPredicate} that will be logically-ANDed with this one
      * @return A composed {@code ByteTriPredicate} that represents the short-circuiting logical AND of this predicate
@@ -142,7 +144,8 @@ public interface ByteTriPredicate {
      * @see #xor(ByteTriPredicate)
      * @see TriPredicate#and(TriPredicate)
      */
-    default ByteTriPredicate and(final ByteTriPredicate other) {
+    @Nonnull
+    default ByteTriPredicate and(@Nonnull final ByteTriPredicate other) {
         Objects.requireNonNull(other);
         return (value1, value2, value3) -> test(value1, value2, value3) && other.test(value1, value2, value3);
     }

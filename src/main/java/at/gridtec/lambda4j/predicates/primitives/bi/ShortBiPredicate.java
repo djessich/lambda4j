@@ -52,6 +52,7 @@ public interface ShortBiPredicate {
      * @return A {@code ShortBiPredicate} that tests if the given arguments are equal to the ones of this predicate.
      * @see #isNotEqual(short, short)
      */
+    @Nonnull
     static ShortBiPredicate isEqual(short target1, short target2) {
         return (value1, value2) -> (value1 == target1) && (value2 == target2);
     }
@@ -65,6 +66,7 @@ public interface ShortBiPredicate {
      * @return A {@code ShortBiPredicate} that tests if the given arguments are not equal to the ones of this predicate.
      * @see #isEqual(short, short)
      */
+    @Nonnull
     static ShortBiPredicate isNotEqual(short target1, short target2) {
         return (value1, value2) -> (value1 != target1) || (value2 != target2);
     }
@@ -128,7 +130,7 @@ public interface ShortBiPredicate {
      * predicate is not evaluated.
      * <p>
      * Any exceptions thrown during evaluation of either predicate are relayed to the caller; if evaluation of this
-     * {@code ShortBiPredicate} throws an exception, the {@code other} {@code ShortBiPredicate} will not be evaluated.
+     * {@code ShortBiPredicate} throws an exception, the {@code other} predicate will not be evaluated.
      *
      * @param other A {@code ShortBiPredicate} that will be logically-ANDed with this one
      * @return A composed {@code ShortBiPredicate} that represents the short-circuiting logical AND of this predicate
@@ -138,7 +140,8 @@ public interface ShortBiPredicate {
      * @see #xor(ShortBiPredicate)
      * @see BiPredicate#and(BiPredicate)
      */
-    default ShortBiPredicate and(final ShortBiPredicate other) {
+    @Nonnull
+    default ShortBiPredicate and(@Nonnull final ShortBiPredicate other) {
         Objects.requireNonNull(other);
         return (value1, value2) -> test(value1, value2) && other.test(value1, value2);
     }

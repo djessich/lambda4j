@@ -17,6 +17,7 @@ package at.gridtec.lambda4j.predicates;
 
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.util.Objects;
 import java.util.function.Predicate;
 
@@ -62,9 +63,10 @@ public interface TriPredicate<T, U, V> {
      * @return A {@code TriPredicate} that tests if the given arguments are equal to the ones of this predicate.
      * @see #isNotEqual(Object, Object, Object)
      */
+    @Nonnull
     //@formatter:off
-    static <T, U, V> TriPredicate<T, U, V> isEqual(final Object targetRef1, final Object targetRef2,
-            final Object targetRef3) {
+    static <T, U, V> TriPredicate<T, U, V> isEqual(@Nullable Object targetRef1, @Nullable Object targetRef2,
+            @Nullable Object targetRef3) {
         return (t, u, v) -> (t == null ? targetRef1 == null : t.equals(targetRef1))
                 && (u == null ? targetRef2 == null : u.equals(targetRef2))
                 && (v == null ? targetRef3 == null : v.equals(targetRef3));
@@ -84,9 +86,10 @@ public interface TriPredicate<T, U, V> {
      * @return A {@code TriPredicate} that tests if the given arguments are not equal to the ones of this predicate.
      * @see #isEqual(Object, Object, Object)
      */
+    @Nonnull
     //@formatter:off
-    static <T, U, V> TriPredicate<T, U, V> isNotEqual(final Object targetRef1, final Object targetRef2,
-            final Object targetRef3) {
+    static <T, U, V> TriPredicate<T, U, V> isNotEqual(@Nullable Object targetRef1, @Nullable Object targetRef2,
+            @Nullable Object targetRef3) {
         return (t, u, v) -> !(t == null ? targetRef1 == null : t.equals(targetRef1))
                 || !(u == null ? targetRef2 == null : u.equals(targetRef2))
                 || !(v == null ? targetRef3 == null : v.equals(targetRef3));
@@ -158,7 +161,7 @@ public interface TriPredicate<T, U, V> {
      * predicate is not evaluated.
      * <p>
      * Any exceptions thrown during evaluation of either predicate are relayed to the caller; if evaluation of this
-     * {@code TriPredicate} throws an exception, the {@code other} {@code TriPredicate} will not be evaluated.
+     * {@code TriPredicate} throws an exception, the {@code other} predicate will not be evaluated.
      *
      * @param other A {@code TriPredicate} that will be logically-ANDed with this one
      * @return A composed {@code TriPredicate} that represents the short-circuiting logical AND of this predicate and
@@ -167,7 +170,8 @@ public interface TriPredicate<T, U, V> {
      * @see #or(TriPredicate)
      * @see #xor(TriPredicate)
      */
-    default TriPredicate<T, U, V> and(final TriPredicate<? super T, ? super U, ? super V> other) {
+    @Nonnull
+    default TriPredicate<T, U, V> and(@Nonnull final TriPredicate<? super T, ? super U, ? super V> other) {
         Objects.requireNonNull(other);
         return (t, u, v) -> test(t, u, v) && other.test(t, u, v);
     }

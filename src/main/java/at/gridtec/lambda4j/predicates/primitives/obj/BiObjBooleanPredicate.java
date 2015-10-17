@@ -19,6 +19,7 @@ import at.gridtec.lambda4j.predicates.TriPredicate;
 
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.util.Objects;
 import java.util.function.BiPredicate;
 
@@ -55,14 +56,16 @@ public interface BiObjBooleanPredicate<T, U> {
      *
      * @param <T> The type of the first argument to the predicate
      * @param <U> The type of the second argument to the predicate
-     * @param targetRef1 The first target value with which to compare for equality
-     * @param targetRef2 The second target value with which to compare for equality
-     * @param targetValue The third target value with which to compare for equality
+     * @param targetRef1 The first target reference with which to compare for equality, which may be {@code null}
+     * @param targetRef2 The second target reference with which to compare for equality, which may be {@code null}
+     * @param targetValue The target value with which to compare for equality
      * @return A {@code BiObjBooleanPredicate} that tests if the given arguments are equal to the ones of this
      * predicate.
      * @see #isNotEqual(Object, Object, boolean)
      */
-    static <T, U> BiObjBooleanPredicate<T, U> isEqual(Object targetRef1, Object targetRef2, boolean targetValue) {
+    @Nonnull
+    static <T, U> BiObjBooleanPredicate<T, U> isEqual(@Nullable Object targetRef1, @Nullable Object targetRef2,
+            boolean targetValue) {
         return (t, u, value) -> (t == null ? targetRef1 == null : t.equals(targetRef1)) && (t == null ? targetRef2
                 == null : t.equals(targetRef2)) && (value == targetValue);
     }
@@ -73,14 +76,16 @@ public interface BiObjBooleanPredicate<T, U> {
      *
      * @param <T> The type of the first argument to the predicate
      * @param <U> The type of the second argument to the predicate
-     * @param targetRef1 The first target value with which to compare for equality
-     * @param targetRef2 The second target value with which to compare for equality
-     * @param targetValue The third target value with which to compare for equality
+     * @param targetRef1 The first target reference with which to compare for equality, which may be {@code null}
+     * @param targetRef2 The second target reference with which to compare for equality, which may be {@code null}
+     * @param targetValue The target value with which to compare for equality
      * @return A {@code BiObjBooleanPredicate} that tests if the given arguments are not equal to the ones of this
      * predicate.
      * @see #isEqual(Object, Object, boolean)
      */
-    static <T, U> BiObjBooleanPredicate<T, U> isNotEqual(Object targetRef1, Object targetRef2, boolean targetValue) {
+    @Nonnull
+    static <T, U> BiObjBooleanPredicate<T, U> isNotEqual(@Nullable Object targetRef1, @Nullable Object targetRef2,
+            boolean targetValue) {
         return (t, u, value) -> !(t == null ? targetRef1 == null : t.equals(targetRef1)) || !(t == null ? targetRef2
                 == null : t.equals(targetRef2)) || (value != targetValue);
     }
@@ -149,8 +154,7 @@ public interface BiObjBooleanPredicate<T, U> {
      * predicate is not evaluated.
      * <p>
      * Any exceptions thrown during evaluation of either predicate are relayed to the caller; if evaluation of this
-     * {@code BiObjBooleanPredicate} throws an exception, the {@code other} {@code BiObjBooleanPredicate} will not be
-     * evaluated.
+     * {@code BiObjBooleanPredicate} throws an exception, the {@code other} predicate will not be evaluated.
      *
      * @param other A {@code BiObjBooleanPredicate} that will be logically-ANDed with this one
      * @return A composed {@code BiObjBooleanPredicate} that represents the short-circuiting logical AND of this
@@ -160,7 +164,8 @@ public interface BiObjBooleanPredicate<T, U> {
      * @see #xor(BiObjBooleanPredicate)
      * @see BiPredicate#and(BiPredicate)
      */
-    default BiObjBooleanPredicate<T, U> and(final BiObjBooleanPredicate<T, U> other) {
+    @Nonnull
+    default BiObjBooleanPredicate<T, U> and(@Nonnull final BiObjBooleanPredicate<T, U> other) {
         Objects.requireNonNull(other);
         return (t, u, value) -> test(t, u, value) && other.test(t, u, value);
     }

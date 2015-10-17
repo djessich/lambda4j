@@ -52,6 +52,7 @@ public interface DoubleBiPredicate {
      * @return A {@code DoubleBiPredicate} that tests if the given arguments are equal to the ones of this predicate.
      * @see #isNotEqual(double, double)
      */
+    @Nonnull
     static DoubleBiPredicate isEqual(double target1, double target2) {
         return (value1, value2) -> (value1 == target1) && (value2 == target2);
     }
@@ -66,6 +67,7 @@ public interface DoubleBiPredicate {
      * predicate.
      * @see #isEqual(double, double)
      */
+    @Nonnull
     static DoubleBiPredicate isNotEqual(double target1, double target2) {
         return (value1, value2) -> (value1 != target1) || (value2 != target2);
     }
@@ -129,8 +131,7 @@ public interface DoubleBiPredicate {
      * predicate is not evaluated.
      * <p>
      * Any exceptions thrown during evaluation of either predicate are relayed to the caller; if evaluation of this
-     * {@code DoubleBiPredicate} throws an exception, the {@code other} {@code DoubleBiPredicate} will not be
-     * evaluated.
+     * {@code DoubleBiPredicate} throws an exception, the {@code other} predicate will not be evaluated.
      *
      * @param other A {@code DoubleBiPredicate} that will be logically-ANDed with this one
      * @return A composed {@code DoubleBiPredicate} that represents the short-circuiting logical AND of this predicate
@@ -140,7 +141,8 @@ public interface DoubleBiPredicate {
      * @see #xor(DoubleBiPredicate)
      * @see BiPredicate#and(BiPredicate)
      */
-    default DoubleBiPredicate and(final DoubleBiPredicate other) {
+    @Nonnull
+    default DoubleBiPredicate and(@Nonnull final DoubleBiPredicate other) {
         Objects.requireNonNull(other);
         return (value1, value2) -> test(value1, value2) && other.test(value1, value2);
     }

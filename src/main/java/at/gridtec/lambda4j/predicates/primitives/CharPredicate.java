@@ -51,6 +51,7 @@ public interface CharPredicate {
      * @return A {@code CharPredicate} that tests if the given argument is equal to the one of this predicate.
      * @see #isNotEqual(char)
      */
+    @Nonnull
     static CharPredicate isEqual(char target) {
         return value -> value == target;
     }
@@ -63,6 +64,7 @@ public interface CharPredicate {
      * @return A {@code CharPredicate} that tests if the given argument is not equal to the one of this predicate.
      * @see #isEqual(char)
      */
+    @Nonnull
     static CharPredicate isNotEqual(char target) {
         return value -> value != target;
     }
@@ -125,7 +127,7 @@ public interface CharPredicate {
      * predicate is not evaluated.
      * <p>
      * Any exceptions thrown during evaluation of either predicate are relayed to the caller; if evaluation of this
-     * {@code CharPredicate} throws an exception, the {@code other} {@code CharPredicate} will not be evaluated.
+     * {@code CharPredicate} throws an exception, the {@code other} predicate will not be evaluated.
      *
      * @param other A {@code CharPredicate} that will be logically-ANDed with this one
      * @return A composed {@code CharPredicate} that represents the short-circuiting logical AND of this predicate and
@@ -135,7 +137,8 @@ public interface CharPredicate {
      * @see #xor(CharPredicate)
      * @see Predicate#and(Predicate)
      */
-    default CharPredicate and(final CharPredicate other) {
+    @Nonnull
+    default CharPredicate and(@Nonnull final CharPredicate other) {
         Objects.requireNonNull(other);
         return value -> test(value) && other.test(value);
     }

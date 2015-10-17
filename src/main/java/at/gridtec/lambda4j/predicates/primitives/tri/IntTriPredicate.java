@@ -54,6 +54,7 @@ public interface IntTriPredicate {
      * @return A {@code IntTriPredicate} that tests if the given arguments are equal to the ones of this predicate.
      * @see #isNotEqual(int, int, int)
      */
+    @Nonnull
     static IntTriPredicate isEqual(int target1, int target2, int target3) {
         return (value1, value2, value3) -> (value1 == target1) && (value2 == target2) && (value3 == target3);
     }
@@ -68,6 +69,7 @@ public interface IntTriPredicate {
      * @return A {@code IntTriPredicate} that tests if the given arguments are not equal to the ones of this predicate.
      * @see #isEqual(int, int, int)
      */
+    @Nonnull
     static IntTriPredicate isNotEqual(int target1, int target2, int target3) {
         return (value1, value2, value3) -> (value1 != target1) && (value2 != target2) && (value3 != target3);
     }
@@ -132,7 +134,7 @@ public interface IntTriPredicate {
      * predicate is not evaluated.
      * <p>
      * Any exceptions thrown during evaluation of either predicate are relayed to the caller; if evaluation of this
-     * {@code IntTriPredicate} throws an exception, the {@code other} {@code IntTriPredicate} will not be evaluated.
+     * {@code IntTriPredicate} throws an exception, the {@code other} predicate will not be evaluated.
      *
      * @param other A {@code IntTriPredicate} that will be logically-ANDed with this one
      * @return A composed {@code IntTriPredicate} that represents the short-circuiting logical AND of this predicate and
@@ -142,7 +144,8 @@ public interface IntTriPredicate {
      * @see #xor(IntTriPredicate)
      * @see TriPredicate#and(TriPredicate)
      */
-    default IntTriPredicate and(final IntTriPredicate other) {
+    @Nonnull
+    default IntTriPredicate and(@Nonnull final IntTriPredicate other) {
         Objects.requireNonNull(other);
         return (value1, value2, value3) -> test(value1, value2, value3) && other.test(value1, value2, value3);
     }

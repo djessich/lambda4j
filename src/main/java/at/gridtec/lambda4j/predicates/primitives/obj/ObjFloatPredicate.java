@@ -17,6 +17,7 @@ package at.gridtec.lambda4j.predicates.primitives.obj;
 
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.util.Objects;
 import java.util.function.BiPredicate;
 
@@ -50,12 +51,13 @@ public interface ObjFloatPredicate<T> {
      * according to {@code value == target} method.
      *
      * @param <T> The type of argument to the predicate
-     * @param targetRef The first target value with which to compare for equality
-     * @param targetValue The second target value with which to compare for equality
+     * @param targetRef The target reference with which to compare for equality, which may be {@code null}
+     * @param targetValue The target value with which to compare for equality
      * @return A {@code ObjFloatPredicate} that tests if the given arguments are equal to the ones of this predicate.
      * @see #isNotEqual(Object, float)
      */
-    static <T> ObjFloatPredicate<T> isEqual(Object targetRef, float targetValue) {
+    @Nonnull
+    static <T> ObjFloatPredicate<T> isEqual(@Nullable Object targetRef, float targetValue) {
         return (t, value) -> (t == null ? targetRef == null : t.equals(targetRef)) && (value == targetValue);
     }
 
@@ -64,13 +66,14 @@ public interface ObjFloatPredicate<T> {
      * according to {@code value != target} method.
      *
      * @param <T> The type of argument to the predicate
-     * @param targetRef The first target value with which to compare for equality
-     * @param targetValue The second target value with which to compare for equality
+     * @param targetRef The target reference with which to compare for equality, which may be {@code null}
+     * @param targetValue The target value with which to compare for equality
      * @return A {@code ObjFloatPredicate} that tests if the given arguments are not equal to the ones of this
      * predicate.
      * @see #isEqual(Object, float)
      */
-    static <T> ObjFloatPredicate<T> isNotEqual(Object targetRef, float targetValue) {
+    @Nonnull
+    static <T> ObjFloatPredicate<T> isNotEqual(@Nullable Object targetRef, float targetValue) {
         return (t, value) -> !(t == null ? targetRef == null : t.equals(targetRef)) || (value != targetValue);
     }
 
@@ -135,7 +138,7 @@ public interface ObjFloatPredicate<T> {
      * predicate is not evaluated.
      * <p>
      * Any exceptions thrown during evaluation of either predicate are relayed to the caller; if evaluation of this
-     * {@code ObjFloatPredicate} throws an exception, the {@code other} {@code ObjFloatPredicate} will not be
+     * {@code ObjFloatPredicate} throws an exception, the {@code other} predicate will not be
      * evaluated.
      *
      * @param other A {@code ObjFloatPredicate} that will be logically-ANDed with this one
@@ -146,7 +149,8 @@ public interface ObjFloatPredicate<T> {
      * @see #xor(ObjFloatPredicate)
      * @see BiPredicate#and(BiPredicate)
      */
-    default ObjFloatPredicate<T> and(final ObjFloatPredicate<T> other) {
+    @Nonnull
+    default ObjFloatPredicate<T> and(@Nonnull final ObjFloatPredicate<T> other) {
         Objects.requireNonNull(other);
         return (t, value) -> test(t, value) && other.test(t, value);
     }

@@ -19,6 +19,7 @@ import at.gridtec.lambda4j.predicates.TriPredicate;
 
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.util.Objects;
 import java.util.function.BiPredicate;
 
@@ -55,13 +56,15 @@ public interface BiObjShortPredicate<T, U> {
      *
      * @param <T> The type of the first argument to the predicate
      * @param <U> The type of the second argument to the predicate
-     * @param targetRef1 The first target value with which to compare for equality
-     * @param targetRef2 The second target value with which to compare for equality
-     * @param targetValue The third target value with which to compare for equality
+     * @param targetRef1 The first target reference with which to compare for equality, which may be {@code null}
+     * @param targetRef2 The second target reference with which to compare for equality, which may be {@code null}
+     * @param targetValue The target value with which to compare for equality
      * @return A {@code BiObjShortPredicate} that tests if the given arguments are equal to the ones of this predicate.
      * @see #isNotEqual(Object, Object, short)
      */
-    static <T, U> BiObjShortPredicate<T, U> isEqual(Object targetRef1, Object targetRef2, short targetValue) {
+    @Nonnull
+    static <T, U> BiObjShortPredicate<T, U> isEqual(@Nullable Object targetRef1, @Nullable Object targetRef2,
+            short targetValue) {
         return (t, u, value) -> (t == null ? targetRef1 == null : t.equals(targetRef1)) && (t == null ? targetRef2
                 == null : t.equals(targetRef2)) && (value == targetValue);
     }
@@ -72,14 +75,16 @@ public interface BiObjShortPredicate<T, U> {
      *
      * @param <T> The type of the first argument to the predicate
      * @param <U> The type of the second argument to the predicate
-     * @param targetRef1 The first target value with which to compare for equality
-     * @param targetRef2 The second target value with which to compare for equality
-     * @param targetValue The third target value with which to compare for equality
+     * @param targetRef1 The first target reference with which to compare for equality, which may be {@code null}
+     * @param targetRef2 The second target reference with which to compare for equality, which may be {@code null}
+     * @param targetValue The target value with which to compare for equality
      * @return A {@code BiObjShortPredicate} that tests if the given arguments are not equal to the ones of this
      * predicate.
      * @see #isEqual(Object, Object, short)
      */
-    static <T, U> BiObjShortPredicate<T, U> isNotEqual(Object targetRef1, Object targetRef2, short targetValue) {
+    @Nonnull
+    static <T, U> BiObjShortPredicate<T, U> isNotEqual(@Nullable Object targetRef1, @Nullable Object targetRef2,
+            short targetValue) {
         return (t, u, value) -> !(t == null ? targetRef1 == null : t.equals(targetRef1)) || !(t == null ? targetRef2
                 == null : t.equals(targetRef2)) || (value != targetValue);
     }
@@ -148,8 +153,7 @@ public interface BiObjShortPredicate<T, U> {
      * predicate is not evaluated.
      * <p>
      * Any exceptions thrown during evaluation of either predicate are relayed to the caller; if evaluation of this
-     * {@code BiObjShortPredicate} throws an exception, the {@code other} {@code BiObjShortPredicate} will not be
-     * evaluated.
+     * {@code BiObjShortPredicate} throws an exception, the {@code other} predicate will not be evaluated.
      *
      * @param other A {@code BiObjShortPredicate} that will be logically-ANDed with this one
      * @return A composed {@code BiObjShortPredicate} that represents the short-circuiting logical AND of this predicate
@@ -159,7 +163,8 @@ public interface BiObjShortPredicate<T, U> {
      * @see #xor(BiObjShortPredicate)
      * @see BiPredicate#and(BiPredicate)
      */
-    default BiObjShortPredicate<T, U> and(final BiObjShortPredicate<T, U> other) {
+    @Nonnull
+    default BiObjShortPredicate<T, U> and(@Nonnull final BiObjShortPredicate<T, U> other) {
         Objects.requireNonNull(other);
         return (t, u, value) -> test(t, u, value) && other.test(t, u, value);
     }

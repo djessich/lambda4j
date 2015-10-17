@@ -51,6 +51,7 @@ public interface ShortPredicate {
      * @return A {@code ShortPredicate} that tests if the given argument is equal to the one of this predicate.
      * @see #isNotEqual(short)
      */
+    @Nonnull
     static ShortPredicate isEqual(short target) {
         return value -> value == target;
     }
@@ -63,6 +64,7 @@ public interface ShortPredicate {
      * @return A {@code ShortPredicate} that tests if the given argument is not equal to the one of this predicate.
      * @see #isEqual(short)
      */
+    @Nonnull
     static ShortPredicate isNotEqual(short target) {
         return value -> value != target;
     }
@@ -125,7 +127,7 @@ public interface ShortPredicate {
      * predicate is not evaluated.
      * <p>
      * Any exceptions thrown during evaluation of either predicate are relayed to the caller; if evaluation of this
-     * {@code ShortPredicate} throws an exception, the {@code other} {@code ShortPredicate} will not be evaluated.
+     * {@code ShortPredicate} throws an exception, the {@code other} predicate will not be evaluated.
      *
      * @param other A {@code ShortPredicate} that will be logically-ANDed with this one
      * @return A composed {@code ShortPredicate} that represents the short-circuiting logical AND of this predicate and
@@ -135,7 +137,8 @@ public interface ShortPredicate {
      * @see #xor(ShortPredicate)
      * @see Predicate#and(Predicate)
      */
-    default ShortPredicate and(final ShortPredicate other) {
+    @Nonnull
+    default ShortPredicate and(@Nonnull final ShortPredicate other) {
         Objects.requireNonNull(other);
         return value -> test(value) && other.test(value);
     }

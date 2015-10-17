@@ -52,6 +52,7 @@ public interface ByteBiPredicate {
      * @return A {@code ByteBiPredicate} that tests if the given arguments are equal to the ones of this predicate.
      * @see #isNotEqual(byte, byte)
      */
+    @Nonnull
     static ByteBiPredicate isEqual(byte target1, byte target2) {
         return (value1, value2) -> (value1 == target1) && (value2 == target2);
     }
@@ -65,6 +66,7 @@ public interface ByteBiPredicate {
      * @return A {@code ByteBiPredicate} that tests if the given arguments are not equal to the ones of this predicate.
      * @see #isEqual(byte, byte)
      */
+    @Nonnull
     static ByteBiPredicate isNotEqual(byte target1, byte target2) {
         return (value1, value2) -> (value1 != target1) || (value2 != target2);
     }
@@ -128,7 +130,7 @@ public interface ByteBiPredicate {
      * predicate is not evaluated.
      * <p>
      * Any exceptions thrown during evaluation of either predicate are relayed to the caller; if evaluation of this
-     * {@code ByteBiPredicate} throws an exception, the {@code other} {@code ByteBiPredicate} will not be evaluated.
+     * {@code ByteBiPredicate} throws an exception, the {@code other} predicate will not be evaluated.
      *
      * @param other A {@code ByteBiPredicate} that will be logically-ANDed with this one
      * @return A composed {@code ByteBiPredicate} that represents the short-circuiting logical AND of this predicate and
@@ -138,7 +140,8 @@ public interface ByteBiPredicate {
      * @see #xor(ByteBiPredicate)
      * @see BiPredicate#and(BiPredicate)
      */
-    default ByteBiPredicate and(final ByteBiPredicate other) {
+    @Nonnull
+    default ByteBiPredicate and(@Nonnull final ByteBiPredicate other) {
         Objects.requireNonNull(other);
         return (value1, value2) -> test(value1, value2) && other.test(value1, value2);
     }

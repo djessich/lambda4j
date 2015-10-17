@@ -51,6 +51,7 @@ public interface BytePredicate {
      * @return A {@code BytePredicate} that tests if the given argument is equal to the one of this predicate.
      * @see #isNotEqual(byte)
      */
+    @Nonnull
     static BytePredicate isEqual(byte target) {
         return value -> value == target;
     }
@@ -63,6 +64,7 @@ public interface BytePredicate {
      * @return A {@code BytePredicate} that tests if the given argument is not equal to the one of this predicate.
      * @see #isEqual(byte)
      */
+    @Nonnull
     static BytePredicate isNotEqual(byte target) {
         return value -> value != target;
     }
@@ -125,7 +127,7 @@ public interface BytePredicate {
      * predicate is not evaluated.
      * <p>
      * Any exceptions thrown during evaluation of either predicate are relayed to the caller; if evaluation of this
-     * {@code BytePredicate} throws an exception, the {@code other} {@code BytePredicate} will not be evaluated.
+     * {@code BytePredicate} throws an exception, the {@code other} predicate will not be evaluated.
      *
      * @param other A {@code BytePredicate} that will be logically-ANDed with this one
      * @return A composed {@code BytePredicate} that represents the short-circuiting logical AND of this predicate and
@@ -135,7 +137,8 @@ public interface BytePredicate {
      * @see #xor(BytePredicate)
      * @see Predicate#and(Predicate)
      */
-    default BytePredicate and(final BytePredicate other) {
+    @Nonnull
+    default BytePredicate and(@Nonnull final BytePredicate other) {
         Objects.requireNonNull(other);
         return value -> test(value) && other.test(value);
     }

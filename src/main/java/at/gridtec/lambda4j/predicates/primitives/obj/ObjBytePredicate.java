@@ -17,6 +17,7 @@ package at.gridtec.lambda4j.predicates.primitives.obj;
 
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.util.Objects;
 import java.util.function.BiPredicate;
 
@@ -50,12 +51,13 @@ public interface ObjBytePredicate<T> {
      * according to {@link Objects#equals(Object)} and {@code value == target} method.
      *
      * @param <T> The type of argument to the predicate
-     * @param targetRef The first target value with which to compare for equality
-     * @param targetValue The second target value with which to compare for equality
+     * @param targetRef The target reference with which to compare for equality, which may be {@code null}
+     * @param targetValue The target value with which to compare for equality
      * @return A {@code ObjBytePredicate} that tests if the given arguments are equal to the ones of this predicate.
      * @see #isNotEqual(Object, byte)
      */
-    static <T> ObjBytePredicate isEqual(T targetRef, byte targetValue) {
+    @Nonnull
+    static <T> ObjBytePredicate isEqual(@Nullable Object targetRef, byte targetValue) {
         return (t, value) -> ((t == null) ? targetRef == null : t.equals(targetRef)) && (value == targetValue);
     }
 
@@ -64,12 +66,13 @@ public interface ObjBytePredicate<T> {
      * according to {@code value != target} method.
      *
      * @param <T> The type of argument to the predicate
-     * @param targetRef The first target value with which to compare for equality
-     * @param targetValue The second target value with which to compare for equality
+     * @param targetRef The target reference with which to compare for equality, which may be {@code null}
+     * @param targetValue The target value with which to compare for equality
      * @return A {@code ObjBytePredicate} that tests if the given arguments are not equal to the ones of this predicate.
      * @see #isEqual(Object, byte)
      */
-    static <T> ObjBytePredicate isNotEqual(T targetRef, byte targetValue) {
+    @Nonnull
+    static <T> ObjBytePredicate isNotEqual(@Nullable Object targetRef, byte targetValue) {
         return (t, value) -> !(t == null ? targetRef == null : t.equals(targetRef)) && (value != targetValue);
     }
 
@@ -132,7 +135,7 @@ public interface ObjBytePredicate<T> {
      * predicate is not evaluated.
      * <p>
      * Any exceptions thrown during evaluation of either predicate are relayed to the caller; if evaluation of this
-     * {@code ObjBytePredicate} throws an exception, the {@code other} {@code ObjBytePredicate} will not be evaluated.
+     * {@code ObjBytePredicate} throws an exception, the {@code other} predicate will not be evaluated.
      *
      * @param other A {@code ObjBytePredicate} that will be logically-ANDed with this one
      * @return A composed {@code ObjBytePredicate} that represents the short-circuiting logical AND of this predicate
@@ -142,7 +145,8 @@ public interface ObjBytePredicate<T> {
      * @see #xor(ObjBytePredicate)
      * @see BiPredicate#and(BiPredicate)
      */
-    default ObjBytePredicate<T> and(final ObjBytePredicate<T> other) {
+    @Nonnull
+    default ObjBytePredicate<T> and(@Nonnull final ObjBytePredicate<T> other) {
         Objects.requireNonNull(other);
         return (t, value) -> test(t, value) && other.test(t, value);
     }

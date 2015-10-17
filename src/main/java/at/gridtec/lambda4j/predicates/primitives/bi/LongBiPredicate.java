@@ -52,6 +52,7 @@ public interface LongBiPredicate {
      * @return A {@code LongBiPredicate} that tests if the given arguments are equal to the ones of this predicate.
      * @see #isNotEqual(long, long)
      */
+    @Nonnull
     static LongBiPredicate isEqual(long target1, long target2) {
         return (value1, value2) -> (value1 == target1) && (value2 == target2);
     }
@@ -65,6 +66,7 @@ public interface LongBiPredicate {
      * @return A {@code LongBiPredicate} that tests if the given arguments are not equal to the ones of this predicate.
      * @see #isEqual(long, long)
      */
+    @Nonnull
     static LongBiPredicate isNotEqual(long target1, long target2) {
         return (value1, value2) -> (value1 != target1) || (value2 != target2);
     }
@@ -128,7 +130,7 @@ public interface LongBiPredicate {
      * predicate is not evaluated.
      * <p>
      * Any exceptions thrown during evaluation of either predicate are relayed to the caller; if evaluation of this
-     * {@code LongBiPredicate} throws an exception, the {@code other} {@code LongBiPredicate} will not be evaluated.
+     * {@code LongBiPredicate} throws an exception, the {@code other} predicate will not be evaluated.
      *
      * @param other A {@code LongBiPredicate} that will be logically-ANDed with this one
      * @return A composed {@code LongBiPredicate} that represents the short-circuiting logical AND of this predicate and
@@ -138,7 +140,8 @@ public interface LongBiPredicate {
      * @see #xor(LongBiPredicate)
      * @see BiPredicate#and(BiPredicate)
      */
-    default LongBiPredicate and(final LongBiPredicate other) {
+    @Nonnull
+    default LongBiPredicate and(@Nonnull final LongBiPredicate other) {
         Objects.requireNonNull(other);
         return (value1, value2) -> test(value1, value2) && other.test(value1, value2);
     }

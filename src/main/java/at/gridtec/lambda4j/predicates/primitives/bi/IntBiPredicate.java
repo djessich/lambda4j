@@ -52,6 +52,7 @@ public interface IntBiPredicate {
      * @return A {@code IntBiPredicate} that tests if the given arguments are equal to the ones of this predicate.
      * @see #isNotEqual(int, int)
      */
+    @Nonnull
     static IntBiPredicate isEqual(int target1, int target2) {
         return (value1, value2) -> (value1 == target1) && (value2 == target2);
     }
@@ -65,6 +66,7 @@ public interface IntBiPredicate {
      * @return A {@code IntBiPredicate} that tests if the given arguments are not equal to the ones of this predicate.
      * @see #isEqual(int, int)
      */
+    @Nonnull
     static IntBiPredicate isNotEqual(int target1, int target2) {
         return (value1, value2) -> (value1 != target1) || (value2 != target2);
     }
@@ -128,7 +130,7 @@ public interface IntBiPredicate {
      * predicate is not evaluated.
      * <p>
      * Any exceptions thrown during evaluation of either predicate are relayed to the caller; if evaluation of this
-     * {@code IntBiPredicate} throws an exception, the {@code other} {@code IntBiPredicate} will not be evaluated.
+     * {@code IntBiPredicate} throws an exception, the {@code other} predicate will not be evaluated.
      *
      * @param other A {@code IntBiPredicate} that will be logically-ANDed with this one
      * @return A composed {@code IntBiPredicate} that represents the short-circuiting logical AND of this predicate and
@@ -138,7 +140,8 @@ public interface IntBiPredicate {
      * @see #xor(IntBiPredicate)
      * @see BiPredicate#and(BiPredicate)
      */
-    default IntBiPredicate and(final IntBiPredicate other) {
+    @Nonnull
+    default IntBiPredicate and(@Nonnull final IntBiPredicate other) {
         Objects.requireNonNull(other);
         return (value1, value2) -> test(value1, value2) && other.test(value1, value2);
     }

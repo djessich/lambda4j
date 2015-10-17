@@ -52,6 +52,7 @@ public interface CharBiPredicate {
      * @return A {@code CharBiPredicate} that tests if the given arguments are equal to the ones of this predicate.
      * @see #isNotEqual(char, char)
      */
+    @Nonnull
     static CharBiPredicate isEqual(char target1, char target2) {
         return (value1, value2) -> (value1 == target1) && (value2 == target2);
     }
@@ -65,6 +66,7 @@ public interface CharBiPredicate {
      * @return A {@code CharBiPredicate} that tests if the given arguments are not equal to the ones of this predicate.
      * @see #isEqual(char, char)
      */
+    @Nonnull
     static CharBiPredicate isNotEqual(char target1, char target2) {
         return (value1, value2) -> (value1 != target1) || (value2 != target2);
     }
@@ -128,7 +130,7 @@ public interface CharBiPredicate {
      * predicate is not evaluated.
      * <p>
      * Any exceptions thrown during evaluation of either predicate are relayed to the caller; if evaluation of this
-     * {@code CharBiPredicate} throws an exception, the {@code other} {@code CharBiPredicate} will not be evaluated.
+     * {@code CharBiPredicate} throws an exception, the {@code other} predicate will not be evaluated.
      *
      * @param other A {@code CharBiPredicate} that will be logically-ANDed with this one
      * @return A composed {@code CharBiPredicate} that represents the short-circuiting logical AND of this predicate and
@@ -138,7 +140,8 @@ public interface CharBiPredicate {
      * @see #xor(CharBiPredicate)
      * @see BiPredicate#and(BiPredicate)
      */
-    default CharBiPredicate and(final CharBiPredicate other) {
+    @Nonnull
+    default CharBiPredicate and(@Nonnull final CharBiPredicate other) {
         Objects.requireNonNull(other);
         return (value1, value2) -> test(value1, value2) && other.test(value1, value2);
     }

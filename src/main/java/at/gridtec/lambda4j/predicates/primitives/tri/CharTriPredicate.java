@@ -54,6 +54,7 @@ public interface CharTriPredicate {
      * @return A {@code CharTriPredicate} that tests if the given arguments are equal to the ones of this predicate.
      * @see #isNotEqual(char, char, char)
      */
+    @Nonnull
     static CharTriPredicate isEqual(char target1, char target2, char target3) {
         return (value1, value2, value3) -> (value1 == target1) && (value2 == target2) && (value3 == target3);
     }
@@ -68,6 +69,7 @@ public interface CharTriPredicate {
      * @return A {@code CharTriPredicate} that tests if the given arguments are not equal to the ones of this predicate.
      * @see #isEqual(char, char, char)
      */
+    @Nonnull
     static CharTriPredicate isNotEqual(char target1, char target2, char target3) {
         return (value1, value2, value3) -> (value1 != target1) && (value2 != target2) && (value3 != target3);
     }
@@ -132,7 +134,7 @@ public interface CharTriPredicate {
      * predicate is not evaluated.
      * <p>
      * Any exceptions thrown during evaluation of either predicate are relayed to the caller; if evaluation of this
-     * {@code CharTriPredicate} throws an exception, the {@code other} {@code CharTriPredicate} will not be evaluated.
+     * {@code CharTriPredicate} throws an exception, the {@code other} predicate will not be evaluated.
      *
      * @param other A {@code CharTriPredicate} that will be logically-ANDed with this one
      * @return A composed {@code CharTriPredicate} that represents the short-circuiting logical AND of this predicate
@@ -142,7 +144,8 @@ public interface CharTriPredicate {
      * @see #xor(CharTriPredicate)
      * @see TriPredicate#and(TriPredicate)
      */
-    default CharTriPredicate and(final CharTriPredicate other) {
+    @Nonnull
+    default CharTriPredicate and(@Nonnull final CharTriPredicate other) {
         Objects.requireNonNull(other);
         return (value1, value2, value3) -> test(value1, value2, value3) && other.test(value1, value2, value3);
     }
