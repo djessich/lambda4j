@@ -15,9 +15,20 @@
  */
 package at.gridtec.lambda4j.operators.unary;
 
+import at.gridtec.lambda4j.consumer.primitives.BooleanConsumer;
+import at.gridtec.lambda4j.function.primitives.BooleanFunction;
+import at.gridtec.lambda4j.function.primitives.conversion.BooleanToByteFunction;
+import at.gridtec.lambda4j.function.primitives.conversion.BooleanToCharFunction;
+import at.gridtec.lambda4j.function.primitives.conversion.BooleanToDoubleFunction;
+import at.gridtec.lambda4j.function.primitives.conversion.BooleanToFloatFunction;
+import at.gridtec.lambda4j.function.primitives.conversion.BooleanToIntFunction;
+import at.gridtec.lambda4j.function.primitives.conversion.BooleanToLongFunction;
+import at.gridtec.lambda4j.function.primitives.conversion.BooleanToShortFunction;
+
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import java.util.Objects;
+import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.function.UnaryOperator;
 
@@ -49,6 +60,7 @@ public interface BooleanUnaryOperator {
      *
      * @return A {@code BooleanUnaryOperator} that always returns its input argument
      */
+    @Nonnull
     static BooleanUnaryOperator identity() {
         return operand -> operand;
     }
@@ -193,15 +205,39 @@ public interface BooleanUnaryOperator {
      * then applies this operator to the result. If evaluation of either operator throws an exception, it is relayed to
      * the caller of the composed operator.
      *
-     * @param before The {@code BooleanUnaryOperator} to apply before this operator is applied
+     * @param before The operator to apply before this operator is applied
      * @return A composed {@code BooleanUnaryOperator} that first applies the {@code before} operator and then applies
-     * this operator.
+     * this operator to the result.
      * @throws NullPointerException If given argument is {@code null}
+     * @implNote The input argument of this method is the primitive specialization of {@link UnaryOperator}. Therefore
+     * the given operation handles primitive types. In this case this is {@code boolean}.
      * @see #andThen(BooleanUnaryOperator)
+     * @see #andThen(BooleanFunction)
      */
-    default BooleanUnaryOperator compose(final BooleanUnaryOperator before) {
+    @Nonnull
+    default BooleanUnaryOperator compose(@Nonnull final BooleanUnaryOperator before) {
         Objects.requireNonNull(before);
         return operand -> applyAsBoolean(before.applyAsBoolean(operand));
+    }
+
+    /**
+     * Returns a composed {@link Predicate} that first applies the {@code before} operation to its input, and then
+     * applies this operator to the result. If evaluation of either operator throws an exception, it is relayed to the
+     * caller of the composed operator.
+     *
+     * @param <T> The type of the argument to the before operation
+     * @param before The operator to apply before this operator is applied
+     * @return A composed {@code Predicate} that first applies the {@code before} operation and then applies this
+     * operator to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implNote The input argument of this method is able to handle every type.
+     * @see #andThen(BooleanUnaryOperator)
+     * @see #andThen(BooleanFunction)
+     */
+    @Nonnull
+    default <T> Predicate<T> compose(@Nonnull final Predicate<? super T> before) {
+        Objects.requireNonNull(before);
+        return t -> applyAsBoolean(before.test(t));
     }
 
     /**
@@ -209,15 +245,181 @@ public interface BooleanUnaryOperator {
      * the {@code after} operator to the result. If evaluation of either operator throws an exception, it is relayed to
      * the caller of the composed operator.
      *
-     * @param after The {@code BooleanUnaryOperator} to apply after this operator is applied
-     * @return A composed {@code BooleanUnaryOperator} that first applies this operator and then applies the {@code
-     * after} operator.
+     * @param after The operator to apply after this operator is applied
+     * @return A composed {@code BooleanUnaryOperator} that first applies this operator to its input, and then applies
+     * the {@code after} operator to the result.
      * @throws NullPointerException If given argument is {@code null}
+     * @implNote The result of this method is the primitive specialization of {@link UnaryOperator}. Therefore the
+     * returned operation handles primitive types. In this case this is {@code boolean}.
      * @see #compose(BooleanUnaryOperator)
+     * @see #compose(Predicate)
      */
-    default BooleanUnaryOperator andThen(final BooleanUnaryOperator after) {
+    @Nonnull
+    default BooleanUnaryOperator andThen(@Nonnull final BooleanUnaryOperator after) {
         Objects.requireNonNull(after);
         return operand -> after.applyAsBoolean(applyAsBoolean(operand));
+    }
+
+    /**
+     * Returns a composed {@link BooleanFunction} that first applies this operator to its input, and then applies the
+     * {@code after} operator to the result. If evaluation of either operation throws an exception, it is relayed to the
+     * caller of the composed operation.
+     *
+     * @param <R> The type of return value from the {@code after} operation, and of the composed operation
+     * @param after The operator to apply after this operator is applied
+     * @return A composed {@code BooleanFunction} that first applies this operator to its input, and then applies the
+     * {@code after} operator to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implNote The returned operation is able to handle every type.
+     * @see #compose(BooleanUnaryOperator)
+     * @see #compose(Predicate)
+     */
+    @Nonnull
+    default <R> BooleanFunction<R> andThen(@Nonnull final BooleanFunction<? extends R> after) {
+        Objects.requireNonNull(after);
+        return value -> after.apply(applyAsBoolean(value));
+    }
+
+    /**
+     * Returns a composed {@link BooleanToByteFunction} that first applies this operator to its input, and then applies
+     * the {@code after} operation to the result. If evaluation of either operation throws an exception, it is relayed
+     * to the caller of the composed operation. This method is just convenience, to provide the ability to transform
+     * this operator to {@code byte}, using the {@code boolean}-to-{@code byte} primitive specialization of {@link
+     * Function}.
+     *
+     * @param after The operation to apply after this operation is applied
+     * @return A composed {@code BooleanToByteFunction} that first gets the result from this operation, and then applies
+     * the {@code after} operation to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     */
+    @Nonnull
+    default BooleanToByteFunction toByte(@Nonnull final BooleanToByteFunction after) {
+        Objects.requireNonNull(after);
+        return value -> after.applyAsByte(applyAsBoolean(value));
+    }
+
+    /**
+     * Returns a composed {@link BooleanToCharFunction} that first applies this operator to its input, and then applies
+     * the {@code after} operation to the result. If evaluation of either operation throws an exception, it is relayed
+     * to the caller of the composed operation. This method is just convenience, to provide the ability to transform
+     * this operator to {@code char}, using the {@code boolean}-to-{@code char} primitive specialization of {@link
+     * Function}.
+     *
+     * @param after The operation to apply after this operation is applied
+     * @return A composed {@code BooleanToCharFunction} that first gets the result from this operation, and then applies
+     * the {@code after} operation to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     */
+    @Nonnull
+    default BooleanToCharFunction toChar(@Nonnull final BooleanToCharFunction after) {
+        Objects.requireNonNull(after);
+        return value -> after.applyAsChar(applyAsBoolean(value));
+    }
+
+    /**
+     * Returns a composed {@link BooleanToDoubleFunction} that first applies this operator to its input, and then
+     * applies the {@code after} operation to the result. If evaluation of either operation throws an exception, it is
+     * relayed to the caller of the composed operation. This method is just convenience, to provide the ability to
+     * transform this operator to {@code double}, using the {@code boolean}-to-{@code double} primitive specialization
+     * of {@link Function}.
+     *
+     * @param after The operation to apply after this operation is applied
+     * @return A composed {@code BooleanToDoubleFunction} that first gets the result from this operation, and then
+     * applies the {@code after} operation to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     */
+    @Nonnull
+    default BooleanToDoubleFunction toDouble(@Nonnull final BooleanToDoubleFunction after) {
+        Objects.requireNonNull(after);
+        return value -> after.applyAsDouble(applyAsBoolean(value));
+    }
+
+    /**
+     * Returns a composed {@link BooleanToFloatFunction} that first applies this operator to its input, and then applies
+     * the {@code after} operation to the result. If evaluation of either operation throws an exception, it is relayed
+     * to the caller of the composed operation. This method is just convenience, to provide the ability to transform
+     * this operator to {@code float}, using the {@code boolean}-to-{@code float} primitive specialization of {@link
+     * Function}.
+     *
+     * @param after The operation to apply after this operation is applied
+     * @return A composed {@code BooleanToFloatFunction} that first gets the result from this operation, and then
+     * applies the {@code after} operation to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     */
+    @Nonnull
+    default BooleanToFloatFunction toFloat(@Nonnull final BooleanToFloatFunction after) {
+        Objects.requireNonNull(after);
+        return value -> after.applyAsFloat(applyAsBoolean(value));
+    }
+
+    /**
+     * Returns a composed {@link BooleanToIntFunction} that first applies this operator to its input, and then applies
+     * the {@code after} operation to the result. If evaluation of either operation throws an exception, it is relayed
+     * to the caller of the composed operation. This method is just convenience, to provide the ability to transform
+     * this operator to {@code int}, using the {@code boolean}-to-{@code int} primitive specialization of {@link
+     * Function}.
+     *
+     * @param after The operation to apply after this operation is applied
+     * @return A composed {@code BooleanToIntFunction} that first gets the result from this operation, and then applies
+     * the {@code after} operation to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     */
+    @Nonnull
+    default BooleanToIntFunction toInt(@Nonnull final BooleanToIntFunction after) {
+        Objects.requireNonNull(after);
+        return value -> after.applyAsInt(applyAsBoolean(value));
+    }
+
+    /**
+     * Returns a composed {@link BooleanToLongFunction} that first applies this operator to its input, and then applies
+     * the {@code after} operation to the result. If evaluation of either operation throws an exception, it is relayed
+     * to the caller of the composed operation. This method is just convenience, to provide the ability to transform
+     * this operator to {@code long}, using the {@code boolean}-to-{@code long} primitive specialization of {@link
+     * Function}.
+     *
+     * @param after The operation to apply after this operation is applied
+     * @return A composed {@code BooleanToLongFunction} that first gets the result from this operation, and then applies
+     * the {@code after} operation to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     */
+    @Nonnull
+    default BooleanToLongFunction toLong(@Nonnull final BooleanToLongFunction after) {
+        Objects.requireNonNull(after);
+        return value -> after.applyAsLong(applyAsBoolean(value));
+    }
+
+    /**
+     * Returns a composed {@link BooleanToShortFunction} that first applies this operator to its input, and then applies
+     * the {@code after} operation to the result. If evaluation of either operation throws an exception, it is relayed
+     * to the caller of the composed operation. This method is just convenience, to provide the ability to transform
+     * this operator to {@code short}, using the {@code boolean}-to-{@code short} primitive specialization of {@link
+     * Function}.
+     *
+     * @param after The operation to apply after this operation is applied
+     * @return A composed {@code BooleanToShortFunction} that first gets the result from this operation, and then
+     * applies the {@code after} operation to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     */
+    @Nonnull
+    default BooleanToShortFunction toShort(@Nonnull final BooleanToShortFunction after) {
+        Objects.requireNonNull(after);
+        return value -> after.applyAsShort(applyAsBoolean(value));
+    }
+
+    /**
+     * Returns a composed {@link BooleanConsumer} that fist applies this operator to its input, and then consumes the
+     * result using the given {@code BooleanConsumer}. If evaluation of either operation throws an exception, it is
+     * relayed to the caller of the composed operation.
+     *
+     * @param consumer The operation which consumes the result from this operation
+     * @return A composed {@code BooleanConsumer} that first applies this operation to its input, and then consumes the
+     * result using the given {@code BooleanConsumer}.
+     * @throws NullPointerException If given argument is {@code null}
+     */
+    @Nonnull
+    default BooleanConsumer consume(@Nonnull final BooleanConsumer consumer) {
+        Objects.requireNonNull(consumer);
+        return value -> consumer.accept(applyAsBoolean(value));
     }
 
     /**
