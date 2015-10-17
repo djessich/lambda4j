@@ -103,7 +103,7 @@ public interface ObjFloatConsumer<T> {
      * @return A composed {@link ObjFloatConsumer} that first applies the {@code before} operations to its input, and
      * then applies this operation to the result.
      * @throws NullPointerException If one of the given operations are {@code null}
-     * @implNote The second input argument of this method is the primitive specialization of {@link UnaryOperator}.
+     * @implNote The last input argument of this method is the primitive specialization of {@link UnaryOperator}.
      * Therefore the operation handles a primitive type. In this case this is {@code float}.
      * @see #andThen(ObjFloatConsumer)
      */

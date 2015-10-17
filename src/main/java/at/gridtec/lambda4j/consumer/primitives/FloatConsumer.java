@@ -84,7 +84,7 @@ public interface FloatConsumer {
      * @return A composed {@link Consumer} that first applies the {@code before} operation to its input, and then
      * applies this operation to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input arguments of this method are able to handle every type.
+     * @implNote The input argument of this method is able to handle every type.
      * @see #andThen(FloatConsumer)
      */
     @Nonnull
