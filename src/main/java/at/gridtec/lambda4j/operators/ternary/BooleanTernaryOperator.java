@@ -39,7 +39,6 @@ import java.util.function.UnaryOperator;
 @SuppressWarnings("unused")
 @FunctionalInterface
 public interface BooleanTernaryOperator {
-    //TODO
 
     /**
      * Creates a {@link BooleanTernaryOperator} which always returns a given value.
@@ -108,6 +107,7 @@ public interface BooleanTernaryOperator {
      * operator.
      * @see #isNotEqual(boolean, boolean, boolean)
      */
+    @Nonnull
     static BooleanTernaryOperator isEqual(boolean target1, boolean target2, boolean target3) {
         return (value1, value2, value3) -> (value1 == target1) && (value2 == target2) && (value3 == target3);
     }
@@ -123,6 +123,7 @@ public interface BooleanTernaryOperator {
      * operator.
      * @see #isEqual(boolean, boolean, boolean)
      */
+    @Nonnull
     static BooleanTernaryOperator isNotEqual(boolean target1, boolean target2, boolean target3) {
         return (value1, value2, value3) -> (value1 != target1) && (value2 != target2) && (value3 != target3);
     }
@@ -133,6 +134,7 @@ public interface BooleanTernaryOperator {
      * @return A {@link BooleanTernaryOperator} the always returns {@code true}.
      * @see #alwaysFalse()
      */
+    @Nonnull
     static BooleanTernaryOperator alwaysTrue() {
         return (value1, value2, value3) -> true;
     }
@@ -143,6 +145,7 @@ public interface BooleanTernaryOperator {
      * @return A {@link BooleanTernaryOperator} the always returns {@code false}.
      * @see #alwaysTrue()
      */
+    @Nonnull
     static BooleanTernaryOperator alwaysFalse() {
         return (value1, value2, value3) -> false;
     }
@@ -153,6 +156,7 @@ public interface BooleanTernaryOperator {
      * @return A {@link BooleanTernaryOperator} which applies a logical AND to its input arguments.
      * @see #and(BooleanTernaryOperator)
      */
+    @Nonnull
     static BooleanTernaryOperator and() {
         return (value1, value2, value3) -> value1 && value2 && value3;
     }
@@ -204,6 +208,7 @@ public interface BooleanTernaryOperator {
      * @return A {@code BooleanTernaryOperator} that represents the logical negation of this one.
      * @see TriPredicate#negate()
      */
+    @Nonnull
     default BooleanTernaryOperator negate() {
         return (value1, value2, value3) -> !applyAsBoolean(value1, value2, value3);
     }
@@ -225,7 +230,8 @@ public interface BooleanTernaryOperator {
      * @see #xor(BooleanTernaryOperator)
      * @see TriPredicate#and(TriPredicate)
      */
-    default BooleanTernaryOperator and(final BooleanTernaryOperator other) {
+    @Nonnull
+    default BooleanTernaryOperator and(@Nonnull final BooleanTernaryOperator other) {
         Objects.requireNonNull(other);
         return (value1, value2, value3) -> applyAsBoolean(value1, value2, value3) && other.applyAsBoolean(value1,
                                                                                                           value2,
@@ -249,7 +255,8 @@ public interface BooleanTernaryOperator {
      * @see #xor(BooleanTernaryOperator)
      * @see TriPredicate#or(TriPredicate)
      */
-    default BooleanTernaryOperator or(final BooleanTernaryOperator other) {
+    @Nonnull
+    default BooleanTernaryOperator or(@Nonnull final BooleanTernaryOperator other) {
         Objects.requireNonNull(other);
         return (value1, value2, value3) -> applyAsBoolean(value1, value2, value3) && other.applyAsBoolean(value1,
                                                                                                           value2,
@@ -270,7 +277,8 @@ public interface BooleanTernaryOperator {
      * @see #or(BooleanTernaryOperator)
      * @see TriPredicate#xor(TriPredicate)
      */
-    default BooleanTernaryOperator xor(final BooleanTernaryOperator other) {
+    @Nonnull
+    default BooleanTernaryOperator xor(@Nonnull final BooleanTernaryOperator other) {
         Objects.requireNonNull(other);
         return (value1, value2, value3) -> applyAsBoolean(value1, value2, value3) ^ other.applyAsBoolean(value1, value2,
                                                                                                          value3);

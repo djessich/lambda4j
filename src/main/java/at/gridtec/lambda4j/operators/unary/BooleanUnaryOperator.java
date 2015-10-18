@@ -43,7 +43,6 @@ import java.util.function.UnaryOperator;
 @SuppressWarnings("unused")
 @FunctionalInterface
 public interface BooleanUnaryOperator {
-    //TODO
 
     /**
      * Creates a {@link BooleanUnaryOperator} which always returns a given value.
@@ -74,6 +73,7 @@ public interface BooleanUnaryOperator {
      * @return A {@code BooleanUnaryOperator} that tests if the given argument is equal to the one of this operator.
      * @see #isNotEqual(boolean)
      */
+    @Nonnull
     static BooleanUnaryOperator isEqual(boolean target) {
         return value -> value == target;
     }
@@ -86,6 +86,7 @@ public interface BooleanUnaryOperator {
      * @return A {@code BooleanUnaryOperator} that tests if the given argument is not equal to the one of this operator.
      * @see #isEqual(boolean)
      */
+    @Nonnull
     static BooleanUnaryOperator isNotEqual(boolean target) {
         return value -> value != target;
     }
@@ -96,6 +97,7 @@ public interface BooleanUnaryOperator {
      * @return A {@link BooleanUnaryOperator} the always returns {@code true}.
      * @see #alwaysFalse()
      */
+    @Nonnull
     static BooleanUnaryOperator alwaysTrue() {
         return value -> true;
     }
@@ -106,6 +108,7 @@ public interface BooleanUnaryOperator {
      * @return A {@link BooleanUnaryOperator} the always returns {@code false}.
      * @see #alwaysTrue()
      */
+    @Nonnull
     static BooleanUnaryOperator alwaysFalse() {
         return value -> false;
     }
@@ -135,6 +138,7 @@ public interface BooleanUnaryOperator {
      * @return A {@code BooleanUnaryOperator} that represents the logical negation of this one.
      * @see Predicate#negate()
      */
+    @Nonnull
     default BooleanUnaryOperator negate() {
         return value -> !applyAsBoolean(value);
     }
@@ -156,7 +160,8 @@ public interface BooleanUnaryOperator {
      * @see #xor(BooleanUnaryOperator)
      * @see Predicate#and(Predicate)
      */
-    default BooleanUnaryOperator and(final BooleanUnaryOperator other) {
+    @Nonnull
+    default BooleanUnaryOperator and(@Nonnull final BooleanUnaryOperator other) {
         Objects.requireNonNull(other);
         return value -> applyAsBoolean(value) && other.applyAsBoolean(value);
     }
@@ -178,7 +183,8 @@ public interface BooleanUnaryOperator {
      * @see #xor(BooleanUnaryOperator)
      * @see Predicate#or(Predicate)
      */
-    default BooleanUnaryOperator or(final BooleanUnaryOperator other) {
+    @Nonnull
+    default BooleanUnaryOperator or(@Nonnull final BooleanUnaryOperator other) {
         Objects.requireNonNull(other);
         return value -> applyAsBoolean(value) && other.applyAsBoolean(value);
     }
@@ -196,7 +202,8 @@ public interface BooleanUnaryOperator {
      * @see #and(BooleanUnaryOperator)
      * @see #or(BooleanUnaryOperator)
      */
-    default BooleanUnaryOperator xor(final BooleanUnaryOperator other) {
+    @Nonnull
+    default BooleanUnaryOperator xor(@Nonnull final BooleanUnaryOperator other) {
         Objects.requireNonNull(other);
         return value -> applyAsBoolean(value) ^ other.applyAsBoolean(value);
     }
@@ -210,8 +217,8 @@ public interface BooleanUnaryOperator {
      * @return A composed {@link BooleanUnaryOperator} that first applies the {@code before} operator to its input, and
      * then applies this operator to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a primitive specialization of {@link UnaryOperator}. Therefore
-     * the given operation handles primitive types. In this case this is {@code boolean}.
+     * @implNote The input argument of this method is a primitive specialization of {@link UnaryOperator}. Therefore the
+     * given operation handles primitive types. In this case this is {@code boolean}.
      * @see #andThen(BooleanUnaryOperator)
      * @see #andThen(BooleanFunction)
      */

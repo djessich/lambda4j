@@ -41,7 +41,6 @@ import java.util.function.UnaryOperator;
 @SuppressWarnings("unused")
 @FunctionalInterface
 public interface BooleanBinaryOperator {
-    //TODO
 
     /**
      * Creates a {@link BooleanBinaryOperator} which always returns a given value.
@@ -125,6 +124,7 @@ public interface BooleanBinaryOperator {
      * @return A {@code BooleanBinaryOperator} that tests if the given arguments are equal to the ones of this operator.
      * @see #isNotEqual(boolean, boolean)
      */
+    @Nonnull
     static BooleanBinaryOperator isEqual(boolean target1, boolean target2) {
         return (value1, value2) -> (value1 == target1) && (value2 == target2);
     }
@@ -139,6 +139,7 @@ public interface BooleanBinaryOperator {
      * operator.
      * @see #isEqual(boolean, boolean)
      */
+    @Nonnull
     static BooleanBinaryOperator isNotEqual(boolean target1, boolean target2) {
         return (value1, value2) -> (value1 != target1) || (value2 != target2);
     }
@@ -149,6 +150,7 @@ public interface BooleanBinaryOperator {
      * @return A {@link BooleanBinaryOperator} the always returns {@code true}.
      * @see #alwaysFalse()
      */
+    @Nonnull
     static BooleanBinaryOperator alwaysTrue() {
         return (value1, value2) -> true;
     }
@@ -159,6 +161,7 @@ public interface BooleanBinaryOperator {
      * @return A {@link BooleanBinaryOperator} the always returns {@code false}.
      * @see #alwaysTrue()
      */
+    @Nonnull
     static BooleanBinaryOperator alwaysFalse() {
         return (value1, value2) -> false;
     }
@@ -169,6 +172,7 @@ public interface BooleanBinaryOperator {
      * @return A {@link BooleanBinaryOperator} which applies a logical AND to its input arguments.
      * @see #and(BooleanBinaryOperator)
      */
+    @Nonnull
     static BooleanBinaryOperator and() {
         return Boolean::logicalAnd;
     }
@@ -179,6 +183,7 @@ public interface BooleanBinaryOperator {
      * @return A {@link BooleanBinaryOperator} which applies a logical OR to its input arguments.
      * @see #or(BooleanBinaryOperator)
      */
+    @Nonnull
     static BooleanBinaryOperator or() {
         return Boolean::logicalOr;
     }
@@ -189,6 +194,7 @@ public interface BooleanBinaryOperator {
      * @return A {@link BooleanBinaryOperator} which applies a logical XOR to its input arguments.
      * @see #xor(BooleanBinaryOperator)
      */
+    @Nonnull
     static BooleanBinaryOperator xor() {
         return Boolean::logicalXor;
     }
@@ -219,6 +225,7 @@ public interface BooleanBinaryOperator {
      * @return A {@code BooleanBinaryOperator} that represents the logical negation of this one.
      * @see BiPredicate#negate()
      */
+    @Nonnull
     default BooleanBinaryOperator negate() {
         return (value1, value2) -> !applyAsBoolean(value1, value2);
     }
@@ -240,7 +247,8 @@ public interface BooleanBinaryOperator {
      * @see #xor(BooleanBinaryOperator)
      * @see BiPredicate#and(BiPredicate)
      */
-    default BooleanBinaryOperator and(final BooleanBinaryOperator other) {
+    @Nonnull
+    default BooleanBinaryOperator and(@Nonnull final BooleanBinaryOperator other) {
         Objects.requireNonNull(other);
         return (value1, value2) -> applyAsBoolean(value1, value2) && other.applyAsBoolean(value1, value2);
     }
@@ -262,7 +270,8 @@ public interface BooleanBinaryOperator {
      * @see #xor(BooleanBinaryOperator)
      * @see BiPredicate#or(BiPredicate)
      */
-    default BooleanBinaryOperator or(final BooleanBinaryOperator other) {
+    @Nonnull
+    default BooleanBinaryOperator or(@Nonnull final BooleanBinaryOperator other) {
         Objects.requireNonNull(other);
         return (value1, value2) -> applyAsBoolean(value1, value2) && other.applyAsBoolean(value1, value2);
     }
@@ -280,7 +289,8 @@ public interface BooleanBinaryOperator {
      * @see #and(BooleanBinaryOperator)
      * @see #or(BooleanBinaryOperator)
      */
-    default BooleanBinaryOperator xor(final BooleanBinaryOperator other) {
+    @Nonnull
+    default BooleanBinaryOperator xor(@Nonnull final BooleanBinaryOperator other) {
         Objects.requireNonNull(other);
         return (value1, value2) -> applyAsBoolean(value1, value2) ^ other.applyAsBoolean(value1, value2);
     }
