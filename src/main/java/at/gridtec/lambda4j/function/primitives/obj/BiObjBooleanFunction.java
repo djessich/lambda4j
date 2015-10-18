@@ -27,6 +27,7 @@ import java.util.Objects;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Predicate;
+import java.util.function.UnaryOperator;
 
 /**
  * Represents a function that accepts two object-valued and a {@code boolean}-valued argument, and produces a result.
@@ -42,6 +43,7 @@ import java.util.function.Predicate;
 @SuppressWarnings("unused")
 @FunctionalInterface
 public interface BiObjBooleanFunction<T, U, R> {
+    //TODO
 
     /**
      * Creates a {@link BiObjBooleanFunction} which always returns a given value.
@@ -134,23 +136,26 @@ public interface BiObjBooleanFunction<T, U, R> {
     }
 
     /**
-     * Returns a composed {@link BiObjBooleanFunction} that first applies the {@code before} functions to its input, and
-     * then applies this operation to the result. If evaluation of either operation throws an exception, it is relayed
-     * to the caller of the composed function.
+     * Returns a composed {@link BiObjBooleanFunction} that first applies the {@code before} operations to its input,
+     * and then applies this function to the result. If evaluation of either operation throws an exception, it is
+     * relayed to the caller of the composed operation.
      *
      * @param <A> The type of the argument to the first before operation
      * @param <B> The type of the argument to the second before operation
-     * @param before1 The first {@code Function} to apply before this operation is applied
-     * @param before2 The second {@code Function} to apply before this operation is applied
-     * @param before3 The third {@code BooleanUnaryOperator} to apply before this operation is applied
-     * @return A composed {@code BiObjBooleanFunction} that first applies the {@code before} functions to its input, and
-     * then applies this operation to the result.
+     * @param before1 The first operation to apply before this function is applied
+     * @param before2 The second operation to apply before this function is applied
+     * @param before3 The third operation to apply before this function is applied
+     * @return A composed {@code BiObjBooleanFunction} that first applies the {@code before} operations to its input,
+     * and then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
+     * @implNote The last input argument of this method is the primitive specialization of {@link UnaryOperator}.
+     * Therefore the operation handles a primitive type. In this case this is {@code byte}.
      * @see #andThen(Predicate)
      * @see #andThen(Function)
      */
-    default <A, B> BiObjBooleanFunction<A, B, R> compose(final Function<? super A, ? extends T> before1,
-            final Function<? super B, ? extends U> before2, final BooleanUnaryOperator before3) {
+    @Nonnull
+    default <A, B> BiObjBooleanFunction<A, B, R> compose(@Nonnull final Function<? super A, ? extends T> before1,
+            @Nonnull final Function<? super B, ? extends U> before2, @Nonnull final BooleanUnaryOperator before3) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         Objects.requireNonNull(before3);
@@ -158,24 +163,26 @@ public interface BiObjBooleanFunction<T, U, R> {
     }
 
     /**
-     * Returns a composed {@link TriFunction} that applies the given {@code before} functions to its input, and then
-     * applies this operation to the result. If evaluation of either operation throws an exception, it is relayed to the
+     * Returns a composed {@link TriFunction} that first applies the {@code before} functions to its input, and then
+     * applies this function to the result. If evaluation of either function throws an exception, it is relayed to the
      * caller of the composed function.
      *
      * @param <A> The type of the argument to the first before operation
      * @param <B> The type of the argument to the second before operation
      * @param <C> The type of the argument to the third before operation
-     * @param before1 The first before {@code Function} to apply before this operation is applied
-     * @param before2 The second before {@code Function} to apply before this operation is applied
-     * @param before3 The third before {@code Predicate} to apply before this operation is applied
-     * @return A composed {@code TriFunction} that applies the given {@code before} functions to its input, and then
-     * applies this operation to the result.
+     * @param before1 The first function to apply before this function is applied
+     * @param before2 The second function to apply before this function is applied
+     * @param before3 The third function to apply before this function is applied
+     * @return A composed {@code TriFunction} that first applies the {@code before} functions to its input, and then
+     * applies this function to the result.
      * @throws NullPointerException If one of the given functions are {@code null}
+     * @implNote The input arguments of this method are able to handle every type.
      * @see #andThen(Predicate)
      * @see #andThen(Function)
      */
-    default <A, B, C> TriFunction<A, B, C, R> compose(final Function<? super A, ? extends T> before1,
-            final Function<? super B, ? extends U> before2, final Predicate<? super C> before3) {
+    @Nonnull
+    default <A, B, C> TriFunction<A, B, C, R> compose(@Nonnull final Function<? super A, ? extends T> before1,
+            @Nonnull final Function<? super B, ? extends U> before2, @Nonnull final Predicate<? super C> before3) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         Objects.requireNonNull(before3);
@@ -183,47 +190,52 @@ public interface BiObjBooleanFunction<T, U, R> {
     }
 
     /**
-     * Returns a composed {@link BiObjBooleanPredicate} that first applies this operation to its input, and then applies
-     * the {@code after} operation to the result. If evaluation of either operation throws an exception, it is relayed
-     * to the caller of the composed operation.
+     * Returns a composed {@link BiObjBooleanPredicate} that first applies this function to its input, and then applies
+     * the {@code after} function to the result. If evaluation of either function throws an exception, it is relayed to
+     * the caller of the composed function.
      *
-     * @param after The {@code Predicate} to apply after this operation is applied
-     * @return A composed {@code BiObjBooleanPredicate} that first applies this operation, and then applies the {@code
-     * after} operation to the result.
+     * @param after The function to apply after this function is applied
+     * @return A composed {@code ToBooleanBiObjBooleanFunction} that first applies this function to its input, and then
+     * applies the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
+     * @implNote The result of this method is a primitive specialization of {@link TriFunction}. Therefore the returned
+     * operation handles primitive types. In this case this is {@code byte}.
      * @see #compose(Function, Function, BooleanUnaryOperator)
      * @see #compose(Function, Function, Predicate)
      */
-    default BiObjBooleanPredicate<T, U> andThen(final Predicate<? super R> after) {
+    @Nonnull
+    default BiObjBooleanPredicate<T, U> andThen(@Nonnull final Predicate<? super R> after) {
         Objects.requireNonNull(after);
         return (t, u, value) -> after.test(apply(t, u, value));
     }
 
     /**
-     * Returns a composed {@link ObjBooleanFunction} that first applies this operation to its input, and then applies
-     * the {@code after} operation to the result. If evaluation of either operation throws an exception, it is relayed
-     * to the caller of the composed operation.
+     * Returns a composed {@link BiObjBooleanFunction} that first applies this function to its input, and then applies
+     * the {@code after} function to the result. If evaluation of either function throws an exception, it is relayed to
+     * the caller of the composed function.
      *
-     * @param <S> The type of output of the {@code after} function, and of the composed function
-     * @param after The {@code Function} to apply after this operation is applied
-     * @return A composed {@code ObjBooleanFunction} that first applies this operation, and then applies the {@code
-     * after} operation to the result.
+     * @param <S> The type of return value from the {@code after} function, and of the composed function
+     * @param after The function to apply after this function is applied
+     * @return A composed {@code BiObjBooleanFunction} that first applies this function to its input, and then applies
+     * the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
+     * @implNote The returned function is able to handle every type.
      * @see #compose(Function, Function, BooleanUnaryOperator)
      * @see #compose(Function, Function, Predicate)
      */
-    default <S> BiObjBooleanFunction<T, U, S> andThen(final Function<? super R, ? extends S> after) {
+    @Nonnull
+    default <S> BiObjBooleanFunction<T, U, S> andThen(@Nonnull final Function<? super R, ? extends S> after) {
         Objects.requireNonNull(after);
         return (t, u, value) -> after.apply(apply(t, u, value));
     }
 
     /**
-     * Returns a composed {@link BiObjBooleanConsumer} that fist applies this operation to its input, and then consumes
+     * Returns a composed {@link BiObjBooleanConsumer} that fist applies this function to its input, and then consumes
      * the result using the given {@link Consumer}. If evaluation of either operation throws an exception, it is relayed
      * to the caller of the composed operation.
      *
      * @param consumer The operation which consumes the result from this operation
-     * @return A composed {@code BiObjBooleanConsumer} that first applies this operation to its input, and then consumes
+     * @return A composed {@code BiObjBooleanConsumer} that first applies this function to its input, and then consumes
      * the result using the given {@code Consumer}.
      * @throws NullPointerException If given argument is {@code null}
      */
