@@ -19,6 +19,7 @@ import at.gridtec.lambda4j.consumer.primitives.tri.BooleanTriConsumer;
 import at.gridtec.lambda4j.function.TriFunction;
 import at.gridtec.lambda4j.function.primitives.BooleanFunction;
 import at.gridtec.lambda4j.operators.ternary.BooleanTernaryOperator;
+import at.gridtec.lambda4j.operators.ternary.TernaryOperator;
 import at.gridtec.lambda4j.operators.unary.BooleanUnaryOperator;
 
 import javax.annotation.Nonnegative;
@@ -27,6 +28,7 @@ import java.util.Objects;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Predicate;
+import java.util.function.UnaryOperator;
 
 /**
  * Represents a function that accepts three boolean-valued argument and produces a result. This is the {@code
@@ -123,20 +125,24 @@ public interface BooleanTriFunction<R> {
     }
 
     /**
-     * Returns a composed {@link BooleanTriFunction} that first applies the {@code before} {@link BooleanUnaryOperator}s
-     * to its input, and then applies this operation to the result. If evaluation of either operation throws an
-     * exception, it is relayed to the caller of the composed function.
+     * Returns a composed {@link BooleanTriFunction} that first applies the {@code before} operations to its input, and
+     * then applies this function to the result. If evaluation of either operation throws an exception, it is relayed to
+     * the caller of the composed operation.
      *
-     * @param before1 The first {@code BooleanUnaryOperator} to apply before this operation is applied
-     * @param before2 The second {@code BooleanUnaryOperator} to apply before this operation is applied
-     * @param before3 The third {@code BooleanUnaryOperator} to apply before this operation is applied
-     * @return A composed {@code BooleanTriFunction} that first applies the {@code before} {@code BooleanUnaryOperator}s
-     * to its input, and then applies this operation to the result.
+     * @param before1 The first operation to apply before this function is applied
+     * @param before2 The second operation to apply before this function is applied
+     * @param before3 The third operation to apply before this function is applied
+     * @return A composed {@link BooleanTriFunction} that first applies the {@code before} operations to its input, and
+     * then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
+     * @implNote The input arguments of this method are primitive specializations of {@link UnaryOperator}. Therefore
+     * the given operations handle primitive types. In this case this is {@code boolean}.
+     * @see #andThen(Predicate)
      * @see #andThen(Function)
      */
-    default BooleanTriFunction<R> compose(final BooleanUnaryOperator before1, final BooleanUnaryOperator before2,
-            final BooleanUnaryOperator before3) {
+    @Nonnull
+    default BooleanTriFunction<R> compose(@Nonnull final BooleanUnaryOperator before1,
+            @Nonnull final BooleanUnaryOperator before2, @Nonnull final BooleanUnaryOperator before3) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         return (value1, value2, value3) -> apply(before1.applyAsBoolean(value1), before2.applyAsBoolean(value2),
@@ -144,70 +150,78 @@ public interface BooleanTriFunction<R> {
     }
 
     /**
-     * Returns a composed {@link TriFunction} that applies the given {@code before} {@link Predicate}s to its input, and
-     * then applies this operation to the result. If evaluation of either operation throws an exception, it is relayed
-     * to the caller of the composed function.
+     * Returns a composed {@link TriFunction} that first applies the {@code before} functions to its input, and then
+     * applies this function to the result. If evaluation of either function throws an exception, it is relayed to the
+     * caller of the composed function.
      *
-     * @param <T> The type of the argument to the first before operation
-     * @param <U> The type of the argument to the second before operation
-     * @param <V> The type of the argument to the third before operation
-     * @param before1 The first before {@code Predicate} to apply before this operation is applied
-     * @param before2 The second before {@code Predicate} to apply before this operation is applied
-     * @param before3 The third before {@code Predicate} to apply before this operation is applied
-     * @return A composed {@code TriFunction} that applies the given {@code before} {@code Predicate}s to its input, and
-     * then applies this operation to the result.
-     * @throws NullPointerException If one of the given functions are {@code null}
+     * @param <T> The type of the argument to the first before function
+     * @param <U> The type of the argument to the second before function
+     * @param <V> The type of the argument to the third before function
+     * @param before1 The first function to apply before this function is applied
+     * @param before2 The second function to apply before this function is applied
+     * @param before3 The third function to apply before this function is applied
+     * @return A composed {@link TriFunction} that first applies the {@code before} functions to its input, and then
+     * applies this function to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implNote The input arguments of this method are able to handle every type.
+     * @see #andThen(Predicate)
      * @see #andThen(Function)
      */
-    default <T, U, V> TriFunction<T, U, V, R> compose(final Predicate<? super T> before1,
-            final Predicate<? super U> before2, final Predicate<? super V> before3) {
+    @Nonnull
+    default <T, U, V> TriFunction<T, U, V, R> compose(@Nonnull final Predicate<? super T> before1,
+            @Nonnull final Predicate<? super U> before2, @Nonnull final Predicate<? super V> before3) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
-        return (value1, value2, value3) -> apply(before1.test(value1), before2.test(value2), before3.test(value3));
+        return (t, u, v) -> apply(before1.test(t), before2.test(u), before3.test(v));
     }
 
     /**
-     * Returns a composed {@link BooleanTernaryOperator} that first applies this operation to its input, and then
-     * applies the {@code after} operation to the result. If evaluation of either operation throws an exception, it is
-     * relayed to the caller of the composed operation.
+     * Returns a composed {@link BooleanTernaryOperator} that first applies this function to its input, and then applies
+     * the {@code after} function to the result. If evaluation of either function throws an exception, it is relayed to
+     * the caller of the composed function.
      *
-     * @param after The {@code ToBooleanFunction} to apply after this operation is applied
-     * @return A composed {@code BooleanTernaryOperator} that first applies this operation, and then applies the {@code
-     * after} operation to the result.
+     * @param after The function to apply after this function is applied
+     * @return A composed {@link BooleanTernaryOperator} that first applies this function to its input, and then applies
+     * the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
+     * @implNote The result of this method is the primitive specialization of {@link TernaryOperator}. Therefore the
+     * returned operation handles primitive types. In this case this is {@code boolean}.
      * @see #compose(BooleanUnaryOperator, BooleanUnaryOperator, BooleanUnaryOperator)
      * @see #compose(Predicate, Predicate, Predicate)
      */
-    default BooleanTernaryOperator andThen(final Predicate<? super R> after) {
+    @Nonnull
+    default BooleanTernaryOperator andThen(@Nonnull final Predicate<? super R> after) {
         Objects.requireNonNull(after);
         return (value1, value2, value3) -> after.test(apply(value1, value2, value3));
     }
 
     /**
-     * Returns a composed {@link BooleanTriFunction} that first applies this operation to its input, and then applies
-     * the {@code after} operation to the result. If evaluation of either operation throws an exception, it is relayed
-     * to the caller of the composed operation.
+     * Returns a composed {@link BooleanTriFunction} that first applies this function to its input, and then applies the
+     * {@code after} function to the result. If evaluation of either function throws an exception, it is relayed to the
+     * caller of the composed function.
      *
-     * @param <S> The type of output of the {@code after} function, and of the composed function
-     * @param after The {@code BooleanTriFunction} to apply after this operation is applied
-     * @return A composed {@code BooleanTriFunction} that first applies this operation, and then applies the {@code
-     * after} operation to the result.
+     * @param <S> The type of return value from the {@code after} function, and of the composed function
+     * @param after The function to apply after this function is applied
+     * @return A composed {@link BooleanTriFunction} that first applies this function to its input, and then applies the
+     * {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
+     * @implNote The returned function is able to handle every type.
      * @see #compose(BooleanUnaryOperator, BooleanUnaryOperator, BooleanUnaryOperator)
      * @see #compose(Predicate, Predicate, Predicate)
      */
-    default <S> BooleanTriFunction<S> andThen(final Function<? super R, ? extends S> after) {
+    @Nonnull
+    default <S> BooleanTriFunction<S> andThen(@Nonnull final Function<? super R, ? extends S> after) {
         Objects.requireNonNull(after);
         return (value1, value2, value3) -> after.apply(apply(value1, value2, value3));
     }
 
     /**
-     * Returns a composed {@link BooleanTriConsumer} that fist applies this operation to its input, and then consumes
-     * the result using the given {@link Consumer}. If evaluation of either operation throws an exception, it is relayed
-     * to the caller of the composed operation.
+     * Returns a composed {@link BooleanTriConsumer} that fist applies this function to its input, and then consumes the
+     * result using the given {@link Consumer}. If evaluation of either operation throws an exception, it is relayed to
+     * the caller of the composed operation.
      *
      * @param consumer The operation which consumes the result from this operation
-     * @return A composed {@code BooleanTriConsumer} that first applies this operation to its input, and then consumes
+     * @return A composed {@code BooleanTriConsumer} that first applies this function to its input, and then consumes
      * the result using the given {@code Consumer}.
      * @throws NullPointerException If given argument is {@code null}
      */

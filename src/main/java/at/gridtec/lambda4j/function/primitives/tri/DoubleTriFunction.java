@@ -18,6 +18,7 @@ package at.gridtec.lambda4j.function.primitives.tri;
 import at.gridtec.lambda4j.consumer.primitives.tri.DoubleTriConsumer;
 import at.gridtec.lambda4j.function.TriFunction;
 import at.gridtec.lambda4j.operators.ternary.DoubleTernaryOperator;
+import at.gridtec.lambda4j.operators.ternary.TernaryOperator;
 
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
@@ -27,6 +28,7 @@ import java.util.function.DoubleFunction;
 import java.util.function.DoubleUnaryOperator;
 import java.util.function.Function;
 import java.util.function.ToDoubleFunction;
+import java.util.function.UnaryOperator;
 
 /**
  * Represents a function that accepts three double-valued argument and produces a result. This is the {@code
@@ -123,20 +125,24 @@ public interface DoubleTriFunction<R> {
     }
 
     /**
-     * Returns a composed {@link DoubleTriFunction} that first applies the {@code before} {@link DoubleUnaryOperator}s
-     * to its input, and then applies this operation to the result. If evaluation of either operation throws an
-     * exception, it is relayed to the caller of the composed function.
+     * Returns a composed {@link DoubleTriFunction} that first applies the {@code before} operations to its input, and
+     * then applies this function to the result. If evaluation of either operation throws an exception, it is relayed to
+     * the caller of the composed operation.
      *
-     * @param before1 The first {@code DoubleUnaryOperator} to apply before this operation is applied
-     * @param before2 The second {@code DoubleUnaryOperator} to apply before this operation is applied
-     * @param before3 The third {@code DoubleUnaryOperator} to apply before this operation is applied
-     * @return A composed {@code DoubleTriFunction} that first applies the {@code before} {@code DoubleUnaryOperator}s
-     * to its input, and then applies this operation to the result.
+     * @param before1 The first operation to apply before this function is applied
+     * @param before2 The second operation to apply before this function is applied
+     * @param before3 The third operation to apply before this function is applied
+     * @return A composed {@link DoubleTriFunction} that first applies the {@code before} operations to its input, and
+     * then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
+     * @implNote The input arguments of this method are primitive specializations of {@link UnaryOperator}. Therefore
+     * the given operations handle primitive types. In this case this is {@code double}.
+     * @see #andThen(ToDoubleFunction)
      * @see #andThen(Function)
      */
-    default DoubleTriFunction<R> compose(final DoubleUnaryOperator before1, final DoubleUnaryOperator before2,
-            final DoubleUnaryOperator before3) {
+    @Nonnull
+    default DoubleTriFunction<R> compose(@Nonnull final DoubleUnaryOperator before1,
+            @Nonnull final DoubleUnaryOperator before2, @Nonnull final DoubleUnaryOperator before3) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         return (value1, value2, value3) -> apply(before1.applyAsDouble(value1), before2.applyAsDouble(value2),
@@ -144,72 +150,79 @@ public interface DoubleTriFunction<R> {
     }
 
     /**
-     * Returns a composed {@link TriFunction} that applies the given {@code before} {@link ToDoubleFunction}s to its
-     * input, and then applies this operation to the result. If evaluation of either operation throws an exception, it
-     * is relayed to the caller of the composed function.
+     * Returns a composed {@link TriFunction} that first applies the {@code before} functions to its input, and then
+     * applies this function to the result. If evaluation of either function throws an exception, it is relayed to the
+     * caller of the composed function.
      *
-     * @param <T> The type of the argument to the first before operation
-     * @param <U> The type of the argument to the second before operation
-     * @param <V> The type of the argument to the third before operation
-     * @param before1 The first before {@code ToDoubleFunction} to apply before this operation is applied
-     * @param before2 The second before {@code ToDoubleFunction} to apply before this operation is applied
-     * @param before3 The third before {@code ToDoubleFunction} to apply before this operation is applied
-     * @return A composed {@code TriFunction} that applies the given {@code before} {@code ToDoubleFunction}s to its
-     * input, and then applies this operation to the result.
-     * @throws NullPointerException If one of the given functions are {@code null}
+     * @param <T> The type of the argument to the first before function
+     * @param <U> The type of the argument to the second before function
+     * @param <V> The type of the argument to the third before function
+     * @param before1 The first function to apply before this function is applied
+     * @param before2 The second function to apply before this function is applied
+     * @param before3 The third function to apply before this function is applied
+     * @return A composed {@link TriFunction} that first applies the {@code before} functions to its input, and then
+     * applies this function to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implNote The input arguments of this method are able to handle every type.
+     * @see #andThen(ToDoubleFunction)
      * @see #andThen(Function)
      */
-    default <T, U, V> TriFunction<T, U, V, R> compose(final ToDoubleFunction<? super T> before1,
-            final ToDoubleFunction<? super U> before2, final ToDoubleFunction<? super V> before3) {
+    @Nonnull
+    default <T, U, V> TriFunction<T, U, V, R> compose(@Nonnull final ToDoubleFunction<? super T> before1,
+            @Nonnull final ToDoubleFunction<? super U> before2, @Nonnull final ToDoubleFunction<? super V> before3) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
-        return (value1, value2, value3) -> apply(before1.applyAsDouble(value1), before2.applyAsDouble(value2),
-                                                 before3.applyAsDouble(value3));
+        return (t, u, v) -> apply(before1.applyAsDouble(t), before2.applyAsDouble(u), before3.applyAsDouble(v));
     }
 
     /**
-     * Returns a composed {@link DoubleTernaryOperator} that first applies this operation to its input, and then applies
-     * the {@code after} operation to the result. If evaluation of either operation throws an exception, it is relayed
-     * to the caller of the composed operation.
+     * Returns a composed {@link DoubleTernaryOperator} that first applies this function to its input, and then applies
+     * the {@code after} function to the result. If evaluation of either function throws an exception, it is relayed to
+     * the caller of the composed function.
      *
-     * @param after The {@code ToDoubleFunction} to apply after this operation is applied
-     * @return A composed {@code DoubleTernaryOperator} that first applies this operation, and then applies the {@code
-     * after} operation to the result.
+     * @param after The function to apply after this function is applied
+     * @return A composed {@link DoubleTernaryOperator} that first applies this function to its input, and then applies
+     * the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
+     * @implNote The result of this method is the primitive specialization of {@link TernaryOperator}. Therefore the
+     * returned operation handles primitive types. In this case this is {@code double}.
      * @see #compose(DoubleUnaryOperator, DoubleUnaryOperator, DoubleUnaryOperator)
      * @see #compose(ToDoubleFunction, ToDoubleFunction, ToDoubleFunction)
      */
-    default DoubleTernaryOperator andThen(final ToDoubleFunction<? super R> after) {
+    @Nonnull
+    default DoubleTernaryOperator andThen(@Nonnull final ToDoubleFunction<? super R> after) {
         Objects.requireNonNull(after);
         return (value1, value2, value3) -> after.applyAsDouble(apply(value1, value2, value3));
     }
 
     /**
-     * Returns a composed {@link DoubleTriFunction} that first applies this operation to its input, and then applies the
-     * {@code after} operation to the result. If evaluation of either operation throws an exception, it is relayed to
-     * the caller of the composed operation.
+     * Returns a composed {@link DoubleTriFunction} that first applies this function to its input, and then applies the
+     * {@code after} function to the result. If evaluation of either function throws an exception, it is relayed to the
+     * caller of the composed function.
      *
-     * @param <S> The type of output of the {@code after} function, and of the composed function
-     * @param after The {@code DoubleTriFunction} to apply after this operation is applied
-     * @return A composed {@code DoubleTriFunction} that first applies this operation, and then applies the {@code
-     * after} operation to the result.
+     * @param <S> The type of return value from the {@code after} function, and of the composed function
+     * @param after The function to apply after this function is applied
+     * @return A composed {@link DoubleTriFunction} that first applies this function to its input, and then applies the
+     * {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
+     * @implNote The returned function is able to handle every type.
      * @see #compose(DoubleUnaryOperator, DoubleUnaryOperator, DoubleUnaryOperator)
      * @see #compose(ToDoubleFunction, ToDoubleFunction, ToDoubleFunction)
      */
-    default <S> DoubleTriFunction<S> andThen(final Function<? super R, ? extends S> after) {
+    @Nonnull
+    default <S> DoubleTriFunction<S> andThen(@Nonnull final Function<? super R, ? extends S> after) {
         Objects.requireNonNull(after);
         return (value1, value2, value3) -> after.apply(apply(value1, value2, value3));
     }
 
     /**
-     * Returns a composed {@link DoubleTriConsumer} that fist applies this operation to its input, and then consumes the
+     * Returns a composed {@link DoubleTriConsumer} that fist applies this function to its input, and then consumes the
      * result using the given {@link Consumer}. If evaluation of either operation throws an exception, it is relayed to
      * the caller of the composed operation.
      *
      * @param consumer The operation which consumes the result from this operation
-     * @return A composed {@code DoubleTriConsumer} that first applies this operation to its input, and then consumes
-     * the result using the given {@code Consumer}.
+     * @return A composed {@code DoubleTriConsumer} that first applies this function to its input, and then consumes the
+     * result using the given {@code Consumer}.
      * @throws NullPointerException If given argument is {@code null}
      */
     @Nonnull

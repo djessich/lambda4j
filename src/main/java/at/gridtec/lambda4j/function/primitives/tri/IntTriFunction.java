@@ -18,6 +18,7 @@ package at.gridtec.lambda4j.function.primitives.tri;
 import at.gridtec.lambda4j.consumer.primitives.tri.IntTriConsumer;
 import at.gridtec.lambda4j.function.TriFunction;
 import at.gridtec.lambda4j.operators.ternary.IntTernaryOperator;
+import at.gridtec.lambda4j.operators.ternary.TernaryOperator;
 
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
@@ -27,6 +28,7 @@ import java.util.function.Function;
 import java.util.function.IntFunction;
 import java.util.function.IntUnaryOperator;
 import java.util.function.ToIntFunction;
+import java.util.function.UnaryOperator;
 
 /**
  * Represents a function that accepts three int-valued argument and produces a result. This is the {@code int}-consuming
@@ -123,20 +125,24 @@ public interface IntTriFunction<R> {
     }
 
     /**
-     * Returns a composed {@link IntTriFunction} that first applies the {@code before} {@link IntUnaryOperator}s to its
-     * input, and then applies this operation to the result. If evaluation of either operation throws an exception, it
-     * is relayed to the caller of the composed function.
+     * Returns a composed {@link IntTriFunction} that first applies the {@code before} operations to its input, and then
+     * applies this function to the result. If evaluation of either operation throws an exception, it is relayed to the
+     * caller of the composed operation.
      *
-     * @param before1 The first {@code IntUnaryOperator} to apply before this operation is applied
-     * @param before2 The second {@code IntUnaryOperator} to apply before this operation is applied
-     * @param before3 The third {@code IntUnaryOperator} to apply before this operation is applied
-     * @return A composed {@code IntTriFunction} that first applies the {@code before} {@code IntUnaryOperator}s to its
-     * input, and then applies this operation to the result.
+     * @param before1 The first operation to apply before this function is applied
+     * @param before2 The second operation to apply before this function is applied
+     * @param before3 The third operation to apply before this function is applied
+     * @return A composed {@link IntTriFunction} that first applies the {@code before} operations to its input, and then
+     * applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
+     * @implNote The input arguments of this method are primitive specializations of {@link UnaryOperator}. Therefore
+     * the given operations handle primitive types. In this case this is {@code int}.
+     * @see #andThen(ToIntFunction)
      * @see #andThen(Function)
      */
-    default IntTriFunction<R> compose(final IntUnaryOperator before1, final IntUnaryOperator before2,
-            final IntUnaryOperator before3) {
+    @Nonnull
+    default IntTriFunction<R> compose(@Nonnull final IntUnaryOperator before1, @Nonnull final IntUnaryOperator before2,
+            @Nonnull final IntUnaryOperator before3) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         return (value1, value2, value3) -> apply(before1.applyAsInt(value1), before2.applyAsInt(value2),
@@ -144,71 +150,78 @@ public interface IntTriFunction<R> {
     }
 
     /**
-     * Returns a composed {@link TriFunction} that applies the given {@code before} {@link ToIntFunction}s to its input,
-     * and then applies this operation to the result. If evaluation of either operation throws an exception, it is
-     * relayed to the caller of the composed function.
+     * Returns a composed {@link TriFunction} that first applies the {@code before} functions to its input, and then
+     * applies this function to the result. If evaluation of either function throws an exception, it is relayed to the
+     * caller of the composed function.
      *
-     * @param <T> The type of the argument to the first before operation
-     * @param <U> The type of the argument to the second before operation
-     * @param <V> The type of the argument to the third before operation
-     * @param before1 The first before {@code ToIntFunction} to apply before this operation is applied
-     * @param before2 The second before {@code ToIntFunction} to apply before this operation is applied
-     * @param before3 The third before {@code ToIntFunction} to apply before this operation is applied
-     * @return A composed {@code TriFunction} that applies the given {@code before} {@code ToIntFunction}s to its input,
-     * and then applies this operation to the result.
-     * @throws NullPointerException If one of the given functions are {@code null}
+     * @param <T> The type of the argument to the first before function
+     * @param <U> The type of the argument to the second before function
+     * @param <V> The type of the argument to the third before function
+     * @param before1 The first function to apply before this function is applied
+     * @param before2 The second function to apply before this function is applied
+     * @param before3 The third function to apply before this function is applied
+     * @return A composed {@link TriFunction} that first applies the {@code before} functions to its input, and then
+     * applies this function to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implNote The input arguments of this method are able to handle every type.
+     * @see #andThen(ToIntFunction)
      * @see #andThen(Function)
      */
-    default <T, U, V> TriFunction<T, U, V, R> compose(final ToIntFunction<? super T> before1,
-            final ToIntFunction<? super U> before2, final ToIntFunction<? super V> before3) {
+    @Nonnull
+    default <T, U, V> TriFunction<T, U, V, R> compose(@Nonnull final ToIntFunction<? super T> before1,
+            @Nonnull final ToIntFunction<? super U> before2, @Nonnull final ToIntFunction<? super V> before3) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
-        return (value1, value2, value3) -> apply(before1.applyAsInt(value1), before2.applyAsInt(value2),
-                                                 before3.applyAsInt(value3));
+        return (t, u, v) -> apply(before1.applyAsInt(t), before2.applyAsInt(u), before3.applyAsInt(v));
     }
 
     /**
-     * Returns a composed {@link IntTernaryOperator} that first applies this operation to its input, and then applies
-     * the {@code after} operation to the result. If evaluation of either operation throws an exception, it is relayed
-     * to the caller of the composed operation.
+     * Returns a composed {@link IntTernaryOperator} that first applies this function to its input, and then applies the
+     * {@code after} function to the result. If evaluation of either function throws an exception, it is relayed to the
+     * caller of the composed function.
      *
-     * @param after The {@code ToIntFunction} to apply after this operation is applied
-     * @return A composed {@code IntTernaryOperator} that first applies this operation, and then applies the {@code
-     * after} operation to the result.
+     * @param after The function to apply after this function is applied
+     * @return A composed {@link IntTernaryOperator} that first applies this function to its input, and then applies the
+     * {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
+     * @implNote The result of this method is the primitive specialization of {@link TernaryOperator}. Therefore the
+     * returned operation handles primitive types. In this case this is {@code int}.
      * @see #compose(IntUnaryOperator, IntUnaryOperator, IntUnaryOperator)
      * @see #compose(ToIntFunction, ToIntFunction, ToIntFunction)
      */
-    default IntTernaryOperator andThen(final ToIntFunction<? super R> after) {
+    @Nonnull
+    default IntTernaryOperator andThen(@Nonnull final ToIntFunction<? super R> after) {
         Objects.requireNonNull(after);
         return (value1, value2, value3) -> after.applyAsInt(apply(value1, value2, value3));
     }
 
     /**
-     * Returns a composed {@link IntTriFunction} that first applies this operation to its input, and then applies the
-     * {@code after} operation to the result. If evaluation of either operation throws an exception, it is relayed to
-     * the caller of the composed operation.
+     * Returns a composed {@link IntTriFunction} that first applies this function to its input, and then applies the
+     * {@code after} function to the result. If evaluation of either function throws an exception, it is relayed to the
+     * caller of the composed function.
      *
-     * @param <S> The type of output of the {@code after} function, and of the composed function
-     * @param after The {@code IntTriFunction} to apply after this operation is applied
-     * @return A composed {@code IntTriFunction} that first applies this operation, and then applies the {@code after}
-     * operation to the result.
+     * @param <S> The type of return value from the {@code after} function, and of the composed function
+     * @param after The function to apply after this function is applied
+     * @return A composed {@link IntTriFunction} that first applies this function to its input, and then applies the
+     * {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
+     * @implNote The returned function is able to handle every type.
      * @see #compose(IntUnaryOperator, IntUnaryOperator, IntUnaryOperator)
      * @see #compose(ToIntFunction, ToIntFunction, ToIntFunction)
      */
-    default <S> IntTriFunction<S> andThen(final Function<? super R, ? extends S> after) {
+    @Nonnull
+    default <S> IntTriFunction<S> andThen(@Nonnull final Function<? super R, ? extends S> after) {
         Objects.requireNonNull(after);
         return (value1, value2, value3) -> after.apply(apply(value1, value2, value3));
     }
 
     /**
-     * Returns a composed {@link IntTriConsumer} that fist applies this operation to its input, and then consumes the
+     * Returns a composed {@link IntTriConsumer} that fist applies this function to its input, and then consumes the
      * result using the given {@link Consumer}. If evaluation of either operation throws an exception, it is relayed to
      * the caller of the composed operation.
      *
      * @param consumer The operation which consumes the result from this operation
-     * @return A composed {@code IntTriConsumer} that first applies this operation to its input, and then consumes the
+     * @return A composed {@code IntTriConsumer} that first applies this function to its input, and then consumes the
      * result using the given {@code Consumer}.
      * @throws NullPointerException If given argument is {@code null}
      */

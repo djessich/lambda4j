@@ -38,6 +38,7 @@ import java.util.function.Predicate;
 import java.util.function.ToDoubleFunction;
 import java.util.function.ToIntFunction;
 import java.util.function.ToLongFunction;
+import java.util.function.UnaryOperator;
 
 /**
  * Represents a function that accepts a char-valued argument and produces a result. This is the {@code char}-consuming
@@ -84,186 +85,210 @@ public interface CharFunction<R> {
     }
 
     /**
-     * Returns a composed {@link CharFunction} that first applies the {@code before} {@link CharUnaryOperator} to its
-     * input, and then applies this operation to the result. If evaluation of either operation throws an exception, it
-     * is relayed to the caller of the composed function.
+     * Returns a composed {@link CharFunction} that first applies the {@code before} operation to its input, and then
+     * applies this function to the result. If evaluation of either operation throws an exception, it is relayed to the
+     * caller of the composed operation.
      *
-     * @param before The {@code CharUnaryOperator} to apply before this operation is applied
-     * @return A composed {@code CharFunction} that first applies the {@code before} {@code CharUnaryOperator} to its
-     * input, and then applies this operation to the result.
+     * @param before The operation to apply before this function is applied
+     * @return A composed {@link CharFunction} that first applies the {@code before} operation to its input, and then
+     * applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @see #andThen(Function)
+     * @implNote The input argument of this method is the primitive specialization of {@link UnaryOperator}. Therefore
+     * the given operation handles primitive types. In this case this is {@code char}.
      */
-    default CharFunction<R> compose(final CharUnaryOperator before) {
+    @Nonnull
+    default CharFunction<R> compose(@Nonnull final CharUnaryOperator before) {
         Objects.requireNonNull(before);
         return value -> apply(before.applyAsChar(value));
     }
 
     /**
-     * Returns a composed {@link Function} that applies the given {@code before} {@link ToCharFunction} to its input,
-     * and then applies this operation to the result. If evaluation of either operation throws an exception, it is
-     * relayed to the caller of the composed function.
+     * Returns a composed {@link Function} that first applies the {@code before} function to its input, and then applies
+     * this function to the result. If evaluation of either function throws an exception, it is relayed to the caller of
+     * the composed function.
      *
-     * @param <T> The type of the argument to the before operation
-     * @param before The before {@code ToCharFunction} to apply before this operation is applied
-     * @return A composed {@code Function} that applies the given {@code before} {@code ToCharFunction} to its input,
-     * and then applies this operation to the result.
-     * @throws NullPointerException If one of the given functions are {@code null}
-     * @see #andThen(Function)
+     * @param <T> The type of the argument to the before function
+     * @param before The first function to apply before this function is applied
+     * @return A omposed {@link Function} that first applies the {@code before} function to its input, and then applies
+     * this function to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implNote The input argument of this method is able to handle every type.
      */
-    default <T> Function<T, R> compose(final ToCharFunction<? super T> before) {
+    @Nonnull
+    default <T> Function<T, R> compose(@Nonnull final ToCharFunction<? super T> before) {
         Objects.requireNonNull(before);
         return value -> apply(before.applyAsChar(value));
     }
 
     /**
-     * Returns a composed {@link CharUnaryOperator} that first applies this operation to its input, and then applies the
-     * {@code after} operation to the result. If evaluation of either operation throws an exception, it is relayed to
-     * the caller of the composed operation.
+     * Returns a composed {@link CharUnaryOperator} that first applies this function to its input, and then applies the
+     * {@code after} function to the result. If evaluation of either function throws an exception, it is relayed to the
+     * caller of the composed operation.
      *
-     * @param after The {@code ToCharFunction} to apply after this operation is applied
-     * @return A composed {@code CharUnaryOperator} that first applies this operation, and then applies the {@code
-     * after} operation to the result.
+     * @param after The function to apply after this function is applied
+     * @return A composed {@link CharUnaryOperator} that first applies this function to its input, and then applies the
+     * {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
+     * @implNote The result of this method is the primitive specialization of {@link UnaryOperator}. Therefore the
+     * returned operation handles primitive types. In this case this is {@code char}.
      * @see #compose(CharUnaryOperator)
      * @see #compose(ToCharFunction)
      */
-    default CharUnaryOperator andThen(final ToCharFunction<? super R> after) {
+    @Nonnull
+    default CharUnaryOperator andThen(@Nonnull final ToCharFunction<? super R> after) {
         Objects.requireNonNull(after);
         return value -> after.applyAsChar(apply(value));
     }
 
     /**
-     * Returns a composed {@link CharFunction} that first applies this operation to its input, and then applies the
-     * {@code after} operation to the result. If evaluation of either operation throws an exception, it is relayed to
-     * the caller of the composed operation.
+     * Returns a composed {@link CharFunction} that first applies this function to its input, and then applies the
+     * {@code after} function to the result. If evaluation of either function throws an exception, it is relayed to the
+     * caller of the composed function.
      *
-     * @param <S> The type of output of the {@code after} function, and of the composed function
-     * @param after The {@code CharFunction} to apply after this operation is applied
-     * @return A composed {@code CharFunction} that first applies this operation, and then applies the {@code after}
-     * operation to the result.
+     * @param <S> The type of return value from the {@code after} function, and of the composed function
+     * @param after The function to apply after this function is applied
+     * @return A composed {@link CharFunction} that first applies this function to its input, and then applies the
+     * {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
+     * @implNote The returned function is able to handle every type.
      * @see #compose(CharUnaryOperator)
      * @see #compose(ToCharFunction)
      */
-    default <S> CharFunction<S> andThen(final Function<? super R, ? extends S> after) {
+    @Nonnull
+    default <S> CharFunction<S> andThen(@Nonnull final Function<? super R, ? extends S> after) {
         Objects.requireNonNull(after);
         return value -> after.apply(apply(value));
     }
 
     /**
-     * Returns a composed {@link CharToBooleanFunction} that first applies this operation to its input, and then applies
-     * the {@code after} operation to the result. If evaluation of either operations throws an exception, it is relayed
-     * to the caller of the composed operation.
+     * Returns a composed {@link CharToBooleanFunction} that first applies this function to its input, and then applies
+     * the {@code after} function to the result. If evaluation of either function throws an exception, it is relayed to
+     * the caller of the composed function. This method is just convenience, to provide the ability to transform this
+     * function to {@code boolean}, using the {@code char}-to-{@code boolean} primitive specialization of {@link
+     * Function}.
      *
-     * @param after The {@code Predicate} to apply after this operation is applied
-     * @return A composed {@code CharToBooleanFunction} that first applies this operation to its input, and then applies
-     * the {@code after} operation to the result.
+     * @param after The function to apply after this function is applied
+     * @return A composed {@link CharToBooleanFunction} that first applies this function to its input, and then applies
+     * the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
      */
-    default CharToBooleanFunction toBoolean(final Predicate<? super R> after) {
+    @Nonnull
+    default CharToBooleanFunction toBoolean(@Nonnull final Predicate<? super R> after) {
         Objects.requireNonNull(after);
         return value -> after.test(apply(value));
     }
 
     /**
-     * Returns a composed {@link CharToByteFunction} that first applies this operation to its input, and then applies
-     * the {@code after} operation to the result. If evaluation of either operations throws an exception, it is relayed
-     * to the caller of the composed operation.
+     * Returns a composed {@link CharToByteFunction} that first applies this function to its input, and then applies the
+     * {@code after} function to the result. If evaluation of either function throws an exception, it is relayed to the
+     * caller of the composed function. This method is just convenience, to provide the ability to transform this
+     * function to {@code byte}, using the {@code char}-to-{@code byte} primitive specialization of {@link Function}.
      *
-     * @param after The {@code ToByteFunction} to apply after this operation is applied
-     * @return A composed {@code CharToByteFunction} that first applies this operation to its input, and then applies
-     * the {@code after} operation to the result.
+     * @param after The function to apply after this function is applied
+     * @return A composed {@link CharToByteFunction} that first applies this function to its input, and then applies the
+     * {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
      */
-    default CharToByteFunction toByte(final ToByteFunction<? super R> after) {
+    @Nonnull
+    default CharToByteFunction toByte(@Nonnull final ToByteFunction<? super R> after) {
         Objects.requireNonNull(after);
         return value -> after.applyAsByte(apply(value));
     }
 
     /**
-     * Returns a composed {@link CharToDoubleFunction} that first applies this operation to its input, and then applies
-     * the {@code after} operation to the result. If evaluation of either operations throws an exception, it is relayed
-     * to the caller of the composed operation.
+     * Returns a composed {@link CharToDoubleFunction} that first applies this function to its input, and then applies
+     * the {@code after} function to the result. If evaluation of either function throws an exception, it is relayed to
+     * the caller of the composed function. This method is just convenience, to provide the ability to transform this
+     * function to {@code double}, using the {@code char}-to-{@code double} primitive specialization of {@link
+     * Function}.
      *
-     * @param after The {@code ToDoubleFunction} to apply after this operation is applied
-     * @return A composed {@code CharToDoubleFunction} that first applies this operation to its input, and then applies
-     * the {@code after} operation to the result.
+     * @param after The function to apply after this function is applied
+     * @return A composed {@link CharToDoubleFunction} that first applies this function to its input, and then applies
+     * the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
      */
-    default CharToDoubleFunction toDouble(final ToDoubleFunction<? super R> after) {
+    @Nonnull
+    default CharToDoubleFunction toDouble(@Nonnull final ToDoubleFunction<? super R> after) {
         Objects.requireNonNull(after);
         return value -> after.applyAsDouble(apply(value));
     }
 
     /**
-     * Returns a composed {@link CharToFloatFunction} that first applies this operation to its input, and then applies
-     * the {@code after} operation to the result. If evaluation of either operations throws an exception, it is relayed
-     * to the caller of the composed operation.
+     * Returns a composed {@link CharToFloatFunction} that first applies this function to its input, and then applies
+     * the {@code after} function to the result. If evaluation of either function throws an exception, it is relayed to
+     * the caller of the composed function. This method is just convenience, to provide the ability to transform this
+     * function to {@code float}, using the {@code char}-to-{@code float} primitive specialization of {@link Function}.
      *
-     * @param after The {@code ToFloatFunction} to apply after this operation is applied
-     * @return A composed {@code CharToFloatFunction} that first applies this operation to its input, and then applies
-     * the {@code after} operation to the result.
+     * @param after The function to apply after this function is applied
+     * @return A composed {@link CharToFloatFunction} that first applies this function to its input, and then applies
+     * the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
      */
-    default CharToFloatFunction toFloat(final ToFloatFunction<? super R> after) {
+    @Nonnull
+    default CharToFloatFunction toFloat(@Nonnull final ToFloatFunction<? super R> after) {
         Objects.requireNonNull(after);
         return value -> after.applyAsFloat(apply(value));
     }
 
     /**
-     * Returns a composed {@link CharToIntFunction} that first applies this operation to its input, and then applies the
-     * {@code after} operation to the result. If evaluation of either operations throws an exception, it is relayed to
-     * the caller of the composed operation.
+     * Returns a composed {@link CharToIntFunction} that first applies this function to its input, and then applies the
+     * {@code after} function to the result. If evaluation of either function throws an exception, it is relayed to the
+     * caller of the composed function. This method is just convenience, to provide the ability to transform this
+     * function to {@code int}, using the {@code char}-to-{@code int} primitive specialization of {@link Function}.
      *
-     * @param after The {@code ToIntFunction} to apply after this operation is applied
-     * @return A composed {@code CharToIntFunction} that first applies this operation to its input, and then applies the
-     * {@code after} operation to the result.
+     * @param after The function to apply after this function is applied
+     * @return A composed {@link CharToIntFunction} that first applies this function to its input, and then applies the
+     * {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
      */
-    default CharToIntFunction toInt(final ToIntFunction<? super R> after) {
+    @Nonnull
+    default CharToIntFunction toInt(@Nonnull final ToIntFunction<? super R> after) {
         Objects.requireNonNull(after);
         return value -> after.applyAsInt(apply(value));
     }
 
     /**
-     * Returns a composed {@link CharToLongFunction} that first applies this operation to its input, and then applies
-     * the {@code after} operation to the result. If evaluation of either operations throws an exception, it is relayed
-     * to the caller of the composed operation.
+     * Returns a composed {@link CharToLongFunction} that first applies this function to its input, and then applies the
+     * {@code after} function to the result. If evaluation of either function throws an exception, it is relayed to the
+     * caller of the composed function. This method is just convenience, to provide the ability to transform this
+     * function to {@code long}, using the {@code char}-to-{@code long} primitive specialization of {@link Function}.
      *
-     * @param after The {@code ToLongFunction} to apply after this operation is applied
-     * @return A composed {@code CharToLongFunction} that first applies this operation to its input, and then applies
-     * the {@code after} operation to the result.
+     * @param after The function to apply after this function is applied
+     * @return A composed {@link CharToLongFunction} that first applies this function to its input, and then applies the
+     * {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
      */
-    default CharToLongFunction toLong(final ToLongFunction<? super R> after) {
+    @Nonnull
+    default CharToLongFunction toLong(@Nonnull final ToLongFunction<? super R> after) {
         Objects.requireNonNull(after);
         return value -> after.applyAsLong(apply(value));
     }
 
     /**
-     * Returns a composed {@link CharToShortFunction} that first applies this operation to its input, and then applies
-     * the {@code after} operation to the result. If evaluation of either operations throws an exception, it is relayed
-     * to the caller of the composed operation.
+     * Returns a composed {@link CharToShortFunction} that first applies this function to its input, and then applies
+     * the {@code after} function to the result. If evaluation of either function throws an exception, it is relayed to
+     * the caller of the composed function. This method is just convenience, to provide the ability to transform this
+     * function to {@code short}, using the {@code char}-to-{@code short} primitive specialization of {@link Function}.
      *
-     * @param after The {@code ToShortFunction} to apply after this operation is applied
-     * @return A composed {@code CharToShortFunction} that first applies this operation to its input, and then applies
-     * the {@code after} operation to the result.
+     * @param after The function to apply after this function is applied
+     * @return A composed {@link CharToShortFunction} that first applies this function to its input, and then applies
+     * the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
      */
-    default CharToShortFunction toShort(final ToShortFunction<? super R> after) {
+    @Nonnull
+    default CharToShortFunction toShort(@Nonnull final ToShortFunction<? super R> after) {
         Objects.requireNonNull(after);
         return value -> after.applyAsShort(apply(value));
     }
 
     /**
-     * Returns a composed {@link CharConsumer} that fist applies this operation to its input, and then consumes the
+     * Returns a composed {@link CharConsumer} that fist applies this function to its input, and then consumes the
      * result using the given {@link Consumer}. If evaluation of either operation throws an exception, it is relayed to
      * the caller of the composed operation.
      *
      * @param consumer The operation which consumes the result from this operation
-     * @return A composed {@code CharConsumer} that first applies this operation to its input, and then consumes the
-     * result using the given {@code Consumer}.
+     * @return A composed {@link CharConsumer} that fist applies this function to its input, and then consumes the
+     * result using the given {@link Consumer}.
      * @throws NullPointerException If given argument is {@code null}
      */
     @Nonnull

@@ -25,8 +25,10 @@ import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import java.util.Objects;
 import java.util.function.BiFunction;
+import java.util.function.BinaryOperator;
 import java.util.function.Consumer;
 import java.util.function.Function;
+import java.util.function.UnaryOperator;
 
 /**
  * Represents a function that accepts two char-valued arguments and produces a result. This is the {@code
@@ -106,86 +108,99 @@ public interface CharBiFunction<R> {
     }
 
     /**
-     * Returns a composed {@link CharBiFunction} that first applies the {@code before} {@link CharUnaryOperator}s to its
-     * input, and then applies this operation to the result. If evaluation of either operation throws an exception, it
-     * is relayed to the caller of the composed function.
+     * Returns a composed {@link CharBiFunction} that first applies the {@code before} operations to its input, and then
+     * applies this function to the result. If evaluation of either operation throws an exception, it is relayed to the
+     * caller of the composed operation.
      *
-     * @param before1 The first {@code CharUnaryOperator} to apply before this operation is applied
-     * @param before2 The second {@code CharUnaryOperator} to apply before this operation is applied
-     * @return A composed {@code CharBiFunction} that first applies the {@code before} {@code CharUnaryOperator}s to its
-     * input, and then applies this operation to the result.
+     * @param before1 The first operation to apply before this function is applied
+     * @param before2 The second operation to apply before this function is applied
+     * @return A composed {@link CharBiFunction} that first applies the {@code before} operations to its input, and then
+     * applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
+     * @implNote The input arguments of this method are primitive specializations of {@link UnaryOperator}. Therefore
+     * the given operations handle primitive types. In this case this is {@code char}.
+     * @see #andThen(ToCharFunction)
      * @see #andThen(Function)
      */
-    default CharBiFunction<R> compose(final CharUnaryOperator before1, final CharUnaryOperator before2) {
+    @Nonnull
+    default CharBiFunction<R> compose(@Nonnull final CharUnaryOperator before1,
+            @Nonnull final CharUnaryOperator before2) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         return (value1, value2) -> apply(before1.applyAsChar(value1), before2.applyAsChar(value2));
     }
 
     /**
-     * Returns a composed {@link BiFunction} that applies the given {@code before} {@link ToCharFunction}s to its input,
-     * and then applies this operation to the result. If evaluation of either operation throws an exception, it is
-     * relayed to the caller of the composed function.
+     * Returns a composed {@link BiFunction} that first applies the {@code before} functions to its input, and then
+     * applies this function to the result. If evaluation of either function throws an exception, it is relayed to the
+     * caller of the composed function.
      *
-     * @param <T> The type of the argument to the first before operation
-     * @param <U> The type of the argument to the second before operation
-     * @param before1 The first before {@code ToCharFunction} to apply before this operation is applied
-     * @param before2 The second before {@code ToCharFunction} to apply before this operation is applied
-     * @return A composed {@code BiFunction} that applies the given {@code before} {@code ToCharFunction}s to its input,
-     * and then applies this operation to the result.
-     * @throws NullPointerException If one of the given functions are {@code null}
+     * @param <T> The type of the argument to the first before function
+     * @param <U> The type of the argument to the second before function
+     * @param before1 The first function to apply before this function is applied
+     * @param before2 The second function to apply before this function is applied
+     * @return A composed {@link BiFunction} that first applies the {@code before} functions to its input, and then
+     * applies this function to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implNote The input arguments of this method are able to handle every type.
+     * @see #andThen(ToCharFunction)
      * @see #andThen(Function)
      */
-    default <T, U> BiFunction<T, U, R> compose(final ToCharFunction<? super T> before1,
-            final ToCharFunction<? super U> before2) {
+    @Nonnull
+    default <T, U> BiFunction<T, U, R> compose(@Nonnull final ToCharFunction<? super T> before1,
+            @Nonnull final ToCharFunction<? super U> before2) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
-        return (value1, value2) -> apply(before1.applyAsChar(value1), before2.applyAsChar(value2));
+        return (t, u) -> apply(before1.applyAsChar(t), before2.applyAsChar(u));
     }
 
     /**
-     * Returns a composed {@link CharBiFunction} that first applies this operation to its input, and then applies the
-     * {@code after} operation to the result. If evaluation of either operation throws an exception, it is relayed to
-     * the caller of the composed operation.
+     * Returns a composed {@link CharBinaryOperator} that first applies this function to its input, and then applies the
+     * {@code after} function to the result. If evaluation of either function throws an exception, it is relayed to the
+     * caller of the composed function.
      *
-     * @param <S> The type of output of the {@code after} function, and of the composed function
-     * @param after The {@code CharBiFunction} to apply after this operation is applied
-     * @return A composed {@code CharBiFunction} that first applies this operation, and then applies the {@code after}
-     * operation to the result.
+     * @param after The function to apply after this function is applied
+     * @return A composed {@link CharBinaryOperator} that first applies this function to its input, and then applies the
+     * {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
+     * @implNote The result of this method is the primitive specialization of {@link BinaryOperator}. Therefore the
+     * returned operation handles primitive types. In this case this is {@code char}.
      * @see #compose(CharUnaryOperator, CharUnaryOperator)
      * @see #compose(ToCharFunction, ToCharFunction)
      */
-    default <S> CharBiFunction<S> andThen(final Function<? super R, ? extends S> after) {
-        Objects.requireNonNull(after);
-        return (value1, value2) -> after.apply(apply(value1, value2));
-    }
-
-    /**
-     * Returns a composed {@link CharBinaryOperator} that first applies this operation to its input, and then applies
-     * the {@code after} operation to the result. If evaluation of either operation throws an exception, it is relayed
-     * to the caller of the composed operation.
-     *
-     * @param after The {@code ToCharFunction} to apply after this operation is applied
-     * @return A composed {@code CharBinaryOperator} that first applies this operation, and then applies the {@code
-     * after} operation to the result.
-     * @throws NullPointerException If given argument is {@code null}
-     * @see #compose(CharUnaryOperator, CharUnaryOperator)
-     * @see #compose(ToCharFunction, ToCharFunction)
-     */
-    default CharBinaryOperator andThen(final ToCharFunction<? super R> after) {
+    @Nonnull
+    default CharBinaryOperator andThen(@Nonnull final ToCharFunction<? super R> after) {
         Objects.requireNonNull(after);
         return (value1, value2) -> after.applyAsChar(apply(value1, value2));
     }
 
     /**
-     * Returns a composed {@link CharBiConsumer} that fist applies this operation to its input, and then consumes the
+     * Returns a composed {@link CharBiFunction} that first applies this function to its input, and then applies the
+     * {@code after} function to the result. If evaluation of either function throws an exception, it is relayed to the
+     * caller of the composed function.
+     *
+     * @param <S> The type of return value from the {@code after} function, and of the composed function
+     * @param after The function to apply after this function is applied
+     * @return A composed {@link CharBiFunction} that first applies this function to its input, and then applies the
+     * {@code after} function to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implNote The returned function is able to handle every type.
+     * @see #compose(CharUnaryOperator, CharUnaryOperator)
+     * @see #compose(ToCharFunction, ToCharFunction)
+     */
+    @Nonnull
+    default <S> CharBiFunction<S> andThen(@Nonnull final Function<? super R, ? extends S> after) {
+        Objects.requireNonNull(after);
+        return (value1, value2) -> after.apply(apply(value1, value2));
+    }
+
+    /**
+     * Returns a composed {@link CharBiConsumer} that fist applies this function to its input, and then consumes the
      * result using the given {@link Consumer}. If evaluation of either operation throws an exception, it is relayed to
      * the caller of the composed operation.
      *
      * @param consumer The operation which consumes the result from this operation
-     * @return A composed {@code CharBiConsumer} that first applies this operation to its input, and then consumes the
+     * @return A composed {@code CharBiConsumer} that first applies this function to its input, and then consumes the
      * result using the given {@code Consumer}.
      * @throws NullPointerException If given argument is {@code null}
      */

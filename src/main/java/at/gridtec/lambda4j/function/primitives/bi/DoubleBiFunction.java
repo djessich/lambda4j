@@ -21,12 +21,14 @@ import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import java.util.Objects;
 import java.util.function.BiFunction;
+import java.util.function.BinaryOperator;
 import java.util.function.Consumer;
 import java.util.function.DoubleBinaryOperator;
 import java.util.function.DoubleFunction;
 import java.util.function.DoubleUnaryOperator;
 import java.util.function.Function;
 import java.util.function.ToDoubleFunction;
+import java.util.function.UnaryOperator;
 
 /**
  * Represents a function that accepts two double-valued arguments and produces a result. This is the {@code
@@ -106,86 +108,99 @@ public interface DoubleBiFunction<R> {
     }
 
     /**
-     * Returns a composed {@link DoubleBiFunction} that first applies the {@code before} {@link DoubleUnaryOperator}s to
-     * its input, and then applies this operation to the result. If evaluation of either operation throws an exception,
-     * it is relayed to the caller of the composed function.
+     * Returns a composed {@link DoubleBiFunction} that first applies the {@code before} operations to its input, and
+     * then applies this function to the result. If evaluation of either operation throws an exception, it is relayed to
+     * the caller of the composed operation.
      *
-     * @param before1 The first {@code DoubleUnaryOperator} to apply before this operation is applied
-     * @param before2 The second {@code DoubleUnaryOperator} to apply before this operation is applied
-     * @return A composed {@code DoubleBiFunction} that first applies the {@code before} {@code DoubleUnaryOperator}s to
-     * its input, and then applies this operation to the result.
+     * @param before1 The first operation to apply before this function is applied
+     * @param before2 The second operation to apply before this function is applied
+     * @return A composed {@link DoubleBiFunction} that first applies the {@code before} operations to its input, and
+     * then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
+     * @implNote The input arguments of this method are primitive specializations of {@link UnaryOperator}. Therefore
+     * the given operations handle primitive types. In this case this is {@code double}.
+     * @see #andThen(ToDoubleFunction)
      * @see #andThen(Function)
      */
-    default DoubleBiFunction<R> compose(final DoubleUnaryOperator before1, final DoubleUnaryOperator before2) {
+    @Nonnull
+    default DoubleBiFunction<R> compose(@Nonnull final DoubleUnaryOperator before1,
+            @Nonnull final DoubleUnaryOperator before2) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         return (value1, value2) -> apply(before1.applyAsDouble(value1), before2.applyAsDouble(value2));
     }
 
     /**
-     * Returns a composed {@link BiFunction} that applies the given {@code before} {@link ToDoubleFunction}s to its
-     * input, and then applies this operation to the result. If evaluation of either operation throws an exception, it
-     * is relayed to the caller of the composed function.
+     * Returns a composed {@link BiFunction} that first applies the {@code before} functions to its input, and then
+     * applies this function to the result. If evaluation of either function throws an exception, it is relayed to the
+     * caller of the composed function.
      *
-     * @param <T> The type of the argument to the first before operation
-     * @param <U> The type of the argument to the second before operation
-     * @param before1 The first before {@code ToDoubleFunction} to apply before this operation is applied
-     * @param before2 The second before {@code ToDoubleFunction} to apply before this operation is applied
-     * @return A composed {@code BiFunction} that applies the given {@code before} {@code ToDoubleFunction}s to its
-     * input, and then applies this operation to the result.
-     * @throws NullPointerException If one of the given functions are {@code null}
+     * @param <T> The type of the argument to the first before function
+     * @param <U> The type of the argument to the second before function
+     * @param before1 The first function to apply before this function is applied
+     * @param before2 The second function to apply before this function is applied
+     * @return A composed {@link BiFunction} that first applies the {@code before} functions to its input, and then
+     * applies this function to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implNote The input arguments of this method are able to handle every type.
+     * @see #andThen(ToDoubleFunction)
      * @see #andThen(Function)
      */
-    default <T, U> BiFunction<T, U, R> compose(final ToDoubleFunction<? super T> before1,
-            final ToDoubleFunction<? super U> before2) {
+    @Nonnull
+    default <T, U> BiFunction<T, U, R> compose(@Nonnull final ToDoubleFunction<? super T> before1,
+            @Nonnull final ToDoubleFunction<? super U> before2) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
-        return (value1, value2) -> apply(before1.applyAsDouble(value1), before2.applyAsDouble(value2));
+        return (t, u) -> apply(before1.applyAsDouble(t), before2.applyAsDouble(u));
     }
 
     /**
-     * Returns a composed {@link DoubleBinaryOperator} that first applies this operation to its input, and then applies
-     * the {@code after} operation to the result. If evaluation of either operation throws an exception, it is relayed
-     * to the caller of the composed operation.
+     * Returns a composed {@link DoubleBinaryOperator} that first applies this function to its input, and then applies
+     * the {@code after} function to the result. If evaluation of either function throws an exception, it is relayed to
+     * the caller of the composed function.
      *
-     * @param after The {@code ToDoubleFunction} to apply after this operation is applied
-     * @return A composed {@code DoubleBinaryOperator} that first applies this operation, and then applies the {@code
-     * after} operation to the result.
+     * @param after The function to apply after this function is applied
+     * @return A composed {@link DoubleBinaryOperator} that first applies this function to its input, and then applies
+     * the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
+     * @implNote The result of this method is the primitive specialization of {@link BinaryOperator}. Therefore the
+     * returned operation handles primitive types. In this case this is {@code double}.
      * @see #compose(DoubleUnaryOperator, DoubleUnaryOperator)
      * @see #compose(ToDoubleFunction, ToDoubleFunction)
      */
-    default DoubleBinaryOperator andThen(final ToDoubleFunction<? super R> after) {
+    @Nonnull
+    default DoubleBinaryOperator andThen(@Nonnull final ToDoubleFunction<? super R> after) {
         Objects.requireNonNull(after);
         return (value1, value2) -> after.applyAsDouble(apply(value1, value2));
     }
 
     /**
-     * Returns a composed {@link DoubleBiFunction} that first applies this operation to its input, and then applies the
-     * {@code after} operation to the result. If evaluation of either operation throws an exception, it is relayed to
-     * the caller of the composed operation.
+     * Returns a composed {@link DoubleBiFunction} that first applies this function to its input, and then applies the
+     * {@code after} function to the result. If evaluation of either function throws an exception, it is relayed to the
+     * caller of the composed function.
      *
-     * @param <S> The type of output of the {@code after} function, and of the composed function
-     * @param after The {@code DoubleBiFunction} to apply after this operation is applied
-     * @return A composed {@code DoubleBiFunction} that first applies this operation, and then applies the {@code after}
-     * operation to the result.
+     * @param <S> The type of return value from the {@code after} function, and of the composed function
+     * @param after The function to apply after this function is applied
+     * @return A composed {@link DoubleBiFunction} that first applies this function to its input, and then applies the
+     * {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
+     * @implNote The returned function is able to handle every type.
      * @see #compose(DoubleUnaryOperator, DoubleUnaryOperator)
      * @see #compose(ToDoubleFunction, ToDoubleFunction)
      */
-    default <S> DoubleBiFunction<S> andThen(final Function<? super R, ? extends S> after) {
+    @Nonnull
+    default <S> DoubleBiFunction<S> andThen(@Nonnull final Function<? super R, ? extends S> after) {
         Objects.requireNonNull(after);
         return (value1, value2) -> after.apply(apply(value1, value2));
     }
 
     /**
-     * Returns a composed {@link DoubleBiConsumer} that fist applies this operation to its input, and then consumes the
+     * Returns a composed {@link DoubleBiConsumer} that fist applies this function to its input, and then consumes the
      * result using the given {@link Consumer}. If evaluation of either operation throws an exception, it is relayed to
      * the caller of the composed operation.
      *
      * @param consumer The operation which consumes the result from this operation
-     * @return A composed {@code DoubleBiConsumer} that first applies this operation to its input, and then consumes the
+     * @return A composed {@code DoubleBiConsumer} that first applies this function to its input, and then consumes the
      * result using the given {@code Consumer}.
      * @throws NullPointerException If given argument is {@code null}
      */

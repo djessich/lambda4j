@@ -16,6 +16,7 @@
 package at.gridtec.lambda4j.function;
 
 import at.gridtec.lambda4j.consumer.TriConsumer;
+import at.gridtec.lambda4j.function.primitives.to.tri.ToByteTriFunction;
 
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
@@ -81,7 +82,7 @@ public interface TriFunction<T, U, V, R> {
      * @param <U> The type of the second argument to the function
      * @param <V> The type of the third argument to the function
      * @param <R> The type of return value from the function
-     * @param function The consumer which accepts the {@code second} parameter of this one
+     * @param function The function which accepts the {@code second} parameter of this one
      * @return Creates a {@code TriFunction} which uses the {@code second} parameter of this one as argument for the
      * given {@code Function}.
      * @throws NullPointerException If the given argument is {@code null}
@@ -100,7 +101,7 @@ public interface TriFunction<T, U, V, R> {
      * @param <U> The type of the second argument to the function
      * @param <V> The type of the third argument to the function
      * @param <R> The type of return value from the function
-     * @param function The consumer which accepts the {@code third} parameter of this one
+     * @param function The function which accepts the {@code third} parameter of this one
      * @return Creates a {@code TriFunction} which uses the {@code third} parameter of this one as argument for the
      * given {@code Function}.
      * @throws NullPointerException If the given argument is {@code null}
@@ -133,23 +134,25 @@ public interface TriFunction<T, U, V, R> {
     }
 
     /**
-     * Returns a composed {@link TriFunction} that applies the given {@code before} {@link Function}s to its input, and
-     * then applies this function to the result. If evaluation of either of the given functions throws an exception, it
-     * is relayed to the caller of the composed function.
+     * Returns a composed {@link ToByteTriFunction} that first applies the {@code before} functions to its input, and
+     * then applies this function to the result. If evaluation of either function throws an exception, it is relayed to
+     * the caller of the composed function.
      *
      * @param <A> The type of the argument to the first before function
      * @param <B> The type of the argument to the second before function
      * @param <C> The type of the argument to the third before function
-     * @param before1 The first before {@code Function} to apply before this function is applied
-     * @param before2 The second before {@code Function} to apply before this function is applied
-     * @param before3 The third before {@code Function} to apply before this function is applied
-     * @return A composed {@code TriFunction} that applies the given {@code before} {@code Function}s to its input, and
+     * @param before1 The first function to apply before this function is applied
+     * @param before2 The second function to apply before this function is applied
+     * @param before3 The third function to apply before this function is applied
+     * @return A composed {@link ToByteTriFunction} that first applies the {@code before} functions to its input, and
      * then applies this function to the result.
-     * @throws NullPointerException If one of the given functions are {@code null}
+     * @throws NullPointerException If given argument is {@code null}
      * @see #andThen(Function)
      */
-    default <A, B, C> TriFunction<A, B, C, R> compose(final Function<? super A, ? extends T> before1,
-            final Function<? super B, ? extends U> before2, final Function<? super C, ? extends V> before3) {
+    @Nonnull
+    default <A, B, C> TriFunction<A, B, C, R> compose(@Nonnull final Function<? super A, ? extends T> before1,
+            @Nonnull final Function<? super B, ? extends U> before2,
+            @Nonnull final Function<? super C, ? extends V> before3) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         Objects.requireNonNull(before3);
@@ -158,28 +161,29 @@ public interface TriFunction<T, U, V, R> {
 
     /**
      * Returns a composed {@link TriFunction} that first applies this function to its input, and then applies the {@code
-     * after} {@link Function} to the result. If evaluation of either function throws an exception, it is relayed to the
-     * caller of the composed function.
+     * after} function to the result. If evaluation of either function throws an exception, it is relayed to the caller
+     * of the composed function.
      *
-     * @param <S> The type of output of the {@code after} function, and of the composed function
+     * @param <S> The type of return value from the {@code after} function, and of the composed function
      * @param after The function to apply after this function is applied
-     * @return A composed {@code TriFunction} that first applies this function and then applies the {@code after}
-     * function.
-     * @throws NullPointerException If given after function is {@code null}
+     * @return A composed {@link TriFunction} that first applies this function to its input, and then applies the {@code
+     * after} function to the result.
+     * @throws NullPointerException If given argument is {@code null}
      * @see #compose(Function, Function, Function)
      */
-    default <S> TriFunction<T, U, V, S> andThen(final Function<? super R, ? extends S> after) {
+    @Nonnull
+    default <S> TriFunction<T, U, V, S> andThen(@Nonnull final Function<? super R, ? extends S> after) {
         Objects.requireNonNull(after);
         return (t, u, v) -> after.apply(apply(t, u, v));
     }
 
     /**
-     * Returns a composed {@link TriConsumer} that fist applies this operation to its input, and then consumes the
-     * result using the given {@link Consumer}. If evaluation of either operation throws an exception, it is relayed to
-     * the caller of the composed operation.
+     * Returns a composed {@link TriConsumer} that fist applies this function to its input, and then consumes the result
+     * using the given {@link Consumer}. If evaluation of either operation throws an exception, it is relayed to the
+     * caller of the composed operation.
      *
      * @param consumer The operation which consumes the result from this operation
-     * @return A composed {@code TriConsumer} that first applies this operation to its input, and then consumes the
+     * @return A composed {@code TriConsumer} that first applies this function to its input, and then consumes the
      * result using the given {@code Consumer}.
      * @throws NullPointerException If given argument is {@code null}
      */
@@ -187,29 +191,5 @@ public interface TriFunction<T, U, V, R> {
     default TriConsumer<T, U, V> consume(@Nonnull final Consumer<? super R> consumer) {
         Objects.requireNonNull(consumer);
         return (t, u, v) -> consumer.accept(apply(t, u, v));
-    }
-
-    /**
-     * Returns a curried version of this {@link ThrowableTriFunction}.
-     *
-     * @return A curried version of this {@code ThrowableTriFunction}.
-     * @see #reversed(Function)
-     */
-    default Function<T, Function<U, Function<V, R>>> curried() {
-        return t -> u -> v -> apply(t, u, v);
-    }
-
-    /**
-     * Returns a reversed (uncurried) {@link TriFunction} from the given curried {@code TriFunction}.
-     *
-     * @param f A curried {@code TriFunction}
-     * @return A reversed (uncurried) {@link TriFunction} from the given curried {@code TriFunction}.
-     * @throws NullPointerException If the given argument is {@code null}
-     * @see #curried()
-     */
-    default TriFunction<T, U, V, R> reversed(
-            Function<? super T, Function<? super U, Function<? super V, ? extends R>>> f) {
-        Objects.requireNonNull(f);
-        return (t, u, v) -> f.apply(t).apply(u).apply(v);
     }
 }

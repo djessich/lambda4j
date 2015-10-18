@@ -38,6 +38,7 @@ import java.util.function.Predicate;
 import java.util.function.ToDoubleFunction;
 import java.util.function.ToIntFunction;
 import java.util.function.ToLongFunction;
+import java.util.function.UnaryOperator;
 
 /**
  * Represents a function that accepts a byte-valued argument and produces a result. This is the {@code byte}-consuming
@@ -84,186 +85,210 @@ public interface ByteFunction<R> {
     }
 
     /**
-     * Returns a composed {@link ByteFunction} that first applies the {@code before} {@link ByteUnaryOperator} to its
-     * input, and then applies this operation to the result. If evaluation of either operation throws an exception, it
-     * is relayed to the caller of the composed function.
+     * Returns a composed {@link ByteFunction} that first applies the {@code before} operation to its input, and then
+     * applies this function to the result. If evaluation of either operation throws an exception, it is relayed to the
+     * caller of the composed operation.
      *
-     * @param before The {@code ByteUnaryOperator} to apply before this operation is applied
-     * @return A composed {@code ByteFunction} that first applies the {@code before} {@code ByteUnaryOperator} to its
-     * input, and then applies this operation to the result.
+     * @param before The operation to apply before this function is applied
+     * @return A composed {@link ByteFunction} that first applies the {@code before} operation to its input, and then
+     * applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @see #andThen(Function)
+     * @implNote The input argument of this method is the primitive specialization of {@link UnaryOperator}. Therefore
+     * the given operation handles primitive types. In this case this is {@code byte}.
      */
-    default ByteFunction<R> compose(final ByteUnaryOperator before) {
+    @Nonnull
+    default ByteFunction<R> compose(@Nonnull final ByteUnaryOperator before) {
         Objects.requireNonNull(before);
         return value -> apply(before.applyAsByte(value));
     }
 
     /**
-     * Returns a composed {@link Function} that applies the given {@code before} {@link ToByteFunction} to its input,
-     * and then applies this operation to the result. If evaluation of either operation throws an exception, it is
-     * relayed to the caller of the composed function.
+     * Returns a composed {@link Function} that first applies the {@code before} function to its input, and then applies
+     * this function to the result. If evaluation of either function throws an exception, it is relayed to the caller of
+     * the composed function.
      *
-     * @param <T> The type of the argument to the before operation
-     * @param before The before {@code ToByteFunction} to apply before this operation is applied
-     * @return A composed {@code Function} that applies the given {@code before} {@code ToByteFunction} to its input,
-     * and then applies this operation to the result.
-     * @throws NullPointerException If one of the given functions are {@code null}
-     * @see #andThen(Function)
+     * @param <T> The type of the argument to the before function
+     * @param before The first function to apply before this function is applied
+     * @return A omposed {@link Function} that first applies the {@code before} function to its input, and then applies
+     * this function to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implNote The input argument of this method is able to handle every type.
      */
-    default <T> Function<T, R> compose(final ToByteFunction<? super T> before) {
+    @Nonnull
+    default <T> Function<T, R> compose(@Nonnull final ToByteFunction<? super T> before) {
         Objects.requireNonNull(before);
         return value -> apply(before.applyAsByte(value));
     }
 
     /**
-     * Returns a composed {@link ByteUnaryOperator} that first applies this operation to its input, and then applies the
-     * {@code after} operation to the result. If evaluation of either operation throws an exception, it is relayed to
-     * the caller of the composed operation.
+     * Returns a composed {@link ByteUnaryOperator} that first applies this function to its input, and then applies the
+     * {@code after} function to the result. If evaluation of either function throws an exception, it is relayed to the
+     * caller of the composed operation.
      *
-     * @param after The {@code ToByteFunction} to apply after this operation is applied
-     * @return A composed {@code ByteUnaryOperator} that first applies this operation, and then applies the {@code
-     * after} operation to the result.
+     * @param after The function to apply after this function is applied
+     * @return A composed {@link ByteUnaryOperator} that first applies this function to its input, and then applies the
+     * {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
+     * @implNote The result of this method is the primitive specialization of {@link UnaryOperator}. Therefore the
+     * returned operation handles primitive types. In this case this is {@code byte}.
      * @see #compose(ByteUnaryOperator)
      * @see #compose(ToByteFunction)
      */
-    default ByteUnaryOperator andThen(final ToByteFunction<? super R> after) {
+    @Nonnull
+    default ByteUnaryOperator andThen(@Nonnull final ToByteFunction<? super R> after) {
         Objects.requireNonNull(after);
         return value -> after.applyAsByte(apply(value));
     }
 
     /**
-     * Returns a composed {@link ByteFunction} that first applies this operation to its input, and then applies the
-     * {@code after} operation to the result. If evaluation of either operation throws an exception, it is relayed to
-     * the caller of the composed operation.
+     * Returns a composed {@link ByteFunction} that first applies this function to its input, and then applies the
+     * {@code after} function to the result. If evaluation of either function throws an exception, it is relayed to the
+     * caller of the composed function.
      *
-     * @param <S> The type of output of the {@code after} function, and of the composed function
-     * @param after The {@code ByteFunction} to apply after this operation is applied
-     * @return A composed {@code ByteFunction} that first applies this operation, and then applies the {@code after}
-     * operation to the result.
+     * @param <S> The type of return value from the {@code after} function, and of the composed function
+     * @param after The function to apply after this function is applied
+     * @return A composed {@link ByteFunction} that first applies this function to its input, and then applies the
+     * {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
+     * @implNote The returned function is able to handle every type.
      * @see #compose(ByteUnaryOperator)
      * @see #compose(ToByteFunction)
      */
-    default <S> ByteFunction<S> andThen(final Function<? super R, ? extends S> after) {
+    @Nonnull
+    default <S> ByteFunction<S> andThen(@Nonnull final Function<? super R, ? extends S> after) {
         Objects.requireNonNull(after);
         return value -> after.apply(apply(value));
     }
 
     /**
-     * Returns a composed {@link ByteToBooleanFunction} that first applies this operation to its input, and then applies
-     * the {@code after} operation to the result. If evaluation of either operations throws an exception, it is relayed
-     * to the caller of the composed operation.
+     * Returns a composed {@link ByteToBooleanFunction} that first applies this function to its input, and then applies
+     * the {@code after} function to the result. If evaluation of either function throws an exception, it is relayed to
+     * the caller of the composed function. This method is just convenience, to provide the ability to transform this
+     * function to {@code boolean}, using the {@code byte}-to-{@code boolean} primitive specialization of {@link
+     * Function}.
      *
-     * @param after The {@code Predicate} to apply after this operation is applied
-     * @return A composed {@code ByteToBooleanFunction} that first applies this operation to its input, and then applies
-     * the {@code after} operation to the result.
+     * @param after The function to apply after this function is applied
+     * @return A composed {@link ByteToBooleanFunction} that first applies this function to its input, and then applies
+     * the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
      */
-    default ByteToBooleanFunction toBoolean(final Predicate<? super R> after) {
+    @Nonnull
+    default ByteToBooleanFunction toBoolean(@Nonnull final Predicate<? super R> after) {
         Objects.requireNonNull(after);
         return value -> after.test(apply(value));
     }
 
     /**
-     * Returns a composed {@link ByteToCharFunction} that first applies this operation to its input, and then applies
-     * the {@code after} operation to the result. If evaluation of either operations throws an exception, it is relayed
-     * to the caller of the composed operation.
+     * Returns a composed {@link ByteToCharFunction} that first applies this function to its input, and then applies the
+     * {@code after} function to the result. If evaluation of either function throws an exception, it is relayed to the
+     * caller of the composed function. This method is just convenience, to provide the ability to transform this
+     * function to {@code char}, using the {@code byte}-to-{@code char} primitive specialization of {@link Function}.
      *
-     * @param after The {@code ToCharFunction} to apply after this operation is applied
-     * @return A composed {@code ByteToCharFunction} that first applies this operation to its input, and then applies
-     * the {@code after} operation to the result.
+     * @param after The function to apply after this function is applied
+     * @return A composed {@link ByteToCharFunction} that first applies this function to its input, and then applies the
+     * {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
      */
-    default ByteToCharFunction toChar(final ToCharFunction<? super R> after) {
+    @Nonnull
+    default ByteToCharFunction toChar(@Nonnull final ToCharFunction<? super R> after) {
         Objects.requireNonNull(after);
         return value -> after.applyAsChar(apply(value));
     }
 
     /**
-     * Returns a composed {@link ByteToDoubleFunction} that first applies this operation to its input, and then applies
-     * the {@code after} operation to the result. If evaluation of either operations throws an exception, it is relayed
-     * to the caller of the composed operation.
+     * Returns a composed {@link ByteToDoubleFunction} that first applies this function to its input, and then applies
+     * the {@code after} function to the result. If evaluation of either function throws an exception, it is relayed to
+     * the caller of the composed function. This method is just convenience, to provide the ability to transform this
+     * function to {@code double}, using the {@code byte}-to-{@code double} primitive specialization of {@link
+     * Function}.
      *
-     * @param after The {@code ToDoubleFunction} to apply after this operation is applied
-     * @return A composed {@code ByteToDoubleFunction} that first applies this operation to its input, and then applies
-     * the {@code after} operation to the result.
+     * @param after The function to apply after this function is applied
+     * @return A composed {@link ByteToDoubleFunction} that first applies this function to its input, and then applies
+     * the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
      */
-    default ByteToDoubleFunction toDouble(final ToDoubleFunction<? super R> after) {
+    @Nonnull
+    default ByteToDoubleFunction toDouble(@Nonnull final ToDoubleFunction<? super R> after) {
         Objects.requireNonNull(after);
         return value -> after.applyAsDouble(apply(value));
     }
 
     /**
-     * Returns a composed {@link ByteToFloatFunction} that first applies this operation to its input, and then applies
-     * the {@code after} operation to the result. If evaluation of either operations throws an exception, it is relayed
-     * to the caller of the composed operation.
+     * Returns a composed {@link ByteToFloatFunction} that first applies this function to its input, and then applies
+     * the {@code after} function to the result. If evaluation of either function throws an exception, it is relayed to
+     * the caller of the composed function. This method is just convenience, to provide the ability to transform this
+     * function to {@code float}, using the {@code byte}-to-{@code float} primitive specialization of {@link Function}.
      *
-     * @param after The {@code ToFloatFunction} to apply after this operation is applied
-     * @return A composed {@code ByteToFloatFunction} that first applies this operation to its input, and then applies
-     * the {@code after} operation to the result.
+     * @param after The function to apply after this function is applied
+     * @return A composed {@link ByteToFloatFunction} that first applies this function to its input, and then applies
+     * the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
      */
-    default ByteToFloatFunction toFloat(final ToFloatFunction<? super R> after) {
+    @Nonnull
+    default ByteToFloatFunction toFloat(@Nonnull final ToFloatFunction<? super R> after) {
         Objects.requireNonNull(after);
         return value -> after.applyAsFloat(apply(value));
     }
 
     /**
-     * Returns a composed {@link ByteToIntFunction} that first applies this operation to its input, and then applies the
-     * {@code after} operation to the result. If evaluation of either operations throws an exception, it is relayed to
-     * the caller of the composed operation.
+     * Returns a composed {@link ByteToIntFunction} that first applies this function to its input, and then applies the
+     * {@code after} function to the result. If evaluation of either function throws an exception, it is relayed to the
+     * caller of the composed function. This method is just convenience, to provide the ability to transform this
+     * function to {@code int}, using the {@code byte}-to-{@code int} primitive specialization of {@link Function}.
      *
-     * @param after The {@code ToIntFunction} to apply after this operation is applied
-     * @return A composed {@code ByteToIntFunction} that first applies this operation to its input, and then applies the
-     * {@code after} operation to the result.
+     * @param after The function to apply after this function is applied
+     * @return A composed {@link ByteToIntFunction} that first applies this function to its input, and then applies the
+     * {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
      */
-    default ByteToIntFunction toInt(final ToIntFunction<? super R> after) {
+    @Nonnull
+    default ByteToIntFunction toInt(@Nonnull final ToIntFunction<? super R> after) {
         Objects.requireNonNull(after);
         return value -> after.applyAsInt(apply(value));
     }
 
     /**
-     * Returns a composed {@link ByteToLongFunction} that first applies this operation to its input, and then applies
-     * the {@code after} operation to the result. If evaluation of either operations throws an exception, it is relayed
-     * to the caller of the composed operation.
+     * Returns a composed {@link ByteToLongFunction} that first applies this function to its input, and then applies the
+     * {@code after} function to the result. If evaluation of either function throws an exception, it is relayed to the
+     * caller of the composed function. This method is just convenience, to provide the ability to transform this
+     * function to {@code long}, using the {@code byte}-to-{@code long} primitive specialization of {@link Function}.
      *
-     * @param after The {@code ToLongFunction} to apply after this operation is applied
-     * @return A composed {@code ByteToLongFunction} that first applies this operation to its input, and then applies
-     * the {@code after} operation to the result.
+     * @param after The function to apply after this function is applied
+     * @return A composed {@link ByteToLongFunction} that first applies this function to its input, and then applies the
+     * {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
      */
-    default ByteToLongFunction toLong(final ToLongFunction<? super R> after) {
+    @Nonnull
+    default ByteToLongFunction toLong(@Nonnull final ToLongFunction<? super R> after) {
         Objects.requireNonNull(after);
         return value -> after.applyAsLong(apply(value));
     }
 
     /**
-     * Returns a composed {@link ByteToShortFunction} that first applies this operation to its input, and then applies
-     * the {@code after} operation to the result. If evaluation of either operations throws an exception, it is relayed
-     * to the caller of the composed operation.
+     * Returns a composed {@link ByteToShortFunction} that first applies this function to its input, and then applies
+     * the {@code after} function to the result. If evaluation of either function throws an exception, it is relayed to
+     * the caller of the composed function. This method is just convenience, to provide the ability to transform this
+     * function to {@code short}, using the {@code byte}-to-{@code short} primitive specialization of {@link Function}.
      *
-     * @param after The {@code ToShortFunction} to apply after this operation is applied
-     * @return A composed {@code ByteToShortFunction} that first applies this operation to its input, and then applies
-     * the {@code after} operation to the result.
+     * @param after The function to apply after this function is applied
+     * @return A composed {@link ByteToShortFunction} that first applies this function to its input, and then applies
+     * the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
      */
-    default ByteToShortFunction toShort(final ToShortFunction<? super R> after) {
+    @Nonnull
+    default ByteToShortFunction toShort(@Nonnull final ToShortFunction<? super R> after) {
         Objects.requireNonNull(after);
         return value -> after.applyAsShort(apply(value));
     }
 
     /**
-     * Returns a composed {@link ByteConsumer} that fist applies this operation to its input, and then consumes the
+     * Returns a composed {@link ByteConsumer} that fist applies this function to its input, and then consumes the
      * result using the given {@link Consumer}. If evaluation of either operation throws an exception, it is relayed to
      * the caller of the composed operation.
      *
      * @param consumer The operation which consumes the result from this operation
-     * @return A composed {@code ByteConsumer} that first applies this operation to its input, and then consumes the
-     * result using the given {@code Consumer}.
+     * @return A composed {@link ByteConsumer} that fist applies this function to its input, and then consumes the
+     * result using the given {@link Consumer}.
      * @throws NullPointerException If given argument is {@code null}
      */
     @Nonnull

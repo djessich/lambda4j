@@ -38,6 +38,7 @@ import java.util.function.Predicate;
 import java.util.function.ToDoubleFunction;
 import java.util.function.ToIntFunction;
 import java.util.function.ToLongFunction;
+import java.util.function.UnaryOperator;
 
 /**
  * Represents a function that accepts a float-valued argument and produces a result. This is the {@code float}-consuming
@@ -84,186 +85,211 @@ public interface FloatFunction<R> {
     }
 
     /**
-     * Returns a composed {@link FloatFunction} that first applies the {@code before} {@link FloatUnaryOperator} to its
-     * input, and then applies this operation to the result. If evaluation of either operation throws an exception, it
-     * is relayed to the caller of the composed function.
+     * Returns a composed {@link FloatFunction} that first applies the {@code before} operation to its input, and then
+     * applies this function to the result. If evaluation of either operation throws an exception, it is relayed to the
+     * caller of the composed operation.
      *
-     * @param before The {@code FloatUnaryOperator} to apply before this operation is applied
-     * @return A composed {@code FloatFunction} that first applies the {@code before} {@code FloatUnaryOperator} to its
-     * input, and then applies this operation to the result.
+     * @param before The operation to apply before this function is applied
+     * @return A composed {@link FloatFunction} that first applies the {@code before} operation to its input, and then
+     * applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @see #andThen(Function)
+     * @implNote The input argument of this method is the primitive specialization of {@link UnaryOperator}. Therefore
+     * the given operation handles primitive types. In this case this is {@code float}.
      */
-    default FloatFunction<R> compose(final FloatUnaryOperator before) {
+    @Nonnull
+    default FloatFunction<R> compose(@Nonnull final FloatUnaryOperator before) {
         Objects.requireNonNull(before);
         return value -> apply(before.applyAsFloat(value));
     }
 
     /**
-     * Returns a composed {@link Function} that applies the given {@code before} {@link ToFloatFunction} to its input,
-     * and then applies this operation to the result. If evaluation of either operation throws an exception, it is
-     * relayed to the caller of the composed function.
+     * Returns a composed {@link Function} that first applies the {@code before} function to its input, and then applies
+     * this function to the result. If evaluation of either function throws an exception, it is relayed to the caller of
+     * the composed function.
      *
-     * @param <T> The type of the argument to the before operation
-     * @param before The before {@code ToFloatFunction} to apply before this operation is applied
-     * @return A composed {@code Function} that applies the given {@code before} {@code ToFloatFunction} to its input,
-     * and then applies this operation to the result.
-     * @throws NullPointerException If one of the given functions are {@code null}
-     * @see #andThen(Function)
+     * @param <T> The type of the argument to the before function
+     * @param before The first function to apply before this function is applied
+     * @return A omposed {@link Function} that first applies the {@code before} function to its input, and then applies
+     * this function to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implNote The input argument of this method is able to handle every type.
      */
-    default <T> Function<T, R> compose(final ToFloatFunction<? super T> before) {
+    @Nonnull
+    default <T> Function<T, R> compose(@Nonnull final ToFloatFunction<? super T> before) {
         Objects.requireNonNull(before);
         return value -> apply(before.applyAsFloat(value));
     }
 
     /**
-     * Returns a composed {@link FloatUnaryOperator} that first applies this operation to its input, and then applies
-     * the {@code after} operation to the result. If evaluation of either operation throws an exception, it is relayed
-     * to the caller of the composed operation.
+     * Returns a composed {@link FloatUnaryOperator} that first applies this function to its input, and then applies the
+     * {@code after} function to the result. If evaluation of either function throws an exception, it is relayed to the
+     * caller of the composed operation.
      *
-     * @param after The {@code ToFloatFunction} to apply after this operation is applied
-     * @return A composed {@code FloatUnaryOperator} that first applies this operation, and then applies the {@code
-     * after} operation to the result.
+     * @param after The function to apply after this function is applied
+     * @return A composed {@link FloatUnaryOperator} that first applies this function to its input, and then applies the
+     * {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
+     * @implNote The result of this method is the primitive specialization of {@link UnaryOperator}. Therefore the
+     * returned operation handles primitive types. In this case this is {@code float}.
      * @see #compose(FloatUnaryOperator)
      * @see #compose(ToFloatFunction)
      */
-    default FloatUnaryOperator andThen(final ToFloatFunction<? super R> after) {
+    @Nonnull
+    default FloatUnaryOperator andThen(@Nonnull final ToFloatFunction<? super R> after) {
         Objects.requireNonNull(after);
         return value -> after.applyAsFloat(apply(value));
     }
 
     /**
-     * Returns a composed {@link FloatFunction} that first applies this operation to its input, and then applies the
-     * {@code after} operation to the result. If evaluation of either operation throws an exception, it is relayed to
-     * the caller of the composed operation.
+     * Returns a composed {@link FloatFunction} that first applies this function to its input, and then applies the
+     * {@code after} function to the result. If evaluation of either function throws an exception, it is relayed to the
+     * caller of the composed function.
      *
-     * @param <S> The type of output of the {@code after} function, and of the composed function
-     * @param after The {@code FloatFunction} to apply after this operation is applied
-     * @return A composed {@code FloatFunction} that first applies this operation, and then applies the {@code after}
-     * operation to the result.
+     * @param <S> The type of return value from the {@code after} function, and of the composed function
+     * @param after The function to apply after this function is applied
+     * @return A composed {@link FloatFunction} that first applies this function to its input, and then applies the
+     * {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
+     * @implNote The returned function is able to handle every type.
      * @see #compose(FloatUnaryOperator)
      * @see #compose(ToFloatFunction)
      */
-    default <S> FloatFunction<S> andThen(final Function<? super R, ? extends S> after) {
+    @Nonnull
+    default <S> FloatFunction<S> andThen(@Nonnull final Function<? super R, ? extends S> after) {
         Objects.requireNonNull(after);
         return value -> after.apply(apply(value));
     }
 
     /**
-     * Returns a composed {@link FloatToBooleanFunction} that first applies this operation to its input, and then
-     * applies the {@code after} operation to the result. If evaluation of either operations throws an exception, it is
-     * relayed to the caller of the composed operation.
+     * Returns a composed {@link FloatToBooleanFunction} that first applies this function to its input, and then applies
+     * the {@code after} function to the result. If evaluation of either function throws an exception, it is relayed to
+     * the caller of the composed function. This method is just convenience, to provide the ability to transform this
+     * function to {@code boolean}, using the {@code float}-to-{@code boolean} primitive specialization of {@link
+     * Function}.
      *
-     * @param after The {@code Predicate} to apply after this operation is applied
-     * @return A composed {@code FloatToBooleanFunction} that first applies this operation to its input, and then
-     * applies the {@code after} operation to the result.
+     * @param after The function to apply after this function is applied
+     * @return A composed {@link FloatToBooleanFunction} that first applies this function to its input, and then applies
+     * the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
      */
-    default FloatToBooleanFunction toBoolean(final Predicate<? super R> after) {
+    @Nonnull
+    default FloatToBooleanFunction toBoolean(@Nonnull final Predicate<? super R> after) {
         Objects.requireNonNull(after);
         return value -> after.test(apply(value));
     }
 
     /**
-     * Returns a composed {@link FloatToByteFunction} that first applies this operation to its input, and then applies
-     * the {@code after} operation to the result. If evaluation of either operations throws an exception, it is relayed
-     * to the caller of the composed operation.
+     * Returns a composed {@link FloatToByteFunction} that first applies this function to its input, and then applies
+     * the {@code after} function to the result. If evaluation of either function throws an exception, it is relayed to
+     * the caller of the composed function. This method is just convenience, to provide the ability to transform this
+     * function to {@code byte}, using the {@code float}-to-{@code byte} primitive specialization of {@link Function}.
      *
-     * @param after The {@code ToByteFunction} to apply after this operation is applied
-     * @return A composed {@code FloatToByteFunction} that first applies this operation to its input, and then applies
-     * the {@code after} operation to the result.
+     * @param after The function to apply after this function is applied
+     * @return A composed {@link FloatToByteFunction} that first applies this function to its input, and then applies
+     * the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
      */
-    default FloatToByteFunction toByte(final ToByteFunction<? super R> after) {
+    @Nonnull
+    default FloatToByteFunction toByte(@Nonnull final ToByteFunction<? super R> after) {
         Objects.requireNonNull(after);
         return value -> after.applyAsByte(apply(value));
     }
 
     /**
-     * Returns a composed {@link FloatToCharFunction} that first applies this operation to its input, and then applies
-     * the {@code after} operation to the result. If evaluation of either operations throws an exception, it is relayed
-     * to the caller of the composed operation.
+     * Returns a composed {@link FloatToCharFunction} that first applies this function to its input, and then applies
+     * the {@code after} function to the result. If evaluation of either function throws an exception, it is relayed to
+     * the caller of the composed function. This method is just convenience, to provide the ability to transform this
+     * function to {@code char}, using the {@code float}-to-{@code char} primitive specialization of {@link Function}.
      *
-     * @param after The {@code ToCharFunction} to apply after this operation is applied
-     * @return A composed {@code FloatToCharFunction} that first applies this operation to its input, and then applies
-     * the {@code after} operation to the result.
+     * @param after The function to apply after this function is applied
+     * @return A composed {@link FloatToCharFunction} that first applies this function to its input, and then applies
+     * the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
      */
-    default FloatToCharFunction toChar(final ToCharFunction<? super R> after) {
+    @Nonnull
+    default FloatToCharFunction toChar(@Nonnull final ToCharFunction<? super R> after) {
         Objects.requireNonNull(after);
         return value -> after.applyAsChar(apply(value));
     }
 
     /**
-     * Returns a composed {@link FloatToDoubleFunction} that first applies this operation to its input, and then applies
-     * the {@code after} operation to the result. If evaluation of either operations throws an exception, it is relayed
-     * to the caller of the composed operation.
+     * Returns a composed {@link FloatToDoubleFunction} that first applies this function to its input, and then applies
+     * the {@code after} function to the result. If evaluation of either function throws an exception, it is relayed to
+     * the caller of the composed function. This method is just convenience, to provide the ability to transform this
+     * function to {@code double}, using the {@code float}-to-{@code double} primitive specialization of {@link
+     * Function}.
      *
-     * @param after The {@code ToDoubleFunction} to apply after this operation is applied
-     * @return A composed {@code FloatToDoubleFunction} that first applies this operation to its input, and then applies
-     * the {@code after} operation to the result.
+     * @param after The function to apply after this function is applied
+     * @return A composed {@link FloatToDoubleFunction} that first applies this function to its input, and then applies
+     * the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
      */
-    default FloatToDoubleFunction toDouble(final ToDoubleFunction<? super R> after) {
+    @Nonnull
+    default FloatToDoubleFunction toDouble(@Nonnull final ToDoubleFunction<? super R> after) {
         Objects.requireNonNull(after);
         return value -> after.applyAsDouble(apply(value));
     }
 
     /**
-     * Returns a composed {@link FloatToIntFunction} that first applies this operation to its input, and then applies
-     * the {@code after} operation to the result. If evaluation of either operations throws an exception, it is relayed
-     * to the caller of the composed operation.
+     * Returns a composed {@link FloatToIntFunction} that first applies this function to its input, and then applies the
+     * {@code after} function to the result. If evaluation of either function throws an exception, it is relayed to the
+     * caller of the composed function. This method is just convenience, to provide the ability to transform this
+     * function to {@code int}, using the {@code float}-to-{@code int} primitive specialization of {@link Function}.
      *
-     * @param after The {@code ToIntFunction} to apply after this operation is applied
-     * @return A composed {@code FloatToIntFunction} that first applies this operation to its input, and then applies
-     * the {@code after} operation to the result.
+     * @param after The function to apply after this function is applied
+     * @return A composed {@link FloatToIntFunction} that first applies this function to its input, and then applies the
+     * {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
      */
-    default FloatToIntFunction toInt(final ToIntFunction<? super R> after) {
+    @Nonnull
+    default FloatToIntFunction toInt(@Nonnull final ToIntFunction<? super R> after) {
         Objects.requireNonNull(after);
         return value -> after.applyAsInt(apply(value));
     }
 
     /**
-     * Returns a composed {@link FloatToLongFunction} that first applies this operation to its input, and then applies
-     * the {@code after} operation to the result. If evaluation of either operations throws an exception, it is relayed
-     * to the caller of the composed operation.
+     * Returns a composed {@link FloatToLongFunction} that first applies this function to its input, and then applies
+     * the {@code after} function to the result. If evaluation of either function throws an exception, it is relayed to
+     * the caller of the composed function. This method is just convenience, to provide the ability to transform this
+     * function to {@code long}, using the {@code float}-to-{@code long} primitive specialization of {@link Function}.
      *
-     * @param after The {@code ToLongFunction} to apply after this operation is applied
-     * @return A composed {@code FloatToLongFunction} that first applies this operation to its input, and then applies
-     * the {@code after} operation to the result.
+     * @param after The function to apply after this function is applied
+     * @return A composed {@link FloatToLongFunction} that first applies this function to its input, and then applies
+     * the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
      */
-    default FloatToLongFunction toLong(final ToLongFunction<? super R> after) {
+    @Nonnull
+    default FloatToLongFunction toLong(@Nonnull final ToLongFunction<? super R> after) {
         Objects.requireNonNull(after);
         return value -> after.applyAsLong(apply(value));
     }
 
     /**
-     * Returns a composed {@link FloatToShortFunction} that first applies this operation to its input, and then applies
-     * the {@code after} operation to the result. If evaluation of either operations throws an exception, it is relayed
-     * to the caller of the composed operation.
+     * Returns a composed {@link FloatToShortFunction} that first applies this function to its input, and then applies
+     * the {@code after} function to the result. If evaluation of either function throws an exception, it is relayed to
+     * the caller of the composed function. This method is just convenience, to provide the ability to transform this
+     * function to {@code short}, using the {@code float}-to-{@code short} primitive specialization of {@link
+     * Function}.
      *
-     * @param after The {@code ToShortFunction} to apply after this operation is applied
-     * @return A composed {@code FloatToShortFunction} that first applies this operation to its input, and then applies
-     * the {@code after} operation to the result.
+     * @param after The function to apply after this function is applied
+     * @return A composed {@link FloatToShortFunction} that first applies this function to its input, and then applies
+     * the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
      */
-    default FloatToShortFunction toShort(final ToShortFunction<? super R> after) {
+    @Nonnull
+    default FloatToShortFunction toShort(@Nonnull final ToShortFunction<? super R> after) {
         Objects.requireNonNull(after);
         return value -> after.applyAsShort(apply(value));
     }
 
     /**
-     * Returns a composed {@link FloatConsumer} that fist applies this operation to its input, and then consumes the
+     * Returns a composed {@link FloatConsumer} that fist applies this function to its input, and then consumes the
      * result using the given {@link Consumer}. If evaluation of either operation throws an exception, it is relayed to
      * the caller of the composed operation.
      *
      * @param consumer The operation which consumes the result from this operation
-     * @return A composed {@code FloatConsumer} that first applies this operation to its input, and then consumes the
-     * result using the given {@code Consumer}.
+     * @return A composed {@link FloatConsumer} that fist applies this function to its input, and then consumes the
+     * result using the given {@link Consumer}.
      * @throws NullPointerException If given argument is {@code null}
      */
     @Nonnull

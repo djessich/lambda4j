@@ -25,8 +25,10 @@ import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import java.util.Objects;
 import java.util.function.BiFunction;
+import java.util.function.BinaryOperator;
 import java.util.function.Consumer;
 import java.util.function.Function;
+import java.util.function.UnaryOperator;
 
 /**
  * Represents a function that accepts two short-valued arguments and produces a result. This is the {@code
@@ -106,86 +108,99 @@ public interface ShortBiFunction<R> {
     }
 
     /**
-     * Returns a composed {@link ShortBiFunction} that first applies the {@code before} {@link ShortUnaryOperator}s to
-     * its input, and then applies this operation to the result. If evaluation of either operation throws an exception,
-     * it is relayed to the caller of the composed function.
+     * Returns a composed {@link ShortBiFunction} that first applies the {@code before} operations to its input, and
+     * then applies this function to the result. If evaluation of either operation throws an exception, it is relayed to
+     * the caller of the composed operation.
      *
-     * @param before1 The first {@code ShortUnaryOperator} to apply before this operation is applied
-     * @param before2 The second {@code ShortUnaryOperator} to apply before this operation is applied
-     * @return A composed {@code ShortBiFunction} that first applies the {@code before} {@code ShortUnaryOperator}s to
-     * its input, and then applies this operation to the result.
+     * @param before1 The first operation to apply before this function is applied
+     * @param before2 The second operation to apply before this function is applied
+     * @return A composed {@link ShortBiFunction} that first applies the {@code before} operations to its input, and
+     * then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
+     * @implNote The input arguments of this method are primitive specializations of {@link UnaryOperator}. Therefore
+     * the given operations handle primitive types. In this case this is {@code short}.
+     * @see #andThen(ToShortFunction)
      * @see #andThen(Function)
      */
-    default ShortBiFunction<R> compose(final ShortUnaryOperator before1, final ShortUnaryOperator before2) {
+    @Nonnull
+    default ShortBiFunction<R> compose(@Nonnull final ShortUnaryOperator before1,
+            @Nonnull final ShortUnaryOperator before2) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         return (value1, value2) -> apply(before1.applyAsShort(value1), before2.applyAsShort(value2));
     }
 
     /**
-     * Returns a composed {@link BiFunction} that applies the given {@code before} {@link ToShortFunction}s to its
-     * input, and then applies this operation to the result. If evaluation of either operation throws an exception, it
-     * is relayed to the caller of the composed function.
+     * Returns a composed {@link BiFunction} that first applies the {@code before} functions to its input, and then
+     * applies this function to the result. If evaluation of either function throws an exception, it is relayed to the
+     * caller of the composed function.
      *
-     * @param <T> The type of the argument to the first before operation
-     * @param <U> The type of the argument to the second before operation
-     * @param before1 The first before {@code ToShortFunction} to apply before this operation is applied
-     * @param before2 The second before {@code ToShortFunction} to apply before this operation is applied
-     * @return A composed {@code BiFunction} that applies the given {@code before} {@code ToShortFunction}s to its
-     * input, and then applies this operation to the result.
-     * @throws NullPointerException If one of the given functions are {@code null}
+     * @param <T> The type of the argument to the first before function
+     * @param <U> The type of the argument to the second before function
+     * @param before1 The first function to apply before this function is applied
+     * @param before2 The second function to apply before this function is applied
+     * @return A composed {@link BiFunction} that first applies the {@code before} functions to its input, and then
+     * applies this function to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implNote The input arguments of this method are able to handle every type.
+     * @see #andThen(ToShortFunction)
      * @see #andThen(Function)
      */
-    default <T, U> BiFunction<T, U, R> compose(final ToShortFunction<? super T> before1,
-            final ToShortFunction<? super U> before2) {
+    @Nonnull
+    default <T, U> BiFunction<T, U, R> compose(@Nonnull final ToShortFunction<? super T> before1,
+            @Nonnull final ToShortFunction<? super U> before2) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
-        return (value1, value2) -> apply(before1.applyAsShort(value1), before2.applyAsShort(value2));
+        return (t, u) -> apply(before1.applyAsShort(t), before2.applyAsShort(u));
     }
 
     /**
-     * Returns a composed {@link ShortBinaryOperator} that first applies this operation to its input, and then applies
-     * the {@code after} operation to the result. If evaluation of either operation throws an exception, it is relayed
-     * to the caller of the composed operation.
+     * Returns a composed {@link ShortBinaryOperator} that first applies this function to its input, and then applies
+     * the {@code after} function to the result. If evaluation of either function throws an exception, it is relayed to
+     * the caller of the composed function.
      *
-     * @param after The {@code ToShortFunction} to apply after this operation is applied
-     * @return A composed {@code ShortBinaryOperator} that first applies this operation, and then applies the {@code
-     * after} operation to the result.
+     * @param after The function to apply after this function is applied
+     * @return A composed {@link ShortBinaryOperator} that first applies this function to its input, and then applies
+     * the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
+     * @implNote The result of this method is the primitive specialization of {@link BinaryOperator}. Therefore the
+     * returned operation handles primitive types. In this case this is {@code short}.
      * @see #compose(ShortUnaryOperator, ShortUnaryOperator)
      * @see #compose(ToShortFunction, ToShortFunction)
      */
-    default ShortBinaryOperator andThen(final ToShortFunction<? super R> after) {
+    @Nonnull
+    default ShortBinaryOperator andThen(@Nonnull final ToShortFunction<? super R> after) {
         Objects.requireNonNull(after);
         return (value1, value2) -> after.applyAsShort(apply(value1, value2));
     }
 
     /**
-     * Returns a composed {@link ShortBiFunction} that first applies this operation to its input, and then applies the
-     * {@code after} operation to the result. If evaluation of either operation throws an exception, it is relayed to
-     * the caller of the composed operation.
+     * Returns a composed {@link ShortBiFunction} that first applies this function to its input, and then applies the
+     * {@code after} function to the result. If evaluation of either function throws an exception, it is relayed to the
+     * caller of the composed function.
      *
-     * @param <S> The type of output of the {@code after} function, and of the composed function
-     * @param after The {@code ShortBiFunction} to apply after this operation is applied
-     * @return A composed {@code ShortBiFunction} that first applies this operation, and then applies the {@code after}
-     * operation to the result.
+     * @param <S> The type of return value from the {@code after} function, and of the composed function
+     * @param after The function to apply after this function is applied
+     * @return A composed {@link ShortBiFunction} that first applies this function to its input, and then applies the
+     * {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
+     * @implNote The returned function is able to handle every type.
      * @see #compose(ShortUnaryOperator, ShortUnaryOperator)
      * @see #compose(ToShortFunction, ToShortFunction)
      */
-    default <S> ShortBiFunction<S> andThen(final Function<? super R, ? extends S> after) {
+    @Nonnull
+    default <S> ShortBiFunction<S> andThen(@Nonnull final Function<? super R, ? extends S> after) {
         Objects.requireNonNull(after);
         return (value1, value2) -> after.apply(apply(value1, value2));
     }
 
     /**
-     * Returns a composed {@link ShortBiConsumer} that fist applies this operation to its input, and then consumes the
+     * Returns a composed {@link ShortBiConsumer} that fist applies this function to its input, and then consumes the
      * result using the given {@link Consumer}. If evaluation of either operation throws an exception, it is relayed to
      * the caller of the composed operation.
      *
      * @param consumer The operation which consumes the result from this operation
-     * @return A composed {@code ShortBiConsumer} that first applies this operation to its input, and then consumes the
+     * @return A composed {@code ShortBiConsumer} that first applies this function to its input, and then consumes the
      * result using the given {@code Consumer}.
      * @throws NullPointerException If given argument is {@code null}
      */
