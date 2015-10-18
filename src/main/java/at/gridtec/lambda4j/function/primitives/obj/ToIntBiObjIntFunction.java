@@ -27,6 +27,7 @@ import java.util.function.IntConsumer;
 import java.util.function.IntFunction;
 import java.util.function.IntUnaryOperator;
 import java.util.function.ToIntFunction;
+import java.util.function.UnaryOperator;
 
 /**
  * Represents a function that accepts two object-valued and a {@code int}-valued argument, and produces a {@code
@@ -52,7 +53,7 @@ public interface ToIntBiObjIntFunction<T, U> {
      * @return A {@code ToIntBiObjIntFunction} which always returns a given value.
      */
     @Nonnull
-    static <T, U> ToIntBiObjIntFunction<T, U> constant(byte ret) {
+    static <T, U> ToIntBiObjIntFunction<T, U> constant(int ret) {
         return (t, u, value) -> ret;
     }
 
@@ -129,23 +130,26 @@ public interface ToIntBiObjIntFunction<T, U> {
     }
 
     /**
-     * Returns a composed {@link ToIntBiObjIntFunction} that first applies the {@code before} functions to its input,
-     * and then applies this operation to the result. If evaluation of either operation throws an exception, it is
-     * relayed to the caller of the composed function.
+     * Returns a composed {@link ToIntBiObjIntFunction} that first applies the {@code before} operations to its input,
+     * and then applies this function to the result. If evaluation of either operation throws an exception, it is
+     * relayed to the caller of the composed operation.
      *
      * @param <A> The type of the argument to the first before operation
      * @param <B> The type of the argument to the second before operation
-     * @param before1 The first {@code Function} to apply before this operation is applied
-     * @param before2 The second {@code Function} to apply before this operation is applied
-     * @param before3 The third {@code IntUnaryOperator} to apply before this operation is applied
-     * @return A composed {@code ToIntBiObjIntFunction} that first applies the {@code before} functions to its input,
-     * and then applies this operation to the result.
+     * @param before1 The first operation to apply before this function is applied
+     * @param before2 The second operation to apply before this function is applied
+     * @param before3 The third operation to apply before this function is applied
+     * @return A composed {@code ToIntBiObjIntFunction} that first applies the {@code before} operations to its input,
+     * and then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
+     * @implNote The last input argument of this method is the primitive specialization of {@link UnaryOperator}.
+     * Therefore the operation handles a primitive type. In this case this is {@code int}.
      * @see #andThen(IntUnaryOperator)
      * @see #andThen(IntFunction)
      */
-    default <A, B> ToIntBiObjIntFunction<A, B> compose(final Function<? super A, ? extends T> before1,
-            final Function<? super B, ? extends U> before2, final IntUnaryOperator before3) {
+    @Nonnull
+    default <A, B> ToIntBiObjIntFunction<A, B> compose(@Nonnull final Function<? super A, ? extends T> before1,
+            @Nonnull final Function<? super B, ? extends U> before2, @Nonnull final IntUnaryOperator before3) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         Objects.requireNonNull(before3);
@@ -153,23 +157,26 @@ public interface ToIntBiObjIntFunction<T, U> {
     }
 
     /**
-     * Returns a composed {@link ToIntTriFunction} that applies the given {@code before} functions to its input, and
-     * then applies this operation to the result. If evaluation of either operation throws an exception, it is relayed
-     * to the caller of the composed function.
+     * Returns a composed {@link ToIntTriFunction} that first applies the {@code before} functions to its input, and
+     * then applies this function to the result. If evaluation of either function throws an exception, it is relayed to
+     * the caller of the composed function.
      *
      * @param <A> The type of the argument to the first before operation
      * @param <B> The type of the argument to the second before operation
      * @param <C> The type of the argument to the third before operation
-     * @param before1 The first before {@code Function} to apply before this operation is applied
-     * @param before2 The second before {@code ToIntFunction} to apply before this operation is applied
-     * @return A composed {@code ToIntTriFunction} that applies the given {@code before} functions to its input, and
-     * then applies this operation to the result.
+     * @param before1 The first function to apply before this function is applied
+     * @param before2 The second function to apply before this function is applied
+     * @param before3 The third function to apply before this function is applied
+     * @return A composed {@code ToIntTriFunction} that first applies the {@code before} functions to its input, and
+     * then applies this function to the result.
      * @throws NullPointerException If one of the given functions are {@code null}
+     * @implNote The input arguments of this method are able to handle every type.
      * @see #andThen(IntUnaryOperator)
      * @see #andThen(IntFunction)
      */
-    default <A, B, C> ToIntTriFunction<A, B, C> compose(final Function<? super A, ? extends T> before1,
-            final Function<? super B, ? extends U> before2, final ToIntFunction<? super C> before3) {
+    @Nonnull
+    default <A, B, C> ToIntTriFunction<A, B, C> compose(@Nonnull final Function<? super A, ? extends T> before1,
+            @Nonnull final Function<? super B, ? extends U> before2, @Nonnull final ToIntFunction<? super C> before3) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         Objects.requireNonNull(before3);
@@ -177,36 +184,41 @@ public interface ToIntBiObjIntFunction<T, U> {
     }
 
     /**
-     * Returns a composed {@link ToIntBiObjIntFunction} that first applies this operation to its input, and then applies
+     * Returns a composed {@link ToIntBiObjIntFunction} that first applies this function to its input, and then applies
      * the {@code after} operation to the result. If evaluation of either operation throws an exception, it is relayed
      * to the caller of the composed operation.
      *
-     * @param after The {@code IntUnaryOperator} to apply after this operation is applied
-     * @return A composed {@code ToIntBiObjIntFunction} that first applies this operation, and then applies the {@code
-     * after} operation to the result.
+     * @param after The operation to apply after this function is applied
+     * @return A composed {@code ToIntBiObjIntFunction} that first applies this function to its input, and then applies
+     * the {@code after} operation to the result.
      * @throws NullPointerException If given argument is {@code null}
+     * @implNote The result of this method is a primitive specialization of {@link TriFunction}. Therefore the returned
+     * operation handles primitive types. In this case this is {@code int}.
      * @see #compose(Function, Function, IntUnaryOperator)
      * @see #compose(Function, Function, ToIntFunction)
      */
-    default ToIntBiObjIntFunction<T, U> andThen(final IntUnaryOperator after) {
+    @Nonnull
+    default ToIntBiObjIntFunction<T, U> andThen(@Nonnull final IntUnaryOperator after) {
         Objects.requireNonNull(after);
         return (t, u, value) -> after.applyAsInt(applyAsInt(t, u, value));
     }
 
     /**
-     * Returns a composed {@link BiObjIntFunction} that first applies this operation to its input, and then applies the
-     * {@code after} operation to the result. If evaluation of either operation throws an exception, it is relayed to
-     * the caller of the composed operation.
+     * Returns a composed {@link BiObjIntFunction} that first applies this function to its input, and then applies the
+     * {@code after} function to the result. If evaluation of either function throws an exception, it is relayed to the
+     * caller of the composed function.
      *
-     * @param <S> The type of output of the {@code after} function, and of the composed function
-     * @param after The {@code IntFunction} to apply after this operation is applied
-     * @return A composed {@code BiObjIntFunction} that first applies this operation, and then applies the {@code after}
-     * operation to the result.
+     * @param <S> The type of return value from the {@code after} function, and of the composed function
+     * @param after The function to apply after this function is applied
+     * @return A composed {@code BiObjIntFunction} that first applies this function to its input, and then applies the
+     * {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
+     * @implNote The returned function is able to handle every type.
      * @see #compose(Function, Function, IntUnaryOperator)
      * @see #compose(Function, Function, ToIntFunction)
      */
-    default <S> BiObjIntFunction<T, U, S> andThen(final IntFunction<? extends S> after) {
+    @Nonnull
+    default <S> BiObjIntFunction<T, U, S> andThen(@Nonnull final IntFunction<? extends S> after) {
         Objects.requireNonNull(after);
         return (t, u, value) -> after.apply(applyAsInt(t, u, value));
     }

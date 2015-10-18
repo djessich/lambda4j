@@ -26,6 +26,7 @@ import java.util.function.LongUnaryOperator;
 import java.util.function.ObjLongConsumer;
 import java.util.function.ToLongBiFunction;
 import java.util.function.ToLongFunction;
+import java.util.function.UnaryOperator;
 
 /**
  * Represents a function that accepts an object-valued and a {@code long}-valued argument, and produces a {@code
@@ -49,7 +50,7 @@ public interface ToLongObjLongFunction<T> {
      * @return A {@code ToLongObjLongFunction} which always returns a given value.
      */
     @Nonnull
-    static <T> ToLongObjLongFunction<T> constant(byte ret) {
+    static <T> ToLongObjLongFunction<T> constant(long ret) {
         return (t, value) -> ret;
     }
 
@@ -106,90 +107,100 @@ public interface ToLongObjLongFunction<T> {
     }
 
     /**
-     * Returns a composed {@link ToLongObjLongFunction} that first applies the {@code before} functions to its input,
-     * and then applies this operation to the result. If evaluation of either operation throws an exception, it is
-     * relayed to the caller of the composed function.
+     * Returns a composed {@link ToLongObjLongFunction} that first applies the {@code before} operations to its input,
+     * and then applies this function to the result. If evaluation of either operation throws an exception, it is
+     * relayed to the caller of the composed operation.
      *
      * @param <U> The type of the argument to the first before operation
-     * @param before1 The first {@code Function} to apply before this operation is applied
-     * @param before2 The second {@code LongUnaryOperator} to apply before this operation is applied
-     * @return A composed {@code ToLongObjLongFunction} that first applies the {@code before} functions to its input,
-     * and then applies this operation to the result.
+     * @param before1 The first operation to apply before this function is applied
+     * @param before2 The second operation to apply before this function is applied
+     * @return A composed {@code ToLongObjLongFunction} that first applies the {@code before} operations to its input,
+     * and then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
+     * @implNote The last input argument of this method is the primitive specialization of {@link UnaryOperator}.
+     * Therefore the operation handles a primitive type. In this case this is {@code long}.
      * @see #andThen(LongUnaryOperator)
      * @see #andThen(LongFunction)
      */
-    default <U> ToLongObjLongFunction<U> compose(final Function<? super U, ? extends T> before1,
-            final LongUnaryOperator before2) {
+    @Nonnull
+    default <U> ToLongObjLongFunction<U> compose(@Nonnull final Function<? super U, ? extends T> before1,
+            @Nonnull final LongUnaryOperator before2) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         return (u, value) -> applyAsLong(before1.apply(u), before2.applyAsLong(value));
     }
 
     /**
-     * Returns a composed {@link ToLongBiFunction} that applies the given {@code before} functions to its input, and
-     * then applies this operation to the result. If evaluation of either operation throws an exception, it is relayed
-     * to the caller of the composed function.
+     * Returns a composed {@link ToLongBiFunction} that first applies the {@code before} functions to its input, and
+     * then applies this function to the result. If evaluation of either function throws an exception, it is relayed to
+     * the caller of the composed function.
      *
      * @param <U> The type of the argument to the first before operation
      * @param <V> The type of the argument to the second before operation
-     * @param before1 The first before {@code Function} to apply before this operation is applied
-     * @param before2 The second before {@code ToLongFunction} to apply before this operation is applied
-     * @return A composed {@code ToLongBiFunction} that applies the given {@code before} functions to its input, and
-     * then applies this operation to the result.
-     * @throws NullPointerException If one of the given functions are {@code null}
+     * @param before1 The first function to apply before this function is applied
+     * @param before2 The second function to apply before this function is applied
+     * @return A composed {@code ToLongBiFunction} that first applies the {@code before} functions to its input, and
+     * then applies this function to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implNote The input arguments of this method are able to handle every type.
      * @see #andThen(LongUnaryOperator)
      * @see #andThen(LongFunction)
      */
-    default <U, V> ToLongBiFunction<U, V> compose(final Function<? super U, ? extends T> before1,
-            final ToLongFunction<? super V> before2) {
+    @Nonnull
+    default <U, V> ToLongBiFunction<U, V> compose(@Nonnull final Function<? super U, ? extends T> before1,
+            @Nonnull final ToLongFunction<? super V> before2) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         return (u, v) -> applyAsLong(before1.apply(u), before2.applyAsLong(v));
     }
 
     /**
-     * Returns a composed {@link ToLongObjLongFunction} that first applies this operation to its input, and then applies
-     * the {@code after} operation to the result. If evaluation of either operation throws an exception, it is relayed
-     * to the caller of the composed operation.
+     * Returns a composed {@link ToLongObjLongFunction} that first applies this function to its input, and then applies
+     * the {@code after} operation to the result. If evaluation of either function throws an exception, it is relayed to
+     * the caller of the composed function.
      *
-     * @param after The {@code ToLongFunction} to apply after this operation is applied
-     * @return A composed {@code LongBinaryOperator} that first applies this operation, and then applies the {@code
-     * after} operation to the result.
+     * @param after The function to apply after this function is applied
+     * @return A composed {@code ToLongObjLongFunction} that first applies this function to its input, and then applies
+     * the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
+     * @implNote The result of this method is a primitive specialization of {@link BiFunction}. Therefore the returned
+     * operation handles primitive types. In this case this is {@code long}.
      * @see #compose(Function, LongUnaryOperator)
      * @see #compose(Function, ToLongFunction)
      */
-    default ToLongObjLongFunction<T> andThen(final LongUnaryOperator after) {
+    @Nonnull
+    default ToLongObjLongFunction<T> andThen(@Nonnull final LongUnaryOperator after) {
         Objects.requireNonNull(after);
         return (t, value) -> after.applyAsLong(applyAsLong(t, value));
     }
 
     /**
-     * Returns a composed {@link ObjLongFunction} that first applies this operation to its input, and then applies the
-     * {@code after} operation to the result. If evaluation of either operation throws an exception, it is relayed to
-     * the caller of the composed operation.
+     * Returns a composed {@link ObjLongFunction} that first applies this function to its input, and then applies the
+     * {@code after} function to the result. If evaluation of either function throws an exception, it is relayed to the
+     * caller of the composed function.
      *
-     * @param <S> The type of output of the {@code after} function, and of the composed function
-     * @param after The {@code LongFunction} to apply after this operation is applied
-     * @return A composed {@code ObjLongFunction} that first applies this operation, and then applies the {@code after}
-     * operation to the result.
+     * @param <S> The type of return value from the {@code after} function, and of the composed function
+     * @param after The function to apply after this function is applied
+     * @return A composed {@code ObjLongFunction} that first applies this function to its input, and then applies the
+     * {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
+     * @implNote The returned function is able to handle every type.
      * @see #compose(Function, LongUnaryOperator)
      * @see #compose(Function, ToLongFunction)
      */
-    default <S> ObjLongFunction<T, S> andThen(final LongFunction<? extends S> after) {
+    @Nonnull
+    default <S> ObjLongFunction<T, S> andThen(@Nonnull final LongFunction<? extends S> after) {
         Objects.requireNonNull(after);
         return (t, value) -> after.apply(applyAsLong(t, value));
     }
 
     /**
-     * Returns a composed {@link ObjLongConsumer} that fist applies this operation to its input, and then consumes the
+     * Returns a composed {@link ObjLongConsumer} that fist applies this function to its input, and then consumes the
      * result using the given {@link LongConsumer}. If evaluation of either operation throws an exception, it is relayed
      * to the caller of the composed operation.
      *
      * @param consumer The operation which consumes the result from this operation
-     * @return A composed {@code ObjLongConsumer} that first applies this operation to its input, and then consumes the
+     * @return A composed {@code ObjLongConsumer} that first applies this function to its input, and then consumes the
      * result using the given {@code LongConsumer}.
      * @throws NullPointerException If given argument is {@code null}
      */

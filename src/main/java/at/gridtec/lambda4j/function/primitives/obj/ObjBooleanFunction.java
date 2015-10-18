@@ -43,7 +43,6 @@ import java.util.function.UnaryOperator;
 @SuppressWarnings("unused")
 @FunctionalInterface
 public interface ObjBooleanFunction<T, R> {
-    //TODO
 
     /**
      * Creates a {@link ObjBooleanFunction} which always returns a given value.
@@ -137,15 +136,15 @@ public interface ObjBooleanFunction<T, R> {
     }
 
     /**
-     * Returns a composed {@link BiFunction} that first applies the {@code before} functions to its input, and then
-     * applies this function to the result. If evaluation of either function throws an exception, it is relayed to the
-     * caller of the composed function.
+     * Returns a composed {@link BiFunction} that first applies the {@code before} operations to its input, and then
+     * applies this function to the result. If evaluation of either operation throws an exception, it is relayed to the
+     * caller of the composed operation.
      *
      * @param <U> The type of the argument to the first before operation
      * @param <V> The type of the argument to the second before operation
-     * @param before1 The first function to apply before this function is applied
-     * @param before2 The second function to apply before this function is applied
-     * @return A composed {@code BiFunction} that first applies the {@code before} functions to its input, and then
+     * @param before1 The first operation to apply before this function is applied
+     * @param before2 The second operation to apply before this function is applied
+     * @return A composed {@code BiFunction} that first applies the {@code before} operations to its input, and then
      * applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
      * @implNote The input arguments of this method are able to handle every type.
@@ -162,12 +161,12 @@ public interface ObjBooleanFunction<T, R> {
 
     /**
      * Returns a composed {@link ObjBooleanPredicate} that first applies this function to its input, and then applies
-     * the {@code after} function to the result. If evaluation of either function throws an exception, it is relayed to
-     * the caller of the composed function.
+     * the {@code after} operation to the result. If evaluation of either operation throws an exception, it is relayed to
+     * the caller of the composed operation.
      *
-     * @param after The function to apply after this function is applied
+     * @param after The operation to apply after this function is applied
      * @return A composed {@code ObjBooleanPredicate} that first applies this function to its input, and then applies
-     * the {@code after} function to the result.
+     * the {@code after} operation to the result.
      * @throws NullPointerException If given argument is {@code null}
      * @implNote The result of this method is a primitive specialization of {@link BiPredicate}. Therefore the returned
      * operation handles primitive types. In this case this is {@code boolean}.

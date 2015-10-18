@@ -27,6 +27,7 @@ import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import java.util.Objects;
 import java.util.function.Function;
+import java.util.function.UnaryOperator;
 
 /**
  * Represents a function that accepts two object-valued and a {@code short}-valued argument, and produces a {@code
@@ -129,23 +130,26 @@ public interface ToShortBiObjShortFunction<T, U> {
     }
 
     /**
-     * Returns a composed {@link ToShortBiObjShortFunction} that first applies the {@code before} functions to its
-     * input, and then applies this operation to the result. If evaluation of either operation throws an exception, it
-     * is relayed to the caller of the composed function.
+     * Returns a composed {@link ToShortBiObjShortFunction} that first applies the {@code before} operations to its
+     * input, and then applies this function to the result. If evaluation of either operation throws an exception, it is
+     * relayed to the caller of the composed operation.
      *
      * @param <A> The type of the argument to the first before operation
      * @param <B> The type of the argument to the second before operation
-     * @param before1 The first {@code Function} to apply before this operation is applied
-     * @param before2 The second {@code Function} to apply before this operation is applied
-     * @param before3 The third {@code ShortUnaryOperator} to apply before this operation is applied
-     * @return A composed {@code ToShortBiObjShortFunction} that first applies the {@code before} functions to its
-     * input, and then applies this operation to the result.
+     * @param before1 The first operation to apply before this function is applied
+     * @param before2 The second operation to apply before this function is applied
+     * @param before3 The third operation to apply before this function is applied
+     * @return A composed {@code ToShortBiObjShortFunction} that first applies the {@code before} operations to its
+     * input, and then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
+     * @implNote The last input argument of this method is the primitive specialization of {@link UnaryOperator}.
+     * Therefore the operation handles a primitive type. In this case this is {@code short}.
      * @see #andThen(ShortUnaryOperator)
      * @see #andThen(ShortFunction)
      */
-    default <A, B> ToShortBiObjShortFunction<A, B> compose(final Function<? super A, ? extends T> before1,
-            final Function<? super B, ? extends U> before2, final ShortUnaryOperator before3) {
+    @Nonnull
+    default <A, B> ToShortBiObjShortFunction<A, B> compose(@Nonnull final Function<? super A, ? extends T> before1,
+            @Nonnull final Function<? super B, ? extends U> before2, @Nonnull final ShortUnaryOperator before3) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         Objects.requireNonNull(before3);
@@ -153,23 +157,27 @@ public interface ToShortBiObjShortFunction<T, U> {
     }
 
     /**
-     * Returns a composed {@link ToShortTriFunction} that applies the given {@code before} functions to its input, and
-     * then applies this operation to the result. If evaluation of either operation throws an exception, it is relayed
-     * to the caller of the composed function.
+     * Returns a composed {@link ToShortTriFunction} that first applies the {@code before} functions to its input, and
+     * then applies this function to the result. If evaluation of either function throws an exception, it is relayed to
+     * the caller of the composed function.
      *
      * @param <A> The type of the argument to the first before operation
      * @param <B> The type of the argument to the second before operation
      * @param <C> The type of the argument to the third before operation
-     * @param before1 The first before {@code Function} to apply before this operation is applied
-     * @param before2 The second before {@code ToShortFunction} to apply before this operation is applied
-     * @return A composed {@code ToShortTriFunction} that applies the given {@code before} functions to its input, and
-     * then applies this operation to the result.
+     * @param before1 The first function to apply before this function is applied
+     * @param before2 The second function to apply before this function is applied
+     * @param before3 The third function to apply before this function is applied
+     * @return A composed {@code ToShortTriFunction} that first applies the {@code before} functions to its input, and
+     * then applies this function to the result.
      * @throws NullPointerException If one of the given functions are {@code null}
+     * @implNote The input arguments of this method are able to handle every type.
      * @see #andThen(ShortUnaryOperator)
      * @see #andThen(ShortFunction)
      */
-    default <A, B, C> ToShortTriFunction<A, B, C> compose(final Function<? super A, ? extends T> before1,
-            final Function<? super B, ? extends U> before2, final ToShortFunction<? super C> before3) {
+    @Nonnull
+    default <A, B, C> ToShortTriFunction<A, B, C> compose(@Nonnull final Function<? super A, ? extends T> before1,
+            @Nonnull final Function<? super B, ? extends U> before2,
+            @Nonnull final ToShortFunction<? super C> before3) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         Objects.requireNonNull(before3);
@@ -177,36 +185,41 @@ public interface ToShortBiObjShortFunction<T, U> {
     }
 
     /**
-     * Returns a composed {@link ToShortBiObjShortFunction} that first applies this operation to its input, and then
+     * Returns a composed {@link ToShortBiObjShortFunction} that first applies this function to its input, and then
      * applies the {@code after} operation to the result. If evaluation of either operation throws an exception, it is
      * relayed to the caller of the composed operation.
      *
-     * @param after The {@code ShortUnaryOperator} to apply after this operation is applied
-     * @return A composed {@code ToShortBiObjShortFunction} that first applies this operation, and then applies the
-     * {@code after} operation to the result.
+     * @param after The operation to apply after this function is applied
+     * @return A composed {@code ToShortBiObjShortFunction} that first applies this function to its input, and then
+     * applies the {@code after} operation to the result.
      * @throws NullPointerException If given argument is {@code null}
+     * @implNote The result of this method is a primitive specialization of {@link TriFunction}. Therefore the returned
+     * operation handles primitive types. In this case this is {@code short}.
      * @see #compose(Function, Function, ShortUnaryOperator)
      * @see #compose(Function, Function, ToShortFunction)
      */
-    default ToShortBiObjShortFunction<T, U> andThen(final ShortUnaryOperator after) {
+    @Nonnull
+    default ToShortBiObjShortFunction<T, U> andThen(@Nonnull final ShortUnaryOperator after) {
         Objects.requireNonNull(after);
         return (t, u, value) -> after.applyAsShort(applyAsShort(t, u, value));
     }
 
     /**
-     * Returns a composed {@link BiObjShortFunction} that first applies this operation to its input, and then applies
-     * the {@code after} operation to the result. If evaluation of either operation throws an exception, it is relayed
-     * to the caller of the composed operation.
+     * Returns a composed {@link BiObjShortFunction} that first applies this function to its input, and then applies the
+     * {@code after} function to the result. If evaluation of either function throws an exception, it is relayed to the
+     * caller of the composed function.
      *
-     * @param <S> The type of output of the {@code after} function, and of the composed function
-     * @param after The {@code ShortFunction} to apply after this operation is applied
-     * @return A composed {@code BiObjShortFunction} that first applies this operation, and then applies the {@code
-     * after} operation to the result.
+     * @param <S> The type of return value from the {@code after} function, and of the composed function
+     * @param after The function to apply after this function is applied
+     * @return A composed {@code BiObjShortFunction} that first applies this function to its input, and then applies the
+     * {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
+     * @implNote The returned function is able to handle every type.
      * @see #compose(Function, Function, ShortUnaryOperator)
      * @see #compose(Function, Function, ToShortFunction)
      */
-    default <S> BiObjShortFunction<T, U, S> andThen(final ShortFunction<? extends S> after) {
+    @Nonnull
+    default <S> BiObjShortFunction<T, U, S> andThen(@Nonnull final ShortFunction<? extends S> after) {
         Objects.requireNonNull(after);
         return (t, u, value) -> after.apply(applyAsShort(t, u, value));
     }
