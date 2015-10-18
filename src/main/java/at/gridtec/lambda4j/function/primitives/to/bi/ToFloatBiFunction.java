@@ -121,89 +121,101 @@ public interface ToFloatBiFunction<T, U> {
     }
 
     /**
-     * Returns a composed {@link ToFloatBiFunction} that first applies the {@code before} {@link UnaryOperator}s to its
-     * input, and then applies this operation to the result. If evaluation of either operation throws an exception, it
-     * is relayed to the caller of the composed function.
+     * Returns a composed {@link ToFloatBiFunction} that first applies the {@code before} operations to its input, and
+     * then applies this function to the result. If evaluation of either operation throws an exception, it is relayed to
+     * the caller of the composed operation.
      *
-     * @param before1 The first {@code UnaryOperator} to apply before this operation is applied
-     * @param before2 The second {@code UnaryOperator} to apply before this operation is applied
-     * @return A composed {@code ToFloatBiFunction} that first applies the {@code before} {@code UnaryOperator}s to its
-     * input, and then applies this operation to the result.
+     * @param before1 The first operation to apply before this operation is applied
+     * @param before2 The second operation to apply before this operation is applied
+     * @return A composed {@code ToFloatBiFunction} that first applies the {@code before} operations to its input, and
+     * then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
+     * @implNote The input arguments of this method are primitive specializations of {@link UnaryOperator}. Therefore
+     * the given operations handle primitive types. In this case this is {@code float}.
      * @see #andThen(FloatUnaryOperator)
      * @see #andThen(FloatFunction)
      */
-    default ToFloatBiFunction<T, U> compose(final UnaryOperator<T> before1, final UnaryOperator<U> before2) {
+    @Nonnull
+    default ToFloatBiFunction<T, U> compose(@Nonnull final UnaryOperator<T> before1,
+            @Nonnull final UnaryOperator<U> before2) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         return (t, u) -> applyAsFloat(before1.apply(t), before2.apply(u));
     }
 
     /**
-     * Returns a composed {@link ToFloatBiFunction} that applies the given {@code before} {@link Function}s to its
-     * input, and then applies this operation to the result. If evaluation of either operation throws an exception, it
-     * is relayed to the caller of the composed function.
+     * Returns a composed {@link ToFloatBiFunction} that first applies the {@code before} functions to its input, and
+     * then applies this function to the result. If evaluation of either function throws an exception, it is relayed to
+     * the caller of the composed function.
      *
-     * @param <A> The type of the first argument to the before operation
-     * @param <B> The type of the second argument to the before operation
-     * @param before1 The first before {@code Function} to apply before this operation is applied
-     * @param before2 The second before {@code Function} to apply before this operation is applied
-     * @return A composed {@code ToFloatBiFunction} that applies the given {@code before} {@code Function}s to its
-     * input, and then applies this operation to the result.
-     * @throws NullPointerException If one of the given functions are {@code null}
+     * @param <A> The type of the argument to the first before function
+     * @param <B> The type of the argument to the second before function
+     * @param before1 The first function to apply before this function is applied
+     * @param before2 The second function to apply before this function is applied
+     * @return A composed {@code ToFloatBiFunction} that first applies the {@code before} functions to its input, and
+     * then applies this function to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implNote The input arguments of this method are able to handle every type.
      * @see #andThen(FloatUnaryOperator)
      * @see #andThen(FloatFunction)
      */
-    default <A, B> ToFloatBiFunction<A, B> compose(final Function<? super A, ? extends T> before1,
-            final Function<? super B, ? extends U> before2) {
+    @Nonnull
+    default <A, B> ToFloatBiFunction<A, B> compose(@Nonnull final Function<? super A, ? extends T> before1,
+            @Nonnull final Function<? super B, ? extends U> before2) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         return (a, b) -> applyAsFloat(before1.apply(a), before2.apply(b));
     }
 
     /**
-     * Returns a composed {@link ToFloatBiFunction} that first applies this operation to its input, and then applies the
+     * Returns a composed {@link ToFloatBiFunction} that first applies this function to its input, and then applies the
      * {@code after} operation to the result. If evaluation of either operation throws an exception, it is relayed to
      * the caller of the composed operation.
      *
-     * @param after The {@code FloatUnaryOperator} to apply after this operation is applied
-     * @return A composed {@code ToFloatBiFunction} that first applies this operation, and then applies the {@code
-     * after} operation to the result.
+     * @param after The operation to apply after this function is applied
+     * @return A composed {@code ToFloatBiFunction} that first applies this function to its input, and then applies the
+     * {@code after} operation to the result.
      * @throws NullPointerException If given argument is {@code null}
+     * @implNote The result of this method is a primitive specialization of {@link BiFunction}. Therefore the returned
+     * operation handles primitive types. In this case this is {@code float}.
      * @see #compose(UnaryOperator, UnaryOperator)
      * @see #compose(Function, Function)
      */
-    default ToFloatBiFunction<T, U> andThen(final FloatUnaryOperator after) {
+    @Nonnull
+    default ToFloatBiFunction<T, U> andThen(@Nonnull final FloatUnaryOperator after) {
         Objects.requireNonNull(after);
         return (t, u) -> after.applyAsFloat(applyAsFloat(t, u));
     }
 
     /**
-     * Returns a composed {@link BiFunction} that first applies this operation to its input, and then applies the {@code
-     * after} operation to the result. If evaluation of either operation throws an exception, it is relayed to the
-     * caller of the composed operation.
+     * Returns a composed {@link BiFunction} that first applies this function to its input, and then applies the {@code
+     * after} function to the result. If evaluation of either function throws an exception, it is relayed to the caller
+     * of the composed function.
      *
-     * @param <R> The type of output of the {@code after} function, and of the composed function
-     * @param after The {@code FloatFunction} to apply after this operation is applied
-     * @return A composed {@code BiFunction} that first applies this operation, and then applies the {@code after}
-     * operation to the result.
+     * @param <R> The type of return value from the {@code after} function, and of the composed function
+     * @param after The function to apply after this function is applied
+     * @return A composed {@code BiFunction} that first applies this function to its input, and then applies the {@code
+     * after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
+     * @implNote The returned function is able to handle every type.
      * @see #compose(UnaryOperator, UnaryOperator)
      * @see #compose(Function, Function)
      */
-    default <R> BiFunction<T, U, R> andThen(final FloatFunction<? extends R> after) {
+    @Nonnull
+    default <R> BiFunction<T, U, R> andThen(@Nonnull final FloatFunction<? extends R> after) {
         Objects.requireNonNull(after);
         return (t, u) -> after.apply(applyAsFloat(t, u));
     }
 
     /**
-     * Returns a composed {@link BiPredicate} that first applies this operation to its input, and then applies the
-     * {@code after} operation to the result. If evaluation of either operations throws an exception, it is relayed to
-     * the caller of the composed operation.
+     * Returns a composed {@link BiPredicate} that first applies this function to its input, and then applies the {@code
+     * after} function to the result. If evaluation of either function throws an exception, it is relayed to the caller
+     * of the composed function. This method is just convenience, to provide the ability to transform this function to
+     * the {@code boolean}-producing primitive specialization of {@link BiPredicate}.
      *
-     * @param after The {@code FloatToBooleanFunction} to apply after this operation is applied
-     * @return A composed {@code BiPredicate} that first applies this operation to its input, and then applies the
-     * {@code after} operation to the result.
+     * @param after The function to apply after this operation is applied
+     * @return A composed {@code BiPredicate} that first applies this function to its input, and then applies the {@code
+     * after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
      */
     default BiPredicate<T, U> toBoolean(final FloatToBooleanFunction after) {
@@ -212,104 +224,116 @@ public interface ToFloatBiFunction<T, U> {
     }
 
     /**
-     * Returns a composed {@link ToByteBiFunction} that first applies this operation to its input, and then applies the
-     * {@code after} operation to the result. If evaluation of either operations throws an exception, it is relayed to
-     * the caller of the composed operation.
+     * Returns a composed {@link ToByteBiFunction} that first applies this function to its input, and then applies the
+     * {@code after} function to the result. If evaluation of either function throws an exception, it is relayed to the
+     * caller of the composed function. This method is just convenience, to provide the ability to transform this
+     * function to the {@code byte}-producing primitive specialization of {@link BiFunction}.
      *
-     * @param after The {@code FloatToByteFunction} to apply after this operation is applied
-     * @return A composed {@code ToByteBiFunction} that first applies this operation to its input, and then applies the
-     * {@code after} operation to the result.
+     * @param after The function to apply after this operation is applied
+     * @return A composed {@code ToByteBiFunction} that first applies this function to its input, and then applies the
+     * {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
      */
-    default ToByteBiFunction<T, U> toByte(final FloatToByteFunction after) {
+    @Nonnull
+    default ToByteBiFunction<T, U> toByte(@Nonnull final FloatToByteFunction after) {
         Objects.requireNonNull(after);
         return (t, u) -> after.applyAsByte(applyAsFloat(t, u));
     }
 
     /**
-     * Returns a composed {@link ToCharBiFunction} that first applies this operation to its input, and then applies the
-     * {@code after} operation to the result. If evaluation of either operations throws an exception, it is relayed to
-     * the caller of the composed operation.
+     * Returns a composed {@link ToCharBiFunction} that first applies this function to its input, and then applies the
+     * {@code after} function to the result. If evaluation of either function throws an exception, it is relayed to the
+     * caller of the composed function. This method is just convenience, to provide the ability to transform this
+     * function to the {@code char}-producing primitive specialization of {@link BiFunction}.
      *
-     * @param after The {@code FloatToCharFunction} to apply after this operation is applied
-     * @return A composed {@code ToCharBiFunction} that first applies this operation to its input, and then applies the
-     * {@code after} operation to the result.
+     * @param after The function to apply after this operation is applied
+     * @return A composed {@code ToCharBiFunction} that first applies this function to its input, and then applies the
+     * {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
      */
-    default ToCharBiFunction<T, U> toChar(final FloatToCharFunction after) {
+    @Nonnull
+    default ToCharBiFunction<T, U> toChar(@Nonnull final FloatToCharFunction after) {
         Objects.requireNonNull(after);
         return (t, u) -> after.applyAsChar(applyAsFloat(t, u));
     }
 
     /**
-     * Returns a composed {@link ToDoubleBiFunction} that first applies this operation to its input, and then applies
-     * the {@code after} operation to the result. If evaluation of either operations throws an exception, it is relayed
-     * to the caller of the composed operation.
+     * Returns a composed {@link ToDoubleBiFunction} that first applies this function to its input, and then applies the
+     * {@code after} function to the result. If evaluation of either function throws an exception, it is relayed to the
+     * caller of the composed function. This method is just convenience, to provide the ability to transform this
+     * function to the {@code double}-producing primitive specialization of {@link BiFunction}.
      *
-     * @param after The {@code FloatToDoubleFunction} to apply after this operation is applied
-     * @return A composed {@code ToDoubleBiFunction} that first applies this operation to its input, and then applies
-     * the {@code after} operation to the result.
+     * @param after The function to apply after this operation is applied
+     * @return A composed {@code ToDoubleBiFunction} that first applies this function to its input, and then applies the
+     * {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
      */
-    default ToDoubleBiFunction<T, U> toDouble(final FloatToDoubleFunction after) {
+    @Nonnull
+    default ToDoubleBiFunction<T, U> toDouble(@Nonnull final FloatToDoubleFunction after) {
         Objects.requireNonNull(after);
         return (t, u) -> after.applyAsDouble(applyAsFloat(t, u));
     }
 
     /**
-     * Returns a composed {@link ToIntBiFunction} that first applies this operation to its input, and then applies the
-     * {@code after} operation to the result. If evaluation of either operations throws an exception, it is relayed to
-     * the caller of the composed operation.
+     * Returns a composed {@link ToIntBiFunction} that first applies this function to its input, and then applies the
+     * {@code after} function to the result. If evaluation of either function throws an exception, it is relayed to the
+     * caller of the composed function. This method is just convenience, to provide the ability to transform this
+     * function to the {@code int}-producing primitive specialization of {@link BiFunction}.
      *
-     * @param after The {@code FloatToIntFunction} to apply after this operation is applied
-     * @return A composed {@code ToIntBiFunction} that first applies this operation to its input, and then applies the
-     * {@code after} operation to the result.
+     * @param after The function to apply after this operation is applied
+     * @return A composed {@code ToIntBiFunction} that first applies this function to its input, and then applies the
+     * {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
      */
-    default ToIntBiFunction<T, U> toInt(final FloatToIntFunction after) {
+    @Nonnull
+    default ToIntBiFunction<T, U> toInt(@Nonnull final FloatToIntFunction after) {
         Objects.requireNonNull(after);
         return (t, u) -> after.applyAsInt(applyAsFloat(t, u));
     }
 
     /**
-     * Returns a composed {@link ToLongBiFunction} that first applies this operation to its input, and then applies the
-     * {@code after} operation to the result. If evaluation of either operations throws an exception, it is relayed to
-     * the caller of the composed operation.
+     * Returns a composed {@link ToLongBiFunction} that first applies this function to its input, and then applies the
+     * {@code after} function to the result. If evaluation of either function throws an exception, it is relayed to the
+     * caller of the composed function. This method is just convenience, to provide the ability to transform this
+     * function to the {@code long}-producing primitive specialization of {@link BiFunction}.
      *
-     * @param after The {@code FloatToLongFunction} to apply after this operation is applied
-     * @return A composed {@code ToLongBiFunction} that first applies this operation to its input, and then applies the
-     * {@code after} operation to the result.
+     * @param after The function to apply after this operation is applied
+     * @return A composed {@code ToLongBiFunction} that first applies this function to its input, and then applies the
+     * {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
      */
-    default ToLongBiFunction<T, U> toLong(final FloatToLongFunction after) {
+    @Nonnull
+    default ToLongBiFunction<T, U> toLong(@Nonnull final FloatToLongFunction after) {
         Objects.requireNonNull(after);
         return (t, u) -> after.applyAsLong(applyAsFloat(t, u));
 
     }
 
     /**
-     * Returns a composed {@link ToShortBiFunction} that first applies this operation to its input, and then applies the
-     * {@code after} operation to the result. If evaluation of either operations throws an exception, it is relayed to
-     * the caller of the composed operation.
+     * Returns a composed {@link ToShortBiFunction} that first applies this function to its input, and then applies the
+     * {@code after} function to the result. If evaluation of either function throws an exception, it is relayed to the
+     * caller of the composed function. This method is just convenience, to provide the ability to transform this
+     * function to the {@code short}-producing primitive specialization of {@link BiFunction}.
      *
-     * @param after The {@code FloatToShortFunction} to apply after this operation is applied
-     * @return A composed {@code ToShortBiFunction} that first applies this operation to its input, and then applies the
-     * {@code after} operation to the result.
+     * @param after The function to apply after this operation is applied
+     * @return A composed {@code ToShortBiFunction} that first applies this function to its input, and then applies the
+     * {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
      */
-    default ToShortBiFunction<T, U> toShort(final FloatToShortFunction after) {
+    @Nonnull
+    default ToShortBiFunction<T, U> toShort(@Nonnull final FloatToShortFunction after) {
         Objects.requireNonNull(after);
         return (t, u) -> after.applyAsShort(applyAsFloat(t, u));
     }
 
     /**
-     * Returns a composed {@link BiConsumer} that fist applies this operation to its input, and then consumes the result
+     * Returns a composed {@link BiConsumer} that fist applies this function to its input, and then consumes the result
      * using the given {@link FloatConsumer}. If evaluation of either operation throws an exception, it is relayed to
      * the caller of the composed operation.
      *
      * @param consumer The operation which consumes the result from this operation
-     * @return A composed {@code BiConsumer} that first applies this operation to its input, and then consumes the
-     * result using the given {@code FloatConsumer}.
+     * @return A composed {@code BiConsumer} that first applies this function to its input, and then consumes the result
+     * using the given {@code FloatConsumer}.
      * @throws NullPointerException If given argument is {@code null}
      */
     @Nonnull

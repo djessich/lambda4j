@@ -41,6 +41,7 @@ import java.util.function.UnaryOperator;
 @SuppressWarnings("unused")
 @FunctionalInterface
 public interface BooleanBinaryOperator {
+    //TODO
 
     /**
      * Creates a {@link BooleanBinaryOperator} which always returns a given value.
@@ -340,7 +341,7 @@ public interface BooleanBinaryOperator {
      * @return A composed {@code BooleanBinaryOperator} that first applies this operator to its input, and then applies
      * the {@code after} operator to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The result of this method is the primitive specialization of {@link BinaryOperator}. Therefore the
+     * @implNote The result of this method is a primitive specialization of {@link BinaryOperator}. Therefore the
      * returned operation handles primitive types. In this case this is {@code boolean}.
      * @see #compose(BooleanUnaryOperator, BooleanUnaryOperator)
      * @see #compose(Predicate, Predicate)

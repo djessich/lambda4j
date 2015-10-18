@@ -90,11 +90,13 @@ public interface ShortFunction<R> {
      * caller of the composed operation.
      *
      * @param before The operation to apply before this function is applied
-     * @return A composed {@link ShortFunction} that first applies the {@code before} operation to its input, and then
+     * @return A composed {@code ShortFunction} that first applies the {@code before} operation to its input, and then
      * applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is the primitive specialization of {@link UnaryOperator}. Therefore
-     * the given operation handles primitive types. In this case this is {@code short}.
+     * @implNote The input argument of this method is a primitive specialization of {@link UnaryOperator}. Therefore the
+     * given operation handles primitive types. In this case this is {@code short}.
+     * @see #andThen(ToShortFunction)
+     * @see #andThen(Function)
      */
     @Nonnull
     default ShortFunction<R> compose(@Nonnull final ShortUnaryOperator before) {
@@ -108,11 +110,13 @@ public interface ShortFunction<R> {
      * the composed function.
      *
      * @param <T> The type of the argument to the before function
-     * @param before The first function to apply before this function is applied
-     * @return A omposed {@link Function} that first applies the {@code before} function to its input, and then applies
+     * @param before The function to apply before this function is applied
+     * @return A composed {@code Function} that first applies the {@code before} function to its input, and then applies
      * this function to the result.
      * @throws NullPointerException If given argument is {@code null}
      * @implNote The input argument of this method is able to handle every type.
+     * @see #andThen(ToShortFunction)
+     * @see #andThen(Function)
      */
     @Nonnull
     default <T> Function<T, R> compose(@Nonnull final ToShortFunction<? super T> before) {
@@ -126,10 +130,10 @@ public interface ShortFunction<R> {
      * caller of the composed operation.
      *
      * @param after The function to apply after this function is applied
-     * @return A composed {@link ShortUnaryOperator} that first applies this function to its input, and then applies the
+     * @return A composed {@code ShortUnaryOperator} that first applies this function to its input, and then applies the
      * {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The result of this method is the primitive specialization of {@link UnaryOperator}. Therefore the
+     * @implNote The result of this method is a primitive specialization of {@link UnaryOperator}. Therefore the
      * returned operation handles primitive types. In this case this is {@code short}.
      * @see #compose(ShortUnaryOperator)
      * @see #compose(ToShortFunction)
@@ -147,7 +151,7 @@ public interface ShortFunction<R> {
      *
      * @param <S> The type of return value from the {@code after} function, and of the composed function
      * @param after The function to apply after this function is applied
-     * @return A composed {@link ShortFunction} that first applies this function to its input, and then applies the
+     * @return A composed {@code ShortFunction} that first applies this function to its input, and then applies the
      * {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
      * @implNote The returned function is able to handle every type.
@@ -168,7 +172,7 @@ public interface ShortFunction<R> {
      * Function}.
      *
      * @param after The function to apply after this function is applied
-     * @return A composed {@link ShortToBooleanFunction} that first applies this function to its input, and then applies
+     * @return A composed {@code ShortToBooleanFunction} that first applies this function to its input, and then applies
      * the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
      */
@@ -185,7 +189,7 @@ public interface ShortFunction<R> {
      * function to {@code byte}, using the {@code short}-to-{@code byte} primitive specialization of {@link Function}.
      *
      * @param after The function to apply after this function is applied
-     * @return A composed {@link ShortToByteFunction} that first applies this function to its input, and then applies
+     * @return A composed {@code ShortToByteFunction} that first applies this function to its input, and then applies
      * the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
      */
@@ -202,7 +206,7 @@ public interface ShortFunction<R> {
      * function to {@code char}, using the {@code short}-to-{@code char} primitive specialization of {@link Function}.
      *
      * @param after The function to apply after this function is applied
-     * @return A composed {@link ShortToCharFunction} that first applies this function to its input, and then applies
+     * @return A composed {@code ShortToCharFunction} that first applies this function to its input, and then applies
      * the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
      */
@@ -220,7 +224,7 @@ public interface ShortFunction<R> {
      * Function}.
      *
      * @param after The function to apply after this function is applied
-     * @return A composed {@link ShortToDoubleFunction} that first applies this function to its input, and then applies
+     * @return A composed {@code ShortToDoubleFunction} that first applies this function to its input, and then applies
      * the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
      */
@@ -238,7 +242,7 @@ public interface ShortFunction<R> {
      * Function}.
      *
      * @param after The function to apply after this function is applied
-     * @return A composed {@link ShortToFloatFunction} that first applies this function to its input, and then applies
+     * @return A composed {@code ShortToFloatFunction} that first applies this function to its input, and then applies
      * the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
      */
@@ -255,7 +259,7 @@ public interface ShortFunction<R> {
      * function to {@code int}, using the {@code short}-to-{@code int} primitive specialization of {@link Function}.
      *
      * @param after The function to apply after this function is applied
-     * @return A composed {@link ShortToIntFunction} that first applies this function to its input, and then applies the
+     * @return A composed {@code ShortToIntFunction} that first applies this function to its input, and then applies the
      * {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
      */
@@ -272,7 +276,7 @@ public interface ShortFunction<R> {
      * function to {@code long}, using the {@code short}-to-{@code long} primitive specialization of {@link Function}.
      *
      * @param after The function to apply after this function is applied
-     * @return A composed {@link ShortToLongFunction} that first applies this function to its input, and then applies
+     * @return A composed {@code ShortToLongFunction} that first applies this function to its input, and then applies
      * the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
      */
@@ -288,8 +292,8 @@ public interface ShortFunction<R> {
      * the caller of the composed operation.
      *
      * @param consumer The operation which consumes the result from this operation
-     * @return A composed {@link ShortConsumer} that fist applies this function to its input, and then consumes the
-     * result using the given {@link Consumer}.
+     * @return A composed {@code ShortConsumer} that fist applies this function to its input, and then consumes the
+     * result using the given {@code Consumer}.
      * @throws NullPointerException If given argument is {@code null}
      */
     @Nonnull

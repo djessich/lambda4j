@@ -90,11 +90,13 @@ public interface ByteFunction<R> {
      * caller of the composed operation.
      *
      * @param before The operation to apply before this function is applied
-     * @return A composed {@link ByteFunction} that first applies the {@code before} operation to its input, and then
+     * @return A composed {@code ByteFunction} that first applies the {@code before} operation to its input, and then
      * applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is the primitive specialization of {@link UnaryOperator}. Therefore
-     * the given operation handles primitive types. In this case this is {@code byte}.
+     * @implNote The input argument of this method is a primitive specialization of {@link UnaryOperator}. Therefore the
+     * given operation handles primitive types. In this case this is {@code byte}.
+     * @see #andThen(ToByteFunction)
+     * @see #andThen(Function)
      */
     @Nonnull
     default ByteFunction<R> compose(@Nonnull final ByteUnaryOperator before) {
@@ -108,11 +110,13 @@ public interface ByteFunction<R> {
      * the composed function.
      *
      * @param <T> The type of the argument to the before function
-     * @param before The first function to apply before this function is applied
-     * @return A omposed {@link Function} that first applies the {@code before} function to its input, and then applies
+     * @param before The function to apply before this function is applied
+     * @return A composed {@code Function} that first applies the {@code before} function to its input, and then applies
      * this function to the result.
      * @throws NullPointerException If given argument is {@code null}
      * @implNote The input argument of this method is able to handle every type.
+     * @see #andThen(ToByteFunction)
+     * @see #andThen(Function)
      */
     @Nonnull
     default <T> Function<T, R> compose(@Nonnull final ToByteFunction<? super T> before) {
@@ -126,10 +130,10 @@ public interface ByteFunction<R> {
      * caller of the composed operation.
      *
      * @param after The function to apply after this function is applied
-     * @return A composed {@link ByteUnaryOperator} that first applies this function to its input, and then applies the
+     * @return A composed {@code ByteUnaryOperator} that first applies this function to its input, and then applies the
      * {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The result of this method is the primitive specialization of {@link UnaryOperator}. Therefore the
+     * @implNote The result of this method is a primitive specialization of {@link UnaryOperator}. Therefore the
      * returned operation handles primitive types. In this case this is {@code byte}.
      * @see #compose(ByteUnaryOperator)
      * @see #compose(ToByteFunction)
@@ -147,7 +151,7 @@ public interface ByteFunction<R> {
      *
      * @param <S> The type of return value from the {@code after} function, and of the composed function
      * @param after The function to apply after this function is applied
-     * @return A composed {@link ByteFunction} that first applies this function to its input, and then applies the
+     * @return A composed {@code ByteFunction} that first applies this function to its input, and then applies the
      * {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
      * @implNote The returned function is able to handle every type.
@@ -168,7 +172,7 @@ public interface ByteFunction<R> {
      * Function}.
      *
      * @param after The function to apply after this function is applied
-     * @return A composed {@link ByteToBooleanFunction} that first applies this function to its input, and then applies
+     * @return A composed {@code ByteToBooleanFunction} that first applies this function to its input, and then applies
      * the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
      */
@@ -185,7 +189,7 @@ public interface ByteFunction<R> {
      * function to {@code char}, using the {@code byte}-to-{@code char} primitive specialization of {@link Function}.
      *
      * @param after The function to apply after this function is applied
-     * @return A composed {@link ByteToCharFunction} that first applies this function to its input, and then applies the
+     * @return A composed {@code ByteToCharFunction} that first applies this function to its input, and then applies the
      * {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
      */
@@ -203,7 +207,7 @@ public interface ByteFunction<R> {
      * Function}.
      *
      * @param after The function to apply after this function is applied
-     * @return A composed {@link ByteToDoubleFunction} that first applies this function to its input, and then applies
+     * @return A composed {@code ByteToDoubleFunction} that first applies this function to its input, and then applies
      * the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
      */
@@ -220,7 +224,7 @@ public interface ByteFunction<R> {
      * function to {@code float}, using the {@code byte}-to-{@code float} primitive specialization of {@link Function}.
      *
      * @param after The function to apply after this function is applied
-     * @return A composed {@link ByteToFloatFunction} that first applies this function to its input, and then applies
+     * @return A composed {@code ByteToFloatFunction} that first applies this function to its input, and then applies
      * the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
      */
@@ -237,7 +241,7 @@ public interface ByteFunction<R> {
      * function to {@code int}, using the {@code byte}-to-{@code int} primitive specialization of {@link Function}.
      *
      * @param after The function to apply after this function is applied
-     * @return A composed {@link ByteToIntFunction} that first applies this function to its input, and then applies the
+     * @return A composed {@code ByteToIntFunction} that first applies this function to its input, and then applies the
      * {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
      */
@@ -254,7 +258,7 @@ public interface ByteFunction<R> {
      * function to {@code long}, using the {@code byte}-to-{@code long} primitive specialization of {@link Function}.
      *
      * @param after The function to apply after this function is applied
-     * @return A composed {@link ByteToLongFunction} that first applies this function to its input, and then applies the
+     * @return A composed {@code ByteToLongFunction} that first applies this function to its input, and then applies the
      * {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
      */
@@ -271,7 +275,7 @@ public interface ByteFunction<R> {
      * function to {@code short}, using the {@code byte}-to-{@code short} primitive specialization of {@link Function}.
      *
      * @param after The function to apply after this function is applied
-     * @return A composed {@link ByteToShortFunction} that first applies this function to its input, and then applies
+     * @return A composed {@code ByteToShortFunction} that first applies this function to its input, and then applies
      * the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
      */
@@ -287,8 +291,8 @@ public interface ByteFunction<R> {
      * the caller of the composed operation.
      *
      * @param consumer The operation which consumes the result from this operation
-     * @return A composed {@link ByteConsumer} that fist applies this function to its input, and then consumes the
-     * result using the given {@link Consumer}.
+     * @return A composed {@code ByteConsumer} that fist applies this function to its input, and then consumes the
+     * result using the given {@code Consumer}.
      * @throws NullPointerException If given argument is {@code null}
      */
     @Nonnull

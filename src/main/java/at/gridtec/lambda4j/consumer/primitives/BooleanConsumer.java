@@ -64,7 +64,7 @@ public interface BooleanConsumer {
      * @return A composed {@link BooleanConsumer} that first applies the {@code before} operation to its input, and then
      * applies this operation to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is the primitive specialization of {@link UnaryOperator}. Therefore
+     * @implNote The input argument of this method is a primitive specialization of {@link UnaryOperator}. Therefore
      * the given operation handles primitive types. In this case this is {@code boolean}.
      * @see #andThen(BooleanConsumer)
      */

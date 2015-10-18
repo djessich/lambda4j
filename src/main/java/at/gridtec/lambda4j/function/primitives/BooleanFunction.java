@@ -90,11 +90,13 @@ public interface BooleanFunction<R> {
      * caller of the composed operation.
      *
      * @param before The operation to apply before this function is applied
-     * @return A composed {@link BooleanFunction} that first applies the {@code before} operation to its input, and then
+     * @return A composed {@code BooleanFunction} that first applies the {@code before} operation to its input, and then
      * applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is the primitive specialization of {@link UnaryOperator}. Therefore
-     * the given operation handles primitive types. In this case this is {@code boolean}.
+     * @implNote The input argument of this method is a primitive specialization of {@link UnaryOperator}. Therefore the
+     * given operation handles primitive types. In this case this is {@code boolean}.
+     * @see #andThen(Predicate)
+     * @see #andThen(Function)
      */
     @Nonnull
     default BooleanFunction<R> compose(@Nonnull final BooleanUnaryOperator before) {
@@ -108,11 +110,13 @@ public interface BooleanFunction<R> {
      * the composed function.
      *
      * @param <T> The type of the argument to the before function
-     * @param before The first function to apply before this function is applied
-     * @return A omposed {@link Function} that first applies the {@code before} function to its input, and then applies
+     * @param before The function to apply before this function is applied
+     * @return A composed {@code Function} that first applies the {@code before} function to its input, and then applies
      * this function to the result.
      * @throws NullPointerException If given argument is {@code null}
      * @implNote The input argument of this method is able to handle every type.
+     * @see #andThen(Predicate)
+     * @see #andThen(Function)
      */
     @Nonnull
     default <T> Function<T, R> compose(@Nonnull final Predicate<? super T> before) {
@@ -126,10 +130,10 @@ public interface BooleanFunction<R> {
      * the caller of the composed operation.
      *
      * @param after The function to apply after this function is applied
-     * @return A composed {@link BooleanUnaryOperator} that first applies this function to its input, and then applies
+     * @return A composed {@code BooleanUnaryOperator} that first applies this function to its input, and then applies
      * the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The result of this method is the primitive specialization of {@link UnaryOperator}. Therefore the
+     * @implNote The result of this method is a primitive specialization of {@link UnaryOperator}. Therefore the
      * returned operation handles primitive types. In this case this is {@code boolean}.
      * @see #compose(BooleanUnaryOperator)
      * @see #compose(Predicate)
@@ -147,7 +151,7 @@ public interface BooleanFunction<R> {
      *
      * @param <S> The type of return value from the {@code after} function, and of the composed function
      * @param after The function to apply after this function is applied
-     * @return A composed {@link BooleanFunction} that first applies this function to its input, and then applies the
+     * @return A composed {@code BooleanFunction} that first applies this function to its input, and then applies the
      * {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
      * @implNote The returned function is able to handle every type.
@@ -168,7 +172,7 @@ public interface BooleanFunction<R> {
      * Function}.
      *
      * @param after The function to apply after this function is applied
-     * @return A composed {@link BooleanToByteFunction} that first applies this function to its input, and then applies
+     * @return A composed {@code BooleanToByteFunction} that first applies this function to its input, and then applies
      * the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
      */
@@ -186,7 +190,7 @@ public interface BooleanFunction<R> {
      * Function}.
      *
      * @param after The function to apply after this function is applied
-     * @return A composed {@link BooleanToCharFunction} that first applies this function to its input, and then applies
+     * @return A composed {@code BooleanToCharFunction} that first applies this function to its input, and then applies
      * the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
      */
@@ -204,7 +208,7 @@ public interface BooleanFunction<R> {
      * of {@link Function}.
      *
      * @param after The function to apply after this function is applied
-     * @return A composed {@link BooleanToDoubleFunction} that first applies this function to its input, and then
+     * @return A composed {@code BooleanToDoubleFunction} that first applies this function to its input, and then
      * applies the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
      */
@@ -222,7 +226,7 @@ public interface BooleanFunction<R> {
      * Function}.
      *
      * @param after The function to apply after this function is applied
-     * @return A composed {@link BooleanToFloatFunction} that first applies this function to its input, and then applies
+     * @return A composed {@code BooleanToFloatFunction} that first applies this function to its input, and then applies
      * the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
      */
@@ -239,7 +243,7 @@ public interface BooleanFunction<R> {
      * function to {@code int}, using the {@code boolean}-to-{@code int} primitive specialization of {@link Function}.
      *
      * @param after The function to apply after this function is applied
-     * @return A composed {@link BooleanToIntFunction} that first applies this function to its input, and then applies
+     * @return A composed {@code BooleanToIntFunction} that first applies this function to its input, and then applies
      * the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
      */
@@ -257,7 +261,7 @@ public interface BooleanFunction<R> {
      * Function}.
      *
      * @param after The function to apply after this function is applied
-     * @return A composed {@link BooleanToLongFunction} that first applies this function to its input, and then applies
+     * @return A composed {@code BooleanToLongFunction} that first applies this function to its input, and then applies
      * the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
      */
@@ -275,7 +279,7 @@ public interface BooleanFunction<R> {
      * Function}.
      *
      * @param after The function to apply after this function is applied
-     * @return A composed {@link BooleanToShortFunction} that first applies this function to its input, and then applies
+     * @return A composed {@code BooleanToShortFunction} that first applies this function to its input, and then applies
      * the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
      */
@@ -291,8 +295,8 @@ public interface BooleanFunction<R> {
      * the caller of the composed operation.
      *
      * @param consumer The operation which consumes the result from this operation
-     * @return A composed {@link BooleanConsumer} that fist applies this function to its input, and then consumes the
-     * result using the given {@link Consumer}.
+     * @return A composed {@code BooleanConsumer} that fist applies this function to its input, and then consumes the
+     * result using the given {@code Consumer}.
      * @throws NullPointerException If given argument is {@code null}
      */
     @Nonnull

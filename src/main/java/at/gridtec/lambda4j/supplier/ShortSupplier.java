@@ -100,7 +100,7 @@ public interface ShortSupplier {
      * @return A composed {@code ShortSupplier} that first gets the result from this operation, and then applies the
      * {@code after} operation to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The result of this method is the primitive specialization of {@link Supplier}. Therefore the returned
+     * @implNote The result of this method is a primitive specialization of {@link Supplier}. Therefore the returned
      * operation handles primitive types. In this case this is {@code short}.
      */
     @Nonnull

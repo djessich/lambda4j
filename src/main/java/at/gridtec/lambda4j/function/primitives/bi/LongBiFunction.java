@@ -114,7 +114,7 @@ public interface LongBiFunction<R> {
      *
      * @param before1 The first operation to apply before this function is applied
      * @param before2 The second operation to apply before this function is applied
-     * @return A composed {@link LongBiFunction} that first applies the {@code before} operations to its input, and then
+     * @return A composed {@code LongBiFunction} that first applies the {@code before} operations to its input, and then
      * applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
      * @implNote The input arguments of this method are primitive specializations of {@link UnaryOperator}. Therefore
@@ -139,7 +139,7 @@ public interface LongBiFunction<R> {
      * @param <U> The type of the argument to the second before function
      * @param before1 The first function to apply before this function is applied
      * @param before2 The second function to apply before this function is applied
-     * @return A composed {@link BiFunction} that first applies the {@code before} functions to its input, and then
+     * @return A composed {@code BiFunction} that first applies the {@code before} functions to its input, and then
      * applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
      * @implNote The input arguments of this method are able to handle every type.
@@ -160,10 +160,10 @@ public interface LongBiFunction<R> {
      * caller of the composed function.
      *
      * @param after The function to apply after this function is applied
-     * @return A composed {@link LongBinaryOperator} that first applies this function to its input, and then applies the
+     * @return A composed {@code LongBinaryOperator} that first applies this function to its input, and then applies the
      * {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The result of this method is the primitive specialization of {@link BinaryOperator}. Therefore the
+     * @implNote The result of this method is a primitive specialization of {@link BinaryOperator}. Therefore the
      * returned operation handles primitive types. In this case this is {@code long}.
      * @see #compose(LongUnaryOperator, LongUnaryOperator)
      * @see #compose(ToLongFunction, ToLongFunction)
@@ -181,7 +181,7 @@ public interface LongBiFunction<R> {
      *
      * @param <S> The type of return value from the {@code after} function, and of the composed function
      * @param after The function to apply after this function is applied
-     * @return A composed {@link LongBiFunction} that first applies this function to its input, and then applies the
+     * @return A composed {@code LongBiFunction} that first applies this function to its input, and then applies the
      * {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
      * @implNote The returned function is able to handle every type.

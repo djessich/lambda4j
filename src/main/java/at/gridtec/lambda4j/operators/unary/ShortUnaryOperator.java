@@ -93,8 +93,8 @@ public interface ShortUnaryOperator {
      * @return A composed {@link ShortUnaryOperator} that first applies the {@code before} operator to its input, and
      * then applies this operator to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is the primitive specialization of {@link UnaryOperator}. Therefore
-     * the given operation handles primitive types. In this case this is {@code short}.
+     * @implNote The input argument of this method is a primitive specialization of {@link UnaryOperator}. Therefore the
+     * given operation handles primitive types. In this case this is {@code short}.
      * @see #andThen(ShortUnaryOperator)
      * @see #andThen(ShortFunction)
      */
@@ -133,7 +133,7 @@ public interface ShortUnaryOperator {
      * @return A composed {@code ShortUnaryOperator} that first applies this operator to its input, and then applies the
      * {@code after} operator to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The result of this method is the primitive specialization of {@link UnaryOperator}. Therefore the
+     * @implNote The result of this method is a primitive specialization of {@link UnaryOperator}. Therefore the
      * returned operation handles primitive types. In this case this is {@code short}.
      * @see #compose(ShortUnaryOperator)
      * @see #compose(ToShortFunction)

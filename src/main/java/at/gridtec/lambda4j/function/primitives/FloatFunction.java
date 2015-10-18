@@ -90,11 +90,13 @@ public interface FloatFunction<R> {
      * caller of the composed operation.
      *
      * @param before The operation to apply before this function is applied
-     * @return A composed {@link FloatFunction} that first applies the {@code before} operation to its input, and then
+     * @return A composed {@code FloatFunction} that first applies the {@code before} operation to its input, and then
      * applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is the primitive specialization of {@link UnaryOperator}. Therefore
-     * the given operation handles primitive types. In this case this is {@code float}.
+     * @implNote The input argument of this method is a primitive specialization of {@link UnaryOperator}. Therefore the
+     * given operation handles primitive types. In this case this is {@code float}.
+     * @see #andThen(ToFloatFunction)
+     * @see #andThen(Function)
      */
     @Nonnull
     default FloatFunction<R> compose(@Nonnull final FloatUnaryOperator before) {
@@ -108,11 +110,13 @@ public interface FloatFunction<R> {
      * the composed function.
      *
      * @param <T> The type of the argument to the before function
-     * @param before The first function to apply before this function is applied
-     * @return A omposed {@link Function} that first applies the {@code before} function to its input, and then applies
+     * @param before The function to apply before this function is applied
+     * @return A composed {@code Function} that first applies the {@code before} function to its input, and then applies
      * this function to the result.
      * @throws NullPointerException If given argument is {@code null}
      * @implNote The input argument of this method is able to handle every type.
+     * @see #andThen(ToFloatFunction)
+     * @see #andThen(Function)
      */
     @Nonnull
     default <T> Function<T, R> compose(@Nonnull final ToFloatFunction<? super T> before) {
@@ -126,10 +130,10 @@ public interface FloatFunction<R> {
      * caller of the composed operation.
      *
      * @param after The function to apply after this function is applied
-     * @return A composed {@link FloatUnaryOperator} that first applies this function to its input, and then applies the
+     * @return A composed {@code FloatUnaryOperator} that first applies this function to its input, and then applies the
      * {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The result of this method is the primitive specialization of {@link UnaryOperator}. Therefore the
+     * @implNote The result of this method is a primitive specialization of {@link UnaryOperator}. Therefore the
      * returned operation handles primitive types. In this case this is {@code float}.
      * @see #compose(FloatUnaryOperator)
      * @see #compose(ToFloatFunction)
@@ -147,7 +151,7 @@ public interface FloatFunction<R> {
      *
      * @param <S> The type of return value from the {@code after} function, and of the composed function
      * @param after The function to apply after this function is applied
-     * @return A composed {@link FloatFunction} that first applies this function to its input, and then applies the
+     * @return A composed {@code FloatFunction} that first applies this function to its input, and then applies the
      * {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
      * @implNote The returned function is able to handle every type.
@@ -168,7 +172,7 @@ public interface FloatFunction<R> {
      * Function}.
      *
      * @param after The function to apply after this function is applied
-     * @return A composed {@link FloatToBooleanFunction} that first applies this function to its input, and then applies
+     * @return A composed {@code FloatToBooleanFunction} that first applies this function to its input, and then applies
      * the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
      */
@@ -185,7 +189,7 @@ public interface FloatFunction<R> {
      * function to {@code byte}, using the {@code float}-to-{@code byte} primitive specialization of {@link Function}.
      *
      * @param after The function to apply after this function is applied
-     * @return A composed {@link FloatToByteFunction} that first applies this function to its input, and then applies
+     * @return A composed {@code FloatToByteFunction} that first applies this function to its input, and then applies
      * the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
      */
@@ -202,7 +206,7 @@ public interface FloatFunction<R> {
      * function to {@code char}, using the {@code float}-to-{@code char} primitive specialization of {@link Function}.
      *
      * @param after The function to apply after this function is applied
-     * @return A composed {@link FloatToCharFunction} that first applies this function to its input, and then applies
+     * @return A composed {@code FloatToCharFunction} that first applies this function to its input, and then applies
      * the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
      */
@@ -220,7 +224,7 @@ public interface FloatFunction<R> {
      * Function}.
      *
      * @param after The function to apply after this function is applied
-     * @return A composed {@link FloatToDoubleFunction} that first applies this function to its input, and then applies
+     * @return A composed {@code FloatToDoubleFunction} that first applies this function to its input, and then applies
      * the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
      */
@@ -237,7 +241,7 @@ public interface FloatFunction<R> {
      * function to {@code int}, using the {@code float}-to-{@code int} primitive specialization of {@link Function}.
      *
      * @param after The function to apply after this function is applied
-     * @return A composed {@link FloatToIntFunction} that first applies this function to its input, and then applies the
+     * @return A composed {@code FloatToIntFunction} that first applies this function to its input, and then applies the
      * {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
      */
@@ -254,7 +258,7 @@ public interface FloatFunction<R> {
      * function to {@code long}, using the {@code float}-to-{@code long} primitive specialization of {@link Function}.
      *
      * @param after The function to apply after this function is applied
-     * @return A composed {@link FloatToLongFunction} that first applies this function to its input, and then applies
+     * @return A composed {@code FloatToLongFunction} that first applies this function to its input, and then applies
      * the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
      */
@@ -272,7 +276,7 @@ public interface FloatFunction<R> {
      * Function}.
      *
      * @param after The function to apply after this function is applied
-     * @return A composed {@link FloatToShortFunction} that first applies this function to its input, and then applies
+     * @return A composed {@code FloatToShortFunction} that first applies this function to its input, and then applies
      * the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
      */
@@ -288,8 +292,8 @@ public interface FloatFunction<R> {
      * the caller of the composed operation.
      *
      * @param consumer The operation which consumes the result from this operation
-     * @return A composed {@link FloatConsumer} that fist applies this function to its input, and then consumes the
-     * result using the given {@link Consumer}.
+     * @return A composed {@code FloatConsumer} that fist applies this function to its input, and then consumes the
+     * result using the given {@code Consumer}.
      * @throws NullPointerException If given argument is {@code null}
      */
     @Nonnull

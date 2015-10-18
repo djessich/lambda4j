@@ -144,7 +144,7 @@ public interface TriFunction<T, U, V, R> {
      * @param before1 The first function to apply before this function is applied
      * @param before2 The second function to apply before this function is applied
      * @param before3 The third function to apply before this function is applied
-     * @return A composed {@link ToByteTriFunction} that first applies the {@code before} functions to its input, and
+     * @return A composed {@code ToByteTriFunction} that first applies the {@code before} functions to its input, and
      * then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
      * @see #andThen(Function)
@@ -166,7 +166,7 @@ public interface TriFunction<T, U, V, R> {
      *
      * @param <S> The type of return value from the {@code after} function, and of the composed function
      * @param after The function to apply after this function is applied
-     * @return A composed {@link TriFunction} that first applies this function to its input, and then applies the {@code
+     * @return A composed {@code TriFunction} that first applies this function to its input, and then applies the {@code
      * after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
      * @see #compose(Function, Function, Function)

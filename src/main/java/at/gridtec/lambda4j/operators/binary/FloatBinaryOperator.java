@@ -217,7 +217,7 @@ public interface FloatBinaryOperator {
      * @return A composed {@code FloatBinaryOperator} that first applies this operator to its input, and then applies
      * the {@code after} operator to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The result of this method is the primitive specialization of {@link BinaryOperator}. Therefore the
+     * @implNote The result of this method is a primitive specialization of {@link BinaryOperator}. Therefore the
      * returned operation handles primitive types. In this case this is {@code float}.
      * @see #compose(FloatUnaryOperator, FloatUnaryOperator)
      * @see #compose(ToFloatFunction, ToFloatFunction)

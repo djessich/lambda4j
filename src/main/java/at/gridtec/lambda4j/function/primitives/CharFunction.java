@@ -90,11 +90,13 @@ public interface CharFunction<R> {
      * caller of the composed operation.
      *
      * @param before The operation to apply before this function is applied
-     * @return A composed {@link CharFunction} that first applies the {@code before} operation to its input, and then
+     * @return A composed {@code CharFunction} that first applies the {@code before} operation to its input, and then
      * applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is the primitive specialization of {@link UnaryOperator}. Therefore
-     * the given operation handles primitive types. In this case this is {@code char}.
+     * @implNote The input argument of this method is a primitive specialization of {@link UnaryOperator}. Therefore the
+     * given operation handles primitive types. In this case this is {@code char}.
+     * @see #andThen(ToCharFunction)
+     * @see #andThen(Function)
      */
     @Nonnull
     default CharFunction<R> compose(@Nonnull final CharUnaryOperator before) {
@@ -109,10 +111,12 @@ public interface CharFunction<R> {
      *
      * @param <T> The type of the argument to the before function
      * @param before The first function to apply before this function is applied
-     * @return A omposed {@link Function} that first applies the {@code before} function to its input, and then applies
+     * @return A composed {@code Function} that first applies the {@code before} function to its input, and then applies
      * this function to the result.
      * @throws NullPointerException If given argument is {@code null}
      * @implNote The input argument of this method is able to handle every type.
+     * @see #andThen(ToCharFunction)
+     * @see #andThen(Function)
      */
     @Nonnull
     default <T> Function<T, R> compose(@Nonnull final ToCharFunction<? super T> before) {
@@ -126,10 +130,10 @@ public interface CharFunction<R> {
      * caller of the composed operation.
      *
      * @param after The function to apply after this function is applied
-     * @return A composed {@link CharUnaryOperator} that first applies this function to its input, and then applies the
+     * @return A composed {@code CharUnaryOperator} that first applies this function to its input, and then applies the
      * {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The result of this method is the primitive specialization of {@link UnaryOperator}. Therefore the
+     * @implNote The result of this method is a primitive specialization of {@link UnaryOperator}. Therefore the
      * returned operation handles primitive types. In this case this is {@code char}.
      * @see #compose(CharUnaryOperator)
      * @see #compose(ToCharFunction)
@@ -147,7 +151,7 @@ public interface CharFunction<R> {
      *
      * @param <S> The type of return value from the {@code after} function, and of the composed function
      * @param after The function to apply after this function is applied
-     * @return A composed {@link CharFunction} that first applies this function to its input, and then applies the
+     * @return A composed {@code CharFunction} that first applies this function to its input, and then applies the
      * {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
      * @implNote The returned function is able to handle every type.
@@ -168,7 +172,7 @@ public interface CharFunction<R> {
      * Function}.
      *
      * @param after The function to apply after this function is applied
-     * @return A composed {@link CharToBooleanFunction} that first applies this function to its input, and then applies
+     * @return A composed {@code CharToBooleanFunction} that first applies this function to its input, and then applies
      * the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
      */
@@ -185,7 +189,7 @@ public interface CharFunction<R> {
      * function to {@code byte}, using the {@code char}-to-{@code byte} primitive specialization of {@link Function}.
      *
      * @param after The function to apply after this function is applied
-     * @return A composed {@link CharToByteFunction} that first applies this function to its input, and then applies the
+     * @return A composed {@code CharToByteFunction} that first applies this function to its input, and then applies the
      * {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
      */
@@ -203,7 +207,7 @@ public interface CharFunction<R> {
      * Function}.
      *
      * @param after The function to apply after this function is applied
-     * @return A composed {@link CharToDoubleFunction} that first applies this function to its input, and then applies
+     * @return A composed {@code CharToDoubleFunction} that first applies this function to its input, and then applies
      * the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
      */
@@ -220,7 +224,7 @@ public interface CharFunction<R> {
      * function to {@code float}, using the {@code char}-to-{@code float} primitive specialization of {@link Function}.
      *
      * @param after The function to apply after this function is applied
-     * @return A composed {@link CharToFloatFunction} that first applies this function to its input, and then applies
+     * @return A composed {@code CharToFloatFunction} that first applies this function to its input, and then applies
      * the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
      */
@@ -237,7 +241,7 @@ public interface CharFunction<R> {
      * function to {@code int}, using the {@code char}-to-{@code int} primitive specialization of {@link Function}.
      *
      * @param after The function to apply after this function is applied
-     * @return A composed {@link CharToIntFunction} that first applies this function to its input, and then applies the
+     * @return A composed {@code CharToIntFunction} that first applies this function to its input, and then applies the
      * {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
      */
@@ -254,7 +258,7 @@ public interface CharFunction<R> {
      * function to {@code long}, using the {@code char}-to-{@code long} primitive specialization of {@link Function}.
      *
      * @param after The function to apply after this function is applied
-     * @return A composed {@link CharToLongFunction} that first applies this function to its input, and then applies the
+     * @return A composed {@code CharToLongFunction} that first applies this function to its input, and then applies the
      * {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
      */
@@ -271,7 +275,7 @@ public interface CharFunction<R> {
      * function to {@code short}, using the {@code char}-to-{@code short} primitive specialization of {@link Function}.
      *
      * @param after The function to apply after this function is applied
-     * @return A composed {@link CharToShortFunction} that first applies this function to its input, and then applies
+     * @return A composed {@code CharToShortFunction} that first applies this function to its input, and then applies
      * the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
      */
@@ -287,8 +291,8 @@ public interface CharFunction<R> {
      * the caller of the composed operation.
      *
      * @param consumer The operation which consumes the result from this operation
-     * @return A composed {@link CharConsumer} that fist applies this function to its input, and then consumes the
-     * result using the given {@link Consumer}.
+     * @return A composed {@code CharConsumer} that fist applies this function to its input, and then consumes the
+     * result using the given {@code Consumer}.
      * @throws NullPointerException If given argument is {@code null}
      */
     @Nonnull
