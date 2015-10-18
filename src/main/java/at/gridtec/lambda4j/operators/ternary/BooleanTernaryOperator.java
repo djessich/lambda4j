@@ -167,6 +167,7 @@ public interface BooleanTernaryOperator {
      * @return A {@link BooleanTernaryOperator} which applies a logical OR to its input arguments.
      * @see #or(BooleanTernaryOperator)
      */
+    @Nonnull
     static BooleanTernaryOperator or() {
         return (value1, value2, value3) -> value1 || value2 || value3;
     }
@@ -177,6 +178,7 @@ public interface BooleanTernaryOperator {
      * @return A {@link BooleanTernaryOperator} which applies a logical XOR to its input arguments.
      * @see #xor(BooleanTernaryOperator)
      */
+    @Nonnull
     static BooleanTernaryOperator xor() {
         return (value1, value2, value3) -> value1 ^ value2 ^ value3;
     }
