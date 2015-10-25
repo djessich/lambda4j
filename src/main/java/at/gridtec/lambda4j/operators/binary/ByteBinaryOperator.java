@@ -169,7 +169,6 @@ public interface ByteBinaryOperator {
      * @throws NullPointerException If given argument is {@code null}
      * @implNote The input arguments of this method are primitive specializations of {@link UnaryOperator}. Therefore
      * the given operations handle primitive types. In this case this is {@code byte}.
-     * @see #andThen(ByteUnaryOperator)
      * @see #andThen(ByteFunction)
      */
     @Nonnull
@@ -193,7 +192,6 @@ public interface ByteBinaryOperator {
      * then applies this operator to the result.
      * @throws NullPointerException If given argument is {@code null}
      * @implNote The input arguments of this method are able to handle every type.
-     * @see #andThen(ByteUnaryOperator)
      * @see #andThen(ByteFunction)
      */
     @Nonnull
@@ -202,24 +200,6 @@ public interface ByteBinaryOperator {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         return (t, u) -> applyAsByte(before1.applyAsByte(t), before2.applyAsByte(u));
-    }
-
-    /**
-     * Returns a composed {@link ByteBinaryOperator} that first applies this operator to its input, and then applies the
-     * {@code after} operator to the result. If evaluation of either operator throws an exception, it is relayed to the
-     * caller of the composed operator.
-     *
-     * @param after The operator to apply after this operator is applied
-     * @return A composed {@code ByteBinaryOperator} that first applies this operator to its input, and then applies the
-     * {@code after} operator to the result.
-     * @throws NullPointerException If given argument is {@code null}
-     * @see #compose(ByteUnaryOperator, ByteUnaryOperator)
-     * @see #compose(ToByteFunction, ToByteFunction)
-     */
-    @Nonnull
-    default ByteBinaryOperator andThen(@Nonnull final ByteUnaryOperator after) {
-        Objects.requireNonNull(after);
-        return (left, right) -> after.applyAsByte(applyAsByte(left, right));
     }
 
     /**

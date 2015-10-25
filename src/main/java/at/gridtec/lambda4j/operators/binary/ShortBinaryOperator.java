@@ -169,7 +169,6 @@ public interface ShortBinaryOperator {
      * @throws NullPointerException If given argument is {@code null}
      * @implNote The input arguments of this method are primitive specializations of {@link UnaryOperator}. Therefore
      * the given operations handle primitive types. In this case this is {@code short}.
-     * @see #andThen(ShortUnaryOperator)
      * @see #andThen(ShortFunction)
      */
     @Nonnull
@@ -193,7 +192,6 @@ public interface ShortBinaryOperator {
      * then applies this operator to the result.
      * @throws NullPointerException If given argument is {@code null}
      * @implNote The input arguments of this method are able to handle every type.
-     * @see #andThen(ShortUnaryOperator)
      * @see #andThen(ShortFunction)
      */
     @Nonnull
@@ -202,24 +200,6 @@ public interface ShortBinaryOperator {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         return (t, u) -> applyAsShort(before1.applyAsShort(t), before2.applyAsShort(u));
-    }
-
-    /**
-     * Returns a composed {@link ShortBinaryOperator} that first applies this operator to its input, and then applies
-     * the {@code after} operator to the result. If evaluation of either operator throws an exception, it is relayed to
-     * the caller of the composed operator.
-     *
-     * @param after The operator to apply after this operator is applied
-     * @return A composed {@code ShortBinaryOperator} that first applies this operator to its input, and then applies
-     * the {@code after} operator to the result.
-     * @throws NullPointerException If given argument is {@code null}
-     * @see #compose(ShortUnaryOperator, ShortUnaryOperator)
-     * @see #compose(ToShortFunction, ToShortFunction)
-     */
-    @Nonnull
-    default ShortBinaryOperator andThen(@Nonnull final ShortUnaryOperator after) {
-        Objects.requireNonNull(after);
-        return (left, right) -> after.applyAsShort(applyAsShort(left, right));
     }
 
     /**

@@ -307,7 +307,6 @@ public interface BooleanBinaryOperator {
      * @throws NullPointerException If given argument is {@code null}
      * @implNote The input arguments of this method are primitive specializations of {@link UnaryOperator}. Therefore
      * the given operations handle primitive types. In this case this is {@code boolean}.
-     * @see #andThen(BooleanUnaryOperator)
      * @see #andThen(BooleanFunction)
      */
     @Nonnull
@@ -331,7 +330,6 @@ public interface BooleanBinaryOperator {
      * applies this operator to the result.
      * @throws NullPointerException If given argument is {@code null}
      * @implNote The input arguments of this method are able to handle every type.
-     * @see #andThen(BooleanUnaryOperator)
      * @see #andThen(BooleanFunction)
      */
     @Nonnull
@@ -340,24 +338,6 @@ public interface BooleanBinaryOperator {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         return (t, u) -> applyAsBoolean(before1.test(t), before2.test(u));
-    }
-
-    /**
-     * Returns a composed {@link BooleanBinaryOperator} that first applies this operator to its input, and then applies
-     * the {@code after} operator to the result. If evaluation of either operator throws an exception, it is relayed to
-     * the caller of the composed operator.
-     *
-     * @param after The operator to apply after this operator is applied
-     * @return A composed {@code BooleanBinaryOperator} that first applies this operator to its input, and then applies
-     * the {@code after} operator to the result.
-     * @throws NullPointerException If given argument is {@code null}
-     * @see #compose(BooleanUnaryOperator, BooleanUnaryOperator)
-     * @see #compose(Predicate, Predicate)
-     */
-    @Nonnull
-    default BooleanBinaryOperator andThen(@Nonnull final BooleanUnaryOperator after) {
-        Objects.requireNonNull(after);
-        return (left, right) -> after.applyAsBoolean(applyAsBoolean(left, right));
     }
 
     /**

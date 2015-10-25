@@ -214,7 +214,7 @@ public interface ToCharTriFunction<T, U, V> {
      * Returns a composed {@link TriPredicate} that first applies this function to its input, and then applies the
      * {@code after} function to the result. If evaluation of either function throws an exception, it is relayed to the
      * caller of the composed function. This method is just convenience, to provide the ability to transform this
-     * function to a function returning {@code boolean}.
+     * operation to an operation returning {@code boolean}.
      *
      * @param after The function to apply after this function is applied
      * @return A composed {@code TriPredicate} that first applies this function to its input, and then applies the
@@ -232,7 +232,7 @@ public interface ToCharTriFunction<T, U, V> {
      * Returns a composed {@link ToByteTriFunction} that first applies this function to its input, and then applies the
      * {@code after} function to the result. If evaluation of either function throws an exception, it is relayed to the
      * caller of the composed function. This method is just convenience, to provide the ability to transform this
-     * function to a function returning {@code byte}.
+     * operation to an operation returning {@code byte}.
      *
      * @param after The function to apply after this function is applied
      * @return A composed {@code ToByteTriFunction} that first applies this function to its input, and then applies the
@@ -250,7 +250,7 @@ public interface ToCharTriFunction<T, U, V> {
      * Returns a composed {@link ToCharTriFunction} that first applies this function to its input, and then applies the
      * {@code after} function to the result. If evaluation of either function throws an exception, it is relayed to the
      * caller of the composed function. This method is just convenience, to provide the ability to transform this
-     * function to a function returning {@code char}.
+     * operation to an operation returning {@code char}.
      *
      * @param after The function to apply after this function is applied
      * @return A composed {@code ToCharTriFunction} that first applies this function to its input, and then applies the
@@ -268,7 +268,7 @@ public interface ToCharTriFunction<T, U, V> {
      * Returns a composed {@link ToDoubleTriFunction} that first applies this function to its input, and then applies
      * the {@code after} function to the result. If evaluation of either function throws an exception, it is relayed to
      * the caller of the composed function. This method is just convenience, to provide the ability to transform this
-     * function to a function returning {@code double}.
+     * operation to an operation returning {@code double}.
      *
      * @param after The function to apply after this function is applied
      * @return A composed {@code ToDoubleTriFunction} that first applies this function to its input, and then applies
@@ -286,7 +286,7 @@ public interface ToCharTriFunction<T, U, V> {
      * Returns a composed {@link ToFloatTriFunction} that first applies this function to its input, and then applies the
      * {@code after} function to the result. If evaluation of either function throws an exception, it is relayed to the
      * caller of the composed function. This method is just convenience, to provide the ability to transform this
-     * function to a function returning {@code float}.
+     * operation to an operation returning {@code float}.
      *
      * @param after The function to apply after this function is applied
      * @return A composed {@code ToFloatTriFunction} that first applies this function to its input, and then applies the
@@ -304,7 +304,7 @@ public interface ToCharTriFunction<T, U, V> {
      * Returns a composed {@link ToIntTriFunction} that first applies this function to its input, and then applies the
      * {@code after} function to the result. If evaluation of either function throws an exception, it is relayed to the
      * caller of the composed function. This method is just convenience, to provide the ability to transform this
-     * function to a function returning {@code int}.
+     * operation to an operation returning {@code int}.
      *
      * @param after The function to apply after this function is applied
      * @return A composed {@code ToIntTriFunction} that first applies this function to its input, and then applies the
@@ -322,7 +322,7 @@ public interface ToCharTriFunction<T, U, V> {
      * Returns a composed {@link ToLongTriFunction} that first applies this function to its input, and then applies the
      * {@code after} function to the result. If evaluation of either function throws an exception, it is relayed to the
      * caller of the composed function. This method is just convenience, to provide the ability to transform this
-     * function to a function returning {@code long}.
+     * operation to an operation returning {@code long}.
      *
      * @param after The function to apply after this function is applied
      * @return A composed {@code ToLongTriFunction} that first applies this function to its input, and then applies the
@@ -341,7 +341,7 @@ public interface ToCharTriFunction<T, U, V> {
      * Returns a composed {@link ToShortTriFunction} that first applies this function to its input, and then applies the
      * {@code after} function to the result. If evaluation of either function throws an exception, it is relayed to the
      * caller of the composed function. This method is just convenience, to provide the ability to transform this
-     * function to a function returning {@code short}.
+     * operation to an operation returning {@code short}.
      *
      * @param after The function to apply after this function is applied
      * @return A composed {@code ToShortTriFunction} that first applies this function to its input, and then applies the

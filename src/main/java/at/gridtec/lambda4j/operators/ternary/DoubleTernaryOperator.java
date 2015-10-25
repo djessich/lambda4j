@@ -130,7 +130,6 @@ public interface DoubleTernaryOperator {
      * @throws NullPointerException If given argument is {@code null}
      * @implNote The input arguments of this method are primitive specializations of {@link UnaryOperator}. Therefore
      * the given operations handle primitive types. In this case this is {@code double}.
-     * @see #andThen(DoubleUnaryOperator)
      * @see #andThen(DoubleFunction)
      */
     @Nonnull
@@ -158,7 +157,6 @@ public interface DoubleTernaryOperator {
      * then applies this operator to the result.
      * @throws NullPointerException If given argument is {@code null}
      * @implNote The input arguments of this method are able to handle every type.
-     * @see #andThen(DoubleUnaryOperator)
      * @see #andThen(DoubleFunction)
      */
     @Nonnull
@@ -168,24 +166,6 @@ public interface DoubleTernaryOperator {
         Objects.requireNonNull(before2);
         Objects.requireNonNull(before3);
         return (t, u, v) -> applyAsDouble(before1.applyAsDouble(t), before2.applyAsDouble(u), before3.applyAsDouble(v));
-    }
-
-    /**
-     * Returns a composed {@link DoubleTernaryOperator} that first applies this operator to its input, and then applies
-     * the {@code after} operator to the result. If evaluation of either operator throws an exception, it is relayed to
-     * the caller of the composed operator.
-     *
-     * @param after The operator to apply after this operator is applied
-     * @return A composed {@link DoubleTernaryOperator} that first applies this operator to its input, and then applies
-     * the {@code after} operator to the result.
-     * @throws NullPointerException If given argument is {@code null}
-     * @see #compose(DoubleUnaryOperator, DoubleUnaryOperator, DoubleUnaryOperator)
-     * @see #compose(ToDoubleFunction, ToDoubleFunction, ToDoubleFunction)
-     */
-    @Nonnull
-    default DoubleTernaryOperator andThen(@Nonnull final DoubleUnaryOperator after) {
-        Objects.requireNonNull(after);
-        return (left, middle, right) -> after.applyAsDouble(applyAsDouble(left, middle, right));
     }
 
     /**

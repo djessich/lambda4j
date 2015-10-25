@@ -130,7 +130,6 @@ public interface CharTernaryOperator {
      * @throws NullPointerException If given argument is {@code null}
      * @implNote The input arguments of this method are primitive specializations of {@link UnaryOperator}. Therefore
      * the given operations handle primitive types. In this case this is {@code char}.
-     * @see #andThen(CharUnaryOperator)
      * @see #andThen(CharFunction)
      */
     @Nonnull
@@ -158,7 +157,6 @@ public interface CharTernaryOperator {
      * then applies this operator to the result.
      * @throws NullPointerException If given argument is {@code null}
      * @implNote The input arguments of this method are able to handle every type.
-     * @see #andThen(CharUnaryOperator)
      * @see #andThen(CharFunction)
      */
     @Nonnull
@@ -168,24 +166,6 @@ public interface CharTernaryOperator {
         Objects.requireNonNull(before2);
         Objects.requireNonNull(before3);
         return (t, u, v) -> applyAsChar(before1.applyAsChar(t), before2.applyAsChar(u), before3.applyAsChar(v));
-    }
-
-    /**
-     * Returns a composed {@link CharTernaryOperator} that first applies this operator to its input, and then applies
-     * the {@code after} operator to the result. If evaluation of either operator throws an exception, it is relayed to
-     * the caller of the composed operator.
-     *
-     * @param after The operator to apply after this operator is applied
-     * @return A composed {@link CharTernaryOperator} that first applies this operator to its input, and then applies
-     * the {@code after} operator to the result.
-     * @throws NullPointerException If given argument is {@code null}
-     * @see #compose(CharUnaryOperator, CharUnaryOperator, CharUnaryOperator)
-     * @see #compose(ToCharFunction, ToCharFunction, ToCharFunction)
-     */
-    @Nonnull
-    default CharTernaryOperator andThen(@Nonnull final CharUnaryOperator after) {
-        Objects.requireNonNull(after);
-        return (left, middle, right) -> after.applyAsChar(applyAsChar(left, middle, right));
     }
 
     /**

@@ -144,7 +144,7 @@ public interface CharUnaryOperator {
      * Returns a composed {@link CharToBooleanFunction} that first applies this operator to its input, and then applies
      * the {@code after} operator to the result. If evaluation of either operator throws an exception, it is relayed to
      * the caller of the composed operator. This method is just convenience, to provide the ability to transform this
-     * operator to an operation returning {@code boolean}.
+     * operation to an operation returning {@code boolean}.
      *
      * @param after The operator to apply after this operator is applied
      * @return A composed {@code CharToBooleanFunction} that first applies this operator to its input, and then applies
@@ -162,7 +162,7 @@ public interface CharUnaryOperator {
      * Returns a composed {@link CharToByteFunction} that first applies this operator to its input, and then applies the
      * {@code after} operator to the result. If evaluation of either operator throws an exception, it is relayed to the
      * caller of the composed operator. This method is just convenience, to provide the ability to transform this
-     * operator to an operation returning {@code byte}.
+     * operation to an operation returning {@code byte}.
      *
      * @param after The operator to apply after this operator is applied
      * @return A composed {@code CharToByteFunction} that first applies this operator to its input, and then applies the
@@ -180,7 +180,7 @@ public interface CharUnaryOperator {
      * Returns a composed {@link CharUnaryOperator} that first applies this operator to its input, and then applies the
      * {@code after} operator to the result. If evaluation of either operator throws an exception, it is relayed to the
      * caller of the composed operator. This method is just convenience, to provide the ability to transform this
-     * operator to an operation returning {@code char}.
+     * operation to an operation returning {@code char}.
      *
      * @param after The operator to apply after this operator is applied
      * @return A composed {@code CharUnaryOperator} that first applies this operator to its input, and then applies the
@@ -198,7 +198,7 @@ public interface CharUnaryOperator {
      * Returns a composed {@link CharToDoubleFunction} that first applies this operator to its input, and then applies
      * the {@code after} operator to the result. If evaluation of either operator throws an exception, it is relayed to
      * the caller of the composed operator. This method is just convenience, to provide the ability to transform this
-     * operator to an operation returning {@code double}.
+     * operation to an operation returning {@code double}.
      *
      * @param after The operator to apply after this operator is applied
      * @return A composed {@code CharToDoubleFunction} that first applies this operator to its input, and then applies
@@ -216,7 +216,7 @@ public interface CharUnaryOperator {
      * Returns a composed {@link CharToFloatFunction} that first applies this operator to its input, and then applies
      * the {@code after} operator to the result. If evaluation of either operator throws an exception, it is relayed to
      * the caller of the composed operator. This method is just convenience, to provide the ability to transform this
-     * operator to an operation returning {@code float}.
+     * operation to an operation returning {@code float}.
      *
      * @param after The operator to apply after this operator is applied
      * @return A composed {@code CharToFloatFunction} that first applies this operator to its input, and then applies
@@ -234,7 +234,7 @@ public interface CharUnaryOperator {
      * Returns a composed {@link CharToIntFunction} that first applies this operator to its input, and then applies the
      * {@code after} operator to the result. If evaluation of either operator throws an exception, it is relayed to the
      * caller of the composed operator. This method is just convenience, to provide the ability to transform this
-     * operator to an operation returning {@code int}.
+     * operation to an operation returning {@code int}.
      *
      * @param after The operator to apply after this operator is applied
      * @return A composed {@code CharToIntFunction} that first applies this operator to its input, and then applies the
@@ -252,7 +252,7 @@ public interface CharUnaryOperator {
      * Returns a composed {@link CharToLongFunction} that first applies this operator to its input, and then applies the
      * {@code after} operator to the result. If evaluation of either operator throws an exception, it is relayed to the
      * caller of the composed operator. This method is just convenience, to provide the ability to transform this
-     * operator to an operation returning {@code long}.
+     * operation to an operation returning {@code long}.
      *
      * @param after The operator to apply after this operator is applied
      * @return A composed {@code CharToLongFunction} that first applies this operator to its input, and then applies the
@@ -270,7 +270,7 @@ public interface CharUnaryOperator {
      * Returns a composed {@link CharToShortFunction} that first applies this operator to its input, and then applies
      * the {@code after} operator to the result. If evaluation of either operator throws an exception, it is relayed to
      * the caller of the composed operator. This method is just convenience, to provide the ability to transform this
-     * operator to an operation returning {@code short}.
+     * operation to an operation returning {@code short}.
      *
      * @param after The operator to apply after this operator is applied
      * @return A composed {@code CharToShortFunction} that first applies this operator to its input, and then applies

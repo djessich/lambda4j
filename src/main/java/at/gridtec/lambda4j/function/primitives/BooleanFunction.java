@@ -145,7 +145,7 @@ public interface BooleanFunction<R> {
      * Returns a composed {@link BooleanUnaryOperator} that first applies this function to its input, and then applies
      * the {@code after} function to the result. If evaluation of either function throws an exception, it is relayed to
      * the caller of the composed operation. This method is just convenience, to provide the ability to transform this
-     * function to an operation returning {@code boolean}.
+     * operation to an operation returning {@code boolean}.
      *
      * @param after The function to apply after this function is applied
      * @return A composed {@code BooleanUnaryOperator} that first applies this function to its input, and then applies
@@ -163,7 +163,7 @@ public interface BooleanFunction<R> {
      * Returns a composed {@link BooleanToByteFunction} that first applies this function to its input, and then applies
      * the {@code after} function to the result. If evaluation of either function throws an exception, it is relayed to
      * the caller of the composed function. This method is just convenience, to provide the ability to transform this
-     * function to a function returning {@code byte}.
+     * operation to an operation returning {@code byte}.
      *
      * @param after The function to apply after this function is applied
      * @return A composed {@code BooleanToByteFunction} that first applies this function to its input, and then applies
@@ -181,7 +181,7 @@ public interface BooleanFunction<R> {
      * Returns a composed {@link BooleanToCharFunction} that first applies this function to its input, and then applies
      * the {@code after} function to the result. If evaluation of either function throws an exception, it is relayed to
      * the caller of the composed function. This method is just convenience, to provide the ability to transform this
-     * function to a function returning {@code char}.
+     * operation to an operation returning {@code char}.
      *
      * @param after The function to apply after this function is applied
      * @return A composed {@code BooleanToCharFunction} that first applies this function to its input, and then applies
@@ -199,7 +199,7 @@ public interface BooleanFunction<R> {
      * Returns a composed {@link BooleanToDoubleFunction} that first applies this function to its input, and then
      * applies the {@code after} function to the result. If evaluation of either function throws an exception, it is
      * relayed to the caller of the composed function. This method is just convenience, to provide the ability to
-     * transform this function to a function returning {@code double}.
+     * transform this operation to an operation returning {@code double}.
      *
      * @param after The function to apply after this function is applied
      * @return A composed {@code BooleanToDoubleFunction} that first applies this function to its input, and then
@@ -217,7 +217,7 @@ public interface BooleanFunction<R> {
      * Returns a composed {@link BooleanToFloatFunction} that first applies this function to its input, and then applies
      * the {@code after} function to the result. If evaluation of either function throws an exception, it is relayed to
      * the caller of the composed function. This method is just convenience, to provide the ability to transform this
-     * function to a function returning {@code float}.
+     * operation to an operation returning {@code float}.
      *
      * @param after The function to apply after this function is applied
      * @return A composed {@code BooleanToFloatFunction} that first applies this function to its input, and then applies
@@ -235,7 +235,7 @@ public interface BooleanFunction<R> {
      * Returns a composed {@link BooleanToIntFunction} that first applies this function to its input, and then applies
      * the {@code after} function to the result. If evaluation of either function throws an exception, it is relayed to
      * the caller of the composed function. This method is just convenience, to provide the ability to transform this
-     * function to a function returning {@code int}.
+     * operation to an operation returning {@code int}.
      *
      * @param after The function to apply after this function is applied
      * @return A composed {@code BooleanToIntFunction} that first applies this function to its input, and then applies
@@ -253,7 +253,7 @@ public interface BooleanFunction<R> {
      * Returns a composed {@link BooleanToLongFunction} that first applies this function to its input, and then applies
      * the {@code after} function to the result. If evaluation of either function throws an exception, it is relayed to
      * the caller of the composed function. This method is just convenience, to provide the ability to transform this
-     * function to a function returning {@code long}.
+     * operation to an operation returning {@code long}.
      *
      * @param after The function to apply after this function is applied
      * @return A composed {@code BooleanToLongFunction} that first applies this function to its input, and then applies
@@ -271,7 +271,7 @@ public interface BooleanFunction<R> {
      * Returns a composed {@link BooleanToShortFunction} that first applies this function to its input, and then applies
      * the {@code after} function to the result. If evaluation of either function throws an exception, it is relayed to
      * the caller of the composed function. This method is just convenience, to provide the ability to transform this
-     * function to a function returning {@code short}.
+     * operation to an operation returning {@code short}.
      *
      * @param after The function to apply after this function is applied
      * @return A composed {@code BooleanToShortFunction} that first applies this function to its input, and then applies

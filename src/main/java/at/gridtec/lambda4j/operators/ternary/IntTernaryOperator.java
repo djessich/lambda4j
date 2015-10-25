@@ -130,7 +130,6 @@ public interface IntTernaryOperator {
      * @throws NullPointerException If given argument is {@code null}
      * @implNote The input arguments of this method are primitive specializations of {@link UnaryOperator}. Therefore
      * the given operations handle primitive types. In this case this is {@code int}.
-     * @see #andThen(IntUnaryOperator)
      * @see #andThen(IntFunction)
      */
     @Nonnull
@@ -158,7 +157,6 @@ public interface IntTernaryOperator {
      * then applies this operator to the result.
      * @throws NullPointerException If given argument is {@code null}
      * @implNote The input arguments of this method are able to handle every type.
-     * @see #andThen(IntUnaryOperator)
      * @see #andThen(IntFunction)
      */
     @Nonnull
@@ -168,24 +166,6 @@ public interface IntTernaryOperator {
         Objects.requireNonNull(before2);
         Objects.requireNonNull(before3);
         return (t, u, v) -> applyAsInt(before1.applyAsInt(t), before2.applyAsInt(u), before3.applyAsInt(v));
-    }
-
-    /**
-     * Returns a composed {@link IntTernaryOperator} that first applies this operator to its input, and then applies the
-     * {@code after} operator to the result. If evaluation of either operator throws an exception, it is relayed to the
-     * caller of the composed operator.
-     *
-     * @param after The operator to apply after this operator is applied
-     * @return A composed {@link IntTernaryOperator} that first applies this operator to its input, and then applies the
-     * {@code after} operator to the result.
-     * @throws NullPointerException If given argument is {@code null}
-     * @see #compose(IntUnaryOperator, IntUnaryOperator, IntUnaryOperator)
-     * @see #compose(ToIntFunction, ToIntFunction, ToIntFunction)
-     */
-    @Nonnull
-    default IntTernaryOperator andThen(@Nonnull final IntUnaryOperator after) {
-        Objects.requireNonNull(after);
-        return (left, middle, right) -> after.applyAsInt(applyAsInt(left, middle, right));
     }
 
     /**

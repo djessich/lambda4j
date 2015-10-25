@@ -299,7 +299,6 @@ public interface BooleanTernaryOperator {
      * @throws NullPointerException If given argument is {@code null}
      * @implNote The input arguments of this method are primitive specializations of {@link UnaryOperator}. Therefore
      * the given operations handle primitive types. In this case this is {@code boolean}.
-     * @see #andThen(BooleanUnaryOperator)
      * @see #andThen(BooleanFunction)
      */
     @Nonnull
@@ -327,7 +326,6 @@ public interface BooleanTernaryOperator {
      * applies this operator to the result.
      * @throws NullPointerException If given argument is {@code null}
      * @implNote The input arguments of this method are able to handle every type.
-     * @see #andThen(BooleanUnaryOperator)
      * @see #andThen(BooleanFunction)
      */
     @Nonnull
@@ -337,24 +335,6 @@ public interface BooleanTernaryOperator {
         Objects.requireNonNull(before2);
         Objects.requireNonNull(before3);
         return (t, u, v) -> applyAsBoolean(before1.test(t), before2.test(u), before3.test(v));
-    }
-
-    /**
-     * Returns a composed {@link BooleanTernaryOperator} that first applies this operator to its input, and then applies
-     * the {@code after} operator to the result. If evaluation of either operator throws an exception, it is relayed to
-     * the caller of the composed operator.
-     *
-     * @param after The operator to apply after this operator is applied
-     * @return A composed {@link BooleanTernaryOperator} that first applies this operator to its input, and then applies
-     * the {@code after} operator to the result.
-     * @throws NullPointerException If given argument is {@code null}
-     * @see #compose(BooleanUnaryOperator, BooleanUnaryOperator, BooleanUnaryOperator)
-     * @see #compose(Predicate, Predicate, Predicate)
-     */
-    @Nonnull
-    default BooleanTernaryOperator andThen(@Nonnull final BooleanUnaryOperator after) {
-        Objects.requireNonNull(after);
-        return (left, middle, right) -> after.applyAsBoolean(applyAsBoolean(left, middle, right));
     }
 
     /**

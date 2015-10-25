@@ -130,7 +130,6 @@ public interface FloatTernaryOperator {
      * @throws NullPointerException If given argument is {@code null}
      * @implNote The input arguments of this method are primitive specializations of {@link UnaryOperator}. Therefore
      * the given operations handle primitive types. In this case this is {@code float}.
-     * @see #andThen(FloatUnaryOperator)
      * @see #andThen(FloatFunction)
      */
     @Nonnull
@@ -158,7 +157,6 @@ public interface FloatTernaryOperator {
      * then applies this operator to the result.
      * @throws NullPointerException If given argument is {@code null}
      * @implNote The input arguments of this method are able to handle every type.
-     * @see #andThen(FloatUnaryOperator)
      * @see #andThen(FloatFunction)
      */
     @Nonnull
@@ -168,24 +166,6 @@ public interface FloatTernaryOperator {
         Objects.requireNonNull(before2);
         Objects.requireNonNull(before3);
         return (t, u, v) -> applyAsFloat(before1.applyAsFloat(t), before2.applyAsFloat(u), before3.applyAsFloat(v));
-    }
-
-    /**
-     * Returns a composed {@link FloatTernaryOperator} that first applies this operator to its input, and then applies
-     * the {@code after} operator to the result. If evaluation of either operator throws an exception, it is relayed to
-     * the caller of the composed operator.
-     *
-     * @param after The operator to apply after this operator is applied
-     * @return A composed {@link FloatTernaryOperator} that first applies this operator to its input, and then applies
-     * the {@code after} operator to the result.
-     * @throws NullPointerException If given argument is {@code null}
-     * @see #compose(FloatUnaryOperator, FloatUnaryOperator, FloatUnaryOperator)
-     * @see #compose(ToFloatFunction, ToFloatFunction, ToFloatFunction)
-     */
-    @Nonnull
-    default FloatTernaryOperator andThen(@Nonnull final FloatUnaryOperator after) {
-        Objects.requireNonNull(after);
-        return (left, middle, right) -> after.applyAsFloat(applyAsFloat(left, middle, right));
     }
 
     /**

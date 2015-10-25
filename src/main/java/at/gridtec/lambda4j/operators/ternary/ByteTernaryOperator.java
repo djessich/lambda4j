@@ -130,7 +130,6 @@ public interface ByteTernaryOperator {
      * @throws NullPointerException If given argument is {@code null}
      * @implNote The input arguments of this method are primitive specializations of {@link UnaryOperator}. Therefore
      * the given operations handle primitive types. In this case this is {@code byte}.
-     * @see #andThen(ByteUnaryOperator)
      * @see #andThen(ByteFunction)
      */
     @Nonnull
@@ -158,7 +157,6 @@ public interface ByteTernaryOperator {
      * then applies this operator to the result.
      * @throws NullPointerException If given argument is {@code null}
      * @implNote The input arguments of this method are able to handle every type.
-     * @see #andThen(ByteUnaryOperator)
      * @see #andThen(ByteFunction)
      */
     @Nonnull
@@ -168,24 +166,6 @@ public interface ByteTernaryOperator {
         Objects.requireNonNull(before2);
         Objects.requireNonNull(before3);
         return (t, u, v) -> applyAsByte(before1.applyAsByte(t), before2.applyAsByte(u), before3.applyAsByte(v));
-    }
-
-    /**
-     * Returns a composed {@link ByteTernaryOperator} that first applies this operator to its input, and then applies
-     * the {@code after} operator to the result. If evaluation of either operator throws an exception, it is relayed to
-     * the caller of the composed operator.
-     *
-     * @param after The operator to apply after this operator is applied
-     * @return A composed {@link ByteTernaryOperator} that first applies this operator to its input, and then applies
-     * the {@code after} operator to the result.
-     * @throws NullPointerException If given argument is {@code null}
-     * @see #compose(ByteUnaryOperator, ByteUnaryOperator, ByteUnaryOperator)
-     * @see #compose(ToByteFunction, ToByteFunction, ToByteFunction)
-     */
-    @Nonnull
-    default ByteTernaryOperator andThen(@Nonnull final ByteUnaryOperator after) {
-        Objects.requireNonNull(after);
-        return (left, middle, right) -> after.applyAsByte(applyAsByte(left, middle, right));
     }
 
     /**

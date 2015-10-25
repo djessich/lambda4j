@@ -173,7 +173,6 @@ public interface FloatBinaryOperator {
      * @throws NullPointerException If given argument is {@code null}
      * @implNote The input arguments of this method are primitive specializations of {@link UnaryOperator}. Therefore
      * the given operations handle primitive types. In this case this is {@code float}.
-     * @see #andThen(FloatUnaryOperator)
      * @see #andThen(FloatFunction)
      */
     @Nonnull
@@ -197,7 +196,6 @@ public interface FloatBinaryOperator {
      * then applies this operator to the result.
      * @throws NullPointerException If given argument is {@code null}
      * @implNote The input arguments of this method are able to handle every type.
-     * @see #andThen(FloatUnaryOperator)
      * @see #andThen(FloatFunction)
      */
     @Nonnull
@@ -208,23 +206,6 @@ public interface FloatBinaryOperator {
         return (t, u) -> applyAsFloat(before1.applyAsFloat(t), before2.applyAsFloat(u));
     }
 
-    /**
-     * Returns a composed {@link FloatBinaryOperator} that first applies this operator to its input, and then applies
-     * the {@code after} operator to the result. If evaluation of either operator throws an exception, it is relayed to
-     * the caller of the composed operator.
-     *
-     * @param after The operator to apply after this operator is applied
-     * @return A composed {@code FloatBinaryOperator} that first applies this operator to its input, and then applies
-     * the {@code after} operator to the result.
-     * @throws NullPointerException If given argument is {@code null}
-     * @see #compose(FloatUnaryOperator, FloatUnaryOperator)
-     * @see #compose(ToFloatFunction, ToFloatFunction)
-     */
-    @Nonnull
-    default FloatBinaryOperator andThen(@Nonnull final FloatUnaryOperator after) {
-        Objects.requireNonNull(after);
-        return (left, right) -> after.applyAsFloat(applyAsFloat(left, right));
-    }
 
     /**
      * Returns a composed {@link FloatBiFunction} that first applies this operator to its input, and then applies the

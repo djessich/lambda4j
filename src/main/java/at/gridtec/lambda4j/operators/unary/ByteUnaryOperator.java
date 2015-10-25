@@ -144,7 +144,7 @@ public interface ByteUnaryOperator {
      * Returns a composed {@link ByteToBooleanFunction} that first applies this operator to its input, and then applies
      * the {@code after} operator to the result. If evaluation of either operator throws an exception, it is relayed to
      * the caller of the composed operator. This method is just convenience, to provide the ability to transform this
-     * operator to an operation returning {@code boolean}.
+     * operation to an operation returning {@code boolean}.
      *
      * @param after The operator to apply after this operator is applied
      * @return A composed {@code ByteToBooleanFunction} that first applies this operator to its input, and then applies
@@ -162,7 +162,7 @@ public interface ByteUnaryOperator {
      * Returns a composed {@link ByteUnaryOperator} that first applies this operator to its input, and then applies the
      * {@code after} operator to the result. If evaluation of either operator throws an exception, it is relayed to the
      * caller of the composed operator. This method is just convenience, to provide the ability to transform this
-     * operator to an operation returning {@code byte}.
+     * operation to an operation returning {@code byte}.
      *
      * @param after The operator to apply after this operator is applied
      * @return A composed {@code ByteUnaryOperator} that first applies this operator to its input, and then applies the
@@ -180,7 +180,7 @@ public interface ByteUnaryOperator {
      * Returns a composed {@link ByteToCharFunction} that first applies this operator to its input, and then applies the
      * {@code after} operator to the result. If evaluation of either operator throws an exception, it is relayed to the
      * caller of the composed operator. This method is just convenience, to provide the ability to transform this
-     * operator to an operation returning {@code char}.
+     * operation to an operation returning {@code char}.
      *
      * @param after The operator to apply after this operator is applied
      * @return A composed {@code ByteToCharFunction} that first applies this operator to its input, and then applies the
@@ -198,7 +198,7 @@ public interface ByteUnaryOperator {
      * Returns a composed {@link ByteToDoubleFunction} that first applies this operator to its input, and then applies
      * the {@code after} operator to the result. If evaluation of either operator throws an exception, it is relayed to
      * the caller of the composed operator. This method is just convenience, to provide the ability to transform this
-     * operator to an operation returning {@code double}.
+     * operation to an operation returning {@code double}.
      *
      * @param after The operator to apply after this operator is applied
      * @return A composed {@code ByteToDoubleFunction} that first applies this operator to its input, and then applies
@@ -216,7 +216,7 @@ public interface ByteUnaryOperator {
      * Returns a composed {@link ByteToFloatFunction} that first applies this operator to its input, and then applies
      * the {@code after} operator to the result. If evaluation of either operator throws an exception, it is relayed to
      * the caller of the composed operator. This method is just convenience, to provide the ability to transform this
-     * operator to an operation returning {@code float}.
+     * operation to an operation returning {@code float}.
      *
      * @param after The operator to apply after this operator is applied
      * @return A composed {@code ByteToFloatFunction} that first applies this operator to its input, and then applies
@@ -234,7 +234,7 @@ public interface ByteUnaryOperator {
      * Returns a composed {@link ByteToIntFunction} that first applies this operator to its input, and then applies the
      * {@code after} operator to the result. If evaluation of either operator throws an exception, it is relayed to the
      * caller of the composed operator. This method is just convenience, to provide the ability to transform this
-     * operator to an operation returning {@code int}.
+     * operation to an operation returning {@code int}.
      *
      * @param after The operator to apply after this operator is applied
      * @return A composed {@code ByteToIntFunction} that first applies this operator to its input, and then applies the
@@ -252,7 +252,7 @@ public interface ByteUnaryOperator {
      * Returns a composed {@link ByteToLongFunction} that first applies this operator to its input, and then applies the
      * {@code after} operator to the result. If evaluation of either operator throws an exception, it is relayed to the
      * caller of the composed operator. This method is just convenience, to provide the ability to transform this
-     * operator to an operation returning {@code long}.
+     * operation to an operation returning {@code long}.
      *
      * @param after The operator to apply after this operator is applied
      * @return A composed {@code ByteToLongFunction} that first applies this operator to its input, and then applies the
@@ -270,7 +270,7 @@ public interface ByteUnaryOperator {
      * Returns a composed {@link ByteToShortFunction} that first applies this operator to its input, and then applies
      * the {@code after} operator to the result. If evaluation of either operator throws an exception, it is relayed to
      * the caller of the composed operator. This method is just convenience, to provide the ability to transform this
-     * operator to an operation returning {@code short}.
+     * operation to an operation returning {@code short}.
      *
      * @param after The operator to apply after this operator is applied
      * @return A composed {@code ByteToShortFunction} that first applies this operator to its input, and then applies

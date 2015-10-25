@@ -133,13 +133,13 @@ public interface ByteToCharFunction {
      * Returns a composed {@link ByteToBooleanFunction} that first applies this function to its input, and then applies
      * the {@code after} function to the result. If evaluation of either function throws an exception, it is relayed to
      * the caller of the composed function. This method is just convenience, to provide the ability to transform this
-     * function to {@code boolean}, using the {@code byte}-to-{@code boolean} primitive specialization of {@link
-     * Function}.
+     * operation to an operation returning {@code boolean}.
      *
      * @param after The function to apply after this function is applied
      * @return A composed {@code ByteToBooleanFunction} that first applies this function to its input, and then applies
      * the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
+     * @see #andThen(CharFunction)
      */
     @Nonnull
     default ByteToBooleanFunction andThenToBoolean(@Nonnull final CharToBooleanFunction after) {
@@ -151,12 +151,13 @@ public interface ByteToCharFunction {
      * Returns a composed {@link ByteUnaryOperator} that first applies this function to its input, and then applies the
      * {@code after} function to the result. If evaluation of either function throws an exception, it is relayed to the
      * caller of the composed function. This method is just convenience, to provide the ability to transform this
-     * function to the {@code byte}-producing primitive specialization of {@link UnaryOperator}.
+     * operation to an operation returning {@code byte}.
      *
      * @param after The function to apply after this function is applied
-     * @return A composed {@code ByteToCharFunction} that first applies this function to its input, and then applies the
+     * @return A composed {@code ByteUnaryOperator} that first applies this function to its input, and then applies the
      * {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
+     * @see #andThen(CharFunction)
      */
     @Nonnull
     default ByteUnaryOperator andThenToByte(@Nonnull final CharToByteFunction after) {
@@ -167,16 +168,14 @@ public interface ByteToCharFunction {
     /**
      * Returns a composed {@link ByteToCharFunction} that first applies this function to its input, and then applies the
      * {@code after} function to the result. If evaluation of either function throws an exception, it is relayed to the
-     * caller of the composed operation.
+     * caller of the composed function. This method is just convenience, to provide the ability to transform this
+     * operation to an operation returning {@code char}.
      *
      * @param after The function to apply after this function is applied
      * @return A composed {@code ByteToCharFunction} that first applies this function to its input, and then applies the
      * {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The result of this method is a primitive specialization of {@link UnaryOperator}. Therefore the
-     * returned operation handles primitive types. In this case this is {@code byte}.
-     * @see #compose(ByteUnaryOperator)
-     * @see #compose(ToByteFunction)
+     * @see #andThen(CharFunction)
      */
     @Nonnull
     default ByteToCharFunction andThenToChar(@Nonnull final CharUnaryOperator after) {
@@ -188,13 +187,13 @@ public interface ByteToCharFunction {
      * Returns a composed {@link ByteToDoubleFunction} that first applies this function to its input, and then applies
      * the {@code after} function to the result. If evaluation of either function throws an exception, it is relayed to
      * the caller of the composed function. This method is just convenience, to provide the ability to transform this
-     * function to {@code double}, using the {@code byte}-to-{@code double} primitive specialization of {@link
-     * Function}.
+     * operation to an operation returning {@code double}.
      *
      * @param after The function to apply after this function is applied
      * @return A composed {@code ByteToDoubleFunction} that first applies this function to its input, and then applies
      * the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
+     * @see #andThen(CharFunction)
      */
     @Nonnull
     default ByteToDoubleFunction andThenToDouble(@Nonnull final CharToDoubleFunction after) {
@@ -206,12 +205,13 @@ public interface ByteToCharFunction {
      * Returns a composed {@link ByteToFloatFunction} that first applies this function to its input, and then applies
      * the {@code after} function to the result. If evaluation of either function throws an exception, it is relayed to
      * the caller of the composed function. This method is just convenience, to provide the ability to transform this
-     * function to {@code float}, using the {@code byte}-to-{@code float} primitive specialization of {@link Function}.
+     * operation to an operation returning {@code float}.
      *
      * @param after The function to apply after this function is applied
      * @return A composed {@code ByteToFloatFunction} that first applies this function to its input, and then applies
      * the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
+     * @see #andThen(CharFunction)
      */
     @Nonnull
     default ByteToFloatFunction andThenToFloat(@Nonnull final CharToFloatFunction after) {
@@ -223,12 +223,13 @@ public interface ByteToCharFunction {
      * Returns a composed {@link ByteToIntFunction} that first applies this function to its input, and then applies the
      * {@code after} function to the result. If evaluation of either function throws an exception, it is relayed to the
      * caller of the composed function. This method is just convenience, to provide the ability to transform this
-     * function to {@code int}, using the {@code byte}-to-{@code int} primitive specialization of {@link Function}.
+     * operation to an operation returning {@code int}.
      *
      * @param after The function to apply after this function is applied
      * @return A composed {@code ByteToIntFunction} that first applies this function to its input, and then applies the
      * {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
+     * @see #andThen(CharFunction)
      */
     @Nonnull
     default ByteToIntFunction andThenToInt(@Nonnull final CharToIntFunction after) {
@@ -240,12 +241,13 @@ public interface ByteToCharFunction {
      * Returns a composed {@link ByteToLongFunction} that first applies this function to its input, and then applies the
      * {@code after} function to the result. If evaluation of either function throws an exception, it is relayed to the
      * caller of the composed function. This method is just convenience, to provide the ability to transform this
-     * function to {@code long}, using the {@code byte}-to-{@code long} primitive specialization of {@link Function}.
+     * operation to an operation returning {@code long}.
      *
      * @param after The function to apply after this function is applied
      * @return A composed {@code ByteToLongFunction} that first applies this function to its input, and then applies the
      * {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
+     * @see #andThen(CharFunction)
      */
     @Nonnull
     default ByteToLongFunction andThenToLong(@Nonnull final CharToLongFunction after) {
@@ -257,12 +259,13 @@ public interface ByteToCharFunction {
      * Returns a composed {@link ByteToShortFunction} that first applies this function to its input, and then applies
      * the {@code after} function to the result. If evaluation of either function throws an exception, it is relayed to
      * the caller of the composed function. This method is just convenience, to provide the ability to transform this
-     * function to {@code short}, using the {@code byte}-to-{@code short} primitive specialization of {@link Function}.
+     * operation to an operation returning {@code short}.
      *
      * @param after The function to apply after this function is applied
      * @return A composed {@code ByteToShortFunction} that first applies this function to its input, and then applies
      * the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
+     * @see #andThen(CharFunction)
      */
     @Nonnull
     default ByteToShortFunction andThenToShort(@Nonnull final CharToShortFunction after) {

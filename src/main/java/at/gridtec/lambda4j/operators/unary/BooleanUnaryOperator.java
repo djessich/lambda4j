@@ -268,7 +268,7 @@ public interface BooleanUnaryOperator {
      * Returns a composed {@link BooleanUnaryOperator} that first applies this operator to its input, and then applies
      * the {@code after} operator to the result. If evaluation of either operator throws an exception, it is relayed to
      * the caller of the composed operator. This method is just convenience, to provide the ability to transform this
-     * operator to an operation returning {@code boolean}.
+     * operation to an operation returning {@code boolean}.
      *
      * @param after The operator to apply after this operator is applied
      * @return A composed {@code BooleanUnaryOperator} that first applies this operator to its input, and then applies
@@ -286,7 +286,7 @@ public interface BooleanUnaryOperator {
      * Returns a composed {@link BooleanToByteFunction} that first applies this operator to its input, and then applies
      * the {@code after} operator to the result. If evaluation of either operator throws an exception, it is relayed to
      * the caller of the composed operator. This method is just convenience, to provide the ability to transform this
-     * operator to an operation returning {@code byte}.
+     * operation to an operation returning {@code byte}.
      *
      * @param after The operator to apply after this operator is applied
      * @return A composed {@code BooleanToByteFunction} that first applies this operator to its input, and then applies
@@ -304,7 +304,7 @@ public interface BooleanUnaryOperator {
      * Returns a composed {@link BooleanToCharFunction} that first applies this operator to its input, and then applies
      * the {@code after} operator to the result. If evaluation of either operator throws an exception, it is relayed to
      * the caller of the composed operator. This method is just convenience, to provide the ability to transform this
-     * operator to an operation returning {@code char}.
+     * operation to an operation returning {@code char}.
      *
      * @param after The operator to apply after this operator is applied
      * @return A composed {@code BooleanToCharFunction} that first applies this operator to its input, and then applies
@@ -319,14 +319,14 @@ public interface BooleanUnaryOperator {
     }
 
     /**
-     * Returns a composed {@link BooleanToDoubleFunction} that first applies this operator to its input, and then applies
-     * the {@code after} operator to the result. If evaluation of either operator throws an exception, it is relayed to
-     * the caller of the composed operator. This method is just convenience, to provide the ability to transform this
-     * operator to an operation returning {@code double}.
+     * Returns a composed {@link BooleanToDoubleFunction} that first applies this operator to its input, and then
+     * applies the {@code after} operator to the result. If evaluation of either operator throws an exception, it is
+     * relayed to the caller of the composed operator. This method is just convenience, to provide the ability to
+     * transform this operation to an operation returning {@code double}.
      *
      * @param after The operator to apply after this operator is applied
-     * @return A composed {@code BooleanToDoubleFunction} that first applies this operator to its input, and then applies
-     * the {@code after} operator to the result.
+     * @return A composed {@code BooleanToDoubleFunction} that first applies this operator to its input, and then
+     * applies the {@code after} operator to the result.
      * @throws NullPointerException If given argument is {@code null}
      * @see #andThen(BooleanFunction)
      */
@@ -340,7 +340,7 @@ public interface BooleanUnaryOperator {
      * Returns a composed {@link BooleanToFloatFunction} that first applies this operator to its input, and then applies
      * the {@code after} operator to the result. If evaluation of either operator throws an exception, it is relayed to
      * the caller of the composed operator. This method is just convenience, to provide the ability to transform this
-     * operator to an operation returning {@code float}.
+     * operation to an operation returning {@code float}.
      *
      * @param after The operator to apply after this operator is applied
      * @return A composed {@code BooleanToFloatFunction} that first applies this operator to its input, and then applies
@@ -358,7 +358,7 @@ public interface BooleanUnaryOperator {
      * Returns a composed {@link BooleanToIntFunction} that first applies this operator to its input, and then applies
      * the {@code after} operator to the result. If evaluation of either operator throws an exception, it is relayed to
      * the caller of the composed operator. This method is just convenience, to provide the ability to transform this
-     * operator to an operation returning {@code int}.
+     * operation to an operation returning {@code int}.
      *
      * @param after The operator to apply after this operator is applied
      * @return A composed {@code BooleanToIntFunction} that first applies this operator to its input, and then applies
@@ -376,7 +376,7 @@ public interface BooleanUnaryOperator {
      * Returns a composed {@link BooleanToLongFunction} that first applies this operator to its input, and then applies
      * the {@code after} operator to the result. If evaluation of either operator throws an exception, it is relayed to
      * the caller of the composed operator. This method is just convenience, to provide the ability to transform this
-     * operator to an operation returning {@code long}.
+     * operation to an operation returning {@code long}.
      *
      * @param after The operator to apply after this operator is applied
      * @return A composed {@code BooleanToLongFunction} that first applies this operator to its input, and then applies
@@ -394,7 +394,7 @@ public interface BooleanUnaryOperator {
      * Returns a composed {@link BooleanToShortFunction} that first applies this operator to its input, and then applies
      * the {@code after} operator to the result. If evaluation of either operator throws an exception, it is relayed to
      * the caller of the composed operator. This method is just convenience, to provide the ability to transform this
-     * operator to an operation returning {@code short}.
+     * operation to an operation returning {@code short}.
      *
      * @param after The operator to apply after this operator is applied
      * @return A composed {@code BooleanToShortFunction} that first applies this operator to its input, and then applies
