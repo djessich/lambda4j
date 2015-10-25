@@ -18,14 +18,12 @@ package at.gridtec.lambda4j.function.primitives.bi;
 import at.gridtec.lambda4j.consumer.primitives.bi.ByteBiConsumer;
 import at.gridtec.lambda4j.function.primitives.ByteFunction;
 import at.gridtec.lambda4j.function.primitives.to.ToByteFunction;
-import at.gridtec.lambda4j.operators.binary.ByteBinaryOperator;
 import at.gridtec.lambda4j.operators.unary.ByteUnaryOperator;
 
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import java.util.Objects;
 import java.util.function.BiFunction;
-import java.util.function.BinaryOperator;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.UnaryOperator;
@@ -119,7 +117,6 @@ public interface ByteBiFunction<R> {
      * @throws NullPointerException If given argument is {@code null}
      * @implNote The input arguments of this method are primitive specializations of {@link UnaryOperator}. Therefore
      * the given operations handle primitive types. In this case this is {@code byte}.
-     * @see #andThen(ToByteFunction)
      * @see #andThen(Function)
      */
     @Nonnull
@@ -143,7 +140,6 @@ public interface ByteBiFunction<R> {
      * applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
      * @implNote The input arguments of this method are able to handle every type.
-     * @see #andThen(ToByteFunction)
      * @see #andThen(Function)
      */
     @Nonnull
@@ -152,26 +148,6 @@ public interface ByteBiFunction<R> {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         return (t, u) -> apply(before1.applyAsByte(t), before2.applyAsByte(u));
-    }
-
-    /**
-     * Returns a composed {@link ByteBinaryOperator} that first applies this function to its input, and then applies the
-     * {@code after} function to the result. If evaluation of either function throws an exception, it is relayed to the
-     * caller of the composed function.
-     *
-     * @param after The function to apply after this function is applied
-     * @return A composed {@code ByteBinaryOperator} that first applies this function to its input, and then applies the
-     * {@code after} function to the result.
-     * @throws NullPointerException If given argument is {@code null}
-     * @implNote The result of this method is a primitive specialization of {@link BinaryOperator}. Therefore the
-     * returned operation handles primitive types. In this case this is {@code byte}.
-     * @see #compose(ByteUnaryOperator, ByteUnaryOperator)
-     * @see #compose(ToByteFunction, ToByteFunction)
-     */
-    @Nonnull
-    default ByteBinaryOperator andThen(@Nonnull final ToByteFunction<? super R> after) {
-        Objects.requireNonNull(after);
-        return (value1, value2) -> after.applyAsByte(apply(value1, value2));
     }
 
     /**
@@ -184,7 +160,6 @@ public interface ByteBiFunction<R> {
      * @return A composed {@code ByteBiFunction} that first applies this function to its input, and then applies the
      * {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The returned function is able to handle every type.
      * @see #compose(ByteUnaryOperator, ByteUnaryOperator)
      * @see #compose(ToByteFunction, ToByteFunction)
      */

@@ -144,7 +144,6 @@ public interface ToByteBiObjByteFunction<T, U> {
      * @throws NullPointerException If given argument is {@code null}
      * @implNote The last input argument of this method is the primitive specialization of {@link UnaryOperator}.
      * Therefore the operation handles a primitive type. In this case this is {@code byte}.
-     * @see #andThen(ByteUnaryOperator)
      * @see #andThen(ByteFunction)
      */
     @Nonnull
@@ -171,7 +170,6 @@ public interface ToByteBiObjByteFunction<T, U> {
      * then applies this function to the result.
      * @throws NullPointerException If one of the given functions are {@code null}
      * @implNote The input arguments of this method are able to handle every type.
-     * @see #andThen(ByteUnaryOperator)
      * @see #andThen(ByteFunction)
      */
     @Nonnull
@@ -184,26 +182,6 @@ public interface ToByteBiObjByteFunction<T, U> {
     }
 
     /**
-     * Returns a composed {@link ToByteBiObjByteFunction} that first applies this function to its input, and then
-     * applies the {@code after} operation to the result. If evaluation of either operation throws an exception, it is
-     * relayed to the caller of the composed operation.
-     *
-     * @param after The operation to apply after this function is applied
-     * @return A composed {@code ToByteBiObjByteFunction} that first applies this function to its input, and then
-     * applies the {@code after} operation to the result.
-     * @throws NullPointerException If given argument is {@code null}
-     * @implNote The result of this method is a primitive specialization of {@link TriFunction}. Therefore the returned
-     * operation handles primitive types. In this case this is {@code byte}.
-     * @see #compose(Function, Function, ByteUnaryOperator)
-     * @see #compose(Function, Function, ToByteFunction)
-     */
-    @Nonnull
-    default ToByteBiObjByteFunction<T, U> andThen(@Nonnull final ByteUnaryOperator after) {
-        Objects.requireNonNull(after);
-        return (t, u, value) -> after.applyAsByte(applyAsByte(t, u, value));
-    }
-
-    /**
      * Returns a composed {@link BiObjByteFunction} that first applies this function to its input, and then applies the
      * {@code after} function to the result. If evaluation of either function throws an exception, it is relayed to the
      * caller of the composed function.
@@ -213,7 +191,6 @@ public interface ToByteBiObjByteFunction<T, U> {
      * @return A composed {@code BiObjByteFunction} that first applies this function to its input, and then applies the
      * {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The returned function is able to handle every type.
      * @see #compose(Function, Function, ByteUnaryOperator)
      * @see #compose(Function, Function, ToByteFunction)
      */

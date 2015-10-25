@@ -19,8 +19,6 @@ import at.gridtec.lambda4j.consumer.primitives.tri.ShortTriConsumer;
 import at.gridtec.lambda4j.function.TriFunction;
 import at.gridtec.lambda4j.function.primitives.ShortFunction;
 import at.gridtec.lambda4j.function.primitives.to.ToShortFunction;
-import at.gridtec.lambda4j.operators.ternary.ShortTernaryOperator;
-import at.gridtec.lambda4j.operators.ternary.TernaryOperator;
 import at.gridtec.lambda4j.operators.unary.ShortUnaryOperator;
 
 import javax.annotation.Nonnegative;
@@ -137,7 +135,6 @@ public interface ShortTriFunction<R> {
      * @throws NullPointerException If given argument is {@code null}
      * @implNote The input arguments of this method are primitive specializations of {@link UnaryOperator}. Therefore
      * the given operations handle primitive types. In this case this is {@code short}.
-     * @see #andThen(ToShortFunction)
      * @see #andThen(Function)
      */
     @Nonnull
@@ -164,7 +161,6 @@ public interface ShortTriFunction<R> {
      * applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
      * @implNote The input arguments of this method are able to handle every type.
-     * @see #andThen(ToShortFunction)
      * @see #andThen(Function)
      */
     @Nonnull
@@ -173,26 +169,6 @@ public interface ShortTriFunction<R> {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         return (t, u, v) -> apply(before1.applyAsShort(t), before2.applyAsShort(u), before3.applyAsShort(v));
-    }
-
-    /**
-     * Returns a composed {@link ShortTernaryOperator} that first applies this function to its input, and then applies
-     * the {@code after} function to the result. If evaluation of either function throws an exception, it is relayed to
-     * the caller of the composed function.
-     *
-     * @param after The function to apply after this function is applied
-     * @return A composed {@code ShortTernaryOperator} that first applies this function to its input, and then applies
-     * the {@code after} function to the result.
-     * @throws NullPointerException If given argument is {@code null}
-     * @implNote The result of this method is a primitive specialization of {@link TernaryOperator}. Therefore the
-     * returned operation handles primitive types. In this case this is {@code short}.
-     * @see #compose(ShortUnaryOperator, ShortUnaryOperator, ShortUnaryOperator)
-     * @see #compose(ToShortFunction, ToShortFunction, ToShortFunction)
-     */
-    @Nonnull
-    default ShortTernaryOperator andThen(@Nonnull final ToShortFunction<? super R> after) {
-        Objects.requireNonNull(after);
-        return (value1, value2, value3) -> after.applyAsShort(apply(value1, value2, value3));
     }
 
     /**
@@ -205,7 +181,6 @@ public interface ShortTriFunction<R> {
      * @return A composed {@code ShortTriFunction} that first applies this function to its input, and then applies the
      * {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The returned function is able to handle every type.
      * @see #compose(ShortUnaryOperator, ShortUnaryOperator, ShortUnaryOperator)
      * @see #compose(ToShortFunction, ToShortFunction, ToShortFunction)
      */

@@ -120,7 +120,6 @@ public interface ToFloatObjFloatFunction<T> {
      * @throws NullPointerException If given argument is {@code null}
      * @implNote The last input argument of this method is the primitive specialization of {@link UnaryOperator}.
      * Therefore the operation handles a primitive type. In this case this is {@code float}.
-     * @see #andThen(FloatUnaryOperator)
      * @see #andThen(FloatFunction)
      */
     @Nonnull
@@ -144,7 +143,6 @@ public interface ToFloatObjFloatFunction<T> {
      * then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
      * @implNote The input arguments of this method are able to handle every type.
-     * @see #andThen(FloatUnaryOperator)
      * @see #andThen(FloatFunction)
      */
     @Nonnull
@@ -153,26 +151,6 @@ public interface ToFloatObjFloatFunction<T> {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         return (u, v) -> applyAsFloat(before1.apply(u), before2.applyAsFloat(v));
-    }
-
-    /**
-     * Returns a composed {@link ToFloatObjFloatFunction} that first applies this function to its input, and then
-     * applies the {@code after} operation to the result. If evaluation of either function throws an exception, it is
-     * relayed to the caller of the composed function.
-     *
-     * @param after The function to apply after this function is applied
-     * @return A composed {@code ToFloatObjFloatFunction} that first applies this function to its input, and then
-     * applies the {@code after} function to the result.
-     * @throws NullPointerException If given argument is {@code null}
-     * @implNote The result of this method is a primitive specialization of {@link BiFunction}. Therefore the returned
-     * operation handles primitive types. In this case this is {@code float}.
-     * @see #compose(Function, FloatUnaryOperator)
-     * @see #compose(Function, ToFloatFunction)
-     */
-    @Nonnull
-    default ToFloatObjFloatFunction<T> andThen(@Nonnull final FloatUnaryOperator after) {
-        Objects.requireNonNull(after);
-        return (t, value) -> after.applyAsFloat(applyAsFloat(t, value));
     }
 
     /**
@@ -185,7 +163,6 @@ public interface ToFloatObjFloatFunction<T> {
      * @return A composed {@code ObjFloatFunction} that first applies this function to its input, and then applies the
      * {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The returned function is able to handle every type.
      * @see #compose(Function, FloatUnaryOperator)
      * @see #compose(Function, ToFloatFunction)
      */

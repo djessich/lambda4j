@@ -19,8 +19,6 @@ import at.gridtec.lambda4j.consumer.primitives.tri.ByteTriConsumer;
 import at.gridtec.lambda4j.function.TriFunction;
 import at.gridtec.lambda4j.function.primitives.ByteFunction;
 import at.gridtec.lambda4j.function.primitives.to.ToByteFunction;
-import at.gridtec.lambda4j.operators.ternary.ByteTernaryOperator;
-import at.gridtec.lambda4j.operators.ternary.TernaryOperator;
 import at.gridtec.lambda4j.operators.unary.ByteUnaryOperator;
 
 import javax.annotation.Nonnegative;
@@ -137,7 +135,6 @@ public interface ByteTriFunction<R> {
      * @throws NullPointerException If given argument is {@code null}
      * @implNote The input arguments of this method are primitive specializations of {@link UnaryOperator}. Therefore
      * the given operations handle primitive types. In this case this is {@code byte}.
-     * @see #andThen(ToByteFunction)
      * @see #andThen(Function)
      */
     @Nonnull
@@ -164,7 +161,6 @@ public interface ByteTriFunction<R> {
      * applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
      * @implNote The input arguments of this method are able to handle every type.
-     * @see #andThen(ToByteFunction)
      * @see #andThen(Function)
      */
     @Nonnull
@@ -173,26 +169,6 @@ public interface ByteTriFunction<R> {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         return (t, u, v) -> apply(before1.applyAsByte(t), before2.applyAsByte(u), before3.applyAsByte(v));
-    }
-
-    /**
-     * Returns a composed {@link ByteTernaryOperator} that first applies this function to its input, and then applies
-     * the {@code after} function to the result. If evaluation of either function throws an exception, it is relayed to
-     * the caller of the composed function.
-     *
-     * @param after The function to apply after this function is applied
-     * @return A composed {@code ByteTernaryOperator} that first applies this function to its input, and then applies
-     * the {@code after} function to the result.
-     * @throws NullPointerException If given argument is {@code null}
-     * @implNote The result of this method is a primitive specialization of {@link TernaryOperator}. Therefore the
-     * returned operation handles primitive types. In this case this is {@code byte}.
-     * @see #compose(ByteUnaryOperator, ByteUnaryOperator, ByteUnaryOperator)
-     * @see #compose(ToByteFunction, ToByteFunction, ToByteFunction)
-     */
-    @Nonnull
-    default ByteTernaryOperator andThen(@Nonnull final ToByteFunction<? super R> after) {
-        Objects.requireNonNull(after);
-        return (value1, value2, value3) -> after.applyAsByte(apply(value1, value2, value3));
     }
 
     /**
@@ -205,7 +181,6 @@ public interface ByteTriFunction<R> {
      * @return A composed {@code ByteTriFunction} that first applies this function to its input, and then applies the
      * {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The returned function is able to handle every type.
      * @see #compose(ByteUnaryOperator, ByteUnaryOperator, ByteUnaryOperator)
      * @see #compose(ToByteFunction, ToByteFunction, ToByteFunction)
      */

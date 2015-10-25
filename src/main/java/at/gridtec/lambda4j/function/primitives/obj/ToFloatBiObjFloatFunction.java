@@ -144,7 +144,6 @@ public interface ToFloatBiObjFloatFunction<T, U> {
      * @throws NullPointerException If given argument is {@code null}
      * @implNote The last input argument of this method is the primitive specialization of {@link UnaryOperator}.
      * Therefore the operation handles a primitive type. In this case this is {@code float}.
-     * @see #andThen(FloatUnaryOperator)
      * @see #andThen(FloatFunction)
      */
     @Nonnull
@@ -171,7 +170,6 @@ public interface ToFloatBiObjFloatFunction<T, U> {
      * then applies this function to the result.
      * @throws NullPointerException If one of the given functions are {@code null}
      * @implNote The input arguments of this method are able to handle every type.
-     * @see #andThen(FloatUnaryOperator)
      * @see #andThen(FloatFunction)
      */
     @Nonnull
@@ -185,26 +183,6 @@ public interface ToFloatBiObjFloatFunction<T, U> {
     }
 
     /**
-     * Returns a composed {@link ToFloatBiObjFloatFunction} that first applies this function to its input, and then
-     * applies the {@code after} operation to the result. If evaluation of either operation throws an exception, it is
-     * relayed to the caller of the composed operation.
-     *
-     * @param after The operation to apply after this function is applied
-     * @return A composed {@code ToFloatBiObjFloatFunction} that first applies this function to its input, and then
-     * applies the {@code after} operation to the result.
-     * @throws NullPointerException If given argument is {@code null}
-     * @implNote The result of this method is a primitive specialization of {@link TriFunction}. Therefore the returned
-     * operation handles primitive types. In this case this is {@code float}.
-     * @see #compose(Function, Function, FloatUnaryOperator)
-     * @see #compose(Function, Function, ToFloatFunction)
-     */
-    @Nonnull
-    default ToFloatBiObjFloatFunction<T, U> andThen(@Nonnull final FloatUnaryOperator after) {
-        Objects.requireNonNull(after);
-        return (t, u, value) -> after.applyAsFloat(applyAsFloat(t, u, value));
-    }
-
-    /**
      * Returns a composed {@link BiObjFloatFunction} that first applies this function to its input, and then applies the
      * {@code after} function to the result. If evaluation of either function throws an exception, it is relayed to the
      * caller of the composed function.
@@ -214,7 +192,6 @@ public interface ToFloatBiObjFloatFunction<T, U> {
      * @return A composed {@code BiObjFloatFunction} that first applies this function to its input, and then applies the
      * {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The returned function is able to handle every type.
      * @see #compose(Function, Function, FloatUnaryOperator)
      * @see #compose(Function, Function, ToFloatFunction)
      */

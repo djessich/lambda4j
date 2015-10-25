@@ -132,7 +132,6 @@ public interface ToCharBiFunction<T, U> {
      * @throws NullPointerException If given argument is {@code null}
      * @implNote The input arguments of this method are primitive specializations of {@link UnaryOperator}. Therefore
      * the given operations handle primitive types. In this case this is {@code char}.
-     * @see #andThen(CharUnaryOperator)
      * @see #andThen(CharFunction)
      */
     @Nonnull
@@ -156,7 +155,6 @@ public interface ToCharBiFunction<T, U> {
      * then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
      * @implNote The input arguments of this method are able to handle every type.
-     * @see #andThen(CharUnaryOperator)
      * @see #andThen(CharFunction)
      */
     @Nonnull
@@ -165,26 +163,6 @@ public interface ToCharBiFunction<T, U> {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         return (a, b) -> applyAsChar(before1.apply(a), before2.apply(b));
-    }
-
-    /**
-     * Returns a composed {@link ToCharBiFunction} that first applies this function to its input, and then applies the
-     * {@code after} operation to the result. If evaluation of either operation throws an exception, it is relayed to
-     * the caller of the composed operation.
-     *
-     * @param after The operation to apply after this function is applied
-     * @return A composed {@code ToCharBiFunction} that first applies this function to its input, and then applies the
-     * {@code after} operation to the result.
-     * @throws NullPointerException If given argument is {@code null}
-     * @implNote The result of this method is a primitive specialization of {@link BiFunction}. Therefore the returned
-     * operation handles primitive types. In this case this is {@code char}.
-     * @see #compose(UnaryOperator, UnaryOperator)
-     * @see #compose(Function, Function)
-     */
-    @Nonnull
-    default ToCharBiFunction<T, U> andThen(@Nonnull final CharUnaryOperator after) {
-        Objects.requireNonNull(after);
-        return (t, u) -> after.applyAsChar(applyAsChar(t, u));
     }
 
     /**
@@ -197,7 +175,6 @@ public interface ToCharBiFunction<T, U> {
      * @return A composed {@code BiFunction} that first applies this function to its input, and then applies the {@code
      * after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The returned function is able to handle every type.
      * @see #compose(UnaryOperator, UnaryOperator)
      * @see #compose(Function, Function)
      */
@@ -210,15 +187,19 @@ public interface ToCharBiFunction<T, U> {
     /**
      * Returns a composed {@link BiPredicate} that first applies this function to its input, and then applies the {@code
      * after} function to the result. If evaluation of either function throws an exception, it is relayed to the caller
-     * of the composed function. This method is just convenience, to provide the ability to transform this function to
-     * the {@code boolean}-producing primitive specialization of {@link BiPredicate}.
+     * of the composed function.
+     * <p>
+     * This method is just convenience, to provide the ability to transform this function to an equal function,
+     * returning {@code boolean}. Thereby the {@code char}-to-{@code boolean} primitive specialization of {@link
+     * Function} is used.
      *
-     * @param after The function to apply after this operation is applied
+     * @param after The function to apply after this function is applied
      * @return A composed {@code BiPredicate} that first applies this function to its input, and then applies the {@code
      * after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
+     * @see #andThen(CharFunction)
      */
-    default BiPredicate<T, U> toBoolean(final CharToBooleanFunction after) {
+    default BiPredicate<T, U> andThenToBoolean(final CharToBooleanFunction after) {
         Objects.requireNonNull(after);
         return (t, u) -> after.applyAsBoolean(applyAsChar(t, u));
     }
@@ -226,33 +207,62 @@ public interface ToCharBiFunction<T, U> {
     /**
      * Returns a composed {@link ToByteBiFunction} that first applies this function to its input, and then applies the
      * {@code after} function to the result. If evaluation of either function throws an exception, it is relayed to the
-     * caller of the composed function. This method is just convenience, to provide the ability to transform this
-     * function to the {@code byte}-producing primitive specialization of {@link BiFunction}.
+     * caller of the composed function.
+     * <p>
+     * This method is just convenience, to provide the ability to transform this function to an equal function,
+     * returning {@code byte}. Thereby the {@code char}-to-{@code byte} primitive specialization of {@link Function} is
+     * used.
      *
-     * @param after The function to apply after this operation is applied
+     * @param after The function to apply after this function is applied
      * @return A composed {@code ToByteBiFunction} that first applies this function to its input, and then applies the
      * {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
+     * @see #andThen(CharFunction)
      */
     @Nonnull
-    default ToByteBiFunction<T, U> toByte(@Nonnull final CharToByteFunction after) {
+    default ToByteBiFunction<T, U> andThenToByte(@Nonnull final CharToByteFunction after) {
         Objects.requireNonNull(after);
         return (t, u) -> after.applyAsByte(applyAsChar(t, u));
     }
 
     /**
+     * Returns a composed {@link ToCharBiFunction} that first applies this function to its input, and then applies the
+     * {@code after} function to the result. If evaluation of either function throws an exception, it is relayed to the
+     * caller of the composed function.
+     * <p>
+     * This method is just convenience, to provide the ability to transform this function to an equal function,
+     * returning {@code char}. Thereby the {@code char}-producing primitive specialization of {@link UnaryOperator} is
+     * used.
+     *
+     * @param after The function to apply after this function is applied
+     * @return A composed {@code ToCharBiFunction} that first applies this function to its input, and then applies the
+     * {@code after} function to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @see #andThen(CharFunction)
+     */
+    @Nonnull
+    default ToCharBiFunction<T, U> andThenToChar(@Nonnull final CharUnaryOperator after) {
+        Objects.requireNonNull(after);
+        return (t, u) -> after.applyAsChar(applyAsChar(t, u));
+    }
+
+    /**
      * Returns a composed {@link ToDoubleBiFunction} that first applies this function to its input, and then applies the
      * {@code after} function to the result. If evaluation of either function throws an exception, it is relayed to the
-     * caller of the composed function. This method is just convenience, to provide the ability to transform this
-     * function to the {@code double}-producing primitive specialization of {@link BiFunction}.
+     * caller of the composed function.
+     * <p>
+     * This method is just convenience, to provide the ability to transform this function to an equal function,
+     * returning {@code double}. Thereby the {@code char}-to-{@code double} primitive specialization of {@link Function}
+     * is used.
      *
-     * @param after The function to apply after this operation is applied
+     * @param after The function to apply after this function is applied
      * @return A composed {@code ToDoubleBiFunction} that first applies this function to its input, and then applies the
      * {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
+     * @see #andThen(CharFunction)
      */
     @Nonnull
-    default ToDoubleBiFunction<T, U> toDouble(@Nonnull final CharToDoubleFunction after) {
+    default ToDoubleBiFunction<T, U> andThenToDouble(@Nonnull final CharToDoubleFunction after) {
         Objects.requireNonNull(after);
         return (t, u) -> after.applyAsDouble(applyAsChar(t, u));
     }
@@ -260,16 +270,20 @@ public interface ToCharBiFunction<T, U> {
     /**
      * Returns a composed {@link ToFloatBiFunction} that first applies this function to its input, and then applies the
      * {@code after} function to the result. If evaluation of either function throws an exception, it is relayed to the
-     * caller of the composed function. This method is just convenience, to provide the ability to transform this
-     * function to the {@code float}-producing primitive specialization of {@link BiFunction}.
+     * caller of the composed function.
+     * <p>
+     * This method is just convenience, to provide the ability to transform this function to an equal function,
+     * returning {@code float}. Thereby the {@code char}-to-{@code float} primitive specialization of {@link Function}
+     * is used.
      *
-     * @param after The function to apply after this operation is applied
+     * @param after The function to apply after this function is applied
      * @return A composed {@code ToFloatBiFunction} that first applies this function to its input, and then applies the
      * {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
+     * @see #andThen(CharFunction)
      */
     @Nonnull
-    default ToFloatBiFunction<T, U> toFloat(@Nonnull final CharToFloatFunction after) {
+    default ToFloatBiFunction<T, U> andThenToFloat(@Nonnull final CharToFloatFunction after) {
         Objects.requireNonNull(after);
         return (t, u) -> after.applyAsFloat(applyAsChar(t, u));
     }
@@ -277,16 +291,20 @@ public interface ToCharBiFunction<T, U> {
     /**
      * Returns a composed {@link ToIntBiFunction} that first applies this function to its input, and then applies the
      * {@code after} function to the result. If evaluation of either function throws an exception, it is relayed to the
-     * caller of the composed function. This method is just convenience, to provide the ability to transform this
-     * function to the {@code int}-producing primitive specialization of {@link BiFunction}.
+     * caller of the composed function.
+     * <p>
+     * This method is just convenience, to provide the ability to transform this function to an equal function,
+     * returning {@code int}. Thereby the {@code char}-to-{@code int} primitive specialization of {@link Function} is
+     * used.
      *
-     * @param after The function to apply after this operation is applied
+     * @param after The function to apply after this function is applied
      * @return A composed {@code ToIntBiFunction} that first applies this function to its input, and then applies the
      * {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
+     * @see #andThen(CharFunction)
      */
     @Nonnull
-    default ToIntBiFunction<T, U> toInt(@Nonnull final CharToIntFunction after) {
+    default ToIntBiFunction<T, U> andThenToInt(@Nonnull final CharToIntFunction after) {
         Objects.requireNonNull(after);
         return (t, u) -> after.applyAsInt(applyAsChar(t, u));
     }
@@ -294,16 +312,20 @@ public interface ToCharBiFunction<T, U> {
     /**
      * Returns a composed {@link ToLongBiFunction} that first applies this function to its input, and then applies the
      * {@code after} function to the result. If evaluation of either function throws an exception, it is relayed to the
-     * caller of the composed function. This method is just convenience, to provide the ability to transform this
-     * function to the {@code long}-producing primitive specialization of {@link BiFunction}.
+     * caller of the composed function.
+     * <p>
+     * This method is just convenience, to provide the ability to transform this function to an equal function,
+     * returning {@code long}. Thereby the {@code char}-to-{@code long} primitive specialization of {@link Function} is
+     * used.
      *
-     * @param after The function to apply after this operation is applied
+     * @param after The function to apply after this function is applied
      * @return A composed {@code ToLongBiFunction} that first applies this function to its input, and then applies the
      * {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
+     * @see #andThen(CharFunction)
      */
     @Nonnull
-    default ToLongBiFunction<T, U> toLong(@Nonnull final CharToLongFunction after) {
+    default ToLongBiFunction<T, U> andThenToLong(@Nonnull final CharToLongFunction after) {
         Objects.requireNonNull(after);
         return (t, u) -> after.applyAsLong(applyAsChar(t, u));
 
@@ -312,16 +334,20 @@ public interface ToCharBiFunction<T, U> {
     /**
      * Returns a composed {@link ToShortBiFunction} that first applies this function to its input, and then applies the
      * {@code after} function to the result. If evaluation of either function throws an exception, it is relayed to the
-     * caller of the composed function. This method is just convenience, to provide the ability to transform this
-     * function to the {@code short}-producing primitive specialization of {@link BiFunction}.
+     * caller of the composed function.
+     * <p>
+     * This method is just convenience, to provide the ability to transform this function to an equal function,
+     * returning {@code short}. Thereby the {@code char}-to-{@code short} primitive specialization of {@link Function}
+     * is used.
      *
-     * @param after The function to apply after this operation is applied
+     * @param after The function to apply after this function is applied
      * @return A composed {@code ToShortBiFunction} that first applies this function to its input, and then applies the
      * {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
+     * @see #andThen(CharFunction)
      */
     @Nonnull
-    default ToShortBiFunction<T, U> toShort(@Nonnull final CharToShortFunction after) {
+    default ToShortBiFunction<T, U> andThenToShort(@Nonnull final CharToShortFunction after) {
         Objects.requireNonNull(after);
         return (t, u) -> after.applyAsShort(applyAsChar(t, u));
     }

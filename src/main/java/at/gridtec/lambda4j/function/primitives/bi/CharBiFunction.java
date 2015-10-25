@@ -18,14 +18,12 @@ package at.gridtec.lambda4j.function.primitives.bi;
 import at.gridtec.lambda4j.consumer.primitives.bi.CharBiConsumer;
 import at.gridtec.lambda4j.function.primitives.CharFunction;
 import at.gridtec.lambda4j.function.primitives.to.ToCharFunction;
-import at.gridtec.lambda4j.operators.binary.CharBinaryOperator;
 import at.gridtec.lambda4j.operators.unary.CharUnaryOperator;
 
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import java.util.Objects;
 import java.util.function.BiFunction;
-import java.util.function.BinaryOperator;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.UnaryOperator;
@@ -119,7 +117,6 @@ public interface CharBiFunction<R> {
      * @throws NullPointerException If given argument is {@code null}
      * @implNote The input arguments of this method are primitive specializations of {@link UnaryOperator}. Therefore
      * the given operations handle primitive types. In this case this is {@code char}.
-     * @see #andThen(ToCharFunction)
      * @see #andThen(Function)
      */
     @Nonnull
@@ -143,7 +140,6 @@ public interface CharBiFunction<R> {
      * applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
      * @implNote The input arguments of this method are able to handle every type.
-     * @see #andThen(ToCharFunction)
      * @see #andThen(Function)
      */
     @Nonnull
@@ -152,26 +148,6 @@ public interface CharBiFunction<R> {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         return (t, u) -> apply(before1.applyAsChar(t), before2.applyAsChar(u));
-    }
-
-    /**
-     * Returns a composed {@link CharBinaryOperator} that first applies this function to its input, and then applies the
-     * {@code after} function to the result. If evaluation of either function throws an exception, it is relayed to the
-     * caller of the composed function.
-     *
-     * @param after The function to apply after this function is applied
-     * @return A composed {@code CharBinaryOperator} that first applies this function to its input, and then applies the
-     * {@code after} function to the result.
-     * @throws NullPointerException If given argument is {@code null}
-     * @implNote The result of this method is a primitive specialization of {@link BinaryOperator}. Therefore the
-     * returned operation handles primitive types. In this case this is {@code char}.
-     * @see #compose(CharUnaryOperator, CharUnaryOperator)
-     * @see #compose(ToCharFunction, ToCharFunction)
-     */
-    @Nonnull
-    default CharBinaryOperator andThen(@Nonnull final ToCharFunction<? super R> after) {
-        Objects.requireNonNull(after);
-        return (value1, value2) -> after.applyAsChar(apply(value1, value2));
     }
 
     /**
@@ -184,7 +160,6 @@ public interface CharBiFunction<R> {
      * @return A composed {@code CharBiFunction} that first applies this function to its input, and then applies the
      * {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The returned function is able to handle every type.
      * @see #compose(CharUnaryOperator, CharUnaryOperator)
      * @see #compose(ToCharFunction, ToCharFunction)
      */

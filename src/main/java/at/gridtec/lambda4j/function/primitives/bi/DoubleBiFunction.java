@@ -21,9 +21,7 @@ import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import java.util.Objects;
 import java.util.function.BiFunction;
-import java.util.function.BinaryOperator;
 import java.util.function.Consumer;
-import java.util.function.DoubleBinaryOperator;
 import java.util.function.DoubleFunction;
 import java.util.function.DoubleUnaryOperator;
 import java.util.function.Function;
@@ -119,7 +117,6 @@ public interface DoubleBiFunction<R> {
      * @throws NullPointerException If given argument is {@code null}
      * @implNote The input arguments of this method are primitive specializations of {@link UnaryOperator}. Therefore
      * the given operations handle primitive types. In this case this is {@code double}.
-     * @see #andThen(ToDoubleFunction)
      * @see #andThen(Function)
      */
     @Nonnull
@@ -143,7 +140,6 @@ public interface DoubleBiFunction<R> {
      * applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
      * @implNote The input arguments of this method are able to handle every type.
-     * @see #andThen(ToDoubleFunction)
      * @see #andThen(Function)
      */
     @Nonnull
@@ -152,26 +148,6 @@ public interface DoubleBiFunction<R> {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         return (t, u) -> apply(before1.applyAsDouble(t), before2.applyAsDouble(u));
-    }
-
-    /**
-     * Returns a composed {@link DoubleBinaryOperator} that first applies this function to its input, and then applies
-     * the {@code after} function to the result. If evaluation of either function throws an exception, it is relayed to
-     * the caller of the composed function.
-     *
-     * @param after The function to apply after this function is applied
-     * @return A composed {@code DoubleBinaryOperator} that first applies this function to its input, and then applies
-     * the {@code after} function to the result.
-     * @throws NullPointerException If given argument is {@code null}
-     * @implNote The result of this method is a primitive specialization of {@link BinaryOperator}. Therefore the
-     * returned operation handles primitive types. In this case this is {@code double}.
-     * @see #compose(DoubleUnaryOperator, DoubleUnaryOperator)
-     * @see #compose(ToDoubleFunction, ToDoubleFunction)
-     */
-    @Nonnull
-    default DoubleBinaryOperator andThen(@Nonnull final ToDoubleFunction<? super R> after) {
-        Objects.requireNonNull(after);
-        return (value1, value2) -> after.applyAsDouble(apply(value1, value2));
     }
 
     /**
@@ -184,7 +160,6 @@ public interface DoubleBiFunction<R> {
      * @return A composed {@code DoubleBiFunction} that first applies this function to its input, and then applies the
      * {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The returned function is able to handle every type.
      * @see #compose(DoubleUnaryOperator, DoubleUnaryOperator)
      * @see #compose(ToDoubleFunction, ToDoubleFunction)
      */

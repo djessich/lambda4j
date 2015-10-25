@@ -21,10 +21,8 @@ import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import java.util.Objects;
 import java.util.function.BiFunction;
-import java.util.function.BinaryOperator;
 import java.util.function.Consumer;
 import java.util.function.Function;
-import java.util.function.LongBinaryOperator;
 import java.util.function.LongFunction;
 import java.util.function.LongUnaryOperator;
 import java.util.function.ToLongFunction;
@@ -119,7 +117,6 @@ public interface LongBiFunction<R> {
      * @throws NullPointerException If given argument is {@code null}
      * @implNote The input arguments of this method are primitive specializations of {@link UnaryOperator}. Therefore
      * the given operations handle primitive types. In this case this is {@code long}.
-     * @see #andThen(ToLongFunction)
      * @see #andThen(Function)
      */
     @Nonnull
@@ -143,7 +140,6 @@ public interface LongBiFunction<R> {
      * applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
      * @implNote The input arguments of this method are able to handle every type.
-     * @see #andThen(ToLongFunction)
      * @see #andThen(Function)
      */
     @Nonnull
@@ -152,26 +148,6 @@ public interface LongBiFunction<R> {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         return (t, u) -> apply(before1.applyAsLong(t), before2.applyAsLong(u));
-    }
-
-    /**
-     * Returns a composed {@link LongBinaryOperator} that first applies this function to its input, and then applies the
-     * {@code after} function to the result. If evaluation of either function throws an exception, it is relayed to the
-     * caller of the composed function.
-     *
-     * @param after The function to apply after this function is applied
-     * @return A composed {@code LongBinaryOperator} that first applies this function to its input, and then applies the
-     * {@code after} function to the result.
-     * @throws NullPointerException If given argument is {@code null}
-     * @implNote The result of this method is a primitive specialization of {@link BinaryOperator}. Therefore the
-     * returned operation handles primitive types. In this case this is {@code long}.
-     * @see #compose(LongUnaryOperator, LongUnaryOperator)
-     * @see #compose(ToLongFunction, ToLongFunction)
-     */
-    @Nonnull
-    default LongBinaryOperator andThen(@Nonnull final ToLongFunction<? super R> after) {
-        Objects.requireNonNull(after);
-        return (value1, value2) -> after.applyAsLong(apply(value1, value2));
     }
 
     /**
@@ -184,7 +160,6 @@ public interface LongBiFunction<R> {
      * @return A composed {@code LongBiFunction} that first applies this function to its input, and then applies the
      * {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The returned function is able to handle every type.
      * @see #compose(LongUnaryOperator, LongUnaryOperator)
      * @see #compose(ToLongFunction, ToLongFunction)
      */

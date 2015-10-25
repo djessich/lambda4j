@@ -147,7 +147,6 @@ public interface BiObjLongFunction<T, U, R> {
      * @throws NullPointerException If given argument is {@code null}
      * @implNote The last input argument of this method is the primitive specialization of {@link UnaryOperator}.
      * Therefore the operation handles a primitive type. In this case this is {@code long}.
-     * @see #andThen(ToLongFunction)
      * @see #andThen(Function)
      */
     @Nonnull
@@ -174,7 +173,6 @@ public interface BiObjLongFunction<T, U, R> {
      * applies this function to the result.
      * @throws NullPointerException If one of the given functions are {@code null}
      * @implNote The input arguments of this method are able to handle every type.
-     * @see #andThen(ToLongFunction)
      * @see #andThen(Function)
      */
     @Nonnull
@@ -186,25 +184,6 @@ public interface BiObjLongFunction<T, U, R> {
         return (a, b, c) -> apply(before1.apply(a), before2.apply(b), before3.applyAsLong(c));
     }
 
-    /**
-     * Returns a composed {@link ToLongBiObjLongFunction} that first applies this function to its input, and then
-     * applies the {@code after} function to the result. If evaluation of either function throws an exception, it is
-     * relayed to the caller of the composed function.
-     *
-     * @param after The function to apply after this function is applied
-     * @return A composed {@code ToLongBiObjLongFunction} that first applies this function to its input, and then
-     * applies the {@code after} function to the result.
-     * @throws NullPointerException If given argument is {@code null}
-     * @implNote The result of this method is a primitive specialization of {@link TriFunction}. Therefore the returned
-     * operation handles primitive types. In this case this is {@code long}.
-     * @see #compose(Function, Function, LongUnaryOperator)
-     * @see #compose(Function, Function, ToLongFunction)
-     */
-    @Nonnull
-    default ToLongBiObjLongFunction<T, U> andThen(@Nonnull final ToLongFunction<? super R> after) {
-        Objects.requireNonNull(after);
-        return (t, u, value) -> after.applyAsLong(apply(t, u, value));
-    }
 
     /**
      * Returns a composed {@link BiObjLongFunction} that first applies this function to its input, and then applies the
@@ -216,7 +195,6 @@ public interface BiObjLongFunction<T, U, R> {
      * @return A composed {@code BiObjLongFunction} that first applies this function to its input, and then applies the
      * {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The returned function is able to handle every type.
      * @see #compose(Function, Function, LongUnaryOperator)
      * @see #compose(Function, Function, ToLongFunction)
      */

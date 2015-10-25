@@ -17,8 +17,6 @@ package at.gridtec.lambda4j.function.primitives.tri;
 
 import at.gridtec.lambda4j.consumer.primitives.tri.IntTriConsumer;
 import at.gridtec.lambda4j.function.TriFunction;
-import at.gridtec.lambda4j.operators.ternary.IntTernaryOperator;
-import at.gridtec.lambda4j.operators.ternary.TernaryOperator;
 
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
@@ -137,7 +135,6 @@ public interface IntTriFunction<R> {
      * @throws NullPointerException If given argument is {@code null}
      * @implNote The input arguments of this method are primitive specializations of {@link UnaryOperator}. Therefore
      * the given operations handle primitive types. In this case this is {@code int}.
-     * @see #andThen(ToIntFunction)
      * @see #andThen(Function)
      */
     @Nonnull
@@ -164,7 +161,6 @@ public interface IntTriFunction<R> {
      * applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
      * @implNote The input arguments of this method are able to handle every type.
-     * @see #andThen(ToIntFunction)
      * @see #andThen(Function)
      */
     @Nonnull
@@ -173,26 +169,6 @@ public interface IntTriFunction<R> {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         return (t, u, v) -> apply(before1.applyAsInt(t), before2.applyAsInt(u), before3.applyAsInt(v));
-    }
-
-    /**
-     * Returns a composed {@link IntTernaryOperator} that first applies this function to its input, and then applies the
-     * {@code after} function to the result. If evaluation of either function throws an exception, it is relayed to the
-     * caller of the composed function.
-     *
-     * @param after The function to apply after this function is applied
-     * @return A composed {@code IntTernaryOperator} that first applies this function to its input, and then applies the
-     * {@code after} function to the result.
-     * @throws NullPointerException If given argument is {@code null}
-     * @implNote The result of this method is a primitive specialization of {@link TernaryOperator}. Therefore the
-     * returned operation handles primitive types. In this case this is {@code int}.
-     * @see #compose(IntUnaryOperator, IntUnaryOperator, IntUnaryOperator)
-     * @see #compose(ToIntFunction, ToIntFunction, ToIntFunction)
-     */
-    @Nonnull
-    default IntTernaryOperator andThen(@Nonnull final ToIntFunction<? super R> after) {
-        Objects.requireNonNull(after);
-        return (value1, value2, value3) -> after.applyAsInt(apply(value1, value2, value3));
     }
 
     /**
@@ -205,7 +181,6 @@ public interface IntTriFunction<R> {
      * @return A composed {@code IntTriFunction} that first applies this function to its input, and then applies the
      * {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The returned function is able to handle every type.
      * @see #compose(IntUnaryOperator, IntUnaryOperator, IntUnaryOperator)
      * @see #compose(ToIntFunction, ToIntFunction, ToIntFunction)
      */

@@ -19,8 +19,6 @@ import at.gridtec.lambda4j.consumer.primitives.tri.FloatTriConsumer;
 import at.gridtec.lambda4j.function.TriFunction;
 import at.gridtec.lambda4j.function.primitives.FloatFunction;
 import at.gridtec.lambda4j.function.primitives.to.ToFloatFunction;
-import at.gridtec.lambda4j.operators.ternary.FloatTernaryOperator;
-import at.gridtec.lambda4j.operators.ternary.TernaryOperator;
 import at.gridtec.lambda4j.operators.unary.FloatUnaryOperator;
 
 import javax.annotation.Nonnegative;
@@ -137,7 +135,6 @@ public interface FloatTriFunction<R> {
      * @throws NullPointerException If given argument is {@code null}
      * @implNote The input arguments of this method are primitive specializations of {@link UnaryOperator}. Therefore
      * the given operations handle primitive types. In this case this is {@code float}.
-     * @see #andThen(ToFloatFunction)
      * @see #andThen(Function)
      */
     @Nonnull
@@ -164,7 +161,6 @@ public interface FloatTriFunction<R> {
      * applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
      * @implNote The input arguments of this method are able to handle every type.
-     * @see #andThen(ToFloatFunction)
      * @see #andThen(Function)
      */
     @Nonnull
@@ -173,26 +169,6 @@ public interface FloatTriFunction<R> {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         return (t, u, v) -> apply(before1.applyAsFloat(t), before2.applyAsFloat(u), before3.applyAsFloat(v));
-    }
-
-    /**
-     * Returns a composed {@link FloatTernaryOperator} that first applies this function to its input, and then applies
-     * the {@code after} function to the result. If evaluation of either function throws an exception, it is relayed to
-     * the caller of the composed function.
-     *
-     * @param after The function to apply after this function is applied
-     * @return A composed {@code FloatTernaryOperator} that first applies this function to its input, and then applies
-     * the {@code after} function to the result.
-     * @throws NullPointerException If given argument is {@code null}
-     * @implNote The result of this method is a primitive specialization of {@link TernaryOperator}. Therefore the
-     * returned operation handles primitive types. In this case this is {@code float}.
-     * @see #compose(FloatUnaryOperator, FloatUnaryOperator, FloatUnaryOperator)
-     * @see #compose(ToFloatFunction, ToFloatFunction, ToFloatFunction)
-     */
-    @Nonnull
-    default FloatTernaryOperator andThen(@Nonnull final ToFloatFunction<? super R> after) {
-        Objects.requireNonNull(after);
-        return (value1, value2, value3) -> after.applyAsFloat(apply(value1, value2, value3));
     }
 
     /**
@@ -205,7 +181,6 @@ public interface FloatTriFunction<R> {
      * @return A composed {@code FloatTriFunction} that first applies this function to its input, and then applies the
      * {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The returned function is able to handle every type.
      * @see #compose(FloatUnaryOperator, FloatUnaryOperator, FloatUnaryOperator)
      * @see #compose(ToFloatFunction, ToFloatFunction, ToFloatFunction)
      */

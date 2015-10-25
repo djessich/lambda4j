@@ -27,7 +27,6 @@ import at.gridtec.lambda4j.predicates.TriPredicate;
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import java.util.Objects;
-import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.function.LongConsumer;
 import java.util.function.LongFunction;
@@ -154,7 +153,6 @@ public interface ToLongTriFunction<T, U, V> {
      * @throws NullPointerException If given argument is {@code null}
      * @implNote The input arguments of this method are primitive specializations of {@link UnaryOperator}. Therefore
      * the given operations handle primitive types. In this case this is {@code long}.
-     * @see #andThen(LongUnaryOperator)
      * @see #andThen(LongFunction)
      */
     @Nonnull
@@ -181,7 +179,6 @@ public interface ToLongTriFunction<T, U, V> {
      * then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
      * @implNote The input arguments of this method are able to handle every type.
-     * @see #andThen(LongUnaryOperator)
      * @see #andThen(LongFunction)
      */
     @Nonnull
@@ -195,26 +192,6 @@ public interface ToLongTriFunction<T, U, V> {
     }
 
     /**
-     * Returns a composed {@link ToLongTriFunction} that first applies this function to its input, and then applies the
-     * {@code after} operation to the result. If evaluation of either operation throws an exception, it is relayed to
-     * the caller of the composed operation.
-     *
-     * @param after The operation to apply after this function is applied
-     * @return A composed {@code ToLongTriFunction} that first applies this function to its input, and then applies the
-     * {@code after} operation to the result.
-     * @throws NullPointerException If given argument is {@code null}
-     * @implNote The result of this method is a primitive specialization of {@link BiFunction}. Therefore the returned
-     * operation handles primitive types. In this case this is {@code long}.
-     * @see #compose(UnaryOperator, UnaryOperator, UnaryOperator)
-     * @see #compose(Function, Function, Function)
-     */
-    @Nonnull
-    default ToLongTriFunction<T, U, V> andThen(@Nonnull final LongUnaryOperator after) {
-        Objects.requireNonNull(after);
-        return (t, u, v) -> after.applyAsLong(applyAsLong(t, u, v));
-    }
-
-    /**
      * Returns a composed {@link TriFunction} that first applies this function to its input, and then applies the {@code
      * after} function to the result. If evaluation of either function throws an exception, it is relayed to the caller
      * of the composed function.
@@ -224,7 +201,6 @@ public interface ToLongTriFunction<T, U, V> {
      * @return A composed {@code TriFunction} that first applies this function to its input, and then applies the {@code
      * after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The returned function is able to handle every type.
      * @see #compose(UnaryOperator, UnaryOperator, UnaryOperator)
      * @see #compose(Function, Function, Function)
      */
@@ -237,16 +213,20 @@ public interface ToLongTriFunction<T, U, V> {
     /**
      * Returns a composed {@link TriPredicate} that first applies this function to its input, and then applies the
      * {@code after} function to the result. If evaluation of either function throws an exception, it is relayed to the
-     * caller of the composed function. This method is just convenience, to provide the ability to transform this
-     * function to the {@code boolean}-producing primitive specialization of {@link TriPredicate}.
+     * caller of the composed function.
+     * <p>
+     * This method is just convenience, to provide the ability to transform this function to an equal function,
+     * returning {@code boolean}. Thereby the {@code long}-to-{@code boolean} primitive specialization of {@link
+     * Function} is used.
      *
-     * @param after The function to apply after this operation is applied
+     * @param after The function to apply after this function is applied
      * @return A composed {@code TriPredicate} that first applies this function to its input, and then applies the
      * {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
+     * @see #andThen(LongFunction)
      */
     @Nonnull
-    default TriPredicate<T, U, V> toBoolean(@Nonnull final LongToBooleanFunction after) {
+    default TriPredicate<T, U, V> andThenToBoolean(@Nonnull final LongToBooleanFunction after) {
         Objects.requireNonNull(after);
         return (t, u, v) -> after.applyAsBoolean(applyAsLong(t, u, v));
     }
@@ -254,16 +234,20 @@ public interface ToLongTriFunction<T, U, V> {
     /**
      * Returns a composed {@link ToByteTriFunction} that first applies this function to its input, and then applies the
      * {@code after} function to the result. If evaluation of either function throws an exception, it is relayed to the
-     * caller of the composed function. This method is just convenience, to provide the ability to transform this
-     * function to the {@code byte}-producing primitive specialization of {@link TriFunction}.
+     * caller of the composed function.
+     * <p>
+     * This method is just convenience, to provide the ability to transform this function to an equal function,
+     * returning {@code byte}. Thereby the {@code long}-to-{@code byte} primitive specialization of {@link Function} is
+     * used.
      *
-     * @param after The function to apply after this operation is applied
+     * @param after The function to apply after this function is applied
      * @return A composed {@code ToByteTriFunction} that first applies this function to its input, and then applies the
      * {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
+     * @see #andThen(LongFunction)
      */
     @Nonnull
-    default ToByteTriFunction<T, U, V> toByte(@Nonnull final LongToByteFunction after) {
+    default ToByteTriFunction<T, U, V> andThenToByte(@Nonnull final LongToByteFunction after) {
         Objects.requireNonNull(after);
         return (t, u, v) -> after.applyAsByte(applyAsLong(t, u, v));
 
@@ -272,16 +256,20 @@ public interface ToLongTriFunction<T, U, V> {
     /**
      * Returns a composed {@link ToCharTriFunction} that first applies this function to its input, and then applies the
      * {@code after} function to the result. If evaluation of either function throws an exception, it is relayed to the
-     * caller of the composed function. This method is just convenience, to provide the ability to transform this
-     * function to the {@code char}-producing primitive specialization of {@link TriFunction}.
+     * caller of the composed function.
+     * <p>
+     * This method is just convenience, to provide the ability to transform this function to an equal function,
+     * returning {@code char}. Thereby the {@code long}-to-{@code char} primitive specialization of {@link Function} is
+     * used.
      *
-     * @param after The function to apply after this operation is applied
+     * @param after The function to apply after this function is applied
      * @return A composed {@code ToCharTriFunction} that first applies this function to its input, and then applies the
      * {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
+     * @see #andThen(LongFunction)
      */
     @Nonnull
-    default ToCharTriFunction<T, U, V> toChar(@Nonnull final LongToCharFunction after) {
+    default ToCharTriFunction<T, U, V> andThenToChar(@Nonnull final LongToCharFunction after) {
         Objects.requireNonNull(after);
         return (t, u, v) -> after.applyAsChar(applyAsLong(t, u, v));
     }
@@ -289,16 +277,20 @@ public interface ToLongTriFunction<T, U, V> {
     /**
      * Returns a composed {@link ToDoubleTriFunction} that first applies this function to its input, and then applies
      * the {@code after} function to the result. If evaluation of either function throws an exception, it is relayed to
-     * the caller of the composed function. This method is just convenience, to provide the ability to transform this
-     * function to the {@code double}-producing primitive specialization of {@link TriFunction}.
+     * the caller of the composed function.
+     * <p>
+     * This method is just convenience, to provide the ability to transform this function to an equal function,
+     * returning {@code double}. Thereby the {@code long}-to-{@code double} primitive specialization of {@link Function}
+     * is used.
      *
-     * @param after The function to apply after this operation is applied
+     * @param after The function to apply after this function is applied
      * @return A composed {@code ToDoubleTriFunction} that first applies this function to its input, and then applies
      * the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
+     * @see #andThen(LongFunction)
      */
     @Nonnull
-    default ToDoubleTriFunction<T, U, V> toDouble(@Nonnull final LongToDoubleFunction after) {
+    default ToDoubleTriFunction<T, U, V> andThenToDouble(@Nonnull final LongToDoubleFunction after) {
         Objects.requireNonNull(after);
         return (t, u, v) -> after.applyAsDouble(applyAsLong(t, u, v));
     }
@@ -306,16 +298,20 @@ public interface ToLongTriFunction<T, U, V> {
     /**
      * Returns a composed {@link ToFloatTriFunction} that first applies this function to its input, and then applies the
      * {@code after} function to the result. If evaluation of either function throws an exception, it is relayed to the
-     * caller of the composed function. This method is just convenience, to provide the ability to transform this
-     * function to the {@code float}-producing primitive specialization of {@link TriFunction}.
+     * caller of the composed function.
+     * <p>
+     * This method is just convenience, to provide the ability to transform this function to an equal function,
+     * returning {@code float}. Thereby the {@code long}-to-{@code float} primitive specialization of {@link Function}
+     * is used.
      *
-     * @param after The function to apply after this operation is applied
+     * @param after The function to apply after this function is applied
      * @return A composed {@code ToFloatTriFunction} that first applies this function to its input, and then applies the
      * {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
+     * @see #andThen(LongFunction)
      */
     @Nonnull
-    default ToFloatTriFunction<T, U, V> toFloat(@Nonnull final LongToFloatFunction after) {
+    default ToFloatTriFunction<T, U, V> andThenToFloat(@Nonnull final LongToFloatFunction after) {
         Objects.requireNonNull(after);
         return (t, u, v) -> after.applyAsFloat(applyAsLong(t, u, v));
     }
@@ -323,33 +319,62 @@ public interface ToLongTriFunction<T, U, V> {
     /**
      * Returns a composed {@link ToIntTriFunction} that first applies this function to its input, and then applies the
      * {@code after} function to the result. If evaluation of either function throws an exception, it is relayed to the
-     * caller of the composed function. This method is just convenience, to provide the ability to transform this
-     * function to the {@code int}-producing primitive specialization of {@link TriFunction}.
+     * caller of the composed function.
+     * <p>
+     * This method is just convenience, to provide the ability to transform this function to an equal function,
+     * returning {@code int}. Thereby the {@code long}-to-{@code int} primitive specialization of {@link Function} is
+     * used.
      *
-     * @param after The function to apply after this operation is applied
+     * @param after The function to apply after this function is applied
      * @return A composed {@code ToIntTriFunction} that first applies this function to its input, and then applies the
      * {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
+     * @see #andThen(LongFunction)
      */
     @Nonnull
-    default ToIntTriFunction<T, U, V> toInt(@Nonnull final LongToIntFunction after) {
+    default ToIntTriFunction<T, U, V> andThenToInt(@Nonnull final LongToIntFunction after) {
         Objects.requireNonNull(after);
         return (t, u, v) -> after.applyAsInt(applyAsLong(t, u, v));
     }
 
     /**
+     * Returns a composed {@link ToLongTriFunction} that first applies this function to its input, and then applies the
+     * {@code after} function to the result. If evaluation of either function throws an exception, it is relayed to the
+     * caller of the composed function.
+     * <p>
+     * This method is just convenience, to provide the ability to transform this function to an equal function,
+     * returning {@code long}. Thereby the {@code long}-producing primitive specialization of {@link UnaryOperator} is
+     * used.
+     *
+     * @param after The function to apply after this function is applied
+     * @return A composed {@code ToLongTriFunction} that first applies this function to its input, and then applies the
+     * {@code after} function to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @see #andThen(LongFunction)
+     */
+    @Nonnull
+    default ToLongTriFunction<T, U, V> andThenToLong(@Nonnull final LongUnaryOperator after) {
+        Objects.requireNonNull(after);
+        return (t, u, v) -> after.applyAsLong(applyAsLong(t, u, v));
+    }
+
+    /**
      * Returns a composed {@link ToShortTriFunction} that first applies this function to its input, and then applies the
      * {@code after} function to the result. If evaluation of either function throws an exception, it is relayed to the
-     * caller of the composed function. This method is just convenience, to provide the ability to transform this
-     * function to the {@code short}-producing primitive specialization of {@link TriFunction}.
+     * caller of the composed function.
+     * <p>
+     * This method is just convenience, to provide the ability to transform this function to an equal function,
+     * returning {@code short}. Thereby the {@code long}-to-{@code short} primitive specialization of {@link Function}
+     * is used.
      *
-     * @param after The function to apply after this operation is applied
+     * @param after The function to apply after this function is applied
      * @return A composed {@code ToShortTriFunction} that first applies this function to its input, and then applies the
      * {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
+     * @see #andThen(LongFunction)
      */
     @Nonnull
-    default ToShortTriFunction<T, U, V> toShort(@Nonnull final LongToShortFunction after) {
+    default ToShortTriFunction<T, U, V> andThenToShort(@Nonnull final LongToShortFunction after) {
         Objects.requireNonNull(after);
         return (t, u, v) -> after.applyAsShort(applyAsLong(t, u, v));
     }

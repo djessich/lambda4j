@@ -107,19 +107,18 @@ public interface ToDoubleObjDoubleFunction<T> {
     }
 
     /**
-     * Returns a composed {@link ToDoubleObjDoubleFunction} that first applies the {@code before} operations to its input,
-     * and then applies this function to the result. If evaluation of either operation throws an exception, it is
+     * Returns a composed {@link ToDoubleObjDoubleFunction} that first applies the {@code before} operations to its
+     * input, and then applies this function to the result. If evaluation of either operation throws an exception, it is
      * relayed to the caller of the composed operation.
      *
      * @param <U> The type of the argument to the first before operation
      * @param before1 The first operation to apply before this function is applied
      * @param before2 The second operation to apply before this function is applied
-     * @return A composed {@code ToDoubleObjDoubleFunction} that first applies the {@code before} operations to its input,
-     * and then applies this function to the result.
+     * @return A composed {@code ToDoubleObjDoubleFunction} that first applies the {@code before} operations to its
+     * input, and then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
      * @implNote The last input argument of this method is the primitive specialization of {@link UnaryOperator}.
      * Therefore the operation handles a primitive type. In this case this is {@code double}.
-     * @see #andThen(DoubleUnaryOperator)
      * @see #andThen(DoubleFunction)
      */
     @Nonnull
@@ -143,7 +142,6 @@ public interface ToDoubleObjDoubleFunction<T> {
      * then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
      * @implNote The input arguments of this method are able to handle every type.
-     * @see #andThen(DoubleUnaryOperator)
      * @see #andThen(DoubleFunction)
      */
     @Nonnull
@@ -152,26 +150,6 @@ public interface ToDoubleObjDoubleFunction<T> {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         return (u, v) -> applyAsDouble(before1.apply(u), before2.applyAsDouble(v));
-    }
-
-    /**
-     * Returns a composed {@link ToDoubleObjDoubleFunction} that first applies this function to its input, and then applies
-     * the {@code after} operation to the result. If evaluation of either function throws an exception, it is relayed to
-     * the caller of the composed function.
-     *
-     * @param after The function to apply after this function is applied
-     * @return A composed {@code ToDoubleObjDoubleFunction} that first applies this function to its input, and then applies
-     * the {@code after} function to the result.
-     * @throws NullPointerException If given argument is {@code null}
-     * @implNote The result of this method is a primitive specialization of {@link BiFunction}. Therefore the returned
-     * operation handles primitive types. In this case this is {@code double}.
-     * @see #compose(Function, DoubleUnaryOperator)
-     * @see #compose(Function, ToDoubleFunction)
-     */
-    @Nonnull
-    default ToDoubleObjDoubleFunction<T> andThen(@Nonnull final DoubleUnaryOperator after) {
-        Objects.requireNonNull(after);
-        return (t, value) -> after.applyAsDouble(applyAsDouble(t, value));
     }
 
     /**
@@ -184,7 +162,6 @@ public interface ToDoubleObjDoubleFunction<T> {
      * @return A composed {@code ObjDoubleFunction} that first applies this function to its input, and then applies the
      * {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The returned function is able to handle every type.
      * @see #compose(Function, DoubleUnaryOperator)
      * @see #compose(Function, ToDoubleFunction)
      */
@@ -196,8 +173,8 @@ public interface ToDoubleObjDoubleFunction<T> {
 
     /**
      * Returns a composed {@link ObjDoubleConsumer} that fist applies this function to its input, and then consumes the
-     * result using the given {@link DoubleConsumer}. If evaluation of either operation throws an exception, it is relayed
-     * to the caller of the composed operation.
+     * result using the given {@link DoubleConsumer}. If evaluation of either operation throws an exception, it is
+     * relayed to the caller of the composed operation.
      *
      * @param consumer The operation which consumes the result from this operation
      * @return A composed {@code ObjDoubleConsumer} that first applies this function to its input, and then consumes the

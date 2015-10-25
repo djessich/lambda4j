@@ -18,13 +18,11 @@ package at.gridtec.lambda4j.function.primitives.obj;
 import at.gridtec.lambda4j.consumer.primitives.obj.ObjBooleanConsumer;
 import at.gridtec.lambda4j.function.primitives.BooleanFunction;
 import at.gridtec.lambda4j.operators.unary.BooleanUnaryOperator;
-import at.gridtec.lambda4j.predicates.primitives.obj.ObjBooleanPredicate;
 
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import java.util.Objects;
 import java.util.function.BiFunction;
-import java.util.function.BiPredicate;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Predicate;
@@ -124,7 +122,6 @@ public interface ObjBooleanFunction<T, R> {
      * @throws NullPointerException If given argument is {@code null}
      * @implNote The last input argument of this method is the primitive specialization of {@link UnaryOperator}.
      * Therefore the operation handles a primitive type. In this case this is {@code boolean}.
-     * @see #andThen(Predicate)
      * @see #andThen(Function)
      */
     @Nonnull
@@ -148,7 +145,6 @@ public interface ObjBooleanFunction<T, R> {
      * applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
      * @implNote The input arguments of this method are able to handle every type.
-     * @see #andThen(Predicate)
      * @see #andThen(Function)
      */
     @Nonnull
@@ -157,26 +153,6 @@ public interface ObjBooleanFunction<T, R> {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         return (u, v) -> apply(before1.apply(u), before2.test(v));
-    }
-
-    /**
-     * Returns a composed {@link ObjBooleanPredicate} that first applies this function to its input, and then applies
-     * the {@code after} operation to the result. If evaluation of either operation throws an exception, it is relayed to
-     * the caller of the composed operation.
-     *
-     * @param after The operation to apply after this function is applied
-     * @return A composed {@code ObjBooleanPredicate} that first applies this function to its input, and then applies
-     * the {@code after} operation to the result.
-     * @throws NullPointerException If given argument is {@code null}
-     * @implNote The result of this method is a primitive specialization of {@link BiPredicate}. Therefore the returned
-     * operation handles primitive types. In this case this is {@code boolean}.
-     * @see #compose(Function, BooleanUnaryOperator)
-     * @see #compose(Function, Predicate)
-     */
-    @Nonnull
-    default ObjBooleanPredicate<T> andThen(@Nonnull final Predicate<? super R> after) {
-        Objects.requireNonNull(after);
-        return (t, value) -> after.test(apply(t, value));
     }
 
     /**
@@ -189,7 +165,6 @@ public interface ObjBooleanFunction<T, R> {
      * @return A composed {@code ObjBooleanFunction} that first applies this function to its input, and then applies the
      * {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The returned function is able to handle every type.
      * @see #compose(Function, BooleanUnaryOperator)
      * @see #compose(Function, Predicate)
      */

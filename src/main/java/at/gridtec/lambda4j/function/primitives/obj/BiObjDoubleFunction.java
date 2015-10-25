@@ -147,7 +147,6 @@ public interface BiObjDoubleFunction<T, U, R> {
      * @throws NullPointerException If given argument is {@code null}
      * @implNote The last input argument of this method is the primitive specialization of {@link UnaryOperator}.
      * Therefore the operation handles a primitive type. In this case this is {@code double}.
-     * @see #andThen(ToDoubleFunction)
      * @see #andThen(Function)
      */
     @Nonnull
@@ -174,7 +173,6 @@ public interface BiObjDoubleFunction<T, U, R> {
      * applies this function to the result.
      * @throws NullPointerException If one of the given functions are {@code null}
      * @implNote The input arguments of this method are able to handle every type.
-     * @see #andThen(ToDoubleFunction)
      * @see #andThen(Function)
      */
     @Nonnull
@@ -188,26 +186,6 @@ public interface BiObjDoubleFunction<T, U, R> {
     }
 
     /**
-     * Returns a composed {@link ToDoubleBiObjDoubleFunction} that first applies this function to its input, and then
-     * applies the {@code after} function to the result. If evaluation of either function throws an exception, it is
-     * relayed to the caller of the composed function.
-     *
-     * @param after The function to apply after this function is applied
-     * @return A composed {@code ToDoubleBiObjDoubleFunction} that first applies this function to its input, and then
-     * applies the {@code after} function to the result.
-     * @throws NullPointerException If given argument is {@code null}
-     * @implNote The result of this method is a primitive specialization of {@link TriFunction}. Therefore the returned
-     * operation handles primitive types. In this case this is {@code double}.
-     * @see #compose(Function, Function, DoubleUnaryOperator)
-     * @see #compose(Function, Function, ToDoubleFunction)
-     */
-    @Nonnull
-    default ToDoubleBiObjDoubleFunction<T, U> andThen(@Nonnull final ToDoubleFunction<? super R> after) {
-        Objects.requireNonNull(after);
-        return (t, u, value) -> after.applyAsDouble(apply(t, u, value));
-    }
-
-    /**
      * Returns a composed {@link BiObjDoubleFunction} that first applies this function to its input, and then applies
      * the {@code after} function to the result. If evaluation of either function throws an exception, it is relayed to
      * the caller of the composed function.
@@ -217,7 +195,6 @@ public interface BiObjDoubleFunction<T, U, R> {
      * @return A composed {@code BiObjDoubleFunction} that first applies this function to its input, and then applies
      * the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The returned function is able to handle every type.
      * @see #compose(Function, Function, DoubleUnaryOperator)
      * @see #compose(Function, Function, ToDoubleFunction)
      */

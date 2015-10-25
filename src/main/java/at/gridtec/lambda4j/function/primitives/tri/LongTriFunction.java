@@ -17,8 +17,6 @@ package at.gridtec.lambda4j.function.primitives.tri;
 
 import at.gridtec.lambda4j.consumer.primitives.tri.LongTriConsumer;
 import at.gridtec.lambda4j.function.TriFunction;
-import at.gridtec.lambda4j.operators.ternary.LongTernaryOperator;
-import at.gridtec.lambda4j.operators.ternary.TernaryOperator;
 
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
@@ -137,7 +135,6 @@ public interface LongTriFunction<R> {
      * @throws NullPointerException If given argument is {@code null}
      * @implNote The input arguments of this method are primitive specializations of {@link UnaryOperator}. Therefore
      * the given operations handle primitive types. In this case this is {@code long}.
-     * @see #andThen(ToLongFunction)
      * @see #andThen(Function)
      */
     @Nonnull
@@ -164,7 +161,6 @@ public interface LongTriFunction<R> {
      * applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
      * @implNote The input arguments of this method are able to handle every type.
-     * @see #andThen(ToLongFunction)
      * @see #andThen(Function)
      */
     @Nonnull
@@ -173,26 +169,6 @@ public interface LongTriFunction<R> {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         return (t, u, v) -> apply(before1.applyAsLong(t), before2.applyAsLong(u), before3.applyAsLong(v));
-    }
-
-    /**
-     * Returns a composed {@link LongTernaryOperator} that first applies this function to its input, and then applies
-     * the {@code after} function to the result. If evaluation of either function throws an exception, it is relayed to
-     * the caller of the composed function.
-     *
-     * @param after The function to apply after this function is applied
-     * @return A composed {@code LongTernaryOperator} that first applies this function to its input, and then applies
-     * the {@code after} function to the result.
-     * @throws NullPointerException If given argument is {@code null}
-     * @implNote The result of this method is a primitive specialization of {@link TernaryOperator}. Therefore the
-     * returned operation handles primitive types. In this case this is {@code long}.
-     * @see #compose(LongUnaryOperator, LongUnaryOperator, LongUnaryOperator)
-     * @see #compose(ToLongFunction, ToLongFunction, ToLongFunction)
-     */
-    @Nonnull
-    default LongTernaryOperator andThen(@Nonnull final ToLongFunction<? super R> after) {
-        Objects.requireNonNull(after);
-        return (value1, value2, value3) -> after.applyAsLong(apply(value1, value2, value3));
     }
 
     /**
@@ -205,7 +181,6 @@ public interface LongTriFunction<R> {
      * @return A composed {@code LongTriFunction} that first applies this function to its input, and then applies the
      * {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The returned function is able to handle every type.
      * @see #compose(LongUnaryOperator, LongUnaryOperator, LongUnaryOperator)
      * @see #compose(ToLongFunction, ToLongFunction, ToLongFunction)
      */

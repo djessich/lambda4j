@@ -120,7 +120,6 @@ public interface ToCharObjCharFunction<T> {
      * @throws NullPointerException If given argument is {@code null}
      * @implNote The last input argument of this method is the primitive specialization of {@link UnaryOperator}.
      * Therefore the operation handles a primitive type. In this case this is {@code char}.
-     * @see #andThen(CharUnaryOperator)
      * @see #andThen(CharFunction)
      */
     @Nonnull
@@ -144,7 +143,6 @@ public interface ToCharObjCharFunction<T> {
      * then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
      * @implNote The input arguments of this method are able to handle every type.
-     * @see #andThen(CharUnaryOperator)
      * @see #andThen(CharFunction)
      */
     @Nonnull
@@ -153,26 +151,6 @@ public interface ToCharObjCharFunction<T> {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         return (u, v) -> applyAsChar(before1.apply(u), before2.applyAsChar(v));
-    }
-
-    /**
-     * Returns a composed {@link ToCharObjCharFunction} that first applies this function to its input, and then applies
-     * the {@code after} operation to the result. If evaluation of either function throws an exception, it is relayed to
-     * the caller of the composed function.
-     *
-     * @param after The function to apply after this function is applied
-     * @return A composed {@code ToCharObjCharFunction} that first applies this function to its input, and then applies
-     * the {@code after} function to the result.
-     * @throws NullPointerException If given argument is {@code null}
-     * @implNote The result of this method is a primitive specialization of {@link BiFunction}. Therefore the returned
-     * operation handles primitive types. In this case this is {@code char}.
-     * @see #compose(Function, CharUnaryOperator)
-     * @see #compose(Function, ToCharFunction)
-     */
-    @Nonnull
-    default ToCharObjCharFunction<T> andThen(@Nonnull final CharUnaryOperator after) {
-        Objects.requireNonNull(after);
-        return (t, value) -> after.applyAsChar(applyAsChar(t, value));
     }
 
     /**
@@ -185,7 +163,6 @@ public interface ToCharObjCharFunction<T> {
      * @return A composed {@code ObjCharFunction} that first applies this function to its input, and then applies the
      * {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The returned function is able to handle every type.
      * @see #compose(Function, CharUnaryOperator)
      * @see #compose(Function, ToCharFunction)
      */

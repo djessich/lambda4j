@@ -122,7 +122,6 @@ public interface ObjByteFunction<T, R> {
      * @throws NullPointerException If given argument is {@code null}
      * @implNote The last input argument of this method is the primitive specialization of {@link UnaryOperator}.
      * Therefore the operation handles a primitive type. In this case this is {@code byte}.
-     * @see #andThen(ToByteFunction)
      * @see #andThen(Function)
      */
     @Nonnull
@@ -146,7 +145,6 @@ public interface ObjByteFunction<T, R> {
      * applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
      * @implNote The input arguments of this method are able to handle every type.
-     * @see #andThen(ToByteFunction)
      * @see #andThen(Function)
      */
     @Nonnull
@@ -155,26 +153,6 @@ public interface ObjByteFunction<T, R> {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         return (u, v) -> apply(before1.apply(u), before2.applyAsByte(v));
-    }
-
-    /**
-     * Returns a composed {@link ToByteObjByteFunction} that first applies this function to its input, and then applies
-     * the {@code after} function to the result. If evaluation of either function throws an exception, it is relayed to
-     * the caller of the composed function.
-     *
-     * @param after The function to apply after this function is applied
-     * @return A composed {@code ToByteObjByteFunction} that first applies this function to its input, and then applies
-     * the {@code after} function to the result.
-     * @throws NullPointerException If given argument is {@code null}
-     * @implNote The result of this method is a primitive specialization of {@link BiFunction}. Therefore the returned
-     * operation handles primitive types. In this case this is {@code byte}.
-     * @see #compose(Function, ByteUnaryOperator)
-     * @see #compose(Function, ToByteFunction)
-     */
-    @Nonnull
-    default ToByteObjByteFunction<T> andThen(@Nonnull final ToByteFunction<? super R> after) {
-        Objects.requireNonNull(after);
-        return (t, value) -> after.applyAsByte(apply(t, value));
     }
 
     /**
@@ -187,7 +165,6 @@ public interface ObjByteFunction<T, R> {
      * @return A composed {@code ObjByteFunction} that first applies this function to its input, and then applies the
      * {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The returned function is able to handle every type.
      * @see #compose(Function, ByteUnaryOperator)
      * @see #compose(Function, ToByteFunction)
      */

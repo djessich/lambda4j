@@ -132,7 +132,6 @@ public interface ToShortBiFunction<T, U> {
      * @throws NullPointerException If given argument is {@code null}
      * @implNote The input arguments of this method are primitive specializations of {@link UnaryOperator}. Therefore
      * the given operations handle primitive types. In this case this is {@code short}.
-     * @see #andThen(ShortUnaryOperator)
      * @see #andThen(ShortFunction)
      */
     @Nonnull
@@ -156,7 +155,6 @@ public interface ToShortBiFunction<T, U> {
      * then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
      * @implNote The input arguments of this method are able to handle every type.
-     * @see #andThen(ShortUnaryOperator)
      * @see #andThen(ShortFunction)
      */
     @Nonnull
@@ -165,26 +163,6 @@ public interface ToShortBiFunction<T, U> {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         return (a, b) -> applyAsShort(before1.apply(a), before2.apply(b));
-    }
-
-    /**
-     * Returns a composed {@link ToShortBiFunction} that first applies this function to its input, and then applies the
-     * {@code after} operation to the result. If evaluation of either operation throws an exception, it is relayed to
-     * the caller of the composed operation.
-     *
-     * @param after The operation to apply after this function is applied
-     * @return A composed {@code ToShortBiFunction} that first applies this function to its input, and then applies the
-     * {@code after} operation to the result.
-     * @throws NullPointerException If given argument is {@code null}
-     * @implNote The result of this method is a primitive specialization of {@link BiFunction}. Therefore the returned
-     * operation handles primitive types. In this case this is {@code short}.
-     * @see #compose(UnaryOperator, UnaryOperator)
-     * @see #compose(Function, Function)
-     */
-    @Nonnull
-    default ToShortBiFunction<T, U> andThen(@Nonnull final ShortUnaryOperator after) {
-        Objects.requireNonNull(after);
-        return (t, u) -> after.applyAsShort(applyAsShort(t, u));
     }
 
     /**
@@ -197,7 +175,6 @@ public interface ToShortBiFunction<T, U> {
      * @return A composed {@code BiFunction} that first applies this function to its input, and then applies the {@code
      * after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The returned function is able to handle every type.
      * @see #compose(UnaryOperator, UnaryOperator)
      * @see #compose(Function, Function)
      */
@@ -210,15 +187,19 @@ public interface ToShortBiFunction<T, U> {
     /**
      * Returns a composed {@link BiPredicate} that first applies this function to its input, and then applies the {@code
      * after} function to the result. If evaluation of either function throws an exception, it is relayed to the caller
-     * of the composed function. This method is just convenience, to provide the ability to transform this function to
-     * the {@code boolean}-producing primitive specialization of {@link BiPredicate}.
+     * of the composed function.
+     * <p>
+     * This method is just convenience, to provide the ability to transform this function to an equal function,
+     * returning {@code boolean}. Thereby the {@code short}-to-{@code boolean} primitive specialization of {@link
+     * Function} is used.
      *
-     * @param after The function to apply after this operation is applied
+     * @param after The function to apply after this function is applied
      * @return A composed {@code BiPredicate} that first applies this function to its input, and then applies the {@code
      * after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
+     * @see #andThen(ShortFunction)
      */
-    default BiPredicate<T, U> toBoolean(final ShortToBooleanFunction after) {
+    default BiPredicate<T, U> andThenToBoolean(final ShortToBooleanFunction after) {
         Objects.requireNonNull(after);
         return (t, u) -> after.applyAsBoolean(applyAsShort(t, u));
     }
@@ -226,16 +207,20 @@ public interface ToShortBiFunction<T, U> {
     /**
      * Returns a composed {@link ToByteBiFunction} that first applies this function to its input, and then applies the
      * {@code after} function to the result. If evaluation of either function throws an exception, it is relayed to the
-     * caller of the composed function. This method is just convenience, to provide the ability to transform this
-     * function to the {@code byte}-producing primitive specialization of {@link BiFunction}.
+     * caller of the composed function.
+     * <p>
+     * This method is just convenience, to provide the ability to transform this function to an equal function,
+     * returning {@code byte}. Thereby the {@code short}-to-{@code byte} primitive specialization of {@link Function} is
+     * used.
      *
-     * @param after The function to apply after this operation is applied
+     * @param after The function to apply after this function is applied
      * @return A composed {@code ToByteBiFunction} that first applies this function to its input, and then applies the
      * {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
+     * @see #andThen(ShortFunction)
      */
     @Nonnull
-    default ToByteBiFunction<T, U> toByte(@Nonnull final ShortToByteFunction after) {
+    default ToByteBiFunction<T, U> andThenToByte(@Nonnull final ShortToByteFunction after) {
         Objects.requireNonNull(after);
         return (t, u) -> after.applyAsByte(applyAsShort(t, u));
     }
@@ -243,16 +228,20 @@ public interface ToShortBiFunction<T, U> {
     /**
      * Returns a composed {@link ToCharBiFunction} that first applies this function to its input, and then applies the
      * {@code after} function to the result. If evaluation of either function throws an exception, it is relayed to the
-     * caller of the composed function. This method is just convenience, to provide the ability to transform this
-     * function to the {@code char}-producing primitive specialization of {@link BiFunction}.
+     * caller of the composed function.
+     * <p>
+     * This method is just convenience, to provide the ability to transform this function to an equal function,
+     * returning {@code char}. Thereby the {@code short}-to-{@code char} primitive specialization of {@link Function} is
+     * used.
      *
-     * @param after The function to apply after this operation is applied
+     * @param after The function to apply after this function is applied
      * @return A composed {@code ToCharBiFunction} that first applies this function to its input, and then applies the
      * {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
+     * @see #andThen(ShortFunction)
      */
     @Nonnull
-    default ToCharBiFunction<T, U> toChar(@Nonnull final ShortToCharFunction after) {
+    default ToCharBiFunction<T, U> andThenToChar(@Nonnull final ShortToCharFunction after) {
         Objects.requireNonNull(after);
         return (t, u) -> after.applyAsChar(applyAsShort(t, u));
     }
@@ -260,16 +249,20 @@ public interface ToShortBiFunction<T, U> {
     /**
      * Returns a composed {@link ToDoubleBiFunction} that first applies this function to its input, and then applies the
      * {@code after} function to the result. If evaluation of either function throws an exception, it is relayed to the
-     * caller of the composed function. This method is just convenience, to provide the ability to transform this
-     * function to the {@code double}-producing primitive specialization of {@link BiFunction}.
+     * caller of the composed function.
+     * <p>
+     * This method is just convenience, to provide the ability to transform this function to an equal function,
+     * returning {@code double}. Thereby the {@code short}-to-{@code double} primitive specialization of {@link
+     * Function} is used.
      *
-     * @param after The function to apply after this operation is applied
+     * @param after The function to apply after this function is applied
      * @return A composed {@code ToDoubleBiFunction} that first applies this function to its input, and then applies the
      * {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
+     * @see #andThen(ShortFunction)
      */
     @Nonnull
-    default ToDoubleBiFunction<T, U> toDouble(@Nonnull final ShortToDoubleFunction after) {
+    default ToDoubleBiFunction<T, U> andThenToDouble(@Nonnull final ShortToDoubleFunction after) {
         Objects.requireNonNull(after);
         return (t, u) -> after.applyAsDouble(applyAsShort(t, u));
     }
@@ -277,16 +270,20 @@ public interface ToShortBiFunction<T, U> {
     /**
      * Returns a composed {@link ToFloatBiFunction} that first applies this function to its input, and then applies the
      * {@code after} function to the result. If evaluation of either function throws an exception, it is relayed to the
-     * caller of the composed function. This method is just convenience, to provide the ability to transform this
-     * function to the {@code float}-producing primitive specialization of {@link BiFunction}.
+     * caller of the composed function.
+     * <p>
+     * This method is just convenience, to provide the ability to transform this function to an equal function,
+     * returning {@code float}. Thereby the {@code short}-to-{@code float} primitive specialization of {@link Function}
+     * is used.
      *
-     * @param after The function to apply after this operation is applied
+     * @param after The function to apply after this function is applied
      * @return A composed {@code ToFloatBiFunction} that first applies this function to its input, and then applies the
      * {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
+     * @see #andThen(ShortFunction)
      */
     @Nonnull
-    default ToFloatBiFunction<T, U> toFloat(@Nonnull final ShortToFloatFunction after) {
+    default ToFloatBiFunction<T, U> andThenToFloat(@Nonnull final ShortToFloatFunction after) {
         Objects.requireNonNull(after);
         return (t, u) -> after.applyAsFloat(applyAsShort(t, u));
     }
@@ -294,16 +291,20 @@ public interface ToShortBiFunction<T, U> {
     /**
      * Returns a composed {@link ToIntBiFunction} that first applies this function to its input, and then applies the
      * {@code after} function to the result. If evaluation of either function throws an exception, it is relayed to the
-     * caller of the composed function. This method is just convenience, to provide the ability to transform this
-     * function to the {@code int}-producing primitive specialization of {@link BiFunction}.
+     * caller of the composed function.
+     * <p>
+     * This method is just convenience, to provide the ability to transform this function to an equal function,
+     * returning {@code int}. Thereby the {@code short}-to-{@code int} primitive specialization of {@link Function} is
+     * used.
      *
-     * @param after The function to apply after this operation is applied
+     * @param after The function to apply after this function is applied
      * @return A composed {@code ToIntBiFunction} that first applies this function to its input, and then applies the
      * {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
+     * @see #andThen(ShortFunction)
      */
     @Nonnull
-    default ToIntBiFunction<T, U> toInt(@Nonnull final ShortToIntFunction after) {
+    default ToIntBiFunction<T, U> andThenToInt(@Nonnull final ShortToIntFunction after) {
         Objects.requireNonNull(after);
         return (t, u) -> after.applyAsInt(applyAsShort(t, u));
     }
@@ -311,19 +312,44 @@ public interface ToShortBiFunction<T, U> {
     /**
      * Returns a composed {@link ToLongBiFunction} that first applies this function to its input, and then applies the
      * {@code after} function to the result. If evaluation of either function throws an exception, it is relayed to the
-     * caller of the composed function. This method is just convenience, to provide the ability to transform this
-     * function to the {@code long}-producing primitive specialization of {@link BiFunction}.
+     * caller of the composed function.
+     * <p>
+     * This method is just convenience, to provide the ability to transform this function to an equal function,
+     * returning {@code long}. Thereby the {@code short}-to-{@code long} primitive specialization of {@link Function} is
+     * used.
      *
-     * @param after The function to apply after this operation is applied
+     * @param after The function to apply after this function is applied
      * @return A composed {@code ToLongBiFunction} that first applies this function to its input, and then applies the
      * {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
+     * @see #andThen(ShortFunction)
      */
     @Nonnull
-    default ToLongBiFunction<T, U> toLong(@Nonnull final ShortToLongFunction after) {
+    default ToLongBiFunction<T, U> andThenToLong(@Nonnull final ShortToLongFunction after) {
         Objects.requireNonNull(after);
         return (t, u) -> after.applyAsLong(applyAsShort(t, u));
 
+    }
+
+    /**
+     * Returns a composed {@link ToShortBiFunction} that first applies this function to its input, and then applies the
+     * {@code after} function to the result. If evaluation of either function throws an exception, it is relayed to the
+     * caller of the composed function.
+     * <p>
+     * This method is just convenience, to provide the ability to transform this function to an equal function,
+     * returning {@code short}. Thereby the {@code short}-producing primitive specialization of {@link UnaryOperator} is
+     * used.
+     *
+     * @param after The function to apply after this function is applied
+     * @return A composed {@code ToShortBiFunction} that first applies this function to its input, and then applies the
+     * {@code after} function to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @see #andThen(ShortFunction)
+     */
+    @Nonnull
+    default ToShortBiFunction<T, U> andThenToShort(@Nonnull final ShortUnaryOperator after) {
+        Objects.requireNonNull(after);
+        return (t, u) -> after.applyAsShort(applyAsShort(t, u));
     }
 
     /**

@@ -95,7 +95,6 @@ public interface BooleanFunction<R> {
      * @throws NullPointerException If given argument is {@code null}
      * @implNote The input argument of this method is a primitive specialization of {@link UnaryOperator}. Therefore the
      * given operation handles primitive types. In this case this is {@code boolean}.
-     * @see #andThen(Predicate)
      * @see #andThen(Function)
      */
     @Nonnull
@@ -115,33 +114,12 @@ public interface BooleanFunction<R> {
      * this function to the result.
      * @throws NullPointerException If given argument is {@code null}
      * @implNote The input argument of this method is able to handle every type.
-     * @see #andThen(Predicate)
      * @see #andThen(Function)
      */
     @Nonnull
     default <T> Function<T, R> compose(@Nonnull final Predicate<? super T> before) {
         Objects.requireNonNull(before);
         return value -> apply(before.test(value));
-    }
-
-    /**
-     * Returns a composed {@link BooleanUnaryOperator} that first applies this function to its input, and then applies
-     * the {@code after} function to the result. If evaluation of either function throws an exception, it is relayed to
-     * the caller of the composed operation.
-     *
-     * @param after The function to apply after this function is applied
-     * @return A composed {@code BooleanUnaryOperator} that first applies this function to its input, and then applies
-     * the {@code after} function to the result.
-     * @throws NullPointerException If given argument is {@code null}
-     * @implNote The result of this method is a primitive specialization of {@link UnaryOperator}. Therefore the
-     * returned operation handles primitive types. In this case this is {@code boolean}.
-     * @see #compose(BooleanUnaryOperator)
-     * @see #compose(Predicate)
-     */
-    @Nonnull
-    default BooleanUnaryOperator andThen(@Nonnull final Predicate<? super R> after) {
-        Objects.requireNonNull(after);
-        return value -> after.test(apply(value));
     }
 
     /**
@@ -154,7 +132,6 @@ public interface BooleanFunction<R> {
      * @return A composed {@code BooleanFunction} that first applies this function to its input, and then applies the
      * {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The returned function is able to handle every type.
      * @see #compose(BooleanUnaryOperator)
      * @see #compose(Predicate)
      */
@@ -165,19 +142,41 @@ public interface BooleanFunction<R> {
     }
 
     /**
+     * Returns a composed {@link BooleanUnaryOperator} that first applies this function to its input, and then applies
+     * the {@code after} function to the result. If evaluation of either function throws an exception, it is relayed to
+     * the caller of the composed operation.
+     * <p>
+     * This method is just convenience, to provide the ability to transform this function to an equal operation,
+     * returning {@code boolean}. Thereby a {@link Predicate} is used.
+     *
+     * @param after The function to apply after this function is applied
+     * @return A composed {@code BooleanUnaryOperator} that first applies this function to its input, and then applies
+     * the {@code after} function to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @see #andThen(Function)
+     */
+    @Nonnull
+    default BooleanUnaryOperator andThenToBoolean(@Nonnull final Predicate<? super R> after) {
+        Objects.requireNonNull(after);
+        return value -> after.test(apply(value));
+    }
+
+    /**
      * Returns a composed {@link BooleanToByteFunction} that first applies this function to its input, and then applies
      * the {@code after} function to the result. If evaluation of either function throws an exception, it is relayed to
-     * the caller of the composed function. This method is just convenience, to provide the ability to transform this
-     * function to {@code byte}, using the {@code boolean}-to-{@code byte} primitive specialization of {@link
-     * Function}.
+     * the caller of the composed function.
+     * <p>
+     * This method is just convenience, to provide the ability to transform this function to an equal function,
+     * returning {@code byte}. Thereby the {@code byte}-producing primitive specialization of {@link Function} is used.
      *
      * @param after The function to apply after this function is applied
      * @return A composed {@code BooleanToByteFunction} that first applies this function to its input, and then applies
      * the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
+     * @see #andThen(Function)
      */
     @Nonnull
-    default BooleanToByteFunction toByte(@Nonnull final ToByteFunction<? super R> after) {
+    default BooleanToByteFunction andThenToByte(@Nonnull final ToByteFunction<? super R> after) {
         Objects.requireNonNull(after);
         return value -> after.applyAsByte(apply(value));
     }
@@ -185,17 +184,19 @@ public interface BooleanFunction<R> {
     /**
      * Returns a composed {@link BooleanToCharFunction} that first applies this function to its input, and then applies
      * the {@code after} function to the result. If evaluation of either function throws an exception, it is relayed to
-     * the caller of the composed function. This method is just convenience, to provide the ability to transform this
-     * function to {@code char}, using the {@code boolean}-to-{@code char} primitive specialization of {@link
-     * Function}.
+     * the caller of the composed function.
+     * <p>
+     * This method is just convenience, to provide the ability to transform this function to an equal function,
+     * returning {@code char}. Thereby the {@code char}-producing primitive specialization of {@link Function} is used.
      *
      * @param after The function to apply after this function is applied
      * @return A composed {@code BooleanToCharFunction} that first applies this function to its input, and then applies
      * the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
+     * @see #andThen(Function)
      */
     @Nonnull
-    default BooleanToCharFunction toChar(@Nonnull final ToCharFunction<? super R> after) {
+    default BooleanToCharFunction andThenToChar(@Nonnull final ToCharFunction<? super R> after) {
         Objects.requireNonNull(after);
         return value -> after.applyAsChar(apply(value));
     }
@@ -203,17 +204,20 @@ public interface BooleanFunction<R> {
     /**
      * Returns a composed {@link BooleanToDoubleFunction} that first applies this function to its input, and then
      * applies the {@code after} function to the result. If evaluation of either function throws an exception, it is
-     * relayed to the caller of the composed function. This method is just convenience, to provide the ability to
-     * transform this function to {@code double}, using the {@code boolean}-to-{@code double} primitive specialization
-     * of {@link Function}.
+     * relayed to the caller of the composed function.
+     * <p>
+     * This method is just convenience, to provide the ability to transform this function to an equal function,
+     * returning {@code double}. Thereby the {@code double}-producing primitive specialization of {@link Function} is
+     * used.
      *
      * @param after The function to apply after this function is applied
      * @return A composed {@code BooleanToDoubleFunction} that first applies this function to its input, and then
      * applies the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
+     * @see #andThen(Function)
      */
     @Nonnull
-    default BooleanToDoubleFunction toDouble(@Nonnull final ToDoubleFunction<? super R> after) {
+    default BooleanToDoubleFunction andThenToDouble(@Nonnull final ToDoubleFunction<? super R> after) {
         Objects.requireNonNull(after);
         return value -> after.applyAsDouble(apply(value));
     }
@@ -221,17 +225,20 @@ public interface BooleanFunction<R> {
     /**
      * Returns a composed {@link BooleanToFloatFunction} that first applies this function to its input, and then applies
      * the {@code after} function to the result. If evaluation of either function throws an exception, it is relayed to
-     * the caller of the composed function. This method is just convenience, to provide the ability to transform this
-     * function to {@code float}, using the {@code boolean}-to-{@code float} primitive specialization of {@link
-     * Function}.
+     * the caller of the composed function.
+     * <p>
+     * This method is just convenience, to provide the ability to transform this function to an equal function,
+     * returning {@code float}. Thereby the {@code float}-producing primitive specialization of {@link Function} is
+     * used.
      *
      * @param after The function to apply after this function is applied
      * @return A composed {@code BooleanToFloatFunction} that first applies this function to its input, and then applies
      * the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
+     * @see #andThen(Function)
      */
     @Nonnull
-    default BooleanToFloatFunction toFloat(@Nonnull final ToFloatFunction<? super R> after) {
+    default BooleanToFloatFunction andThenToFloat(@Nonnull final ToFloatFunction<? super R> after) {
         Objects.requireNonNull(after);
         return value -> after.applyAsFloat(apply(value));
     }
@@ -239,16 +246,19 @@ public interface BooleanFunction<R> {
     /**
      * Returns a composed {@link BooleanToIntFunction} that first applies this function to its input, and then applies
      * the {@code after} function to the result. If evaluation of either function throws an exception, it is relayed to
-     * the caller of the composed function. This method is just convenience, to provide the ability to transform this
-     * function to {@code int}, using the {@code boolean}-to-{@code int} primitive specialization of {@link Function}.
+     * the caller of the composed function.
+     * <p>
+     * This method is just convenience, to provide the ability to transform this function to an equal function,
+     * returning {@code int}. Thereby the {@code int}-producing primitive specialization of {@link Function} is used.
      *
      * @param after The function to apply after this function is applied
      * @return A composed {@code BooleanToIntFunction} that first applies this function to its input, and then applies
      * the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
+     * @see #andThen(Function)
      */
     @Nonnull
-    default BooleanToIntFunction toInt(@Nonnull final ToIntFunction<? super R> after) {
+    default BooleanToIntFunction andThenToInt(@Nonnull final ToIntFunction<? super R> after) {
         Objects.requireNonNull(after);
         return value -> after.applyAsInt(apply(value));
     }
@@ -256,17 +266,19 @@ public interface BooleanFunction<R> {
     /**
      * Returns a composed {@link BooleanToLongFunction} that first applies this function to its input, and then applies
      * the {@code after} function to the result. If evaluation of either function throws an exception, it is relayed to
-     * the caller of the composed function. This method is just convenience, to provide the ability to transform this
-     * function to {@code long}, using the {@code boolean}-to-{@code long} primitive specialization of {@link
-     * Function}.
+     * the caller of the composed function.
+     * <p>
+     * This method is just convenience, to provide the ability to transform this function to an equal function,
+     * returning {@code long}. Thereby the {@code long}-producing primitive specialization of {@link Function} is used.
      *
      * @param after The function to apply after this function is applied
      * @return A composed {@code BooleanToLongFunction} that first applies this function to its input, and then applies
      * the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
+     * @see #andThen(Function)
      */
     @Nonnull
-    default BooleanToLongFunction toLong(@Nonnull final ToLongFunction<? super R> after) {
+    default BooleanToLongFunction andThenToLong(@Nonnull final ToLongFunction<? super R> after) {
         Objects.requireNonNull(after);
         return value -> after.applyAsLong(apply(value));
     }
@@ -274,17 +286,20 @@ public interface BooleanFunction<R> {
     /**
      * Returns a composed {@link BooleanToShortFunction} that first applies this function to its input, and then applies
      * the {@code after} function to the result. If evaluation of either function throws an exception, it is relayed to
-     * the caller of the composed function. This method is just convenience, to provide the ability to transform this
-     * function to {@code short}, using the {@code boolean}-to-{@code short} primitive specialization of {@link
-     * Function}.
+     * the caller of the composed function.
+     * <p>
+     * This method is just convenience, to provide the ability to transform this function to an equal function,
+     * returning {@code short}. Thereby the {@code short}-producing primitive specialization of {@link Function} is
+     * used.
      *
      * @param after The function to apply after this function is applied
      * @return A composed {@code BooleanToShortFunction} that first applies this function to its input, and then applies
      * the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
+     * @see #andThen(Function)
      */
     @Nonnull
-    default BooleanToShortFunction toShort(@Nonnull final ToShortFunction<? super R> after) {
+    default BooleanToShortFunction andThenToShort(@Nonnull final ToShortFunction<? super R> after) {
         Objects.requireNonNull(after);
         return value -> after.applyAsShort(apply(value));
     }

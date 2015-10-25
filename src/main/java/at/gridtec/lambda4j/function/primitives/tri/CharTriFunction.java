@@ -19,8 +19,6 @@ import at.gridtec.lambda4j.consumer.primitives.tri.CharTriConsumer;
 import at.gridtec.lambda4j.function.TriFunction;
 import at.gridtec.lambda4j.function.primitives.CharFunction;
 import at.gridtec.lambda4j.function.primitives.to.ToCharFunction;
-import at.gridtec.lambda4j.operators.ternary.CharTernaryOperator;
-import at.gridtec.lambda4j.operators.ternary.TernaryOperator;
 import at.gridtec.lambda4j.operators.unary.CharUnaryOperator;
 
 import javax.annotation.Nonnegative;
@@ -137,7 +135,6 @@ public interface CharTriFunction<R> {
      * @throws NullPointerException If given argument is {@code null}
      * @implNote The input arguments of this method are primitive specializations of {@link UnaryOperator}. Therefore
      * the given operations handle primitive types. In this case this is {@code char}.
-     * @see #andThen(ToCharFunction)
      * @see #andThen(Function)
      */
     @Nonnull
@@ -164,7 +161,6 @@ public interface CharTriFunction<R> {
      * applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
      * @implNote The input arguments of this method are able to handle every type.
-     * @see #andThen(ToCharFunction)
      * @see #andThen(Function)
      */
     @Nonnull
@@ -173,26 +169,6 @@ public interface CharTriFunction<R> {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         return (t, u, v) -> apply(before1.applyAsChar(t), before2.applyAsChar(u), before3.applyAsChar(v));
-    }
-
-    /**
-     * Returns a composed {@link CharTernaryOperator} that first applies this function to its input, and then applies
-     * the {@code after} function to the result. If evaluation of either function throws an exception, it is relayed to
-     * the caller of the composed function.
-     *
-     * @param after The function to apply after this function is applied
-     * @return A composed {@code CharTernaryOperator} that first applies this function to its input, and then applies
-     * the {@code after} function to the result.
-     * @throws NullPointerException If given argument is {@code null}
-     * @implNote The result of this method is a primitive specialization of {@link TernaryOperator}. Therefore the
-     * returned operation handles primitive types. In this case this is {@code char}.
-     * @see #compose(CharUnaryOperator, CharUnaryOperator, CharUnaryOperator)
-     * @see #compose(ToCharFunction, ToCharFunction, ToCharFunction)
-     */
-    @Nonnull
-    default CharTernaryOperator andThen(@Nonnull final ToCharFunction<? super R> after) {
-        Objects.requireNonNull(after);
-        return (value1, value2, value3) -> after.applyAsChar(apply(value1, value2, value3));
     }
 
     /**
@@ -205,7 +181,6 @@ public interface CharTriFunction<R> {
      * @return A composed {@code CharTriFunction} that first applies this function to its input, and then applies the
      * {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The returned function is able to handle every type.
      * @see #compose(CharUnaryOperator, CharUnaryOperator, CharUnaryOperator)
      * @see #compose(ToCharFunction, ToCharFunction, ToCharFunction)
      */

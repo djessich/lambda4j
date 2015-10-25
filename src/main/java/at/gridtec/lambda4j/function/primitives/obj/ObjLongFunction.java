@@ -121,7 +121,6 @@ public interface ObjLongFunction<T, R> {
      * @throws NullPointerException If given argument is {@code null}
      * @implNote The last input argument of this method is the primitive specialization of {@link UnaryOperator}.
      * Therefore the operation handles a primitive type. In this case this is {@code long}.
-     * @see #andThen(ToLongFunction)
      * @see #andThen(Function)
      */
     @Nonnull
@@ -145,7 +144,6 @@ public interface ObjLongFunction<T, R> {
      * applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
      * @implNote The input arguments of this method are able to handle every type.
-     * @see #andThen(ToLongFunction)
      * @see #andThen(Function)
      */
     @Nonnull
@@ -154,26 +152,6 @@ public interface ObjLongFunction<T, R> {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         return (u, v) -> apply(before1.apply(u), before2.applyAsLong(v));
-    }
-
-    /**
-     * Returns a composed {@link ToLongObjLongFunction} that first applies this function to its input, and then applies
-     * the {@code after} function to the result. If evaluation of either function throws an exception, it is relayed to
-     * the caller of the composed function.
-     *
-     * @param after The function to apply after this function is applied
-     * @return A composed {@code ToLongObjLongFunction} that first applies this function to its input, and then applies
-     * the {@code after} function to the result.
-     * @throws NullPointerException If given argument is {@code null}
-     * @implNote The result of this method is a primitive specialization of {@link BiFunction}. Therefore the returned
-     * operation handles primitive types. In this case this is {@code long}.
-     * @see #compose(Function, LongUnaryOperator)
-     * @see #compose(Function, ToLongFunction)
-     */
-    @Nonnull
-    default ToLongObjLongFunction<T> andThen(@Nonnull final ToLongFunction<? super R> after) {
-        Objects.requireNonNull(after);
-        return (t, value) -> after.applyAsLong(apply(t, value));
     }
 
     /**
@@ -186,7 +164,6 @@ public interface ObjLongFunction<T, R> {
      * @return A composed {@code ObjLongFunction} that first applies this function to its input, and then applies the
      * {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The returned function is able to handle every type.
      * @see #compose(Function, LongUnaryOperator)
      * @see #compose(Function, ToLongFunction)
      */

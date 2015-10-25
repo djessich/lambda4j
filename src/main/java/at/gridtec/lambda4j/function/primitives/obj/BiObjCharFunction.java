@@ -147,7 +147,6 @@ public interface BiObjCharFunction<T, U, R> {
      * @throws NullPointerException If given argument is {@code null}
      * @implNote The last input argument of this method is the primitive specialization of {@link UnaryOperator}.
      * Therefore the operation handles a primitive type. In this case this is {@code char}.
-     * @see #andThen(ToCharFunction)
      * @see #andThen(Function)
      */
     @Nonnull
@@ -174,7 +173,6 @@ public interface BiObjCharFunction<T, U, R> {
      * applies this function to the result.
      * @throws NullPointerException If one of the given functions are {@code null}
      * @implNote The input arguments of this method are able to handle every type.
-     * @see #andThen(ToCharFunction)
      * @see #andThen(Function)
      */
     @Nonnull
@@ -187,26 +185,6 @@ public interface BiObjCharFunction<T, U, R> {
     }
 
     /**
-     * Returns a composed {@link ToCharBiObjCharFunction} that first applies this function to its input, and then
-     * applies the {@code after} function to the result. If evaluation of either function throws an exception, it is
-     * relayed to the caller of the composed function.
-     *
-     * @param after The function to apply after this function is applied
-     * @return A composed {@code ToCharBiObjCharFunction} that first applies this function to its input, and then
-     * applies the {@code after} function to the result.
-     * @throws NullPointerException If given argument is {@code null}
-     * @implNote The result of this method is a primitive specialization of {@link TriFunction}. Therefore the returned
-     * operation handles primitive types. In this case this is {@code char}.
-     * @see #compose(Function, Function, CharUnaryOperator)
-     * @see #compose(Function, Function, ToCharFunction)
-     */
-    @Nonnull
-    default ToCharBiObjCharFunction<T, U> andThen(@Nonnull final ToCharFunction<? super R> after) {
-        Objects.requireNonNull(after);
-        return (t, u, value) -> after.applyAsChar(apply(t, u, value));
-    }
-
-    /**
      * Returns a composed {@link BiObjCharFunction} that first applies this function to its input, and then applies the
      * {@code after} function to the result. If evaluation of either function throws an exception, it is relayed to the
      * caller of the composed function.
@@ -216,7 +194,6 @@ public interface BiObjCharFunction<T, U, R> {
      * @return A composed {@code BiObjCharFunction} that first applies this function to its input, and then applies the
      * {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The returned function is able to handle every type.
      * @see #compose(Function, Function, CharUnaryOperator)
      * @see #compose(Function, Function, ToCharFunction)
      */

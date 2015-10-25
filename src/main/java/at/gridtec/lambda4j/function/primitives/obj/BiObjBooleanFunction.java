@@ -19,7 +19,6 @@ import at.gridtec.lambda4j.consumer.primitives.obj.BiObjBooleanConsumer;
 import at.gridtec.lambda4j.function.TriFunction;
 import at.gridtec.lambda4j.function.primitives.BooleanFunction;
 import at.gridtec.lambda4j.operators.unary.BooleanUnaryOperator;
-import at.gridtec.lambda4j.predicates.primitives.obj.BiObjBooleanPredicate;
 
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
@@ -149,7 +148,6 @@ public interface BiObjBooleanFunction<T, U, R> {
      * @throws NullPointerException If given argument is {@code null}
      * @implNote The last input argument of this method is the primitive specialization of {@link UnaryOperator}.
      * Therefore the operation handles a primitive type. In this case this is {@code byte}.
-     * @see #andThen(Predicate)
      * @see #andThen(Function)
      */
     @Nonnull
@@ -176,7 +174,6 @@ public interface BiObjBooleanFunction<T, U, R> {
      * applies this operation to the result.
      * @throws NullPointerException If one of the given functions are {@code null}
      * @implNote The input arguments of this method are able to handle every type.
-     * @see #andThen(Predicate)
      * @see #andThen(Function)
      */
     @Nonnull
@@ -189,26 +186,6 @@ public interface BiObjBooleanFunction<T, U, R> {
     }
 
     /**
-     * Returns a composed {@link BiObjBooleanPredicate} that first applies this function to its input, and then applies
-     * the {@code after} operation to the result. If evaluation of either operation throws an exception, it is relayed
-     * to the caller of the operation function.
-     *
-     * @param after The operation to apply after this function is applied
-     * @return A composed {@code BiObjBooleanPredicate} that first applies this function to its input, and then applies
-     * the {@code after} operation to the result.
-     * @throws NullPointerException If given argument is {@code null}
-     * @implNote The result of this method is a primitive specialization of {@link TriFunction}. Therefore the returned
-     * operation handles primitive types. In this case this is {@code byte}.
-     * @see #compose(Function, Function, BooleanUnaryOperator)
-     * @see #compose(Function, Function, Predicate)
-     */
-    @Nonnull
-    default BiObjBooleanPredicate<T, U> andThen(@Nonnull final Predicate<? super R> after) {
-        Objects.requireNonNull(after);
-        return (t, u, value) -> after.test(apply(t, u, value));
-    }
-
-    /**
      * Returns a composed {@link BiObjBooleanFunction} that first applies this function to its input, and then applies
      * the {@code after} function to the result. If evaluation of either function throws an exception, it is relayed to
      * the caller of the composed function.
@@ -218,7 +195,6 @@ public interface BiObjBooleanFunction<T, U, R> {
      * @return A composed {@code BiObjBooleanFunction} that first applies this function to its input, and then applies
      * the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The returned function is able to handle every type.
      * @see #compose(Function, Function, BooleanUnaryOperator)
      * @see #compose(Function, Function, Predicate)
      */

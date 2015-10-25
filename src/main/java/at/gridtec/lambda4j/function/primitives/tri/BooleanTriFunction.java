@@ -18,8 +18,6 @@ package at.gridtec.lambda4j.function.primitives.tri;
 import at.gridtec.lambda4j.consumer.primitives.tri.BooleanTriConsumer;
 import at.gridtec.lambda4j.function.TriFunction;
 import at.gridtec.lambda4j.function.primitives.BooleanFunction;
-import at.gridtec.lambda4j.operators.ternary.BooleanTernaryOperator;
-import at.gridtec.lambda4j.operators.ternary.TernaryOperator;
 import at.gridtec.lambda4j.operators.unary.BooleanUnaryOperator;
 
 import javax.annotation.Nonnegative;
@@ -137,7 +135,6 @@ public interface BooleanTriFunction<R> {
      * @throws NullPointerException If given argument is {@code null}
      * @implNote The input arguments of this method are primitive specializations of {@link UnaryOperator}. Therefore
      * the given operations handle primitive types. In this case this is {@code boolean}.
-     * @see #andThen(Predicate)
      * @see #andThen(Function)
      */
     @Nonnull
@@ -164,7 +161,6 @@ public interface BooleanTriFunction<R> {
      * applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
      * @implNote The input arguments of this method are able to handle every type.
-     * @see #andThen(Predicate)
      * @see #andThen(Function)
      */
     @Nonnull
@@ -173,26 +169,6 @@ public interface BooleanTriFunction<R> {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         return (t, u, v) -> apply(before1.test(t), before2.test(u), before3.test(v));
-    }
-
-    /**
-     * Returns a composed {@link BooleanTernaryOperator} that first applies this function to its input, and then applies
-     * the {@code after} function to the result. If evaluation of either function throws an exception, it is relayed to
-     * the caller of the composed function.
-     *
-     * @param after The function to apply after this function is applied
-     * @return A composed {@code BooleanTernaryOperator} that first applies this function to its input, and then applies
-     * the {@code after} function to the result.
-     * @throws NullPointerException If given argument is {@code null}
-     * @implNote The result of this method is a primitive specialization of {@link TernaryOperator}. Therefore the
-     * returned operation handles primitive types. In this case this is {@code boolean}.
-     * @see #compose(BooleanUnaryOperator, BooleanUnaryOperator, BooleanUnaryOperator)
-     * @see #compose(Predicate, Predicate, Predicate)
-     */
-    @Nonnull
-    default BooleanTernaryOperator andThen(@Nonnull final Predicate<? super R> after) {
-        Objects.requireNonNull(after);
-        return (value1, value2, value3) -> after.test(apply(value1, value2, value3));
     }
 
     /**
@@ -205,7 +181,6 @@ public interface BooleanTriFunction<R> {
      * @return A composed {@code BooleanTriFunction} that first applies this function to its input, and then applies the
      * {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The returned function is able to handle every type.
      * @see #compose(BooleanUnaryOperator, BooleanUnaryOperator, BooleanUnaryOperator)
      * @see #compose(Predicate, Predicate, Predicate)
      */
