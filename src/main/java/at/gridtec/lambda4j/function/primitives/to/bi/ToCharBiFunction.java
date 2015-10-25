@@ -187,11 +187,8 @@ public interface ToCharBiFunction<T, U> {
     /**
      * Returns a composed {@link BiPredicate} that first applies this function to its input, and then applies the {@code
      * after} function to the result. If evaluation of either function throws an exception, it is relayed to the caller
-     * of the composed function.
-     * <p>
-     * This method is just convenience, to provide the ability to transform this function to an equal function,
-     * returning {@code boolean}. Thereby the {@code char}-to-{@code boolean} primitive specialization of {@link
-     * Function} is used.
+     * of the composed function. This method is just convenience, to provide the ability to transform this function to
+     * an equal function, returning {@code boolean}.
      *
      * @param after The function to apply after this function is applied
      * @return A composed {@code BiPredicate} that first applies this function to its input, and then applies the {@code
@@ -207,11 +204,8 @@ public interface ToCharBiFunction<T, U> {
     /**
      * Returns a composed {@link ToByteBiFunction} that first applies this function to its input, and then applies the
      * {@code after} function to the result. If evaluation of either function throws an exception, it is relayed to the
-     * caller of the composed function.
-     * <p>
-     * This method is just convenience, to provide the ability to transform this function to an equal function,
-     * returning {@code byte}. Thereby the {@code char}-to-{@code byte} primitive specialization of {@link Function} is
-     * used.
+     * caller of the composed function. This method is just convenience, to provide the ability to transform this
+     * function to an equal function, returning {@code byte}.
      *
      * @param after The function to apply after this function is applied
      * @return A composed {@code ToByteBiFunction} that first applies this function to its input, and then applies the
@@ -228,11 +222,8 @@ public interface ToCharBiFunction<T, U> {
     /**
      * Returns a composed {@link ToCharBiFunction} that first applies this function to its input, and then applies the
      * {@code after} function to the result. If evaluation of either function throws an exception, it is relayed to the
-     * caller of the composed function.
-     * <p>
-     * This method is just convenience, to provide the ability to transform this function to an equal function,
-     * returning {@code char}. Thereby the {@code char}-producing primitive specialization of {@link UnaryOperator} is
-     * used.
+     * caller of the composed function. This method is just convenience, to provide the ability to transform this
+     * function to an equal function, returning {@code char}.
      *
      * @param after The function to apply after this function is applied
      * @return A composed {@code ToCharBiFunction} that first applies this function to its input, and then applies the
@@ -249,11 +240,8 @@ public interface ToCharBiFunction<T, U> {
     /**
      * Returns a composed {@link ToDoubleBiFunction} that first applies this function to its input, and then applies the
      * {@code after} function to the result. If evaluation of either function throws an exception, it is relayed to the
-     * caller of the composed function.
-     * <p>
-     * This method is just convenience, to provide the ability to transform this function to an equal function,
-     * returning {@code double}. Thereby the {@code char}-to-{@code double} primitive specialization of {@link Function}
-     * is used.
+     * caller of the composed function. This method is just convenience, to provide the ability to transform this
+     * function to an equal function, returning {@code double}.
      *
      * @param after The function to apply after this function is applied
      * @return A composed {@code ToDoubleBiFunction} that first applies this function to its input, and then applies the
@@ -270,11 +258,8 @@ public interface ToCharBiFunction<T, U> {
     /**
      * Returns a composed {@link ToFloatBiFunction} that first applies this function to its input, and then applies the
      * {@code after} function to the result. If evaluation of either function throws an exception, it is relayed to the
-     * caller of the composed function.
-     * <p>
-     * This method is just convenience, to provide the ability to transform this function to an equal function,
-     * returning {@code float}. Thereby the {@code char}-to-{@code float} primitive specialization of {@link Function}
-     * is used.
+     * caller of the composed function. This method is just convenience, to provide the ability to transform this
+     * function to an equal function, returning {@code float}.
      *
      * @param after The function to apply after this function is applied
      * @return A composed {@code ToFloatBiFunction} that first applies this function to its input, and then applies the
@@ -291,11 +276,8 @@ public interface ToCharBiFunction<T, U> {
     /**
      * Returns a composed {@link ToIntBiFunction} that first applies this function to its input, and then applies the
      * {@code after} function to the result. If evaluation of either function throws an exception, it is relayed to the
-     * caller of the composed function.
-     * <p>
-     * This method is just convenience, to provide the ability to transform this function to an equal function,
-     * returning {@code int}. Thereby the {@code char}-to-{@code int} primitive specialization of {@link Function} is
-     * used.
+     * caller of the composed function. This method is just convenience, to provide the ability to transform this
+     * function to an equal function, returning {@code int}.
      *
      * @param after The function to apply after this function is applied
      * @return A composed {@code ToIntBiFunction} that first applies this function to its input, and then applies the
@@ -312,11 +294,8 @@ public interface ToCharBiFunction<T, U> {
     /**
      * Returns a composed {@link ToLongBiFunction} that first applies this function to its input, and then applies the
      * {@code after} function to the result. If evaluation of either function throws an exception, it is relayed to the
-     * caller of the composed function.
-     * <p>
-     * This method is just convenience, to provide the ability to transform this function to an equal function,
-     * returning {@code long}. Thereby the {@code char}-to-{@code long} primitive specialization of {@link Function} is
-     * used.
+     * caller of the composed function. This method is just convenience, to provide the ability to transform this
+     * function to an equal function, returning {@code long}.
      *
      * @param after The function to apply after this function is applied
      * @return A composed {@code ToLongBiFunction} that first applies this function to its input, and then applies the
@@ -334,11 +313,8 @@ public interface ToCharBiFunction<T, U> {
     /**
      * Returns a composed {@link ToShortBiFunction} that first applies this function to its input, and then applies the
      * {@code after} function to the result. If evaluation of either function throws an exception, it is relayed to the
-     * caller of the composed function.
-     * <p>
-     * This method is just convenience, to provide the ability to transform this function to an equal function,
-     * returning {@code short}. Thereby the {@code char}-to-{@code short} primitive specialization of {@link Function}
-     * is used.
+     * caller of the composed function. This method is just convenience, to provide the ability to transform this
+     * function to an equal function, returning {@code short}.
      *
      * @param after The function to apply after this function is applied
      * @return A composed {@code ToShortBiFunction} that first applies this function to its input, and then applies the

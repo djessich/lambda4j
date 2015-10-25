@@ -93,24 +93,6 @@ public interface CharSupplier {
     }
 
     /**
-     * Returns a composed {@link CharSupplier} that first gets the result from this operation, and then applies the
-     * {@code after} operation to the result. If evaluation of either operation throws an exception, it is relayed to
-     * the caller of the composed operation.
-     *
-     * @param after The operation to apply after this operation is applied
-     * @return A composed {@code CharSupplier} that first gets the result from this operation, and then applies the
-     * {@code after} operation to the result.
-     * @throws NullPointerException If given argument is {@code null}
-     * @implNote The result of this method is a primitive specialization of {@link Supplier}. Therefore the returned
-     * operation handles primitive types. In this case this is {@code char}.
-     */
-    @Nonnull
-    default CharSupplier andThen(@Nonnull final CharUnaryOperator after) {
-        Objects.requireNonNull(after);
-        return () -> after.applyAsChar(getAsChar());
-    }
-
-    /**
      * Returns a composed {@link Supplier} that first gets the result from this operation, and then applies the {@code
      * after} operation to the result. If evaluation of either operation throws an exception, it is relayed to the
      * caller of the composed operation.
@@ -132,15 +114,16 @@ public interface CharSupplier {
      * Returns a composed {@link BooleanSupplier} that first gets the result from this operation, and then applies the
      * {@code after} operation to the result. If evaluation of either operation throws an exception, it is relayed to
      * the caller of the composed operation. This method is just convenience, to provide the ability to transform this
-     * operation to the {@code boolean}-producing primitive specialization of {@link Supplier}.
+     * operation to an equal operation, returning {@code boolean}.
      *
      * @param after The operation to apply after this operation is applied
      * @return A composed {@code BooleanSupplier} that first gets the result from this operation, and then applies the
      * {@code after} operation to the result.
      * @throws NullPointerException If given argument is {@code null}
+     * @see #andThen(CharFunction)
      */
     @Nonnull
-    default BooleanSupplier toBoolean(@Nonnull final CharToBooleanFunction after) {
+    default BooleanSupplier andThenToBoolean(@Nonnull final CharToBooleanFunction after) {
         Objects.requireNonNull(after);
         return () -> after.applyAsBoolean(getAsChar());
     }
@@ -149,32 +132,52 @@ public interface CharSupplier {
      * Returns a composed {@link ByteSupplier} that first gets the result from this operation, and then applies the
      * {@code after} operation to the result. If evaluation of either operation throws an exception, it is relayed to
      * the caller of the composed operation. This method is just convenience, to provide the ability to transform this
-     * operation to the {@code byte}-producing primitive specialization of {@link Supplier}.
+     * operation to an equal operation, returning {@code byte}.
      *
      * @param after The operation to apply after this operation is applied
      * @return A composed {@code ByteSupplier} that first gets the result from this operation, and then applies the
      * {@code after} operation to the result.
      * @throws NullPointerException If given argument is {@code null}
+     * @see #andThen(CharFunction)
      */
     @Nonnull
-    default ByteSupplier toByte(@Nonnull final CharToByteFunction after) {
+    default ByteSupplier andThenToByte(@Nonnull final CharToByteFunction after) {
         Objects.requireNonNull(after);
         return () -> after.applyAsByte(getAsChar());
+    }
+
+    /**
+     * Returns a composed {@link CharSupplier} that first gets the result from this operation, and then applies the
+     * {@code after} operation to the result. If evaluation of either operation throws an exception, it is relayed to
+     * the caller of the composed operation. This method is just convenience, to provide the ability to transform this
+     * operation to an equal operation, returning {@code char}.
+     *
+     * @param after The operation to apply after this operation is applied
+     * @return A composed {@code CharSupplier} that first gets the result from this operation, and then applies the
+     * {@code after} operation to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @see #andThen(CharFunction)
+     */
+    @Nonnull
+    default CharSupplier andThenToChar(@Nonnull final CharUnaryOperator after) {
+        Objects.requireNonNull(after);
+        return () -> after.applyAsChar(getAsChar());
     }
 
     /**
      * Returns a composed {@link DoubleSupplier} that first gets the result from this operation, and then applies the
      * {@code after} operation to the result. If evaluation of either operation throws an exception, it is relayed to
      * the caller of the composed operation. This method is just convenience, to provide the ability to transform this
-     * operation to the {@code double}-producing primitive specialization of {@link Supplier}.
+     * operation to an equal operation, returning {@code double}.
      *
      * @param after The operation to apply after this operation is applied
      * @return A composed {@code DoubleSupplier} that first gets the result from this operation, and then applies the
      * {@code after} operation to the result.
      * @throws NullPointerException If given argument is {@code null}
+     * @see #andThen(CharFunction)
      */
     @Nonnull
-    default DoubleSupplier toDouble(@Nonnull final CharToDoubleFunction after) {
+    default DoubleSupplier andThenToDouble(@Nonnull final CharToDoubleFunction after) {
         Objects.requireNonNull(after);
         return () -> after.applyAsDouble(getAsChar());
     }
@@ -183,15 +186,16 @@ public interface CharSupplier {
      * Returns a composed {@link FloatSupplier} that first gets the result from this operation, and then applies the
      * {@code after} operation to the result. If evaluation of either operation throws an exception, it is relayed to
      * the caller of the composed operation. This method is just convenience, to provide the ability to transform this
-     * operation to the {@code float}-producing primitive specialization of {@link Supplier}.
+     * operation to an equal operation, returning {@code float}.
      *
      * @param after The operation to apply after this operation is applied
      * @return A composed {@code FloatSupplier} that first gets the result from this operation, and then applies the
      * {@code after} operation to the result.
      * @throws NullPointerException If given argument is {@code null}
+     * @see #andThen(CharFunction)
      */
     @Nonnull
-    default FloatSupplier toFloat(@Nonnull final CharToFloatFunction after) {
+    default FloatSupplier andThenToFloat(@Nonnull final CharToFloatFunction after) {
         Objects.requireNonNull(after);
         return () -> after.applyAsFloat(getAsChar());
     }
@@ -200,15 +204,16 @@ public interface CharSupplier {
      * Returns a composed {@link IntSupplier} that first gets the result from this operation, and then applies the
      * {@code after} operation to the result. If evaluation of either operation throws an exception, it is relayed to
      * the caller of the composed operation. This method is just convenience, to provide the ability to transform this
-     * operation to the {@code int}-producing primitive specialization of {@link Supplier}.
+     * operation to an equal operation, returning {@code int}.
      *
      * @param after The operation to apply after this operation is applied
      * @return A composed {@code IntSupplier} that first gets the result from this operation, and then applies the
      * {@code after} operation to the result.
      * @throws NullPointerException If given argument is {@code null}
+     * @see #andThen(CharFunction)
      */
     @Nonnull
-    default IntSupplier toInt(@Nonnull final CharToIntFunction after) {
+    default IntSupplier andThenToInt(@Nonnull final CharToIntFunction after) {
         Objects.requireNonNull(after);
         return () -> after.applyAsInt(getAsChar());
     }
@@ -217,15 +222,16 @@ public interface CharSupplier {
      * Returns a composed {@link LongSupplier} that first gets the result from this operation, and then applies the
      * {@code after} operation to the result. If evaluation of either operation throws an exception, it is relayed to
      * the caller of the composed operation. This method is just convenience, to provide the ability to transform this
-     * operation to the {@code long}-producing primitive specialization of {@link Supplier}.
+     * operation to an equal operation, returning {@code long}.
      *
      * @param after The operation to apply after this operation is applied
      * @return A composed {@code LongSupplier} that first gets the result from this operation, and then applies the
      * {@code after} operation to the result.
      * @throws NullPointerException If given argument is {@code null}
+     * @see #andThen(CharFunction)
      */
     @Nonnull
-    default LongSupplier toLong(@Nonnull final CharToLongFunction after) {
+    default LongSupplier andThenToLong(@Nonnull final CharToLongFunction after) {
         Objects.requireNonNull(after);
         return () -> after.applyAsLong(getAsChar());
 
@@ -235,15 +241,16 @@ public interface CharSupplier {
      * Returns a composed {@link ShortSupplier} that first gets the result from this operation, and then applies the
      * {@code after} operation to the result. If evaluation of either operation throws an exception, it is relayed to
      * the caller of the composed operation. This method is just convenience, to provide the ability to transform this
-     * operation to the {@code short}-producing primitive specialization of {@link Supplier}.
+     * operation to an equal operation, returning {@code short}.
      *
      * @param after The operation to apply after this operation is applied
      * @return A composed {@code ShortSupplier} that first gets the result from this operation, and then applies the
      * {@code after} operation to the result.
      * @throws NullPointerException If given argument is {@code null}
+     * @see #andThen(CharFunction)
      */
     @Nonnull
-    default ShortSupplier toShort(@Nonnull final CharToShortFunction after) {
+    default ShortSupplier andThenToShort(@Nonnull final CharToShortFunction after) {
         Objects.requireNonNull(after);
         return () -> after.applyAsShort(getAsChar());
     }

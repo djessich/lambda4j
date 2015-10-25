@@ -144,10 +144,8 @@ public interface BooleanFunction<R> {
     /**
      * Returns a composed {@link BooleanUnaryOperator} that first applies this function to its input, and then applies
      * the {@code after} function to the result. If evaluation of either function throws an exception, it is relayed to
-     * the caller of the composed operation.
-     * <p>
-     * This method is just convenience, to provide the ability to transform this function to an equal operation,
-     * returning {@code boolean}. Thereby a {@link Predicate} is used.
+     * the caller of the composed operation. This method is just convenience, to provide the ability to transform this
+     * function to an equal operation, returning {@code boolean}.
      *
      * @param after The function to apply after this function is applied
      * @return A composed {@code BooleanUnaryOperator} that first applies this function to its input, and then applies
@@ -164,10 +162,8 @@ public interface BooleanFunction<R> {
     /**
      * Returns a composed {@link BooleanToByteFunction} that first applies this function to its input, and then applies
      * the {@code after} function to the result. If evaluation of either function throws an exception, it is relayed to
-     * the caller of the composed function.
-     * <p>
-     * This method is just convenience, to provide the ability to transform this function to an equal function,
-     * returning {@code byte}. Thereby the {@code byte}-producing primitive specialization of {@link Function} is used.
+     * the caller of the composed function. This method is just convenience, to provide the ability to transform this
+     * function to an equal function, returning {@code byte}.
      *
      * @param after The function to apply after this function is applied
      * @return A composed {@code BooleanToByteFunction} that first applies this function to its input, and then applies
@@ -184,10 +180,8 @@ public interface BooleanFunction<R> {
     /**
      * Returns a composed {@link BooleanToCharFunction} that first applies this function to its input, and then applies
      * the {@code after} function to the result. If evaluation of either function throws an exception, it is relayed to
-     * the caller of the composed function.
-     * <p>
-     * This method is just convenience, to provide the ability to transform this function to an equal function,
-     * returning {@code char}. Thereby the {@code char}-producing primitive specialization of {@link Function} is used.
+     * the caller of the composed function. This method is just convenience, to provide the ability to transform this
+     * function to an equal function, returning {@code char}.
      *
      * @param after The function to apply after this function is applied
      * @return A composed {@code BooleanToCharFunction} that first applies this function to its input, and then applies
@@ -204,11 +198,8 @@ public interface BooleanFunction<R> {
     /**
      * Returns a composed {@link BooleanToDoubleFunction} that first applies this function to its input, and then
      * applies the {@code after} function to the result. If evaluation of either function throws an exception, it is
-     * relayed to the caller of the composed function.
-     * <p>
-     * This method is just convenience, to provide the ability to transform this function to an equal function,
-     * returning {@code double}. Thereby the {@code double}-producing primitive specialization of {@link Function} is
-     * used.
+     * relayed to the caller of the composed function. This method is just convenience, to provide the ability to
+     * transform this function to an equal function, returning {@code double}.
      *
      * @param after The function to apply after this function is applied
      * @return A composed {@code BooleanToDoubleFunction} that first applies this function to its input, and then
@@ -225,11 +216,8 @@ public interface BooleanFunction<R> {
     /**
      * Returns a composed {@link BooleanToFloatFunction} that first applies this function to its input, and then applies
      * the {@code after} function to the result. If evaluation of either function throws an exception, it is relayed to
-     * the caller of the composed function.
-     * <p>
-     * This method is just convenience, to provide the ability to transform this function to an equal function,
-     * returning {@code float}. Thereby the {@code float}-producing primitive specialization of {@link Function} is
-     * used.
+     * the caller of the composed function. This method is just convenience, to provide the ability to transform this
+     * function to an equal function, returning {@code float}.
      *
      * @param after The function to apply after this function is applied
      * @return A composed {@code BooleanToFloatFunction} that first applies this function to its input, and then applies
@@ -246,10 +234,8 @@ public interface BooleanFunction<R> {
     /**
      * Returns a composed {@link BooleanToIntFunction} that first applies this function to its input, and then applies
      * the {@code after} function to the result. If evaluation of either function throws an exception, it is relayed to
-     * the caller of the composed function.
-     * <p>
-     * This method is just convenience, to provide the ability to transform this function to an equal function,
-     * returning {@code int}. Thereby the {@code int}-producing primitive specialization of {@link Function} is used.
+     * the caller of the composed function. This method is just convenience, to provide the ability to transform this
+     * function to an equal function, returning {@code int}.
      *
      * @param after The function to apply after this function is applied
      * @return A composed {@code BooleanToIntFunction} that first applies this function to its input, and then applies
@@ -266,10 +252,8 @@ public interface BooleanFunction<R> {
     /**
      * Returns a composed {@link BooleanToLongFunction} that first applies this function to its input, and then applies
      * the {@code after} function to the result. If evaluation of either function throws an exception, it is relayed to
-     * the caller of the composed function.
-     * <p>
-     * This method is just convenience, to provide the ability to transform this function to an equal function,
-     * returning {@code long}. Thereby the {@code long}-producing primitive specialization of {@link Function} is used.
+     * the caller of the composed function. This method is just convenience, to provide the ability to transform this
+     * function to an equal function, returning {@code long}.
      *
      * @param after The function to apply after this function is applied
      * @return A composed {@code BooleanToLongFunction} that first applies this function to its input, and then applies
@@ -286,11 +270,8 @@ public interface BooleanFunction<R> {
     /**
      * Returns a composed {@link BooleanToShortFunction} that first applies this function to its input, and then applies
      * the {@code after} function to the result. If evaluation of either function throws an exception, it is relayed to
-     * the caller of the composed function.
-     * <p>
-     * This method is just convenience, to provide the ability to transform this function to an equal function,
-     * returning {@code short}. Thereby the {@code short}-producing primitive specialization of {@link Function} is
-     * used.
+     * the caller of the composed function. This method is just convenience, to provide the ability to transform this
+     * function to an equal function, returning {@code short}.
      *
      * @param after The function to apply after this function is applied
      * @return A composed {@code BooleanToShortFunction} that first applies this function to its input, and then applies

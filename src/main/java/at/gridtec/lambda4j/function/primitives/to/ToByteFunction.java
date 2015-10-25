@@ -141,11 +141,8 @@ public interface ToByteFunction<T> {
     /**
      * Returns a composed {@link Predicate} that first applies this function to its input, and then applies the {@code
      * after} function to the result. If evaluation of either function throws an exception, it is relayed to the caller
-     * of the composed function.
-     * <p>
-     * This method is just convenience, to provide the ability to transform this function to an equal function,
-     * returning {@code boolean}. Thereby the {@code byte}-to-{@code boolean} primitive specialization of {@link
-     * Function} is used.
+     * of the composed function. This method is just convenience, to provide the ability to transform this function to
+     * an equal function, returning {@code boolean}.
      *
      * @param after The function to apply after this function is applied
      * @return A composed {@code Predicate} that first applies this function to its input, and then applies the {@code
@@ -162,11 +159,8 @@ public interface ToByteFunction<T> {
     /**
      * Returns a composed {@link ToByteFunction} that first applies this function to its input, and then applies the
      * {@code after} function to the result. If evaluation of either function throws an exception, it is relayed to the
-     * caller of the composed function.
-     * <p>
-     * This method is just convenience, to provide the ability to transform this function to an equal function,
-     * returning {@code byte}. Thereby the {@code byte}-producing primitive specialization of {@link UnaryOperator} is
-     * used.
+     * caller of the composed function. This method is just convenience, to provide the ability to transform this
+     * function to an equal function, returning {@code byte}.
      *
      * @param after The function to apply after this function is applied
      * @return A composed {@code ToByteFunction} that first applies this function to its input, and then applies the
@@ -183,11 +177,8 @@ public interface ToByteFunction<T> {
     /**
      * Returns a composed {@link ToCharFunction} that first applies this function to its input, and then applies the
      * {@code after} function to the result. If evaluation of either function throws an exception, it is relayed to the
-     * caller of the composed function.
-     * <p>
-     * This method is just convenience, to provide the ability to transform this function to an equal function,
-     * returning {@code char}. Thereby the {@code byte}-to-{@code char} primitive specialization of {@link Function} is
-     * used.
+     * caller of the composed function. This method is just convenience, to provide the ability to transform this
+     * function to an equal function, returning {@code char}.
      *
      * @param after The function to apply after this function is applied
      * @return A composed {@code ToCharFunction} that first applies this function to its input, and then applies the
@@ -204,11 +195,8 @@ public interface ToByteFunction<T> {
     /**
      * Returns a composed {@link ToDoubleFunction} that first applies this function to its input, and then applies the
      * {@code after} function to the result. If evaluation of either function throws an exception, it is relayed to the
-     * caller of the composed function.
-     * <p>
-     * This method is just convenience, to provide the ability to transform this function to an equal function,
-     * returning {@code double}. Thereby the {@code byte}-to-{@code double} primitive specialization of {@link Function}
-     * is used.
+     * caller of the composed function. This method is just convenience, to provide the ability to transform this
+     * function to an equal function, returning {@code double}.
      *
      * @param after The function to apply after this function is applied
      * @return A composed {@code ToDoubleFunction} that first applies this function to its input, and then applies the
@@ -225,11 +213,8 @@ public interface ToByteFunction<T> {
     /**
      * Returns a composed {@link ToFloatFunction} that first applies this function to its input, and then applies the
      * {@code after} function to the result. If evaluation of either function throws an exception, it is relayed to the
-     * caller of the composed function.
-     * <p>
-     * This method is just convenience, to provide the ability to transform this function to an equal function,
-     * returning {@code float}. Thereby the {@code byte}-to-{@code float} primitive specialization of {@link Function}
-     * is used.
+     * caller of the composed function. This method is just convenience, to provide the ability to transform this
+     * function to an equal function, returning {@code float}.
      *
      * @param after The function to apply after this function is applied
      * @return A composed {@code ToFloatFunction} that first applies this function to its input, and then applies the
@@ -246,11 +231,8 @@ public interface ToByteFunction<T> {
     /**
      * Returns a composed {@link ToIntFunction} that first applies this function to its input, and then applies the
      * {@code after} function to the result. If evaluation of either function throws an exception, it is relayed to the
-     * caller of the composed function.
-     * <p>
-     * This method is just convenience, to provide the ability to transform this function to an equal function,
-     * returning {@code int}. Thereby the {@code byte}-to-{@code int} primitive specialization of {@link Function} is
-     * used.
+     * caller of the composed function. This method is just convenience, to provide the ability to transform this
+     * function to an equal function, returning {@code int}.
      *
      * @param after The function to apply after this function is applied
      * @return A composed {@code ToIntFunction} that first applies this function to its input, and then applies the
@@ -267,11 +249,8 @@ public interface ToByteFunction<T> {
     /**
      * Returns a composed {@link ToLongFunction} that first applies this function to its input, and then applies the
      * {@code after} function to the result. If evaluation of either function throws an exception, it is relayed to the
-     * caller of the composed function.
-     * <p>
-     * This method is just convenience, to provide the ability to transform this function to an equal function,
-     * returning {@code long}. Thereby the {@code byte}-to-{@code long} primitive specialization of {@link Function} is
-     * used.
+     * caller of the composed function. This method is just convenience, to provide the ability to transform this
+     * function to an equal function, returning {@code long}.
      *
      * @param after The function to apply after this function is applied
      * @return A composed {@code ToLongFunction} that first applies this function to its input, and then applies the
@@ -289,11 +268,8 @@ public interface ToByteFunction<T> {
     /**
      * Returns a composed {@link ToShortFunction} that first applies this function to its input, and then applies the
      * {@code after} function to the result. If evaluation of either function throws an exception, it is relayed to the
-     * caller of the composed function.
-     * <p>
-     * This method is just convenience, to provide the ability to transform this function to an equal function,
-     * returning {@code short}. Thereby the {@code byte}-to-{@code short} primitive specialization of {@link Function}
-     * is used.
+     * caller of the composed function. This method is just convenience, to provide the ability to transform this
+     * function to an equal function, returning {@code short}.
      *
      * @param after The function to apply after this function is applied
      * @return A composed {@code ToShortFunction} that first applies this function to its input, and then applies the
