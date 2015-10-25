@@ -213,8 +213,6 @@ public interface CharBinaryOperator {
      * @return A composed {@code CharBinaryOperator} that first applies this operator to its input, and then applies the
      * {@code after} operator to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The result of this method is a primitive specialization of {@link BinaryOperator}. Therefore the
-     * returned operation handles primitive types. In this case this is {@code char}.
      * @see #compose(CharUnaryOperator, CharUnaryOperator)
      * @see #compose(ToCharFunction, ToCharFunction)
      */
@@ -234,7 +232,6 @@ public interface CharBinaryOperator {
      * @return A composed {@code CharBiFunction} that first applies this operator to its input, and then applies the
      * {@code after} operation to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The returned operation is able to handle every type.
      * @see #compose(CharUnaryOperator, CharUnaryOperator)
      * @see #compose(ToCharFunction, ToCharFunction)
      */

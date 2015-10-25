@@ -351,8 +351,6 @@ public interface BooleanBinaryOperator {
      * @return A composed {@code BooleanBinaryOperator} that first applies this operator to its input, and then applies
      * the {@code after} operator to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The result of this method is a primitive specialization of {@link BinaryOperator}. Therefore the
-     * returned operation handles primitive types. In this case this is {@code boolean}.
      * @see #compose(BooleanUnaryOperator, BooleanUnaryOperator)
      * @see #compose(Predicate, Predicate)
      */
@@ -372,7 +370,6 @@ public interface BooleanBinaryOperator {
      * @return A composed {@code BooleanBiFunction} that first applies this operator to its input, and then applies the
      * {@code after} operation to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The returned operation is able to handle every type.
      * @see #compose(BooleanUnaryOperator, BooleanUnaryOperator)
      * @see #compose(Predicate, Predicate)
      */

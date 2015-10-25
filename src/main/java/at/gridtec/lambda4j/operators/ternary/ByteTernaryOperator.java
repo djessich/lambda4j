@@ -179,8 +179,6 @@ public interface ByteTernaryOperator {
      * @return A composed {@link ByteTernaryOperator} that first applies this operator to its input, and then applies
      * the {@code after} operator to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The result of this method is a primitive specialization of {@link TernaryOperator}. Therefore the
-     * returned operation handles primitive types. In this case this is {@code byte}.
      * @see #compose(ByteUnaryOperator, ByteUnaryOperator, ByteUnaryOperator)
      * @see #compose(ToByteFunction, ToByteFunction, ToByteFunction)
      */
@@ -200,7 +198,6 @@ public interface ByteTernaryOperator {
      * @return A composed {@code ByteTriFunction} that first applies this operator to its input, and then applies the
      * {@code after} operation to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The returned operation is able to handle every type.
      * @see #compose(ByteUnaryOperator, ByteUnaryOperator, ByteUnaryOperator)
      * @see #compose(ToByteFunction, ToByteFunction, ToByteFunction)
      */

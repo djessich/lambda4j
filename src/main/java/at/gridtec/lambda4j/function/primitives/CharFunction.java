@@ -145,7 +145,7 @@ public interface CharFunction<R> {
      * Returns a composed {@link CharToBooleanFunction} that first applies this function to its input, and then applies
      * the {@code after} function to the result. If evaluation of either function throws an exception, it is relayed to
      * the caller of the composed function. This method is just convenience, to provide the ability to transform this
-     * function to an equal function, returning {@code boolean}.
+     * function to a function returning {@code boolean}.
      *
      * @param after The function to apply after this function is applied
      * @return A composed {@code CharToBooleanFunction} that first applies this function to its input, and then applies
@@ -163,7 +163,7 @@ public interface CharFunction<R> {
      * Returns a composed {@link CharToByteFunction} that first applies this function to its input, and then applies the
      * {@code after} function to the result. If evaluation of either function throws an exception, it is relayed to the
      * caller of the composed function. This method is just convenience, to provide the ability to transform this
-     * function to an equal function, returning {@code byte}.
+     * function to a function returning {@code byte}.
      *
      * @param after The function to apply after this function is applied
      * @return A composed {@code CharToByteFunction} that first applies this function to its input, and then applies the
@@ -181,7 +181,7 @@ public interface CharFunction<R> {
      * Returns a composed {@link CharUnaryOperator} that first applies this function to its input, and then applies the
      * {@code after} function to the result. If evaluation of either function throws an exception, it is relayed to the
      * caller of the composed operation. This method is just convenience, to provide the ability to transform this
-     * function to an equal operation, returning {@code char}.
+     * function to an operation returning {@code char}.
      *
      * @param after The function to apply after this function is applied
      * @return A composed {@code CharUnaryOperator} that first applies this function to its input, and then applies the
@@ -199,7 +199,7 @@ public interface CharFunction<R> {
      * Returns a composed {@link CharToDoubleFunction} that first applies this function to its input, and then applies
      * the {@code after} function to the result. If evaluation of either function throws an exception, it is relayed to
      * the caller of the composed function. This method is just convenience, to provide the ability to transform this
-     * function to an equal function, returning {@code double}.
+     * function to a function returning {@code double}.
      *
      * @param after The function to apply after this function is applied
      * @return A composed {@code CharToDoubleFunction} that first applies this function to its input, and then applies
@@ -217,7 +217,7 @@ public interface CharFunction<R> {
      * Returns a composed {@link CharToFloatFunction} that first applies this function to its input, and then applies
      * the {@code after} function to the result. If evaluation of either function throws an exception, it is relayed to
      * the caller of the composed function. This method is just convenience, to provide the ability to transform this
-     * function to an equal function, returning {@code float}.
+     * function to a function returning {@code float}.
      *
      * @param after The function to apply after this function is applied
      * @return A composed {@code CharToFloatFunction} that first applies this function to its input, and then applies
@@ -235,7 +235,7 @@ public interface CharFunction<R> {
      * Returns a composed {@link CharToIntFunction} that first applies this function to its input, and then applies the
      * {@code after} function to the result. If evaluation of either function throws an exception, it is relayed to the
      * caller of the composed function. This method is just convenience, to provide the ability to transform this
-     * function to an equal function, returning {@code int}.
+     * function to a function returning {@code int}.
      *
      * @param after The function to apply after this function is applied
      * @return A composed {@code CharToIntFunction} that first applies this function to its input, and then applies the
@@ -253,7 +253,7 @@ public interface CharFunction<R> {
      * Returns a composed {@link CharToLongFunction} that first applies this function to its input, and then applies the
      * {@code after} function to the result. If evaluation of either function throws an exception, it is relayed to the
      * caller of the composed function. This method is just convenience, to provide the ability to transform this
-     * function to an equal function, returning {@code long}.
+     * function to a function returning {@code long}.
      *
      * @param after The function to apply after this function is applied
      * @return A composed {@code CharToLongFunction} that first applies this function to its input, and then applies the
@@ -271,7 +271,7 @@ public interface CharFunction<R> {
      * Returns a composed {@link CharToShortFunction} that first applies this function to its input, and then applies
      * the {@code after} function to the result. If evaluation of either function throws an exception, it is relayed to
      * the caller of the composed function. This method is just convenience, to provide the ability to transform this
-     * function to an equal function, returning {@code short}.
+     * function to a function returning {@code short}.
      *
      * @param after The function to apply after this function is applied
      * @return A composed {@code CharToShortFunction} that first applies this function to its input, and then applies

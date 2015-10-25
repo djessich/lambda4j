@@ -205,7 +205,7 @@ public interface ToShortBiFunction<T, U> {
      * Returns a composed {@link ToByteBiFunction} that first applies this function to its input, and then applies the
      * {@code after} function to the result. If evaluation of either function throws an exception, it is relayed to the
      * caller of the composed function. This method is just convenience, to provide the ability to transform this
-     * function to an equal function, returning {@code byte}.
+     * function to a function returning {@code byte}.
      *
      * @param after The function to apply after this function is applied
      * @return A composed {@code ToByteBiFunction} that first applies this function to its input, and then applies the
@@ -223,7 +223,7 @@ public interface ToShortBiFunction<T, U> {
      * Returns a composed {@link ToCharBiFunction} that first applies this function to its input, and then applies the
      * {@code after} function to the result. If evaluation of either function throws an exception, it is relayed to the
      * caller of the composed function. This method is just convenience, to provide the ability to transform this
-     * function to an equal function, returning {@code char}.
+     * function to a function returning {@code char}.
      *
      * @param after The function to apply after this function is applied
      * @return A composed {@code ToCharBiFunction} that first applies this function to its input, and then applies the
@@ -241,7 +241,7 @@ public interface ToShortBiFunction<T, U> {
      * Returns a composed {@link ToDoubleBiFunction} that first applies this function to its input, and then applies the
      * {@code after} function to the result. If evaluation of either function throws an exception, it is relayed to the
      * caller of the composed function. This method is just convenience, to provide the ability to transform this
-     * function to an equal function, returning {@code double}.
+     * function to a function returning {@code double}.
      *
      * @param after The function to apply after this function is applied
      * @return A composed {@code ToDoubleBiFunction} that first applies this function to its input, and then applies the
@@ -259,7 +259,7 @@ public interface ToShortBiFunction<T, U> {
      * Returns a composed {@link ToFloatBiFunction} that first applies this function to its input, and then applies the
      * {@code after} function to the result. If evaluation of either function throws an exception, it is relayed to the
      * caller of the composed function. This method is just convenience, to provide the ability to transform this
-     * function to an equal function, returning {@code float}.
+     * function to a function returning {@code float}.
      *
      * @param after The function to apply after this function is applied
      * @return A composed {@code ToFloatBiFunction} that first applies this function to its input, and then applies the
@@ -277,7 +277,7 @@ public interface ToShortBiFunction<T, U> {
      * Returns a composed {@link ToIntBiFunction} that first applies this function to its input, and then applies the
      * {@code after} function to the result. If evaluation of either function throws an exception, it is relayed to the
      * caller of the composed function. This method is just convenience, to provide the ability to transform this
-     * function to an equal function, returning {@code int}.
+     * function to a function returning {@code int}.
      *
      * @param after The function to apply after this function is applied
      * @return A composed {@code ToIntBiFunction} that first applies this function to its input, and then applies the
@@ -295,7 +295,7 @@ public interface ToShortBiFunction<T, U> {
      * Returns a composed {@link ToLongBiFunction} that first applies this function to its input, and then applies the
      * {@code after} function to the result. If evaluation of either function throws an exception, it is relayed to the
      * caller of the composed function. This method is just convenience, to provide the ability to transform this
-     * function to an equal function, returning {@code long}.
+     * function to a function returning {@code long}.
      *
      * @param after The function to apply after this function is applied
      * @return A composed {@code ToLongBiFunction} that first applies this function to its input, and then applies the
@@ -314,7 +314,7 @@ public interface ToShortBiFunction<T, U> {
      * Returns a composed {@link ToShortBiFunction} that first applies this function to its input, and then applies the
      * {@code after} function to the result. If evaluation of either function throws an exception, it is relayed to the
      * caller of the composed function. This method is just convenience, to provide the ability to transform this
-     * function to an equal function, returning {@code short}.
+     * function to a function returning {@code short}.
      *
      * @param after The function to apply after this function is applied
      * @return A composed {@code ToShortBiFunction} that first applies this function to its input, and then applies the

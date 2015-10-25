@@ -179,8 +179,6 @@ public interface DoubleTernaryOperator {
      * @return A composed {@link DoubleTernaryOperator} that first applies this operator to its input, and then applies
      * the {@code after} operator to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The result of this method is a primitive specialization of {@link TernaryOperator}. Therefore the
-     * returned operation handles primitive types. In this case this is {@code double}.
      * @see #compose(DoubleUnaryOperator, DoubleUnaryOperator, DoubleUnaryOperator)
      * @see #compose(ToDoubleFunction, ToDoubleFunction, ToDoubleFunction)
      */
@@ -200,7 +198,6 @@ public interface DoubleTernaryOperator {
      * @return A composed {@code DoubleTriFunction} that first applies this operator to its input, and then applies the
      * {@code after} operation to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The returned operation is able to handle every type.
      * @see #compose(DoubleUnaryOperator, DoubleUnaryOperator, DoubleUnaryOperator)
      * @see #compose(ToDoubleFunction, ToDoubleFunction, ToDoubleFunction)
      */

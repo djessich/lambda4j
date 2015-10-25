@@ -200,7 +200,6 @@ public interface LongTernaryOperator {
      * @return A composed {@code LongTriFunction} that first applies this operator to its input, and then applies the
      * {@code after} operation to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The returned operation is able to handle every type.
      * @see #compose(LongUnaryOperator, LongUnaryOperator, LongUnaryOperator)
      * @see #compose(ToLongFunction, ToLongFunction, ToLongFunction)
      */

@@ -29,7 +29,6 @@ import at.gridtec.lambda4j.function.primitives.to.ToShortFunction;
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import java.util.Objects;
-import java.util.function.Function;
 import java.util.function.UnaryOperator;
 
 /**
@@ -95,7 +94,6 @@ public interface ShortUnaryOperator {
      * @throws NullPointerException If given argument is {@code null}
      * @implNote The input argument of this method is a primitive specialization of {@link UnaryOperator}. Therefore the
      * given operation handles primitive types. In this case this is {@code short}.
-     * @see #andThen(ShortUnaryOperator)
      * @see #andThen(ShortFunction)
      */
     @Nonnull
@@ -115,33 +113,12 @@ public interface ShortUnaryOperator {
      * applies this operator to the result.
      * @throws NullPointerException If given argument is {@code null}
      * @implNote The input argument of this method is able to handle every type.
-     * @see #andThen(ShortUnaryOperator)
      * @see #andThen(ShortFunction)
      */
     @Nonnull
     default <T> ToShortFunction<T> compose(@Nonnull final ToShortFunction<? super T> before) {
         Objects.requireNonNull(before);
         return t -> applyAsShort(before.applyAsShort(t));
-    }
-
-    /**
-     * Returns a composed {@link ShortUnaryOperator} that first applies this operator to its input, and then applies the
-     * {@code after} operator to the result. If evaluation of either operator throws an exception, it is relayed to the
-     * caller of the composed operator.
-     *
-     * @param after The operator to apply after this operator is applied
-     * @return A composed {@code ShortUnaryOperator} that first applies this operator to its input, and then applies the
-     * {@code after} operator to the result.
-     * @throws NullPointerException If given argument is {@code null}
-     * @implNote The result of this method is a primitive specialization of {@link UnaryOperator}. Therefore the
-     * returned operation handles primitive types. In this case this is {@code short}.
-     * @see #compose(ShortUnaryOperator)
-     * @see #compose(ToShortFunction)
-     */
-    @Nonnull
-    default ShortUnaryOperator andThen(@Nonnull final ShortUnaryOperator after) {
-        Objects.requireNonNull(after);
-        return operand -> after.applyAsShort(applyAsShort(operand));
     }
 
     /**
@@ -154,7 +131,6 @@ public interface ShortUnaryOperator {
      * @return A composed {@code ShortFunction} that first applies this operator to its input, and then applies the
      * {@code after} operation to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The returned operation is able to handle every type.
      * @see #compose(ShortUnaryOperator)
      * @see #compose(ToShortFunction)
      */
@@ -166,127 +142,146 @@ public interface ShortUnaryOperator {
 
     /**
      * Returns a composed {@link ShortToBooleanFunction} that first applies this operator to its input, and then applies
-     * the {@code after} operation to the result. If evaluation of either operation throws an exception, it is relayed
-     * to the caller of the composed operation. This method is just convenience, to provide the ability to transform
-     * this operator to {@code boolean}, using the {@code short}-to-{@code boolean} primitive specialization of {@link
-     * Function}.
+     * the {@code after} operator to the result. If evaluation of either operator throws an exception, it is relayed to
+     * the caller of the composed operator. This method is just convenience, to provide the ability to transform this
+     * operator to an operation returning {@code boolean}.
      *
-     * @param after The operation to apply after this operation is applied
-     * @return A composed {@code ShortToBooleanFunction} that first gets the result from this operation, and then
-     * applies the {@code after} operation to the result.
+     * @param after The operator to apply after this operator is applied
+     * @return A composed {@code ShortToBooleanFunction} that first applies this operator to its input, and then applies
+     * the {@code after} operator to the result.
      * @throws NullPointerException If given argument is {@code null}
+     * @see #andThen(ShortFunction)
      */
     @Nonnull
-    default ShortToBooleanFunction toBoolean(@Nonnull final ShortToBooleanFunction after) {
+    default ShortToBooleanFunction andThenToBoolean(@Nonnull final ShortToBooleanFunction after) {
         Objects.requireNonNull(after);
         return value -> after.applyAsBoolean(applyAsShort(value));
     }
 
     /**
      * Returns a composed {@link ShortToByteFunction} that first applies this operator to its input, and then applies
-     * the {@code after} operation to the result. If evaluation of either operation throws an exception, it is relayed
-     * to the caller of the composed operation. This method is just convenience, to provide the ability to transform
-     * this operator to {@code byte}, using the {@code short}-to-{@code byte} primitive specialization of {@link
-     * Function}.
+     * the {@code after} operator to the result. If evaluation of either operator throws an exception, it is relayed to
+     * the caller of the composed operator. This method is just convenience, to provide the ability to transform this
+     * operator to an operation returning {@code byte}.
      *
-     * @param after The operation to apply after this operation is applied
-     * @return A composed {@code ShortToByteFunction} that first gets the result from this operation, and then applies
-     * the {@code after} operation to the result.
+     * @param after The operator to apply after this operator is applied
+     * @return A composed {@code ShortToByteFunction} that first applies this operator to its input, and then applies
+     * the {@code after} operator to the result.
      * @throws NullPointerException If given argument is {@code null}
+     * @see #andThen(ShortFunction)
      */
     @Nonnull
-    default ShortToByteFunction toByte(@Nonnull final ShortToByteFunction after) {
+    default ShortToByteFunction andThenToByte(@Nonnull final ShortToByteFunction after) {
         Objects.requireNonNull(after);
         return value -> after.applyAsByte(applyAsShort(value));
     }
 
     /**
      * Returns a composed {@link ShortToCharFunction} that first applies this operator to its input, and then applies
-     * the {@code after} operation to the result. If evaluation of either operation throws an exception, it is relayed
-     * to the caller of the composed operation. This method is just convenience, to provide the ability to transform
-     * this operator to {@code char}, using the {@code short}-to-{@code char} primitive specialization of {@link
-     * Function}.
+     * the {@code after} operator to the result. If evaluation of either operator throws an exception, it is relayed to
+     * the caller of the composed operator. This method is just convenience, to provide the ability to transform this
+     * operator to an operation returning {@code char}.
      *
-     * @param after The operation to apply after this operation is applied
-     * @return A composed {@code ShortToCharFunction} that first gets the result from this operation, and then applies
-     * the {@code after} operation to the result.
+     * @param after The operator to apply after this operator is applied
+     * @return A composed {@code ShortToCharFunction} that first applies this operator to its input, and then applies
+     * the {@code after} operator to the result.
      * @throws NullPointerException If given argument is {@code null}
+     * @see #andThen(ShortFunction)
      */
     @Nonnull
-    default ShortToCharFunction toChar(@Nonnull final ShortToCharFunction after) {
+    default ShortToCharFunction andThenToChar(@Nonnull final ShortToCharFunction after) {
         Objects.requireNonNull(after);
         return value -> after.applyAsChar(applyAsShort(value));
     }
 
     /**
      * Returns a composed {@link ShortToDoubleFunction} that first applies this operator to its input, and then applies
-     * the {@code after} operation to the result. If evaluation of either operation throws an exception, it is relayed
-     * to the caller of the composed operation. This method is just convenience, to provide the ability to transform
-     * this operator to {@code double}, using the {@code short}-to-{@code double} primitive specialization of {@link
-     * Function}.
+     * the {@code after} operator to the result. If evaluation of either operator throws an exception, it is relayed to
+     * the caller of the composed operator. This method is just convenience, to provide the ability to transform this
+     * operator to an operation returning {@code double}.
      *
-     * @param after The operation to apply after this operation is applied
-     * @return A composed {@code ShortToDoubleFunction} that first gets the result from this operation, and then applies
-     * the {@code after} operation to the result.
+     * @param after The operator to apply after this operator is applied
+     * @return A composed {@code ShortToDoubleFunction} that first applies this operator to its input, and then applies
+     * the {@code after} operator to the result.
      * @throws NullPointerException If given argument is {@code null}
+     * @see #andThen(ShortFunction)
      */
     @Nonnull
-    default ShortToDoubleFunction toDouble(@Nonnull final ShortToDoubleFunction after) {
+    default ShortToDoubleFunction andThenToDouble(@Nonnull final ShortToDoubleFunction after) {
         Objects.requireNonNull(after);
         return value -> after.applyAsDouble(applyAsShort(value));
     }
 
     /**
      * Returns a composed {@link ShortToFloatFunction} that first applies this operator to its input, and then applies
-     * the {@code after} operation to the result. If evaluation of either operation throws an exception, it is relayed
-     * to the caller of the composed operation. This method is just convenience, to provide the ability to transform
-     * this operator to {@code float}, using the {@code short}-to-{@code float} primitive specialization of {@link
-     * Function}.
+     * the {@code after} operator to the result. If evaluation of either operator throws an exception, it is relayed to
+     * the caller of the composed operator. This method is just convenience, to provide the ability to transform this
+     * operator to an operation returning {@code float}.
      *
-     * @param after The operation to apply after this operation is applied
-     * @return A composed {@code ShortToFloatFunction} that first gets the result from this operation, and then applies
-     * the {@code after} operation to the result.
+     * @param after The operator to apply after this operator is applied
+     * @return A composed {@code ShortToFloatFunction} that first applies this operator to its input, and then applies
+     * the {@code after} operator to the result.
      * @throws NullPointerException If given argument is {@code null}
+     * @see #andThen(ShortFunction)
      */
     @Nonnull
-    default ShortToFloatFunction toFloat(@Nonnull final ShortToFloatFunction after) {
+    default ShortToFloatFunction andThenToFloat(@Nonnull final ShortToFloatFunction after) {
         Objects.requireNonNull(after);
         return value -> after.applyAsFloat(applyAsShort(value));
     }
 
     /**
      * Returns a composed {@link ShortToIntFunction} that first applies this operator to its input, and then applies the
-     * {@code after} operation to the result. If evaluation of either operation throws an exception, it is relayed to
-     * the caller of the composed operation. This method is just convenience, to provide the ability to transform this
-     * operator to {@code int}, using the {@code short}-to-{@code int} primitive specialization of {@link Function}.
+     * {@code after} operator to the result. If evaluation of either operator throws an exception, it is relayed to the
+     * caller of the composed operator. This method is just convenience, to provide the ability to transform this
+     * operator to an operation returning {@code int}.
      *
-     * @param after The operation to apply after this operation is applied
-     * @return A composed {@code ShortToIntFunction} that first gets the result from this operation, and then applies
-     * the {@code after} operation to the result.
+     * @param after The operator to apply after this operator is applied
+     * @return A composed {@code ShortToIntFunction} that first applies this operator to its input, and then applies the
+     * {@code after} operator to the result.
      * @throws NullPointerException If given argument is {@code null}
+     * @see #andThen(ShortFunction)
      */
     @Nonnull
-    default ShortToIntFunction toInt(@Nonnull final ShortToIntFunction after) {
+    default ShortToIntFunction andThenToInt(@Nonnull final ShortToIntFunction after) {
         Objects.requireNonNull(after);
         return value -> after.applyAsInt(applyAsShort(value));
     }
 
     /**
      * Returns a composed {@link ShortToLongFunction} that first applies this operator to its input, and then applies
-     * the {@code after} operation to the result. If evaluation of either operation throws an exception, it is relayed
-     * to the caller of the composed operation. This method is just convenience, to provide the ability to transform
-     * this operator to {@code long}, using the {@code short}-to-{@code long} primitive specialization of {@link
-     * Function}.
+     * the {@code after} operator to the result. If evaluation of either operator throws an exception, it is relayed to
+     * the caller of the composed operator. This method is just convenience, to provide the ability to transform this
+     * operator to an operation returning {@code long}.
      *
-     * @param after The operation to apply after this operation is applied
-     * @return A composed {@code ShortToLongFunction} that first gets the result from this operation, and then applies
-     * the {@code after} operation to the result.
+     * @param after The operator to apply after this operator is applied
+     * @return A composed {@code ShortToLongFunction} that first applies this operator to its input, and then applies
+     * the {@code after} operator to the result.
      * @throws NullPointerException If given argument is {@code null}
+     * @see #andThen(ShortFunction)
      */
     @Nonnull
-    default ShortToLongFunction toLong(@Nonnull final ShortToLongFunction after) {
+    default ShortToLongFunction andThenToLong(@Nonnull final ShortToLongFunction after) {
         Objects.requireNonNull(after);
         return value -> after.applyAsLong(applyAsShort(value));
+    }
+
+    /**
+     * Returns a composed {@link ShortUnaryOperator} that first applies this operator to its input, and then applies the
+     * {@code after} operator to the result. If evaluation of either operator throws an exception, it is relayed to the
+     * caller of the composed operator. This method is just convenience, to provide the ability to transform this
+     * operator to an operation returning {@code short}.
+     *
+     * @param after The operator to apply after this operator is applied
+     * @return A composed {@code ShortUnaryOperator} that first applies this operator to its input, and then applies the
+     * {@code after} operator to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @see #andThen(ShortFunction)
+     */
+    @Nonnull
+    default ShortUnaryOperator andThenToShort(@Nonnull final ShortUnaryOperator after) {
+        Objects.requireNonNull(after);
+        return operand -> after.applyAsShort(applyAsShort(operand));
     }
 
     /**

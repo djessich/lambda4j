@@ -213,8 +213,6 @@ public interface ByteBinaryOperator {
      * @return A composed {@code ByteBinaryOperator} that first applies this operator to its input, and then applies the
      * {@code after} operator to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The result of this method is a primitive specialization of {@link BinaryOperator}. Therefore the
-     * returned operation handles primitive types. In this case this is {@code byte}.
      * @see #compose(ByteUnaryOperator, ByteUnaryOperator)
      * @see #compose(ToByteFunction, ToByteFunction)
      */
@@ -234,7 +232,6 @@ public interface ByteBinaryOperator {
      * @return A composed {@code ByteBiFunction} that first applies this operator to its input, and then applies the
      * {@code after} operation to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The returned operation is able to handle every type.
      * @see #compose(ByteUnaryOperator, ByteUnaryOperator)
      * @see #compose(ToByteFunction, ToByteFunction)
      */

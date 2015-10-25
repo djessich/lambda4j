@@ -113,7 +113,7 @@ public interface FloatSupplier {
      * Returns a composed {@link BooleanSupplier} that first gets the result from this operation, and then applies the
      * {@code after} operation to the result. If evaluation of either operation throws an exception, it is relayed to
      * the caller of the composed operation. This method is just convenience, to provide the ability to transform this
-     * operation to an equal operation, returning {@code boolean}.
+     * operation to an operation returning {@code boolean}.
      *
      * @param after The operation to apply after this operation is applied
      * @return A composed {@code BooleanSupplier} that first gets the result from this operation, and then applies the
@@ -131,7 +131,7 @@ public interface FloatSupplier {
      * Returns a composed {@link ByteSupplier} that first gets the result from this operation, and then applies the
      * {@code after} operation to the result. If evaluation of either operation throws an exception, it is relayed to
      * the caller of the composed operation. This method is just convenience, to provide the ability to transform this
-     * operation to an equal operation, returning {@code byte}.
+     * operation to an operation returning {@code byte}.
      *
      * @param after The operation to apply after this operation is applied
      * @return A composed {@code ByteSupplier} that first gets the result from this operation, and then applies the
@@ -149,7 +149,7 @@ public interface FloatSupplier {
      * Returns a composed {@link CharSupplier} that first gets the result from this operation, and then applies the
      * {@code after} operation to the result. If evaluation of either operation throws an exception, it is relayed to
      * the caller of the composed operation. This method is just convenience, to provide the ability to transform this
-     * operation to an equal operation, returning {@code char}.
+     * operation to an operation returning {@code char}.
      *
      * @param after The operation to apply after this operation is applied
      * @return A composed {@code CharSupplier} that first gets the result from this operation, and then applies the
@@ -167,7 +167,7 @@ public interface FloatSupplier {
      * Returns a composed {@link DoubleSupplier} that first gets the result from this operation, and then applies the
      * {@code after} operation to the result. If evaluation of either operation throws an exception, it is relayed to
      * the caller of the composed operation. This method is just convenience, to provide the ability to transform this
-     * operation to an equal operation, returning {@code double}.
+     * operation to an operation returning {@code double}.
      *
      * @param after The operation to apply after this operation is applied
      * @return A composed {@code DoubleSupplier} that first gets the result from this operation, and then applies the
@@ -185,7 +185,7 @@ public interface FloatSupplier {
      * Returns a composed {@link FloatSupplier} that first gets the result from this operation, and then applies the
      * {@code after} operation to the result. If evaluation of either operation throws an exception, it is relayed to
      * the caller of the composed operation. This method is just convenience, to provide the ability to transform this
-     * operation to an equal operation, returning {@code float}.
+     * operation to an operation returning {@code float}.
      *
      * @param after The operation to apply after this operation is applied
      * @return A composed {@code FloatSupplier} that first gets the result from this operation, and then applies the
@@ -203,7 +203,7 @@ public interface FloatSupplier {
      * Returns a composed {@link IntSupplier} that first gets the result from this operation, and then applies the
      * {@code after} operation to the result. If evaluation of either operation throws an exception, it is relayed to
      * the caller of the composed operation. This method is just convenience, to provide the ability to transform this
-     * operation to an equal operation, returning {@code int}.
+     * operation to an operation returning {@code int}.
      *
      * @param after The operation to apply after this operation is applied
      * @return A composed {@code IntSupplier} that first gets the result from this operation, and then applies the
@@ -221,7 +221,7 @@ public interface FloatSupplier {
      * Returns a composed {@link LongSupplier} that first gets the result from this operation, and then applies the
      * {@code after} operation to the result. If evaluation of either operation throws an exception, it is relayed to
      * the caller of the composed operation. This method is just convenience, to provide the ability to transform this
-     * operation to an equal operation, returning {@code long}.
+     * operation to an operation returning {@code long}.
      *
      * @param after The operation to apply after this operation is applied
      * @return A composed {@code LongSupplier} that first gets the result from this operation, and then applies the
@@ -240,7 +240,7 @@ public interface FloatSupplier {
      * Returns a composed {@link ShortSupplier} that first gets the result from this operation, and then applies the
      * {@code after} operation to the result. If evaluation of either operation throws an exception, it is relayed to
      * the caller of the composed operation. This method is just convenience, to provide the ability to transform this
-     * operation to an equal operation, returning {@code short}.
+     * operation to an operation returning {@code short}.
      *
      * @param after The operation to apply after this operation is applied
      * @return A composed {@code ShortSupplier} that first gets the result from this operation, and then applies the

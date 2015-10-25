@@ -28,7 +28,6 @@ import at.gridtec.lambda4j.function.primitives.conversion.BooleanToShortFunction
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import java.util.Objects;
-import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.function.UnaryOperator;
 
@@ -219,7 +218,6 @@ public interface BooleanUnaryOperator {
      * @throws NullPointerException If given argument is {@code null}
      * @implNote The input argument of this method is a primitive specialization of {@link UnaryOperator}. Therefore the
      * given operation handles primitive types. In this case this is {@code boolean}.
-     * @see #andThen(BooleanUnaryOperator)
      * @see #andThen(BooleanFunction)
      */
     @Nonnull
@@ -239,33 +237,12 @@ public interface BooleanUnaryOperator {
      * applies this operator to the result.
      * @throws NullPointerException If given argument is {@code null}
      * @implNote The input argument of this method is able to handle every type.
-     * @see #andThen(BooleanUnaryOperator)
      * @see #andThen(BooleanFunction)
      */
     @Nonnull
     default <T> Predicate<T> compose(@Nonnull final Predicate<? super T> before) {
         Objects.requireNonNull(before);
         return t -> applyAsBoolean(before.test(t));
-    }
-
-    /**
-     * Returns a composed {@link BooleanUnaryOperator} that first applies this operator to its input, and then applies
-     * the {@code after} operator to the result. If evaluation of either operator throws an exception, it is relayed to
-     * the caller of the composed operator.
-     *
-     * @param after The operator to apply after this operator is applied
-     * @return A composed {@code BooleanUnaryOperator} that first applies this operator to its input, and then applies
-     * the {@code after} operator to the result.
-     * @throws NullPointerException If given argument is {@code null}
-     * @implNote The result of this method is a primitive specialization of {@link UnaryOperator}. Therefore the
-     * returned operation handles primitive types. In this case this is {@code boolean}.
-     * @see #compose(BooleanUnaryOperator)
-     * @see #compose(Predicate)
-     */
-    @Nonnull
-    default BooleanUnaryOperator andThen(@Nonnull final BooleanUnaryOperator after) {
-        Objects.requireNonNull(after);
-        return operand -> after.applyAsBoolean(applyAsBoolean(operand));
     }
 
     /**
@@ -278,7 +255,6 @@ public interface BooleanUnaryOperator {
      * @return A composed {@code BooleanFunction} that first applies this operator to its input, and then applies the
      * {@code after} operation to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The returned operation is able to handle every type.
      * @see #compose(BooleanUnaryOperator)
      * @see #compose(Predicate)
      */
@@ -289,127 +265,145 @@ public interface BooleanUnaryOperator {
     }
 
     /**
-     * Returns a composed {@link BooleanToByteFunction} that first applies this operator to its input, and then applies
-     * the {@code after} operation to the result. If evaluation of either operation throws an exception, it is relayed
-     * to the caller of the composed operation. This method is just convenience, to provide the ability to transform
-     * this operator to {@code byte}, using the {@code boolean}-to-{@code byte} primitive specialization of {@link
-     * Function}.
+     * Returns a composed {@link BooleanUnaryOperator} that first applies this operator to its input, and then applies
+     * the {@code after} operator to the result. If evaluation of either operator throws an exception, it is relayed to
+     * the caller of the composed operator. This method is just convenience, to provide the ability to transform this
+     * operator to an operation returning {@code boolean}.
      *
-     * @param after The operation to apply after this operation is applied
-     * @return A composed {@code BooleanToByteFunction} that first gets the result from this operation, and then applies
-     * the {@code after} operation to the result.
+     * @param after The operator to apply after this operator is applied
+     * @return A composed {@code BooleanUnaryOperator} that first applies this operator to its input, and then applies
+     * the {@code after} operator to the result.
      * @throws NullPointerException If given argument is {@code null}
+     * @see #andThen(BooleanFunction)
      */
     @Nonnull
-    default BooleanToByteFunction toByte(@Nonnull final BooleanToByteFunction after) {
+    default BooleanUnaryOperator andThenToBoolean(@Nonnull final BooleanUnaryOperator after) {
+        Objects.requireNonNull(after);
+        return operand -> after.applyAsBoolean(applyAsBoolean(operand));
+    }
+
+    /**
+     * Returns a composed {@link BooleanToByteFunction} that first applies this operator to its input, and then applies
+     * the {@code after} operator to the result. If evaluation of either operator throws an exception, it is relayed to
+     * the caller of the composed operator. This method is just convenience, to provide the ability to transform this
+     * operator to an operation returning {@code byte}.
+     *
+     * @param after The operator to apply after this operator is applied
+     * @return A composed {@code BooleanToByteFunction} that first applies this operator to its input, and then applies
+     * the {@code after} operator to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @see #andThen(BooleanFunction)
+     */
+    @Nonnull
+    default BooleanToByteFunction andThenToByte(@Nonnull final BooleanToByteFunction after) {
         Objects.requireNonNull(after);
         return value -> after.applyAsByte(applyAsBoolean(value));
     }
 
     /**
      * Returns a composed {@link BooleanToCharFunction} that first applies this operator to its input, and then applies
-     * the {@code after} operation to the result. If evaluation of either operation throws an exception, it is relayed
-     * to the caller of the composed operation. This method is just convenience, to provide the ability to transform
-     * this operator to {@code char}, using the {@code boolean}-to-{@code char} primitive specialization of {@link
-     * Function}.
+     * the {@code after} operator to the result. If evaluation of either operator throws an exception, it is relayed to
+     * the caller of the composed operator. This method is just convenience, to provide the ability to transform this
+     * operator to an operation returning {@code char}.
      *
-     * @param after The operation to apply after this operation is applied
-     * @return A composed {@code BooleanToCharFunction} that first gets the result from this operation, and then applies
-     * the {@code after} operation to the result.
+     * @param after The operator to apply after this operator is applied
+     * @return A composed {@code BooleanToCharFunction} that first applies this operator to its input, and then applies
+     * the {@code after} operator to the result.
      * @throws NullPointerException If given argument is {@code null}
+     * @see #andThen(BooleanFunction)
      */
     @Nonnull
-    default BooleanToCharFunction toChar(@Nonnull final BooleanToCharFunction after) {
+    default BooleanToCharFunction andThenToChar(@Nonnull final BooleanToCharFunction after) {
         Objects.requireNonNull(after);
         return value -> after.applyAsChar(applyAsBoolean(value));
     }
 
     /**
-     * Returns a composed {@link BooleanToDoubleFunction} that first applies this operator to its input, and then
-     * applies the {@code after} operation to the result. If evaluation of either operation throws an exception, it is
-     * relayed to the caller of the composed operation. This method is just convenience, to provide the ability to
-     * transform this operator to {@code double}, using the {@code boolean}-to-{@code double} primitive specialization
-     * of {@link Function}.
+     * Returns a composed {@link BooleanToDoubleFunction} that first applies this operator to its input, and then applies
+     * the {@code after} operator to the result. If evaluation of either operator throws an exception, it is relayed to
+     * the caller of the composed operator. This method is just convenience, to provide the ability to transform this
+     * operator to an operation returning {@code double}.
      *
-     * @param after The operation to apply after this operation is applied
-     * @return A composed {@code BooleanToDoubleFunction} that first gets the result from this operation, and then
-     * applies the {@code after} operation to the result.
+     * @param after The operator to apply after this operator is applied
+     * @return A composed {@code BooleanToDoubleFunction} that first applies this operator to its input, and then applies
+     * the {@code after} operator to the result.
      * @throws NullPointerException If given argument is {@code null}
+     * @see #andThen(BooleanFunction)
      */
     @Nonnull
-    default BooleanToDoubleFunction toDouble(@Nonnull final BooleanToDoubleFunction after) {
+    default BooleanToDoubleFunction andThenToDouble(@Nonnull final BooleanToDoubleFunction after) {
         Objects.requireNonNull(after);
         return value -> after.applyAsDouble(applyAsBoolean(value));
     }
 
     /**
      * Returns a composed {@link BooleanToFloatFunction} that first applies this operator to its input, and then applies
-     * the {@code after} operation to the result. If evaluation of either operation throws an exception, it is relayed
-     * to the caller of the composed operation. This method is just convenience, to provide the ability to transform
-     * this operator to {@code float}, using the {@code boolean}-to-{@code float} primitive specialization of {@link
-     * Function}.
+     * the {@code after} operator to the result. If evaluation of either operator throws an exception, it is relayed to
+     * the caller of the composed operator. This method is just convenience, to provide the ability to transform this
+     * operator to an operation returning {@code float}.
      *
-     * @param after The operation to apply after this operation is applied
-     * @return A composed {@code BooleanToFloatFunction} that first gets the result from this operation, and then
-     * applies the {@code after} operation to the result.
+     * @param after The operator to apply after this operator is applied
+     * @return A composed {@code BooleanToFloatFunction} that first applies this operator to its input, and then applies
+     * the {@code after} operator to the result.
      * @throws NullPointerException If given argument is {@code null}
+     * @see #andThen(BooleanFunction)
      */
     @Nonnull
-    default BooleanToFloatFunction toFloat(@Nonnull final BooleanToFloatFunction after) {
+    default BooleanToFloatFunction andThenToFloat(@Nonnull final BooleanToFloatFunction after) {
         Objects.requireNonNull(after);
         return value -> after.applyAsFloat(applyAsBoolean(value));
     }
 
     /**
      * Returns a composed {@link BooleanToIntFunction} that first applies this operator to its input, and then applies
-     * the {@code after} operation to the result. If evaluation of either operation throws an exception, it is relayed
-     * to the caller of the composed operation. This method is just convenience, to provide the ability to transform
-     * this operator to {@code int}, using the {@code boolean}-to-{@code int} primitive specialization of {@link
-     * Function}.
+     * the {@code after} operator to the result. If evaluation of either operator throws an exception, it is relayed to
+     * the caller of the composed operator. This method is just convenience, to provide the ability to transform this
+     * operator to an operation returning {@code int}.
      *
-     * @param after The operation to apply after this operation is applied
-     * @return A composed {@code BooleanToIntFunction} that first gets the result from this operation, and then applies
-     * the {@code after} operation to the result.
+     * @param after The operator to apply after this operator is applied
+     * @return A composed {@code BooleanToIntFunction} that first applies this operator to its input, and then applies
+     * the {@code after} operator to the result.
      * @throws NullPointerException If given argument is {@code null}
+     * @see #andThen(BooleanFunction)
      */
     @Nonnull
-    default BooleanToIntFunction toInt(@Nonnull final BooleanToIntFunction after) {
+    default BooleanToIntFunction andThenToInt(@Nonnull final BooleanToIntFunction after) {
         Objects.requireNonNull(after);
         return value -> after.applyAsInt(applyAsBoolean(value));
     }
 
     /**
      * Returns a composed {@link BooleanToLongFunction} that first applies this operator to its input, and then applies
-     * the {@code after} operation to the result. If evaluation of either operation throws an exception, it is relayed
-     * to the caller of the composed operation. This method is just convenience, to provide the ability to transform
-     * this operator to {@code long}, using the {@code boolean}-to-{@code long} primitive specialization of {@link
-     * Function}.
+     * the {@code after} operator to the result. If evaluation of either operator throws an exception, it is relayed to
+     * the caller of the composed operator. This method is just convenience, to provide the ability to transform this
+     * operator to an operation returning {@code long}.
      *
-     * @param after The operation to apply after this operation is applied
-     * @return A composed {@code BooleanToLongFunction} that first gets the result from this operation, and then applies
-     * the {@code after} operation to the result.
+     * @param after The operator to apply after this operator is applied
+     * @return A composed {@code BooleanToLongFunction} that first applies this operator to its input, and then applies
+     * the {@code after} operator to the result.
      * @throws NullPointerException If given argument is {@code null}
+     * @see #andThen(BooleanFunction)
      */
     @Nonnull
-    default BooleanToLongFunction toLong(@Nonnull final BooleanToLongFunction after) {
+    default BooleanToLongFunction andThenToLong(@Nonnull final BooleanToLongFunction after) {
         Objects.requireNonNull(after);
         return value -> after.applyAsLong(applyAsBoolean(value));
     }
 
     /**
      * Returns a composed {@link BooleanToShortFunction} that first applies this operator to its input, and then applies
-     * the {@code after} operation to the result. If evaluation of either operation throws an exception, it is relayed
-     * to the caller of the composed operation. This method is just convenience, to provide the ability to transform
-     * this operator to {@code short}, using the {@code boolean}-to-{@code short} primitive specialization of {@link
-     * Function}.
+     * the {@code after} operator to the result. If evaluation of either operator throws an exception, it is relayed to
+     * the caller of the composed operator. This method is just convenience, to provide the ability to transform this
+     * operator to an operation returning {@code short}.
      *
-     * @param after The operation to apply after this operation is applied
-     * @return A composed {@code BooleanToShortFunction} that first gets the result from this operation, and then
-     * applies the {@code after} operation to the result.
+     * @param after The operator to apply after this operator is applied
+     * @return A composed {@code BooleanToShortFunction} that first applies this operator to its input, and then applies
+     * the {@code after} operator to the result.
      * @throws NullPointerException If given argument is {@code null}
+     * @see #andThen(BooleanFunction)
      */
     @Nonnull
-    default BooleanToShortFunction toShort(@Nonnull final BooleanToShortFunction after) {
+    default BooleanToShortFunction andThenToShort(@Nonnull final BooleanToShortFunction after) {
         Objects.requireNonNull(after);
         return value -> after.applyAsShort(applyAsBoolean(value));
     }

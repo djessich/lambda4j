@@ -160,7 +160,7 @@ public interface ToFloatFunction<T> {
      * Returns a composed {@link ToByteFunction} that first applies this function to its input, and then applies the
      * {@code after} function to the result. If evaluation of either function throws an exception, it is relayed to the
      * caller of the composed function. This method is just convenience, to provide the ability to transform this
-     * function to an equal function, returning {@code byte}.
+     * function to a function returning {@code byte}.
      *
      * @param after The function to apply after this function is applied
      * @return A composed {@code ToByteFunction} that first applies this function to its input, and then applies the
@@ -178,7 +178,7 @@ public interface ToFloatFunction<T> {
      * Returns a composed {@link ToCharFunction} that first applies this function to its input, and then applies the
      * {@code after} function to the result. If evaluation of either function throws an exception, it is relayed to the
      * caller of the composed function. This method is just convenience, to provide the ability to transform this
-     * function to an equal function, returning {@code char}.
+     * function to a function returning {@code char}.
      *
      * @param after The function to apply after this function is applied
      * @return A composed {@code ToCharFunction} that first applies this function to its input, and then applies the
@@ -196,7 +196,7 @@ public interface ToFloatFunction<T> {
      * Returns a composed {@link ToDoubleFunction} that first applies this function to its input, and then applies the
      * {@code after} function to the result. If evaluation of either function throws an exception, it is relayed to the
      * caller of the composed function. This method is just convenience, to provide the ability to transform this
-     * function to an equal function, returning {@code double}.
+     * function to a function returning {@code double}.
      *
      * @param after The function to apply after this function is applied
      * @return A composed {@code ToDoubleFunction} that first applies this function to its input, and then applies the
@@ -214,7 +214,7 @@ public interface ToFloatFunction<T> {
      * Returns a composed {@link ToFloatFunction} that first applies this function to its input, and then applies the
      * {@code after} function to the result. If evaluation of either function throws an exception, it is relayed to the
      * caller of the composed function. This method is just convenience, to provide the ability to transform this
-     * function to an equal function, returning {@code float}.
+     * function to a function returning {@code float}.
      *
      * @param after The function to apply after this function is applied
      * @return A composed {@code ToFloatFunction} that first applies this function to its input, and then applies the
@@ -232,7 +232,7 @@ public interface ToFloatFunction<T> {
      * Returns a composed {@link ToIntFunction} that first applies this function to its input, and then applies the
      * {@code after} function to the result. If evaluation of either function throws an exception, it is relayed to the
      * caller of the composed function. This method is just convenience, to provide the ability to transform this
-     * function to an equal function, returning {@code int}.
+     * function to a function returning {@code int}.
      *
      * @param after The function to apply after this function is applied
      * @return A composed {@code ToIntFunction} that first applies this function to its input, and then applies the
@@ -250,7 +250,7 @@ public interface ToFloatFunction<T> {
      * Returns a composed {@link ToLongFunction} that first applies this function to its input, and then applies the
      * {@code after} function to the result. If evaluation of either function throws an exception, it is relayed to the
      * caller of the composed function. This method is just convenience, to provide the ability to transform this
-     * function to an equal function, returning {@code long}.
+     * function to a function returning {@code long}.
      *
      * @param after The function to apply after this function is applied
      * @return A composed {@code ToLongFunction} that first applies this function to its input, and then applies the
@@ -269,7 +269,7 @@ public interface ToFloatFunction<T> {
      * Returns a composed {@link ToShortFunction} that first applies this function to its input, and then applies the
      * {@code after} function to the result. If evaluation of either function throws an exception, it is relayed to the
      * caller of the composed function. This method is just convenience, to provide the ability to transform this
-     * function to an equal function, returning {@code short}.
+     * function to a function returning {@code short}.
      *
      * @param after The function to apply after this function is applied
      * @return A composed {@code ToShortFunction} that first applies this function to its input, and then applies the
