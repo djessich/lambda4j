@@ -207,6 +207,16 @@ public interface ByteTriFunction<R> {
     }
 
     /**
+     * Returns a curried version of this function.
+     *
+     * @return A curried version of this function.
+     */
+    @Nonnull
+    default ByteFunction<ByteFunction<ByteFunction<R>>> curried() {
+        return value1 -> value2 -> value3 -> apply(value1, value2, value3);
+    }
+
+    /**
      * Returns a composed {@link TriFunction} which represents this {@link ByteTriFunction}. Thereby the primitive input
      * argument for this function is autoboxed.
      *

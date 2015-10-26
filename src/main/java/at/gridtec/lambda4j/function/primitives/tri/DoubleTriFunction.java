@@ -207,6 +207,16 @@ public interface DoubleTriFunction<R> {
     }
 
     /**
+     * Returns a curried version of this function.
+     *
+     * @return A curried version of this function.
+     */
+    @Nonnull
+    default DoubleFunction<DoubleFunction<DoubleFunction<R>>> curried() {
+        return value1 -> value2 -> value3 -> apply(value1, value2, value3);
+    }
+
+    /**
      * Returns a composed {@link TriFunction} which represents this {@link DoubleTriFunction}. Thereby the primitive
      * input argument for this function is autoboxed.
      *

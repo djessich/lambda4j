@@ -30,6 +30,8 @@ import at.gridtec.lambda4j.function.primitives.to.ToFloatFunction;
 import at.gridtec.lambda4j.operators.unary.FloatUnaryOperator;
 import at.gridtec.lambda4j.predicates.TriPredicate;
 
+import org.apache.commons.lang3.tuple.Triple;
+
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import java.util.Objects;
@@ -369,6 +371,16 @@ public interface ToFloatTriFunction<T, U, V> {
     default TriConsumer<T, U, V> consume(@Nonnull final FloatConsumer consumer) {
         Objects.requireNonNull(consumer);
         return (t, u, v) -> consumer.accept(applyAsFloat(t, u, v));
+    }
+
+    /**
+     * Returns a tupled version of this function.
+     *
+     * @return A tupled version of this function.
+     */
+    @Nonnull
+    default ToFloatFunction<Triple<T, U, V>> tupled() {
+        return t -> applyAsFloat(t.getLeft(), t.getMiddle(), t.getRight());
     }
 
     /**

@@ -27,6 +27,8 @@ import at.gridtec.lambda4j.function.primitives.conversion.ShortToLongFunction;
 import at.gridtec.lambda4j.function.primitives.to.ToShortFunction;
 import at.gridtec.lambda4j.operators.unary.ShortUnaryOperator;
 
+import org.apache.commons.lang3.tuple.Pair;
+
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import java.util.Objects;
@@ -342,6 +344,16 @@ public interface ToShortBiFunction<T, U> {
     default BiConsumer<T, U> consume(@Nonnull final ShortConsumer consumer) {
         Objects.requireNonNull(consumer);
         return (t, u) -> consumer.accept(applyAsShort(t, u));
+    }
+
+    /**
+     * Returns a tupled version of this function.
+     *
+     * @return A tupled version of this function.
+     */
+    @Nonnull
+    default ToShortFunction<Pair<T, U>> tupled() {
+        return t -> applyAsShort(t.getLeft(), t.getRight());
     }
 
     /**

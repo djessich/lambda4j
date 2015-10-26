@@ -18,6 +18,8 @@ package at.gridtec.lambda4j.function;
 import at.gridtec.lambda4j.consumer.TriConsumer;
 import at.gridtec.lambda4j.function.primitives.to.tri.ToByteTriFunction;
 
+import org.apache.commons.lang3.tuple.Triple;
+
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import java.util.Objects;
@@ -191,5 +193,25 @@ public interface TriFunction<T, U, V, R> {
     default TriConsumer<T, U, V> consume(@Nonnull final Consumer<? super R> consumer) {
         Objects.requireNonNull(consumer);
         return (t, u, v) -> consumer.accept(apply(t, u, v));
+    }
+
+    /**
+     * Returns a curried version of this function.
+     *
+     * @return A curried version of this function.
+     */
+    @Nonnull
+    default Function<T, Function<U, Function<V, R>>> curried() {
+        return t -> u -> v -> apply(t, u, v);
+    }
+
+    /**
+     * Returns a tupled version of this function.
+     *
+     * @return A tupled version of this function.
+     */
+    @Nonnull
+    default Function<Triple<T, U, V>, R> tupled() {
+        return t -> apply(t.getLeft(), t.getMiddle(), t.getRight());
     }
 }

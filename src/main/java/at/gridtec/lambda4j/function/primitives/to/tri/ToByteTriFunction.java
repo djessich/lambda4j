@@ -30,6 +30,8 @@ import at.gridtec.lambda4j.function.primitives.to.ToByteFunction;
 import at.gridtec.lambda4j.operators.unary.ByteUnaryOperator;
 import at.gridtec.lambda4j.predicates.TriPredicate;
 
+import org.apache.commons.lang3.tuple.Triple;
+
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import java.util.Objects;
@@ -369,6 +371,16 @@ public interface ToByteTriFunction<T, U, V> {
     default TriConsumer<T, U, V> consume(@Nonnull final ByteConsumer consumer) {
         Objects.requireNonNull(consumer);
         return (t, u, v) -> consumer.accept(applyAsByte(t, u, v));
+    }
+
+    /**
+     * Returns a tupled version of this function.
+     *
+     * @return A tupled version of this function.
+     */
+    @Nonnull
+    default ToByteFunction<Triple<T, U, V>> tupled() {
+        return t -> applyAsByte(t.getLeft(), t.getMiddle(), t.getRight());
     }
 
     /**

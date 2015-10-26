@@ -15,6 +15,8 @@
  */
 package at.gridtec.lambda4j.function.primitives.to.tri;
 
+import at.gridtec.lambda4j.consumer.TriConsumer;
+import at.gridtec.lambda4j.consumer.primitives.ShortConsumer;
 import at.gridtec.lambda4j.function.TriFunction;
 import at.gridtec.lambda4j.function.primitives.ShortFunction;
 import at.gridtec.lambda4j.function.primitives.conversion.ShortToBooleanFunction;
@@ -27,6 +29,8 @@ import at.gridtec.lambda4j.function.primitives.conversion.ShortToLongFunction;
 import at.gridtec.lambda4j.function.primitives.to.ToShortFunction;
 import at.gridtec.lambda4j.operators.unary.ShortUnaryOperator;
 import at.gridtec.lambda4j.predicates.TriPredicate;
+
+import org.apache.commons.lang3.tuple.Triple;
 
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
@@ -351,6 +355,32 @@ public interface ToShortTriFunction<T, U, V> {
     default ToShortTriFunction<T, U, V> andThenToShort(@Nonnull final ShortUnaryOperator after) {
         Objects.requireNonNull(after);
         return (t, u, v) -> after.applyAsShort(applyAsShort(t, u, v));
+    }
+
+    /**
+     * Returns a composed {@link TriConsumer} that fist applies this function to its input, and then consumes the result
+     * using the given {@link ShortConsumer}. If evaluation of either operation throws an exception, it is relayed to
+     * the caller of the composed operation.
+     *
+     * @param consumer The operation which consumes the result from this operation
+     * @return A composed {@code TriConsumer} that first applies this function to its input, and then consumes the
+     * result using the given {@code ShortConsumer}.
+     * @throws NullPointerException If given argument is {@code null}
+     */
+    @Nonnull
+    default TriConsumer<T, U, V> consume(@Nonnull final ShortConsumer consumer) {
+        Objects.requireNonNull(consumer);
+        return (t, u, v) -> consumer.accept(applyAsShort(t, u, v));
+    }
+
+    /**
+     * Returns a tupled version of this function.
+     *
+     * @return A tupled version of this function.
+     */
+    @Nonnull
+    default ToShortFunction<Triple<T, U, V>> tupled() {
+        return t -> applyAsShort(t.getLeft(), t.getMiddle(), t.getRight());
     }
 
     /**

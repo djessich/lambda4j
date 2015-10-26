@@ -24,6 +24,8 @@ import at.gridtec.lambda4j.function.primitives.conversion.IntToFloatFunction;
 import at.gridtec.lambda4j.function.primitives.conversion.IntToShortFunction;
 import at.gridtec.lambda4j.predicates.TriPredicate;
 
+import org.apache.commons.lang3.tuple.Triple;
+
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import java.util.Objects;
@@ -369,6 +371,16 @@ public interface ToIntTriFunction<T, U, V> {
     default TriConsumer<T, U, V> consume(@Nonnull final IntConsumer consumer) {
         Objects.requireNonNull(consumer);
         return (t, u, v) -> consumer.accept(applyAsInt(t, u, v));
+    }
+
+    /**
+     * Returns a tupled version of this function.
+     *
+     * @return A tupled version of this function.
+     */
+    @Nonnull
+    default ToIntFunction<Triple<T, U, V>> tupled() {
+        return t -> applyAsInt(t.getLeft(), t.getMiddle(), t.getRight());
     }
 
     /**

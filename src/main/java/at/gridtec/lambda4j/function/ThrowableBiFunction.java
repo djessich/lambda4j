@@ -242,31 +242,4 @@ public interface ThrowableBiFunction<T, U, R> extends BiFunction<T, U, R> {
             }
         };
     }
-
-    /**
-     * Returns a curried version of this {@link ThrowableBiFunction}. The returned curried version of this {@code
-     * ThrowableBiFunction} is able to throw any {@link Exception} type.
-     *
-     * @return A curried version of this {@code ThrowableBiFunction}.
-     * @see #reversed(ThrowableFunction)
-     */
-    default ThrowableFunction<T, ThrowableFunction<U, R>> curried() {
-        return t -> u -> apply(t, u);
-    }
-
-    /**
-     * Returns a reversed (uncurried) {@link ThrowableBiFunction} from the given curried {@code ThrowableBiFunction}.
-     * The returned {@code ThrowableBiFunction} from the given curried {@code ThrowableBiFunction} is able to throw any
-     * {@link Exception} type.
-     *
-     * @param f A curried {@code ThrowableBiFunction}
-     * @return A reversed (uncurried) {@link ThrowableBiFunction} from the given curried {@code ThrowableBiFunction}.
-     * @throws NullPointerException If the given argument is {@code null}
-     * @see #curried()
-     */
-    default ThrowableBiFunction<T, U, R> reversed(
-            ThrowableFunction<? super T, ThrowableFunction<? super U, ? extends R>> f) {
-        Objects.requireNonNull(f);
-        return (t, u) -> f.apply(t).apply(u);
-    }
 }

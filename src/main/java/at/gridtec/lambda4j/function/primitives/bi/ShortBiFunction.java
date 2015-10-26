@@ -186,6 +186,16 @@ public interface ShortBiFunction<R> {
     }
 
     /**
+     * Returns a curried version of this function.
+     *
+     * @return A curried version of this function.
+     */
+    @Nonnull
+    default ShortFunction<ShortFunction<R>> curried() {
+        return value1 -> value2 -> apply(value1, value2);
+    }
+
+    /**
      * Returns a composed {@link BiFunction} which represents this {@link ShortBiFunction}. Thereby the primitive input
      * argument for this function is autoboxed. This method is just convenience to provide the ability to use this
      * {@code ShortBiFunction} with JRE specific methods, only accepting {@code BiFunction}.

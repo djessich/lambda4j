@@ -15,6 +15,8 @@
  */
 package at.gridtec.lambda4j.consumer;
 
+import org.apache.commons.lang3.tuple.Triple;
+
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import java.util.Objects;
@@ -155,5 +157,15 @@ public interface TriConsumer<T, U, V> {
             accept(t, u, v);
             after.accept(t, u, v);
         };
+    }
+
+    /**
+     * Returns a tupled version of this operation.
+     *
+     * @return A tupled version of this operation.
+     */
+    @Nonnull
+    default Consumer<Triple<T, U, V>> tupled() {
+        return t -> accept(t.getLeft(), t.getMiddle(), t.getRight());
     }
 }

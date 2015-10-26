@@ -207,6 +207,16 @@ public interface FloatTriFunction<R> {
     }
 
     /**
+     * Returns a curried version of this function.
+     *
+     * @return A curried version of this function.
+     */
+    @Nonnull
+    default FloatFunction<FloatFunction<FloatFunction<R>>> curried() {
+        return value1 -> value2 -> value3 -> apply(value1, value2, value3);
+    }
+
+    /**
      * Returns a composed {@link TriFunction} which represents this {@link FloatTriFunction}. Thereby the primitive
      * input argument for this function is autoboxed.
      *

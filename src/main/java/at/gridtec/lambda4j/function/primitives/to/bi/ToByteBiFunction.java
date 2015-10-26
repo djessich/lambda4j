@@ -27,6 +27,8 @@ import at.gridtec.lambda4j.function.primitives.conversion.ByteToShortFunction;
 import at.gridtec.lambda4j.function.primitives.to.ToByteFunction;
 import at.gridtec.lambda4j.operators.unary.ByteUnaryOperator;
 
+import org.apache.commons.lang3.tuple.Pair;
+
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import java.util.Objects;
@@ -342,6 +344,16 @@ public interface ToByteBiFunction<T, U> {
     default BiConsumer<T, U> consume(@Nonnull final ByteConsumer consumer) {
         Objects.requireNonNull(consumer);
         return (t, u) -> consumer.accept(applyAsByte(t, u));
+    }
+
+    /**
+     * Returns a tupled version of this function.
+     *
+     * @return A tupled version of this function.
+     */
+    @Nonnull
+    default ToByteFunction<Pair<T, U>> tupled() {
+        return t -> applyAsByte(t.getLeft(), t.getRight());
     }
 
     /**

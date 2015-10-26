@@ -27,6 +27,8 @@ import at.gridtec.lambda4j.function.primitives.conversion.FloatToShortFunction;
 import at.gridtec.lambda4j.function.primitives.to.ToFloatFunction;
 import at.gridtec.lambda4j.operators.unary.FloatUnaryOperator;
 
+import org.apache.commons.lang3.tuple.Pair;
+
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import java.util.Objects;
@@ -342,6 +344,16 @@ public interface ToFloatBiFunction<T, U> {
     default BiConsumer<T, U> consume(@Nonnull final FloatConsumer consumer) {
         Objects.requireNonNull(consumer);
         return (t, u) -> consumer.accept(applyAsFloat(t, u));
+    }
+
+    /**
+     * Returns a tupled version of this function.
+     *
+     * @return A tupled version of this function.
+     */
+    @Nonnull
+    default ToFloatFunction<Pair<T, U>> tupled() {
+        return t -> applyAsFloat(t.getLeft(), t.getRight());
     }
 
     /**

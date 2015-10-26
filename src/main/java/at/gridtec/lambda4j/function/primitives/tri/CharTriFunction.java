@@ -207,6 +207,16 @@ public interface CharTriFunction<R> {
     }
 
     /**
+     * Returns a curried version of this function.
+     *
+     * @return A curried version of this function.
+     */
+    @Nonnull
+    default CharFunction<CharFunction<CharFunction<R>>> curried() {
+        return value1 -> value2 -> value3 -> apply(value1, value2, value3);
+    }
+
+    /**
      * Returns a composed {@link TriFunction} which represents this {@link CharTriFunction}. Thereby the primitive input
      * argument for this function is autoboxed.
      *

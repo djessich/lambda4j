@@ -27,6 +27,8 @@ import at.gridtec.lambda4j.function.primitives.conversion.CharToShortFunction;
 import at.gridtec.lambda4j.function.primitives.to.ToCharFunction;
 import at.gridtec.lambda4j.operators.unary.CharUnaryOperator;
 
+import org.apache.commons.lang3.tuple.Pair;
+
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import java.util.Objects;
@@ -342,6 +344,16 @@ public interface ToCharBiFunction<T, U> {
     default BiConsumer<T, U> consume(@Nonnull final CharConsumer consumer) {
         Objects.requireNonNull(consumer);
         return (t, u) -> consumer.accept(applyAsChar(t, u));
+    }
+
+    /**
+     * Returns a tupled version of this function.
+     *
+     * @return A tupled version of this function.
+     */
+    @Nonnull
+    default ToCharFunction<Pair<T, U>> tupled() {
+        return t -> applyAsChar(t.getLeft(), t.getRight());
     }
 
     /**

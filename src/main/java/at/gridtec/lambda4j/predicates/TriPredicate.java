@@ -15,6 +15,8 @@
  */
 package at.gridtec.lambda4j.predicates;
 
+import org.apache.commons.lang3.tuple.Triple;
+
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -267,5 +269,15 @@ public interface TriPredicate<T, U, V> {
     default TriPredicate<T, U, V> xor(@Nonnull final TriPredicate<? super T, ? super U, ? super V> other) {
         Objects.requireNonNull(other);
         return (t, u, v) -> test(t, u, v) ^ other.test(t, u, v);
+    }
+
+    /**
+     * Returns a tupled version of this predicate.
+     *
+     * @return A tupled version of this predicate.
+     */
+    @Nonnull
+    default Predicate<Triple<T, U, V>> tupled() {
+        return t -> test(t.getLeft(), t.getMiddle(), t.getRight());
     }
 }

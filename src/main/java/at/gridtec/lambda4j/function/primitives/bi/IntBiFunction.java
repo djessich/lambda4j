@@ -185,6 +185,16 @@ public interface IntBiFunction<R> {
     }
 
     /**
+     * Returns a curried version of this function.
+     *
+     * @return A curried version of this function.
+     */
+    @Nonnull
+    default IntFunction<IntFunction<R>> curried() {
+        return value1 -> value2 -> apply(value1, value2);
+    }
+
+    /**
      * Returns a composed {@link BiFunction} which represents this {@link IntBiFunction}. Thereby the primitive input
      * argument for this function is autoboxed. This method is just convenience to provide the ability to use this
      * {@code IntBiFunction} with JRE specific methods, only accepting {@code BiFunction}.
