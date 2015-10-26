@@ -41,14 +41,18 @@ import java.util.function.UnaryOperator;
 public interface ByteTernaryOperator {
 
     /**
-     * Creates a {@link ByteTernaryOperator} which always returns a given value.
+     * Calls the given {@link ByteTernaryOperator} with the given arguments and returns its result.
      *
-     * @param ret The return value for the constant
-     * @return A {@code ByteTernaryOperator} which always returns a given value.
+     * @param operator The operator to be called
+     * @param left The first argument to the operator (left input)
+     * @param middle The second argument to the operator (middle input)
+     * @param right The third argument to the operator (right input)
+     * @return The result from the given {@code ByteTernaryOperator}.
+     * @throws NullPointerException If the given operator is {@code null}
      */
-    @Nonnull
-    static ByteTernaryOperator constant(byte ret) {
-        return (left, middle, right) -> ret;
+    static byte call(@Nonnull final ByteTernaryOperator operator, byte left, byte middle, byte right) {
+        Objects.requireNonNull(operator);
+        return operator.applyAsByte(left, middle, right);
     }
 
     /**
@@ -94,6 +98,17 @@ public interface ByteTernaryOperator {
     static ByteTernaryOperator onlyRight(@Nonnull final ByteUnaryOperator operator) {
         Objects.requireNonNull(operator);
         return (left, middle, right) -> operator.applyAsByte(right);
+    }
+
+    /**
+     * Creates a {@link ByteTernaryOperator} which always returns a given value.
+     *
+     * @param ret The return value for the constant
+     * @return A {@code ByteTernaryOperator} which always returns a given value.
+     */
+    @Nonnull
+    static ByteTernaryOperator constant(byte ret) {
+        return (left, middle, right) -> ret;
     }
 
     /**

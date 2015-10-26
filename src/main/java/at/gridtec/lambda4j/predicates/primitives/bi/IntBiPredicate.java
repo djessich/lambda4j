@@ -34,14 +34,17 @@ import java.util.function.IntPredicate;
 public interface IntBiPredicate {
 
     /**
-     * Creates a {@link IntBiPredicate} which always returns a given value.
+     * Calls the given {@link IntBiPredicate} with the given arguments and returns its result.
      *
-     * @param ret The return value for the constant
-     * @return A {@code IntBiPredicate} which always returns a given value.
+     * @param predicate The predicate to be called
+     * @param value1 The first argument to the predicate
+     * @param value2 The second argument to the predicate
+     * @return The result from the given {@code IntBiPredicate}.
+     * @throws NullPointerException If the given predicate is {@code null}
      */
-    @Nonnull
-    static IntBiPredicate constant(boolean ret) {
-        return (value1, value2) -> ret;
+    static boolean call(@Nonnull final IntBiPredicate predicate, int value1, int value2) {
+        Objects.requireNonNull(predicate);
+        return predicate.test(value1, value2);
     }
 
     /**
@@ -72,6 +75,17 @@ public interface IntBiPredicate {
     static IntBiPredicate onlySecond(@Nonnull final IntPredicate predicate) {
         Objects.requireNonNull(predicate);
         return (value1, value2) -> predicate.test(value2);
+    }
+
+    /**
+     * Creates a {@link IntBiPredicate} which always returns a given value.
+     *
+     * @param ret The return value for the constant
+     * @return A {@code IntBiPredicate} which always returns a given value.
+     */
+    @Nonnull
+    static IntBiPredicate constant(boolean ret) {
+        return (value1, value2) -> ret;
     }
 
     /**

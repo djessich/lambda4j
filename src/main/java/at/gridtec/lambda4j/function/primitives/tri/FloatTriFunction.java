@@ -42,15 +42,19 @@ import java.util.function.UnaryOperator;
 public interface FloatTriFunction<R> {
 
     /**
-     * Creates a {@link FloatTriFunction} which always returns a given value.
+     * Calls the given {@link FloatTriFunction} with the given arguments and returns its result.
      *
      * @param <R> The type of return value from the function
-     * @param r The return value for the constant
-     * @return A {@code FloatTriFunction} which always returns a given value.
+     * @param function The function to be called
+     * @param value1 The first argument to the function
+     * @param value2 The second argument to the function
+     * @param value3 The third argument to the function
+     * @return The result from the given {@code FloatTriFunction}.
+     * @throws NullPointerException If the given function is {@code null}
      */
-    @Nonnull
-    static <R> FloatTriFunction<R> constant(R r) {
-        return (value1, value2, value3) -> r;
+    static <R> R call(@Nonnull final FloatTriFunction<? extends R> function, float value1, float value2, float value3) {
+        Objects.requireNonNull(function);
+        return function.apply(value1, value2, value3);
     }
 
     /**
@@ -99,6 +103,18 @@ public interface FloatTriFunction<R> {
     static <R> FloatTriFunction<R> onlyThird(@Nonnull final FloatFunction<? extends R> function) {
         Objects.requireNonNull(function);
         return (value1, value2, value3) -> function.apply(value3);
+    }
+
+    /**
+     * Creates a {@link FloatTriFunction} which always returns a given value.
+     *
+     * @param <R> The type of return value from the function
+     * @param r The return value for the constant
+     * @return A {@code FloatTriFunction} which always returns a given value.
+     */
+    @Nonnull
+    static <R> FloatTriFunction<R> constant(R r) {
+        return (value1, value2, value3) -> r;
     }
 
     /**

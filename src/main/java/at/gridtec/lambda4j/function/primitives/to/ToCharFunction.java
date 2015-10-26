@@ -51,6 +51,20 @@ import java.util.function.UnaryOperator;
 public interface ToCharFunction<T> {
 
     /**
+     * Calls the given {@link ToCharFunction} with the given arguments and returns its result.
+     *
+     * @param <T> The type of argument to the function
+     * @param function The function to be called
+     * @param t The argument to the function
+     * @return The result from the given {@code ToCharFunction}.
+     * @throws NullPointerException If the given function is {@code null}
+     */
+    static <T> char call(@Nonnull final ToCharFunction<? super T> function, final T t) {
+        Objects.requireNonNull(function);
+        return function.applyAsChar(t);
+    }
+
+    /**
      * Creates a {@link ToCharFunction} which always returns a given value.
      *
      * @param <T> The type of argument to the function

@@ -54,17 +54,22 @@ import java.util.function.UnaryOperator;
 public interface ToCharTriFunction<T, U, V> {
 
     /**
-     * Creates a {@link ToCharTriFunction} which always returns a given value.
+     * Calls the given {@link ToCharTriFunction} with the given arguments and returns its result.
      *
      * @param <T> The type of the first argument to the function
      * @param <U> The type of the second argument to the function
      * @param <V> The type of the third argument to the function
-     * @param ret The return value for the constant
-     * @return A {@code ToCharTriFunction} which always returns a given value.
+     * @param function The function to be called
+     * @param t The first argument to the function
+     * @param u The second argument to the function
+     * @param v The third argument to the function
+     * @return The result from the given {@code ToCharTriFunction}.
+     * @throws NullPointerException If the given function is {@code null}
      */
-    @Nonnull
-    static <T, U, V> ToCharTriFunction<T, U, V> constant(char ret) {
-        return (t, u, v) -> ret;
+    static <T, U, V> char call(@Nonnull final ToCharTriFunction<? super T, ? super U, ? super V> function, T t, U u,
+            V v) {
+        Objects.requireNonNull(function);
+        return function.applyAsChar(t, u, v);
     }
 
     /**
@@ -119,6 +124,20 @@ public interface ToCharTriFunction<T, U, V> {
     static <T, U, V> ToCharTriFunction<T, U, V> onlyThird(@Nonnull final ToCharFunction<? super V> function) {
         Objects.requireNonNull(function);
         return (t, u, v) -> function.applyAsChar(v);
+    }
+
+    /**
+     * Creates a {@link ToCharTriFunction} which always returns a given value.
+     *
+     * @param <T> The type of the first argument to the function
+     * @param <U> The type of the second argument to the function
+     * @param <V> The type of the third argument to the function
+     * @param ret The return value for the constant
+     * @return A {@code ToCharTriFunction} which always returns a given value.
+     */
+    @Nonnull
+    static <T, U, V> ToCharTriFunction<T, U, V> constant(char ret) {
+        return (t, u, v) -> ret;
     }
 
     /**

@@ -33,6 +33,19 @@ import java.util.function.Predicate;
 public interface CharPredicate {
 
     /**
+     * Calls the given {@link CharPredicate} with the given argument and returns its result.
+     *
+     * @param predicate The predicate to be called
+     * @param value The argument to the predicate
+     * @return The result from the given {@code CharPredicate}.
+     * @throws NullPointerException If the given predicate is {@code null}
+     */
+    static boolean call(@Nonnull final CharPredicate predicate, char value) {
+        Objects.requireNonNull(predicate);
+        return predicate.test(value);
+    }
+
+    /**
      * Creates a {@link CharPredicate} which always returns a given value.
      *
      * @param ret The return value for the constant

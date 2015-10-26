@@ -43,16 +43,19 @@ import java.util.function.UnaryOperator;
 public interface ObjFloatFunction<T, R> {
 
     /**
-     * Creates a {@link ObjFloatFunction} which always returns a given value.
+     * Calls the given {@link ObjFloatFunction} with the given arguments and returns its result.
      *
      * @param <T> The type of argument to the function
      * @param <R> The type of return value from the function
-     * @param r The return value for the constant
-     * @return A {@code ObjFloatFunction} which always returns a given value.
+     * @param function The function to be called
+     * @param t The first argument to the function
+     * @param value The second argument to the function
+     * @return The result from the given {@code ObjFloatFunction}.
+     * @throws NullPointerException If the given function is {@code null}
      */
-    @Nonnull
-    static <T, R> ObjFloatFunction<T, R> constant(R r) {
-        return (t, value) -> r;
+    static <T, R> R call(@Nonnull final ObjFloatFunction<? super T, ? extends R> function, final T t, float value) {
+        Objects.requireNonNull(function);
+        return function.apply(t, value);
     }
 
     /**
@@ -87,6 +90,19 @@ public interface ObjFloatFunction<T, R> {
     static <T, R> ObjFloatFunction<T, R> onlySecond(@Nonnull final FloatFunction<? extends R> function) {
         Objects.requireNonNull(function);
         return (t, value) -> function.apply(value);
+    }
+
+    /**
+     * Creates a {@link ObjFloatFunction} which always returns a given value.
+     *
+     * @param <T> The type of argument to the function
+     * @param <R> The type of return value from the function
+     * @param r The return value for the constant
+     * @return A {@code ObjFloatFunction} which always returns a given value.
+     */
+    @Nonnull
+    static <T, R> ObjFloatFunction<T, R> constant(R r) {
+        return (t, value) -> r;
     }
 
     /**

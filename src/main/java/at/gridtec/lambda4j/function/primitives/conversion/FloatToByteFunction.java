@@ -43,6 +43,19 @@ import java.util.function.UnaryOperator;
 public interface FloatToByteFunction {
 
     /**
+     * Calls the given {@link FloatToByteFunction} with the given arguments and returns its result.
+     *
+     * @param function The function to be called
+     * @param value The argument to the function
+     * @return The result from the given {@code FloatToByteFunction}.
+     * @throws NullPointerException If the given function is {@code null}
+     */
+    static byte call(@Nonnull final FloatToByteFunction function, float value) {
+        Objects.requireNonNull(function);
+        return function.applyAsByte(value);
+    }
+
+    /**
      * Creates a {@link FloatToByteFunction} which always returns a given value.
      *
      * @param ret The return value for the constant
@@ -56,7 +69,7 @@ public interface FloatToByteFunction {
     /**
      * Applies this function to the given argument.
      *
-     * @param value The argument to this function
+     * @param value The argument to the function
      * @return The result from this function, which is its result.
      */
     byte applyAsByte(float value);

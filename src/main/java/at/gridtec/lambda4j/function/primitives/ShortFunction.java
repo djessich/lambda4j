@@ -54,6 +54,20 @@ import java.util.function.UnaryOperator;
 public interface ShortFunction<R> {
 
     /**
+     * Calls the given {@link ShortFunction} with the given arguments and returns its result.
+     *
+     * @param <R> The type of return value from the function
+     * @param function The function to be called
+     * @param value The argument to the function
+     * @return The result from the given {@code ShortFunction}.
+     * @throws NullPointerException If the given function is {@code null}
+     */
+    static <R> R call(@Nonnull final ShortFunction<? extends R> function, short value) {
+        Objects.requireNonNull(function);
+        return function.apply(value);
+    }
+
+    /**
      * Creates a {@link ShortFunction} which always returns a given value.
      *
      * @param <R> The type of return value from the function

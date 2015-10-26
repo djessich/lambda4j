@@ -43,6 +43,19 @@ import java.util.function.UnaryOperator;
 public interface ShortToByteFunction {
 
     /**
+     * Calls the given {@link ShortToByteFunction} with the given arguments and returns its result.
+     *
+     * @param function The function to be called
+     * @param value The argument to the function
+     * @return The result from the given {@code ShortToByteFunction}.
+     * @throws NullPointerException If the given function is {@code null}
+     */
+    static byte call(@Nonnull final ShortToByteFunction function, short value) {
+        Objects.requireNonNull(function);
+        return function.applyAsByte(value);
+    }
+
+    /**
      * Creates a {@link ShortToByteFunction} which always returns a given value.
      *
      * @param ret The return value for the constant
@@ -56,7 +69,7 @@ public interface ShortToByteFunction {
     /**
      * Applies this function to the given argument.
      *
-     * @param value The argument to this function
+     * @param value The argument to the function
      * @return The result from this function, which is its result.
      */
     byte applyAsByte(short value);

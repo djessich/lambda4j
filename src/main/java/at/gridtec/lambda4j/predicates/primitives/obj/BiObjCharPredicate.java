@@ -40,16 +40,21 @@ import java.util.function.Predicate;
 public interface BiObjCharPredicate<T, U> {
 
     /**
-     * Creates a {@link BiObjCharPredicate} which always returns a given value.
+     * Calls the given {@link BiObjCharPredicate} with the given arguments and returns its result.
      *
      * @param <T> The type of the first argument to the predicate
      * @param <U> The type of the second argument to the predicate
-     * @param ret The return value for the constant
-     * @return A {@code BiObjCharPredicate} which always returns a given value.
+     * @param predicate The predicate to be called
+     * @param t The first argument to the predicate
+     * @param u The second argument to the predicate
+     * @param value The third argument to the predicate
+     * @return The result from the given {@code BiObjCharPredicate}.
+     * @throws NullPointerException If the given predicate is {@code null}
      */
-    @Nonnull
-    static <T, U> BiObjCharPredicate<T, U> constant(boolean ret) {
-        return (t, u, value) -> ret;
+    static <T, U> boolean call(@Nonnull final BiObjCharPredicate<? super T, ? super U> predicate, final T t, final U u,
+            char value) {
+        Objects.requireNonNull(predicate);
+        return predicate.test(t, u, value);
     }
 
     /**
@@ -101,6 +106,19 @@ public interface BiObjCharPredicate<T, U> {
     static <T, U> BiObjCharPredicate<T, U> onlyThird(@Nonnull final CharPredicate predicate) {
         Objects.requireNonNull(predicate);
         return (t, u, value) -> predicate.test(value);
+    }
+
+    /**
+     * Creates a {@link BiObjCharPredicate} which always returns a given value.
+     *
+     * @param <T> The type of the first argument to the predicate
+     * @param <U> The type of the second argument to the predicate
+     * @param ret The return value for the constant
+     * @return A {@code BiObjCharPredicate} which always returns a given value.
+     */
+    @Nonnull
+    static <T, U> BiObjCharPredicate<T, U> constant(boolean ret) {
+        return (t, u, value) -> ret;
     }
 
     /**

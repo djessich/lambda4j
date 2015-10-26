@@ -43,14 +43,17 @@ import java.util.function.UnaryOperator;
 public interface FloatBinaryOperator {
 
     /**
-     * Creates a {@link FloatBinaryOperator} which always returns a given value.
+     * Calls the given {@link FloatBinaryOperator} with the given arguments and returns its result.
      *
-     * @param ret The return value for the constant
-     * @return A {@code FloatBinaryOperator} which always returns a given value.
+     * @param operator The operator to be called
+     * @param left The first argument to the operator (left input)
+     * @param right The second argument to the operator (right input)
+     * @return The result from the given {@code FloatBinaryOperator}.
+     * @throws NullPointerException If the given operator is {@code null}
      */
-    @Nonnull
-    static FloatBinaryOperator constant(float ret) {
-        return (left, right) -> ret;
+    static float call(@Nonnull final FloatBinaryOperator operator, float left, float right) {
+        Objects.requireNonNull(operator);
+        return operator.applyAsFloat(left, right);
     }
 
     /**
@@ -81,6 +84,17 @@ public interface FloatBinaryOperator {
     static FloatBinaryOperator onlyRight(@Nonnull final FloatUnaryOperator operator) {
         Objects.requireNonNull(operator);
         return (left, right) -> operator.applyAsFloat(right);
+    }
+
+    /**
+     * Creates a {@link FloatBinaryOperator} which always returns a given value.
+     *
+     * @param ret The return value for the constant
+     * @return A {@code FloatBinaryOperator} which always returns a given value.
+     */
+    @Nonnull
+    static FloatBinaryOperator constant(float ret) {
+        return (left, right) -> ret;
     }
 
     /**
@@ -205,7 +219,6 @@ public interface FloatBinaryOperator {
         Objects.requireNonNull(before2);
         return (t, u) -> applyAsFloat(before1.applyAsFloat(t), before2.applyAsFloat(u));
     }
-
 
     /**
      * Returns a composed {@link FloatBiFunction} that first applies this operator to its input, and then applies the

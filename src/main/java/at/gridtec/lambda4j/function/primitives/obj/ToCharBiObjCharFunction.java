@@ -45,16 +45,21 @@ import java.util.function.UnaryOperator;
 public interface ToCharBiObjCharFunction<T, U> {
 
     /**
-     * Creates a {@link ToCharBiObjCharFunction} which always returns a given value.
+     * Calls the given {@link ToCharBiObjCharFunction} with the given arguments and returns its result.
      *
      * @param <T> The type of the first argument to the function
      * @param <U> The type of the second argument to the function
-     * @param ret The return value for the constant
-     * @return A {@code ToCharBiObjCharFunction} which always returns a given value.
+     * @param function The function to be called
+     * @param t The first argument to the function
+     * @param u The second argument to the function
+     * @param value The third argument to the function
+     * @return The result from the given {@code ToCharBiObjCharFunction}.
+     * @throws NullPointerException If the given function is {@code null}
      */
-    @Nonnull
-    static <T, U> ToCharBiObjCharFunction<T, U> constant(char ret) {
-        return (t, u, value) -> ret;
+    static <T, U> char call(@Nonnull final ToCharBiObjCharFunction<? super T, ? super U> function, final T t, final U u,
+            char value) {
+        Objects.requireNonNull(function);
+        return function.applyAsChar(t, u, value);
     }
 
     /**
@@ -106,6 +111,19 @@ public interface ToCharBiObjCharFunction<T, U> {
     static <T, U> ToCharBiObjCharFunction<T, U> onlyThird(@Nonnull final CharUnaryOperator function) {
         Objects.requireNonNull(function);
         return (t, u, value) -> function.applyAsChar(value);
+    }
+
+    /**
+     * Creates a {@link ToCharBiObjCharFunction} which always returns a given value.
+     *
+     * @param <T> The type of the first argument to the function
+     * @param <U> The type of the second argument to the function
+     * @param ret The return value for the constant
+     * @return A {@code ToCharBiObjCharFunction} which always returns a given value.
+     */
+    @Nonnull
+    static <T, U> ToCharBiObjCharFunction<T, U> constant(char ret) {
+        return (t, u, value) -> ret;
     }
 
     /**

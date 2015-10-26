@@ -35,14 +35,18 @@ import java.util.Objects;
 public interface CharTriPredicate {
 
     /**
-     * Creates a {@link CharTriPredicate} which always returns a given value.
+     * Calls the given {@link CharTriPredicate} with the given arguments and returns its result.
      *
-     * @param ret The return value for the constant
-     * @return A {@code CharTriPredicate} which always returns a given value.
+     * @param predicate The predicate to be called
+     * @param value1 The first argument to the predicate
+     * @param value2 The second argument to the predicate
+     * @param value3 The third argument to the predicate
+     * @return The result from the given {@code CharTriPredicate}.
+     * @throws NullPointerException If the given predicate is {@code null}
      */
-    @Nonnull
-    static CharTriPredicate constant(boolean ret) {
-        return (value1, value2, value3) -> ret;
+    static boolean call(@Nonnull final CharTriPredicate predicate, char value1, char value2, char value3) {
+        Objects.requireNonNull(predicate);
+        return predicate.test(value1, value2, value3);
     }
 
     /**
@@ -88,6 +92,17 @@ public interface CharTriPredicate {
     static CharTriPredicate onlyThird(@Nonnull final CharPredicate predicate) {
         Objects.requireNonNull(predicate);
         return (value1, value2, value3) -> predicate.test(value3);
+    }
+
+    /**
+     * Creates a {@link CharTriPredicate} which always returns a given value.
+     *
+     * @param ret The return value for the constant
+     * @return A {@code CharTriPredicate} which always returns a given value.
+     */
+    @Nonnull
+    static CharTriPredicate constant(boolean ret) {
+        return (value1, value2, value3) -> ret;
     }
 
     /**

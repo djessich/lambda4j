@@ -54,17 +54,22 @@ import java.util.function.UnaryOperator;
 public interface ToLongTriFunction<T, U, V> {
 
     /**
-     * Creates a {@link ToLongTriFunction} which always returns a given value.
+     * Calls the given {@link ToLongTriFunction} with the given arguments and returns its result.
      *
      * @param <T> The type of the first argument to the function
      * @param <U> The type of the second argument to the function
      * @param <V> The type of the third argument to the function
-     * @param ret The return value for the constant
-     * @return A {@code ToLongTriFunction} which always returns a given value.
+     * @param function The function to be called
+     * @param t The first argument to the function
+     * @param u The second argument to the function
+     * @param v The third argument to the function
+     * @return The result from the given {@code ToLongTriFunction}.
+     * @throws NullPointerException If the given function is {@code null}
      */
-    @Nonnull
-    static <T, U, V> ToLongTriFunction<T, U, V> constant(byte ret) {
-        return (t, u, v) -> ret;
+    static <T, U, V> long call(@Nonnull final ToLongTriFunction<? super T, ? super U, ? super V> function, T t, U u,
+            V v) {
+        Objects.requireNonNull(function);
+        return function.applyAsLong(t, u, v);
     }
 
     /**
@@ -119,6 +124,20 @@ public interface ToLongTriFunction<T, U, V> {
     static <T, U, V> ToLongTriFunction<T, U, V> onlyThird(@Nonnull final ToLongFunction<? super V> function) {
         Objects.requireNonNull(function);
         return (t, u, v) -> function.applyAsLong(v);
+    }
+
+    /**
+     * Creates a {@link ToLongTriFunction} which always returns a given value.
+     *
+     * @param <T> The type of the first argument to the function
+     * @param <U> The type of the second argument to the function
+     * @param <V> The type of the third argument to the function
+     * @param ret The return value for the constant
+     * @return A {@code ToLongTriFunction} which always returns a given value.
+     */
+    @Nonnull
+    static <T, U, V> ToLongTriFunction<T, U, V> constant(byte ret) {
+        return (t, u, v) -> ret;
     }
 
     /**

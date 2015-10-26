@@ -38,6 +38,18 @@ import java.util.function.UnaryOperator;
 public interface CharConsumer {
 
     /**
+     * Calls the given {@link CharConsumer} with the given arguments and returns its result.
+     *
+     * @param consumer The consumer to be called
+     * @param value The argument to the operation to be consumed
+     * @throws NullPointerException If the given consumer is {@code null}
+     */
+    static void call(@Nonnull final CharConsumer consumer, char value) {
+        Objects.requireNonNull(consumer);
+        consumer.accept(value);
+    }
+
+    /**
      * Performs this operation on the given argument.
      *
      * @param value The argument to the operation to be consumed
@@ -64,8 +76,8 @@ public interface CharConsumer {
      * @return A composed {@link CharConsumer} that first applies the {@code before} operation to its input, and then
      * applies this operation to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a primitive specialization of {@link UnaryOperator}. Therefore
-     * the given operation handles primitive types. In this case this is {@code char}.
+     * @implNote The input argument of this method is a primitive specialization of {@link UnaryOperator}. Therefore the
+     * given operation handles primitive types. In this case this is {@code char}.
      * @see #andThen(CharConsumer)
      */
     @Nonnull

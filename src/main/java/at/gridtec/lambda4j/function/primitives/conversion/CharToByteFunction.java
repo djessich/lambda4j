@@ -43,6 +43,19 @@ import java.util.function.UnaryOperator;
 public interface CharToByteFunction {
 
     /**
+     * Calls the given {@link CharToByteFunction} with the given arguments and returns its result.
+     *
+     * @param function The function to be called
+     * @param value The argument to the function
+     * @return The result from the given {@code CharToByteFunction}.
+     * @throws NullPointerException If the given function is {@code null}
+     */
+    static byte call(@Nonnull final CharToByteFunction function, char value) {
+        Objects.requireNonNull(function);
+        return function.applyAsByte(value);
+    }
+
+    /**
      * Creates a {@link CharToByteFunction} which always returns a given value.
      *
      * @param ret The return value for the constant
@@ -56,7 +69,7 @@ public interface CharToByteFunction {
     /**
      * Applies this function to the given argument.
      *
-     * @param value The argument to this function
+     * @param value The argument to the function
      * @return The result from this function, which is its result.
      */
     byte applyAsByte(char value);

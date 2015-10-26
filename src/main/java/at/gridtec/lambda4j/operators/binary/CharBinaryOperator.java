@@ -43,14 +43,17 @@ import java.util.function.UnaryOperator;
 public interface CharBinaryOperator {
 
     /**
-     * Creates a {@link CharBinaryOperator} which always returns a given value.
+     * Calls the given {@link CharBinaryOperator} with the given arguments and returns its result.
      *
-     * @param ret The return value for the constant
-     * @return A {@code CharBinaryOperator} which always returns a given value.
+     * @param operator The operator to be called
+     * @param left The first argument to the operator (left input)
+     * @param right The second argument to the operator (right input)
+     * @return The result from the given {@code CharBinaryOperator}.
+     * @throws NullPointerException If the given operator is {@code null}
      */
-    @Nonnull
-    static CharBinaryOperator constant(char ret) {
-        return (left, right) -> ret;
+    static char call(@Nonnull final CharBinaryOperator operator, char left, char right) {
+        Objects.requireNonNull(operator);
+        return operator.applyAsChar(left, right);
     }
 
     /**
@@ -81,6 +84,17 @@ public interface CharBinaryOperator {
     static CharBinaryOperator onlyRight(@Nonnull final CharUnaryOperator operator) {
         Objects.requireNonNull(operator);
         return (left, right) -> operator.applyAsChar(right);
+    }
+
+    /**
+     * Creates a {@link CharBinaryOperator} which always returns a given value.
+     *
+     * @param ret The return value for the constant
+     * @return A {@code CharBinaryOperator} which always returns a given value.
+     */
+    @Nonnull
+    static CharBinaryOperator constant(char ret) {
+        return (left, right) -> ret;
     }
 
     /**
@@ -201,7 +215,6 @@ public interface CharBinaryOperator {
         Objects.requireNonNull(before2);
         return (t, u) -> applyAsChar(before1.applyAsChar(t), before2.applyAsChar(u));
     }
-
 
     /**
      * Returns a composed {@link CharBiFunction} that first applies this operator to its input, and then applies the

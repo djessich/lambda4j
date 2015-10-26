@@ -43,14 +43,17 @@ import java.util.function.UnaryOperator;
 public interface ByteBinaryOperator {
 
     /**
-     * Creates a {@link ByteBinaryOperator} which always returns a given value.
+     * Calls the given {@link ByteBinaryOperator} with the given arguments and returns its result.
      *
-     * @param ret The return value for the constant
-     * @return A {@code ByteBinaryOperator} which always returns a given value.
+     * @param operator The operator to be called
+     * @param left The first argument to the operator (left input)
+     * @param right The second argument to the operator (right input)
+     * @return The result from the given {@code ByteBinaryOperator}.
+     * @throws NullPointerException If the given operator is {@code null}
      */
-    @Nonnull
-    static ByteBinaryOperator constant(byte ret) {
-        return (left, right) -> ret;
+    static byte call(@Nonnull final ByteBinaryOperator operator, byte left, byte right) {
+        Objects.requireNonNull(operator);
+        return operator.applyAsByte(left, right);
     }
 
     /**
@@ -81,6 +84,17 @@ public interface ByteBinaryOperator {
     static ByteBinaryOperator onlyRight(@Nonnull final ByteUnaryOperator operator) {
         Objects.requireNonNull(operator);
         return (left, right) -> operator.applyAsByte(right);
+    }
+
+    /**
+     * Creates a {@link ByteBinaryOperator} which always returns a given value.
+     *
+     * @param ret The return value for the constant
+     * @return A {@code ByteBinaryOperator} which always returns a given value.
+     */
+    @Nonnull
+    static ByteBinaryOperator constant(byte ret) {
+        return (left, right) -> ret;
     }
 
     /**

@@ -33,6 +33,19 @@ import java.util.function.Predicate;
 public interface FloatPredicate {
 
     /**
+     * Calls the given {@link FloatPredicate} with the given argument and returns its result.
+     *
+     * @param predicate The predicate to be called
+     * @param value The argument to the predicate
+     * @return The result from the given {@code FloatPredicate}.
+     * @throws NullPointerException If the given predicate is {@code null}
+     */
+    static boolean call(@Nonnull final FloatPredicate predicate, float value) {
+        Objects.requireNonNull(predicate);
+        return predicate.test(value);
+    }
+
+    /**
      * Creates a {@link FloatPredicate} which always returns a given value.
      *
      * @param ret The return value for the constant

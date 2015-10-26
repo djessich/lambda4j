@@ -45,6 +45,19 @@ import java.util.function.UnaryOperator;
 public interface CharToLongFunction {
 
     /**
+     * Calls the given {@link CharToLongFunction} with the given arguments and returns its result.
+     *
+     * @param function The function to be called
+     * @param value The argument to the function
+     * @return The result from the given {@code CharToLongFunction}.
+     * @throws NullPointerException If the given function is {@code null}
+     */
+    static long call(@Nonnull final CharToLongFunction function, char value) {
+        Objects.requireNonNull(function);
+        return function.applyAsLong(value);
+    }
+
+    /**
      * Creates a {@link CharToLongFunction} which always returns a given value.
      *
      * @param ret The return value for the constant
@@ -58,7 +71,7 @@ public interface CharToLongFunction {
     /**
      * Applies this function to the given argument.
      *
-     * @param value The argument to this function
+     * @param value The argument to the function
      * @return The result from this function, which is its result.
      */
     long applyAsLong(char value);

@@ -44,6 +44,19 @@ import java.util.function.UnaryOperator;
 public interface FloatUnaryOperator {
 
     /**
+     * Calls the given {@link FloatUnaryOperator} with the given arguments and returns its result.
+     *
+     * @param operator The operator to be called
+     * @param operand The argument to the operator
+     * @return The result from the given {@code FloatUnaryOperator}.
+     * @throws NullPointerException If the given operator is {@code null}
+     */
+    static float call(@Nonnull final FloatUnaryOperator operator, float operand) {
+        Objects.requireNonNull(operator);
+        return operator.applyAsFloat(operand);
+    }
+
+    /**
      * Creates a {@link FloatUnaryOperator} which always returns a given value.
      *
      * @param ret The return value for the constant

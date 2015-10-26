@@ -45,6 +45,19 @@ import java.util.function.UnaryOperator;
 public interface LongToShortFunction {
 
     /**
+     * Calls the given {@link LongToShortFunction} with the given arguments and returns its result.
+     *
+     * @param function The function to be called
+     * @param value The argument to the function
+     * @return The result from the given {@code LongToShortFunction}.
+     * @throws NullPointerException If the given function is {@code null}
+     */
+    static short call(@Nonnull final LongToShortFunction function, long value) {
+        Objects.requireNonNull(function);
+        return function.applyAsShort(value);
+    }
+
+    /**
      * Creates a {@link LongToShortFunction} which always returns a given value.
      *
      * @param ret The return value for the constant
@@ -58,7 +71,7 @@ public interface LongToShortFunction {
     /**
      * Applies this function to the given argument.
      *
-     * @param value The argument to this function
+     * @param value The argument to the function
      * @return The result from this function, which is its result.
      */
     short applyAsShort(long value);

@@ -43,6 +43,19 @@ import java.util.function.UnaryOperator;
 public interface FloatToBooleanFunction {
 
     /**
+     * Calls the given {@link FloatToBooleanFunction} with the given arguments and returns its result.
+     *
+     * @param function The function to be called
+     * @param value The argument to the function
+     * @return The result from the given {@code FloatToBooleanFunction}.
+     * @throws NullPointerException If the given function is {@code null}
+     */
+    static boolean call(@Nonnull final FloatToBooleanFunction function, float value) {
+        Objects.requireNonNull(function);
+        return function.applyAsBoolean(value);
+    }
+
+    /**
      * Creates a {@link FloatToBooleanFunction} which always returns a given value.
      *
      * @param ret The return value for the constant
@@ -56,7 +69,7 @@ public interface FloatToBooleanFunction {
     /**
      * Applies this function to the given argument.
      *
-     * @param value The argument to this function
+     * @param value The argument to the function
      * @return The result from this function, which is its result.
      */
     boolean applyAsBoolean(float value);

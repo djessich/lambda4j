@@ -15,11 +15,14 @@
  */
 package at.gridtec.lambda4j.predicates.primitives.obj;
 
+import at.gridtec.lambda4j.operators.unary.BooleanUnaryOperator;
+
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.Objects;
 import java.util.function.BiPredicate;
+import java.util.function.Predicate;
 
 /**
  * Represents a predicate (boolean-valued function) of an object-valued and a {@code boolean}-valued argument. This is
@@ -33,6 +36,53 @@ import java.util.function.BiPredicate;
 @SuppressWarnings("unused")
 @FunctionalInterface
 public interface ObjBooleanPredicate<T> {
+
+    /**
+     * Calls the given {@link ObjBooleanPredicate} with the given arguments and returns its result.
+     *
+     * @param <T> The type of argument to the predicate
+     * @param predicate The predicate to be called
+     * @param t The first argument to the predicate
+     * @param value The second argument to the predicate
+     * @return The result from the given {@code ObjBooleanPredicate}.
+     * @throws NullPointerException If the given predicate is {@code null}
+     */
+    static <T> boolean call(@Nonnull final ObjBooleanPredicate<? super T> predicate, final T t, boolean value) {
+        Objects.requireNonNull(predicate);
+        return predicate.test(t, value);
+    }
+
+    /**
+     * Creates a {@link ObjBooleanPredicate} which uses the {@code first} parameter of this one as argument for the
+     * given {@link Predicate}.
+     *
+     * @param <T> The type of argument to the predicate
+     * @param predicate The predicate which accepts the {@code first} parameter of this one
+     * @return Creates a {@code ObjBooleanPredicate} which uses the {@code first} parameter of this one as argument for
+     * the given {@code Predicate}.
+     * @throws NullPointerException If the given argument is {@code null}
+     */
+    @Nonnull
+    static <T> ObjBooleanPredicate<T> onlyFirst(@Nonnull final Predicate<? super T> predicate) {
+        Objects.requireNonNull(predicate);
+        return (t, value) -> predicate.test(t);
+    }
+
+    /**
+     * Creates a {@link ObjBooleanPredicate} which uses the {@code second} parameter of this one as argument for the
+     * given {@link BooleanUnaryOperator}.
+     *
+     * @param <T> The type of argument to the predicate
+     * @param operator The operation which accepts the {@code second} parameter of this one
+     * @return Creates a {@code ObjBooleanPredicate} which uses the {@code second} parameter of this one as argument for
+     * the given {@code BooleanUnaryOperator}.
+     * @throws NullPointerException If the given argument is {@code null}
+     */
+    @Nonnull
+    static <T> ObjBooleanPredicate<T> onlySecond(@Nonnull final BooleanUnaryOperator operator) {
+        Objects.requireNonNull(operator);
+        return (t, value) -> operator.applyAsBoolean(value);
+    }
 
     /**
      * Creates a {@link ObjBooleanPredicate} which always returns a given value.

@@ -42,16 +42,19 @@ import java.util.function.UnaryOperator;
 public interface ObjDoubleFunction<T, R> {
 
     /**
-     * Creates a {@link ObjDoubleFunction} which always returns a given value.
+     * Calls the given {@link ObjDoubleFunction} with the given arguments and returns its result.
      *
      * @param <T> The type of argument to the function
      * @param <R> The type of return value from the function
-     * @param r The return value for the constant
-     * @return A {@code ObjDoubleFunction} which always returns a given value.
+     * @param function The function to be called
+     * @param t The first argument to the function
+     * @param value The second argument to the function
+     * @return The result from the given {@code ObjDoubleFunction}.
+     * @throws NullPointerException If the given function is {@code null}
      */
-    @Nonnull
-    static <T, R> ObjDoubleFunction<T, R> constant(R r) {
-        return (t, value) -> r;
+    static <T, R> R call(@Nonnull final ObjDoubleFunction<? super T, ? extends R> function, final T t, double value) {
+        Objects.requireNonNull(function);
+        return function.apply(t, value);
     }
 
     /**
@@ -86,6 +89,19 @@ public interface ObjDoubleFunction<T, R> {
     static <T, R> ObjDoubleFunction<T, R> onlySecond(@Nonnull final DoubleFunction<? extends R> function) {
         Objects.requireNonNull(function);
         return (t, value) -> function.apply(value);
+    }
+
+    /**
+     * Creates a {@link ObjDoubleFunction} which always returns a given value.
+     *
+     * @param <T> The type of argument to the function
+     * @param <R> The type of return value from the function
+     * @param r The return value for the constant
+     * @return A {@code ObjDoubleFunction} which always returns a given value.
+     */
+    @Nonnull
+    static <T, R> ObjDoubleFunction<T, R> constant(R r) {
+        return (t, value) -> r;
     }
 
     /**

@@ -42,15 +42,20 @@ import java.util.function.UnaryOperator;
 public interface DoubleTriFunction<R> {
 
     /**
-     * Creates a {@link DoubleTriFunction} which always returns a given value.
+     * Calls the given {@link DoubleTriFunction} with the given arguments and returns its result.
      *
      * @param <R> The type of return value from the function
-     * @param r The return value for the constant
-     * @return A {@code DoubleTriFunction} which always returns a given value.
+     * @param function The function to be called
+     * @param value1 The first argument to the function
+     * @param value2 The second argument to the function
+     * @param value3 The third argument to the function
+     * @return The result from the given {@code DoubleTriFunction}.
+     * @throws NullPointerException If the given function is {@code null}
      */
-    @Nonnull
-    static <R> DoubleTriFunction<R> constant(R r) {
-        return (value1, value2, value3) -> r;
+    static <R> R call(@Nonnull final DoubleTriFunction<? extends R> function, double value1, double value2,
+            double value3) {
+        Objects.requireNonNull(function);
+        return function.apply(value1, value2, value3);
     }
 
     /**
@@ -99,6 +104,18 @@ public interface DoubleTriFunction<R> {
     static <R> DoubleTriFunction<R> onlyThird(@Nonnull final DoubleFunction<? extends R> function) {
         Objects.requireNonNull(function);
         return (value1, value2, value3) -> function.apply(value3);
+    }
+
+    /**
+     * Creates a {@link DoubleTriFunction} which always returns a given value.
+     *
+     * @param <R> The type of return value from the function
+     * @param r The return value for the constant
+     * @return A {@code DoubleTriFunction} which always returns a given value.
+     */
+    @Nonnull
+    static <R> DoubleTriFunction<R> constant(R r) {
+        return (value1, value2, value3) -> r;
     }
 
     /**

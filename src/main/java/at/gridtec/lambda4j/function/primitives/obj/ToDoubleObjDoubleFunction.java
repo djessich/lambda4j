@@ -43,17 +43,19 @@ import java.util.function.UnaryOperator;
 public interface ToDoubleObjDoubleFunction<T> {
 
     /**
-     * Creates a {@link ToDoubleObjDoubleFunction} which always returns a given value.
+     * Calls the given {@link ToDoubleObjDoubleFunction} with the given arguments and returns its result.
      *
      * @param <T> The type of argument to the function
-     * @param ret The return value for the constant
-     * @return A {@code ToDoubleObjDoubleFunction} which always returns a given value.
+     * @param function The function to be called
+     * @param t The first argument to the function
+     * @param value The second argument to the function
+     * @return The result from the given {@code ToDoubleObjDoubleFunction}.
+     * @throws NullPointerException If the given function is {@code null}
      */
-    @Nonnull
-    static <T> ToDoubleObjDoubleFunction<T> constant(double ret) {
-        return (t, value) -> ret;
+    static <T> double call(@Nonnull final ToDoubleObjDoubleFunction<? super T> function, final T t, double value) {
+        Objects.requireNonNull(function);
+        return function.applyAsDouble(t, value);
     }
-
     /**
      * Creates a {@link ToDoubleObjDoubleFunction} which uses the {@code first} parameter of this one as argument for
      * the given {@link ToDoubleFunction}.
@@ -84,6 +86,18 @@ public interface ToDoubleObjDoubleFunction<T> {
     static <T> ToDoubleObjDoubleFunction<T> onlySecond(@Nonnull final DoubleUnaryOperator function) {
         Objects.requireNonNull(function);
         return (t, value) -> function.applyAsDouble(value);
+    }
+
+    /**
+     * Creates a {@link ToDoubleObjDoubleFunction} which always returns a given value.
+     *
+     * @param <T> The type of argument to the function
+     * @param ret The return value for the constant
+     * @return A {@code ToDoubleObjDoubleFunction} which always returns a given value.
+     */
+    @Nonnull
+    static <T> ToDoubleObjDoubleFunction<T> constant(double ret) {
+        return (t, value) -> ret;
     }
 
     /**

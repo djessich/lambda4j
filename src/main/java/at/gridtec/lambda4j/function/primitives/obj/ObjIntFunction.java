@@ -42,16 +42,19 @@ import java.util.function.UnaryOperator;
 public interface ObjIntFunction<T, R> {
 
     /**
-     * Creates a {@link ObjIntFunction} which always returns a given value.
+     * Calls the given {@link ObjIntFunction} with the given arguments and returns its result.
      *
      * @param <T> The type of argument to the function
      * @param <R> The type of return value from the function
-     * @param r The return value for the constant
-     * @return A {@code ObjIntFunction} which always returns a given value.
+     * @param function The function to be called
+     * @param t The first argument to the function
+     * @param value The second argument to the function
+     * @return The result from the given {@code ObjIntFunction}.
+     * @throws NullPointerException If the given function is {@code null}
      */
-    @Nonnull
-    static <T, R> ObjIntFunction<T, R> constant(R r) {
-        return (t, value) -> r;
+    static <T, R> R call(@Nonnull final ObjIntFunction<? super T, ? extends R> function, final T t, int value) {
+        Objects.requireNonNull(function);
+        return function.apply(t, value);
     }
 
     /**
@@ -86,6 +89,19 @@ public interface ObjIntFunction<T, R> {
     static <T, R> ObjIntFunction<T, R> onlySecond(@Nonnull final IntFunction<? extends R> function) {
         Objects.requireNonNull(function);
         return (t, value) -> function.apply(value);
+    }
+
+    /**
+     * Creates a {@link ObjIntFunction} which always returns a given value.
+     *
+     * @param <T> The type of argument to the function
+     * @param <R> The type of return value from the function
+     * @param r The return value for the constant
+     * @return A {@code ObjIntFunction} which always returns a given value.
+     */
+    @Nonnull
+    static <T, R> ObjIntFunction<T, R> constant(R r) {
+        return (t, value) -> r;
     }
 
     /**

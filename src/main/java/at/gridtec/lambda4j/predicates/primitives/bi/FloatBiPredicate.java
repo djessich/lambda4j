@@ -35,14 +35,17 @@ import java.util.function.BiPredicate;
 public interface FloatBiPredicate {
 
     /**
-     * Creates a {@link FloatBiPredicate} which always returns a given value.
+     * Calls the given {@link FloatBiPredicate} with the given arguments and returns its result.
      *
-     * @param ret The return value for the constant
-     * @return A {@code FloatBiPredicate} which always returns a given value.
+     * @param predicate The predicate to be called
+     * @param value1 The first argument to the predicate
+     * @param value2 The second argument to the predicate
+     * @return The result from the given {@code FloatBiPredicate}.
+     * @throws NullPointerException If the given predicate is {@code null}
      */
-    @Nonnull
-    static FloatBiPredicate constant(boolean ret) {
-        return (value1, value2) -> ret;
+    static boolean call(@Nonnull final FloatBiPredicate predicate, float value1, float value2) {
+        Objects.requireNonNull(predicate);
+        return predicate.test(value1, value2);
     }
 
     /**
@@ -73,6 +76,17 @@ public interface FloatBiPredicate {
     static FloatBiPredicate onlySecond(@Nonnull final FloatPredicate predicate) {
         Objects.requireNonNull(predicate);
         return (value1, value2) -> predicate.test(value2);
+    }
+
+    /**
+     * Creates a {@link FloatBiPredicate} which always returns a given value.
+     *
+     * @param ret The return value for the constant
+     * @return A {@code FloatBiPredicate} which always returns a given value.
+     */
+    @Nonnull
+    static FloatBiPredicate constant(boolean ret) {
+        return (value1, value2) -> ret;
     }
 
     /**

@@ -40,6 +40,20 @@ import java.util.function.UnaryOperator;
 public interface ShortTriConsumer {
 
     /**
+     * Calls the given {@link ShortTriConsumer} with the given arguments and returns its result.
+     *
+     * @param consumer The consumer to be called
+     * @param value1 The first argument to the operation to be consumed
+     * @param value2 The second argument to the operation to be consumed
+     * @param value3 The third argument to the operation to be consumed
+     * @throws NullPointerException If the given consumer is {@code null}
+     */
+    static void call(@Nonnull final ShortTriConsumer consumer, short value1, short value2, short value3) {
+        Objects.requireNonNull(consumer);
+        consumer.accept(value1, value2, value3);
+    }
+
+    /**
      * Creates a {@link ShortTriConsumer} which uses the {@code first} parameter as argument for the given {@link
      * ShortConsumer}.
      *

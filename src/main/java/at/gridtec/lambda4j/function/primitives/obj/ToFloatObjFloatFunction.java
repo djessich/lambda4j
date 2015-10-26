@@ -44,15 +44,18 @@ import java.util.function.UnaryOperator;
 public interface ToFloatObjFloatFunction<T> {
 
     /**
-     * Creates a {@link ToFloatObjFloatFunction} which always returns a given value.
+     * Calls the given {@link ToFloatObjFloatFunction} with the given arguments and returns its result.
      *
      * @param <T> The type of argument to the function
-     * @param ret The return value for the constant
-     * @return A {@code ToFloatObjFloatFunction} which always returns a given value.
+     * @param function The function to be called
+     * @param t The first argument to the function
+     * @param value The second argument to the function
+     * @return The result from the given {@code ToFloatObjFloatFunction}.
+     * @throws NullPointerException If the given function is {@code null}
      */
-    @Nonnull
-    static <T> ToFloatObjFloatFunction<T> constant(float ret) {
-        return (t, value) -> ret;
+    static <T> float call(@Nonnull final ToFloatObjFloatFunction<? super T> function, final T t, float value) {
+        Objects.requireNonNull(function);
+        return function.applyAsFloat(t, value);
     }
 
     /**
@@ -85,6 +88,18 @@ public interface ToFloatObjFloatFunction<T> {
     static <T> ToFloatObjFloatFunction<T> onlySecond(@Nonnull final FloatUnaryOperator function) {
         Objects.requireNonNull(function);
         return (t, value) -> function.applyAsFloat(value);
+    }
+
+    /**
+     * Creates a {@link ToFloatObjFloatFunction} which always returns a given value.
+     *
+     * @param <T> The type of argument to the function
+     * @param ret The return value for the constant
+     * @return A {@code ToFloatObjFloatFunction} which always returns a given value.
+     */
+    @Nonnull
+    static <T> ToFloatObjFloatFunction<T> constant(float ret) {
+        return (t, value) -> ret;
     }
 
     /**

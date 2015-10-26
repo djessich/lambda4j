@@ -40,6 +40,20 @@ import java.util.function.UnaryOperator;
 public interface FloatTriConsumer {
 
     /**
+     * Calls the given {@link FloatTriConsumer} with the given arguments and returns its result.
+     *
+     * @param consumer The consumer to be called
+     * @param value1 The first argument to the operation to be consumed
+     * @param value2 The second argument to the operation to be consumed
+     * @param value3 The third argument to the operation to be consumed
+     * @throws NullPointerException If the given consumer is {@code null}
+     */
+    static void call(@Nonnull final FloatTriConsumer consumer, float value1, float value2, float value3) {
+        Objects.requireNonNull(consumer);
+        consumer.accept(value1, value2, value3);
+    }
+
+    /**
      * Creates a {@link FloatTriConsumer} which uses the {@code first} parameter as argument for the given {@link
      * FloatConsumer}.
      *

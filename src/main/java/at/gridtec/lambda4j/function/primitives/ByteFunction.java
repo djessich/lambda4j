@@ -54,6 +54,20 @@ import java.util.function.UnaryOperator;
 public interface ByteFunction<R> {
 
     /**
+     * Calls the given {@link ByteFunction} with the given arguments and returns its result.
+     *
+     * @param <R> The type of return value from the function
+     * @param function The function to be called
+     * @param value The argument to the function
+     * @return The result from the given {@code ByteFunction}.
+     * @throws NullPointerException If the given function is {@code null}
+     */
+    static <R> R call(@Nonnull final ByteFunction<? extends R> function, byte value) {
+        Objects.requireNonNull(function);
+        return function.apply(value);
+    }
+
+    /**
      * Creates a {@link ByteFunction} which always returns a given value.
      *
      * @param <R> The type of return value from the function

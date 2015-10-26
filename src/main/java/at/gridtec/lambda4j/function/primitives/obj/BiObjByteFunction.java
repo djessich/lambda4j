@@ -44,17 +44,22 @@ import java.util.function.UnaryOperator;
 public interface BiObjByteFunction<T, U, R> {
 
     /**
-     * Creates a {@link BiObjByteFunction} which always returns a given value.
+     * Calls the given {@link BiObjByteFunction} with the given arguments and returns its result.
      *
      * @param <T> The type of the first argument to the function
      * @param <U> The type of the second argument to the function
      * @param <R> The type of return value from the function
-     * @param r The return value for the constant
-     * @return A {@code BiObjByteFunction} which always returns a given value.
+     * @param function The function to be called
+     * @param t The first argument to the function
+     * @param u The second argument to the function
+     * @param value The third argument to the function
+     * @return The result from the given {@code BiObjByteFunction}.
+     * @throws NullPointerException If the given function is {@code null}
      */
-    @Nonnull
-    static <T, U, R> BiObjByteFunction<T, U, R> constant(R r) {
-        return (t, u, value) -> r;
+    static <T, U, R> R call(@Nonnull final BiObjByteFunction<? super T, ? super U, ? extends R> function, final T t,
+            final U u, byte value) {
+        Objects.requireNonNull(function);
+        return function.apply(t, u, value);
     }
 
     /**
@@ -109,6 +114,20 @@ public interface BiObjByteFunction<T, U, R> {
     static <T, U, R> BiObjByteFunction<T, U, R> onlyThird(@Nonnull final ByteFunction<? extends R> function) {
         Objects.requireNonNull(function);
         return (t, u, value) -> function.apply(value);
+    }
+
+    /**
+     * Creates a {@link BiObjByteFunction} which always returns a given value.
+     *
+     * @param <T> The type of the first argument to the function
+     * @param <U> The type of the second argument to the function
+     * @param <R> The type of return value from the function
+     * @param r The return value for the constant
+     * @return A {@code BiObjByteFunction} which always returns a given value.
+     */
+    @Nonnull
+    static <T, U, R> BiObjByteFunction<T, U, R> constant(R r) {
+        return (t, u, value) -> r;
     }
 
     /**

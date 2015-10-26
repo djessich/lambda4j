@@ -43,6 +43,19 @@ import java.util.function.UnaryOperator;
 public interface CharToFloatFunction {
 
     /**
+     * Calls the given {@link CharToFloatFunction} with the given arguments and returns its result.
+     *
+     * @param function The function to be called
+     * @param value The argument to the function
+     * @return The result from the given {@code CharToFloatFunction}.
+     * @throws NullPointerException If the given function is {@code null}
+     */
+    static float call(@Nonnull final CharToFloatFunction function, char value) {
+        Objects.requireNonNull(function);
+        return function.applyAsFloat(value);
+    }
+
+    /**
      * Creates a {@link CharToFloatFunction} which always returns a given value.
      *
      * @param ret The return value for the constant
@@ -56,7 +69,7 @@ public interface CharToFloatFunction {
     /**
      * Applies this function to the given argument.
      *
-     * @param value The argument to this function
+     * @param value The argument to the function
      * @return The result from this function, which is its result.
      */
     float applyAsFloat(char value);

@@ -38,6 +38,18 @@ import java.util.function.UnaryOperator;
 public interface ShortConsumer {
 
     /**
+     * Calls the given {@link ShortConsumer} with the given arguments and returns its result.
+     *
+     * @param consumer The consumer to be called
+     * @param value The argument to the operation to be consumed
+     * @throws NullPointerException If the given consumer is {@code null}
+     */
+    static void call(@Nonnull final ShortConsumer consumer, short value) {
+        Objects.requireNonNull(consumer);
+        consumer.accept(value);
+    }
+
+    /**
      * Performs this operation on the given argument.
      *
      * @param value The argument to the operation to be consumed
@@ -64,8 +76,8 @@ public interface ShortConsumer {
      * @return A composed {@link ShortConsumer} that first applies the {@code before} operation to its input, and then
      * applies this operation to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a primitive specialization of {@link UnaryOperator}. Therefore
-     * the given operation handles primitive types. In this case this is {@code short}.
+     * @implNote The input argument of this method is a primitive specialization of {@link UnaryOperator}. Therefore the
+     * given operation handles primitive types. In this case this is {@code short}.
      * @see #andThen(ShortConsumer)
      */
     @Nonnull

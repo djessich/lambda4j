@@ -37,15 +37,18 @@ import java.util.function.Predicate;
 public interface ObjDoublePredicate<T> {
 
     /**
-     * Creates a {@link ObjDoublePredicate} which always returns a given value.
+     * Calls the given {@link ObjDoublePredicate} with the given arguments and returns its result.
      *
      * @param <T> The type of argument to the predicate
-     * @param ret The return value for the constant
-     * @return A {@code ObjDoublePredicate} which always returns a given value.
+     * @param predicate The predicate to be called
+     * @param t The first argument to the predicate
+     * @param value The second argument to the predicate
+     * @return The result from the given {@code ObjDoublePredicate}.
+     * @throws NullPointerException If the given predicate is {@code null}
      */
-    @Nonnull
-    static <T> ObjDoublePredicate<T> constant(boolean ret) {
-        return (t, value) -> ret;
+    static <T> boolean call(@Nonnull final ObjDoublePredicate<? super T> predicate, final T t, double value) {
+        Objects.requireNonNull(predicate);
+        return predicate.test(t, value);
     }
 
     /**
@@ -78,6 +81,18 @@ public interface ObjDoublePredicate<T> {
     static <T> ObjDoublePredicate<T> onlySecond(@Nonnull final DoublePredicate predicate) {
         Objects.requireNonNull(predicate);
         return (t, value) -> predicate.test(value);
+    }
+
+    /**
+     * Creates a {@link ObjDoublePredicate} which always returns a given value.
+     *
+     * @param <T> The type of argument to the predicate
+     * @param ret The return value for the constant
+     * @return A {@code ObjDoublePredicate} which always returns a given value.
+     */
+    @Nonnull
+    static <T> ObjDoublePredicate<T> constant(boolean ret) {
+        return (t, value) -> ret;
     }
 
     /**

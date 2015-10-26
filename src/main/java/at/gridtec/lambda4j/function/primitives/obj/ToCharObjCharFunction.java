@@ -44,17 +44,19 @@ import java.util.function.UnaryOperator;
 public interface ToCharObjCharFunction<T> {
 
     /**
-     * Creates a {@link ToCharObjCharFunction} which always returns a given value.
+     * Calls the given {@link ToCharObjCharFunction} with the given arguments and returns its result.
      *
      * @param <T> The type of argument to the function
-     * @param ret The return value for the constant
-     * @return A {@code ToCharObjCharFunction} which always returns a given value.
+     * @param function The function to be called
+     * @param t The first argument to the function
+     * @param value The second argument to the function
+     * @return The result from the given {@code ToCharObjCharFunction}.
+     * @throws NullPointerException If the given function is {@code null}
      */
-    @Nonnull
-    static <T> ToCharObjCharFunction<T> constant(char ret) {
-        return (t, value) -> ret;
+    static <T> char call(@Nonnull final ToCharObjCharFunction<? super T> function, final T t, char value) {
+        Objects.requireNonNull(function);
+        return function.applyAsChar(t, value);
     }
-
     /**
      * Creates a {@link ToCharObjCharFunction} which uses the {@code first} parameter of this one as argument for the
      * given {@link ToCharFunction}.
@@ -85,6 +87,18 @@ public interface ToCharObjCharFunction<T> {
     static <T> ToCharObjCharFunction<T> onlySecond(@Nonnull final CharUnaryOperator function) {
         Objects.requireNonNull(function);
         return (t, value) -> function.applyAsChar(value);
+    }
+
+    /**
+     * Creates a {@link ToCharObjCharFunction} which always returns a given value.
+     *
+     * @param <T> The type of argument to the function
+     * @param ret The return value for the constant
+     * @return A {@code ToCharObjCharFunction} which always returns a given value.
+     */
+    @Nonnull
+    static <T> ToCharObjCharFunction<T> constant(char ret) {
+        return (t, value) -> ret;
     }
 
     /**

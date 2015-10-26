@@ -51,6 +51,17 @@ import java.util.function.Supplier;
 public interface ShortSupplier {
 
     /**
+     * Calls the given {@link ShortSupplier} and returns its result.
+     *
+     * @param supplier The supplier to be called
+     * @return The result of the given {@code ShortSupplier}.
+     */
+    static short call(@Nonnull final ShortSupplier supplier) {
+        Objects.requireNonNull(supplier);
+        return supplier.getAsShort();
+    }
+
+    /**
      * Creates a {@link ShortSupplier} which always returns a given value.
      *
      * @param ret The return value for the constant
@@ -59,18 +70,6 @@ public interface ShortSupplier {
     @Nonnull
     static ShortSupplier constant(short ret) {
         return () -> ret;
-    }
-
-    /**
-     * Calls the given {@link ShortSupplier} and returns its result. If evaluation of the given operation throws an
-     * exception, it is relayed to the caller of this operation.
-     *
-     * @param supplier The supplier to be called
-     * @return The result of the given {@code ShortSupplier}.
-     */
-    static short call(@Nonnull final ShortSupplier supplier) {
-        Objects.requireNonNull(supplier);
-        return supplier.getAsShort();
     }
 
     /**

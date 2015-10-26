@@ -38,15 +38,18 @@ import java.util.function.Predicate;
 public interface ObjShortPredicate<T> {
 
     /**
-     * Creates a {@link ObjShortPredicate} which always returns a given value.
+     * Calls the given {@link ObjShortPredicate} with the given arguments and returns its result.
      *
      * @param <T> The type of argument to the predicate
-     * @param ret The return value for the constant
-     * @return A {@code ObjShortPredicate} which always returns a given value.
+     * @param predicate The predicate to be called
+     * @param t The first argument to the predicate
+     * @param value The second argument to the predicate
+     * @return The result from the given {@code ObjShortPredicate}.
+     * @throws NullPointerException If the given predicate is {@code null}
      */
-    @Nonnull
-    static <T> ObjShortPredicate<T> constant(boolean ret) {
-        return (t, value) -> ret;
+    static <T> boolean call(@Nonnull final ObjShortPredicate<? super T> predicate, final T t, short value) {
+        Objects.requireNonNull(predicate);
+        return predicate.test(t, value);
     }
 
     /**
@@ -79,6 +82,18 @@ public interface ObjShortPredicate<T> {
     static <T> ObjShortPredicate<T> onlySecond(@Nonnull final ShortPredicate predicate) {
         Objects.requireNonNull(predicate);
         return (t, value) -> predicate.test(value);
+    }
+
+    /**
+     * Creates a {@link ObjShortPredicate} which always returns a given value.
+     *
+     * @param <T> The type of argument to the predicate
+     * @param ret The return value for the constant
+     * @return A {@code ObjShortPredicate} which always returns a given value.
+     */
+    @Nonnull
+    static <T> ObjShortPredicate<T> constant(boolean ret) {
+        return (t, value) -> ret;
     }
 
     /**

@@ -45,16 +45,21 @@ import java.util.function.UnaryOperator;
 public interface ToDoubleBiObjDoubleFunction<T, U> {
 
     /**
-     * Creates a {@link ToDoubleBiObjDoubleFunction} which always returns a given value.
+     * Calls the given {@link ToDoubleBiObjDoubleFunction} with the given arguments and returns its result.
      *
      * @param <T> The type of the first argument to the function
      * @param <U> The type of the second argument to the function
-     * @param ret The return value for the constant
-     * @return A {@code ToDoubleBiObjDoubleFunction} which always returns a given value.
+     * @param function The function to be called
+     * @param t The first argument to the function
+     * @param u The second argument to the function
+     * @param value The third argument to the function
+     * @return The result from the given {@code ToDoubleBiObjDoubleFunction}.
+     * @throws NullPointerException If the given function is {@code null}
      */
-    @Nonnull
-    static <T, U> ToDoubleBiObjDoubleFunction<T, U> constant(double ret) {
-        return (t, u, value) -> ret;
+    static <T, U> double call(@Nonnull final ToDoubleBiObjDoubleFunction<? super T, ? super U> function, final T t,
+            final U u, double value) {
+        Objects.requireNonNull(function);
+        return function.applyAsDouble(t, u, value);
     }
 
     /**
@@ -106,6 +111,19 @@ public interface ToDoubleBiObjDoubleFunction<T, U> {
     static <T, U> ToDoubleBiObjDoubleFunction<T, U> onlyThird(@Nonnull final DoubleUnaryOperator function) {
         Objects.requireNonNull(function);
         return (t, u, value) -> function.applyAsDouble(value);
+    }
+
+    /**
+     * Creates a {@link ToDoubleBiObjDoubleFunction} which always returns a given value.
+     *
+     * @param <T> The type of the first argument to the function
+     * @param <U> The type of the second argument to the function
+     * @param ret The return value for the constant
+     * @return A {@code ToDoubleBiObjDoubleFunction} which always returns a given value.
+     */
+    @Nonnull
+    static <T, U> ToDoubleBiObjDoubleFunction<T, U> constant(double ret) {
+        return (t, u, value) -> ret;
     }
 
     /**

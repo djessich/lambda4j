@@ -51,6 +51,20 @@ import java.util.function.UnaryOperator;
 public interface ToShortFunction<T> {
 
     /**
+     * Calls the given {@link ToShortFunction} with the given arguments and returns its result.
+     *
+     * @param <T> The type of argument to the function
+     * @param function The function to be called
+     * @param t The argument to the function
+     * @return The result from the given {@code ToShortFunction}.
+     * @throws NullPointerException If the given function is {@code null}
+     */
+    static <T> short call(@Nonnull final ToShortFunction<? super T> function, final T t) {
+        Objects.requireNonNull(function);
+        return function.applyAsShort(t);
+    }
+
+    /**
      * Creates a {@link ToShortFunction} which always returns a given value.
      *
      * @param <T> The type of argument to the function

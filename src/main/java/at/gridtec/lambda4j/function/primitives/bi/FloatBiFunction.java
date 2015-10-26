@@ -42,15 +42,18 @@ import java.util.function.UnaryOperator;
 public interface FloatBiFunction<R> {
 
     /**
-     * Creates a {@link FloatBiFunction} which always returns a given value.
+     * Calls the given {@link FloatBiFunction} with the given arguments and returns its result.
      *
      * @param <R> The type of return value from the function
-     * @param r The return value for the constant
-     * @return A {@code FloatBiFunction} which always returns a given value.
+     * @param function The function to be called
+     * @param value1 The first argument to the function
+     * @param value2 The second argument to the function
+     * @return The result from the given {@code FloatBiFunction}.
+     * @throws NullPointerException If the given function is {@code null}
      */
-    @Nonnull
-    static <R> FloatBiFunction<R> constant(R r) {
-        return (value1, value2) -> r;
+    static <R> R call(@Nonnull final FloatBiFunction<? extends R> function, float value1, float value2) {
+        Objects.requireNonNull(function);
+        return function.apply(value1, value2);
     }
 
     /**
@@ -83,6 +86,18 @@ public interface FloatBiFunction<R> {
     static <R> FloatBiFunction<R> onlySecond(@Nonnull final FloatFunction<? extends R> function) {
         Objects.requireNonNull(function);
         return (value1, value2) -> function.apply(value2);
+    }
+
+    /**
+     * Creates a {@link FloatBiFunction} which always returns a given value.
+     *
+     * @param <R> The type of return value from the function
+     * @param r The return value for the constant
+     * @return A {@code FloatBiFunction} which always returns a given value.
+     */
+    @Nonnull
+    static <R> FloatBiFunction<R> constant(R r) {
+        return (value1, value2) -> r;
     }
 
     /**
@@ -194,6 +209,7 @@ public interface FloatBiFunction<R> {
     default FloatFunction<FloatFunction<R>> curried() {
         return value1 -> value2 -> apply(value1, value2);
     }
+
     /**
      * Returns a composed {@link BiFunction} which represents this {@link FloatBiFunction}. Thereby the primitive input
      * argument for this function is autoboxed. This method is just convenience to provide the ability to use this

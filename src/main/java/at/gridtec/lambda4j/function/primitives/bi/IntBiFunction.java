@@ -42,15 +42,18 @@ import java.util.function.UnaryOperator;
 public interface IntBiFunction<R> {
 
     /**
-     * Creates a {@link IntBiFunction} which always returns a given value.
+     * Calls the given {@link IntBiFunction} with the given arguments and returns its result.
      *
      * @param <R> The type of return value from the function
-     * @param r The return value for the constant
-     * @return A {@code IntBiFunction} which always returns a given value.
+     * @param function The function to be called
+     * @param value1 The first argument to the function
+     * @param value2 The second argument to the function
+     * @return The result from the given {@code IntBiFunction}.
+     * @throws NullPointerException If the given function is {@code null}
      */
-    @Nonnull
-    static <R> IntBiFunction<R> constant(R r) {
-        return (value1, value2) -> r;
+    static <R> R call(@Nonnull final IntBiFunction<? extends R> function, int value1, int value2) {
+        Objects.requireNonNull(function);
+        return function.apply(value1, value2);
     }
 
     /**
@@ -83,6 +86,18 @@ public interface IntBiFunction<R> {
     static <R> IntBiFunction<R> onlySecond(@Nonnull final IntFunction<? extends R> function) {
         Objects.requireNonNull(function);
         return (value1, value2) -> function.apply(value2);
+    }
+
+    /**
+     * Creates a {@link IntBiFunction} which always returns a given value.
+     *
+     * @param <R> The type of return value from the function
+     * @param r The return value for the constant
+     * @return A {@code IntBiFunction} which always returns a given value.
+     */
+    @Nonnull
+    static <R> IntBiFunction<R> constant(R r) {
+        return (value1, value2) -> r;
     }
 
     /**

@@ -44,19 +44,23 @@ import java.util.function.UnaryOperator;
 public interface BiObjDoubleFunction<T, U, R> {
 
     /**
-     * Creates a {@link BiObjDoubleFunction} which always returns a given value.
+     * Calls the given {@link BiObjDoubleFunction} with the given arguments and returns its result.
      *
      * @param <T> The type of the first argument to the function
      * @param <U> The type of the second argument to the function
      * @param <R> The type of return value from the function
-     * @param r The return value for the constant
-     * @return A {@code BiObjDoubleFunction} which always returns a given value.
+     * @param function The function to be called
+     * @param t The first argument to the function
+     * @param u The second argument to the function
+     * @param value The third argument to the function
+     * @return The result from the given {@code BiObjDoubleFunction}.
+     * @throws NullPointerException If the given function is {@code null}
      */
-    @Nonnull
-    static <T, U, R> BiObjDoubleFunction<T, U, R> constant(R r) {
-        return (t, u, value) -> r;
+    static <T, U, R> R call(@Nonnull final BiObjDoubleFunction<? super T, ? super U, ? extends R> function, final T t,
+            final U u, char value) {
+        Objects.requireNonNull(function);
+        return function.apply(t, u, value);
     }
-
     /**
      * Creates a {@link BiObjDoubleFunction} which uses the {@code first} parameter of this one as argument for the
      * given {@link Function}.
@@ -109,6 +113,20 @@ public interface BiObjDoubleFunction<T, U, R> {
     static <T, U, R> BiObjDoubleFunction<T, U, R> onlyThird(@Nonnull final DoubleFunction<? extends R> function) {
         Objects.requireNonNull(function);
         return (t, u, value) -> function.apply(value);
+    }
+
+    /**
+     * Creates a {@link BiObjDoubleFunction} which always returns a given value.
+     *
+     * @param <T> The type of the first argument to the function
+     * @param <U> The type of the second argument to the function
+     * @param <R> The type of return value from the function
+     * @param r The return value for the constant
+     * @return A {@code BiObjDoubleFunction} which always returns a given value.
+     */
+    @Nonnull
+    static <T, U, R> BiObjDoubleFunction<T, U, R> constant(R r) {
+        return (t, u, value) -> r;
     }
 
     /**

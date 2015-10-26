@@ -45,6 +45,19 @@ import java.util.function.UnaryOperator;
 public interface DoubleToFloatFunction {
 
     /**
+     * Calls the given {@link DoubleToFloatFunction} with the given arguments and returns its result.
+     *
+     * @param function The function to be called
+     * @param value The argument to the function
+     * @return The result from the given {@code DoubleToFloatFunction}.
+     * @throws NullPointerException If the given function is {@code null}
+     */
+    static float call(@Nonnull final DoubleToFloatFunction function, double value) {
+        Objects.requireNonNull(function);
+        return function.applyAsFloat(value);
+    }
+
+    /**
      * Creates a {@link DoubleToFloatFunction} which always returns a given value.
      *
      * @param ret The return value for the constant
@@ -58,7 +71,7 @@ public interface DoubleToFloatFunction {
     /**
      * Applies this function to the given argument.
      *
-     * @param value The argument to this function
+     * @param value The argument to the function
      * @return The result from this function, which is its result.
      */
     float applyAsFloat(double value);

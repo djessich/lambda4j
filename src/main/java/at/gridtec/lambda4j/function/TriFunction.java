@@ -43,18 +43,23 @@ import java.util.function.Function;
 public interface TriFunction<T, U, V, R> {
 
     /**
-     * Creates a {@link TriFunction} which always returns a given value.
+     * Calls the given {@link TriFunction} with the given arguments and returns its result.
      *
      * @param <T> The type of the first argument to the function
      * @param <U> The type of the second argument to the function
      * @param <V> The type of the third argument to the function
      * @param <R> The type of return value from the function
-     * @param r The return value for the constant
-     * @return A {@code TriFunction} which always returns a given value.
+     * @param function The function to be called
+     * @param t The first argument to the function
+     * @param u The second argument to the function
+     * @param v The third argument to the function
+     * @return The result from the given {@code TriFunction}.
+     * @throws NullPointerException If the given function is {@code null}
      */
-    @Nonnull
-    static <T, U, V, R> TriFunction<T, U, V, R> constant(R r) {
-        return (t, u, v) -> r;
+    static <T, U, V, R> R call(@Nonnull final TriFunction<? super T, ? super U, ? super V, ? extends R> function,
+            final T t, final U u, final V v) {
+        Objects.requireNonNull(function);
+        return function.apply(t, u, v);
     }
 
     /**
@@ -112,6 +117,21 @@ public interface TriFunction<T, U, V, R> {
     static <T, U, V, R> TriFunction<T, U, V, R> onlyThird(@Nonnull final Function<? super V, ? extends R> function) {
         Objects.requireNonNull(function);
         return (t, u, v) -> function.apply(v);
+    }
+
+    /**
+     * Creates a {@link TriFunction} which always returns a given value.
+     *
+     * @param <T> The type of the first argument to the function
+     * @param <U> The type of the second argument to the function
+     * @param <V> The type of the third argument to the function
+     * @param <R> The type of return value from the function
+     * @param r The return value for the constant
+     * @return A {@code TriFunction} which always returns a given value.
+     */
+    @Nonnull
+    static <T, U, V, R> TriFunction<T, U, V, R> constant(R r) {
+        return (t, u, v) -> r;
     }
 
     /**

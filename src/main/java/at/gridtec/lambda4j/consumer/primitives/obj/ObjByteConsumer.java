@@ -42,6 +42,20 @@ import java.util.function.UnaryOperator;
 public interface ObjByteConsumer<T> {
 
     /**
+     * Calls the given {@link ObjByteConsumer} with the given arguments and returns its result.
+     *
+     * @param <T> The type of argument to the operation to be consumed
+     * @param consumer The consumer to be called
+     * @param t The first argument to the operation to be consumed
+     * @param value The second argument to the operation to be consumed
+     * @throws NullPointerException If the given consumer is {@code null}
+     */
+    static <T> void call(@Nonnull final ObjByteConsumer<? super T> consumer, T t, byte value) {
+        Objects.requireNonNull(consumer);
+        consumer.accept(t, value);
+    }
+
+    /**
      * Creates a {@link ObjByteConsumer} which uses the {@code first} parameter of this one as argument for the given
      * {@link Consumer}.
      *

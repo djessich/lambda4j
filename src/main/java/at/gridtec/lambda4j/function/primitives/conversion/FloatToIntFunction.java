@@ -45,6 +45,19 @@ import java.util.function.UnaryOperator;
 public interface FloatToIntFunction {
 
     /**
+     * Calls the given {@link FloatToIntFunction} with the given arguments and returns its result.
+     *
+     * @param function The function to be called
+     * @param value The argument to the function
+     * @return The result from the given {@code FloatToIntFunction}.
+     * @throws NullPointerException If the given function is {@code null}
+     */
+    static int call(@Nonnull final FloatToIntFunction function, float value) {
+        Objects.requireNonNull(function);
+        return function.applyAsInt(value);
+    }
+
+    /**
      * Creates a {@link FloatToIntFunction} which always returns a given value.
      *
      * @param ret The return value for the constant
@@ -58,7 +71,7 @@ public interface FloatToIntFunction {
     /**
      * Applies this function to the given argument.
      *
-     * @param value The argument to this function
+     * @param value The argument to the function
      * @return The result from this function, which is its result.
      */
     int applyAsInt(float value);

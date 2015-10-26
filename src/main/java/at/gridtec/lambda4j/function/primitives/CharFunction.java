@@ -54,6 +54,20 @@ import java.util.function.UnaryOperator;
 public interface CharFunction<R> {
 
     /**
+     * Calls the given {@link CharFunction} with the given arguments and returns its result.
+     *
+     * @param <R> The type of return value from the function
+     * @param function The function to be called
+     * @param value The argument to the function
+     * @return The result from the given {@code CharFunction}.
+     * @throws NullPointerException If the given function is {@code null}
+     */
+    static <R> R call(@Nonnull final CharFunction<? extends R> function, char value) {
+        Objects.requireNonNull(function);
+        return function.apply(value);
+    }
+
+    /**
      * Creates a {@link CharFunction} which always returns a given value.
      *
      * @param <R> The type of return value from the function

@@ -42,15 +42,18 @@ import java.util.function.UnaryOperator;
 public interface ByteBiFunction<R> {
 
     /**
-     * Creates a {@link ByteBiFunction} which always returns a given value.
+     * Calls the given {@link ByteBiFunction} with the given arguments and returns its result.
      *
      * @param <R> The type of return value from the function
-     * @param r The return value for the constant
-     * @return A {@code ByteBiFunction} which always returns a given value.
+     * @param function The function to be called
+     * @param value1 The first argument to the function
+     * @param value2 The second argument to the function
+     * @return The result from the given {@code ByteBiFunction}.
+     * @throws NullPointerException If the given function is {@code null}
      */
-    @Nonnull
-    static <R> ByteBiFunction<R> constant(R r) {
-        return (value1, value2) -> r;
+    static <R> R call(@Nonnull final ByteBiFunction<? extends R> function, byte value1, byte value2) {
+        Objects.requireNonNull(function);
+        return function.apply(value1, value2);
     }
 
     /**
@@ -83,6 +86,18 @@ public interface ByteBiFunction<R> {
     static <R> ByteBiFunction<R> onlySecond(@Nonnull final ByteFunction<? extends R> function) {
         Objects.requireNonNull(function);
         return (value1, value2) -> function.apply(value2);
+    }
+
+    /**
+     * Creates a {@link ByteBiFunction} which always returns a given value.
+     *
+     * @param <R> The type of return value from the function
+     * @param r The return value for the constant
+     * @return A {@code ByteBiFunction} which always returns a given value.
+     */
+    @Nonnull
+    static <R> ByteBiFunction<R> constant(R r) {
+        return (value1, value2) -> r;
     }
 
     /**

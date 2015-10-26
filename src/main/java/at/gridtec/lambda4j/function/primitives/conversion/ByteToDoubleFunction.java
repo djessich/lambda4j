@@ -45,6 +45,19 @@ import java.util.function.UnaryOperator;
 public interface ByteToDoubleFunction {
 
     /**
+     * Calls the given {@link ByteToDoubleFunction} with the given arguments and returns its result.
+     *
+     * @param function The function to be called
+     * @param value The argument to the function
+     * @return The result from the given {@code ByteToDoubleFunction}.
+     * @throws NullPointerException If the given function is {@code null}
+     */
+    static double call(@Nonnull final ByteToDoubleFunction function, byte value) {
+        Objects.requireNonNull(function);
+        return function.applyAsDouble(value);
+    }
+
+    /**
      * Creates a {@link ByteToDoubleFunction} which always returns a given value.
      *
      * @param ret The return value for the constant
@@ -58,7 +71,7 @@ public interface ByteToDoubleFunction {
     /**
      * Applies this function to the given argument.
      *
-     * @param value The argument to this function
+     * @param value The argument to the function
      * @return The result from this function, which is its result.
      */
     double applyAsDouble(byte value);

@@ -38,15 +38,18 @@ import java.util.function.Predicate;
 public interface ObjFloatPredicate<T> {
 
     /**
-     * Creates a {@link ObjFloatPredicate} which always returns a given value.
+     * Calls the given {@link ObjFloatPredicate} with the given arguments and returns its result.
      *
      * @param <T> The type of argument to the predicate
-     * @param ret The return value for the constant
-     * @return A {@code ObjFloatPredicate} which always returns a given value.
+     * @param predicate The predicate to be called
+     * @param t The first argument to the predicate
+     * @param value The second argument to the predicate
+     * @return The result from the given {@code ObjFloatPredicate}.
+     * @throws NullPointerException If the given predicate is {@code null}
      */
-    @Nonnull
-    static <T> ObjFloatPredicate<T> constant(boolean ret) {
-        return (t, value) -> ret;
+    static <T> boolean call(@Nonnull final ObjFloatPredicate<? super T> predicate, final T t, float value) {
+        Objects.requireNonNull(predicate);
+        return predicate.test(t, value);
     }
 
     /**
@@ -79,6 +82,18 @@ public interface ObjFloatPredicate<T> {
     static <T> ObjFloatPredicate<T> onlySecond(@Nonnull final FloatPredicate predicate) {
         Objects.requireNonNull(predicate);
         return (t, value) -> predicate.test(value);
+    }
+
+    /**
+     * Creates a {@link ObjFloatPredicate} which always returns a given value.
+     *
+     * @param <T> The type of argument to the predicate
+     * @param ret The return value for the constant
+     * @return A {@code ObjFloatPredicate} which always returns a given value.
+     */
+    @Nonnull
+    static <T> ObjFloatPredicate<T> constant(boolean ret) {
+        return (t, value) -> ret;
     }
 
     /**

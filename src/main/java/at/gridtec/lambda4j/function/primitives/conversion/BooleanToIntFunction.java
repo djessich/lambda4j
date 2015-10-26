@@ -45,6 +45,19 @@ import java.util.function.UnaryOperator;
 public interface BooleanToIntFunction {
 
     /**
+     * Calls the given {@link BooleanToIntFunction} with the given arguments and returns its result.
+     *
+     * @param function The function to be called
+     * @param value The argument to the function
+     * @return The result from the given {@code BooleanToIntFunction}.
+     * @throws NullPointerException If the given function is {@code null}
+     */
+    static int call(@Nonnull final BooleanToIntFunction function, boolean value) {
+        Objects.requireNonNull(function);
+        return function.applyAsInt(value);
+    }
+
+    /**
      * Creates a {@link BooleanToIntFunction} which always returns a given value.
      *
      * @param ret The return value for the constant
@@ -58,7 +71,7 @@ public interface BooleanToIntFunction {
     /**
      * Applies this function to the given argument.
      *
-     * @param value The argument to this function
+     * @param value The argument to the function
      * @return The result from this function, which is its result.
      */
     int applyAsInt(boolean value);

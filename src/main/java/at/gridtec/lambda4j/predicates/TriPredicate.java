@@ -39,17 +39,22 @@ import java.util.function.Predicate;
 public interface TriPredicate<T, U, V> {
 
     /**
-     * Creates a {@link TriPredicate} which always returns a given value.
+     * Calls the given {@link TriPredicate} with the given arguments and returns its result.
      *
      * @param <T> The type of the first argument to the predicate
      * @param <U> The type of the second argument to the predicate
      * @param <V> The type of the third argument to the predicate
-     * @param ret The return value for the constant
-     * @return A {@code TriPredicate} which always returns a given value.
+     * @param predicate The predicate to be called
+     * @param t The first argument to the predicate
+     * @param u The second argument to the predicate
+     * @param v The third argument to the predicate
+     * @return The result from the given {@code TriPredicate}.
+     * @throws NullPointerException If the given predicate is {@code null}
      */
-    @Nonnull
-    static <T, U, V> TriPredicate<T, U, V> constant(boolean ret) {
-        return (t, v, u) -> ret;
+    static <T, U, V> boolean call(@Nonnull final TriPredicate<? super T, ? super U, ? super V> predicate, final T t,
+            final U u, final V v) {
+        Objects.requireNonNull(predicate);
+        return predicate.test(t, u, v);
     }
 
     /**
@@ -104,6 +109,20 @@ public interface TriPredicate<T, U, V> {
     static <T, U, V> TriPredicate<T, U, V> onlyThird(@Nonnull final Predicate<? super V> predicate) {
         Objects.requireNonNull(predicate);
         return (t, u, v) -> predicate.test(v);
+    }
+
+    /**
+     * Creates a {@link TriPredicate} which always returns a given value.
+     *
+     * @param <T> The type of the first argument to the predicate
+     * @param <U> The type of the second argument to the predicate
+     * @param <V> The type of the third argument to the predicate
+     * @param ret The return value for the constant
+     * @return A {@code TriPredicate} which always returns a given value.
+     */
+    @Nonnull
+    static <T, U, V> TriPredicate<T, U, V> constant(boolean ret) {
+        return (t, v, u) -> ret;
     }
 
     /**

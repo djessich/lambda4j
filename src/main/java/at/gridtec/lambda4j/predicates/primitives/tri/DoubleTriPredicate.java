@@ -35,14 +35,18 @@ import java.util.function.DoublePredicate;
 public interface DoubleTriPredicate {
 
     /**
-     * Creates a {@link ShortTriPredicate} which always returns a given value.
+     * Calls the given {@link DoubleTriPredicate} with the given arguments and returns its result.
      *
-     * @param ret The return value for the constant
-     * @return A {@code ShortTriPredicate} which always returns a given value.
+     * @param predicate The predicate to be called
+     * @param value1 The first argument to the predicate
+     * @param value2 The second argument to the predicate
+     * @param value3 The third argument to the predicate
+     * @return The result from the given {@code DoubleTriPredicate}.
+     * @throws NullPointerException If the given predicate is {@code null}
      */
-    @Nonnull
-    static ShortTriPredicate constant(boolean ret) {
-        return (value1, value2, value3) -> ret;
+    static boolean call(@Nonnull final DoubleTriPredicate predicate, double value1, double value2, double value3) {
+        Objects.requireNonNull(predicate);
+        return predicate.test(value1, value2, value3);
     }
 
     /**
@@ -88,6 +92,17 @@ public interface DoubleTriPredicate {
     static DoubleTriPredicate onlyThird(@Nonnull final DoublePredicate predicate) {
         Objects.requireNonNull(predicate);
         return (value1, value2, value3) -> predicate.test(value3);
+    }
+
+    /**
+     * Creates a {@link ShortTriPredicate} which always returns a given value.
+     *
+     * @param ret The return value for the constant
+     * @return A {@code ShortTriPredicate} which always returns a given value.
+     */
+    @Nonnull
+    static ShortTriPredicate constant(boolean ret) {
+        return (value1, value2, value3) -> ret;
     }
 
     /**

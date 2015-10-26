@@ -35,14 +35,18 @@ import java.util.function.IntPredicate;
 public interface IntTriPredicate {
 
     /**
-     * Creates a {@link IntTriPredicate} which always returns a given value.
+     * Calls the given {@link IntTriPredicate} with the given arguments and returns its result.
      *
-     * @param ret The return value for the constant
-     * @return A {@code IntTriPredicate} which always returns a given value.
+     * @param predicate The predicate to be called
+     * @param value1 The first argument to the predicate
+     * @param value2 The second argument to the predicate
+     * @param value3 The third argument to the predicate
+     * @return The result from the given {@code IntTriPredicate}.
+     * @throws NullPointerException If the given predicate is {@code null}
      */
-    @Nonnull
-    static IntTriPredicate constant(boolean ret) {
-        return (value1, value2, value3) -> ret;
+    static boolean call(@Nonnull final IntTriPredicate predicate, int value1, int value2, int value3) {
+        Objects.requireNonNull(predicate);
+        return predicate.test(value1, value2, value3);
     }
 
     /**
@@ -88,6 +92,17 @@ public interface IntTriPredicate {
     static IntTriPredicate onlyThird(@Nonnull final IntPredicate predicate) {
         Objects.requireNonNull(predicate);
         return (value1, value2, value3) -> predicate.test(value3);
+    }
+
+    /**
+     * Creates a {@link IntTriPredicate} which always returns a given value.
+     *
+     * @param ret The return value for the constant
+     * @return A {@code IntTriPredicate} which always returns a given value.
+     */
+    @Nonnull
+    static IntTriPredicate constant(boolean ret) {
+        return (value1, value2, value3) -> ret;
     }
 
     /**

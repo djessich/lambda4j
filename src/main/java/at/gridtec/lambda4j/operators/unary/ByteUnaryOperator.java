@@ -44,6 +44,19 @@ import java.util.function.UnaryOperator;
 public interface ByteUnaryOperator {
 
     /**
+     * Calls the given {@link ByteUnaryOperator} with the given arguments and returns its result.
+     *
+     * @param operator The operator to be called
+     * @param operand The argument to the operator
+     * @return The result from the given {@code ByteUnaryOperator}.
+     * @throws NullPointerException If the given operator is {@code null}
+     */
+    static byte call(@Nonnull final ByteUnaryOperator operator, byte operand) {
+        Objects.requireNonNull(operator);
+        return operator.applyAsByte(operand);
+    }
+
+    /**
      * Creates a {@link ByteUnaryOperator} which always returns a given value.
      *
      * @param ret The return value for the constant

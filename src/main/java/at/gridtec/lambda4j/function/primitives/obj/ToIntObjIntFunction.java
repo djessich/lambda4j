@@ -43,15 +43,18 @@ import java.util.function.UnaryOperator;
 public interface ToIntObjIntFunction<T> {
 
     /**
-     * Creates a {@link ToIntObjIntFunction} which always returns a given value.
+     * Calls the given {@link ToIntObjIntFunction} with the given arguments and returns its result.
      *
      * @param <T> The type of argument to the function
-     * @param ret The return value for the constant
-     * @return A {@code ToIntObjIntFunction} which always returns a given value.
+     * @param function The function to be called
+     * @param t The first argument to the function
+     * @param value The second argument to the function
+     * @return The result from the given {@code ToIntObjIntFunction}.
+     * @throws NullPointerException If the given function is {@code null}
      */
-    @Nonnull
-    static <T> ToIntObjIntFunction<T> constant(int ret) {
-        return (t, value) -> ret;
+    static <T> int call(@Nonnull final ToIntObjIntFunction<? super T> function, final T t, int value) {
+        Objects.requireNonNull(function);
+        return function.applyAsInt(t, value);
     }
 
     /**
@@ -84,6 +87,18 @@ public interface ToIntObjIntFunction<T> {
     static <T> ToIntObjIntFunction<T> onlySecond(@Nonnull final IntUnaryOperator function) {
         Objects.requireNonNull(function);
         return (t, value) -> function.applyAsInt(value);
+    }
+
+    /**
+     * Creates a {@link ToIntObjIntFunction} which always returns a given value.
+     *
+     * @param <T> The type of argument to the function
+     * @param ret The return value for the constant
+     * @return A {@code ToIntObjIntFunction} which always returns a given value.
+     */
+    @Nonnull
+    static <T> ToIntObjIntFunction<T> constant(int ret) {
+        return (t, value) -> ret;
     }
 
     /**

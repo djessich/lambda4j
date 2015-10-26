@@ -42,6 +42,20 @@ import java.util.function.UnaryOperator;
 public interface ObjBooleanConsumer<T> {
 
     /**
+     * Calls the given {@link ObjBooleanConsumer} with the given arguments and returns its result.
+     *
+     * @param <T> The type of argument to the operation to be consumed
+     * @param consumer The consumer to be called
+     * @param t The first argument to the operation to be consumed
+     * @param value The second argument to the operation to be consumed
+     * @throws NullPointerException If the given consumer is {@code null}
+     */
+    static <T> void call(@Nonnull final ObjBooleanConsumer<? super T> consumer, T t, boolean value) {
+        Objects.requireNonNull(consumer);
+        consumer.accept(t, value);
+    }
+
+    /**
      * Creates a {@link ObjBooleanConsumer} which uses the {@code first} parameter of this one as argument for the given
      * {@link Consumer}.
      *

@@ -38,6 +38,19 @@ import java.util.function.UnaryOperator;
 public interface LongBiConsumer {
 
     /**
+     * Calls the given {@link LongBiConsumer} with the given arguments and returns its result.
+     *
+     * @param consumer The consumer to be called
+     * @param value1 The first argument to the operation to be consumed
+     * @param value2 The second argument to the operation to be consumed
+     * @throws NullPointerException If the given consumer is {@code null}
+     */
+    static void call(@Nonnull final LongBiConsumer consumer, long value1, long value2) {
+        Objects.requireNonNull(consumer);
+        consumer.accept(value1, value2);
+    }
+
+    /**
      * Creates a {@link LongBiConsumer} which uses the {@code first} parameter of this one as argument for the given
      * {@link LongConsumer}.
      *

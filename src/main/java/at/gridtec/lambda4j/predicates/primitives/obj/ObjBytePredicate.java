@@ -38,15 +38,18 @@ import java.util.function.Predicate;
 public interface ObjBytePredicate<T> {
 
     /**
-     * Creates a {@link ObjBytePredicate} which always returns a given value.
+     * Calls the given {@link ObjBytePredicate} with the given arguments and returns its result.
      *
      * @param <T> The type of argument to the predicate
-     * @param ret The return value for the constant
-     * @return A {@code ObjBytePredicate} which always returns a given value.
+     * @param predicate The predicate to be called
+     * @param t The first argument to the predicate
+     * @param value The second argument to the predicate
+     * @return The result from the given {@code ObjBytePredicate}.
+     * @throws NullPointerException If the given predicate is {@code null}
      */
-    @Nonnull
-    static <T> ObjBytePredicate<T> constant(boolean ret) {
-        return (t, value) -> ret;
+    static <T> boolean call(@Nonnull final ObjBytePredicate<? super T> predicate, final T t, byte value) {
+        Objects.requireNonNull(predicate);
+        return predicate.test(t, value);
     }
 
     /**
@@ -79,6 +82,18 @@ public interface ObjBytePredicate<T> {
     static <T> ObjBytePredicate<T> onlySecond(@Nonnull final BytePredicate predicate) {
         Objects.requireNonNull(predicate);
         return (t, value) -> predicate.test(value);
+    }
+
+    /**
+     * Creates a {@link ObjBytePredicate} which always returns a given value.
+     *
+     * @param <T> The type of argument to the predicate
+     * @param ret The return value for the constant
+     * @return A {@code ObjBytePredicate} which always returns a given value.
+     */
+    @Nonnull
+    static <T> ObjBytePredicate<T> constant(boolean ret) {
+        return (t, value) -> ret;
     }
 
     /**

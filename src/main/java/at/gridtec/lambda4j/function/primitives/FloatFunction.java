@@ -54,6 +54,20 @@ import java.util.function.UnaryOperator;
 public interface FloatFunction<R> {
 
     /**
+     * Calls the given {@link FloatFunction} with the given arguments and returns its result.
+     *
+     * @param <R> The type of return value from the function
+     * @param function The function to be called
+     * @param value The argument to the function
+     * @return The result from the given {@code FloatFunction}.
+     * @throws NullPointerException If the given function is {@code null}
+     */
+    static <R> R call(@Nonnull final FloatFunction<? extends R> function, float value) {
+        Objects.requireNonNull(function);
+        return function.apply(value);
+    }
+
+    /**
      * Creates a {@link FloatFunction} which always returns a given value.
      *
      * @param <R> The type of return value from the function

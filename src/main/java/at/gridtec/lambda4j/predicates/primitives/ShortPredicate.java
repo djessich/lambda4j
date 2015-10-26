@@ -33,6 +33,19 @@ import java.util.function.Predicate;
 public interface ShortPredicate {
 
     /**
+     * Calls the given {@link ShortPredicate} with the given argument and returns its result.
+     *
+     * @param predicate The predicate to be called
+     * @param value The argument to the predicate
+     * @return The result from the given {@code ShortPredicate}.
+     * @throws NullPointerException If the given predicate is {@code null}
+     */
+    static boolean call(@Nonnull final ShortPredicate predicate, short value) {
+        Objects.requireNonNull(predicate);
+        return predicate.test(value);
+    }
+
+    /**
      * Creates a {@link ShortPredicate} which always returns a given value.
      *
      * @param ret The return value for the constant

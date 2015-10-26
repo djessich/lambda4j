@@ -44,6 +44,19 @@ import java.util.function.UnaryOperator;
 public interface ShortUnaryOperator {
 
     /**
+     * Calls the given {@link ShortUnaryOperator} with the given arguments and returns its result.
+     *
+     * @param operator The operator to be called
+     * @param operand The argument to the operator
+     * @return The result from the given {@code ShortUnaryOperator}.
+     * @throws NullPointerException If the given operator is {@code null}
+     */
+    static short call(@Nonnull final ShortUnaryOperator operator, short operand) {
+        Objects.requireNonNull(operator);
+        return operator.applyAsShort(operand);
+    }
+
+    /**
      * Creates a {@link ShortUnaryOperator} which always returns a given value.
      *
      * @param ret The return value for the constant

@@ -43,6 +43,18 @@ import java.util.function.UnaryOperator;
 @SuppressWarnings("unused")
 @FunctionalInterface
 public interface BooleanToLongFunction {
+    /**
+     * Calls the given {@link BooleanToLongFunction} with the given arguments and returns its result.
+     *
+     * @param function The function to be called
+     * @param value The argument to the function
+     * @return The result from the given {@code BooleanToLongFunction}.
+     * @throws NullPointerException If the given function is {@code null}
+     */
+    static long call(@Nonnull final BooleanToLongFunction function, boolean value) {
+        Objects.requireNonNull(function);
+        return function.applyAsLong(value);
+    }
 
     /**
      * Creates a {@link BooleanToLongFunction} which always returns a given value.
@@ -58,7 +70,7 @@ public interface BooleanToLongFunction {
     /**
      * Applies this function to the given argument.
      *
-     * @param value The argument to this function
+     * @param value The argument to the function
      * @return The result from this function, which is its result.
      */
     long applyAsLong(boolean value);

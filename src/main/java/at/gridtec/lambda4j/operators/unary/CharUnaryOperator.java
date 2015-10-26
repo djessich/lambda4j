@@ -44,6 +44,19 @@ import java.util.function.UnaryOperator;
 public interface CharUnaryOperator {
 
     /**
+     * Calls the given {@link CharUnaryOperator} with the given arguments and returns its result.
+     *
+     * @param operator The operator to be called
+     * @param operand The argument to the operator
+     * @return The result from the given {@code CharUnaryOperator}.
+     * @throws NullPointerException If the given operator is {@code null}
+     */
+    static char call(@Nonnull final CharUnaryOperator operator, char operand) {
+        Objects.requireNonNull(operator);
+        return operator.applyAsChar(operand);
+    }
+
+    /**
      * Creates a {@link CharUnaryOperator} which always returns a given value.
      *
      * @param ret The return value for the constant

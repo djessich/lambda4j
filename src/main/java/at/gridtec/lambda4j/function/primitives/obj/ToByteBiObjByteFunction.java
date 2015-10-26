@@ -45,16 +45,21 @@ import java.util.function.UnaryOperator;
 public interface ToByteBiObjByteFunction<T, U> {
 
     /**
-     * Creates a {@link ToByteBiObjByteFunction} which always returns a given value.
+     * Calls the given {@link ToByteBiObjByteFunction} with the given arguments and returns its result.
      *
      * @param <T> The type of the first argument to the function
      * @param <U> The type of the second argument to the function
-     * @param ret The return value for the constant
-     * @return A {@code ToByteBiObjByteFunction} which always returns a given value.
+     * @param function The function to be called
+     * @param t The first argument to the function
+     * @param u The second argument to the function
+     * @param value The third argument to the function
+     * @return The result from the given {@code ToByteBiObjByteFunction}.
+     * @throws NullPointerException If the given function is {@code null}
      */
-    @Nonnull
-    static <T, U> ToByteBiObjByteFunction<T, U> constant(byte ret) {
-        return (t, u, value) -> ret;
+    static <T, U> byte call(@Nonnull final ToByteBiObjByteFunction<? super T, ? super U> function, final T t, final U u,
+            byte value) {
+        Objects.requireNonNull(function);
+        return function.applyAsByte(t, u, value);
     }
 
     /**
@@ -106,6 +111,19 @@ public interface ToByteBiObjByteFunction<T, U> {
     static <T, U> ToByteBiObjByteFunction<T, U> onlyThird(@Nonnull final ByteUnaryOperator function) {
         Objects.requireNonNull(function);
         return (t, u, value) -> function.applyAsByte(value);
+    }
+
+    /**
+     * Creates a {@link ToByteBiObjByteFunction} which always returns a given value.
+     *
+     * @param <T> The type of the first argument to the function
+     * @param <U> The type of the second argument to the function
+     * @param ret The return value for the constant
+     * @return A {@code ToByteBiObjByteFunction} which always returns a given value.
+     */
+    @Nonnull
+    static <T, U> ToByteBiObjByteFunction<T, U> constant(byte ret) {
+        return (t, u, value) -> ret;
     }
 
     /**

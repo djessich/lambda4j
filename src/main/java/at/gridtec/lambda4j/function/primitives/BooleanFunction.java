@@ -54,6 +54,20 @@ import java.util.function.UnaryOperator;
 public interface BooleanFunction<R> {
 
     /**
+     * Calls the given {@link BooleanFunction} with the given arguments and returns its result.
+     *
+     * @param <R> The type of return value from the function
+     * @param function The function to be called
+     * @param value The argument to the function
+     * @return The result from the given {@code BooleanFunction}.
+     * @throws NullPointerException If the given function is {@code null}
+     */
+    static <R> R call(@Nonnull final BooleanFunction<? extends R> function, boolean value) {
+        Objects.requireNonNull(function);
+        return function.apply(value);
+    }
+
+    /**
      * Creates a {@link BooleanFunction} which always returns a given value.
      *
      * @param <R> The type of return value from the function

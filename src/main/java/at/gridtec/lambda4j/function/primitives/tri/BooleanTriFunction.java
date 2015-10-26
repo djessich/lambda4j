@@ -42,15 +42,20 @@ import java.util.function.UnaryOperator;
 public interface BooleanTriFunction<R> {
 
     /**
-     * Creates a {@link BooleanTriFunction} which always returns a given value.
+     * Calls the given {@link BooleanTriFunction} with the given arguments and returns its result.
      *
      * @param <R> The type of return value from the function
-     * @param r The return value for the constant
-     * @return A {@code BooleanTriFunction} which always returns a given value.
+     * @param function The function to be called
+     * @param value1 The first argument to the function
+     * @param value2 The second argument to the function
+     * @param value3 The third argument to the function
+     * @return The result from the given {@code BooleanTriFunction}.
+     * @throws NullPointerException If the given function is {@code null}
      */
-    @Nonnull
-    static <R> BooleanTriFunction<R> constant(R r) {
-        return (value1, value2, value3) -> r;
+    static <R> R call(@Nonnull final BooleanTriFunction<? extends R> function, boolean value1, boolean value2,
+            boolean value3) {
+        Objects.requireNonNull(function);
+        return function.apply(value1, value2, value3);
     }
 
     /**
@@ -99,6 +104,18 @@ public interface BooleanTriFunction<R> {
     static <R> BooleanTriFunction<R> onlyThird(@Nonnull final BooleanFunction<? extends R> function) {
         Objects.requireNonNull(function);
         return (value1, value2, value3) -> function.apply(value3);
+    }
+
+    /**
+     * Creates a {@link BooleanTriFunction} which always returns a given value.
+     *
+     * @param <R> The type of return value from the function
+     * @param r The return value for the constant
+     * @return A {@code BooleanTriFunction} which always returns a given value.
+     */
+    @Nonnull
+    static <R> BooleanTriFunction<R> constant(R r) {
+        return (value1, value2, value3) -> r;
     }
 
     /**

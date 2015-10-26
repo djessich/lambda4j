@@ -37,15 +37,18 @@ import java.util.function.Predicate;
 public interface ObjLongPredicate<T> {
 
     /**
-     * Creates a {@link ObjLongPredicate} which always returns a given value.
+     * Calls the given {@link ObjLongPredicate} with the given arguments and returns its result.
      *
      * @param <T> The type of argument to the predicate
-     * @param ret The return value for the constant
-     * @return A {@code ObjLongPredicate} which always returns a given value.
+     * @param predicate The predicate to be called
+     * @param t The first argument to the predicate
+     * @param value The second argument to the predicate
+     * @return The result from the given {@code ObjLongPredicate}.
+     * @throws NullPointerException If the given predicate is {@code null}
      */
-    @Nonnull
-    static <T> ObjLongPredicate<T> constant(boolean ret) {
-        return (t, value) -> ret;
+    static <T> boolean call(@Nonnull final ObjLongPredicate<? super T> predicate, final T t, long value) {
+        Objects.requireNonNull(predicate);
+        return predicate.test(t, value);
     }
 
     /**
@@ -78,6 +81,18 @@ public interface ObjLongPredicate<T> {
     static <T> ObjLongPredicate<T> onlySecond(@Nonnull final LongPredicate predicate) {
         Objects.requireNonNull(predicate);
         return (t, value) -> predicate.test(value);
+    }
+
+    /**
+     * Creates a {@link ObjLongPredicate} which always returns a given value.
+     *
+     * @param <T> The type of argument to the predicate
+     * @param ret The return value for the constant
+     * @return A {@code ObjLongPredicate} which always returns a given value.
+     */
+    @Nonnull
+    static <T> ObjLongPredicate<T> constant(boolean ret) {
+        return (t, value) -> ret;
     }
 
     /**

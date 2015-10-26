@@ -43,17 +43,19 @@ import java.util.function.UnaryOperator;
 public interface ToLongObjLongFunction<T> {
 
     /**
-     * Creates a {@link ToLongObjLongFunction} which always returns a given value.
+     * Calls the given {@link ToLongObjLongFunction} with the given arguments and returns its result.
      *
      * @param <T> The type of argument to the function
-     * @param ret The return value for the constant
-     * @return A {@code ToLongObjLongFunction} which always returns a given value.
+     * @param function The function to be called
+     * @param t The first argument to the function
+     * @param value The second argument to the function
+     * @return The result from the given {@code ToLongObjLongFunction}.
+     * @throws NullPointerException If the given function is {@code null}
      */
-    @Nonnull
-    static <T> ToLongObjLongFunction<T> constant(long ret) {
-        return (t, value) -> ret;
+    static <T> long call(@Nonnull final ToLongObjLongFunction<? super T> function, final T t, long value) {
+        Objects.requireNonNull(function);
+        return function.applyAsLong(t, value);
     }
-
     /**
      * Creates a {@link ToLongObjLongFunction} which uses the {@code first} parameter of this one as argument for the
      * given {@link ToLongFunction}.
@@ -84,6 +86,18 @@ public interface ToLongObjLongFunction<T> {
     static <T> ToLongObjLongFunction<T> onlySecond(@Nonnull final LongUnaryOperator function) {
         Objects.requireNonNull(function);
         return (t, value) -> function.applyAsLong(value);
+    }
+
+    /**
+     * Creates a {@link ToLongObjLongFunction} which always returns a given value.
+     *
+     * @param <T> The type of argument to the function
+     * @param ret The return value for the constant
+     * @return A {@code ToLongObjLongFunction} which always returns a given value.
+     */
+    @Nonnull
+    static <T> ToLongObjLongFunction<T> constant(long ret) {
+        return (t, value) -> ret;
     }
 
     /**

@@ -42,15 +42,18 @@ import java.util.function.UnaryOperator;
 public interface CharBiFunction<R> {
 
     /**
-     * Creates a {@link CharBiFunction} which always returns a given value.
+     * Calls the given {@link CharBiFunction} with the given arguments and returns its result.
      *
      * @param <R> The type of return value from the function
-     * @param r The return value for the constant
-     * @return A {@code CharBiFunction} which always returns a given value.
+     * @param function The function to be called
+     * @param value1 The first argument to the function
+     * @param value2 The second argument to the function
+     * @return The result from the given {@code CharBiFunction}.
+     * @throws NullPointerException If the given function is {@code null}
      */
-    @Nonnull
-    static <R> CharBiFunction<R> constant(R r) {
-        return (value1, value2) -> r;
+    static <R> R call(@Nonnull final CharBiFunction<? extends R> function, char value1, char value2) {
+        Objects.requireNonNull(function);
+        return function.apply(value1, value2);
     }
 
     /**
@@ -83,6 +86,18 @@ public interface CharBiFunction<R> {
     static <R> CharBiFunction<R> onlySecond(@Nonnull final CharFunction<? extends R> function) {
         Objects.requireNonNull(function);
         return (value1, value2) -> function.apply(value2);
+    }
+
+    /**
+     * Creates a {@link CharBiFunction} which always returns a given value.
+     *
+     * @param <R> The type of return value from the function
+     * @param r The return value for the constant
+     * @return A {@code CharBiFunction} which always returns a given value.
+     */
+    @Nonnull
+    static <R> CharBiFunction<R> constant(R r) {
+        return (value1, value2) -> r;
     }
 
     /**

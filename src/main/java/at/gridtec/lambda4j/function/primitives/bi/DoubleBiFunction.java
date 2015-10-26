@@ -42,15 +42,18 @@ import java.util.function.UnaryOperator;
 public interface DoubleBiFunction<R> {
 
     /**
-     * Creates a {@link DoubleBiFunction} which always returns a given value.
+     * Calls the given {@link DoubleBiFunction} with the given arguments and returns its result.
      *
      * @param <R> The type of return value from the function
-     * @param r The return value for the constant
-     * @return A {@code DoubleBiFunction} which always returns a given value.
+     * @param function The function to be called
+     * @param value1 The first argument to the function
+     * @param value2 The second argument to the function
+     * @return The result from the given {@code DoubleBiFunction}.
+     * @throws NullPointerException If the given function is {@code null}
      */
-    @Nonnull
-    static <R> DoubleBiFunction<R> constant(R r) {
-        return (value1, value2) -> r;
+    static <R> R call(@Nonnull final DoubleBiFunction<? extends R> function, double value1, double value2) {
+        Objects.requireNonNull(function);
+        return function.apply(value1, value2);
     }
 
     /**
@@ -83,6 +86,18 @@ public interface DoubleBiFunction<R> {
     static <R> DoubleBiFunction<R> onlySecond(@Nonnull final DoubleFunction<? extends R> function) {
         Objects.requireNonNull(function);
         return (value1, value2) -> function.apply(value2);
+    }
+
+    /**
+     * Creates a {@link DoubleBiFunction} which always returns a given value.
+     *
+     * @param <R> The type of return value from the function
+     * @param r The return value for the constant
+     * @return A {@code DoubleBiFunction} which always returns a given value.
+     */
+    @Nonnull
+    static <R> DoubleBiFunction<R> constant(R r) {
+        return (value1, value2) -> r;
     }
 
     /**
@@ -194,6 +209,7 @@ public interface DoubleBiFunction<R> {
     default DoubleFunction<DoubleFunction<R>> curried() {
         return value1 -> value2 -> apply(value1, value2);
     }
+
     /**
      * Returns a composed {@link BiFunction} which represents this {@link DoubleBiFunction}. Thereby the primitive input
      * argument for this function is autoboxed. This method is just convenience to provide the ability to use this

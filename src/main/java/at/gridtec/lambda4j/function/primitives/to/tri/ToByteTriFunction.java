@@ -54,17 +54,22 @@ import java.util.function.UnaryOperator;
 public interface ToByteTriFunction<T, U, V> {
 
     /**
-     * Creates a {@link ToByteTriFunction} which always returns a given value.
+     * Calls the given {@link ToByteTriFunction} with the given arguments and returns its result.
      *
      * @param <T> The type of the first argument to the function
      * @param <U> The type of the second argument to the function
      * @param <V> The type of the third argument to the function
-     * @param ret The return value for the constant
-     * @return A {@code ToByteTriFunction} which always returns a given value.
+     * @param function The function to be called
+     * @param t The first argument to the function
+     * @param u The second argument to the function
+     * @param v The third argument to the function
+     * @return The result from the given {@code ToByteTriFunction}.
+     * @throws NullPointerException If the given function is {@code null}
      */
-    @Nonnull
-    static <T, U, V> ToByteTriFunction<T, U, V> constant(byte ret) {
-        return (t, u, v) -> ret;
+    static <T, U, V> byte call(@Nonnull final ToByteTriFunction<? super T, ? super U, ? super V> function, T t, U u,
+            V v) {
+        Objects.requireNonNull(function);
+        return function.applyAsByte(t, u, v);
     }
 
     /**
@@ -119,6 +124,20 @@ public interface ToByteTriFunction<T, U, V> {
     static <T, U, V> ToByteTriFunction<T, U, V> onlyThird(@Nonnull final ToByteFunction<? super V> function) {
         Objects.requireNonNull(function);
         return (t, u, v) -> function.applyAsByte(v);
+    }
+
+    /**
+     * Creates a {@link ToByteTriFunction} which always returns a given value.
+     *
+     * @param <T> The type of the first argument to the function
+     * @param <U> The type of the second argument to the function
+     * @param <V> The type of the third argument to the function
+     * @param ret The return value for the constant
+     * @return A {@code ToByteTriFunction} which always returns a given value.
+     */
+    @Nonnull
+    static <T, U, V> ToByteTriFunction<T, U, V> constant(byte ret) {
+        return (t, u, v) -> ret;
     }
 
     /**

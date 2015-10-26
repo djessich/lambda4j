@@ -45,16 +45,21 @@ import java.util.function.UnaryOperator;
 public interface ToFloatBiObjFloatFunction<T, U> {
 
     /**
-     * Creates a {@link ToFloatBiObjFloatFunction} which always returns a given value.
+     * Calls the given {@link ToFloatBiObjFloatFunction} with the given arguments and returns its result.
      *
      * @param <T> The type of the first argument to the function
      * @param <U> The type of the second argument to the function
-     * @param ret The return value for the constant
-     * @return A {@code ToFloatBiObjFloatFunction} which always returns a given value.
+     * @param function The function to be called
+     * @param t The first argument to the function
+     * @param u The second argument to the function
+     * @param value The third argument to the function
+     * @return The result from the given {@code ToFloatBiObjFloatFunction}.
+     * @throws NullPointerException If the given function is {@code null}
      */
-    @Nonnull
-    static <T, U> ToFloatBiObjFloatFunction<T, U> constant(float ret) {
-        return (t, u, value) -> ret;
+    static <T, U> float call(@Nonnull final ToFloatBiObjFloatFunction<? super T, ? super U> function, final T t,
+            final U u, float value) {
+        Objects.requireNonNull(function);
+        return function.applyAsFloat(t, u, value);
     }
 
     /**
@@ -106,6 +111,19 @@ public interface ToFloatBiObjFloatFunction<T, U> {
     static <T, U> ToFloatBiObjFloatFunction<T, U> onlyThird(@Nonnull final FloatUnaryOperator function) {
         Objects.requireNonNull(function);
         return (t, u, value) -> function.applyAsFloat(value);
+    }
+
+    /**
+     * Creates a {@link ToFloatBiObjFloatFunction} which always returns a given value.
+     *
+     * @param <T> The type of the first argument to the function
+     * @param <U> The type of the second argument to the function
+     * @param ret The return value for the constant
+     * @return A {@code ToFloatBiObjFloatFunction} which always returns a given value.
+     */
+    @Nonnull
+    static <T, U> ToFloatBiObjFloatFunction<T, U> constant(float ret) {
+        return (t, u, value) -> ret;
     }
 
     /**

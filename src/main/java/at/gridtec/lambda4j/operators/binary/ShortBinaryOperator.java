@@ -43,14 +43,17 @@ import java.util.function.UnaryOperator;
 public interface ShortBinaryOperator {
 
     /**
-     * Creates a {@link ShortBinaryOperator} which always returns a given value.
+     * Calls the given {@link ShortBinaryOperator} with the given arguments and returns its result.
      *
-     * @param ret The return value for the constant
-     * @return A {@code ShortBinaryOperator} which always returns a given value.
+     * @param operator The operator to be called
+     * @param left The first argument to the operator (left input)
+     * @param right The second argument to the operator (right input)
+     * @return The result from the given {@code ShortBinaryOperator}.
+     * @throws NullPointerException If the given operator is {@code null}
      */
-    @Nonnull
-    static ShortBinaryOperator constant(short ret) {
-        return (left, right) -> ret;
+    static short call(@Nonnull final ShortBinaryOperator operator, short left, short right) {
+        Objects.requireNonNull(operator);
+        return operator.applyAsShort(left, right);
     }
 
     /**
@@ -81,6 +84,17 @@ public interface ShortBinaryOperator {
     static ShortBinaryOperator onlyRight(@Nonnull final ShortUnaryOperator operator) {
         Objects.requireNonNull(operator);
         return (left, right) -> operator.applyAsShort(right);
+    }
+
+    /**
+     * Creates a {@link ShortBinaryOperator} which always returns a given value.
+     *
+     * @param ret The return value for the constant
+     * @return A {@code ShortBinaryOperator} which always returns a given value.
+     */
+    @Nonnull
+    static ShortBinaryOperator constant(short ret) {
+        return (left, right) -> ret;
     }
 
     /**

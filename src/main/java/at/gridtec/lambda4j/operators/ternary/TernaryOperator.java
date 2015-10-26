@@ -35,22 +35,27 @@ import java.util.function.UnaryOperator;
 public interface TernaryOperator<T> extends TriFunction<T, T, T, T> {
 
     /**
-     * Creates a {@link TernaryOperator} which always returns a given value.
+     * Calls the given {@link TernaryOperator} with the given arguments and returns its result.
      *
-     * @param <T> The type of argument to the operator
-     * @param r The return value for the constant
-     * @return A {@code TernaryOperator} which always returns a given value.
+     * @param <T> The type of the operands and result of the operator
+     * @param operator The operator to be called
+     * @param left The first argument to the operator (left input)
+     * @param middle The second argument to the operator (middle input)
+     * @param right The third argument to the operator (right input)
+     * @return The result from the given {@code TernaryOperator}.
+     * @throws NullPointerException If the given operator is {@code null}
      */
-    @Nonnull
-    static <T> TernaryOperator<T> constant(T r) {
-        return (t, u, v) -> r;
+    @SuppressWarnings("unchecked")
+    static <T> T call(@Nonnull final TernaryOperator<? super T> operator, final T left, final T middle, final T right) {
+        Objects.requireNonNull(operator);
+        return (T) operator.apply(left, middle, right);
     }
 
     /**
      * Creates a {@link TernaryOperator} which uses the {@code left} parameter as argument for the given {@link
      * UnaryOperator}.
      *
-     * @param <T> The type of argument to the operator
+     * @param <T> The type of the operands and result of the operator
      * @param operator The operator which accepts the {@code left} parameter of this one
      * @return Creates a {@code TernaryOperator} which uses the {@code left} parameter as argument for the given {@code
      * UnaryOperator}.
@@ -66,7 +71,7 @@ public interface TernaryOperator<T> extends TriFunction<T, T, T, T> {
      * Creates a {@link TernaryOperator} which uses the {@code middle} parameter as argument for the given {@link
      * UnaryOperator}.
      *
-     * @param <T> The type of argument to the operator
+     * @param <T> The type of the operands and result of the operator
      * @param operator The operator which accepts the {@code middle} parameter of this one
      * @return Creates a {@code TernaryOperator} which uses the {@code middle} parameter as argument for the given
      * {@code UnaryOperator}.
@@ -82,7 +87,7 @@ public interface TernaryOperator<T> extends TriFunction<T, T, T, T> {
      * Creates a {@link TernaryOperator} which uses the {@code right} parameter as argument for the given {@link
      * UnaryOperator}.
      *
-     * @param <T> The type of argument to the operator
+     * @param <T> The type of the operands and result of the operator
      * @param operator The operator which accepts the {@code right} parameter of this one
      * @return Creates a {@code TernaryOperator} which uses the {@code right} parameter as argument for the given {@code
      * UnaryOperator}.
@@ -92,5 +97,17 @@ public interface TernaryOperator<T> extends TriFunction<T, T, T, T> {
     static <T> TernaryOperator<T> onlyRight(@Nonnull final UnaryOperator<T> operator) {
         Objects.requireNonNull(operator);
         return (t, u, v) -> operator.apply(v);
+    }
+
+    /**
+     * Creates a {@link TernaryOperator} which always returns a given value.
+     *
+     * @param <T> The type of the operands and result of the operator
+     * @param r The return value for the constant
+     * @return A {@code TernaryOperator} which always returns a given value.
+     */
+    @Nonnull
+    static <T> TernaryOperator<T> constant(T r) {
+        return (t, u, v) -> r;
     }
 }

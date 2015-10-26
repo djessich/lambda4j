@@ -42,15 +42,19 @@ import java.util.function.UnaryOperator;
 public interface CharTriFunction<R> {
 
     /**
-     * Creates a {@link CharTriFunction} which always returns a given value.
+     * Calls the given {@link CharTriFunction} with the given arguments and returns its result.
      *
      * @param <R> The type of return value from the function
-     * @param r The return value for the constant
-     * @return A {@code CharTriFunction} which always returns a given value.
+     * @param function The function to be called
+     * @param value1 The first argument to the function
+     * @param value2 The second argument to the function
+     * @param value3 The third argument to the function
+     * @return The result from the given {@code CharTriFunction}.
+     * @throws NullPointerException If the given function is {@code null}
      */
-    @Nonnull
-    static <R> CharTriFunction<R> constant(R r) {
-        return (value1, value2, value3) -> r;
+    static <R> R call(@Nonnull final CharTriFunction<? extends R> function, char value1, char value2, char value3) {
+        Objects.requireNonNull(function);
+        return function.apply(value1, value2, value3);
     }
 
     /**
@@ -99,6 +103,18 @@ public interface CharTriFunction<R> {
     static <R> CharTriFunction<R> onlyThird(@Nonnull final CharFunction<? extends R> function) {
         Objects.requireNonNull(function);
         return (value1, value2, value3) -> function.apply(value3);
+    }
+
+    /**
+     * Creates a {@link CharTriFunction} which always returns a given value.
+     *
+     * @param <R> The type of return value from the function
+     * @param r The return value for the constant
+     * @return A {@code CharTriFunction} which always returns a given value.
+     */
+    @Nonnull
+    static <R> CharTriFunction<R> constant(R r) {
+        return (value1, value2, value3) -> r;
     }
 
     /**

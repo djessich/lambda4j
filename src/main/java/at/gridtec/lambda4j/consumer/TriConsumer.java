@@ -40,6 +40,24 @@ import java.util.function.Function;
 public interface TriConsumer<T, U, V> {
 
     /**
+     * Calls the given {@link TriConsumer} with the given arguments and returns its result.
+     *
+     * @param <T> The type of the first argument to the operation to be consumed
+     * @param <U> The type of the second argument to the operation to be consumed
+     * @param <V> The type of the third argument to the operation to be consumed
+     * @param consumer The consumer to be called
+     * @param t The first argument to the operation to be consumed
+     * @param u The second argument to the operation to be consumed
+     * @param v The third argument to the operation to be consumed
+     * @throws NullPointerException If the given consumer is {@code null}
+     */
+    static <T, U, V> void call(@Nonnull final TriConsumer<? super T, ? super U, ? super V> consumer, final T t,
+            final U u, final V v) {
+        Objects.requireNonNull(consumer);
+        consumer.accept(t, u, v);
+    }
+
+    /**
      * Creates a {@link TriConsumer} which uses the {@code first} parameter of this one as argument for the given {@link
      * Consumer}.
      *

@@ -44,17 +44,19 @@ import java.util.function.UnaryOperator;
 public interface ToByteObjByteFunction<T> {
 
     /**
-     * Creates a {@link ToByteObjByteFunction} which always returns a given value.
+     * Calls the given {@link ToByteObjByteFunction} with the given arguments and returns its result.
      *
      * @param <T> The type of argument to the function
-     * @param ret The return value for the constant
-     * @return A {@code ToByteObjByteFunction} which always returns a given value.
+     * @param function The function to be called
+     * @param t The first argument to the function
+     * @param value The second argument to the function
+     * @return The result from the given {@code ToByteObjByteFunction}.
+     * @throws NullPointerException If the given function is {@code null}
      */
-    @Nonnull
-    static <T> ToByteObjByteFunction<T> constant(byte ret) {
-        return (t, value) -> ret;
+    static <T> byte call(@Nonnull final ToByteObjByteFunction<? super T> function, final T t, byte value) {
+        Objects.requireNonNull(function);
+        return function.applyAsByte(t, value);
     }
-
     /**
      * Creates a {@link ToByteObjByteFunction} which uses the {@code first} parameter of this one as argument for the
      * given {@link ToByteFunction}.
@@ -85,6 +87,18 @@ public interface ToByteObjByteFunction<T> {
     static <T> ToByteObjByteFunction<T> onlySecond(@Nonnull final ByteUnaryOperator function) {
         Objects.requireNonNull(function);
         return (t, value) -> function.applyAsByte(value);
+    }
+
+    /**
+     * Creates a {@link ToByteObjByteFunction} which always returns a given value.
+     *
+     * @param <T> The type of argument to the function
+     * @param ret The return value for the constant
+     * @return A {@code ToByteObjByteFunction} which always returns a given value.
+     */
+    @Nonnull
+    static <T> ToByteObjByteFunction<T> constant(byte ret) {
+        return (t, value) -> ret;
     }
 
     /**

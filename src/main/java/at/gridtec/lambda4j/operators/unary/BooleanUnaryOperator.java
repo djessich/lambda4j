@@ -44,6 +44,19 @@ import java.util.function.UnaryOperator;
 public interface BooleanUnaryOperator {
 
     /**
+     * Calls the given {@link BooleanUnaryOperator} with the given arguments and returns its result.
+     *
+     * @param operator The operator to be called
+     * @param operand The argument to the operator
+     * @return The result from the given {@code BooleanUnaryOperator}.
+     * @throws NullPointerException If the given operator is {@code null}
+     */
+    static boolean call(@Nonnull final BooleanUnaryOperator operator, boolean operand) {
+        Objects.requireNonNull(operator);
+        return operator.applyAsBoolean(operand);
+    }
+
+    /**
      * Creates a {@link BooleanUnaryOperator} which always returns a given value.
      *
      * @param ret The return value for the constant

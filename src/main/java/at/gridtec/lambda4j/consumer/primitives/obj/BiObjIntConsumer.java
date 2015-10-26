@@ -43,6 +43,22 @@ import java.util.function.UnaryOperator;
 public interface BiObjIntConsumer<T, U> {
 
     /**
+     * Calls the given {@link BiObjIntConsumer} with the given arguments and returns its result.
+     *
+     * @param <T> The type of the first argument to the operation to be consumed
+     * @param <U> The type of the second argument to the operation to be consumed
+     * @param consumer The consumer to be called
+     * @param t The first argument to the operation to be consumed
+     * @param u The second argument to the operation to be consumed
+     * @param value The third argument to the operation to be consumed
+     * @throws NullPointerException If the given consumer is {@code null}
+     */
+    static <T, U> void call(@Nonnull final BiObjIntConsumer<? super T, ? super U> consumer, T t, U u, int value) {
+        Objects.requireNonNull(consumer);
+        consumer.accept(t, u, value);
+    }
+
+    /**
      * Creates a {@link BiObjIntConsumer} which uses the {@code first} parameter of this one as argument for the given
      * {@link Consumer}.
      *

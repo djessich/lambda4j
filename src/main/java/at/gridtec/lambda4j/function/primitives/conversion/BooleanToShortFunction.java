@@ -43,6 +43,19 @@ import java.util.function.UnaryOperator;
 public interface BooleanToShortFunction {
 
     /**
+     * Calls the given {@link BooleanToShortFunction} with the given arguments and returns its result.
+     *
+     * @param function The function to be called
+     * @param value The argument to the function
+     * @return The result from the given {@code BooleanToShortFunction}.
+     * @throws NullPointerException If the given function is {@code null}
+     */
+    static short call(@Nonnull final BooleanToShortFunction function, boolean value) {
+        Objects.requireNonNull(function);
+        return function.applyAsShort(value);
+    }
+
+    /**
      * Creates a {@link BooleanToShortFunction} which always returns a given value.
      *
      * @param ret The return value for the constant
@@ -56,7 +69,7 @@ public interface BooleanToShortFunction {
     /**
      * Applies this function to the given argument.
      *
-     * @param value The argument to this function
+     * @param value The argument to the function
      * @return The result from this function, which is its result.
      */
     short applyAsShort(boolean value);

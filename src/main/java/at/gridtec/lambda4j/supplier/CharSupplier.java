@@ -52,6 +52,17 @@ import java.util.function.Supplier;
 public interface CharSupplier {
 
     /**
+     * Calls the given {@link CharSupplier} and returns its result.
+     *
+     * @param supplier The supplier to be called
+     * @return The result of the given {@code CharSupplier}.
+     */
+    static char call(@Nonnull final CharSupplier supplier) {
+        Objects.requireNonNull(supplier);
+        return supplier.getAsChar();
+    }
+
+    /**
      * Creates a {@link CharSupplier} which always returns a given value.
      *
      * @param ret The return value for the constant
@@ -60,18 +71,6 @@ public interface CharSupplier {
     @Nonnull
     static CharSupplier constant(char ret) {
         return () -> ret;
-    }
-
-    /**
-     * Calls the given {@link CharSupplier} and returns its result. If evaluation of the given operation throws an
-     * exception, it is relayed to the caller of this operation.
-     *
-     * @param supplier The supplier to be called
-     * @return The result of the given {@code CharSupplier}.
-     */
-    static char call(@Nonnull final CharSupplier supplier) {
-        Objects.requireNonNull(supplier);
-        return supplier.getAsChar();
     }
 
     /**

@@ -45,6 +45,19 @@ import java.util.function.UnaryOperator;
 public interface CharToDoubleFunction {
 
     /**
+     * Calls the given {@link CharToDoubleFunction} with the given arguments and returns its result.
+     *
+     * @param function The function to be called
+     * @param value The argument to the function
+     * @return The result from the given {@code CharToDoubleFunction}.
+     * @throws NullPointerException If the given function is {@code null}
+     */
+    static double call(@Nonnull final CharToDoubleFunction function, char value) {
+        Objects.requireNonNull(function);
+        return function.applyAsDouble(value);
+    }
+
+    /**
      * Creates a {@link CharToDoubleFunction} which always returns a given value.
      *
      * @param ret The return value for the constant
@@ -58,7 +71,7 @@ public interface CharToDoubleFunction {
     /**
      * Applies this function to the given argument.
      *
-     * @param value The argument to this function
+     * @param value The argument to the function
      * @return The result from this function, which is its result.
      */
     double applyAsDouble(char value);

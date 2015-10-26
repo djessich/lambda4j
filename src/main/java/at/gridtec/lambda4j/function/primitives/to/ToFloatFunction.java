@@ -51,6 +51,20 @@ import java.util.function.UnaryOperator;
 public interface ToFloatFunction<T> {
 
     /**
+     * Calls the given {@link ToFloatFunction} with the given arguments and returns its result.
+     *
+     * @param <T> The type of argument to the function
+     * @param function The function to be called
+     * @param t The argument to the function
+     * @return The result from the given {@code ToFloatFunction}.
+     * @throws NullPointerException If the given function is {@code null}
+     */
+    static <T> float call(@Nonnull final ToFloatFunction<? super T> function, final T t) {
+        Objects.requireNonNull(function);
+        return function.applyAsFloat(t);
+    }
+
+    /**
      * Creates a {@link ToFloatFunction} which always returns a given value.
      *
      * @param <T> The type of argument to the function
