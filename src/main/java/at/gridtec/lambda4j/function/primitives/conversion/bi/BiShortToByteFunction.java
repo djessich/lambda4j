@@ -19,9 +19,18 @@ import at.gridtec.lambda4j.consumer.primitives.ByteConsumer;
 import at.gridtec.lambda4j.consumer.primitives.bi.ShortBiConsumer;
 import at.gridtec.lambda4j.function.primitives.ByteFunction;
 import at.gridtec.lambda4j.function.primitives.bi.ShortBiFunction;
+import at.gridtec.lambda4j.function.primitives.conversion.ByteToBooleanFunction;
+import at.gridtec.lambda4j.function.primitives.conversion.ByteToCharFunction;
+import at.gridtec.lambda4j.function.primitives.conversion.ByteToDoubleFunction;
+import at.gridtec.lambda4j.function.primitives.conversion.ByteToFloatFunction;
+import at.gridtec.lambda4j.function.primitives.conversion.ByteToIntFunction;
+import at.gridtec.lambda4j.function.primitives.conversion.ByteToLongFunction;
+import at.gridtec.lambda4j.function.primitives.conversion.ByteToShortFunction;
 import at.gridtec.lambda4j.function.primitives.conversion.ShortToByteFunction;
 import at.gridtec.lambda4j.function.primitives.to.ToShortFunction;
 import at.gridtec.lambda4j.function.primitives.to.bi.ToByteBiFunction;
+import at.gridtec.lambda4j.operators.binary.ShortBinaryOperator;
+import at.gridtec.lambda4j.operators.unary.ByteUnaryOperator;
 import at.gridtec.lambda4j.operators.unary.ShortUnaryOperator;
 
 import javax.annotation.Nonnegative;
@@ -179,6 +188,150 @@ public interface BiShortToByteFunction {
     default <R> ShortBiFunction<R> andThen(@Nonnull final ByteFunction<? extends R> after) {
         Objects.requireNonNull(after);
         return (value1, value2) -> after.apply(applyAsByte(value1, value2));
+    }
+
+    /**
+     * Returns a composed {@link BiShortToBooleanFunction} that first applies this function to its input, and then
+     * applies the {@code after} function to the result. If evaluation of either function throws an exception, it is
+     * relayed to the caller of the composed function. This method is just convenience, to provide the ability to
+     * transform this operation to an operation returning {@code boolean}.
+     *
+     * @param after The function to apply after this function is applied
+     * @return A composed {@code BiShortToBooleanFunction} that first applies this function to its input, and then
+     * applies the {@code after} function to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @see #andThen(ByteFunction)
+     */
+    @Nonnull
+    default BiShortToBooleanFunction andThenToBoolean(@Nonnull final ByteToBooleanFunction after) {
+        Objects.requireNonNull(after);
+        return (value1, value2) -> after.applyAsBoolean(applyAsByte(value1, value2));
+    }
+
+    /**
+     * Returns a composed {@link BiShortToByteFunction} that first applies this function to its input, and then applies
+     * the {@code after} function to the result. If evaluation of either function throws an exception, it is relayed to
+     * the caller of the composed function. This method is just convenience, to provide the ability to transform this
+     * operation to an operation returning {@code byte}.
+     *
+     * @param after The function to apply after this function is applied
+     * @return A composed {@code BiShortToByteFunction} that first applies this function to its input, and then applies
+     * the {@code after} function to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @see #andThen(ByteFunction)
+     */
+    @Nonnull
+    default BiShortToByteFunction andThenToByte(@Nonnull final ByteUnaryOperator after) {
+        Objects.requireNonNull(after);
+        return (value1, value2) -> after.applyAsByte(applyAsByte(value1, value2));
+    }
+
+    /**
+     * Returns a composed {@link BiShortToCharFunction} that first applies this function to its input, and then applies
+     * the {@code after} function to the result. If evaluation of either function throws an exception, it is relayed to
+     * the caller of the composed function. This method is just convenience, to provide the ability to transform this
+     * operation to an operation returning {@code char}.
+     *
+     * @param after The function to apply after this function is applied
+     * @return A composed {@code BiShortToCharFunction} that first applies this function to its input, and then applies
+     * the {@code after} function to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @see #andThen(ByteFunction)
+     */
+    @Nonnull
+    default BiShortToCharFunction andThenToChar(@Nonnull final ByteToCharFunction after) {
+        Objects.requireNonNull(after);
+        return (value1, value2) -> after.applyAsChar(applyAsByte(value1, value2));
+    }
+
+    /**
+     * Returns a composed {@link BiShortToDoubleFunction} that first applies this function to its input, and then
+     * applies the {@code after} function to the result. If evaluation of either function throws an exception, it is
+     * relayed to the caller of the composed function. This method is just convenience, to provide the ability to
+     * transform this operation to an operation returning {@code double}.
+     *
+     * @param after The function to apply after this function is applied
+     * @return A composed {@code BiShortToDoubleFunction} that first applies this function to its input, and then
+     * applies the {@code after} function to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @see #andThen(ByteFunction)
+     */
+    @Nonnull
+    default BiShortToDoubleFunction andThenToDouble(@Nonnull final ByteToDoubleFunction after) {
+        Objects.requireNonNull(after);
+        return (value1, value2) -> after.applyAsDouble(applyAsByte(value1, value2));
+    }
+
+    /**
+     * Returns a composed {@link BiShortToFloatFunction} that first applies this function to its input, and then applies
+     * the {@code after} function to the result. If evaluation of either function throws an exception, it is relayed to
+     * the caller of the composed function. This method is just convenience, to provide the ability to transform this
+     * operation to an operation returning {@code float}.
+     *
+     * @param after The function to apply after this function is applied
+     * @return A composed {@code BiShortToFloatFunction} that first applies this function to its input, and then applies
+     * the {@code after} function to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @see #andThen(ByteFunction)
+     */
+    @Nonnull
+    default BiShortToFloatFunction andThenToFloat(@Nonnull final ByteToFloatFunction after) {
+        Objects.requireNonNull(after);
+        return (value1, value2) -> after.applyAsFloat(applyAsByte(value1, value2));
+    }
+
+    /**
+     * Returns a composed {@link BiShortToIntFunction} that first applies this function to its input, and then applies
+     * the {@code after} function to the result. If evaluation of either function throws an exception, it is relayed to
+     * the caller of the composed function. This method is just convenience, to provide the ability to transform this
+     * operation to an operation returning {@code int}.
+     *
+     * @param after The function to apply after this function is applied
+     * @return A composed {@code BiShortToIntFunction} that first applies this function to its input, and then applies
+     * the {@code after} function to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @see #andThen(ByteFunction)
+     */
+    @Nonnull
+    default BiShortToIntFunction andThenToInt(@Nonnull final ByteToIntFunction after) {
+        Objects.requireNonNull(after);
+        return (value1, value2) -> after.applyAsInt(applyAsByte(value1, value2));
+    }
+
+    /**
+     * Returns a composed {@link BiShortToLongFunction} that first applies this function to its input, and then applies
+     * the {@code after} function to the result. If evaluation of either function throws an exception, it is relayed to
+     * the caller of the composed function. This method is just convenience, to provide the ability to transform this
+     * operation to an operation returning {@code long}.
+     *
+     * @param after The function to apply after this function is applied
+     * @return A composed {@code BiShortToLongFunction} that first applies this function to its input, and then applies
+     * the {@code after} function to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @see #andThen(ByteFunction)
+     */
+    @Nonnull
+    default BiShortToLongFunction andThenToLong(@Nonnull final ByteToLongFunction after) {
+        Objects.requireNonNull(after);
+        return (value1, value2) -> after.applyAsLong(applyAsByte(value1, value2));
+    }
+
+    /**
+     * Returns a composed {@link ShortBinaryOperator} that first applies this function to its input, and then applies
+     * the {@code after} function to the result. If evaluation of either function throws an exception, it is relayed to
+     * the caller of the composed function. This method is just convenience, to provide the ability to transform this
+     * operation to an operation returning {@code short}.
+     *
+     * @param after The function to apply after this function is applied
+     * @return A composed {@code ShortBinaryOperator} that first applies this function to its input, and then applies
+     * the {@code after} function to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @see #andThen(ByteFunction)
+     */
+    @Nonnull
+    default ShortBinaryOperator andThenToShort(@Nonnull final ByteToShortFunction after) {
+        Objects.requireNonNull(after);
+        return (value1, value2) -> after.applyAsShort(applyAsByte(value1, value2));
     }
 
     /**

@@ -17,6 +17,11 @@ package at.gridtec.lambda4j.function.primitives.conversion.bi;
 
 import at.gridtec.lambda4j.consumer.primitives.bi.IntBiConsumer;
 import at.gridtec.lambda4j.function.primitives.bi.IntBiFunction;
+import at.gridtec.lambda4j.function.primitives.conversion.DoubleToBooleanFunction;
+import at.gridtec.lambda4j.function.primitives.conversion.DoubleToByteFunction;
+import at.gridtec.lambda4j.function.primitives.conversion.DoubleToCharFunction;
+import at.gridtec.lambda4j.function.primitives.conversion.DoubleToFloatFunction;
+import at.gridtec.lambda4j.function.primitives.conversion.DoubleToShortFunction;
 
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
@@ -24,6 +29,10 @@ import java.util.Objects;
 import java.util.function.BiFunction;
 import java.util.function.DoubleConsumer;
 import java.util.function.DoubleFunction;
+import java.util.function.DoubleToIntFunction;
+import java.util.function.DoubleToLongFunction;
+import java.util.function.DoubleUnaryOperator;
+import java.util.function.IntBinaryOperator;
 import java.util.function.IntToDoubleFunction;
 import java.util.function.IntUnaryOperator;
 import java.util.function.ToDoubleBiFunction;
@@ -179,6 +188,150 @@ public interface BiIntToDoubleFunction {
     default <R> IntBiFunction<R> andThen(@Nonnull final DoubleFunction<? extends R> after) {
         Objects.requireNonNull(after);
         return (value1, value2) -> after.apply(applyAsDouble(value1, value2));
+    }
+
+    /**
+     * Returns a composed {@link BiIntToBooleanFunction} that first applies this function to its input, and then applies
+     * the {@code after} function to the result. If evaluation of either function throws an exception, it is relayed to
+     * the caller of the composed function. This method is just convenience, to provide the ability to transform this
+     * operation to an operation returning {@code boolean}.
+     *
+     * @param after The function to apply after this function is applied
+     * @return A composed {@code BiIntToBooleanFunction} that first applies this function to its input, and then applies
+     * the {@code after} function to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @see #andThen(DoubleFunction)
+     */
+    @Nonnull
+    default BiIntToBooleanFunction andThenToBoolean(@Nonnull final DoubleToBooleanFunction after) {
+        Objects.requireNonNull(after);
+        return (value1, value2) -> after.applyAsBoolean(applyAsDouble(value1, value2));
+    }
+
+    /**
+     * Returns a composed {@link BiIntToByteFunction} that first applies this function to its input, and then applies
+     * the {@code after} function to the result. If evaluation of either function throws an exception, it is relayed to
+     * the caller of the composed function. This method is just convenience, to provide the ability to transform this
+     * operation to an operation returning {@code byte}.
+     *
+     * @param after The function to apply after this function is applied
+     * @return A composed {@code BiIntToByteFunction} that first applies this function to its input, and then applies
+     * the {@code after} function to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @see #andThen(DoubleFunction)
+     */
+    @Nonnull
+    default BiIntToByteFunction andThenToByte(@Nonnull final DoubleToByteFunction after) {
+        Objects.requireNonNull(after);
+        return (value1, value2) -> after.applyAsByte(applyAsDouble(value1, value2));
+    }
+
+    /**
+     * Returns a composed {@link BiIntToCharFunction} that first applies this function to its input, and then applies
+     * the {@code after} function to the result. If evaluation of either function throws an exception, it is relayed to
+     * the caller of the composed function. This method is just convenience, to provide the ability to transform this
+     * operation to an operation returning {@code char}.
+     *
+     * @param after The function to apply after this function is applied
+     * @return A composed {@code BiIntToCharFunction} that first applies this function to its input, and then applies
+     * the {@code after} function to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @see #andThen(DoubleFunction)
+     */
+    @Nonnull
+    default BiIntToCharFunction andThenToChar(@Nonnull final DoubleToCharFunction after) {
+        Objects.requireNonNull(after);
+        return (value1, value2) -> after.applyAsChar(applyAsDouble(value1, value2));
+    }
+
+    /**
+     * Returns a composed {@link BiIntToDoubleFunction} that first applies this function to its input, and then applies
+     * the {@code after} function to the result. If evaluation of either function throws an exception, it is relayed to
+     * the caller of the composed function. This method is just convenience, to provide the ability to transform this
+     * operation to an operation returning {@code double}.
+     *
+     * @param after The function to apply after this function is applied
+     * @return A composed {@code BiIntToDoubleFunction} that first applies this function to its input, and then applies
+     * the {@code after} function to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @see #andThen(DoubleFunction)
+     */
+    @Nonnull
+    default BiIntToDoubleFunction andThenToDouble(@Nonnull final DoubleUnaryOperator after) {
+        Objects.requireNonNull(after);
+        return (value1, value2) -> after.applyAsDouble(applyAsDouble(value1, value2));
+    }
+
+    /**
+     * Returns a composed {@link BiIntToFloatFunction} that first applies this function to its input, and then applies
+     * the {@code after} function to the result. If evaluation of either function throws an exception, it is relayed to
+     * the caller of the composed function. This method is just convenience, to provide the ability to transform this
+     * operation to an operation returning {@code float}.
+     *
+     * @param after The function to apply after this function is applied
+     * @return A composed {@code BiIntToFloatFunction} that first applies this function to its input, and then applies
+     * the {@code after} function to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @see #andThen(DoubleFunction)
+     */
+    @Nonnull
+    default BiIntToFloatFunction andThenToFloat(@Nonnull final DoubleToFloatFunction after) {
+        Objects.requireNonNull(after);
+        return (value1, value2) -> after.applyAsFloat(applyAsDouble(value1, value2));
+    }
+
+    /**
+     * Returns a composed {@link IntBinaryOperator} that first applies this function to its input, and then applies the
+     * {@code after} function to the result. If evaluation of either function throws an exception, it is relayed to the
+     * caller of the composed function. This method is just convenience, to provide the ability to transform this
+     * operation to an operation returning {@code int}.
+     *
+     * @param after The function to apply after this function is applied
+     * @return A composed {@code IntBinaryOperator} that first applies this function to its input, and then applies the
+     * {@code after} function to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @see #andThen(DoubleFunction)
+     */
+    @Nonnull
+    default IntBinaryOperator andThenToInt(@Nonnull final DoubleToIntFunction after) {
+        Objects.requireNonNull(after);
+        return (value1, value2) -> after.applyAsInt(applyAsDouble(value1, value2));
+    }
+
+    /**
+     * Returns a composed {@link BiIntToLongFunction} that first applies this function to its input, and then applies
+     * the {@code after} function to the result. If evaluation of either function throws an exception, it is relayed to
+     * the caller of the composed function. This method is just convenience, to provide the ability to transform this
+     * operation to an operation returning {@code long}.
+     *
+     * @param after The function to apply after this function is applied
+     * @return A composed {@code BiIntToLongFunction} that first applies this function to its input, and then applies
+     * the {@code after} function to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @see #andThen(DoubleFunction)
+     */
+    @Nonnull
+    default BiIntToLongFunction andThenToLong(@Nonnull final DoubleToLongFunction after) {
+        Objects.requireNonNull(after);
+        return (value1, value2) -> after.applyAsLong(applyAsDouble(value1, value2));
+    }
+
+    /**
+     * Returns a composed {@link BiIntToShortFunction} that first applies this function to its input, and then applies
+     * the {@code after} function to the result. If evaluation of either function throws an exception, it is relayed to
+     * the caller of the composed function. This method is just convenience, to provide the ability to transform this
+     * operation to an operation returning {@code short}.
+     *
+     * @param after The function to apply after this function is applied
+     * @return A composed {@code BiIntToShortFunction} that first applies this function to its input, and then applies
+     * the {@code after} function to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @see #andThen(DoubleFunction)
+     */
+    @Nonnull
+    default BiIntToShortFunction andThenToShort(@Nonnull final DoubleToShortFunction after) {
+        Objects.requireNonNull(after);
+        return (value1, value2) -> after.applyAsShort(applyAsDouble(value1, value2));
     }
 
     /**
