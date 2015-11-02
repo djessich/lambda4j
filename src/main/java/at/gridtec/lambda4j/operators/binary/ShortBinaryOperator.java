@@ -282,7 +282,7 @@ public interface ShortBinaryOperator {
     @Nonnull
     default BiShortToByteFunction andThenToByte(@Nonnull final ShortToByteFunction after) {
         Objects.requireNonNull(after);
-        return (left, right) -> after.applyAsByte(applyAsShort(left, right));
+        return (value1, value2) -> after.applyAsByte(applyAsShort(value1, value2));
     }
 
     /**

@@ -282,7 +282,7 @@ public interface ByteBinaryOperator {
     @Nonnull
     default ByteBinaryOperator andThenToByte(@Nonnull final ByteUnaryOperator after) {
         Objects.requireNonNull(after);
-        return (left, right) -> after.applyAsByte(applyAsByte(left, right));
+        return (value1, value2) -> after.applyAsByte(applyAsByte(value1, value2));
     }
 
     /**

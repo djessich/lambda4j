@@ -286,7 +286,7 @@ public interface FloatBinaryOperator {
     @Nonnull
     default BiFloatToByteFunction andThenToByte(@Nonnull final FloatToByteFunction after) {
         Objects.requireNonNull(after);
-        return (left, right) -> after.applyAsByte(applyAsFloat(left, right));
+        return (value1, value2) -> after.applyAsByte(applyAsFloat(value1, value2));
     }
 
     /**

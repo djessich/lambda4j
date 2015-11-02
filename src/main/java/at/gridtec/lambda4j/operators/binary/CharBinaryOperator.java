@@ -282,7 +282,7 @@ public interface CharBinaryOperator {
     @Nonnull
     default BiCharToByteFunction andThenToByte(@Nonnull final CharToByteFunction after) {
         Objects.requireNonNull(after);
-        return (left, right) -> after.applyAsByte(applyAsChar(left, right));
+        return (value1, value2) -> after.applyAsByte(applyAsChar(value1, value2));
     }
 
     /**

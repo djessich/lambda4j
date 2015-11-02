@@ -107,14 +107,14 @@ public interface BooleanToDoubleFunction {
     }
 
     /**
-     * Returns a composed {@link ToDoubleFunction} that first applies the {@code before} function to its input, and then
-     * applies this function to the result. If evaluation of either function throws an exception, it is relayed to the
-     * caller of the composed function.
+     * Returns a composed {@link ToDoubleFunction} that first applies the {@code before} operation to its input, and
+     * then applies this function to the result. If evaluation of either function throws an exception, it is relayed to
+     * the caller of the composed function.
      *
      * @param <T> The type of the argument to the before function
      * @param before The function to apply before this function is applied
-     * @return A composed {@code ToDoubleFunction} that first applies the {@code before} function to its input, and then
-     * applies this function to the result.
+     * @return A composed {@code ToDoubleFunction} that first applies the {@code before} operation to its input, and
+     * then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
      * @implNote The input argument of this method is able to handle every type.
      * @see #andThen(DoubleFunction)

@@ -119,7 +119,7 @@ public interface BiBooleanToIntFunction {
      * Returns the number of this operations arguments.
      *
      * @return The number of this operations arguments.
-     * @implSpec The default implementation always returns {@code 1}.
+     * @implSpec The default implementation always returns {@code 2}.
      */
     @Nonnegative
     default int arity() {
@@ -149,16 +149,16 @@ public interface BiBooleanToIntFunction {
     }
 
     /**
-     * Returns a composed {@link ToIntBiFunction} that first applies the {@code before} functions to its input, and then
-     * applies this function to the result. If evaluation of either function throws an exception, it is relayed to the
-     * caller of the composed function.
+     * Returns a composed {@link ToIntBiFunction} that first applies the {@code before} operations to its input, and
+     * then applies this function to the result. If evaluation of either function throws an exception, it is relayed to
+     * the caller of the composed function.
      *
      * @param <T> The type of the argument to the first before function
      * @param <U> The type of the argument to the second before function
      * @param before1 The first function to apply before this function is applied
      * @param before2 The second function to apply before this function is applied
-     * @return A composed {@code ToIntBiFunction} that first applies the {@code before} functions to its input, and then
-     * applies this function to the result.
+     * @return A composed {@code ToIntBiFunction} that first applies the {@code before} operations to its input, and
+     * then applies this function to the result.
      * @throws NullPointerException If one of the given arguments is {@code null}
      * @implNote The input arguments of this method are able to handle every type.
      * @see #andThen(IntFunction)

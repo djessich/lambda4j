@@ -420,7 +420,7 @@ public interface BooleanBinaryOperator {
     @Nonnull
     default BiBooleanToByteFunction andThenToByte(@Nonnull final BooleanToByteFunction after) {
         Objects.requireNonNull(after);
-        return (left, right) -> after.applyAsByte(applyAsBoolean(left, right));
+        return (value1, value2) -> after.applyAsByte(applyAsBoolean(value1, value2));
     }
 
     /**
