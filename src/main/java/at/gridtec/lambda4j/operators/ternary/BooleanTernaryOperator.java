@@ -18,6 +18,20 @@ package at.gridtec.lambda4j.operators.ternary;
 import at.gridtec.lambda4j.consumer.primitives.BooleanConsumer;
 import at.gridtec.lambda4j.consumer.primitives.tri.BooleanTriConsumer;
 import at.gridtec.lambda4j.function.primitives.BooleanFunction;
+import at.gridtec.lambda4j.function.primitives.conversion.BooleanToByteFunction;
+import at.gridtec.lambda4j.function.primitives.conversion.BooleanToCharFunction;
+import at.gridtec.lambda4j.function.primitives.conversion.BooleanToDoubleFunction;
+import at.gridtec.lambda4j.function.primitives.conversion.BooleanToFloatFunction;
+import at.gridtec.lambda4j.function.primitives.conversion.BooleanToIntFunction;
+import at.gridtec.lambda4j.function.primitives.conversion.BooleanToLongFunction;
+import at.gridtec.lambda4j.function.primitives.conversion.BooleanToShortFunction;
+import at.gridtec.lambda4j.function.primitives.conversion.tri.TriBooleanToByteFunction;
+import at.gridtec.lambda4j.function.primitives.conversion.tri.TriBooleanToCharFunction;
+import at.gridtec.lambda4j.function.primitives.conversion.tri.TriBooleanToDoubleFunction;
+import at.gridtec.lambda4j.function.primitives.conversion.tri.TriBooleanToFloatFunction;
+import at.gridtec.lambda4j.function.primitives.conversion.tri.TriBooleanToIntFunction;
+import at.gridtec.lambda4j.function.primitives.conversion.tri.TriBooleanToLongFunction;
+import at.gridtec.lambda4j.function.primitives.conversion.tri.TriBooleanToShortFunction;
 import at.gridtec.lambda4j.function.primitives.tri.BooleanTriFunction;
 import at.gridtec.lambda4j.operators.unary.BooleanUnaryOperator;
 import at.gridtec.lambda4j.predicates.TriPredicate;
@@ -369,6 +383,150 @@ public interface BooleanTernaryOperator {
     default <R> BooleanTriFunction<R> andThen(@Nonnull final BooleanFunction<? extends R> after) {
         Objects.requireNonNull(after);
         return (value1, value2, value3) -> after.apply(applyAsBoolean(value1, value2, value3));
+    }
+
+    /**
+     * Returns a composed {@link BooleanTernaryOperator} that first applies this function to its input, and then applies
+     * the {@code after} function to the result. If evaluation of either function throws an exception, it is relayed to
+     * the caller of the composed function. This method is just convenience, to provide the ability to transform this
+     * operation to an operation returning {@code boolean}.
+     *
+     * @param after The function to apply after this function is applied
+     * @return A composed {@code BooleanTernaryOperator} that first applies this function to its input, and then applies
+     * the {@code after} function to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @see #andThen(BooleanFunction)
+     */
+    @Nonnull
+    default BooleanTernaryOperator andThenToBoolean(@Nonnull final BooleanUnaryOperator after) {
+        Objects.requireNonNull(after);
+        return (value1, value2, value3) -> after.applyAsBoolean(applyAsBoolean(value1, value2, value3));
+    }
+
+    /**
+     * Returns a composed {@link TriBooleanToByteFunction} that first applies this function to its input, and then
+     * applies the {@code after} function to the result. If evaluation of either function throws an exception, it is
+     * relayed to the caller of the composed function. This method is just convenience, to provide the ability to
+     * transform this operation to an operation returning {@code byte}.
+     *
+     * @param after The function to apply after this function is applied
+     * @return A composed {@code TriBooleanToByteFunction} that first applies this function to its input, and then
+     * applies the {@code after} function to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @see #andThen(BooleanFunction)
+     */
+    @Nonnull
+    default TriBooleanToByteFunction andThenToByte(@Nonnull final BooleanToByteFunction after) {
+        Objects.requireNonNull(after);
+        return (value1, value2, value3) -> after.applyAsByte(applyAsBoolean(value1, value2, value3));
+    }
+
+    /**
+     * Returns a composed {@link TriBooleanToCharFunction} that first applies this function to its input, and then
+     * applies the {@code after} function to the result. If evaluation of either function throws an exception, it is
+     * relayed to the caller of the composed function. This method is just convenience, to provide the ability to
+     * transform this operation to an operation returning {@code char}.
+     *
+     * @param after The function to apply after this function is applied
+     * @return A composed {@code TriBooleanToCharFunction} that first applies this function to its input, and then
+     * applies the {@code after} function to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @see #andThen(BooleanFunction)
+     */
+    @Nonnull
+    default TriBooleanToCharFunction andThenToChar(@Nonnull final BooleanToCharFunction after) {
+        Objects.requireNonNull(after);
+        return (value1, value2, value3) -> after.applyAsChar(applyAsBoolean(value1, value2, value3));
+    }
+
+    /**
+     * Returns a composed {@link TriBooleanToDoubleFunction} that first applies this function to its input, and then
+     * applies the {@code after} function to the result. If evaluation of either function throws an exception, it is
+     * relayed to the caller of the composed function. This method is just convenience, to provide the ability to
+     * transform this operation to an operation returning {@code double}.
+     *
+     * @param after The function to apply after this function is applied
+     * @return A composed {@code TriBooleanToDoubleFunction} that first applies this function to its input, and then
+     * applies the {@code after} function to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @see #andThen(BooleanFunction)
+     */
+    @Nonnull
+    default TriBooleanToDoubleFunction andThenToDouble(@Nonnull final BooleanToDoubleFunction after) {
+        Objects.requireNonNull(after);
+        return (value1, value2, value3) -> after.applyAsDouble(applyAsBoolean(value1, value2, value3));
+    }
+
+    /**
+     * Returns a composed {@link TriBooleanToFloatFunction} that first applies this function to its input, and then
+     * applies the {@code after} function to the result. If evaluation of either function throws an exception, it is
+     * relayed to the caller of the composed function. This method is just convenience, to provide the ability to
+     * transform this operation to an operation returning {@code float}.
+     *
+     * @param after The function to apply after this function is applied
+     * @return A composed {@code TriBooleanToFloatFunction} that first applies this function to its input, and then
+     * applies the {@code after} function to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @see #andThen(BooleanFunction)
+     */
+    @Nonnull
+    default TriBooleanToFloatFunction andThenToFloat(@Nonnull final BooleanToFloatFunction after) {
+        Objects.requireNonNull(after);
+        return (value1, value2, value3) -> after.applyAsFloat(applyAsBoolean(value1, value2, value3));
+    }
+
+    /**
+     * Returns a composed {@link TriBooleanToIntFunction} that first applies this function to its input, and then
+     * applies the {@code after} function to the result. If evaluation of either function throws an exception, it is
+     * relayed to the caller of the composed function. This method is just convenience, to provide the ability to
+     * transform this operation to an operation returning {@code int}.
+     *
+     * @param after The function to apply after this function is applied
+     * @return A composed {@code TriBooleanToIntFunction} that first applies this function to its input, and then
+     * applies the {@code after} function to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @see #andThen(BooleanFunction)
+     */
+    @Nonnull
+    default TriBooleanToIntFunction andThenToInt(@Nonnull final BooleanToIntFunction after) {
+        Objects.requireNonNull(after);
+        return (value1, value2, value3) -> after.applyAsInt(applyAsBoolean(value1, value2, value3));
+    }
+
+    /**
+     * Returns a composed {@link TriBooleanToLongFunction} that first applies this function to its input, and then
+     * applies the {@code after} function to the result. If evaluation of either function throws an exception, it is
+     * relayed to the caller of the composed function. This method is just convenience, to provide the ability to
+     * transform this operation to an operation returning {@code long}.
+     *
+     * @param after The function to apply after this function is applied
+     * @return A composed {@code TriBooleanToLongFunction} that first applies this function to its input, and then
+     * applies the {@code after} function to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @see #andThen(BooleanFunction)
+     */
+    @Nonnull
+    default TriBooleanToLongFunction andThenToLong(@Nonnull final BooleanToLongFunction after) {
+        Objects.requireNonNull(after);
+        return (value1, value2, value3) -> after.applyAsLong(applyAsBoolean(value1, value2, value3));
+    }
+
+    /**
+     * Returns a composed {@link TriBooleanToShortFunction} that first applies this function to its input, and then
+     * applies the {@code after} function to the result. If evaluation of either function throws an exception, it is
+     * relayed to the caller of the composed function. This method is just convenience, to provide the ability to
+     * transform this operation to an operation returning {@code short}.
+     *
+     * @param after The function to apply after this function is applied
+     * @return A composed {@code TriBooleanToShortFunction} that first applies this function to its input, and then
+     * applies the {@code after} function to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @see #andThen(BooleanFunction)
+     */
+    @Nonnull
+    default TriBooleanToShortFunction andThenToShort(@Nonnull final BooleanToShortFunction after) {
+        Objects.requireNonNull(after);
+        return (value1, value2, value3) -> after.applyAsShort(applyAsBoolean(value1, value2, value3));
     }
 
     /**

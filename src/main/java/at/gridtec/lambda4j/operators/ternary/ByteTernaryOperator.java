@@ -18,6 +18,20 @@ package at.gridtec.lambda4j.operators.ternary;
 import at.gridtec.lambda4j.consumer.primitives.ByteConsumer;
 import at.gridtec.lambda4j.consumer.primitives.tri.ByteTriConsumer;
 import at.gridtec.lambda4j.function.primitives.ByteFunction;
+import at.gridtec.lambda4j.function.primitives.conversion.ByteToBooleanFunction;
+import at.gridtec.lambda4j.function.primitives.conversion.ByteToCharFunction;
+import at.gridtec.lambda4j.function.primitives.conversion.ByteToDoubleFunction;
+import at.gridtec.lambda4j.function.primitives.conversion.ByteToFloatFunction;
+import at.gridtec.lambda4j.function.primitives.conversion.ByteToIntFunction;
+import at.gridtec.lambda4j.function.primitives.conversion.ByteToLongFunction;
+import at.gridtec.lambda4j.function.primitives.conversion.ByteToShortFunction;
+import at.gridtec.lambda4j.function.primitives.conversion.tri.TriByteToBooleanFunction;
+import at.gridtec.lambda4j.function.primitives.conversion.tri.TriByteToCharFunction;
+import at.gridtec.lambda4j.function.primitives.conversion.tri.TriByteToDoubleFunction;
+import at.gridtec.lambda4j.function.primitives.conversion.tri.TriByteToFloatFunction;
+import at.gridtec.lambda4j.function.primitives.conversion.tri.TriByteToIntFunction;
+import at.gridtec.lambda4j.function.primitives.conversion.tri.TriByteToLongFunction;
+import at.gridtec.lambda4j.function.primitives.conversion.tri.TriByteToShortFunction;
 import at.gridtec.lambda4j.function.primitives.to.ToByteFunction;
 import at.gridtec.lambda4j.function.primitives.to.tri.ToByteTriFunction;
 import at.gridtec.lambda4j.function.primitives.tri.ByteTriFunction;
@@ -200,6 +214,150 @@ public interface ByteTernaryOperator {
     default <R> ByteTriFunction<R> andThen(@Nonnull final ByteFunction<? extends R> after) {
         Objects.requireNonNull(after);
         return (value1, value2, value3) -> after.apply(applyAsByte(value1, value2, value3));
+    }
+
+    /**
+     * Returns a composed {@link TriByteToBooleanFunction} that first applies this function to its input, and then
+     * applies the {@code after} function to the result. If evaluation of either function throws an exception, it is
+     * relayed to the caller of the composed function. This method is just convenience, to provide the ability to
+     * transform this operation to an operation returning {@code boolean}.
+     *
+     * @param after The function to apply after this function is applied
+     * @return A composed {@code TriByteToBooleanFunction} that first applies this function to its input, and then
+     * applies the {@code after} function to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @see #andThen(ByteFunction)
+     */
+    @Nonnull
+    default TriByteToBooleanFunction andThenToBoolean(@Nonnull final ByteToBooleanFunction after) {
+        Objects.requireNonNull(after);
+        return (value1, value2, value3) -> after.applyAsBoolean(applyAsByte(value1, value2, value3));
+    }
+
+    /**
+     * Returns a composed {@link ByteTernaryOperator} that first applies this function to its input, and then applies
+     * the {@code after} function to the result. If evaluation of either function throws an exception, it is relayed to
+     * the caller of the composed function. This method is just convenience, to provide the ability to transform this
+     * operation to an operation returning {@code byte}.
+     *
+     * @param after The function to apply after this function is applied
+     * @return A composed {@code ByteTernaryOperator} that first applies this function to its input, and then applies
+     * the {@code after} function to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @see #andThen(ByteFunction)
+     */
+    @Nonnull
+    default ByteTernaryOperator andThenToByte(@Nonnull final ByteUnaryOperator after) {
+        Objects.requireNonNull(after);
+        return (value1, value2, value3) -> after.applyAsByte(applyAsByte(value1, value2, value3));
+    }
+
+    /**
+     * Returns a composed {@link TriByteToCharFunction} that first applies this function to its input, and then applies
+     * the {@code after} function to the result. If evaluation of either function throws an exception, it is relayed to
+     * the caller of the composed function. This method is just convenience, to provide the ability to transform this
+     * operation to an operation returning {@code char}.
+     *
+     * @param after The function to apply after this function is applied
+     * @return A composed {@code TriByteToCharFunction} that first applies this function to its input, and then applies
+     * the {@code after} function to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @see #andThen(ByteFunction)
+     */
+    @Nonnull
+    default TriByteToCharFunction andThenToChar(@Nonnull final ByteToCharFunction after) {
+        Objects.requireNonNull(after);
+        return (value1, value2, value3) -> after.applyAsChar(applyAsByte(value1, value2, value3));
+    }
+
+    /**
+     * Returns a composed {@link TriByteToDoubleFunction} that first applies this function to its input, and then
+     * applies the {@code after} function to the result. If evaluation of either function throws an exception, it is
+     * relayed to the caller of the composed function. This method is just convenience, to provide the ability to
+     * transform this operation to an operation returning {@code double}.
+     *
+     * @param after The function to apply after this function is applied
+     * @return A composed {@code TriByteToDoubleFunction} that first applies this function to its input, and then
+     * applies the {@code after} function to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @see #andThen(ByteFunction)
+     */
+    @Nonnull
+    default TriByteToDoubleFunction andThenToDouble(@Nonnull final ByteToDoubleFunction after) {
+        Objects.requireNonNull(after);
+        return (value1, value2, value3) -> after.applyAsDouble(applyAsByte(value1, value2, value3));
+    }
+
+    /**
+     * Returns a composed {@link TriByteToFloatFunction} that first applies this function to its input, and then applies
+     * the {@code after} function to the result. If evaluation of either function throws an exception, it is relayed to
+     * the caller of the composed function. This method is just convenience, to provide the ability to transform this
+     * operation to an operation returning {@code float}.
+     *
+     * @param after The function to apply after this function is applied
+     * @return A composed {@code TriByteToFloatFunction} that first applies this function to its input, and then applies
+     * the {@code after} function to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @see #andThen(ByteFunction)
+     */
+    @Nonnull
+    default TriByteToFloatFunction andThenToFloat(@Nonnull final ByteToFloatFunction after) {
+        Objects.requireNonNull(after);
+        return (value1, value2, value3) -> after.applyAsFloat(applyAsByte(value1, value2, value3));
+    }
+
+    /**
+     * Returns a composed {@link TriByteToIntFunction} that first applies this function to its input, and then applies
+     * the {@code after} function to the result. If evaluation of either function throws an exception, it is relayed to
+     * the caller of the composed function. This method is just convenience, to provide the ability to transform this
+     * operation to an operation returning {@code int}.
+     *
+     * @param after The function to apply after this function is applied
+     * @return A composed {@code TriByteToIntFunction} that first applies this function to its input, and then applies
+     * the {@code after} function to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @see #andThen(ByteFunction)
+     */
+    @Nonnull
+    default TriByteToIntFunction andThenToInt(@Nonnull final ByteToIntFunction after) {
+        Objects.requireNonNull(after);
+        return (value1, value2, value3) -> after.applyAsInt(applyAsByte(value1, value2, value3));
+    }
+
+    /**
+     * Returns a composed {@link TriByteToLongFunction} that first applies this function to its input, and then applies
+     * the {@code after} function to the result. If evaluation of either function throws an exception, it is relayed to
+     * the caller of the composed function. This method is just convenience, to provide the ability to transform this
+     * operation to an operation returning {@code long}.
+     *
+     * @param after The function to apply after this function is applied
+     * @return A composed {@code TriByteToLongFunction} that first applies this function to its input, and then applies
+     * the {@code after} function to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @see #andThen(ByteFunction)
+     */
+    @Nonnull
+    default TriByteToLongFunction andThenToLong(@Nonnull final ByteToLongFunction after) {
+        Objects.requireNonNull(after);
+        return (value1, value2, value3) -> after.applyAsLong(applyAsByte(value1, value2, value3));
+    }
+
+    /**
+     * Returns a composed {@link TriByteToShortFunction} that first applies this function to its input, and then applies
+     * the {@code after} function to the result. If evaluation of either function throws an exception, it is relayed to
+     * the caller of the composed function. This method is just convenience, to provide the ability to transform this
+     * operation to an operation returning {@code short}.
+     *
+     * @param after The function to apply after this function is applied
+     * @return A composed {@code TriByteToShortFunction} that first applies this function to its input, and then applies
+     * the {@code after} function to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @see #andThen(ByteFunction)
+     */
+    @Nonnull
+    default TriByteToShortFunction andThenToShort(@Nonnull final ByteToShortFunction after) {
+        Objects.requireNonNull(after);
+        return (value1, value2, value3) -> after.applyAsShort(applyAsByte(value1, value2, value3));
     }
 
     /**

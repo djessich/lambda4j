@@ -18,6 +18,20 @@ package at.gridtec.lambda4j.operators.ternary;
 import at.gridtec.lambda4j.consumer.primitives.FloatConsumer;
 import at.gridtec.lambda4j.consumer.primitives.tri.FloatTriConsumer;
 import at.gridtec.lambda4j.function.primitives.FloatFunction;
+import at.gridtec.lambda4j.function.primitives.conversion.FloatToBooleanFunction;
+import at.gridtec.lambda4j.function.primitives.conversion.FloatToByteFunction;
+import at.gridtec.lambda4j.function.primitives.conversion.FloatToCharFunction;
+import at.gridtec.lambda4j.function.primitives.conversion.FloatToDoubleFunction;
+import at.gridtec.lambda4j.function.primitives.conversion.FloatToIntFunction;
+import at.gridtec.lambda4j.function.primitives.conversion.FloatToLongFunction;
+import at.gridtec.lambda4j.function.primitives.conversion.FloatToShortFunction;
+import at.gridtec.lambda4j.function.primitives.conversion.tri.TriFloatToBooleanFunction;
+import at.gridtec.lambda4j.function.primitives.conversion.tri.TriFloatToByteFunction;
+import at.gridtec.lambda4j.function.primitives.conversion.tri.TriFloatToCharFunction;
+import at.gridtec.lambda4j.function.primitives.conversion.tri.TriFloatToDoubleFunction;
+import at.gridtec.lambda4j.function.primitives.conversion.tri.TriFloatToIntFunction;
+import at.gridtec.lambda4j.function.primitives.conversion.tri.TriFloatToLongFunction;
+import at.gridtec.lambda4j.function.primitives.conversion.tri.TriFloatToShortFunction;
 import at.gridtec.lambda4j.function.primitives.to.ToFloatFunction;
 import at.gridtec.lambda4j.function.primitives.to.tri.ToFloatTriFunction;
 import at.gridtec.lambda4j.function.primitives.tri.FloatTriFunction;
@@ -200,6 +214,150 @@ public interface FloatTernaryOperator {
     default <R> FloatTriFunction<R> andThen(@Nonnull final FloatFunction<? extends R> after) {
         Objects.requireNonNull(after);
         return (value1, value2, value3) -> after.apply(applyAsFloat(value1, value2, value3));
+    }
+
+    /**
+     * Returns a composed {@link TriFloatToBooleanFunction} that first applies this function to its input, and then
+     * applies the {@code after} function to the result. If evaluation of either function throws an exception, it is
+     * relayed to the caller of the composed function. This method is just convenience, to provide the ability to
+     * transform this operation to an operation returning {@code boolean}.
+     *
+     * @param after The function to apply after this function is applied
+     * @return A composed {@code TriFloatToBooleanFunction} that first applies this function to its input, and then
+     * applies the {@code after} function to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @see #andThen(FloatFunction)
+     */
+    @Nonnull
+    default TriFloatToBooleanFunction andThenToBoolean(@Nonnull final FloatToBooleanFunction after) {
+        Objects.requireNonNull(after);
+        return (value1, value2, value3) -> after.applyAsBoolean(applyAsFloat(value1, value2, value3));
+    }
+
+    /**
+     * Returns a composed {@link TriFloatToByteFunction} that first applies this function to its input, and then applies
+     * the {@code after} function to the result. If evaluation of either function throws an exception, it is relayed to
+     * the caller of the composed function. This method is just convenience, to provide the ability to transform this
+     * operation to an operation returning {@code byte}.
+     *
+     * @param after The function to apply after this function is applied
+     * @return A composed {@code TriFloatToByteFunction} that first applies this function to its input, and then applies
+     * the {@code after} function to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @see #andThen(FloatFunction)
+     */
+    @Nonnull
+    default TriFloatToByteFunction andThenToByte(@Nonnull final FloatToByteFunction after) {
+        Objects.requireNonNull(after);
+        return (value1, value2, value3) -> after.applyAsByte(applyAsFloat(value1, value2, value3));
+    }
+
+    /**
+     * Returns a composed {@link TriFloatToCharFunction} that first applies this function to its input, and then applies
+     * the {@code after} function to the result. If evaluation of either function throws an exception, it is relayed to
+     * the caller of the composed function. This method is just convenience, to provide the ability to transform this
+     * operation to an operation returning {@code char}.
+     *
+     * @param after The function to apply after this function is applied
+     * @return A composed {@code TriFloatToCharFunction} that first applies this function to its input, and then applies
+     * the {@code after} function to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @see #andThen(FloatFunction)
+     */
+    @Nonnull
+    default TriFloatToCharFunction andThenToChar(@Nonnull final FloatToCharFunction after) {
+        Objects.requireNonNull(after);
+        return (value1, value2, value3) -> after.applyAsChar(applyAsFloat(value1, value2, value3));
+    }
+
+    /**
+     * Returns a composed {@link TriFloatToDoubleFunction} that first applies this function to its input, and then
+     * applies the {@code after} function to the result. If evaluation of either function throws an exception, it is
+     * relayed to the caller of the composed function. This method is just convenience, to provide the ability to
+     * transform this operation to an operation returning {@code double}.
+     *
+     * @param after The function to apply after this function is applied
+     * @return A composed {@code TriFloatToDoubleFunction} that first applies this function to its input, and then
+     * applies the {@code after} function to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @see #andThen(FloatFunction)
+     */
+    @Nonnull
+    default TriFloatToDoubleFunction andThenToDouble(@Nonnull final FloatToDoubleFunction after) {
+        Objects.requireNonNull(after);
+        return (value1, value2, value3) -> after.applyAsDouble(applyAsFloat(value1, value2, value3));
+    }
+
+    /**
+     * Returns a composed {@link FloatTernaryOperator} that first applies this function to its input, and then applies
+     * the {@code after} function to the result. If evaluation of either function throws an exception, it is relayed to
+     * the caller of the composed function. This method is just convenience, to provide the ability to transform this
+     * operation to an operation returning {@code float}.
+     *
+     * @param after The function to apply after this function is applied
+     * @return A composed {@code FloatTernaryOperator} that first applies this function to its input, and then applies
+     * the {@code after} function to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @see #andThen(FloatFunction)
+     */
+    @Nonnull
+    default FloatTernaryOperator andThenToFloat(@Nonnull final FloatUnaryOperator after) {
+        Objects.requireNonNull(after);
+        return (value1, value2, value3) -> after.applyAsFloat(applyAsFloat(value1, value2, value3));
+    }
+
+    /**
+     * Returns a composed {@link TriFloatToIntFunction} that first applies this function to its input, and then applies
+     * the {@code after} function to the result. If evaluation of either function throws an exception, it is relayed to
+     * the caller of the composed function. This method is just convenience, to provide the ability to transform this
+     * operation to an operation returning {@code int}.
+     *
+     * @param after The function to apply after this function is applied
+     * @return A composed {@code TriFloatToIntFunction} that first applies this function to its input, and then applies
+     * the {@code after} function to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @see #andThen(FloatFunction)
+     */
+    @Nonnull
+    default TriFloatToIntFunction andThenToInt(@Nonnull final FloatToIntFunction after) {
+        Objects.requireNonNull(after);
+        return (value1, value2, value3) -> after.applyAsInt(applyAsFloat(value1, value2, value3));
+    }
+
+    /**
+     * Returns a composed {@link TriFloatToLongFunction} that first applies this function to its input, and then applies
+     * the {@code after} function to the result. If evaluation of either function throws an exception, it is relayed to
+     * the caller of the composed function. This method is just convenience, to provide the ability to transform this
+     * operation to an operation returning {@code long}.
+     *
+     * @param after The function to apply after this function is applied
+     * @return A composed {@code TriFloatToLongFunction} that first applies this function to its input, and then applies
+     * the {@code after} function to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @see #andThen(FloatFunction)
+     */
+    @Nonnull
+    default TriFloatToLongFunction andThenToLong(@Nonnull final FloatToLongFunction after) {
+        Objects.requireNonNull(after);
+        return (value1, value2, value3) -> after.applyAsLong(applyAsFloat(value1, value2, value3));
+    }
+
+    /**
+     * Returns a composed {@link TriFloatToShortFunction} that first applies this function to its input, and then
+     * applies the {@code after} function to the result. If evaluation of either function throws an exception, it is
+     * relayed to the caller of the composed function. This method is just convenience, to provide the ability to
+     * transform this operation to an operation returning {@code short}.
+     *
+     * @param after The function to apply after this function is applied
+     * @return A composed {@code TriFloatToShortFunction} that first applies this function to its input, and then
+     * applies the {@code after} function to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @see #andThen(FloatFunction)
+     */
+    @Nonnull
+    default TriFloatToShortFunction andThenToShort(@Nonnull final FloatToShortFunction after) {
+        Objects.requireNonNull(after);
+        return (value1, value2, value3) -> after.applyAsShort(applyAsFloat(value1, value2, value3));
     }
 
     /**

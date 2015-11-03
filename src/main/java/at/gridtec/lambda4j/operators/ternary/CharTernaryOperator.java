@@ -18,6 +18,20 @@ package at.gridtec.lambda4j.operators.ternary;
 import at.gridtec.lambda4j.consumer.primitives.CharConsumer;
 import at.gridtec.lambda4j.consumer.primitives.tri.CharTriConsumer;
 import at.gridtec.lambda4j.function.primitives.CharFunction;
+import at.gridtec.lambda4j.function.primitives.conversion.CharToBooleanFunction;
+import at.gridtec.lambda4j.function.primitives.conversion.CharToByteFunction;
+import at.gridtec.lambda4j.function.primitives.conversion.CharToDoubleFunction;
+import at.gridtec.lambda4j.function.primitives.conversion.CharToFloatFunction;
+import at.gridtec.lambda4j.function.primitives.conversion.CharToIntFunction;
+import at.gridtec.lambda4j.function.primitives.conversion.CharToLongFunction;
+import at.gridtec.lambda4j.function.primitives.conversion.CharToShortFunction;
+import at.gridtec.lambda4j.function.primitives.conversion.tri.TriCharToBooleanFunction;
+import at.gridtec.lambda4j.function.primitives.conversion.tri.TriCharToByteFunction;
+import at.gridtec.lambda4j.function.primitives.conversion.tri.TriCharToDoubleFunction;
+import at.gridtec.lambda4j.function.primitives.conversion.tri.TriCharToFloatFunction;
+import at.gridtec.lambda4j.function.primitives.conversion.tri.TriCharToIntFunction;
+import at.gridtec.lambda4j.function.primitives.conversion.tri.TriCharToLongFunction;
+import at.gridtec.lambda4j.function.primitives.conversion.tri.TriCharToShortFunction;
 import at.gridtec.lambda4j.function.primitives.to.ToCharFunction;
 import at.gridtec.lambda4j.function.primitives.to.tri.ToCharTriFunction;
 import at.gridtec.lambda4j.function.primitives.tri.CharTriFunction;
@@ -200,6 +214,150 @@ public interface CharTernaryOperator {
     default <R> CharTriFunction<R> andThen(@Nonnull final CharFunction<? extends R> after) {
         Objects.requireNonNull(after);
         return (value1, value2, value3) -> after.apply(applyAsChar(value1, value2, value3));
+    }
+
+    /**
+     * Returns a composed {@link TriCharToBooleanFunction} that first applies this function to its input, and then
+     * applies the {@code after} function to the result. If evaluation of either function throws an exception, it is
+     * relayed to the caller of the composed function. This method is just convenience, to provide the ability to
+     * transform this operation to an operation returning {@code boolean}.
+     *
+     * @param after The function to apply after this function is applied
+     * @return A composed {@code TriCharToBooleanFunction} that first applies this function to its input, and then
+     * applies the {@code after} function to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @see #andThen(CharFunction)
+     */
+    @Nonnull
+    default TriCharToBooleanFunction andThenToBoolean(@Nonnull final CharToBooleanFunction after) {
+        Objects.requireNonNull(after);
+        return (value1, value2, value3) -> after.applyAsBoolean(applyAsChar(value1, value2, value3));
+    }
+
+    /**
+     * Returns a composed {@link TriCharToByteFunction} that first applies this function to its input, and then applies
+     * the {@code after} function to the result. If evaluation of either function throws an exception, it is relayed to
+     * the caller of the composed function. This method is just convenience, to provide the ability to transform this
+     * operation to an operation returning {@code byte}.
+     *
+     * @param after The function to apply after this function is applied
+     * @return A composed {@code TriCharToByteFunction} that first applies this function to its input, and then applies
+     * the {@code after} function to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @see #andThen(CharFunction)
+     */
+    @Nonnull
+    default TriCharToByteFunction andThenToByte(@Nonnull final CharToByteFunction after) {
+        Objects.requireNonNull(after);
+        return (value1, value2, value3) -> after.applyAsByte(applyAsChar(value1, value2, value3));
+    }
+
+    /**
+     * Returns a composed {@link CharTernaryOperator} that first applies this function to its input, and then applies
+     * the {@code after} function to the result. If evaluation of either function throws an exception, it is relayed to
+     * the caller of the composed function. This method is just convenience, to provide the ability to transform this
+     * operation to an operation returning {@code char}.
+     *
+     * @param after The function to apply after this function is applied
+     * @return A composed {@code CharTernaryOperator} that first applies this function to its input, and then applies
+     * the {@code after} function to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @see #andThen(CharFunction)
+     */
+    @Nonnull
+    default CharTernaryOperator andThenToChar(@Nonnull final CharUnaryOperator after) {
+        Objects.requireNonNull(after);
+        return (value1, value2, value3) -> after.applyAsChar(applyAsChar(value1, value2, value3));
+    }
+
+    /**
+     * Returns a composed {@link TriCharToDoubleFunction} that first applies this function to its input, and then
+     * applies the {@code after} function to the result. If evaluation of either function throws an exception, it is
+     * relayed to the caller of the composed function. This method is just convenience, to provide the ability to
+     * transform this operation to an operation returning {@code double}.
+     *
+     * @param after The function to apply after this function is applied
+     * @return A composed {@code TriCharToDoubleFunction} that first applies this function to its input, and then
+     * applies the {@code after} function to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @see #andThen(CharFunction)
+     */
+    @Nonnull
+    default TriCharToDoubleFunction andThenToDouble(@Nonnull final CharToDoubleFunction after) {
+        Objects.requireNonNull(after);
+        return (value1, value2, value3) -> after.applyAsDouble(applyAsChar(value1, value2, value3));
+    }
+
+    /**
+     * Returns a composed {@link TriCharToFloatFunction} that first applies this function to its input, and then applies
+     * the {@code after} function to the result. If evaluation of either function throws an exception, it is relayed to
+     * the caller of the composed function. This method is just convenience, to provide the ability to transform this
+     * operation to an operation returning {@code float}.
+     *
+     * @param after The function to apply after this function is applied
+     * @return A composed {@code TriCharToFloatFunction} that first applies this function to its input, and then applies
+     * the {@code after} function to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @see #andThen(CharFunction)
+     */
+    @Nonnull
+    default TriCharToFloatFunction andThenToFloat(@Nonnull final CharToFloatFunction after) {
+        Objects.requireNonNull(after);
+        return (value1, value2, value3) -> after.applyAsFloat(applyAsChar(value1, value2, value3));
+    }
+
+    /**
+     * Returns a composed {@link TriCharToIntFunction} that first applies this function to its input, and then applies
+     * the {@code after} function to the result. If evaluation of either function throws an exception, it is relayed to
+     * the caller of the composed function. This method is just convenience, to provide the ability to transform this
+     * operation to an operation returning {@code int}.
+     *
+     * @param after The function to apply after this function is applied
+     * @return A composed {@code TriCharToIntFunction} that first applies this function to its input, and then applies
+     * the {@code after} function to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @see #andThen(CharFunction)
+     */
+    @Nonnull
+    default TriCharToIntFunction andThenToInt(@Nonnull final CharToIntFunction after) {
+        Objects.requireNonNull(after);
+        return (value1, value2, value3) -> after.applyAsInt(applyAsChar(value1, value2, value3));
+    }
+
+    /**
+     * Returns a composed {@link TriCharToLongFunction} that first applies this function to its input, and then applies
+     * the {@code after} function to the result. If evaluation of either function throws an exception, it is relayed to
+     * the caller of the composed function. This method is just convenience, to provide the ability to transform this
+     * operation to an operation returning {@code long}.
+     *
+     * @param after The function to apply after this function is applied
+     * @return A composed {@code TriCharToLongFunction} that first applies this function to its input, and then applies
+     * the {@code after} function to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @see #andThen(CharFunction)
+     */
+    @Nonnull
+    default TriCharToLongFunction andThenToLong(@Nonnull final CharToLongFunction after) {
+        Objects.requireNonNull(after);
+        return (value1, value2, value3) -> after.applyAsLong(applyAsChar(value1, value2, value3));
+    }
+
+    /**
+     * Returns a composed {@link TriCharToShortFunction} that first applies this function to its input, and then applies
+     * the {@code after} function to the result. If evaluation of either function throws an exception, it is relayed to
+     * the caller of the composed function. This method is just convenience, to provide the ability to transform this
+     * operation to an operation returning {@code short}.
+     *
+     * @param after The function to apply after this function is applied
+     * @return A composed {@code TriCharToShortFunction} that first applies this function to its input, and then applies
+     * the {@code after} function to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @see #andThen(CharFunction)
+     */
+    @Nonnull
+    default TriCharToShortFunction andThenToShort(@Nonnull final CharToShortFunction after) {
+        Objects.requireNonNull(after);
+        return (value1, value2, value3) -> after.applyAsShort(applyAsChar(value1, value2, value3));
     }
 
     /**

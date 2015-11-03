@@ -16,6 +16,18 @@
 package at.gridtec.lambda4j.operators.ternary;
 
 import at.gridtec.lambda4j.consumer.primitives.tri.DoubleTriConsumer;
+import at.gridtec.lambda4j.function.primitives.conversion.DoubleToBooleanFunction;
+import at.gridtec.lambda4j.function.primitives.conversion.DoubleToByteFunction;
+import at.gridtec.lambda4j.function.primitives.conversion.DoubleToCharFunction;
+import at.gridtec.lambda4j.function.primitives.conversion.DoubleToFloatFunction;
+import at.gridtec.lambda4j.function.primitives.conversion.DoubleToShortFunction;
+import at.gridtec.lambda4j.function.primitives.conversion.tri.TriDoubleToBooleanFunction;
+import at.gridtec.lambda4j.function.primitives.conversion.tri.TriDoubleToByteFunction;
+import at.gridtec.lambda4j.function.primitives.conversion.tri.TriDoubleToCharFunction;
+import at.gridtec.lambda4j.function.primitives.conversion.tri.TriDoubleToFloatFunction;
+import at.gridtec.lambda4j.function.primitives.conversion.tri.TriDoubleToIntFunction;
+import at.gridtec.lambda4j.function.primitives.conversion.tri.TriDoubleToLongFunction;
+import at.gridtec.lambda4j.function.primitives.conversion.tri.TriDoubleToShortFunction;
 import at.gridtec.lambda4j.function.primitives.to.tri.ToDoubleTriFunction;
 import at.gridtec.lambda4j.function.primitives.tri.DoubleTriFunction;
 
@@ -24,6 +36,8 @@ import javax.annotation.Nonnull;
 import java.util.Objects;
 import java.util.function.DoubleConsumer;
 import java.util.function.DoubleFunction;
+import java.util.function.DoubleToIntFunction;
+import java.util.function.DoubleToLongFunction;
 import java.util.function.DoubleUnaryOperator;
 import java.util.function.ToDoubleFunction;
 import java.util.function.UnaryOperator;
@@ -200,6 +214,150 @@ public interface DoubleTernaryOperator {
     default <R> DoubleTriFunction<R> andThen(@Nonnull final DoubleFunction<? extends R> after) {
         Objects.requireNonNull(after);
         return (value1, value2, value3) -> after.apply(applyAsDouble(value1, value2, value3));
+    }
+
+    /**
+     * Returns a composed {@link TriDoubleToBooleanFunction} that first applies this function to its input, and then
+     * applies the {@code after} function to the result. If evaluation of either function throws an exception, it is
+     * relayed to the caller of the composed function. This method is just convenience, to provide the ability to
+     * transform this operation to an operation returning {@code boolean}.
+     *
+     * @param after The function to apply after this function is applied
+     * @return A composed {@code TriDoubleToBooleanFunction} that first applies this function to its input, and then
+     * applies the {@code after} function to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @see #andThen(DoubleFunction)
+     */
+    @Nonnull
+    default TriDoubleToBooleanFunction andThenToBoolean(@Nonnull final DoubleToBooleanFunction after) {
+        Objects.requireNonNull(after);
+        return (value1, value2, value3) -> after.applyAsBoolean(applyAsDouble(value1, value2, value3));
+    }
+
+    /**
+     * Returns a composed {@link TriDoubleToByteFunction} that first applies this function to its input, and then
+     * applies the {@code after} function to the result. If evaluation of either function throws an exception, it is
+     * relayed to the caller of the composed function. This method is just convenience, to provide the ability to
+     * transform this operation to an operation returning {@code byte}.
+     *
+     * @param after The function to apply after this function is applied
+     * @return A composed {@code TriDoubleToByteFunction} that first applies this function to its input, and then
+     * applies the {@code after} function to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @see #andThen(DoubleFunction)
+     */
+    @Nonnull
+    default TriDoubleToByteFunction andThenToByte(@Nonnull final DoubleToByteFunction after) {
+        Objects.requireNonNull(after);
+        return (value1, value2, value3) -> after.applyAsByte(applyAsDouble(value1, value2, value3));
+    }
+
+    /**
+     * Returns a composed {@link TriDoubleToCharFunction} that first applies this function to its input, and then
+     * applies the {@code after} function to the result. If evaluation of either function throws an exception, it is
+     * relayed to the caller of the composed function. This method is just convenience, to provide the ability to
+     * transform this operation to an operation returning {@code char}.
+     *
+     * @param after The function to apply after this function is applied
+     * @return A composed {@code TriDoubleToCharFunction} that first applies this function to its input, and then
+     * applies the {@code after} function to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @see #andThen(DoubleFunction)
+     */
+    @Nonnull
+    default TriDoubleToCharFunction andThenToChar(@Nonnull final DoubleToCharFunction after) {
+        Objects.requireNonNull(after);
+        return (value1, value2, value3) -> after.applyAsChar(applyAsDouble(value1, value2, value3));
+    }
+
+    /**
+     * Returns a composed {@link DoubleTernaryOperator} that first applies this function to its input, and then applies
+     * the {@code after} function to the result. If evaluation of either function throws an exception, it is relayed to
+     * the caller of the composed function. This method is just convenience, to provide the ability to transform this
+     * operation to an operation returning {@code double}.
+     *
+     * @param after The function to apply after this function is applied
+     * @return A composed {@code DoubleTernaryOperator} that first applies this function to its input, and then applies
+     * the {@code after} function to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @see #andThen(DoubleFunction)
+     */
+    @Nonnull
+    default DoubleTernaryOperator andThenToDouble(@Nonnull final DoubleUnaryOperator after) {
+        Objects.requireNonNull(after);
+        return (value1, value2, value3) -> after.applyAsDouble(applyAsDouble(value1, value2, value3));
+    }
+
+    /**
+     * Returns a composed {@link TriDoubleToFloatFunction} that first applies this function to its input, and then
+     * applies the {@code after} function to the result. If evaluation of either function throws an exception, it is
+     * relayed to the caller of the composed function. This method is just convenience, to provide the ability to
+     * transform this operation to an operation returning {@code float}.
+     *
+     * @param after The function to apply after this function is applied
+     * @return A composed {@code TriDoubleToFloatFunction} that first applies this function to its input, and then
+     * applies the {@code after} function to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @see #andThen(DoubleFunction)
+     */
+    @Nonnull
+    default TriDoubleToFloatFunction andThenToFloat(@Nonnull final DoubleToFloatFunction after) {
+        Objects.requireNonNull(after);
+        return (value1, value2, value3) -> after.applyAsFloat(applyAsDouble(value1, value2, value3));
+    }
+
+    /**
+     * Returns a composed {@link TriDoubleToIntFunction} that first applies this function to its input, and then applies
+     * the {@code after} function to the result. If evaluation of either function throws an exception, it is relayed to
+     * the caller of the composed function. This method is just convenience, to provide the ability to transform this
+     * operation to an operation returning {@code int}.
+     *
+     * @param after The function to apply after this function is applied
+     * @return A composed {@code TriDoubleToIntFunction} that first applies this function to its input, and then applies
+     * the {@code after} function to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @see #andThen(DoubleFunction)
+     */
+    @Nonnull
+    default TriDoubleToIntFunction andThenToInt(@Nonnull final DoubleToIntFunction after) {
+        Objects.requireNonNull(after);
+        return (value1, value2, value3) -> after.applyAsInt(applyAsDouble(value1, value2, value3));
+    }
+
+    /**
+     * Returns a composed {@link TriDoubleToLongFunction} that first applies this function to its input, and then
+     * applies the {@code after} function to the result. If evaluation of either function throws an exception, it is
+     * relayed to the caller of the composed function. This method is just convenience, to provide the ability to
+     * transform this operation to an operation returning {@code long}.
+     *
+     * @param after The function to apply after this function is applied
+     * @return A composed {@code TriDoubleToLongFunction} that first applies this function to its input, and then
+     * applies the {@code after} function to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @see #andThen(DoubleFunction)
+     */
+    @Nonnull
+    default TriDoubleToLongFunction andThenToLong(@Nonnull final DoubleToLongFunction after) {
+        Objects.requireNonNull(after);
+        return (value1, value2, value3) -> after.applyAsLong(applyAsDouble(value1, value2, value3));
+    }
+
+    /**
+     * Returns a composed {@link TriDoubleToShortFunction} that first applies this function to its input, and then
+     * applies the {@code after} function to the result. If evaluation of either function throws an exception, it is
+     * relayed to the caller of the composed function. This method is just convenience, to provide the ability to
+     * transform this operation to an operation returning {@code short}.
+     *
+     * @param after The function to apply after this function is applied
+     * @return A composed {@code TriDoubleToShortFunction} that first applies this function to its input, and then
+     * applies the {@code after} function to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @see #andThen(DoubleFunction)
+     */
+    @Nonnull
+    default TriDoubleToShortFunction andThenToShort(@Nonnull final DoubleToShortFunction after) {
+        Objects.requireNonNull(after);
+        return (value1, value2, value3) -> after.applyAsShort(applyAsDouble(value1, value2, value3));
     }
 
     /**
