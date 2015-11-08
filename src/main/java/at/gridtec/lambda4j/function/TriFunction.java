@@ -23,6 +23,7 @@ import org.apache.commons.lang3.tuple.Triple;
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
@@ -233,5 +234,17 @@ public interface TriFunction<T, U, V, R> {
     @Nonnull
     default Function<Triple<T, U, V>, R> tupled() {
         return t -> apply(t.getLeft(), t.getMiddle(), t.getRight());
+    }
+
+    /**
+     * Converts this function to an equal function, which ensures that its result is not {@code null} using {@link
+     * Optional}. This method mainly exists to avoid unnecessary {@code NullPointerException}s through referencing
+     * {@code null} from this function.
+     *
+     * @return An equal function, which ensures that its result is not {@code null}.
+     */
+    @Nonnull
+    default TriFunction<T, U, V, Optional<R>> nonNull() {
+        return (t, u, v) -> Optional.ofNullable(apply(t, u, v));
     }
 }

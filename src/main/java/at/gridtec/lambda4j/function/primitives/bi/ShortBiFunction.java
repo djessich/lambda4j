@@ -34,6 +34,7 @@ import at.gridtec.lambda4j.operators.unary.ShortUnaryOperator;
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.function.BiFunction;
 import java.util.function.Consumer;
 import java.util.function.Function;
@@ -367,6 +368,18 @@ public interface ShortBiFunction<R> {
     @Nonnull
     default ShortFunction<ShortFunction<R>> curried() {
         return value1 -> value2 -> apply(value1, value2);
+    }
+
+    /**
+     * Converts this function to an equal function, which ensures that its result is not {@code null} using {@link
+     * Optional}. This method mainly exists to avoid unnecessary {@code NullPointerException}s through referencing
+     * {@code null} from this function.
+     *
+     * @return An equal function, which ensures that its result is not {@code null}.
+     */
+    @Nonnull
+    default ShortBiFunction<Optional<R>> nonNull() {
+        return (value1, value2) -> Optional.ofNullable(apply(value1, value2));
     }
 
     /**

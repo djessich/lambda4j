@@ -33,6 +33,7 @@ import at.gridtec.lambda4j.operators.ternary.DoubleTernaryOperator;
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.function.Consumer;
 import java.util.function.DoubleFunction;
 import java.util.function.DoubleUnaryOperator;
@@ -392,6 +393,17 @@ public interface DoubleTriFunction<R> {
         return value1 -> value2 -> value3 -> apply(value1, value2, value3);
     }
 
+    /**
+     * Converts this function to an equal function, which ensures that its result is not {@code null} using {@link
+     * Optional}. This method mainly exists to avoid unnecessary {@code NullPointerException}s through referencing
+     * {@code null} from this function.
+     *
+     * @return An equal function, which ensures that its result is not {@code null}.
+     */
+    @Nonnull
+    default DoubleTriFunction<Optional<R>> nonNull() {
+        return (value1, value2, value3) -> Optional.ofNullable(apply(value1, value2, value3));
+    }
     /**
      * Returns a composed {@link TriFunction} which represents this {@link DoubleTriFunction}. Thereby the primitive
      * input argument for this function is autoboxed.

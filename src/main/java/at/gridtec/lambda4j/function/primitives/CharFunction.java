@@ -32,6 +32,7 @@ import at.gridtec.lambda4j.operators.unary.CharUnaryOperator;
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Predicate;
@@ -313,6 +314,18 @@ public interface CharFunction<R> {
     default CharConsumer consume(@Nonnull final Consumer<? super R> consumer) {
         Objects.requireNonNull(consumer);
         return value -> consumer.accept(apply(value));
+    }
+
+    /**
+     * Converts this function to an equal function, which ensures that its result is not {@code null} using {@link
+     * Optional}. This method mainly exists to avoid unnecessary {@code NullPointerException}s through referencing
+     * {@code null} from this function.
+     *
+     * @return An equal function, which ensures that its result is not {@code null}.
+     */
+    @Nonnull
+    default CharFunction<Optional<R>> nonNull() {
+        return value -> Optional.ofNullable(apply(value));
     }
 
     /**

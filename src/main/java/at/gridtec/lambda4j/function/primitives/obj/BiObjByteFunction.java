@@ -24,6 +24,7 @@ import at.gridtec.lambda4j.operators.unary.ByteUnaryOperator;
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.UnaryOperator;
@@ -238,6 +239,17 @@ public interface BiObjByteFunction<T, U, R> {
         return (t, u, value) -> consumer.accept(apply(t, u, value));
     }
 
+    /**
+     * Converts this function to an equal function, which ensures that its result is not {@code null} using {@link
+     * Optional}. This method mainly exists to avoid unnecessary {@code NullPointerException}s through referencing
+     * {@code null} from this function.
+     *
+     * @return An equal function, which ensures that its result is not {@code null}.
+     */
+    @Nonnull
+    default BiObjByteFunction<T, U, Optional<R>> nonNull() {
+        return (t, u, value) -> Optional.ofNullable(apply(t, u, value));
+    }
     /**
      * Returns a composed {@link TriFunction} which represents this {@link ObjByteFunction}. Thereby the primitive input
      * argument for this function is autoboxed.
