@@ -17,6 +17,8 @@ package at.gridtec.lambda4j.consumer.primitives.obj;
 
 import at.gridtec.lambda4j.consumer.TriConsumer;
 
+import org.apache.commons.lang3.tuple.Pair;
+
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import java.util.Objects;
@@ -24,6 +26,7 @@ import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.LongConsumer;
 import java.util.function.LongUnaryOperator;
+import java.util.function.ObjLongConsumer;
 import java.util.function.ToLongFunction;
 import java.util.function.UnaryOperator;
 
@@ -119,6 +122,19 @@ public interface BiObjLongConsumer<T, U> {
     void accept(T t, U u, long value);
 
     /**
+     * Performs this operation on the given tuple.
+     *
+     * @param tuple The tuple to be applied to the operation to be consumed
+     * @param value The primitive value to be applied to the operation to be consumed
+     * @throws NullPointerException If given argument is {@code null}
+     * @see org.apache.commons.lang3.tuple.Triple
+     */
+    default void accept(@Nonnull Pair<T, U> tuple, long value) {
+        Objects.requireNonNull(tuple);
+        accept(tuple.getLeft(), tuple.getRight(), value);
+    }
+
+    /**
      * Returns the number of this operations arguments.
      *
      * @return The number of this operations arguments.
@@ -201,6 +217,16 @@ public interface BiObjLongConsumer<T, U> {
             accept(t, u, value);
             after.accept(t, u, value);
         };
+    }
+
+    /**
+     * Returns a tupled version of this operation.
+     *
+     * @return A tupled version of this operation.
+     */
+    @Nonnull
+    default ObjLongConsumer<Pair<T, U>> tupled() {
+        return this::accept;
     }
 
     /**

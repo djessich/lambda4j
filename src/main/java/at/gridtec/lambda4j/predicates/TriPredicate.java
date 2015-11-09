@@ -210,6 +210,19 @@ public interface TriPredicate<T, U, V> {
     boolean test(T t, U u, V v);
 
     /**
+     * Evaluates this predicate on the given tuple.
+     *
+     * @param tuple The tuple to be applied to the predicate
+     * @return {@code true} if the input arguments match the predicate, otherwise {@code false}.
+     * @throws NullPointerException If given argument is {@code null}
+     * @see org.apache.commons.lang3.tuple.Triple
+     */
+    default boolean test(@Nonnull Triple<T, U, V> tuple) {
+        Objects.requireNonNull(tuple);
+        return test(tuple.getLeft(), tuple.getMiddle(), tuple.getRight());
+    }
+
+    /**
      * Returns the number of this operations arguments.
      *
      * @return The number of this operations arguments.
@@ -297,6 +310,6 @@ public interface TriPredicate<T, U, V> {
      */
     @Nonnull
     default Predicate<Triple<T, U, V>> tupled() {
-        return t -> test(t.getLeft(), t.getMiddle(), t.getRight());
+        return this::test;
     }
 }

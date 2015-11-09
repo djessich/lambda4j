@@ -149,6 +149,18 @@ public interface ToDoubleTriFunction<T, U, V> {
      * @return The return value from the function, which is its result.
      */
     double applyAsDouble(T t, U u, V v);
+    /**
+     * Applies this function to the given tuple.
+     *
+     * @param tuple The tuple to be applied to the function
+     * @return The return value from the function, which is its result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @see org.apache.commons.lang3.tuple.Triple
+     */
+    default double applyAsDouble(@Nonnull Triple<T, U, V> tuple) {
+        Objects.requireNonNull(tuple);
+        return applyAsDouble(tuple.getLeft(), tuple.getMiddle(), tuple.getRight());
+    }
 
     /**
      * Returns the number of this operations arguments.
@@ -399,7 +411,7 @@ public interface ToDoubleTriFunction<T, U, V> {
      */
     @Nonnull
     default ToDoubleFunction<Triple<T, U, V>> tupled() {
-        return t -> applyAsDouble(t.getLeft(), t.getMiddle(), t.getRight());
+        return this::applyAsDouble;
     }
 
     /**

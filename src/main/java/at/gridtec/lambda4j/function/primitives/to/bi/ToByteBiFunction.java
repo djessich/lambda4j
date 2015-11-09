@@ -128,6 +128,19 @@ public interface ToByteBiFunction<T, U> {
     byte applyAsByte(T t, U u);
 
     /**
+     * Applies this function to the given tuple.
+     *
+     * @param tuple The tuple to be applied to the function
+     * @return The return value from the function, which is its result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @see org.apache.commons.lang3.tuple.Pair
+     */
+    default byte applyAsByte(@Nonnull Pair<T, U> tuple) {
+        Objects.requireNonNull(tuple);
+        return applyAsByte(tuple.getLeft(), tuple.getRight());
+    }
+
+    /**
      * Returns the number of this operations arguments.
      *
      * @return The number of this operations arguments.
@@ -369,7 +382,7 @@ public interface ToByteBiFunction<T, U> {
      */
     @Nonnull
     default ToByteFunction<Pair<T, U>> tupled() {
-        return t -> applyAsByte(t.getLeft(), t.getRight());
+        return this::applyAsByte;
     }
 
     /**

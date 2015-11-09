@@ -23,6 +23,8 @@ import at.gridtec.lambda4j.function.primitives.to.ToCharFunction;
 import at.gridtec.lambda4j.function.primitives.to.tri.ToCharTriFunction;
 import at.gridtec.lambda4j.operators.unary.CharUnaryOperator;
 
+import org.apache.commons.lang3.tuple.Pair;
+
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import java.util.Objects;
@@ -137,6 +139,20 @@ public interface ToCharBiObjCharFunction<T, U> {
     char applyAsChar(T t, U u, char value);
 
     /**
+     * Applies this function to the given tuple.
+     *
+     * @param tuple The tuple to be applied to the function
+     * @param value The primitive value to be applied to the function
+     * @return The return value from the function, which is its result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @see org.apache.commons.lang3.tuple.Pair
+     */
+    default char applyAsChar(@Nonnull Pair<T, U> tuple, char value) {
+        Objects.requireNonNull(tuple);
+        return applyAsChar(tuple.getLeft(), tuple.getRight(), value);
+    }
+
+    /**
      * Returns the number of this operations arguments.
      *
      * @return The number of this operations arguments.
@@ -234,6 +250,15 @@ public interface ToCharBiObjCharFunction<T, U> {
         return (t, u, value) -> consumer.accept(applyAsChar(t, u, value));
     }
 
+    /**
+     * Returns a tupled version of this function.
+     *
+     * @return A tupled version of this function.
+     */
+    @Nonnull
+    default ToCharObjCharFunction<Pair<T, U>> tupled() {
+        return this::applyAsChar;
+    }
     /**
      * Returns a composed {@link TriFunction} which represents this {@link ObjCharFunction}. Thereby the primitive input
      * argument for this function is autoboxed.

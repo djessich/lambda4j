@@ -19,6 +19,8 @@ import at.gridtec.lambda4j.consumer.primitives.obj.BiObjLongConsumer;
 import at.gridtec.lambda4j.function.TriFunction;
 import at.gridtec.lambda4j.function.primitives.to.tri.ToLongTriFunction;
 
+import org.apache.commons.lang3.tuple.Pair;
+
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import java.util.Objects;
@@ -137,6 +139,20 @@ public interface ToLongBiObjLongFunction<T, U> {
     long applyAsLong(T t, U u, long value);
 
     /**
+     * Applies this function to the given tuple.
+     *
+     * @param tuple The tuple to be applied to the function
+     * @param value The primitive value to be applied to the function
+     * @return The return value from the function, which is its result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @see org.apache.commons.lang3.tuple.Pair
+     */
+    default long applyAsLong(@Nonnull Pair<T, U> tuple, long value) {
+        Objects.requireNonNull(tuple);
+        return applyAsLong(tuple.getLeft(), tuple.getRight(), value);
+    }
+
+    /**
      * Returns the number of this operations arguments.
      *
      * @return The number of this operations arguments.
@@ -232,6 +248,16 @@ public interface ToLongBiObjLongFunction<T, U> {
     default BiObjLongConsumer<T, U> consume(@Nonnull final LongConsumer consumer) {
         Objects.requireNonNull(consumer);
         return (t, u, value) -> consumer.accept(applyAsLong(t, u, value));
+    }
+
+    /**
+     * Returns a tupled version of this function.
+     *
+     * @return A tupled version of this function.
+     */
+    @Nonnull
+    default ToLongObjLongFunction<Pair<T, U>> tupled() {
+        return this::applyAsLong;
     }
 
     /**

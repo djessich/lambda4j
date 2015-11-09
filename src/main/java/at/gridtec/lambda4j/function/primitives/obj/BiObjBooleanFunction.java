@@ -20,6 +20,8 @@ import at.gridtec.lambda4j.function.TriFunction;
 import at.gridtec.lambda4j.function.primitives.BooleanFunction;
 import at.gridtec.lambda4j.operators.unary.BooleanUnaryOperator;
 
+import org.apache.commons.lang3.tuple.Pair;
+
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import java.util.Objects;
@@ -143,6 +145,20 @@ public interface BiObjBooleanFunction<T, U, R> {
     R apply(T t, U u, boolean value);
 
     /**
+     * Applies this function to the given tuple.
+     *
+     * @param tuple The tuple to be applied to the function
+     * @param value The primitive value to be applied to the function
+     * @return The return value from the function, which is its result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @see org.apache.commons.lang3.tuple.Pair
+     */
+    default R apply(@Nonnull Pair<T, U> tuple, boolean value) {
+        Objects.requireNonNull(tuple);
+        return apply(tuple.getLeft(), tuple.getRight(), value);
+    }
+
+    /**
      * Returns the number of this operations arguments.
      *
      * @return The number of this operations arguments.
@@ -238,6 +254,16 @@ public interface BiObjBooleanFunction<T, U, R> {
     default BiObjBooleanConsumer<T, U> consume(@Nonnull final Consumer<? super R> consumer) {
         Objects.requireNonNull(consumer);
         return (t, u, value) -> consumer.accept(apply(t, u, value));
+    }
+
+    /**
+     * Returns a tupled version of this function.
+     *
+     * @return A tupled version of this function.
+     */
+    @Nonnull
+    default ObjBooleanFunction<Pair<T, U>, R> tupled() {
+        return this::apply;
     }
 
     /**

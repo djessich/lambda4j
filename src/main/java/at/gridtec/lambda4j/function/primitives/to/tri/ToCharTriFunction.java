@@ -151,6 +151,19 @@ public interface ToCharTriFunction<T, U, V> {
     char applyAsChar(T t, U u, V v);
 
     /**
+     * Applies this function to the given tuple.
+     *
+     * @param tuple The tuple to be applied to the function
+     * @return The return value from the function, which is its result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @see org.apache.commons.lang3.tuple.Triple
+     */
+    default char applyAsChar(@Nonnull Triple<T, U, V> tuple) {
+        Objects.requireNonNull(tuple);
+        return applyAsChar(tuple.getLeft(), tuple.getMiddle(), tuple.getRight());
+    }
+
+    /**
      * Returns the number of this operations arguments.
      *
      * @return The number of this operations arguments.
@@ -399,7 +412,7 @@ public interface ToCharTriFunction<T, U, V> {
      */
     @Nonnull
     default ToCharFunction<Triple<T, U, V>> tupled() {
-        return t -> applyAsChar(t.getLeft(), t.getMiddle(), t.getRight());
+        return this::applyAsChar;
     }
 
     /**

@@ -23,6 +23,8 @@ import at.gridtec.lambda4j.function.primitives.to.ToByteFunction;
 import at.gridtec.lambda4j.function.primitives.to.tri.ToByteTriFunction;
 import at.gridtec.lambda4j.operators.unary.ByteUnaryOperator;
 
+import org.apache.commons.lang3.tuple.Pair;
+
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import java.util.Objects;
@@ -137,6 +139,20 @@ public interface ToByteBiObjByteFunction<T, U> {
     byte applyAsByte(T t, U u, byte value);
 
     /**
+     * Applies this function to the given tuple.
+     *
+     * @param tuple The tuple to be applied to the function
+     * @param value The primitive value to be applied to the function
+     * @return The return value from the function, which is its result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @see org.apache.commons.lang3.tuple.Pair
+     */
+    default byte applyAsByte(@Nonnull Pair<T, U> tuple, byte value) {
+        Objects.requireNonNull(tuple);
+        return applyAsByte(tuple.getLeft(), tuple.getRight(), value);
+    }
+
+    /**
      * Returns the number of this operations arguments.
      *
      * @return The number of this operations arguments.
@@ -232,6 +248,16 @@ public interface ToByteBiObjByteFunction<T, U> {
     default BiObjByteConsumer<T, U> consume(@Nonnull final ByteConsumer consumer) {
         Objects.requireNonNull(consumer);
         return (t, u, value) -> consumer.accept(applyAsByte(t, u, value));
+    }
+
+    /**
+     * Returns a tupled version of this function.
+     *
+     * @return A tupled version of this function.
+     */
+    @Nonnull
+    default ToByteObjByteFunction<Pair<T, U>> tupled() {
+        return this::applyAsByte;
     }
 
     /**

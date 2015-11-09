@@ -151,6 +151,19 @@ public interface ToByteTriFunction<T, U, V> {
     byte applyAsByte(T t, U u, V v);
 
     /**
+     * Applies this function to the given tuple.
+     *
+     * @param tuple The tuple to be applied to the function
+     * @return The return value from the function, which is its result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @see org.apache.commons.lang3.tuple.Triple
+     */
+    default byte applyAsByte(@Nonnull Triple<T, U, V> tuple) {
+        Objects.requireNonNull(tuple);
+        return applyAsByte(tuple.getLeft(), tuple.getMiddle(), tuple.getRight());
+    }
+
+    /**
      * Returns the number of this operations arguments.
      *
      * @return The number of this operations arguments.
@@ -399,7 +412,7 @@ public interface ToByteTriFunction<T, U, V> {
      */
     @Nonnull
     default ToByteFunction<Triple<T, U, V>> tupled() {
-        return t -> applyAsByte(t.getLeft(), t.getMiddle(), t.getRight());
+        return this::applyAsByte;
     }
 
     /**

@@ -21,6 +21,8 @@ import at.gridtec.lambda4j.function.primitives.ShortFunction;
 import at.gridtec.lambda4j.function.primitives.to.ToShortFunction;
 import at.gridtec.lambda4j.operators.unary.ShortUnaryOperator;
 
+import org.apache.commons.lang3.tuple.Pair;
+
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import java.util.Objects;
@@ -142,6 +144,20 @@ public interface BiObjShortFunction<T, U, R> {
     R apply(T t, U u, short value);
 
     /**
+     * Applies this function to the given tuple.
+     *
+     * @param tuple The tuple to be applied to the function
+     * @param value The primitive value to be applied to the function
+     * @return The return value from the function, which is its result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @see org.apache.commons.lang3.tuple.Pair
+     */
+    default R apply(@Nonnull Pair<T, U> tuple, short value) {
+        Objects.requireNonNull(tuple);
+        return apply(tuple.getLeft(), tuple.getRight(), value);
+    }
+
+    /**
      * Returns the number of this operations arguments.
      *
      * @return The number of this operations arguments.
@@ -238,6 +254,16 @@ public interface BiObjShortFunction<T, U, R> {
     default BiObjShortConsumer<T, U> consume(@Nonnull final Consumer<? super R> consumer) {
         Objects.requireNonNull(consumer);
         return (t, u, value) -> consumer.accept(apply(t, u, value));
+    }
+
+    /**
+     * Returns a tupled version of this function.
+     *
+     * @return A tupled version of this function.
+     */
+    @Nonnull
+    default ObjShortFunction<Pair<T, U>, R> tupled() {
+        return this::apply;
     }
 
     /**

@@ -128,6 +128,19 @@ public interface ToShortBiFunction<T, U> {
     short applyAsShort(T t, U u);
 
     /**
+     * Applies this function to the given tuple.
+     *
+     * @param tuple The tuple to be applied to the function
+     * @return The return value from the function, which is its result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @see org.apache.commons.lang3.tuple.Pair
+     */
+    default short applyAsShort(@Nonnull Pair<T, U> tuple) {
+        Objects.requireNonNull(tuple);
+        return applyAsShort(tuple.getLeft(), tuple.getRight());
+    }
+
+    /**
      * Returns the number of this operations arguments.
      *
      * @return The number of this operations arguments.
@@ -369,7 +382,7 @@ public interface ToShortBiFunction<T, U> {
      */
     @Nonnull
     default ToShortFunction<Pair<T, U>> tupled() {
-        return t -> applyAsShort(t.getLeft(), t.getRight());
+        return this::applyAsShort;
     }
 
     /**

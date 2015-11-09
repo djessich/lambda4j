@@ -21,6 +21,8 @@ import at.gridtec.lambda4j.function.primitives.ByteFunction;
 import at.gridtec.lambda4j.function.primitives.to.ToByteFunction;
 import at.gridtec.lambda4j.operators.unary.ByteUnaryOperator;
 
+import org.apache.commons.lang3.tuple.Pair;
+
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import java.util.Objects;
@@ -142,6 +144,20 @@ public interface BiObjByteFunction<T, U, R> {
     R apply(T t, U u, byte value);
 
     /**
+     * Applies this function to the given tuple.
+     *
+     * @param tuple The tuple to be applied to the function
+     * @param value The primitive value to be applied to the function
+     * @return The return value from the function, which is its result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @see org.apache.commons.lang3.tuple.Pair
+     */
+    default R apply(@Nonnull Pair<T, U> tuple, byte value) {
+        Objects.requireNonNull(tuple);
+        return apply(tuple.getLeft(), tuple.getRight(), value);
+    }
+
+    /**
      * Returns the number of this operations arguments.
      *
      * @return The number of this operations arguments.
@@ -240,6 +256,16 @@ public interface BiObjByteFunction<T, U, R> {
     }
 
     /**
+     * Returns a tupled version of this function.
+     *
+     * @return A tupled version of this function.
+     */
+    @Nonnull
+    default ObjByteFunction<Pair<T, U>, R> tupled() {
+        return this::apply;
+    }
+
+    /**
      * Converts this function to an equal function, which ensures that its result is not {@code null} using {@link
      * Optional}. This method mainly exists to avoid unnecessary {@code NullPointerException}s through referencing
      * {@code null} from this function.
@@ -250,6 +276,7 @@ public interface BiObjByteFunction<T, U, R> {
     default BiObjByteFunction<T, U, Optional<R>> nonNull() {
         return (t, u, value) -> Optional.ofNullable(apply(t, u, value));
     }
+
     /**
      * Returns a composed {@link TriFunction} which represents this {@link ObjByteFunction}. Thereby the primitive input
      * argument for this function is autoboxed.

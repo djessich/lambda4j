@@ -19,6 +19,8 @@ import at.gridtec.lambda4j.consumer.primitives.obj.BiObjIntConsumer;
 import at.gridtec.lambda4j.function.TriFunction;
 import at.gridtec.lambda4j.function.primitives.to.tri.ToIntTriFunction;
 
+import org.apache.commons.lang3.tuple.Pair;
+
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import java.util.Objects;
@@ -137,6 +139,20 @@ public interface ToIntBiObjIntFunction<T, U> {
     int applyAsInt(T t, U u, int value);
 
     /**
+     * Applies this function to the given tuple.
+     *
+     * @param tuple The tuple to be applied to the function
+     * @param value The primitive value to be applied to the function
+     * @return The return value from the function, which is its result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @see org.apache.commons.lang3.tuple.Pair
+     */
+    default int applyAsInt(@Nonnull Pair<T, U> tuple, int value) {
+        Objects.requireNonNull(tuple);
+        return applyAsInt(tuple.getLeft(), tuple.getRight(), value);
+    }
+
+    /**
      * Returns the number of this operations arguments.
      *
      * @return The number of this operations arguments.
@@ -232,6 +248,16 @@ public interface ToIntBiObjIntFunction<T, U> {
     default BiObjIntConsumer<T, U> consume(@Nonnull final IntConsumer consumer) {
         Objects.requireNonNull(consumer);
         return (t, u, value) -> consumer.accept(applyAsInt(t, u, value));
+    }
+
+    /**
+     * Returns a tupled version of this function.
+     *
+     * @return A tupled version of this function.
+     */
+    @Nonnull
+    default ToIntObjIntFunction<Pair<T, U>> tupled() {
+        return this::applyAsInt;
     }
 
     /**

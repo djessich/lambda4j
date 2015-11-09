@@ -121,6 +121,18 @@ public interface TriConsumer<T, U, V> {
     void accept(T t, U u, V v);
 
     /**
+     * Performs this operation on the given tuple.
+     *
+     * @param tuple The tuple to be applied to the operation to be consumed
+     * @throws NullPointerException If given argument is {@code null}
+     * @see org.apache.commons.lang3.tuple.Triple
+     */
+    default void accept(@Nonnull Triple<T, U, V> tuple) {
+        Objects.requireNonNull(tuple);
+        accept(tuple.getLeft(), tuple.getMiddle(), tuple.getRight());
+    }
+
+    /**
      * Returns the number of this operations arguments.
      *
      * @return The number of this operations arguments.
@@ -184,6 +196,6 @@ public interface TriConsumer<T, U, V> {
      */
     @Nonnull
     default Consumer<Triple<T, U, V>> tupled() {
-        return t -> accept(t.getLeft(), t.getMiddle(), t.getRight());
+        return this::accept;
     }
 }

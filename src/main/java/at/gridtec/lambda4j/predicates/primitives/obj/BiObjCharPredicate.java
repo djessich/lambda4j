@@ -18,6 +18,8 @@ package at.gridtec.lambda4j.predicates.primitives.obj;
 import at.gridtec.lambda4j.predicates.TriPredicate;
 import at.gridtec.lambda4j.predicates.primitives.CharPredicate;
 
+import org.apache.commons.lang3.tuple.Pair;
+
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -197,6 +199,20 @@ public interface BiObjCharPredicate<T, U> {
     boolean test(T t, U u, char value);
 
     /**
+     * Evaluates this predicate on the given tuple.
+     *
+     * @param tuple The tuple to be applied to the predicate
+     * @param value The primitive value to be applied to the predicate
+     * @return {@code true} if the input arguments match the predicate, otherwise {@code false}.
+     * @throws NullPointerException If given argument is {@code null}
+     * @see org.apache.commons.lang3.tuple.Pair
+     */
+    default boolean test(@Nonnull Pair<T, U> tuple, char value) {
+        Objects.requireNonNull(tuple);
+        return test(tuple.getLeft(), tuple.getRight(), value);
+    }
+
+    /**
      * Returns the number of this operations arguments.
      *
      * @return The number of this operations arguments.
@@ -278,6 +294,16 @@ public interface BiObjCharPredicate<T, U> {
     default BiObjCharPredicate<T, U> xor(@Nonnull final BiObjCharPredicate<? super T, ? super U> other) {
         Objects.requireNonNull(other);
         return (t, u, value) -> test(t, u, value) ^ other.test(t, u, value);
+    }
+
+    /**
+     * Returns a tupled version of this predicate.
+     *
+     * @return A tupled version of this predicate.
+     */
+    @Nonnull
+    default ObjCharPredicate<Pair<T, U>> tupled() {
+        return this::test;
     }
 
     /**

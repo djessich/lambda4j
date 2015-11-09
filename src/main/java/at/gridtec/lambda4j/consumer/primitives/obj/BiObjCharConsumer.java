@@ -20,6 +20,8 @@ import at.gridtec.lambda4j.consumer.primitives.CharConsumer;
 import at.gridtec.lambda4j.function.primitives.to.ToCharFunction;
 import at.gridtec.lambda4j.operators.unary.CharUnaryOperator;
 
+import org.apache.commons.lang3.tuple.Pair;
+
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import java.util.Objects;
@@ -119,6 +121,19 @@ public interface BiObjCharConsumer<T, U> {
     void accept(T t, U u, char value);
 
     /**
+     * Performs this operation on the given tuple.
+     *
+     * @param tuple The tuple to be applied to the operation to be consumed
+     * @param value The primitive value to be applied to the operation to be consumed
+     * @throws NullPointerException If given argument is {@code null}
+     * @see org.apache.commons.lang3.tuple.Triple
+     */
+    default void accept(@Nonnull Pair<T, U> tuple, char value) {
+        Objects.requireNonNull(tuple);
+        accept(tuple.getLeft(), tuple.getRight(), value);
+    }
+
+    /**
      * Returns the number of this operations arguments.
      *
      * @return The number of this operations arguments.
@@ -201,6 +216,16 @@ public interface BiObjCharConsumer<T, U> {
             accept(t, u, value);
             after.accept(t, u, value);
         };
+    }
+
+    /**
+     * Returns a tupled version of this operation.
+     *
+     * @return A tupled version of this operation.
+     */
+    @Nonnull
+    default ObjCharConsumer<Pair<T, U>> tupled() {
+        return this::accept;
     }
 
     /**

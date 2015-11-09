@@ -23,6 +23,8 @@ import at.gridtec.lambda4j.function.primitives.to.ToFloatFunction;
 import at.gridtec.lambda4j.function.primitives.to.tri.ToFloatTriFunction;
 import at.gridtec.lambda4j.operators.unary.FloatUnaryOperator;
 
+import org.apache.commons.lang3.tuple.Pair;
+
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import java.util.Objects;
@@ -137,6 +139,20 @@ public interface ToFloatBiObjFloatFunction<T, U> {
     float applyAsFloat(T t, U u, float value);
 
     /**
+     * Applies this function to the given tuple.
+     *
+     * @param tuple The tuple to be applied to the function
+     * @param value The primitive value to be applied to the function
+     * @return The return value from the function, which is its result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @see org.apache.commons.lang3.tuple.Pair
+     */
+    default float applyAsFloat(@Nonnull Pair<T, U> tuple, float value) {
+        Objects.requireNonNull(tuple);
+        return applyAsFloat(tuple.getLeft(), tuple.getRight(), value);
+    }
+
+    /**
      * Returns the number of this operations arguments.
      *
      * @return The number of this operations arguments.
@@ -233,6 +249,16 @@ public interface ToFloatBiObjFloatFunction<T, U> {
     default BiObjFloatConsumer<T, U> consume(@Nonnull final FloatConsumer consumer) {
         Objects.requireNonNull(consumer);
         return (t, u, value) -> consumer.accept(applyAsFloat(t, u, value));
+    }
+
+    /**
+     * Returns a tupled version of this function.
+     *
+     * @return A tupled version of this function.
+     */
+    @Nonnull
+    default ToFloatObjFloatFunction<Pair<T, U>> tupled() {
+        return this::applyAsFloat;
     }
 
     /**

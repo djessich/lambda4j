@@ -146,6 +146,19 @@ public interface TriFunction<T, U, V, R> {
     R apply(T t, U u, V v);
 
     /**
+     * Applies this function to the given tuple.
+     *
+     * @param tuple The tuple to be applied to the function
+     * @return The return value from the function, which is its result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @see org.apache.commons.lang3.tuple.Triple
+     */
+    default R apply(@Nonnull Triple<T, U, V> tuple) {
+        Objects.requireNonNull(tuple);
+        return apply(tuple.getLeft(), tuple.getMiddle(), tuple.getRight());
+    }
+
+    /**
      * Returns the number of arguments for this operation.
      *
      * @return The number of arguments for this operation.
@@ -233,7 +246,7 @@ public interface TriFunction<T, U, V, R> {
      */
     @Nonnull
     default Function<Triple<T, U, V>, R> tupled() {
-        return t -> apply(t.getLeft(), t.getMiddle(), t.getRight());
+        return this::apply;
     }
 
     /**
