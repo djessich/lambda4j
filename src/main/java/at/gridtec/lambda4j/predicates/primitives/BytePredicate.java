@@ -18,6 +18,7 @@ package at.gridtec.lambda4j.predicates.primitives;
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import java.util.Objects;
+import java.util.function.BooleanSupplier;
 import java.util.function.Predicate;
 
 /**
@@ -194,6 +195,17 @@ public interface BytePredicate {
     default BytePredicate xor(@Nonnull final BytePredicate other) {
         Objects.requireNonNull(other);
         return value -> test(value) ^ other.test(value);
+    }
+
+    /**
+     * Applies this predicate partially to one argument. The result is an operation of arity {@code 0};
+     *
+     * @param value The argument to partially apply to the predicate
+     * @return A partial application of this predicate.
+     */
+    @Nonnull
+    default BooleanSupplier partial(byte value) {
+        return () -> test(value);
     }
 
     /**

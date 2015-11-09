@@ -19,6 +19,7 @@ import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import java.util.Objects;
 import java.util.function.BiPredicate;
+import java.util.function.BooleanSupplier;
 import java.util.function.IntPredicate;
 
 /**
@@ -229,6 +230,29 @@ public interface IntBiPredicate {
     default IntBiPredicate xor(@Nonnull final IntBiPredicate other) {
         Objects.requireNonNull(other);
         return (value1, value2) -> test(value1, value2) ^ other.test(value1, value2);
+    }
+
+    /**
+     * Applies this predicate partially to one argument. The result is a predicate of arity {@code 1}.
+     *
+     * @param value1 The argument to partially apply to the predicate
+     * @return A partial application of this predicate.
+     */
+    @Nonnull
+    default IntPredicate partial(int value1) {
+        return value2 -> test(value1, value2);
+    }
+
+    /**
+     * Applies this predicate partially to two arguments. The result is an operation of arity {@code 0}.
+     *
+     * @param value1 The first argument to partially apply to the predicate
+     * @param value2 The second argument to partially apply to the predicate
+     * @return A partial application of this predicate.
+     */
+    @Nonnull
+    default BooleanSupplier partial(int value1, int value2) {
+        return () -> test(value1, value2);
     }
 
     /**

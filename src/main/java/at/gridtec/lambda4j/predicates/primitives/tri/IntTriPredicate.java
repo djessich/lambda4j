@@ -16,10 +16,12 @@
 package at.gridtec.lambda4j.predicates.primitives.tri;
 
 import at.gridtec.lambda4j.predicates.TriPredicate;
+import at.gridtec.lambda4j.predicates.primitives.bi.IntBiPredicate;
 
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import java.util.Objects;
+import java.util.function.BooleanSupplier;
 import java.util.function.IntPredicate;
 
 /**
@@ -250,6 +252,42 @@ public interface IntTriPredicate {
     default IntTriPredicate xor(@Nonnull final IntTriPredicate other) {
         Objects.requireNonNull(other);
         return (value1, value2, value3) -> test(value1, value2, value3) ^ other.test(value1, value2, value3);
+    }
+
+    /**
+     * Applies this predicate partially to one argument. The result is a predicate of arity {@code 2};
+     *
+     * @param value1 The argument to partially apply to the predicate
+     * @return A partial application of this predicate.
+     */
+    @Nonnull
+    default IntBiPredicate partial(int value1) {
+        return (value2, value3) -> test(value1, value2, value3);
+    }
+
+    /**
+     * Applies this predicate partially to two arguments. The result is a predicate of arity {@code 1}.
+     *
+     * @param value1 The first argument to partially apply to the predicate
+     * @param value2 The second argument to partially apply to the predicate
+     * @return A partial application of this predicate.
+     */
+    @Nonnull
+    default IntPredicate partial(int value1, int value2) {
+        return value3 -> test(value1, value2, value3);
+    }
+
+    /**
+     * Applies this predicate partially to three arguments. The result is an operation of arity {@code 0}.
+     *
+     * @param value1 The first argument to partially apply to the predicate
+     * @param value2 The second argument to partially apply to the predicate
+     * @param value3 The third argument to partially apply to the predicate
+     * @return A partial application of this predicate.
+     */
+    @Nonnull
+    default BooleanSupplier partial(int value1, int value2, int value3) {
+        return () -> test(value1, value2, value3);
     }
 
     /**
