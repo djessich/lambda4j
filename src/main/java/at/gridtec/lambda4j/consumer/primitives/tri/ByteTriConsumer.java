@@ -18,6 +18,7 @@ package at.gridtec.lambda4j.consumer.primitives.tri;
 
 import at.gridtec.lambda4j.consumer.TriConsumer;
 import at.gridtec.lambda4j.consumer.primitives.ByteConsumer;
+import at.gridtec.lambda4j.consumer.primitives.bi.ByteBiConsumer;
 import at.gridtec.lambda4j.function.primitives.to.ToByteFunction;
 import at.gridtec.lambda4j.operators.unary.ByteUnaryOperator;
 
@@ -189,6 +190,29 @@ public interface ByteTriConsumer {
             accept(value1, value2, value3);
             after.accept(value1, value2, value3);
         };
+    }
+
+    /**
+     * Applies this operation partially to one argument. The result is an operation of arity {@code 2};
+     *
+     * @param value1 The argument to partially apply to the operation
+     * @return A partial application of this operation.
+     */
+    @Nonnull
+    default ByteBiConsumer partial(byte value1) {
+        return (value2, value3) -> accept(value1, value2, value3);
+    }
+
+    /**
+     * Applies this operation partially to two arguments. The result is an operation of arity {@code 1}.
+     *
+     * @param value1 The first argument to partially apply to the operation
+     * @param value2 The second argument to partially apply to the operation
+     * @return A partial application of this operation.
+     */
+    @Nonnull
+    default ByteConsumer partial(byte value1, byte value2) {
+        return value3 -> accept(value1, value2, value3);
     }
 
     /**

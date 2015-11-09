@@ -168,6 +168,17 @@ public interface ShortBiConsumer {
     }
 
     /**
+     * Applies this operation partially to one argument. The result is an operation of arity {@code 1}.
+     *
+     * @param value1 The argument to partially apply to the operation
+     * @return A partial application of this operation.
+     */
+    @Nonnull
+    default ShortConsumer partial(short value1) {
+        return value2 -> accept(value1, value2);
+    }
+
+    /**
      * Returns a composed {@link BiConsumer} which represents this {@link ShortBiConsumer}. Thereby the primitive input
      * argument for this consumer is autoboxed. This method is just convenience to provide the ability to use this
      * {@code ShortBiConsumer} with JRE specific methods, only accepting {@code BiConsumer}.
