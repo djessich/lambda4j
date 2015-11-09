@@ -36,6 +36,7 @@ import at.gridtec.lambda4j.function.primitives.conversion.bi.BiFloatToShortFunct
 import at.gridtec.lambda4j.function.primitives.to.ToFloatFunction;
 import at.gridtec.lambda4j.function.primitives.to.bi.ToFloatBiFunction;
 import at.gridtec.lambda4j.operators.unary.FloatUnaryOperator;
+import at.gridtec.lambda4j.supplier.FloatSupplier;
 
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
@@ -411,6 +412,29 @@ public interface FloatBinaryOperator {
     default FloatBiConsumer consume(@Nonnull final FloatConsumer consumer) {
         Objects.requireNonNull(consumer);
         return (value1, value2) -> consumer.accept(applyAsFloat(value1, value2));
+    }
+
+    /**
+     * Applies this operator partially to one argument. The result is an operator of arity {@code 1}.
+     *
+     * @param value1 The argument to partially apply to the operator
+     * @return A partial application of this operator.
+     */
+    @Nonnull
+    default FloatUnaryOperator partial(float value1) {
+        return value2 -> applyAsFloat(value1, value2);
+    }
+
+    /**
+     * Applies this operator partially to two arguments. The result is an operation of arity {@code 0}.
+     *
+     * @param value1 The first argument to partially apply to the operator
+     * @param value2 The second argument to partially apply to the operator
+     * @return A partial application of this operator.
+     */
+    @Nonnull
+    default FloatSupplier partial(float value1, float value2) {
+        return () -> applyAsFloat(value1, value2);
     }
 
     /**

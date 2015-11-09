@@ -41,6 +41,7 @@ import java.util.Comparator;
 import java.util.Objects;
 import java.util.function.BiPredicate;
 import java.util.function.BinaryOperator;
+import java.util.function.BooleanSupplier;
 import java.util.function.Predicate;
 import java.util.function.UnaryOperator;
 
@@ -545,6 +546,29 @@ public interface BooleanBinaryOperator {
     default BooleanBiConsumer consume(@Nonnull final BooleanConsumer consumer) {
         Objects.requireNonNull(consumer);
         return (value1, value2) -> consumer.accept(applyAsBoolean(value1, value2));
+    }
+
+    /**
+     * Applies this operator partially to one argument. The result is an operator of arity {@code 1}.
+     *
+     * @param value1 The argument to partially apply to the operator
+     * @return A partial application of this operator.
+     */
+    @Nonnull
+    default BooleanUnaryOperator partial(boolean value1) {
+        return value2 -> applyAsBoolean(value1, value2);
+    }
+
+    /**
+     * Applies this operator partially to two arguments. The result is an operation of arity {@code 0}.
+     *
+     * @param value1 The first argument to partially apply to the operator
+     * @param value2 The second argument to partially apply to the operator
+     * @return A partial application of this operator.
+     */
+    @Nonnull
+    default BooleanSupplier partial(boolean value1, boolean value2) {
+        return () -> applyAsBoolean(value1, value2);
     }
 
     /**

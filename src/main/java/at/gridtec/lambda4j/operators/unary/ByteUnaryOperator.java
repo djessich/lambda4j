@@ -25,6 +25,7 @@ import at.gridtec.lambda4j.function.primitives.conversion.ByteToIntFunction;
 import at.gridtec.lambda4j.function.primitives.conversion.ByteToLongFunction;
 import at.gridtec.lambda4j.function.primitives.conversion.ByteToShortFunction;
 import at.gridtec.lambda4j.function.primitives.to.ToByteFunction;
+import at.gridtec.lambda4j.supplier.ByteSupplier;
 
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
@@ -311,6 +312,17 @@ public interface ByteUnaryOperator {
     default ByteConsumer consume(@Nonnull final ByteConsumer consumer) {
         Objects.requireNonNull(consumer);
         return value -> consumer.accept(applyAsByte(value));
+    }
+
+    /**
+     * Applies this operator partially to one argument. The result is an operation of arity {@code 0}.
+     *
+     * @param value The argument to partially apply to the operator
+     * @return A partial application of this operator.
+     */
+    @Nonnull
+    default ByteSupplier partial(byte value) {
+        return () -> applyAsByte(value);
     }
 
     /**

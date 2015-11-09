@@ -36,6 +36,7 @@ import at.gridtec.lambda4j.function.primitives.conversion.bi.BiCharToShortFuncti
 import at.gridtec.lambda4j.function.primitives.to.ToCharFunction;
 import at.gridtec.lambda4j.function.primitives.to.bi.ToCharBiFunction;
 import at.gridtec.lambda4j.operators.unary.CharUnaryOperator;
+import at.gridtec.lambda4j.supplier.CharSupplier;
 
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
@@ -407,6 +408,29 @@ public interface CharBinaryOperator {
     default CharBiConsumer consume(@Nonnull final CharConsumer consumer) {
         Objects.requireNonNull(consumer);
         return (value1, value2) -> consumer.accept(applyAsChar(value1, value2));
+    }
+
+    /**
+     * Applies this operator partially to one argument. The result is an operator of arity {@code 1}.
+     *
+     * @param value1 The argument to partially apply to the operator
+     * @return A partial application of this operator.
+     */
+    @Nonnull
+    default CharUnaryOperator partial(char value1) {
+        return value2 -> applyAsChar(value1, value2);
+    }
+
+    /**
+     * Applies this operator partially to two arguments. The result is an operation of arity {@code 0}.
+     *
+     * @param value1 The first argument to partially apply to the operator
+     * @param value2 The second argument to partially apply to the operator
+     * @return A partial application of this operator.
+     */
+    @Nonnull
+    default CharSupplier partial(char value1, char value2) {
+        return () -> applyAsChar(value1, value2);
     }
 
     /**

@@ -36,6 +36,7 @@ import at.gridtec.lambda4j.function.primitives.conversion.bi.BiShortToLongFuncti
 import at.gridtec.lambda4j.function.primitives.to.ToShortFunction;
 import at.gridtec.lambda4j.function.primitives.to.bi.ToShortBiFunction;
 import at.gridtec.lambda4j.operators.unary.ShortUnaryOperator;
+import at.gridtec.lambda4j.supplier.ShortSupplier;
 
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
@@ -407,6 +408,29 @@ public interface ShortBinaryOperator {
     default ShortBiConsumer consume(@Nonnull final ShortConsumer consumer) {
         Objects.requireNonNull(consumer);
         return (value1, value2) -> consumer.accept(applyAsShort(value1, value2));
+    }
+
+    /**
+     * Applies this operator partially to one argument. The result is an operator of arity {@code 1}.
+     *
+     * @param value1 The argument to partially apply to the operator
+     * @return A partial application of this operator.
+     */
+    @Nonnull
+    default ShortUnaryOperator partial(short value1) {
+        return value2 -> applyAsShort(value1, value2);
+    }
+
+    /**
+     * Applies this operator partially to two arguments. The result is an operation of arity {@code 0}.
+     *
+     * @param value1 The first argument to partially apply to the operator
+     * @param value2 The second argument to partially apply to the operator
+     * @return A partial application of this operator.
+     */
+    @Nonnull
+    default ShortSupplier partial(short value1, short value2) {
+        return () -> applyAsShort(value1, value2);
     }
 
     /**

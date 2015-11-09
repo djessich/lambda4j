@@ -35,7 +35,9 @@ import at.gridtec.lambda4j.function.primitives.conversion.tri.TriFloatToShortFun
 import at.gridtec.lambda4j.function.primitives.to.ToFloatFunction;
 import at.gridtec.lambda4j.function.primitives.to.tri.ToFloatTriFunction;
 import at.gridtec.lambda4j.function.primitives.tri.FloatTriFunction;
+import at.gridtec.lambda4j.operators.binary.FloatBinaryOperator;
 import at.gridtec.lambda4j.operators.unary.FloatUnaryOperator;
+import at.gridtec.lambda4j.supplier.FloatSupplier;
 
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
@@ -374,6 +376,42 @@ public interface FloatTernaryOperator {
     default FloatTriConsumer consume(@Nonnull final FloatConsumer consumer) {
         Objects.requireNonNull(consumer);
         return (value1, value2, value3) -> consumer.accept(applyAsFloat(value1, value2, value3));
+    }
+
+    /**
+     * Applies this operator partially to one argument. The result is an operator of arity {@code 2};
+     *
+     * @param value1 The argument to partially apply to the operator
+     * @return A partial application of this operator.
+     */
+    @Nonnull
+    default FloatBinaryOperator partial(float value1) {
+        return (value2, value3) -> applyAsFloat(value1, value2, value3);
+    }
+
+    /**
+     * Applies this operator partially to two arguments. The result is an operator of arity {@code 1}.
+     *
+     * @param value1 The first argument to partially apply to the operator
+     * @param value2 The second argument to partially apply to the operator
+     * @return A partial application of this operator.
+     */
+    @Nonnull
+    default FloatUnaryOperator partial(float value1, float value2) {
+        return value3 -> applyAsFloat(value1, value2, value3);
+    }
+
+    /**
+     * Applies this operator partially to three arguments. The result is an operation of arity {@code 0}.
+     *
+     * @param value1 The first argument to partially apply to the operator
+     * @param value2 The second argument to partially apply to the operator
+     * @param value3 The third argument to partially apply to the operator
+     * @return A partial application of this operator.
+     */
+    @Nonnull
+    default FloatSupplier partial(float value1, float value2, float value3) {
+        return () -> applyAsFloat(value1, value2, value3);
     }
 
     /**

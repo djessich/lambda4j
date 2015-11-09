@@ -28,6 +28,7 @@ import at.gridtec.lambda4j.function.primitives.conversion.BooleanToShortFunction
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import java.util.Objects;
+import java.util.function.BooleanSupplier;
 import java.util.function.Predicate;
 import java.util.function.UnaryOperator;
 
@@ -435,6 +436,17 @@ public interface BooleanUnaryOperator {
     default BooleanConsumer consume(@Nonnull final BooleanConsumer consumer) {
         Objects.requireNonNull(consumer);
         return value -> consumer.accept(applyAsBoolean(value));
+    }
+
+    /**
+     * Applies this operator partially to one argument. The result is an operation of arity {@code 0}.
+     *
+     * @param value The argument to partially apply to the operator
+     * @return A partial application of this operator.
+     */
+    @Nonnull
+    default BooleanSupplier partial(boolean value) {
+        return () -> applyAsBoolean(value);
     }
 
     /**

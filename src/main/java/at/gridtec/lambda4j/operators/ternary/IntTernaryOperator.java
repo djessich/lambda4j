@@ -34,8 +34,10 @@ import at.gridtec.lambda4j.function.primitives.tri.IntTriFunction;
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import java.util.Objects;
+import java.util.function.IntBinaryOperator;
 import java.util.function.IntConsumer;
 import java.util.function.IntFunction;
+import java.util.function.IntSupplier;
 import java.util.function.IntToDoubleFunction;
 import java.util.function.IntToLongFunction;
 import java.util.function.IntUnaryOperator;
@@ -374,6 +376,42 @@ public interface IntTernaryOperator {
     default IntTriConsumer consume(@Nonnull final IntConsumer consumer) {
         Objects.requireNonNull(consumer);
         return (value1, value2, value3) -> consumer.accept(applyAsInt(value1, value2, value3));
+    }
+
+    /**
+     * Applies this operator partially to one argument. The result is an operator of arity {@code 2};
+     *
+     * @param value1 The argument to partially apply to the operator
+     * @return A partial application of this operator.
+     */
+    @Nonnull
+    default IntBinaryOperator partial(int value1) {
+        return (value2, value3) -> applyAsInt(value1, value2, value3);
+    }
+
+    /**
+     * Applies this operator partially to two arguments. The result is an operator of arity {@code 1}.
+     *
+     * @param value1 The first argument to partially apply to the operator
+     * @param value2 The second argument to partially apply to the operator
+     * @return A partial application of this operator.
+     */
+    @Nonnull
+    default IntUnaryOperator partial(int value1, int value2) {
+        return value3 -> applyAsInt(value1, value2, value3);
+    }
+
+    /**
+     * Applies this operator partially to three arguments. The result is an operation of arity {@code 0}.
+     *
+     * @param value1 The first argument to partially apply to the operator
+     * @param value2 The second argument to partially apply to the operator
+     * @param value3 The third argument to partially apply to the operator
+     * @return A partial application of this operator.
+     */
+    @Nonnull
+    default IntSupplier partial(int value1, int value2, int value3) {
+        return () -> applyAsInt(value1, value2, value3);
     }
 
     /**

@@ -34,8 +34,10 @@ import at.gridtec.lambda4j.function.primitives.tri.DoubleTriFunction;
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import java.util.Objects;
+import java.util.function.DoubleBinaryOperator;
 import java.util.function.DoubleConsumer;
 import java.util.function.DoubleFunction;
+import java.util.function.DoubleSupplier;
 import java.util.function.DoubleToIntFunction;
 import java.util.function.DoubleToLongFunction;
 import java.util.function.DoubleUnaryOperator;
@@ -374,6 +376,42 @@ public interface DoubleTernaryOperator {
     default DoubleTriConsumer consume(@Nonnull final DoubleConsumer consumer) {
         Objects.requireNonNull(consumer);
         return (value1, value2, value3) -> consumer.accept(applyAsDouble(value1, value2, value3));
+    }
+
+    /**
+     * Applies this operator partially to one argument. The result is an operator of arity {@code 2};
+     *
+     * @param value1 The argument to partially apply to the operator
+     * @return A partial application of this operator.
+     */
+    @Nonnull
+    default DoubleBinaryOperator partial(double value1) {
+        return (value2, value3) -> applyAsDouble(value1, value2, value3);
+    }
+
+    /**
+     * Applies this operator partially to two arguments. The result is an operator of arity {@code 1}.
+     *
+     * @param value1 The first argument to partially apply to the operator
+     * @param value2 The second argument to partially apply to the operator
+     * @return A partial application of this operator.
+     */
+    @Nonnull
+    default DoubleUnaryOperator partial(double value1, double value2) {
+        return value3 -> applyAsDouble(value1, value2, value3);
+    }
+
+    /**
+     * Applies this operator partially to three arguments. The result is an operation of arity {@code 0}.
+     *
+     * @param value1 The first argument to partially apply to the operator
+     * @param value2 The second argument to partially apply to the operator
+     * @param value3 The third argument to partially apply to the operator
+     * @return A partial application of this operator.
+     */
+    @Nonnull
+    default DoubleSupplier partial(double value1, double value2, double value3) {
+        return () -> applyAsDouble(value1, value2, value3);
     }
 
     /**

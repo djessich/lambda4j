@@ -25,6 +25,7 @@ import at.gridtec.lambda4j.function.primitives.conversion.ShortToFloatFunction;
 import at.gridtec.lambda4j.function.primitives.conversion.ShortToIntFunction;
 import at.gridtec.lambda4j.function.primitives.conversion.ShortToLongFunction;
 import at.gridtec.lambda4j.function.primitives.to.ToShortFunction;
+import at.gridtec.lambda4j.supplier.ShortSupplier;
 
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
@@ -313,6 +314,16 @@ public interface ShortUnaryOperator {
         return value -> consumer.accept(applyAsShort(value));
     }
 
+    /**
+     * Applies this operator partially to one argument. The result is an operation of arity {@code 0}.
+     *
+     * @param value The argument to partially apply to the operator
+     * @return A partial application of this operator.
+     */
+    @Nonnull
+    default ShortSupplier partial(short value) {
+        return () -> applyAsShort(value);
+    }
     /**
      * Returns a composed {@link UnaryOperator} which represents this {@link ShortUnaryOperator}. Thereby the primitive
      * input argument for this operator is autoboxed. This method is just convenience to provide the ability to use this

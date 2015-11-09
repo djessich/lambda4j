@@ -25,6 +25,7 @@ import at.gridtec.lambda4j.function.primitives.conversion.FloatToIntFunction;
 import at.gridtec.lambda4j.function.primitives.conversion.FloatToLongFunction;
 import at.gridtec.lambda4j.function.primitives.conversion.FloatToShortFunction;
 import at.gridtec.lambda4j.function.primitives.to.ToFloatFunction;
+import at.gridtec.lambda4j.supplier.FloatSupplier;
 
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
@@ -313,6 +314,16 @@ public interface FloatUnaryOperator {
         return value -> consumer.accept(applyAsFloat(value));
     }
 
+    /**
+     * Applies this operator partially to one argument. The result is an operation of arity {@code 0}.
+     *
+     * @param value The argument to partially apply to the operator
+     * @return A partial application of this operator.
+     */
+    @Nonnull
+    default FloatSupplier partial(float value) {
+        return () -> applyAsFloat(value);
+    }
     /**
      * Returns a composed {@link UnaryOperator} which represents this {@link FloatUnaryOperator}. Thereby the primitive
      * input argument for this operator is autoboxed. This method is just convenience to provide the ability to use this

@@ -35,7 +35,9 @@ import at.gridtec.lambda4j.function.primitives.conversion.tri.TriCharToShortFunc
 import at.gridtec.lambda4j.function.primitives.to.ToCharFunction;
 import at.gridtec.lambda4j.function.primitives.to.tri.ToCharTriFunction;
 import at.gridtec.lambda4j.function.primitives.tri.CharTriFunction;
+import at.gridtec.lambda4j.operators.binary.CharBinaryOperator;
 import at.gridtec.lambda4j.operators.unary.CharUnaryOperator;
+import at.gridtec.lambda4j.supplier.CharSupplier;
 
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
@@ -374,6 +376,42 @@ public interface CharTernaryOperator {
     default CharTriConsumer consume(@Nonnull final CharConsumer consumer) {
         Objects.requireNonNull(consumer);
         return (value1, value2, value3) -> consumer.accept(applyAsChar(value1, value2, value3));
+    }
+
+    /**
+     * Applies this operator partially to one argument. The result is an operator of arity {@code 2};
+     *
+     * @param value1 The argument to partially apply to the operator
+     * @return A partial application of this operator.
+     */
+    @Nonnull
+    default CharBinaryOperator partial(char value1) {
+        return (value2, value3) -> applyAsChar(value1, value2, value3);
+    }
+
+    /**
+     * Applies this operator partially to two arguments. The result is an operator of arity {@code 1}.
+     *
+     * @param value1 The first argument to partially apply to the operator
+     * @param value2 The second argument to partially apply to the operator
+     * @return A partial application of this operator.
+     */
+    @Nonnull
+    default CharUnaryOperator partial(char value1, char value2) {
+        return value3 -> applyAsChar(value1, value2, value3);
+    }
+
+    /**
+     * Applies this operator partially to three arguments. The result is an operation of arity {@code 0}.
+     *
+     * @param value1 The first argument to partially apply to the operator
+     * @param value2 The second argument to partially apply to the operator
+     * @param value3 The third argument to partially apply to the operator
+     * @return A partial application of this operator.
+     */
+    @Nonnull
+    default CharSupplier partial(char value1, char value2, char value3) {
+        return () -> applyAsChar(value1, value2, value3);
     }
 
     /**

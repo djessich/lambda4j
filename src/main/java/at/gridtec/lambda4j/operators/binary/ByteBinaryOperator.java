@@ -36,6 +36,7 @@ import at.gridtec.lambda4j.function.primitives.conversion.bi.BiByteToShortFuncti
 import at.gridtec.lambda4j.function.primitives.to.ToByteFunction;
 import at.gridtec.lambda4j.function.primitives.to.bi.ToByteBiFunction;
 import at.gridtec.lambda4j.operators.unary.ByteUnaryOperator;
+import at.gridtec.lambda4j.supplier.ByteSupplier;
 
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
@@ -407,6 +408,29 @@ public interface ByteBinaryOperator {
     default ByteBiConsumer consume(@Nonnull final ByteConsumer consumer) {
         Objects.requireNonNull(consumer);
         return (value1, value2) -> consumer.accept(applyAsByte(value1, value2));
+    }
+
+    /**
+     * Applies this operator partially to one argument. The result is an operator of arity {@code 1}.
+     *
+     * @param value1 The argument to partially apply to the operator
+     * @return A partial application of this operator.
+     */
+    @Nonnull
+    default ByteUnaryOperator partial(byte value1) {
+        return value2 -> applyAsByte(value1, value2);
+    }
+
+    /**
+     * Applies this operator partially to two arguments. The result is an operation of arity {@code 0}.
+     *
+     * @param value1 The first argument to partially apply to the operator
+     * @param value2 The second argument to partially apply to the operator
+     * @return A partial application of this operator.
+     */
+    @Nonnull
+    default ByteSupplier partial(byte value1, byte value2) {
+        return () -> applyAsByte(value1, value2);
     }
 
     /**
