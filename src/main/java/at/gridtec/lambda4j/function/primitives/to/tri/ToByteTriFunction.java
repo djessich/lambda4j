@@ -27,8 +27,10 @@ import at.gridtec.lambda4j.function.primitives.conversion.ByteToIntFunction;
 import at.gridtec.lambda4j.function.primitives.conversion.ByteToLongFunction;
 import at.gridtec.lambda4j.function.primitives.conversion.ByteToShortFunction;
 import at.gridtec.lambda4j.function.primitives.to.ToByteFunction;
+import at.gridtec.lambda4j.function.primitives.to.bi.ToByteBiFunction;
 import at.gridtec.lambda4j.operators.unary.ByteUnaryOperator;
 import at.gridtec.lambda4j.predicates.TriPredicate;
+import at.gridtec.lambda4j.supplier.ByteSupplier;
 
 import org.apache.commons.lang3.tuple.Triple;
 
@@ -403,6 +405,42 @@ public interface ToByteTriFunction<T, U, V> {
     default TriConsumer<T, U, V> consume(@Nonnull final ByteConsumer consumer) {
         Objects.requireNonNull(consumer);
         return (t, u, v) -> consumer.accept(applyAsByte(t, u, v));
+    }
+
+    /**
+     * Applies this function partially to one argument. The result is a function of arity {@code 2};
+     *
+     * @param t The argument to partially apply to the function
+     * @return A partial application of this function.
+     */
+    @Nonnull
+    default ToByteBiFunction<U, V> partial(T t) {
+        return (u, v) -> applyAsByte(t, u, v);
+    }
+
+    /**
+     * Applies this function partially to two arguments. The result is a function of arity {@code 1}.
+     *
+     * @param t The first argument to partially apply to the function
+     * @param u The second argument to partially apply to the function
+     * @return A partial application of this function.
+     */
+    @Nonnull
+    default ToByteFunction<V> partial(T t, U u) {
+        return v -> applyAsByte(t, u, v);
+    }
+
+    /**
+     * Applies this function partially to three arguments. The result is an operation of arity {@code 0}.
+     *
+     * @param t The first argument to partially apply to the function
+     * @param u The second argument to partially apply to the function
+     * @param v The third argument to partially apply to the function
+     * @return A partial application of this function.
+     */
+    @Nonnull
+    default ByteSupplier partial(T t, U u, V v) {
+        return () -> applyAsByte(t, u, v);
     }
 
     /**

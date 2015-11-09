@@ -26,6 +26,7 @@ import at.gridtec.lambda4j.function.primitives.conversion.CharToLongFunction;
 import at.gridtec.lambda4j.function.primitives.conversion.CharToShortFunction;
 import at.gridtec.lambda4j.function.primitives.to.ToCharFunction;
 import at.gridtec.lambda4j.operators.unary.CharUnaryOperator;
+import at.gridtec.lambda4j.supplier.CharSupplier;
 
 import org.apache.commons.lang3.tuple.Pair;
 
@@ -373,6 +374,29 @@ public interface ToCharBiFunction<T, U> {
     default BiConsumer<T, U> consume(@Nonnull final CharConsumer consumer) {
         Objects.requireNonNull(consumer);
         return (t, u) -> consumer.accept(applyAsChar(t, u));
+    }
+
+    /**
+     * Applies this function partially to one argument. The result is a function of arity {@code 1}.
+     *
+     * @param t The argument to partially apply to the function
+     * @return A partial application of this function.
+     */
+    @Nonnull
+    default ToCharFunction<U> partial(T t) {
+        return u -> applyAsChar(t, u);
+    }
+
+    /**
+     * Applies this function partially to two arguments. The result is an operation of arity {@code 0}.
+     *
+     * @param t The first argument to partially apply to the function
+     * @param u The second argument to partially apply to the function
+     * @return A partial application of this function.
+     */
+    @Nonnull
+    default CharSupplier partial(T t, U u) {
+        return () -> applyAsChar(t, u);
     }
 
     /**

@@ -27,8 +27,10 @@ import at.gridtec.lambda4j.function.primitives.conversion.ShortToFloatFunction;
 import at.gridtec.lambda4j.function.primitives.conversion.ShortToIntFunction;
 import at.gridtec.lambda4j.function.primitives.conversion.ShortToLongFunction;
 import at.gridtec.lambda4j.function.primitives.to.ToShortFunction;
+import at.gridtec.lambda4j.function.primitives.to.bi.ToShortBiFunction;
 import at.gridtec.lambda4j.operators.unary.ShortUnaryOperator;
 import at.gridtec.lambda4j.predicates.TriPredicate;
+import at.gridtec.lambda4j.supplier.ShortSupplier;
 
 import org.apache.commons.lang3.tuple.Triple;
 
@@ -403,6 +405,42 @@ public interface ToShortTriFunction<T, U, V> {
     default TriConsumer<T, U, V> consume(@Nonnull final ShortConsumer consumer) {
         Objects.requireNonNull(consumer);
         return (t, u, v) -> consumer.accept(applyAsShort(t, u, v));
+    }
+
+    /**
+     * Applies this function partially to one argument. The result is a function of arity {@code 2};
+     *
+     * @param t The argument to partially apply to the function
+     * @return A partial application of this function.
+     */
+    @Nonnull
+    default ToShortBiFunction<U, V> partial(T t) {
+        return (u, v) -> applyAsShort(t, u, v);
+    }
+
+    /**
+     * Applies this function partially to two arguments. The result is a function of arity {@code 1}.
+     *
+     * @param t The first argument to partially apply to the function
+     * @param u The second argument to partially apply to the function
+     * @return A partial application of this function.
+     */
+    @Nonnull
+    default ToShortFunction<V> partial(T t, U u) {
+        return v -> applyAsShort(t, u, v);
+    }
+
+    /**
+     * Applies this function partially to three arguments. The result is an operation of arity {@code 0}.
+     *
+     * @param t The first argument to partially apply to the function
+     * @param u The second argument to partially apply to the function
+     * @param v The third argument to partially apply to the function
+     * @return A partial application of this function.
+     */
+    @Nonnull
+    default ShortSupplier partial(T t, U u, V v) {
+        return () -> applyAsShort(t, u, v);
     }
 
     /**

@@ -26,6 +26,7 @@ import at.gridtec.lambda4j.function.primitives.conversion.FloatToLongFunction;
 import at.gridtec.lambda4j.function.primitives.conversion.FloatToShortFunction;
 import at.gridtec.lambda4j.function.primitives.to.ToFloatFunction;
 import at.gridtec.lambda4j.operators.unary.FloatUnaryOperator;
+import at.gridtec.lambda4j.supplier.FloatSupplier;
 
 import org.apache.commons.lang3.tuple.Pair;
 
@@ -373,6 +374,29 @@ public interface ToFloatBiFunction<T, U> {
     default BiConsumer<T, U> consume(@Nonnull final FloatConsumer consumer) {
         Objects.requireNonNull(consumer);
         return (t, u) -> consumer.accept(applyAsFloat(t, u));
+    }
+
+    /**
+     * Applies this function partially to one argument. The result is a function of arity {@code 1}.
+     *
+     * @param t The argument to partially apply to the function
+     * @return A partial application of this function.
+     */
+    @Nonnull
+    default ToFloatFunction<U> partial(T t) {
+        return u -> applyAsFloat(t, u);
+    }
+
+    /**
+     * Applies this function partially to two arguments. The result is an operation of arity {@code 0}.
+     *
+     * @param t The first argument to partially apply to the function
+     * @param u The second argument to partially apply to the function
+     * @return A partial application of this function.
+     */
+    @Nonnull
+    default FloatSupplier partial(T t, U u) {
+        return () -> applyAsFloat(t, u);
     }
 
     /**

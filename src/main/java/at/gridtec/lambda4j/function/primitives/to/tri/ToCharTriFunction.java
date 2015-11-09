@@ -27,8 +27,10 @@ import at.gridtec.lambda4j.function.primitives.conversion.CharToIntFunction;
 import at.gridtec.lambda4j.function.primitives.conversion.CharToLongFunction;
 import at.gridtec.lambda4j.function.primitives.conversion.CharToShortFunction;
 import at.gridtec.lambda4j.function.primitives.to.ToCharFunction;
+import at.gridtec.lambda4j.function.primitives.to.bi.ToCharBiFunction;
 import at.gridtec.lambda4j.operators.unary.CharUnaryOperator;
 import at.gridtec.lambda4j.predicates.TriPredicate;
+import at.gridtec.lambda4j.supplier.CharSupplier;
 
 import org.apache.commons.lang3.tuple.Triple;
 
@@ -403,6 +405,42 @@ public interface ToCharTriFunction<T, U, V> {
     default TriConsumer<T, U, V> consume(@Nonnull final CharConsumer consumer) {
         Objects.requireNonNull(consumer);
         return (t, u, v) -> consumer.accept(applyAsChar(t, u, v));
+    }
+
+    /**
+     * Applies this function partially to one argument. The result is a function of arity {@code 2};
+     *
+     * @param t The argument to partially apply to the function
+     * @return A partial application of this function.
+     */
+    @Nonnull
+    default ToCharBiFunction<U, V> partial(T t) {
+        return (u, v) -> applyAsChar(t, u, v);
+    }
+
+    /**
+     * Applies this function partially to two arguments. The result is a function of arity {@code 1}.
+     *
+     * @param t The first argument to partially apply to the function
+     * @param u The second argument to partially apply to the function
+     * @return A partial application of this function.
+     */
+    @Nonnull
+    default ToCharFunction<V> partial(T t, U u) {
+        return v -> applyAsChar(t, u, v);
+    }
+
+    /**
+     * Applies this function partially to three arguments. The result is an operation of arity {@code 0}.
+     *
+     * @param t The first argument to partially apply to the function
+     * @param u The second argument to partially apply to the function
+     * @param v The third argument to partially apply to the function
+     * @return A partial application of this function.
+     */
+    @Nonnull
+    default CharSupplier partial(T t, U u, V v) {
+        return () -> applyAsChar(t, u, v);
     }
 
     /**

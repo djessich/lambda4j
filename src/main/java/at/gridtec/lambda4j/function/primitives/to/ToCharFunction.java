@@ -25,6 +25,7 @@ import at.gridtec.lambda4j.function.primitives.conversion.CharToIntFunction;
 import at.gridtec.lambda4j.function.primitives.conversion.CharToLongFunction;
 import at.gridtec.lambda4j.function.primitives.conversion.CharToShortFunction;
 import at.gridtec.lambda4j.operators.unary.CharUnaryOperator;
+import at.gridtec.lambda4j.supplier.CharSupplier;
 
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
@@ -311,6 +312,17 @@ public interface ToCharFunction<T> {
     default Consumer<T> consume(@Nonnull final CharConsumer consumer) {
         Objects.requireNonNull(consumer);
         return t -> consumer.accept(applyAsChar(t));
+    }
+
+    /**
+     * Applies this function partially to one argument. The result is an operation of arity {@code 0}.
+     *
+     * @param t The argument to partially apply to the function
+     * @return A partial application of this function.
+     */
+    @Nonnull
+    default CharSupplier partial(T t) {
+        return () -> applyAsChar(t);
     }
 
     /**

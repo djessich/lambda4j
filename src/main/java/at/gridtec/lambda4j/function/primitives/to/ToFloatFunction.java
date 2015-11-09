@@ -25,6 +25,7 @@ import at.gridtec.lambda4j.function.primitives.conversion.FloatToIntFunction;
 import at.gridtec.lambda4j.function.primitives.conversion.FloatToLongFunction;
 import at.gridtec.lambda4j.function.primitives.conversion.FloatToShortFunction;
 import at.gridtec.lambda4j.operators.unary.FloatUnaryOperator;
+import at.gridtec.lambda4j.supplier.FloatSupplier;
 
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
@@ -311,6 +312,17 @@ public interface ToFloatFunction<T> {
     default Consumer<T> consume(@Nonnull final FloatConsumer consumer) {
         Objects.requireNonNull(consumer);
         return t -> consumer.accept(applyAsFloat(t));
+    }
+
+    /**
+     * Applies this function partially to one argument. The result is an operation of arity {@code 0}.
+     *
+     * @param t The argument to partially apply to the function
+     * @return A partial application of this function.
+     */
+    @Nonnull
+    default FloatSupplier partial(T t) {
+        return () -> applyAsFloat(t);
     }
 
     /**

@@ -31,10 +31,12 @@ import javax.annotation.Nonnull;
 import java.util.Objects;
 import java.util.function.DoubleConsumer;
 import java.util.function.DoubleFunction;
+import java.util.function.DoubleSupplier;
 import java.util.function.DoubleToIntFunction;
 import java.util.function.DoubleToLongFunction;
 import java.util.function.DoubleUnaryOperator;
 import java.util.function.Function;
+import java.util.function.ToDoubleBiFunction;
 import java.util.function.ToDoubleFunction;
 import java.util.function.UnaryOperator;
 
@@ -149,6 +151,7 @@ public interface ToDoubleTriFunction<T, U, V> {
      * @return The return value from the function, which is its result.
      */
     double applyAsDouble(T t, U u, V v);
+
     /**
      * Applies this function to the given tuple.
      *
@@ -402,6 +405,42 @@ public interface ToDoubleTriFunction<T, U, V> {
     default TriConsumer<T, U, V> consume(@Nonnull final DoubleConsumer consumer) {
         Objects.requireNonNull(consumer);
         return (t, u, v) -> consumer.accept(applyAsDouble(t, u, v));
+    }
+
+    /**
+     * Applies this function partially to one argument. The result is a function of arity {@code 2};
+     *
+     * @param t The argument to partially apply to the function
+     * @return A partial application of this function.
+     */
+    @Nonnull
+    default ToDoubleBiFunction<U, V> partial(T t) {
+        return (u, v) -> applyAsDouble(t, u, v);
+    }
+
+    /**
+     * Applies this function partially to two arguments. The result is a function of arity {@code 1}.
+     *
+     * @param t The first argument to partially apply to the function
+     * @param u The second argument to partially apply to the function
+     * @return A partial application of this function.
+     */
+    @Nonnull
+    default ToDoubleFunction<V> partial(T t, U u) {
+        return v -> applyAsDouble(t, u, v);
+    }
+
+    /**
+     * Applies this function partially to three arguments. The result is an operation of arity {@code 0}.
+     *
+     * @param t The first argument to partially apply to the function
+     * @param u The second argument to partially apply to the function
+     * @param v The third argument to partially apply to the function
+     * @return A partial application of this function.
+     */
+    @Nonnull
+    default DoubleSupplier partial(T t, U u, V v) {
+        return () -> applyAsDouble(t, u, v);
     }
 
     /**
