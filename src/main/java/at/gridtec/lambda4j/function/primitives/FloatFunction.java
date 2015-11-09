@@ -36,6 +36,7 @@ import java.util.Optional;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Predicate;
+import java.util.function.Supplier;
 import java.util.function.ToDoubleFunction;
 import java.util.function.ToIntFunction;
 import java.util.function.ToLongFunction;
@@ -317,6 +318,17 @@ public interface FloatFunction<R> {
     }
 
     /**
+     * Applies this function partially to one argument. The result is an operation of arity {@code 0}.
+     *
+     * @param value The argument to partially apply to the function
+     * @return A partial application of this function.
+     */
+    @Nonnull
+    default Supplier<R> partial(float value) {
+        return () -> apply(value);
+    }
+
+    /**
      * Converts this function to an equal function, which ensures that its result is not {@code null} using {@link
      * Optional}. This method mainly exists to avoid unnecessary {@code NullPointerException}s through referencing
      * {@code null} from this function.
@@ -327,6 +339,7 @@ public interface FloatFunction<R> {
     default FloatFunction<Optional<R>> nonNull() {
         return value -> Optional.ofNullable(apply(value));
     }
+
     /**
      * Returns a composed {@link Function} which represents this {@link FloatFunction}. Thereby the primitive input
      * argument for this function is autoboxed. This method is just convenience to provide the ability to use this

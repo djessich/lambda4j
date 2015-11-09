@@ -18,6 +18,7 @@ package at.gridtec.lambda4j.function.primitives.tri;
 import at.gridtec.lambda4j.consumer.primitives.tri.ByteTriConsumer;
 import at.gridtec.lambda4j.function.TriFunction;
 import at.gridtec.lambda4j.function.primitives.ByteFunction;
+import at.gridtec.lambda4j.function.primitives.bi.ByteBiFunction;
 import at.gridtec.lambda4j.function.primitives.conversion.tri.TriByteToBooleanFunction;
 import at.gridtec.lambda4j.function.primitives.conversion.tri.TriByteToCharFunction;
 import at.gridtec.lambda4j.function.primitives.conversion.tri.TriByteToDoubleFunction;
@@ -39,6 +40,7 @@ import java.util.Optional;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Predicate;
+import java.util.function.Supplier;
 import java.util.function.ToDoubleFunction;
 import java.util.function.ToIntFunction;
 import java.util.function.ToLongFunction;
@@ -383,6 +385,42 @@ public interface ByteTriFunction<R> {
     }
 
     /**
+     * Applies this function partially to one argument. The result is a function of arity {@code 2};
+     *
+     * @param value1 The argument to partially apply to the function
+     * @return A partial application of this function.
+     */
+    @Nonnull
+    default ByteBiFunction<R> partial(byte value1) {
+        return (value2, value3) -> apply(value1, value2, value3);
+    }
+
+    /**
+     * Applies this function partially to two arguments. The result is a function of arity {@code 1}.
+     *
+     * @param value1 The first argument to partially apply to the function
+     * @param value2 The second argument to partially apply to the function
+     * @return A partial application of this function.
+     */
+    @Nonnull
+    default ByteFunction<R> partial(byte value1, byte value2) {
+        return value3 -> apply(value1, value2, value3);
+    }
+
+    /**
+     * Applies this function partially to three arguments. The result is an operation of arity {@code 0}.
+     *
+     * @param value1 The first argument to partially apply to the function
+     * @param value2 The second argument to partially apply to the function
+     * @param value3 The third argument to partially apply to the function
+     * @return A partial application of this function.
+     */
+    @Nonnull
+    default Supplier<R> partial(byte value1, byte value2, byte value3) {
+        return () -> apply(value1, value2, value3);
+    }
+
+    /**
      * Returns a curried version of this function.
      *
      * @return A curried version of this function.
@@ -403,6 +441,7 @@ public interface ByteTriFunction<R> {
     default ByteTriFunction<Optional<R>> nonNull() {
         return (value1, value2, value3) -> Optional.ofNullable(apply(value1, value2, value3));
     }
+
     /**
      * Returns a composed {@link TriFunction} which represents this {@link ByteTriFunction}. Thereby the primitive input
      * argument for this function is autoboxed.

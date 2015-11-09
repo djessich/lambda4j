@@ -18,6 +18,7 @@ package at.gridtec.lambda4j.function.primitives.tri;
 import at.gridtec.lambda4j.consumer.primitives.tri.FloatTriConsumer;
 import at.gridtec.lambda4j.function.TriFunction;
 import at.gridtec.lambda4j.function.primitives.FloatFunction;
+import at.gridtec.lambda4j.function.primitives.bi.FloatBiFunction;
 import at.gridtec.lambda4j.function.primitives.conversion.tri.TriFloatToBooleanFunction;
 import at.gridtec.lambda4j.function.primitives.conversion.tri.TriFloatToByteFunction;
 import at.gridtec.lambda4j.function.primitives.conversion.tri.TriFloatToCharFunction;
@@ -39,6 +40,7 @@ import java.util.Optional;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Predicate;
+import java.util.function.Supplier;
 import java.util.function.ToDoubleFunction;
 import java.util.function.ToIntFunction;
 import java.util.function.ToLongFunction;
@@ -383,6 +385,42 @@ public interface FloatTriFunction<R> {
     }
 
     /**
+     * Applies this function partially to one argument. The result is a function of arity {@code 2};
+     *
+     * @param value1 The argument to partially apply to the function
+     * @return A partial application of this function.
+     */
+    @Nonnull
+    default FloatBiFunction<R> partial(float value1) {
+        return (value2, value3) -> apply(value1, value2, value3);
+    }
+
+    /**
+     * Applies this function partially to two arguments. The result is a function of arity {@code 1}.
+     *
+     * @param value1 The first argument to partially apply to the function
+     * @param value2 The second argument to partially apply to the function
+     * @return A partial application of this function.
+     */
+    @Nonnull
+    default FloatFunction<R> partial(float value1, float value2) {
+        return value3 -> apply(value1, value2, value3);
+    }
+
+    /**
+     * Applies this function partially to three arguments. The result is an operation of arity {@code 0}.
+     *
+     * @param value1 The first argument to partially apply to the function
+     * @param value2 The second argument to partially apply to the function
+     * @param value3 The third argument to partially apply to the function
+     * @return A partial application of this function.
+     */
+    @Nonnull
+    default Supplier<R> partial(float value1, float value2, float value3) {
+        return () -> apply(value1, value2, value3);
+    }
+
+    /**
      * Returns a curried version of this function.
      *
      * @return A curried version of this function.
@@ -403,6 +441,7 @@ public interface FloatTriFunction<R> {
     default FloatTriFunction<Optional<R>> nonNull() {
         return (value1, value2, value3) -> Optional.ofNullable(apply(value1, value2, value3));
     }
+
     /**
      * Returns a composed {@link TriFunction} which represents this {@link FloatTriFunction}. Thereby the primitive
      * input argument for this function is autoboxed.

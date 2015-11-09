@@ -39,6 +39,7 @@ import java.util.function.IntBinaryOperator;
 import java.util.function.IntFunction;
 import java.util.function.IntUnaryOperator;
 import java.util.function.Predicate;
+import java.util.function.Supplier;
 import java.util.function.ToDoubleFunction;
 import java.util.function.ToIntFunction;
 import java.util.function.ToLongFunction;
@@ -360,6 +361,29 @@ public interface IntBiFunction<R> {
     }
 
     /**
+     * Applies this function partially to one argument. The result is a function of arity {@code 1};
+     *
+     * @param value1 The argument to partially apply to the function
+     * @return A partial application of this function.
+     */
+    @Nonnull
+    default IntFunction<R> partial(int value1) {
+        return (value2) -> apply(value1, value2);
+    }
+
+    /**
+     * Applies this function partially to two arguments. The result is an operation of arity {@code 0}.
+     *
+     * @param value1 The first argument to partially apply to the function
+     * @param value2 The second argument to partially apply to the function
+     * @return A partial application of this function.
+     */
+    @Nonnull
+    default Supplier<R> partial(int value1, int value2) {
+        return () -> apply(value1, value2);
+    }
+
+    /**
      * Returns a curried version of this function.
      *
      * @return A curried version of this function.
@@ -380,6 +404,7 @@ public interface IntBiFunction<R> {
     default IntBiFunction<Optional<R>> nonNull() {
         return (value1, value2) -> Optional.ofNullable(apply(value1, value2));
     }
+
     /**
      * Returns a composed {@link BiFunction} which represents this {@link IntBiFunction}. Thereby the primitive input
      * argument for this function is autoboxed. This method is just convenience to provide the ability to use this

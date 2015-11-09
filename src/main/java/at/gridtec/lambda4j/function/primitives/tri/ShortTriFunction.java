@@ -18,6 +18,7 @@ package at.gridtec.lambda4j.function.primitives.tri;
 import at.gridtec.lambda4j.consumer.primitives.tri.ShortTriConsumer;
 import at.gridtec.lambda4j.function.TriFunction;
 import at.gridtec.lambda4j.function.primitives.ShortFunction;
+import at.gridtec.lambda4j.function.primitives.bi.ShortBiFunction;
 import at.gridtec.lambda4j.function.primitives.conversion.tri.TriShortToBooleanFunction;
 import at.gridtec.lambda4j.function.primitives.conversion.tri.TriShortToByteFunction;
 import at.gridtec.lambda4j.function.primitives.conversion.tri.TriShortToCharFunction;
@@ -39,6 +40,7 @@ import java.util.Optional;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Predicate;
+import java.util.function.Supplier;
 import java.util.function.ToDoubleFunction;
 import java.util.function.ToIntFunction;
 import java.util.function.ToLongFunction;
@@ -380,6 +382,42 @@ public interface ShortTriFunction<R> {
     default ShortTriConsumer consume(@Nonnull final Consumer<? super R> consumer) {
         Objects.requireNonNull(consumer);
         return (value1, value2, value3) -> consumer.accept(apply(value1, value2, value3));
+    }
+
+    /**
+     * Applies this function partially to one argument. The result is a function of arity {@code 2};
+     *
+     * @param value1 The argument to partially apply to the function
+     * @return A partial application of this function.
+     */
+    @Nonnull
+    default ShortBiFunction<R> partial(short value1) {
+        return (value2, value3) -> apply(value1, value2, value3);
+    }
+
+    /**
+     * Applies this function partially to two arguments. The result is a function of arity {@code 1}.
+     *
+     * @param value1 The first argument to partially apply to the function
+     * @param value2 The second argument to partially apply to the function
+     * @return A partial application of this function.
+     */
+    @Nonnull
+    default ShortFunction<R> partial(short value1, short value2) {
+        return value3 -> apply(value1, value2, value3);
+    }
+
+    /**
+     * Applies this function partially to three arguments. The result is an operation of arity {@code 0}.
+     *
+     * @param value1 The first argument to partially apply to the function
+     * @param value2 The second argument to partially apply to the function
+     * @param value3 The third argument to partially apply to the function
+     * @return A partial application of this function.
+     */
+    @Nonnull
+    default Supplier<R> partial(short value1, short value2, short value3) {
+        return () -> apply(value1, value2, value3);
     }
 
     /**
