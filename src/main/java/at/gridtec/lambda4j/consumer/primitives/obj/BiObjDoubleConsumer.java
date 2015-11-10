@@ -22,6 +22,7 @@ import org.apache.commons.lang3.tuple.Pair;
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import java.util.Objects;
+import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 import java.util.function.DoubleConsumer;
 import java.util.function.DoubleUnaryOperator;
@@ -218,6 +219,52 @@ public interface BiObjDoubleConsumer<T, U> {
             accept(t, u, value);
             after.accept(t, u, value);
         };
+    }
+
+    /**
+     * Applies this operation partially to one argument. The result is an operation of arity {@code 2};
+     *
+     * @param t The argument to partially apply to the operation
+     * @return A partial application of this operation.
+     */
+    @Nonnull
+    default ObjDoubleConsumer<U> partial(T t) {
+        return (u, value) -> accept(t, u, value);
+    }
+
+    /**
+     * Applies this operation partially to one argument. The result is an operation of arity {@code 2};
+     *
+     * @param value The argument to partially apply to the operation
+     * @return A partial application of this operation.
+     */
+    @Nonnull
+    default BiConsumer<T, U> partial(double value) {
+        return (t, u) -> accept(t, u, value);
+    }
+
+    /**
+     * Applies this operation partially to two arguments. The result is an operation of arity {@code 1}.
+     *
+     * @param t The first argument to partially apply to the operation
+     * @param u The second argument to partially apply to the operation
+     * @return A partial application of this operation.
+     */
+    @Nonnull
+    default DoubleConsumer partial(T t, U u) {
+        return value -> accept(t, u, value);
+    }
+
+    /**
+     * Applies this operation partially to two arguments. The result is an operation of arity {@code 1}.
+     *
+     * @param t The first argument to partially apply to the operation
+     * @param value The second argument to partially apply to the operation
+     * @return A partial application of this operation.
+     */
+    @Nonnull
+    default Consumer<U> partial(T t, double value) {
+        return u -> accept(t, u, value);
     }
 
     /**

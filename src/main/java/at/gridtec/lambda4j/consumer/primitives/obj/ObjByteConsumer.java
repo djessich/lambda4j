@@ -175,6 +175,28 @@ public interface ObjByteConsumer<T> {
     }
 
     /**
+     * Applies this operation partially to one argument. The result is an operation of arity {@code 1};
+     *
+     * @param t The argument to partially apply to the operation
+     * @return A partial application of this operation.
+     */
+    @Nonnull
+    default ByteConsumer partial(T t) {
+        return value -> accept(t, value);
+    }
+
+    /**
+     * Applies this operation partially to one argument. The result is an operation of arity {@code 1};
+     *
+     * @param value The argument to partially apply to the operation
+     * @return A partial application of this operation.
+     */
+    @Nonnull
+    default Consumer<T> partial(byte value) {
+        return t -> accept(t, value);
+    }
+
+    /**
      * Returns a composed {@link BiConsumer} which represents this {@link ObjByteConsumer}. Thereby the primitive input
      * argument for this consumer is autoboxed. This method is just convenience to provide the ability to use this
      * {@code ObjByteConsumer} with JRE specific methods, only accepting {@code BiConsumer}.
