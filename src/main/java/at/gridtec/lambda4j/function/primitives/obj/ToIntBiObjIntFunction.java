@@ -27,7 +27,9 @@ import java.util.Objects;
 import java.util.function.Function;
 import java.util.function.IntConsumer;
 import java.util.function.IntFunction;
+import java.util.function.IntSupplier;
 import java.util.function.IntUnaryOperator;
+import java.util.function.ToIntBiFunction;
 import java.util.function.ToIntFunction;
 import java.util.function.UnaryOperator;
 
@@ -248,6 +250,65 @@ public interface ToIntBiObjIntFunction<T, U> {
     default BiObjIntConsumer<T, U> consume(@Nonnull final IntConsumer consumer) {
         Objects.requireNonNull(consumer);
         return (t, u, value) -> consumer.accept(applyAsInt(t, u, value));
+    }
+
+    /**
+     * Applies this function partially to one argument. The result is a function of arity {@code 2};
+     *
+     * @param t The argument to partially apply to the function
+     * @return A partial application of this function.
+     */
+    @Nonnull
+    default ToIntObjIntFunction<U> partial(T t) {
+        return (u, value) -> applyAsInt(t, u, value);
+    }
+
+    /**
+     * Applies this function partially to one argument. The result is a function of arity {@code 2};
+     *
+     * @param value The argument to partially apply to the function
+     * @return A partial application of this function.
+     */
+    @Nonnull
+    default ToIntBiFunction<T, U> partial(int value) {
+        return (t, u) -> applyAsInt(t, u, value);
+    }
+
+    /**
+     * Applies this function partially to two arguments. The result is a function of arity {@code 1}.
+     *
+     * @param t The first argument to partially apply to the function
+     * @param u The second argument to partially apply to the function
+     * @return A partial application of this function.
+     */
+    @Nonnull
+    default IntUnaryOperator partial(T t, U u) {
+        return value -> applyAsInt(t, u, value);
+    }
+
+    /**
+     * Applies this function partially to two arguments. The result is a function of arity {@code 1}.
+     *
+     * @param t The first argument to partially apply to the function
+     * @param value The second argument to partially apply to the function
+     * @return A partial application of this function.
+     */
+    @Nonnull
+    default ToIntFunction<U> partial(T t, int value) {
+        return u -> applyAsInt(t, u, value);
+    }
+
+    /**
+     * Applies this function partially to three arguments. The result is an operation of arity {@code 0}.
+     *
+     * @param t The first argument to partially apply to the function
+     * @param u The second argument to partially apply to the function
+     * @param value The third argument to partially apply to the function
+     * @return A partial application of this function.
+     */
+    @Nonnull
+    default IntSupplier partial(T t, U u, int value) {
+        return () -> applyAsInt(t, u, value);
     }
 
     /**

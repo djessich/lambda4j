@@ -20,8 +20,10 @@ import at.gridtec.lambda4j.consumer.primitives.obj.BiObjShortConsumer;
 import at.gridtec.lambda4j.function.TriFunction;
 import at.gridtec.lambda4j.function.primitives.ShortFunction;
 import at.gridtec.lambda4j.function.primitives.to.ToShortFunction;
+import at.gridtec.lambda4j.function.primitives.to.bi.ToShortBiFunction;
 import at.gridtec.lambda4j.function.primitives.to.tri.ToShortTriFunction;
 import at.gridtec.lambda4j.operators.unary.ShortUnaryOperator;
+import at.gridtec.lambda4j.supplier.ShortSupplier;
 
 import org.apache.commons.lang3.tuple.Pair;
 
@@ -249,6 +251,65 @@ public interface ToShortBiObjShortFunction<T, U> {
     default BiObjShortConsumer<T, U> consume(@Nonnull final ShortConsumer consumer) {
         Objects.requireNonNull(consumer);
         return (t, u, value) -> consumer.accept(applyAsShort(t, u, value));
+    }
+
+    /**
+     * Applies this function partially to one argument. The result is a function of arity {@code 2};
+     *
+     * @param t The argument to partially apply to the function
+     * @return A partial application of this function.
+     */
+    @Nonnull
+    default ToShortObjShortFunction<U> partial(T t) {
+        return (u, value) -> applyAsShort(t, u, value);
+    }
+
+    /**
+     * Applies this function partially to one argument. The result is a function of arity {@code 2};
+     *
+     * @param value The argument to partially apply to the function
+     * @return A partial application of this function.
+     */
+    @Nonnull
+    default ToShortBiFunction<T, U> partial(short value) {
+        return (t, u) -> applyAsShort(t, u, value);
+    }
+
+    /**
+     * Applies this function partially to two arguments. The result is a function of arity {@code 1}.
+     *
+     * @param t The first argument to partially apply to the function
+     * @param u The second argument to partially apply to the function
+     * @return A partial application of this function.
+     */
+    @Nonnull
+    default ShortUnaryOperator partial(T t, U u) {
+        return value -> applyAsShort(t, u, value);
+    }
+
+    /**
+     * Applies this function partially to two arguments. The result is a function of arity {@code 1}.
+     *
+     * @param t The first argument to partially apply to the function
+     * @param value The second argument to partially apply to the function
+     * @return A partial application of this function.
+     */
+    @Nonnull
+    default ToShortFunction<U> partial(T t, short value) {
+        return u -> applyAsShort(t, u, value);
+    }
+
+    /**
+     * Applies this function partially to three arguments. The result is an operation of arity {@code 0}.
+     *
+     * @param t The first argument to partially apply to the function
+     * @param u The second argument to partially apply to the function
+     * @param value The third argument to partially apply to the function
+     * @return A partial application of this function.
+     */
+    @Nonnull
+    default ShortSupplier partial(T t, U u, short value) {
+        return () -> applyAsShort(t, u, value);
     }
 
     /**

@@ -21,6 +21,7 @@ import at.gridtec.lambda4j.function.primitives.ShortFunction;
 import at.gridtec.lambda4j.function.primitives.to.ToShortFunction;
 import at.gridtec.lambda4j.function.primitives.to.bi.ToShortBiFunction;
 import at.gridtec.lambda4j.operators.unary.ShortUnaryOperator;
+import at.gridtec.lambda4j.supplier.ShortSupplier;
 
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
@@ -201,6 +202,40 @@ public interface ToShortObjShortFunction<T> {
     default ObjShortConsumer<T> consume(@Nonnull final ShortConsumer consumer) {
         Objects.requireNonNull(consumer);
         return (t, value) -> consumer.accept(applyAsShort(t, value));
+    }
+
+    /**
+     * Applies this function partially to one argument. The result is a function of arity {@code 1};
+     *
+     * @param t The argument to partially apply to the function
+     * @return A partial application of this function.
+     */
+    @Nonnull
+    default ShortUnaryOperator partial(T t) {
+        return value -> applyAsShort(t, value);
+    }
+
+    /**
+     * Applies this function partially to one argument. The result is a function of arity {@code 1};
+     *
+     * @param value The argument to partially apply to the function
+     * @return A partial application of this function.
+     */
+    @Nonnull
+    default ToShortFunction<T> partial(short value) {
+        return t -> applyAsShort(t, value);
+    }
+
+    /**
+     * Applies this function partially to two arguments. The result is a function of arity {@code 0}.
+     *
+     * @param t The first argument to partially apply to the function
+     * @param value The second argument to partially apply to the function
+     * @return A partial application of this function.
+     */
+    @Nonnull
+    default ShortSupplier partial(T t, short value) {
+        return () -> applyAsShort(t, value);
     }
 
     /**

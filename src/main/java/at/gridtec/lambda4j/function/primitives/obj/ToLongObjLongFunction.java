@@ -22,6 +22,7 @@ import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.function.LongConsumer;
 import java.util.function.LongFunction;
+import java.util.function.LongSupplier;
 import java.util.function.LongUnaryOperator;
 import java.util.function.ObjLongConsumer;
 import java.util.function.ToLongBiFunction;
@@ -56,6 +57,7 @@ public interface ToLongObjLongFunction<T> {
         Objects.requireNonNull(function);
         return function.applyAsLong(t, value);
     }
+
     /**
      * Creates a {@link ToLongObjLongFunction} which uses the {@code first} parameter of this one as argument for the
      * given {@link ToLongFunction}.
@@ -199,6 +201,40 @@ public interface ToLongObjLongFunction<T> {
     default ObjLongConsumer<T> consume(@Nonnull final LongConsumer consumer) {
         Objects.requireNonNull(consumer);
         return (t, value) -> consumer.accept(applyAsLong(t, value));
+    }
+
+    /**
+     * Applies this function partially to one argument. The result is a function of arity {@code 1};
+     *
+     * @param t The argument to partially apply to the function
+     * @return A partial application of this function.
+     */
+    @Nonnull
+    default LongUnaryOperator partial(T t) {
+        return value -> applyAsLong(t, value);
+    }
+
+    /**
+     * Applies this function partially to one argument. The result is a function of arity {@code 1};
+     *
+     * @param value The argument to partially apply to the function
+     * @return A partial application of this function.
+     */
+    @Nonnull
+    default ToLongFunction<T> partial(long value) {
+        return t -> applyAsLong(t, value);
+    }
+
+    /**
+     * Applies this function partially to two arguments. The result is a function of arity {@code 0}.
+     *
+     * @param t The first argument to partially apply to the function
+     * @param value The second argument to partially apply to the function
+     * @return A partial application of this function.
+     */
+    @Nonnull
+    default LongSupplier partial(T t, long value) {
+        return () -> applyAsLong(t, value);
     }
 
     /**

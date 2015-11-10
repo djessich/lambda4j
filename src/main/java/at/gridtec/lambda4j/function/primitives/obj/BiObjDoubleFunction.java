@@ -23,10 +23,12 @@ import org.apache.commons.lang3.tuple.Pair;
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import java.util.Objects;
+import java.util.function.BiFunction;
 import java.util.function.Consumer;
 import java.util.function.DoubleFunction;
 import java.util.function.DoubleUnaryOperator;
 import java.util.function.Function;
+import java.util.function.Supplier;
 import java.util.function.ToDoubleFunction;
 import java.util.function.UnaryOperator;
 
@@ -256,6 +258,65 @@ public interface BiObjDoubleFunction<T, U, R> {
     }
 
     /**
+     * Applies this function partially to one argument. The result is a function of arity {@code 2};
+     *
+     * @param t The argument to partially apply to the function
+     * @return A partial application of this function.
+     */
+    @Nonnull
+    default ObjDoubleFunction<U, R> partial(T t) {
+        return (u, value) -> apply(t, u, value);
+    }
+
+    /**
+     * Applies this function partially to one argument. The result is a function of arity {@code 2};
+     *
+     * @param value The argument to partially apply to the function
+     * @return A partial application of this function.
+     */
+    @Nonnull
+    default BiFunction<T, U, R> partial(double value) {
+        return (t, u) -> apply(t, u, value);
+    }
+
+    /**
+     * Applies this function partially to two arguments. The result is a function of arity {@code 1}.
+     *
+     * @param t The first argument to partially apply to the function
+     * @param u The second argument to partially apply to the function
+     * @return A partial application of this function.
+     */
+    @Nonnull
+    default DoubleFunction<R> partial(T t, U u) {
+        return value -> apply(t, u, value);
+    }
+
+    /**
+     * Applies this function partially to two arguments. The result is a function of arity {@code 1}.
+     *
+     * @param t The first argument to partially apply to the function
+     * @param value The second argument to partially apply to the function
+     * @return A partial application of this function.
+     */
+    @Nonnull
+    default Function<U, R> partial(T t, double value) {
+        return u -> apply(t, u, value);
+    }
+
+    /**
+     * Applies this function partially to three arguments. The result is an operation of arity {@code 0}.
+     *
+     * @param t The first argument to partially apply to the function
+     * @param u The second argument to partially apply to the function
+     * @param value The third argument to partially apply to the function
+     * @return A partial application of this function.
+     */
+    @Nonnull
+    default Supplier<R> partial(T t, U u, double value) {
+        return () -> apply(t, u, value);
+    }
+
+    /**
      * Returns a tupled version of this function.
      *
      * @return A tupled version of this function.
@@ -264,6 +325,7 @@ public interface BiObjDoubleFunction<T, U, R> {
     default ObjDoubleFunction<Pair<T, U>, R> tupled() {
         return this::apply;
     }
+
     /**
      * Returns a composed {@link TriFunction} which represents this {@link ObjDoubleFunction}. Thereby the primitive
      * input argument for this function is autoboxed.

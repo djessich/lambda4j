@@ -27,7 +27,9 @@ import java.util.Objects;
 import java.util.function.Function;
 import java.util.function.LongConsumer;
 import java.util.function.LongFunction;
+import java.util.function.LongSupplier;
 import java.util.function.LongUnaryOperator;
+import java.util.function.ToLongBiFunction;
 import java.util.function.ToLongFunction;
 import java.util.function.UnaryOperator;
 
@@ -248,6 +250,65 @@ public interface ToLongBiObjLongFunction<T, U> {
     default BiObjLongConsumer<T, U> consume(@Nonnull final LongConsumer consumer) {
         Objects.requireNonNull(consumer);
         return (t, u, value) -> consumer.accept(applyAsLong(t, u, value));
+    }
+
+    /**
+     * Applies this function partially to one argument. The result is a function of arity {@code 2};
+     *
+     * @param t The argument to partially apply to the function
+     * @return A partial application of this function.
+     */
+    @Nonnull
+    default ToLongObjLongFunction<U> partial(T t) {
+        return (u, value) -> applyAsLong(t, u, value);
+    }
+
+    /**
+     * Applies this function partially to one argument. The result is a function of arity {@code 2};
+     *
+     * @param value The argument to partially apply to the function
+     * @return A partial application of this function.
+     */
+    @Nonnull
+    default ToLongBiFunction<T, U> partial(long value) {
+        return (t, u) -> applyAsLong(t, u, value);
+    }
+
+    /**
+     * Applies this function partially to two arguments. The result is a function of arity {@code 1}.
+     *
+     * @param t The first argument to partially apply to the function
+     * @param u The second argument to partially apply to the function
+     * @return A partial application of this function.
+     */
+    @Nonnull
+    default LongUnaryOperator partial(T t, U u) {
+        return value -> applyAsLong(t, u, value);
+    }
+
+    /**
+     * Applies this function partially to two arguments. The result is a function of arity {@code 1}.
+     *
+     * @param t The first argument to partially apply to the function
+     * @param value The second argument to partially apply to the function
+     * @return A partial application of this function.
+     */
+    @Nonnull
+    default ToLongFunction<U> partial(T t, long value) {
+        return u -> applyAsLong(t, u, value);
+    }
+
+    /**
+     * Applies this function partially to three arguments. The result is an operation of arity {@code 0}.
+     *
+     * @param t The first argument to partially apply to the function
+     * @param u The second argument to partially apply to the function
+     * @param value The third argument to partially apply to the function
+     * @return A partial application of this function.
+     */
+    @Nonnull
+    default LongSupplier partial(T t, U u, long value) {
+        return () -> applyAsLong(t, u, value);
     }
 
     /**

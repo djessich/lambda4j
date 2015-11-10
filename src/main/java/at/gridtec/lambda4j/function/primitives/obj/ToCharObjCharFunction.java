@@ -21,6 +21,7 @@ import at.gridtec.lambda4j.function.primitives.CharFunction;
 import at.gridtec.lambda4j.function.primitives.to.ToCharFunction;
 import at.gridtec.lambda4j.function.primitives.to.bi.ToCharBiFunction;
 import at.gridtec.lambda4j.operators.unary.CharUnaryOperator;
+import at.gridtec.lambda4j.supplier.CharSupplier;
 
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
@@ -57,6 +58,7 @@ public interface ToCharObjCharFunction<T> {
         Objects.requireNonNull(function);
         return function.applyAsChar(t, value);
     }
+
     /**
      * Creates a {@link ToCharObjCharFunction} which uses the {@code first} parameter of this one as argument for the
      * given {@link ToCharFunction}.
@@ -200,6 +202,40 @@ public interface ToCharObjCharFunction<T> {
     default ObjCharConsumer<T> consume(@Nonnull final CharConsumer consumer) {
         Objects.requireNonNull(consumer);
         return (t, value) -> consumer.accept(applyAsChar(t, value));
+    }
+
+    /**
+     * Applies this function partially to one argument. The result is a function of arity {@code 1};
+     *
+     * @param t The argument to partially apply to the function
+     * @return A partial application of this function.
+     */
+    @Nonnull
+    default CharUnaryOperator partial(T t) {
+        return value -> applyAsChar(t, value);
+    }
+
+    /**
+     * Applies this function partially to one argument. The result is a function of arity {@code 1};
+     *
+     * @param value The argument to partially apply to the function
+     * @return A partial application of this function.
+     */
+    @Nonnull
+    default ToCharFunction<T> partial(char value) {
+        return t -> applyAsChar(t, value);
+    }
+
+    /**
+     * Applies this function partially to two arguments. The result is a function of arity {@code 0}.
+     *
+     * @param t The first argument to partially apply to the function
+     * @param value The second argument to partially apply to the function
+     * @return A partial application of this function.
+     */
+    @Nonnull
+    default CharSupplier partial(T t, char value) {
+        return () -> applyAsChar(t, value);
     }
 
     /**

@@ -22,6 +22,7 @@ import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.function.IntConsumer;
 import java.util.function.IntFunction;
+import java.util.function.IntSupplier;
 import java.util.function.IntUnaryOperator;
 import java.util.function.ObjIntConsumer;
 import java.util.function.ToIntBiFunction;
@@ -200,6 +201,40 @@ public interface ToIntObjIntFunction<T> {
     default ObjIntConsumer<T> consume(@Nonnull final IntConsumer consumer) {
         Objects.requireNonNull(consumer);
         return (t, value) -> consumer.accept(applyAsInt(t, value));
+    }
+
+    /**
+     * Applies this function partially to one argument. The result is a function of arity {@code 1};
+     *
+     * @param t The argument to partially apply to the function
+     * @return A partial application of this function.
+     */
+    @Nonnull
+    default IntUnaryOperator partial(T t) {
+        return value -> applyAsInt(t, value);
+    }
+
+    /**
+     * Applies this function partially to one argument. The result is a function of arity {@code 1};
+     *
+     * @param value The argument to partially apply to the function
+     * @return A partial application of this function.
+     */
+    @Nonnull
+    default ToIntFunction<T> partial(int value) {
+        return t -> applyAsInt(t, value);
+    }
+
+    /**
+     * Applies this function partially to two arguments. The result is a function of arity {@code 0}.
+     *
+     * @param t The first argument to partially apply to the function
+     * @param value The second argument to partially apply to the function
+     * @return A partial application of this function.
+     */
+    @Nonnull
+    default IntSupplier partial(T t, int value) {
+        return () -> applyAsInt(t, value);
     }
 
     /**

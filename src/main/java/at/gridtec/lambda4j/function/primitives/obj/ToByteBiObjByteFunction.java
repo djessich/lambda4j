@@ -20,8 +20,10 @@ import at.gridtec.lambda4j.consumer.primitives.obj.BiObjByteConsumer;
 import at.gridtec.lambda4j.function.TriFunction;
 import at.gridtec.lambda4j.function.primitives.ByteFunction;
 import at.gridtec.lambda4j.function.primitives.to.ToByteFunction;
+import at.gridtec.lambda4j.function.primitives.to.bi.ToByteBiFunction;
 import at.gridtec.lambda4j.function.primitives.to.tri.ToByteTriFunction;
 import at.gridtec.lambda4j.operators.unary.ByteUnaryOperator;
+import at.gridtec.lambda4j.supplier.ByteSupplier;
 
 import org.apache.commons.lang3.tuple.Pair;
 
@@ -248,6 +250,65 @@ public interface ToByteBiObjByteFunction<T, U> {
     default BiObjByteConsumer<T, U> consume(@Nonnull final ByteConsumer consumer) {
         Objects.requireNonNull(consumer);
         return (t, u, value) -> consumer.accept(applyAsByte(t, u, value));
+    }
+
+    /**
+     * Applies this function partially to one argument. The result is a function of arity {@code 2};
+     *
+     * @param t The argument to partially apply to the function
+     * @return A partial application of this function.
+     */
+    @Nonnull
+    default ToByteObjByteFunction<U> partial(T t) {
+        return (u, value) -> applyAsByte(t, u, value);
+    }
+
+    /**
+     * Applies this function partially to one argument. The result is a function of arity {@code 2};
+     *
+     * @param value The argument to partially apply to the function
+     * @return A partial application of this function.
+     */
+    @Nonnull
+    default ToByteBiFunction<T, U> partial(byte value) {
+        return (t, u) -> applyAsByte(t, u, value);
+    }
+
+    /**
+     * Applies this function partially to two arguments. The result is a function of arity {@code 1}.
+     *
+     * @param t The first argument to partially apply to the function
+     * @param u The second argument to partially apply to the function
+     * @return A partial application of this function.
+     */
+    @Nonnull
+    default ByteUnaryOperator partial(T t, U u) {
+        return value -> applyAsByte(t, u, value);
+    }
+
+    /**
+     * Applies this function partially to two arguments. The result is a function of arity {@code 1}.
+     *
+     * @param t The first argument to partially apply to the function
+     * @param value The second argument to partially apply to the function
+     * @return A partial application of this function.
+     */
+    @Nonnull
+    default ToByteFunction<U> partial(T t, byte value) {
+        return u -> applyAsByte(t, u, value);
+    }
+
+    /**
+     * Applies this function partially to three arguments. The result is an operation of arity {@code 0}.
+     *
+     * @param t The first argument to partially apply to the function
+     * @param u The second argument to partially apply to the function
+     * @param value The third argument to partially apply to the function
+     * @return A partial application of this function.
+     */
+    @Nonnull
+    default ByteSupplier partial(T t, U u, byte value) {
+        return () -> applyAsByte(t, u, value);
     }
 
     /**

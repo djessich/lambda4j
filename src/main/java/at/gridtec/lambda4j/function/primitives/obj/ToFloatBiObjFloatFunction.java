@@ -20,8 +20,10 @@ import at.gridtec.lambda4j.consumer.primitives.obj.BiObjFloatConsumer;
 import at.gridtec.lambda4j.function.TriFunction;
 import at.gridtec.lambda4j.function.primitives.FloatFunction;
 import at.gridtec.lambda4j.function.primitives.to.ToFloatFunction;
+import at.gridtec.lambda4j.function.primitives.to.bi.ToFloatBiFunction;
 import at.gridtec.lambda4j.function.primitives.to.tri.ToFloatTriFunction;
 import at.gridtec.lambda4j.operators.unary.FloatUnaryOperator;
+import at.gridtec.lambda4j.supplier.FloatSupplier;
 
 import org.apache.commons.lang3.tuple.Pair;
 
@@ -249,6 +251,65 @@ public interface ToFloatBiObjFloatFunction<T, U> {
     default BiObjFloatConsumer<T, U> consume(@Nonnull final FloatConsumer consumer) {
         Objects.requireNonNull(consumer);
         return (t, u, value) -> consumer.accept(applyAsFloat(t, u, value));
+    }
+
+    /**
+     * Applies this function partially to one argument. The result is a function of arity {@code 2};
+     *
+     * @param t The argument to partially apply to the function
+     * @return A partial application of this function.
+     */
+    @Nonnull
+    default ToFloatObjFloatFunction<U> partial(T t) {
+        return (u, value) -> applyAsFloat(t, u, value);
+    }
+
+    /**
+     * Applies this function partially to one argument. The result is a function of arity {@code 2};
+     *
+     * @param value The argument to partially apply to the function
+     * @return A partial application of this function.
+     */
+    @Nonnull
+    default ToFloatBiFunction<T, U> partial(float value) {
+        return (t, u) -> applyAsFloat(t, u, value);
+    }
+
+    /**
+     * Applies this function partially to two arguments. The result is a function of arity {@code 1}.
+     *
+     * @param t The first argument to partially apply to the function
+     * @param u The second argument to partially apply to the function
+     * @return A partial application of this function.
+     */
+    @Nonnull
+    default FloatUnaryOperator partial(T t, U u) {
+        return value -> applyAsFloat(t, u, value);
+    }
+
+    /**
+     * Applies this function partially to two arguments. The result is a function of arity {@code 1}.
+     *
+     * @param t The first argument to partially apply to the function
+     * @param value The second argument to partially apply to the function
+     * @return A partial application of this function.
+     */
+    @Nonnull
+    default ToFloatFunction<U> partial(T t, float value) {
+        return u -> applyAsFloat(t, u, value);
+    }
+
+    /**
+     * Applies this function partially to three arguments. The result is an operation of arity {@code 0}.
+     *
+     * @param t The first argument to partially apply to the function
+     * @param u The second argument to partially apply to the function
+     * @param value The third argument to partially apply to the function
+     * @return A partial application of this function.
+     */
+    @Nonnull
+    default FloatSupplier partial(T t, U u, float value) {
+        return () -> applyAsFloat(t, u, value);
     }
 
     /**

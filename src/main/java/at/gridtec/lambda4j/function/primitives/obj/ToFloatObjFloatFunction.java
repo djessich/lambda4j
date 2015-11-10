@@ -21,6 +21,7 @@ import at.gridtec.lambda4j.function.primitives.FloatFunction;
 import at.gridtec.lambda4j.function.primitives.to.ToFloatFunction;
 import at.gridtec.lambda4j.function.primitives.to.bi.ToFloatBiFunction;
 import at.gridtec.lambda4j.operators.unary.FloatUnaryOperator;
+import at.gridtec.lambda4j.supplier.FloatSupplier;
 
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
@@ -201,6 +202,40 @@ public interface ToFloatObjFloatFunction<T> {
     default ObjFloatConsumer<T> consume(@Nonnull final FloatConsumer consumer) {
         Objects.requireNonNull(consumer);
         return (t, value) -> consumer.accept(applyAsFloat(t, value));
+    }
+
+    /**
+     * Applies this function partially to one argument. The result is a function of arity {@code 1};
+     *
+     * @param t The argument to partially apply to the function
+     * @return A partial application of this function.
+     */
+    @Nonnull
+    default FloatUnaryOperator partial(T t) {
+        return value -> applyAsFloat(t, value);
+    }
+
+    /**
+     * Applies this function partially to one argument. The result is a function of arity {@code 1};
+     *
+     * @param value The argument to partially apply to the function
+     * @return A partial application of this function.
+     */
+    @Nonnull
+    default ToFloatFunction<T> partial(float value) {
+        return t -> applyAsFloat(t, value);
+    }
+
+    /**
+     * Applies this function partially to two arguments. The result is a function of arity {@code 0}.
+     *
+     * @param t The first argument to partially apply to the function
+     * @param value The second argument to partially apply to the function
+     * @return A partial application of this function.
+     */
+    @Nonnull
+    default FloatSupplier partial(T t, float value) {
+        return () -> applyAsFloat(t, value);
     }
 
     /**

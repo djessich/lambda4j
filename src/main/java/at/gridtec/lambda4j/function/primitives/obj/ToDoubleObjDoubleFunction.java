@@ -21,6 +21,7 @@ import java.util.Objects;
 import java.util.function.BiFunction;
 import java.util.function.DoubleConsumer;
 import java.util.function.DoubleFunction;
+import java.util.function.DoubleSupplier;
 import java.util.function.DoubleUnaryOperator;
 import java.util.function.Function;
 import java.util.function.ObjDoubleConsumer;
@@ -56,6 +57,7 @@ public interface ToDoubleObjDoubleFunction<T> {
         Objects.requireNonNull(function);
         return function.applyAsDouble(t, value);
     }
+
     /**
      * Creates a {@link ToDoubleObjDoubleFunction} which uses the {@code first} parameter of this one as argument for
      * the given {@link ToDoubleFunction}.
@@ -199,6 +201,40 @@ public interface ToDoubleObjDoubleFunction<T> {
     default ObjDoubleConsumer<T> consume(@Nonnull final DoubleConsumer consumer) {
         Objects.requireNonNull(consumer);
         return (t, value) -> consumer.accept(applyAsDouble(t, value));
+    }
+
+    /**
+     * Applies this function partially to one argument. The result is a function of arity {@code 1};
+     *
+     * @param t The argument to partially apply to the function
+     * @return A partial application of this function.
+     */
+    @Nonnull
+    default DoubleUnaryOperator partial(T t) {
+        return value -> applyAsDouble(t, value);
+    }
+
+    /**
+     * Applies this function partially to one argument. The result is a function of arity {@code 1};
+     *
+     * @param value The argument to partially apply to the function
+     * @return A partial application of this function.
+     */
+    @Nonnull
+    default ToDoubleFunction<T> partial(double value) {
+        return t -> applyAsDouble(t, value);
+    }
+
+    /**
+     * Applies this function partially to two arguments. The result is a function of arity {@code 0}.
+     *
+     * @param t The first argument to partially apply to the function
+     * @param value The second argument to partially apply to the function
+     * @return A partial application of this function.
+     */
+    @Nonnull
+    default DoubleSupplier partial(T t, double value) {
+        return () -> applyAsDouble(t, value);
     }
 
     /**

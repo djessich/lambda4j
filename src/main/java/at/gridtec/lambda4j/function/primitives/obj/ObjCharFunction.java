@@ -27,6 +27,7 @@ import java.util.Optional;
 import java.util.function.BiFunction;
 import java.util.function.Consumer;
 import java.util.function.Function;
+import java.util.function.Supplier;
 import java.util.function.UnaryOperator;
 
 /**
@@ -205,6 +206,40 @@ public interface ObjCharFunction<T, R> {
     default ObjCharConsumer<T> consume(@Nonnull final Consumer<? super R> consumer) {
         Objects.requireNonNull(consumer);
         return (t, value) -> consumer.accept(apply(t, value));
+    }
+
+    /**
+     * Applies this function partially to one argument. The result is a function of arity {@code 1};
+     *
+     * @param t The argument to partially apply to the function
+     * @return A partial application of this function.
+     */
+    @Nonnull
+    default CharFunction<R> partial(T t) {
+        return value -> apply(t, value);
+    }
+
+    /**
+     * Applies this function partially to one argument. The result is a function of arity {@code 1};
+     *
+     * @param value The argument to partially apply to the function
+     * @return A partial application of this function.
+     */
+    @Nonnull
+    default Function<T, R> partial(char value) {
+        return t -> apply(t, value);
+    }
+
+    /**
+     * Applies this function partially to two arguments. The result is a function of arity {@code 0}.
+     *
+     * @param t The first argument to partially apply to the function
+     * @param value The second argument to partially apply to the function
+     * @return A partial application of this function.
+     */
+    @Nonnull
+    default Supplier<R> partial(T t, char value) {
+        return () -> apply(t, value);
     }
 
     /**

@@ -27,6 +27,7 @@ import java.util.Optional;
 import java.util.function.BiFunction;
 import java.util.function.Consumer;
 import java.util.function.Function;
+import java.util.function.Supplier;
 import java.util.function.UnaryOperator;
 
 /**
@@ -208,6 +209,40 @@ public interface ObjFloatFunction<T, R> {
     }
 
     /**
+     * Applies this function partially to one argument. The result is a function of arity {@code 1};
+     *
+     * @param t The argument to partially apply to the function
+     * @return A partial application of this function.
+     */
+    @Nonnull
+    default FloatFunction<R> partial(T t) {
+        return value -> apply(t, value);
+    }
+
+    /**
+     * Applies this function partially to one argument. The result is a function of arity {@code 1};
+     *
+     * @param value The argument to partially apply to the function
+     * @return A partial application of this function.
+     */
+    @Nonnull
+    default Function<T, R> partial(float value) {
+        return t -> apply(t, value);
+    }
+
+    /**
+     * Applies this function partially to two arguments. The result is a function of arity {@code 0}.
+     *
+     * @param t The first argument to partially apply to the function
+     * @param value The second argument to partially apply to the function
+     * @return A partial application of this function.
+     */
+    @Nonnull
+    default Supplier<R> partial(T t, float value) {
+        return () -> apply(t, value);
+    }
+
+    /**
      * Converts this function to an equal function, which ensures that its result is not {@code null} using {@link
      * Optional}. This method mainly exists to avoid unnecessary {@code NullPointerException}s through referencing
      * {@code null} from this function.
@@ -218,6 +253,7 @@ public interface ObjFloatFunction<T, R> {
     default ObjFloatFunction<T, Optional<R>> nonNull() {
         return (t, value) -> Optional.ofNullable(apply(t, value));
     }
+
     /**
      * Returns a composed {@link BiFunction} which represents this {@link ObjFloatFunction}. Thereby the primitive input
      * argument for this function is autoboxed. This method is just convenience to provide the ability to use this

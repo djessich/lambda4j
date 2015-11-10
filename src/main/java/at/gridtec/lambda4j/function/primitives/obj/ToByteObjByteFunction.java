@@ -21,6 +21,7 @@ import at.gridtec.lambda4j.function.primitives.ByteFunction;
 import at.gridtec.lambda4j.function.primitives.to.ToByteFunction;
 import at.gridtec.lambda4j.function.primitives.to.bi.ToByteBiFunction;
 import at.gridtec.lambda4j.operators.unary.ByteUnaryOperator;
+import at.gridtec.lambda4j.supplier.ByteSupplier;
 
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
@@ -57,6 +58,7 @@ public interface ToByteObjByteFunction<T> {
         Objects.requireNonNull(function);
         return function.applyAsByte(t, value);
     }
+
     /**
      * Creates a {@link ToByteObjByteFunction} which uses the {@code first} parameter of this one as argument for the
      * given {@link ToByteFunction}.
@@ -200,6 +202,40 @@ public interface ToByteObjByteFunction<T> {
     default ObjByteConsumer<T> consume(@Nonnull final ByteConsumer consumer) {
         Objects.requireNonNull(consumer);
         return (t, value) -> consumer.accept(applyAsByte(t, value));
+    }
+
+    /**
+     * Applies this function partially to one argument. The result is a function of arity {@code 1};
+     *
+     * @param t The argument to partially apply to the function
+     * @return A partial application of this function.
+     */
+    @Nonnull
+    default ByteUnaryOperator partial(T t) {
+        return value -> applyAsByte(t, value);
+    }
+
+    /**
+     * Applies this function partially to one argument. The result is a function of arity {@code 1};
+     *
+     * @param value The argument to partially apply to the function
+     * @return A partial application of this function.
+     */
+    @Nonnull
+    default ToByteFunction<T> partial(byte value) {
+        return t -> applyAsByte(t, value);
+    }
+
+    /**
+     * Applies this function partially to two arguments. The result is a function of arity {@code 0}.
+     *
+     * @param t The first argument to partially apply to the function
+     * @param value The second argument to partially apply to the function
+     * @return A partial application of this function.
+     */
+    @Nonnull
+    default ByteSupplier partial(T t, byte value) {
+        return () -> applyAsByte(t, value);
     }
 
     /**

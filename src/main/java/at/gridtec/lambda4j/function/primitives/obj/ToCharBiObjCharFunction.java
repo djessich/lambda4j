@@ -20,8 +20,10 @@ import at.gridtec.lambda4j.consumer.primitives.obj.BiObjCharConsumer;
 import at.gridtec.lambda4j.function.TriFunction;
 import at.gridtec.lambda4j.function.primitives.CharFunction;
 import at.gridtec.lambda4j.function.primitives.to.ToCharFunction;
+import at.gridtec.lambda4j.function.primitives.to.bi.ToCharBiFunction;
 import at.gridtec.lambda4j.function.primitives.to.tri.ToCharTriFunction;
 import at.gridtec.lambda4j.operators.unary.CharUnaryOperator;
+import at.gridtec.lambda4j.supplier.CharSupplier;
 
 import org.apache.commons.lang3.tuple.Pair;
 
@@ -251,6 +253,65 @@ public interface ToCharBiObjCharFunction<T, U> {
     }
 
     /**
+     * Applies this function partially to one argument. The result is a function of arity {@code 2};
+     *
+     * @param t The argument to partially apply to the function
+     * @return A partial application of this function.
+     */
+    @Nonnull
+    default ToCharObjCharFunction<U> partial(T t) {
+        return (u, value) -> applyAsChar(t, u, value);
+    }
+
+    /**
+     * Applies this function partially to one argument. The result is a function of arity {@code 2};
+     *
+     * @param value The argument to partially apply to the function
+     * @return A partial application of this function.
+     */
+    @Nonnull
+    default ToCharBiFunction<T, U> partial(char value) {
+        return (t, u) -> applyAsChar(t, u, value);
+    }
+
+    /**
+     * Applies this function partially to two arguments. The result is a function of arity {@code 1}.
+     *
+     * @param t The first argument to partially apply to the function
+     * @param u The second argument to partially apply to the function
+     * @return A partial application of this function.
+     */
+    @Nonnull
+    default CharUnaryOperator partial(T t, U u) {
+        return value -> applyAsChar(t, u, value);
+    }
+
+    /**
+     * Applies this function partially to two arguments. The result is a function of arity {@code 1}.
+     *
+     * @param t The first argument to partially apply to the function
+     * @param value The second argument to partially apply to the function
+     * @return A partial application of this function.
+     */
+    @Nonnull
+    default ToCharFunction<U> partial(T t, char value) {
+        return u -> applyAsChar(t, u, value);
+    }
+
+    /**
+     * Applies this function partially to three arguments. The result is an operation of arity {@code 0}.
+     *
+     * @param t The first argument to partially apply to the function
+     * @param u The second argument to partially apply to the function
+     * @param value The third argument to partially apply to the function
+     * @return A partial application of this function.
+     */
+    @Nonnull
+    default CharSupplier partial(T t, U u, char value) {
+        return () -> applyAsChar(t, u, value);
+    }
+
+    /**
      * Returns a tupled version of this function.
      *
      * @return A tupled version of this function.
@@ -259,6 +320,7 @@ public interface ToCharBiObjCharFunction<T, U> {
     default ToCharObjCharFunction<Pair<T, U>> tupled() {
         return this::applyAsChar;
     }
+
     /**
      * Returns a composed {@link TriFunction} which represents this {@link ObjCharFunction}. Thereby the primitive input
      * argument for this function is autoboxed.
