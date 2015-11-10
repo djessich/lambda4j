@@ -23,6 +23,7 @@ import at.gridtec.lambda4j.function.primitives.to.ToCharFunction;
 import at.gridtec.lambda4j.function.primitives.to.ToShortFunction;
 import at.gridtec.lambda4j.operators.unary.CharUnaryOperator;
 import at.gridtec.lambda4j.operators.unary.ShortUnaryOperator;
+import at.gridtec.lambda4j.supplier.ShortSupplier;
 
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
@@ -302,6 +303,16 @@ public interface CharToShortFunction {
         return value -> consumer.accept(applyAsShort(value));
     }
 
+    /**
+     * Applies this function partially to one argument. The result is an operation of arity {@code 0}.
+     *
+     * @param value The argument to partially apply to the function
+     * @return A partial application of this function.
+     */
+    @Nonnull
+    default ShortSupplier partial(char value) {
+        return () -> applyAsShort(value);
+    }
     /**
      * Returns a composed {@link Function} which represents this {@link CharToShortFunction}. Thereby the primitive
      * input argument for this function is autoboxed. This method is just convenience to provide the ability to use this

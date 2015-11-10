@@ -23,6 +23,7 @@ import at.gridtec.lambda4j.function.primitives.to.ToFloatFunction;
 import at.gridtec.lambda4j.function.primitives.to.ToShortFunction;
 import at.gridtec.lambda4j.operators.unary.FloatUnaryOperator;
 import at.gridtec.lambda4j.operators.unary.ShortUnaryOperator;
+import at.gridtec.lambda4j.supplier.FloatSupplier;
 
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
@@ -300,6 +301,17 @@ public interface ShortToFloatFunction {
     default ShortConsumer consume(@Nonnull final FloatConsumer consumer) {
         Objects.requireNonNull(consumer);
         return value -> consumer.accept(applyAsFloat(value));
+    }
+
+    /**
+     * Applies this function partially to one argument. The result is an operation of arity {@code 0}.
+     *
+     * @param value The argument to partially apply to the function
+     * @return A partial application of this function.
+     */
+    @Nonnull
+    default FloatSupplier partial(short value) {
+        return () -> applyAsFloat(value);
     }
 
     /**

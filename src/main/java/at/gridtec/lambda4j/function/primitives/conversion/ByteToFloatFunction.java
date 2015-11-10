@@ -23,6 +23,7 @@ import at.gridtec.lambda4j.function.primitives.to.ToByteFunction;
 import at.gridtec.lambda4j.function.primitives.to.ToFloatFunction;
 import at.gridtec.lambda4j.operators.unary.ByteUnaryOperator;
 import at.gridtec.lambda4j.operators.unary.FloatUnaryOperator;
+import at.gridtec.lambda4j.supplier.FloatSupplier;
 
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
@@ -302,6 +303,16 @@ public interface ByteToFloatFunction {
         return value -> consumer.accept(applyAsFloat(value));
     }
 
+    /**
+     * Applies this function partially to one argument. The result is an operation of arity {@code 0}.
+     *
+     * @param value The argument to partially apply to the function
+     * @return A partial application of this function.
+     */
+    @Nonnull
+    default FloatSupplier partial(byte value) {
+        return () -> applyAsFloat(value);
+    }
     /**
      * Returns a composed {@link Function} which represents this {@link ByteToFloatFunction}. Thereby the primitive
      * input argument for this function is autoboxed. This method is just convenience to provide the ability to use this

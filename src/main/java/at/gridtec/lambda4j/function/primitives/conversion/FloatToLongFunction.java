@@ -26,6 +26,7 @@ import java.util.Objects;
 import java.util.function.Function;
 import java.util.function.LongConsumer;
 import java.util.function.LongFunction;
+import java.util.function.LongSupplier;
 import java.util.function.LongToDoubleFunction;
 import java.util.function.LongToIntFunction;
 import java.util.function.LongUnaryOperator;
@@ -304,6 +305,16 @@ public interface FloatToLongFunction {
         return value -> consumer.accept(applyAsLong(value));
     }
 
+    /**
+     * Applies this function partially to one argument. The result is an operation of arity {@code 0}.
+     *
+     * @param value The argument to partially apply to the function
+     * @return A partial application of this function.
+     */
+    @Nonnull
+    default LongSupplier partial(float value) {
+        return () -> applyAsLong(value);
+    }
     /**
      * Returns a composed {@link Function} which represents this {@link FloatToLongFunction}. Thereby the primitive
      * input argument for this function is autoboxed. This method is just convenience to provide the ability to use this

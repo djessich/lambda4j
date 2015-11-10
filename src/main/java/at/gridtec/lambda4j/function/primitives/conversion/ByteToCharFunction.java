@@ -23,6 +23,7 @@ import at.gridtec.lambda4j.function.primitives.to.ToByteFunction;
 import at.gridtec.lambda4j.function.primitives.to.ToCharFunction;
 import at.gridtec.lambda4j.operators.unary.ByteUnaryOperator;
 import at.gridtec.lambda4j.operators.unary.CharUnaryOperator;
+import at.gridtec.lambda4j.supplier.CharSupplier;
 
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
@@ -300,6 +301,17 @@ public interface ByteToCharFunction {
     default ByteConsumer consume(@Nonnull final CharConsumer consumer) {
         Objects.requireNonNull(consumer);
         return value -> consumer.accept(applyAsChar(value));
+    }
+
+    /**
+     * Applies this function partially to one argument. The result is an operation of arity {@code 0}.
+     *
+     * @param value The argument to partially apply to the function
+     * @return A partial application of this function.
+     */
+    @Nonnull
+    default CharSupplier partial(byte value) {
+        return () -> applyAsChar(value);
     }
 
     /**

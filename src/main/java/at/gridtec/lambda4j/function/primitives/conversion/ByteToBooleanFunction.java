@@ -26,6 +26,7 @@ import at.gridtec.lambda4j.operators.unary.ByteUnaryOperator;
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import java.util.Objects;
+import java.util.function.BooleanSupplier;
 import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.function.UnaryOperator;
@@ -300,6 +301,17 @@ public interface ByteToBooleanFunction {
     default ByteConsumer consume(@Nonnull final BooleanConsumer consumer) {
         Objects.requireNonNull(consumer);
         return value -> consumer.accept(applyAsBoolean(value));
+    }
+
+    /**
+     * Applies this function partially to one argument. The result is an operation of arity {@code 0}.
+     *
+     * @param value The argument to partially apply to the function
+     * @return A partial application of this function.
+     */
+    @Nonnull
+    default BooleanSupplier partial(byte value) {
+        return () -> applyAsBoolean(value);
     }
 
     /**

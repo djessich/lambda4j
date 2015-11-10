@@ -26,6 +26,7 @@ import java.util.Objects;
 import java.util.function.Function;
 import java.util.function.LongConsumer;
 import java.util.function.LongFunction;
+import java.util.function.LongSupplier;
 import java.util.function.LongToDoubleFunction;
 import java.util.function.LongToIntFunction;
 import java.util.function.LongUnaryOperator;
@@ -302,6 +303,17 @@ public interface CharToLongFunction {
     default CharConsumer consume(@Nonnull final LongConsumer consumer) {
         Objects.requireNonNull(consumer);
         return value -> consumer.accept(applyAsLong(value));
+    }
+
+    /**
+     * Applies this function partially to one argument. The result is an operation of arity {@code 0}.
+     *
+     * @param value The argument to partially apply to the function
+     * @return A partial application of this function.
+     */
+    @Nonnull
+    default LongSupplier partial(char value) {
+        return () -> applyAsLong(value);
     }
 
     /**

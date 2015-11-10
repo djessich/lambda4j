@@ -25,6 +25,7 @@ import javax.annotation.Nonnull;
 import java.util.Objects;
 import java.util.function.DoubleConsumer;
 import java.util.function.DoubleFunction;
+import java.util.function.DoubleSupplier;
 import java.util.function.DoubleToIntFunction;
 import java.util.function.DoubleToLongFunction;
 import java.util.function.DoubleUnaryOperator;
@@ -302,6 +303,17 @@ public interface CharToDoubleFunction {
     default CharConsumer consume(@Nonnull final DoubleConsumer consumer) {
         Objects.requireNonNull(consumer);
         return value -> consumer.accept(applyAsDouble(value));
+    }
+
+    /**
+     * Applies this function partially to one argument. The result is an operation of arity {@code 0}.
+     *
+     * @param value The argument to partially apply to the function
+     * @return A partial application of this function.
+     */
+    @Nonnull
+    default DoubleSupplier partial(char value) {
+        return () -> applyAsDouble(value);
     }
 
     /**

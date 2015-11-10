@@ -26,6 +26,7 @@ import java.util.Objects;
 import java.util.function.Function;
 import java.util.function.IntConsumer;
 import java.util.function.IntFunction;
+import java.util.function.IntSupplier;
 import java.util.function.IntToDoubleFunction;
 import java.util.function.IntToLongFunction;
 import java.util.function.IntUnaryOperator;
@@ -302,6 +303,17 @@ public interface ByteToIntFunction {
     default ByteConsumer consume(@Nonnull final IntConsumer consumer) {
         Objects.requireNonNull(consumer);
         return value -> consumer.accept(applyAsInt(value));
+    }
+
+    /**
+     * Applies this function partially to one argument. The result is an operation of arity {@code 0}.
+     *
+     * @param value The argument to partially apply to the function
+     * @return A partial application of this function.
+     */
+    @Nonnull
+    default IntSupplier partial(byte value) {
+        return () -> applyAsInt(value);
     }
 
     /**

@@ -23,6 +23,7 @@ import at.gridtec.lambda4j.function.primitives.to.ToByteFunction;
 import at.gridtec.lambda4j.function.primitives.to.ToShortFunction;
 import at.gridtec.lambda4j.operators.unary.ByteUnaryOperator;
 import at.gridtec.lambda4j.operators.unary.ShortUnaryOperator;
+import at.gridtec.lambda4j.supplier.ByteSupplier;
 
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
@@ -300,6 +301,17 @@ public interface ShortToByteFunction {
     default ShortConsumer consume(@Nonnull final ByteConsumer consumer) {
         Objects.requireNonNull(consumer);
         return value -> consumer.accept(applyAsByte(value));
+    }
+
+    /**
+     * Applies this function partially to one argument. The result is an operation of arity {@code 0}.
+     *
+     * @param value The argument to partially apply to the function
+     * @return A partial application of this function.
+     */
+    @Nonnull
+    default ByteSupplier partial(short value) {
+        return () -> applyAsByte(value);
     }
 
     /**
