@@ -27,12 +27,14 @@ import at.gridtec.lambda4j.function.primitives.conversion.ShortToDoubleFunction;
 import at.gridtec.lambda4j.function.primitives.conversion.ShortToFloatFunction;
 import at.gridtec.lambda4j.function.primitives.conversion.ShortToIntFunction;
 import at.gridtec.lambda4j.function.primitives.conversion.ShortToLongFunction;
+import at.gridtec.lambda4j.function.primitives.conversion.bi.BiCharToShortFunction;
 import at.gridtec.lambda4j.function.primitives.to.ToCharFunction;
 import at.gridtec.lambda4j.function.primitives.to.tri.ToShortTriFunction;
 import at.gridtec.lambda4j.function.primitives.tri.CharTriFunction;
 import at.gridtec.lambda4j.operators.ternary.CharTernaryOperator;
 import at.gridtec.lambda4j.operators.unary.CharUnaryOperator;
 import at.gridtec.lambda4j.operators.unary.ShortUnaryOperator;
+import at.gridtec.lambda4j.supplier.ShortSupplier;
 
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
@@ -370,6 +372,42 @@ public interface TriCharToShortFunction {
     default CharTriConsumer consume(@Nonnull final ShortConsumer consumer) {
         Objects.requireNonNull(consumer);
         return (value1, value2, value3) -> consumer.accept(applyAsShort(value1, value2, value3));
+    }
+
+    /**
+     * Applies this function partially to one argument. The result is a function of arity {@code 2};
+     *
+     * @param value1 The argument to partially apply to the function
+     * @return A partial application of this function.
+     */
+    @Nonnull
+    default BiCharToShortFunction partial(char value1) {
+        return (value2, value3) -> applyAsShort(value1, value2, value3);
+    }
+
+    /**
+     * Applies this function partially to two arguments. The result is a function of arity {@code 1}.
+     *
+     * @param value1 The first argument to partially apply to the function
+     * @param value2 The second argument to partially apply to the function
+     * @return A partial application of this function.
+     */
+    @Nonnull
+    default CharToShortFunction partial(char value1, char value2) {
+        return value3 -> applyAsShort(value1, value2, value3);
+    }
+
+    /**
+     * Applies this function partially to three arguments. The result is an operation of arity {@code 0}.
+     *
+     * @param value1 The first argument to partially apply to the function
+     * @param value2 The second argument to partially apply to the function
+     * @param value3 The third argument to partially apply to the function
+     * @return A partial application of this function.
+     */
+    @Nonnull
+    default ShortSupplier partial(char value1, char value2, char value3) {
+        return () -> applyAsShort(value1, value2, value3);
     }
 
     /**

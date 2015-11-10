@@ -27,10 +27,12 @@ import at.gridtec.lambda4j.function.primitives.conversion.CharToIntFunction;
 import at.gridtec.lambda4j.function.primitives.conversion.CharToLongFunction;
 import at.gridtec.lambda4j.function.primitives.conversion.CharToShortFunction;
 import at.gridtec.lambda4j.function.primitives.conversion.IntToCharFunction;
+import at.gridtec.lambda4j.function.primitives.conversion.bi.BiIntToCharFunction;
 import at.gridtec.lambda4j.function.primitives.to.tri.ToCharTriFunction;
 import at.gridtec.lambda4j.function.primitives.tri.IntTriFunction;
 import at.gridtec.lambda4j.operators.ternary.IntTernaryOperator;
 import at.gridtec.lambda4j.operators.unary.CharUnaryOperator;
+import at.gridtec.lambda4j.supplier.CharSupplier;
 
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
@@ -370,6 +372,42 @@ public interface TriIntToCharFunction {
     default IntTriConsumer consume(@Nonnull final CharConsumer consumer) {
         Objects.requireNonNull(consumer);
         return (value1, value2, value3) -> consumer.accept(applyAsChar(value1, value2, value3));
+    }
+
+    /**
+     * Applies this function partially to one argument. The result is a function of arity {@code 2};
+     *
+     * @param value1 The argument to partially apply to the function
+     * @return A partial application of this function.
+     */
+    @Nonnull
+    default BiIntToCharFunction partial(int value1) {
+        return (value2, value3) -> applyAsChar(value1, value2, value3);
+    }
+
+    /**
+     * Applies this function partially to two arguments. The result is a function of arity {@code 1}.
+     *
+     * @param value1 The first argument to partially apply to the function
+     * @param value2 The second argument to partially apply to the function
+     * @return A partial application of this function.
+     */
+    @Nonnull
+    default IntToCharFunction partial(int value1, int value2) {
+        return value3 -> applyAsChar(value1, value2, value3);
+    }
+
+    /**
+     * Applies this function partially to three arguments. The result is an operation of arity {@code 0}.
+     *
+     * @param value1 The first argument to partially apply to the function
+     * @param value2 The second argument to partially apply to the function
+     * @param value3 The third argument to partially apply to the function
+     * @return A partial application of this function.
+     */
+    @Nonnull
+    default CharSupplier partial(int value1, int value2, int value3) {
+        return () -> applyAsChar(value1, value2, value3);
     }
 
     /**

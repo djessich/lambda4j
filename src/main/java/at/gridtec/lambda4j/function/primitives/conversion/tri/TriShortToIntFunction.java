@@ -23,6 +23,7 @@ import at.gridtec.lambda4j.function.primitives.conversion.IntToCharFunction;
 import at.gridtec.lambda4j.function.primitives.conversion.IntToFloatFunction;
 import at.gridtec.lambda4j.function.primitives.conversion.IntToShortFunction;
 import at.gridtec.lambda4j.function.primitives.conversion.ShortToIntFunction;
+import at.gridtec.lambda4j.function.primitives.conversion.bi.BiShortToIntFunction;
 import at.gridtec.lambda4j.function.primitives.to.ToShortFunction;
 import at.gridtec.lambda4j.function.primitives.to.tri.ToIntTriFunction;
 import at.gridtec.lambda4j.function.primitives.tri.ShortTriFunction;
@@ -34,6 +35,7 @@ import javax.annotation.Nonnull;
 import java.util.Objects;
 import java.util.function.IntConsumer;
 import java.util.function.IntFunction;
+import java.util.function.IntSupplier;
 import java.util.function.IntToDoubleFunction;
 import java.util.function.IntToLongFunction;
 import java.util.function.IntUnaryOperator;
@@ -370,6 +372,42 @@ public interface TriShortToIntFunction {
     default ShortTriConsumer consume(@Nonnull final IntConsumer consumer) {
         Objects.requireNonNull(consumer);
         return (value1, value2, value3) -> consumer.accept(applyAsInt(value1, value2, value3));
+    }
+
+    /**
+     * Applies this function partially to one argument. The result is a function of arity {@code 2};
+     *
+     * @param value1 The argument to partially apply to the function
+     * @return A partial application of this function.
+     */
+    @Nonnull
+    default BiShortToIntFunction partial(short value1) {
+        return (value2, value3) -> applyAsInt(value1, value2, value3);
+    }
+
+    /**
+     * Applies this function partially to two arguments. The result is a function of arity {@code 1}.
+     *
+     * @param value1 The first argument to partially apply to the function
+     * @param value2 The second argument to partially apply to the function
+     * @return A partial application of this function.
+     */
+    @Nonnull
+    default ShortToIntFunction partial(short value1, short value2) {
+        return value3 -> applyAsInt(value1, value2, value3);
+    }
+
+    /**
+     * Applies this function partially to three arguments. The result is an operation of arity {@code 0}.
+     *
+     * @param value1 The first argument to partially apply to the function
+     * @param value2 The second argument to partially apply to the function
+     * @param value3 The third argument to partially apply to the function
+     * @return A partial application of this function.
+     */
+    @Nonnull
+    default IntSupplier partial(short value1, short value2, short value3) {
+        return () -> applyAsInt(value1, value2, value3);
     }
 
     /**

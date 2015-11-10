@@ -22,6 +22,7 @@ import at.gridtec.lambda4j.function.primitives.conversion.IntToByteFunction;
 import at.gridtec.lambda4j.function.primitives.conversion.IntToCharFunction;
 import at.gridtec.lambda4j.function.primitives.conversion.IntToFloatFunction;
 import at.gridtec.lambda4j.function.primitives.conversion.IntToShortFunction;
+import at.gridtec.lambda4j.function.primitives.conversion.bi.BiDoubleToIntFunction;
 import at.gridtec.lambda4j.function.primitives.to.tri.ToIntTriFunction;
 import at.gridtec.lambda4j.function.primitives.tri.DoubleTriFunction;
 import at.gridtec.lambda4j.operators.ternary.DoubleTernaryOperator;
@@ -33,6 +34,7 @@ import java.util.function.DoubleToIntFunction;
 import java.util.function.DoubleUnaryOperator;
 import java.util.function.IntConsumer;
 import java.util.function.IntFunction;
+import java.util.function.IntSupplier;
 import java.util.function.IntToDoubleFunction;
 import java.util.function.IntToLongFunction;
 import java.util.function.IntUnaryOperator;
@@ -370,6 +372,42 @@ public interface TriDoubleToIntFunction {
     default DoubleTriConsumer consume(@Nonnull final IntConsumer consumer) {
         Objects.requireNonNull(consumer);
         return (value1, value2, value3) -> consumer.accept(applyAsInt(value1, value2, value3));
+    }
+
+    /**
+     * Applies this function partially to one argument. The result is a function of arity {@code 2};
+     *
+     * @param value1 The argument to partially apply to the function
+     * @return A partial application of this function.
+     */
+    @Nonnull
+    default BiDoubleToIntFunction partial(double value1) {
+        return (value2, value3) -> applyAsInt(value1, value2, value3);
+    }
+
+    /**
+     * Applies this function partially to two arguments. The result is a function of arity {@code 1}.
+     *
+     * @param value1 The first argument to partially apply to the function
+     * @param value2 The second argument to partially apply to the function
+     * @return A partial application of this function.
+     */
+    @Nonnull
+    default DoubleToIntFunction partial(double value1, double value2) {
+        return value3 -> applyAsInt(value1, value2, value3);
+    }
+
+    /**
+     * Applies this function partially to three arguments. The result is an operation of arity {@code 0}.
+     *
+     * @param value1 The first argument to partially apply to the function
+     * @param value2 The second argument to partially apply to the function
+     * @param value3 The third argument to partially apply to the function
+     * @return A partial application of this function.
+     */
+    @Nonnull
+    default IntSupplier partial(double value1, double value2, double value3) {
+        return () -> applyAsInt(value1, value2, value3);
     }
 
     /**

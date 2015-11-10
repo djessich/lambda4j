@@ -23,6 +23,7 @@ import at.gridtec.lambda4j.function.primitives.conversion.DoubleToByteFunction;
 import at.gridtec.lambda4j.function.primitives.conversion.DoubleToCharFunction;
 import at.gridtec.lambda4j.function.primitives.conversion.DoubleToFloatFunction;
 import at.gridtec.lambda4j.function.primitives.conversion.DoubleToShortFunction;
+import at.gridtec.lambda4j.function.primitives.conversion.bi.BiBooleanToDoubleFunction;
 import at.gridtec.lambda4j.function.primitives.to.tri.ToDoubleTriFunction;
 import at.gridtec.lambda4j.function.primitives.tri.BooleanTriFunction;
 import at.gridtec.lambda4j.operators.ternary.BooleanTernaryOperator;
@@ -33,6 +34,7 @@ import javax.annotation.Nonnull;
 import java.util.Objects;
 import java.util.function.DoubleConsumer;
 import java.util.function.DoubleFunction;
+import java.util.function.DoubleSupplier;
 import java.util.function.DoubleToIntFunction;
 import java.util.function.DoubleToLongFunction;
 import java.util.function.DoubleUnaryOperator;
@@ -371,6 +373,42 @@ public interface TriBooleanToDoubleFunction {
     default BooleanTriConsumer consume(@Nonnull final DoubleConsumer consumer) {
         Objects.requireNonNull(consumer);
         return (value1, value2, value3) -> consumer.accept(applyAsDouble(value1, value2, value3));
+    }
+
+    /**
+     * Applies this function partially to one argument. The result is a function of arity {@code 2};
+     *
+     * @param value1 The argument to partially apply to the function
+     * @return A partial application of this function.
+     */
+    @Nonnull
+    default BiBooleanToDoubleFunction partial(boolean value1) {
+        return (value2, value3) -> applyAsDouble(value1, value2, value3);
+    }
+
+    /**
+     * Applies this function partially to two arguments. The result is a function of arity {@code 1}.
+     *
+     * @param value1 The first argument to partially apply to the function
+     * @param value2 The second argument to partially apply to the function
+     * @return A partial application of this function.
+     */
+    @Nonnull
+    default BooleanToDoubleFunction partial(boolean value1, boolean value2) {
+        return value3 -> applyAsDouble(value1, value2, value3);
+    }
+
+    /**
+     * Applies this function partially to three arguments. The result is an operation of arity {@code 0}.
+     *
+     * @param value1 The first argument to partially apply to the function
+     * @param value2 The second argument to partially apply to the function
+     * @param value3 The third argument to partially apply to the function
+     * @return A partial application of this function.
+     */
+    @Nonnull
+    default DoubleSupplier partial(boolean value1, boolean value2, boolean value3) {
+        return () -> applyAsDouble(value1, value2, value3);
     }
 
     /**

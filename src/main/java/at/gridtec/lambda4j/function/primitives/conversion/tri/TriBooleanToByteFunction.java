@@ -27,11 +27,13 @@ import at.gridtec.lambda4j.function.primitives.conversion.ByteToFloatFunction;
 import at.gridtec.lambda4j.function.primitives.conversion.ByteToIntFunction;
 import at.gridtec.lambda4j.function.primitives.conversion.ByteToLongFunction;
 import at.gridtec.lambda4j.function.primitives.conversion.ByteToShortFunction;
+import at.gridtec.lambda4j.function.primitives.conversion.bi.BiBooleanToByteFunction;
 import at.gridtec.lambda4j.function.primitives.to.tri.ToByteTriFunction;
 import at.gridtec.lambda4j.function.primitives.tri.BooleanTriFunction;
 import at.gridtec.lambda4j.operators.ternary.BooleanTernaryOperator;
 import at.gridtec.lambda4j.operators.unary.BooleanUnaryOperator;
 import at.gridtec.lambda4j.operators.unary.ByteUnaryOperator;
+import at.gridtec.lambda4j.supplier.ByteSupplier;
 
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
@@ -370,6 +372,42 @@ public interface TriBooleanToByteFunction {
     default BooleanTriConsumer consume(@Nonnull final ByteConsumer consumer) {
         Objects.requireNonNull(consumer);
         return (value1, value2, value3) -> consumer.accept(applyAsByte(value1, value2, value3));
+    }
+
+    /**
+     * Applies this function partially to one argument. The result is a function of arity {@code 2};
+     *
+     * @param value1 The argument to partially apply to the function
+     * @return A partial application of this function.
+     */
+    @Nonnull
+    default BiBooleanToByteFunction partial(boolean value1) {
+        return (value2, value3) -> applyAsByte(value1, value2, value3);
+    }
+
+    /**
+     * Applies this function partially to two arguments. The result is a function of arity {@code 1}.
+     *
+     * @param value1 The first argument to partially apply to the function
+     * @param value2 The second argument to partially apply to the function
+     * @return A partial application of this function.
+     */
+    @Nonnull
+    default BooleanToByteFunction partial(boolean value1, boolean value2) {
+        return value3 -> applyAsByte(value1, value2, value3);
+    }
+
+    /**
+     * Applies this function partially to three arguments. The result is an operation of arity {@code 0}.
+     *
+     * @param value1 The first argument to partially apply to the function
+     * @param value2 The second argument to partially apply to the function
+     * @param value3 The third argument to partially apply to the function
+     * @return A partial application of this function.
+     */
+    @Nonnull
+    default ByteSupplier partial(boolean value1, boolean value2, boolean value3) {
+        return () -> applyAsByte(value1, value2, value3);
     }
 
     /**

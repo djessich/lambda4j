@@ -27,10 +27,12 @@ import at.gridtec.lambda4j.function.primitives.conversion.FloatToDoubleFunction;
 import at.gridtec.lambda4j.function.primitives.conversion.FloatToIntFunction;
 import at.gridtec.lambda4j.function.primitives.conversion.FloatToLongFunction;
 import at.gridtec.lambda4j.function.primitives.conversion.FloatToShortFunction;
+import at.gridtec.lambda4j.function.primitives.conversion.bi.BiDoubleToFloatFunction;
 import at.gridtec.lambda4j.function.primitives.to.tri.ToFloatTriFunction;
 import at.gridtec.lambda4j.function.primitives.tri.DoubleTriFunction;
 import at.gridtec.lambda4j.operators.ternary.DoubleTernaryOperator;
 import at.gridtec.lambda4j.operators.unary.FloatUnaryOperator;
+import at.gridtec.lambda4j.supplier.FloatSupplier;
 
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
@@ -370,6 +372,42 @@ public interface TriDoubleToFloatFunction {
     default DoubleTriConsumer consume(@Nonnull final FloatConsumer consumer) {
         Objects.requireNonNull(consumer);
         return (value1, value2, value3) -> consumer.accept(applyAsFloat(value1, value2, value3));
+    }
+
+    /**
+     * Applies this function partially to one argument. The result is a function of arity {@code 2};
+     *
+     * @param value1 The argument to partially apply to the function
+     * @return A partial application of this function.
+     */
+    @Nonnull
+    default BiDoubleToFloatFunction partial(double value1) {
+        return (value2, value3) -> applyAsFloat(value1, value2, value3);
+    }
+
+    /**
+     * Applies this function partially to two arguments. The result is a function of arity {@code 1}.
+     *
+     * @param value1 The first argument to partially apply to the function
+     * @param value2 The second argument to partially apply to the function
+     * @return A partial application of this function.
+     */
+    @Nonnull
+    default DoubleToFloatFunction partial(double value1, double value2) {
+        return value3 -> applyAsFloat(value1, value2, value3);
+    }
+
+    /**
+     * Applies this function partially to three arguments. The result is an operation of arity {@code 0}.
+     *
+     * @param value1 The first argument to partially apply to the function
+     * @param value2 The second argument to partially apply to the function
+     * @param value3 The third argument to partially apply to the function
+     * @return A partial application of this function.
+     */
+    @Nonnull
+    default FloatSupplier partial(double value1, double value2, double value3) {
+        return () -> applyAsFloat(value1, value2, value3);
     }
 
     /**

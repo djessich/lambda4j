@@ -23,6 +23,7 @@ import at.gridtec.lambda4j.function.primitives.conversion.DoubleToCharFunction;
 import at.gridtec.lambda4j.function.primitives.conversion.DoubleToFloatFunction;
 import at.gridtec.lambda4j.function.primitives.conversion.DoubleToShortFunction;
 import at.gridtec.lambda4j.function.primitives.conversion.ShortToDoubleFunction;
+import at.gridtec.lambda4j.function.primitives.conversion.bi.BiShortToDoubleFunction;
 import at.gridtec.lambda4j.function.primitives.to.ToShortFunction;
 import at.gridtec.lambda4j.function.primitives.to.tri.ToDoubleTriFunction;
 import at.gridtec.lambda4j.function.primitives.tri.ShortTriFunction;
@@ -34,6 +35,7 @@ import javax.annotation.Nonnull;
 import java.util.Objects;
 import java.util.function.DoubleConsumer;
 import java.util.function.DoubleFunction;
+import java.util.function.DoubleSupplier;
 import java.util.function.DoubleToIntFunction;
 import java.util.function.DoubleToLongFunction;
 import java.util.function.DoubleUnaryOperator;
@@ -370,6 +372,42 @@ public interface TriShortToDoubleFunction {
     default ShortTriConsumer consume(@Nonnull final DoubleConsumer consumer) {
         Objects.requireNonNull(consumer);
         return (value1, value2, value3) -> consumer.accept(applyAsDouble(value1, value2, value3));
+    }
+
+    /**
+     * Applies this function partially to one argument. The result is a function of arity {@code 2};
+     *
+     * @param value1 The argument to partially apply to the function
+     * @return A partial application of this function.
+     */
+    @Nonnull
+    default BiShortToDoubleFunction partial(short value1) {
+        return (value2, value3) -> applyAsDouble(value1, value2, value3);
+    }
+
+    /**
+     * Applies this function partially to two arguments. The result is a function of arity {@code 1}.
+     *
+     * @param value1 The first argument to partially apply to the function
+     * @param value2 The second argument to partially apply to the function
+     * @return A partial application of this function.
+     */
+    @Nonnull
+    default ShortToDoubleFunction partial(short value1, short value2) {
+        return value3 -> applyAsDouble(value1, value2, value3);
+    }
+
+    /**
+     * Applies this function partially to three arguments. The result is an operation of arity {@code 0}.
+     *
+     * @param value1 The first argument to partially apply to the function
+     * @param value2 The second argument to partially apply to the function
+     * @param value3 The third argument to partially apply to the function
+     * @return A partial application of this function.
+     */
+    @Nonnull
+    default DoubleSupplier partial(short value1, short value2, short value3) {
+        return () -> applyAsDouble(value1, value2, value3);
     }
 
     /**

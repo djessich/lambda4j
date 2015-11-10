@@ -23,6 +23,7 @@ import at.gridtec.lambda4j.function.primitives.conversion.LongToByteFunction;
 import at.gridtec.lambda4j.function.primitives.conversion.LongToCharFunction;
 import at.gridtec.lambda4j.function.primitives.conversion.LongToFloatFunction;
 import at.gridtec.lambda4j.function.primitives.conversion.LongToShortFunction;
+import at.gridtec.lambda4j.function.primitives.conversion.bi.BiFloatToLongFunction;
 import at.gridtec.lambda4j.function.primitives.to.ToFloatFunction;
 import at.gridtec.lambda4j.function.primitives.to.tri.ToLongTriFunction;
 import at.gridtec.lambda4j.function.primitives.tri.FloatTriFunction;
@@ -34,6 +35,7 @@ import javax.annotation.Nonnull;
 import java.util.Objects;
 import java.util.function.LongConsumer;
 import java.util.function.LongFunction;
+import java.util.function.LongSupplier;
 import java.util.function.LongToDoubleFunction;
 import java.util.function.LongToIntFunction;
 import java.util.function.LongUnaryOperator;
@@ -370,6 +372,42 @@ public interface TriFloatToLongFunction {
     default FloatTriConsumer consume(@Nonnull final LongConsumer consumer) {
         Objects.requireNonNull(consumer);
         return (value1, value2, value3) -> consumer.accept(applyAsLong(value1, value2, value3));
+    }
+
+    /**
+     * Applies this function partially to one argument. The result is a function of arity {@code 2};
+     *
+     * @param value1 The argument to partially apply to the function
+     * @return A partial application of this function.
+     */
+    @Nonnull
+    default BiFloatToLongFunction partial(float value1) {
+        return (value2, value3) -> applyAsLong(value1, value2, value3);
+    }
+
+    /**
+     * Applies this function partially to two arguments. The result is a function of arity {@code 1}.
+     *
+     * @param value1 The first argument to partially apply to the function
+     * @param value2 The second argument to partially apply to the function
+     * @return A partial application of this function.
+     */
+    @Nonnull
+    default FloatToLongFunction partial(float value1, float value2) {
+        return value3 -> applyAsLong(value1, value2, value3);
+    }
+
+    /**
+     * Applies this function partially to three arguments. The result is an operation of arity {@code 0}.
+     *
+     * @param value1 The first argument to partially apply to the function
+     * @param value2 The second argument to partially apply to the function
+     * @param value3 The third argument to partially apply to the function
+     * @return A partial application of this function.
+     */
+    @Nonnull
+    default LongSupplier partial(float value1, float value2, float value3) {
+        return () -> applyAsLong(value1, value2, value3);
     }
 
     /**
