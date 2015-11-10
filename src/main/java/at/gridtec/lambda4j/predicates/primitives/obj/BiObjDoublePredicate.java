@@ -24,6 +24,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.Objects;
 import java.util.function.BiPredicate;
+import java.util.function.BooleanSupplier;
 import java.util.function.DoublePredicate;
 import java.util.function.Predicate;
 
@@ -294,6 +295,65 @@ public interface BiObjDoublePredicate<T, U> {
     default BiObjDoublePredicate<T, U> xor(@Nonnull final BiObjDoublePredicate<? super T, ? super U> other) {
         Objects.requireNonNull(other);
         return (t, u, value) -> test(t, u, value) ^ other.test(t, u, value);
+    }
+
+    /**
+     * Applies this predicate partially to one argument. The result is a predicate of arity {@code 2};
+     *
+     * @param t The argument to partially apply to the predicate
+     * @return A partial application of this predicate.
+     */
+    @Nonnull
+    default ObjDoublePredicate<U> partial(T t) {
+        return (u, value) -> test(t, u, value);
+    }
+
+    /**
+     * Applies this predicate partially to one argument. The result is a predicate of arity {@code 2};
+     *
+     * @param value The argument to partially apply to the predicate
+     * @return A partial application of this predicate.
+     */
+    @Nonnull
+    default BiPredicate<T, U> partial(double value) {
+        return (t, u) -> test(t, u, value);
+    }
+
+    /**
+     * Applies this predicate partially to two arguments. The result is a predicate of arity {@code 1}.
+     *
+     * @param t The first argument to partially apply to the predicate
+     * @param u The second argument to partially apply to the predicate
+     * @return A partial application of this predicate.
+     */
+    @Nonnull
+    default DoublePredicate partial(T t, U u) {
+        return value -> test(t, u, value);
+    }
+
+    /**
+     * Applies this predicate partially to two arguments. The result is a predicate of arity {@code 1}.
+     *
+     * @param t The first argument to partially apply to the predicate
+     * @param value The second argument to partially apply to the predicate
+     * @return A partial application of this predicate.
+     */
+    @Nonnull
+    default Predicate<U> partial(T t, double value) {
+        return u -> test(t, u, value);
+    }
+
+    /**
+     * Applies this predicate partially to three arguments. The result is an operation of arity {@code 0}.
+     *
+     * @param t The first argument to partially apply to the predicate
+     * @param u The second argument to partially apply to the predicate
+     * @param value The third argument to partially apply to the predicate
+     * @return A partial application of this predicate.
+     */
+    @Nonnull
+    default BooleanSupplier partial(T t, U u, double value) {
+        return () -> test(t, u, value);
     }
 
     /**

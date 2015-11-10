@@ -22,6 +22,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.Objects;
 import java.util.function.BiPredicate;
+import java.util.function.BooleanSupplier;
 import java.util.function.Predicate;
 
 /**
@@ -242,6 +243,40 @@ public interface ObjFloatPredicate<T> {
     default ObjFloatPredicate<T> xor(@Nonnull final ObjFloatPredicate<? super T> other) {
         Objects.requireNonNull(other);
         return (t, value) -> test(t, value) ^ other.test(t, value);
+    }
+
+    /**
+     * Applies this predicate partially to one argument. The result is a predicate of arity {@code 1};
+     *
+     * @param t The argument to partially apply to the predicate
+     * @return A partial application of this predicate.
+     */
+    @Nonnull
+    default FloatPredicate partial(T t) {
+        return value -> test(t, value);
+    }
+
+    /**
+     * Applies this predicate partially to one argument. The result is a predicate of arity {@code 1};
+     *
+     * @param value The argument to partially apply to the predicate
+     * @return A partial application of this predicate.
+     */
+    @Nonnull
+    default Predicate<T> partial(byte value) {
+        return t -> test(t, value);
+    }
+
+    /**
+     * Applies this predicate partially to two arguments. The result is a predicate of arity {@code 0}.
+     *
+     * @param t The first argument to partially apply to the predicate
+     * @param value The second argument to partially apply to the predicate
+     * @return A partial application of this predicate.
+     */
+    @Nonnull
+    default BooleanSupplier partial(T t, byte value) {
+        return () -> test(t, value);
     }
 
     /**

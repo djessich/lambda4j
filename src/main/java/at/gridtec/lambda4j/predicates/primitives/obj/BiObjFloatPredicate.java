@@ -25,6 +25,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.Objects;
 import java.util.function.BiPredicate;
+import java.util.function.BooleanSupplier;
 import java.util.function.Predicate;
 
 /**
@@ -294,6 +295,65 @@ public interface BiObjFloatPredicate<T, U> {
     default BiObjFloatPredicate<T, U> xor(@Nonnull final BiObjFloatPredicate<? super T, ? super U> other) {
         Objects.requireNonNull(other);
         return (t, u, value) -> test(t, u, value) ^ other.test(t, u, value);
+    }
+
+    /**
+     * Applies this predicate partially to one argument. The result is a predicate of arity {@code 2};
+     *
+     * @param t The argument to partially apply to the predicate
+     * @return A partial application of this predicate.
+     */
+    @Nonnull
+    default ObjFloatPredicate<U> partial(T t) {
+        return (u, value) -> test(t, u, value);
+    }
+
+    /**
+     * Applies this predicate partially to one argument. The result is a predicate of arity {@code 2};
+     *
+     * @param value The argument to partially apply to the predicate
+     * @return A partial application of this predicate.
+     */
+    @Nonnull
+    default BiPredicate<T, U> partial(float value) {
+        return (t, u) -> test(t, u, value);
+    }
+
+    /**
+     * Applies this predicate partially to two arguments. The result is a predicate of arity {@code 1}.
+     *
+     * @param t The first argument to partially apply to the predicate
+     * @param u The second argument to partially apply to the predicate
+     * @return A partial application of this predicate.
+     */
+    @Nonnull
+    default FloatPredicate partial(T t, U u) {
+        return value -> test(t, u, value);
+    }
+
+    /**
+     * Applies this predicate partially to two arguments. The result is a predicate of arity {@code 1}.
+     *
+     * @param t The first argument to partially apply to the predicate
+     * @param value The second argument to partially apply to the predicate
+     * @return A partial application of this predicate.
+     */
+    @Nonnull
+    default Predicate<U> partial(T t, float value) {
+        return u -> test(t, u, value);
+    }
+
+    /**
+     * Applies this predicate partially to three arguments. The result is an operation of arity {@code 0}.
+     *
+     * @param t The first argument to partially apply to the predicate
+     * @param u The second argument to partially apply to the predicate
+     * @param value The third argument to partially apply to the predicate
+     * @return A partial application of this predicate.
+     */
+    @Nonnull
+    default BooleanSupplier partial(T t, U u, float value) {
+        return () -> test(t, u, value);
     }
 
     /**
