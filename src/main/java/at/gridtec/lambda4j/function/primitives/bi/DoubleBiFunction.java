@@ -369,7 +369,7 @@ public interface DoubleBiFunction<R> {
      */
     @Nonnull
     default DoubleFunction<R> partial(double value1) {
-        return (value2) -> apply(value1, value2);
+        return value2 -> apply(value1, value2);
     }
 
     /**

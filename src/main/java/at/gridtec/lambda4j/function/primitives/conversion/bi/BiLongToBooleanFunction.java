@@ -34,6 +34,7 @@ import javax.annotation.Nonnull;
 import java.util.Objects;
 import java.util.function.BiFunction;
 import java.util.function.BiPredicate;
+import java.util.function.BooleanSupplier;
 import java.util.function.LongBinaryOperator;
 import java.util.function.LongUnaryOperator;
 import java.util.function.ToLongFunction;
@@ -348,6 +349,29 @@ public interface BiLongToBooleanFunction {
     default LongBiConsumer consume(@Nonnull final BooleanConsumer consumer) {
         Objects.requireNonNull(consumer);
         return (value1, value2) -> consumer.accept(applyAsBoolean(value1, value2));
+    }
+
+    /**
+     * Applies this function partially to one argument. The result is a function of arity {@code 1};
+     *
+     * @param value1 The argument to partially apply to the function
+     * @return A partial application of this function.
+     */
+    @Nonnull
+    default LongToBooleanFunction partial(long value1) {
+        return value2 -> applyAsBoolean(value1, value2);
+    }
+
+    /**
+     * Applies this function partially to two arguments. The result is an operation of arity {@code 0}.
+     *
+     * @param value1 The first argument to partially apply to the function
+     * @param value2 The second argument to partially apply to the function
+     * @return A partial application of this function.
+     */
+    @Nonnull
+    default BooleanSupplier partial(long value1, long value2) {
+        return () -> applyAsBoolean(value1, value2);
     }
 
     /**

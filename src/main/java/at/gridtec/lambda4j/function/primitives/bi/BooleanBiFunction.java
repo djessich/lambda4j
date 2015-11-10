@@ -369,7 +369,7 @@ public interface BooleanBiFunction<R> {
      */
     @Nonnull
     default BooleanFunction<R> partial(boolean value1) {
-        return (value2) -> apply(value1, value2);
+        return value2 -> apply(value1, value2);
     }
 
     /**

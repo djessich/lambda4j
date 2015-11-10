@@ -369,7 +369,7 @@ public interface CharBiFunction<R> {
      */
     @Nonnull
     default CharFunction<R> partial(char value1) {
-        return (value2) -> apply(value1, value2);
+        return value2 -> apply(value1, value2);
     }
 
     /**

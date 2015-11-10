@@ -369,7 +369,7 @@ public interface ByteBiFunction<R> {
      */
     @Nonnull
     default ByteFunction<R> partial(byte value1) {
-        return (value2) -> apply(value1, value2);
+        return value2 -> apply(value1, value2);
     }
 
     /**

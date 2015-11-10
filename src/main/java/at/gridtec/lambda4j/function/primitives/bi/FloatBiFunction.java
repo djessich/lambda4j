@@ -369,7 +369,7 @@ public interface FloatBiFunction<R> {
      */
     @Nonnull
     default FloatFunction<R> partial(float value1) {
-        return (value2) -> apply(value1, value2);
+        return value2 -> apply(value1, value2);
     }
 
     /**

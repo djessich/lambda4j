@@ -369,7 +369,7 @@ public interface LongBiFunction<R> {
      */
     @Nonnull
     default LongFunction<R> partial(long value1) {
-        return (value2) -> apply(value1, value2);
+        return value2 -> apply(value1, value2);
     }
 
     /**

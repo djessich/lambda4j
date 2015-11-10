@@ -368,7 +368,7 @@ public interface IntBiFunction<R> {
      */
     @Nonnull
     default IntFunction<R> partial(int value1) {
-        return (value2) -> apply(value1, value2);
+        return value2 -> apply(value1, value2);
     }
 
     /**
