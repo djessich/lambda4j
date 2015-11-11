@@ -13,27 +13,9 @@
  * This software consists of voluntary contributions made by individuals on behalf
  * of Gridtec. For more information on Gridtec, please refer to www.gridtec.at homepage.
  */
-package at.gridtec.lambda4j;
-
-import javax.annotation.Nonnegative;
-import java.io.Serializable;
 
 /**
- * This is a general definition of lambdas of unknown parameters and return value. Also it does not matter if the
- * inheriting lambda is able to throw or not.
+ * This package provides additional primitive specializations of {@link java.util.function.Predicate} of one
+ * primitive-valued argument. This means that this package implements functions of arity {@code 1}.
  */
-public interface Lambda extends Serializable {
-
-    /**
-     * The <a href="https://docs.oracle.com/javase/8/docs/api/java/io/Serializable.html">serialVersionUID</a>.
-     */
-    long serialVersionUID = 1L;
-
-    /**
-     * Returns the number of arguments for this operation.
-     *
-     * @return The number of arguments for this operation.
-     */
-    @Nonnegative
-    int arity();
-}
+package at.gridtec.lambda4j.predicates.primitives;
