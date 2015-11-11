@@ -454,6 +454,15 @@ public interface ToCharTriFunction<T, U, V> {
     }
 
     /**
+     * Returns a reversed version of this function. This may be useful in recursive context.
+     *
+     * @return A reversed version of this function.
+     */
+    @Nonnull
+    default ToCharTriFunction<V, U, T> reversed() {
+        return (v, u, t) -> applyAsChar(t, u, v);
+    }
+    /**
      * Returns a composed {@link TriFunction} which represents this {@link ToCharTriFunction}. Thereby the primitive
      * input argument for this function is autoboxed.
      *

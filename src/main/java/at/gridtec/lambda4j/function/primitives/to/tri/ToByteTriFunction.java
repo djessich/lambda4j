@@ -454,6 +454,16 @@ public interface ToByteTriFunction<T, U, V> {
     }
 
     /**
+     * Returns a reversed version of this function. This may be useful in recursive context.
+     *
+     * @return A reversed version of this function.
+     */
+    @Nonnull
+    default ToByteTriFunction<V, U, T> reversed() {
+        return (v, u, t) -> applyAsByte(t, u, v);
+    }
+
+    /**
      * Returns a composed {@link TriFunction} which represents this {@link ToByteTriFunction}. Thereby the primitive
      * input argument for this function is autoboxed.
      *

@@ -454,6 +454,16 @@ public interface ToDoubleTriFunction<T, U, V> {
     }
 
     /**
+     * Returns a reversed version of this function. This may be useful in recursive context.
+     *
+     * @return A reversed version of this function.
+     */
+    @Nonnull
+    default ToDoubleTriFunction<V, U, T> reversed() {
+        return (v, u, t) -> applyAsDouble(t, u, v);
+    }
+
+    /**
      * Returns a composed {@link TriFunction} which represents this {@link ToDoubleTriFunction}. Thereby the primitive
      * input argument for this function is autoboxed.
      *

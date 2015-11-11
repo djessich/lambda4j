@@ -350,4 +350,14 @@ public interface TriPredicate<T, U, V> {
     default Predicate<Triple<T, U, V>> tupled() {
         return this::test;
     }
+
+    /**
+     * Returns a reversed version of this predicate. This may be useful in recursive context.
+     *
+     * @return A reversed version of this predicate.
+     */
+    @Nonnull
+    default TriPredicate<V, U, T> reversed() {
+        return (v, u, t) -> test(t, u, v);
+    }
 }

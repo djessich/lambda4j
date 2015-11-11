@@ -288,6 +288,16 @@ public interface TriFunction<T, U, V, R> {
     }
 
     /**
+     * Returns a reversed version of this function. This may be useful in recursive context.
+     *
+     * @return A reversed version of this function.
+     */
+    @Nonnull
+    default TriFunction<V, U, T, R> reversed() {
+        return (v, u, t) -> apply(t, u, v);
+    }
+
+    /**
      * Converts this function to an equal function, which ensures that its result is not {@code null} using {@link
      * Optional}. This method mainly exists to avoid unnecessary {@code NullPointerException}s through referencing
      * {@code null} from this function.

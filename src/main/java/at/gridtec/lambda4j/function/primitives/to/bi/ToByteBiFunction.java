@@ -410,6 +410,16 @@ public interface ToByteBiFunction<T, U> {
     }
 
     /**
+     * Returns a reversed version of this function. This may be useful in recursive context.
+     *
+     * @return A reversed version of this function.
+     */
+    @Nonnull
+    default ToByteBiFunction<U, T> reversed() {
+        return (u, t) -> applyAsByte(t, u);
+    }
+
+    /**
      * Returns a composed {@link BiFunction} which represents this {@link ToByteBiFunction}. Thereby the primitive input
      * argument for this function is autoboxed. This method is just convenience to provide the ability to use this
      * {@code ToByteBiFunction} with JRE specific methods, only accepting {@code BiFunction}.

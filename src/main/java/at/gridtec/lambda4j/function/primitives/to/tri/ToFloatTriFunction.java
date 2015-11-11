@@ -454,6 +454,16 @@ public interface ToFloatTriFunction<T, U, V> {
     }
 
     /**
+     * Returns a reversed version of this function. This may be useful in recursive context.
+     *
+     * @return A reversed version of this function.
+     */
+    @Nonnull
+    default ToFloatTriFunction<V, U, T> reversed() {
+        return (v, u, t) -> applyAsFloat(t, u, v);
+    }
+
+    /**
      * Returns a composed {@link TriFunction} which represents this {@link ToFloatTriFunction}. Thereby the primitive
      * input argument for this function is autoboxed.
      *

@@ -222,4 +222,14 @@ public interface TriConsumer<T, U, V> {
     default Consumer<Triple<T, U, V>> tupled() {
         return this::accept;
     }
+
+    /**
+     * Returns a reversed version of this operation. This may be useful in recursive context.
+     *
+     * @return A reversed version of this operation.
+     */
+    @Nonnull
+    default TriConsumer<V, U, T> reversed() {
+        return (v, u, t) -> accept(t, u, v);
+    }
 }

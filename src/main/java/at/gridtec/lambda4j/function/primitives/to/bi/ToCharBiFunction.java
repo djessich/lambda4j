@@ -410,6 +410,16 @@ public interface ToCharBiFunction<T, U> {
     }
 
     /**
+     * Returns a reversed version of this function. This may be useful in recursive context.
+     *
+     * @return A reversed version of this function.
+     */
+    @Nonnull
+    default ToCharBiFunction<U, T> reversed() {
+        return (u, t) -> applyAsChar(t, u);
+    }
+
+    /**
      * Returns a composed {@link BiFunction} which represents this {@link ToCharBiFunction}. Thereby the primitive input
      * argument for this function is autoboxed. This method is just convenience to provide the ability to use this
      * {@code ToCharBiFunction} with JRE specific methods, only accepting {@code BiFunction}.

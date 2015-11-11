@@ -454,6 +454,16 @@ public interface ToLongTriFunction<T, U, V> {
     }
 
     /**
+     * Returns a reversed version of this function. This may be useful in recursive context.
+     *
+     * @return A reversed version of this function.
+     */
+    @Nonnull
+    default ToLongTriFunction<V, U, T> reversed() {
+        return (v, u, t) -> applyAsLong(t, u, v);
+    }
+
+    /**
      * Returns a composed {@link TriFunction} which represents this {@link ToLongTriFunction}. Thereby the primitive
      * input argument for this function is autoboxed.
      *
