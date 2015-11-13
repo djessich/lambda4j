@@ -1,6 +1,7 @@
 ### Custom
 doc/
 javadoc/
+coverage/
 saves/
 logs/
 log/
