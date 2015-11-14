@@ -17,7 +17,6 @@ package at.gridtec.lambda4j.function.primitives.conversion.bi;
 
 import at.gridtec.lambda4j.consumer.primitives.bi.ShortBiConsumer;
 import at.gridtec.lambda4j.function.primitives.bi.ShortBiFunction;
-import at.gridtec.lambda4j.function.primitives.conversion.DoubleToBooleanFunction;
 import at.gridtec.lambda4j.function.primitives.conversion.DoubleToByteFunction;
 import at.gridtec.lambda4j.function.primitives.conversion.DoubleToCharFunction;
 import at.gridtec.lambda4j.function.primitives.conversion.DoubleToFloatFunction;
@@ -26,6 +25,7 @@ import at.gridtec.lambda4j.function.primitives.conversion.ShortToDoubleFunction;
 import at.gridtec.lambda4j.function.primitives.to.ToShortFunction;
 import at.gridtec.lambda4j.operators.binary.ShortBinaryOperator;
 import at.gridtec.lambda4j.operators.unary.ShortUnaryOperator;
+import at.gridtec.lambda4j.predicates.primitives.bi.ShortBiPredicate;
 
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
@@ -33,6 +33,7 @@ import java.util.Objects;
 import java.util.function.BiFunction;
 import java.util.function.DoubleConsumer;
 import java.util.function.DoubleFunction;
+import java.util.function.DoublePredicate;
 import java.util.function.DoubleSupplier;
 import java.util.function.DoubleToIntFunction;
 import java.util.function.DoubleToLongFunction;
@@ -192,21 +193,21 @@ public interface BiShortToDoubleFunction {
     }
 
     /**
-     * Returns a composed {@link BiShortToBooleanFunction} that first applies this function to its input, and then
-     * applies the {@code after} function to the result. If evaluation of either function throws an exception, it is
-     * relayed to the caller of the composed function. This method is just convenience, to provide the ability to
-     * transform this operation to an operation returning {@code boolean}.
+     * Returns a composed {@link ShortBiPredicate} that first applies this function to its input, and then applies the
+     * {@code after} function to the result. If evaluation of either function throws an exception, it is relayed to the
+     * caller of the composed function. This method is just convenience, to provide the ability to transform this
+     * operation to an operation returning {@code boolean}.
      *
      * @param after The function to apply after this function is applied
-     * @return A composed {@code BiShortToBooleanFunction} that first applies this function to its input, and then
-     * applies the {@code after} function to the result.
+     * @return A composed {@code ShortBiPredicate} that first applies this function to its input, and then applies the
+     * {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
      * @see #andThen(DoubleFunction)
      */
     @Nonnull
-    default BiShortToBooleanFunction andThenToBoolean(@Nonnull final DoubleToBooleanFunction after) {
+    default ShortBiPredicate andThenToBoolean(@Nonnull final DoublePredicate after) {
         Objects.requireNonNull(after);
-        return (value1, value2) -> after.applyAsBoolean(applyAsDouble(value1, value2));
+        return (value1, value2) -> after.test(applyAsDouble(value1, value2));
     }
 
     /**

@@ -19,6 +19,7 @@ import at.gridtec.lambda4j.consumer.primitives.FloatConsumer;
 import at.gridtec.lambda4j.function.primitives.FloatFunction;
 import at.gridtec.lambda4j.function.primitives.to.ToFloatFunction;
 import at.gridtec.lambda4j.operators.unary.FloatUnaryOperator;
+import at.gridtec.lambda4j.predicates.primitives.FloatPredicate;
 
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
@@ -26,6 +27,7 @@ import java.util.Objects;
 import java.util.function.Function;
 import java.util.function.IntConsumer;
 import java.util.function.IntFunction;
+import java.util.function.IntPredicate;
 import java.util.function.IntSupplier;
 import java.util.function.IntToDoubleFunction;
 import java.util.function.IntToLongFunction;
@@ -146,21 +148,21 @@ public interface FloatToIntFunction {
     }
 
     /**
-     * Returns a composed {@link FloatToBooleanFunction} that first applies this function to its input, and then applies
-     * the {@code after} function to the result. If evaluation of either function throws an exception, it is relayed to
-     * the caller of the composed function. This method is just convenience, to provide the ability to transform this
+     * Returns a composed {@link FloatPredicate} that first applies this function to its input, and then applies the
+     * {@code after} function to the result. If evaluation of either function throws an exception, it is relayed to the
+     * caller of the composed function. This method is just convenience, to provide the ability to transform this
      * operation to an operation returning {@code boolean}.
      *
      * @param after The function to apply after this function is applied
-     * @return A composed {@code FloatToBooleanFunction} that first applies this function to its input, and then applies
-     * the {@code after} function to the result.
+     * @return A composed {@code FloatPredicate} that first applies this function to its input, and then applies the
+     * {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
      * @see #andThen(IntFunction)
      */
     @Nonnull
-    default FloatToBooleanFunction andThenToBoolean(@Nonnull final IntToBooleanFunction after) {
+    default FloatPredicate andThenToBoolean(@Nonnull final IntPredicate after) {
         Objects.requireNonNull(after);
-        return value -> after.applyAsBoolean(applyAsInt(value));
+        return value -> after.test(applyAsInt(value));
     }
 
     /**

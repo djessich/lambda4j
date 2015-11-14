@@ -19,7 +19,6 @@ import at.gridtec.lambda4j.consumer.primitives.ByteConsumer;
 import at.gridtec.lambda4j.consumer.primitives.bi.DoubleBiConsumer;
 import at.gridtec.lambda4j.function.primitives.ByteFunction;
 import at.gridtec.lambda4j.function.primitives.bi.DoubleBiFunction;
-import at.gridtec.lambda4j.function.primitives.conversion.ByteToBooleanFunction;
 import at.gridtec.lambda4j.function.primitives.conversion.ByteToCharFunction;
 import at.gridtec.lambda4j.function.primitives.conversion.ByteToDoubleFunction;
 import at.gridtec.lambda4j.function.primitives.conversion.ByteToFloatFunction;
@@ -29,6 +28,8 @@ import at.gridtec.lambda4j.function.primitives.conversion.ByteToShortFunction;
 import at.gridtec.lambda4j.function.primitives.conversion.DoubleToByteFunction;
 import at.gridtec.lambda4j.function.primitives.to.bi.ToByteBiFunction;
 import at.gridtec.lambda4j.operators.unary.ByteUnaryOperator;
+import at.gridtec.lambda4j.predicates.primitives.BytePredicate;
+import at.gridtec.lambda4j.predicates.primitives.bi.DoubleBiPredicate;
 import at.gridtec.lambda4j.supplier.ByteSupplier;
 
 import javax.annotation.Nonnegative;
@@ -192,21 +193,21 @@ public interface BiDoubleToByteFunction {
     }
 
     /**
-     * Returns a composed {@link BiDoubleToBooleanFunction} that first applies this function to its input, and then
-     * applies the {@code after} function to the result. If evaluation of either function throws an exception, it is
-     * relayed to the caller of the composed function. This method is just convenience, to provide the ability to
-     * transform this operation to an operation returning {@code boolean}.
+     * Returns a composed {@link DoubleBiPredicate} that first applies this function to its input, and then applies the
+     * {@code after} function to the result. If evaluation of either function throws an exception, it is relayed to the
+     * caller of the composed function. This method is just convenience, to provide the ability to transform this
+     * operation to an operation returning {@code boolean}.
      *
      * @param after The function to apply after this function is applied
-     * @return A composed {@code BiDoubleToBooleanFunction} that first applies this function to its input, and then
-     * applies the {@code after} function to the result.
+     * @return A composed {@code DoubleBiPredicate} that first applies this function to its input, and then applies the
+     * {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
      * @see #andThen(ByteFunction)
      */
     @Nonnull
-    default BiDoubleToBooleanFunction andThenToBoolean(@Nonnull final ByteToBooleanFunction after) {
+    default DoubleBiPredicate andThenToBoolean(@Nonnull final BytePredicate after) {
         Objects.requireNonNull(after);
-        return (value1, value2) -> after.applyAsBoolean(applyAsByte(value1, value2));
+        return (value1, value2) -> after.test(applyAsByte(value1, value2));
     }
 
     /**

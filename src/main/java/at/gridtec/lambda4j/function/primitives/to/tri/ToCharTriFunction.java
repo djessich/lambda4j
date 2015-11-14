@@ -19,7 +19,6 @@ import at.gridtec.lambda4j.consumer.TriConsumer;
 import at.gridtec.lambda4j.consumer.primitives.CharConsumer;
 import at.gridtec.lambda4j.function.TriFunction;
 import at.gridtec.lambda4j.function.primitives.CharFunction;
-import at.gridtec.lambda4j.function.primitives.conversion.CharToBooleanFunction;
 import at.gridtec.lambda4j.function.primitives.conversion.CharToByteFunction;
 import at.gridtec.lambda4j.function.primitives.conversion.CharToDoubleFunction;
 import at.gridtec.lambda4j.function.primitives.conversion.CharToFloatFunction;
@@ -30,6 +29,7 @@ import at.gridtec.lambda4j.function.primitives.to.ToCharFunction;
 import at.gridtec.lambda4j.function.primitives.to.bi.ToCharBiFunction;
 import at.gridtec.lambda4j.operators.unary.CharUnaryOperator;
 import at.gridtec.lambda4j.predicates.TriPredicate;
+import at.gridtec.lambda4j.predicates.primitives.CharPredicate;
 import at.gridtec.lambda4j.supplier.CharSupplier;
 
 import org.apache.commons.lang3.tuple.Triple;
@@ -39,7 +39,6 @@ import javax.annotation.Nonnull;
 import java.util.Objects;
 import java.util.function.Function;
 import java.util.function.UnaryOperator;
-
 /**
  * Represents a function that produces a char-valued result from three arguments. This is the {@code char}-producing
  * primitive specialization for {@link TriFunction}.
@@ -259,9 +258,9 @@ public interface ToCharTriFunction<T, U, V> {
      * @see #andThen(CharFunction)
      */
     @Nonnull
-    default TriPredicate<T, U, V> andThenToBoolean(@Nonnull final CharToBooleanFunction after) {
+    default TriPredicate<T, U, V> andThenToBoolean(@Nonnull final CharPredicate after) {
         Objects.requireNonNull(after);
-        return (t, u, v) -> after.applyAsBoolean(applyAsChar(t, u, v));
+        return (t, u, v) -> after.test(applyAsChar(t, u, v));
     }
 
     /**
@@ -462,6 +461,7 @@ public interface ToCharTriFunction<T, U, V> {
     default ToCharTriFunction<V, U, T> reversed() {
         return (v, u, t) -> applyAsChar(t, u, v);
     }
+
     /**
      * Returns a composed {@link TriFunction} which represents this {@link ToCharTriFunction}. Thereby the primitive
      * input argument for this function is autoboxed.

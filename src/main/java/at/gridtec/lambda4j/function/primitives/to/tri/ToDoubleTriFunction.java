@@ -17,7 +17,6 @@ package at.gridtec.lambda4j.function.primitives.to.tri;
 
 import at.gridtec.lambda4j.consumer.TriConsumer;
 import at.gridtec.lambda4j.function.TriFunction;
-import at.gridtec.lambda4j.function.primitives.conversion.DoubleToBooleanFunction;
 import at.gridtec.lambda4j.function.primitives.conversion.DoubleToByteFunction;
 import at.gridtec.lambda4j.function.primitives.conversion.DoubleToCharFunction;
 import at.gridtec.lambda4j.function.primitives.conversion.DoubleToFloatFunction;
@@ -31,6 +30,7 @@ import javax.annotation.Nonnull;
 import java.util.Objects;
 import java.util.function.DoubleConsumer;
 import java.util.function.DoubleFunction;
+import java.util.function.DoublePredicate;
 import java.util.function.DoubleSupplier;
 import java.util.function.DoubleToIntFunction;
 import java.util.function.DoubleToLongFunction;
@@ -39,7 +39,6 @@ import java.util.function.Function;
 import java.util.function.ToDoubleBiFunction;
 import java.util.function.ToDoubleFunction;
 import java.util.function.UnaryOperator;
-
 /**
  * Represents a function that produces a double-valued result from three arguments. This is the {@code double}-producing
  * primitive specialization for {@link TriFunction}.
@@ -259,9 +258,9 @@ public interface ToDoubleTriFunction<T, U, V> {
      * @see #andThen(DoubleFunction)
      */
     @Nonnull
-    default TriPredicate<T, U, V> andThenToBoolean(@Nonnull final DoubleToBooleanFunction after) {
+    default TriPredicate<T, U, V> andThenToBoolean(@Nonnull final DoublePredicate after) {
         Objects.requireNonNull(after);
-        return (t, u, v) -> after.applyAsBoolean(applyAsDouble(t, u, v));
+        return (t, u, v) -> after.test(applyAsDouble(t, u, v));
     }
 
     /**

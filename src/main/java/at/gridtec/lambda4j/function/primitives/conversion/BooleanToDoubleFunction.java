@@ -24,6 +24,7 @@ import javax.annotation.Nonnull;
 import java.util.Objects;
 import java.util.function.DoubleConsumer;
 import java.util.function.DoubleFunction;
+import java.util.function.DoublePredicate;
 import java.util.function.DoubleSupplier;
 import java.util.function.DoubleToIntFunction;
 import java.util.function.DoubleToLongFunction;
@@ -158,9 +159,9 @@ public interface BooleanToDoubleFunction {
      * @see #andThen(DoubleFunction)
      */
     @Nonnull
-    default BooleanUnaryOperator andThenToBoolean(@Nonnull final DoubleToBooleanFunction after) {
+    default BooleanUnaryOperator andThenToBoolean(@Nonnull final DoublePredicate after) {
         Objects.requireNonNull(after);
-        return value -> after.applyAsBoolean(applyAsDouble(value));
+        return value -> after.test(applyAsDouble(value));
     }
 
     /**

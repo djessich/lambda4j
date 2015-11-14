@@ -16,12 +16,10 @@
 package at.gridtec.lambda4j.operators.ternary;
 
 import at.gridtec.lambda4j.consumer.primitives.tri.LongTriConsumer;
-import at.gridtec.lambda4j.function.primitives.conversion.LongToBooleanFunction;
 import at.gridtec.lambda4j.function.primitives.conversion.LongToByteFunction;
 import at.gridtec.lambda4j.function.primitives.conversion.LongToCharFunction;
 import at.gridtec.lambda4j.function.primitives.conversion.LongToFloatFunction;
 import at.gridtec.lambda4j.function.primitives.conversion.LongToShortFunction;
-import at.gridtec.lambda4j.function.primitives.conversion.tri.TriLongToBooleanFunction;
 import at.gridtec.lambda4j.function.primitives.conversion.tri.TriLongToByteFunction;
 import at.gridtec.lambda4j.function.primitives.conversion.tri.TriLongToCharFunction;
 import at.gridtec.lambda4j.function.primitives.conversion.tri.TriLongToDoubleFunction;
@@ -30,6 +28,7 @@ import at.gridtec.lambda4j.function.primitives.conversion.tri.TriLongToIntFuncti
 import at.gridtec.lambda4j.function.primitives.conversion.tri.TriLongToShortFunction;
 import at.gridtec.lambda4j.function.primitives.to.tri.ToLongTriFunction;
 import at.gridtec.lambda4j.function.primitives.tri.LongTriFunction;
+import at.gridtec.lambda4j.predicates.primitives.tri.LongTriPredicate;
 
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
@@ -37,6 +36,7 @@ import java.util.Objects;
 import java.util.function.LongBinaryOperator;
 import java.util.function.LongConsumer;
 import java.util.function.LongFunction;
+import java.util.function.LongPredicate;
 import java.util.function.LongSupplier;
 import java.util.function.LongToDoubleFunction;
 import java.util.function.LongToIntFunction;
@@ -219,21 +219,21 @@ public interface LongTernaryOperator {
     }
 
     /**
-     * Returns a composed {@link TriLongToBooleanFunction} that first applies this function to its input, and then
-     * applies the {@code after} function to the result. If evaluation of either function throws an exception, it is
-     * relayed to the caller of the composed function. This method is just convenience, to provide the ability to
-     * transform this operation to an operation returning {@code boolean}.
+     * Returns a composed {@link LongTriPredicate} that first applies this function to its input, and then applies the
+     * {@code after} function to the result. If evaluation of either function throws an exception, it is relayed to the
+     * caller of the composed function. This method is just convenience, to provide the ability to transform this
+     * operation to an operation returning {@code boolean}.
      *
      * @param after The function to apply after this function is applied
-     * @return A composed {@code TriLongToBooleanFunction} that first applies this function to its input, and then
-     * applies the {@code after} function to the result.
+     * @return A composed {@code LongTriPredicate} that first applies this function to its input, and then applies the
+     * {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
      * @see #andThen(LongFunction)
      */
     @Nonnull
-    default TriLongToBooleanFunction andThenToBoolean(@Nonnull final LongToBooleanFunction after) {
+    default LongTriPredicate andThenToBoolean(@Nonnull final LongPredicate after) {
         Objects.requireNonNull(after);
-        return (value1, value2, value3) -> after.applyAsBoolean(applyAsLong(value1, value2, value3));
+        return (value1, value2, value3) -> after.test(applyAsLong(value1, value2, value3));
     }
 
     /**

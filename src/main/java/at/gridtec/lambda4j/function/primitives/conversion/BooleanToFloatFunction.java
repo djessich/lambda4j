@@ -22,6 +22,7 @@ import at.gridtec.lambda4j.function.primitives.FloatFunction;
 import at.gridtec.lambda4j.function.primitives.to.ToFloatFunction;
 import at.gridtec.lambda4j.operators.unary.BooleanUnaryOperator;
 import at.gridtec.lambda4j.operators.unary.FloatUnaryOperator;
+import at.gridtec.lambda4j.predicates.primitives.FloatPredicate;
 import at.gridtec.lambda4j.supplier.FloatSupplier;
 
 import javax.annotation.Nonnegative;
@@ -156,9 +157,9 @@ public interface BooleanToFloatFunction {
      * @see #andThen(FloatFunction)
      */
     @Nonnull
-    default BooleanUnaryOperator andThenToBoolean(@Nonnull final FloatToBooleanFunction after) {
+    default BooleanUnaryOperator andThenToBoolean(@Nonnull final FloatPredicate after) {
         Objects.requireNonNull(after);
-        return value -> after.applyAsBoolean(applyAsFloat(value));
+        return value -> after.test(applyAsFloat(value));
     }
 
     /**

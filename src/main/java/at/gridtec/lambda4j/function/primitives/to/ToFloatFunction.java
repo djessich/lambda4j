@@ -17,7 +17,6 @@ package at.gridtec.lambda4j.function.primitives.to;
 
 import at.gridtec.lambda4j.consumer.primitives.FloatConsumer;
 import at.gridtec.lambda4j.function.primitives.FloatFunction;
-import at.gridtec.lambda4j.function.primitives.conversion.FloatToBooleanFunction;
 import at.gridtec.lambda4j.function.primitives.conversion.FloatToByteFunction;
 import at.gridtec.lambda4j.function.primitives.conversion.FloatToCharFunction;
 import at.gridtec.lambda4j.function.primitives.conversion.FloatToDoubleFunction;
@@ -25,6 +24,7 @@ import at.gridtec.lambda4j.function.primitives.conversion.FloatToIntFunction;
 import at.gridtec.lambda4j.function.primitives.conversion.FloatToLongFunction;
 import at.gridtec.lambda4j.function.primitives.conversion.FloatToShortFunction;
 import at.gridtec.lambda4j.operators.unary.FloatUnaryOperator;
+import at.gridtec.lambda4j.predicates.primitives.FloatPredicate;
 import at.gridtec.lambda4j.supplier.FloatSupplier;
 
 import javax.annotation.Nonnegative;
@@ -37,7 +37,6 @@ import java.util.function.ToDoubleFunction;
 import java.util.function.ToIntFunction;
 import java.util.function.ToLongFunction;
 import java.util.function.UnaryOperator;
-
 /**
  * Represents a function that produces a float-valued result from one argument. This is the {@code float}-producing
  * primitive specialization for {@link Function}.
@@ -166,9 +165,9 @@ public interface ToFloatFunction<T> {
      * @see #andThen(FloatFunction)
      */
     @Nonnull
-    default Predicate<T> andThenToBoolean(@Nonnull final FloatToBooleanFunction after) {
+    default Predicate<T> andThenToBoolean(@Nonnull final FloatPredicate after) {
         Objects.requireNonNull(after);
-        return t -> after.applyAsBoolean(applyAsFloat(t));
+        return t -> after.test(applyAsFloat(t));
     }
 
     /**

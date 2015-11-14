@@ -20,7 +20,6 @@ import at.gridtec.lambda4j.consumer.primitives.tri.BooleanTriConsumer;
 import at.gridtec.lambda4j.function.TriFunction;
 import at.gridtec.lambda4j.function.primitives.FloatFunction;
 import at.gridtec.lambda4j.function.primitives.conversion.BooleanToFloatFunction;
-import at.gridtec.lambda4j.function.primitives.conversion.FloatToBooleanFunction;
 import at.gridtec.lambda4j.function.primitives.conversion.FloatToByteFunction;
 import at.gridtec.lambda4j.function.primitives.conversion.FloatToCharFunction;
 import at.gridtec.lambda4j.function.primitives.conversion.FloatToDoubleFunction;
@@ -33,6 +32,7 @@ import at.gridtec.lambda4j.function.primitives.tri.BooleanTriFunction;
 import at.gridtec.lambda4j.operators.ternary.BooleanTernaryOperator;
 import at.gridtec.lambda4j.operators.unary.BooleanUnaryOperator;
 import at.gridtec.lambda4j.operators.unary.FloatUnaryOperator;
+import at.gridtec.lambda4j.predicates.primitives.FloatPredicate;
 import at.gridtec.lambda4j.supplier.FloatSupplier;
 
 import javax.annotation.Nonnegative;
@@ -228,9 +228,9 @@ public interface TriBooleanToFloatFunction {
      * @see #andThen(FloatFunction)
      */
     @Nonnull
-    default BooleanTernaryOperator andThenToBoolean(@Nonnull final FloatToBooleanFunction after) {
+    default BooleanTernaryOperator andThenToBoolean(@Nonnull final FloatPredicate after) {
         Objects.requireNonNull(after);
-        return (value1, value2, value3) -> after.applyAsBoolean(applyAsFloat(value1, value2, value3));
+        return (value1, value2, value3) -> after.test(applyAsFloat(value1, value2, value3));
     }
 
     /**

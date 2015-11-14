@@ -17,7 +17,6 @@ package at.gridtec.lambda4j.operators.unary;
 
 import at.gridtec.lambda4j.consumer.primitives.ByteConsumer;
 import at.gridtec.lambda4j.function.primitives.ByteFunction;
-import at.gridtec.lambda4j.function.primitives.conversion.ByteToBooleanFunction;
 import at.gridtec.lambda4j.function.primitives.conversion.ByteToCharFunction;
 import at.gridtec.lambda4j.function.primitives.conversion.ByteToDoubleFunction;
 import at.gridtec.lambda4j.function.primitives.conversion.ByteToFloatFunction;
@@ -25,6 +24,7 @@ import at.gridtec.lambda4j.function.primitives.conversion.ByteToIntFunction;
 import at.gridtec.lambda4j.function.primitives.conversion.ByteToLongFunction;
 import at.gridtec.lambda4j.function.primitives.conversion.ByteToShortFunction;
 import at.gridtec.lambda4j.function.primitives.to.ToByteFunction;
+import at.gridtec.lambda4j.predicates.primitives.BytePredicate;
 import at.gridtec.lambda4j.supplier.ByteSupplier;
 
 import javax.annotation.Nonnegative;
@@ -155,21 +155,21 @@ public interface ByteUnaryOperator {
     }
 
     /**
-     * Returns a composed {@link ByteToBooleanFunction} that first applies this operator to its input, and then applies
-     * the {@code after} operator to the result. If evaluation of either operator throws an exception, it is relayed to
-     * the caller of the composed operator. This method is just convenience, to provide the ability to transform this
+     * Returns a composed {@link BytePredicate} that first applies this operator to its input, and then applies the
+     * {@code after} operator to the result. If evaluation of either operator throws an exception, it is relayed to the
+     * caller of the composed operator. This method is just convenience, to provide the ability to transform this
      * operation to an operation returning {@code boolean}.
      *
      * @param after The operator to apply after this operator is applied
-     * @return A composed {@code ByteToBooleanFunction} that first applies this operator to its input, and then applies
-     * the {@code after} operator to the result.
+     * @return A composed {@code BytePredicate} that first applies this operator to its input, and then applies the
+     * {@code after} operator to the result.
      * @throws NullPointerException If given argument is {@code null}
      * @see #andThen(ByteFunction)
      */
     @Nonnull
-    default ByteToBooleanFunction andThenToBoolean(@Nonnull final ByteToBooleanFunction after) {
+    default BytePredicate andThenToBoolean(@Nonnull final BytePredicate after) {
         Objects.requireNonNull(after);
-        return value -> after.applyAsBoolean(applyAsByte(value));
+        return value -> after.test(applyAsByte(value));
     }
 
     /**

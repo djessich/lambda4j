@@ -17,7 +17,6 @@ package at.gridtec.lambda4j.supplier;
 
 import at.gridtec.lambda4j.consumer.primitives.FloatConsumer;
 import at.gridtec.lambda4j.function.primitives.FloatFunction;
-import at.gridtec.lambda4j.function.primitives.conversion.FloatToBooleanFunction;
 import at.gridtec.lambda4j.function.primitives.conversion.FloatToByteFunction;
 import at.gridtec.lambda4j.function.primitives.conversion.FloatToCharFunction;
 import at.gridtec.lambda4j.function.primitives.conversion.FloatToDoubleFunction;
@@ -25,6 +24,7 @@ import at.gridtec.lambda4j.function.primitives.conversion.FloatToIntFunction;
 import at.gridtec.lambda4j.function.primitives.conversion.FloatToLongFunction;
 import at.gridtec.lambda4j.function.primitives.conversion.FloatToShortFunction;
 import at.gridtec.lambda4j.operators.unary.FloatUnaryOperator;
+import at.gridtec.lambda4j.predicates.primitives.FloatPredicate;
 
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
@@ -121,9 +121,9 @@ public interface FloatSupplier {
      * @see #andThen(FloatFunction)
      */
     @Nonnull
-    default BooleanSupplier andThenToBoolean(@Nonnull final FloatToBooleanFunction after) {
+    default BooleanSupplier andThenToBoolean(@Nonnull final FloatPredicate after) {
         Objects.requireNonNull(after);
-        return () -> after.applyAsBoolean(getAsFloat());
+        return () -> after.test(getAsFloat());
     }
 
     /**

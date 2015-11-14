@@ -18,7 +18,6 @@ package at.gridtec.lambda4j.function.primitives.conversion.tri;
 import at.gridtec.lambda4j.consumer.primitives.tri.FloatTriConsumer;
 import at.gridtec.lambda4j.function.TriFunction;
 import at.gridtec.lambda4j.function.primitives.conversion.FloatToLongFunction;
-import at.gridtec.lambda4j.function.primitives.conversion.LongToBooleanFunction;
 import at.gridtec.lambda4j.function.primitives.conversion.LongToByteFunction;
 import at.gridtec.lambda4j.function.primitives.conversion.LongToCharFunction;
 import at.gridtec.lambda4j.function.primitives.conversion.LongToFloatFunction;
@@ -29,12 +28,14 @@ import at.gridtec.lambda4j.function.primitives.to.tri.ToLongTriFunction;
 import at.gridtec.lambda4j.function.primitives.tri.FloatTriFunction;
 import at.gridtec.lambda4j.operators.ternary.FloatTernaryOperator;
 import at.gridtec.lambda4j.operators.unary.FloatUnaryOperator;
+import at.gridtec.lambda4j.predicates.primitives.tri.FloatTriPredicate;
 
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import java.util.Objects;
 import java.util.function.LongConsumer;
 import java.util.function.LongFunction;
+import java.util.function.LongPredicate;
 import java.util.function.LongSupplier;
 import java.util.function.LongToDoubleFunction;
 import java.util.function.LongToIntFunction;
@@ -215,21 +216,21 @@ public interface TriFloatToLongFunction {
     }
 
     /**
-     * Returns a composed {@link TriFloatToBooleanFunction} that first applies this function to its input, and then
-     * applies the {@code after} function to the result. If evaluation of either function throws an exception, it is
-     * relayed to the caller of the composed function. This method is just convenience, to provide the ability to
-     * transform this operation to an operation returning {@code boolean}.
+     * Returns a composed {@link FloatTriPredicate} that first applies this function to its input, and then applies the
+     * {@code after} function to the result. If evaluation of either function throws an exception, it is relayed to the
+     * caller of the composed function. This method is just convenience, to provide the ability to transform this
+     * operation to an operation returning {@code boolean}.
      *
      * @param after The function to apply after this function is applied
-     * @return A composed {@code TriFloatToBooleanFunction} that first applies this function to its input, and then
-     * applies the {@code after} function to the result.
+     * @return A composed {@code FloatTriPredicate} that first applies this function to its input, and then applies the
+     * {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
      * @see #andThen(LongFunction)
      */
     @Nonnull
-    default TriFloatToBooleanFunction andThenToBoolean(@Nonnull final LongToBooleanFunction after) {
+    default FloatTriPredicate andThenToBoolean(@Nonnull final LongPredicate after) {
         Objects.requireNonNull(after);
-        return (value1, value2, value3) -> after.applyAsBoolean(applyAsLong(value1, value2, value3));
+        return (value1, value2, value3) -> after.test(applyAsLong(value1, value2, value3));
     }
 
     /**

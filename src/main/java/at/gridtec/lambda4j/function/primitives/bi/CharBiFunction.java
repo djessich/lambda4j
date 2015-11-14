@@ -17,7 +17,6 @@ package at.gridtec.lambda4j.function.primitives.bi;
 
 import at.gridtec.lambda4j.consumer.primitives.bi.CharBiConsumer;
 import at.gridtec.lambda4j.function.primitives.CharFunction;
-import at.gridtec.lambda4j.function.primitives.conversion.bi.BiCharToBooleanFunction;
 import at.gridtec.lambda4j.function.primitives.conversion.bi.BiCharToByteFunction;
 import at.gridtec.lambda4j.function.primitives.conversion.bi.BiCharToDoubleFunction;
 import at.gridtec.lambda4j.function.primitives.conversion.bi.BiCharToFloatFunction;
@@ -30,6 +29,7 @@ import at.gridtec.lambda4j.function.primitives.to.ToFloatFunction;
 import at.gridtec.lambda4j.function.primitives.to.ToShortFunction;
 import at.gridtec.lambda4j.operators.binary.CharBinaryOperator;
 import at.gridtec.lambda4j.operators.unary.CharUnaryOperator;
+import at.gridtec.lambda4j.predicates.primitives.bi.CharBiPredicate;
 
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
@@ -202,19 +202,19 @@ public interface CharBiFunction<R> {
     }
 
     /**
-     * Returns a composed {@link BiCharToBooleanFunction} that first applies this function to its input, and then
-     * applies the {@code after} function to the result. If evaluation of either function throws an exception, it is
-     * relayed to the caller of the composed function. This method is just convenience, to provide the ability to
-     * transform this operation to an operation returning {@code boolean}.
+     * Returns a composed {@link CharBiPredicate} that first applies this function to its input, and then applies the
+     * {@code after} function to the result. If evaluation of either function throws an exception, it is relayed to the
+     * caller of the composed function. This method is just convenience, to provide the ability to transform this
+     * operation to an operation returning {@code boolean}.
      *
      * @param after The function to apply after this function is applied
-     * @return A composed {@code BiCharToBooleanFunction} that first applies this function to its input, and then
-     * applies the {@code after} function to the result.
+     * @return A composed {@code CharBiPredicate} that first applies this function to its input, and then applies the
+     * {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
      * @see #andThen(Function)
      */
     @Nonnull
-    default BiCharToBooleanFunction andThenToBoolean(@Nonnull final Predicate<? super R> after) {
+    default CharBiPredicate andThenToBoolean(@Nonnull final Predicate<? super R> after) {
         Objects.requireNonNull(after);
         return (value1, value2) -> after.test(apply(value1, value2));
     }

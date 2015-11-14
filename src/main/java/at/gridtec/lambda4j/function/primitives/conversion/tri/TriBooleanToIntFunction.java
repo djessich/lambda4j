@@ -18,7 +18,6 @@ package at.gridtec.lambda4j.function.primitives.conversion.tri;
 import at.gridtec.lambda4j.consumer.primitives.tri.BooleanTriConsumer;
 import at.gridtec.lambda4j.function.TriFunction;
 import at.gridtec.lambda4j.function.primitives.conversion.BooleanToIntFunction;
-import at.gridtec.lambda4j.function.primitives.conversion.IntToBooleanFunction;
 import at.gridtec.lambda4j.function.primitives.conversion.IntToByteFunction;
 import at.gridtec.lambda4j.function.primitives.conversion.IntToCharFunction;
 import at.gridtec.lambda4j.function.primitives.conversion.IntToFloatFunction;
@@ -34,6 +33,7 @@ import javax.annotation.Nonnull;
 import java.util.Objects;
 import java.util.function.IntConsumer;
 import java.util.function.IntFunction;
+import java.util.function.IntPredicate;
 import java.util.function.IntSupplier;
 import java.util.function.IntToDoubleFunction;
 import java.util.function.IntToLongFunction;
@@ -227,9 +227,9 @@ public interface TriBooleanToIntFunction {
      * @see #andThen(IntFunction)
      */
     @Nonnull
-    default BooleanTernaryOperator andThenToBoolean(@Nonnull final IntToBooleanFunction after) {
+    default BooleanTernaryOperator andThenToBoolean(@Nonnull final IntPredicate after) {
         Objects.requireNonNull(after);
-        return (value1, value2, value3) -> after.applyAsBoolean(applyAsInt(value1, value2, value3));
+        return (value1, value2, value3) -> after.test(applyAsInt(value1, value2, value3));
     }
 
     /**

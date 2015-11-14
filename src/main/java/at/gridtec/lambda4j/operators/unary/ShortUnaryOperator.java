@@ -17,7 +17,6 @@ package at.gridtec.lambda4j.operators.unary;
 
 import at.gridtec.lambda4j.consumer.primitives.ShortConsumer;
 import at.gridtec.lambda4j.function.primitives.ShortFunction;
-import at.gridtec.lambda4j.function.primitives.conversion.ShortToBooleanFunction;
 import at.gridtec.lambda4j.function.primitives.conversion.ShortToByteFunction;
 import at.gridtec.lambda4j.function.primitives.conversion.ShortToCharFunction;
 import at.gridtec.lambda4j.function.primitives.conversion.ShortToDoubleFunction;
@@ -25,6 +24,7 @@ import at.gridtec.lambda4j.function.primitives.conversion.ShortToFloatFunction;
 import at.gridtec.lambda4j.function.primitives.conversion.ShortToIntFunction;
 import at.gridtec.lambda4j.function.primitives.conversion.ShortToLongFunction;
 import at.gridtec.lambda4j.function.primitives.to.ToShortFunction;
+import at.gridtec.lambda4j.predicates.primitives.ShortPredicate;
 import at.gridtec.lambda4j.supplier.ShortSupplier;
 
 import javax.annotation.Nonnegative;
@@ -155,21 +155,21 @@ public interface ShortUnaryOperator {
     }
 
     /**
-     * Returns a composed {@link ShortToBooleanFunction} that first applies this operator to its input, and then applies
-     * the {@code after} operator to the result. If evaluation of either operator throws an exception, it is relayed to
-     * the caller of the composed operator. This method is just convenience, to provide the ability to transform this
+     * Returns a composed {@link ShortPredicate} that first applies this operator to its input, and then applies the
+     * {@code after} operator to the result. If evaluation of either operator throws an exception, it is relayed to the
+     * caller of the composed operator. This method is just convenience, to provide the ability to transform this
      * operation to an operation returning {@code boolean}.
      *
      * @param after The operator to apply after this operator is applied
-     * @return A composed {@code ShortToBooleanFunction} that first applies this operator to its input, and then applies
-     * the {@code after} operator to the result.
+     * @return A composed {@code ShortPredicate} that first applies this operator to its input, and then applies the
+     * {@code after} operator to the result.
      * @throws NullPointerException If given argument is {@code null}
      * @see #andThen(ShortFunction)
      */
     @Nonnull
-    default ShortToBooleanFunction andThenToBoolean(@Nonnull final ShortToBooleanFunction after) {
+    default ShortPredicate andThenToBoolean(@Nonnull final ShortPredicate after) {
         Objects.requireNonNull(after);
-        return value -> after.applyAsBoolean(applyAsShort(value));
+        return value -> after.test(applyAsShort(value));
     }
 
     /**
@@ -324,6 +324,7 @@ public interface ShortUnaryOperator {
     default ShortSupplier partial(short value) {
         return () -> applyAsShort(value);
     }
+
     /**
      * Returns a composed {@link UnaryOperator} which represents this {@link ShortUnaryOperator}. Thereby the primitive
      * input argument for this operator is autoboxed. This method is just convenience to provide the ability to use this

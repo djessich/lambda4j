@@ -18,14 +18,12 @@ package at.gridtec.lambda4j.operators.ternary;
 import at.gridtec.lambda4j.consumer.primitives.ShortConsumer;
 import at.gridtec.lambda4j.consumer.primitives.tri.ShortTriConsumer;
 import at.gridtec.lambda4j.function.primitives.ShortFunction;
-import at.gridtec.lambda4j.function.primitives.conversion.ShortToBooleanFunction;
 import at.gridtec.lambda4j.function.primitives.conversion.ShortToByteFunction;
 import at.gridtec.lambda4j.function.primitives.conversion.ShortToCharFunction;
 import at.gridtec.lambda4j.function.primitives.conversion.ShortToDoubleFunction;
 import at.gridtec.lambda4j.function.primitives.conversion.ShortToFloatFunction;
 import at.gridtec.lambda4j.function.primitives.conversion.ShortToIntFunction;
 import at.gridtec.lambda4j.function.primitives.conversion.ShortToLongFunction;
-import at.gridtec.lambda4j.function.primitives.conversion.tri.TriShortToBooleanFunction;
 import at.gridtec.lambda4j.function.primitives.conversion.tri.TriShortToByteFunction;
 import at.gridtec.lambda4j.function.primitives.conversion.tri.TriShortToCharFunction;
 import at.gridtec.lambda4j.function.primitives.conversion.tri.TriShortToDoubleFunction;
@@ -37,6 +35,8 @@ import at.gridtec.lambda4j.function.primitives.to.tri.ToShortTriFunction;
 import at.gridtec.lambda4j.function.primitives.tri.ShortTriFunction;
 import at.gridtec.lambda4j.operators.binary.ShortBinaryOperator;
 import at.gridtec.lambda4j.operators.unary.ShortUnaryOperator;
+import at.gridtec.lambda4j.predicates.primitives.ShortPredicate;
+import at.gridtec.lambda4j.predicates.primitives.tri.ShortTriPredicate;
 import at.gridtec.lambda4j.supplier.ShortSupplier;
 
 import javax.annotation.Nonnegative;
@@ -219,21 +219,21 @@ public interface ShortTernaryOperator {
     }
 
     /**
-     * Returns a composed {@link TriShortToBooleanFunction} that first applies this function to its input, and then
-     * applies the {@code after} function to the result. If evaluation of either function throws an exception, it is
-     * relayed to the caller of the composed function. This method is just convenience, to provide the ability to
-     * transform this operation to an operation returning {@code boolean}.
+     * Returns a composed {@link ShortTriPredicate} that first applies this function to its input, and then applies the
+     * {@code after} function to the result. If evaluation of either function throws an exception, it is relayed to the
+     * caller of the composed function. This method is just convenience, to provide the ability to transform this
+     * operation to an operation returning {@code boolean}.
      *
      * @param after The function to apply after this function is applied
-     * @return A composed {@code TriShortToBooleanFunction} that first applies this function to its input, and then
-     * applies the {@code after} function to the result.
+     * @return A composed {@code ShortTriPredicate} that first applies this function to its input, and then applies the
+     * {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
      * @see #andThen(ShortFunction)
      */
     @Nonnull
-    default TriShortToBooleanFunction andThenToBoolean(@Nonnull final ShortToBooleanFunction after) {
+    default ShortTriPredicate andThenToBoolean(@Nonnull final ShortPredicate after) {
         Objects.requireNonNull(after);
-        return (value1, value2, value3) -> after.applyAsBoolean(applyAsShort(value1, value2, value3));
+        return (value1, value2, value3) -> after.test(applyAsShort(value1, value2, value3));
     }
 
     /**

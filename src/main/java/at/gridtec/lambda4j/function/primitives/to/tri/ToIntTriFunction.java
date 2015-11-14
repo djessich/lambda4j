@@ -17,7 +17,6 @@ package at.gridtec.lambda4j.function.primitives.to.tri;
 
 import at.gridtec.lambda4j.consumer.TriConsumer;
 import at.gridtec.lambda4j.function.TriFunction;
-import at.gridtec.lambda4j.function.primitives.conversion.IntToBooleanFunction;
 import at.gridtec.lambda4j.function.primitives.conversion.IntToByteFunction;
 import at.gridtec.lambda4j.function.primitives.conversion.IntToCharFunction;
 import at.gridtec.lambda4j.function.primitives.conversion.IntToFloatFunction;
@@ -32,6 +31,7 @@ import java.util.Objects;
 import java.util.function.Function;
 import java.util.function.IntConsumer;
 import java.util.function.IntFunction;
+import java.util.function.IntPredicate;
 import java.util.function.IntSupplier;
 import java.util.function.IntToDoubleFunction;
 import java.util.function.IntToLongFunction;
@@ -39,7 +39,6 @@ import java.util.function.IntUnaryOperator;
 import java.util.function.ToIntBiFunction;
 import java.util.function.ToIntFunction;
 import java.util.function.UnaryOperator;
-
 /**
  * Represents a function that produces a int-valued result from three arguments. This is the {@code int}-producing
  * primitive specialization for {@link TriFunction}.
@@ -259,9 +258,9 @@ public interface ToIntTriFunction<T, U, V> {
      * @see #andThen(IntFunction)
      */
     @Nonnull
-    default TriPredicate<T, U, V> andThenToBoolean(@Nonnull final IntToBooleanFunction after) {
+    default TriPredicate<T, U, V> andThenToBoolean(@Nonnull final IntPredicate after) {
         Objects.requireNonNull(after);
-        return (t, u, v) -> after.applyAsBoolean(applyAsInt(t, u, v));
+        return (t, u, v) -> after.test(applyAsInt(t, u, v));
     }
 
     /**

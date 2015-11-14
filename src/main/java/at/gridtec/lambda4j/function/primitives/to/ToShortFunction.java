@@ -17,7 +17,6 @@ package at.gridtec.lambda4j.function.primitives.to;
 
 import at.gridtec.lambda4j.consumer.primitives.ShortConsumer;
 import at.gridtec.lambda4j.function.primitives.ShortFunction;
-import at.gridtec.lambda4j.function.primitives.conversion.ShortToBooleanFunction;
 import at.gridtec.lambda4j.function.primitives.conversion.ShortToByteFunction;
 import at.gridtec.lambda4j.function.primitives.conversion.ShortToCharFunction;
 import at.gridtec.lambda4j.function.primitives.conversion.ShortToDoubleFunction;
@@ -25,6 +24,7 @@ import at.gridtec.lambda4j.function.primitives.conversion.ShortToFloatFunction;
 import at.gridtec.lambda4j.function.primitives.conversion.ShortToIntFunction;
 import at.gridtec.lambda4j.function.primitives.conversion.ShortToLongFunction;
 import at.gridtec.lambda4j.operators.unary.ShortUnaryOperator;
+import at.gridtec.lambda4j.predicates.primitives.ShortPredicate;
 import at.gridtec.lambda4j.supplier.ShortSupplier;
 
 import javax.annotation.Nonnegative;
@@ -166,9 +166,9 @@ public interface ToShortFunction<T> {
      * @see #andThen(ShortFunction)
      */
     @Nonnull
-    default Predicate<T> andThenToBoolean(@Nonnull final ShortToBooleanFunction after) {
+    default Predicate<T> andThenToBoolean(@Nonnull final ShortPredicate after) {
         Objects.requireNonNull(after);
-        return t -> after.applyAsBoolean(applyAsShort(t));
+        return t -> after.test(applyAsShort(t));
     }
 
     /**

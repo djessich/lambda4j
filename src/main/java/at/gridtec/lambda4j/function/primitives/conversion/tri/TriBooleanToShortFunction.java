@@ -20,7 +20,6 @@ import at.gridtec.lambda4j.consumer.primitives.tri.BooleanTriConsumer;
 import at.gridtec.lambda4j.function.TriFunction;
 import at.gridtec.lambda4j.function.primitives.ShortFunction;
 import at.gridtec.lambda4j.function.primitives.conversion.BooleanToShortFunction;
-import at.gridtec.lambda4j.function.primitives.conversion.ShortToBooleanFunction;
 import at.gridtec.lambda4j.function.primitives.conversion.ShortToByteFunction;
 import at.gridtec.lambda4j.function.primitives.conversion.ShortToCharFunction;
 import at.gridtec.lambda4j.function.primitives.conversion.ShortToDoubleFunction;
@@ -33,6 +32,7 @@ import at.gridtec.lambda4j.function.primitives.tri.BooleanTriFunction;
 import at.gridtec.lambda4j.operators.ternary.BooleanTernaryOperator;
 import at.gridtec.lambda4j.operators.unary.BooleanUnaryOperator;
 import at.gridtec.lambda4j.operators.unary.ShortUnaryOperator;
+import at.gridtec.lambda4j.predicates.primitives.ShortPredicate;
 import at.gridtec.lambda4j.supplier.ShortSupplier;
 
 import javax.annotation.Nonnegative;
@@ -228,9 +228,9 @@ public interface TriBooleanToShortFunction {
      * @see #andThen(ShortFunction)
      */
     @Nonnull
-    default BooleanTernaryOperator andThenToBoolean(@Nonnull final ShortToBooleanFunction after) {
+    default BooleanTernaryOperator andThenToBoolean(@Nonnull final ShortPredicate after) {
         Objects.requireNonNull(after);
-        return (value1, value2, value3) -> after.applyAsBoolean(applyAsShort(value1, value2, value3));
+        return (value1, value2, value3) -> after.test(applyAsShort(value1, value2, value3));
     }
 
     /**

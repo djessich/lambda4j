@@ -22,6 +22,7 @@ import at.gridtec.lambda4j.function.primitives.ByteFunction;
 import at.gridtec.lambda4j.function.primitives.to.ToByteFunction;
 import at.gridtec.lambda4j.operators.unary.BooleanUnaryOperator;
 import at.gridtec.lambda4j.operators.unary.ByteUnaryOperator;
+import at.gridtec.lambda4j.predicates.primitives.BytePredicate;
 import at.gridtec.lambda4j.supplier.ByteSupplier;
 
 import javax.annotation.Nonnegative;
@@ -156,9 +157,9 @@ public interface BooleanToByteFunction {
      * @see #andThen(ByteFunction)
      */
     @Nonnull
-    default BooleanUnaryOperator andThenToBoolean(@Nonnull final ByteToBooleanFunction after) {
+    default BooleanUnaryOperator andThenToBoolean(@Nonnull final BytePredicate after) {
         Objects.requireNonNull(after);
-        return value -> after.applyAsBoolean(applyAsByte(value));
+        return value -> after.test(applyAsByte(value));
     }
 
     /**

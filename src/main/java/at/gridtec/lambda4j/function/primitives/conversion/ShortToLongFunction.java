@@ -19,6 +19,7 @@ import at.gridtec.lambda4j.consumer.primitives.ShortConsumer;
 import at.gridtec.lambda4j.function.primitives.ShortFunction;
 import at.gridtec.lambda4j.function.primitives.to.ToShortFunction;
 import at.gridtec.lambda4j.operators.unary.ShortUnaryOperator;
+import at.gridtec.lambda4j.predicates.primitives.ShortPredicate;
 
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
@@ -26,6 +27,7 @@ import java.util.Objects;
 import java.util.function.Function;
 import java.util.function.LongConsumer;
 import java.util.function.LongFunction;
+import java.util.function.LongPredicate;
 import java.util.function.LongSupplier;
 import java.util.function.LongToDoubleFunction;
 import java.util.function.LongToIntFunction;
@@ -146,21 +148,21 @@ public interface ShortToLongFunction {
     }
 
     /**
-     * Returns a composed {@link ShortToBooleanFunction} that first applies this function to its input, and then applies
-     * the {@code after} function to the result. If evaluation of either function throws an exception, it is relayed to
-     * the caller of the composed function. This method is just convenience, to provide the ability to transform this
+     * Returns a composed {@link ShortPredicate} that first applies this function to its input, and then applies the
+     * {@code after} function to the result. If evaluation of either function throws an exception, it is relayed to the
+     * caller of the composed function. This method is just convenience, to provide the ability to transform this
      * operation to an operation returning {@code boolean}.
      *
      * @param after The function to apply after this function is applied
-     * @return A composed {@code ShortToBooleanFunction} that first applies this function to its input, and then applies
-     * the {@code after} function to the result.
+     * @return A composed {@code ShortPredicate} that first applies this function to its input, and then applies the
+     * {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
      * @see #andThen(LongFunction)
      */
     @Nonnull
-    default ShortToBooleanFunction andThenToBoolean(@Nonnull final LongToBooleanFunction after) {
+    default ShortPredicate andThenToBoolean(@Nonnull final LongPredicate after) {
         Objects.requireNonNull(after);
-        return value -> after.applyAsBoolean(applyAsLong(value));
+        return value -> after.test(applyAsLong(value));
     }
 
     /**
@@ -315,6 +317,7 @@ public interface ShortToLongFunction {
     default LongSupplier partial(short value) {
         return () -> applyAsLong(value);
     }
+
     /**
      * Returns a composed {@link Function} which represents this {@link ShortToLongFunction}. Thereby the primitive
      * input argument for this function is autoboxed. This method is just convenience to provide the ability to use this

@@ -18,7 +18,6 @@ package at.gridtec.lambda4j.function.primitives.conversion.tri;
 import at.gridtec.lambda4j.consumer.primitives.tri.BooleanTriConsumer;
 import at.gridtec.lambda4j.function.TriFunction;
 import at.gridtec.lambda4j.function.primitives.conversion.BooleanToDoubleFunction;
-import at.gridtec.lambda4j.function.primitives.conversion.DoubleToBooleanFunction;
 import at.gridtec.lambda4j.function.primitives.conversion.DoubleToByteFunction;
 import at.gridtec.lambda4j.function.primitives.conversion.DoubleToCharFunction;
 import at.gridtec.lambda4j.function.primitives.conversion.DoubleToFloatFunction;
@@ -34,6 +33,7 @@ import javax.annotation.Nonnull;
 import java.util.Objects;
 import java.util.function.DoubleConsumer;
 import java.util.function.DoubleFunction;
+import java.util.function.DoublePredicate;
 import java.util.function.DoubleSupplier;
 import java.util.function.DoubleToIntFunction;
 import java.util.function.DoubleToLongFunction;
@@ -228,9 +228,9 @@ public interface TriBooleanToDoubleFunction {
      * @see #andThen(DoubleFunction)
      */
     @Nonnull
-    default BooleanTernaryOperator andThenToBoolean(@Nonnull final DoubleToBooleanFunction after) {
+    default BooleanTernaryOperator andThenToBoolean(@Nonnull final DoublePredicate after) {
         Objects.requireNonNull(after);
-        return (value1, value2, value3) -> after.applyAsBoolean(applyAsDouble(value1, value2, value3));
+        return (value1, value2, value3) -> after.test(applyAsDouble(value1, value2, value3));
     }
 
     /**

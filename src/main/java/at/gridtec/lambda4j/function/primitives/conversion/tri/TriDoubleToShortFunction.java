@@ -20,7 +20,6 @@ import at.gridtec.lambda4j.consumer.primitives.tri.DoubleTriConsumer;
 import at.gridtec.lambda4j.function.TriFunction;
 import at.gridtec.lambda4j.function.primitives.ShortFunction;
 import at.gridtec.lambda4j.function.primitives.conversion.DoubleToShortFunction;
-import at.gridtec.lambda4j.function.primitives.conversion.ShortToBooleanFunction;
 import at.gridtec.lambda4j.function.primitives.conversion.ShortToByteFunction;
 import at.gridtec.lambda4j.function.primitives.conversion.ShortToCharFunction;
 import at.gridtec.lambda4j.function.primitives.conversion.ShortToDoubleFunction;
@@ -32,6 +31,8 @@ import at.gridtec.lambda4j.function.primitives.to.tri.ToShortTriFunction;
 import at.gridtec.lambda4j.function.primitives.tri.DoubleTriFunction;
 import at.gridtec.lambda4j.operators.ternary.DoubleTernaryOperator;
 import at.gridtec.lambda4j.operators.unary.ShortUnaryOperator;
+import at.gridtec.lambda4j.predicates.primitives.ShortPredicate;
+import at.gridtec.lambda4j.predicates.primitives.tri.DoubleTriPredicate;
 import at.gridtec.lambda4j.supplier.ShortSupplier;
 
 import javax.annotation.Nonnegative;
@@ -215,21 +216,21 @@ public interface TriDoubleToShortFunction {
     }
 
     /**
-     * Returns a composed {@link TriDoubleToBooleanFunction} that first applies this function to its input, and then
-     * applies the {@code after} function to the result. If evaluation of either function throws an exception, it is
-     * relayed to the caller of the composed function. This method is just convenience, to provide the ability to
-     * transform this operation to an operation returning {@code boolean}.
+     * Returns a composed {@link DoubleTriPredicate} that first applies this function to its input, and then applies the
+     * {@code after} function to the result. If evaluation of either function throws an exception, it is relayed to the
+     * caller of the composed function. This method is just convenience, to provide the ability to transform this
+     * operation to an operation returning {@code boolean}.
      *
      * @param after The function to apply after this function is applied
-     * @return A composed {@code TriDoubleToBooleanFunction} that first applies this function to its input, and then
-     * applies the {@code after} function to the result.
+     * @return A composed {@code DoubleTriPredicate} that first applies this function to its input, and then applies the
+     * {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
      * @see #andThen(ShortFunction)
      */
     @Nonnull
-    default TriDoubleToBooleanFunction andThenToBoolean(@Nonnull final ShortToBooleanFunction after) {
+    default DoubleTriPredicate andThenToBoolean(@Nonnull final ShortPredicate after) {
         Objects.requireNonNull(after);
-        return (value1, value2, value3) -> after.applyAsBoolean(applyAsShort(value1, value2, value3));
+        return (value1, value2, value3) -> after.test(applyAsShort(value1, value2, value3));
     }
 
     /**

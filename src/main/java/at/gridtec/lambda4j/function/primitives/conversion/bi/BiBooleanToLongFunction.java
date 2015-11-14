@@ -18,7 +18,6 @@ package at.gridtec.lambda4j.function.primitives.conversion.bi;
 import at.gridtec.lambda4j.consumer.primitives.bi.BooleanBiConsumer;
 import at.gridtec.lambda4j.function.primitives.bi.BooleanBiFunction;
 import at.gridtec.lambda4j.function.primitives.conversion.BooleanToLongFunction;
-import at.gridtec.lambda4j.function.primitives.conversion.LongToBooleanFunction;
 import at.gridtec.lambda4j.function.primitives.conversion.LongToByteFunction;
 import at.gridtec.lambda4j.function.primitives.conversion.LongToCharFunction;
 import at.gridtec.lambda4j.function.primitives.conversion.LongToFloatFunction;
@@ -32,6 +31,7 @@ import java.util.Objects;
 import java.util.function.BiFunction;
 import java.util.function.LongConsumer;
 import java.util.function.LongFunction;
+import java.util.function.LongPredicate;
 import java.util.function.LongSupplier;
 import java.util.function.LongToDoubleFunction;
 import java.util.function.LongToIntFunction;
@@ -204,9 +204,9 @@ public interface BiBooleanToLongFunction {
      * @see #andThen(LongFunction)
      */
     @Nonnull
-    default BooleanBinaryOperator andThenToBoolean(@Nonnull final LongToBooleanFunction after) {
+    default BooleanBinaryOperator andThenToBoolean(@Nonnull final LongPredicate after) {
         Objects.requireNonNull(after);
-        return (value1, value2) -> after.applyAsBoolean(applyAsLong(value1, value2));
+        return (value1, value2) -> after.test(applyAsLong(value1, value2));
     }
 
     /**

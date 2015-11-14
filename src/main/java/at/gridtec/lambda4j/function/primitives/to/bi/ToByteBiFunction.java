@@ -17,7 +17,6 @@ package at.gridtec.lambda4j.function.primitives.to.bi;
 
 import at.gridtec.lambda4j.consumer.primitives.ByteConsumer;
 import at.gridtec.lambda4j.function.primitives.ByteFunction;
-import at.gridtec.lambda4j.function.primitives.conversion.ByteToBooleanFunction;
 import at.gridtec.lambda4j.function.primitives.conversion.ByteToCharFunction;
 import at.gridtec.lambda4j.function.primitives.conversion.ByteToDoubleFunction;
 import at.gridtec.lambda4j.function.primitives.conversion.ByteToFloatFunction;
@@ -26,6 +25,7 @@ import at.gridtec.lambda4j.function.primitives.conversion.ByteToLongFunction;
 import at.gridtec.lambda4j.function.primitives.conversion.ByteToShortFunction;
 import at.gridtec.lambda4j.function.primitives.to.ToByteFunction;
 import at.gridtec.lambda4j.operators.unary.ByteUnaryOperator;
+import at.gridtec.lambda4j.predicates.primitives.BytePredicate;
 import at.gridtec.lambda4j.supplier.ByteSupplier;
 
 import org.apache.commons.lang3.tuple.Pair;
@@ -41,7 +41,6 @@ import java.util.function.ToDoubleBiFunction;
 import java.util.function.ToIntBiFunction;
 import java.util.function.ToLongBiFunction;
 import java.util.function.UnaryOperator;
-
 /**
  * Represents a function that produces a byte-valued result from two arguments. This is the {@code byte}-producing
  * primitive specialization for {@link BiFunction}.
@@ -228,9 +227,9 @@ public interface ToByteBiFunction<T, U> {
      * @throws NullPointerException If given argument is {@code null}
      * @see #andThen(ByteFunction)
      */
-    default BiPredicate<T, U> andThenToBoolean(final ByteToBooleanFunction after) {
+    default BiPredicate<T, U> andThenToBoolean(final BytePredicate after) {
         Objects.requireNonNull(after);
-        return (t, u) -> after.applyAsBoolean(applyAsByte(t, u));
+        return (t, u) -> after.test(applyAsByte(t, u));
     }
 
     /**

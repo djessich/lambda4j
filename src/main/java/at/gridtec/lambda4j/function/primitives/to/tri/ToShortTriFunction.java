@@ -19,7 +19,6 @@ import at.gridtec.lambda4j.consumer.TriConsumer;
 import at.gridtec.lambda4j.consumer.primitives.ShortConsumer;
 import at.gridtec.lambda4j.function.TriFunction;
 import at.gridtec.lambda4j.function.primitives.ShortFunction;
-import at.gridtec.lambda4j.function.primitives.conversion.ShortToBooleanFunction;
 import at.gridtec.lambda4j.function.primitives.conversion.ShortToByteFunction;
 import at.gridtec.lambda4j.function.primitives.conversion.ShortToCharFunction;
 import at.gridtec.lambda4j.function.primitives.conversion.ShortToDoubleFunction;
@@ -30,6 +29,7 @@ import at.gridtec.lambda4j.function.primitives.to.ToShortFunction;
 import at.gridtec.lambda4j.function.primitives.to.bi.ToShortBiFunction;
 import at.gridtec.lambda4j.operators.unary.ShortUnaryOperator;
 import at.gridtec.lambda4j.predicates.TriPredicate;
+import at.gridtec.lambda4j.predicates.primitives.ShortPredicate;
 import at.gridtec.lambda4j.supplier.ShortSupplier;
 
 import org.apache.commons.lang3.tuple.Triple;
@@ -259,9 +259,9 @@ public interface ToShortTriFunction<T, U, V> {
      * @see #andThen(ShortFunction)
      */
     @Nonnull
-    default TriPredicate<T, U, V> andThenToBoolean(@Nonnull final ShortToBooleanFunction after) {
+    default TriPredicate<T, U, V> andThenToBoolean(@Nonnull final ShortPredicate after) {
         Objects.requireNonNull(after);
-        return (t, u, v) -> after.applyAsBoolean(applyAsShort(t, u, v));
+        return (t, u, v) -> after.test(applyAsShort(t, u, v));
     }
 
     /**

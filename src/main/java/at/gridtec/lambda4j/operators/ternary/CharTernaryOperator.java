@@ -18,14 +18,12 @@ package at.gridtec.lambda4j.operators.ternary;
 import at.gridtec.lambda4j.consumer.primitives.CharConsumer;
 import at.gridtec.lambda4j.consumer.primitives.tri.CharTriConsumer;
 import at.gridtec.lambda4j.function.primitives.CharFunction;
-import at.gridtec.lambda4j.function.primitives.conversion.CharToBooleanFunction;
 import at.gridtec.lambda4j.function.primitives.conversion.CharToByteFunction;
 import at.gridtec.lambda4j.function.primitives.conversion.CharToDoubleFunction;
 import at.gridtec.lambda4j.function.primitives.conversion.CharToFloatFunction;
 import at.gridtec.lambda4j.function.primitives.conversion.CharToIntFunction;
 import at.gridtec.lambda4j.function.primitives.conversion.CharToLongFunction;
 import at.gridtec.lambda4j.function.primitives.conversion.CharToShortFunction;
-import at.gridtec.lambda4j.function.primitives.conversion.tri.TriCharToBooleanFunction;
 import at.gridtec.lambda4j.function.primitives.conversion.tri.TriCharToByteFunction;
 import at.gridtec.lambda4j.function.primitives.conversion.tri.TriCharToDoubleFunction;
 import at.gridtec.lambda4j.function.primitives.conversion.tri.TriCharToFloatFunction;
@@ -37,6 +35,8 @@ import at.gridtec.lambda4j.function.primitives.to.tri.ToCharTriFunction;
 import at.gridtec.lambda4j.function.primitives.tri.CharTriFunction;
 import at.gridtec.lambda4j.operators.binary.CharBinaryOperator;
 import at.gridtec.lambda4j.operators.unary.CharUnaryOperator;
+import at.gridtec.lambda4j.predicates.primitives.CharPredicate;
+import at.gridtec.lambda4j.predicates.primitives.tri.CharTriPredicate;
 import at.gridtec.lambda4j.supplier.CharSupplier;
 
 import javax.annotation.Nonnegative;
@@ -219,21 +219,21 @@ public interface CharTernaryOperator {
     }
 
     /**
-     * Returns a composed {@link TriCharToBooleanFunction} that first applies this function to its input, and then
-     * applies the {@code after} function to the result. If evaluation of either function throws an exception, it is
-     * relayed to the caller of the composed function. This method is just convenience, to provide the ability to
-     * transform this operation to an operation returning {@code boolean}.
+     * Returns a composed {@link CharTriPredicate} that first applies this function to its input, and then applies the
+     * {@code after} function to the result. If evaluation of either function throws an exception, it is relayed to the
+     * caller of the composed function. This method is just convenience, to provide the ability to transform this
+     * operation to an operation returning {@code boolean}.
      *
      * @param after The function to apply after this function is applied
-     * @return A composed {@code TriCharToBooleanFunction} that first applies this function to its input, and then
-     * applies the {@code after} function to the result.
+     * @return A composed {@code CharTriPredicate} that first applies this function to its input, and then applies the
+     * {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
      * @see #andThen(CharFunction)
      */
     @Nonnull
-    default TriCharToBooleanFunction andThenToBoolean(@Nonnull final CharToBooleanFunction after) {
+    default CharTriPredicate andThenToBoolean(@Nonnull final CharPredicate after) {
         Objects.requireNonNull(after);
-        return (value1, value2, value3) -> after.applyAsBoolean(applyAsChar(value1, value2, value3));
+        return (value1, value2, value3) -> after.test(applyAsChar(value1, value2, value3));
     }
 
     /**

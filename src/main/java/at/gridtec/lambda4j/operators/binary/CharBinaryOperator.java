@@ -19,14 +19,12 @@ import at.gridtec.lambda4j.consumer.primitives.CharConsumer;
 import at.gridtec.lambda4j.consumer.primitives.bi.CharBiConsumer;
 import at.gridtec.lambda4j.function.primitives.CharFunction;
 import at.gridtec.lambda4j.function.primitives.bi.CharBiFunction;
-import at.gridtec.lambda4j.function.primitives.conversion.CharToBooleanFunction;
 import at.gridtec.lambda4j.function.primitives.conversion.CharToByteFunction;
 import at.gridtec.lambda4j.function.primitives.conversion.CharToDoubleFunction;
 import at.gridtec.lambda4j.function.primitives.conversion.CharToFloatFunction;
 import at.gridtec.lambda4j.function.primitives.conversion.CharToIntFunction;
 import at.gridtec.lambda4j.function.primitives.conversion.CharToLongFunction;
 import at.gridtec.lambda4j.function.primitives.conversion.CharToShortFunction;
-import at.gridtec.lambda4j.function.primitives.conversion.bi.BiCharToBooleanFunction;
 import at.gridtec.lambda4j.function.primitives.conversion.bi.BiCharToByteFunction;
 import at.gridtec.lambda4j.function.primitives.conversion.bi.BiCharToDoubleFunction;
 import at.gridtec.lambda4j.function.primitives.conversion.bi.BiCharToFloatFunction;
@@ -36,6 +34,8 @@ import at.gridtec.lambda4j.function.primitives.conversion.bi.BiCharToShortFuncti
 import at.gridtec.lambda4j.function.primitives.to.ToCharFunction;
 import at.gridtec.lambda4j.function.primitives.to.bi.ToCharBiFunction;
 import at.gridtec.lambda4j.operators.unary.CharUnaryOperator;
+import at.gridtec.lambda4j.predicates.primitives.CharPredicate;
+import at.gridtec.lambda4j.predicates.primitives.bi.CharBiPredicate;
 import at.gridtec.lambda4j.supplier.CharSupplier;
 
 import javax.annotation.Nonnegative;
@@ -251,21 +251,21 @@ public interface CharBinaryOperator {
     }
 
     /**
-     * Returns a composed {@link BiCharToBooleanFunction} that first applies this operator to its input, and then
-     * applies the {@code after} operator to the result. If evaluation of either operator throws an exception, it is
-     * relayed to the caller of the composed operator. This method is just convenience, to provide the ability to
-     * transform this operation to an operation returning {@code boolean}.
+     * Returns a composed {@link CharBiPredicate} that first applies this operator to its input, and then applies the
+     * {@code after} operator to the result. If evaluation of either operator throws an exception, it is relayed to the
+     * caller of the composed operator. This method is just convenience, to provide the ability to transform this
+     * operation to an operation returning {@code boolean}.
      *
      * @param after The operator to apply after this operator is applied
-     * @return A composed {@code BiCharToBooleanFunction} that first applies this operator to its input, and then
-     * applies the {@code after} operator to the result.
+     * @return A composed {@code CharBiPredicate} that first applies this operator to its input, and then applies the
+     * {@code after} operator to the result.
      * @throws NullPointerException If given argument is {@code null}
      * @see #andThen(CharFunction)
      */
     @Nonnull
-    default BiCharToBooleanFunction andThenToBoolean(@Nonnull final CharToBooleanFunction after) {
+    default CharBiPredicate andThenToBoolean(@Nonnull final CharPredicate after) {
         Objects.requireNonNull(after);
-        return (value1, value2) -> after.applyAsBoolean(applyAsChar(value1, value2));
+        return (value1, value2) -> after.test(applyAsChar(value1, value2));
     }
 
     /**

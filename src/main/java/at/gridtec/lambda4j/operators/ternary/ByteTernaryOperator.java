@@ -18,14 +18,12 @@ package at.gridtec.lambda4j.operators.ternary;
 import at.gridtec.lambda4j.consumer.primitives.ByteConsumer;
 import at.gridtec.lambda4j.consumer.primitives.tri.ByteTriConsumer;
 import at.gridtec.lambda4j.function.primitives.ByteFunction;
-import at.gridtec.lambda4j.function.primitives.conversion.ByteToBooleanFunction;
 import at.gridtec.lambda4j.function.primitives.conversion.ByteToCharFunction;
 import at.gridtec.lambda4j.function.primitives.conversion.ByteToDoubleFunction;
 import at.gridtec.lambda4j.function.primitives.conversion.ByteToFloatFunction;
 import at.gridtec.lambda4j.function.primitives.conversion.ByteToIntFunction;
 import at.gridtec.lambda4j.function.primitives.conversion.ByteToLongFunction;
 import at.gridtec.lambda4j.function.primitives.conversion.ByteToShortFunction;
-import at.gridtec.lambda4j.function.primitives.conversion.tri.TriByteToBooleanFunction;
 import at.gridtec.lambda4j.function.primitives.conversion.tri.TriByteToCharFunction;
 import at.gridtec.lambda4j.function.primitives.conversion.tri.TriByteToDoubleFunction;
 import at.gridtec.lambda4j.function.primitives.conversion.tri.TriByteToFloatFunction;
@@ -37,6 +35,8 @@ import at.gridtec.lambda4j.function.primitives.to.tri.ToByteTriFunction;
 import at.gridtec.lambda4j.function.primitives.tri.ByteTriFunction;
 import at.gridtec.lambda4j.operators.binary.ByteBinaryOperator;
 import at.gridtec.lambda4j.operators.unary.ByteUnaryOperator;
+import at.gridtec.lambda4j.predicates.primitives.BytePredicate;
+import at.gridtec.lambda4j.predicates.primitives.tri.ByteTriPredicate;
 import at.gridtec.lambda4j.supplier.ByteSupplier;
 
 import javax.annotation.Nonnegative;
@@ -219,21 +219,21 @@ public interface ByteTernaryOperator {
     }
 
     /**
-     * Returns a composed {@link TriByteToBooleanFunction} that first applies this function to its input, and then
-     * applies the {@code after} function to the result. If evaluation of either function throws an exception, it is
-     * relayed to the caller of the composed function. This method is just convenience, to provide the ability to
-     * transform this operation to an operation returning {@code boolean}.
+     * Returns a composed {@link ByteTriPredicate} that first applies this function to its input, and then applies the
+     * {@code after} function to the result. If evaluation of either function throws an exception, it is relayed to the
+     * caller of the composed function. This method is just convenience, to provide the ability to transform this
+     * operation to an operation returning {@code boolean}.
      *
      * @param after The function to apply after this function is applied
-     * @return A composed {@code TriByteToBooleanFunction} that first applies this function to its input, and then
-     * applies the {@code after} function to the result.
+     * @return A composed {@code ByteTriPredicate} that first applies this function to its input, and then applies the
+     * {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
      * @see #andThen(ByteFunction)
      */
     @Nonnull
-    default TriByteToBooleanFunction andThenToBoolean(@Nonnull final ByteToBooleanFunction after) {
+    default ByteTriPredicate andThenToBoolean(@Nonnull final BytePredicate after) {
         Objects.requireNonNull(after);
-        return (value1, value2, value3) -> after.applyAsBoolean(applyAsByte(value1, value2, value3));
+        return (value1, value2, value3) -> after.test(applyAsByte(value1, value2, value3));
     }
 
     /**

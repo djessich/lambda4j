@@ -18,14 +18,12 @@ package at.gridtec.lambda4j.operators.ternary;
 import at.gridtec.lambda4j.consumer.primitives.FloatConsumer;
 import at.gridtec.lambda4j.consumer.primitives.tri.FloatTriConsumer;
 import at.gridtec.lambda4j.function.primitives.FloatFunction;
-import at.gridtec.lambda4j.function.primitives.conversion.FloatToBooleanFunction;
 import at.gridtec.lambda4j.function.primitives.conversion.FloatToByteFunction;
 import at.gridtec.lambda4j.function.primitives.conversion.FloatToCharFunction;
 import at.gridtec.lambda4j.function.primitives.conversion.FloatToDoubleFunction;
 import at.gridtec.lambda4j.function.primitives.conversion.FloatToIntFunction;
 import at.gridtec.lambda4j.function.primitives.conversion.FloatToLongFunction;
 import at.gridtec.lambda4j.function.primitives.conversion.FloatToShortFunction;
-import at.gridtec.lambda4j.function.primitives.conversion.tri.TriFloatToBooleanFunction;
 import at.gridtec.lambda4j.function.primitives.conversion.tri.TriFloatToByteFunction;
 import at.gridtec.lambda4j.function.primitives.conversion.tri.TriFloatToCharFunction;
 import at.gridtec.lambda4j.function.primitives.conversion.tri.TriFloatToDoubleFunction;
@@ -37,6 +35,8 @@ import at.gridtec.lambda4j.function.primitives.to.tri.ToFloatTriFunction;
 import at.gridtec.lambda4j.function.primitives.tri.FloatTriFunction;
 import at.gridtec.lambda4j.operators.binary.FloatBinaryOperator;
 import at.gridtec.lambda4j.operators.unary.FloatUnaryOperator;
+import at.gridtec.lambda4j.predicates.primitives.FloatPredicate;
+import at.gridtec.lambda4j.predicates.primitives.tri.FloatTriPredicate;
 import at.gridtec.lambda4j.supplier.FloatSupplier;
 
 import javax.annotation.Nonnegative;
@@ -219,21 +219,21 @@ public interface FloatTernaryOperator {
     }
 
     /**
-     * Returns a composed {@link TriFloatToBooleanFunction} that first applies this function to its input, and then
-     * applies the {@code after} function to the result. If evaluation of either function throws an exception, it is
-     * relayed to the caller of the composed function. This method is just convenience, to provide the ability to
-     * transform this operation to an operation returning {@code boolean}.
+     * Returns a composed {@link FloatTriPredicate} that first applies this function to its input, and then applies the
+     * {@code after} function to the result. If evaluation of either function throws an exception, it is relayed to the
+     * caller of the composed function. This method is just convenience, to provide the ability to transform this
+     * operation to an operation returning {@code boolean}.
      *
      * @param after The function to apply after this function is applied
-     * @return A composed {@code TriFloatToBooleanFunction} that first applies this function to its input, and then
-     * applies the {@code after} function to the result.
+     * @return A composed {@code FloatTriPredicate} that first applies this function to its input, and then applies the
+     * {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
      * @see #andThen(FloatFunction)
      */
     @Nonnull
-    default TriFloatToBooleanFunction andThenToBoolean(@Nonnull final FloatToBooleanFunction after) {
+    default FloatTriPredicate andThenToBoolean(@Nonnull final FloatPredicate after) {
         Objects.requireNonNull(after);
-        return (value1, value2, value3) -> after.applyAsBoolean(applyAsFloat(value1, value2, value3));
+        return (value1, value2, value3) -> after.test(applyAsFloat(value1, value2, value3));
     }
 
     /**

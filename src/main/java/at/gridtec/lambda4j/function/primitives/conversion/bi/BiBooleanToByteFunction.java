@@ -20,7 +20,6 @@ import at.gridtec.lambda4j.consumer.primitives.bi.BooleanBiConsumer;
 import at.gridtec.lambda4j.function.primitives.ByteFunction;
 import at.gridtec.lambda4j.function.primitives.bi.BooleanBiFunction;
 import at.gridtec.lambda4j.function.primitives.conversion.BooleanToByteFunction;
-import at.gridtec.lambda4j.function.primitives.conversion.ByteToBooleanFunction;
 import at.gridtec.lambda4j.function.primitives.conversion.ByteToCharFunction;
 import at.gridtec.lambda4j.function.primitives.conversion.ByteToDoubleFunction;
 import at.gridtec.lambda4j.function.primitives.conversion.ByteToFloatFunction;
@@ -31,6 +30,7 @@ import at.gridtec.lambda4j.function.primitives.to.bi.ToByteBiFunction;
 import at.gridtec.lambda4j.operators.binary.BooleanBinaryOperator;
 import at.gridtec.lambda4j.operators.unary.BooleanUnaryOperator;
 import at.gridtec.lambda4j.operators.unary.ByteUnaryOperator;
+import at.gridtec.lambda4j.predicates.primitives.BytePredicate;
 import at.gridtec.lambda4j.supplier.ByteSupplier;
 
 import javax.annotation.Nonnegative;
@@ -204,9 +204,9 @@ public interface BiBooleanToByteFunction {
      * @see #andThen(ByteFunction)
      */
     @Nonnull
-    default BooleanBinaryOperator andThenToBoolean(@Nonnull final ByteToBooleanFunction after) {
+    default BooleanBinaryOperator andThenToBoolean(@Nonnull final BytePredicate after) {
         Objects.requireNonNull(after);
-        return (value1, value2) -> after.applyAsBoolean(applyAsByte(value1, value2));
+        return (value1, value2) -> after.test(applyAsByte(value1, value2));
     }
 
     /**

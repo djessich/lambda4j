@@ -18,7 +18,6 @@ package at.gridtec.lambda4j.function.primitives.conversion.bi;
 import at.gridtec.lambda4j.consumer.primitives.bi.BooleanBiConsumer;
 import at.gridtec.lambda4j.function.primitives.bi.BooleanBiFunction;
 import at.gridtec.lambda4j.function.primitives.conversion.BooleanToIntFunction;
-import at.gridtec.lambda4j.function.primitives.conversion.IntToBooleanFunction;
 import at.gridtec.lambda4j.function.primitives.conversion.IntToByteFunction;
 import at.gridtec.lambda4j.function.primitives.conversion.IntToCharFunction;
 import at.gridtec.lambda4j.function.primitives.conversion.IntToFloatFunction;
@@ -32,6 +31,7 @@ import java.util.Objects;
 import java.util.function.BiFunction;
 import java.util.function.IntConsumer;
 import java.util.function.IntFunction;
+import java.util.function.IntPredicate;
 import java.util.function.IntSupplier;
 import java.util.function.IntToDoubleFunction;
 import java.util.function.IntToLongFunction;
@@ -204,9 +204,9 @@ public interface BiBooleanToIntFunction {
      * @see #andThen(IntFunction)
      */
     @Nonnull
-    default BooleanBinaryOperator andThenToBoolean(@Nonnull final IntToBooleanFunction after) {
+    default BooleanBinaryOperator andThenToBoolean(@Nonnull final IntPredicate after) {
         Objects.requireNonNull(after);
-        return (value1, value2) -> after.applyAsBoolean(applyAsInt(value1, value2));
+        return (value1, value2) -> after.test(applyAsInt(value1, value2));
     }
 
     /**

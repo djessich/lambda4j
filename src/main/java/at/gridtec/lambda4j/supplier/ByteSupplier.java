@@ -17,7 +17,6 @@ package at.gridtec.lambda4j.supplier;
 
 import at.gridtec.lambda4j.consumer.primitives.ByteConsumer;
 import at.gridtec.lambda4j.function.primitives.ByteFunction;
-import at.gridtec.lambda4j.function.primitives.conversion.ByteToBooleanFunction;
 import at.gridtec.lambda4j.function.primitives.conversion.ByteToCharFunction;
 import at.gridtec.lambda4j.function.primitives.conversion.ByteToDoubleFunction;
 import at.gridtec.lambda4j.function.primitives.conversion.ByteToFloatFunction;
@@ -25,6 +24,7 @@ import at.gridtec.lambda4j.function.primitives.conversion.ByteToIntFunction;
 import at.gridtec.lambda4j.function.primitives.conversion.ByteToLongFunction;
 import at.gridtec.lambda4j.function.primitives.conversion.ByteToShortFunction;
 import at.gridtec.lambda4j.operators.unary.ByteUnaryOperator;
+import at.gridtec.lambda4j.predicates.primitives.BytePredicate;
 
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
@@ -122,9 +122,9 @@ public interface ByteSupplier {
      * @see #andThen(ByteFunction)
      */
     @Nonnull
-    default BooleanSupplier andThenToBoolean(@Nonnull final ByteToBooleanFunction after) {
+    default BooleanSupplier andThenToBoolean(@Nonnull final BytePredicate after) {
         Objects.requireNonNull(after);
-        return () -> after.applyAsBoolean(getAsByte());
+        return () -> after.test(getAsByte());
     }
 
     /**

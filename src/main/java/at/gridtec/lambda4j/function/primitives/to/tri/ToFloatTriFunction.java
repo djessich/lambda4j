@@ -19,7 +19,6 @@ import at.gridtec.lambda4j.consumer.TriConsumer;
 import at.gridtec.lambda4j.consumer.primitives.FloatConsumer;
 import at.gridtec.lambda4j.function.TriFunction;
 import at.gridtec.lambda4j.function.primitives.FloatFunction;
-import at.gridtec.lambda4j.function.primitives.conversion.FloatToBooleanFunction;
 import at.gridtec.lambda4j.function.primitives.conversion.FloatToByteFunction;
 import at.gridtec.lambda4j.function.primitives.conversion.FloatToCharFunction;
 import at.gridtec.lambda4j.function.primitives.conversion.FloatToDoubleFunction;
@@ -30,6 +29,7 @@ import at.gridtec.lambda4j.function.primitives.to.ToFloatFunction;
 import at.gridtec.lambda4j.function.primitives.to.bi.ToFloatBiFunction;
 import at.gridtec.lambda4j.operators.unary.FloatUnaryOperator;
 import at.gridtec.lambda4j.predicates.TriPredicate;
+import at.gridtec.lambda4j.predicates.primitives.FloatPredicate;
 import at.gridtec.lambda4j.supplier.FloatSupplier;
 
 import org.apache.commons.lang3.tuple.Triple;
@@ -39,7 +39,6 @@ import javax.annotation.Nonnull;
 import java.util.Objects;
 import java.util.function.Function;
 import java.util.function.UnaryOperator;
-
 /**
  * Represents a function that produces a float-valued result from three arguments. This is the {@code float}-producing
  * primitive specialization for {@link TriFunction}.
@@ -259,9 +258,9 @@ public interface ToFloatTriFunction<T, U, V> {
      * @see #andThen(FloatFunction)
      */
     @Nonnull
-    default TriPredicate<T, U, V> andThenToBoolean(@Nonnull final FloatToBooleanFunction after) {
+    default TriPredicate<T, U, V> andThenToBoolean(@Nonnull final FloatPredicate after) {
         Objects.requireNonNull(after);
-        return (t, u, v) -> after.applyAsBoolean(applyAsFloat(t, u, v));
+        return (t, u, v) -> after.test(applyAsFloat(t, u, v));
     }
 
     /**

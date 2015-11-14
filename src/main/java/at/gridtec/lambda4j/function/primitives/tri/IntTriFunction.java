@@ -18,7 +18,6 @@ package at.gridtec.lambda4j.function.primitives.tri;
 import at.gridtec.lambda4j.consumer.primitives.tri.IntTriConsumer;
 import at.gridtec.lambda4j.function.TriFunction;
 import at.gridtec.lambda4j.function.primitives.bi.IntBiFunction;
-import at.gridtec.lambda4j.function.primitives.conversion.tri.TriIntToBooleanFunction;
 import at.gridtec.lambda4j.function.primitives.conversion.tri.TriIntToByteFunction;
 import at.gridtec.lambda4j.function.primitives.conversion.tri.TriIntToCharFunction;
 import at.gridtec.lambda4j.function.primitives.conversion.tri.TriIntToDoubleFunction;
@@ -30,6 +29,7 @@ import at.gridtec.lambda4j.function.primitives.to.ToCharFunction;
 import at.gridtec.lambda4j.function.primitives.to.ToFloatFunction;
 import at.gridtec.lambda4j.function.primitives.to.ToShortFunction;
 import at.gridtec.lambda4j.operators.ternary.IntTernaryOperator;
+import at.gridtec.lambda4j.predicates.primitives.tri.IntTriPredicate;
 
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
@@ -225,19 +225,19 @@ public interface IntTriFunction<R> {
     }
 
     /**
-     * Returns a composed {@link TriIntToBooleanFunction} that first applies this function to its input, and then
-     * applies the {@code after} function to the result. If evaluation of either function throws an exception, it is
-     * relayed to the caller of the composed function. This method is just convenience, to provide the ability to
-     * transform this operation to an operation returning {@code boolean}.
+     * Returns a composed {@link IntTriPredicate} that first applies this function to its input, and then applies the
+     * {@code after} function to the result. If evaluation of either function throws an exception, it is relayed to the
+     * caller of the composed function. This method is just convenience, to provide the ability to transform this
+     * operation to an operation returning {@code boolean}.
      *
      * @param after The function to apply after this function is applied
-     * @return A composed {@code TriIntToBooleanFunction} that first applies this function to its input, and then
-     * applies the {@code after} function to the result.
+     * @return A composed {@code IntTriPredicate} that first applies this function to its input, and then applies the
+     * {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
      * @see #andThen(Function)
      */
     @Nonnull
-    default TriIntToBooleanFunction andThenToBoolean(@Nonnull final Predicate<? super R> after) {
+    default IntTriPredicate andThenToBoolean(@Nonnull final Predicate<? super R> after) {
         Objects.requireNonNull(after);
         return (value1, value2, value3) -> after.test(apply(value1, value2, value3));
     }

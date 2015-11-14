@@ -22,6 +22,7 @@ import at.gridtec.lambda4j.function.primitives.CharFunction;
 import at.gridtec.lambda4j.function.primitives.to.ToCharFunction;
 import at.gridtec.lambda4j.operators.unary.BooleanUnaryOperator;
 import at.gridtec.lambda4j.operators.unary.CharUnaryOperator;
+import at.gridtec.lambda4j.predicates.primitives.CharPredicate;
 import at.gridtec.lambda4j.supplier.CharSupplier;
 
 import javax.annotation.Nonnegative;
@@ -156,9 +157,9 @@ public interface BooleanToCharFunction {
      * @see #andThen(CharFunction)
      */
     @Nonnull
-    default BooleanUnaryOperator andThenToBoolean(@Nonnull final CharToBooleanFunction after) {
+    default BooleanUnaryOperator andThenToBoolean(@Nonnull final CharPredicate after) {
         Objects.requireNonNull(after);
-        return value -> after.applyAsBoolean(applyAsChar(value));
+        return value -> after.test(applyAsChar(value));
     }
 
     /**

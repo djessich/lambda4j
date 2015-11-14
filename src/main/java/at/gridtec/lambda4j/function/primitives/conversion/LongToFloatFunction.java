@@ -19,6 +19,7 @@ import at.gridtec.lambda4j.consumer.primitives.FloatConsumer;
 import at.gridtec.lambda4j.function.primitives.FloatFunction;
 import at.gridtec.lambda4j.function.primitives.to.ToFloatFunction;
 import at.gridtec.lambda4j.operators.unary.FloatUnaryOperator;
+import at.gridtec.lambda4j.predicates.primitives.FloatPredicate;
 import at.gridtec.lambda4j.supplier.FloatSupplier;
 
 import javax.annotation.Nonnegative;
@@ -27,6 +28,7 @@ import java.util.Objects;
 import java.util.function.Function;
 import java.util.function.LongConsumer;
 import java.util.function.LongFunction;
+import java.util.function.LongPredicate;
 import java.util.function.LongToDoubleFunction;
 import java.util.function.LongToIntFunction;
 import java.util.function.LongUnaryOperator;
@@ -146,21 +148,21 @@ public interface LongToFloatFunction {
     }
 
     /**
-     * Returns a composed {@link LongToBooleanFunction} that first applies this function to its input, and then applies
-     * the {@code after} function to the result. If evaluation of either function throws an exception, it is relayed to
-     * the caller of the composed function. This method is just convenience, to provide the ability to transform this
+     * Returns a composed {@link LongPredicate} that first applies this function to its input, and then applies the
+     * {@code after} function to the result. If evaluation of either function throws an exception, it is relayed to the
+     * caller of the composed function. This method is just convenience, to provide the ability to transform this
      * operation to an operation returning {@code boolean}.
      *
      * @param after The function to apply after this function is applied
-     * @return A composed {@code LongToBooleanFunction} that first applies this function to its input, and then applies
-     * the {@code after} function to the result.
+     * @return A composed {@code LongPredicate} that first applies this function to its input, and then applies the
+     * {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
      * @see #andThen(FloatFunction)
      */
     @Nonnull
-    default LongToBooleanFunction andThenToBoolean(@Nonnull final FloatToBooleanFunction after) {
+    default LongPredicate andThenToBoolean(@Nonnull final FloatPredicate after) {
         Objects.requireNonNull(after);
-        return value -> after.applyAsBoolean(applyAsFloat(value));
+        return value -> after.test(applyAsFloat(value));
     }
 
     /**
@@ -315,6 +317,7 @@ public interface LongToFloatFunction {
     default FloatSupplier partial(long value) {
         return () -> applyAsFloat(value);
     }
+
     /**
      * Returns a composed {@link Function} which represents this {@link LongToFloatFunction}. Thereby the primitive
      * input argument for this function is autoboxed. This method is just convenience to provide the ability to use this

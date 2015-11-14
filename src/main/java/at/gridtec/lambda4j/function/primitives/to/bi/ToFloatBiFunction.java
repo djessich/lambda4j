@@ -17,7 +17,6 @@ package at.gridtec.lambda4j.function.primitives.to.bi;
 
 import at.gridtec.lambda4j.consumer.primitives.FloatConsumer;
 import at.gridtec.lambda4j.function.primitives.FloatFunction;
-import at.gridtec.lambda4j.function.primitives.conversion.FloatToBooleanFunction;
 import at.gridtec.lambda4j.function.primitives.conversion.FloatToByteFunction;
 import at.gridtec.lambda4j.function.primitives.conversion.FloatToCharFunction;
 import at.gridtec.lambda4j.function.primitives.conversion.FloatToDoubleFunction;
@@ -26,6 +25,7 @@ import at.gridtec.lambda4j.function.primitives.conversion.FloatToLongFunction;
 import at.gridtec.lambda4j.function.primitives.conversion.FloatToShortFunction;
 import at.gridtec.lambda4j.function.primitives.to.ToFloatFunction;
 import at.gridtec.lambda4j.operators.unary.FloatUnaryOperator;
+import at.gridtec.lambda4j.predicates.primitives.FloatPredicate;
 import at.gridtec.lambda4j.supplier.FloatSupplier;
 
 import org.apache.commons.lang3.tuple.Pair;
@@ -41,7 +41,6 @@ import java.util.function.ToDoubleBiFunction;
 import java.util.function.ToIntBiFunction;
 import java.util.function.ToLongBiFunction;
 import java.util.function.UnaryOperator;
-
 /**
  * Represents a function that produces a float-valued result from two arguments. This is the {@code float}-producing
  * primitive specialization for {@link BiFunction}.
@@ -228,9 +227,9 @@ public interface ToFloatBiFunction<T, U> {
      * @throws NullPointerException If given argument is {@code null}
      * @see #andThen(FloatFunction)
      */
-    default BiPredicate<T, U> andThenToBoolean(final FloatToBooleanFunction after) {
+    default BiPredicate<T, U> andThenToBoolean(final FloatPredicate after) {
         Objects.requireNonNull(after);
-        return (t, u) -> after.applyAsBoolean(applyAsFloat(t, u));
+        return (t, u) -> after.test(applyAsFloat(t, u));
     }
 
     /**

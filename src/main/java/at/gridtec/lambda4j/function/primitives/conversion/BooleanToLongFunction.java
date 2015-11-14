@@ -25,6 +25,7 @@ import java.util.Objects;
 import java.util.function.Function;
 import java.util.function.LongConsumer;
 import java.util.function.LongFunction;
+import java.util.function.LongPredicate;
 import java.util.function.LongSupplier;
 import java.util.function.LongToDoubleFunction;
 import java.util.function.LongToIntFunction;
@@ -157,9 +158,9 @@ public interface BooleanToLongFunction {
      * @see #andThen(LongFunction)
      */
     @Nonnull
-    default BooleanUnaryOperator andThenToBoolean(@Nonnull final LongToBooleanFunction after) {
+    default BooleanUnaryOperator andThenToBoolean(@Nonnull final LongPredicate after) {
         Objects.requireNonNull(after);
-        return value -> after.applyAsBoolean(applyAsLong(value));
+        return value -> after.test(applyAsLong(value));
     }
 
     /**

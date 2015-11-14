@@ -17,7 +17,6 @@ package at.gridtec.lambda4j.function.primitives.to.tri;
 
 import at.gridtec.lambda4j.consumer.TriConsumer;
 import at.gridtec.lambda4j.function.TriFunction;
-import at.gridtec.lambda4j.function.primitives.conversion.LongToBooleanFunction;
 import at.gridtec.lambda4j.function.primitives.conversion.LongToByteFunction;
 import at.gridtec.lambda4j.function.primitives.conversion.LongToCharFunction;
 import at.gridtec.lambda4j.function.primitives.conversion.LongToFloatFunction;
@@ -32,6 +31,7 @@ import java.util.Objects;
 import java.util.function.Function;
 import java.util.function.LongConsumer;
 import java.util.function.LongFunction;
+import java.util.function.LongPredicate;
 import java.util.function.LongSupplier;
 import java.util.function.LongToDoubleFunction;
 import java.util.function.LongToIntFunction;
@@ -39,7 +39,6 @@ import java.util.function.LongUnaryOperator;
 import java.util.function.ToLongBiFunction;
 import java.util.function.ToLongFunction;
 import java.util.function.UnaryOperator;
-
 /**
  * Represents a function that produces a long-valued result from three arguments. This is the {@code long}-producing
  * primitive specialization for {@link TriFunction}.
@@ -259,9 +258,9 @@ public interface ToLongTriFunction<T, U, V> {
      * @see #andThen(LongFunction)
      */
     @Nonnull
-    default TriPredicate<T, U, V> andThenToBoolean(@Nonnull final LongToBooleanFunction after) {
+    default TriPredicate<T, U, V> andThenToBoolean(@Nonnull final LongPredicate after) {
         Objects.requireNonNull(after);
-        return (t, u, v) -> after.applyAsBoolean(applyAsLong(t, u, v));
+        return (t, u, v) -> after.test(applyAsLong(t, u, v));
     }
 
     /**

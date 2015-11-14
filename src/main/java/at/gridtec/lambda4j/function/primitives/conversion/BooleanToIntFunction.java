@@ -25,6 +25,7 @@ import java.util.Objects;
 import java.util.function.Function;
 import java.util.function.IntConsumer;
 import java.util.function.IntFunction;
+import java.util.function.IntPredicate;
 import java.util.function.IntSupplier;
 import java.util.function.IntToDoubleFunction;
 import java.util.function.IntToLongFunction;
@@ -158,9 +159,9 @@ public interface BooleanToIntFunction {
      * @see #andThen(IntFunction)
      */
     @Nonnull
-    default BooleanUnaryOperator andThenToBoolean(@Nonnull final IntToBooleanFunction after) {
+    default BooleanUnaryOperator andThenToBoolean(@Nonnull final IntPredicate after) {
         Objects.requireNonNull(after);
-        return value -> after.applyAsBoolean(applyAsInt(value));
+        return value -> after.test(applyAsInt(value));
     }
 
     /**

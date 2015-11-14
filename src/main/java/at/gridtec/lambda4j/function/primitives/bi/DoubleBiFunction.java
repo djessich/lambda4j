@@ -16,7 +16,6 @@
 package at.gridtec.lambda4j.function.primitives.bi;
 
 import at.gridtec.lambda4j.consumer.primitives.bi.DoubleBiConsumer;
-import at.gridtec.lambda4j.function.primitives.conversion.bi.BiDoubleToBooleanFunction;
 import at.gridtec.lambda4j.function.primitives.conversion.bi.BiDoubleToByteFunction;
 import at.gridtec.lambda4j.function.primitives.conversion.bi.BiDoubleToCharFunction;
 import at.gridtec.lambda4j.function.primitives.conversion.bi.BiDoubleToFloatFunction;
@@ -27,6 +26,7 @@ import at.gridtec.lambda4j.function.primitives.to.ToByteFunction;
 import at.gridtec.lambda4j.function.primitives.to.ToCharFunction;
 import at.gridtec.lambda4j.function.primitives.to.ToFloatFunction;
 import at.gridtec.lambda4j.function.primitives.to.ToShortFunction;
+import at.gridtec.lambda4j.predicates.primitives.bi.DoubleBiPredicate;
 
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
@@ -202,19 +202,19 @@ public interface DoubleBiFunction<R> {
     }
 
     /**
-     * Returns a composed {@link BiDoubleToBooleanFunction} that first applies this function to its input, and then
-     * applies the {@code after} function to the result. If evaluation of either function throws an exception, it is
-     * relayed to the caller of the composed function. This method is just convenience, to provide the ability to
-     * transform this operation to an operation returning {@code boolean}.
+     * Returns a composed {@link DoubleBiPredicate} that first applies this function to its input, and then applies the
+     * {@code after} function to the result. If evaluation of either function throws an exception, it is relayed to the
+     * caller of the composed function. This method is just convenience, to provide the ability to transform this
+     * operation to an operation returning {@code boolean}.
      *
      * @param after The function to apply after this function is applied
-     * @return A composed {@code BiDoubleToBooleanFunction} that first applies this function to its input, and then
-     * applies the {@code after} function to the result.
+     * @return A composed {@code DoubleBiPredicate} that first applies this function to its input, and then applies the
+     * {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
      * @see #andThen(Function)
      */
     @Nonnull
-    default BiDoubleToBooleanFunction andThenToBoolean(@Nonnull final Predicate<? super R> after) {
+    default DoubleBiPredicate andThenToBoolean(@Nonnull final Predicate<? super R> after) {
         Objects.requireNonNull(after);
         return (value1, value2) -> after.test(apply(value1, value2));
     }

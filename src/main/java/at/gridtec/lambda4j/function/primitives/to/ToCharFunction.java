@@ -17,7 +17,6 @@ package at.gridtec.lambda4j.function.primitives.to;
 
 import at.gridtec.lambda4j.consumer.primitives.CharConsumer;
 import at.gridtec.lambda4j.function.primitives.CharFunction;
-import at.gridtec.lambda4j.function.primitives.conversion.CharToBooleanFunction;
 import at.gridtec.lambda4j.function.primitives.conversion.CharToByteFunction;
 import at.gridtec.lambda4j.function.primitives.conversion.CharToDoubleFunction;
 import at.gridtec.lambda4j.function.primitives.conversion.CharToFloatFunction;
@@ -25,6 +24,7 @@ import at.gridtec.lambda4j.function.primitives.conversion.CharToIntFunction;
 import at.gridtec.lambda4j.function.primitives.conversion.CharToLongFunction;
 import at.gridtec.lambda4j.function.primitives.conversion.CharToShortFunction;
 import at.gridtec.lambda4j.operators.unary.CharUnaryOperator;
+import at.gridtec.lambda4j.predicates.primitives.CharPredicate;
 import at.gridtec.lambda4j.supplier.CharSupplier;
 
 import javax.annotation.Nonnegative;
@@ -166,9 +166,9 @@ public interface ToCharFunction<T> {
      * @see #andThen(CharFunction)
      */
     @Nonnull
-    default Predicate<T> andThenToBoolean(@Nonnull final CharToBooleanFunction after) {
+    default Predicate<T> andThenToBoolean(@Nonnull final CharPredicate after) {
         Objects.requireNonNull(after);
-        return t -> after.applyAsBoolean(applyAsChar(t));
+        return t -> after.test(applyAsChar(t));
     }
 
     /**

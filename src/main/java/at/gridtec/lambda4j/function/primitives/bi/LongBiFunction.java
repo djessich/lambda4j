@@ -16,7 +16,6 @@
 package at.gridtec.lambda4j.function.primitives.bi;
 
 import at.gridtec.lambda4j.consumer.primitives.bi.LongBiConsumer;
-import at.gridtec.lambda4j.function.primitives.conversion.bi.BiLongToBooleanFunction;
 import at.gridtec.lambda4j.function.primitives.conversion.bi.BiLongToByteFunction;
 import at.gridtec.lambda4j.function.primitives.conversion.bi.BiLongToCharFunction;
 import at.gridtec.lambda4j.function.primitives.conversion.bi.BiLongToDoubleFunction;
@@ -27,6 +26,7 @@ import at.gridtec.lambda4j.function.primitives.to.ToByteFunction;
 import at.gridtec.lambda4j.function.primitives.to.ToCharFunction;
 import at.gridtec.lambda4j.function.primitives.to.ToFloatFunction;
 import at.gridtec.lambda4j.function.primitives.to.ToShortFunction;
+import at.gridtec.lambda4j.predicates.primitives.bi.LongBiPredicate;
 
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
@@ -202,19 +202,19 @@ public interface LongBiFunction<R> {
     }
 
     /**
-     * Returns a composed {@link BiLongToBooleanFunction} that first applies this function to its input, and then
-     * applies the {@code after} function to the result. If evaluation of either function throws an exception, it is
-     * relayed to the caller of the composed function. This method is just convenience, to provide the ability to
-     * transform this operation to an operation returning {@code boolean}.
+     * Returns a composed {@link LongBiPredicate} that first applies this function to its input, and then applies the
+     * {@code after} function to the result. If evaluation of either function throws an exception, it is relayed to the
+     * caller of the composed function. This method is just convenience, to provide the ability to transform this
+     * operation to an operation returning {@code boolean}.
      *
      * @param after The function to apply after this function is applied
-     * @return A composed {@code BiLongToBooleanFunction} that first applies this function to its input, and then
-     * applies the {@code after} function to the result.
+     * @return A composed {@code LongBiPredicate} that first applies this function to its input, and then applies the
+     * {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
      * @see #andThen(Function)
      */
     @Nonnull
-    default BiLongToBooleanFunction andThenToBoolean(@Nonnull final Predicate<? super R> after) {
+    default LongBiPredicate andThenToBoolean(@Nonnull final Predicate<? super R> after) {
         Objects.requireNonNull(after);
         return (value1, value2) -> after.test(apply(value1, value2));
     }

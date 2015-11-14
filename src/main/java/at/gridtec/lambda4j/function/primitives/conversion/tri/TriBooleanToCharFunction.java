@@ -20,7 +20,6 @@ import at.gridtec.lambda4j.consumer.primitives.tri.BooleanTriConsumer;
 import at.gridtec.lambda4j.function.TriFunction;
 import at.gridtec.lambda4j.function.primitives.CharFunction;
 import at.gridtec.lambda4j.function.primitives.conversion.BooleanToCharFunction;
-import at.gridtec.lambda4j.function.primitives.conversion.CharToBooleanFunction;
 import at.gridtec.lambda4j.function.primitives.conversion.CharToByteFunction;
 import at.gridtec.lambda4j.function.primitives.conversion.CharToDoubleFunction;
 import at.gridtec.lambda4j.function.primitives.conversion.CharToFloatFunction;
@@ -33,6 +32,7 @@ import at.gridtec.lambda4j.function.primitives.tri.BooleanTriFunction;
 import at.gridtec.lambda4j.operators.ternary.BooleanTernaryOperator;
 import at.gridtec.lambda4j.operators.unary.BooleanUnaryOperator;
 import at.gridtec.lambda4j.operators.unary.CharUnaryOperator;
+import at.gridtec.lambda4j.predicates.primitives.CharPredicate;
 import at.gridtec.lambda4j.supplier.CharSupplier;
 
 import javax.annotation.Nonnegative;
@@ -227,9 +227,9 @@ public interface TriBooleanToCharFunction {
      * @see #andThen(CharFunction)
      */
     @Nonnull
-    default BooleanTernaryOperator andThenToBoolean(@Nonnull final CharToBooleanFunction after) {
+    default BooleanTernaryOperator andThenToBoolean(@Nonnull final CharPredicate after) {
         Objects.requireNonNull(after);
-        return (value1, value2, value3) -> after.applyAsBoolean(applyAsChar(value1, value2, value3));
+        return (value1, value2, value3) -> after.test(applyAsChar(value1, value2, value3));
     }
 
     /**

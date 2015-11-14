@@ -19,6 +19,7 @@ import at.gridtec.lambda4j.consumer.primitives.CharConsumer;
 import at.gridtec.lambda4j.function.primitives.CharFunction;
 import at.gridtec.lambda4j.function.primitives.to.ToCharFunction;
 import at.gridtec.lambda4j.operators.unary.CharUnaryOperator;
+import at.gridtec.lambda4j.predicates.primitives.CharPredicate;
 import at.gridtec.lambda4j.supplier.CharSupplier;
 
 import javax.annotation.Nonnegative;
@@ -27,6 +28,7 @@ import java.util.Objects;
 import java.util.function.Function;
 import java.util.function.IntConsumer;
 import java.util.function.IntFunction;
+import java.util.function.IntPredicate;
 import java.util.function.IntToDoubleFunction;
 import java.util.function.IntToLongFunction;
 import java.util.function.IntUnaryOperator;
@@ -146,21 +148,21 @@ public interface IntToCharFunction {
     }
 
     /**
-     * Returns a composed {@link IntToBooleanFunction} that first applies this function to its input, and then applies
-     * the {@code after} function to the result. If evaluation of either function throws an exception, it is relayed to
-     * the caller of the composed function. This method is just convenience, to provide the ability to transform this
+     * Returns a composed {@link IntPredicate} that first applies this function to its input, and then applies the
+     * {@code after} function to the result. If evaluation of either function throws an exception, it is relayed to the
+     * caller of the composed function. This method is just convenience, to provide the ability to transform this
      * operation to an operation returning {@code boolean}.
      *
      * @param after The function to apply after this function is applied
-     * @return A composed {@code IntToBooleanFunction} that first applies this function to its input, and then applies
-     * the {@code after} function to the result.
+     * @return A composed {@code IntPredicate} that first applies this function to its input, and then applies the
+     * {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
      * @see #andThen(CharFunction)
      */
     @Nonnull
-    default IntToBooleanFunction andThenToBoolean(@Nonnull final CharToBooleanFunction after) {
+    default IntPredicate andThenToBoolean(@Nonnull final CharPredicate after) {
         Objects.requireNonNull(after);
-        return value -> after.applyAsBoolean(applyAsChar(value));
+        return value -> after.test(applyAsChar(value));
     }
 
     /**

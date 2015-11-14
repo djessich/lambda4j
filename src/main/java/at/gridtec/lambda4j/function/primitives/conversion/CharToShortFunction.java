@@ -23,6 +23,8 @@ import at.gridtec.lambda4j.function.primitives.to.ToCharFunction;
 import at.gridtec.lambda4j.function.primitives.to.ToShortFunction;
 import at.gridtec.lambda4j.operators.unary.CharUnaryOperator;
 import at.gridtec.lambda4j.operators.unary.ShortUnaryOperator;
+import at.gridtec.lambda4j.predicates.primitives.CharPredicate;
+import at.gridtec.lambda4j.predicates.primitives.ShortPredicate;
 import at.gridtec.lambda4j.supplier.ShortSupplier;
 
 import javax.annotation.Nonnegative;
@@ -144,21 +146,21 @@ public interface CharToShortFunction {
     }
 
     /**
-     * Returns a composed {@link CharToBooleanFunction} that first applies this function to its input, and then applies
-     * the {@code after} function to the result. If evaluation of either function throws an exception, it is relayed to
-     * the caller of the composed function. This method is just convenience, to provide the ability to transform this
+     * Returns a composed {@link CharPredicate} that first applies this function to its input, and then applies the
+     * {@code after} function to the result. If evaluation of either function throws an exception, it is relayed to the
+     * caller of the composed function. This method is just convenience, to provide the ability to transform this
      * operation to an operation returning {@code boolean}.
      *
      * @param after The function to apply after this function is applied
-     * @return A composed {@code CharToBooleanFunction} that first applies this function to its input, and then applies
-     * the {@code after} function to the result.
+     * @return A composed {@code CharPredicate} that first applies this function to its input, and then applies the
+     * {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
      * @see #andThen(ShortFunction)
      */
     @Nonnull
-    default CharToBooleanFunction andThenToBoolean(@Nonnull final ShortToBooleanFunction after) {
+    default CharPredicate andThenToBoolean(@Nonnull final ShortPredicate after) {
         Objects.requireNonNull(after);
-        return value -> after.applyAsBoolean(applyAsShort(value));
+        return value -> after.test(applyAsShort(value));
     }
 
     /**
@@ -313,6 +315,7 @@ public interface CharToShortFunction {
     default ShortSupplier partial(char value) {
         return () -> applyAsShort(value);
     }
+
     /**
      * Returns a composed {@link Function} which represents this {@link CharToShortFunction}. Thereby the primitive
      * input argument for this function is autoboxed. This method is just convenience to provide the ability to use this

@@ -19,14 +19,12 @@ import at.gridtec.lambda4j.consumer.primitives.FloatConsumer;
 import at.gridtec.lambda4j.consumer.primitives.bi.FloatBiConsumer;
 import at.gridtec.lambda4j.function.primitives.FloatFunction;
 import at.gridtec.lambda4j.function.primitives.bi.FloatBiFunction;
-import at.gridtec.lambda4j.function.primitives.conversion.FloatToBooleanFunction;
 import at.gridtec.lambda4j.function.primitives.conversion.FloatToByteFunction;
 import at.gridtec.lambda4j.function.primitives.conversion.FloatToCharFunction;
 import at.gridtec.lambda4j.function.primitives.conversion.FloatToDoubleFunction;
 import at.gridtec.lambda4j.function.primitives.conversion.FloatToIntFunction;
 import at.gridtec.lambda4j.function.primitives.conversion.FloatToLongFunction;
 import at.gridtec.lambda4j.function.primitives.conversion.FloatToShortFunction;
-import at.gridtec.lambda4j.function.primitives.conversion.bi.BiFloatToBooleanFunction;
 import at.gridtec.lambda4j.function.primitives.conversion.bi.BiFloatToByteFunction;
 import at.gridtec.lambda4j.function.primitives.conversion.bi.BiFloatToCharFunction;
 import at.gridtec.lambda4j.function.primitives.conversion.bi.BiFloatToDoubleFunction;
@@ -36,6 +34,8 @@ import at.gridtec.lambda4j.function.primitives.conversion.bi.BiFloatToShortFunct
 import at.gridtec.lambda4j.function.primitives.to.ToFloatFunction;
 import at.gridtec.lambda4j.function.primitives.to.bi.ToFloatBiFunction;
 import at.gridtec.lambda4j.operators.unary.FloatUnaryOperator;
+import at.gridtec.lambda4j.predicates.primitives.FloatPredicate;
+import at.gridtec.lambda4j.predicates.primitives.bi.FloatBiPredicate;
 import at.gridtec.lambda4j.supplier.FloatSupplier;
 
 import javax.annotation.Nonnegative;
@@ -255,21 +255,21 @@ public interface FloatBinaryOperator {
     }
 
     /**
-     * Returns a composed {@link BiFloatToBooleanFunction} that first applies this operator to its input, and then
-     * applies the {@code after} operator to the result. If evaluation of either operator throws an exception, it is
-     * relayed to the caller of the composed operator. This method is just convenience, to provide the ability to
-     * transform this operation to an operation returning {@code boolean}.
+     * Returns a composed {@link FloatBiPredicate} that first applies this operator to its input, and then applies the
+     * {@code after} operator to the result. If evaluation of either operator throws an exception, it is relayed to the
+     * caller of the composed operator. This method is just convenience, to provide the ability to transform this
+     * operation to an operation returning {@code boolean}.
      *
      * @param after The operator to apply after this operator is applied
-     * @return A composed {@code BiFloatToBooleanFunction} that first applies this operator to its input, and then
-     * applies the {@code after} operator to the result.
+     * @return A composed {@code FloatBiPredicate} that first applies this operator to its input, and then applies the
+     * {@code after} operator to the result.
      * @throws NullPointerException If given argument is {@code null}
      * @see #andThen(FloatFunction)
      */
     @Nonnull
-    default BiFloatToBooleanFunction andThenToBoolean(@Nonnull final FloatToBooleanFunction after) {
+    default FloatBiPredicate andThenToBoolean(@Nonnull final FloatPredicate after) {
         Objects.requireNonNull(after);
-        return (value1, value2) -> after.applyAsBoolean(applyAsFloat(value1, value2));
+        return (value1, value2) -> after.test(applyAsFloat(value1, value2));
     }
 
     /**

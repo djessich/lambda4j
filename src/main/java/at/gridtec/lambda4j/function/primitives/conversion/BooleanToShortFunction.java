@@ -22,6 +22,7 @@ import at.gridtec.lambda4j.function.primitives.ShortFunction;
 import at.gridtec.lambda4j.function.primitives.to.ToShortFunction;
 import at.gridtec.lambda4j.operators.unary.BooleanUnaryOperator;
 import at.gridtec.lambda4j.operators.unary.ShortUnaryOperator;
+import at.gridtec.lambda4j.predicates.primitives.ShortPredicate;
 import at.gridtec.lambda4j.supplier.ShortSupplier;
 
 import javax.annotation.Nonnegative;
@@ -156,9 +157,9 @@ public interface BooleanToShortFunction {
      * @see #andThen(ShortFunction)
      */
     @Nonnull
-    default BooleanUnaryOperator andThenToBoolean(@Nonnull final ShortToBooleanFunction after) {
+    default BooleanUnaryOperator andThenToBoolean(@Nonnull final ShortPredicate after) {
         Objects.requireNonNull(after);
-        return value -> after.applyAsBoolean(applyAsShort(value));
+        return value -> after.test(applyAsShort(value));
     }
 
     /**

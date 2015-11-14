@@ -18,7 +18,6 @@ package at.gridtec.lambda4j.function.primitives.conversion.tri;
 import at.gridtec.lambda4j.consumer.primitives.tri.BooleanTriConsumer;
 import at.gridtec.lambda4j.function.TriFunction;
 import at.gridtec.lambda4j.function.primitives.conversion.BooleanToLongFunction;
-import at.gridtec.lambda4j.function.primitives.conversion.LongToBooleanFunction;
 import at.gridtec.lambda4j.function.primitives.conversion.LongToByteFunction;
 import at.gridtec.lambda4j.function.primitives.conversion.LongToCharFunction;
 import at.gridtec.lambda4j.function.primitives.conversion.LongToFloatFunction;
@@ -34,6 +33,7 @@ import javax.annotation.Nonnull;
 import java.util.Objects;
 import java.util.function.LongConsumer;
 import java.util.function.LongFunction;
+import java.util.function.LongPredicate;
 import java.util.function.LongSupplier;
 import java.util.function.LongToDoubleFunction;
 import java.util.function.LongToIntFunction;
@@ -227,9 +227,9 @@ public interface TriBooleanToLongFunction {
      * @see #andThen(LongFunction)
      */
     @Nonnull
-    default BooleanTernaryOperator andThenToBoolean(@Nonnull final LongToBooleanFunction after) {
+    default BooleanTernaryOperator andThenToBoolean(@Nonnull final LongPredicate after) {
         Objects.requireNonNull(after);
-        return (value1, value2, value3) -> after.applyAsBoolean(applyAsLong(value1, value2, value3));
+        return (value1, value2, value3) -> after.test(applyAsLong(value1, value2, value3));
     }
 
     /**

@@ -17,7 +17,6 @@ package at.gridtec.lambda4j.operators.unary;
 
 import at.gridtec.lambda4j.consumer.primitives.FloatConsumer;
 import at.gridtec.lambda4j.function.primitives.FloatFunction;
-import at.gridtec.lambda4j.function.primitives.conversion.FloatToBooleanFunction;
 import at.gridtec.lambda4j.function.primitives.conversion.FloatToByteFunction;
 import at.gridtec.lambda4j.function.primitives.conversion.FloatToCharFunction;
 import at.gridtec.lambda4j.function.primitives.conversion.FloatToDoubleFunction;
@@ -25,6 +24,7 @@ import at.gridtec.lambda4j.function.primitives.conversion.FloatToIntFunction;
 import at.gridtec.lambda4j.function.primitives.conversion.FloatToLongFunction;
 import at.gridtec.lambda4j.function.primitives.conversion.FloatToShortFunction;
 import at.gridtec.lambda4j.function.primitives.to.ToFloatFunction;
+import at.gridtec.lambda4j.predicates.primitives.FloatPredicate;
 import at.gridtec.lambda4j.supplier.FloatSupplier;
 
 import javax.annotation.Nonnegative;
@@ -155,21 +155,21 @@ public interface FloatUnaryOperator {
     }
 
     /**
-     * Returns a composed {@link FloatToBooleanFunction} that first applies this operator to its input, and then applies
-     * the {@code after} operator to the result. If evaluation of either operator throws an exception, it is relayed to
-     * the caller of the composed operator. This method is just convenience, to provide the ability to transform this
+     * Returns a composed {@link FloatPredicate} that first applies this operator to its input, and then applies the
+     * {@code after} operator to the result. If evaluation of either operator throws an exception, it is relayed to the
+     * caller of the composed operator. This method is just convenience, to provide the ability to transform this
      * operation to an operation returning {@code boolean}.
      *
      * @param after The operator to apply after this operator is applied
-     * @return A composed {@code FloatToBooleanFunction} that first applies this operator to its input, and then applies
-     * the {@code after} operator to the result.
+     * @return A composed {@code FloatPredicate} that first applies this operator to its input, and then applies the
+     * {@code after} operator to the result.
      * @throws NullPointerException If given argument is {@code null}
      * @see #andThen(FloatFunction)
      */
     @Nonnull
-    default FloatToBooleanFunction andThenToBoolean(@Nonnull final FloatToBooleanFunction after) {
+    default FloatPredicate andThenToBoolean(@Nonnull final FloatPredicate after) {
         Objects.requireNonNull(after);
-        return value -> after.applyAsBoolean(applyAsFloat(value));
+        return value -> after.test(applyAsFloat(value));
     }
 
     /**
@@ -324,6 +324,7 @@ public interface FloatUnaryOperator {
     default FloatSupplier partial(float value) {
         return () -> applyAsFloat(value);
     }
+
     /**
      * Returns a composed {@link UnaryOperator} which represents this {@link FloatUnaryOperator}. Thereby the primitive
      * input argument for this operator is autoboxed. This method is just convenience to provide the ability to use this

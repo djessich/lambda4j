@@ -19,14 +19,12 @@ import at.gridtec.lambda4j.consumer.primitives.ByteConsumer;
 import at.gridtec.lambda4j.consumer.primitives.bi.ByteBiConsumer;
 import at.gridtec.lambda4j.function.primitives.ByteFunction;
 import at.gridtec.lambda4j.function.primitives.bi.ByteBiFunction;
-import at.gridtec.lambda4j.function.primitives.conversion.ByteToBooleanFunction;
 import at.gridtec.lambda4j.function.primitives.conversion.ByteToCharFunction;
 import at.gridtec.lambda4j.function.primitives.conversion.ByteToDoubleFunction;
 import at.gridtec.lambda4j.function.primitives.conversion.ByteToFloatFunction;
 import at.gridtec.lambda4j.function.primitives.conversion.ByteToIntFunction;
 import at.gridtec.lambda4j.function.primitives.conversion.ByteToLongFunction;
 import at.gridtec.lambda4j.function.primitives.conversion.ByteToShortFunction;
-import at.gridtec.lambda4j.function.primitives.conversion.bi.BiByteToBooleanFunction;
 import at.gridtec.lambda4j.function.primitives.conversion.bi.BiByteToCharFunction;
 import at.gridtec.lambda4j.function.primitives.conversion.bi.BiByteToDoubleFunction;
 import at.gridtec.lambda4j.function.primitives.conversion.bi.BiByteToFloatFunction;
@@ -36,6 +34,8 @@ import at.gridtec.lambda4j.function.primitives.conversion.bi.BiByteToShortFuncti
 import at.gridtec.lambda4j.function.primitives.to.ToByteFunction;
 import at.gridtec.lambda4j.function.primitives.to.bi.ToByteBiFunction;
 import at.gridtec.lambda4j.operators.unary.ByteUnaryOperator;
+import at.gridtec.lambda4j.predicates.primitives.BytePredicate;
+import at.gridtec.lambda4j.predicates.primitives.bi.ByteBiPredicate;
 import at.gridtec.lambda4j.supplier.ByteSupplier;
 
 import javax.annotation.Nonnegative;
@@ -251,21 +251,21 @@ public interface ByteBinaryOperator {
     }
 
     /**
-     * Returns a composed {@link BiByteToBooleanFunction} that first applies this operator to its input, and then
-     * applies the {@code after} operator to the result. If evaluation of either operator throws an exception, it is
-     * relayed to the caller of the composed operator. This method is just convenience, to provide the ability to
-     * transform this operation to an operation returning {@code boolean}.
+     * Returns a composed {@link ByteBiPredicate} that first applies this operator to its input, and then applies the
+     * {@code after} operator to the result. If evaluation of either operator throws an exception, it is relayed to the
+     * caller of the composed operator. This method is just convenience, to provide the ability to transform this
+     * operation to an operation returning {@code boolean}.
      *
      * @param after The operator to apply after this operator is applied
-     * @return A composed {@code BiByteToBooleanFunction} that first applies this operator to its input, and then
-     * applies the {@code after} operator to the result.
+     * @return A composed {@code ByteBiPredicate} that first applies this operator to its input, and then applies the
+     * {@code after} operator to the result.
      * @throws NullPointerException If given argument is {@code null}
      * @see #andThen(ByteFunction)
      */
     @Nonnull
-    default BiByteToBooleanFunction andThenToBoolean(@Nonnull final ByteToBooleanFunction after) {
+    default ByteBiPredicate andThenToBoolean(@Nonnull final BytePredicate after) {
         Objects.requireNonNull(after);
-        return (value1, value2) -> after.applyAsBoolean(applyAsByte(value1, value2));
+        return (value1, value2) -> after.test(applyAsByte(value1, value2));
     }
 
     /**

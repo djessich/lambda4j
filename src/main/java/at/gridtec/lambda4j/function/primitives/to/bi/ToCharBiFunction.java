@@ -17,7 +17,6 @@ package at.gridtec.lambda4j.function.primitives.to.bi;
 
 import at.gridtec.lambda4j.consumer.primitives.CharConsumer;
 import at.gridtec.lambda4j.function.primitives.CharFunction;
-import at.gridtec.lambda4j.function.primitives.conversion.CharToBooleanFunction;
 import at.gridtec.lambda4j.function.primitives.conversion.CharToByteFunction;
 import at.gridtec.lambda4j.function.primitives.conversion.CharToDoubleFunction;
 import at.gridtec.lambda4j.function.primitives.conversion.CharToFloatFunction;
@@ -26,6 +25,7 @@ import at.gridtec.lambda4j.function.primitives.conversion.CharToLongFunction;
 import at.gridtec.lambda4j.function.primitives.conversion.CharToShortFunction;
 import at.gridtec.lambda4j.function.primitives.to.ToCharFunction;
 import at.gridtec.lambda4j.operators.unary.CharUnaryOperator;
+import at.gridtec.lambda4j.predicates.primitives.CharPredicate;
 import at.gridtec.lambda4j.supplier.CharSupplier;
 
 import org.apache.commons.lang3.tuple.Pair;
@@ -41,7 +41,6 @@ import java.util.function.ToDoubleBiFunction;
 import java.util.function.ToIntBiFunction;
 import java.util.function.ToLongBiFunction;
 import java.util.function.UnaryOperator;
-
 /**
  * Represents a function that produces a char-valued result from two arguments. This is the {@code char}-producing
  * primitive specialization for {@link BiFunction}.
@@ -228,9 +227,9 @@ public interface ToCharBiFunction<T, U> {
      * @throws NullPointerException If given argument is {@code null}
      * @see #andThen(CharFunction)
      */
-    default BiPredicate<T, U> andThenToBoolean(final CharToBooleanFunction after) {
+    default BiPredicate<T, U> andThenToBoolean(final CharPredicate after) {
         Objects.requireNonNull(after);
-        return (t, u) -> after.applyAsBoolean(applyAsChar(t, u));
+        return (t, u) -> after.test(applyAsChar(t, u));
     }
 
     /**

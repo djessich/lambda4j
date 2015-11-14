@@ -19,14 +19,12 @@ import at.gridtec.lambda4j.consumer.primitives.ShortConsumer;
 import at.gridtec.lambda4j.consumer.primitives.bi.ShortBiConsumer;
 import at.gridtec.lambda4j.function.primitives.ShortFunction;
 import at.gridtec.lambda4j.function.primitives.bi.ShortBiFunction;
-import at.gridtec.lambda4j.function.primitives.conversion.ShortToBooleanFunction;
 import at.gridtec.lambda4j.function.primitives.conversion.ShortToByteFunction;
 import at.gridtec.lambda4j.function.primitives.conversion.ShortToCharFunction;
 import at.gridtec.lambda4j.function.primitives.conversion.ShortToDoubleFunction;
 import at.gridtec.lambda4j.function.primitives.conversion.ShortToFloatFunction;
 import at.gridtec.lambda4j.function.primitives.conversion.ShortToIntFunction;
 import at.gridtec.lambda4j.function.primitives.conversion.ShortToLongFunction;
-import at.gridtec.lambda4j.function.primitives.conversion.bi.BiShortToBooleanFunction;
 import at.gridtec.lambda4j.function.primitives.conversion.bi.BiShortToByteFunction;
 import at.gridtec.lambda4j.function.primitives.conversion.bi.BiShortToCharFunction;
 import at.gridtec.lambda4j.function.primitives.conversion.bi.BiShortToDoubleFunction;
@@ -36,6 +34,8 @@ import at.gridtec.lambda4j.function.primitives.conversion.bi.BiShortToLongFuncti
 import at.gridtec.lambda4j.function.primitives.to.ToShortFunction;
 import at.gridtec.lambda4j.function.primitives.to.bi.ToShortBiFunction;
 import at.gridtec.lambda4j.operators.unary.ShortUnaryOperator;
+import at.gridtec.lambda4j.predicates.primitives.ShortPredicate;
+import at.gridtec.lambda4j.predicates.primitives.bi.ShortBiPredicate;
 import at.gridtec.lambda4j.supplier.ShortSupplier;
 
 import javax.annotation.Nonnegative;
@@ -251,21 +251,21 @@ public interface ShortBinaryOperator {
     }
 
     /**
-     * Returns a composed {@link BiShortToBooleanFunction} that first applies this operator to its input, and then
-     * applies the {@code after} operator to the result. If evaluation of either operator throws an exception, it is
-     * relayed to the caller of the composed operator. This method is just convenience, to provide the ability to
-     * transform this operation to an operation returning {@code boolean}.
+     * Returns a composed {@link ShortBiPredicate} that first applies this operator to its input, and then applies the
+     * {@code after} operator to the result. If evaluation of either operator throws an exception, it is relayed to the
+     * caller of the composed operator. This method is just convenience, to provide the ability to transform this
+     * operation to an operation returning {@code boolean}.
      *
      * @param after The operator to apply after this operator is applied
-     * @return A composed {@code BiShortToBooleanFunction} that first applies this operator to its input, and then
-     * applies the {@code after} operator to the result.
+     * @return A composed {@code ShortBiPredicate} that first applies this operator to its input, and then applies the
+     * {@code after} operator to the result.
      * @throws NullPointerException If given argument is {@code null}
      * @see #andThen(ShortFunction)
      */
     @Nonnull
-    default BiShortToBooleanFunction andThenToBoolean(@Nonnull final ShortToBooleanFunction after) {
+    default ShortBiPredicate andThenToBoolean(@Nonnull final ShortPredicate after) {
         Objects.requireNonNull(after);
-        return (value1, value2) -> after.applyAsBoolean(applyAsShort(value1, value2));
+        return (value1, value2) -> after.test(applyAsShort(value1, value2));
     }
 
     /**
