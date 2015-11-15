@@ -54,7 +54,7 @@ public interface ObjIntFunction<T, R> {
      * @return The result from the given {@code ObjIntFunction}.
      * @throws NullPointerException If the given function is {@code null}
      */
-    static <T, R> R call(@Nonnull final ObjIntFunction<? super T, ? extends R> function, final T t, int value) {
+    static <T, R> R call(@Nonnull final ObjIntFunction<? super T, ? extends R> function, T t, int value) {
         Objects.requireNonNull(function);
         return function.apply(t, value);
     }

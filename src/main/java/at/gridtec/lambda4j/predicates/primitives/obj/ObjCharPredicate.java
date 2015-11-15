@@ -48,7 +48,7 @@ public interface ObjCharPredicate<T> {
      * @return The result from the given {@code ObjCharPredicate}.
      * @throws NullPointerException If the given predicate is {@code null}
      */
-    static <T> boolean call(@Nonnull final ObjCharPredicate<? super T> predicate, final T t, char value) {
+    static <T> boolean call(@Nonnull final ObjCharPredicate<? super T> predicate, T t, char value) {
         Objects.requireNonNull(predicate);
         return predicate.test(t, value);
     }

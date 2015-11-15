@@ -53,7 +53,7 @@ public interface ToLongObjLongFunction<T> {
      * @return The result from the given {@code ToLongObjLongFunction}.
      * @throws NullPointerException If the given function is {@code null}
      */
-    static <T> long call(@Nonnull final ToLongObjLongFunction<? super T> function, final T t, long value) {
+    static <T> long call(@Nonnull final ToLongObjLongFunction<? super T> function, T t, long value) {
         Objects.requireNonNull(function);
         return function.applyAsLong(t, value);
     }

@@ -60,7 +60,7 @@ public interface ToCharBiObjCharFunction<T, U> {
      * @return The result from the given {@code ToCharBiObjCharFunction}.
      * @throws NullPointerException If the given function is {@code null}
      */
-    static <T, U> char call(@Nonnull final ToCharBiObjCharFunction<? super T, ? super U> function, final T t, final U u,
+    static <T, U> char call(@Nonnull final ToCharBiObjCharFunction<? super T, ? super U> function, T t, U u,
             char value) {
         Objects.requireNonNull(function);
         return function.applyAsChar(t, u, value);

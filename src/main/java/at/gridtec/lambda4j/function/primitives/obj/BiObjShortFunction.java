@@ -61,8 +61,8 @@ public interface BiObjShortFunction<T, U, R> {
      * @return The result from the given {@code BiObjShortFunction}.
      * @throws NullPointerException If the given function is {@code null}
      */
-    static <T, U, R> R call(@Nonnull final BiObjShortFunction<? super T, ? super U, ? extends R> function, final T t,
-            final U u, short value) {
+    static <T, U, R> R call(@Nonnull final BiObjShortFunction<? super T, ? super U, ? extends R> function, T t, U u,
+            short value) {
         Objects.requireNonNull(function);
         return function.apply(t, u, value);
     }

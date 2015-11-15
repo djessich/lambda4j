@@ -39,6 +39,7 @@ import java.util.function.LongUnaryOperator;
 import java.util.function.ToLongBiFunction;
 import java.util.function.ToLongFunction;
 import java.util.function.UnaryOperator;
+
 /**
  * Represents a function that produces a long-valued result from three arguments. This is the {@code long}-producing
  * primitive specialization for {@link TriFunction}.

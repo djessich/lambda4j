@@ -39,6 +39,7 @@ import java.util.function.IntUnaryOperator;
 import java.util.function.ToIntBiFunction;
 import java.util.function.ToIntFunction;
 import java.util.function.UnaryOperator;
+
 /**
  * Represents a function that produces a int-valued result from three arguments. This is the {@code int}-producing
  * primitive specialization for {@link TriFunction}.

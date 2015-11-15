@@ -60,8 +60,8 @@ public interface BiObjDoubleFunction<T, U, R> {
      * @return The result from the given {@code BiObjDoubleFunction}.
      * @throws NullPointerException If the given function is {@code null}
      */
-    static <T, U, R> R call(@Nonnull final BiObjDoubleFunction<? super T, ? super U, ? extends R> function, final T t,
-            final U u, char value) {
+    static <T, U, R> R call(@Nonnull final BiObjDoubleFunction<? super T, ? super U, ? extends R> function, T t, U u,
+            char value) {
         Objects.requireNonNull(function);
         return function.apply(t, u, value);
     }

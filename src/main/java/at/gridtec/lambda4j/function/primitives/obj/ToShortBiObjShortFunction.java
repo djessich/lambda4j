@@ -60,8 +60,8 @@ public interface ToShortBiObjShortFunction<T, U> {
      * @return The result from the given {@code ToShortBiObjShortFunction}.
      * @throws NullPointerException If the given function is {@code null}
      */
-    static <T, U> short call(@Nonnull final ToShortBiObjShortFunction<? super T, ? super U> function, final T t,
-            final U u, short value) {
+    static <T, U> short call(@Nonnull final ToShortBiObjShortFunction<? super T, ? super U> function, T t, U u,
+            short value) {
         Objects.requireNonNull(function);
         return function.applyAsShort(t, u, value);
     }

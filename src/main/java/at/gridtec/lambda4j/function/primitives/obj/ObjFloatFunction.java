@@ -55,7 +55,7 @@ public interface ObjFloatFunction<T, R> {
      * @return The result from the given {@code ObjFloatFunction}.
      * @throws NullPointerException If the given function is {@code null}
      */
-    static <T, R> R call(@Nonnull final ObjFloatFunction<? super T, ? extends R> function, final T t, float value) {
+    static <T, R> R call(@Nonnull final ObjFloatFunction<? super T, ? extends R> function, T t, float value) {
         Objects.requireNonNull(function);
         return function.apply(t, value);
     }

@@ -54,8 +54,8 @@ public interface BiObjDoublePredicate<T, U> {
      * @return The result from the given {@code BiObjDoublePredicate}.
      * @throws NullPointerException If the given predicate is {@code null}
      */
-    static <T, U> boolean call(@Nonnull final BiObjDoublePredicate<? super T, ? super U> predicate, final T t,
-            final U u, double value) {
+    static <T, U> boolean call(@Nonnull final BiObjDoublePredicate<? super T, ? super U> predicate, T t, U u,
+            double value) {
         Objects.requireNonNull(predicate);
         return predicate.test(t, u, value);
     }

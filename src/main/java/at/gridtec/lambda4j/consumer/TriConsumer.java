@@ -52,8 +52,7 @@ public interface TriConsumer<T, U, V> {
      * @param v The third argument to the operation to be consumed
      * @throws NullPointerException If the given consumer is {@code null}
      */
-    static <T, U, V> void call(@Nonnull final TriConsumer<? super T, ? super U, ? super V> consumer, final T t,
-            final U u, final V v) {
+    static <T, U, V> void call(@Nonnull final TriConsumer<? super T, ? super U, ? super V> consumer, T t, U u, V v) {
         Objects.requireNonNull(consumer);
         consumer.accept(t, u, v);
     }

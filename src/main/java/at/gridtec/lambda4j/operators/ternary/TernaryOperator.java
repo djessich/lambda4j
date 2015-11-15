@@ -46,7 +46,7 @@ public interface TernaryOperator<T> extends TriFunction<T, T, T, T> {
      * @throws NullPointerException If the given operator is {@code null}
      */
     @SuppressWarnings("unchecked")
-    static <T> T call(@Nonnull final TernaryOperator<? super T> operator, final T left, final T middle, final T right) {
+    static <T> T call(@Nonnull final TernaryOperator<? super T> operator, T left, T middle, T right) {
         Objects.requireNonNull(operator);
         return (T) operator.apply(left, middle, right);
     }

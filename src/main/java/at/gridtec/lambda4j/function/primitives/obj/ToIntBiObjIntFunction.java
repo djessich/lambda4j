@@ -60,8 +60,7 @@ public interface ToIntBiObjIntFunction<T, U> {
      * @return The result from the given {@code ToIntBiObjIntFunction}.
      * @throws NullPointerException If the given function is {@code null}
      */
-    static <T, U> int call(@Nonnull final ToIntBiObjIntFunction<? super T, ? super U> function, final T t, final U u,
-            int value) {
+    static <T, U> int call(@Nonnull final ToIntBiObjIntFunction<? super T, ? super U> function, T t, U u, int value) {
         Objects.requireNonNull(function);
         return function.applyAsInt(t, u, value);
     }

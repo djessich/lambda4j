@@ -41,6 +41,7 @@ import java.util.function.ToDoubleBiFunction;
 import java.util.function.ToIntBiFunction;
 import java.util.function.ToLongBiFunction;
 import java.util.function.UnaryOperator;
+
 /**
  * Represents a function that produces a byte-valued result from two arguments. This is the {@code byte}-producing
  * primitive specialization for {@link BiFunction}.

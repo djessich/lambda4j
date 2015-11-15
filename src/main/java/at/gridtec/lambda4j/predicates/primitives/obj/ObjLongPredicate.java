@@ -47,7 +47,7 @@ public interface ObjLongPredicate<T> {
      * @return The result from the given {@code ObjLongPredicate}.
      * @throws NullPointerException If the given predicate is {@code null}
      */
-    static <T> boolean call(@Nonnull final ObjLongPredicate<? super T> predicate, final T t, long value) {
+    static <T> boolean call(@Nonnull final ObjLongPredicate<? super T> predicate, T t, long value) {
         Objects.requireNonNull(predicate);
         return predicate.test(t, value);
     }

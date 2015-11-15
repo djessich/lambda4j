@@ -39,6 +39,7 @@ import javax.annotation.Nonnull;
 import java.util.Objects;
 import java.util.function.Function;
 import java.util.function.UnaryOperator;
+
 /**
  * Represents a function that produces a char-valued result from three arguments. This is the {@code char}-producing
  * primitive specialization for {@link TriFunction}.

@@ -60,8 +60,8 @@ public interface ToFloatBiObjFloatFunction<T, U> {
      * @return The result from the given {@code ToFloatBiObjFloatFunction}.
      * @throws NullPointerException If the given function is {@code null}
      */
-    static <T, U> float call(@Nonnull final ToFloatBiObjFloatFunction<? super T, ? super U> function, final T t,
-            final U u, float value) {
+    static <T, U> float call(@Nonnull final ToFloatBiObjFloatFunction<? super T, ? super U> function, T t, U u,
+            float value) {
         Objects.requireNonNull(function);
         return function.applyAsFloat(t, u, value);
     }

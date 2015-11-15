@@ -55,7 +55,7 @@ public interface ObjCharFunction<T, R> {
      * @return The result from the given {@code ObjCharFunction}.
      * @throws NullPointerException If the given function is {@code null}
      */
-    static <T, R> R call(@Nonnull final ObjCharFunction<? super T, ? extends R> function, final T t, char value) {
+    static <T, R> R call(@Nonnull final ObjCharFunction<? super T, ? extends R> function, T t, char value) {
         Objects.requireNonNull(function);
         return function.apply(t, value);
     }

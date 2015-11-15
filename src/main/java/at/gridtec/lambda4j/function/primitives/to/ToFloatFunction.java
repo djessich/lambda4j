@@ -37,6 +37,7 @@ import java.util.function.ToDoubleFunction;
 import java.util.function.ToIntFunction;
 import java.util.function.ToLongFunction;
 import java.util.function.UnaryOperator;
+
 /**
  * Represents a function that produces a float-valued result from one argument. This is the {@code float}-producing
  * primitive specialization for {@link Function}.
@@ -59,7 +60,7 @@ public interface ToFloatFunction<T> {
      * @return The result from the given {@code ToFloatFunction}.
      * @throws NullPointerException If the given function is {@code null}
      */
-    static <T> float call(@Nonnull final ToFloatFunction<? super T> function, final T t) {
+    static <T> float call(@Nonnull final ToFloatFunction<? super T> function, T t) {
         Objects.requireNonNull(function);
         return function.applyAsFloat(t);
     }

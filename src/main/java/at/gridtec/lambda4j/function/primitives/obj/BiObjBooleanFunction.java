@@ -61,8 +61,8 @@ public interface BiObjBooleanFunction<T, U, R> {
      * @return The result from the given {@code BiObjBooleanFunction}.
      * @throws NullPointerException If the given function is {@code null}
      */
-    static <T, U, R> R call(@Nonnull final BiObjBooleanFunction<? super T, ? super U, ? extends R> function, final T t,
-            final U u, boolean value) {
+    static <T, U, R> R call(@Nonnull final BiObjBooleanFunction<? super T, ? super U, ? extends R> function, T t, U u,
+            boolean value) {
         Objects.requireNonNull(function);
         return function.apply(t, u, value);
     }

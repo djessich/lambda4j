@@ -54,7 +54,7 @@ public interface ToByteObjByteFunction<T> {
      * @return The result from the given {@code ToByteObjByteFunction}.
      * @throws NullPointerException If the given function is {@code null}
      */
-    static <T> byte call(@Nonnull final ToByteObjByteFunction<? super T> function, final T t, byte value) {
+    static <T> byte call(@Nonnull final ToByteObjByteFunction<? super T> function, T t, byte value) {
         Objects.requireNonNull(function);
         return function.applyAsByte(t, value);
     }

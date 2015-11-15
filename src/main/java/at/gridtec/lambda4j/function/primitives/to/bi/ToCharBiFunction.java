@@ -41,6 +41,7 @@ import java.util.function.ToDoubleBiFunction;
 import java.util.function.ToIntBiFunction;
 import java.util.function.ToLongBiFunction;
 import java.util.function.UnaryOperator;
+
 /**
  * Represents a function that produces a char-valued result from two arguments. This is the {@code char}-producing
  * primitive specialization for {@link BiFunction}.

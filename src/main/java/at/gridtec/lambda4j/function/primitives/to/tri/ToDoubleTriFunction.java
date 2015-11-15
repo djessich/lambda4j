@@ -39,6 +39,7 @@ import java.util.function.Function;
 import java.util.function.ToDoubleBiFunction;
 import java.util.function.ToDoubleFunction;
 import java.util.function.UnaryOperator;
+
 /**
  * Represents a function that produces a double-valued result from three arguments. This is the {@code double}-producing
  * primitive specialization for {@link TriFunction}.

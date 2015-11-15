@@ -54,7 +54,7 @@ public interface ToShortObjShortFunction<T> {
      * @return The result from the given {@code ToShortObjShortFunction}.
      * @throws NullPointerException If the given function is {@code null}
      */
-    static <T> short call(@Nonnull final ToShortObjShortFunction<? super T> function, final T t, short value) {
+    static <T> short call(@Nonnull final ToShortObjShortFunction<? super T> function, T t, short value) {
         Objects.requireNonNull(function);
         return function.applyAsShort(t, value);
     }

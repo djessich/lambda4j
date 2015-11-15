@@ -60,7 +60,7 @@ public interface ToLongBiObjLongFunction<T, U> {
      * @return The result from the given {@code ToLongBiObjLongFunction}.
      * @throws NullPointerException If the given function is {@code null}
      */
-    static <T, U> long call(@Nonnull final ToLongBiObjLongFunction<? super T, ? super U> function, final T t, final U u,
+    static <T, U> long call(@Nonnull final ToLongBiObjLongFunction<? super T, ? super U> function, T t, U u,
             long value) {
         Objects.requireNonNull(function);
         return function.applyAsLong(t, u, value);

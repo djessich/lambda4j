@@ -61,8 +61,8 @@ public interface BiObjLongFunction<T, U, R> {
      * @return The result from the given {@code BiObjLongFunction}.
      * @throws NullPointerException If the given function is {@code null}
      */
-    static <T, U, R> R call(@Nonnull final BiObjLongFunction<? super T, ? super U, ? extends R> function, final T t,
-            final U u, long value) {
+    static <T, U, R> R call(@Nonnull final BiObjLongFunction<? super T, ? super U, ? extends R> function, T t, U u,
+            long value) {
         Objects.requireNonNull(function);
         return function.apply(t, u, value);
     }

@@ -53,7 +53,7 @@ public interface ToIntObjIntFunction<T> {
      * @return The result from the given {@code ToIntObjIntFunction}.
      * @throws NullPointerException If the given function is {@code null}
      */
-    static <T> int call(@Nonnull final ToIntObjIntFunction<? super T> function, final T t, int value) {
+    static <T> int call(@Nonnull final ToIntObjIntFunction<? super T> function, T t, int value) {
         Objects.requireNonNull(function);
         return function.applyAsInt(t, value);
     }

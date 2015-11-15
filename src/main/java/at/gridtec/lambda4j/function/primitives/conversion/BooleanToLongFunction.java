@@ -45,6 +45,7 @@ import java.util.function.UnaryOperator;
 @SuppressWarnings("unused")
 @FunctionalInterface
 public interface BooleanToLongFunction {
+
     /**
      * Calls the given {@link BooleanToLongFunction} with the given arguments and returns its result.
      *

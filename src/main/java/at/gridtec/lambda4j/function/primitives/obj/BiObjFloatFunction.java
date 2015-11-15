@@ -61,8 +61,8 @@ public interface BiObjFloatFunction<T, U, R> {
      * @return The result from the given {@code BiObjFloatFunction}.
      * @throws NullPointerException If the given function is {@code null}
      */
-    static <T, U, R> R call(@Nonnull final BiObjFloatFunction<? super T, ? super U, ? extends R> function, final T t,
-            final U u, float value) {
+    static <T, U, R> R call(@Nonnull final BiObjFloatFunction<? super T, ? super U, ? extends R> function, T t, U u,
+            float value) {
         Objects.requireNonNull(function);
         return function.apply(t, u, value);
     }

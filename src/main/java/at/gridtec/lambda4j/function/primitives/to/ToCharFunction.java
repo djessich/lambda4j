@@ -60,7 +60,7 @@ public interface ToCharFunction<T> {
      * @return The result from the given {@code ToCharFunction}.
      * @throws NullPointerException If the given function is {@code null}
      */
-    static <T> char call(@Nonnull final ToCharFunction<? super T> function, final T t) {
+    static <T> char call(@Nonnull final ToCharFunction<? super T> function, T t) {
         Objects.requireNonNull(function);
         return function.applyAsChar(t);
     }

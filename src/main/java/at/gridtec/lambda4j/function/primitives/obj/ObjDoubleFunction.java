@@ -54,7 +54,7 @@ public interface ObjDoubleFunction<T, R> {
      * @return The result from the given {@code ObjDoubleFunction}.
      * @throws NullPointerException If the given function is {@code null}
      */
-    static <T, R> R call(@Nonnull final ObjDoubleFunction<? super T, ? extends R> function, final T t, double value) {
+    static <T, R> R call(@Nonnull final ObjDoubleFunction<? super T, ? extends R> function, T t, double value) {
         Objects.requireNonNull(function);
         return function.apply(t, value);
     }

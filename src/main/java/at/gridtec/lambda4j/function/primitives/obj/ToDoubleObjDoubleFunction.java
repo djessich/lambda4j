@@ -53,7 +53,7 @@ public interface ToDoubleObjDoubleFunction<T> {
      * @return The result from the given {@code ToDoubleObjDoubleFunction}.
      * @throws NullPointerException If the given function is {@code null}
      */
-    static <T> double call(@Nonnull final ToDoubleObjDoubleFunction<? super T> function, final T t, double value) {
+    static <T> double call(@Nonnull final ToDoubleObjDoubleFunction<? super T> function, T t, double value) {
         Objects.requireNonNull(function);
         return function.applyAsDouble(t, value);
     }

@@ -55,7 +55,7 @@ public interface ObjShortFunction<T, R> {
      * @return The result from the given {@code ObjShortFunction}.
      * @throws NullPointerException If the given function is {@code null}
      */
-    static <T, R> R call(@Nonnull final ObjShortFunction<? super T, ? extends R> function, final T t, short value) {
+    static <T, R> R call(@Nonnull final ObjShortFunction<? super T, ? extends R> function, T t, short value) {
         Objects.requireNonNull(function);
         return function.apply(t, value);
     }

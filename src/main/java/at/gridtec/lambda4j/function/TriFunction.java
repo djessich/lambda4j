@@ -59,8 +59,8 @@ public interface TriFunction<T, U, V, R> {
      * @return The result from the given {@code TriFunction}.
      * @throws NullPointerException If the given function is {@code null}
      */
-    static <T, U, V, R> R call(@Nonnull final TriFunction<? super T, ? super U, ? super V, ? extends R> function,
-            final T t, final U u, final V v) {
+    static <T, U, V, R> R call(@Nonnull final TriFunction<? super T, ? super U, ? super V, ? extends R> function, T t,
+            U u, V v) {
         Objects.requireNonNull(function);
         return function.apply(t, u, v);
     }

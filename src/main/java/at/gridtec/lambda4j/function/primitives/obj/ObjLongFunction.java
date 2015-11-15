@@ -54,7 +54,7 @@ public interface ObjLongFunction<T, R> {
      * @return The result from the given {@code ObjLongFunction}.
      * @throws NullPointerException If the given function is {@code null}
      */
-    static <T, R> R call(@Nonnull final ObjLongFunction<? super T, ? extends R> function, final T t, long value) {
+    static <T, R> R call(@Nonnull final ObjLongFunction<? super T, ? extends R> function, T t, long value) {
         Objects.requireNonNull(function);
         return function.apply(t, value);
     }

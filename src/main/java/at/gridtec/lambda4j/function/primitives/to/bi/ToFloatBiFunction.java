@@ -41,6 +41,7 @@ import java.util.function.ToDoubleBiFunction;
 import java.util.function.ToIntBiFunction;
 import java.util.function.ToLongBiFunction;
 import java.util.function.UnaryOperator;
+
 /**
  * Represents a function that produces a float-valued result from two arguments. This is the {@code float}-producing
  * primitive specialization for {@link BiFunction}.

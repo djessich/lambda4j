@@ -54,7 +54,7 @@ public interface ToFloatObjFloatFunction<T> {
      * @return The result from the given {@code ToFloatObjFloatFunction}.
      * @throws NullPointerException If the given function is {@code null}
      */
-    static <T> float call(@Nonnull final ToFloatObjFloatFunction<? super T> function, final T t, float value) {
+    static <T> float call(@Nonnull final ToFloatObjFloatFunction<? super T> function, T t, float value) {
         Objects.requireNonNull(function);
         return function.applyAsFloat(t, value);
     }

@@ -60,7 +60,7 @@ public interface ToShortFunction<T> {
      * @return The result from the given {@code ToShortFunction}.
      * @throws NullPointerException If the given function is {@code null}
      */
-    static <T> short call(@Nonnull final ToShortFunction<? super T> function, final T t) {
+    static <T> short call(@Nonnull final ToShortFunction<? super T> function, T t) {
         Objects.requireNonNull(function);
         return function.applyAsShort(t);
     }
