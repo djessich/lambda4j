@@ -56,6 +56,7 @@ public interface CharSupplier {
      *
      * @param supplier The supplier to be called
      * @return The result of the given {@code CharSupplier}.
+     * @throws NullPointerException If the given argument is {@code null}
      */
     static char call(@Nonnull final CharSupplier supplier) {
         Objects.requireNonNull(supplier);

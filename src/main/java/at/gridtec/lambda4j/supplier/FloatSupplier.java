@@ -55,6 +55,7 @@ public interface FloatSupplier {
      *
      * @param supplier The supplier to be called
      * @return The result of the given {@code FloatSupplier}.
+     * @throws NullPointerException If the given argument is {@code null}
      */
     static float call(@Nonnull final FloatSupplier supplier) {
         Objects.requireNonNull(supplier);

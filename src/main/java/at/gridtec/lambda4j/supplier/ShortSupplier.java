@@ -55,6 +55,7 @@ public interface ShortSupplier {
      *
      * @param supplier The supplier to be called
      * @return The result of the given {@code ShortSupplier}.
+     * @throws NullPointerException If the given argument is {@code null}
      */
     static short call(@Nonnull final ShortSupplier supplier) {
         Objects.requireNonNull(supplier);
