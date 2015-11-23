@@ -1,5 +1,4 @@
 Tests
-JavaDoc
 Wiki
 Examples
 Deployment to Maven Central and Github

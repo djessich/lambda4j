@@ -3,6 +3,7 @@ doc/
 javadoc/
 coverage/
 saves/
+save/
 logs/
 log/
 *.log
