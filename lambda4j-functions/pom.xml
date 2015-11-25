@@ -29,4 +29,11 @@
     <packaging>jar</packaging>
     <name>lambda4j Functions</name>
 
+    <dependencies>
+        <dependency>
+            <groupId>at.gridtec.lambda4j</groupId>
+            <artifactId>lambda4j-core</artifactId>
+        </dependency>
+    </dependencies>
+
 </project>
