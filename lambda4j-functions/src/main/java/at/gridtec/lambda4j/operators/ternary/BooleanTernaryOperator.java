@@ -389,8 +389,8 @@ public interface BooleanTernaryOperator {
 
     /**
      * Returns a composed {@link BooleanTernaryOperator} that first applies this function to its input, and then applies
-     * the {@code after} function to the result. If evaluation of either function throws an exception, it is relayed to
-     * the caller of the composed function. This method is just convenience, to provide the ability to transform this
+     * the {@code after} function to the result. If evaluation of either operator throws an exception, it is relayed to
+     * the caller of the composed operator. This method is just convenience, to provide the ability to transform this
      * operation to an operation returning {@code boolean}.
      *
      * @param after The function to apply after this function is applied
@@ -407,8 +407,8 @@ public interface BooleanTernaryOperator {
 
     /**
      * Returns a composed {@link TriBooleanToByteFunction} that first applies this function to its input, and then
-     * applies the {@code after} function to the result. If evaluation of either function throws an exception, it is
-     * relayed to the caller of the composed function. This method is just convenience, to provide the ability to
+     * applies the {@code after} function to the result. If evaluation of either operator throws an exception, it is
+     * relayed to the caller of the composed operator. This method is just convenience, to provide the ability to
      * transform this operation to an operation returning {@code byte}.
      *
      * @param after The function to apply after this function is applied
@@ -425,8 +425,8 @@ public interface BooleanTernaryOperator {
 
     /**
      * Returns a composed {@link TriBooleanToCharFunction} that first applies this function to its input, and then
-     * applies the {@code after} function to the result. If evaluation of either function throws an exception, it is
-     * relayed to the caller of the composed function. This method is just convenience, to provide the ability to
+     * applies the {@code after} function to the result. If evaluation of either operator throws an exception, it is
+     * relayed to the caller of the composed operator. This method is just convenience, to provide the ability to
      * transform this operation to an operation returning {@code char}.
      *
      * @param after The function to apply after this function is applied
@@ -443,8 +443,8 @@ public interface BooleanTernaryOperator {
 
     /**
      * Returns a composed {@link TriBooleanToDoubleFunction} that first applies this function to its input, and then
-     * applies the {@code after} function to the result. If evaluation of either function throws an exception, it is
-     * relayed to the caller of the composed function. This method is just convenience, to provide the ability to
+     * applies the {@code after} function to the result. If evaluation of either operator throws an exception, it is
+     * relayed to the caller of the composed operator. This method is just convenience, to provide the ability to
      * transform this operation to an operation returning {@code double}.
      *
      * @param after The function to apply after this function is applied
@@ -461,8 +461,8 @@ public interface BooleanTernaryOperator {
 
     /**
      * Returns a composed {@link TriBooleanToFloatFunction} that first applies this function to its input, and then
-     * applies the {@code after} function to the result. If evaluation of either function throws an exception, it is
-     * relayed to the caller of the composed function. This method is just convenience, to provide the ability to
+     * applies the {@code after} function to the result. If evaluation of either operator throws an exception, it is
+     * relayed to the caller of the composed operator. This method is just convenience, to provide the ability to
      * transform this operation to an operation returning {@code float}.
      *
      * @param after The function to apply after this function is applied
@@ -479,8 +479,8 @@ public interface BooleanTernaryOperator {
 
     /**
      * Returns a composed {@link TriBooleanToIntFunction} that first applies this function to its input, and then
-     * applies the {@code after} function to the result. If evaluation of either function throws an exception, it is
-     * relayed to the caller of the composed function. This method is just convenience, to provide the ability to
+     * applies the {@code after} function to the result. If evaluation of either operator throws an exception, it is
+     * relayed to the caller of the composed operator. This method is just convenience, to provide the ability to
      * transform this operation to an operation returning {@code int}.
      *
      * @param after The function to apply after this function is applied
@@ -497,8 +497,8 @@ public interface BooleanTernaryOperator {
 
     /**
      * Returns a composed {@link TriBooleanToLongFunction} that first applies this function to its input, and then
-     * applies the {@code after} function to the result. If evaluation of either function throws an exception, it is
-     * relayed to the caller of the composed function. This method is just convenience, to provide the ability to
+     * applies the {@code after} function to the result. If evaluation of either operator throws an exception, it is
+     * relayed to the caller of the composed operator. This method is just convenience, to provide the ability to
      * transform this operation to an operation returning {@code long}.
      *
      * @param after The function to apply after this function is applied
@@ -515,8 +515,8 @@ public interface BooleanTernaryOperator {
 
     /**
      * Returns a composed {@link TriBooleanToShortFunction} that first applies this function to its input, and then
-     * applies the {@code after} function to the result. If evaluation of either function throws an exception, it is
-     * relayed to the caller of the composed function. This method is just convenience, to provide the ability to
+     * applies the {@code after} function to the result. If evaluation of either operator throws an exception, it is
+     * relayed to the caller of the composed operator. This method is just convenience, to provide the ability to
      * transform this operation to an operation returning {@code short}.
      *
      * @param after The function to apply after this function is applied

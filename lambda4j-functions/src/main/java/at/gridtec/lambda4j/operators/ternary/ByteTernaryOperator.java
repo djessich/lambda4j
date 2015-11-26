@@ -220,8 +220,8 @@ public interface ByteTernaryOperator {
 
     /**
      * Returns a composed {@link ByteTriPredicate} that first applies this function to its input, and then applies the
-     * {@code after} function to the result. If evaluation of either function throws an exception, it is relayed to the
-     * caller of the composed function. This method is just convenience, to provide the ability to transform this
+     * {@code after} function to the result. If evaluation of either operator throws an exception, it is relayed to the
+     * caller of the composed operator. This method is just convenience, to provide the ability to transform this
      * operation to an operation returning {@code boolean}.
      *
      * @param after The function to apply after this function is applied
@@ -238,8 +238,8 @@ public interface ByteTernaryOperator {
 
     /**
      * Returns a composed {@link ByteTernaryOperator} that first applies this function to its input, and then applies
-     * the {@code after} function to the result. If evaluation of either function throws an exception, it is relayed to
-     * the caller of the composed function. This method is just convenience, to provide the ability to transform this
+     * the {@code after} function to the result. If evaluation of either operator throws an exception, it is relayed to
+     * the caller of the composed operator. This method is just convenience, to provide the ability to transform this
      * operation to an operation returning {@code byte}.
      *
      * @param after The function to apply after this function is applied
@@ -256,8 +256,8 @@ public interface ByteTernaryOperator {
 
     /**
      * Returns a composed {@link TriByteToCharFunction} that first applies this function to its input, and then applies
-     * the {@code after} function to the result. If evaluation of either function throws an exception, it is relayed to
-     * the caller of the composed function. This method is just convenience, to provide the ability to transform this
+     * the {@code after} function to the result. If evaluation of either operator throws an exception, it is relayed to
+     * the caller of the composed operator. This method is just convenience, to provide the ability to transform this
      * operation to an operation returning {@code char}.
      *
      * @param after The function to apply after this function is applied
@@ -274,8 +274,8 @@ public interface ByteTernaryOperator {
 
     /**
      * Returns a composed {@link TriByteToDoubleFunction} that first applies this function to its input, and then
-     * applies the {@code after} function to the result. If evaluation of either function throws an exception, it is
-     * relayed to the caller of the composed function. This method is just convenience, to provide the ability to
+     * applies the {@code after} function to the result. If evaluation of either operator throws an exception, it is
+     * relayed to the caller of the composed operator. This method is just convenience, to provide the ability to
      * transform this operation to an operation returning {@code double}.
      *
      * @param after The function to apply after this function is applied
@@ -292,8 +292,8 @@ public interface ByteTernaryOperator {
 
     /**
      * Returns a composed {@link TriByteToFloatFunction} that first applies this function to its input, and then applies
-     * the {@code after} function to the result. If evaluation of either function throws an exception, it is relayed to
-     * the caller of the composed function. This method is just convenience, to provide the ability to transform this
+     * the {@code after} function to the result. If evaluation of either operator throws an exception, it is relayed to
+     * the caller of the composed operator. This method is just convenience, to provide the ability to transform this
      * operation to an operation returning {@code float}.
      *
      * @param after The function to apply after this function is applied
@@ -310,8 +310,8 @@ public interface ByteTernaryOperator {
 
     /**
      * Returns a composed {@link TriByteToIntFunction} that first applies this function to its input, and then applies
-     * the {@code after} function to the result. If evaluation of either function throws an exception, it is relayed to
-     * the caller of the composed function. This method is just convenience, to provide the ability to transform this
+     * the {@code after} function to the result. If evaluation of either operator throws an exception, it is relayed to
+     * the caller of the composed operator. This method is just convenience, to provide the ability to transform this
      * operation to an operation returning {@code int}.
      *
      * @param after The function to apply after this function is applied
@@ -328,8 +328,8 @@ public interface ByteTernaryOperator {
 
     /**
      * Returns a composed {@link TriByteToLongFunction} that first applies this function to its input, and then applies
-     * the {@code after} function to the result. If evaluation of either function throws an exception, it is relayed to
-     * the caller of the composed function. This method is just convenience, to provide the ability to transform this
+     * the {@code after} function to the result. If evaluation of either operator throws an exception, it is relayed to
+     * the caller of the composed operator. This method is just convenience, to provide the ability to transform this
      * operation to an operation returning {@code long}.
      *
      * @param after The function to apply after this function is applied
@@ -346,8 +346,8 @@ public interface ByteTernaryOperator {
 
     /**
      * Returns a composed {@link TriByteToShortFunction} that first applies this function to its input, and then applies
-     * the {@code after} function to the result. If evaluation of either function throws an exception, it is relayed to
-     * the caller of the composed function. This method is just convenience, to provide the ability to transform this
+     * the {@code after} function to the result. If evaluation of either operator throws an exception, it is relayed to
+     * the caller of the composed operator. This method is just convenience, to provide the ability to transform this
      * operation to an operation returning {@code short}.
      *
      * @param after The function to apply after this function is applied

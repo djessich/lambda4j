@@ -39,7 +39,7 @@ public interface ThrowableSupplier<T> extends Supplier<T> {
     /**
      * Calls the given {@link ThrowableSupplier} and returns its result.
      *
-     * @param <T> The type of return value from the Supplier
+     * @param <T> The type of return value from the supplier
      * @param supplier The supplier to be called
      * @return The result of the given {@code ThrowableSupplier}.
      * @throws NullPointerException If the given argument is {@code null}

@@ -75,7 +75,7 @@ public interface ByteSupplier {
     }
 
     /**
-     * Gets the supplied result from this {@link ByteSupplier}.
+     * Gets the supplied result from this supplier.
      *
      * @return The supplied result.
      */

@@ -174,8 +174,7 @@ public interface ThrowableTriConsumer<T, U, V> {
 
     /**
      * Returns a composed {@link ThrowableTriConsumer} that performs, in sequence, this operation followed by the {@code
-     * after} operation. If evaluation of either operation throws an exception, it is relayed to the caller of the
-     * composed operation. If performing this operation throws an exception, the {@code after} operation will not be
+     * after} operation. If performing this operation throws an exception, the {@code after} operation will not be
      * performed.
      *
      * @param after The operation to apply after this operator is applied

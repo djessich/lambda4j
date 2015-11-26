@@ -15,6 +15,8 @@
  */
 package at.gridtec.lambda4j.predicates;
 
+import at.gridtec.lambda4j.supplier.ThrowableBooleanSupplier;
+
 import org.apache.commons.lang3.tuple.Triple;
 
 import javax.annotation.Nonnegative;
@@ -252,8 +254,8 @@ public interface ThrowableTriPredicate<T, U, V> {
      * and another.  When evaluating the composed predicate, if this predicate is {@code false}, then the {@code other}
      * predicate is not evaluated.
      * <p>
-     * Any exceptions thrown during evaluation of either predicate are relayed to the caller; if evaluation of this
-     * {@code ThrowableTriPredicate} throws an exception, the {@code other} predicate will not be evaluated.
+     * If evaluation of this {@code ThrowableTriPredicate} throws an exception, the {@code other} predicate will not be
+     * evaluated.
      *
      * @param other A {@code ThrowableTriPredicate} that will be logically-ANDed with this one
      * @return A composed {@code ThrowableTriPredicate} that represents the short-circuiting logical AND of this
@@ -274,8 +276,8 @@ public interface ThrowableTriPredicate<T, U, V> {
      * and another. When evaluating the composed predicate, if this predicate is {@code true}, then the {@code other}
      * predicate is not evaluated.
      * <p>
-     * Any exceptions thrown during evaluation of either predicate are relayed to the caller; if evaluation of this
-     * {@code ThrowableTriPredicate} throws an exception, the {@code other} predicate will not be evaluated.
+     * If evaluation of this {@code ThrowableTriPredicate} throws an exception, the {@code other} predicate will not be
+     * evaluated.
      *
      * @param other A {@code ThrowableTriPredicate} that will be logically-ORed with this one
      * @return A composed {@code ThrowableTriPredicate} that represents the short-circuiting logical OR of this
@@ -293,8 +295,8 @@ public interface ThrowableTriPredicate<T, U, V> {
 
     /**
      * Returns a composed {@link ThrowableTriPredicate} that represents a short-circuiting logical XOR of this predicate
-     * and another. Any exceptions thrown during evaluation of either predicate are relayed to the caller; if evaluation
-     * of this {@code ThrowableTriPredicate} throws an exception, the {@code other} predicate will not be evaluated.
+     * and another. If evaluation of this {@code ThrowableTriPredicate} throws an exception, the {@code other} predicate
+     * will not be evaluated.
      *
      * @param other A {@code ThrowableTriPredicate} that will be logically-XORed with this one
      * @return A composed {@code ThrowableTriPredicate} that represents the short-circuiting logical XOR of this
@@ -333,19 +335,18 @@ public interface ThrowableTriPredicate<T, U, V> {
         return v -> testThrows(t, u, v);
     }
 
-    // TODO
-    //    /**
-    //     * Applies this predicate partially to three arguments. The result is an operation of arity {@code 0}.
-    //     *
-    //     * @param t The first argument to partially apply to the predicate
-    //     * @param u The second argument to partially apply to the predicate
-    //     * @param v The third argument to partially apply to the predicate
-    //     * @return A partial application of this predicate.
-    //     */
-    //    @Nonnull
-    //    default ThrowableBooleanSupplier partial(T t, U u, V v) {
-    //        return () -> testThrows(t, u, v);
-    //    }
+    /**
+     * Applies this predicate partially to three arguments. The result is an operation of arity {@code 0}.
+     *
+     * @param t The first argument to partially apply to the predicate
+     * @param u The second argument to partially apply to the predicate
+     * @param v The third argument to partially apply to the predicate
+     * @return A partial application of this predicate.
+     */
+    @Nonnull
+    default ThrowableBooleanSupplier partial(T t, U u, V v) {
+        return () -> testThrows(t, u, v);
+    }
 
     /**
      * Returns a tupled version of this predicate.

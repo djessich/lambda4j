@@ -203,8 +203,7 @@ public interface ThrowableTriFunction<T, U, V, R> {
 
     /**
      * Returns a composed {@link ThrowableTriFunction} that first applies this function to its input, and then applies
-     * the {@code after} function to the result. If evaluation of either function throws an exception, it is relayed to
-     * the caller of the composed function.
+     * the {@code after} function to the result.
      *
      * @param <S> The type of return value from the {@code after} function, and of the composed function
      * @param after The function to apply after this function is applied
@@ -222,8 +221,7 @@ public interface ThrowableTriFunction<T, U, V, R> {
 
     /**
      * Returns a composed {@link ThrowableTriConsumer} that fist applies this function to its input, and then consumes
-     * the result using the given {@link ThrowableConsumer}. If evaluation of either operation throws an exception, it
-     * is relayed to the caller of the composed operation.
+     * the result using the given {@link ThrowableConsumer}.
      *
      * @param consumer The operation which consumes the result from this operation
      * @return A composed {@code ThrowableTriConsumer} that first applies this function to its input, and then consumes
