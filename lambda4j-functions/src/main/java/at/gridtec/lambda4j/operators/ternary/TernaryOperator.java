@@ -64,7 +64,7 @@ public interface TernaryOperator<T> extends TriFunction<T, T, T, T> {
     @Nonnull
     static <T> TernaryOperator<T> onlyLeft(@Nonnull final UnaryOperator<T> operator) {
         Objects.requireNonNull(operator);
-        return (t, u, v) -> operator.apply(t);
+        return (left, middle, right) -> operator.apply(left);
     }
 
     /**
@@ -80,7 +80,7 @@ public interface TernaryOperator<T> extends TriFunction<T, T, T, T> {
     @Nonnull
     static <T> TernaryOperator<T> onlyMiddle(@Nonnull final UnaryOperator<T> operator) {
         Objects.requireNonNull(operator);
-        return (t, u, v) -> operator.apply(u);
+        return (left, middle, right) -> operator.apply(middle);
     }
 
     /**
@@ -96,7 +96,7 @@ public interface TernaryOperator<T> extends TriFunction<T, T, T, T> {
     @Nonnull
     static <T> TernaryOperator<T> onlyRight(@Nonnull final UnaryOperator<T> operator) {
         Objects.requireNonNull(operator);
-        return (t, u, v) -> operator.apply(v);
+        return (left, middle, right) -> operator.apply(right);
     }
 
     /**
@@ -108,6 +108,6 @@ public interface TernaryOperator<T> extends TriFunction<T, T, T, T> {
      */
     @Nonnull
     static <T> TernaryOperator<T> constant(T r) {
-        return (t, u, v) -> r;
+        return (left, middle, right) -> r;
     }
 }

@@ -25,7 +25,7 @@ import java.util.function.Consumer;
 import java.util.function.Function;
 
 /**
- * Represents an operation that accepts three input arguments and returns no result.  This is the three-arity
+ * Represents an operation that accepts three input arguments and returns no result. This is the three-arity
  * specialization of {@link Consumer}. Unlike most other functional interfaces, {@code TriConsumer} is expected to
  * operate via side-effects.
  * <p>
@@ -34,7 +34,6 @@ import java.util.function.Function;
  * @param <T> The type of the first argument to the operation to be consumed
  * @param <U> The type of the second argument to the operation to be consumed
  * @param <V> The type of the third argument to the operation to be consumed
- * @see Consumer
  */
 @SuppressWarnings("unused")
 @FunctionalInterface

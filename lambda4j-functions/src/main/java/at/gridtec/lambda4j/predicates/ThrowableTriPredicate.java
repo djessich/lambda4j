@@ -15,89 +15,114 @@
  */
 package at.gridtec.lambda4j.predicates;
 
-import at.gridtec.lambda4j.util.ThrowableUtils;
+import org.apache.commons.lang3.tuple.Triple;
 
+import javax.annotation.Nonnegative;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.util.Objects;
 
 /**
- * This functional interface implements a {@link TriPredicate} which is able to throw any {@link Exception}.
- * <p>
- * The thrown {@link Exception} is sneakily thrown unless its a {@link RuntimeException}. This means that there is no
- * need to catch the thrown exception, nor to declare that you throw it using the <em>throws</em> keyword. The exception
- * is still thrown, but the Java compiler stops warning about it.
- * <p>
- * However, when using this throwing lambda, be aware of the following consequences: <ol> <li>If the calling code is to
- * handle a thrown {@code Exception}, it MUST be declared in the methods <em>throws</em> clause which uses this lambda.
- * The compiler will not force you to add it.</li> <li>If the calling code already handles a thrown {@code Exception},
- * it needs to be declared in the methods <em>throws</em> clause which uses this lambda. If not the compiler prints an
- * error that the corresponding {@code try} block never throws the specific exception.</li> <li>In any case, there is no
- * way of explicitly catching the thrown {@code Exception} in the method which uses this lambda. If you try, the
- * compiler prints an error that the corresponding {@code try} block never throws the specific exception.</li> </ol>
- * <p>
- * When the calling code never throws the specific exception that it declares, you should omit it. For example: {@code
- * new String(byteArr, "UTF-8") throws UnsupportedEncodingException}, but UTF-8 is guaranteed by the Java specification
- * to be always present. The exception should therefore be omitted.
- * <p>
- * Moreover, if no checked exception should be used at all or its use is inappropriate for any reasons, omit the
- * declaration in the <em>throws</em> clause. The checked exception will behave just like a normal <b>unchecked</b>
- * exception due to sneaky throwing.
+ * Represents a predicate (boolean-valued function) of three arguments which is able to throw any {@link Throwable}.
+ * This is the three-arity specialization of {@link ThrowablePredicate}.
  * <p>
  * This is a {@link FunctionalInterface} whose functional method is {@link #testThrows(Object, Object, Object)}.
  *
- * @param <T> The type of the first argument for the predicate
- * @param <U> The type of the second argument for the predicate
- * @param <V> The type of the third argument for the predicate
- * @see java.util.function.Predicate
+ * @param <T> The type of the first argument to the predicate
+ * @param <U> The type of the second argument to the predicate
+ * @param <V> The type of the third argument to the predicate
+ * @see ThrowableTriPredicate
  */
 @SuppressWarnings("unused")
 @FunctionalInterface
-public interface ThrowableTriPredicate<T, U, V> extends TriPredicate<T, U, V> {
+public interface ThrowableTriPredicate<T, U, V> {
 
     /**
-     * Implicitly casts, and therefore wraps a given lambda as {@link ThrowableTriPredicate}. This is a convenience
-     * method in case the given {@link ThrowableTriPredicate} is ambiguous for the compiler. This might happen for
-     * overloaded methods accepting different functional interfaces. The given {@code ThrowableTriPredicate} is returned
-     * as-is.
+     * Calls the given {@link ThrowableTriPredicate} with the given arguments and returns its result.
      *
-     * @param <T> The type of the first argument for the predicate
-     * @param <U> The type of the second argument for the predicate
-     * @param <V> The type of the third argument for the predicate
-     * @param lambda The {@code ThrowableTriPredicate} which should be returned as-is.
-     * @return The given {@code ThrowableTriPredicate} as-is.
-     * @throws NullPointerException If the given argument is {@code null}
+     * @param <T> The type of the first argument to the predicate
+     * @param <U> The type of the second argument to the predicate
+     * @param <V> The type of the third argument to the predicate
+     * @param predicate The predicate to be called
+     * @param t The first argument to the predicate
+     * @param u The second argument to the predicate
+     * @param v The third argument to the predicate
+     * @return The result from the given {@code ThrowableTriPredicate}.
+     * @throws NullPointerException If the given predicate is {@code null}
+     * @throws Throwable Any throwable from the given predicates action
      */
-    static <T, U, V> ThrowableTriPredicate<T, U, V> wrap(final ThrowableTriPredicate<T, U, V> lambda) {
-        Objects.requireNonNull(lambda);
-        return lambda;
+    static <T, U, V> boolean call(@Nonnull final ThrowableTriPredicate<? super T, ? super U, ? super V> predicate, T t,
+            U u, V v) throws Throwable {
+        Objects.requireNonNull(predicate);
+        return predicate.testThrows(t, u, v);
     }
 
     /**
-     * Creates a {@link ThrowableTriPredicate} from the given {@link TriPredicate}. This method is just convenience to
-     * provide a mapping for the non-throwable/throwable instances of the corresponding functional interface.
+     * Creates a {@link ThrowableTriPredicate} which uses the {@code first} parameter of this one as argument for the
+     * given {@link ThrowablePredicate}.
      *
-     * @param <T> The type of the first argument for the predicate
-     * @param <U> The type of the second argument for the predicate
-     * @param <V> The type of the third argument for the predicate
-     * @param lambda A {@code TriPredicate} which should be mapped to its throwable counterpart
-     * @return A {@code ThrowableTriPredicate} from the given {@code TriPredicate}.
+     * @param <T> The type of the first argument to the predicate
+     * @param <U> The type of the second argument to the predicate
+     * @param <V> The type of the third argument to the predicate
+     * @param predicate The predicate which accepts the {@code first} parameter of this one
+     * @return Creates a {@code ThrowableTriPredicate} which uses the {@code first} parameter of this one as argument
+     * for the given {@code ThrowablePredicate}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static <T, U, V> ThrowableTriPredicate<T, U, V> from(final TriPredicate<T, U, V> lambda) {
-        Objects.requireNonNull(lambda);
-        return lambda::test;
+    @Nonnull
+    static <T, U, V> ThrowableTriPredicate<T, U, V> onlyFirst(@Nonnull final ThrowablePredicate<? super T> predicate) {
+        Objects.requireNonNull(predicate);
+        return (t, u, v) -> predicate.testThrows(t);
+    }
+
+    /**
+     * Creates a {@link ThrowableTriPredicate} which uses the {@code second} parameter of this one as argument for the
+     * given {@link ThrowablePredicate}.
+     *
+     * @param <T> The type of the first argument to the predicate
+     * @param <U> The type of the second argument to the predicate
+     * @param <V> The type of the third argument to the predicate
+     * @param predicate The predicate which accepts the {@code second} parameter of this one
+     * @return Creates a {@code ThrowableTriPredicate} which uses the {@code second} parameter of this one as argument
+     * for the given {@code ThrowablePredicate}.
+     * @throws NullPointerException If the given argument is {@code null}
+     */
+    @Nonnull
+    static <T, U, V> ThrowableTriPredicate<T, U, V> onlySecond(@Nonnull final ThrowablePredicate<? super U> predicate) {
+        Objects.requireNonNull(predicate);
+        return (t, u, v) -> predicate.testThrows(u);
+    }
+
+    /**
+     * Creates a {@link ThrowableTriPredicate} which uses the {@code third} parameter of this one as argument for the
+     * given {@link ThrowablePredicate}.
+     *
+     * @param <T> The type of the first argument to the predicate
+     * @param <U> The type of the second argument to the predicate
+     * @param <V> The type of the third argument to the predicate
+     * @param predicate The predicate which accepts the {@code third} parameter of this one
+     * @return Creates a {@code ThrowableTriPredicate} which uses the {@code third} parameter of this one as argument
+     * for the given {@code ThrowablePredicate}.
+     * @throws NullPointerException If the given argument is {@code null}
+     */
+    @Nonnull
+    static <T, U, V> ThrowableTriPredicate<T, U, V> onlyThird(@Nonnull final ThrowablePredicate<? super V> predicate) {
+        Objects.requireNonNull(predicate);
+        return (t, u, v) -> predicate.testThrows(v);
     }
 
     /**
      * Creates a {@link ThrowableTriPredicate} which always returns a given value.
      *
-     * @param <T> The type of the first argument for the predicate
-     * @param <U> The type of the second argument for the predicate
-     * @param <V> The type of the third argument for the predicate
+     * @param <T> The type of the first argument to the predicate
+     * @param <U> The type of the second argument to the predicate
+     * @param <V> The type of the third argument to the predicate
      * @param ret The return value for the constant
      * @return A {@code ThrowableTriPredicate} which always returns a given value.
      */
+    @Nonnull
     static <T, U, V> ThrowableTriPredicate<T, U, V> constant(boolean ret) {
-        return (t, u, v) -> ret;
+        return (t, v, u) -> ret;
     }
 
     /**
@@ -114,9 +139,10 @@ public interface ThrowableTriPredicate<T, U, V> extends TriPredicate<T, U, V> {
      * predicate.
      * @see #isNotEqual(Object, Object, Object)
      */
+    @Nonnull
     //@formatter:off
-    static <T, U, V> ThrowableTriPredicate<T, U, V> isEqual(final Object targetRef1, final Object targetRef2,
-            final Object targetRef3) {
+    static <T, U, V> ThrowableTriPredicate<T, U, V> isEqual(@Nullable Object targetRef1, @Nullable Object targetRef2,
+            @Nullable Object targetRef3) {
         return (t, u, v) -> (t == null ? targetRef1 == null : t.equals(targetRef1))
                 && (u == null ? targetRef2 == null : u.equals(targetRef2))
                 && (v == null ? targetRef3 == null : v.equals(targetRef3));
@@ -124,8 +150,8 @@ public interface ThrowableTriPredicate<T, U, V> extends TriPredicate<T, U, V> {
     //@formatter:on
 
     /**
-     * Returns a {@link ThrowableTriPredicate} that tests if the given arguments are not equal to the ones of this
-     * predicate according to {@link Objects#equals(Object)} method.
+     * Returns a {@link ThrowableTriPredicate} that tests if given arguments are not equal to the ones of this predicate
+     * according to {@link Objects#equals(Object)} method.
      *
      * @param <T> The type of the first argument to the predicate
      * @param <U> The type of the second argument to the predicate
@@ -137,9 +163,10 @@ public interface ThrowableTriPredicate<T, U, V> extends TriPredicate<T, U, V> {
      * predicate.
      * @see #isEqual(Object, Object, Object)
      */
+    @Nonnull
     //@formatter:off
-    static <T, U, V> ThrowableTriPredicate<T, U, V> isNotEqual(final Object targetRef1, final Object targetRef2,
-            final Object targetRef3) {
+    static <T, U, V> ThrowableTriPredicate<T, U, V> isNotEqual(@Nullable Object targetRef1, @Nullable Object targetRef2,
+            @Nullable Object targetRef3) {
         return (t, u, v) -> !(t == null ? targetRef1 == null : t.equals(targetRef1))
                 || !(u == null ? targetRef2 == null : u.equals(targetRef2))
                 || !(v == null ? targetRef3 == null : v.equals(targetRef3));
@@ -155,6 +182,7 @@ public interface ThrowableTriPredicate<T, U, V> extends TriPredicate<T, U, V> {
      * @return A {@link ThrowableTriPredicate} that always returns {@code true}.
      * @see #alwaysFalse()
      */
+    @Nonnull
     static <T, U, V> ThrowableTriPredicate<T, U, V> alwaysTrue() {
         return (t, u, v) -> true;
     }
@@ -168,144 +196,174 @@ public interface ThrowableTriPredicate<T, U, V> extends TriPredicate<T, U, V> {
      * @return A {@link ThrowableTriPredicate} the always returns {@code false}.
      * @see #alwaysTrue()
      */
+    @Nonnull
     static <T, U, V> ThrowableTriPredicate<T, U, V> alwaysFalse() {
         return (t, u, v) -> false;
     }
 
     /**
-     * The test method for this {@link TriPredicate} which is able to throw any {@link Exception} type.
+     * Evaluates this predicate on the given arguments. Thereby any {@link Throwable} is able to be thrown.
      *
      * @param t The first argument to the predicate
      * @param u The second argument to the predicate
      * @param v The third argument to the predicate
-     * @return {@code true} if the input argument matches the predicate, otherwise {@code false}.
-     * @throws Exception Any exception from this functions action
+     * @return {@code true} if the input arguments match the predicate, otherwise {@code false}.
+     * @throws Throwable Any throwable from this predicates action
      */
-    boolean testThrows(T t, U u, V v) throws Exception;
+    boolean testThrows(T t, U u, V v) throws Throwable;
 
     /**
-     * Overrides the {@link TriPredicate#test(Object, Object, Object)} method by using a redefinition as default method.
-     * It calls the {@link #testThrows(Object, Object, Object)} method of this interface and catches the thrown {@link
-     * Exception}s from it. If it is of type {@link RuntimeException}, the exception is rethrown. Other exception types
-     * are sneakily thrown.
+     * Evaluates this predicate on the given tuple. Thereby any {@link Throwable} is able to be thrown.
      *
-     * @param t The first argument to the predicate
-     * @param u The second argument to the predicate
-     * @param v The third argument to the predicate
-     * @return {@code true} if the input argument matches the predicate, otherwise {@code false}.
-     * @see ThrowableUtils#sneakyThrow(Throwable)
+     * @param tuple The tuple to be applied to the predicate
+     * @return {@code true} if the input arguments match the predicate, otherwise {@code false}.
+     * @throws NullPointerException If given argument is {@code null}
+     * @throws Throwable Any throwable from this predicates action
+     * @see org.apache.commons.lang3.tuple.Triple
      */
-    @Override
-    default boolean test(T t, U u, V v) {
-        try {
-            return testThrows(t, u, v);
-        } catch (RuntimeException e) {
-            throw e;
-        } catch (Exception e) {
-            throw ThrowableUtils.sneakyThrow(e);
-        }
+    default boolean testThrows(@Nonnull Triple<T, U, V> tuple) throws Throwable {
+        Objects.requireNonNull(tuple);
+        return testThrows(tuple.getLeft(), tuple.getMiddle(), tuple.getRight());
     }
 
     /**
-     * Returns a composed {@link ThrowableTriPredicate} that applies this {@code ThrowableTriPredicate} to its input,
-     * and if an error occurred, applies the given one. The exception from this {@code ThrowableTriPredicate} is
-     * ignored.
+     * Returns the number of this operations arguments.
      *
-     * @param other A {@code ThrowableTriPredicate} to be applied if this one fails
-     * @return A composed {@code ThrowableTriPredicate} that applies this {@code ThrowableTriPredicate}, and if an error
-     * occurred, applies the given one.
-     * @throws NullPointerException If the given argument is {@code null}
+     * @return The number of this operations arguments.
+     * @implSpec The default implementation always returns {@code 3}.
      */
-    default ThrowableTriPredicate<T, U, V> orElse(final ThrowableTriPredicate<? super T, ? super U, ? super V> other) {
-        Objects.requireNonNull(other);
-        return (t, u, v) -> {
-            try {
-                return testThrows(t, u, v);
-            } catch (Exception ignored) {
-                return other.testThrows(t, u, v);
-            }
-        };
+    @Nonnegative
+    default int arity() {
+        return 3;
     }
 
     /**
-     * Returns a composed {@link ThrowableTriPredicate} that applies this {@code ThrowableTriPredicate} to its input,
-     * and if an error occurred, throws the given {@link Exception}. The exception from this {@code
-     * ThrowableTriPredicate} is added as suppressed to the given one.
+     * Returns a {@link ThrowableTriPredicate} that represents the logical negation of this one.
+     *
+     * @return A {@code ThrowableTriPredicate} that represents the logical negation of this one.
+     */
+    @Nonnull
+    default ThrowableTriPredicate<T, U, V> negate() {
+        return (t, u, v) -> !testThrows(t, u, v);
+    }
+
+    /**
+     * Returns a composed {@link ThrowableTriPredicate} that represents a short-circuiting logical AND of this predicate
+     * and another.  When evaluating the composed predicate, if this predicate is {@code false}, then the {@code other}
+     * predicate is not evaluated.
      * <p>
-     * The given exception must have a no arg constructor for reflection purposes. If not, then appropriate exception as
-     * described in {@link Class#newInstance()} is thrown.
+     * Any exceptions thrown during evaluation of either predicate are relayed to the caller; if evaluation of this
+     * {@code ThrowableTriPredicate} throws an exception, the {@code other} predicate will not be evaluated.
      *
-     * @param <X> The type for the class extending {@code Exception}
-     * @param clazz The exception class to throw if an error occurred
-     * @return A composed {@code ThrowableTriPredicate} that applies this {@code ThrowableTriPredicate}, and if an error
-     * occurred, throws the given {@code Exception}.
+     * @param other A {@code ThrowableTriPredicate} that will be logically-ANDed with this one
+     * @return A composed {@code ThrowableTriPredicate} that represents the short-circuiting logical AND of this
+     * predicate and the {@code other} predicate.
      * @throws NullPointerException If the given argument is {@code null}
+     * @see #or(ThrowableTriPredicate)
+     * @see #xor(ThrowableTriPredicate)
      */
-    default <X extends Exception> ThrowableTriPredicate<T, U, V> orThrow(Class<X> clazz) {
-        Objects.requireNonNull(clazz);
-        return (t, u, v) -> {
-            try {
-                return testThrows(t, u, v);
-            } catch (Exception e) {
-                X ex = clazz.newInstance();
-                ex.addSuppressed(e);
-                throw ThrowableUtils.sneakyThrow(ex);
-            }
-        };
+    @Nonnull
+    default ThrowableTriPredicate<T, U, V> and(
+            @Nonnull final ThrowableTriPredicate<? super T, ? super U, ? super V> other) {
+        Objects.requireNonNull(other);
+        return (t, u, v) -> testThrows(t, u, v) && other.testThrows(t, u, v);
     }
 
     /**
-     * Returns a composed {@link TriPredicate} that applies this {@link ThrowableTriPredicate} to its input, and if an
-     * error occurred, applies the given {@code TriPredicate} representing a fallback. The exception from this {@code
-     * ThrowableTriPredicate} is ignored.
+     * Returns a composed {@link ThrowableTriPredicate} that represents a short-circuiting logical OR of this predicate
+     * and another. When evaluating the composed predicate, if this predicate is {@code true}, then the {@code other}
+     * predicate is not evaluated.
+     * <p>
+     * Any exceptions thrown during evaluation of either predicate are relayed to the caller; if evaluation of this
+     * {@code ThrowableTriPredicate} throws an exception, the {@code other} predicate will not be evaluated.
      *
-     * @param fallback A {@code TriPredicate} to be applied if this one fails
-     * @return A composed {@code TriPredicate} that applies this {@code ThrowableTriPredicate}, and if an error
-     * occurred, applies the given {@code TriPredicate}.
+     * @param other A {@code ThrowableTriPredicate} that will be logically-ORed with this one
+     * @return A composed {@code ThrowableTriPredicate} that represents the short-circuiting logical OR of this
+     * predicate and the {@code other} predicate.
      * @throws NullPointerException If the given argument is {@code null}
+     * @see #and(ThrowableTriPredicate)
+     * @see #xor(ThrowableTriPredicate)
      */
-    default TriPredicate<T, U, V> fallbackTo(final TriPredicate<? super T, ? super U, ? super V> fallback) {
-        Objects.requireNonNull(fallback);
-        return (t, u, v) -> {
-            try {
-                return testThrows(t, u, v);
-            } catch (Exception ignored) {
-                return fallback.test(t, u, v);
-            }
-        };
+    @Nonnull
+    default ThrowableTriPredicate<T, U, V> or(
+            @Nonnull final ThrowableTriPredicate<? super T, ? super U, ? super V> other) {
+        Objects.requireNonNull(other);
+        return (t, u, v) -> testThrows(t, u, v) && other.testThrows(t, u, v);
     }
 
     /**
-     * Returns a composed {@link TriPredicate} that applies this {@link ThrowableTriPredicate} to its input, and if an
-     * error occurred, returns {@code true}. The exception from this {@code ThrowableTriPredicate} is ignored.
+     * Returns a composed {@link ThrowableTriPredicate} that represents a short-circuiting logical XOR of this predicate
+     * and another. Any exceptions thrown during evaluation of either predicate are relayed to the caller; if evaluation
+     * of this {@code ThrowableTriPredicate} throws an exception, the {@code other} predicate will not be evaluated.
      *
-     * @return A composed {@code TriPredicate} that applies this {@code ThrowableTriPredicate}, and if an error
-     * occurred, returns {@code true}.
+     * @param other A {@code ThrowableTriPredicate} that will be logically-XORed with this one
+     * @return A composed {@code ThrowableTriPredicate} that represents the short-circuiting logical XOR of this
+     * predicate and the {@code other} predicate.
+     * @throws NullPointerException If the given argument is {@code null}
+     * @see #and(ThrowableTriPredicate)
+     * @see #or(ThrowableTriPredicate)
      */
-    default TriPredicate<T, U, V> orReturnTrue() {
-        return (t, u, v) -> {
-            try {
-                return testThrows(t, u, v);
-            } catch (Exception ignored) {
-                return true;
-            }
-        };
+    @Nonnull
+    default ThrowableTriPredicate<T, U, V> xor(
+            @Nonnull final ThrowableTriPredicate<? super T, ? super U, ? super V> other) {
+        Objects.requireNonNull(other);
+        return (t, u, v) -> testThrows(t, u, v) ^ other.testThrows(t, u, v);
     }
 
     /**
-     * Returns a composed {@link TriPredicate} that applies this {@link ThrowableTriPredicate} to its input, and if an
-     * error occurred, returns {@code false}. The exception from this {@code ThrowableTriPredicate} is ignored.
+     * Applies this predicate partially to one argument. The result is a predicate of arity {@code 2};
      *
-     * @return A composed {@code TriPredicate} that applies this {@code ThrowableTriPredicate}, and if an error
-     * occurred, returns {@code false}.
+     * @param t The argument to partially apply to the predicate
+     * @return A partial application of this predicate.
      */
-    default TriPredicate<T, U, V> orReturnFalse() {
-        return (t, u, v) -> {
-            try {
-                return testThrows(t, u, v);
-            } catch (Exception ignored) {
-                return false;
-            }
-        };
+    @Nonnull
+    default ThrowableBiPredicate<U, V> partial(T t) {
+        return (u, v) -> testThrows(t, u, v);
+    }
+
+    /**
+     * Applies this predicate partially to two arguments. The result is a predicate of arity {@code 1}.
+     *
+     * @param t The first argument to partially apply to the predicate
+     * @param u The second argument to partially apply to the predicate
+     * @return A partial application of this predicate.
+     */
+    @Nonnull
+    default ThrowablePredicate<V> partial(T t, U u) {
+        return v -> testThrows(t, u, v);
+    }
+
+    // TODO
+    //    /**
+    //     * Applies this predicate partially to three arguments. The result is an operation of arity {@code 0}.
+    //     *
+    //     * @param t The first argument to partially apply to the predicate
+    //     * @param u The second argument to partially apply to the predicate
+    //     * @param v The third argument to partially apply to the predicate
+    //     * @return A partial application of this predicate.
+    //     */
+    //    @Nonnull
+    //    default ThrowableBooleanSupplier partial(T t, U u, V v) {
+    //        return () -> testThrows(t, u, v);
+    //    }
+
+    /**
+     * Returns a tupled version of this predicate.
+     *
+     * @return A tupled version of this predicate.
+     */
+    @Nonnull
+    default ThrowablePredicate<Triple<T, U, V>> tupled() {
+        return this::testThrows;
+    }
+
+    /**
+     * Returns a reversed version of this predicate. This may be useful in recursive context.
+     *
+     * @return A reversed version of this predicate.
+     */
+    @Nonnull
+    default ThrowableTriPredicate<V, U, T> reversed() {
+        return (v, u, t) -> testThrows(t, u, v);
     }
 }

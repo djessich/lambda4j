@@ -34,7 +34,6 @@ import java.util.function.Predicate;
  * @param <T> The type of the first argument to the predicate
  * @param <U> The type of the second argument to the predicate
  * @param <V> The type of the third argument to the predicate
- * @see Predicate
  */
 @SuppressWarnings("unused")
 @FunctionalInterface

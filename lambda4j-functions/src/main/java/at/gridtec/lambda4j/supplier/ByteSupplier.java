@@ -278,7 +278,7 @@ public interface ByteSupplier {
     /**
      * Returns a composed {@link Supplier} which represents this {@link ByteSupplier}. Thereby the primitive input
      * argument for this operation is autoboxed. This method is just convenience to provide the ability to use this
-     * {@code FloatSupplier} with JRE specific methods, only accepting {@code Supplier}.
+     * {@code ByteSupplier} with JRE specific methods, only accepting {@code Supplier}.
      *
      * @return A composed {@code Supplier} which represents this {@code ByteSupplier}.
      */

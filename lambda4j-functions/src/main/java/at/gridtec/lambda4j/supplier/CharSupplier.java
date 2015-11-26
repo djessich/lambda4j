@@ -275,11 +275,11 @@ public interface CharSupplier {
     }
 
     /**
-     * Returns a composed {@link Supplier} which represents this {@link ShortSupplier}. Thereby the primitive input
+     * Returns a composed {@link Supplier} which represents this {@link CharSupplier}. Thereby the primitive input
      * argument for this operation is autoboxed. This method is just convenience to provide the ability to use this
-     * {@code ShortSupplier} with JRE specific methods, only accepting {@code Supplier}.
+     * {@code CharSupplier} with JRE specific methods, only accepting {@code Supplier}.
      *
-     * @return A composed {@code Supplier} which represents this {@code ShortSupplier}.
+     * @return A composed {@code Supplier} which represents this {@code CharSupplier}.
      */
     @Nonnull
     default Supplier<Character> boxed() {

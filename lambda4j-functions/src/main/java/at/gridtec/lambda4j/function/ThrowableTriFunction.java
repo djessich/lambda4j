@@ -15,34 +15,20 @@
  */
 package at.gridtec.lambda4j.function;
 
-import at.gridtec.lambda4j.util.ThrowableUtils;
+import at.gridtec.lambda4j.consumer.ThrowableConsumer;
+import at.gridtec.lambda4j.consumer.ThrowableTriConsumer;
+import at.gridtec.lambda4j.supplier.ThrowableSupplier;
 
+import org.apache.commons.lang3.tuple.Triple;
+
+import javax.annotation.Nonnegative;
+import javax.annotation.Nonnull;
 import java.util.Objects;
-import java.util.function.BiFunction;
-import java.util.function.Supplier;
+import java.util.Optional;
 
 /**
- * This functional interface implements a {@link TriFunction} which is able to throw any {@link Exception}.
- * <p>
- * The thrown {@link Exception} is sneakily thrown unless its a {@link RuntimeException}. This means that there is no
- * need to catch the thrown exception, nor to declare that you throw it using the <em>throws</em> keyword. The exception
- * is still thrown, but the Java compiler stops warning about it.
- * <p>
- * However, when using this throwing lambda, be aware of the following consequences: <ol> <li>If the calling code is to
- * handle a thrown {@code Exception}, it MUST be declared in the methods <em>throws</em> clause which uses this lambda.
- * The compiler will not force you to add it.</li> <li>If the calling code already handles a thrown {@code Exception},
- * it needs to be declared in the methods <em>throws</em> clause which uses this lambda. If not the compiler prints an
- * error that the corresponding {@code try} block never throws the specific exception.</li> <li>In any case, there is no
- * way of explicitly catching the thrown {@code Exception} in the method which uses this lambda. If you try, the
- * compiler prints an error that the corresponding {@code try} block never throws the specific exception.</li> </ol>
- * <p>
- * When the calling code never throws the specific exception that it declares, you should omit it. For example: {@code
- * new String(byteArr, "UTF-8") throws UnsupportedEncodingException}, but UTF-8 is guaranteed by the Java specification
- * to be always present. The exception should therefore be omitted.
- * <p>
- * Moreover, if no checked exception should be used at all or its use is inappropriate for any reasons, omit the
- * declaration in the <em>throws</em> clause. The checked exception will behave just like a normal <b>unchecked</b>
- * exception due to sneaky throwing.
+ * Represents a function that accepts three arguments and produces a result which is able to throw any {@link
+ * Throwable}. This is the three-arity specialization of {@link ThrowableFunction}.
  * <p>
  * This is a {@link FunctionalInterface} whose functional method is {@link #applyThrows(Object, Object, Object)}.
  *
@@ -50,46 +36,92 @@ import java.util.function.Supplier;
  * @param <U> The type of the second argument to the function
  * @param <V> The type of the third argument to the function
  * @param <R> The type of return value from the function
- * @see java.util.function.Function
+ * @see TriFunction
  */
 @SuppressWarnings("unused")
 @FunctionalInterface
-public interface ThrowableTriFunction<T, U, V, R> extends TriFunction<T, U, V, R> {
+public interface ThrowableTriFunction<T, U, V, R> {
 
     /**
-     * Implicitly casts, and therefore wraps a given lambda as {@link ThrowableTriFunction}. This is a convenience
-     * method in case the given {@link ThrowableTriFunction} is ambiguous for the compiler. This might happen for
-     * overloaded methods accepting different functional interfaces. The given {@code ThrowableTriFunction} is returned
-     * as-is.
+     * Calls the given {@link ThrowableTriFunction} with the given arguments and returns its result.
      *
      * @param <T> The type of the first argument to the function
      * @param <U> The type of the second argument to the function
      * @param <V> The type of the third argument to the function
      * @param <R> The type of return value from the function
-     * @param lambda The {@code ThrowableTriFunction} which should be returned as-is.
-     * @return The given {@code ThrowableTriFunction} as-is.
-     * @throws NullPointerException If the given argument is {@code null}
+     * @param function The function to be called
+     * @param t The first argument to the function
+     * @param u The second argument to the function
+     * @param v The third argument to the function
+     * @return The result from the given {@code ThrowableTriFunction}.
+     * @throws NullPointerException If the given function is {@code null}
+     * @throws Throwable Any throwable from the given functions action
      */
-    static <T, U, V, R> ThrowableTriFunction<T, U, V, R> wrap(final ThrowableTriFunction<T, U, V, R> lambda) {
-        Objects.requireNonNull(lambda);
-        return lambda;
+    static <T, U, V, R> R call(
+            @Nonnull final ThrowableTriFunction<? super T, ? super U, ? super V, ? extends R> function, T t, U u,
+            V v) throws Throwable {
+        Objects.requireNonNull(function);
+        return function.applyThrows(t, u, v);
     }
 
     /**
-     * Creates a {@link ThrowableTriFunction} from the given {@link TriFunction}. This method is just convenience to
-     * provide a mapping for the non-throwable/throwable instances of the corresponding functional interface.
+     * Creates a {@link ThrowableTriFunction} which uses the {@code first} parameter of this one as argument for the
+     * given {@link ThrowableFunction}.
      *
      * @param <T> The type of the first argument to the function
      * @param <U> The type of the second argument to the function
      * @param <V> The type of the third argument to the function
      * @param <R> The type of return value from the function
-     * @param lambda A {@code TriFunction} which should be mapped to its throwable counterpart
-     * @return A {@code ThrowableTriFunction} from the given {@code TriFunction}.
+     * @param function The function which accepts the {@code first} parameter of this one
+     * @return Creates a {@code ThrowableTriFunction} which uses the {@code first} parameter of this one as argument for
+     * the given {@code ThrowableFunction}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static <T, U, V, R> ThrowableTriFunction<T, U, V, R> from(final TriFunction<T, U, V, R> lambda) {
-        Objects.requireNonNull(lambda);
-        return lambda::apply;
+    @Nonnull
+    static <T, U, V, R> ThrowableTriFunction<T, U, V, R> onlyFirst(
+            @Nonnull final ThrowableFunction<? super T, ? extends R> function) {
+        Objects.requireNonNull(function);
+        return (t, u, v) -> function.applyThrows(t);
+    }
+
+    /**
+     * Creates a {@link ThrowableTriFunction} which uses the {@code second} parameter of this one as argument for the
+     * given {@link ThrowableFunction}.
+     *
+     * @param <T> The type of the first argument to the function
+     * @param <U> The type of the second argument to the function
+     * @param <V> The type of the third argument to the function
+     * @param <R> The type of return value from the function
+     * @param function The function which accepts the {@code second} parameter of this one
+     * @return Creates a {@code ThrowableTriFunction} which uses the {@code second} parameter of this one as argument
+     * for the given {@code ThrowableFunction}.
+     * @throws NullPointerException If the given argument is {@code null}
+     */
+    @Nonnull
+    static <T, U, V, R> ThrowableTriFunction<T, U, V, R> onlySecond(
+            @Nonnull final ThrowableFunction<? super U, ? extends R> function) {
+        Objects.requireNonNull(function);
+        return (t, u, v) -> function.applyThrows(u);
+    }
+
+    /**
+     * Creates a {@link ThrowableTriFunction} which uses the {@code third} parameter of this one as argument for the
+     * given {@link ThrowableFunction}.
+     *
+     * @param <T> The type of the first argument to the function
+     * @param <U> The type of the second argument to the function
+     * @param <V> The type of the third argument to the function
+     * @param <R> The type of return value from the function
+     * @param function The function which accepts the {@code third} parameter of this one
+     * @return Creates a {@code ThrowableTriFunction} which uses the {@code third} parameter of this one as argument for
+     * the given {@code ThrowableFunction}.
+     * @throws NullPointerException If the given argument is {@code null}
+     */
+    @Nonnull
+    static <T, U, V, R> ThrowableTriFunction<T, U, V, R> onlyThird(
+            @Nonnull final ThrowableFunction<? super V, ? extends R> function) {
+        Objects.requireNonNull(function);
+        return (t, u, v) -> function.applyThrows(v);
     }
 
     /**
@@ -102,152 +134,183 @@ public interface ThrowableTriFunction<T, U, V, R> extends TriFunction<T, U, V, R
      * @param r The return value for the constant
      * @return A {@code ThrowableTriFunction} which always returns a given value.
      */
+    @Nonnull
     static <T, U, V, R> ThrowableTriFunction<T, U, V, R> constant(R r) {
         return (t, u, v) -> r;
     }
 
     /**
-     * The apply method for this {@link BiFunction} which is able to throw any {@link Exception} type.
+     * Applies this function to the given arguments. Thereby any {@link Throwable} is able to be thrown.
      *
      * @param t The first argument to the function
      * @param u The second argument to the function
      * @param v The third argument to the function
      * @return The return value from the function, which is its result.
-     * @throws Exception Any exception from this functions action
+     * @throws Throwable Any throwable from this functions action
      */
-    R applyThrows(T t, U u, V v) throws Exception;
+    R applyThrows(T t, U u, V v) throws Throwable;
 
     /**
-     * Overrides the {@link TriFunction#apply(Object, Object, Object)} method by using a redefinition as default method.
-     * It calls the {@link #applyThrows(Object, Object, Object)} method of this interface and catches the thrown {@link
-     * Exception}s from it. If it is of type {@link RuntimeException}, the exception is rethrown. Other exception types
-     * are sneakily thrown.
+     * Applies this function to the given tuple. Thereby any {@link Throwable} is able to be thrown.
      *
-     * @param t The first argument to the function
-     * @param u The second argument to the function
-     * @param v The third argument to the function
+     * @param tuple The tuple to be applied to the function
      * @return The return value from the function, which is its result.
-     * @see at.gridtec.lambda4j.util.ThrowableUtils#sneakyThrow(Throwable)
+     * @throws NullPointerException If given argument is {@code null}
+     * @throws Throwable Any throwable from this functions action
+     * @see org.apache.commons.lang3.tuple.Triple
      */
-    @Override
-    default R apply(T t, U u, V v) {
-        try {
-            return applyThrows(t, u, v);
-        } catch (RuntimeException e) {
-            throw e;
-        } catch (Exception e) {
-            throw ThrowableUtils.sneakyThrow(e);
-        }
+    default R applyThrows(@Nonnull Triple<T, U, V> tuple) throws Throwable {
+        Objects.requireNonNull(tuple);
+        return applyThrows(tuple.getLeft(), tuple.getMiddle(), tuple.getRight());
     }
 
     /**
-     * Returns a composed {@link ThrowableTriFunction} that applies this {@code ThrowableTriFunction} to its input, and
-     * if an error occurred, applies the given one. The exception from this {@code ThrowableTriFunction} is ignored.
+     * Returns the number of arguments for this operation.
      *
-     * @param other A {@code ThrowableTriFunction} to be applied if this one fails
-     * @return A composed {@code ThrowableTriFunction} that applies this {@code ThrowableTriFunction}, and if an error
-     * occurred, applies the given one.
-     * @throws NullPointerException If the given argument is {@code null}
+     * @return The number of arguments for this operation.
+     * @implSpec The default implementation always returns {@code 3}.
      */
-    default ThrowableTriFunction<T, U, V, R> orElse(
-            final ThrowableTriFunction<? super T, ? super U, ? super V, ? extends R> other) {
-        Objects.requireNonNull(other);
-        return (t, u, v) -> {
-            try {
-                return applyThrows(t, u, v);
-            } catch (Exception ignored) {
-                return other.applyThrows(t, u, v);
-            }
-        };
+    @Nonnegative
+    default int arity() {
+        return 3;
     }
 
     /**
-     * Returns a composed {@link ThrowableTriFunction} that applies this {@code ThrowableTriFunction} to its input, and
-     * if an error occurred, throws the given {@link Exception}. The exception from this {@code ThrowableTriFunction} is
-     * added as suppressed to the given one.
-     * <p>
-     * The given exception must have a no arg constructor for reflection purposes. If not, then appropriate exception as
-     * described in {@link Class#newInstance()} is thrown.
+     * Returns a composed {@link ThrowableTriFunction} that first applies the {@code before} functions to its input, and
+     * then applies this function to the result.
      *
-     * @param <X> The type for the class extending {@code Exception}
-     * @param clazz The exception class to throw if an error occurred
-     * @return A composed {@code ThrowableTriFunction} that applies this {@code ThrowableTriFunction}, and if an error
-     * occurred, throws the given {@code Exception}.
-     * @throws NullPointerException If the given argument is {@code null}
+     * @param <A> The type of the argument to the first before function
+     * @param <B> The type of the argument to the second before function
+     * @param <C> The type of the argument to the third before function
+     * @param before1 The first function to apply before this function is applied
+     * @param before2 The second function to apply before this function is applied
+     * @param before3 The third function to apply before this function is applied
+     * @return A composed {@code ThrowableTriFunction} that first applies the {@code before} functions to its input, and
+     * then applies this function to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @see #andThen(ThrowableFunction)
      */
-    default <X extends Exception> ThrowableTriFunction<T, U, V, R> orThrow(Class<X> clazz) {
-        Objects.requireNonNull(clazz);
-        return (t, u, v) -> {
-            try {
-                return applyThrows(t, u, v);
-            } catch (Exception e) {
-                X ex = clazz.newInstance();
-                ex.addSuppressed(e);
-                throw ThrowableUtils.sneakyThrow(ex);
-            }
-        };
+    @Nonnull
+    default <A, B, C> ThrowableTriFunction<A, B, C, R> compose(
+            @Nonnull final ThrowableFunction<? super A, ? extends T> before1,
+            @Nonnull final ThrowableFunction<? super B, ? extends U> before2,
+            @Nonnull final ThrowableFunction<? super C, ? extends V> before3) {
+        Objects.requireNonNull(before1);
+        Objects.requireNonNull(before2);
+        Objects.requireNonNull(before3);
+        return (a, b, c) -> applyThrows(before1.applyThrows(a), before2.applyThrows(b), before3.applyThrows(c));
     }
 
     /**
-     * Returns a composed {@link TriFunction} that applies this {@link ThrowableTriFunction} to its input, and if an
-     * error occurred, applies the given {@code TriFunction} representing a fallback. The exception from this {@code
-     * ThrowableTriFunction} is ignored.
+     * Returns a composed {@link ThrowableTriFunction} that first applies this function to its input, and then applies
+     * the {@code after} function to the result. If evaluation of either function throws an exception, it is relayed to
+     * the caller of the composed function.
      *
-     * @param fallback A {@code TriFunction} to be applied if this one fails
-     * @return A composed {@code TriFunction} that applies this {@code ThrowableTriFunction}, and if an error occurred,
-     * applies the given {@code TriFunction}.
-     * @throws NullPointerException If the given argument is {@code null}
+     * @param <S> The type of return value from the {@code after} function, and of the composed function
+     * @param after The function to apply after this function is applied
+     * @return A composed {@code ThrowableTriFunction} that first applies this function to its input, and then applies
+     * the {@code after} function to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @see #compose(ThrowableFunction, ThrowableFunction, ThrowableFunction)
      */
-    default TriFunction<T, U, V, R> fallbackTo(
-            final TriFunction<? super T, ? super U, ? super V, ? extends R> fallback) {
-        Objects.requireNonNull(fallback);
-        return (t, u, v) -> {
-            try {
-                return applyThrows(t, u, v);
-            } catch (Exception ignored) {
-                return fallback.apply(t, u, v);
-            }
-        };
+    @Nonnull
+    default <S> ThrowableTriFunction<T, U, V, S> andThen(
+            @Nonnull final ThrowableFunction<? super R, ? extends S> after) {
+        Objects.requireNonNull(after);
+        return (t, u, v) -> after.applyThrows(applyThrows(t, u, v));
     }
 
     /**
-     * Returns a composed {@link TriFunction} that applies this {@link ThrowableTriFunction} to its input, and if an
-     * error occurred, returns the given value. The exception from this {@code ThrowableTriFunction} is ignored.
+     * Returns a composed {@link ThrowableTriConsumer} that fist applies this function to its input, and then consumes
+     * the result using the given {@link ThrowableConsumer}. If evaluation of either operation throws an exception, it
+     * is relayed to the caller of the composed operation.
      *
-     * @param value The value to be returned if this {@code ThrowableTriFunction} fails
-     * @return A composed {@code TriFunction} that applies this {@code ThrowableTriFunction}, and if an error occurred,
-     * returns the given value.
-     * @throws NullPointerException If the given argument is {@code null}
+     * @param consumer The operation which consumes the result from this operation
+     * @return A composed {@code ThrowableTriConsumer} that first applies this function to its input, and then consumes
+     * the result using the given {@code ThrowableConsumer}.
+     * @throws NullPointerException If given argument is {@code null}
      */
-    default TriFunction<T, U, V, R> orReturn(final R value) {
-        Objects.requireNonNull(value);
-        return (t, u, v) -> {
-            try {
-                return applyThrows(t, u, v);
-            } catch (Exception ignored) {
-                return value;
-            }
-        };
+    @Nonnull
+    default ThrowableTriConsumer<T, U, V> consume(@Nonnull final ThrowableConsumer<? super R> consumer) {
+        Objects.requireNonNull(consumer);
+        return (t, u, v) -> consumer.acceptThrows(applyThrows(t, u, v));
     }
 
     /**
-     * Returns a composed {@link TriFunction} that applies this {@link ThrowableTriFunction} to its input, and if an
-     * error occurred, returns the supplied value from the given {@link Supplier}. The exception from this {@code
-     * ThrowableTriFunction} is ignored.
+     * Applies this function partially to one argument. The result is a function of arity {@code 2};
      *
-     * @param supplier A {@code Supplier} to return a supplied value if this {@code ThrowableTriFunction} fails
-     * @return A composed {@code TriFunction} that applies this {@code ThrowableTriFunction}, and if an error occurred,
-     * the supplied value from the given {@code Supplier}.
-     * @throws NullPointerException If the given argument is {@code null}
+     * @param t The argument to partially apply to the function
+     * @return A partial application of this function.
      */
-    default TriFunction<T, U, V, R> orReturn(final Supplier<? extends R> supplier) {
-        Objects.requireNonNull(supplier);
-        return (t, u, v) -> {
-            try {
-                return applyThrows(t, u, v);
-            } catch (Exception ignored) {
-                return supplier.get();
-            }
-        };
+    @Nonnull
+    default ThrowableBiFunction<U, V, R> partial(T t) {
+        return (u, v) -> applyThrows(t, u, v);
+    }
+
+    /**
+     * Applies this function partially to two arguments. The result is a function of arity {@code 1}.
+     *
+     * @param t The first argument to partially apply to the function
+     * @param u The second argument to partially apply to the function
+     * @return A partial application of this function.
+     */
+    @Nonnull
+    default ThrowableFunction<V, R> partial(T t, U u) {
+        return v -> applyThrows(t, u, v);
+    }
+
+    /**
+     * Applies this function partially to three arguments. The result is an operation of arity {@code 0}.
+     *
+     * @param t The first argument to partially apply to the function
+     * @param u The second argument to partially apply to the function
+     * @param v The third argument to partially apply to the function
+     * @return A partial application of this function.
+     */
+    @Nonnull
+    default ThrowableSupplier<R> partial(T t, U u, V v) {
+        return () -> applyThrows(t, u, v);
+    }
+
+    /**
+     * Returns a curried version of this function.
+     *
+     * @return A curried version of this function.
+     */
+    @Nonnull
+    default ThrowableFunction<T, ThrowableFunction<U, ThrowableFunction<V, R>>> curried() {
+        return t -> u -> v -> applyThrows(t, u, v);
+    }
+
+    /**
+     * Returns a tupled version of this function.
+     *
+     * @return A tupled version of this function.
+     */
+    @Nonnull
+    default ThrowableFunction<Triple<T, U, V>, R> tupled() {
+        return this::applyThrows;
+    }
+
+    /**
+     * Returns a reversed version of this function. This may be useful in recursive context.
+     *
+     * @return A reversed version of this function.
+     */
+    @Nonnull
+    default ThrowableTriFunction<V, U, T, R> reversed() {
+        return (v, u, t) -> applyThrows(t, u, v);
+    }
+
+    /**
+     * Converts this function to an equal function, which ensures that its result is not {@code null} using {@link
+     * Optional}. This method mainly exists to avoid unnecessary {@code NullPointerException}s through referencing
+     * {@code null} from this function.
+     *
+     * @return An equal function, which ensures that its result is not {@code null}.
+     */
+    @Nonnull
+    default ThrowableTriFunction<T, U, V, Optional<R>> nonNull() {
+        return (t, u, v) -> Optional.ofNullable(applyThrows(t, u, v));
     }
 }

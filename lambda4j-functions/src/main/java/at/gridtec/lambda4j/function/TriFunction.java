@@ -16,7 +16,6 @@
 package at.gridtec.lambda4j.function;
 
 import at.gridtec.lambda4j.consumer.TriConsumer;
-import at.gridtec.lambda4j.function.primitives.to.tri.ToByteTriFunction;
 
 import org.apache.commons.lang3.tuple.Triple;
 
@@ -39,7 +38,6 @@ import java.util.function.Supplier;
  * @param <U> The type of the second argument to the function
  * @param <V> The type of the third argument to the function
  * @param <R> The type of return value from the function
- * @see Function
  */
 @SuppressWarnings("unused")
 @FunctionalInterface
@@ -172,9 +170,9 @@ public interface TriFunction<T, U, V, R> {
     }
 
     /**
-     * Returns a composed {@link ToByteTriFunction} that first applies the {@code before} functions to its input, and
-     * then applies this function to the result. If evaluation of either function throws an exception, it is relayed to
-     * the caller of the composed function.
+     * Returns a composed {@link TriFunction} that first applies the {@code before} functions to its input, and then
+     * applies this function to the result. If evaluation of either function throws an exception, it is relayed to the
+     * caller of the composed function.
      *
      * @param <A> The type of the argument to the first before function
      * @param <B> The type of the argument to the second before function

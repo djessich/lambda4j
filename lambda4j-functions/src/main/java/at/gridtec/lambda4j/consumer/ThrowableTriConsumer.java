@@ -15,74 +15,47 @@
  */
 package at.gridtec.lambda4j.consumer;
 
-import at.gridtec.lambda4j.util.ThrowableUtils;
+import at.gridtec.lambda4j.function.ThrowableFunction;
 
+import org.apache.commons.lang3.tuple.Triple;
+
+import javax.annotation.Nonnegative;
+import javax.annotation.Nonnull;
 import java.util.Objects;
 
 /**
- * This functional interface implements a {@link TriConsumer} which is able to throw any {@link Exception}.
+ * Represents an operation that accepts three input arguments and returns no result which is able to throw any {@link
+ * Throwable}. This is the three-arity specialization of {@link ThrowableConsumer}. Unlike most other functional
+ * interfaces, {@code ThrowableTriConsumer} is expected to operate via side-effects.
  * <p>
- * The thrown {@link Exception} is sneakily thrown unless its a {@link RuntimeException}. This means that there is no
- * need to catch the thrown exception, nor to declare that you throw it using the <em>throws</em> keyword. The exception
- * is still thrown, but the Java compiler stops warning about it.
- * <p>
- * However, when using this throwing lambda, be aware of the following consequences: <ol> <li>If the calling code is to
- * handle a thrown {@code Exception}, it MUST be declared in the methods <em>throws</em> clause which uses this lambda.
- * The compiler will not force you to add it.</li> <li>If the calling code already handles a thrown {@code Exception},
- * it needs to be declared in the methods <em>throws</em> clause which uses this lambda. If not the compiler prints an
- * error that the corresponding {@code try} block never throws the specific exception.</li> <li>In any case, there is no
- * way of explicitly catching the thrown {@code Exception} in the method which uses this lambda. If you try, the
- * compiler prints an error that the corresponding {@code try} block never throws the specific exception.</li> </ol>
- * <p>
- * When the calling code never throws the specific exception that it declares, you should omit it. For example: {@code
- * new String(byteArr, "UTF-8") throws UnsupportedEncodingException}, but UTF-8 is guaranteed by the Java specification
- * to be always present. The exception should therefore be omitted.
- * <p>
- * Moreover, if no checked exception should be used at all or its use is inappropriate for any reasons, omit the
- * declaration in the <em>throws</em> clause. The checked exception will behave just like a normal <b>unchecked</b>
- * exception due to sneaky throwing.
+ * This is a {@link FunctionalInterface} whose functional method is {@link #acceptThrows(Object, Object, Object)}.
  *
  * @param <T> The type of the first argument to the operation to be consumed
  * @param <U> The type of the second argument to the operation to be consumed
  * @param <V> The type of the third argument to the operation to be consumed
- * @see java.util.function.Consumer
+ * @see TriConsumer
  */
 @SuppressWarnings("unused")
 @FunctionalInterface
-public interface ThrowableTriConsumer<T, U, V> extends TriConsumer<T, U, V> {
+public interface ThrowableTriConsumer<T, U, V> {
 
     /**
-     * Implicitly casts, and therefore wraps a given lambda as {@link ThrowableTriConsumer}. This is a convenience
-     * method in case the given {@link ThrowableTriConsumer} is ambiguous for the compiler. This might happen for
-     * overloaded methods accepting different functional interfaces. The given {@code ThrowableTriConsumer} is returned
-     * as-is.
+     * Calls the given {@link ThrowableTriConsumer} with the given arguments and returns its result.
      *
      * @param <T> The type of the first argument to the operation to be consumed
      * @param <U> The type of the second argument to the operation to be consumed
      * @param <V> The type of the third argument to the operation to be consumed
-     * @param lambda The {@code ThrowableTriConsumer} which should be returned as-is.
-     * @return The given {@code ThrowableTriConsumer} as-is.
-     * @throws NullPointerException If the given argument is {@code null}
+     * @param consumer The consumer to be called
+     * @param t The first argument to the operation to be consumed
+     * @param u The second argument to the operation to be consumed
+     * @param v The third argument to the operation to be consumed
+     * @throws NullPointerException If the given consumer is {@code null}
+     * @throws Throwable Any throwable from the given consumers action
      */
-    static <T, U, V> ThrowableTriConsumer<T, U, V> wrap(final ThrowableTriConsumer<T, U, V> lambda) {
-        Objects.requireNonNull(lambda);
-        return lambda;
-    }
-
-    /**
-     * Creates a {@link ThrowableTriConsumer} from the given {@link TriConsumer}. This method is just convenience to
-     * provide a mapping for the non-throwable/throwable instances of the corresponding functional interface.
-     *
-     * @param <T> The type of the first argument to the operation to be consumed
-     * @param <U> The type of the second argument to the operation to be consumed
-     * @param <V> The type of the third argument to the operation to be consumed
-     * @param lambda A {@code TriConsumer} which should be mapped to its throwable counterpart
-     * @return A {@code ThrowableTriConsumer} from the given {@code TriConsumer}.
-     * @throws NullPointerException If the given argument is {@code null}
-     */
-    static <T, U, V> ThrowableTriConsumer<T, U, V> from(final TriConsumer<T, U, V> lambda) {
-        Objects.requireNonNull(lambda);
-        return lambda::accept;
+    static <T, U, V> void call(@Nonnull final ThrowableTriConsumer<? super T, ? super U, ? super V> consumer, T t, U u,
+            V v) throws Throwable {
+        Objects.requireNonNull(consumer);
+        consumer.acceptThrows(t, u, v);
     }
 
     /**
@@ -97,9 +70,10 @@ public interface ThrowableTriConsumer<T, U, V> extends TriConsumer<T, U, V> {
      * the given {@code ThrowableConsumer}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static <T, U, V> ThrowableTriConsumer<T, U, V> onlyFirst(final ThrowableConsumer<? super T> consumer) {
+    @Nonnull
+    static <T, U, V> ThrowableTriConsumer<T, U, V> onlyFirst(@Nonnull final ThrowableConsumer<? super T> consumer) {
         Objects.requireNonNull(consumer);
-        return (t, u, v) -> consumer.accept(t);
+        return (t, u, v) -> consumer.acceptThrows(t);
     }
 
     /**
@@ -114,9 +88,10 @@ public interface ThrowableTriConsumer<T, U, V> extends TriConsumer<T, U, V> {
      * for the given {@code ThrowableConsumer}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static <T, U, V> ThrowableTriConsumer<T, U, V> onlySecond(final ThrowableConsumer<? super U> consumer) {
+    @Nonnull
+    static <T, U, V> ThrowableTriConsumer<T, U, V> onlySecond(@Nonnull final ThrowableConsumer<? super U> consumer) {
         Objects.requireNonNull(consumer);
-        return (t, u, v) -> consumer.accept(u);
+        return (t, u, v) -> consumer.acceptThrows(u);
     }
 
     /**
@@ -131,123 +106,134 @@ public interface ThrowableTriConsumer<T, U, V> extends TriConsumer<T, U, V> {
      * the given {@code ThrowableConsumer}.
      * @throws NullPointerException If the given argument is {@code null}
      */
-    static <T, U, V> ThrowableTriConsumer<T, U, V> onlyThird(final ThrowableConsumer<? super V> consumer) {
+    @Nonnull
+    static <T, U, V> ThrowableTriConsumer<T, U, V> onlyThird(@Nonnull final ThrowableConsumer<? super V> consumer) {
         Objects.requireNonNull(consumer);
-        return (t, u, v) -> consumer.accept(v);
+        return (t, u, v) -> consumer.acceptThrows(v);
     }
 
     /**
-     * The accept method for this {@link TriConsumer} which is able to throw any {@link Exception} type.
+     * Performs this operation on the given arguments. Thereby any {@link Throwable} is able to be thrown.
      *
      * @param t The first argument to the operation to be consumed
      * @param u The second argument to the operation to be consumed
      * @param v The third argument to the operation to be consumed
-     * @throws Exception Any exception from this operations action
+     * @throws Throwable Any throwable from this consumers action
      */
-    void acceptThrows(T t, U u, V v) throws Exception;
+    void acceptThrows(T t, U u, V v) throws Throwable;
 
     /**
-     * Overrides the {@link TriConsumer#accept(Object, Object, Object)} method by using a redefinition as default
-     * method. It calls the {@link #acceptThrows(Object, Object, Object)} method of this interface and catches the
-     * thrown {@link Exception}s from it. If it is of type {@link RuntimeException}, the exception is rethrown. Other
-     * exception types are sneakily thrown.
+     * Performs this operation on the given tuple. Thereby any {@link Throwable} is able to be thrown.
      *
-     * @param t The first argument to the operation to be consumed
-     * @param u The second argument to the operation to be consumed
-     * @param v The third argument to the operation to be consumed
-     * @see ThrowableUtils#sneakyThrow(Throwable)
+     * @param tuple The tuple to be applied to the operation to be consumed
+     * @throws NullPointerException If given argument is {@code null}
+     * @throws Throwable Any throwable from this functions action
+     * @see org.apache.commons.lang3.tuple.Triple
      */
-    @Override
-    default void accept(T t, U u, V v) {
-        try {
+    default void acceptThrows(@Nonnull Triple<T, U, V> tuple) throws Throwable {
+        Objects.requireNonNull(tuple);
+        acceptThrows(tuple.getLeft(), tuple.getMiddle(), tuple.getRight());
+    }
+
+    /**
+     * Returns the number of this operations arguments.
+     *
+     * @return The number of this operations arguments.
+     * @implSpec The default implementation always returns {@code 3}.
+     */
+    @Nonnegative
+    default int arity() {
+        return 3;
+    }
+
+    /**
+     * Returns a composed {@link ThrowableTriConsumer} that first applies the {@code before} operations to its input,
+     * and then applies this operation to the result.
+     *
+     * @param <A> The type of the argument to the first before operation
+     * @param <B> The type of the argument to the second before operation
+     * @param <C> The type of the argument to the third before operation
+     * @param before1 The first operation to apply before this operation is applied
+     * @param before2 The second operation to apply before this operation is applied
+     * @param before3 The third operation to apply before this operation is applied
+     * @return A composed {@link ThrowableTriConsumer} that first applies the {@code before} operations to its input,
+     * and then applies this operation to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @see #andThen(ThrowableTriConsumer)
+     */
+    @Nonnull
+    default <A, B, C> ThrowableTriConsumer<A, B, C> compose(
+            @Nonnull final ThrowableFunction<? super A, ? extends T> before1,
+            @Nonnull final ThrowableFunction<? super B, ? extends U> before2,
+            @Nonnull final ThrowableFunction<? super C, ? extends V> before3) {
+        Objects.requireNonNull(before1);
+        Objects.requireNonNull(before2);
+        Objects.requireNonNull(before3);
+        return (a, b, c) -> acceptThrows(before1.apply(a), before2.apply(b), before3.apply(c));
+    }
+
+    /**
+     * Returns a composed {@link ThrowableTriConsumer} that performs, in sequence, this operation followed by the {@code
+     * after} operation. If evaluation of either operation throws an exception, it is relayed to the caller of the
+     * composed operation. If performing this operation throws an exception, the {@code after} operation will not be
+     * performed.
+     *
+     * @param after The operation to apply after this operator is applied
+     * @return A composed {@link ThrowableTriConsumer} that performs, in sequence, this operation followed by the {@code
+     * after} operation.
+     * @throws NullPointerException If given argument is {@code null}
+     * @see #compose(ThrowableFunction, ThrowableFunction, ThrowableFunction)
+     */
+    @Nonnull
+    default ThrowableTriConsumer<T, U, V> andThen(
+            @Nonnull final ThrowableTriConsumer<? super T, ? super U, ? super V> after) {
+        Objects.requireNonNull(after);
+        return (t, u, v) -> {
             acceptThrows(t, u, v);
-        } catch (RuntimeException e) {
-            throw e;
-        } catch (Exception e) {
-            throw ThrowableUtils.sneakyThrow(e);
-        }
-    }
-
-    /**
-     * Returns a composed {@link ThrowableTriConsumer} that applies this {@code ThrowableTriConsumer} to its input, and
-     * if an error occurred, applies the given one. The exception from this {@code ThrowableTriConsumer} is ignored.
-     *
-     * @param other A {@code ThrowableTriConsumer} to be applied if this one fails
-     * @return A composed {@code ThrowableTriConsumer} that applies this {@code ThrowableTriConsumer}, and if an error
-     * occurred, applies the given one.
-     * @throws NullPointerException If the given argument is {@code null}
-     */
-    default ThrowableTriConsumer<T, U, V> orElse(final ThrowableTriConsumer<? super T, ? super U, ? super V> other) {
-        Objects.requireNonNull(other);
-        return (t, u, v) -> {
-            try {
-                acceptThrows(t, u, v);
-            } catch (Exception ignored) {
-                other.acceptThrows(t, u, v);
-            }
+            after.acceptThrows(t, u, v);
         };
     }
 
     /**
-     * Returns a composed {@link ThrowableTriConsumer} that applies this {@code ThrowableTriConsumer} to its input, and
-     * if an error occurred, throws the given {@link Exception}. The exception from this {@code ThrowableTriConsumer} is
-     * added as suppressed to the given one.
-     * <p>
-     * The given exception must have a no arg constructor for reflection purposes. If not, then appropriate exception as
-     * described in {@link Class#newInstance()} is thrown.
+     * Applies this operation partially to one argument. The result is an operation of arity {@code 2};
      *
-     * @param <X> The type for the class extending {@code Exception}
-     * @param clazz The exception class to throw if an error occurred
-     * @return A composed {@code ThrowableTriConsumer} that applies this {@code ThrowableTriConsumer}, and if an error
-     * occurred, throws the given {@code Exception}.
-     * @throws NullPointerException If the given argument is {@code null}
+     * @param t The argument to partially apply to the operation
+     * @return A partial application of this operation.
      */
-    default <X extends Exception> ThrowableTriConsumer<T, U, V> orThrow(Class<X> clazz) {
-        Objects.requireNonNull(clazz);
-        return (t, u, v) -> {
-            try {
-                acceptThrows(t, u, v);
-            } catch (Exception e) {
-                X ex = clazz.newInstance();
-                ex.addSuppressed(e);
-                throw ThrowableUtils.sneakyThrow(ex);
-            }
-        };
+    @Nonnull
+    default ThrowableBiConsumer<U, V> partial(T t) {
+        return (u, v) -> acceptThrows(t, u, v);
     }
 
     /**
-     * Returns a composed {@link TriConsumer} that applies this {@link ThrowableTriConsumer} to its input, ignoring any
-     * possible errors, unless it is an unchecked exception.
+     * Applies this operation partially to two arguments. The result is an operation of arity {@code 1}.
      *
-     * @return A composed {@code TriConsumer} that applies this {@code ThrowableTriConsumer}, ignoring any possible
-     * errors, unless it is an unchecked exception.
+     * @param t The first argument to partially apply to the operation
+     * @param u The second argument to partially apply to the operation
+     * @return A partial application of this operation.
      */
-    default TriConsumer<T, U, V> ignore() {
-        return (t, u, v) -> {
-            try {
-                acceptThrows(t, u, v);
-            } catch (RuntimeException e) {
-                throw e;
-            } catch (Exception ignored) {
-                // Do nothing
-            }
-        };
+    @Nonnull
+    default ThrowableConsumer<V> partial(T t, U u) {
+        return v -> acceptThrows(t, u, v);
     }
 
     /**
-     * Returns a composed {@link TriConsumer} that applies this {@link ThrowableTriConsumer} to its input, ignoring any
-     * possible errors.
+     * Returns a tupled version of this operation.
      *
-     * @return A composed {@code TriConsumer} that applies this {@code ThrowableTriConsumer}, ignoring any possible
-     * errors.
+     * @return A tupled version of this operation.
      */
-    default TriConsumer<T, U, V> ignoreAll() {
-        return (t, u, v) -> {
-            try {
-                acceptThrows(t, u, v);
-            } catch (Exception ignored) {
-                // Do nothing
-            }
-        };
+    @Nonnull
+    default ThrowableConsumer<Triple<T, U, V>> tupled() {
+        return this::acceptThrows;
+    }
+
+    /**
+     * Returns a reversed version of this operation. This may be useful in recursive context.
+     *
+     * @return A reversed version of this operation.
+     */
+    @Nonnull
+    default ThrowableTriConsumer<V, U, T> reversed() {
+        return (v, u, t) -> acceptThrows(t, u, v);
     }
 }
