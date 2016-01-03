@@ -1,6 +1,6 @@
 ### Custom
 doc/
-javadoc/
+/javadaoc
 coverage/
 saves/
 save/
