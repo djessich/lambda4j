@@ -105,6 +105,7 @@ public final class LambdaUtils {
         if (arity < 0) {
             throw new IllegalArgumentException("arity must be greater than 0");
         }
+
         // Find lambda and return it if such or null
         return LambdaCache.getInstance()
                 .getLambdas()
@@ -112,6 +113,40 @@ public final class LambdaUtils {
                 .filter(l -> l.getType().equals(type))
                 .filter(l -> l.getArity() == arity)
                 .filter(l -> l.isPrimitive() == isPrimitve)
+                .filter(l -> l.isThrowable() == isThrowable)
+                .findFirst()
+                .orElseGet(null);
+    }
+
+    /**
+     * Searches for a {@link Lambda} using given lambda type, lambda arity, lambda return type and throwable flag. If
+     * the lambda exists, it will be returned as is, otherwise {@code null} is returned.
+     *
+     * @param type The lambdas type
+     * @param arity The lambdas arity
+     * @param returnType The lambdas return type
+     * @param isThrowable The flag indicating if lambda is throwable
+     * @return The lambda from given lambda type, lambda arity, lambda return type and throwable flag, or {@code null}
+     * if no such lambda exists.
+     * @throws NullPointerException If given lambda type or lambda return type is {@code null}
+     * @throws IllegalArgumentException If given lambda arity is < 0
+     */
+    public static Lambda searchByReturnType(@Nonnull final LambdaTypeEnum type, @Nonnegative int arity,
+            @Nonnull final String returnType, boolean isThrowable) {
+        // Check arguments
+        Objects.requireNonNull(type);
+        Objects.requireNonNull(returnType);
+        if (arity < 0) {
+            throw new IllegalArgumentException("arity must be greater than 0");
+        }
+
+        // Find lambda and return it if such or null
+        return LambdaCache.getInstance()
+                .getLambdas()
+                .stream()
+                .filter(l -> l.getType().equals(type))
+                .filter(l -> l.getArity() == arity)
+                .filter(l -> l.getReturnType().equals(returnType))
                 .filter(l -> l.isThrowable() == isThrowable)
                 .findFirst()
                 .orElseGet(null);

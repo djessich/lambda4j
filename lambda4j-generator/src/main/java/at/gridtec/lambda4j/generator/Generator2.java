@@ -26,6 +26,7 @@ import at.gridtec.lambda4j.generator.processors.impl.InputTypeTwoProcessor;
 import at.gridtec.lambda4j.generator.processors.impl.NameProcessor;
 import at.gridtec.lambda4j.generator.processors.impl.PrimitiveProcessor;
 import at.gridtec.lambda4j.generator.processors.impl.ReturnTypeProcessor;
+import at.gridtec.lambda4j.generator.processors.impl.ThrowableProcessor;
 import at.gridtec.lambda4j.generator.processors.impl.TypeProcessor;
 import at.gridtec.lambda4j.generator.processors.impl.inputTypeThreeProcessor;
 import at.gridtec.lambda4j.generator.util.LambdaUtils;
@@ -128,12 +129,12 @@ public class Generator2 {
         Processor inputTypeThreeProcessor = new inputTypeThreeProcessor();
         Processor changeOperatorProcessor = new ChangeOperatorProcessor();
         Processor primitveProcessor = new PrimitiveProcessor();
-        //        Processor throwableProcessor = new ThrowableProcessor();
+        Processor throwableProcessor = new ThrowableProcessor();
         Processor nameProcessor = new NameProcessor();
 
         // Build chain turned around (start adding last step first)
         ProcessorChain.getInstance().addProcessor(nameProcessor);
-        //        ProcessorChain.getInstance().addProcessor(throwableProcessor);
+        ProcessorChain.getInstance().addProcessor(throwableProcessor);
         ProcessorChain.getInstance().addProcessor(primitveProcessor);
         ProcessorChain.getInstance().addProcessor(changeOperatorProcessor);
         ProcessorChain.getInstance().addProcessor(inputTypeThreeProcessor);
