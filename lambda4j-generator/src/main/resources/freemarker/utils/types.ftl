@@ -22,8 +22,8 @@
 </#function>
 
 
-<#function buildParameterString target = lambda other1 = "" other2 = "" other3 = "" other4 = "">
-    <#local target = otherParametersToTarget(target, other1, other2, other3, other4)>
+<#function buildParameterString target = lambda other1 = "" other2 = "" other3 = "">
+    <#local target = otherParametersToTarget(target, other1, other2, other3)>
     <#local types = [target.inputOneType!"", target.inputTwoType!"", target.inputThreeType!""]>
     <#local types = filters.filterEmpties(types)>
     <#local genericString = "">
@@ -38,8 +38,8 @@
     <#return genericString>
 </#function>
 
-<#function buildParameterNameString target = lambda other1 = "" other2 = "" other3 = "" other4 = "">
-    <#local target = otherParametersToTarget(target, other1, other2, other3, other4)>
+<#function buildParameterNameString target = lambda other1 = "" other2 = "" other3 = "">
+    <#local target = otherParametersToTarget(target, other1, other2, other3)>
     <#local types = [target.inputOneType!"", target.inputTwoType!"", target.inputThreeType!""]>
     <#local types = filters.filterEmpties(types)>
     <#local genericString = "">

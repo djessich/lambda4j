@@ -29,7 +29,12 @@ import java.util.List;
 import java.util.Objects;
 
 /**
- * Created by domin on 24.12.2015.
+ * Represents a {@link Processor} which creates copies of the given lambda and sets the lambdas name. These copies are
+ * handed over to next {@code Processor} to do further processing. The result from next step is returned by this step.
+ * <p>
+ * Requirements by this step are the lambdas type ({@link Lambda#getType()}), arity ({@link Lambda#getArity()}), return
+ * type ({@link Lambda#getReturnType()}) and input types ({@link Lambda#getInputOneType()}, {@link
+ * Lambda#getInputTwoType()}, {@link Lambda#getInputThreeType()}).
  */
 public final class NameProcessor extends Processor {
 

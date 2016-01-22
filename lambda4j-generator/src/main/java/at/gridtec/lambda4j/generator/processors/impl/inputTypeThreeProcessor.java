@@ -27,6 +27,9 @@ import java.util.List;
  * Represents a {@link Processor} which creates copies of the given lambda to set all possible lambda input types for
  * the {@code second} argument to the lambda. These copies are handed over to next {@code Processor} to do further
  * processing. The result from next step is returned by this step.
+ * <p>
+ * Requirements by this step are the lambdas type ({@link Lambda#getType()}), arity ({@link Lambda#getArity()}) and
+ * second input type {@link Lambda#getInputTwoType()}.
  */
 public final class inputTypeThreeProcessor extends Processor {
 

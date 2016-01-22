@@ -9,13 +9,13 @@
 <#assign groupid>target</#assign>
 
 <#include "header/copyright.ftl">
-package ${groupid}.${lambda.type.simpleName}
+package ${groupid}
 
 <#include "header/imports.ftl">
 
 @SuppressWarnings("unused")
 @FunctionalInterface
-public interface ${lambda.name} {
+public interface ${lambda.name}${genericParameterTypeString} {
 
 <#include "methods/static/call.ftl">
 <#include "methods/static/only.ftl">

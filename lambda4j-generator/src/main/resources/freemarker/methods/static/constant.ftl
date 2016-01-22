@@ -1,4 +1,6 @@
 <#-- @formatter:off -->
+<#import "../../utils/types.ftl" as types>
+
 <#-- parse only if lambda is of type Consumer -->
 <#if !LambdaUtils.isOfTypeConsumer(lambda)>
      <@constantMethod/>

@@ -25,6 +25,8 @@ import java.util.List;
  * Represents a {@link Processor} which sets the primitive flag if the output or one of the input arguments is a
  * primitive. The changed input argument is handed over to next {@code Processor} to do further processing. The result
  * from next step is returned by this step.
+ * <p>
+ * There are no requirements by this step.
  */
 public final class PrimitiveProcessor extends Processor {
 

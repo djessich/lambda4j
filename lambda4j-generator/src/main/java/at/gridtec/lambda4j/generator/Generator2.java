@@ -75,7 +75,7 @@ public class Generator2 {
         System.out.println(lambdas.size());
         System.out.println(LambdaCache.getInstance().getLambdas().size());
 
-        final Lambda lambda = lambdas.stream().filter(p -> p.getName().equals("BiFunction")).findFirst().get();
+        final Lambda lambda = lambdas.stream().filter(p -> p.getName().equals("TriFunction")).findFirst().get();
         System.out.println(lambda);
 
         // Create your Configuration instance, and specify if up to what FreeMarker

@@ -28,6 +28,10 @@ import java.util.List;
  * Represents a {@link Processor} which creates copies of the given lambda for all lambdas logically representing an
  * operator. For each copy the {@link Lambda#type} is changed accordingly. These copies are handed over to next {@code
  * Processor} to do further processing. The result from next step is returned by this step.
+ * <p>
+ * Requirements by this step are the lambdas arity ({@link Lambda#getArity()}), return type ({@link
+ * Lambda#getReturnType()}) and input types ({@link Lambda#getInputOneType()}, {@link Lambda#getInputTwoType()}, {@link
+ * Lambda#getInputThreeType()}).
  */
 public final class ChangeOperatorProcessor extends Processor {
 

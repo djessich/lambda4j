@@ -27,24 +27,4 @@ default ${outputLambda.name}<${lambda.inputOneType}, ${outputLambda.name}<${lamb
     return t -> u ${lastArrow} -> ${lambda.type.method}(${parameterNameString});
 }
 </#macro>
-
-<#-- helper macros to use in cases when lambda arity is greater than 3 -->
-<#function curriedMethodPrintStep>
-    <#if (lambda.arity >= 3)>
-        <#return "${outputLambda.name}<${lambda.inputThreeType},">
-    </#if>
-    <#return "">
-</#function>
-<#function curriedMethodPrintClosingTag>
-    <#if (lambda.arity >= 3)>
-        <#return ">">
-    </#if>
-    <#return "">
-</#function>
-<#function curriedMethodPrintArrow>
-    <#if (lambda.arity >= 3)>
-        <#return "-> " + types.buildParameterName(lambda.inputThreeType)>
-    </#if>
-    <#return "">
-</#function>
 <#-- @formatter:on -->

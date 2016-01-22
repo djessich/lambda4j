@@ -28,6 +28,8 @@ import java.util.stream.Collectors;
  * Represents a {@link Processor} which creates copies of the given lambda to set all possible lambda return types to
  * the lambda. These copies are handed over to next {@code Processor} to do further processing. The result from next
  * step is returned by this step.
+ * <p>
+ * Requirements by this step is the lambdas type ({@link Lambda#getType()}) only.
  */
 public final class ReturnTypeProcessor extends Processor {
 

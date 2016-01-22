@@ -30,8 +30,15 @@ import java.util.stream.Collectors;
  * Represents a {@link Processor} which creates copies of the given lambda to set all the specified types of {@link
  * LambdaTypeEnum} to the lambda. These copies are handed over to next {@code Processor} to do further processing. The
  * result from next step is returned by this step.
+ * <p>
+ * There are no requirements by this step.
  */
 public final class TypeProcessor extends Processor {
+
+    @Override
+    public boolean processable(@Nonnull final Lambda lambda) {
+        return true;
+    }
 
     @Override
     @Nonnull
@@ -53,10 +60,5 @@ public final class TypeProcessor extends Processor {
             lambdas.addAll(next(copy));
         }
         return lambdas;
-    }
-
-    @Override
-    protected boolean processable(@Nonnull final Lambda lambda) {
-        return true;
     }
 }

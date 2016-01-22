@@ -27,6 +27,8 @@ import java.util.List;
  * Represents a {@link Processor} which creates copies of the given lambda to set the lambdas throwable flag. These
  * copies are handed over to next {@code Processor} to do further processing. The result from next step is returned by
  * this step.
+ * <p>
+ * There are no requirements by this step.
  */
 public final class ThrowableProcessor extends Processor {
 

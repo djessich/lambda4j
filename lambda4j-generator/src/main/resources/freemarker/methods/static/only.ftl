@@ -1,4 +1,6 @@
 <#-- @formatter:off -->
+<#import "../../utils/types.ftl" as types>
+
 <#-- parse only if lambda arity is greater than 2 -->
 <#if (lambda.arity >= 2)>
     <#-- search for correct input lambda of only method -->
@@ -21,7 +23,7 @@
 <#-- a helper macro to centralize only method and to avoid unnecessary indenting -->
 <#macro onlyMethod number capitalizedNumber inputLambda argumentType argumentName>
 /**
- * Creates a {@link ${lambda.name} which uses the {@code ${number}} parameter of this one as argument for the given {@link ${inputLambda.name}}.
+ * Creates a {@link ${lambda.name}} which uses the {@code ${number}} parameter of this one as argument for the given {@link ${inputLambda.name}}.
  *
 <#include "../../javadoc/paramGenericInput.ftl">
  * @param ${lambda.type.simpleName} The ${lambda.type.simpleName} which accepts the {@code ${number}} parameter of this one
