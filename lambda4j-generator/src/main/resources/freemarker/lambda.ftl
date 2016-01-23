@@ -27,5 +27,6 @@ public interface ${lambda.name}${genericParameterTypeString} {
 <#include "methods/tupled.ftl">
 <#include "methods/reversed.ftl">
 <#include "methods/nonNull.ftl">
+<#include "methods/boxed.ftl">
 
 }

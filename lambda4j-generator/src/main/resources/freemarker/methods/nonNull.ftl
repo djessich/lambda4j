@@ -4,9 +4,9 @@
 <#-- parse only if lambda return is not primitive -->
 <#if (!helpers.isPrimitive(lambda.returnType))>
     <#-- generate generic string with return type wrapped in optional -->
-    <#assign genericTypeStringWithOptionalReturn = types.buildGenericParameterTypeString(target, "", "", "", "Optional<" + lambda.returnType + ">")>
+    <#assign genericTypeStringWithOptionalReturn = types.buildGenericParameterTypeString(lambda, "", "", "", "Optional<" + lambda.returnType + ">")>
     <#-- print nonNull method -->
-    <@nonNullMethod genericTypeStringWithOptionalReturn/>
+    <@.namespace.nonNullMethod genericTypeStringWithOptionalReturn/>
 </#if>
 
 <#-- a helper macro to centralize nonNull method and to avoid unnecessary indenting -->

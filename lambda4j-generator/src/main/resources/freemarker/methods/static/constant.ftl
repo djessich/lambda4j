@@ -3,7 +3,7 @@
 
 <#-- parse only if lambda is of type Consumer -->
 <#if !LambdaUtils.isOfTypeConsumer(lambda)>
-     <@constantMethod/>
+     <@.namespace.constantMethod/>
 </#if>
 
 <#-- a helper macro to centralize constant method and to avoid unnecessary indenting -->

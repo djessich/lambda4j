@@ -12,7 +12,7 @@
         <#assign lastArrow = "-> " + types.buildParameterName(lambda.inputThreeType)>
     </#if>
     <#-- print curried method -->
-    <@curriedMethod lastStep!"" lastClosingTag!"" lastArrow!""/>
+    <@.namespace.curriedMethod lastStep!"" lastClosingTag!"" lastArrow!""/>
 </#if>
 
 <#-- a helper macro to centralize curried method and to avoid unnecessary indenting -->

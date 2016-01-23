@@ -16,7 +16,7 @@
         <#assign capitalizedNumber = number?cap_first>
         <#assign argumentType = argumentTypes[arity?index]>
         <#assign argumentName = argumentNames[arity?index]>
-        <@onlyMethod number capitalizedNumber inputLambda argumentType argumentName/>
+        <@.namespace.onlyMethod number capitalizedNumber inputLambda argumentType argumentName/>
     </#list>
 </#if>
 

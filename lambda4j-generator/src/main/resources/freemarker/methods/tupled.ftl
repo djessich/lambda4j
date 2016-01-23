@@ -11,7 +11,7 @@
         <#assign return = ", ${lambda.returnType}">
     </#if>
     <#-- print tupled method -->
-    <@tupledMethod return!""/>
+    <@.namespace.tupledMethod return!""/>
 </#if>
 
 <#-- a helper macro to centralize tupled method and to avoid unnecessary indenting -->

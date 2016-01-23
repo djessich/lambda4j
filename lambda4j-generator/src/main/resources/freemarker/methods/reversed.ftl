@@ -28,7 +28,7 @@
     <#if (parametersWithReturn?has_content)>
         <#assign genericParameterTypeStringReversed = "<" + parametersWithReturn?join(", ", "", ">")>
     </#if>
-    <@reversedMethod genericParameterTypeStringReversed!"" parameterNameStringReversed!""/>
+    <@.namespace.reversedMethod genericParameterTypeStringReversed!"" parameterNameStringReversed!""/>
 </#if>
 
 <#-- a helper macro to centralize reversed method and to avoid unnecessary indenting -->
