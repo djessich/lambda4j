@@ -4,8 +4,11 @@
 
 <#-- parse only if lambda is primitive -->
 <#if lambda.primitive>
+    <#-- build a generic parameter type string including primitives also -->
     <#assign genericParameterTypeStringWithPrimitives = .namespace.buildGenericParameterTypeStringWithPrimitives()>
+    <#-- get output lambda using a search for lambda type, arity, primitive and throwable flag -->
     <#assign outputLambda = LambdaUtils.search(lambda.type, lambda.arity, false, lambda.throwable)>
+    <#-- print boxed method -->
     <@.namespace.boxedMethod genericParameterTypeStringWithPrimitives outputLambda/>
 </#if>
 

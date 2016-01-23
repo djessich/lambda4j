@@ -6,9 +6,9 @@
     <#local isInputOnePrimitive = helpers.isPrimitive(target.inputOneType!"")>
     <#local isInputTwoPrimitive = helpers.isPrimitive(target.inputTwoType!"")>
     <#local isInputThreePrimitive = helpers.isPrimitive(target.inputThreeType!"")>
-    <#if !isInputOnePrimitive && !isInputTwoPrimitive>
+    <#if (target.arity == 2) && !isInputOnePrimitive && !isInputTwoPrimitive>
         <#local ret = "Pair<" + target.inputOneType + ", " + target.inputTwoType + ">">
-    <#elseif !isInputOnePrimitive && !isInputTwoPrimitive && !isInputThreePrimitive>
+    <#elseif (target.arity == 3) && !isInputOnePrimitive && !isInputTwoPrimitive && !isInputThreePrimitive>
         <#local ret = "Triple<" + target.inputOneType + ", " + target.inputTwoType + ", " + target.inputThreeType + ">">
     </#if>
     <#return ret>

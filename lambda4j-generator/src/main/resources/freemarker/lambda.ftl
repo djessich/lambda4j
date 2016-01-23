@@ -23,6 +23,7 @@ public interface ${lambda.name}${genericParameterTypeString} {
 
 <#include "methods/lambdaMethod.ftl">
 <#include "methods/arity.ftl">
+<#include "methods/consume.ftl">
 <#include "methods/curried.ftl">
 <#include "methods/tupled.ftl">
 <#include "methods/reversed.ftl">

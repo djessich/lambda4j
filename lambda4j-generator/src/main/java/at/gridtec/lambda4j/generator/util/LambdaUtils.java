@@ -153,6 +153,149 @@ public final class LambdaUtils {
     }
 
     /**
+     * Searches for a {@link Lambda} using given lambda type, lambda arity, lambda input one type and throwable flag. If
+     * the lambda exists, it will be returned as is, otherwise {@code null} is returned.
+     *
+     * @param type The lambdas type
+     * @param arity The lambdas arity
+     * @param inputOneType The lambdas input one type
+     * @param isThrowable The flag indicating if lambda is throwable
+     * @return The lambda from given lambda type, lambda arity, lambda input one type and throwable flag, or {@code
+     * null} if no such lambda exists.
+     * @throws NullPointerException If given lambda type or lambda input type is {@code null}
+     * @throws IllegalArgumentException If given lambda arity is < 0
+     */
+    public static Lambda searchByInputOneType(@Nonnull final LambdaTypeEnum type, @Nonnegative int arity,
+            @Nonnull final String inputOneType, boolean isThrowable) {
+        // Check arguments
+        Objects.requireNonNull(type);
+        Objects.requireNonNull(inputOneType);
+        if (arity < 0) {
+            throw new IllegalArgumentException("arity must be greater than 0");
+        }
+
+        // Find lambda and return it if such or null
+        return LambdaCache.getInstance()
+                .getLambdas()
+                .stream()
+                .filter(l -> l.getType().equals(type))
+                .filter(l -> l.getArity() == arity)
+                .filter(l -> l.getInputOneType() == null || l.getInputOneType().equals(inputOneType))
+                .filter(l -> l.isThrowable() == isThrowable)
+                .findFirst()
+                .orElseGet(null);
+    }
+
+    /**
+     * Searches for a {@link Lambda} using given lambda type, lambda arity, lambda input two type and throwable flag. If
+     * the lambda exists, it will be returned as is, otherwise {@code null} is returned.
+     *
+     * @param type The lambdas type
+     * @param arity The lambdas arity
+     * @param inputTwoType The lambdas input two type
+     * @param isThrowable The flag indicating if lambda is throwable
+     * @return The lambda from given lambda type, lambda arity, lambda input two type and throwable flag, or {@code
+     * null} if no such lambda exists.
+     * @throws NullPointerException If given lambda type or lambda input type is {@code null}
+     * @throws IllegalArgumentException If given lambda arity is < 0
+     */
+    public static Lambda searchByInputTwoType(@Nonnull final LambdaTypeEnum type, @Nonnegative int arity,
+            @Nonnull final String inputTwoType, boolean isThrowable) {
+        // Check arguments
+        Objects.requireNonNull(type);
+        Objects.requireNonNull(inputTwoType);
+        if (arity < 0) {
+            throw new IllegalArgumentException("arity must be greater than 0");
+        }
+
+        // Find lambda and return it if such or null
+        return LambdaCache.getInstance()
+                .getLambdas()
+                .stream()
+                .filter(l -> l.getType().equals(type))
+                .filter(l -> l.getArity() == arity)
+                .filter(l -> l.getInputTwoType() == null || l.getInputTwoType().equals(inputTwoType))
+                .filter(l -> l.isThrowable() == isThrowable)
+                .findFirst()
+                .orElseGet(null);
+    }
+
+    /**
+     * Searches for a {@link Lambda} using given lambda type, lambda arity, lambda input three type and throwable flag.
+     * If the lambda exists, it will be returned as is, otherwise {@code null} is returned.
+     *
+     * @param type The lambdas type
+     * @param arity The lambdas arity
+     * @param inputThreeType The lambdas input three type
+     * @param isThrowable The flag indicating if lambda is throwable
+     * @return The lambda from given lambda type, lambda arity, lambda input three type and throwable flag, or {@code
+     * null} if no such lambda exists.
+     * @throws NullPointerException If given lambda type or lambda input type is {@code null}
+     * @throws IllegalArgumentException If given lambda arity is < 0
+     */
+    public static Lambda searchByInputThreeType(@Nonnull final LambdaTypeEnum type, @Nonnegative int arity,
+            @Nonnull final String inputThreeType, boolean isThrowable) {
+        // Check arguments
+        Objects.requireNonNull(type);
+        Objects.requireNonNull(inputThreeType);
+        if (arity < 0) {
+            throw new IllegalArgumentException("arity must be greater than 0");
+        }
+
+        // Find lambda and return it if such or null
+        return LambdaCache.getInstance()
+                .getLambdas()
+                .stream()
+                .filter(l -> l.getType().equals(type))
+                .filter(l -> l.getArity() == arity)
+                .filter(l -> l.getInputThreeType() == null || l.getInputThreeType().equals(inputThreeType))
+                .filter(l -> l.isThrowable() == isThrowable)
+                .findFirst()
+                .orElseGet(null);
+    }
+
+    /**
+     * Searches for a {@link Lambda} using given lambda type, input types and throwable flag. If the lambda exists, it
+     * will be returned as is, otherwise {@code null} is returned.
+     *
+     * @param type The lambdas type
+     * @param arity The lambdas arity
+     * @param inputOneType The lambdas input one type
+     * @param inputTwoType The lambdas input two type
+     * @param inputThreeType The lambdas input three type
+     * @param isThrowable The flag indicating if lambda is throwable
+     * @return The lambda from given lambda type, input types and throwable flag, or {@code null} if no such lambda
+     * exists.
+     * @throws NullPointerException If given lambda type is or lambda input types are {@code null}
+     * @throws IllegalArgumentException If given lambda arity is < 0
+     */
+    public static Lambda searchByInputTypes(@Nonnull final LambdaTypeEnum type, @Nonnegative int arity,
+            @Nonnull final String inputOneType, @Nonnull final String inputTwoType,
+            @Nonnull final String inputThreeType, boolean isThrowable) {
+        // Check arguments
+        Objects.requireNonNull(type);
+        Objects.requireNonNull(inputOneType);
+        Objects.requireNonNull(inputTwoType);
+        Objects.requireNonNull(inputThreeType);
+        if (arity < 0) {
+            throw new IllegalArgumentException("arity must be greater than 0");
+        }
+
+        // Find lambda and return it if such or null
+        return LambdaCache.getInstance()
+                .getLambdas()
+                .stream()
+                .filter(l -> l.getType().equals(type))
+                .filter(l -> l.getArity() == arity)
+                .filter(l -> l.getInputOneType() == null || l.getInputOneType().equals(inputOneType))
+                .filter(l -> l.getInputTwoType() == null || l.getInputTwoType().equals(inputTwoType))
+                .filter(l -> l.getInputThreeType() == null || l.getInputThreeType().equals(inputThreeType))
+                .filter(l -> l.isThrowable() == isThrowable)
+                .findFirst()
+                .orElseGet(null);
+    }
+
+    /**
      * Returns the {@link LambdaTypeEnum#COMPARATOR} lambda type.
      *
      * @return The {@code LambdaTypeEnum#COMPARATOR} lambda type.
