@@ -11,11 +11,11 @@
     <#assign argumentTypes = [lambda.inputOneType!"", lambda.inputTwoType!"", lambda.inputThreeType!""]>
     <#assign argumentNames = [types.buildParameterName(lambda.inputOneType!""), types.buildParameterName(lambda.inputTwoType!""),types.buildParameterName(lambda.inputThreeType!"")]>
     <#-- loop over range (which depends on arity) and print only method -->
-    <#list 0..!lambda.arity as arity>
-        <#assign number = numbers[arity?index]>
+    <#list 0..!lambda.arity as current>
+        <#assign number = numbers[current?index]>
         <#assign capitalizedNumber = number?cap_first>
-        <#assign argumentType = argumentTypes[arity?index]>
-        <#assign argumentName = argumentNames[arity?index]>
+        <#assign argumentType = argumentTypes[current?index]>
+        <#assign argumentName = argumentNames[current?index]>
         <@.namespace.onlyMethod number capitalizedNumber inputLambda argumentType argumentName/>
     </#list>
 </#if>

@@ -19,11 +19,13 @@ public interface ${lambda.name}${genericParameterTypeString} {
 
 <#include "methods/static/call.ftl">
 <#include "methods/static/only.ftl">
+<#include "methods/static/identity.ftl">
 <#include "methods/static/constant.ftl">
 
 <#include "methods/lambdaMethod.ftl">
 <#include "methods/arity.ftl">
-<#include "methods/consume.ftl">
+<#--<#include "methods/consume.ftl">-->
+<#--<#include "methods/partial.ftl">-->
 <#include "methods/curried.ftl">
 <#include "methods/tupled.ftl">
 <#include "methods/reversed.ftl">

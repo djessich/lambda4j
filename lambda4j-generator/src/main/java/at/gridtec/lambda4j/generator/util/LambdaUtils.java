@@ -81,8 +81,7 @@ public final class LambdaUtils {
                 .filter(l -> l.getType().equals(type))
                 .filter(l -> l.getArity() == arity)
                 .filter(l -> l.isThrowable() == isThrowable)
-                .findFirst()
-                .orElseGet(null);
+                .findFirst().orElse(null);
     }
 
     /**
@@ -114,8 +113,7 @@ public final class LambdaUtils {
                 .filter(l -> l.getArity() == arity)
                 .filter(l -> l.isPrimitive() == isPrimitve)
                 .filter(l -> l.isThrowable() == isThrowable)
-                .findFirst()
-                .orElseGet(null);
+                .findFirst().orElse(null);
     }
 
     /**
@@ -148,8 +146,7 @@ public final class LambdaUtils {
                 .filter(l -> l.getArity() == arity)
                 .filter(l -> l.getReturnType().equals(returnType))
                 .filter(l -> l.isThrowable() == isThrowable)
-                .findFirst()
-                .orElseGet(null);
+                .findFirst().orElse(null);
     }
 
     /**
@@ -182,8 +179,7 @@ public final class LambdaUtils {
                 .filter(l -> l.getArity() == arity)
                 .filter(l -> l.getInputOneType() == null || l.getInputOneType().equals(inputOneType))
                 .filter(l -> l.isThrowable() == isThrowable)
-                .findFirst()
-                .orElseGet(null);
+                .findFirst().orElse(null);
     }
 
     /**
@@ -216,8 +212,7 @@ public final class LambdaUtils {
                 .filter(l -> l.getArity() == arity)
                 .filter(l -> l.getInputTwoType() == null || l.getInputTwoType().equals(inputTwoType))
                 .filter(l -> l.isThrowable() == isThrowable)
-                .findFirst()
-                .orElseGet(null);
+                .findFirst().orElse(null);
     }
 
     /**
@@ -250,8 +245,7 @@ public final class LambdaUtils {
                 .filter(l -> l.getArity() == arity)
                 .filter(l -> l.getInputThreeType() == null || l.getInputThreeType().equals(inputThreeType))
                 .filter(l -> l.isThrowable() == isThrowable)
-                .findFirst()
-                .orElseGet(null);
+                .findFirst().orElse(null);
     }
 
     /**
@@ -291,8 +285,7 @@ public final class LambdaUtils {
                 .filter(l -> l.getInputTwoType() == null || l.getInputTwoType().equals(inputTwoType))
                 .filter(l -> l.getInputThreeType() == null || l.getInputThreeType().equals(inputThreeType))
                 .filter(l -> l.isThrowable() == isThrowable)
-                .findFirst()
-                .orElseGet(null);
+                .findFirst().orElse(null);
     }
 
     /**
