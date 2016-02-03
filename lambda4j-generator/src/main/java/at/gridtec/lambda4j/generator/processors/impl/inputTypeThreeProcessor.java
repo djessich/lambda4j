@@ -31,7 +31,7 @@ import java.util.List;
  * Requirements by this step are the lambdas type ({@link Lambda#getType()}), arity ({@link Lambda#getArity()}) and
  * second input type {@link Lambda#getInputTwoType()}.
  */
-public final class inputTypeThreeProcessor extends Processor {
+public final class InputTypeThreeProcessor extends Processor {
 
     @Override
     protected boolean processable(@Nonnull final Lambda lambda) {
