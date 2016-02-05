@@ -18,6 +18,8 @@ package at.gridtec.lambda4j.generator;
 /**
  * Created by Dominik Jessich on 29.11.2015.
  */
+// TODO Javadoc
+// TODO Move to correct pacakge
 public enum LambdaTypeEnum {
 
     COMPARATOR(1, "comparator", "compare"),

@@ -34,6 +34,8 @@ import java.util.stream.Collectors;
 /**
  * Lambda descriptor utils class.
  */
+// TODO missing javadocs
+// TODO Search operations including returns
 @SuppressWarnings("unused")
 public final class LambdaUtils {
 
@@ -80,8 +82,7 @@ public final class LambdaUtils {
                 .stream()
                 .filter(l -> l.getType().equals(type))
                 .filter(l -> l.getArity() == arity)
-                .filter(l -> l.isThrowable() == isThrowable)
-                .findFirst().orElse(null);
+                .filter(l -> l.isThrowable() == isThrowable).findFirst().orElse(null);
     }
 
     /**
@@ -112,8 +113,7 @@ public final class LambdaUtils {
                 .filter(l -> l.getType().equals(type))
                 .filter(l -> l.getArity() == arity)
                 .filter(l -> l.isPrimitive() == isPrimitve)
-                .filter(l -> l.isThrowable() == isThrowable)
-                .findFirst().orElse(null);
+                .filter(l -> l.isThrowable() == isThrowable).findFirst().orElse(null);
     }
 
     /**
@@ -145,8 +145,7 @@ public final class LambdaUtils {
                 .filter(l -> l.getType().equals(type))
                 .filter(l -> l.getArity() == arity)
                 .filter(l -> l.getReturnType().equals(returnType))
-                .filter(l -> l.isThrowable() == isThrowable)
-                .findFirst().orElse(null);
+                .filter(l -> l.isThrowable() == isThrowable).findFirst().orElse(null);
     }
 
     /**
@@ -178,8 +177,31 @@ public final class LambdaUtils {
                 .filter(l -> l.getType().equals(type))
                 .filter(l -> l.getArity() == arity)
                 .filter(l -> l.getInputOneType() == null || l.getInputOneType().equals(inputOneType))
+                .filter(l -> l.isThrowable() == isThrowable).findFirst().orElse(null);
+    }
+
+    // TODO Javadoc
+    public static Lambda searchByInputOneTypeAndReturnType(@Nonnull final LambdaTypeEnum type, @Nonnegative int arity,
+            @Nonnull final String inputOneType, @Nonnull final String returnType, boolean isThrowable) {
+        // Check arguments
+        Objects.requireNonNull(type);
+        Objects.requireNonNull(inputOneType);
+        Objects.requireNonNull(returnType);
+        if (arity < 0) {
+            throw new IllegalArgumentException("arity must be greater than 0");
+        }
+
+        // Find lambda and return it if such or null
+        return LambdaCache.getInstance()
+                .getLambdas()
+                .stream()
+                .filter(l -> l.getType().equals(type))
+                .filter(l -> l.getArity() == arity)
+                .filter(l -> l.getInputOneType() == null || l.getInputOneType().equals(inputOneType))
+                .filter(l -> l.getReturnType() == null || l.getReturnType().equals(returnType))
                 .filter(l -> l.isThrowable() == isThrowable)
-                .findFirst().orElse(null);
+                .findFirst()
+                .orElse(null);
     }
 
     /**
@@ -211,8 +233,7 @@ public final class LambdaUtils {
                 .filter(l -> l.getType().equals(type))
                 .filter(l -> l.getArity() == arity)
                 .filter(l -> l.getInputTwoType() == null || l.getInputTwoType().equals(inputTwoType))
-                .filter(l -> l.isThrowable() == isThrowable)
-                .findFirst().orElse(null);
+                .filter(l -> l.isThrowable() == isThrowable).findFirst().orElse(null);
     }
 
     /**
@@ -244,8 +265,7 @@ public final class LambdaUtils {
                 .filter(l -> l.getType().equals(type))
                 .filter(l -> l.getArity() == arity)
                 .filter(l -> l.getInputThreeType() == null || l.getInputThreeType().equals(inputThreeType))
-                .filter(l -> l.isThrowable() == isThrowable)
-                .findFirst().orElse(null);
+                .filter(l -> l.isThrowable() == isThrowable).findFirst().orElse(null);
     }
 
     /**
@@ -284,8 +304,36 @@ public final class LambdaUtils {
                 .filter(l -> l.getInputOneType() == null || l.getInputOneType().equals(inputOneType))
                 .filter(l -> l.getInputTwoType() == null || l.getInputTwoType().equals(inputTwoType))
                 .filter(l -> l.getInputThreeType() == null || l.getInputThreeType().equals(inputThreeType))
+                .filter(l -> l.isThrowable() == isThrowable).findFirst().orElse(null);
+    }
+
+    // TODO Javadoc
+    public static Lambda searchByInputTypesAndReturnType(@Nonnull final LambdaTypeEnum type, @Nonnegative int arity,
+            @Nonnull final String inputOneType, @Nonnull final String inputTwoType,
+            @Nonnull final String inputThreeType, @Nonnull String returnType, boolean isThrowable) {
+        // Check arguments
+        Objects.requireNonNull(type);
+        Objects.requireNonNull(inputOneType);
+        Objects.requireNonNull(inputTwoType);
+        Objects.requireNonNull(inputThreeType);
+        Objects.requireNonNull(returnType);
+        if (arity < 0) {
+            throw new IllegalArgumentException("arity must be greater than 0");
+        }
+
+        // Find lambda and return it if such or null
+        return LambdaCache.getInstance()
+                .getLambdas()
+                .stream()
+                .filter(l -> l.getType().equals(type))
+                .filter(l -> l.getArity() == arity)
+                .filter(l -> l.getInputOneType() == null || l.getInputOneType().equals(inputOneType))
+                .filter(l -> l.getInputTwoType() == null || l.getInputTwoType().equals(inputTwoType))
+                .filter(l -> l.getInputThreeType() == null || l.getInputThreeType().equals(inputThreeType))
+                .filter(l -> l.getReturnType() == null || l.getReturnType().equals(returnType))
                 .filter(l -> l.isThrowable() == isThrowable)
-                .findFirst().orElse(null);
+                .findFirst()
+                .orElse(null);
     }
 
     /**

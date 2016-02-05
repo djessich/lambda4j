@@ -20,6 +20,7 @@ import java.io.Serializable;
 /**
  * The annotation entity defining all annotations to be used in Velocity templates.
  */
+// TODO Javadoc
 public class AnnotationEntity implements Serializable {
 
     /**

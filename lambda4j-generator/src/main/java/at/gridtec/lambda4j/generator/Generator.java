@@ -22,13 +22,13 @@ import at.gridtec.lambda4j.generator.processors.ProcessorChain;
 import at.gridtec.lambda4j.generator.processors.impl.ArityProcessor;
 import at.gridtec.lambda4j.generator.processors.impl.ChangeOperatorProcessor;
 import at.gridtec.lambda4j.generator.processors.impl.InputTypeOneProcessor;
+import at.gridtec.lambda4j.generator.processors.impl.InputTypeThreeProcessor;
 import at.gridtec.lambda4j.generator.processors.impl.InputTypeTwoProcessor;
 import at.gridtec.lambda4j.generator.processors.impl.NameProcessor;
 import at.gridtec.lambda4j.generator.processors.impl.PrimitiveProcessor;
 import at.gridtec.lambda4j.generator.processors.impl.ReturnTypeProcessor;
 import at.gridtec.lambda4j.generator.processors.impl.ThrowableProcessor;
 import at.gridtec.lambda4j.generator.processors.impl.TypeProcessor;
-import at.gridtec.lambda4j.generator.processors.impl.inputTypeThreeProcessor;
 import at.gridtec.lambda4j.generator.util.LambdaUtils;
 
 import org.apache.velocity.Template;
@@ -47,6 +47,7 @@ import java.util.List;
 /**
  * Generator main file.
  */
+// TODO As this is for velocity which will be removed from generator project, remove this class
 public final class Generator {
 
     public static void main(String[] args) {
@@ -115,7 +116,7 @@ public final class Generator {
         Processor returnTypeProcessor = new ReturnTypeProcessor();
         Processor inputTypeOneProcessor = new InputTypeOneProcessor();
         Processor inputTypeTwoProcessor = new InputTypeTwoProcessor();
-        Processor inputTypeThreeProcessor = new inputTypeThreeProcessor();
+        Processor inputTypeThreeProcessor = new InputTypeThreeProcessor();
         Processor changeOperatorProcessor = new ChangeOperatorProcessor();
         Processor primitveProcessor = new PrimitiveProcessor();
         Processor throwableProcessor = new ThrowableProcessor();

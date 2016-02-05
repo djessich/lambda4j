@@ -30,6 +30,7 @@ import java.util.stream.Collectors;
  * Processor} this class must be extended and {@link #process(Lambda)} must be implemented as it will always be called
  * from previous {@code Processor}. The next {@code Processor} can be set using {@link #setNextProcessor(Processor)}.
  */
+// TODO avoid use od PRIMITIVES List; get all primitive classes from a lib
 public abstract class Processor {
 
     protected static final List<String> PRIMITIVES = Arrays.asList(boolean.class, byte.class, char.class, double.class,

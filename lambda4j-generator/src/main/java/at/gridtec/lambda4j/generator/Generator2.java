@@ -22,13 +22,13 @@ import at.gridtec.lambda4j.generator.processors.ProcessorChain;
 import at.gridtec.lambda4j.generator.processors.impl.ArityProcessor;
 import at.gridtec.lambda4j.generator.processors.impl.ChangeOperatorProcessor;
 import at.gridtec.lambda4j.generator.processors.impl.InputTypeOneProcessor;
+import at.gridtec.lambda4j.generator.processors.impl.InputTypeThreeProcessor;
 import at.gridtec.lambda4j.generator.processors.impl.InputTypeTwoProcessor;
 import at.gridtec.lambda4j.generator.processors.impl.NameProcessor;
 import at.gridtec.lambda4j.generator.processors.impl.PrimitiveProcessor;
 import at.gridtec.lambda4j.generator.processors.impl.ReturnTypeProcessor;
 import at.gridtec.lambda4j.generator.processors.impl.ThrowableProcessor;
 import at.gridtec.lambda4j.generator.processors.impl.TypeProcessor;
-import at.gridtec.lambda4j.generator.processors.impl.inputTypeThreeProcessor;
 import at.gridtec.lambda4j.generator.util.LambdaUtils;
 import freemarker.ext.beans.BeansWrapper;
 import freemarker.ext.beans.BeansWrapperBuilder;
@@ -50,6 +50,7 @@ import java.util.Map;
 /**
  * Generator main file.
  */
+// TODO Rename to generater after velocity is out of project
 public class Generator2 {
 
     public static void main(String[] args) throws Exception {
@@ -75,7 +76,7 @@ public class Generator2 {
         System.out.println(lambdas.size());
         System.out.println(LambdaCache.getInstance().getLambdas().size());
 
-        final Lambda lambda = lambdas.stream().filter(p -> p.getName().equals("TriFunction")).findFirst().get();
+        final Lambda lambda = lambdas.stream().filter(p -> p.getName().equals("ByteFunction")).findFirst().get();
         System.out.println(lambda);
 
         // Create your Configuration instance, and specify if up to what FreeMarker
@@ -95,6 +96,7 @@ public class Generator2 {
         // During web page *development* TemplateExceptionHandler.HTML_DEBUG_HANDLER is better.
         cfg.setTemplateExceptionHandler(TemplateExceptionHandler.RETHROW_HANDLER);
 
+        // TODO only for lambda utils; really necessary?
         BeansWrapper wrapper = new BeansWrapperBuilder(Configuration.getVersion()).build();
         TemplateHashModel staticModels = wrapper.getStaticModels();
         TemplateHashModel lambdaUtilsStatics = (TemplateHashModel) staticModels.get(LambdaUtils.class.getName());
@@ -126,7 +128,7 @@ public class Generator2 {
         Processor returnTypeProcessor = new ReturnTypeProcessor();
         Processor inputTypeOneProcessor = new InputTypeOneProcessor();
         Processor inputTypeTwoProcessor = new InputTypeTwoProcessor();
-        Processor inputTypeThreeProcessor = new inputTypeThreeProcessor();
+        Processor inputTypeThreeProcessor = new InputTypeThreeProcessor();
         Processor changeOperatorProcessor = new ChangeOperatorProcessor();
         Processor primitveProcessor = new PrimitiveProcessor();
         Processor throwableProcessor = new ThrowableProcessor();

@@ -17,6 +17,7 @@ package at.gridtec.lambda4j.generator;
 
 import java.io.Serializable;
 
+// TODO Javadoc
 public class Lambda implements Serializable {
 
     private String name;
@@ -24,6 +25,8 @@ public class Lambda implements Serializable {
     private int arity;
     private boolean primitive;
     private boolean throwable;
+
+    // TODO Use classes instead of strings for search operations in templates; this includes a type system whichconverts and names the used types correctly (f.e. Object -> T, byte -> Byte)
     private String inputOneType;
     private String inputTwoType;
     private String inputThreeType;

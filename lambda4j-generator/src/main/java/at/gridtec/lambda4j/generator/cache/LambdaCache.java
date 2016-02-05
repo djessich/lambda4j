@@ -23,6 +23,8 @@ import java.util.List;
 /**
  * A cache for all generated {@link Lambda}s.
  */
+// TODO Javadoc for this class
+// TODO move to another package
 public final class LambdaCache {
 
     private static LambdaCache instance = null;

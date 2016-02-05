@@ -52,6 +52,7 @@ public final class ChangeOperatorProcessor extends Processor {
 
     @Override
     @Nonnull
+    // TODO easier conversion with class lambda types
     protected List<Lambda> process(@Nonnull final Lambda lambda) {
         final List<Lambda> lambdas = new LinkedList<>();
 
