@@ -16,8 +16,11 @@
 package at.gridtec.lambda4j.generator.processors.impl;
 
 import at.gridtec.lambda4j.generator.Lambda;
+import at.gridtec.lambda4j.generator.entities.TypeEntity;
 import at.gridtec.lambda4j.generator.processors.Processor;
 import at.gridtec.lambda4j.generator.util.LambdaUtils;
+
+import org.apache.commons.lang.StringUtils;
 
 import javax.annotation.Nonnull;
 import java.util.LinkedList;
@@ -48,7 +51,8 @@ public final class InputTypeOneProcessor extends Processor {
             // Special Rule: Comparator is only generic
             if (LambdaUtils.isOfTypeComparator(lambda)) {
                 final Lambda copy = LambdaUtils.copy(lambda);
-                copy.setInputOneType("T");
+                TypeEntity type = new TypeEntity(Object.class, "T");
+                copy.setFirstInputType(type);
                 lambdas.addAll(next(copy));
             }
 
@@ -59,13 +63,15 @@ public final class InputTypeOneProcessor extends Processor {
 
                 // Apply generical input for arg 1
                 final Lambda generical = LambdaUtils.copy(lambda);
-                generical.setInputOneType("T");
+                TypeEntity type = new TypeEntity(Object.class, "T");
+                generical.setFirstInputType(type);
                 genLambdas.add(generical);
 
                 // Apply primitive input for arg 1
-                for (String type : PRIMITIVES) {
+                for (final Class<?> typeClass : PRIMITIVES) {
                     final Lambda primitive = LambdaUtils.copy(lambda);
-                    primitive.setInputOneType(type);
+                    type = new TypeEntity(typeClass, StringUtils.capitalize(typeClass.getSimpleName()));
+                    primitive.setFirstInputType(type);
                     genLambdas.add(primitive);
                 }
 

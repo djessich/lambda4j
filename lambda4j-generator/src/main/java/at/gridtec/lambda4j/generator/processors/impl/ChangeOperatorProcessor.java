@@ -30,8 +30,8 @@ import java.util.List;
  * Processor} to do further processing. The result from next step is returned by this step.
  * <p>
  * Requirements by this step are the lambdas arity ({@link Lambda#getArity()}), return type ({@link
- * Lambda#getReturnType()}) and input types ({@link Lambda#getInputOneType()}, {@link Lambda#getInputTwoType()}, {@link
- * Lambda#getInputThreeType()}).
+ * Lambda#getReturnType()}) and input types ({@link Lambda#getFirstInputType()}, {@link Lambda#getSecondInputType()},
+ * {@link Lambda#getThirdInputType()}).
  */
 public final class ChangeOperatorProcessor extends Processor {
 
@@ -39,13 +39,13 @@ public final class ChangeOperatorProcessor extends Processor {
     protected boolean processable(@Nonnull final Lambda lambda) {
         boolean processable = lambda.getReturnType() != null;
         if (lambda.getArity() >= 1) {
-            processable = processable && lambda.getInputOneType() != null;
+            processable = processable && lambda.getFirstInputType() != null;
         }
         if (lambda.getArity() >= 2) {
-            processable = processable && lambda.getInputTwoType() != null;
+            processable = processable && lambda.getSecondInputType() != null;
         }
         if (lambda.getArity() >= 3) {
-            processable = processable && lambda.getInputThreeType() != null;
+            processable = processable && lambda.getThirdInputType() != null;
         }
         return processable;
     }
@@ -60,42 +60,44 @@ public final class ChangeOperatorProcessor extends Processor {
         boolean isValidPrimitive = false;
         boolean isValidGenerical = false;
 
+        boolean isOperator = false;
+
         // Lambdas arity is at least 1
         if (lambda.getArity() >= 1) {
-            isValidPrimitive = lambda.getReturnType().equals(lambda.getInputOneType());
-            isValidGenerical = lambda.getReturnType().equals("R") && lambda.getInputOneType().equals("T");
+            isOperator = lambda.getReturnType().equals(lambda.getFirstInputType());
         }
 
         // Lambdas arity is at least 2
         if (lambda.getArity() >= 2) {
-            isValidPrimitive = isValidPrimitive && lambda.getReturnType().equals(lambda.getInputTwoType());
-            isValidGenerical = isValidGenerical && lambda.getInputTwoType().equals("U");
+            isOperator = isOperator && lambda.getReturnType().equals(lambda.getSecondInputType());
         }
 
         // Lambdas arity is at least 3
         if (lambda.getArity() >= 3) {
-            isValidPrimitive = isValidPrimitive && lambda.getReturnType().equals(lambda.getInputThreeType());
-            isValidGenerical = isValidGenerical && lambda.getInputThreeType().equals("V");
+            isOperator = isOperator && lambda.getReturnType().equals(lambda.getThirdInputType());
         }
 
-        // Before adding to list change lambda if operator; otherwise add as-is
-        if (isValidPrimitive) {
-            lambda.setType(LambdaTypeEnum.OPERATOR);
-        } else if (isValidGenerical) {
+        // If lambda fulfills operator requirements
+        if (isOperator) {
             final Lambda copy = LambdaUtils.copy(lambda);
             copy.setType(LambdaTypeEnum.OPERATOR);
-            copy.setReturnType("T");
-            if (copy.getArity() >= 1) {
-                copy.setInputOneType("T");
+
+            // If lambda is a generical operator, we need to change its input and return type names
+            if (!lambda.getReturnType().isPrimitive()) {
+                copy.getReturnType().setTypeName("T");
+                if (copy.getArity() >= 1) {
+                    copy.getFirstInputType().setTypeName("T");
+                }
+                if (copy.getArity() >= 2) {
+                    copy.getSecondInputType().setTypeName("T");
+                }
+                if (copy.getArity() >= 3) {
+                    copy.getThirdInputType().setTypeName("T");
+                }
             }
-            if (copy.getArity() >= 2) {
-                copy.setInputTwoType("T");
-            }
-            if (copy.getArity() >= 3) {
-                copy.setInputThreeType("T");
-            }
-            lambdas.addAll(next(lambda));
+            lambdas.addAll(next(copy));
         }
+
         lambdas.addAll(next(lambda));
         return lambdas;
     }

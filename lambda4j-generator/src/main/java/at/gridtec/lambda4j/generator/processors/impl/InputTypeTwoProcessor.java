@@ -16,8 +16,11 @@
 package at.gridtec.lambda4j.generator.processors.impl;
 
 import at.gridtec.lambda4j.generator.Lambda;
+import at.gridtec.lambda4j.generator.entities.TypeEntity;
 import at.gridtec.lambda4j.generator.processors.Processor;
 import at.gridtec.lambda4j.generator.util.LambdaUtils;
+
+import org.apache.commons.lang3.StringUtils;
 
 import javax.annotation.Nonnull;
 import java.util.LinkedList;
@@ -29,7 +32,7 @@ import java.util.List;
  * processing. The result from next step is returned by this step.
  * <p>
  * Requirements by this step are the lambdas type ({@link Lambda#getType()}), arity ({@link Lambda#getArity()}) and
- * first input type ({@link Lambda#getInputOneType()}.
+ * first input type ({@link Lambda#getFirstInputType()}.
  */
 public final class InputTypeTwoProcessor extends Processor {
 
@@ -37,7 +40,7 @@ public final class InputTypeTwoProcessor extends Processor {
     protected boolean processable(@Nonnull final Lambda lambda) {
         boolean processable = lambda.getType() != null;
         if (lambda.getArity() >= 1) {
-            processable = processable && lambda.getInputOneType() != null;
+            processable = processable && lambda.getFirstInputType() != null;
         }
         return processable;
     }
@@ -53,7 +56,8 @@ public final class InputTypeTwoProcessor extends Processor {
             // Special Rule: Comparator is only generic
             if (LambdaUtils.isOfTypeComparator(lambda)) {
                 final Lambda copy = LambdaUtils.copy(lambda);
-                copy.setInputTwoType("U");
+                TypeEntity type = new TypeEntity(Object.class, "U");
+                copy.setSecondInputType(type);
                 lambdas.addAll(next(copy));
             }
 
@@ -64,17 +68,19 @@ public final class InputTypeTwoProcessor extends Processor {
                 final List<Lambda> genLambdas = new LinkedList<>();
 
                 // Lambda has generical arg 1 so apply further generical and primitive input for arg 2
-                if (!PRIMITIVES.contains(lambda.getInputOneType())) {
+                if (!PRIMITIVES.contains(lambda.getFirstInputType().getTypeClass())) {
 
                     // Apply generical input for arg 2
                     final Lambda generical = LambdaUtils.copy(lambda);
-                    generical.setInputTwoType("U");
+                    TypeEntity type = new TypeEntity(Object.class, "U");
+                    generical.setSecondInputType(type);
                     genLambdas.add(generical);
 
                     // Apply primitive input for arg 2
-                    for (String type : PRIMITIVES) {
+                    for (final Class<?> typeClass : PRIMITIVES) {
                         final Lambda primitive = LambdaUtils.copy(lambda);
-                        primitive.setInputTwoType(type);
+                        type = new TypeEntity(typeClass, StringUtils.capitalize(typeClass.getSimpleName()));
+                        primitive.setSecondInputType(type);
                         genLambdas.add(primitive);
                     }
                 }
@@ -82,7 +88,7 @@ public final class InputTypeTwoProcessor extends Processor {
                 // Lambda has primitive arg 1 so apply same primitive type to arg 2
                 else {
                     final Lambda primitive = LambdaUtils.copy(lambda);
-                    primitive.setInputTwoType(primitive.getInputOneType());
+                    primitive.setSecondInputType(primitive.getFirstInputType());
                     genLambdas.add(primitive);
                 }
 

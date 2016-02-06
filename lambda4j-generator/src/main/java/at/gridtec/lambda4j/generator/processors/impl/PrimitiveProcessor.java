@@ -39,13 +39,13 @@ public final class PrimitiveProcessor extends Processor {
     @Nonnull
     protected List<Lambda> process(@Nonnull final Lambda lambda) {
         // If return type or one of the input types is primitive, set primitive flag; otherwise return lambda as-is
-        if (PRIMITIVES.contains(lambda.getReturnType())) {
+        if (PRIMITIVES.contains(lambda.getReturnType().getTypeClass())) {
             lambda.setPrimitive(true);
-        } else if (PRIMITIVES.contains(lambda.getInputOneType())) {
+        } else if (PRIMITIVES.contains(lambda.getFirstInputType().getTypeClass())) {
             lambda.setPrimitive(true);
-        } else if (PRIMITIVES.contains(lambda.getInputTwoType())) {
+        } else if (PRIMITIVES.contains(lambda.getSecondInputType().getTypeClass())) {
             lambda.setPrimitive(true);
-        } else if (PRIMITIVES.contains(lambda.getInputThreeType())) {
+        } else if (PRIMITIVES.contains(lambda.getThirdInputType().getTypeClass())) {
             lambda.setPrimitive(true);
         }
         return next(lambda);

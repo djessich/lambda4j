@@ -33,10 +33,10 @@ import java.util.stream.Collectors;
 // TODO avoid use od PRIMITIVES List; get all primitive classes from a lib
 public abstract class Processor {
 
-    protected static final List<String> PRIMITIVES = Arrays.asList(boolean.class, byte.class, char.class, double.class,
-                                                                   float.class, int.class, long.class, short.class)
-            .stream()
-            .map(Class::getSimpleName)
+    protected static final List<Class<?>> PRIMITIVES = Arrays.asList(boolean.class, byte.class, char.class,
+                                                                     double.class, float.class, int.class, long.class,
+                                                                     short.class).stream()
+            //            .map(Class::getSimpleName)
             .collect(Collectors.toList());
 
     /**

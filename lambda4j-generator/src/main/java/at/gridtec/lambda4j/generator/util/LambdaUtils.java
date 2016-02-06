@@ -18,13 +18,14 @@ package at.gridtec.lambda4j.generator.util;
 import at.gridtec.lambda4j.generator.Lambda;
 import at.gridtec.lambda4j.generator.LambdaTypeEnum;
 import at.gridtec.lambda4j.generator.cache.LambdaCache;
+import at.gridtec.lambda4j.generator.entities.TypeEntity;
 
+import org.apache.commons.lang3.ClassUtils;
 import org.apache.commons.lang3.SerializationUtils;
 
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.ListIterator;
@@ -82,7 +83,9 @@ public final class LambdaUtils {
                 .stream()
                 .filter(l -> l.getType().equals(type))
                 .filter(l -> l.getArity() == arity)
-                .filter(l -> l.isThrowable() == isThrowable).findFirst().orElse(null);
+                .filter(l -> l.isThrowable() == isThrowable)
+                .findFirst()
+                .orElse(null);
     }
 
     /**
@@ -113,7 +116,9 @@ public final class LambdaUtils {
                 .filter(l -> l.getType().equals(type))
                 .filter(l -> l.getArity() == arity)
                 .filter(l -> l.isPrimitive() == isPrimitve)
-                .filter(l -> l.isThrowable() == isThrowable).findFirst().orElse(null);
+                .filter(l -> l.isThrowable() == isThrowable)
+                .findFirst()
+                .orElse(null);
     }
 
     /**
@@ -130,7 +135,7 @@ public final class LambdaUtils {
      * @throws IllegalArgumentException If given lambda arity is < 0
      */
     public static Lambda searchByReturnType(@Nonnull final LambdaTypeEnum type, @Nonnegative int arity,
-            @Nonnull final String returnType, boolean isThrowable) {
+            @Nonnull final TypeEntity returnType, boolean isThrowable) {
         // Check arguments
         Objects.requireNonNull(type);
         Objects.requireNonNull(returnType);
@@ -145,27 +150,29 @@ public final class LambdaUtils {
                 .filter(l -> l.getType().equals(type))
                 .filter(l -> l.getArity() == arity)
                 .filter(l -> l.getReturnType().equals(returnType))
-                .filter(l -> l.isThrowable() == isThrowable).findFirst().orElse(null);
+                .filter(l -> l.isThrowable() == isThrowable)
+                .findFirst()
+                .orElse(null);
     }
 
     /**
-     * Searches for a {@link Lambda} using given lambda type, lambda arity, lambda input one type and throwable flag. If
-     * the lambda exists, it will be returned as is, otherwise {@code null} is returned.
+     * Searches for a {@link Lambda} using given lambda type, lambda arity, lambda first input type and throwable flag.
+     * If the lambda exists, it will be returned as is, otherwise {@code null} is returned.
      *
      * @param type The lambdas type
      * @param arity The lambdas arity
-     * @param inputOneType The lambdas input one type
+     * @param firstInputType The lambdas first input type
      * @param isThrowable The flag indicating if lambda is throwable
-     * @return The lambda from given lambda type, lambda arity, lambda input one type and throwable flag, or {@code
+     * @return The lambda from given lambda type, lambda arity, lambda first input type and throwable flag, or {@code
      * null} if no such lambda exists.
      * @throws NullPointerException If given lambda type or lambda input type is {@code null}
      * @throws IllegalArgumentException If given lambda arity is < 0
      */
     public static Lambda searchByInputOneType(@Nonnull final LambdaTypeEnum type, @Nonnegative int arity,
-            @Nonnull final String inputOneType, boolean isThrowable) {
+            @Nonnull final TypeEntity firstInputType, boolean isThrowable) {
         // Check arguments
         Objects.requireNonNull(type);
-        Objects.requireNonNull(inputOneType);
+        Objects.requireNonNull(firstInputType);
         if (arity < 0) {
             throw new IllegalArgumentException("arity must be greater than 0");
         }
@@ -176,13 +183,15 @@ public final class LambdaUtils {
                 .stream()
                 .filter(l -> l.getType().equals(type))
                 .filter(l -> l.getArity() == arity)
-                .filter(l -> l.getInputOneType() == null || l.getInputOneType().equals(inputOneType))
-                .filter(l -> l.isThrowable() == isThrowable).findFirst().orElse(null);
+                .filter(l -> l.getFirstInputType() == null || l.getFirstInputType().equals(firstInputType))
+                .filter(l -> l.isThrowable() == isThrowable)
+                .findFirst()
+                .orElse(null);
     }
 
     // TODO Javadoc
     public static Lambda searchByInputOneTypeAndReturnType(@Nonnull final LambdaTypeEnum type, @Nonnegative int arity,
-            @Nonnull final String inputOneType, @Nonnull final String returnType, boolean isThrowable) {
+            @Nonnull final TypeEntity inputOneType, @Nonnull final TypeEntity returnType, boolean isThrowable) {
         // Check arguments
         Objects.requireNonNull(type);
         Objects.requireNonNull(inputOneType);
@@ -197,7 +206,7 @@ public final class LambdaUtils {
                 .stream()
                 .filter(l -> l.getType().equals(type))
                 .filter(l -> l.getArity() == arity)
-                .filter(l -> l.getInputOneType() == null || l.getInputOneType().equals(inputOneType))
+                .filter(l -> l.getFirstInputType() == null || l.getFirstInputType().equals(inputOneType))
                 .filter(l -> l.getReturnType() == null || l.getReturnType().equals(returnType))
                 .filter(l -> l.isThrowable() == isThrowable)
                 .findFirst()
@@ -205,23 +214,23 @@ public final class LambdaUtils {
     }
 
     /**
-     * Searches for a {@link Lambda} using given lambda type, lambda arity, lambda input two type and throwable flag. If
-     * the lambda exists, it will be returned as is, otherwise {@code null} is returned.
+     * Searches for a {@link Lambda} using given lambda type, lambda arity, lambda second input type and throwable flag.
+     * If the lambda exists, it will be returned as is, otherwise {@code null} is returned.
      *
      * @param type The lambdas type
      * @param arity The lambdas arity
-     * @param inputTwoType The lambdas input two type
+     * @param secondInputType The lambdas second input type
      * @param isThrowable The flag indicating if lambda is throwable
-     * @return The lambda from given lambda type, lambda arity, lambda input two type and throwable flag, or {@code
+     * @return The lambda from given lambda type, lambda arity, lambda second input type and throwable flag, or {@code
      * null} if no such lambda exists.
      * @throws NullPointerException If given lambda type or lambda input type is {@code null}
      * @throws IllegalArgumentException If given lambda arity is < 0
      */
     public static Lambda searchByInputTwoType(@Nonnull final LambdaTypeEnum type, @Nonnegative int arity,
-            @Nonnull final String inputTwoType, boolean isThrowable) {
+            @Nonnull final TypeEntity secondInputType, boolean isThrowable) {
         // Check arguments
         Objects.requireNonNull(type);
-        Objects.requireNonNull(inputTwoType);
+        Objects.requireNonNull(secondInputType);
         if (arity < 0) {
             throw new IllegalArgumentException("arity must be greater than 0");
         }
@@ -232,28 +241,30 @@ public final class LambdaUtils {
                 .stream()
                 .filter(l -> l.getType().equals(type))
                 .filter(l -> l.getArity() == arity)
-                .filter(l -> l.getInputTwoType() == null || l.getInputTwoType().equals(inputTwoType))
-                .filter(l -> l.isThrowable() == isThrowable).findFirst().orElse(null);
+                .filter(l -> l.getSecondInputType() == null || l.getSecondInputType().equals(secondInputType))
+                .filter(l -> l.isThrowable() == isThrowable)
+                .findFirst()
+                .orElse(null);
     }
 
     /**
-     * Searches for a {@link Lambda} using given lambda type, lambda arity, lambda input three type and throwable flag.
+     * Searches for a {@link Lambda} using given lambda type, lambda arity, lambda third input type and throwable flag.
      * If the lambda exists, it will be returned as is, otherwise {@code null} is returned.
      *
      * @param type The lambdas type
      * @param arity The lambdas arity
-     * @param inputThreeType The lambdas input three type
+     * @param thirdInputType The lambdas third input type
      * @param isThrowable The flag indicating if lambda is throwable
-     * @return The lambda from given lambda type, lambda arity, lambda input three type and throwable flag, or {@code
+     * @return The lambda from given lambda type, lambda arity, lambda third  input type and throwable flag, or {@code
      * null} if no such lambda exists.
      * @throws NullPointerException If given lambda type or lambda input type is {@code null}
      * @throws IllegalArgumentException If given lambda arity is < 0
      */
     public static Lambda searchByInputThreeType(@Nonnull final LambdaTypeEnum type, @Nonnegative int arity,
-            @Nonnull final String inputThreeType, boolean isThrowable) {
+            @Nonnull final TypeEntity thirdInputType, boolean isThrowable) {
         // Check arguments
         Objects.requireNonNull(type);
-        Objects.requireNonNull(inputThreeType);
+        Objects.requireNonNull(thirdInputType);
         if (arity < 0) {
             throw new IllegalArgumentException("arity must be greater than 0");
         }
@@ -264,8 +275,10 @@ public final class LambdaUtils {
                 .stream()
                 .filter(l -> l.getType().equals(type))
                 .filter(l -> l.getArity() == arity)
-                .filter(l -> l.getInputThreeType() == null || l.getInputThreeType().equals(inputThreeType))
-                .filter(l -> l.isThrowable() == isThrowable).findFirst().orElse(null);
+                .filter(l -> l.getThirdInputType() == null || l.getThirdInputType().equals(thirdInputType))
+                .filter(l -> l.isThrowable() == isThrowable)
+                .findFirst()
+                .orElse(null);
     }
 
     /**
@@ -274,9 +287,9 @@ public final class LambdaUtils {
      *
      * @param type The lambdas type
      * @param arity The lambdas arity
-     * @param inputOneType The lambdas input one type
-     * @param inputTwoType The lambdas input two type
-     * @param inputThreeType The lambdas input three type
+     * @param firstInputType The lambdas first input type
+     * @param secondInputType The lambdas second input type
+     * @param thirdInputType The lambdas third input type
      * @param isThrowable The flag indicating if lambda is throwable
      * @return The lambda from given lambda type, input types and throwable flag, or {@code null} if no such lambda
      * exists.
@@ -284,13 +297,13 @@ public final class LambdaUtils {
      * @throws IllegalArgumentException If given lambda arity is < 0
      */
     public static Lambda searchByInputTypes(@Nonnull final LambdaTypeEnum type, @Nonnegative int arity,
-            @Nonnull final String inputOneType, @Nonnull final String inputTwoType,
-            @Nonnull final String inputThreeType, boolean isThrowable) {
+            @Nonnull final TypeEntity firstInputType, @Nonnull final TypeEntity secondInputType,
+            @Nonnull final TypeEntity thirdInputType, boolean isThrowable) {
         // Check arguments
         Objects.requireNonNull(type);
-        Objects.requireNonNull(inputOneType);
-        Objects.requireNonNull(inputTwoType);
-        Objects.requireNonNull(inputThreeType);
+        Objects.requireNonNull(firstInputType);
+        Objects.requireNonNull(secondInputType);
+        Objects.requireNonNull(thirdInputType);
         if (arity < 0) {
             throw new IllegalArgumentException("arity must be greater than 0");
         }
@@ -301,22 +314,20 @@ public final class LambdaUtils {
                 .stream()
                 .filter(l -> l.getType().equals(type))
                 .filter(l -> l.getArity() == arity)
-                .filter(l -> l.getInputOneType() == null || l.getInputOneType().equals(inputOneType))
-                .filter(l -> l.getInputTwoType() == null || l.getInputTwoType().equals(inputTwoType))
-                .filter(l -> l.getInputThreeType() == null || l.getInputThreeType().equals(inputThreeType))
-                .filter(l -> l.isThrowable() == isThrowable).findFirst().orElse(null);
+                .filter(l -> l.getFirstInputType() == null || l.getFirstInputType().equals(firstInputType))
+                .filter(l -> l.getSecondInputType() == null || l.getSecondInputType().equals(secondInputType))
+                .filter(l -> l.getThirdInputType() == null || l.getThirdInputType().equals(thirdInputType))
+                .filter(l -> l.isThrowable() == isThrowable)
+                .findFirst()
+                .orElse(null);
     }
 
     // TODO Javadoc
     public static Lambda searchByInputTypesAndReturnType(@Nonnull final LambdaTypeEnum type, @Nonnegative int arity,
-            @Nonnull final String inputOneType, @Nonnull final String inputTwoType,
-            @Nonnull final String inputThreeType, @Nonnull String returnType, boolean isThrowable) {
+            @Nullable final TypeEntity firstInputType, @Nullable final TypeEntity secondInputType,
+            @Nullable final TypeEntity thirdInputType, @Nullable TypeEntity returnType, boolean isThrowable) {
         // Check arguments
         Objects.requireNonNull(type);
-        Objects.requireNonNull(inputOneType);
-        Objects.requireNonNull(inputTwoType);
-        Objects.requireNonNull(inputThreeType);
-        Objects.requireNonNull(returnType);
         if (arity < 0) {
             throw new IllegalArgumentException("arity must be greater than 0");
         }
@@ -327,9 +338,9 @@ public final class LambdaUtils {
                 .stream()
                 .filter(l -> l.getType().equals(type))
                 .filter(l -> l.getArity() == arity)
-                .filter(l -> l.getInputOneType() == null || l.getInputOneType().equals(inputOneType))
-                .filter(l -> l.getInputTwoType() == null || l.getInputTwoType().equals(inputTwoType))
-                .filter(l -> l.getInputThreeType() == null || l.getInputThreeType().equals(inputThreeType))
+                .filter(l -> l.getFirstInputType() == null || l.getFirstInputType().equals(firstInputType))
+                .filter(l -> l.getSecondInputType() == null || l.getSecondInputType().equals(secondInputType))
+                .filter(l -> l.getThirdInputType() == null || l.getThirdInputType().equals(thirdInputType))
                 .filter(l -> l.getReturnType() == null || l.getReturnType().equals(returnType))
                 .filter(l -> l.isThrowable() == isThrowable)
                 .findFirst()
@@ -509,14 +520,8 @@ public final class LambdaUtils {
      * @param type The type in string representation
      * @return {@code true} if, and only if, given string represents a primitive type, {@code false} otherwise.
      */
-    public static boolean isPrimitiveType(@Nullable final String type) {
-        return type != null && Arrays.asList(boolean.class, byte.class, char.class, double.class, float.class,
-                                             int.class, long.class, short.class, void.class)
-                .stream()
-                .map(Class::getSimpleName)
-                .filter(primitive -> primitive.equals(type))
-                .findFirst()
-                .isPresent();
+    public static boolean isPrimitiveType(@Nullable final TypeEntity type) {
+        return type != null && ClassUtils.isPrimitiveOrWrapper(type.getTypeClass());
     }
 
     /**
@@ -527,7 +532,7 @@ public final class LambdaUtils {
      * @return An argument {@code String} containing type and name.
      * @throws NullPointerException If given argument is {@code null}
      */
-    public static String buildParameterString(@Nonnull final String type) {
+    public static String buildParameterString(@Nonnull final TypeEntity type) {
         Objects.requireNonNull(type);
         final StringBuilder builder = new StringBuilder();
         boolean isPrimitve = isPrimitiveType(type);
@@ -553,7 +558,7 @@ public final class LambdaUtils {
      * @return An argument {@code String} containing type and name if not primitive.
      * @throws NullPointerException If given argument is {@code null}
      */
-    public static String buildParameterStringIfGeneric(@Nonnull final String type) {
+    public static String buildParameterStringIfGeneric(@Nonnull final TypeEntity type) {
         Objects.requireNonNull(type);
         final StringBuilder builder = new StringBuilder();
         if (!isPrimitiveType(type)) {
@@ -570,7 +575,7 @@ public final class LambdaUtils {
      * @return An argument {@code String} containing type and name if primitive.
      * @throws NullPointerException If given argument is {@code null}
      */
-    public static String buildParameterStringIfPrimitive(@Nonnull final String type) {
+    public static String buildParameterStringIfPrimitive(@Nonnull final TypeEntity type) {
         Objects.requireNonNull(type);
         final StringBuilder builder = new StringBuilder();
         if (isPrimitiveType(type)) {
@@ -587,9 +592,9 @@ public final class LambdaUtils {
      * @return An argument {@code String} containing only the given arguments type.
      * @throws NullPointerException If given argument is {@code null}
      */
-    public static String buildParameterTypeString(@Nonnull final String type) {
+    public static String buildParameterTypeString(@Nonnull final TypeEntity type) {
         Objects.requireNonNull(type);
-        return type;
+        return type.getTypeName();
     }
 
     /**
@@ -600,7 +605,7 @@ public final class LambdaUtils {
      * @return An argument {@code String} containing only the given arguments type if not primitive.
      * @throws NullPointerException If given argument is {@code null}
      */
-    public static String buildParameterTypeStringIfGeneric(@Nonnull final String type) {
+    public static String buildParameterTypeStringIfGeneric(@Nonnull final TypeEntity type) {
         Objects.requireNonNull(type);
         final StringBuilder builder = new StringBuilder("");
         if (!isPrimitiveType(type)) {
@@ -617,7 +622,7 @@ public final class LambdaUtils {
      * @return An argument {@code String} containing only the given arguments type if primitive.
      * @throws NullPointerException If given argument is {@code null}
      */
-    public static String buildParameterTypeStringIfPrimitive(@Nonnull final String type) {
+    public static String buildParameterTypeStringIfPrimitive(@Nonnull final TypeEntity type) {
         Objects.requireNonNull(type);
         final StringBuilder builder = new StringBuilder("");
         if (isPrimitiveType(type)) {
@@ -634,13 +639,13 @@ public final class LambdaUtils {
      * @return An argument {@code String} containing only the given arguments type.
      * @throws NullPointerException If given argument is {@code null}
      */
-    public static String buildParameterNameString(@Nonnull final String type) {
+    public static String buildParameterNameString(@Nonnull final TypeEntity type) {
         Objects.requireNonNull(type);
         final StringBuilder builder = new StringBuilder("");
         if (isPrimitiveType(type)) {
             builder.append("value");
         } else {
-            builder.append(type.toLowerCase());
+            builder.append(type.getTypeName().toLowerCase());
         }
         return builder.toString();
     }
@@ -653,7 +658,7 @@ public final class LambdaUtils {
      * @return An argument {@code String} containing only the given arguments type if not primitive.
      * @throws NullPointerException If given argument is {@code null}
      */
-    public static String buildParameterNameStringIfGeneric(@Nonnull final String type) {
+    public static String buildParameterNameStringIfGeneric(@Nonnull final TypeEntity type) {
         final StringBuilder builder = new StringBuilder("");
         if (!isPrimitiveType(type)) {
             builder.append(buildParameterNameString(type));
@@ -669,7 +674,7 @@ public final class LambdaUtils {
      * @return An argument {@code String} containing only the given arguments type if primitive.
      * @throws NullPointerException If given argument is {@code null}
      */
-    public static String buildParameterNameStringIfPrimitive(@Nonnull final String type) {
+    public static String buildParameterNameStringIfPrimitive(@Nonnull final TypeEntity type) {
         final StringBuilder builder = new StringBuilder("");
         if (isPrimitiveType(type)) {
             builder.append(buildParameterNameString(type));
@@ -687,21 +692,20 @@ public final class LambdaUtils {
 
     private static String buildGenericString(@Nonnull final Lambda lambda, boolean erasureOn) {
         final StringBuilder builder = new StringBuilder("");
-        List<String> typeList = new LinkedList<>();
-        typeList.add(lambda.getInputOneType());
-        typeList.add(lambda.getInputTwoType());
-        typeList.add(lambda.getInputThreeType());
+        List<TypeEntity> typeList = new LinkedList<>();
+        typeList.add(lambda.getFirstInputType());
+        typeList.add(lambda.getSecondInputType());
+        typeList.add(lambda.getThirdInputType());
         typeList.add(lambda.getReturnType());
 
         // Filter all lambda types for null and primitiveness
         typeList = typeList.stream()
                 .filter(Objects::nonNull)
-                .filter(type -> !type.isEmpty())
                 .filter(type -> !isPrimitiveType(type))
                 .collect(Collectors.toList());
 
         // Loop over all left types
-        for (ListIterator<String> it = typeList.listIterator(); it.hasNext(); ) {
+        for (final ListIterator<TypeEntity> it = typeList.listIterator(); it.hasNext(); ) {
 
             // If first element then append "<"
             if (!it.hasPrevious()) {
@@ -709,7 +713,7 @@ public final class LambdaUtils {
             }
 
             // Get actual element
-            String type = it.next();
+            TypeEntity type = it.next();
 
             // If type erasure is enabled append it
             if (erasureOn) {
@@ -722,7 +726,7 @@ public final class LambdaUtils {
             }
 
             // Append type itself
-            builder.append(type);
+            builder.append(type.getTypeName());
 
             // If there is a next element then append ","; otherwise append ">"
             if (it.hasNext()) {

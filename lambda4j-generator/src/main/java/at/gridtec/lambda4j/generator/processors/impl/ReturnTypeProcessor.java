@@ -16,8 +16,11 @@
 package at.gridtec.lambda4j.generator.processors.impl;
 
 import at.gridtec.lambda4j.generator.Lambda;
+import at.gridtec.lambda4j.generator.entities.TypeEntity;
 import at.gridtec.lambda4j.generator.processors.Processor;
 import at.gridtec.lambda4j.generator.util.LambdaUtils;
+
+import org.apache.commons.lang3.StringUtils;
 
 import javax.annotation.Nonnull;
 import java.util.LinkedList;
@@ -46,39 +49,46 @@ public final class ReturnTypeProcessor extends Processor {
         // Special Rule: Lambda is a Comparator it must return int
         if (LambdaUtils.isOfTypeComparator(lambda)) {
             final Lambda copy = LambdaUtils.copy(lambda);
-            copy.setReturnType(int.class.getName());
+            TypeEntity type = new TypeEntity(int.class, StringUtils.capitalize(int.class.getSimpleName()));
+            copy.setReturnType(type);
             lambdas.addAll(next(copy));
         }
 
         // Special Rule: Lambda is a Consumer it must return nothing (void)
         else if (LambdaUtils.isOfTypeConsumer(lambda)) {
             final Lambda copy = LambdaUtils.copy(lambda);
-            copy.setReturnType(void.class.getName());
+            TypeEntity type = new TypeEntity(void.class, StringUtils.capitalize(void.class.getSimpleName()));
+            copy.setReturnType(type);
             lambdas.addAll(next(copy));
         }
 
         // Special Rule: Lambda is a Predicate it must return boolean
         else if (LambdaUtils.isOfTypePredicate(lambda)) {
             final Lambda copy = LambdaUtils.copy(lambda);
-            copy.setReturnType(boolean.class.getSimpleName());
+            TypeEntity type = new TypeEntity(boolean.class, StringUtils.capitalize(boolean.class.getSimpleName()));
+            copy.setReturnType(type);
             lambdas.addAll(next(copy));
         }
 
         // Special Rule: Lambda is a Runnable it must return nothing (void) and does not allow input -> end call stack
         else if (LambdaUtils.isOfTypeRunnable(lambda)) {
             final Lambda copy = LambdaUtils.copy(lambda);
-            copy.setReturnType(void.class.getName());
+            TypeEntity type = new TypeEntity(void.class, StringUtils.capitalize(void.class.getSimpleName()));
+            copy.setReturnType(type);
             lambdas.addAll(next(copy));
         }
 
         // All other types will return normally, so evaluate them
         else {
             // Loop over left primitives without boolean
-            final List<String> primitivesWithoutBoolean = PRIMITIVES.stream()
-                    .filter(str -> !str.equals(boolean.class.getSimpleName()))
+            // TODO This removal also avoids generation of boolean operators
+            final List<Class<?>> primitivesWithoutBoolean = PRIMITIVES.stream()
+                    .filter(clazz -> !clazz.equals(boolean.class))
                     .collect(Collectors.toList());
-            for (String type : primitivesWithoutBoolean) {
+            
+            for (final Class<?> typeClass : primitivesWithoutBoolean) {
                 final Lambda primitive = LambdaUtils.copy(lambda);
+                TypeEntity type = new TypeEntity(typeClass, StringUtils.capitalize(typeClass.getSimpleName()));
                 primitive.setReturnType(type);
                 lambdas.addAll(next(primitive));
             }
@@ -86,9 +96,11 @@ public final class ReturnTypeProcessor extends Processor {
             // Lambda returns generic; Special Rule: rename generic if lambda type is Supplier or a Operator
             final Lambda generical = LambdaUtils.copy(lambda);
             if (LambdaUtils.isOfTypeSupplier(lambda) && LambdaUtils.isOfTypeOperator(lambda)) {
-                generical.setReturnType("T");
+                TypeEntity type = new TypeEntity(Object.class, "T");
+                generical.setReturnType(type);
             } else {
-                generical.setReturnType("R");
+                TypeEntity type = new TypeEntity(Object.class, "R");
+                generical.setReturnType(type);
             }
             lambdas.addAll(next(generical));
         }

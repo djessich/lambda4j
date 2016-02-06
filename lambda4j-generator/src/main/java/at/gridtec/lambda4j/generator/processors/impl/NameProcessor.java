@@ -16,7 +16,7 @@
 package at.gridtec.lambda4j.generator.processors.impl;
 
 import at.gridtec.lambda4j.generator.Lambda;
-import at.gridtec.lambda4j.generator.LambdaTypeEnum;
+import at.gridtec.lambda4j.generator.entities.TypeEntity;
 import at.gridtec.lambda4j.generator.processors.Processor;
 import at.gridtec.lambda4j.generator.util.LambdaUtils;
 
@@ -33,8 +33,8 @@ import java.util.Objects;
  * handed over to next {@code Processor} to do further processing. The result from next step is returned by this step.
  * <p>
  * Requirements by this step are the lambdas type ({@link Lambda#getType()}), arity ({@link Lambda#getArity()}), return
- * type ({@link Lambda#getReturnType()}) and input types ({@link Lambda#getInputOneType()}, {@link
- * Lambda#getInputTwoType()}, {@link Lambda#getInputThreeType()}).
+ * type ({@link Lambda#getReturnType()}) and input types ({@link Lambda#getFirstInputType()}, {@link
+ * Lambda#getSecondInputType()}, {@link Lambda#getThirdInputType()}).
  */
 public final class NameProcessor extends Processor {
 
@@ -82,13 +82,13 @@ public final class NameProcessor extends Processor {
     protected boolean processable(@Nonnull final Lambda lambda) {
         boolean processable = lambda.getType() != null && lambda.getReturnType() != null;
         if (lambda.getArity() >= 1) {
-            processable = processable && lambda.getInputOneType() != null;
+            processable = processable && lambda.getFirstInputType() != null;
         }
         if (lambda.getArity() >= 2) {
-            processable = processable && lambda.getInputTwoType() != null;
+            processable = processable && lambda.getSecondInputType() != null;
         }
         if (lambda.getArity() >= 3) {
-            processable = processable && lambda.getInputThreeType() != null;
+            processable = processable && lambda.getThirdInputType() != null;
         }
         return processable;
     }
@@ -106,9 +106,9 @@ public final class NameProcessor extends Processor {
         }
 
         // Special Rule: Operators will have special arity identifiers
-        if (LambdaUtils.isOfType(lambda, LambdaTypeEnum.OPERATOR)) {
+        if (LambdaUtils.isOfTypeOperator(lambda)) {
             if (LambdaUtils.isPrimitiveType(lambda.getReturnType())) {
-                nameBuilder.append(StringUtils.capitalize(lambda.getReturnType()));
+                nameBuilder.append(lambda.getReturnType().getTypeName());
             }
             if (lambda.getArity() == 1) {
                 nameBuilder.append(OPERATOR_ARITY_ONE_IDENTIFIER);
@@ -121,7 +121,7 @@ public final class NameProcessor extends Processor {
 
         // Special Rule: Lambda is of type supplier and has primitive return, append primitive identifier
         else if (LambdaUtils.isOfTypeSupplier(lambda) && LambdaUtils.isPrimitiveType(lambda.getReturnType())) {
-            nameBuilder.append(StringUtils.capitalize(lambda.getReturnType()));
+            nameBuilder.append(lambda.getReturnType().getTypeName());
         }
 
         // All other types will be named using normal schema, unless Comparator or Runnable
@@ -132,16 +132,16 @@ public final class NameProcessor extends Processor {
 
                 // Special Rule: Lambda is of type function and input one type is not primitive, but return type is it,
                 // then append 'To' identifier at start (needed as some lambda require arity after 'To' identifier)
-                notToIdentifier(nameBuilder, lambda, lambda.getInputOneType());
+                notToIdentifier(nameBuilder, lambda, lambda.getFirstInputType());
 
                 // Lambda input one is primitive, so append primitive type name
-                if (LambdaUtils.isPrimitiveType(lambda.getInputOneType())) {
-                    nameBuilder.append(StringUtils.capitalize(lambda.getInputOneType()));
+                if (LambdaUtils.isPrimitiveType(lambda.getFirstInputType())) {
+                    nameBuilder.append(lambda.getFirstInputType().getTypeName());
                 }
 
                 // Special Rule: Lambda is of type function which has primitive input one and return type, so append 'To'
                 // identifier at end (normal for lambda with primitive return)
-                toIdentifier(nameBuilder, lambda, lambda.getInputOneType());
+                toIdentifier(nameBuilder, lambda, lambda.getFirstInputType());
             }
 
             // Lambda with arity 2
@@ -149,25 +149,25 @@ public final class NameProcessor extends Processor {
 
                 // Special Rule: Lambda is of type function and input two type is not primitive, but return type is it,
                 // then append 'To' identifier at start (needed as some lambda require arity after 'To' identifier)
-                notToIdentifier(nameBuilder, lambda, lambda.getInputTwoType());
+                notToIdentifier(nameBuilder, lambda, lambda.getSecondInputType());
 
                 // Lambda input one type is generic and input two type is primitive, so append 'Obj' identifier;
                 // otherwise just append normal 'Bi' identifier
-                if (!LambdaUtils.isPrimitiveType(lambda.getInputOneType()) && LambdaUtils.isPrimitiveType(
-                        lambda.getInputTwoType())) {
+                if (!LambdaUtils.isPrimitiveType(lambda.getFirstInputType()) && LambdaUtils.isPrimitiveType(
+                        lambda.getSecondInputType())) {
                     objIdentifier(nameBuilder, null, null);
                 } else {
                     nameBuilder.append(ARITY_TWO_IDENTIFIER);
                 }
 
                 // Lambda input two is primitive, so append primitive type name
-                if (LambdaUtils.isPrimitiveType(lambda.getInputTwoType())) {
-                    nameBuilder.append(StringUtils.capitalize(lambda.getInputTwoType()));
+                if (LambdaUtils.isPrimitiveType(lambda.getSecondInputType())) {
+                    nameBuilder.append(lambda.getSecondInputType().getTypeName());
                 }
 
                 // Special Rule: Lambda is of type function which has primitive input two and return type, so append 'To'
                 // identifier at end (normal for lambda with primitive return)
-                toIdentifier(nameBuilder, lambda, lambda.getInputTwoType());
+                toIdentifier(nameBuilder, lambda, lambda.getSecondInputType());
             }
 
             // Lambda with arity 3
@@ -175,29 +175,29 @@ public final class NameProcessor extends Processor {
 
                 // Special Rule: Lambda is of type function and input three type is not primitive, but return type is it,
                 // then append 'To' identifier at start (needed as some lambda require arity after 'To' identifier)
-                notToIdentifier(nameBuilder, lambda, lambda.getInputThreeType());
+                notToIdentifier(nameBuilder, lambda, lambda.getThirdInputType());
 
                 // Lambda input one and two types are generic and input three type is primitive, so append 'BiObj' identifier
-                if (!LambdaUtils.isPrimitiveType(lambda.getInputOneType()) && !LambdaUtils.isPrimitiveType(
-                        lambda.getInputTwoType()) && LambdaUtils.isPrimitiveType(lambda.getInputThreeType())) {
+                if (!LambdaUtils.isPrimitiveType(lambda.getFirstInputType()) && !LambdaUtils.isPrimitiveType(
+                        lambda.getSecondInputType()) && LambdaUtils.isPrimitiveType(lambda.getThirdInputType())) {
                     objIdentifier(nameBuilder, ARITY_TWO_IDENTIFIER, null);
                 }
                 // Lambda input one is generic and input two and three types are primitive, so append 'ObjBi' identifier
-                else if (!LambdaUtils.isPrimitiveType(lambda.getInputOneType()) && LambdaUtils.isPrimitiveType(
-                        lambda.getInputTwoType()) && LambdaUtils.isPrimitiveType(lambda.getInputThreeType())) {
+                else if (!LambdaUtils.isPrimitiveType(lambda.getFirstInputType()) && LambdaUtils.isPrimitiveType(
+                        lambda.getSecondInputType()) && LambdaUtils.isPrimitiveType(lambda.getThirdInputType())) {
                     objIdentifier(nameBuilder, null, ARITY_TWO_IDENTIFIER);
                 } else {
                     nameBuilder.append(ARITY_THREE_IDENTIFIER);
                 }
 
                 // Lambda input three is primitive, so append primitive type name
-                if (LambdaUtils.isPrimitiveType(lambda.getInputThreeType())) {
-                    nameBuilder.append(StringUtils.capitalize(lambda.getInputThreeType()));
+                if (LambdaUtils.isPrimitiveType(lambda.getThirdInputType())) {
+                    nameBuilder.append(lambda.getThirdInputType().getTypeName());
                 }
 
                 // Special Rule: Lambda is of type function which has primitive input three and return type, so append 'To'
                 // identifier at end (normal for lambda with primitive return)
-                toIdentifier(nameBuilder, lambda, lambda.getInputThreeType());
+                toIdentifier(nameBuilder, lambda, lambda.getThirdInputType());
             }
         }
 
@@ -221,19 +221,19 @@ public final class NameProcessor extends Processor {
      * @throws NullPointerException If one of the given arguments is {@code null}
      * @implSpec The implementation requires the input and return types to be primitive, and only if this occasion is
      * met, the identifier will be appended.
-     * @see #notToIdentifier(StringBuilder, Lambda, String)
+     * @see #notToIdentifier(StringBuilder, Lambda, TypeEntity)
      */
     private void toIdentifier(@Nonnull final StringBuilder builder, @Nonnull final Lambda lambda,
-            @Nonnull final String lambdaInputType) {
+            @Nonnull final TypeEntity lambdaInputType) {
         Objects.requireNonNull(builder);
         Objects.requireNonNull(lambda);
         Objects.requireNonNull(lambdaInputType);
-        final String lambdaReturnType = lambda.getReturnType();
+        final TypeEntity lambdaReturnType = lambda.getReturnType();
         if (LambdaUtils.isOfTypeFunction(lambda)
                 && LambdaUtils.isPrimitiveType(lambdaInputType)
                 && LambdaUtils.isPrimitiveType(lambdaReturnType)) {
             builder.append(TO_IDENTIFIER);
-            builder.append(StringUtils.capitalize(lambdaReturnType));
+            builder.append(lambdaReturnType.getTypeName());
         }
     }
 
@@ -248,19 +248,19 @@ public final class NameProcessor extends Processor {
      * @throws NullPointerException If one of the given arguments is {@code null}
      * @implSpec The implementation requires the input type to be <b>not</b> primitive and return type to be primitive.
      * Only if this occasion is met, the identifier will be appended.
-     * @see #toIdentifier(StringBuilder, Lambda, String)
+     * @see #toIdentifier(StringBuilder, Lambda, TypeEntity)
      */
     private void notToIdentifier(@Nonnull final StringBuilder builder, @Nonnull final Lambda lambda,
-            @Nonnull final String lambdaInputType) {
+            @Nonnull final TypeEntity lambdaInputType) {
         Objects.requireNonNull(builder);
         Objects.requireNonNull(lambda);
         Objects.requireNonNull(lambdaInputType);
-        final String lambdaReturnType = lambda.getReturnType();
+        final TypeEntity lambdaReturnType = lambda.getReturnType();
         if (LambdaUtils.isOfTypeFunction(lambda)
                 && !LambdaUtils.isPrimitiveType(lambdaInputType)
                 && LambdaUtils.isPrimitiveType(lambdaReturnType)) {
             builder.append(TO_IDENTIFIER);
-            builder.append(StringUtils.capitalize(lambdaReturnType));
+            builder.append(lambdaReturnType.getTypeName());
         }
     }
 

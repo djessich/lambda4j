@@ -17,6 +17,7 @@ package at.gridtec.lambda4j.generator;
 
 import at.gridtec.lambda4j.generator.cache.LambdaCache;
 import at.gridtec.lambda4j.generator.entities.AnnotationEntity;
+import at.gridtec.lambda4j.generator.entities.TypeEntity;
 import at.gridtec.lambda4j.generator.processors.Processor;
 import at.gridtec.lambda4j.generator.processors.ProcessorChain;
 import at.gridtec.lambda4j.generator.processors.impl.ArityProcessor;
@@ -75,7 +76,6 @@ public class Generator2 {
 
         System.out.println(lambdas.size());
         System.out.println(LambdaCache.getInstance().getLambdas().size());
-
         final Lambda lambda = lambdas.stream().filter(p -> p.getName().equals("ByteFunction")).findFirst().get();
         System.out.println(lambda);
 
@@ -104,6 +104,7 @@ public class Generator2 {
         // Prepare context for Freemarker
         Map<String, Object> context = new HashMap<>();
         context.put("lambda", lambda);
+        context.put("object", new TypeEntity(Object.class, "Object"));
         context.put("annotation", new AnnotationEntity());
         context.put("LambdaUtils", lambdaUtilsStatics);
 
@@ -136,8 +137,8 @@ public class Generator2 {
 
         // Build chain turned around (start adding last step first)
         ProcessorChain.getInstance().addProcessor(nameProcessor);
-        ProcessorChain.getInstance().addProcessor(throwableProcessor);
-        ProcessorChain.getInstance().addProcessor(primitveProcessor);
+        //        ProcessorChain.getInstance().addProcessor(throwableProcessor);
+        // ProcessorChain.getInstance().addProcessor(primitveProcessor); // TODO since reference to a class algorithm must check null reference
         ProcessorChain.getInstance().addProcessor(changeOperatorProcessor);
         ProcessorChain.getInstance().addProcessor(inputTypeThreeProcessor);
         ProcessorChain.getInstance().addProcessor(inputTypeTwoProcessor);

@@ -15,6 +15,8 @@
  */
 package at.gridtec.lambda4j.generator;
 
+import at.gridtec.lambda4j.generator.entities.TypeEntity;
+
 import java.io.Serializable;
 
 // TODO Javadoc
@@ -25,12 +27,11 @@ public class Lambda implements Serializable {
     private int arity;
     private boolean primitive;
     private boolean throwable;
-
     // TODO Use classes instead of strings for search operations in templates; this includes a type system whichconverts and names the used types correctly (f.e. Object -> T, byte -> Byte)
-    private String inputOneType;
-    private String inputTwoType;
-    private String inputThreeType;
-    private String returnType;
+    private TypeEntity firstInputType;
+    private TypeEntity secondInputType;
+    private TypeEntity thirdInputType;
+    private TypeEntity returnType;
 
     public Lambda() {
 
@@ -76,35 +77,35 @@ public class Lambda implements Serializable {
         this.throwable = throwable;
     }
 
-    public String getInputOneType() {
-        return inputOneType;
+    public TypeEntity getFirstInputType() {
+        return firstInputType;
     }
 
-    public void setInputOneType(String inputOneType) {
-        this.inputOneType = inputOneType;
+    public void setFirstInputType(TypeEntity firstInputType) {
+        this.firstInputType = firstInputType;
     }
 
-    public String getInputTwoType() {
-        return inputTwoType;
+    public TypeEntity getSecondInputType() {
+        return secondInputType;
     }
 
-    public void setInputTwoType(String inputTwoType) {
-        this.inputTwoType = inputTwoType;
+    public void setSecondInputType(TypeEntity secondInputType) {
+        this.secondInputType = secondInputType;
     }
 
-    public String getInputThreeType() {
-        return inputThreeType;
+    public TypeEntity getThirdInputType() {
+        return thirdInputType;
     }
 
-    public void setInputThreeType(String inputThreeType) {
-        this.inputThreeType = inputThreeType;
+    public void setThirdInputType(TypeEntity thirdInputType) {
+        this.thirdInputType = thirdInputType;
     }
 
-    public String getReturnType() {
+    public TypeEntity getReturnType() {
         return returnType;
     }
 
-    public void setReturnType(String returnType) {
+    public void setReturnType(TypeEntity returnType) {
         this.returnType = returnType;
     }
 
@@ -134,13 +135,13 @@ public class Lambda implements Serializable {
         if (type != lambda.type) {
             return false;
         }
-        if (!inputOneType.equals(lambda.inputOneType)) {
+        if (!firstInputType.equals(lambda.firstInputType)) {
             return false;
         }
-        if (!inputTwoType.equals(lambda.inputTwoType)) {
+        if (!secondInputType.equals(lambda.secondInputType)) {
             return false;
         }
-        if (!inputThreeType.equals(lambda.inputThreeType)) {
+        if (!thirdInputType.equals(lambda.thirdInputType)) {
             return false;
         }
         return returnType.equals(lambda.returnType);
@@ -154,9 +155,9 @@ public class Lambda implements Serializable {
         result = 31 * result + arity;
         result = 31 * result + (primitive ? 1 : 0);
         result = 31 * result + (throwable ? 1 : 0);
-        result = 31 * result + inputOneType.hashCode();
-        result = 31 * result + inputTwoType.hashCode();
-        result = 31 * result + inputThreeType.hashCode();
+        result = 31 * result + firstInputType.hashCode();
+        result = 31 * result + secondInputType.hashCode();
+        result = 31 * result + thirdInputType.hashCode();
         result = 31 * result + returnType.hashCode();
         return result;
     }
@@ -169,10 +170,10 @@ public class Lambda implements Serializable {
                 ", arity=" + arity +
                 ", primitive=" + primitive +
                 ", throwable=" + throwable +
-                ", inputOneType='" + inputOneType + '\'' +
-                ", inputTwoType='" + inputTwoType + '\'' +
-                ", inputThreeType='" + inputThreeType + '\'' +
-                ", returnType='" + returnType + '\'' +
+                ", firstInputType=" + firstInputType +
+                ", secondInputType=" + secondInputType +
+                ", thirdInputType=" + thirdInputType +
+                ", returnType=" + returnType +
                 '}';
     }
 }
