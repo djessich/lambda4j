@@ -25,7 +25,6 @@ import at.gridtec.lambda4j.generator.processors.impl.InputTypeOneProcessor;
 import at.gridtec.lambda4j.generator.processors.impl.InputTypeThreeProcessor;
 import at.gridtec.lambda4j.generator.processors.impl.InputTypeTwoProcessor;
 import at.gridtec.lambda4j.generator.processors.impl.NameProcessor;
-import at.gridtec.lambda4j.generator.processors.impl.PrimitiveProcessor;
 import at.gridtec.lambda4j.generator.processors.impl.ReturnTypeProcessor;
 import at.gridtec.lambda4j.generator.processors.impl.ThrowableProcessor;
 import at.gridtec.lambda4j.generator.processors.impl.TypeProcessor;

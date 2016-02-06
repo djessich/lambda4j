@@ -89,39 +89,6 @@ public final class LambdaUtils {
     }
 
     /**
-     * Searches for a {@link Lambda} using given lambda type, lambda arity, primitive flag and throwable flag. If the
-     * lambda exists, it will be returned as is, otherwise {@code null} is returned.
-     *
-     * @param type The lambdas type
-     * @param arity The lambdas arity
-     * @param isPrimitve The flag indicating the lambdas primitiveness
-     * @param isThrowable The flag indicating if lambda is throwable
-     * @return The lambda from given lambda type, lambda arity, primitive flag and throwable flag, or {@code null} if no
-     * such lambda exists.
-     * @throws NullPointerException If given lambda type is {@code null}
-     * @throws IllegalArgumentException If given lambda arity is < 0
-     */
-    public static Lambda search(@Nonnull final LambdaTypeEnum type, @Nonnegative int arity, boolean isPrimitve,
-            boolean isThrowable) {
-        // Check arguments
-        Objects.requireNonNull(type);
-        if (arity < 0) {
-            throw new IllegalArgumentException("arity must be greater than 0");
-        }
-
-        // Find lambda and return it if such or null
-        return LambdaCache.getInstance()
-                .getLambdas()
-                .stream()
-                .filter(l -> l.getType().equals(type))
-                .filter(l -> l.getArity() == arity)
-                .filter(l -> l.isPrimitive() == isPrimitve)
-                .filter(l -> l.isThrowable() == isThrowable)
-                .findFirst()
-                .orElse(null);
-    }
-
-    /**
      * Searches for a {@link Lambda} using given lambda type, lambda arity, lambda return type and throwable flag. If
      * the lambda exists, it will be returned as is, otherwise {@code null} is returned. Thereby the return type may be
      * {@code null}.
@@ -169,7 +136,7 @@ public final class LambdaUtils {
      * @throws NullPointerException If given lambda type is {@code null}
      * @throws IllegalArgumentException If given lambda arity is < 0
      */
-    public static Lambda searchByInputOneType(@Nonnull final LambdaTypeEnum type, @Nonnegative int arity,
+    public static Lambda searchByFirstInputType(@Nonnull final LambdaTypeEnum type, @Nonnegative int arity,
             @Nullable final TypeEntity firstInputType, boolean isThrowable) {
         // Check arguments
         Objects.requireNonNull(type);
@@ -204,7 +171,7 @@ public final class LambdaUtils {
      * @throws NullPointerException If given lambda type is {@code null}
      * @throws IllegalArgumentException If given lambda arity is < 0
      */
-    public static Lambda searchByInputOneAndReturnType(@Nonnull final LambdaTypeEnum type, @Nonnegative int arity,
+    public static Lambda searchByFirstInputAndReturnType(@Nonnull final LambdaTypeEnum type, @Nonnegative int arity,
             @Nullable final TypeEntity firstInputType, @Nullable final TypeEntity returnType, boolean isThrowable) {
         // Check arguments
         Objects.requireNonNull(type);
@@ -239,7 +206,7 @@ public final class LambdaUtils {
      * @throws NullPointerException If given lambda type is {@code null}
      * @throws IllegalArgumentException If given lambda arity is < 0
      */
-    public static Lambda searchByInputTwoType(@Nonnull final LambdaTypeEnum type, @Nonnegative int arity,
+    public static Lambda searchBySecondInputType(@Nonnull final LambdaTypeEnum type, @Nonnegative int arity,
             @Nullable final TypeEntity secondInputType, boolean isThrowable) {
         // Check arguments
         Objects.requireNonNull(type);
@@ -274,7 +241,7 @@ public final class LambdaUtils {
      * @throws NullPointerException If given lambda type is {@code null}
      * @throws IllegalArgumentException If given lambda arity is < 0
      */
-    public static Lambda searchByInputTwoAndReturnType(@Nonnull final LambdaTypeEnum type, @Nonnegative int arity,
+    public static Lambda searchBySecondInputAndReturnType(@Nonnull final LambdaTypeEnum type, @Nonnegative int arity,
             @Nullable final TypeEntity secondInputType, @Nullable final TypeEntity returnType, boolean isThrowable) {
         // Check arguments
         Objects.requireNonNull(type);
@@ -309,7 +276,7 @@ public final class LambdaUtils {
      * @throws NullPointerException If given lambda type is {@code null}
      * @throws IllegalArgumentException If given lambda arity is < 0
      */
-    public static Lambda searchByInputThreeType(@Nonnull final LambdaTypeEnum type, @Nonnegative int arity,
+    public static Lambda searchByThirdInputType(@Nonnull final LambdaTypeEnum type, @Nonnegative int arity,
             @Nullable final TypeEntity thirdInputType, boolean isThrowable) {
         // Check arguments
         Objects.requireNonNull(type);
@@ -344,7 +311,7 @@ public final class LambdaUtils {
      * @throws NullPointerException If given lambda type is {@code null}
      * @throws IllegalArgumentException If given lambda arity is < 0
      */
-    public static Lambda searchByInputThreeAndReturnType(@Nonnull final LambdaTypeEnum type, @Nonnegative int arity,
+    public static Lambda searchByThirdInputAndReturnType(@Nonnull final LambdaTypeEnum type, @Nonnegative int arity,
             @Nullable final TypeEntity thirdInputType, @Nullable final TypeEntity returnType, boolean isThrowable) {
         // Check arguments
         Objects.requireNonNull(type);

@@ -26,7 +26,6 @@ import at.gridtec.lambda4j.generator.processors.impl.InputTypeOneProcessor;
 import at.gridtec.lambda4j.generator.processors.impl.InputTypeThreeProcessor;
 import at.gridtec.lambda4j.generator.processors.impl.InputTypeTwoProcessor;
 import at.gridtec.lambda4j.generator.processors.impl.NameProcessor;
-import at.gridtec.lambda4j.generator.processors.impl.PrimitiveProcessor;
 import at.gridtec.lambda4j.generator.processors.impl.ReturnTypeProcessor;
 import at.gridtec.lambda4j.generator.processors.impl.ThrowableProcessor;
 import at.gridtec.lambda4j.generator.processors.impl.TypeProcessor;
@@ -76,7 +75,7 @@ public class Generator2 {
 
         System.out.println(lambdas.size());
         System.out.println(LambdaCache.getInstance().getLambdas().size());
-        final Lambda lambda = lambdas.stream().filter(p -> p.getName().equals("ByteFunction")).findFirst().get();
+        final Lambda lambda = lambdas.stream().filter(p -> p.getName().equals("TriFunction")).findFirst().get();
         System.out.println(lambda);
 
         // Create your Configuration instance, and specify if up to what FreeMarker
@@ -131,14 +130,12 @@ public class Generator2 {
         Processor inputTypeTwoProcessor = new InputTypeTwoProcessor();
         Processor inputTypeThreeProcessor = new InputTypeThreeProcessor();
         Processor changeOperatorProcessor = new ChangeOperatorProcessor();
-        Processor primitveProcessor = new PrimitiveProcessor();
         Processor throwableProcessor = new ThrowableProcessor();
         Processor nameProcessor = new NameProcessor();
 
         // Build chain turned around (start adding last step first)
         ProcessorChain.getInstance().addProcessor(nameProcessor);
-        //        ProcessorChain.getInstance().addProcessor(throwableProcessor);
-        // ProcessorChain.getInstance().addProcessor(primitveProcessor); // TODO since reference to a class algorithm must check null reference
+        ProcessorChain.getInstance().addProcessor(throwableProcessor);
         ProcessorChain.getInstance().addProcessor(changeOperatorProcessor);
         ProcessorChain.getInstance().addProcessor(inputTypeThreeProcessor);
         ProcessorChain.getInstance().addProcessor(inputTypeTwoProcessor);

@@ -25,9 +25,7 @@ public class Lambda implements Serializable {
     private String name;
     private LambdaTypeEnum type;
     private int arity;
-    private boolean primitive;
     private boolean throwable;
-    // TODO Use classes instead of strings for search operations in templates; this includes a type system whichconverts and names the used types correctly (f.e. Object -> T, byte -> Byte)
     private TypeEntity firstInputType;
     private TypeEntity secondInputType;
     private TypeEntity thirdInputType;
@@ -59,14 +57,6 @@ public class Lambda implements Serializable {
 
     public void setArity(int arity) {
         this.arity = arity;
-    }
-
-    public boolean isPrimitive() {
-        return primitive;
-    }
-
-    public void setPrimitive(boolean primitive) {
-        this.primitive = primitive;
     }
 
     public boolean isThrowable() {
@@ -123,9 +113,6 @@ public class Lambda implements Serializable {
         if (arity != lambda.arity) {
             return false;
         }
-        if (primitive != lambda.primitive) {
-            return false;
-        }
         if (throwable != lambda.throwable) {
             return false;
         }
@@ -153,7 +140,6 @@ public class Lambda implements Serializable {
         int result = name.hashCode();
         result = 31 * result + type.hashCode();
         result = 31 * result + arity;
-        result = 31 * result + (primitive ? 1 : 0);
         result = 31 * result + (throwable ? 1 : 0);
         result = 31 * result + firstInputType.hashCode();
         result = 31 * result + secondInputType.hashCode();
@@ -168,7 +154,6 @@ public class Lambda implements Serializable {
                 "name='" + name + '\'' +
                 ", type=" + type +
                 ", arity=" + arity +
-                ", primitive=" + primitive +
                 ", throwable=" + throwable +
                 ", firstInputType=" + firstInputType +
                 ", secondInputType=" + secondInputType +

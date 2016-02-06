@@ -52,32 +52,22 @@ public final class ChangeOperatorProcessor extends Processor {
 
     @Override
     @Nonnull
-    // TODO easier conversion with class lambda types
     protected List<Lambda> process(@Nonnull final Lambda lambda) {
         final List<Lambda> lambdas = new LinkedList<>();
 
-        // If lambda is an operator check if its valid; otherwise return lambda as-is
-        boolean isValidPrimitive = false;
-        boolean isValidGenerical = false;
-
+        // Check if lambda is operator depending on its arity
         boolean isOperator = false;
-
-        // Lambdas arity is at least 1
         if (lambda.getArity() >= 1) {
             isOperator = lambda.getReturnType().equals(lambda.getFirstInputType());
         }
-
-        // Lambdas arity is at least 2
         if (lambda.getArity() >= 2) {
             isOperator = isOperator && lambda.getReturnType().equals(lambda.getSecondInputType());
         }
-
-        // Lambdas arity is at least 3
         if (lambda.getArity() >= 3) {
             isOperator = isOperator && lambda.getReturnType().equals(lambda.getThirdInputType());
         }
 
-        // If lambda fulfills operator requirements
+        // If lambda fulfills operator requirements, then set type and do primitive operator checking
         if (isOperator) {
             final Lambda copy = LambdaUtils.copy(lambda);
             copy.setType(LambdaTypeEnum.OPERATOR);
