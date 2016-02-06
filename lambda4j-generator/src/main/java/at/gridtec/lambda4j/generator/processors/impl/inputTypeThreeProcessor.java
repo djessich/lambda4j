@@ -16,8 +16,11 @@
 package at.gridtec.lambda4j.generator.processors.impl;
 
 import at.gridtec.lambda4j.generator.Lambda;
+import at.gridtec.lambda4j.generator.entities.TypeEntity;
 import at.gridtec.lambda4j.generator.processors.Processor;
 import at.gridtec.lambda4j.generator.util.LambdaUtils;
+
+import org.apache.commons.lang.StringUtils;
 
 import javax.annotation.Nonnull;
 import java.util.LinkedList;
@@ -29,7 +32,7 @@ import java.util.List;
  * processing. The result from next step is returned by this step.
  * <p>
  * Requirements by this step are the lambdas type ({@link Lambda#getType()}), arity ({@link Lambda#getArity()}) and
- * second input type {@link Lambda#getInputTwoType()}.
+ * second input type {@link Lambda#getSecondInputType()}.
  */
 public final class InputTypeThreeProcessor extends Processor {
 
@@ -37,7 +40,7 @@ public final class InputTypeThreeProcessor extends Processor {
     protected boolean processable(@Nonnull final Lambda lambda) {
         boolean processable = lambda.getType() != null;
         if (lambda.getArity() >= 2) {
-            processable = processable && lambda.getInputTwoType() != null;
+            processable = processable && lambda.getSecondInputType() != null;
         }
         return processable;
     }
@@ -54,17 +57,19 @@ public final class InputTypeThreeProcessor extends Processor {
             final List<Lambda> genLambdas = new LinkedList<>();
 
             // Lambda has generical arg 2 so apply further generical and primitive input for arg 3
-            if (!PRIMITIVES.contains(lambda.getInputTwoType())) {
+            if (!PRIMITIVES.contains(lambda.getSecondInputType().getTypeClass())) {
 
                 // Apply generical input for arg 3
                 final Lambda generical = LambdaUtils.copy(lambda);
-                generical.setInputThreeType("V");
+                TypeEntity type = new TypeEntity(Object.class, "V");
+                generical.setThirdInputType(type);
                 genLambdas.add(generical);
 
                 // Apply primitive input for arg 3
-                for (String type : PRIMITIVES) {
+                for (final Class<?> typeClass : PRIMITIVES) {
                     final Lambda primitive = LambdaUtils.copy(lambda);
-                    primitive.setInputThreeType(type);
+                    type = new TypeEntity(typeClass, StringUtils.capitalize(typeClass.getSimpleName()));
+                    primitive.setThirdInputType(type);
                     genLambdas.add(primitive);
                 }
             }
@@ -72,7 +77,7 @@ public final class InputTypeThreeProcessor extends Processor {
             // Lambda has primitive arg 2 so apply same primitive type to arg 3
             else {
                 final Lambda primitive = LambdaUtils.copy(lambda);
-                primitive.setInputThreeType(primitive.getInputTwoType());
+                primitive.setThirdInputType(primitive.getSecondInputType());
                 genLambdas.add(primitive);
             }
 
