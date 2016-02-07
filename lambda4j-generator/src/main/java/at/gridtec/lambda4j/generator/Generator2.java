@@ -17,7 +17,6 @@ package at.gridtec.lambda4j.generator;
 
 import at.gridtec.lambda4j.generator.cache.LambdaCache;
 import at.gridtec.lambda4j.generator.entities.AnnotationEntity;
-import at.gridtec.lambda4j.generator.entities.TypeEntity;
 import at.gridtec.lambda4j.generator.processors.Processor;
 import at.gridtec.lambda4j.generator.processors.ProcessorChain;
 import at.gridtec.lambda4j.generator.processors.impl.ArityProcessor;
@@ -103,7 +102,6 @@ public class Generator2 {
         // Prepare context for Freemarker
         Map<String, Object> context = new HashMap<>();
         context.put("lambda", lambda);
-        context.put("object", new TypeEntity(Object.class, "Object"));
         context.put("annotation", new AnnotationEntity());
         context.put("LambdaUtils", lambdaUtilsStatics);
 

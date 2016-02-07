@@ -4,6 +4,15 @@
 <#global parameterNameString = types.buildParameterNameString()>
 <#global genericParameterTypeString = types.buildGenericParameterTypeString()>
 <#global genericParameterTypeStringWithErasure = types.buildGenericParameterTypeStringWithErasure()>
+<#global Object = LambdaUtils.getObjectTypeEntity()>
+<#global boolean = LambdaUtils.getBooleanTypeEntity()>
+<#global byte = LambdaUtils.getByteTypeEntity()>
+<#global char = LambdaUtils.getCharTypeEntity()>
+<#global double = LambdaUtils.getDoubleTypeEntity()>
+<#global float = LambdaUtils.getFloatTypeEntity()>
+<#global int = LambdaUtils.getIntTypeEntity()>
+<#global long = LambdaUtils.getLongTypeEntity()>
+<#global short = LambdaUtils.getShortTypeEntity()>
 
 <#--<#assign groupid>at.gridtec.lambda4j</#assign>-->
 <#assign groupid>target</#assign>

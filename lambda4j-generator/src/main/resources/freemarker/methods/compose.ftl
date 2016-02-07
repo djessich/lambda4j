@@ -13,7 +13,7 @@
     <#assign inputLambda3 = LambdaUtils.searchByReturnType(lambda.type, 1, lambda.thirdInputType,  lambda.throwable)>
 </#if>
 <#-- find correct output lambda which is able to handle object inputs only and returns object output -->
-<#assign outputLambda = LambdaUtils.searchByInputTypesAndReturnType(lambda.type, lambda.arity, LambdaUtils.getObjectTypeEntity(), LambdaUtils.getObjectTypeEntity(), LambdaUtils.getObjectTypeEntity(), LambdaUtils.getObjectTypeEntity(), lambda.throwable)>
+<#assign outputLambda = LambdaUtils.searchByInputTypesAndReturnType(lambda.type, lambda.arity, Object, Object, Object, Object, lambda.throwable)>
 
 <@.namespace.composeMethod "A" "B" "C" inputLambda1 inputLambda2 inputLambda3 outputLambda/>
 

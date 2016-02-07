@@ -2,8 +2,8 @@
 <#import "../utils/helpers.ftl" as helpers>
 <#import "../utils/types.ftl" as types>
 
-<#assign inputLambda = LambdaUtils.searchByFirstInputAndReturnType(lambda.type, 1, lambda.returnType, object, lambda.throwable)>
-<#assign outputLambda = LambdaUtils.searchByInputTypesAndReturnType(lambda.arity, lambda.firstInputType, lambda.secondInputType, lambda.thirdInputType, object, lambda.throwable)>
+<#assign inputLambda = LambdaUtils.searchByFirstInputAndReturnType(lambda.type, 1, lambda.returnType, Object, lambda.throwable)>
+<#assign outputLambda = LambdaUtils.searchByInputTypesAndReturnType(lambda.arity, lambda.firstInputType, lambda.secondInputType, lambda.thirdInputType, Object, lambda.throwable)>
 <@.namespace.andThenMethod inputLambda outputLambda/>
 
 <#-- a helper macro to centralize andThen method and to avoid unnecessary indenting -->

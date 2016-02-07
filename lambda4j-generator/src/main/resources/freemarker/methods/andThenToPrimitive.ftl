@@ -5,14 +5,14 @@
 <#-- parse only if lambda is primitive -->
 <#if helpers.isPrimitiveLambda(lambda)>
     <#assign primitives = {
-        "boolean":LambdaUtils.getBooleanTypeEntity(),
-        "byte":LambdaUtils.getByteTypeEntity(),
-        "char":LambdaUtils.getCharTypeEntity(),
-        "double":LambdaUtils.getDoubleTypeEntity(),
-        "float":LambdaUtils.getFloatTypeEntity(),
-        "int":LambdaUtils.getIntTypeEntity(),
-        "long":LambdaUtils.getLongTypeEntity(),
-        "short":LambdaUtils.getShortTypeEntity()
+        "boolean":boolean,
+        "byte":byte,
+        "char":char,
+        "double":double,
+        "float":float,
+        "int":int,
+        "long":long,
+        "short":short
     }>
     <#list primitives?keys as key>
         <#assign primitive = primitives[key]>
