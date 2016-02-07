@@ -30,5 +30,6 @@ import at.gridtec.lambda4j.runnable.*;
 import at.gridtec.lambda4j.supplier.*;
 import org.apache.commons.lang3.tuple.*;
 import javax.annotation.*;
+import java.util.*;
 import java.util.function.*;
 <#-- @formatter:on -->
