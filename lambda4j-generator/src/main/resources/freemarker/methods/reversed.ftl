@@ -1,11 +1,12 @@
 <#-- @formatter:off -->
 <#import "../utils/filters.ftl" as filters>
+<#import "../utils/helpers.ftl" as helpers>
 <#import "../utils/types.ftl" as types>
-
+<#-- TODO create function for reversed generic string creation -->
 <#-- parse only if lambda is not primitive -->
-<#if !lambda.primitive>
+<#if !helpers.isPrimitiveLambda(lambda)>
     <#-- create a list which includes all input types in reversed order -->
-    <#assign parameters = ([lambda.inputOneType!""] + [lambda.inputTwoType!""] + [lambda.inputThreeType!""])?reverse>
+    <#assign parameters = ([lambda.firstInputType!""] + [lambda.secondInputType!""] + [lambda.thirdInputType!""])?reverse>
     <#assign parameters = filters.filterEmpties(parameters)>
     <#-- create list made of reversed input types list and the return type -->
     <#assign parametersWithReturn = parameters + [lambda.returnType!""]>

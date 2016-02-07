@@ -12,7 +12,7 @@
 </#function>
 
 <#-- filters all primitive elements in the list -->
-<#function filterPrimitives list>
+<#function filterPrimitives list = []>
     <#local filtered = []>
     <#list list as elem>
         <#if elem?has_content && !helpers.isPrimitive(elem)>

@@ -3,13 +3,13 @@
 
 <#function printTuple target = lambda>
     <#local ret = "">
-    <#local isInputOnePrimitive = helpers.isPrimitive(target.inputOneType!"")>
-    <#local isInputTwoPrimitive = helpers.isPrimitive(target.inputTwoType!"")>
-    <#local isInputThreePrimitive = helpers.isPrimitive(target.inputThreeType!"")>
+    <#local isInputOnePrimitive = helpers.isPrimitive(target.firstInputType!"")>
+    <#local isInputTwoPrimitive = helpers.isPrimitive(target.secondInputType!"")>
+    <#local isInputThreePrimitive = helpers.isPrimitive(target.thirdInputType!"")>
     <#if (target.arity == 2) && !isInputOnePrimitive && !isInputTwoPrimitive>
-        <#local ret = "Pair<" + target.inputOneType + ", " + target.inputTwoType + ">">
+        <#local ret = "Pair<" + target.firstInputType + ", " + target.secondInputType + ">">
     <#elseif (target.arity == 3) && !isInputOnePrimitive && !isInputTwoPrimitive && !isInputThreePrimitive>
-        <#local ret = "Triple<" + target.inputOneType + ", " + target.inputTwoType + ", " + target.inputThreeType + ">">
+        <#local ret = "Triple<" + target.firstInputType + ", " + target.secondInputType + ", " + target.thirdInputType + ">">
     </#if>
     <#return ret>
 </#function>

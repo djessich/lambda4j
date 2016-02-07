@@ -1,25 +1,25 @@
 <#import "./filters.ftl" as filters>
 <#import "./helpers.ftl" as helpers>
 
-<#function buildParameter param>
+<#function buildParameter param = "">
     <#local genericString = "">
-    <#if param??>
+    <#if param?has_content>
         <#local genericString = .namespace.buildParameterType(param) + " " + .namespace.buildParameterName(param)>
     </#if>
     <#return genericString>
 </#function>
 
-<#function buildParameterType param>
+<#function buildParameterType param = "">
     <#local genericString = "">
-    <#if param??>
+    <#if param?has_content>
         <#local genericString = genericString + param>
     </#if>
     <#return genericString>
 </#function>
 
-<#function buildParameterName param>
+<#function buildParameterName param = "">
     <#local genericString = "">
-    <#if param??>
+    <#if param?has_content>
         <#if helpers.isPrimitive(param)>
             <#local genericString = genericString + "value">
         <#else>
@@ -32,7 +32,7 @@
 
 <#function buildParameterString target = lambda other1 = "" other2 = "" other3 = "">
     <#local target = .namespace.otherParametersToTarget(target, other1, other2, other3)>
-    <#local types = [target.inputOneType!"", target.inputTwoType!"", target.inputThreeType!""]>
+    <#local types = [target.firstInputType!"", target.secondInputType!"", target.thirdInputType!""]>
     <#local types = filters.filterEmpties(types)>
     <#local genericString = "">
     <#if (types?has_content)>
@@ -46,9 +46,9 @@
     <#return genericString>
 </#function>
 
-<#function buildParameterTypeString target = lambda other1 = "" other2 = "" other3 = "" other4 = "">
-    <#local target = .namespace.otherParametersToTarget(target, other1, other2, other3, other4)>
-    <#local types = [target.inputOneType!"", target.inputTwoType!"", target.inputThreeType!"", target.returnType!""]>
+<#function buildParameterTypeString target = lambda other1 = "" other2 = "" other3 = "">
+    <#local target = .namespace.otherParametersToTarget(target, other1, other2, other3)>
+    <#local types = [target.firstInputType!"", target.secondInputType!"", target.thirdInputType!""]>
     <#local types = filters.filterEmpties(types)>
     <#local genericString = "">
     <#if (types?has_content)>
@@ -64,7 +64,7 @@
 
 <#function buildParameterNameString target = lambda other1 = "" other2 = "" other3 = "">
     <#local target = .namespace.otherParametersToTarget(target, other1, other2, other3)>
-    <#local types = [target.inputOneType!"", target.inputTwoType!"", target.inputThreeType!""]>
+    <#local types = [target.firstInputType!"", target.secondInputType!"", target.thirdInputType!""]>
     <#local types = filters.filterEmpties(types)>
     <#local genericString = "">
     <#if (types?has_content)>
@@ -81,7 +81,7 @@
 
 <#function buildGenericParameterTypeString target = lambda other1 = "" other2 = "" other3 = "" other4 = "">
     <#local target = .namespace.otherParametersToTarget(target, other1, other2, other3, other4)>
-    <#local types = [target.inputOneType!"", target.inputTwoType!"", target.inputThreeType!"", target.returnType!""]>
+    <#local types = [target.firstInputType!"", target.secondInputType!"", target.thirdInputType!"", target.returnType!""]>
     <#local types = filters.filterEmpties(types)>
     <#local types = filters.filterPrimitives(types)>
     <#local genericString = "">
@@ -93,7 +93,7 @@
 
 <#function buildGenericParameterTypeStringWithErasure target = lambda other1 = "" other2 = "" other3 = "" other4 = "">
     <#local target = .namespace.otherParametersToTarget(target, other1, other2, other3, other4)>
-    <#local types = [target.inputOneType!"", target.inputTwoType!"", target.inputThreeType!"", target.returnType!""]>
+    <#local types = [target.firstInputType!"", target.secondInputType!"", target.thirdInputType!"", target.returnType!""]>
     <#local types = filters.filterEmpties(types)>
     <#local types = filters.filterPrimitives(types)>
     <#local genericString = "">
@@ -116,9 +116,9 @@
 
 <#function otherParametersToTarget target = lambda other1 = "" other2 = "" other3 = "" other4 = "">
     <#assign copy = LambdaUtils.copy(target)> <#-- copy lambda as we will change its input arguments -->
-    <#if other1?has_content>${copy.setInputOneType(other1)}</#if>
-    <#if other2?has_content>${copy.setInputTwoType(other2)}</#if>
-    <#if other3?has_content>${copy.setInputThreeType(other3)}</#if>
-    <#if other4?has_content>${copy.setReturnType(other4)}</#if>
+    <#if other1?has_content && copy.getFirstInputType()?has_content>${copy.getFirstInputType().setTypeName(other1)}</#if>
+    <#if other2?has_content && copy.getSecondInputType()?has_content>${copy.getSecondInputType().setTypeName(other2)}</#if>
+    <#if other3?has_content && copy.getThirdInputType()?has_content>${copy.getThirdInputType().setTypeName(other3)}</#if>
+    <#if other4?has_content && copy.getReturnType()?has_content>${copy.getReturnType().setTypeName(other4)}</#if>
     <#return copy>
 </#function>

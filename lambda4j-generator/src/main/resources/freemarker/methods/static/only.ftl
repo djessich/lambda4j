@@ -1,15 +1,15 @@
 <#-- @formatter:off -->
 <#import "../../utils/types.ftl" as types>
-
+<#-- TODO find a proper way to search for lambda with primitive type first and inclusion of return type -->
 <#-- parse only if lambda arity is greater than 2 -->
 <#if (lambda.arity >= 2)>
     <#-- search for correct input lambda of only method -->
-    <#assign inputLambda = LambdaUtils.search(lambda.type, 1, lambda.primitive, lambda.throwable)>
+    <#assign inputLambda = LambdaUtils.searchByReturnType(lambda.type, 1, lambda.returnType, lambda.throwable)>
     <#-- set a list of textual representation for numbers -->
     <#assign numbers = ["first", "second", "third"]>
     <#-- set argument lists -->
-    <#assign argumentTypes = [lambda.inputOneType!"", lambda.inputTwoType!"", lambda.inputThreeType!""]>
-    <#assign argumentNames = [types.buildParameterName(lambda.inputOneType!""), types.buildParameterName(lambda.inputTwoType!""),types.buildParameterName(lambda.inputThreeType!"")]>
+    <#assign argumentTypes = [lambda.firstInputType!"", lambda.secondInputType!"", lambda.thirdInputType!""]>
+    <#assign argumentNames = [types.buildParameterName(lambda.firstInputType!""), types.buildParameterName(lambda.secondInputType!""),types.buildParameterName(lambda.thirdInputType!"")]>
     <#-- loop over range (which depends on arity) and print only method -->
     <#list 0..!lambda.arity as current>
         <#assign number = numbers[current?index]>
@@ -31,7 +31,7 @@
 <#include "../../javadoc/throwsNullPointerException.ftl">
  */
 ${annotation.nonnull}
-static ${genericParameterTypeString} ${lambda.name}${genericParameterTypeString} only${capitalizedNumber}(${annotation.nonnull} final ${inputLambda.name}${types.buildGenericParameterTypeString(inputLambda, argumentType)} ${lambda.type.simpleName}) {
+static ${genericParameterTypeString} ${lambda.name}${genericParameterTypeString} only${capitalizedNumber}(${annotation.nonnull} final ${inputLambda.name}${types.buildGenericParameterTypeStringWithErasure(inputLambda, argumentType)} ${lambda.type.simpleName}) {
     Objects.requireNonNull(${lambda.type.simpleName});
     return (${parameterNameString}) -> ${lambda.type.simpleName}.${lambda.type.method}(${argumentName});
 }

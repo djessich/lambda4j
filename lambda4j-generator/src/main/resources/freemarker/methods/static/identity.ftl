@@ -14,7 +14,7 @@
  * @return A {@code  ${lambda.name}} that always returns its input argument
  */
 ${annotation.nonnull}
-static ${lambda.name} identity() {
+static ${lambda.name}${genericParameterTypeString} identity() {
     return (${parameterNameString}) -> ${parameterNameString};
 }
 </#macro>

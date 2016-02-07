@@ -22,6 +22,7 @@ import at.gridtec.lambda4j.generator.entities.TypeEntity;
 
 import org.apache.commons.lang3.ClassUtils;
 import org.apache.commons.lang3.SerializationUtils;
+import org.apache.commons.lang3.StringUtils;
 
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
@@ -171,6 +172,7 @@ public final class LambdaUtils {
      * @throws NullPointerException If given lambda type is {@code null}
      * @throws IllegalArgumentException If given lambda arity is < 0
      */
+    // TODO do we really need lambda type
     public static Lambda searchByFirstInputAndReturnType(@Nonnull final LambdaTypeEnum type, @Nonnegative int arity,
             @Nullable final TypeEntity firstInputType, @Nullable final TypeEntity returnType, boolean isThrowable) {
         // Check arguments
@@ -178,12 +180,30 @@ public final class LambdaUtils {
         if (arity < 0) {
             throw new IllegalArgumentException("arity must be greater than 0");
         }
-
         // Find lambda and return it if such or null
         return LambdaCache.getInstance()
                 .getLambdas()
                 .stream()
                 .filter(l -> l.getType().equals(type))
+                .filter(l -> l.getArity() == arity)
+                .filter(l -> l.getFirstInputType() == null || l.getFirstInputType().equals(firstInputType))
+                .filter(l -> l.getReturnType() == null || l.getReturnType().equals(returnType))
+                .filter(l -> l.isThrowable() == isThrowable)
+                .findFirst()
+                .orElse(null);
+    }
+
+    // TODO do javadoc
+    public static Lambda searchByFirstInputAndReturnType(@Nonnegative int arity,
+            @Nullable final TypeEntity firstInputType, @Nullable final TypeEntity returnType, boolean isThrowable) {
+        // Check arguments
+        if (arity < 0) {
+            throw new IllegalArgumentException("arity must be greater than 0");
+        }
+        // Find lambda and return it if such or null
+        return LambdaCache.getInstance()
+                .getLambdas()
+                .stream()
                 .filter(l -> l.getArity() == arity)
                 .filter(l -> l.getFirstInputType() == null || l.getFirstInputType().equals(firstInputType))
                 .filter(l -> l.getReturnType() == null || l.getReturnType().equals(returnType))
@@ -411,6 +431,29 @@ public final class LambdaUtils {
                 .orElse(null);
     }
 
+    // TODO testing
+    public static Lambda searchByInputTypesAndReturnType(@Nonnegative int arity,
+            @Nullable final TypeEntity firstInputType, @Nullable final TypeEntity secondInputType,
+            @Nullable final TypeEntity thirdInputType, @Nullable TypeEntity returnType, boolean isThrowable) {
+        // Check arguments
+        if (arity < 0) {
+            throw new IllegalArgumentException("arity must be greater than 0");
+        }
+
+        // Find lambda and return it if such or null
+        return LambdaCache.getInstance()
+                .getLambdas()
+                .stream()
+                .filter(l -> l.getArity() == arity)
+                .filter(l -> l.getFirstInputType() == null || l.getFirstInputType().equals(firstInputType))
+                .filter(l -> l.getSecondInputType() == null || l.getSecondInputType().equals(secondInputType))
+                .filter(l -> l.getThirdInputType() == null || l.getThirdInputType().equals(thirdInputType))
+                .filter(l -> l.getReturnType() == null || l.getReturnType().equals(returnType))
+                .filter(l -> l.isThrowable() == isThrowable)
+                .findFirst()
+                .orElse(null);
+    }
+
     /**
      * Returns the {@link LambdaTypeEnum#COMPARATOR} lambda type.
      *
@@ -576,6 +619,87 @@ public final class LambdaUtils {
     public static boolean isOfTypeSupplier(@Nonnull final Lambda lambda) {
         Objects.requireNonNull(lambda);
         return isOfType(lambda, LambdaTypeEnum.SUPPLIER);
+    }
+
+    /**
+     * Returns a {@link TypeEntity} referencing a {@code Object} type.
+     *
+     * @return A a {@code TypeEntity} referencing a {@code Object} type.
+     */
+    public static TypeEntity getObjectTypeEntity() {
+        return new TypeEntity(Object.class, "");
+    }
+
+    /**
+     * Returns a {@link TypeEntity} referencing a {@code boolean} type.
+     *
+     * @return A a {@code TypeEntity} referencing a {@code boolean} type.
+     */
+    public static TypeEntity getBooleanTypeEntity() {
+        return new TypeEntity(boolean.class, StringUtils.capitalize(boolean.class.getSimpleName()));
+    }
+
+    /**
+     * Returns a {@link TypeEntity} referencing a {@code byte} type.
+     *
+     * @return A a {@code TypeEntity} referencing a {@code byte} type.
+     */
+    public static TypeEntity getByteTypeEntity() {
+        return new TypeEntity(byte.class, StringUtils.capitalize(byte.class.getSimpleName()));
+    }
+
+    /**
+     * Returns a {@link TypeEntity} referencing a {@code char} type.
+     *
+     * @return A a {@code TypeEntity} referencing a {@code char} type.
+     */
+    public static TypeEntity getCharTypeEntity() {
+        return new TypeEntity(char.class, StringUtils.capitalize(char.class.getSimpleName()));
+    }
+
+    /**
+     * Returns a {@link TypeEntity} referencing a {@code double} type.
+     *
+     * @return A a {@code TypeEntity} referencing a {@code double} type.
+     */
+    public static TypeEntity getDoubleTypeEntity() {
+        return new TypeEntity(double.class, StringUtils.capitalize(double.class.getSimpleName()));
+    }
+
+    /**
+     * Returns a {@link TypeEntity} referencing a {@code float} type.
+     *
+     * @return A a {@code TypeEntity} referencing a {@code float} type.
+     */
+    public static TypeEntity getFloatTypeEntity() {
+        return new TypeEntity(float.class, StringUtils.capitalize(float.class.getSimpleName()));
+    }
+
+    /**
+     * Returns a {@link TypeEntity} referencing a {@code int} type.
+     *
+     * @return A a {@code TypeEntity} referencing a {@code int} type.
+     */
+    public static TypeEntity getIntTypeEntity() {
+        return new TypeEntity(int.class, StringUtils.capitalize(int.class.getSimpleName()));
+    }
+
+    /**
+     * Returns a {@link TypeEntity} referencing a {@code long} type.
+     *
+     * @return A a {@code TypeEntity} referencing a {@code long} type.
+     */
+    public static TypeEntity getLongTypeEntity() {
+        return new TypeEntity(long.class, StringUtils.capitalize(long.class.getSimpleName()));
+    }
+
+    /**
+     * Returns a {@link TypeEntity} referencing a {@code short} type.
+     *
+     * @return A a {@code TypeEntity} referencing a {@code short} type.
+     */
+    public static TypeEntity getShortTypeEntity() {
+        return new TypeEntity(short.class, StringUtils.capitalize(short.class.getSimpleName()));
     }
 
     /**

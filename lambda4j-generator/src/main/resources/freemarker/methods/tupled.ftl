@@ -1,11 +1,11 @@
 <#-- @formatter:off -->
 <#import "../utils/helpers.ftl" as helpers>
 <#import "../utils/tuple.ftl" as tuple>
-
+<#-- TODO find correct output lambda for BiObjByteFunction -> which is ObjByteFunction -->
 <#-- parse only if lambda has arity greater than 2 and at least two generics -->
-<#if (lambda.arity >= 2)  && !helpers.isPrimitive(lambda.inputOneType!"") && !helpers.isPrimitive(lambda.inputTwoType!"")>
+<#if (lambda.arity >= 2)  && !helpers.isPrimitive(lambda.firstInputType!"") && !helpers.isPrimitive(lambda.secondInputType!"")>
     <#-- search for correct output lambda of tupled method -->
-    <#assign outputLambda = LambdaUtils.search(lambda.type, 1, lambda.primitive, lambda.throwable)>
+    <#assign outputLambda = LambdaUtils.searchByReturnType(lambda.type, 1, lambda.returnType, lambda.throwable)>
     <#-- if lambda does not have primitive return type, generate generic return for tupled method -->
     <#if !helpers.isPrimitive(outputLambda.returnType)>
         <#assign return = ", ${lambda.returnType}">

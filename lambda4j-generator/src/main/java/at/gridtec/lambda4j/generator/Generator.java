@@ -117,14 +117,14 @@ public final class Generator {
         Processor inputTypeTwoProcessor = new InputTypeTwoProcessor();
         Processor inputTypeThreeProcessor = new InputTypeThreeProcessor();
         Processor changeOperatorProcessor = new ChangeOperatorProcessor();
-        Processor primitveProcessor = new PrimitiveProcessor();
+        //        Processor primitveProcessor = new PrimitiveProcessor();
         Processor throwableProcessor = new ThrowableProcessor();
         Processor nameProcessor = new NameProcessor();
 
         // Build chain turned around (start adding last step first)
         ProcessorChain.getInstance().addProcessor(nameProcessor);
         ProcessorChain.getInstance().addProcessor(throwableProcessor);
-        ProcessorChain.getInstance().addProcessor(primitveProcessor);
+        //        ProcessorChain.getInstance().addProcessor(primitveProcessor);
         ProcessorChain.getInstance().addProcessor(changeOperatorProcessor);
         ProcessorChain.getInstance().addProcessor(inputTypeThreeProcessor);
         ProcessorChain.getInstance().addProcessor(inputTypeTwoProcessor);

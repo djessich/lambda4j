@@ -1,13 +1,14 @@
 <#-- @formatter:off -->
 <#import "../utils/filters.ftl" as filters>
+<#import "../utils/helpers.ftl" as helpers>
 <#import "../utils/types.ftl" as types>
 
 <#-- parse only if lambda is primitive -->
-<#if lambda.primitive>
+<#if helpers.isPrimitive(lambda.firstInputType) || helpers.isPrimitive(lambda.secondInputType) || helpers.isPrimitive(lambda.thirdInputType)>
     <#-- build a generic parameter type string including primitives also -->
     <#assign genericParameterTypeStringWithPrimitives = .namespace.buildGenericParameterTypeStringWithPrimitives()>
     <#-- get output lambda using a search for lambda type, arity, primitive and throwable flag -->
-    <#assign outputLambda = LambdaUtils.search(lambda.type, lambda.arity, false, lambda.throwable)>
+    <#assign outputLambda = LambdaUtils.searchByReturnType(lambda.type, lambda.arity, lambda.returnType, lambda.throwable)>
     <#-- print boxed method -->
     <@.namespace.boxedMethod genericParameterTypeStringWithPrimitives outputLambda/>
 </#if>
@@ -32,7 +33,7 @@ default ${outputLambda.name}${genericParameterTypeStringWithPrimitives} boxed() 
 
 <#-- a helper function to build a generic parameter type string with primitives for given target lambda -->
 <#function buildGenericParameterTypeStringWithPrimitives target = lambda>
-    <#local parameters = [target.inputOneType!"", target.inputTwoType!"", target.inputThreeType!"", target.returnType!""]>
+    <#local parameters = [target.firstInputType!"", target.secondInputType!"", target.thirdInputType!"", target.returnType!""]>
     <#local parameters = filters.filterEmpties(parameters)>
     <#local genericString = "">
     <#if (types?has_content)>

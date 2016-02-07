@@ -25,6 +25,7 @@ public class TypeEntity implements Serializable {
     private Class<?> typeClass;
 
     private String typeName;
+    private String typeSimpleName;
 
     private boolean isPrimitive;
 
@@ -35,6 +36,7 @@ public class TypeEntity implements Serializable {
     public TypeEntity(final Class<?> typeClass, final String typeName) {
         this.typeClass = typeClass;
         this.typeName = typeName;
+        this.typeSimpleName = typeClass.getSimpleName();
         this.isPrimitive = typeClass.isPrimitive();
     }
 
@@ -62,35 +64,6 @@ public class TypeEntity implements Serializable {
         isPrimitive = primitive;
     }
 
-    //    @Override
-    //    public boolean equals(Object o) {
-    //        if (this == o) {
-    //            return true;
-    //        }
-    //        if (o == null || getClass() != o.getClass()) {
-    //            return false;
-    //        }
-    //
-    //        TypeEntity entity = (TypeEntity) o;
-    //
-    //        if (isPrimitive != entity.isPrimitive) {
-    //            return false;
-    //        }
-    //        if (!typeClass.equals(entity.typeClass)) {
-    //            return false;
-    //        }
-    //        return typeName.equals(entity.typeName);
-    //
-    //    }
-    //
-    //    @Override
-    //    public int hashCode() {
-    //        int result = typeClass.hashCode();
-    //        result = 31 * result + typeName.hashCode();
-    //        result = 31 * result + (isPrimitive ? 1 : 0);
-    //        return result;
-    //    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -113,10 +86,11 @@ public class TypeEntity implements Serializable {
 
     @Override
     public String toString() {
-        return "TypeEntity{" +
-                "typeClass=" + typeClass +
-                ", typeName='" + typeName + '\'' +
-                ", isPrimitive=" + isPrimitive +
-                '}';
+        //        return "TypeEntity{" +
+        //                "typeClass=" + typeClass +
+        //                ", typeName='" + typeName + '\'' +
+        //                ", isPrimitive=" + isPrimitive +
+        //                '}';
+        return this.typeName;
     }
 }
