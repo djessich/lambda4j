@@ -6,11 +6,16 @@
     <#-- get input consumer lambda using a search for the global lambdas return type; throwable flag will also be handled -->
     <#assign inputLambda = LambdaUtils.searchByFirstInputType(LambdaUtils.getConsumerType(), 1, lambda.returnType, lambda.throwable)>
     <#-- get output consumer lambda using a search for all the input types of global lambda; throwable flag will also be handled -->
-    <#assign outputLambda = LambdaUtils.searchByInputTypes(LambdaUtils.getConsumerType(), lambda.arity, lambda.firstInputType, lambda.secondInputType, lambda.thirdInputType, lambda.throwable)>
+    <#if LambdaUtils.isOfTypeSupplier(lambda)>
+        <#assign outputLambda = LambdaUtils.searchByFirstInputType(LambdaUtils.getConsumerType(), 1, Object, lambda.throwable)>
+        ${outputLambda.getFirstInputType().setTypeName("Void")}
+    <#else>
+        <#assign outputLambda = LambdaUtils.searchByInputTypes(LambdaUtils.getConsumerType(), lambda.arity, lambda.firstInputType, lambda.secondInputType, lambda.thirdInputType, lambda.throwable)>
+    </#if>
     <#-- print consume method -->
     <@.namespace.consumeMethod inputLambda outputLambda/>
 </#if>
-
+<#-- TODO implement special javadoc for suppliers -->
 <#-- a helper macro to centralize consume method and to avoid unnecessary indenting -->
 <#macro consumeMethod inputLambda outputLambda>
 /**

@@ -1,6 +1,6 @@
 <#-- @formatter:off -->
 <#import "../../utils/types.ftl" as types>
-<#-- TODO find a proper way to search for lambda with primitive type first and inclusion of return type -->
+<#-- TODO find a proper way to search for lambda with primitive type first and inclusion of return type (Consumer<? super Char> -> CharConsumer) -->
 <#-- parse only if lambda arity is greater than 2 -->
 <#if (lambda.arity >= 2)>
     <#-- search for correct input lambda of only method -->

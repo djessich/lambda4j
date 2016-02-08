@@ -15,6 +15,9 @@
  */
 package at.gridtec.lambda4j.predicates;
 
+import at.gridtec.lambda4j.function.TriFunction;
+import at.gridtec.lambda4j.function.primitives.BooleanFunction;
+
 import org.apache.commons.lang3.tuple.Triple;
 
 import javax.annotation.Nonnegative;
@@ -263,6 +266,12 @@ public interface TriPredicate<T, U, V> {
     default TriPredicate<T, U, V> and(@Nonnull final TriPredicate<? super T, ? super U, ? super V> other) {
         Objects.requireNonNull(other);
         return (t, u, v) -> test(t, u, v) && other.test(t, u, v);
+    }
+
+    @Nonnull
+    default <S> TriFunction<T, U, V, S> andThen(@Nonnull final BooleanFunction<? extends S> after) {
+        Objects.requireNonNull(after);
+        return (t, u, v) -> after.apply(test(t, u, v));
     }
 
     /**

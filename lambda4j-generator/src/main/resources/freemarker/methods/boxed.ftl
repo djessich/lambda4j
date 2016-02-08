@@ -3,7 +3,8 @@
 <#import "../utils/helpers.ftl" as helpers>
 <#import "../utils/types.ftl" as types>
 
-<#-- parse only if lambda is primitive -->
+<#-- TODO all primitive lambdas should have a boxed method (f.e. ByteFunction, CharSupplier, ...) -->
+<#-- parse only if lambda is primitive or a supplier -->
 <#if helpers.isPrimitive(lambda.firstInputType) || helpers.isPrimitive(lambda.secondInputType) || helpers.isPrimitive(lambda.thirdInputType)>
     <#-- build a generic parameter type string including primitives also -->
     <#assign genericParameterTypeStringWithPrimitives = .namespace.buildGenericParameterTypeStringWithPrimitives()>

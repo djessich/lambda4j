@@ -1,42 +1,51 @@
 <#-- @formatter:off -->
 <#import "../utils/helpers.ftl" as helpers>
 <#import "../utils/types.ftl" as types>
-
+<#-- TODO predicates won't work so they are excluded, but logical assumptions should allow this -->
+<#-- TODO allow suppliers to do sequence here @see Consumer#andThen for sequenctial example-->
+<#-- parse only if lambda is not of type supplier and predicate -->
+<#if !LambdaUtils.isOfTypeSupplier(lambda) && !LambdaUtils.isOfTypePredicate(lambda)>
 <#-- search for correct input lambdas depending on lambda arity -->
 <#if (lambda.arity >= 1)>
-    <#assign inputLambda1 = LambdaUtils.searchByReturnType(lambda.type, 1, lambda.firstInputType,  lambda.throwable)>
+    <#assign type = (lambda.firstInputType == boolean)?then(LambdaUtils.getPredicateType(), LambdaUtils.getFunctionType())>
+    <#assign inputLambda1 = LambdaUtils.searchByFirstInputAndReturnType(type, 1, Object, lambda.firstInputType, lambda.throwable)>
 </#if>
 <#if (lambda.arity >= 2)>
-    <#assign inputLambda2 = LambdaUtils.searchByReturnType(lambda.type, 1, lambda.secondInputType,  lambda.throwable)>
+    <#assign type = (lambda.secondInputType == boolean)?then(LambdaUtils.getPredicateType(), LambdaUtils.getFunctionType())>
+    <#assign inputLambda2 = LambdaUtils.searchByFirstInputAndReturnType(type, 1, Object, lambda.secondInputType, lambda.throwable)>
 </#if>
 <#if (lambda.arity >= 3)>
-    <#assign inputLambda3 = LambdaUtils.searchByReturnType(lambda.type, 1, lambda.thirdInputType,  lambda.throwable)>
+    <#assign type = (lambda.thirdInputType == boolean)?then(LambdaUtils.getPredicateType(), LambdaUtils.getFunctionType())>
+    <#assign inputLambda3 = LambdaUtils.searchByFirstInputAndReturnType(type, 1, Object, lambda.thirdInputType, lambda.throwable)>
 </#if>
-<#-- find correct output lambda which is able to handle object inputs only and returns object output -->
-<#assign outputLambda = LambdaUtils.searchByInputTypesAndReturnType(lambda.type, lambda.arity, Object, Object, Object, Object, lambda.throwable)>
-
-<@.namespace.composeMethod "A" "B" "C" inputLambda1 inputLambda2 inputLambda3 outputLambda/>
+<#-- find correct output lambda which is able to handle object inputs only and returns lambda output, unless consumers which do not have outputs -->
+<#if LambdaUtils.isOfTypeConsumer(lambda)>
+    <#assign outputLambda = LambdaUtils.searchByInputTypes(LambdaUtils.getConsumerType(), lambda.arity, Object, Object, Object, lambda.throwable)>
+<#else>
+    <#assign outputLambda = LambdaUtils.searchByInputTypesAndReturnType(lambda.arity, Object, Object, Object, lambda.returnType, lambda.throwable)>
+</#if>
+<#-- print compose method -->
+<@.namespace.composeMethod "A" "B" "C" outputLambda inputLambda1 inputLambda2 inputLambda3/>
+</#if>
 
 <#-- a helper macro to centralize compose method and to avoid unnecessary indenting -->
-<#macro composeMethod generic1 generic2 generic3 inputLambda1 = "" inputLambda2 = "" inputLambda3 = "" outputLambda = "">
+<#macro composeMethod generic1 generic2 generic3 outputLambda inputLambda1 = "" inputLambda2 = "" inputLambda3 = "">
 /**
  * Returns a composed {@link ${outputLambda.name}} that first applies the {@code before} ${.namespace.javadocInputLambdaSimpleNamePlural()} to its input, and
  * then applies this ${lambda.type.simpleName} to the result.
 <#if !lambda.throwable>
- * If evaluation of either function throws an exception, it is relayed to the caller of the composed function.
+ * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
 </#if>
  *
-<@.namespace.javadocGenericInputComposeMethod generic1 generic2 generic3 inputLambda1 inputLambda2 inputLambda3 outputLambda/>
+<@.namespace.javadocGenericInputComposeMethod generic1 generic2 generic3 outputLambda inputLambda1 inputLambda2 inputLambda3/>
 <@.namespace.javadocArgumentInputComposeMethod inputLambda1 inputLambda2 inputLambda3/>
  * @return A composed {@code ${outputLambda.name}} that first applies the {@code before} ${.namespace.javadocInputLambdaSimpleNamePlural()} to its input, and
  * then applies this ${lambda.type.simpleName} to the result.
 <#include "../javadoc/throwsNullPointerException.ftl">
+ * @implNote The input argument of this method is able to handle every type.
  */
 ${annotation.nonnull}
 default ${.namespace.buildGenericInputTypeString(outputLambda, generic1, generic2, generic3)} ${outputLambda.name}${types.buildGenericParameterTypeString(outputLambda, generic1, generic2, generic3)} compose(${.namespace.inputLambdasString(inputLambda1, inputLambda2, inputLambda3)}) {
-    <#--${.namespace.inputLambdaChecking(1 inputLambda1)}-->
-    <#--${.namespace.inputLambdaChecking(2 inputLambda2)}-->
-    <#--${.namespace.inputLambdaChecking(3 inputLambda3)}-->
     ${.namespace.inputLambdaChecking(inputLambda1, inputLambda2, inputLambda3)}
     return (${types.buildParameterNameString(outputLambda, generic1, generic2, generic3)}) -> ${lambda.type.method}(${.namespace.callLambdasString(inputLambda1, inputLambda2, inputLambda3)});
 }
@@ -52,7 +61,7 @@ default ${.namespace.buildGenericInputTypeString(outputLambda, generic1, generic
 </#function>
 
 <#-- prints javadoc generic input parameters of compose method -->
-<#macro javadocGenericInputComposeMethod generic1 generic2 generic3 inputLambda1 = "" inputLambda2 = "" inputLambda3 = "" outputLambda = "">
+<#macro javadocGenericInputComposeMethod generic1 generic2 generic3 outputLambda inputLambda1 = "" inputLambda2 = "" inputLambda3 = "">
 <#if (lambda.arity >= 1) && inputLambda1?has_content>
  * @param <${generic1}> The type of the argument to the ${helpers.first()} given ${inputLambda1.type.simpleName}, and of composed ${outputLambda.type.simpleName}
 </#if>

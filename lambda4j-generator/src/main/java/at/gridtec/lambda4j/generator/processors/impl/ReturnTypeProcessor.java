@@ -82,9 +82,12 @@ public final class ReturnTypeProcessor extends Processor {
         else {
             // Loop over left primitives without boolean (we do not like the other lambda types to return boolean,
             // as this is only allowed for predicates)
-            final List<Class<?>> primitivesWithoutBoolean = PRIMITIVES.stream()
-                    .filter(clazz -> !clazz.equals(boolean.class))
-                    .collect(Collectors.toList());
+            List<Class<?>> primitivesWithoutBoolean = PRIMITIVES;
+            if (!LambdaUtils.isOfTypeSupplier(lambda)) {
+                primitivesWithoutBoolean = PRIMITIVES.stream()
+                        .filter(clazz -> !clazz.equals(boolean.class))
+                        .collect(Collectors.toList());
+            }
             for (final Class<?> typeClass : primitivesWithoutBoolean) {
                 final Lambda primitive = LambdaUtils.copy(lambda);
                 TypeEntity type = new TypeEntity(typeClass, StringUtils.capitalize(typeClass.getSimpleName()));

@@ -2,8 +2,9 @@
 <#import "../utils/helpers.ftl" as helpers>
 <#import "../utils/types.ftl" as types>
 
-<#-- parse only if lambda is primitive -->
-<#if helpers.isPrimitiveLambda(lambda)>
+<#-- TODO predicates won't work so they are excluded, but logical assumptions should allow this -->
+<#-- parse only if lambda is not of type predicate or consumer and is primitive -->
+<#if !LambdaUtils.isOfTypePredicate(lambda) && !LambdaUtils.isOfTypeConsumer(lambda) && helpers.isPrimitiveLambda(lambda)>
     <#assign primitives = {
         "boolean":boolean,
         "byte":byte,
