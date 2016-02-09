@@ -73,7 +73,7 @@ public final class ChangeOperatorProcessor extends Processor {
             copy.setType(LambdaTypeEnum.OPERATOR);
 
             // If lambda is a generical operator, we need to change its input and return type names
-            if (!lambda.getReturnType().isPrimitive()) {
+            if (!lambda.getReturnType().isTypePrimitive()) {
                 copy.getReturnType().setTypeName("T");
                 if (copy.getArity() >= 1) {
                     copy.getFirstInputType().setTypeName("T");

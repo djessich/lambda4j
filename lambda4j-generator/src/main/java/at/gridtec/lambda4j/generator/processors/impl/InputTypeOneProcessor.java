@@ -20,8 +20,6 @@ import at.gridtec.lambda4j.generator.entities.TypeEntity;
 import at.gridtec.lambda4j.generator.processors.Processor;
 import at.gridtec.lambda4j.generator.util.LambdaUtils;
 
-import org.apache.commons.lang.StringUtils;
-
 import javax.annotation.Nonnull;
 import java.util.LinkedList;
 import java.util.List;
@@ -70,7 +68,7 @@ public final class InputTypeOneProcessor extends Processor {
                 // Apply primitive input for arg 1
                 for (final Class<?> typeClass : PRIMITIVES) {
                     final Lambda primitive = LambdaUtils.copy(lambda);
-                    type = new TypeEntity(typeClass, StringUtils.capitalize(typeClass.getSimpleName()));
+                    type = new TypeEntity(typeClass, typeClass.getSimpleName());
                     primitive.setFirstInputType(type);
                     genLambdas.add(primitive);
                 }

@@ -4,7 +4,7 @@
 
 <#-- if lambdas arity is greater than 1 then write javadoc param -->
 <#if (lambda.arity >= 1)>
- * @param ${types.buildParameterName(lambda.firstInputType)} The ${helpers.first()} argument to the ${lambda.type.simpleName}
+ * @param ${types.buildParameterName(lambda.firstInputType)} The ${helpers.first()}argument to the ${lambda.type.simpleName}
 </#if>
 <#-- if lambdas arity is greater than 2 then write javadoc param -->
 <#if (lambda.arity >= 2)>

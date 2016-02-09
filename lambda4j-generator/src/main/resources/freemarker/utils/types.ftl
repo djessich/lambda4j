@@ -1,7 +1,7 @@
 <#import "./filters.ftl" as filters>
 <#import "./helpers.ftl" as helpers>
 
-<#function buildParameter param = "">
+<#function buildParameter param>
     <#local genericString = "">
     <#if param?has_content>
         <#local genericString = .namespace.buildParameterType(param) + " " + .namespace.buildParameterName(param)>
@@ -9,21 +9,21 @@
     <#return genericString>
 </#function>
 
-<#function buildParameterType param = "">
+<#function buildParameterType param>
     <#local genericString = "">
     <#if param?has_content>
-        <#local genericString = genericString + param>
+        <#local genericString = genericString + param.typeName>
     </#if>
     <#return genericString>
 </#function>
 
-<#function buildParameterName param = "">
+<#function buildParameterName param>
     <#local genericString = "">
     <#if param?has_content>
-        <#if helpers.isPrimitive(param)>
+        <#if param.typePrimitive>
             <#local genericString = genericString + "value">
         <#else>
-            <#local genericString = genericString + param?lower_case>
+            <#local genericString = genericString + param.typeName?lower_case>
         </#if>
     </#if>
     <#return genericString>

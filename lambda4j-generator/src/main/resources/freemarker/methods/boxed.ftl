@@ -34,7 +34,7 @@ default ${outputLambda.name}${genericParameterTypeStringWithPrimitives} boxed() 
 
 <#-- a helper function to build a generic parameter type string with primitives for given target lambda -->
 <#function buildGenericParameterTypeStringWithPrimitives target = lambda>
-    <#local parameters = [target.firstInputType!"", target.secondInputType!"", target.thirdInputType!"", target.returnType!""]>
+    <#local parameters = [target.firstInputType!"", target.secondInputType!"", target.thirdInputType!""]>
     <#local parameters = filters.filterEmpties(parameters)>
     <#local genericString = "">
     <#if (types?has_content)>

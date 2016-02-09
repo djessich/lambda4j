@@ -1,6 +1,6 @@
 <#-- checks if given type represents a primitive type -->
 <#function isPrimitive type = "">
-    <#return (type?hasContent) && LambdaUtils.isPrimitiveType(type)>
+    <#return (type?hasContent) && type.typePrimitive>
 </#function>
 
 <#-- checks if the given lambda has primitive types -->
@@ -13,8 +13,5 @@
 
 <#-- prints number string for first argument if lambdas arity is greater than 1 -->
 <#function first target = lambda>
-    <#if (target.arity > 1)>
-        <#return "first">
-    </#if>
-    <#return "">
+    <#return (target.arity > 1)?then("first ", "")>
 </#function>

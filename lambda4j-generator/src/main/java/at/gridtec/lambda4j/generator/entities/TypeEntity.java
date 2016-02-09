@@ -25,9 +25,10 @@ public class TypeEntity implements Serializable {
     private Class<?> typeClass;
 
     private String typeName;
+
     private String typeSimpleName;
 
-    private boolean isPrimitive;
+    private boolean typePrimitive;
 
     public TypeEntity() {
 
@@ -37,7 +38,7 @@ public class TypeEntity implements Serializable {
         this.typeClass = typeClass;
         this.typeName = typeName;
         this.typeSimpleName = typeClass.getSimpleName();
-        this.isPrimitive = typeClass.isPrimitive();
+        this.typePrimitive = typeClass.isPrimitive();
     }
 
     public Class<?> getTypeClass() {
@@ -56,12 +57,20 @@ public class TypeEntity implements Serializable {
         this.typeName = typeName;
     }
 
-    public boolean isPrimitive() {
-        return isPrimitive;
+    public String getTypeSimpleName() {
+        return typeSimpleName;
     }
 
-    public void setPrimitive(boolean primitive) {
-        isPrimitive = primitive;
+    public void setTypeSimpleName(String typeSimpleName) {
+        this.typeSimpleName = typeSimpleName;
+    }
+
+    public boolean isTypePrimitive() {
+        return typePrimitive;
+    }
+
+    public void setTypePrimitive(boolean typePrimitive) {
+        this.typePrimitive = typePrimitive;
     }
 
     @Override
@@ -89,7 +98,7 @@ public class TypeEntity implements Serializable {
         //        return "TypeEntity{" +
         //                "typeClass=" + typeClass +
         //                ", typeName='" + typeName + '\'' +
-        //                ", isPrimitive=" + isPrimitive +
+        //                ", typePrimitive=" + typePrimitive +
         //                '}';
         return this.typeName;
     }

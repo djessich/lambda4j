@@ -45,6 +45,7 @@ import java.io.Writer;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * Generator main file.
@@ -58,7 +59,12 @@ public class Generator2 {
         prepareChain();
 
         // Run chain and create all lambda descriptors
-        final List<Lambda> lambdas = ProcessorChain.getInstance().invoke();
+        final List<Lambda> lambdas = ProcessorChain.getInstance()
+                .invoke()
+                .stream()
+                .filter(lambda -> !lambda.getType().equals(LambdaTypeEnum.COMPARATOR))
+                .filter(lambda -> !lambda.getType().equals(LambdaTypeEnum.RUNNABLE))
+                .collect(Collectors.toList());
         LambdaCache.getInstance().setLambdas(lambdas);
 
         try (OutputStream ostream = new FileOutputStream("names.txt")) {
@@ -74,8 +80,8 @@ public class Generator2 {
 
         System.out.println(lambdas.size());
         System.out.println(LambdaCache.getInstance().getLambdas().size());
-        final Lambda lambda = lambdas.stream().filter(p -> p.getName().equals("BiObjByteFunction")).findFirst().get();
-        System.out.println(lambda);
+        //        final Lambda lambda = lambdas.stream().filter(p -> p.getName().equals("BiObjByteFunction")).findFirst().get();
+        //        System.out.println(lambda);
 
         // Create your Configuration instance, and specify if up to what FreeMarker
         // version (here 2.3.24) do you want to apply the fixes that are not 100%
@@ -99,18 +105,22 @@ public class Generator2 {
         TemplateHashModel staticModels = wrapper.getStaticModels();
         TemplateHashModel lambdaUtilsStatics = (TemplateHashModel) staticModels.get(LambdaUtils.class.getName());
 
-        // Prepare context for Freemarker
-        Map<String, Object> context = new HashMap<>();
-        context.put("lambda", lambda);
-        context.put("annotation", new AnnotationEntity());
-        context.put("LambdaUtils", lambdaUtilsStatics);
+        for (final Lambda lambda : LambdaCache.getInstance().getLambdas()) {
+            System.out.println("Processing the following lambda: " + lambda);
 
-        // Get Freemarker template
-        Template temp = cfg.getTemplate("lambda.ftl");
+            // Prepare context for Freemarker
+            Map<String, Object> context = new HashMap<>();
+            context.put("lambda", lambda);
+            context.put("annotation", new AnnotationEntity());
+            context.put("LambdaUtils", lambdaUtilsStatics);
 
-        // Merge template with lambda data model
-        Writer out = new FileWriter("target/" + lambda.getName() + ".java");
-        temp.process(context, out);
+            // Get Freemarker template
+            Template temp = cfg.getTemplate("lambda.ftl");
+
+            // Merge template with lambda data model
+            Writer out = new FileWriter("target/" + lambda.getName() + ".java");
+            temp.process(context, out);
+        }
     }
 
     /**

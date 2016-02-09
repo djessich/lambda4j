@@ -12,7 +12,7 @@
  * Creates a {@link ${lambda.name}} which always returns a given value.
  *
 <#include "../../javadoc/paramGenericInput.ftl">
- * @param r The return value for the constant
+ * @param ${types.buildParameterName(lambda.returnType)} The return value for the constant
  * @return A {@code ${lambda.name}} which always returns a given value.
  */
 ${annotation.nonnull}

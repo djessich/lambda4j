@@ -22,7 +22,6 @@ import at.gridtec.lambda4j.generator.entities.TypeEntity;
 
 import org.apache.commons.lang3.ClassUtils;
 import org.apache.commons.lang3.SerializationUtils;
-import org.apache.commons.lang3.StringUtils;
 
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
@@ -116,6 +115,25 @@ public final class LambdaUtils {
                 .getLambdas()
                 .stream()
                 .filter(l -> l.getType().equals(type))
+                .filter(l -> l.getArity() == arity)
+                .filter(l -> l.getReturnType() == null || l.getReturnType().equals(returnType))
+                .filter(l -> l.isThrowable() == isThrowable)
+                .findFirst()
+                .orElse(null);
+    }
+
+    // TODO testing -> Javadoc
+    public static Lambda searchByReturnType(@Nonnegative int arity, @Nullable final TypeEntity returnType,
+            boolean isThrowable) {
+        // Check arguments
+        if (arity < 0) {
+            throw new IllegalArgumentException("arity must be greater than 0");
+        }
+
+        // Find lambda and return it if such or null
+        return LambdaCache.getInstance()
+                .getLambdas()
+                .stream()
                 .filter(l -> l.getArity() == arity)
                 .filter(l -> l.getReturnType() == null || l.getReturnType().equals(returnType))
                 .filter(l -> l.isThrowable() == isThrowable)
@@ -627,7 +645,7 @@ public final class LambdaUtils {
      * @return A a {@code TypeEntity} referencing a {@code Object} type.
      */
     public static TypeEntity getObjectTypeEntity() {
-        return new TypeEntity(Object.class, "");
+        return new TypeEntity(Object.class, "Object");
     }
 
     /**
@@ -636,7 +654,7 @@ public final class LambdaUtils {
      * @return A a {@code TypeEntity} referencing a {@code boolean} type.
      */
     public static TypeEntity getBooleanTypeEntity() {
-        return new TypeEntity(boolean.class, StringUtils.capitalize(boolean.class.getSimpleName()));
+        return new TypeEntity(boolean.class, boolean.class.getSimpleName());
     }
 
     /**
@@ -645,7 +663,7 @@ public final class LambdaUtils {
      * @return A a {@code TypeEntity} referencing a {@code byte} type.
      */
     public static TypeEntity getByteTypeEntity() {
-        return new TypeEntity(byte.class, StringUtils.capitalize(byte.class.getSimpleName()));
+        return new TypeEntity(byte.class, byte.class.getSimpleName());
     }
 
     /**
@@ -654,7 +672,7 @@ public final class LambdaUtils {
      * @return A a {@code TypeEntity} referencing a {@code char} type.
      */
     public static TypeEntity getCharTypeEntity() {
-        return new TypeEntity(char.class, StringUtils.capitalize(char.class.getSimpleName()));
+        return new TypeEntity(char.class, char.class.getSimpleName());
     }
 
     /**
@@ -663,7 +681,7 @@ public final class LambdaUtils {
      * @return A a {@code TypeEntity} referencing a {@code double} type.
      */
     public static TypeEntity getDoubleTypeEntity() {
-        return new TypeEntity(double.class, StringUtils.capitalize(double.class.getSimpleName()));
+        return new TypeEntity(double.class, double.class.getSimpleName());
     }
 
     /**
@@ -672,7 +690,7 @@ public final class LambdaUtils {
      * @return A a {@code TypeEntity} referencing a {@code float} type.
      */
     public static TypeEntity getFloatTypeEntity() {
-        return new TypeEntity(float.class, StringUtils.capitalize(float.class.getSimpleName()));
+        return new TypeEntity(float.class, float.class.getSimpleName());
     }
 
     /**
@@ -681,7 +699,7 @@ public final class LambdaUtils {
      * @return A a {@code TypeEntity} referencing a {@code int} type.
      */
     public static TypeEntity getIntTypeEntity() {
-        return new TypeEntity(int.class, StringUtils.capitalize(int.class.getSimpleName()));
+        return new TypeEntity(int.class, int.class.getSimpleName());
     }
 
     /**
@@ -690,7 +708,7 @@ public final class LambdaUtils {
      * @return A a {@code TypeEntity} referencing a {@code long} type.
      */
     public static TypeEntity getLongTypeEntity() {
-        return new TypeEntity(long.class, StringUtils.capitalize(long.class.getSimpleName()));
+        return new TypeEntity(long.class, long.class.getSimpleName());
     }
 
     /**
@@ -699,7 +717,7 @@ public final class LambdaUtils {
      * @return A a {@code TypeEntity} referencing a {@code short} type.
      */
     public static TypeEntity getShortTypeEntity() {
-        return new TypeEntity(short.class, StringUtils.capitalize(short.class.getSimpleName()));
+        return new TypeEntity(short.class, short.class.getSimpleName());
     }
 
     /**

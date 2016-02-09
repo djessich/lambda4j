@@ -4,6 +4,7 @@
 <#global parameterNameString = types.buildParameterNameString()>
 <#global genericParameterTypeString = types.buildGenericParameterTypeString()>
 <#global genericParameterTypeStringWithErasure = types.buildGenericParameterTypeStringWithErasure()>
+
 <#global Object = LambdaUtils.getObjectTypeEntity()>
 <#global boolean = LambdaUtils.getBooleanTypeEntity()>
 <#global byte = LambdaUtils.getByteTypeEntity()>
@@ -33,7 +34,6 @@ public interface ${lambda.name}${genericParameterTypeString} {
 <#include "methods/static/alwaysTrue.ftl">
 <#include "methods/static/alwaysFalse.ftl">
 <#include "methods/static/isEqual.ftl">
-<#include "methods/static/isNotEqual.ftl">
 <#--&lt;#&ndash;<#include "methods/static/min.ftl">&ndash;&gt;-->
 <#--&lt;#&ndash;<#include "methods/static/max.ftl">&ndash;&gt;-->
 <#--&lt;#&ndash;<#include "methods/static/minBy.ftl">&ndash;&gt;-->

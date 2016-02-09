@@ -4,7 +4,7 @@
 
 <#-- if lambdas arity is greater than 1 and first param is not primitive then print javadoc param -->
 <#if (lambda.arity >= 1) && !helpers.isPrimitive(lambda.firstInputType)>
- * @param <${lambda.firstInputType}> The type of the ${helpers.first()} argument to the ${lambda.type.simpleName}
+ * @param <${lambda.firstInputType}> The type of the ${helpers.first()}argument to the ${lambda.type.simpleName}
 </#if>
 <#-- if lambdas arity is greater than 2 and second param is not primitive then print javadoc param -->
 <#if (lambda.arity >= 2) && !helpers.isPrimitive(lambda.secondInputType)>

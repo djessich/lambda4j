@@ -4,7 +4,7 @@
 <#-- TODO predicates won't work so they are excluded, but logical assumptions should allow this -->
 <#-- TODO allow suppliers to do sequence here @see Consumer#andThen for sequenctial example-->
 <#-- parse only if lambda is not of type supplier and predicate -->
-<#if !LambdaUtils.isOfTypeSupplier(lambda) && !LambdaUtils.isOfTypePredicate(lambda)>
+<#if !LambdaUtils.isOfTypeSupplier(lambda) >
 <#-- search for correct input lambdas depending on lambda arity -->
 <#if (lambda.arity >= 1)>
     <#assign type = (lambda.firstInputType == boolean)?then(LambdaUtils.getPredicateType(), LambdaUtils.getFunctionType())>
@@ -51,15 +51,6 @@ default ${.namespace.buildGenericInputTypeString(outputLambda, generic1, generic
 }
 </#macro>
 
-<#-- creates lambda javadoc string which represents lambda.type.simpleName including plural if lambda has arity greater than 1 -->
-<#function javadocInputLambdaSimpleNamePlural>
-    <#if (lambda.arity <= 1)>
-        <#return inputLambda1.type.simpleName>
-    <#else>
-        <#return inputLambda1.type.simpleName + "s">
-    </#if>
-</#function>
-
 <#-- prints javadoc generic input parameters of compose method -->
 <#macro javadocGenericInputComposeMethod generic1 generic2 generic3 outputLambda inputLambda1 = "" inputLambda2 = "" inputLambda3 = "">
 <#if (lambda.arity >= 1) && inputLambda1?has_content>
@@ -85,6 +76,15 @@ default ${.namespace.buildGenericInputTypeString(outputLambda, generic1, generic
  * @param before3 The third ${inputLambda3.type.simpleName} to apply before this ${lambda.type.simpleName} is applied
 </#if>
 </#macro>
+
+<#-- creates lambda javadoc string which represents lambda.type.simpleName including plural if lambda has arity greater than 1 -->
+<#function javadocInputLambdaSimpleNamePlural>
+    <#if (lambda.arity <= 1)>
+        <#return inputLambda1.type.simpleName>
+    <#else>
+        <#return inputLambda1.type.simpleName + "s">
+    </#if>
+</#function>
 
 <#-- a helper function to build a generic input lambda string for compose operation -->
 <#function buildGenericInputTypeString target generic1 generic2 generic3>

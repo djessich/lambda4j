@@ -20,8 +20,6 @@ import at.gridtec.lambda4j.generator.entities.TypeEntity;
 import at.gridtec.lambda4j.generator.processors.Processor;
 import at.gridtec.lambda4j.generator.util.LambdaUtils;
 
-import org.apache.commons.lang3.StringUtils;
-
 import javax.annotation.Nonnull;
 import java.util.LinkedList;
 import java.util.List;
@@ -49,7 +47,7 @@ public final class ReturnTypeProcessor extends Processor {
         // Special Rule: Lambda is a Comparator it must return int
         if (LambdaUtils.isOfTypeComparator(lambda)) {
             final Lambda copy = LambdaUtils.copy(lambda);
-            TypeEntity type = new TypeEntity(int.class, StringUtils.capitalize(int.class.getSimpleName()));
+            TypeEntity type = new TypeEntity(int.class, int.class.getSimpleName());
             copy.setReturnType(type);
             lambdas.addAll(next(copy));
         }
@@ -57,7 +55,7 @@ public final class ReturnTypeProcessor extends Processor {
         // Special Rule: Lambda is a Consumer it must return nothing (void)
         else if (LambdaUtils.isOfTypeConsumer(lambda)) {
             final Lambda copy = LambdaUtils.copy(lambda);
-            TypeEntity type = new TypeEntity(void.class, StringUtils.capitalize(void.class.getSimpleName()));
+            TypeEntity type = new TypeEntity(void.class, void.class.getSimpleName());
             copy.setReturnType(type);
             lambdas.addAll(next(copy));
         }
@@ -65,7 +63,7 @@ public final class ReturnTypeProcessor extends Processor {
         // Special Rule: Lambda is a Predicate it must return boolean
         else if (LambdaUtils.isOfTypePredicate(lambda)) {
             final Lambda copy = LambdaUtils.copy(lambda);
-            TypeEntity type = new TypeEntity(boolean.class, StringUtils.capitalize(boolean.class.getSimpleName()));
+            TypeEntity type = new TypeEntity(boolean.class, boolean.class.getSimpleName());
             copy.setReturnType(type);
             lambdas.addAll(next(copy));
         }
@@ -73,7 +71,7 @@ public final class ReturnTypeProcessor extends Processor {
         // Special Rule: Lambda is a Runnable it must return nothing (void) and does not allow input -> end call stack
         else if (LambdaUtils.isOfTypeRunnable(lambda)) {
             final Lambda copy = LambdaUtils.copy(lambda);
-            TypeEntity type = new TypeEntity(void.class, StringUtils.capitalize(void.class.getSimpleName()));
+            TypeEntity type = new TypeEntity(void.class, void.class.getSimpleName());
             copy.setReturnType(type);
             lambdas.addAll(next(copy));
         }
@@ -90,7 +88,7 @@ public final class ReturnTypeProcessor extends Processor {
             }
             for (final Class<?> typeClass : primitivesWithoutBoolean) {
                 final Lambda primitive = LambdaUtils.copy(lambda);
-                TypeEntity type = new TypeEntity(typeClass, StringUtils.capitalize(typeClass.getSimpleName()));
+                TypeEntity type = new TypeEntity(typeClass, typeClass.getSimpleName());
                 primitive.setReturnType(type);
                 lambdas.addAll(next(primitive));
             }

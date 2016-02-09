@@ -9,7 +9,7 @@
 <#include "../javadoc/paramArgumentInput.ftl">
  * @return The return value from the function, which is its result.
  */
-${lambda.returnType} ${lambda.type.method}(${parameterString});
+${lambda.returnType.typeName} ${lambda.type.method}(${parameterString});
 
 <#-- print tupled apply only if lambda has arity greater than 2 and at least two generics -->
 <#if (lambda.arity >= 2) && !helpers.isPrimitive(lambda.firstInputType!"") && !helpers.isPrimitive(lambda.secondInputType!"")>
@@ -21,7 +21,7 @@ ${lambda.returnType} ${lambda.type.method}(${parameterString});
 <#include "../javadoc/throwsNullPointerException.ftl">
 <#include "../javadoc/seeTupleClass.ftl">
  */
-default ${lambda.returnType} ${lambda.type.method}(${annotation.nonnull} ${tuple.printTuple()} tuple) {
+default ${lambda.returnType.typeName} ${lambda.type.method}(${annotation.nonnull} ${tuple.printTuple()} tuple) {
     Objects.requireNonNull(tuple);
     return ${lambda.type.method}(${tuple.printTupleAccess()});
 }

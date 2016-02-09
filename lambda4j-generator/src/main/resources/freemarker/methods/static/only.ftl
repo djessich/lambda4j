@@ -1,21 +1,26 @@
 <#-- @formatter:off -->
 <#import "../../utils/types.ftl" as types>
-<#-- TODO find a proper way to search for lambda with primitive type first and inclusion of return type (Consumer<? super Char> -> CharConsumer) -->
+
 <#-- parse only if lambda arity is greater than 2 -->
 <#if (lambda.arity >= 2)>
-    <#-- search for correct input lambda of only method -->
-    <#assign inputLambda = LambdaUtils.searchByReturnType(lambda.type, 1, lambda.returnType, lambda.throwable)>
     <#-- set a list of textual representation for numbers -->
     <#assign numbers = ["first", "second", "third"]>
     <#-- set argument lists -->
     <#assign argumentTypes = [lambda.firstInputType!"", lambda.secondInputType!"", lambda.thirdInputType!""]>
-    <#assign argumentNames = [types.buildParameterName(lambda.firstInputType!""), types.buildParameterName(lambda.secondInputType!""),types.buildParameterName(lambda.thirdInputType!"")]>
+    <#assign argumentNames = [types.buildParameterName(lambda.firstInputType!""), types.buildParameterName(lambda.secondInputType!""), types.buildParameterName(lambda.thirdInputType!"")]>
     <#-- loop over range (which depends on arity) and print only method -->
     <#list 0..!lambda.arity as current>
+        <#-- search for correct input lambda of only method -->
+        <#assign inputLambda = LambdaUtils.searchByFirstInputAndReturnType(1, argumentTypes[current?index], lambda.returnType, lambda.throwable)>
+        <#-- get actual number from numbers array -->
         <#assign number = numbers[current?index]>
+        <#-- get actual number from numbers array and capitalize first letter -->
         <#assign capitalizedNumber = number?cap_first>
+        <#-- get lambda parameter -->
         <#assign argumentType = argumentTypes[current?index]>
+        <#-- get lambda parameter and build its parameter name -->
         <#assign argumentName = argumentNames[current?index]>
+        <#-- print only method -->
         <@.namespace.onlyMethod number capitalizedNumber inputLambda argumentType argumentName/>
     </#list>
 </#if>
@@ -31,7 +36,7 @@
 <#include "../../javadoc/throwsNullPointerException.ftl">
  */
 ${annotation.nonnull}
-static ${genericParameterTypeString} ${lambda.name}${genericParameterTypeString} only${capitalizedNumber}(${annotation.nonnull} final ${inputLambda.name}${types.buildGenericParameterTypeStringWithErasure(inputLambda, argumentType)} ${lambda.type.simpleName}) {
+static ${genericParameterTypeString} ${lambda.name}${genericParameterTypeString} only${capitalizedNumber}(${annotation.nonnull} final ${inputLambda.name}${types.buildGenericParameterTypeStringWithErasure(inputLambda, argumentType)} ${inputLambda.type.simpleName}) {
     Objects.requireNonNull(${lambda.type.simpleName});
     return (${parameterNameString}) -> ${lambda.type.simpleName}.${lambda.type.method}(${argumentName});
 }
