@@ -644,6 +644,15 @@ public final class LambdaUtils {
      *
      * @return A a {@code TypeEntity} referencing a {@code Object} type.
      */
+    public static TypeEntity getNewTypeEntity() {
+        return new TypeEntity();
+    }
+
+    /**
+     * Returns a {@link TypeEntity} referencing a {@code Object} type.
+     *
+     * @return A a {@code TypeEntity} referencing a {@code Object} type.
+     */
     public static TypeEntity getObjectTypeEntity() {
         return new TypeEntity(Object.class, "Object");
     }
