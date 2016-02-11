@@ -22,7 +22,8 @@
 <#if LambdaUtils.isOfTypeConsumer(lambda)>
     <#assign outputLambda = LambdaUtils.searchByInputTypes(LambdaUtils.getConsumerType(), lambda.arity, Object, Object, Object, lambda.throwable)>
 <#else>
-    <#assign outputLambda = LambdaUtils.searchByInputTypesAndReturnType(lambda.arity, Object, Object, Object, lambda.returnType, lambda.throwable)>
+    <#assign type = (lambda.returnType == boolean)?then(LambdaUtils.getPredicateType(), LambdaUtils.getFunctionType())>
+    <#assign outputLambda = LambdaUtils.searchByInputTypesAndReturnType(type, lambda.arity, Object, Object, Object, lambda.returnType, lambda.throwable)>
 </#if>
 <#-- print compose method -->
 <@.namespace.composeMethod "A" "B" "C" outputLambda inputLambda1 inputLambda2 inputLambda3/>

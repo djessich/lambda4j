@@ -16,10 +16,8 @@
 <#global short = LambdaUtils.getShortTypeEntity()>
 
 <#--<#assign groupid>at.gridtec.lambda4j</#assign>-->
-<#assign groupid>target</#assign>
-
 <#include "header/copyright.ftl">
-package ${groupid}
+package ${lambda.packageName};
 
 <#include "header/imports.ftl">
 
