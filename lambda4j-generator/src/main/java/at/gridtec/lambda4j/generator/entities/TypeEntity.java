@@ -38,7 +38,7 @@ public class TypeEntity implements Serializable {
         this.typeClass = typeClass;
         this.typeName = typeName;
         this.typeSimpleName = typeClass.getSimpleName();
-        this.typePrimitive = typeClass.isPrimitive();
+        this.typePrimitive = !typeClass.equals(void.class) && typeClass.isPrimitive();
     }
 
     public Class<?> getTypeClass() {

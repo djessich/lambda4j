@@ -22,10 +22,12 @@ import java.io.Serializable;
 // TODO Javadoc
 public class Lambda implements Serializable {
 
+    private String packageName;
     private String name;
     private LambdaTypeEnum type;
     private int arity;
     private boolean throwable;
+    private String method;
     private TypeEntity firstInputType;
     private TypeEntity secondInputType;
     private TypeEntity thirdInputType;
@@ -33,6 +35,14 @@ public class Lambda implements Serializable {
 
     public Lambda() {
 
+    }
+
+    public String getPackageName() {
+        return packageName;
+    }
+
+    public void setPackageName(String packageName) {
+        this.packageName = packageName;
     }
 
     public String getName() {
@@ -65,6 +75,14 @@ public class Lambda implements Serializable {
 
     public void setThrowable(boolean throwable) {
         this.throwable = throwable;
+    }
+
+    public String getMethod() {
+        return method;
+    }
+
+    public void setMethod(String method) {
+        this.method = method;
     }
 
     public TypeEntity getFirstInputType() {
@@ -116,10 +134,16 @@ public class Lambda implements Serializable {
         if (throwable != lambda.throwable) {
             return false;
         }
+        if (!packageName.equals(lambda.packageName)) {
+            return false;
+        }
         if (!name.equals(lambda.name)) {
             return false;
         }
         if (type != lambda.type) {
+            return false;
+        }
+        if (!method.equals(lambda.method)) {
             return false;
         }
         if (!firstInputType.equals(lambda.firstInputType)) {
@@ -137,10 +161,12 @@ public class Lambda implements Serializable {
 
     @Override
     public int hashCode() {
-        int result = name.hashCode();
+        int result = packageName.hashCode();
+        result = 31 * result + name.hashCode();
         result = 31 * result + type.hashCode();
         result = 31 * result + arity;
         result = 31 * result + (throwable ? 1 : 0);
+        result = 31 * result + method.hashCode();
         result = 31 * result + firstInputType.hashCode();
         result = 31 * result + secondInputType.hashCode();
         result = 31 * result + thirdInputType.hashCode();
@@ -151,10 +177,12 @@ public class Lambda implements Serializable {
     @Override
     public String toString() {
         return "Lambda{" +
-                "name='" + name + '\'' +
+                "packageName='" + packageName + '\'' +
+                ", name='" + name + '\'' +
                 ", type=" + type +
                 ", arity=" + arity +
                 ", throwable=" + throwable +
+                ", method='" + method + '\'' +
                 ", firstInputType=" + firstInputType +
                 ", secondInputType=" + secondInputType +
                 ", thirdInputType=" + thirdInputType +

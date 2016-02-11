@@ -57,18 +57,27 @@ public final class ChangeOperatorProcessor extends Processor {
 
         // Check if lambda is operator depending on its arity
         boolean isOperator = false;
+        boolean isPrimitiveOperator = false;
         if (lambda.getArity() >= 1) {
             isOperator = lambda.getReturnType().equals(lambda.getFirstInputType());
+            isPrimitiveOperator = isOperator && lambda.getFirstInputType().isTypePrimitive() && lambda.getReturnType()
+                    .isTypePrimitive();
         }
         if (lambda.getArity() >= 2) {
             isOperator = isOperator && lambda.getReturnType().equals(lambda.getSecondInputType());
+            isPrimitiveOperator = isOperator && lambda.getSecondInputType().isTypePrimitive() && lambda.getReturnType()
+                    .isTypePrimitive();
         }
         if (lambda.getArity() >= 3) {
             isOperator = isOperator && lambda.getReturnType().equals(lambda.getThirdInputType());
+            isPrimitiveOperator = isOperator && lambda.getThirdInputType().isTypePrimitive() && lambda.getReturnType()
+                    .isTypePrimitive();
         }
 
         // If lambda fulfills operator requirements, then set type and do primitive operator checking
-        if (isOperator) {
+        if (isPrimitiveOperator) {
+            lambda.setType(LambdaTypeEnum.OPERATOR);
+        } else if (isOperator) {
             final Lambda copy = LambdaUtils.copy(lambda);
             copy.setType(LambdaTypeEnum.OPERATOR);
 

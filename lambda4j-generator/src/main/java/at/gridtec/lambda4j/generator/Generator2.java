@@ -24,7 +24,9 @@ import at.gridtec.lambda4j.generator.processors.impl.ChangeOperatorProcessor;
 import at.gridtec.lambda4j.generator.processors.impl.InputTypeOneProcessor;
 import at.gridtec.lambda4j.generator.processors.impl.InputTypeThreeProcessor;
 import at.gridtec.lambda4j.generator.processors.impl.InputTypeTwoProcessor;
+import at.gridtec.lambda4j.generator.processors.impl.MethodProcessor;
 import at.gridtec.lambda4j.generator.processors.impl.NameProcessor;
+import at.gridtec.lambda4j.generator.processors.impl.PackageProcessor;
 import at.gridtec.lambda4j.generator.processors.impl.ReturnTypeProcessor;
 import at.gridtec.lambda4j.generator.processors.impl.ThrowableProcessor;
 import at.gridtec.lambda4j.generator.processors.impl.TypeProcessor;
@@ -35,6 +37,8 @@ import freemarker.template.Configuration;
 import freemarker.template.Template;
 import freemarker.template.TemplateExceptionHandler;
 import freemarker.template.TemplateHashModel;
+
+import org.apache.velocity.util.StringUtils;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -50,7 +54,7 @@ import java.util.stream.Collectors;
 /**
  * Generator main file.
  */
-// TODO Rename to generater after velocity is out of project
+// TODO Rename to generator after velocity is out of project
 public class Generator2 {
 
     public static void main(String[] args) throws Exception {
@@ -117,8 +121,13 @@ public class Generator2 {
             // Get Freemarker template
             Template temp = cfg.getTemplate("lambda.ftl");
 
+            // Create path where to create file
+            final String packagePath = StringUtils.getPackageAsPath(lambda.getPackageName()).replace("\\", "/");
+            final File outputDir = new File("target/" + packagePath).getAbsoluteFile();
+            outputDir.mkdirs();
+
             // Merge template with lambda data model
-            Writer out = new FileWriter("target/" + lambda.getName() + ".java");
+            Writer out = new FileWriter(new File(outputDir.getAbsoluteFile(), lambda.getName() + ".java"));
             temp.process(context, out);
         }
     }
@@ -138,12 +147,16 @@ public class Generator2 {
         Processor inputTypeTwoProcessor = new InputTypeTwoProcessor();
         Processor inputTypeThreeProcessor = new InputTypeThreeProcessor();
         Processor changeOperatorProcessor = new ChangeOperatorProcessor();
+        Processor packageProcessor = new PackageProcessor();
         Processor throwableProcessor = new ThrowableProcessor();
+        Processor methodProcessor = new MethodProcessor();
         Processor nameProcessor = new NameProcessor();
 
         // Build chain turned around (start adding last step first)
         ProcessorChain.getInstance().addProcessor(nameProcessor);
+        ProcessorChain.getInstance().addProcessor(methodProcessor);
         ProcessorChain.getInstance().addProcessor(throwableProcessor);
+        ProcessorChain.getInstance().addProcessor(packageProcessor);
         ProcessorChain.getInstance().addProcessor(changeOperatorProcessor);
         ProcessorChain.getInstance().addProcessor(inputTypeThreeProcessor);
         ProcessorChain.getInstance().addProcessor(inputTypeTwoProcessor);

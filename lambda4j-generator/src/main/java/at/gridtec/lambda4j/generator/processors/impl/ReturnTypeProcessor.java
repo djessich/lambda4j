@@ -78,6 +78,7 @@ public final class ReturnTypeProcessor extends Processor {
 
         // All other types will return normally, so evaluate them
         else {
+            // TODO There is no prossibility to create boolean return for conversion functions
             // Loop over left primitives without boolean (we do not like the other lambda types to return boolean,
             // as this is only allowed for predicates)
             List<Class<?>> primitivesWithoutBoolean = PRIMITIVES;
