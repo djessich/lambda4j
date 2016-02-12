@@ -2,7 +2,6 @@
 <#import "../../utils/helpers.ftl" as helpers>
 <#import "../../utils/types.ftl" as types>
 
-<#-- TODO javadoc {@link Objects#equals(Object)} only for not primitive -->
 <#-- parse only if lambda is of type predicate -->
 <#if LambdaUtils.isOfTypePredicate(lambda)>
     <@.namespace.isEqualMethod/>
@@ -11,12 +10,13 @@
 <#-- a helper macro to centralize isEqual method and to avoid unnecessary indenting -->
 <#macro isEqualMethod>
 /**
- * Returns a {@link ${lambda.name}} that tests if the given arguments are <b>equal</b> to the ones of this ${lambda.type.simpleName}
- * according to {@link Objects#equals(Object)} method.
+ * Returns a {@link ${lambda.name}} that tests if the given arguments are <b>equal</b> to the ones of this ${lambda.type.simpleName}.
  *
 <#include "../../javadoc/paramGenericInput.ftl">
 <@.namespace.javadocArgumentInputisEqualMethod/>
  * @return A {@code ${lambda.name}} that tests if the given arguments are <b>equal</b> to the ones of this ${lambda.type.simpleName}.
+ * @implNote This implementation checks equality according to {@link Objects#equals(Object)} operation for {@link Object}
+ * references and {@code value == target} operation for primitive values.
  */
 ${annotation.nonnull}
 static ${genericParameterTypeString} ${lambda.name}${genericParameterTypeString} isEqual(${.namespace.inputLambdasString()}) {
