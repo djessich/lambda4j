@@ -3,8 +3,8 @@
 <#import "../utils/helpers.ftl" as helpers>
 <#import "../utils/types.ftl" as types>
 
-<#-- parse only if lambda is not primitive -->
-<#if !helpers.isPrimitiveLambdaInput(lambda)>
+<#-- parse only if lambda is not of type supplier and not primitive -->
+<#if !LambdaUtils.isOfTypeSupplier(lambda) && !helpers.isPrimitiveLambdaInput(lambda)>
     <#-- build required reversed parameter strings -->
     <#assign genericParameterTypeStringReversed = .namespace.buildGenericParameterTypeStringReversed()>
     <#assign parameterNameStringReversed = .namespace.buildParameterNameStringReversed()>

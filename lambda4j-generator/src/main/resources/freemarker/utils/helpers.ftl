@@ -5,17 +5,12 @@
 
 <#-- checks if the given lambda has primitive types -->
 <#function isPrimitiveLambda target = lambda>
-    <#return (target?hasContent) && (LambdaUtils.isPrimitiveType(target.firstInputType)
-    || LambdaUtils.isPrimitiveType(target.secondInputType)
-    || LambdaUtils.isPrimitiveType(target.thirdInputType)
-    || LambdaUtils.isPrimitiveType(target.returnType))>
+    <#return (target?hasContent) && (.namespace.isPrimitive(target.firstInputType) || .namespace.isPrimitive(target.secondInputType) || .namespace.isPrimitive(target.thirdInputType) || .namespace.isPrimitive(target.returnType))>
 </#function>
 
 <#-- checks if the given lambda has primitive types (excluding return) -->
 <#function isPrimitiveLambdaInput target = lambda>
-    <#return (target?hasContent) && (LambdaUtils.isPrimitiveType(target.firstInputType)
-    || LambdaUtils.isPrimitiveType(target.secondInputType)
-    || LambdaUtils.isPrimitiveType(target.thirdInputType))>
+    <#return (target?hasContent) && (.namespace.isPrimitive(target.firstInputType) || .namespace.isPrimitive(target.secondInputType) || .namespace.isPrimitive(target.thirdInputType))>
 </#function>
 
 <#-- prints number string for first argument if lambdas arity is greater than 1 -->

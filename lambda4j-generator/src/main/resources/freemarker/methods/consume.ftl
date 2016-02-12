@@ -30,6 +30,7 @@
  * @return A composed {@code ${outputLambda.name}} that first applies this ${lambda.type.simpleName} to its input, and then consumes the result
  * using the given {@code ${inputLambda.name}}.
 <#include "../javadoc/throwsNullPointerException.ftl">
+ */
 ${annotation.nonnull}
 default ${outputLambda.name}${types.buildGenericParameterTypeString(outputLambda)} consume(${annotation.nonnull} final ${inputLambda.name}${types.buildGenericParameterTypeStringWithErasure(inputLambda, lambda.returnType)} ${inputLambda.type.simpleName}) {
     Objects.requireNonNull(${inputLambda.type.simpleName});
