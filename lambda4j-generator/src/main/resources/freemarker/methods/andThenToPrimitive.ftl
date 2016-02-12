@@ -2,9 +2,8 @@
 <#import "../utils/helpers.ftl" as helpers>
 <#import "../utils/types.ftl" as types>
 
-<#-- TODO predicates won't work so they are excluded, but logical assumptions should allow this -->
-<#-- parse only if lambda is not of type predicate or consumer and is primitive -->
-<#if !LambdaUtils.isOfTypePredicate(lambda) && !LambdaUtils.isOfTypeConsumer(lambda) && helpers.isPrimitiveLambda(lambda)>
+<#-- parse only if lambda is not of type consumer (no return type) and has primitive return type -->
+<#if !LambdaUtils.isOfTypeConsumer(lambda) && helpers.isPrimitive(lambda.returnType)>
     <#assign primitives = {
         "boolean":boolean,
         "byte":byte,
@@ -23,20 +22,18 @@
     </#list>
 </#if>
 
-<#-- TODO access type entity using a lowercase simple name of its name -->
-<#-- TODO recheck all parameters -->
 <#-- a helper macro to centralize andThenToPrimitive method and to avoid unnecessary indenting -->
 <#macro andThenToPrimitiveMethod inputLambda outputLambda primitiveType>
 /**
  * Returns a composed {@link ${outputLambda.name}} that first applies this ${lambda.type.simpleName} to its input, and then applies
  * the {@code after} ${inputLambda.type.simpleName} to the result.
-<#if lambda.throwable>
+<#if !lambda.throwable>
  * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
 </#if>
- * This method is just convenience, to provide the ability to transform this operation to an operation returning {@code ${primitiveType}}.
+ * This method is just convenience, to provide the ability to transform this primitive ${lambda.type.simpleName} to an operation returning {@code ${primitiveType}}.
  *
  * @param after The ${inputLambda.type.simpleName} to apply after this ${lambda.type.simpleName} is applied
- * @return A composed {@link ${outputLambda.name}} that first applies this ${lambda.type.simpleName} to its input, and then applies
+ * @return A composed {@code ${outputLambda.name}} that first applies this ${lambda.type.simpleName} to its input, and then applies
  * the {@code after} ${inputLambda.type.simpleName} to the result.
 <#include "../javadoc/throwsNullPointerException.ftl">
  */

@@ -3,7 +3,7 @@
 <#import "../utils/types.ftl" as types>
 
 <#-- TODO allow suppliers to do sequence here @see Consumer#andThen for sequenctial example-->
-<#-- parse only if lambda is not of type supplier and predicate -->
+<#-- parse only if lambda is not of type supplier -->
 <#if !LambdaUtils.isOfTypeSupplier(lambda) >
 <#-- search for correct input lambdas depending on lambda arity -->
 <#if (lambda.arity >= 1)>
