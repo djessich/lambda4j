@@ -4,12 +4,21 @@
 <#import "../utils/types.ftl" as types>
 
 <#-- TODO all primitive lambdas should have a boxed method (f.e. ByteFunction, CharSupplier, ...) -->
-<#-- parse only if lambda is primitive or a supplier -->
-<#if helpers.isPrimitive(lambda.firstInputType) || helpers.isPrimitive(lambda.secondInputType) || helpers.isPrimitive(lambda.thirdInputType)>
+<#-- parse only if lambda input is primitive or a supplier -->
+<#if helpers.isPrimitiveLambdaInput(lambda) || LambdaUtils.isOfTypeSupplier(lambda)>
     <#-- build a generic parameter type string including primitives also -->
     <#assign genericParameterTypeStringWithPrimitives = .namespace.buildGenericParameterTypeStringWithPrimitives()>
     <#-- get output lambda using a search for lambda type, arity, primitive and throwable flag -->
-    <#assign outputLambda = LambdaUtils.searchByReturnType(lambda.type, lambda.arity, lambda.returnType, lambda.throwable)>
+    <#--<#if LambdaUtils.isOfTypeSupplier(lambda)>-->
+        <#--<#assign outputLambda = LambdaUtils.searchByReturnType(lambda.type, lambda.arity, Object, lambda.throwable)>-->
+    <#if LambdaUtils.isOfTypeConsumer(lambda)>
+        <#assign outputLambda = LambdaUtils.searchByInputTypesAndReturnType(lambda.type, lambda.arity, Object, Object, Object, lambda.returnType, lambda.throwable)>
+    <#elseif LambdaUtils.isOfTypePredicate(lambda)>
+        <#assign outputLambda = LambdaUtils.searchByInputTypesAndReturnType(lambda.type, lambda.arity, Object, Object, Object, lambda.returnType, lambda.throwable)>
+    <#else>
+        <#--<#assign outputLambda = LambdaUtils.searchByReturnType(lambda.type, lambda.arity, lambda.returnType, lambda.throwable)>-->
+        <#assign outputLambda = LambdaUtils.searchByInputTypesAndReturnType(lambda.type, lambda.arity, Object, Object, Object, Object, lambda.throwable)>
+    </#if>
     <#-- print boxed method -->
     <@.namespace.boxedMethod genericParameterTypeStringWithPrimitives outputLambda/>
 </#if>
@@ -35,6 +44,9 @@ default ${outputLambda.name}${genericParameterTypeStringWithPrimitives} boxed() 
 <#-- a helper function to build a generic parameter type string with primitives for given target lambda -->
 <#function buildGenericParameterTypeStringWithPrimitives target = lambda>
     <#local parameters = [target.firstInputType!"", target.secondInputType!"", target.thirdInputType!""]>
+    <#if helpers.isPrimitive(target.returnType)>
+        <#local parameters = parameters + [target.returnType!""]>
+    </#if>
     <#local parameters = filters.filterEmpties(parameters)>
     <#local genericString = "">
     <#if (types?has_content)>

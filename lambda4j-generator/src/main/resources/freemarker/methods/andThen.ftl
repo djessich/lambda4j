@@ -1,25 +1,22 @@
 <#-- @formatter:off -->
 <#import "../utils/helpers.ftl" as helpers>
 <#import "../utils/types.ftl" as types>
-<#-- TODO predicates won't work so they are excluded, but logical assumptions should allow this -->
-<#-- parse only if lambda is of type predicate -->
-<#if !LambdaUtils.isOfTypePredicate(lambda)>
-    <#-- Consumers will get special macro, as they will only sequence lambda calls; all other lambdas will use normal macro -->
-    <#if LambdaUtils.isOfTypeConsumer(lambda)>
-        <#-- print andThen method -->
-        <@.namespace.andThenMethodOnlyConsumers/>
+
+<#-- Consumers will get special macro, as they will only sequence lambda calls; all other lambdas will use normal macro -->
+<#if LambdaUtils.isOfTypeConsumer(lambda)>
+    <#-- print andThen method -->
+    <@.namespace.andThenMethodOnlyConsumers/>
+<#else>
+    <#-- search for function lambdas from lambda return type as input lambdas input argument and only with object (generical) return -->
+    <#assign inputLambda = LambdaUtils.searchByFirstInputAndReturnType(LambdaUtils.getFunctionType(), 1, lambda.returnType, Object, lambda.throwable)>
+    <#-- search for correct lambda which get lambda inputs and returns object output, unless suppliers which do not have inputs -->
+    <#if LambdaUtils.isOfTypeSupplier(lambda)>
+        <#assign outputLambda = LambdaUtils.searchByInputTypesAndReturnType(LambdaUtils.getSupplierType(), lambda.arity, lambda.firstInputType, lambda.secondInputType, lambda.thirdInputType, Object, lambda.throwable)>
     <#else>
-        <#-- search for function lambdas from lambda return type as input lambdas input argument and only with object (generical) return -->
-        <#assign inputLambda = LambdaUtils.searchByFirstInputAndReturnType(LambdaUtils.getFunctionType(), 1, lambda.returnType, Object, lambda.throwable)>
-        <#-- search for correct lambda which get lambda inputs and returns object output, unless suppliers which do not have inputs -->
-        <#if LambdaUtils.isOfTypeSupplier(lambda)>
-            <#assign outputLambda = LambdaUtils.searchByInputTypesAndReturnType(LambdaUtils.getSupplierType(), lambda.arity, lambda.firstInputType, lambda.secondInputType, lambda.thirdInputType, Object, lambda.throwable)>
-        <#else>
-            <#assign outputLambda = LambdaUtils.searchByInputTypesAndReturnType(LambdaUtils.getFunctionType(), lambda.arity, lambda.firstInputType, lambda.secondInputType, lambda.thirdInputType, Object, lambda.throwable)>
-        </#if>
-        <#-- print andThen method -->
-        <@.namespace.andThenMethod inputLambda outputLambda/>
+        <#assign outputLambda = LambdaUtils.searchByInputTypesAndReturnType(LambdaUtils.getFunctionType(), lambda.arity, lambda.firstInputType, lambda.secondInputType, lambda.thirdInputType, Object, lambda.throwable)>
     </#if>
+    <#-- print andThen method -->
+    <@.namespace.andThenMethod inputLambda outputLambda/>
 </#if>
 
 <#-- a helper macro to centralize andThen method and to avoid unnecessary indenting -->

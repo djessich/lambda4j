@@ -1,7 +1,7 @@
 <#-- @formatter:off -->
 <#import "../utils/helpers.ftl" as helpers>
 <#import "../utils/types.ftl" as types>
-<#-- TODO predicates won't work so they are excluded, but logical assumptions should allow this -->
+
 <#-- TODO allow suppliers to do sequence here @see Consumer#andThen for sequenctial example-->
 <#-- parse only if lambda is not of type supplier and predicate -->
 <#if !LambdaUtils.isOfTypeSupplier(lambda) >
