@@ -730,6 +730,15 @@ public final class LambdaUtils {
     }
 
     /**
+     * Returns a {@link TypeEntity} referencing {@code void}.
+     *
+     * @return A a {@code TypeEntity} referencing {@code void}.
+     */
+    public static TypeEntity getVoidTypeEntity() {
+        return new TypeEntity(void.class, void.class.getSimpleName());
+    }
+
+    /**
      * Checks if the given string represents a primitive type.
      *
      * @param type The type in string representation

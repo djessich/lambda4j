@@ -14,6 +14,7 @@
 <#global int = LambdaUtils.getIntTypeEntity()>
 <#global long = LambdaUtils.getLongTypeEntity()>
 <#global short = LambdaUtils.getShortTypeEntity()>
+<#global void = LambdaUtils.getVoidTypeEntity()>
 
 <#--<#assign groupid>at.gridtec.lambda4j</#assign>-->
 <#include "header/copyright.ftl">
