@@ -2,7 +2,6 @@
 <#import "../utils/helpers.ftl" as helpers>
 <#import "../utils/tuple.ftl" as tuple>
 
-<#-- TODO what is with lambda (T,U,byte)? It should have tupled() argument Pair<T,U>, byte value -->
 /**
  * Applies this ${lambda.type.simpleName} to the given arguments.
  *
@@ -12,7 +11,7 @@
 ${lambda.returnType.typeName} ${lambda.type.method}(${parameterString});
 
 <#-- print tupled apply only if lambda has arity greater than 2 and at least two generics -->
-<#if (lambda.arity >= 2) && !helpers.isPrimitive(lambda.firstInputType!"") && !helpers.isPrimitive(lambda.secondInputType!"")>
+<#if (lambda.arity >= 2) && !helpers.isPrimitive(lambda.firstInputType) && !helpers.isPrimitive(lambda.secondInputType)>
 /**
  * Applies this ${lambda.type.simpleName} to the given tuple.
  *
@@ -21,9 +20,9 @@ ${lambda.returnType.typeName} ${lambda.type.method}(${parameterString});
 <#include "../javadoc/throwsNullPointerException.ftl">
 <#include "../javadoc/seeTupleClass.ftl">
  */
-default ${lambda.returnType.typeName} ${lambda.type.method}(${annotation.nonnull} ${tuple.printTuple()} tuple) {
+default ${lambda.returnType.typeName} ${lambda.type.method}(${annotation.nonnull} ${tuple.printTuple()} tuple ${helpers.isPrimitive(lambda.thirdInputType)?then(", " + types.buildParameter(lambda.thirdInputType), "")}) {
     Objects.requireNonNull(tuple);
-    return ${lambda.type.method}(${tuple.printTupleAccess()});
+    return ${lambda.type.method}(${tuple.printTupleAccess()} ${helpers.isPrimitive(lambda.thirdInputType)?then(", " + types.buildParameterName(lambda.thirdInputType), "")});
 }
 </#if>
 <#-- @formatter:on -->
