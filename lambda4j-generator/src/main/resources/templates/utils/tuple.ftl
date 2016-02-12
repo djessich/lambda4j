@@ -1,5 +1,5 @@
-<#import "../utils/helpers.ftl" as helpers>
-<#import "../utils/types.ftl" as types>
+<#import "helpers.ftl" as helpers>
+<#import "types.ftl" as types>
 
 <#function printTuple target = lambda>
     <#local ret = "">

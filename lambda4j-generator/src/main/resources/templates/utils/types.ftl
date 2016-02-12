@@ -1,5 +1,5 @@
-<#import "./filters.ftl" as filters>
-<#import "./helpers.ftl" as helpers>
+<#import "filters.ftl" as filters>
+<#import "helpers.ftl" as helpers>
 
 <#function buildParameter param>
     <#local genericString = "">

@@ -1,4 +1,4 @@
-<#import "./helpers.ftl" as helpers>
+<#import "helpers.ftl" as helpers>
 
 <#-- filters all empty objects of the given list -->
 <#function filterEmpties list = []>
