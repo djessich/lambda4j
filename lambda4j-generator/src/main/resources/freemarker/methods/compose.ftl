@@ -2,31 +2,30 @@
 <#import "../utils/helpers.ftl" as helpers>
 <#import "../utils/types.ftl" as types>
 
-<#-- TODO allow suppliers to do sequence here @see Consumer#andThen for sequenctial example-->
 <#-- parse only if lambda is not of type supplier -->
-<#if !LambdaUtils.isOfTypeSupplier(lambda) >
-<#-- search for correct input lambdas depending on lambda arity -->
-<#if (lambda.arity >= 1)>
-    <#assign type = (lambda.firstInputType == boolean)?then(LambdaUtils.getPredicateType(), LambdaUtils.getFunctionType())>
-    <#assign inputLambda1 = LambdaUtils.searchByFirstInputAndReturnType(type, 1, Object, lambda.firstInputType, lambda.throwable)>
-</#if>
-<#if (lambda.arity >= 2)>
-    <#assign type = (lambda.secondInputType == boolean)?then(LambdaUtils.getPredicateType(), LambdaUtils.getFunctionType())>
-    <#assign inputLambda2 = LambdaUtils.searchByFirstInputAndReturnType(type, 1, Object, lambda.secondInputType, lambda.throwable)>
-</#if>
-<#if (lambda.arity >= 3)>
-    <#assign type = (lambda.thirdInputType == boolean)?then(LambdaUtils.getPredicateType(), LambdaUtils.getFunctionType())>
-    <#assign inputLambda3 = LambdaUtils.searchByFirstInputAndReturnType(type, 1, Object, lambda.thirdInputType, lambda.throwable)>
-</#if>
-<#-- find correct output lambda which is able to handle object inputs only and returns lambda output, unless consumers which do not have outputs -->
-<#if LambdaUtils.isOfTypeConsumer(lambda)>
-    <#assign outputLambda = LambdaUtils.searchByInputTypes(LambdaUtils.getConsumerType(), lambda.arity, Object, Object, Object, lambda.throwable)>
-<#else>
-    <#assign type = (lambda.returnType == boolean)?then(LambdaUtils.getPredicateType(), LambdaUtils.getFunctionType())>
-    <#assign outputLambda = LambdaUtils.searchByInputTypesAndReturnType(type, lambda.arity, Object, Object, Object, lambda.returnType, lambda.throwable)>
-</#if>
-<#-- print compose method -->
-<@.namespace.composeMethod "A" "B" "C" outputLambda inputLambda1 inputLambda2 inputLambda3/>
+<#if !LambdaUtils.isOfTypeSupplier(lambda)>
+    <#-- search for correct input lambdas depending on lambda arity -->
+    <#if (lambda.arity >= 1)>
+        <#assign type = (lambda.firstInputType == boolean)?then(LambdaUtils.getPredicateType(), LambdaUtils.getFunctionType())>
+        <#assign inputLambda1 = LambdaUtils.searchByFirstInputAndReturnType(type, 1, Object, lambda.firstInputType, lambda.throwable)>
+    </#if>
+    <#if (lambda.arity >= 2)>
+        <#assign type = (lambda.secondInputType == boolean)?then(LambdaUtils.getPredicateType(), LambdaUtils.getFunctionType())>
+        <#assign inputLambda2 = LambdaUtils.searchByFirstInputAndReturnType(type, 1, Object, lambda.secondInputType, lambda.throwable)>
+    </#if>
+    <#if (lambda.arity >= 3)>
+        <#assign type = (lambda.thirdInputType == boolean)?then(LambdaUtils.getPredicateType(), LambdaUtils.getFunctionType())>
+        <#assign inputLambda3 = LambdaUtils.searchByFirstInputAndReturnType(type, 1, Object, lambda.thirdInputType, lambda.throwable)>
+    </#if>
+    <#-- find correct output lambda which is able to handle object inputs only and returns lambda output, unless consumers which do not have outputs -->
+    <#if LambdaUtils.isOfTypeConsumer(lambda)>
+        <#assign outputLambda = LambdaUtils.searchByInputTypes(LambdaUtils.getConsumerType(), lambda.arity, Object, Object, Object, lambda.throwable)>
+    <#else>
+        <#assign type = (lambda.returnType == boolean)?then(LambdaUtils.getPredicateType(), LambdaUtils.getFunctionType())>
+        <#assign outputLambda = LambdaUtils.searchByInputTypesAndReturnType(type, lambda.arity, Object, Object, Object, lambda.returnType, lambda.throwable)>
+    </#if>
+    <#-- print compose method -->
+    <@.namespace.composeMethod "A" "B" "C" outputLambda inputLambda1 inputLambda2 inputLambda3/>
 </#if>
 
 <#-- a helper macro to centralize compose method and to avoid unnecessary indenting -->

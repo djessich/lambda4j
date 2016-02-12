@@ -4,7 +4,7 @@
 
 <#-- Consumers will get special macro, as they will only sequence lambda calls; all other lambdas will use normal macro -->
 <#if LambdaUtils.isOfTypeConsumer(lambda)>
-    <#-- print andThen method -->
+    <#-- print andThen method, only for consumers -->
     <@.namespace.andThenMethodOnlyConsumers/>
 <#else>
     <#-- search for function lambdas from lambda return type as input lambdas input argument and only with object (generical) return -->
