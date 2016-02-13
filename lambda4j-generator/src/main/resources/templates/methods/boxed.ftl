@@ -3,21 +3,15 @@
 <#import "../utils/helpers.ftl" as helpers>
 <#import "../utils/types.ftl" as types>
 
-<#-- TODO all primitive lambdas should have a boxed method (f.e. ByteFunction, CharSupplier, ...) -->
-<#-- parse only if lambda input is primitive or a supplier -->
-<#if helpers.isPrimitiveLambdaInput(lambda) || LambdaUtils.isOfTypeSupplier(lambda)>
+<#-- parse only if lambda is primitive -->
+<#if helpers.isPrimitiveLambda(lambda)>
     <#-- build a generic parameter type string including primitives also -->
     <#assign genericParameterTypeStringWithPrimitives = .namespace.buildGenericParameterTypeStringWithPrimitives()>
-    <#-- get output lambda using a search for lambda type, arity, primitive and throwable flag -->
-    <#--<#if LambdaUtils.isOfTypeSupplier(lambda)>-->
-        <#--<#assign outputLambda = LambdaUtils.searchByReturnType(lambda.type, lambda.arity, Object, lambda.throwable)>-->
-    <#if LambdaUtils.isOfTypeConsumer(lambda)>
-        <#assign outputLambda = LambdaUtils.searchByInputTypesAndReturnType(lambda.type, lambda.arity, Object, Object, Object, lambda.returnType, lambda.throwable)>
-    <#elseif LambdaUtils.isOfTypePredicate(lambda)>
-        <#assign outputLambda = LambdaUtils.searchByInputTypesAndReturnType(lambda.type, lambda.arity, Object, Object, Object, lambda.returnType, lambda.throwable)>
+    <#-- search for correct output lambda, which gets object (generical) inputs and object (generical) output, unless if global lambda represents a type a predicate or consumer type) -->
+    <#if LambdaUtils.isOfTypePredicate(lambda) || LambdaUtils.isOfTypeConsumer(lambda)>
+        <#assign outputLambda = LambdaUtils.searchByInputTypesAndReturnType(lambda.type, lambda.arity, Object, Object, Object,  lambda.returnType, lambda.throwable)>
     <#else>
-        <#--<#assign outputLambda = LambdaUtils.searchByReturnType(lambda.type, lambda.arity, lambda.returnType, lambda.throwable)>-->
-        <#assign outputLambda = LambdaUtils.searchByInputTypesAndReturnType(lambda.type, lambda.arity, Object, Object, Object, Object, lambda.throwable)>
+        <#assign outputLambda = LambdaUtils.searchByInputTypesAndReturnType(lambda.type, lambda.arity, Object, Object, Object,  Object, lambda.throwable)>
     </#if>
     <#-- print boxed method -->
     <@.namespace.boxedMethod genericParameterTypeStringWithPrimitives outputLambda/>
@@ -44,7 +38,10 @@ default ${outputLambda.name}${genericParameterTypeStringWithPrimitives} boxed() 
 <#-- a helper function to build a generic parameter type string with primitives for given target lambda -->
 <#function buildGenericParameterTypeStringWithPrimitives target = lambda>
     <#local parameters = [target.firstInputType!"", target.secondInputType!"", target.thirdInputType!""]>
-    <#if helpers.isPrimitive(target.returnType)>
+    <#-- if lambda is of type operator just use return type; otherwise if not predicate or consumer append return type -->
+    <#if LambdaUtils.isOfTypeOperator(target)>
+        <#local parameters = [target.returnType!""]>
+    <#elseif !LambdaUtils.isOfTypePredicate(target) && !LambdaUtils.isOfTypeConsumer(target)>
         <#local parameters = parameters + [target.returnType!""]>
     </#if>
     <#local parameters = filters.filterEmpties(parameters)>
