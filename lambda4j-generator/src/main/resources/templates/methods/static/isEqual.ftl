@@ -27,7 +27,7 @@ static ${genericParameterTypeString} ${lambda.name}${genericParameterTypeString}
 <#-- prints javadoc input parameters of isEqual method -->
 <#macro javadocArgumentInputisEqualMethod>
 <#if (lambda.arity >= 1)>
- * @param target${.namespace.numberSwitch()} The ${helpers.first(lambda)}reference with which to compare for equality, which may be {@code null}
+ * @param target${helpers.number()} The ${helpers.first(lambda)}reference with which to compare for equality, which may be {@code null}
 </#if>
 <#if (lambda.arity >= 2)>
  * @param target2 The second reference with which to compare for equality, which may be {@code null}
@@ -41,7 +41,7 @@ static ${genericParameterTypeString} ${lambda.name}${genericParameterTypeString}
 <#function inputLambdasString>
     <#local ret = "">
     <#if (lambda.arity >= 1)>
-        <#local ret = ret + helpers.isPrimitive(lambda.firstInputType)?then(lambda.firstInputType.typeSimpleName, annotation.nullable + " " + Object.typeSimpleName) + " target" + .namespace.numberSwitch()>
+        <#local ret = ret + helpers.isPrimitive(lambda.firstInputType)?then(lambda.firstInputType.typeSimpleName, annotation.nullable + " " + Object.typeSimpleName) + " target" + helpers.number()>
     </#if>
     <#if (lambda.arity >= 2)>
         <#local ret = ret + ", " + helpers.isPrimitive(lambda.secondInputType)?then(lambda.secondInputType.typeSimpleName, annotation.nullable + " " + Object.typeSimpleName) + " target2">
@@ -58,9 +58,9 @@ static ${genericParameterTypeString} ${lambda.name}${genericParameterTypeString}
     <#if (lambda.arity >= 1)>
         <#local parameterName = types.buildParameterName(lambda.firstInputType)>
         <#if helpers.isPrimitive(lambda.firstInputType)>
-            <#local ret = ret + "(" + parameterName + " == target" + .namespace.numberSwitch() + ")">
+            <#local ret = ret + "(" + parameterName + " == target" + helpers.number() + ")">
         <#else>
-            <#local ret = ret + "(" + parameterName + " == null ? target1 == null : " + parameterName + ".equals(target1))">
+            <#local ret = ret + "(" + parameterName + " == null ? target" + helpers.number() + " == null : " + parameterName + ".equals(target" + helpers.number() + "))">
         </#if>
     </#if>
     <#if (lambda.arity >= 2)>
@@ -80,10 +80,5 @@ static ${genericParameterTypeString} ${lambda.name}${genericParameterTypeString}
         </#if>
     </#if>
     <#return ret>
-</#function>
-
-<#-- a switch for printing "1" if lambda arity is greather than 1 -->
-<#function numberSwitch>
-    <#return (lambda.arity > 1)?then("1", "")>
 </#function>
 <#-- @formatter:on -->

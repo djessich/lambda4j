@@ -45,7 +45,7 @@
  * @implNote The input argument of this method is able to handle every type.
  */
 ${annotation.nonnull}
-default ${.namespace.buildGenericInputTypeString(outputLambda, generic1, generic2, generic3)} ${outputLambda.name}${types.buildGenericParameterTypeString(outputLambda, generic1, generic2, generic3)} compose(${.namespace.inputLambdasString(inputLambda1, inputLambda2, inputLambda3)}) {
+default ${.namespace.buildGenericInputTypeString(outputLambda, generic1, generic2, generic3)} ${outputLambda.name}${types.buildGenericParameterTypeString(outputLambda, generic1, generic2, generic3)} compose(${.namespace.inputLambdasString(generic1, generic2, generic3, inputLambda1, inputLambda2, inputLambda3)}) {
     ${.namespace.inputLambdaChecking(inputLambda1, inputLambda2, inputLambda3)}
     return (${types.buildParameterNameString(outputLambda, generic1, generic2, generic3)}) -> ${lambda.type.method}(${.namespace.callLambdasString(inputLambda1, inputLambda2, inputLambda3)});
 }
@@ -54,7 +54,7 @@ default ${.namespace.buildGenericInputTypeString(outputLambda, generic1, generic
 <#-- prints javadoc generic input parameters of compose method -->
 <#macro javadocGenericInputComposeMethod generic1 generic2 generic3 outputLambda inputLambda1 = "" inputLambda2 = "" inputLambda3 = "">
 <#if (lambda.arity >= 1) && inputLambda1?has_content>
- * @param <${generic1}> The type of the argument to the ${helpers.first()} given ${inputLambda1.type.simpleName}, and of composed ${outputLambda.type.simpleName}
+ * @param <${generic1}> The type of the argument to the ${helpers.first()}given ${inputLambda1.type.simpleName}, and of composed ${outputLambda.type.simpleName}
 </#if>
 <#if (lambda.arity >= 2) && inputLambda2?has_content>
  * @param <${generic2}> The type of the argument to the second given ${inputLambda2.type.simpleName}, and of composed ${outputLambda.type.simpleName}
@@ -67,7 +67,7 @@ default ${.namespace.buildGenericInputTypeString(outputLambda, generic1, generic
 <#-- prints javadoc input parameters of compose method -->
 <#macro javadocArgumentInputComposeMethod inputLambda1 = "" inputLambda2 = "" inputLambda3 = "">
 <#if (lambda.arity >= 1) && inputLambda1?has_content>
- * @param before1 The ${helpers.first()} ${inputLambda1.type.simpleName} to apply before this ${lambda.type.simpleName} is applied
+ * @param before${helpers.number()} The ${helpers.first()}${inputLambda1.type.simpleName} to apply before this ${lambda.type.simpleName} is applied
 </#if>
 <#if (lambda.arity >= 2) && inputLambda2?has_content>
  * @param before2 The second ${inputLambda2.type.simpleName} to apply before this ${lambda.type.simpleName} is applied
@@ -96,16 +96,16 @@ default ${.namespace.buildGenericInputTypeString(outputLambda, generic1, generic
 </#function>
 
 <#-- a helper function to build an input lambdas string for compose operation -->
-<#function inputLambdasString inputLambda1 = "" inputLambda2 = "" inputLambda3 = "">
+<#function inputLambdasString generic1 generic2 generic3 inputLambda1 = "" inputLambda2 = "" inputLambda3 = "">
     <#local ret = "">
     <#if (lambda.arity >= 1) && inputLambda1?has_content>
-        <#local ret = ret + '${annotation.nonnull} final ${inputLambda1.name}${types.buildGenericParameterTypeStringWithErasure(inputLambda1, "A", "", "", lambda.firstInputType)} before1'>
+        <#local ret = ret + '${annotation.nonnull} final ${inputLambda1.name}${types.buildGenericParameterTypeStringWithErasure(inputLambda1, generic1, "", "", lambda.firstInputType)} before${helpers.number()}'>
     </#if>
     <#if (lambda.arity >= 2) && inputLambda2?has_content>
-        <#local ret = ret + ', ${annotation.nonnull} final ${inputLambda2.name}${types.buildGenericParameterTypeStringWithErasure(inputLambda2, "B", "", "", lambda.secondInputType)} before2'>
+        <#local ret = ret + ', ${annotation.nonnull} final ${inputLambda2.name}${types.buildGenericParameterTypeStringWithErasure(inputLambda2, generic2, "", "", lambda.secondInputType)} before2'>
     </#if>
     <#if (lambda.arity >= 3) && inputLambda3?has_content>
-        <#local ret = ret + ', ${annotation.nonnull} final ${inputLambda3.name}${types.buildGenericParameterTypeStringWithErasure(inputLambda3, "C", "", "", lambda.thirdInputType)} before3'>
+        <#local ret = ret + ', ${annotation.nonnull} final ${inputLambda3.name}${types.buildGenericParameterTypeStringWithErasure(inputLambda3, generic3, "", "", lambda.thirdInputType)} before3'>
     </#if>
     <#return ret>
 </#function>
@@ -114,7 +114,7 @@ default ${.namespace.buildGenericInputTypeString(outputLambda, generic1, generic
 <#function inputLambdaChecking inputLambda1 = "" inputLambda2 = "" inputLambda3 = "">
     <#local ret = "">
     <#if (lambda.arity >= 1) && inputLambda1?has_content>
-        <#local ret = ret + "Objects.requireNonNull(before1);">
+        <#local ret = ret + "Objects.requireNonNull(before${helpers.number()});">
     </#if>
     <#if (lambda.arity >= 2) && inputLambda2?has_content>
         <#local ret = ret + "Objects.requireNonNull(before2);">
@@ -129,7 +129,7 @@ default ${.namespace.buildGenericInputTypeString(outputLambda, generic1, generic
 <#function callLambdasString inputLambda1 = "" inputLambda2 = "" inputLambda3 = "">
     <#local ret = "">
     <#if (lambda.arity >= 1) && inputLambda1?has_content>
-        <#local ret = ret + 'before1.${inputLambda1.type.method}(a)'>
+        <#local ret = ret + 'before${helpers.number()}.${inputLambda1.type.method}(a)'>
     </#if>
     <#if (lambda.arity >= 2) && inputLambda2?has_content>
         <#local ret = ret + ', before2.${inputLambda2.type.method}(b)'>

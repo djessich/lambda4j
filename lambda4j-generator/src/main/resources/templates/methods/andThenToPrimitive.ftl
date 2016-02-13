@@ -14,10 +14,15 @@
         "long":long,
         "short":short
     }>
+    <#-- foreach primitive type print method -->
     <#list primitives?keys as key>
+        <#-- get primitive type -->
         <#assign primitive = primitives[key]>
+        <#-- search for correct input lambda which gets the return type from this lambda as input and returns a primitive -->
         <#assign inputLambda = LambdaUtils.searchByFirstInputAndReturnType(1, lambda.returnType, primitive, lambda.throwable)>
+        <#-- search for correct output lambda which get all input types from this lambda and returns the new primitive value -->
         <#assign outputLambda = LambdaUtils.searchByInputTypesAndReturnType(lambda.arity, lambda.firstInputType, lambda.secondInputType, lambda.thirdInputType, primitive, lambda.throwable)>
+        <#-- print andThenToPrimitive method -->
         <@.namespace.andThenToPrimitiveMethod inputLambda outputLambda primitive/>
     </#list>
 </#if>

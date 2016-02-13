@@ -40,7 +40,7 @@ public interface ${lambda.name}${genericParameterTypeString} {
 <#include "methods/lambdaMethod.ftl">
 <#include "methods/arity.ftl">
 <#include "methods/compose.ftl">
-<#--<#include "methods/composeToPrimitive.ftl">-->
+<#include "methods/composeFromPrimitive.ftl">
 <#include "methods/andThen.ftl">
 <#include "methods/andThenToPrimitive.ftl">
 <#include "methods/consume.ftl">

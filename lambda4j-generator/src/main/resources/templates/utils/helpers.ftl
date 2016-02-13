@@ -17,3 +17,8 @@
 <#function first target = lambda>
     <#return (target.arity > 1)?then("first ", "")>
 </#function>
+
+<#-- prints number if lambdas arity is greater than 1 -->
+<#function number target = lambda>
+    <#return (target.arity > 1)?then("1", "")>
+</#function>
