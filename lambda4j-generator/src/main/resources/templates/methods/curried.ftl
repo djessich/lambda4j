@@ -4,7 +4,7 @@
 
 <#-- parse only if lambda arity greater than 2, lambda is not primitive and lambda needs to return -->
 <#if (lambda.arity >= 2 && !helpers.isPrimitiveLambda(lambda) && lambda.returnType?has_content)>
-    <#-- search for correct output lambda of curried method -->
+    <#-- search for correct output lambda of curried method, which depends on global lambdas return type -->
     <#assign outputLambda = LambdaUtils.searchByReturnType(lambda.type, 1, lambda.returnType, lambda.throwable)>
     <#-- if lambda has larity greater than or equal 3, generate variables for curried method -->
     <#if (lambda.arity >= 3)>

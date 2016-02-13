@@ -3,14 +3,14 @@
 
 <#-- parse only if lambda is not of type consumer -->
 <#if !LambdaUtils.isOfTypeConsumer(lambda)>
-    <#-- get input consumer lambda using a search for the global lambdas return type; throwable flag will also be handled -->
+    <#-- get input consumer lambda using a search for the global lambdas return type as consumer lambda input; throwable flag will also be handled -->
     <#assign inputLambda = LambdaUtils.searchByFirstInputType(LambdaUtils.getConsumerType(), 1, lambda.returnType, lambda.throwable)>
     <#-- if lambda is of type supplier then print macro for suppliers; else print normal macro -->
     <#if LambdaUtils.isOfTypeSupplier(lambda)>
         <#-- print consume method -->
         <@.namespace.consumeMethodForSupplierOnly inputLambda/>
     <#else>
-        <#-- get output consumer lambda using a search for all the input types of global lambda; throwable flag will also be handled -->
+        <#-- get output consumer lambda using a search for all of the input types of global lambda; throwable flag will also be handled -->
         <#assign outputLambda = LambdaUtils.searchByInputTypes(LambdaUtils.getConsumerType(), lambda.arity, lambda.firstInputType, lambda.secondInputType, lambda.thirdInputType, lambda.throwable)>
         <#-- print consume method -->
         <@.namespace.consumeMethod inputLambda outputLambda/>

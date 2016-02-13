@@ -18,7 +18,7 @@
     <#list primitives?keys as key>
         <#-- get primitive type -->
         <#assign primitive = primitives[key]>
-        <#-- search for correct input lambdas depending on lambda arity with primitive input arg and primitive return type (as lambda has primitive input) -->
+        <#-- search for correct input lambdas depending on global lambda arity with primitive input type and primitive return type (global lambda has primitive input) -->
         <#if (lambda.arity >= 1)>
             <#assign inputLambda1 = LambdaUtils.searchByFirstInputAndReturnType(1, primitive, lambda.firstInputType, lambda.throwable)>
         </#if>

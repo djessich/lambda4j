@@ -17,7 +17,7 @@
         <#assign type = (lambda.thirdInputType == boolean)?then(LambdaUtils.getPredicateType(), LambdaUtils.getFunctionType())>
         <#assign inputLambda3 = LambdaUtils.searchByFirstInputAndReturnType(type, 1, Object, lambda.thirdInputType, lambda.throwable)>
     </#if>
-    <#-- find correct output lambda which is able to handle object inputs only and returns lambda output, unless consumers which do not have outputs -->
+    <#-- find correct output lambda which is able to handle object inputs only and returns global lambda output, unless consumers which do not have outputs -->
     <#if LambdaUtils.isOfTypeConsumer(lambda)>
         <#assign outputLambda = LambdaUtils.searchByInputTypes(LambdaUtils.getConsumerType(), lambda.arity, Object, Object, Object, lambda.throwable)>
     <#else>

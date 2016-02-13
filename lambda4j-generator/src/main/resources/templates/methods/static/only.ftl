@@ -10,7 +10,7 @@
     <#assign argumentNames = [types.buildParameterName(lambda.firstInputType!""), types.buildParameterName(lambda.secondInputType!""), types.buildParameterName(lambda.thirdInputType!"")]>
     <#-- loop over range (which depends on arity) and print only method -->
     <#list 0..!lambda.arity as current>
-        <#-- search for correct input lambda of only method -->
+        <#-- search for correct input lambda of only method, which is the global lambdas input type (depending on arity) and its return type -->
         <#assign inputLambda = LambdaUtils.searchByFirstInputAndReturnType(1, argumentTypes[current?index], lambda.returnType, lambda.throwable)>
         <#-- get actual number from numbers array -->
         <#assign number = numbers[current?index]>

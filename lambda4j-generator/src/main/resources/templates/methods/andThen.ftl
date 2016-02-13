@@ -7,9 +7,9 @@
     <#-- print andThen method, only for consumers -->
     <@.namespace.andThenMethodOnlyConsumers/>
 <#else>
-    <#-- search for function lambdas from lambda return type as input lambdas input argument and only with object (generical) return -->
+    <#-- search for function lambdas from global lambda return type as input lambdas input argument and only with object (generical) return -->
     <#assign inputLambda = LambdaUtils.searchByFirstInputAndReturnType(LambdaUtils.getFunctionType(), 1, lambda.returnType, Object, lambda.throwable)>
-    <#-- search for correct lambda which get lambda inputs and returns object output, unless suppliers which do not have inputs -->
+    <#-- search for correct lambda which gets global lambda inputs and returns object output, unless suppliers which do not have inputs -->
     <#if LambdaUtils.isOfTypeSupplier(lambda)>
         <#assign outputLambda = LambdaUtils.searchByInputTypesAndReturnType(LambdaUtils.getSupplierType(), lambda.arity, lambda.firstInputType, lambda.secondInputType, lambda.thirdInputType, Object, lambda.throwable)>
     <#else>

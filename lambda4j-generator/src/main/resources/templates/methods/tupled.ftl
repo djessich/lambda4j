@@ -8,7 +8,7 @@
     <#-- else lambda has only generic input, then we set arity to 1 -->
     <#assign decrementedArity = (lambda.arity - 1)>
     <#assign arity = helpers.isPrimitiveLambdaInput(lambda)?then((decrementedArity == 0)?then(1, decrementedArity), 1)>
-    <#-- search for correct output lambda of tupled method -->
+    <#-- search for correct output lambda of tupled method, which is a lambda with all inputs of global lambda and its return -->
     <#assign outputLambda = LambdaUtils.searchByInputTypesAndReturnType(lambda.type, arity, lambda.firstInputType, lambda.thirdInputType!lambda.secondInputType, lambda.thirdInputType, lambda.returnType, lambda.throwable)>
     <#-- if lambda does not have primitive return type, generate generic return for tupled method -->
     <#if !helpers.isPrimitive(outputLambda.returnType)>
