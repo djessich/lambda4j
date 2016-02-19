@@ -20,7 +20,7 @@ import at.gridtec.lambda4j.generator.entities.TypeEntity;
 import at.gridtec.lambda4j.generator.processors.Processor;
 import at.gridtec.lambda4j.generator.util.LambdaUtils;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;

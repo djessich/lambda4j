@@ -38,13 +38,8 @@ import freemarker.template.Template;
 import freemarker.template.TemplateExceptionHandler;
 import freemarker.template.TemplateHashModel;
 
-import org.apache.velocity.util.StringUtils;
-
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.FileWriter;
-import java.io.IOException;
-import java.io.OutputStream;
 import java.io.Writer;
 import java.util.HashMap;
 import java.util.List;
@@ -58,6 +53,10 @@ public class Generator {
 
     public static void main(String[] args) throws Exception {
 
+        final File file = new File(args[0]).getAbsoluteFile();
+        file.mkdirs();
+        System.out.println(file);
+
         // Prepare chain
         prepareChain();
 
@@ -69,17 +68,6 @@ public class Generator {
                 .filter(lambda -> !lambda.getType().equals(LambdaTypeEnum.RUNNABLE))
                 .collect(Collectors.toList());
         LambdaCache.getInstance().setLambdas(lambdas);
-
-        try (OutputStream ostream = new FileOutputStream("names.txt")) {
-            for (Lambda lambda : lambdas) {
-                String lambdaAsString = lambda.toString();
-                lambdaAsString += "\n";
-                ostream.write(lambdaAsString.getBytes());
-            }
-        } catch (IOException e) {
-            System.err.println("Unable to write to file");
-            System.exit(-1);
-        }
 
         System.out.println(lambdas.size());
         System.out.println(LambdaCache.getInstance().getLambdas().size());
@@ -121,8 +109,8 @@ public class Generator {
             Template temp = cfg.getTemplate("lambda.ftl");
 
             // Create path where to create file
-            final String packagePath = StringUtils.getPackageAsPath(lambda.getPackageName()).replace("\\", "/");
-            final File outputDir = new File("target/" + packagePath).getAbsoluteFile();
+            final String packagePath = lambda.getPackageName().replace(".", "/");
+            final File outputDir = new File(file + "/" + packagePath).getAbsoluteFile();
             outputDir.mkdirs();
 
             // Merge template with lambda data model
