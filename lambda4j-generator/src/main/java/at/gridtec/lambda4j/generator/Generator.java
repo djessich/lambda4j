@@ -41,9 +41,11 @@ import freemarker.template.TemplateHashModel;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.Writer;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 /**
@@ -64,8 +66,11 @@ public class Generator {
         final List<Lambda> lambdas = ProcessorChain.getInstance()
                 .invoke()
                 .stream()
+                .filter(Objects::nonNull)
                 .filter(lambda -> !lambda.getType().equals(LambdaTypeEnum.COMPARATOR))
                 .filter(lambda -> !lambda.getType().equals(LambdaTypeEnum.RUNNABLE))
+                .sorted(Comparator.comparing(Lambda::getType).thenComparing(Lambda::getPackageName))
+                .peek(System.out::println)
                 .collect(Collectors.toList());
         LambdaCache.getInstance().setLambdas(lambdas);
 

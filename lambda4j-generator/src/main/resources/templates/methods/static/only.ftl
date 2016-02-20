@@ -11,7 +11,9 @@
     <#-- loop over range (which depends on arity) and print only method -->
     <#list 0..!lambda.arity as current>
         <#-- search for correct input lambda of only method, which is the global lambdas input type (depending on arity) and its return type -->
-        <#assign inputLambda = LambdaUtils.searchByFirstInputAndReturnType(1, argumentTypes[current?index], lambda.returnType, lambda.throwable)>
+        <#--<#assign inputLambdaDefault = LambdaUtils.searchByFirstInputAndReturnType(1, argumentTypes[current?index], lambda.returnType, lambda.throwable)>-->
+        <#assign type = (argumentTypes[current?index] == lambda.returnType)?then(LambdaUtils.getOperatorType(), lambda.type)>
+        <#assign inputLambda = LambdaUtils.searchByFirstInputAndReturnType(type, 1, argumentTypes[current?index], lambda.returnType, lambda.throwable)>
         <#-- get actual number from numbers array -->
         <#assign number = numbers[current?index]>
         <#-- get actual number from numbers array and capitalize first letter -->
@@ -31,14 +33,14 @@
  * Creates a {@link ${lambda.name}} which uses the {@code ${number}} parameter of this one as argument for the given {@link ${inputLambda.name}}.
  *
 <#include "../../javadoc/paramGenericInput.ftl">
- * @param ${lambda.type.simpleName} The ${lambda.type.simpleName} which accepts the {@code ${number}} parameter of this one
+ * @param ${inputLambda.type.simpleName} The ${inputLambda.type.simpleName} which accepts the {@code ${number}} parameter of this one
  * @return Creates a {@code ${lambda.name}} which uses the {@code ${number}} parameter of this one as argument for the given {@code ${inputLambda.name}}.
 <#include "../../javadoc/throwsNullPointerException.ftl">
  */
 ${annotation.nonnull}
 static ${genericParameterTypeString} ${lambda.name}${genericParameterTypeString} only${capitalizedNumber}(${annotation.nonnull} final ${inputLambda.name}${types.buildGenericParameterTypeStringWithErasure(inputLambda, argumentType)} ${inputLambda.type.simpleName}) {
-    Objects.requireNonNull(${lambda.type.simpleName});
-    return (${parameterNameString}) -> ${lambda.type.simpleName}.${lambda.type.method}(${argumentName});
+    Objects.requireNonNull(${inputLambda.type.simpleName});
+    return (${parameterNameString}) -> ${inputLambda.type.simpleName}.${inputLambda.type.method}(${argumentName});
 }
 </#macro>
 <#-- @formatter:on -->
