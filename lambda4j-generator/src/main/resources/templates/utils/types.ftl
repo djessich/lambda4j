@@ -81,7 +81,12 @@
 
 <#function buildGenericParameterTypeString target = lambda other1 = "" other2 = "" other3 = "" other4 = "">
     <#local target = .namespace.otherParametersToTarget(target, other1, other2, other3, other4)>
-    <#local types = [target.firstInputType!"", target.secondInputType!"", target.thirdInputType!"", target.returnType!""]>
+    <#local types = []>
+    <#if LambdaUtils.isOfTypeOperator(target)>
+        <#local types = [target.returnType!""]>
+    <#else>
+        <#local types = [target.firstInputType!"", target.secondInputType!"", target.thirdInputType!"", target.returnType!""]>
+    </#if>
     <#local types = filters.filterEmpties(types)>
     <#local types = filters.filterPrimitives(types)>
     <#local genericString = "">
@@ -93,7 +98,12 @@
 
 <#function buildGenericParameterTypeStringWithErasure target = lambda other1 = "" other2 = "" other3 = "" other4 = "">
     <#local target = .namespace.otherParametersToTarget(target, other1, other2, other3, other4)>
-    <#local types = [target.firstInputType!"", target.secondInputType!"", target.thirdInputType!"", target.returnType!""]>
+    <#local types = []>
+    <#if LambdaUtils.isOfTypeOperator(target)>
+        <#local types = [target.returnType!""]>
+    <#else>
+        <#local types = [target.firstInputType!"", target.secondInputType!"", target.thirdInputType!"", target.returnType!""]>
+    </#if>
     <#local types = filters.filterEmpties(types)>
     <#local types = filters.filterPrimitives(types)>
     <#local genericString = "">

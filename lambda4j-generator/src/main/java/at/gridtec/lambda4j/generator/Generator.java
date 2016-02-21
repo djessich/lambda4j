@@ -70,7 +70,6 @@ public class Generator {
                 .filter(lambda -> !lambda.getType().equals(LambdaTypeEnum.COMPARATOR))
                 .filter(lambda -> !lambda.getType().equals(LambdaTypeEnum.RUNNABLE))
                 .sorted(Comparator.comparing(Lambda::getType).thenComparing(Lambda::getPackageName))
-                .peek(System.out::println)
                 .collect(Collectors.toList());
         LambdaCache.getInstance().setLambdas(lambdas);
 
