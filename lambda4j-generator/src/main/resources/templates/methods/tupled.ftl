@@ -27,7 +27,7 @@
  */
 ${annotation.nonnull}
 default ${outputLambda.name}<${tuple.printTuple()} ${return}> tupled() {
-    return this::${lambda.type.method};
+    return this::${lambda.method};
 }
 </#macro>
 <#-- @formatter:on -->

@@ -22,7 +22,7 @@
 ${annotation.nonnull}
 default ${lambda.name}${genericParameterTypeString} xor(${annotation.nonnull} final ${lambda.name}${genericParameterTypeStringWithErasure} other) {
     Objects.requireNonNull(other);
-    return (${parameterNameString}) -> ${lambda.type.method}(${parameterNameString}) ^ other.${lambda.type.method}(${parameterNameString});
+    return (${parameterNameString}) -> ${lambda.method}(${parameterNameString}) ^ other.${lambda.method}(${parameterNameString});
 }
 </#macro>
 <#-- @formatter:on -->

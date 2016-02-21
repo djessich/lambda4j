@@ -21,7 +21,7 @@
  */
 ${annotation.nonnull}
 default ${lambda.name}${genericParameterTypeStringReversed} reversed() {
-    return (${parameterNameStringReversed}) -> ${lambda.type.method}(${parameterNameString});
+    return (${parameterNameStringReversed}) -> ${lambda.method}(${parameterNameString});
 }
 </#macro>
 

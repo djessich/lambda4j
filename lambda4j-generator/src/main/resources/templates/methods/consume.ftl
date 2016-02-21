@@ -34,7 +34,7 @@
 ${annotation.nonnull}
 default ${outputLambda.name}${types.buildGenericParameterTypeString(outputLambda)} consume(${annotation.nonnull} final ${inputLambda.name}${types.buildGenericParameterTypeStringWithErasure(inputLambda, lambda.returnType)} ${inputLambda.type.simpleName}) {
     Objects.requireNonNull(${inputLambda.type.simpleName});
-    return (${parameterNameString}) -> ${inputLambda.type.simpleName}.${inputLambda.type.method}(${lambda.type.method}(${parameterNameString}));
+    return (${parameterNameString}) -> ${inputLambda.type.simpleName}.${inputLambda.method}(${lambda.method}(${parameterNameString}));
 }
 </#macro>
 
@@ -59,7 +59,7 @@ default ${outputLambda.name}${types.buildGenericParameterTypeString(outputLambda
 ${annotation.nonnull}
 default Consumer<Void> consume(${annotation.nonnull} final ${inputLambda.name} ${inputLambda.type.simpleName}) {
     Objects.requireNonNull(${inputLambda.type.simpleName});
-    return ignored -> ${inputLambda.type.simpleName}.${inputLambda.type.method}(${lambda.type.method}(${parameterNameString}));
+    return ignored -> ${inputLambda.type.simpleName}.${inputLambda.method}(${lambda.method}(${parameterNameString}));
 }
 </#macro>
 <#-- @formatter:on -->

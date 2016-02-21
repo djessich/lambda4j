@@ -54,7 +54,7 @@
 ${annotation.nonnull}
 default ${outputLambda.name}${types.buildGenericParameterTypeString(outputLambda)} composeFrom${primitiveType?cap_first}(${.namespace.inputLambdasString(inputLambda1, inputLambda2, inputLambda3)}) {
     ${.namespace.inputLambdaChecking(inputLambda1, inputLambda2, inputLambda3)}
-    return (${types.buildParameterNameString(outputLambda)}) -> ${lambda.type.method}(${.namespace.callLambdasString(outputLambda, inputLambda1, inputLambda2, inputLambda3)});
+    return (${types.buildParameterNameString(outputLambda)}) -> ${lambda.method}(${.namespace.callLambdasString(outputLambda, inputLambda1, inputLambda2, inputLambda3)});
 }
 </#macro>
 
@@ -127,13 +127,13 @@ default ${outputLambda.name}${types.buildGenericParameterTypeString(outputLambda
 <#function callLambdasString outputLambda = "", inputLambda1 = "" inputLambda2 = "" inputLambda3 = "">
     <#local ret = "">
     <#if (lambda.arity >= 1) && inputLambda1?has_content>
-        <#local ret = ret + 'before${helpers.number()}.${inputLambda1.type.method}(${types.buildParameterName(outputLambda.firstInputType)})'>
+        <#local ret = ret + 'before${helpers.number()}.${inputLambda1.method}(${types.buildParameterName(outputLambda.firstInputType)})'>
     </#if>
     <#if (lambda.arity >= 2) && inputLambda2?has_content>
-        <#local ret = ret + ', before2.${inputLambda2.type.method}(${types.buildParameterName(outputLambda.secondInputType)})'>
+        <#local ret = ret + ', before2.${inputLambda2.method}(${types.buildParameterName(outputLambda.secondInputType)})'>
     </#if>
     <#if (lambda.arity >= 3) && inputLambda3?has_content>
-        <#local ret = ret + ', before3.${inputLambda3.type.method}(${types.buildParameterName(outputLambda.thirdInputType)})'>
+        <#local ret = ret + ', before3.${inputLambda3.method}(${types.buildParameterName(outputLambda.thirdInputType)})'>
     </#if>
     <#return ret>
 </#function>

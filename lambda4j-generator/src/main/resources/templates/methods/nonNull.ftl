@@ -20,7 +20,7 @@
  */
 @Nonnull
 default ${lambda.name} ${genericTypeStringWithOptionalReturn} nonNull() {
-    return (${parameterNameString}) -> Optional.ofNullable(${lambda.type.method}(${parameterNameString}));
+    return (${parameterNameString}) -> Optional.ofNullable(${lambda.method}(${parameterNameString}));
 }
 </#macro>
 <#-- @formatter:on -->

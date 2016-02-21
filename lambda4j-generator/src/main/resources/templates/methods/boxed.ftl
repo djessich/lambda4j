@@ -31,7 +31,7 @@
  */
 ${annotation.nonnull}
 default ${outputLambda.name}${genericParameterTypeStringWithPrimitives} boxed() {
-    return this::${lambda.type.method};
+    return this::${lambda.method};
 }
 </#macro>
 

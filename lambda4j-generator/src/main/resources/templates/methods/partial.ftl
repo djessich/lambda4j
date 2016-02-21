@@ -62,7 +62,7 @@
  */
 ${annotation.nonnull}
 default ${outputLambda.name}${types.buildGenericParameterTypeString(outputLambda)} partial(${types.buildParameterString(inputLambda)}) {
-    return (${types.buildParameterNameString(outputLambda)}) -> ${lambda.type.method}(${parameterNameString});
+    return (${types.buildParameterNameString(outputLambda)}) -> ${lambda.method}(${parameterNameString});
 }
 </#macro>
 <#-- @formatter:on -->

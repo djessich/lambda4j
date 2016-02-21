@@ -25,7 +25,7 @@
 */
 ${annotation.nonnull}
 default ${outputLambda.name}<${lambda.firstInputType}, ${outputLambda.name}<${lambda.secondInputType}, ${lastStep} ${lambda.returnType} ${lastClosingTag}>> curried() {
-    return t -> u ${lastArrow} -> ${lambda.type.method}(${parameterNameString});
+    return t -> u ${lastArrow} -> ${lambda.method}(${parameterNameString});
 }
 </#macro>
 <#-- @formatter:on -->

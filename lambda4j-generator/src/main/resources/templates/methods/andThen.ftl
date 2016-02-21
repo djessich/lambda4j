@@ -37,7 +37,7 @@
 ${annotation.nonnull}
 default <S> ${outputLambda.name}${types.buildGenericParameterTypeString(outputLambda, "", "", "", "S")} andThen(${annotation.nonnull} final ${inputLambda.name}${types.buildGenericParameterTypeStringWithErasure(inputLambda, lambda.returnType, "", "", "S")} after) {
     Objects.requireNonNull(after);
-    return (${parameterNameString}) -> after.${inputLambda.type.method}(${lambda.type.method}(${parameterNameString}));
+    return (${parameterNameString}) -> after.${inputLambda.method}(${lambda.method}(${parameterNameString}));
 }
 </#macro>
 
@@ -60,8 +60,8 @@ ${annotation.nonnull}
 default ${lambda.name}${genericParameterTypeString} andThen(${annotation.nonnull} final ${lambda.name}${genericParameterTypeStringWithErasure} after) {
     Objects.requireNonNull(after);
     return (${parameterNameString}) -> {
-        ${lambda.type.method}(${parameterNameString});
-        after.${lambda.type.method}(${parameterNameString});
+        ${lambda.method}(${parameterNameString});
+        after.${lambda.method}(${parameterNameString});
     };
 }
 </#macro>

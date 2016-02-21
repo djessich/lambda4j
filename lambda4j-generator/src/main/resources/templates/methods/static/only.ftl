@@ -40,7 +40,7 @@
 ${annotation.nonnull}
 static ${genericParameterTypeString} ${lambda.name}${genericParameterTypeString} only${capitalizedNumber}(${annotation.nonnull} final ${inputLambda.name}${types.buildGenericParameterTypeStringWithErasure(inputLambda, argumentType)} ${inputLambda.type.simpleName}) {
     Objects.requireNonNull(${inputLambda.type.simpleName});
-    return (${parameterNameString}) -> ${inputLambda.type.simpleName}.${inputLambda.type.method}(${argumentName});
+    return (${parameterNameString}) -> ${inputLambda.type.simpleName}.${inputLambda.method}(${argumentName});
 }
 </#macro>
 <#-- @formatter:on -->

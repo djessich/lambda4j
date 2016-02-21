@@ -45,7 +45,7 @@
 ${annotation.nonnull}
 default ${outputLambda.name}${types.buildGenericParameterTypeString(outputLambda)} andThenTo${primitiveType?cap_first}(${annotation.nonnull} final ${inputLambda.name}${types.buildGenericParameterTypeStringWithErasure(inputLambda, lambda.returnType)} after) {
     Objects.requireNonNull(after);
-    return (${parameterNameString}) -> after.${inputLambda.type.method}(${lambda.type.method}(${parameterNameString}));
+    return (${parameterNameString}) -> after.${inputLambda.method}(${lambda.method}(${parameterNameString}));
 }
 </#macro>
 <#-- @formatter:on -->

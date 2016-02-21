@@ -8,7 +8,7 @@
 <#include "../javadoc/paramArgumentInput.ftl">
  * @return The return value from the function, which is its result.
  */
-${lambda.returnType.typeName} ${lambda.type.method}(${parameterString});
+${lambda.returnType.typeName} ${lambda.method}(${parameterString});
 
 <#-- print tupled apply only if lambda has arity greater than 2 and at least two generics -->
 <#if (lambda.arity >= 2) && !helpers.isPrimitive(lambda.firstInputType) && !helpers.isPrimitive(lambda.secondInputType)>
@@ -20,9 +20,9 @@ ${lambda.returnType.typeName} ${lambda.type.method}(${parameterString});
 <#include "../javadoc/throwsNullPointerException.ftl">
 <#include "../javadoc/seeTupleClass.ftl">
  */
-default ${lambda.returnType.typeName} ${lambda.type.method}(${annotation.nonnull} ${tuple.printTuple()} tuple ${helpers.isPrimitive(lambda.thirdInputType)?then(", " + types.buildParameter(lambda.thirdInputType), "")}) {
+default ${lambda.returnType.typeName} ${lambda.method}(${annotation.nonnull} ${tuple.printTuple()} tuple ${helpers.isPrimitive(lambda.thirdInputType)?then(", " + types.buildParameter(lambda.thirdInputType), "")}) {
     Objects.requireNonNull(tuple);
-    return ${lambda.type.method}(${tuple.printTupleAccess()} ${helpers.isPrimitive(lambda.thirdInputType)?then(", " + types.buildParameterName(lambda.thirdInputType), "")});
+    return ${lambda.method}(${tuple.printTupleAccess()} ${helpers.isPrimitive(lambda.thirdInputType)?then(", " + types.buildParameterName(lambda.thirdInputType), "")});
 }
 </#if>
 <#-- @formatter:on -->

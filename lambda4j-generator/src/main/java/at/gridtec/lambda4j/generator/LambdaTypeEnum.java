@@ -22,28 +22,25 @@ package at.gridtec.lambda4j.generator;
 // TODO Move to correct pacakge
 public enum LambdaTypeEnum {
 
-    COMPARATOR(1, "comparator", "compare"),
-    CONSUMER(2, "consumer", "accept"),
-    FUNCTION(3, "function", "apply"),
-    OPERATOR(4, "operator", "apply"),
-    PREDICATE(5, "predicate", "test"),
-    RUNNABLE(6, "runnable", "run"),
-    SUPPLIER(7, "supplier", "get");
+    COMPARATOR(1, "comparator"),
+    CONSUMER(2, "consumer"),
+    FUNCTION(3, "function"),
+    OPERATOR(4, "operator"),
+    PREDICATE(5, "predicate"),
+    RUNNABLE(6, "runnable"),
+    SUPPLIER(7, "supplier");
 
     private final int id;
     private final String simpleName;
-    private final String method;
 
     /**
      * Constructs this enum name.
      *
      * @param id The id for the constant
-     * @param simpleName The string representation for the constant
      */
-    private LambdaTypeEnum(int id, final String simpleName, final String method) {
+    private LambdaTypeEnum(int id, final String simpleName) {
         this.id = id;
         this.simpleName = simpleName;
-        this.method = method;
     }
 
     /**
@@ -62,15 +59,6 @@ public enum LambdaTypeEnum {
      */
     public String getSimpleName() {
         return simpleName;
-    }
-
-    /**
-     * Returns the lambda method name for the enum constant.
-     *
-     * @return The lambda method name for the enum constant.
-     */
-    public String getMethod() {
-        return method;
     }
 
     /**
