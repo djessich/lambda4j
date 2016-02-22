@@ -148,7 +148,7 @@ public final class MethodProcessor extends Processor {
         Objects.requireNonNull(lambdaReturnType);
         if (LambdaUtils.isPrimitiveType(lambdaReturnType)) {
             builder.append(AS_IDENTIFIER);
-            builder.append(StringUtils.capitalize(lambdaReturnType.getTypeName()));
+            builder.append(StringUtils.capitalize(lambdaReturnType.getTypeSimpleName()));
         }
     }
 

@@ -22,7 +22,6 @@ import at.gridtec.lambda4j.generator.processors.ProcessorChain;
 import at.gridtec.lambda4j.generator.processors.impl.ArityProcessor;
 import at.gridtec.lambda4j.generator.processors.impl.ChangeOperatorProcessor;
 import at.gridtec.lambda4j.generator.processors.impl.InputTypeOneProcessor;
-import at.gridtec.lambda4j.generator.processors.impl.InputTypeThreeProcessor;
 import at.gridtec.lambda4j.generator.processors.impl.InputTypeTwoProcessor;
 import at.gridtec.lambda4j.generator.processors.impl.MethodProcessor;
 import at.gridtec.lambda4j.generator.processors.impl.NameProcessor;
@@ -30,6 +29,7 @@ import at.gridtec.lambda4j.generator.processors.impl.PackageProcessor;
 import at.gridtec.lambda4j.generator.processors.impl.ReturnTypeProcessor;
 import at.gridtec.lambda4j.generator.processors.impl.ThrowableProcessor;
 import at.gridtec.lambda4j.generator.processors.impl.TypeProcessor;
+import at.gridtec.lambda4j.generator.processors.impl.inputTypeThreeProcessor;
 import at.gridtec.lambda4j.generator.util.LambdaUtils;
 import freemarker.ext.beans.BeansWrapper;
 import freemarker.ext.beans.BeansWrapperBuilder;
@@ -69,7 +69,19 @@ public class Generator {
                 .filter(Objects::nonNull)
                 .filter(lambda -> !lambda.getType().equals(LambdaTypeEnum.COMPARATOR))
                 .filter(lambda -> !lambda.getType().equals(LambdaTypeEnum.RUNNABLE))
-                .sorted(Comparator.comparing(Lambda::getType).thenComparing(Lambda::getPackageName))
+                .sorted(Comparator.comparing(Lambda::getType).thenComparing(Lambda::getPackageName)).peek(lambda -> {
+                    final StringBuilder builder = new StringBuilder();
+                    if (lambda.getArity() >= 1) {
+                        builder.append(lambda.getFirstInputType().getTypeCount());
+                    }
+                    if (lambda.getArity() >= 2) {
+                        builder.append(", " + lambda.getSecondInputType().getTypeCount());
+                    }
+                    if (lambda.getArity() >= 3) {
+                        builder.append(", " + lambda.getThirdInputType().getTypeCount());
+                    }
+                    System.out.println(builder.toString());
+                })
                 .collect(Collectors.toList());
         LambdaCache.getInstance().setLambdas(lambdas);
 
@@ -136,7 +148,7 @@ public class Generator {
         Processor returnTypeProcessor = new ReturnTypeProcessor();
         Processor inputTypeOneProcessor = new InputTypeOneProcessor();
         Processor inputTypeTwoProcessor = new InputTypeTwoProcessor();
-        Processor inputTypeThreeProcessor = new InputTypeThreeProcessor();
+        Processor inputTypeThreeProcessor = new inputTypeThreeProcessor();
         Processor changeOperatorProcessor = new ChangeOperatorProcessor();
         Processor packageProcessor = new PackageProcessor();
         Processor throwableProcessor = new ThrowableProcessor();

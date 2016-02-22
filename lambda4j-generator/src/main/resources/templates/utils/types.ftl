@@ -1,29 +1,41 @@
 <#import "filters.ftl" as filters>
 <#import "helpers.ftl" as helpers>
 
-<#function buildParameter param>
+<#function buildParameter param target = lambda>
     <#local genericString = "">
     <#if param?has_content>
-        <#local genericString = .namespace.buildParameterType(param) + " " + .namespace.buildParameterName(param)>
+        <#local genericString = .namespace.buildParameterType(param, target) + " " + .namespace.buildParameterName(param, target)>
     </#if>
     <#return genericString>
 </#function>
 
-<#function buildParameterType param>
-    <#local genericString = "">
-    <#if param?has_content>
-        <#local genericString = genericString + param.typeName>
-    </#if>
-    <#return genericString>
-</#function>
-
-<#function buildParameterName param>
+<#function buildParameterType param target = lambda>
     <#local genericString = "">
     <#if param?has_content>
         <#if param.typePrimitive>
-            <#local genericString = genericString + "value">
+            <#local genericString = genericString + param.typeSimpleName>
         <#else>
-            <#local genericString = genericString + param.typeName?lower_case>
+            <#local genericString = genericString + param.typeName>
+        </#if>
+    </#if>
+    <#return genericString>
+</#function>
+
+<#-- TODO lambda with primitive and generic input args there is no need to set count -->
+<#function buildParameterName param target = lambda>
+    <#local genericString = "">
+    <#if param?has_content>
+        <#local genericString = genericString + param.typeName?lower_case>
+        <#if param.typePrimitive && (param.typeCount > 0)>
+        <#--<#local genericString = genericString + "value" + (target.arity > 1)?then((param.typeCount), "")>-->
+            <#local count = 0>
+            <#if (target.firstInputType?has_content)>
+                <#local count = target.firstInputType.typePrimitive?then(count, count + 1)>
+            </#if>
+            <#if (target.secondInputType?has_content)>
+                <#local count = target.secondInputType.typePrimitive?then(count, count + 1)>
+            </#if>
+            <#local genericString = genericString + ((target.arity - count) > 1)?then((param.typeCount), "")>
         </#if>
     </#if>
     <#return genericString>
@@ -37,7 +49,7 @@
     <#local genericString = "">
     <#if (types?has_content)>
         <#list types as type>
-            <#local genericString = genericString + .namespace.buildParameter(type)>
+            <#local genericString = genericString + .namespace.buildParameter(type, target)>
             <#if type?has_next>
                 <#local genericString = genericString + ", ">
             </#if>
@@ -53,7 +65,7 @@
     <#local genericString = "">
     <#if (types?has_content)>
         <#list types as type>
-            <#local genericString = genericString + .namespace.buildParameterType(type)>
+            <#local genericString = genericString + .namespace.buildParameterType(type, target)>
             <#if type?has_next>
                 <#local genericString = genericString + ", ">
             </#if>
@@ -69,7 +81,7 @@
     <#local genericString = "">
     <#if (types?has_content)>
         <#list types as type>
-            <#local genericString = genericString + .namespace.buildParameterName(type)>
+            <#local genericString = genericString + .namespace.buildParameterName(type, target)>
             <#if type?has_next>
                 <#local genericString = genericString + ", ">
             </#if>
@@ -91,7 +103,15 @@
     <#local types = filters.filterPrimitives(types)>
     <#local genericString = "">
     <#if (types?has_content)>
-        <#local genericString = genericString + "<" + types?join(", ", "", ">")>
+        <#local genericString = genericString + "<">
+        <#list types as type>
+        <#--<#local genericString = genericString + "<" + types?join(", ", "", ">")>-->
+            <#local genericString = genericString + .namespace.buildParameterType(type, target)>
+            <#if type?has_next>
+                <#local genericString = genericString + ", ">
+            </#if>
+        </#list>
+        <#local genericString = genericString + ">">
     </#if>
     <#return genericString>
 </#function>
@@ -111,9 +131,9 @@
         <#local genericString = genericString + "<">
         <#list types as type>
             <#if type == target.returnType!"">
-                <#local genericString = genericString + "? extends " + .namespace.buildParameterType(type)>
+                <#local genericString = genericString + "? extends " + .namespace.buildParameterType(type, target)>
             <#else>
-                <#local genericString = genericString + "? super " + .namespace.buildParameterType(type)>
+                <#local genericString = genericString + "? super " + .namespace.buildParameterType(type, target)>
             </#if>
             <#if type?has_next>
                 <#local genericString = genericString + ", ">

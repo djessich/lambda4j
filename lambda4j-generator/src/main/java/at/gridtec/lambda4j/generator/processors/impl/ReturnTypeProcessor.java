@@ -47,7 +47,7 @@ public final class ReturnTypeProcessor extends Processor {
         // Special Rule: Lambda is a Comparator it must return int
         if (LambdaUtils.isOfTypeComparator(lambda)) {
             final Lambda copy = LambdaUtils.copy(lambda);
-            TypeEntity type = new TypeEntity(int.class, int.class.getSimpleName());
+            TypeEntity type = new TypeEntity(int.class, "ret");
             copy.setReturnType(type);
             lambdas.addAll(next(copy));
         }
@@ -63,7 +63,7 @@ public final class ReturnTypeProcessor extends Processor {
         // Special Rule: Lambda is a Predicate it must return boolean
         else if (LambdaUtils.isOfTypePredicate(lambda)) {
             final Lambda copy = LambdaUtils.copy(lambda);
-            TypeEntity type = new TypeEntity(boolean.class, boolean.class.getSimpleName());
+            TypeEntity type = new TypeEntity(boolean.class, "ret");
             copy.setReturnType(type);
             lambdas.addAll(next(copy));
         }
@@ -89,7 +89,7 @@ public final class ReturnTypeProcessor extends Processor {
             }
             for (final Class<?> typeClass : primitivesWithoutBoolean) {
                 final Lambda primitive = LambdaUtils.copy(lambda);
-                TypeEntity type = new TypeEntity(typeClass, typeClass.getSimpleName());
+                TypeEntity type = new TypeEntity(typeClass, "ret");
                 primitive.setReturnType(type);
                 lambdas.addAll(next(primitive));
             }

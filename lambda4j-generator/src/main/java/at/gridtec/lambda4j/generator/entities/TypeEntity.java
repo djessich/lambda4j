@@ -26,6 +26,8 @@ public class TypeEntity implements Serializable {
 
     private String typeName;
 
+    private int typeCount;
+
     private String typeSimpleName;
 
     private boolean typePrimitive;
@@ -37,6 +39,14 @@ public class TypeEntity implements Serializable {
     public TypeEntity(final Class<?> typeClass, final String typeName) {
         this.typeClass = typeClass;
         this.typeName = typeName;
+        this.typeSimpleName = typeClass.getSimpleName();
+        this.typePrimitive = typeClass.isPrimitive();
+    }
+
+    public TypeEntity(final Class<?> typeClass, final String typeName, int typeCount) {
+        this.typeClass = typeClass;
+        this.typeName = typeName;
+        this.typeCount = typeCount;
         this.typeSimpleName = typeClass.getSimpleName();
         this.typePrimitive = typeClass.isPrimitive();
     }
@@ -55,6 +65,14 @@ public class TypeEntity implements Serializable {
 
     public void setTypeName(String typeName) {
         this.typeName = typeName;
+    }
+
+    public int getTypeCount() {
+        return typeCount;
+    }
+
+    public void setTypeCount(int typeCount) {
+        this.typeCount = typeCount;
     }
 
     public String getTypeSimpleName() {
