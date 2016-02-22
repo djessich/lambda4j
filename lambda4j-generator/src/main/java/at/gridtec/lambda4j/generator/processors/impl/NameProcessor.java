@@ -108,7 +108,7 @@ public final class NameProcessor extends Processor {
         // Special Rule: Operators will have special arity identifiers
         if (LambdaUtils.isOfTypeOperator(lambda)) {
             if (LambdaUtils.isPrimitiveType(lambda.getReturnType())) {
-                nameBuilder.append(cap(lambda.getReturnType().getTypeName()));
+                nameBuilder.append(cap(lambda.getReturnType().getTypeSimpleName()));
             }
             if (lambda.getArity() == 1) {
                 nameBuilder.append(OPERATOR_ARITY_ONE_IDENTIFIER);
@@ -121,7 +121,7 @@ public final class NameProcessor extends Processor {
 
         // Special Rule: Lambda is of type supplier and has primitive return, append primitive identifier
         else if (LambdaUtils.isOfTypeSupplier(lambda) && LambdaUtils.isPrimitiveType(lambda.getReturnType())) {
-            nameBuilder.append(cap(lambda.getReturnType().getTypeName()));
+            nameBuilder.append(cap(lambda.getReturnType().getTypeSimpleName()));
         }
 
         // All other types will be named using normal schema, unless Comparator or Runnable
@@ -136,7 +136,7 @@ public final class NameProcessor extends Processor {
 
                 // Lambda input one is primitive, so append primitive type name
                 if (LambdaUtils.isPrimitiveType(lambda.getFirstInputType())) {
-                    nameBuilder.append(cap(lambda.getFirstInputType().getTypeName()));
+                    nameBuilder.append(cap(lambda.getFirstInputType().getTypeSimpleName()));
                 }
 
                 // Special Rule: Lambda is of type function which has primitive input one and return type, so append 'To'
@@ -162,7 +162,7 @@ public final class NameProcessor extends Processor {
 
                 // Lambda input two is primitive, so append primitive type name
                 if (LambdaUtils.isPrimitiveType(lambda.getSecondInputType())) {
-                    nameBuilder.append(cap(lambda.getSecondInputType().getTypeName()));
+                    nameBuilder.append(cap(lambda.getSecondInputType().getTypeSimpleName()));
                 }
 
                 // Special Rule: Lambda is of type function which has primitive input two and return type, so append 'To'
@@ -192,7 +192,7 @@ public final class NameProcessor extends Processor {
 
                 // Lambda input three is primitive, so append primitive type name
                 if (LambdaUtils.isPrimitiveType(lambda.getThirdInputType())) {
-                    nameBuilder.append(cap(lambda.getThirdInputType().getTypeName()));
+                    nameBuilder.append(cap(lambda.getThirdInputType().getTypeSimpleName()));
                 }
 
                 // Special Rule: Lambda is of type function which has primitive input three and return type, so append 'To'
@@ -233,7 +233,7 @@ public final class NameProcessor extends Processor {
                 && LambdaUtils.isPrimitiveType(lambdaInputType)
                 && LambdaUtils.isPrimitiveType(lambdaReturnType)) {
             builder.append(TO_IDENTIFIER);
-            builder.append(cap(lambdaReturnType.getTypeName()));
+            builder.append(cap(lambdaReturnType.getTypeSimpleName()));
         }
     }
 
@@ -260,7 +260,7 @@ public final class NameProcessor extends Processor {
                 && !LambdaUtils.isPrimitiveType(lambdaInputType)
                 && LambdaUtils.isPrimitiveType(lambdaReturnType)) {
             builder.append(TO_IDENTIFIER);
-            builder.append(cap(lambdaReturnType.getTypeName()));
+            builder.append(cap(lambdaReturnType.getTypeSimpleName()));
         }
     }
 

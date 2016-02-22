@@ -10,10 +10,6 @@
     <#assign argumentNames = [types.buildParameterName(lambda.firstInputType!""), types.buildParameterName(lambda.secondInputType!""), types.buildParameterName(lambda.thirdInputType!"")]>
     <#-- loop over range (which depends on arity) and print only method -->
     <#list 0..!lambda.arity as current>
-        <#-- search for correct input lambda of only method, which is the global lambdas input type (depending on arity) and its return type -->
-        <#--<#assign inputLambdaDefault = LambdaUtils.searchByFirstInputAndReturnType(1, argumentTypes[current?index], lambda.returnType, lambda.throwable)>-->
-        <#assign type = (argumentTypes[current?index] == lambda.returnType)?then(LambdaUtils.getOperatorType(), lambda.type)>
-        <#assign inputLambda = LambdaUtils.searchByFirstInputAndReturnType(type, 1, argumentTypes[current?index], lambda.returnType, lambda.throwable)>
         <#-- get actual number from numbers array -->
         <#assign number = numbers[current?index]>
         <#-- get actual number from numbers array and capitalize first letter -->
@@ -22,6 +18,9 @@
         <#assign argumentType = argumentTypes[current?index]>
         <#-- get lambda parameter and build its parameter name -->
         <#assign argumentName = argumentNames[current?index]>
+        <#-- search for correct input lambda of only method, which is the global lambdas input type (depending on arity) and its return type -->
+        <#assign type = (lambda.returnType.typePrimitive && lambda.returnType.equals(argumentType))?then(LambdaUtils.getOperatorType(), lambda.type)>
+        <#assign inputLambda = LambdaUtils.searchByFirstInputAndReturnType(type, 1, argumentType, lambda.returnType, lambda.throwable)>
         <#-- print only method -->
         <@.namespace.onlyMethod number capitalizedNumber inputLambda argumentType argumentName/>
     </#list>

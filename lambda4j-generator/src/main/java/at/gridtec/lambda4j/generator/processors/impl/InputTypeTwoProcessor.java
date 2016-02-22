@@ -54,7 +54,7 @@ public final class InputTypeTwoProcessor extends Processor {
             // Special Rule: Comparator is only generic
             if (LambdaUtils.isOfTypeComparator(lambda)) {
                 final Lambda copy = LambdaUtils.copy(lambda);
-                TypeEntity type = new TypeEntity(Object.class, "U");
+                TypeEntity type = new TypeEntity(Object.class, "U", 2);
                 copy.setSecondInputType(type);
                 lambdas.addAll(next(copy));
             }
@@ -70,14 +70,14 @@ public final class InputTypeTwoProcessor extends Processor {
 
                     // Apply generical input for arg 2
                     final Lambda generical = LambdaUtils.copy(lambda);
-                    TypeEntity type = new TypeEntity(Object.class, "U");
+                    TypeEntity type = new TypeEntity(Object.class, "U", 2);
                     generical.setSecondInputType(type);
                     genLambdas.add(generical);
 
                     // Apply primitive input for arg 2
                     for (final Class<?> typeClass : PRIMITIVES) {
                         final Lambda primitive = LambdaUtils.copy(lambda);
-                        type = new TypeEntity(typeClass, typeClass.getSimpleName());
+                        type = new TypeEntity(typeClass, "value", 1);
                         primitive.setSecondInputType(type);
                         genLambdas.add(primitive);
                     }
@@ -86,7 +86,8 @@ public final class InputTypeTwoProcessor extends Processor {
                 // Lambda has primitive arg 1 so apply same primitive type to arg 2
                 else {
                     final Lambda primitive = LambdaUtils.copy(lambda);
-                    primitive.setSecondInputType(primitive.getFirstInputType());
+                    TypeEntity entity = primitive.getFirstInputType();
+                    primitive.setSecondInputType(new TypeEntity(entity.getTypeClass(), entity.getTypeName(), 2));
                     genLambdas.add(primitive);
                 }
 

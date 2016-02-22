@@ -69,7 +69,19 @@ public class Generator {
                 .filter(Objects::nonNull)
                 .filter(lambda -> !lambda.getType().equals(LambdaTypeEnum.COMPARATOR))
                 .filter(lambda -> !lambda.getType().equals(LambdaTypeEnum.RUNNABLE))
-                .sorted(Comparator.comparing(Lambda::getType).thenComparing(Lambda::getPackageName))
+                .sorted(Comparator.comparing(Lambda::getType).thenComparing(Lambda::getPackageName)).peek(lambda -> {
+                    final StringBuilder builder = new StringBuilder();
+                    if (lambda.getArity() >= 1) {
+                        builder.append(lambda.getFirstInputType().getTypeCount());
+                    }
+                    if (lambda.getArity() >= 2) {
+                        builder.append(", " + lambda.getSecondInputType().getTypeCount());
+                    }
+                    if (lambda.getArity() >= 3) {
+                        builder.append(", " + lambda.getThirdInputType().getTypeCount());
+                    }
+                    System.out.println(builder.toString());
+                })
                 .collect(Collectors.toList());
         LambdaCache.getInstance().setLambdas(lambdas);
 

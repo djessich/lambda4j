@@ -31,7 +31,7 @@
         <#-- search for correct output lambda which has primitive input only and the same return type as this lambda -->
         <#assign outputLambda = LambdaUtils.searchByInputTypesAndReturnType(lambda.arity, primitive, primitive, primitive, lambda.returnType, lambda.throwable)>
         <#-- print composeFromPrimitive method -->
-        <@.namespace.composeFromPrimitiveMethod primitive outputLambda inputLambda1 inputLambda2 inputLambda3/>
+        <@.namespace.composeFromPrimitiveMethod primitive.typeSimpleName outputLambda inputLambda1 inputLambda2 inputLambda3/>
     </#list>
 </#if>
 

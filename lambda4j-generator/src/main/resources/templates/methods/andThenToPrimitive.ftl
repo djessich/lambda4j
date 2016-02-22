@@ -23,7 +23,7 @@
         <#-- search for correct output lambda which get all input types from global lambda and returns a primitive value -->
         <#assign outputLambda = LambdaUtils.searchByInputTypesAndReturnType(lambda.arity, lambda.firstInputType, lambda.secondInputType, lambda.thirdInputType, primitive, lambda.throwable)>
         <#-- print andThenToPrimitive method -->
-        <@.namespace.andThenToPrimitiveMethod inputLambda outputLambda primitive/>
+        <@.namespace.andThenToPrimitiveMethod inputLambda outputLambda primitive.typeSimpleName/>
     </#list>
 </#if>
 
