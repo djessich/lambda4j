@@ -29,7 +29,7 @@ import at.gridtec.lambda4j.generator.processors.impl.PackageProcessor;
 import at.gridtec.lambda4j.generator.processors.impl.ReturnTypeProcessor;
 import at.gridtec.lambda4j.generator.processors.impl.ThrowableProcessor;
 import at.gridtec.lambda4j.generator.processors.impl.TypeProcessor;
-import at.gridtec.lambda4j.generator.processors.impl.inputTypeTwoProcessor;
+import at.gridtec.lambda4j.generator.processors.impl.InputTypeTwoProcessor;
 import at.gridtec.lambda4j.generator.util.LambdaUtils;
 import freemarker.ext.beans.BeansWrapper;
 import freemarker.ext.beans.BeansWrapperBuilder;
@@ -147,7 +147,7 @@ public class Generator {
         Processor arityProcessor = new ArityProcessor();
         Processor returnTypeProcessor = new ReturnTypeProcessor();
         Processor inputTypeOneProcessor = new InputTypeOneProcessor();
-        Processor inputTypeTwoProcessor = new inputTypeTwoProcessor();
+        Processor inputTypeTwoProcessor = new InputTypeTwoProcessor();
         Processor inputTypeThreeProcessor = new InputTypeThreeProcessor();
         Processor changeOperatorProcessor = new ChangeOperatorProcessor();
         Processor packageProcessor = new PackageProcessor();
