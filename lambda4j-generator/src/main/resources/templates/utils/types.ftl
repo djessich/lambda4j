@@ -21,13 +21,11 @@
     <#return genericString>
 </#function>
 
-<#-- TODO lambda with primitive and generic input args there is no need to set count -->
 <#function buildParameterName param target = lambda>
     <#local genericString = "">
     <#if param?has_content>
         <#local genericString = genericString + param.typeName?lower_case>
         <#if param.typePrimitive && (param.typeCount > 0)>
-        <#--<#local genericString = genericString + "value" + (target.arity > 1)?then((param.typeCount), "")>-->
             <#local count = 0>
             <#if (target.firstInputType?has_content)>
                 <#local count = target.firstInputType.typePrimitive?then(count, count + 1)>

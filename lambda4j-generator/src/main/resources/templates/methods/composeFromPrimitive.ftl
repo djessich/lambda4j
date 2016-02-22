@@ -127,13 +127,13 @@ default ${outputLambda.name}${types.buildGenericParameterTypeString(outputLambda
 <#function callLambdasString outputLambda = "", inputLambda1 = "" inputLambda2 = "" inputLambda3 = "">
     <#local ret = "">
     <#if (lambda.arity >= 1) && inputLambda1?has_content>
-        <#local ret = ret + 'before${helpers.number()}.${inputLambda1.method}(${types.buildParameterName(outputLambda.firstInputType)})'>
+        <#local ret = ret + 'before${helpers.number()}.${inputLambda1.method}(${types.buildParameterName(outputLambda.firstInputType, outputLambda)})'>
     </#if>
     <#if (lambda.arity >= 2) && inputLambda2?has_content>
-        <#local ret = ret + ', before2.${inputLambda2.method}(${types.buildParameterName(outputLambda.secondInputType)})'>
+        <#local ret = ret + ', before2.${inputLambda2.method}(${types.buildParameterName(outputLambda.secondInputType, outputLambda)})'>
     </#if>
     <#if (lambda.arity >= 3) && inputLambda3?has_content>
-        <#local ret = ret + ', before3.${inputLambda3.method}(${types.buildParameterName(outputLambda.thirdInputType)})'>
+        <#local ret = ret + ', before3.${inputLambda3.method}(${types.buildParameterName(outputLambda.thirdInputType, outputLambda)})'>
     </#if>
     <#return ret>
 </#function>

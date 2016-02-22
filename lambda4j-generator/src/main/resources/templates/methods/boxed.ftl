@@ -37,6 +37,8 @@ default ${outputLambda.name}${genericParameterTypeStringWithPrimitives} boxed() 
 
 <#-- a helper function to build a generic parameter type string with primitives for given target lambda -->
 <#function buildGenericParameterTypeStringWithPrimitives target = lambda>
+    <#--<#local target = LambdaUtils.copy(target)>-->
+    <#-- prepare lambda input parameters as sequence -->
     <#local parameters = [target.firstInputType!"", target.secondInputType!"", target.thirdInputType!""]>
     <#-- if lambda is of type operator just use return type; otherwise if not predicate or consumer append return type -->
     <#if LambdaUtils.isOfTypeOperator(target)>
@@ -44,11 +46,24 @@ default ${outputLambda.name}${genericParameterTypeStringWithPrimitives} boxed() 
     <#elseif !LambdaUtils.isOfTypePredicate(target) && !LambdaUtils.isOfTypeConsumer(target)>
         <#local parameters = parameters + [target.returnType!""]>
     </#if>
+    <#-- filter all unset values from parameters sequence -->
     <#local parameters = filters.filterEmpties(parameters)>
+    <#-- setup a map for mapping primitive values to their primitive wrapper counterpart -->
+    <#local classMap = {
+        "char":"Character",
+        "int":"Integer"
+    }>
+    <#-- after filtering, if sequence contains elements, start generic parameter type string generation -->
     <#local genericString = "">
     <#if (types?has_content)>
         <#local genericString = genericString + "<">
         <#list parameters as type>
+            <#-- get type simple name from type as key for class map and save the keys value -->
+            <#local newTypeSimpleName = classMap[type.typeSimpleName]!"">
+             if type is primitive and new simple type name is valid, then set it as new type
+            <#if (type.typePrimitive && newTypeSimpleName?has_content)>
+                ${type.setTypeSimpleName(newTypeSimpleName)}
+            </#if>
             <#local genericString = genericString + types.buildParameterType(type)?cap_first>
             <#if type?has_next>
                 <#local genericString = genericString + ", ">

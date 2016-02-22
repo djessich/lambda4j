@@ -1,4 +1,5 @@
 <#-- @formatter:off -->
+<#import "../../utils/filters.ftl" as filters>
 <#import "../../utils/types.ftl" as types>
 
 <#-- parse only if lambda has arity 1 and return type -->
@@ -20,12 +21,25 @@ static ${.namespace.buildGenericInputTypeString()} ${lambda.name}${types.buildGe
 }
 </#macro>
 
-<#-- a helper function to build a generic input lambda string for compose operation -->
-<#function buildGenericInputTypeString target = lambda other1 = "" other2 = "" other3 = "">
-    <#local ret = "">
-    <#if (target.arity > 0)>
-        <#local ret = ret + "<" + types.buildParameterTypeString(target, other1, other2, other3) + ">">
+<#-- a helper function to build a generic input lambda string for boxed operation -->
+<#function buildGenericInputTypeString target = lambda>
+    <#local parameters = [target.firstInputType!"", target.secondInputType!"", target.thirdInputType!""]>
+    <#if LambdaUtils.isOfTypeOperator(target)>
+        <#local parameters = [target.returnType!""]>
     </#if>
-    <#return ret>
+    <#local parameters = filters.filterEmpties(parameters)>
+    <#local parameters = filters.filterPrimitives(parameters)>
+    <#local genericString = "">
+    <#if (parameters?has_content)>
+        <#local genericString = genericString + "<">
+        <#list parameters as parameter>
+            <#local genericString = genericString + types.buildParameterType(parameter, target)>
+            <#if parameter?has_next>
+                <#local genericString = genericString + ", ">
+            </#if>
+        </#list>
+        <#local genericString = genericString + ">">
+    </#if>
+    <#return genericString>
 </#function>
 <#-- @formatter:on -->
