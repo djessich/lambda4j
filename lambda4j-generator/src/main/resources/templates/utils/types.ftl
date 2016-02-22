@@ -142,6 +142,31 @@
     <#return genericString>
 </#function>
 
+<#-- a helper function to build a generic input lambda string for boxed operation -->
+<#function buildGenericInputParameterTypeString target = lambda other1 = "" other2 = "" other3 = "">
+    <#local target = .namespace.otherParametersToTarget(target, other1, other2, other3)>
+    <#local types = []>
+    <#if LambdaUtils.isOfTypeOperator(target)>
+        <#local types = [target.returnType!""]>
+    <#else>
+        <#local types = [target.firstInputType!"", target.secondInputType!"", target.thirdInputType!""]>
+    </#if>
+    <#local types = filters.filterEmpties(types)>
+    <#local types = filters.filterPrimitives(types)>
+    <#local genericString = "">
+    <#if (types?has_content)>
+        <#local genericString = genericString + "<">
+        <#list types as type>
+            <#local genericString = genericString + .namespace.buildParameterType(type, target)>
+            <#if type?has_next>
+                <#local genericString = genericString + ", ">
+            </#if>
+        </#list>
+        <#local genericString = genericString + ">">
+    </#if>
+    <#return genericString>
+</#function>
+
 <#function otherParametersToTarget target = lambda other1 = "" other2 = "" other3 = "" other4 = "">
     <#assign copy = LambdaUtils.copy(target)> <#-- copy lambda as we will change its input arguments -->
     <#if other1?has_content && copy.getFirstInputType()?has_content>${copy.getFirstInputType().setTypeName(other1)}</#if>

@@ -16,30 +16,31 @@
  * @return A {@code  ${lambda.name}} that always returns its input argument
  */
 ${annotation.nonnull}
-static ${.namespace.buildGenericInputTypeString()} ${lambda.name}${types.buildGenericParameterTypeString(lambda, lambda.firstInputType, "", "", lambda.firstInputType)} identity() {
+static ${types.buildGenericInputParameterTypeString()} ${lambda.name}${types.buildGenericParameterTypeString(lambda, lambda.firstInputType, "", "", lambda.firstInputType)} identity() {
     return (${parameterNameString}) -> ${parameterNameString};
 }
 </#macro>
 
-<#-- a helper function to build a generic input lambda string for boxed operation -->
-<#function buildGenericInputTypeString target = lambda>
-    <#local parameters = [target.firstInputType!"", target.secondInputType!"", target.thirdInputType!""]>
-    <#if LambdaUtils.isOfTypeOperator(target)>
-        <#local parameters = [target.returnType!""]>
-    </#if>
-    <#local parameters = filters.filterEmpties(parameters)>
-    <#local parameters = filters.filterPrimitives(parameters)>
-    <#local genericString = "">
-    <#if (parameters?has_content)>
-        <#local genericString = genericString + "<">
-        <#list parameters as parameter>
-            <#local genericString = genericString + types.buildParameterType(parameter, target)>
-            <#if parameter?has_next>
-                <#local genericString = genericString + ", ">
-            </#if>
-        </#list>
-        <#local genericString = genericString + ">">
-    </#if>
-    <#return genericString>
-</#function>
+<#-- TODO Remove if tested -->
+<#--&lt;#&ndash; a helper function to build a generic input lambda string for boxed operation &ndash;&gt;-->
+<#--<#function buildGenericInputTypeString target = lambda>-->
+    <#--<#local parameters = [target.firstInputType!"", target.secondInputType!"", target.thirdInputType!""]>-->
+    <#--<#if LambdaUtils.isOfTypeOperator(target)>-->
+        <#--<#local parameters = [target.returnType!""]>-->
+    <#--</#if>-->
+    <#--<#local parameters = filters.filterEmpties(parameters)>-->
+    <#--<#local parameters = filters.filterPrimitives(parameters)>-->
+    <#--<#local genericString = "">-->
+    <#--<#if (parameters?has_content)>-->
+        <#--<#local genericString = genericString + "<">-->
+        <#--<#list parameters as parameter>-->
+            <#--<#local genericString = genericString + types.buildParameterType(parameter, target)>-->
+            <#--<#if parameter?has_next>-->
+                <#--<#local genericString = genericString + ", ">-->
+            <#--</#if>-->
+        <#--</#list>-->
+        <#--<#local genericString = genericString + ">">-->
+    <#--</#if>-->
+    <#--<#return genericString>-->
+<#--</#function>-->
 <#-- @formatter:on -->
