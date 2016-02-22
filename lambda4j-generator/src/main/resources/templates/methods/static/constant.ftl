@@ -1,6 +1,9 @@
 <#-- @formatter:off -->
 <#import "../../utils/types.ftl" as types>
 
+<#-- TODO Javadoc: generic operator has param for inputs and return type with same name (@param <T> ... 2x) -->
+<#-- TODO UnaryOperator has return type name 't' so var 't' is defined twice in scope -->
+<#-- TODO generic operator of arity greater than 2 has lambda inputs with same parameter name ( return (t, t) -> ... ) -->
 <#-- parse only if lambda is of type Consumer -->
 <#if !LambdaUtils.isOfTypeConsumer(lambda)>
      <@.namespace.constantMethod/>

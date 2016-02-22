@@ -3,6 +3,8 @@
 <#import "../utils/helpers.ftl" as helpers>
 <#import "../utils/types.ftl" as types>
 
+<#-- TODO process lambda.jdk flag -->
+<#-- TODO TriPredicate has boxed method -->
 <#-- parse only if lambda is primitive -->
 <#if helpers.isPrimitiveLambda(lambda)>
     <#-- build a generic parameter type string including primitives also -->

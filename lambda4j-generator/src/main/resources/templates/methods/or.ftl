@@ -25,7 +25,7 @@
 ${annotation.nonnull}
 default ${lambda.name}${genericParameterTypeString} or(${annotation.nonnull} final ${lambda.name}${genericParameterTypeStringWithErasure} other) {
     Objects.requireNonNull(other);
-    return (${parameterNameString}) -> ${lambda.method}(${parameterNameString}) && other.${lambda.method}(${parameterNameString});
+    return (${parameterNameString}) -> ${lambda.method}(${parameterNameString}) || other.${lambda.method}(${parameterNameString});
 }
 </#macro>
 <#-- @formatter:on -->

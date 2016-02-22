@@ -3,6 +3,8 @@
 <#import "../utils/tuple.ftl" as tuple>
 <#import "../utils/types.ftl" as types>
 
+<#-- TODO tupled apply needs to have param tags not only for tuple but also for value if BiObjByteToIntFunction -->
+<#-- TODO tupled apply cannot return void result from consumer (... return consumer.accept(...); ...) -->
 /**
  * Applies this ${lambda.type.simpleName} to the given arguments.
  *

@@ -1,6 +1,9 @@
 <#-- @formatter:off -->
 <#import "../../utils/types.ftl" as types>
 
+<#-- TODO generic operator must not have '? extends T' -->
+<#-- TODO Javadoc: generic operator has param for inputs and return type with same name (@param <T> ... 2x) -->
+<#-- TODO generic operator of arity greater than 2 has lambda inputs with same parameter name ( return (t, t) -> ... ) -->
 <#-- parse only if lambda arity is greater than 2 -->
 <#if (lambda.arity >= 2)>
     <#-- set a list of textual representation for numbers -->

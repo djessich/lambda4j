@@ -2,6 +2,7 @@
 <#import "../utils/helpers.ftl" as helpers>
 <#import "../utils/types.ftl" as types>
 
+<#-- TODO javadoc: implSpec that this handles primitive types -> see composeFromPrimitive.ftl -->
 <#-- parse only if lambda is not of type consumer (no return type) and has primitive return type -->
 <#if !LambdaUtils.isOfTypeConsumer(lambda) && helpers.isPrimitive(lambda.returnType)>
     <#assign primitives = {

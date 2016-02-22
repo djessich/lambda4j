@@ -2,6 +2,8 @@
 <#import "../utils/helpers.ftl" as helpers>
 <#import "../utils/types.ftl" as types>
 
+<#-- TODO javadoc: This method is just convenience to provide... -> see andThenToPrimitive -->
+<#-- TODO javadoc: This BIObjByteFunction has generic param tags, which are not needed -->
 <#-- parse only if lmabda is not of type supplier (no input) and has primitive input only -->
 <#if !LambdaUtils.isOfTypeSupplier(lambda) && helpers.isPrimitiveLambdaInput(lambda)>
     <#assign primitives = {
