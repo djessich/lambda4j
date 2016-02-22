@@ -32,7 +32,7 @@ import java.util.List;
  * Requirements by this step are the lambdas type ({@link Lambda#getType()}), arity ({@link Lambda#getArity()}) and
  * first input type ({@link Lambda#getFirstInputType()}.
  */
-public final class InputTypeTwoProcessor extends Processor {
+public final class inputTypeTwoProcessor extends Processor {
 
     @Override
     protected boolean processable(@Nonnull final Lambda lambda) {
