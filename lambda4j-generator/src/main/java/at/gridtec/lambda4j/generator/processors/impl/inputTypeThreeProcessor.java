@@ -32,7 +32,7 @@ import java.util.List;
  * Requirements by this step are the lambdas type ({@link Lambda#getType()}), arity ({@link Lambda#getArity()}) and
  * second input type {@link Lambda#getSecondInputType()}.
  */
-public final class inputTypeThreeProcessor extends Processor {
+public final class InputTypeThreeProcessor extends Processor {
 
     @Override
     protected boolean processable(@Nonnull final Lambda lambda) {
@@ -59,14 +59,14 @@ public final class inputTypeThreeProcessor extends Processor {
 
                 // Apply generical input for arg 3
                 final Lambda generical = LambdaUtils.copy(lambda);
-                TypeEntity type = new TypeEntity(Object.class, "V", 3);
+                TypeEntity type = new TypeEntity(Object.class, "V");
                 generical.setThirdInputType(type);
                 genLambdas.add(generical);
 
                 // Apply primitive input for arg 3
                 for (final Class<?> typeClass : PRIMITIVES) {
                     final Lambda primitive = LambdaUtils.copy(lambda);
-                    type = new TypeEntity(typeClass, "value", 1);
+                    type = new TypeEntity(typeClass, typeClass.getSimpleName());
                     primitive.setThirdInputType(type);
                     genLambdas.add(primitive);
                 }
@@ -75,12 +75,7 @@ public final class inputTypeThreeProcessor extends Processor {
             // Lambda has primitive arg 2 so apply same primitive type to arg 3
             else {
                 final Lambda primitive = LambdaUtils.copy(lambda);
-                TypeEntity entity = primitive.getSecondInputType();
-                if (!primitive.getFirstInputType().isTypePrimitive()) {
-                    primitive.setThirdInputType(new TypeEntity(entity.getTypeClass(), entity.getTypeName(), 2));
-                } else {
-                    primitive.setThirdInputType(new TypeEntity(entity.getTypeClass(), entity.getTypeName(), 3));
-                }
+                primitive.setThirdInputType(primitive.getSecondInputType());
                 genLambdas.add(primitive);
             }
 
