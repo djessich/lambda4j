@@ -3,7 +3,6 @@
 <#import "../utils/types.ftl" as types>
 
 <#-- TODO javadoc: This method is just convenience to provide... -> see andThenToPrimitive -->
-<#-- TODO javadoc: This BIObjByteFunction has generic param tags, which are not needed -->
 <#-- parse only if lmabda is not of type supplier (no input) and has primitive input only -->
 <#if !LambdaUtils.isOfTypeSupplier(lambda) && helpers.isPrimitiveLambdaInput(lambda)>
     <#assign primitives = {
@@ -46,7 +45,8 @@
  * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
 </#if>
  *
-<@.namespace.javadocGenericInputComposeMethod outputLambda inputLambda1 inputLambda2 inputLambda3/>
+<#-- TODO Remove if tested -->
+<#--<@.namespace.javadocGenericInputComposeMethod outputLambda inputLambda1 inputLambda2 inputLambda3/>-->
 <@.namespace.javadocArgumentInputComposeMethod inputLambda1 inputLambda2 inputLambda3/>
  * @return A composed {@code ${outputLambda.name}} that first applies the {@code before} ${.namespace.javadocInputLambdaSimpleNamePlural()} to
  * its input, and then applies this ${lambda.type.simpleName} to the result.
@@ -60,18 +60,19 @@ default ${outputLambda.name}${types.buildGenericParameterTypeString(outputLambda
 }
 </#macro>
 
+<#-- TODO Remove if tested -->
 <#-- prints javadoc generic input parameters of compose method -->
-<#macro javadocGenericInputComposeMethod outputLambda inputLambda1 = "" inputLambda2 = "" inputLambda3 = "">
-<#if (lambda.arity >= 1) && !helpers.isPrimitive(lambda.firstInputType) && inputLambda1?has_content>
- * @param <${lambda.firstInputType}> The type of the argument to the ${helpers.first()}given ${inputLambda1.type.simpleName}, and of composed ${outputLambda.type.simpleName}
-</#if>
-<#if (lambda.arity >= 2) && !helpers.isPrimitive(lambda.secondInputType) && inputLambda2?has_content>
- * @param <${lambda.secondInputType}> The type of the argument to the second given ${inputLambda2.type.simpleName}, and of composed ${outputLambda.type.simpleName}
-</#if>
-<#if (lambda.arity >= 3) && !helpers.isPrimitive(lambda.thirdInputType) && inputLambda3?has_content>
- * @param <${lambda.thirdInputType}> The type of the argument to the third given ${inputLambda3.type.simpleName}, and of composed ${outputLambda.type.simpleName}
-</#if>
-</#macro>
+<#--<#macro javadocGenericInputComposeMethod outputLambda inputLambda1 = "" inputLambda2 = "" inputLambda3 = "">-->
+<#--<#if (lambda.arity >= 1) && !helpers.isPrimitive(lambda.firstInputType) && inputLambda1?has_content>-->
+ <#--* @param <${lambda.firstInputType}> The type of the argument to the ${helpers.first()}given ${inputLambda1.type.simpleName}, and of composed ${outputLambda.type.simpleName}-->
+<#--</#if>-->
+<#--<#if (lambda.arity >= 2) && !helpers.isPrimitive(lambda.secondInputType) && inputLambda2?has_content>-->
+ <#--* @param <${lambda.secondInputType}> The type of the argument to the second given ${inputLambda2.type.simpleName}, and of composed ${outputLambda.type.simpleName}-->
+<#--</#if>-->
+<#--<#if (lambda.arity >= 3) && !helpers.isPrimitive(lambda.thirdInputType) && inputLambda3?has_content>-->
+ <#--* @param <${lambda.thirdInputType}> The type of the argument to the third given ${inputLambda3.type.simpleName}, and of composed ${outputLambda.type.simpleName}-->
+<#--</#if>-->
+<#--</#macro>-->
 
 <#-- prints javadoc input parameters of compose method -->
 <#macro javadocArgumentInputComposeMethod inputLambda1 = "" inputLambda2 = "" inputLambda3 = "">
