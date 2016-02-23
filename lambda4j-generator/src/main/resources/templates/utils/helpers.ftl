@@ -22,3 +22,12 @@
 <#function number target = lambda>
     <#return (target.arity > 1)?then("1", "")>
 </#function>
+
+<#-- prints return keyword only if given lambda not consumer type -->
+<#function printReturnIfNotConsumer target = lambda>
+    <#local ret = "">
+    <#if !LambdaUtils.isOfTypeConsumer(target)>
+        <#local ret = "return">
+    </#if>co
+    <#return ret>
+</#function>

@@ -1,4 +1,5 @@
 <#-- @formatter:off -->
+<#import "../../utils/helpers.ftl" as helpers>
 <#import "../../utils/throwable.ftl" as throwable>
 <#import "../../utils/types.ftl" as types>
 
@@ -7,7 +8,6 @@
 <#-- TODO generic operator must not have '? extends T' -->
 <#-- TODO generic operator of arity greater than 2 has method inputs with same name (... operator, T t, T t) -->
 <#-- TODO generic operator of arity greater than 2 has lambda inputs with same parameter name ( return (t, t) -> ... ) -->
-<#-- TODO cannot return void result from consumer (... return consumer.accept(...); ...) -->
 /**
  * Calls the given {@link ${lambda.name}} with the given arguments and returns its result.
  *
@@ -19,6 +19,6 @@
  */
 static ${genericParameterTypeString} ${types.buildParameterType(lambda.returnType)} call(${annotation.nonnull} final ${lambda.name}${genericParameterTypeStringWithErasure} ${lambda.type.simpleName}, ${parameterString}) <@throwable.printThrowableDeclaration/> {
     Objects.requireNonNull(${lambda.type.simpleName});
-    return ${lambda.type.simpleName}.${lambda.method}(${parameterNameString});
+    ${helpers.printReturnIfNotConsumer()} ${lambda.type.simpleName}.${lambda.method}(${parameterNameString});
 }
 <#-- @formatter:on -->
