@@ -4,9 +4,8 @@
 <#import "../utils/types.ftl" as types>
 
 <#-- TODO process lambda.jdk flag -->
-<#-- TODO TriPredicate has boxed method -->
 <#-- parse only if lambda is primitive -->
-<#if helpers.isPrimitiveLambda(lambda)>
+<#if helpers.isPrimitiveLambdaInput(lambda)>
     <#-- build a generic parameter type string including primitives also -->
     <#assign genericParameterTypeStringWithPrimitives = .namespace.buildGenericParameterTypeStringWithPrimitives()>
     <#-- search for correct output lambda, which gets object (generical) inputs and object (generical) output, unless if global lambda represents a type a predicate or consumer type) -->
