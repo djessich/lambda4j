@@ -3,7 +3,6 @@
 <#import "../utils/helpers.ftl" as helpers>
 <#import "../utils/types.ftl" as types>
 
-<#-- TODO process lambda.jdk flag -->
 <#-- parse only if lambda has primitive input arguments -->
 <#if helpers.isPrimitiveLambdaInput(lambda)>
     <#-- build a generic parameter type string including primitives also -->
@@ -23,8 +22,8 @@
 /**
  * Returns a composed {@link ${outputLambda.name}} which represents this {@link ${lambda.name}}. Thereby the primitive
  * input argument for this ${lambda.type.simpleName} is autoboxed.
-<#if lambda.jdk??>
- * This method is just convenience to provide the ability to use this {@code ${lambda.name}} with JRE specific methods,
+<#if lambda.fromJDK>
+ * This method is just convenience to provide the ability to use this {@code ${lambda.name}} with JDK specific methods,
  * only accepting {@code ${outputLambda.name}}.
 </#if>
  *

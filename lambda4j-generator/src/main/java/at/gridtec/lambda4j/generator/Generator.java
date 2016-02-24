@@ -24,6 +24,7 @@ import at.gridtec.lambda4j.generator.processors.impl.ChangeOperatorProcessor;
 import at.gridtec.lambda4j.generator.processors.impl.InputTypeOneProcessor;
 import at.gridtec.lambda4j.generator.processors.impl.InputTypeThreeProcessor;
 import at.gridtec.lambda4j.generator.processors.impl.InputTypeTwoProcessor;
+import at.gridtec.lambda4j.generator.processors.impl.JdkProcessor;
 import at.gridtec.lambda4j.generator.processors.impl.MethodProcessor;
 import at.gridtec.lambda4j.generator.processors.impl.NameProcessor;
 import at.gridtec.lambda4j.generator.processors.impl.PackageProcessor;
@@ -69,26 +70,11 @@ public class Generator {
                 .filter(Objects::nonNull)
                 .filter(lambda -> !lambda.getType().equals(LambdaTypeEnum.COMPARATOR))
                 .sorted(Comparator.comparing(Lambda::getType).thenComparing(Lambda::getPackageName))
-                .peek(lambda -> {
-                    final StringBuilder builder = new StringBuilder();
-                    if (lambda.getArity() >= 1) {
-                        builder.append(lambda.getFirstInputType().getTypeCount());
-                    }
-                    if (lambda.getArity() >= 2) {
-                        builder.append(", " + lambda.getSecondInputType().getTypeCount());
-                    }
-                    if (lambda.getArity() >= 3) {
-                        builder.append(", " + lambda.getThirdInputType().getTypeCount());
-                    }
-                    System.out.println(builder.toString());
-                })
                 .collect(Collectors.toList());
         LambdaCache.getInstance().setLambdas(lambdas);
 
         System.out.println(lambdas.size());
         System.out.println(LambdaCache.getInstance().getLambdas().size());
-        //        final Lambda lambda = lambdas.stream().filter(p -> p.getName().equals("BiObjByteFunction")).findFirst().get();
-        //        System.out.println(lambda);
 
         // Create your Configuration instance, and specify if up to what FreeMarker
         // version (here 2.3.24) do you want to apply the fixes that are not 100%
@@ -139,7 +125,6 @@ public class Generator {
      * Prepares {@link ProcessorChain} by creating all {@link Processor}s and adding them to the chain (in reverse
      * order).
      */
-
     private static void prepareChain() {
 
         // Create instances for all processors
@@ -154,8 +139,10 @@ public class Generator {
         Processor throwableProcessor = new ThrowableProcessor();
         Processor methodProcessor = new MethodProcessor();
         Processor nameProcessor = new NameProcessor();
+        Processor jdkProcessor = new JdkProcessor();
 
         // Build chain turned around (start adding last step first)
+        ProcessorChain.getInstance().addProcessor(jdkProcessor);
         ProcessorChain.getInstance().addProcessor(nameProcessor);
         ProcessorChain.getInstance().addProcessor(methodProcessor);
         ProcessorChain.getInstance().addProcessor(throwableProcessor);
@@ -168,5 +155,4 @@ public class Generator {
         ProcessorChain.getInstance().addProcessor(arityProcessor);
         ProcessorChain.getInstance().addProcessor(typeProcessor);
     }
-
 }

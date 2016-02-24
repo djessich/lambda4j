@@ -32,6 +32,7 @@ public class Lambda implements Serializable {
     private TypeEntity secondInputType;
     private TypeEntity thirdInputType;
     private TypeEntity returnType;
+    private boolean fromJDK;
 
     public Lambda() {
 
@@ -117,6 +118,14 @@ public class Lambda implements Serializable {
         this.returnType = returnType;
     }
 
+    public boolean isFromJDK() {
+        return fromJDK;
+    }
+
+    public void setFromJDK(boolean fromJDK) {
+        this.fromJDK = fromJDK;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -132,6 +141,9 @@ public class Lambda implements Serializable {
             return false;
         }
         if (throwable != lambda.throwable) {
+            return false;
+        }
+        if (fromJDK != lambda.fromJDK) {
             return false;
         }
         if (!packageName.equals(lambda.packageName)) {
@@ -171,6 +183,7 @@ public class Lambda implements Serializable {
         result = 31 * result + secondInputType.hashCode();
         result = 31 * result + thirdInputType.hashCode();
         result = 31 * result + returnType.hashCode();
+        result = 31 * result + (fromJDK ? 1 : 0);
         return result;
     }
 
@@ -187,6 +200,7 @@ public class Lambda implements Serializable {
                 ", secondInputType=" + secondInputType +
                 ", thirdInputType=" + thirdInputType +
                 ", returnType=" + returnType +
+                ", fromJDK=" + fromJDK +
                 '}';
     }
 }

@@ -19,7 +19,7 @@
  * This is a {@link FunctionalInterface} whose functional method is {@link #${super.javadocLambdaMethodLinkString()}}.
  *
 <#include "./paramGenericInput.ftl">
-<#include "./apiNoteJreLambda.ftl">
+<#include "apiNoteJdkLambda.ftl">
  * @see ${codomain.name}
  */
 </#macro>
