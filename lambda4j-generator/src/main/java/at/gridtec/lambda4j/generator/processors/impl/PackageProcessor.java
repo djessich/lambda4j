@@ -107,8 +107,8 @@ public class PackageProcessor extends Processor {
             }
         }
 
-        // All other lambdas will go here and have normal scheme
-        else {
+        // All other lambdas will go here (except comparators and runnables types) and have normal scheme
+        else if (!LambdaUtils.isOfTypeComparator(lambda) && !LambdaUtils.isOfTypeRunnable(lambda)) {
             // Lambda arity is one, so add no identifier (actual package ".function"
             if (lambda.getArity() == 1) {
                 // If lambda of type function and has primitive return type check if input is primitive

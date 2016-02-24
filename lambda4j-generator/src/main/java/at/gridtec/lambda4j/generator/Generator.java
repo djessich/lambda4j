@@ -23,13 +23,13 @@ import at.gridtec.lambda4j.generator.processors.impl.ArityProcessor;
 import at.gridtec.lambda4j.generator.processors.impl.ChangeOperatorProcessor;
 import at.gridtec.lambda4j.generator.processors.impl.InputTypeOneProcessor;
 import at.gridtec.lambda4j.generator.processors.impl.InputTypeThreeProcessor;
+import at.gridtec.lambda4j.generator.processors.impl.InputTypeTwoProcessor;
 import at.gridtec.lambda4j.generator.processors.impl.MethodProcessor;
 import at.gridtec.lambda4j.generator.processors.impl.NameProcessor;
 import at.gridtec.lambda4j.generator.processors.impl.PackageProcessor;
 import at.gridtec.lambda4j.generator.processors.impl.ReturnTypeProcessor;
 import at.gridtec.lambda4j.generator.processors.impl.ThrowableProcessor;
 import at.gridtec.lambda4j.generator.processors.impl.TypeProcessor;
-import at.gridtec.lambda4j.generator.processors.impl.InputTypeTwoProcessor;
 import at.gridtec.lambda4j.generator.util.LambdaUtils;
 import freemarker.ext.beans.BeansWrapper;
 import freemarker.ext.beans.BeansWrapperBuilder;
@@ -68,8 +68,8 @@ public class Generator {
                 .stream()
                 .filter(Objects::nonNull)
                 .filter(lambda -> !lambda.getType().equals(LambdaTypeEnum.COMPARATOR))
-                .filter(lambda -> !lambda.getType().equals(LambdaTypeEnum.RUNNABLE))
-                .sorted(Comparator.comparing(Lambda::getType).thenComparing(Lambda::getPackageName)).peek(lambda -> {
+                .sorted(Comparator.comparing(Lambda::getType).thenComparing(Lambda::getPackageName))
+                .peek(lambda -> {
                     final StringBuilder builder = new StringBuilder();
                     if (lambda.getArity() >= 1) {
                         builder.append(lambda.getFirstInputType().getTypeCount());

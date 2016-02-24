@@ -3,8 +3,8 @@
 <#import "../utils/types.ftl" as types>
 
 <#-- TODO javadoc: implSpec that this handles primitive types -> see composeFromPrimitive.ftl -->
-<#-- parse only if lambda is not of type consumer (no return type) and has primitive return type -->
-<#if !LambdaUtils.isOfTypeConsumer(lambda) && helpers.isPrimitive(lambda.returnType)>
+<#-- parse only if lambda is not of type consumer or runnable (no return type) and has primitive return type -->
+<#if !LambdaUtils.isOfTypeConsumer(lambda) && !LambdaUtils.isOfTypeRunnable(lambda) && helpers.isPrimitive(lambda.returnType)>
     <#assign primitives = {
         "boolean":boolean,
         "byte":byte,

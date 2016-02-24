@@ -3,8 +3,8 @@
 <#import "../utils/types.ftl" as types>
 
 <#-- TODO javadoc: implSpec that this handles every type -> see compose.ftl -->
-<#-- Consumers will get special macro, as they will only sequence lambda calls; all other lambdas will use normal macro -->
-<#if LambdaUtils.isOfTypeConsumer(lambda)>
+<#-- Consumers or Runnables will get special macro, as they will only sequence lambda calls; all other lambdas will use normal macro -->
+<#if LambdaUtils.isOfTypeConsumer(lambda) || LambdaUtils.isOfTypeRunnable(lambda)>
     <#-- print andThen method, only for consumers -->
     <@.namespace.andThenMethodOnlyConsumers/>
 <#else>

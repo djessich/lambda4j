@@ -1,8 +1,8 @@
 <#-- @formatter:off -->
 <#import "../utils/types.ftl" as types>
 
-<#-- parse only if lambda return is not primitive -->
-<#if (!helpers.isPrimitive(lambda.returnType))>
+<#-- parse only if lambda is not of type consumer or runnable (void return) and lambdas return is not primitive -->
+<#if !LambdaUtils.isOfTypeConsumer(lambda) && !LambdaUtils.isOfTypeRunnable(lambda) && !helpers.isPrimitive(lambda.returnType)>
     <#-- generate generic string with return type wrapped in optional -->
     <#assign genericTypeStringWithOptionalReturn = types.buildGenericParameterTypeString(lambda, "", "", "", "Optional<" + lambda.returnType + ">")>
     <#-- print nonNull method -->

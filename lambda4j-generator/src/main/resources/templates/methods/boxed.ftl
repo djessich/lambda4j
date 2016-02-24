@@ -4,7 +4,7 @@
 <#import "../utils/types.ftl" as types>
 
 <#-- TODO process lambda.jdk flag -->
-<#-- parse only if lambda is primitive -->
+<#-- parse only if lambda has primitive input arguments -->
 <#if helpers.isPrimitiveLambdaInput(lambda)>
     <#-- build a generic parameter type string including primitives also -->
     <#assign genericParameterTypeStringWithPrimitives = .namespace.buildGenericParameterTypeStringWithPrimitives()>

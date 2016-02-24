@@ -2,8 +2,8 @@
 <#import "../utils/helpers.ftl" as helpers>
 <#import "../utils/types.ftl" as types>
 
-<#-- parse only if lambda is not of type supplier -->
-<#if !LambdaUtils.isOfTypeSupplier(lambda)>
+<#-- parse only if lambda is not of type supplier or runnable (no input) -->
+<#if !LambdaUtils.isOfTypeSupplier(lambda) && !LambdaUtils.isOfTypeRunnable(lambda)>
     <#-- search for correct input lambdas depending on lambda arity -->
     <#if (lambda.arity >= 1)>
         <#assign type = (lambda.firstInputType.equals(boolean))?then(LambdaUtils.getPredicateType(), LambdaUtils.getFunctionType())>

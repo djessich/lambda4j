@@ -3,8 +3,8 @@
 <#import "../utils/types.ftl" as types>
 
 <#-- TODO javadoc: This method is just convenience to provide... -> see andThenToPrimitive -->
-<#-- parse only if lmabda is not of type supplier (no input) and has primitive input only -->
-<#if !LambdaUtils.isOfTypeSupplier(lambda) && helpers.isPrimitiveLambdaInput(lambda)>
+<#-- parse only if lmabda is not of type supplier or runnable (no input) and has primitive input only -->
+<#if !LambdaUtils.isOfTypeSupplier(lambda) && !LambdaUtils.isOfTypeRunnable(lambda) && helpers.isPrimitiveLambdaInput(lambda)>
     <#assign primitives = {
         "boolean":boolean,
         "byte":byte,

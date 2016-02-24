@@ -1,8 +1,8 @@
 <#-- @formatter:off -->
 <#import "../utils/types.ftl" as types>
 
-<#-- parse only if lambda is not of type consumer -->
-<#if !LambdaUtils.isOfTypeConsumer(lambda)>
+<#-- parse only if lambda is not of type consumer or runnable (void return) -->
+<#if !LambdaUtils.isOfTypeConsumer(lambda) && !LambdaUtils.isOfTypeRunnable(lambda)>
     <#-- get input consumer lambda using a search for the global lambdas return type as consumer lambda input; throwable flag will also be handled -->
     <#assign inputLambda = LambdaUtils.searchByFirstInputType(LambdaUtils.getConsumerType(), 1, lambda.returnType, lambda.throwable)>
     <#-- if lambda is of type supplier then print macro for suppliers; else print normal macro -->
