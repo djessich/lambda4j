@@ -31,6 +31,10 @@ package ${lambda.packageName};
 
 <#include "header/imports.ftl">
 
+<#compress>
+    <#include "javadoc/classLambda.ftl">
+</#compress>
+
 @SuppressWarnings("unused")
 @FunctionalInterface
 public interface ${lambda.name}${genericParameterTypeString} ${genericOperatorExtendsFunction} {
