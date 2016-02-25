@@ -2,7 +2,6 @@
 <#import "../utils/helpers.ftl" as helpers>
 <#import "../utils/types.ftl" as types>
 
-<#-- TODO javadoc: implSpec that this handles primitive types -> see composeFromPrimitive.ftl -->
 <#-- parse only if lambda is not of type consumer or runnable (no return type) and has primitive return type -->
 <#if !LambdaUtils.isOfTypeConsumer(lambda) && !LambdaUtils.isOfTypeRunnable(lambda) && helpers.isPrimitive(lambda.returnType)>
     <#assign primitives = {
@@ -42,6 +41,7 @@
  * @return A composed {@code ${outputLambda.name}} that first applies this ${lambda.type.simpleName} to its input, and then applies
  * the {@code after} ${inputLambda.type.simpleName} to the result.
 <#include "../javadoc/throwsNullPointerException.ftl">
+ * @implNote The input argument of this method is a able to return primitive values. In this case this is {@code ${primitiveType}}.
  */
 ${annotation.nonnull}
 default ${outputLambda.name}${types.buildGenericParameterTypeString(outputLambda)} andThenTo${primitiveType?cap_first}(${annotation.nonnull} final ${inputLambda.name}${types.buildGenericParameterTypeStringWithErasure(inputLambda, lambda.returnType)} after) {

@@ -2,7 +2,6 @@
 <#import "../utils/helpers.ftl" as helpers>
 <#import "../utils/types.ftl" as types>
 
-<#-- TODO javadoc: This method is just convenience to provide... -> see andThenToPrimitive -->
 <#-- parse only if lmabda is not of type supplier or runnable (no input) and has primitive input only -->
 <#if !LambdaUtils.isOfTypeSupplier(lambda) && !LambdaUtils.isOfTypeRunnable(lambda) && helpers.isPrimitiveLambdaInput(lambda)>
     <#assign primitives = {
@@ -44,6 +43,8 @@
 <#if !lambda.throwable>
  * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
 </#if>
+ * This method is just convenience, to provide the ability to execute an operation which accepts {@code ${primitiveType}} input,
+ * before this primitive ${lambda.type.simpleName} is executed.
  *
 <#-- TODO Remove if tested -->
 <#--<@.namespace.javadocGenericInputComposeMethod outputLambda inputLambda1 inputLambda2 inputLambda3/>-->
