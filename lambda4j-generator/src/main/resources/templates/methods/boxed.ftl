@@ -3,6 +3,7 @@
 <#import "../utils/helpers.ftl" as helpers>
 <#import "../utils/types.ftl" as types>
 
+<#-- TODO: ToCharBiFunction does not have boxed method -->
 <#-- parse only if lambda has primitive input arguments -->
 <#if helpers.isPrimitiveLambdaInput(lambda)>
     <#-- build a generic parameter type string including primitives also -->
@@ -60,9 +61,9 @@ default ${outputLambda.name}${genericParameterTypeStringWithPrimitives} boxed() 
         <#list parameters as type>
             <#-- get type simple name from type as key for class map and save the keys value -->
             <#local newTypeSimpleName = classMap[type.typeSimpleName]!"">
-             if type is primitive and new simple type name is valid, then set it as new type
-            <#if (type.typePrimitive && newTypeSimpleName?has_content)>
-                ${type.setTypeSimpleName(newTypeSimpleName)}
+             <#-- if type is primitive and new simple type name is valid, then set it as new type -->
+            <#if (type.primitive && newTypeSimpleName?has_content)>
+                ${type.setTypeName(newTypeSimpleName)}
             </#if>
             <#local genericString = genericString + types.buildParameterType(type)?cap_first>
             <#if type?has_next>

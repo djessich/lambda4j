@@ -69,7 +69,12 @@ public class Generator {
                 .stream()
                 .filter(Objects::nonNull)
                 .filter(lambda -> !lambda.getType().equals(LambdaTypeEnum.COMPARATOR))
-                .sorted(Comparator.comparing(Lambda::getType).thenComparing(Lambda::getPackageName))
+                .sorted(Comparator.comparing(Lambda::getType).thenComparing(Lambda::getPackageName)).map(lambda -> {
+                    if (lambda.isFromJDK()) {
+                        lambda.setName(lambda.getName() + "2");
+                    }
+                    return lambda;
+                })
                 .collect(Collectors.toList());
         LambdaCache.getInstance().setLambdas(lambdas);
 

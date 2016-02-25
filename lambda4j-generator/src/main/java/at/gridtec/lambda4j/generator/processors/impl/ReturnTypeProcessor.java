@@ -47,7 +47,7 @@ public final class ReturnTypeProcessor extends Processor {
         // Special Rule: Lambda is a Comparator it must return int
         if (LambdaUtils.isOfTypeComparator(lambda)) {
             final Lambda copy = LambdaUtils.copy(lambda);
-            TypeEntity type = new TypeEntity(int.class, "ret");
+            TypeEntity type = new TypeEntity(int.class, int.class.getSimpleName(), "ret");
             copy.setReturnType(type);
             lambdas.addAll(next(copy));
         }
@@ -55,7 +55,7 @@ public final class ReturnTypeProcessor extends Processor {
         // Special Rule: Lambda is a Consumer it must return nothing (void)
         else if (LambdaUtils.isOfTypeConsumer(lambda)) {
             final Lambda copy = LambdaUtils.copy(lambda);
-            TypeEntity type = new TypeEntity(void.class, void.class.getSimpleName());
+            TypeEntity type = new TypeEntity(void.class, void.class.getSimpleName(), "ret");
             copy.setReturnType(type);
             lambdas.addAll(next(copy));
         }
@@ -63,7 +63,7 @@ public final class ReturnTypeProcessor extends Processor {
         // Special Rule: Lambda is a Predicate it must return boolean
         else if (LambdaUtils.isOfTypePredicate(lambda)) {
             final Lambda copy = LambdaUtils.copy(lambda);
-            TypeEntity type = new TypeEntity(boolean.class, "ret");
+            TypeEntity type = new TypeEntity(boolean.class, boolean.class.getSimpleName(), "ret");
             copy.setReturnType(type);
             lambdas.addAll(next(copy));
         }
@@ -71,7 +71,7 @@ public final class ReturnTypeProcessor extends Processor {
         // Special Rule: Lambda is a Runnable it must return nothing (void) and does not allow input -> end call stack
         else if (LambdaUtils.isOfTypeRunnable(lambda)) {
             final Lambda copy = LambdaUtils.copy(lambda);
-            TypeEntity type = new TypeEntity(void.class, void.class.getSimpleName());
+            TypeEntity type = new TypeEntity(void.class, void.class.getSimpleName(), "ret");
             copy.setReturnType(type);
             lambdas.addAll(next(copy));
         }
@@ -89,7 +89,7 @@ public final class ReturnTypeProcessor extends Processor {
             }
             for (final Class<?> typeClass : primitivesWithoutBoolean) {
                 final Lambda primitive = LambdaUtils.copy(lambda);
-                TypeEntity type = new TypeEntity(typeClass, "ret");
+                TypeEntity type = new TypeEntity(typeClass, typeClass.getSimpleName(), "ret");
                 primitive.setReturnType(type);
                 lambdas.addAll(next(primitive));
             }
@@ -97,10 +97,10 @@ public final class ReturnTypeProcessor extends Processor {
             // Lambda returns generic; Special Rule: rename generic if lambda type is Supplier or a Operator
             final Lambda generical = LambdaUtils.copy(lambda);
             if (LambdaUtils.isOfTypeSupplier(lambda) && LambdaUtils.isOfTypeOperator(lambda)) {
-                TypeEntity type = new TypeEntity(Object.class, "T");
+                TypeEntity type = new TypeEntity(Object.class, "T", "ret");
                 generical.setReturnType(type);
             } else {
-                TypeEntity type = new TypeEntity(Object.class, "R");
+                TypeEntity type = new TypeEntity(Object.class, "R", "ret");
                 generical.setReturnType(type);
             }
             lambdas.addAll(next(generical));

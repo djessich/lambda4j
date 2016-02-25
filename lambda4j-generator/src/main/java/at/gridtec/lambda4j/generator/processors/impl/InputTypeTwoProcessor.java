@@ -54,7 +54,7 @@ public final class InputTypeTwoProcessor extends Processor {
             // Special Rule: Comparator is only generic
             if (LambdaUtils.isOfTypeComparator(lambda)) {
                 final Lambda copy = LambdaUtils.copy(lambda);
-                TypeEntity type = new TypeEntity(Object.class, "U", 2);
+                TypeEntity type = new TypeEntity(Object.class, "U", "u", 2);
                 copy.setSecondInputType(type);
                 lambdas.addAll(next(copy));
             }
@@ -70,14 +70,14 @@ public final class InputTypeTwoProcessor extends Processor {
 
                     // Apply generical input for arg 2
                     final Lambda generical = LambdaUtils.copy(lambda);
-                    TypeEntity type = new TypeEntity(Object.class, "U", 2);
+                    TypeEntity type = new TypeEntity(Object.class, "U", "u", 2);
                     generical.setSecondInputType(type);
                     genLambdas.add(generical);
 
                     // Apply primitive input for arg 2
                     for (final Class<?> typeClass : PRIMITIVES) {
                         final Lambda primitive = LambdaUtils.copy(lambda);
-                        type = new TypeEntity(typeClass, "value", 1);
+                        type = new TypeEntity(typeClass, typeClass.getSimpleName(), "value", 1);
                         primitive.setSecondInputType(type);
                         genLambdas.add(primitive);
                     }
@@ -87,7 +87,8 @@ public final class InputTypeTwoProcessor extends Processor {
                 else {
                     final Lambda primitive = LambdaUtils.copy(lambda);
                     TypeEntity entity = primitive.getFirstInputType();
-                    primitive.setSecondInputType(new TypeEntity(entity.getTypeClass(), entity.getTypeName(), 2));
+                    primitive.setSecondInputType(
+                            new TypeEntity(entity.getTypeClass(), entity.getTypeName(), entity.getName(), 2));
                     genLambdas.add(primitive);
                 }
 

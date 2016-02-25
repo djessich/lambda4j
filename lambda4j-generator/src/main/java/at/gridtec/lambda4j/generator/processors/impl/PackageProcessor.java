@@ -112,9 +112,9 @@ public class PackageProcessor extends Processor {
             // Lambda arity is one, so add no identifier (actual package ".function"
             if (lambda.getArity() == 1) {
                 // If lambda of type function and has primitive return type check if input is primitive
-                if (LambdaUtils.isOfTypeFunction(lambda) && lambda.getReturnType().isTypePrimitive()) {
+                if (LambdaUtils.isOfTypeFunction(lambda) && lambda.getReturnType().isPrimitive()) {
                     // If first lambda parameter is primitive, add "conversion" identifier ".function.conversion"
-                    if (lambda.getFirstInputType().isTypePrimitive()) {
+                    if (lambda.getFirstInputType().isPrimitive()) {
                         packageBuilder.append(PACKAGE_CONVERSION_IDENTIFIER);
                     }
                     // If first lambda parameter is an object, add "to" identifier ".function.to"
@@ -130,14 +130,14 @@ public class PackageProcessor extends Processor {
 
                 // If lambda gets object and primitive type then append obj identifier ".function.bi.obj"
                 if (lambda.getFirstInputType().equals(LambdaUtils.getObjectTypeEntity()) && lambda.getSecondInputType()
-                        .isTypePrimitive()) {
+                        .isPrimitive()) {
                     packageBuilder.append(PACKAGE_OBJ_IDENTIFIER);
                 }
 
                 // If lambda of type function and has primitive return type check if input is primitive
-                else if (LambdaUtils.isOfTypeFunction(lambda) && lambda.getReturnType().isTypePrimitive()) {
+                else if (LambdaUtils.isOfTypeFunction(lambda) && lambda.getReturnType().isPrimitive()) {
                     // If first and second lambda parameters are primitive, add "conversion" identifier ".function.bi.conversion"
-                    if (lambda.getFirstInputType().isTypePrimitive() && lambda.getSecondInputType().isTypePrimitive()) {
+                    if (lambda.getFirstInputType().isPrimitive() && lambda.getSecondInputType().isPrimitive()) {
                         packageBuilder.append(PACKAGE_CONVERSION_IDENTIFIER);
                     }
                     // If first and second lambda parameters are objects, add "to" identifier ".function.bi.to"
@@ -153,17 +153,17 @@ public class PackageProcessor extends Processor {
 
                 // If lambda gets object, object and primitive type then append obj identifier ".function.tri.obj"
                 if (lambda.getFirstInputType().equals(LambdaUtils.getObjectTypeEntity()) && lambda.getThirdInputType()
-                        .isTypePrimitive()) {
+                        .isPrimitive()) {
                     packageBuilder.append(PACKAGE_OBJ_IDENTIFIER);
 
                 }
 
                 // If lambda of type function and has primitive return type check if input is primitive
-                else if (LambdaUtils.isOfTypeFunction(lambda) && lambda.getReturnType().isTypePrimitive()) {
+                else if (LambdaUtils.isOfTypeFunction(lambda) && lambda.getReturnType().isPrimitive()) {
                     // If all lambda input parameters are primitive, add "conversion" identifier ".function.tri.conversion"
-                    if (lambda.getFirstInputType().isTypePrimitive()
-                            && lambda.getSecondInputType().isTypePrimitive()
-                            && lambda.getThirdInputType().isTypePrimitive()) {
+                    if (lambda.getFirstInputType().isPrimitive()
+                            && lambda.getSecondInputType().isPrimitive()
+                            && lambda.getThirdInputType().isPrimitive()) {
                         packageBuilder.append(PACKAGE_CONVERSION_IDENTIFIER);
                     }
                     // If all lambda input parameters are objects, add "to" identifier ".function.tri.to"

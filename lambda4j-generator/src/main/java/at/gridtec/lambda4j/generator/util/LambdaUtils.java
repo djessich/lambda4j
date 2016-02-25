@@ -654,7 +654,7 @@ public final class LambdaUtils {
      * @return A a {@code TypeEntity} referencing a {@code Object} type.
      */
     public static TypeEntity getObjectTypeEntity() {
-        return new TypeEntity(Object.class, "Object");
+        return new TypeEntity(Object.class, "Object", "");
     }
 
     /**
@@ -663,7 +663,7 @@ public final class LambdaUtils {
      * @return A a {@code TypeEntity} referencing a {@code boolean} type.
      */
     public static TypeEntity getBooleanTypeEntity() {
-        return new TypeEntity(boolean.class, "value");
+        return new TypeEntity(boolean.class, boolean.class.getSimpleName(), "value");
     }
 
     /**
@@ -672,7 +672,7 @@ public final class LambdaUtils {
      * @return A a {@code TypeEntity} referencing a {@code byte} type.
      */
     public static TypeEntity getByteTypeEntity() {
-        return new TypeEntity(byte.class, "value");
+        return new TypeEntity(byte.class, byte.class.getSimpleName(), "value");
     }
 
     /**
@@ -681,7 +681,7 @@ public final class LambdaUtils {
      * @return A a {@code TypeEntity} referencing a {@code char} type.
      */
     public static TypeEntity getCharTypeEntity() {
-        return new TypeEntity(char.class, "value");
+        return new TypeEntity(char.class, char.class.getSimpleName(), "value");
     }
 
     /**
@@ -690,7 +690,7 @@ public final class LambdaUtils {
      * @return A a {@code TypeEntity} referencing a {@code double} type.
      */
     public static TypeEntity getDoubleTypeEntity() {
-        return new TypeEntity(double.class, "value");
+        return new TypeEntity(double.class, double.class.getSimpleName(), "value");
     }
 
     /**
@@ -699,7 +699,7 @@ public final class LambdaUtils {
      * @return A a {@code TypeEntity} referencing a {@code float} type.
      */
     public static TypeEntity getFloatTypeEntity() {
-        return new TypeEntity(float.class, "value");
+        return new TypeEntity(float.class, float.class.getSimpleName(), "value");
     }
 
     /**
@@ -708,7 +708,7 @@ public final class LambdaUtils {
      * @return A a {@code TypeEntity} referencing a {@code int} type.
      */
     public static TypeEntity getIntTypeEntity() {
-        return new TypeEntity(int.class, "value");
+        return new TypeEntity(int.class, int.class.getSimpleName(), "value");
     }
 
     /**
@@ -717,7 +717,7 @@ public final class LambdaUtils {
      * @return A a {@code TypeEntity} referencing a {@code long} type.
      */
     public static TypeEntity getLongTypeEntity() {
-        return new TypeEntity(long.class, "value");
+        return new TypeEntity(long.class, long.class.getSimpleName(), "value");
     }
 
     /**
@@ -726,7 +726,7 @@ public final class LambdaUtils {
      * @return A a {@code TypeEntity} referencing a {@code short} type.
      */
     public static TypeEntity getShortTypeEntity() {
-        return new TypeEntity(short.class, "value");
+        return new TypeEntity(short.class, short.class.getSimpleName(), "value");
     }
 
     /**
@@ -735,7 +735,7 @@ public final class LambdaUtils {
      * @return A a {@code TypeEntity} referencing {@code void}.
      */
     public static TypeEntity getVoidTypeEntity() {
-        return new TypeEntity(void.class, void.class.getSimpleName());
+        return new TypeEntity(void.class, void.class.getSimpleName(), "value");
     }
 
     /**

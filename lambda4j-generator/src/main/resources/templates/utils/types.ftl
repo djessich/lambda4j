@@ -12,8 +12,9 @@
 <#function buildParameterType param target = lambda>
     <#local genericString = "">
     <#if param?has_content>
-        <#if param.typePrimitive>
-            <#local genericString = genericString + param.typeSimpleName>
+        <#if param.primitive>
+        <#--<#local genericString = genericString + param.typeSimpleName>-->
+            <#local genericString = genericString + param.typeName>
         <#else>
             <#local genericString = genericString + param.typeName>
         </#if>
@@ -24,17 +25,27 @@
 <#function buildParameterName param target = lambda>
     <#local genericString = "">
     <#if param?has_content>
-        <#local genericString = genericString + param.typeName?lower_case>
-        <#if param.typePrimitive && (param.typeCount > 0)>
+    <#-- TODO remove if tested -->
+    <#--<#if (param.count <= 0)>-->
+    <#--<#local genericString = genericString + "ret">-->
+    <#--<#else>-->
+    <#--<#if LambdaUtils.isOfTypeOperator(target)>-->
+    <#--<#local genericString = genericString + "operand" + (target.arity > 1)?then(param.count, "")>-->
+    <#--<#else>-->
+        <#local genericString = genericString + param.name?lower_case>
+        <#if param.primitive && (param.count > 0)>
             <#local count = 0>
             <#if (target.firstInputType?has_content)>
-                <#local count = target.firstInputType.typePrimitive?then(count, count + 1)>
+                <#local count = target.firstInputType.primitive?then(count, count + 1)>
             </#if>
             <#if (target.secondInputType?has_content)>
-                <#local count = target.secondInputType.typePrimitive?then(count, count + 1)>
+                <#local count = target.secondInputType.primitive?then(count, count + 1)>
             </#if>
-            <#local genericString = genericString + ((target.arity - count) > 1)?then((param.typeCount), "")>
+            <#local genericString = genericString + ((target.arity - count) > 1)?then((param.count), "")>
         </#if>
+    <#-- TODO remove if tested -->
+    <#--</#if>-->
+    <#--</#if>-->
     </#if>
     <#return genericString>
 </#function>
@@ -129,7 +140,11 @@
         <#local genericString = genericString + "<">
         <#list types as type>
             <#if type == target.returnType!"">
-                <#local genericString = genericString + "? extends " + .namespace.buildParameterType(type, target)>
+                <#if LambdaUtils.isOfTypeOperator(target)>
+                    <#local genericString = genericString + .namespace.buildParameterType(type, target)>
+                <#else>
+                    <#local genericString = genericString + "? extends " + .namespace.buildParameterType(type, target)>
+                </#if>
             <#else>
                 <#local genericString = genericString + "? super " + .namespace.buildParameterType(type, target)>
             </#if>
@@ -169,9 +184,21 @@
 
 <#function otherParametersToTarget target = lambda other1 = "" other2 = "" other3 = "" other4 = "">
     <#assign copy = LambdaUtils.copy(target)> <#-- copy lambda as we will change its input arguments -->
-    <#if other1?has_content && copy.getFirstInputType()?has_content>${copy.getFirstInputType().setTypeName(other1)}</#if>
-    <#if other2?has_content && copy.getSecondInputType()?has_content>${copy.getSecondInputType().setTypeName(other2)}</#if>
-    <#if other3?has_content && copy.getThirdInputType()?has_content>${copy.getThirdInputType().setTypeName(other3)}</#if>
-    <#if other4?has_content && copy.getReturnType()?has_content>${copy.getReturnType().setTypeName(other4)}</#if>
+    <#if other1?has_content && copy.getFirstInputType()?has_content>
+    ${copy.getFirstInputType().setTypeName(other1)}
+    ${copy.getFirstInputType().setName(other1?lower_case)}
+    </#if>
+    <#if other2?has_content && copy.getSecondInputType()?has_content>
+    ${copy.getSecondInputType().setTypeName(other2)}
+    ${copy.getSecondInputType().setName(other2?lower_case)}
+    </#if>
+    <#if other3?has_content && copy.getThirdInputType()?has_content>
+    ${copy.getThirdInputType().setTypeName(other3)}
+    ${copy.getThirdInputType().setName(other3?lower_case)}
+    </#if>
+    <#if other4?has_content && copy.getReturnType()?has_content>
+    ${copy.getReturnType().setTypeName(other4)}
+    ${copy.getReturnType().setName(other4)}
+    </#if>
     <#return copy>
 </#function>

@@ -1,5 +1,5 @@
 <#-- @formatter:off -->
-import at.gridtec.lambda4j.comparator.*;
+<#--import at.gridtec.lambda4j.comparator.*;-->
 import at.gridtec.lambda4j.consumer.*;
 import at.gridtec.lambda4j.consumer.bi.*;
 import at.gridtec.lambda4j.consumer.bi.obj.*;

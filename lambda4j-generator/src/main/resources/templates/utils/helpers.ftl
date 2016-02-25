@@ -1,6 +1,6 @@
 <#-- checks if given type represents a primitive type -->
 <#function isPrimitive type = "">
-    <#return (type?hasContent) && type.typePrimitive>
+    <#return (type?hasContent) && type.primitive>
 </#function>
 
 <#-- checks if the given lambda has primitive types -->
@@ -24,9 +24,9 @@
 </#function>
 
 <#-- prints return keyword only if given lambda not consumer type -->
-<#function printReturnIfNotConsumer target = lambda>
+<#function printReturnIfNotVoid target = lambda>
     <#local ret = "">
-    <#if !LambdaUtils.isOfTypeConsumer(target)>
+    <#if !LambdaUtils.isOfTypeConsumer(target) && !LambdaUtils.isOfTypeRunnable(lambda)>
         <#local ret = "return">
     </#if>co
     <#return ret>

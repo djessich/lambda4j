@@ -3,7 +3,7 @@
 <#import "../utils/tuple.ftl" as tuple>
 <#import "../utils/types.ftl" as types>
 
-<#-- TODO tupled apply needs to have param tags not only for tuple but also for value if BiObjByteToIntFunction -->
+<#-- TODO javadoc: tupled apply needs to have param tags not only for tuple but also for value if BiObjByteToIntFunction -->
 /**
  * Applies this ${lambda.type.simpleName} to the given arguments.
  *
@@ -24,7 +24,7 @@ ${types.buildParameterType(lambda.returnType)} ${lambda.method}(${parameterStrin
  */
 default ${types.buildParameterType(lambda.returnType)} ${lambda.method}(${annotation.nonnull} ${tuple.printTuple()} tuple ${helpers.isPrimitive(lambda.thirdInputType)?then(", " + types.buildParameter(lambda.thirdInputType), "")}) {
     Objects.requireNonNull(tuple);
-    ${helpers.printReturnIfNotConsumer()} ${lambda.method}(${tuple.printTupleAccess()} ${helpers.isPrimitive(lambda.thirdInputType)?then(", " + types.buildParameterName(lambda.thirdInputType), "")});
+    ${helpers.printReturnIfNotVoid()} ${lambda.method}(${tuple.printTupleAccess()} ${helpers.isPrimitive(lambda.thirdInputType)?then(", " + types.buildParameterName(lambda.thirdInputType), "")});
 }
 </#if>
 <#-- @formatter:on -->

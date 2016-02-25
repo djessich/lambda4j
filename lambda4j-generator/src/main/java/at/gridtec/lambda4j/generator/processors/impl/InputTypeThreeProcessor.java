@@ -59,14 +59,14 @@ public final class InputTypeThreeProcessor extends Processor {
 
                 // Apply generical input for arg 3
                 final Lambda generical = LambdaUtils.copy(lambda);
-                TypeEntity type = new TypeEntity(Object.class, "V", 3);
+                TypeEntity type = new TypeEntity(Object.class, "V", "v", 3);
                 generical.setThirdInputType(type);
                 genLambdas.add(generical);
 
                 // Apply primitive input for arg 3
                 for (final Class<?> typeClass : PRIMITIVES) {
                     final Lambda primitive = LambdaUtils.copy(lambda);
-                    type = new TypeEntity(typeClass, "value", 1);
+                    type = new TypeEntity(typeClass, typeClass.getSimpleName(), "value", 1);
                     primitive.setThirdInputType(type);
                     genLambdas.add(primitive);
                 }
@@ -76,10 +76,12 @@ public final class InputTypeThreeProcessor extends Processor {
             else {
                 final Lambda primitive = LambdaUtils.copy(lambda);
                 TypeEntity entity = primitive.getSecondInputType();
-                if (!primitive.getFirstInputType().isTypePrimitive()) {
-                    primitive.setThirdInputType(new TypeEntity(entity.getTypeClass(), entity.getTypeName(), 2));
+                if (!primitive.getFirstInputType().isPrimitive()) {
+                    primitive.setThirdInputType(
+                            new TypeEntity(entity.getTypeClass(), entity.getTypeName(), entity.getName(), 2));
                 } else {
-                    primitive.setThirdInputType(new TypeEntity(entity.getTypeClass(), entity.getTypeName(), 3));
+                    primitive.setThirdInputType(
+                            new TypeEntity(entity.getTypeClass(), entity.getTypeName(), entity.getName(), 3));
                 }
                 genLambdas.add(primitive);
             }

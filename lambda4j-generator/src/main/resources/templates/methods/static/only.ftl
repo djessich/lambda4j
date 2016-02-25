@@ -1,9 +1,7 @@
 <#-- @formatter:off -->
 <#import "../../utils/types.ftl" as types>
 
-<#-- TODO generic operator must not have '? extends T' -->
 <#-- TODO Javadoc: generic operator has param for inputs and return type with same name (@param <T> ... 2x) -->
-<#-- TODO generic operator of arity greater than 2 has lambda inputs with same parameter name ( return (t, t) -> ... ) -->
 <#-- parse only if lambda arity is greater than 2 and is not of type comprator -->
 <#if (lambda.arity >= 2) && !LambdaUtils.isOfTypeComparator(lambda)>
     <#-- set a list of textual representation for numbers -->
@@ -22,7 +20,7 @@
         <#-- get lambda parameter and build its parameter name -->
         <#assign argumentName = argumentNames[current?index]>
         <#-- search for correct input lambda of only method, which is the global lambdas input type (depending on arity) and its return type -->
-        <#assign type = (lambda.returnType.typePrimitive && lambda.returnType.equals(argumentType))?then(LambdaUtils.getOperatorType(), lambda.type)>
+        <#assign type = (lambda.returnType.primitive && lambda.returnType.equals(argumentType))?then(LambdaUtils.getOperatorType(), lambda.type)>
         <#assign inputLambda = LambdaUtils.searchByFirstInputAndReturnType(type, 1, argumentType, lambda.returnType, lambda.throwable)>
         <#-- print only method -->
         <@.namespace.onlyMethod number capitalizedNumber inputLambda argumentType argumentName/>

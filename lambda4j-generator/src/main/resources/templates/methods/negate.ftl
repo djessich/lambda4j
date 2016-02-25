@@ -14,7 +14,7 @@
  */
 ${annotation.nonnull}
 default ${lambda.name}${genericParameterTypeString} negate() {
-    return (${parameterNameString}) -> !test(${parameterNameString});
+    return (${parameterNameString}) -> !${lambda.method}(${parameterNameString});
 }
 </#macro>
 <#-- @formatter:on -->

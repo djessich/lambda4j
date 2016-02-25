@@ -60,18 +60,18 @@ public final class ChangeOperatorProcessor extends Processor {
         boolean isPrimitiveOperator = false;
         if (lambda.getArity() >= 1) {
             isOperator = lambda.getReturnType().equals(lambda.getFirstInputType());
-            isPrimitiveOperator = isOperator && lambda.getFirstInputType().isTypePrimitive() && lambda.getReturnType()
-                    .isTypePrimitive();
+            isPrimitiveOperator = isOperator && lambda.getFirstInputType().isPrimitive() && lambda.getReturnType()
+                    .isPrimitive();
         }
         if (lambda.getArity() >= 2) {
             isOperator = isOperator && lambda.getReturnType().equals(lambda.getSecondInputType());
-            isPrimitiveOperator = isOperator && lambda.getSecondInputType().isTypePrimitive() && lambda.getReturnType()
-                    .isTypePrimitive();
+            isPrimitiveOperator = isOperator && lambda.getSecondInputType().isPrimitive() && lambda.getReturnType()
+                    .isPrimitive();
         }
         if (lambda.getArity() >= 3) {
             isOperator = isOperator && lambda.getReturnType().equals(lambda.getThirdInputType());
-            isPrimitiveOperator = isOperator && lambda.getThirdInputType().isTypePrimitive() && lambda.getReturnType()
-                    .isTypePrimitive();
+            isPrimitiveOperator = isOperator && lambda.getThirdInputType().isPrimitive() && lambda.getReturnType()
+                    .isPrimitive();
         }
 
         // If lambda fulfills operator requirements, then set type and do primitive operator checking
@@ -82,7 +82,7 @@ public final class ChangeOperatorProcessor extends Processor {
             copy.setType(LambdaTypeEnum.OPERATOR);
 
             // If lambda is a generical operator, we need to change its input and return type names
-            if (!lambda.getReturnType().isTypePrimitive()) {
+            if (!lambda.getReturnType().isPrimitive()) {
                 copy.getReturnType().setTypeName("T");
                 if (copy.getArity() >= 1) {
                     copy.getFirstInputType().setTypeName("T");

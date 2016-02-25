@@ -49,7 +49,7 @@ public final class InputTypeOneProcessor extends Processor {
             // Special Rule: Comparator is only generic
             if (LambdaUtils.isOfTypeComparator(lambda)) {
                 final Lambda copy = LambdaUtils.copy(lambda);
-                TypeEntity type = new TypeEntity(Object.class, "T", 1);
+                TypeEntity type = new TypeEntity(Object.class, "T", "t", 1);
                 copy.setFirstInputType(type);
                 lambdas.addAll(next(copy));
             }
@@ -61,14 +61,14 @@ public final class InputTypeOneProcessor extends Processor {
 
                 // Apply generical input for arg 1
                 final Lambda generical = LambdaUtils.copy(lambda);
-                TypeEntity type = new TypeEntity(Object.class, "T", 1);
+                TypeEntity type = new TypeEntity(Object.class, "T", "t", 1);
                 generical.setFirstInputType(type);
                 genLambdas.add(generical);
 
                 // Apply primitive input for arg 1
                 for (final Class<?> typeClass : PRIMITIVES) {
                     final Lambda primitive = LambdaUtils.copy(lambda);
-                    type = new TypeEntity(typeClass, "value", 1);
+                    type = new TypeEntity(typeClass, typeClass.getSimpleName(), "value", 1);
                     primitive.setFirstInputType(type);
                     genLambdas.add(primitive);
                 }

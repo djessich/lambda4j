@@ -17,6 +17,8 @@ package at.gridtec.lambda4j.generator.entities;
 
 import java.io.Serializable;
 
+// TODO remove type simple name
+
 /**
  * Created by domin on 05.02.2016.
  */
@@ -26,29 +28,33 @@ public class TypeEntity implements Serializable {
 
     private String typeName;
 
-    private int typeCount;
+    private String name;
+
+    private int count;
 
     private String typeSimpleName;
 
-    private boolean typePrimitive;
+    private boolean primitive;
 
     public TypeEntity() {
 
     }
 
-    public TypeEntity(final Class<?> typeClass, final String typeName) {
+    public TypeEntity(final Class<?> typeClass, final String typeName, final String name) {
         this.typeClass = typeClass;
         this.typeName = typeName;
+        this.name = name;
         this.typeSimpleName = typeClass.getSimpleName();
-        this.typePrimitive = typeClass.isPrimitive();
+        this.primitive = typeClass.isPrimitive();
     }
 
-    public TypeEntity(final Class<?> typeClass, final String typeName, int typeCount) {
+    public TypeEntity(final Class<?> typeClass, final String typeName, final String name, int count) {
         this.typeClass = typeClass;
         this.typeName = typeName;
-        this.typeCount = typeCount;
+        this.name = name;
+        this.count = count;
         this.typeSimpleName = typeClass.getSimpleName();
-        this.typePrimitive = typeClass.isPrimitive();
+        this.primitive = typeClass.isPrimitive();
     }
 
     public Class<?> getTypeClass() {
@@ -67,12 +73,20 @@ public class TypeEntity implements Serializable {
         this.typeName = typeName;
     }
 
-    public int getTypeCount() {
-        return typeCount;
+    public String getName() {
+        return name;
     }
 
-    public void setTypeCount(int typeCount) {
-        this.typeCount = typeCount;
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public int getCount() {
+        return count;
+    }
+
+    public void setCount(int count) {
+        this.count = count;
     }
 
     public String getTypeSimpleName() {
@@ -83,12 +97,12 @@ public class TypeEntity implements Serializable {
         this.typeSimpleName = typeSimpleName;
     }
 
-    public boolean isTypePrimitive() {
-        return typePrimitive;
+    public boolean isPrimitive() {
+        return primitive;
     }
 
-    public void setTypePrimitive(boolean typePrimitive) {
-        this.typePrimitive = typePrimitive;
+    public void setPrimitive(boolean primitive) {
+        this.primitive = primitive;
     }
 
     @Override
@@ -116,7 +130,7 @@ public class TypeEntity implements Serializable {
         //        return "TypeEntity{" +
         //                "typeClass=" + typeClass +
         //                ", typeName='" + typeName + '\'' +
-        //                ", typePrimitive=" + typePrimitive +
+        //                ", primitive=" + primitive +
         //                '}';
         return this.typeName;
     }
