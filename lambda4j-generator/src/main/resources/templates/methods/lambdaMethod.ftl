@@ -4,8 +4,6 @@
 <#import "../utils/tuple.ftl" as tuple>
 <#import "../utils/types.ftl" as types>
 
-<#-- TODO javadoc: tupled apply needs to have param tags not only for tuple but also for value if BiObjByteToIntFunction -->
-<#-- TODO throws throwable + javadoc -->
 /**
  * Applies this ${lambda.type.simpleName} to the given arguments.
  *
@@ -21,6 +19,7 @@ ${types.buildParameterType(lambda.returnType)} ${lambda.method}(${parameterStrin
  * Applies this ${lambda.type.simpleName} to the given tuple.
  *
  * @param tuple The tuple to be applied to the ${lambda.type.simpleName}
+<@.namespace.javadocParamForTupleAndPrimitiveInput/>
 <@.namespace.printJavadocReturnIfNotVoidLambdaMethod/>
 <#include "../javadoc/throwsNullPointerException.ftl">
 <#include "../javadoc/throwsThrowable.ftl">
@@ -32,6 +31,13 @@ default ${types.buildParameterType(lambda.returnType)} ${lambda.method}(${annota
 }
 </#if>
 
+<#-- a helper macro which prints javadoc param tag, if lambda has tupled and primitive input -->
+<#macro javadocParamForTupleAndPrimitiveInput target = lambda>
+<#if !helpers.isPrimitive(target.firstInputType) && !helpers.isPrimitive(target.secondInputType) && helpers.isPrimitive(lambda.thirdInputType)>
+ * @param ${types.buildParameterName(lambda.thirdInputType)} The primitive value to be applied to the ${lambda.type.simpleName}
+</#if>
+</#macro>
+
 <#-- a helper macro which prints javadoc return tag, if lambda is not of type consumer or runnable (no output) -->
 <#macro printJavadocReturnIfNotVoidLambdaMethod target = lambda>
 <#if !LambdaUtils.isOfTypeConsumer(target) && !LambdaUtils.isOfTypeRunnable(target)>
@@ -39,4 +45,5 @@ default ${types.buildParameterType(lambda.returnType)} ${lambda.method}(${annota
  * @return The return value from the ${target.type.simpleName}, which is its result.
 </#if>
 </#macro>
+
 <#-- @formatter:on -->
