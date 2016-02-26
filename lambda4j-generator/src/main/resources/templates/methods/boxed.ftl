@@ -3,9 +3,8 @@
 <#import "../utils/helpers.ftl" as helpers>
 <#import "../utils/types.ftl" as types>
 
-<#-- TODO: ToCharBiFunction does not have boxed method -->
-<#-- parse only if lambda has primitive input arguments -->
-<#if helpers.isPrimitiveLambdaInput(lambda)>
+<#-- parse only if lambda has primitive input arguments, or is of type function or supplier with primitive return -->
+<#if helpers.isPrimitiveLambdaInput(lambda) || ((LambdaUtils.isOfTypeFunction(lambda) || LambdaUtils.isOfTypeSupplier(lambda)) && helpers.isPrimitive(lambda.returnType))>
     <#-- build a generic parameter type string including primitives also -->
     <#assign genericParameterTypeStringWithPrimitives = .namespace.buildGenericParameterTypeStringWithPrimitives()>
     <#-- search for correct output lambda, which gets object (generical) inputs and object (generical) output, unless if global lambda represents a type a predicate or consumer type) -->
