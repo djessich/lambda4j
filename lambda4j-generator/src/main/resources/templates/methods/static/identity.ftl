@@ -2,7 +2,6 @@
 <#import "../../utils/filters.ftl" as filters>
 <#import "../../utils/types.ftl" as types>
 
-<#-- TODO Javadoc: generic operator has param for inputs and return type with same name (@param <T> ... 2x) -->
 <#-- parse only if lambda has arity 1 and return type -->
 <#if lambda.arity == 1 && lambda.returnType?? && lambda.firstInputType?? && (lambda.returnType.equals(lambda.firstInputType))>
     <@.namespace.identityMethod/>
@@ -13,7 +12,7 @@
 /**
  * Returns a {@link ${lambda.name}} that always returns its input argument.
  *
-<#include "../../javadoc/paramGenericInput.ftl">
+<@.namespace.javadocGenericInputIdentityMethod/>
  * @return A {@code  ${lambda.name}} that always returns its input argument
  */
 ${annotation.nonnull}
@@ -22,26 +21,10 @@ static ${types.buildGenericInputParameterTypeString()} ${lambda.name}${types.bui
 }
 </#macro>
 
-<#-- TODO Remove if tested -->
-<#--&lt;#&ndash; a helper function to build a generic input lambda string for boxed operation &ndash;&gt;-->
-<#--<#function buildGenericInputTypeString target = lambda>-->
-    <#--<#local parameters = [target.firstInputType!"", target.secondInputType!"", target.thirdInputType!""]>-->
-    <#--<#if LambdaUtils.isOfTypeOperator(target)>-->
-        <#--<#local parameters = [target.returnType!""]>-->
-    <#--</#if>-->
-    <#--<#local parameters = filters.filterEmpties(parameters)>-->
-    <#--<#local parameters = filters.filterPrimitives(parameters)>-->
-    <#--<#local genericString = "">-->
-    <#--<#if (parameters?has_content)>-->
-        <#--<#local genericString = genericString + "<">-->
-        <#--<#list parameters as parameter>-->
-            <#--<#local genericString = genericString + types.buildParameterType(parameter, target)>-->
-            <#--<#if parameter?has_next>-->
-                <#--<#local genericString = genericString + ", ">-->
-            <#--</#if>-->
-        <#--</#list>-->
-        <#--<#local genericString = genericString + ">">-->
-    <#--</#if>-->
-    <#--<#return genericString>-->
-<#--</#function>-->
+<#-- prints javadoc generic input parameters of identity method -->
+<#macro javadocGenericInputIdentityMethod target = lambda>
+<#if !helpers.isPrimitive(target.firstInputType)>
+ * @param <${target.firstInputType}> The type of the argument to the ${target.type.simpleName} and of return from the ${target.type.simpleName}
+</#if>
+</#macro>
 <#-- @formatter:on -->

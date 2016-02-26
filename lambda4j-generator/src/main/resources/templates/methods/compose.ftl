@@ -86,16 +86,6 @@ default ${types.buildGenericInputParameterTypeString(outputLambda, generic1, gen
     </#if>
 </#function>
 
-<#-- TODO Remove if tested -->
-<#--&lt;#&ndash; a helper function to build a generic input lambda string for compose operation &ndash;&gt;-->
-<#--<#function buildGenericInputTypeString target generic1 generic2 generic3>-->
-    <#--<#local ret = "">-->
-    <#--<#if (target.arity > 0)>-->
-        <#--<#local ret = ret + "<" + types.buildParameterTypeString(target, generic1, generic2, generic3) + ">">-->
-    <#--</#if>-->
-    <#--<#return ret>-->
-<#--</#function>-->
-
 <#-- a helper function to build an input lambdas string for compose operation -->
 <#function inputLambdasString generic1 generic2 generic3 inputLambda1 = "" inputLambda2 = "" inputLambda3 = "">
     <#local ret = "">

@@ -25,13 +25,6 @@
 <#function buildParameterName param target = lambda>
     <#local genericString = "">
     <#if param?has_content>
-    <#-- TODO remove if tested -->
-    <#--<#if (param.count <= 0)>-->
-    <#--<#local genericString = genericString + "ret">-->
-    <#--<#else>-->
-    <#--<#if LambdaUtils.isOfTypeOperator(target)>-->
-    <#--<#local genericString = genericString + "operand" + (target.arity > 1)?then(param.count, "")>-->
-    <#--<#else>-->
         <#local genericString = genericString + param.name?lower_case>
         <#if param.primitive && (param.count > 0)>
             <#local count = 0>
@@ -43,9 +36,6 @@
             </#if>
             <#local genericString = genericString + ((target.arity - count) > 1)?then((param.count), "")>
         </#if>
-    <#-- TODO remove if tested -->
-    <#--</#if>-->
-    <#--</#if>-->
     </#if>
     <#return genericString>
 </#function>

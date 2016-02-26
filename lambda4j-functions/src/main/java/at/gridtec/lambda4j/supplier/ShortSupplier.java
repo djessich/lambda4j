@@ -46,7 +46,6 @@ import java.util.function.Supplier;
  *
  * @see Supplier
  */
-// TODO refactor all @throws Nullpointerexception to correct meaning (in all lambdas)
 @SuppressWarnings("unused")
 @FunctionalInterface
 public interface ShortSupplier {

@@ -101,7 +101,6 @@ public interface ThrowableBooleanSupplier extends BooleanSupplier {
         return 0;
     }
 
-    // TODO
     //    /**
     //     * Returns a composed {@link ThrowableSupplier} that first gets the result from this operation, and then applies the
     //     * {@code after} operation to the result.

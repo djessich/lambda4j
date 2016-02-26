@@ -46,8 +46,6 @@
  * This method is just convenience, to provide the ability to execute an operation which accepts {@code ${primitiveType}} input,
  * before this primitive ${lambda.type.simpleName} is executed.
  *
-<#-- TODO Remove if tested -->
-<#--<@.namespace.javadocGenericInputComposeMethod outputLambda inputLambda1 inputLambda2 inputLambda3/>-->
 <@.namespace.javadocArgumentInputComposeMethod inputLambda1 inputLambda2 inputLambda3/>
  * @return A composed {@code ${outputLambda.name}} that first applies the {@code before} ${.namespace.javadocInputLambdaSimpleNamePlural()} to
  * its input, and then applies this ${lambda.type.simpleName} to the result.
@@ -60,20 +58,6 @@ default ${outputLambda.name}${types.buildGenericParameterTypeString(outputLambda
     return (${types.buildParameterNameString(outputLambda)}) -> ${lambda.method}(${.namespace.callLambdasString(outputLambda, inputLambda1, inputLambda2, inputLambda3)});
 }
 </#macro>
-
-<#-- TODO Remove if tested -->
-<#-- prints javadoc generic input parameters of compose method -->
-<#--<#macro javadocGenericInputComposeMethod outputLambda inputLambda1 = "" inputLambda2 = "" inputLambda3 = "">-->
-<#--<#if (lambda.arity >= 1) && !helpers.isPrimitive(lambda.firstInputType) && inputLambda1?has_content>-->
- <#--* @param <${lambda.firstInputType}> The type of the argument to the ${helpers.first()}given ${inputLambda1.type.simpleName}, and of composed ${outputLambda.type.simpleName}-->
-<#--</#if>-->
-<#--<#if (lambda.arity >= 2) && !helpers.isPrimitive(lambda.secondInputType) && inputLambda2?has_content>-->
- <#--* @param <${lambda.secondInputType}> The type of the argument to the second given ${inputLambda2.type.simpleName}, and of composed ${outputLambda.type.simpleName}-->
-<#--</#if>-->
-<#--<#if (lambda.arity >= 3) && !helpers.isPrimitive(lambda.thirdInputType) && inputLambda3?has_content>-->
- <#--* @param <${lambda.thirdInputType}> The type of the argument to the third given ${inputLambda3.type.simpleName}, and of composed ${outputLambda.type.simpleName}-->
-<#--</#if>-->
-<#--</#macro>-->
 
 <#-- prints javadoc input parameters of compose method -->
 <#macro javadocArgumentInputComposeMethod inputLambda1 = "" inputLambda2 = "" inputLambda3 = "">

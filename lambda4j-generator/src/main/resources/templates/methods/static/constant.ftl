@@ -1,7 +1,6 @@
 <#-- @formatter:off -->
 <#import "../../utils/types.ftl" as types>
 
-<#-- TODO Javadoc: generic operator has param for inputs and return type with same name (@param <T> ... 2x) -->
 <#-- parse only if lambda is not of type Consumer or Runnable (no return) -->
 <#if !LambdaUtils.isOfTypeConsumer(lambda) && !LambdaUtils.isOfTypeRunnable(lambda)>
      <@.namespace.constantMethod/>

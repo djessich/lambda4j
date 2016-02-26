@@ -1,7 +1,6 @@
 <#-- @formatter:off -->
 <#import "../../utils/types.ftl" as types>
 
-<#-- TODO Javadoc: generic operator has param for inputs and return type with same name (@param <T> ... 2x) -->
 <#-- parse only if lambda arity is greater than 2 and is not of type comprator -->
 <#if (lambda.arity >= 2) && !LambdaUtils.isOfTypeComparator(lambda)>
     <#-- set a list of textual representation for numbers -->

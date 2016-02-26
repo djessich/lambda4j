@@ -26,8 +26,8 @@
 <#-- prints return keyword only if given lambda not consumer type -->
 <#function printReturnIfNotVoid target = lambda>
     <#local ret = "">
-    <#if !LambdaUtils.isOfTypeConsumer(target) && !LambdaUtils.isOfTypeRunnable(lambda)>
+    <#if !LambdaUtils.isOfTypeConsumer(target) && !LambdaUtils.isOfTypeRunnable(target)>
         <#local ret = "return">
-    </#if>co
+    </#if>
     <#return ret>
 </#function>
