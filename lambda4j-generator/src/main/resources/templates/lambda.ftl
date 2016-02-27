@@ -39,6 +39,7 @@ package ${lambda.packageName};
 @FunctionalInterface
 public interface ${lambda.name}${genericParameterTypeString} ${genericOperatorExtendsFunction} {
 
+<#include "methods/static/of.ftl">
 <#include "methods/static/call.ftl">
 <#include "methods/static/only.ftl">
 <#include "methods/static/identity.ftl">
