@@ -15,8 +15,8 @@
  */
 package at.gridtec.lambda4j.generator.processors.impl;
 
-import at.gridtec.lambda4j.generator.Lambda;
 import at.gridtec.lambda4j.generator.LambdaTypeEnum;
+import at.gridtec.lambda4j.generator.entities.LambdaEntity;
 import at.gridtec.lambda4j.generator.processors.Processor;
 import at.gridtec.lambda4j.generator.util.LambdaUtils;
 
@@ -31,14 +31,14 @@ import java.util.Objects;
  * are handed over to next {@code Processor} to do further processing. The result from next step is returned by this
  * step.
  * <p>
- * Requirements by this step is the lambdas <b>correct</b> type ({@link Lambda#getType()}) only.
+ * Requirements by this step is the lambdas <b>correct</b> type ({@link LambdaEntity#getType()}) only.
  */
 public class PackageProcessor extends Processor {
 
     /**
      * Defines the default package prefix, representing the projects group id.
      */
-    private static final String PACKAGE_DEFAULT_PREFIX = "at.gridtec.lambda4j";
+    private static final String PACKAGE_DEFAULT_PREFIX = "at.gridtec.lambda4j.functions";
 
     /**
      * Defines the identifier for lambdas with arity 2.
@@ -82,15 +82,15 @@ public class PackageProcessor extends Processor {
     private static final String PACKAGE_OPERATOR_ARITY_THREE = "ternary";
 
     @Override
-    protected boolean processable(@Nonnull Lambda lambda) {
+    protected boolean processable(@Nonnull LambdaEntity lambda) {
         return lambda.getType() != null;
     }
 
     @Nonnull
     @Override
-    protected List<Lambda> process(@Nonnull Lambda lambda) {
-        final List<Lambda> lambdas = new LinkedList<>();
-        final Lambda copy = LambdaUtils.copy(lambda);
+    protected List<LambdaEntity> process(@Nonnull LambdaEntity lambda) {
+        final List<LambdaEntity> lambdas = new LinkedList<>();
+        final LambdaEntity copy = LambdaUtils.copy(lambda);
         final PackageBuilder packageBuilder = new PackageBuilder(PACKAGE_DEFAULT_PREFIX);
 
         // Add lambda type simple name to type for lambda grouping (actual package ".function"
@@ -180,8 +180,8 @@ public class PackageProcessor extends Processor {
     }
 
     /**
-     * Represents a class for building up a {@link Lambda}s package name. Internally a {@link StringBuilder} is used to
-     * create the string representing the package name.
+     * Represents a class for building up a {@link LambdaEntity}s package name. Internally a {@link StringBuilder} is
+     * used to create the string representing the package name.
      */
     private final class PackageBuilder {
 

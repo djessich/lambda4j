@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015 Gridtec. All rights reserved.
+ * Copyright (c) 2016 Gridtec. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,7 +15,7 @@
  */
 package at.gridtec.lambda4j.generator.processors.impl;
 
-import at.gridtec.lambda4j.generator.Lambda;
+import at.gridtec.lambda4j.generator.entities.LambdaEntity;
 import at.gridtec.lambda4j.generator.entities.TypeEntity;
 import at.gridtec.lambda4j.generator.processors.Processor;
 import at.gridtec.lambda4j.generator.util.LambdaUtils;
@@ -29,26 +29,26 @@ import java.util.List;
  * the {@code first} argument to the lambda. These copies are handed over to next {@code Processor} to do further
  * processing. The result from next step is returned by this step.
  * <p>
- * Requirements by this step is the lambdas type ({@link Lambda#getType()}) only.
+ * Requirements by this step is the lambdas type ({@link LambdaEntity#getType()}) only.
  */
 public final class InputTypeOneProcessor extends Processor {
 
     @Override
-    protected boolean processable(@Nonnull final Lambda lambda) {
+    protected boolean processable(@Nonnull final LambdaEntity lambda) {
         return lambda.getType() != null;
     }
 
     @Override
     @Nonnull
-    protected List<Lambda> process(@Nonnull final Lambda lambda) {
-        final List<Lambda> lambdas = new LinkedList<>();
+    protected List<LambdaEntity> process(@Nonnull final LambdaEntity lambda) {
+        final List<LambdaEntity> lambdas = new LinkedList<>();
 
         // Check if it has arity 1; otherwise end call stack
         if (lambda.getArity() >= 1) {
 
             // Special Rule: Comparator is only generic
             if (LambdaUtils.isOfTypeComparator(lambda)) {
-                final Lambda copy = LambdaUtils.copy(lambda);
+                final LambdaEntity copy = LambdaUtils.copy(lambda);
                 TypeEntity type = new TypeEntity(Object.class, "T", "t", 1);
                 copy.setFirstInputType(type);
                 lambdas.addAll(next(copy));
@@ -57,29 +57,29 @@ public final class InputTypeOneProcessor extends Processor {
             // All other lambdas have normal input 1
             else {
                 // Create new list to generate variants for the given lambda
-                final List<Lambda> genLambdas = new LinkedList<>();
+                final List<LambdaEntity> genLambdas = new LinkedList<>();
 
                 // Apply generical input for arg 1
-                final Lambda generical = LambdaUtils.copy(lambda);
+                final LambdaEntity generical = LambdaUtils.copy(lambda);
                 TypeEntity type = new TypeEntity(Object.class, "T", "t", 1);
                 generical.setFirstInputType(type);
                 genLambdas.add(generical);
 
                 // Apply primitive input for arg 1
                 for (final Class<?> typeClass : PRIMITIVES) {
-                    final Lambda primitive = LambdaUtils.copy(lambda);
+                    final LambdaEntity primitive = LambdaUtils.copy(lambda);
                     type = new TypeEntity(typeClass, typeClass.getSimpleName(), "value", 1);
                     primitive.setFirstInputType(type);
                     genLambdas.add(primitive);
                 }
 
                 // For each generated given lambda variant
-                for (Lambda genLambda : genLambdas) {
+                for (LambdaEntity genLambda : genLambdas) {
                     lambdas.addAll(next(genLambda));
                 }
             }
         } else {
-            final Lambda copy = LambdaUtils.copy(lambda);
+            final LambdaEntity copy = LambdaUtils.copy(lambda);
             lambdas.addAll(next(copy));
         }
 

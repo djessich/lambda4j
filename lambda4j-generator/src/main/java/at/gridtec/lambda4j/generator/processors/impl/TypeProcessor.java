@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015 Gridtec. All rights reserved.
+ * Copyright (c) 2016 Gridtec. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,8 +15,8 @@
  */
 package at.gridtec.lambda4j.generator.processors.impl;
 
-import at.gridtec.lambda4j.generator.Lambda;
 import at.gridtec.lambda4j.generator.LambdaTypeEnum;
+import at.gridtec.lambda4j.generator.entities.LambdaEntity;
 import at.gridtec.lambda4j.generator.processors.Processor;
 import at.gridtec.lambda4j.generator.util.LambdaUtils;
 
@@ -36,14 +36,14 @@ import java.util.stream.Collectors;
 public final class TypeProcessor extends Processor {
 
     @Override
-    public boolean processable(@Nonnull final Lambda lambda) {
+    public boolean processable(@Nonnull final LambdaEntity lambda) {
         return true;
     }
 
     @Override
     @Nonnull
-    public List<Lambda> process(@Nonnull final Lambda lambda) {
-        final List<Lambda> lambdas = new LinkedList<>();
+    public List<LambdaEntity> process(@Nonnull final LambdaEntity lambda) {
+        final List<LambdaEntity> lambdas = new LinkedList<>();
 
         // Exclude some lambda as those will be evaluated later
         final List<LambdaTypeEnum> types = Arrays.stream(LambdaTypeEnum.values())
@@ -55,7 +55,7 @@ public final class TypeProcessor extends Processor {
 
         // Loop of all other types
         for (LambdaTypeEnum type : types) {
-            final Lambda copy = LambdaUtils.copy(lambda);
+            final LambdaEntity copy = LambdaUtils.copy(lambda);
             copy.setType(type);
             lambdas.addAll(next(copy));
         }

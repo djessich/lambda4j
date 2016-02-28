@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015 Gridtec. All rights reserved.
+ * Copyright (c) 2016 Gridtec. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,7 +15,7 @@
  */
 package at.gridtec.lambda4j.generator.processors;
 
-import at.gridtec.lambda4j.generator.Lambda;
+import at.gridtec.lambda4j.generator.entities.LambdaEntity;
 import at.gridtec.lambda4j.generator.exception.NotProcessableException;
 
 import javax.annotation.Nonnull;
@@ -26,7 +26,7 @@ import java.util.List;
 import java.util.Objects;
 
 /**
- * This class represents the chain of all {@link Processor}s to manipulate {@code Lambda}s.
+ * This class represents the chain of all {@link Processor}s to manipulate {@code LambdaEntity}s.
  */
 public class ProcessorChain {
 
@@ -102,10 +102,10 @@ public class ProcessorChain {
      * @return The result from chain invocation.
      */
     @Nonnull
-    public List<Lambda> invoke() {
-        List<Lambda> lambdas = new LinkedList<>();
+    public List<LambdaEntity> invoke() {
+        List<LambdaEntity> lambdas = new LinkedList<>();
         if (this.processor != null) {
-            final Lambda lambda = new Lambda();
+            final LambdaEntity lambda = new LambdaEntity();
             if (this.processor.processable(lambda)) {
                 lambdas.addAll(this.processor.process(lambda));
             } else {

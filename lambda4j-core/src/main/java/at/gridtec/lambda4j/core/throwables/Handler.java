@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015 Gridtec. All rights reserved.
+ * Copyright (c) 2016 Gridtec. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,9 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package at.gridtec.lambda4j.throwables;
+package at.gridtec.lambda4j.core.throwables;
 
-import at.gridtec.lambda4j.meta.Selfable;
+import at.gridtec.lambda4j.core.meta.Selfable;
 
 import javax.annotation.Nonnull;
 import java.util.function.Function;

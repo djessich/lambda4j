@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015 Gridtec. All rights reserved.
+ * Copyright (c) 2016 Gridtec. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,7 +15,7 @@
  */
 package at.gridtec.lambda4j.generator.exception;
 
-import at.gridtec.lambda4j.generator.Lambda;
+import at.gridtec.lambda4j.generator.entities.LambdaEntity;
 import at.gridtec.lambda4j.generator.processors.Processor;
 
 /**
@@ -32,29 +32,29 @@ public final class NotProcessableException extends RuntimeException {
     /**
      * The lambda which failed to be handled.
      */
-    private final Lambda lambda;
+    private final LambdaEntity lambda;
 
     /**
-     * Creates this exception from given {@link Processor} and {@link Lambda}, and generates a default message string.
+     * Creates this exception from given {@link Processor} and {@link LambdaEntity}, and generates a default message string.
      *
      * @param processor The processor which failed to handle the given lambda
      * @param lambda The lambda which could not be handled
      */
-    public NotProcessableException(final Processor processor, final Lambda lambda) {
+    public NotProcessableException(final Processor processor, final LambdaEntity lambda) {
         super(processor.getClass().getSimpleName() + " failed to handle a lambda");
         this.processor = processor;
         this.lambda = lambda;
     }
 
     /**
-     * Creates this exception from given {@link Processor} and {@link Lambda}, and generates a default message string .
+     * Creates this exception from given {@link Processor} and {@link LambdaEntity}, and generates a default message string .
      * Thereby the given {@code cause} is appended to this exception.
      *
      * @param processor The processor which failed to handle the given lambda
      * @param lambda The lambda which could not be handled
      * @param cause The cause of this exception
      */
-    public NotProcessableException(final Processor processor, final Lambda lambda, final Throwable cause) {
+    public NotProcessableException(final Processor processor, final LambdaEntity lambda, final Throwable cause) {
         super(processor.getClass().getName() + " failed to handle handle a lambda", cause);
         this.processor = processor;
         this.lambda = lambda;
@@ -74,7 +74,7 @@ public final class NotProcessableException extends RuntimeException {
      *
      * @return The lambda which failed to be handled.
      */
-    public Lambda getLambda() {
+    public LambdaEntity getLambda() {
         return lambda;
     }
 }

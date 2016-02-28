@@ -17,6 +17,7 @@ package at.gridtec.lambda4j.generator;
 
 import at.gridtec.lambda4j.generator.cache.LambdaCache;
 import at.gridtec.lambda4j.generator.entities.AnnotationEntity;
+import at.gridtec.lambda4j.generator.entities.LambdaEntity;
 import at.gridtec.lambda4j.generator.processors.Processor;
 import at.gridtec.lambda4j.generator.processors.ProcessorChain;
 import at.gridtec.lambda4j.generator.processors.impl.ArityProcessor;
@@ -64,12 +65,13 @@ public class Generator {
         prepareChain();
 
         // Run chain and create all lambda descriptors
-        final List<Lambda> lambdas = ProcessorChain.getInstance()
+        final List<LambdaEntity> lambdas = ProcessorChain.getInstance()
                 .invoke()
                 .stream()
                 .filter(Objects::nonNull)
                 .filter(lambda -> !lambda.getType().equals(LambdaTypeEnum.COMPARATOR))
-                .sorted(Comparator.comparing(Lambda::getType).thenComparing(Lambda::getPackageName)).map(lambda -> {
+                .sorted(Comparator.comparing(LambdaEntity::getType).thenComparing(LambdaEntity::getPackageName))
+                .map(lambda -> {
                     if (lambda.isFromJDK()) {
                         lambda.setName(lambda.getName() + "2");
                     }
@@ -95,15 +97,14 @@ public class Generator {
         cfg.setDefaultEncoding("UTF-8");
 
         // Sets how errors will appear.
-        // During web page *development* TemplateExceptionHandler.HTML_DEBUG_HANDLER is better.
         cfg.setTemplateExceptionHandler(TemplateExceptionHandler.RETHROW_HANDLER);
 
-        // TODO only for lambda utils; really necessary?
+        // Allows to statically ad methods from LambdaUtils.class to Freemarker
         BeansWrapper wrapper = new BeansWrapperBuilder(Configuration.getVersion()).build();
         TemplateHashModel staticModels = wrapper.getStaticModels();
         TemplateHashModel lambdaUtilsStatics = (TemplateHashModel) staticModels.get(LambdaUtils.class.getName());
 
-        for (final Lambda lambda : LambdaCache.getInstance().getLambdas()) {
+        for (final LambdaEntity lambda : LambdaCache.getInstance().getLambdas()) {
             System.out.println("Processing the following lambda: " + lambda);
 
             // Prepare context for Freemarker

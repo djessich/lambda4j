@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015 Gridtec. All rights reserved.
+ * Copyright (c) 2016 Gridtec. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,7 +15,7 @@
  */
 package at.gridtec.lambda4j.generator.processors.impl;
 
-import at.gridtec.lambda4j.generator.Lambda;
+import at.gridtec.lambda4j.generator.entities.LambdaEntity;
 import at.gridtec.lambda4j.generator.entities.TypeEntity;
 import at.gridtec.lambda4j.generator.processors.Processor;
 import at.gridtec.lambda4j.generator.util.LambdaUtils;
@@ -32,9 +32,10 @@ import java.util.Objects;
  * Represents a {@link Processor} which creates copies of the given lambda and sets the lambdas name. These copies are
  * handed over to next {@code Processor} to do further processing. The result from next step is returned by this step.
  * <p>
- * Requirements by this step are the lambdas type ({@link Lambda#getType()}), arity ({@link Lambda#getArity()}), return
- * type ({@link Lambda#getReturnType()}) and input types ({@link Lambda#getFirstInputType()}, {@link
- * Lambda#getSecondInputType()}, {@link Lambda#getThirdInputType()}).
+ * Requirements by this step are the lambdas type ({@link LambdaEntity#getType()}), arity ({@link
+ * LambdaEntity#getArity()}), return type ({@link LambdaEntity#getReturnType()}) and input types ({@link
+ * LambdaEntity#getFirstInputType()}, {@link LambdaEntity#getSecondInputType()}, {@link
+ * LambdaEntity#getThirdInputType()}).
  */
 public final class NameProcessor extends Processor {
 
@@ -79,7 +80,7 @@ public final class NameProcessor extends Processor {
     private static final String OBJ_IDENTIFIER = "Obj";
 
     @Override
-    protected boolean processable(@Nonnull final Lambda lambda) {
+    protected boolean processable(@Nonnull final LambdaEntity lambda) {
         boolean processable = lambda.getType() != null && lambda.getReturnType() != null;
         if (lambda.getArity() >= 1) {
             processable = processable && lambda.getFirstInputType() != null;
@@ -95,9 +96,9 @@ public final class NameProcessor extends Processor {
 
     @Override
     @Nonnull
-    protected List<Lambda> process(@Nonnull final Lambda lambda) {
-        final List<Lambda> lambdas = new LinkedList<Lambda>();
-        final Lambda copy = LambdaUtils.copy(lambda);
+    protected List<LambdaEntity> process(@Nonnull final LambdaEntity lambda) {
+        final List<LambdaEntity> lambdas = new LinkedList<LambdaEntity>();
+        final LambdaEntity copy = LambdaUtils.copy(lambda);
         StringBuilder nameBuilder = new StringBuilder();
 
         // Lambdas which are throwable will have throwable identifier
@@ -221,9 +222,9 @@ public final class NameProcessor extends Processor {
      * @throws NullPointerException If one of the given arguments is {@code null}
      * @implSpec The implementation requires the input and return types to be primitive, and only if this occasion is
      * met, the identifier will be appended.
-     * @see #notToIdentifier(StringBuilder, Lambda, TypeEntity)
+     * @see #notToIdentifier(StringBuilder, LambdaEntity, TypeEntity)
      */
-    private void toIdentifier(@Nonnull final StringBuilder builder, @Nonnull final Lambda lambda,
+    private void toIdentifier(@Nonnull final StringBuilder builder, @Nonnull final LambdaEntity lambda,
             @Nonnull final TypeEntity lambdaInputType) {
         Objects.requireNonNull(builder);
         Objects.requireNonNull(lambda);
@@ -248,9 +249,9 @@ public final class NameProcessor extends Processor {
      * @throws NullPointerException If one of the given arguments is {@code null}
      * @implSpec The implementation requires the input type to be <b>not</b> primitive and return type to be primitive.
      * Only if this occasion is met, the identifier will be appended.
-     * @see #toIdentifier(StringBuilder, Lambda, TypeEntity)
+     * @see #toIdentifier(StringBuilder, LambdaEntity, TypeEntity)
      */
-    private void notToIdentifier(@Nonnull final StringBuilder builder, @Nonnull final Lambda lambda,
+    private void notToIdentifier(@Nonnull final StringBuilder builder, @Nonnull final LambdaEntity lambda,
             @Nonnull final TypeEntity lambdaInputType) {
         Objects.requireNonNull(builder);
         Objects.requireNonNull(lambda);

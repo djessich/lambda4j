@@ -3,8 +3,6 @@ Wiki
 Examples
 Deployment to Maven Central and Github
 Factory for all lambdas
-Convert to multi module project
-Type Annotations
 New lambda methods need to be invented
 Functional Idioms Methods (Currying, Uncurrying, etc.)
 Boxed Functions

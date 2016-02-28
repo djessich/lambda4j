@@ -15,8 +15,8 @@
  */
 package at.gridtec.lambda4j.generator.processors.impl;
 
-import at.gridtec.lambda4j.generator.Lambda;
 import at.gridtec.lambda4j.generator.LambdaTypeEnum;
+import at.gridtec.lambda4j.generator.entities.LambdaEntity;
 import at.gridtec.lambda4j.generator.entities.TypeEntity;
 import at.gridtec.lambda4j.generator.processors.Processor;
 import at.gridtec.lambda4j.generator.util.LambdaUtils;
@@ -33,8 +33,8 @@ import java.util.Objects;
  * on lambda type) to the lambda. These copies are handed over to next {@code Processor} to do further processing. The
  * result from next step is returned by this step.
  * <p>
- * Requirements by this step are the lambdas type ({@link Lambda#getType()}) and return type ({@link
- * Lambda#getReturnType()}). As this processor relies on lambda throwable flag, this should be called <em>before</em>
+ * Requirements by this step are the lambdas type ({@link LambdaEntity#getType()}) and return type ({@link
+ * LambdaEntity#getReturnType()}). As this processor relies on lambda throwable flag, this should be called <em>before</em>
  * this one is called.
  */
 public final class MethodProcessor extends Processor {
@@ -86,15 +86,15 @@ public final class MethodProcessor extends Processor {
     public static final String THROWS_IDENTIFIER = "Throws";
 
     @Override
-    protected boolean processable(@Nonnull Lambda lambda) {
+    protected boolean processable(@Nonnull LambdaEntity lambda) {
         return lambda.getType() != null && lambda.getReturnType() != null;
     }
 
     @Nonnull
     @Override
-    protected List<Lambda> process(@Nonnull Lambda lambda) {
-        final List<Lambda> lambdas = new LinkedList<Lambda>();
-        final Lambda copy = LambdaUtils.copy(lambda);
+    protected List<LambdaEntity> process(@Nonnull LambdaEntity lambda) {
+        final List<LambdaEntity> lambdas = new LinkedList<LambdaEntity>();
+        final LambdaEntity copy = LambdaUtils.copy(lambda);
         final StringBuilder methodBuilder = new StringBuilder();
 
         // Set lambda method name depending on lambda type
@@ -141,7 +141,7 @@ public final class MethodProcessor extends Processor {
      * @implSpec The implementation required the return type be primitive. Only if this occasion is met, the identifier
      * will be appended.
      */
-    private void asIdentifier(@Nonnull final StringBuilder builder, @Nonnull final Lambda lambda,
+    private void asIdentifier(@Nonnull final StringBuilder builder, @Nonnull final LambdaEntity lambda,
             @Nonnull final TypeEntity lambdaReturnType) {
         Objects.requireNonNull(builder);
         Objects.requireNonNull(lambda);
@@ -162,7 +162,7 @@ public final class MethodProcessor extends Processor {
      * @implSpec The implementation required the lambda to be a throwable lambda. Only if this occasion is met, the
      * identifier will be appended.
      */
-    private void throwsIdentifier(@Nonnull final StringBuilder builder, @Nonnull final Lambda lambda) {
+    private void throwsIdentifier(@Nonnull final StringBuilder builder, @Nonnull final LambdaEntity lambda) {
         Objects.requireNonNull(builder);
         Objects.requireNonNull(lambda);
         if (lambda.isThrowable()) {

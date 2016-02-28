@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015 Gridtec. All rights reserved.
+ * Copyright (c) 2016 Gridtec. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,7 +15,7 @@
  */
 package at.gridtec.lambda4j.generator.processors;
 
-import at.gridtec.lambda4j.generator.Lambda;
+import at.gridtec.lambda4j.generator.entities.LambdaEntity;
 import at.gridtec.lambda4j.generator.exception.NotProcessableException;
 
 import javax.annotation.Nonnull;
@@ -27,10 +27,11 @@ import java.util.stream.Collectors;
 
 /**
  * Represents the base type for all {@link Processor}s available in the {@link Processor} chain. To create a new {@code
- * Processor} this class must be extended and {@link #process(Lambda)} must be implemented as it will always be called
- * from previous {@code Processor}. The next {@code Processor} can be set using {@link #setNextProcessor(Processor)}.
+ * Processor} this class must be extended and {@link #process(LambdaEntity)} must be implemented as it will always be
+ * called from previous {@code Processor}. The next {@code Processor} can be set using {@link
+ * #setNextProcessor(Processor)}.
  */
-// TODO avoid use od PRIMITIVES List; get all primitive classes from a lib
+// TODO avoid use of PRIMITIVES List; get all primitive classes from a lib
 public abstract class Processor {
 
     protected static final List<Class<?>> PRIMITIVES = Arrays.asList(boolean.class, byte.class, char.class,
@@ -65,27 +66,27 @@ public abstract class Processor {
     }
 
     /**
-     * This method must be overridden in implementing classes to check if a {@link Lambda} is able to be handled. If the
-     * {@link Processor} is not able to handle this lambda, an appropriate exception will be thrown.
+     * This method must be overridden in implementing classes to check if a {@link LambdaEntity} is able to be handled.
+     * If the {@link Processor} is not able to handle this lambda, an appropriate exception will be thrown.
      *
      * @param lambda The lambda to be checked
      * @return {@code true} if, and only if, the given lambda is able to be handled
      * @throws NullPointerException If given argument is {@code null}
      */
-    protected abstract boolean processable(@Nonnull final Lambda lambda);
+    protected abstract boolean processable(@Nonnull final LambdaEntity lambda);
 
     /**
-     * This method must be overridden in implementing classes to handle the given {@link Lambda} by the chain. By
-     * calling {@link #next(Lambda)} the next handler will be invoked. The return value represents the result from next
-     * step, if there is one.
+     * This method must be overridden in implementing classes to handle the given {@link LambdaEntity} by the chain. By
+     * calling {@link #next(LambdaEntity)} the next handler will be invoked. The return value represents the result from
+     * next step, if there is one.
      *
      * @param lambda The lambda to be processed
      * @return The result from next {@code Processor}.
      * @throws NullPointerException If given argument is {@code null}
-     * @see #next(Lambda)
+     * @see #next(LambdaEntity)
      */
     @Nonnull
-    protected abstract List<Lambda> process(@Nonnull final Lambda lambda);
+    protected abstract List<LambdaEntity> process(@Nonnull final LambdaEntity lambda);
 
     /**
      * Helper method to call the next {@link Processor} only, if it has been set (not {@code null}). If there is no next
@@ -98,7 +99,7 @@ public abstract class Processor {
      */
     @SuppressWarnings("ArraysAsListWithZeroOrOneArgument")
     @Nonnull
-    protected final List<Lambda> next(@Nonnull final Lambda lambda) {
+    protected final List<LambdaEntity> next(@Nonnull final LambdaEntity lambda) {
         Objects.requireNonNull(lambda);
         if (this.nextProcessor != null) {
             return invoke(lambda);
@@ -116,7 +117,7 @@ public abstract class Processor {
      * @throws NullPointerException If given argument is {@code null}
      */
     @Nonnull
-    private List<Lambda> invoke(@Nonnull final Lambda lambda) {
+    private List<LambdaEntity> invoke(@Nonnull final LambdaEntity lambda) {
         Objects.requireNonNull(lambda);
         if (this.nextProcessor.processable(lambda)) {
             return this.nextProcessor.process(lambda);

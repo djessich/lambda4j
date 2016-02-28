@@ -15,21 +15,25 @@
  */
 package at.gridtec.lambda4j.generator.cache;
 
-import at.gridtec.lambda4j.generator.Lambda;
+import at.gridtec.lambda4j.generator.entities.LambdaEntity;
 
 import java.util.LinkedList;
 import java.util.List;
 
 /**
- * A cache for all generated {@link Lambda}s.
+ * A cache for all generated {@link LambdaEntity}s.
  */
-// TODO Javadoc for this class
-// TODO move to another package
 public final class LambdaCache {
 
+    /**
+     * The only singleton instance for this class.
+     */
     private static LambdaCache instance = null;
 
-    private List<Lambda> lambdas = new LinkedList<>();
+    /**
+     * A list of generated lambda entities.
+     */
+    private List<LambdaEntity> lambdas = new LinkedList<>();
 
     /**
      * Private constructor to prevent instantiation.
@@ -55,20 +59,20 @@ public final class LambdaCache {
     }
 
     /**
-     * Returns a list of all generated {@link Lambda}s.
+     * Returns a list of all generated {@link LambdaEntity}s.
      *
-     * @return A list of all generated {@link Lambda}s.
+     * @return A list of all generated {@link LambdaEntity}s.
      */
-    public List<Lambda> getLambdas() {
+    public List<LambdaEntity> getLambdas() {
         return lambdas;
     }
 
     /**
-     * Sets the generated list of {@link Lambda}s.
+     * Sets the generated list of {@link LambdaEntity}s.
      *
-     * @param lambdas The generated {@code Lambda}s to be set
+     * @param lambdas The generated {@code LambdaEntity}s to be set
      */
-    public void setLambdas(List<Lambda> lambdas) {
+    public void setLambdas(List<LambdaEntity> lambdas) {
         this.lambdas = lambdas;
     }
 

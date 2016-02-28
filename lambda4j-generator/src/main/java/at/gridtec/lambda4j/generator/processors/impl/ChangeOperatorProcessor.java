@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015 Gridtec. All rights reserved.
+ * Copyright (c) 2016 Gridtec. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,8 +15,8 @@
  */
 package at.gridtec.lambda4j.generator.processors.impl;
 
-import at.gridtec.lambda4j.generator.Lambda;
 import at.gridtec.lambda4j.generator.LambdaTypeEnum;
+import at.gridtec.lambda4j.generator.entities.LambdaEntity;
 import at.gridtec.lambda4j.generator.processors.Processor;
 import at.gridtec.lambda4j.generator.util.LambdaUtils;
 
@@ -26,17 +26,17 @@ import java.util.List;
 
 /**
  * Represents a {@link Processor} which creates copies of the given lambda for all lambdas logically representing an
- * operator. For each copy the {@link Lambda#type} is changed accordingly. These copies are handed over to next {@code
+ * operator. For each copy the {@link LambdaEntity#type} is changed accordingly. These copies are handed over to next {@code
  * Processor} to do further processing. The result from next step is returned by this step.
  * <p>
- * Requirements by this step are the lambdas arity ({@link Lambda#getArity()}), return type ({@link
- * Lambda#getReturnType()}) and input types ({@link Lambda#getFirstInputType()}, {@link Lambda#getSecondInputType()},
- * {@link Lambda#getThirdInputType()}).
+ * Requirements by this step are the lambdas arity ({@link LambdaEntity#getArity()}), return type ({@link
+ * LambdaEntity#getReturnType()}) and input types ({@link LambdaEntity#getFirstInputType()}, {@link LambdaEntity#getSecondInputType()},
+ * {@link LambdaEntity#getThirdInputType()}).
  */
 public final class ChangeOperatorProcessor extends Processor {
 
     @Override
-    protected boolean processable(@Nonnull final Lambda lambda) {
+    protected boolean processable(@Nonnull final LambdaEntity lambda) {
         boolean processable = lambda.getReturnType() != null;
         if (lambda.getArity() >= 1) {
             processable = processable && lambda.getFirstInputType() != null;
@@ -52,8 +52,8 @@ public final class ChangeOperatorProcessor extends Processor {
 
     @Override
     @Nonnull
-    protected List<Lambda> process(@Nonnull final Lambda lambda) {
-        final List<Lambda> lambdas = new LinkedList<>();
+    protected List<LambdaEntity> process(@Nonnull final LambdaEntity lambda) {
+        final List<LambdaEntity> lambdas = new LinkedList<>();
 
         // Check if lambda is operator depending on its arity
         boolean isOperator = false;
@@ -78,7 +78,7 @@ public final class ChangeOperatorProcessor extends Processor {
         if (isPrimitiveOperator) {
             lambda.setType(LambdaTypeEnum.OPERATOR);
         } else if (isOperator) {
-            final Lambda copy = LambdaUtils.copy(lambda);
+            final LambdaEntity copy = LambdaUtils.copy(lambda);
             copy.setType(LambdaTypeEnum.OPERATOR);
 
             // If lambda is a generical operator, we need to change its input and return type names

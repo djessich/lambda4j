@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015 Gridtec. All rights reserved.
+ * Copyright (c) 2016 Gridtec. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,7 +15,7 @@
  */
 package at.gridtec.lambda4j.generator.processors.impl;
 
-import at.gridtec.lambda4j.generator.Lambda;
+import at.gridtec.lambda4j.generator.entities.LambdaEntity;
 import at.gridtec.lambda4j.generator.processors.Processor;
 import at.gridtec.lambda4j.generator.util.LambdaUtils;
 
@@ -33,16 +33,16 @@ import java.util.List;
 public final class ThrowableProcessor extends Processor {
 
     @Override
-    protected boolean processable(@Nonnull final Lambda lambda) {
+    protected boolean processable(@Nonnull final LambdaEntity lambda) {
         return true;
     }
 
     @Override
     @Nonnull
-    protected List<Lambda> process(@Nonnull Lambda lambda) {
-        final List<Lambda> lambdas = new LinkedList<>();
-        final Lambda copyNotThrowable = LambdaUtils.copy(lambda);
-        final Lambda copyThrowable = LambdaUtils.copy(lambda);
+    protected List<LambdaEntity> process(@Nonnull LambdaEntity lambda) {
+        final List<LambdaEntity> lambdas = new LinkedList<>();
+        final LambdaEntity copyNotThrowable = LambdaUtils.copy(lambda);
+        final LambdaEntity copyThrowable = LambdaUtils.copy(lambda);
         copyNotThrowable.setThrowable(false);
         copyThrowable.setThrowable(true);
         lambdas.addAll(next(copyNotThrowable));

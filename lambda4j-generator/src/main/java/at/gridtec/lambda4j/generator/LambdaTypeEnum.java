@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015 Gridtec. All rights reserved.
+ * Copyright (c) 2016 Gridtec. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,10 +16,9 @@
 package at.gridtec.lambda4j.generator;
 
 /**
- * Created by Dominik Jessich on 29.11.2015.
+ * An enumeration type which defines all possible lambda types. These are Comparator, Consumer, Function, Operator,
+ * Predicate, Runnable and Supplier types. Each type defined herein, has an id and a simple name.
  */
-// TODO Javadoc
-// TODO Move to correct pacakge
 public enum LambdaTypeEnum {
 
     COMPARATOR(1, "comparator"),
@@ -30,7 +29,14 @@ public enum LambdaTypeEnum {
     RUNNABLE(6, "runnable"),
     SUPPLIER(7, "supplier");
 
+    /**
+     * The id for the enum type.
+     */
     private final int id;
+
+    /**
+     * The enum types simple name.
+     */
     private final String simpleName;
 
     /**

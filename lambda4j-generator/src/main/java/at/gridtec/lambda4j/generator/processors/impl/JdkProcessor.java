@@ -15,7 +15,7 @@
  */
 package at.gridtec.lambda4j.generator.processors.impl;
 
-import at.gridtec.lambda4j.generator.Lambda;
+import at.gridtec.lambda4j.generator.entities.LambdaEntity;
 import at.gridtec.lambda4j.generator.processors.Processor;
 
 import org.apache.commons.lang3.ClassUtils;
@@ -25,7 +25,7 @@ import java.util.List;
 import java.util.function.Function;
 
 /**
- * Represents a {@link Processor} which sets the lambdas JDK flag using {@link Lambda#setFromJDK(boolean)}, which
+ * Represents a {@link Processor} which sets the lambdas JDK flag using {@link LambdaEntity#setFromJDK(boolean)}, which
  * defines if the lambda can also be found in the JDK. The lambda is handed over to next {@code Processor} to do further
  * processing. The result from next step is returned by this step.
  * <p>
@@ -39,13 +39,13 @@ public class JdkProcessor extends Processor {
     private static final String JAVA_UTIL_FUNCTION_PACKAGE = ClassUtils.getPackageName(Function.class);
 
     @Override
-    protected boolean processable(@Nonnull final Lambda lambda) {
+    protected boolean processable(@Nonnull final LambdaEntity lambda) {
         return true;
     }
 
     @Nonnull
     @Override
-    protected List<Lambda> process(@Nonnull final Lambda lambda) {
+    protected List<LambdaEntity> process(@Nonnull final LambdaEntity lambda) {
         lambda.setFromJDK(this.isLambdaFromJdk(lambda));
         return next(lambda);
     }
@@ -56,7 +56,7 @@ public class JdkProcessor extends Processor {
      * @param lambda The lambda to be searched for
      * @return {@code true}, if and only if, lambda has been found in the jdk, {@code false} otherwise
      */
-    private boolean isLambdaFromJdk(final Lambda lambda) {
+    private boolean isLambdaFromJdk(final LambdaEntity lambda) {
         try {
             Class.forName(JAVA_UTIL_FUNCTION_PACKAGE + "." + lambda.getName());
         } catch (ClassNotFoundException ignored) {

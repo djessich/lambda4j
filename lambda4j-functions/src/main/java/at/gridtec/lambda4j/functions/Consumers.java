@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015 Gridtec. All rights reserved.
+ * Copyright (c) 2016 Gridtec. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,43 +13,43 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package at.gridtec.lambda4j;
+package at.gridtec.lambda4j.functions;
 
-import at.gridtec.lambda4j.consumer.BooleanConsumer;
-import at.gridtec.lambda4j.consumer.ByteConsumer;
-import at.gridtec.lambda4j.consumer.CharConsumer;
-import at.gridtec.lambda4j.consumer.FloatConsumer;
-import at.gridtec.lambda4j.consumer.ShortConsumer;
-import at.gridtec.lambda4j.consumer.bi.BiBooleanConsumer;
-import at.gridtec.lambda4j.consumer.bi.BiByteConsumer;
-import at.gridtec.lambda4j.consumer.bi.BiCharConsumer;
-import at.gridtec.lambda4j.consumer.bi.BiDoubleConsumer;
-import at.gridtec.lambda4j.consumer.bi.BiFloatConsumer;
-import at.gridtec.lambda4j.consumer.bi.BiIntConsumer;
-import at.gridtec.lambda4j.consumer.bi.BiLongConsumer;
-import at.gridtec.lambda4j.consumer.bi.BiShortConsumer;
-import at.gridtec.lambda4j.consumer.bi.obj.ObjBooleanConsumer;
-import at.gridtec.lambda4j.consumer.bi.obj.ObjByteConsumer;
-import at.gridtec.lambda4j.consumer.bi.obj.ObjCharConsumer;
-import at.gridtec.lambda4j.consumer.bi.obj.ObjFloatConsumer;
-import at.gridtec.lambda4j.consumer.bi.obj.ObjShortConsumer;
-import at.gridtec.lambda4j.consumer.tri.TriBooleanConsumer;
-import at.gridtec.lambda4j.consumer.tri.TriByteConsumer;
-import at.gridtec.lambda4j.consumer.tri.TriCharConsumer;
-import at.gridtec.lambda4j.consumer.tri.TriConsumer;
-import at.gridtec.lambda4j.consumer.tri.TriDoubleConsumer;
-import at.gridtec.lambda4j.consumer.tri.TriFloatConsumer;
-import at.gridtec.lambda4j.consumer.tri.TriIntConsumer;
-import at.gridtec.lambda4j.consumer.tri.TriLongConsumer;
-import at.gridtec.lambda4j.consumer.tri.TriShortConsumer;
-import at.gridtec.lambda4j.consumer.tri.obj.BiObjBooleanConsumer;
-import at.gridtec.lambda4j.consumer.tri.obj.BiObjByteConsumer;
-import at.gridtec.lambda4j.consumer.tri.obj.BiObjCharConsumer;
-import at.gridtec.lambda4j.consumer.tri.obj.BiObjDoubleConsumer;
-import at.gridtec.lambda4j.consumer.tri.obj.BiObjFloatConsumer;
-import at.gridtec.lambda4j.consumer.tri.obj.BiObjIntConsumer;
-import at.gridtec.lambda4j.consumer.tri.obj.BiObjLongConsumer;
-import at.gridtec.lambda4j.consumer.tri.obj.BiObjShortConsumer;
+import at.gridtec.lambda4j.functions.consumer.BooleanConsumer;
+import at.gridtec.lambda4j.functions.consumer.ByteConsumer;
+import at.gridtec.lambda4j.functions.consumer.CharConsumer;
+import at.gridtec.lambda4j.functions.consumer.FloatConsumer;
+import at.gridtec.lambda4j.functions.consumer.ShortConsumer;
+import at.gridtec.lambda4j.functions.consumer.bi.BiBooleanConsumer;
+import at.gridtec.lambda4j.functions.consumer.bi.BiByteConsumer;
+import at.gridtec.lambda4j.functions.consumer.bi.BiCharConsumer;
+import at.gridtec.lambda4j.functions.consumer.bi.BiDoubleConsumer;
+import at.gridtec.lambda4j.functions.consumer.bi.BiFloatConsumer;
+import at.gridtec.lambda4j.functions.consumer.bi.BiIntConsumer;
+import at.gridtec.lambda4j.functions.consumer.bi.BiLongConsumer;
+import at.gridtec.lambda4j.functions.consumer.bi.BiShortConsumer;
+import at.gridtec.lambda4j.functions.consumer.bi.obj.ObjBooleanConsumer;
+import at.gridtec.lambda4j.functions.consumer.bi.obj.ObjByteConsumer;
+import at.gridtec.lambda4j.functions.consumer.bi.obj.ObjCharConsumer;
+import at.gridtec.lambda4j.functions.consumer.bi.obj.ObjFloatConsumer;
+import at.gridtec.lambda4j.functions.consumer.bi.obj.ObjShortConsumer;
+import at.gridtec.lambda4j.functions.consumer.tri.TriBooleanConsumer;
+import at.gridtec.lambda4j.functions.consumer.tri.TriByteConsumer;
+import at.gridtec.lambda4j.functions.consumer.tri.TriCharConsumer;
+import at.gridtec.lambda4j.functions.consumer.tri.TriConsumer;
+import at.gridtec.lambda4j.functions.consumer.tri.TriDoubleConsumer;
+import at.gridtec.lambda4j.functions.consumer.tri.TriFloatConsumer;
+import at.gridtec.lambda4j.functions.consumer.tri.TriIntConsumer;
+import at.gridtec.lambda4j.functions.consumer.tri.TriLongConsumer;
+import at.gridtec.lambda4j.functions.consumer.tri.TriShortConsumer;
+import at.gridtec.lambda4j.functions.consumer.tri.obj.BiObjBooleanConsumer;
+import at.gridtec.lambda4j.functions.consumer.tri.obj.BiObjByteConsumer;
+import at.gridtec.lambda4j.functions.consumer.tri.obj.BiObjCharConsumer;
+import at.gridtec.lambda4j.functions.consumer.tri.obj.BiObjDoubleConsumer;
+import at.gridtec.lambda4j.functions.consumer.tri.obj.BiObjFloatConsumer;
+import at.gridtec.lambda4j.functions.consumer.tri.obj.BiObjIntConsumer;
+import at.gridtec.lambda4j.functions.consumer.tri.obj.BiObjLongConsumer;
+import at.gridtec.lambda4j.functions.consumer.tri.obj.BiObjShortConsumer;
 
 import javax.annotation.Nonnull;
 import java.util.Objects;

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015 Gridtec. All rights reserved.
+ * Copyright (c) 2016 Gridtec. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,7 +15,7 @@
  */
 package at.gridtec.lambda4j.generator.processors.impl;
 
-import at.gridtec.lambda4j.generator.Lambda;
+import at.gridtec.lambda4j.generator.entities.LambdaEntity;
 import at.gridtec.lambda4j.generator.processors.Processor;
 import at.gridtec.lambda4j.generator.util.LambdaUtils;
 
@@ -28,7 +28,7 @@ import java.util.List;
  * lambda. These copies are handed over to next {@code Processor} to do further processing. The result from next step is
  * returned by this step.
  * <p>
- * Requirements by this step is the lambdas type ({@link Lambda#getType()}) only.
+ * Requirements by this step is the lambdas type ({@link LambdaEntity#getType()}) only.
  */
 public final class ArityProcessor extends Processor {
 
@@ -38,32 +38,32 @@ public final class ArityProcessor extends Processor {
     private static final int ARITY_MAX = 3;
 
     @Override
-    protected boolean processable(@Nonnull final Lambda lambda) {
+    protected boolean processable(@Nonnull final LambdaEntity lambda) {
         return lambda.getType() != null;
     }
 
     @Override
     @Nonnull
-    protected List<Lambda> process(@Nonnull final Lambda lambda) {
-        final List<Lambda> lambdas = new LinkedList<>();
+    protected List<LambdaEntity> process(@Nonnull final LambdaEntity lambda) {
+        final List<LambdaEntity> lambdas = new LinkedList<>();
 
         // Special Rule: Lambda is of type Comparator it must have arity 2
         if (LambdaUtils.isOfTypeComparator(lambda)) {
-            final Lambda copy = LambdaUtils.copy(lambda);
+            final LambdaEntity copy = LambdaUtils.copy(lambda);
             copy.setArity(2);
             lambdas.addAll(next(copy));
         }
 
         // Special Rule: Lambda is of type Runnable it must have arity 0
         else if (LambdaUtils.isOfTypeRunnable(lambda)) {
-            final Lambda copy = LambdaUtils.copy(lambda);
+            final LambdaEntity copy = LambdaUtils.copy(lambda);
             copy.setArity(0);
             lambdas.addAll(next(copy));
         }
 
         // Special Rule: Lambda is of type Supplier it must have arity 0
         else if (LambdaUtils.isOfTypeSupplier(lambda)) {
-            final Lambda copy = LambdaUtils.copy(lambda);
+            final LambdaEntity copy = LambdaUtils.copy(lambda);
             copy.setArity(0);
             lambdas.addAll(next(copy));
         }
@@ -71,7 +71,7 @@ public final class ArityProcessor extends Processor {
         // All other lambdas can have each arity
         else {
             for (int arity = 1; arity <= ARITY_MAX; arity++) {
-                final Lambda copy = LambdaUtils.copy(lambda);
+                final LambdaEntity copy = LambdaUtils.copy(lambda);
                 copy.setArity(arity);
                 lambdas.addAll(next(copy));
             }

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015 Gridtec. All rights reserved.
+ * Copyright (c) 2016 Gridtec. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,11 +15,11 @@
  */
 package at.gridtec.lambda4j.generator.exception;
 
-import at.gridtec.lambda4j.generator.Lambda;
+import at.gridtec.lambda4j.generator.entities.LambdaEntity;
 import at.gridtec.lambda4j.generator.processors.Processor;
 
 /**
- * Implements a {@link RuntimeException} which indicated, that the {@link Processor#next(Lambda)} had not been called in
+ * Implements a {@link RuntimeException} which indicated, that the {@link Processor#next(LambdaEntity)} had not been called in
  * a {@code Processor} to invoke next {@code Processor}.
  *
  * @deprecated As next method is not required to be called in each {@code Processor} and returning an instance directly

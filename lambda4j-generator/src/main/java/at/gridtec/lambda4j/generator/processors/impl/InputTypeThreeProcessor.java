@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015 Gridtec. All rights reserved.
+ * Copyright (c) 2016 Gridtec. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,7 +15,7 @@
  */
 package at.gridtec.lambda4j.generator.processors.impl;
 
-import at.gridtec.lambda4j.generator.Lambda;
+import at.gridtec.lambda4j.generator.entities.LambdaEntity;
 import at.gridtec.lambda4j.generator.entities.TypeEntity;
 import at.gridtec.lambda4j.generator.processors.Processor;
 import at.gridtec.lambda4j.generator.util.LambdaUtils;
@@ -29,13 +29,13 @@ import java.util.List;
  * the {@code second} argument to the lambda. These copies are handed over to next {@code Processor} to do further
  * processing. The result from next step is returned by this step.
  * <p>
- * Requirements by this step are the lambdas type ({@link Lambda#getType()}), arity ({@link Lambda#getArity()}) and
- * second input type {@link Lambda#getSecondInputType()}.
+ * Requirements by this step are the lambdas type ({@link LambdaEntity#getType()}), arity ({@link LambdaEntity#getArity()}) and
+ * second input type {@link LambdaEntity#getSecondInputType()}.
  */
 public final class InputTypeThreeProcessor extends Processor {
 
     @Override
-    protected boolean processable(@Nonnull final Lambda lambda) {
+    protected boolean processable(@Nonnull final LambdaEntity lambda) {
         boolean processable = lambda.getType() != null;
         if (lambda.getArity() >= 2) {
             processable = processable && lambda.getSecondInputType() != null;
@@ -45,27 +45,27 @@ public final class InputTypeThreeProcessor extends Processor {
 
     @Override
     @Nonnull
-    protected List<Lambda> process(@Nonnull final Lambda lambda) {
-        final List<Lambda> lambdas = new LinkedList<>();
+    protected List<LambdaEntity> process(@Nonnull final LambdaEntity lambda) {
+        final List<LambdaEntity> lambdas = new LinkedList<>();
 
         // Check if it has arity 3; otherwise end call stack
         if (lambda.getArity() >= 3) {
 
             // Create new list to generate variants for the given lambda
-            final List<Lambda> genLambdas = new LinkedList<>();
+            final List<LambdaEntity> genLambdas = new LinkedList<>();
 
             // Lambda has generical arg 2 so apply further generical and primitive input for arg 3
             if (!PRIMITIVES.contains(lambda.getSecondInputType().getTypeClass())) {
 
                 // Apply generical input for arg 3
-                final Lambda generical = LambdaUtils.copy(lambda);
+                final LambdaEntity generical = LambdaUtils.copy(lambda);
                 TypeEntity type = new TypeEntity(Object.class, "V", "v", 3);
                 generical.setThirdInputType(type);
                 genLambdas.add(generical);
 
                 // Apply primitive input for arg 3
                 for (final Class<?> typeClass : PRIMITIVES) {
-                    final Lambda primitive = LambdaUtils.copy(lambda);
+                    final LambdaEntity primitive = LambdaUtils.copy(lambda);
                     type = new TypeEntity(typeClass, typeClass.getSimpleName(), "value", 1);
                     primitive.setThirdInputType(type);
                     genLambdas.add(primitive);
@@ -74,7 +74,7 @@ public final class InputTypeThreeProcessor extends Processor {
 
             // Lambda has primitive arg 2 so apply same primitive type to arg 3
             else {
-                final Lambda primitive = LambdaUtils.copy(lambda);
+                final LambdaEntity primitive = LambdaUtils.copy(lambda);
                 TypeEntity entity = primitive.getSecondInputType();
                 if (!primitive.getFirstInputType().isPrimitive()) {
                     primitive.setThirdInputType(
@@ -87,11 +87,11 @@ public final class InputTypeThreeProcessor extends Processor {
             }
 
             // For each generated given lambda variant
-            for (Lambda genLambda : genLambdas) {
+            for (LambdaEntity genLambda : genLambdas) {
                 lambdas.addAll(next(genLambda));
             }
         } else {
-            final Lambda copy = LambdaUtils.copy(lambda);
+            final LambdaEntity copy = LambdaUtils.copy(lambda);
             lambdas.addAll(next(copy));
         }
 

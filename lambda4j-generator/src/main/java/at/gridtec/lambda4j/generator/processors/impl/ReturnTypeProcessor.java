@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015 Gridtec. All rights reserved.
+ * Copyright (c) 2016 Gridtec. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,7 +15,7 @@
  */
 package at.gridtec.lambda4j.generator.processors.impl;
 
-import at.gridtec.lambda4j.generator.Lambda;
+import at.gridtec.lambda4j.generator.entities.LambdaEntity;
 import at.gridtec.lambda4j.generator.entities.TypeEntity;
 import at.gridtec.lambda4j.generator.processors.Processor;
 import at.gridtec.lambda4j.generator.util.LambdaUtils;
@@ -30,23 +30,23 @@ import java.util.stream.Collectors;
  * the lambda. These copies are handed over to next {@code Processor} to do further processing. The result from next
  * step is returned by this step.
  * <p>
- * Requirements by this step is the lambdas type ({@link Lambda#getType()}) only.
+ * Requirements by this step is the lambdas type ({@link LambdaEntity#getType()}) only.
  */
 public final class ReturnTypeProcessor extends Processor {
 
     @Override
-    protected boolean processable(@Nonnull final Lambda lambda) {
+    protected boolean processable(@Nonnull final LambdaEntity lambda) {
         return lambda.getType() != null;
     }
 
     @Override
     @Nonnull
-    protected List<Lambda> process(@Nonnull final Lambda lambda) {
-        final List<Lambda> lambdas = new LinkedList<>();
+    protected List<LambdaEntity> process(@Nonnull final LambdaEntity lambda) {
+        final List<LambdaEntity> lambdas = new LinkedList<>();
 
         // Special Rule: Lambda is a Comparator it must return int
         if (LambdaUtils.isOfTypeComparator(lambda)) {
-            final Lambda copy = LambdaUtils.copy(lambda);
+            final LambdaEntity copy = LambdaUtils.copy(lambda);
             TypeEntity type = new TypeEntity(int.class, int.class.getSimpleName(), "ret");
             copy.setReturnType(type);
             lambdas.addAll(next(copy));
@@ -54,7 +54,7 @@ public final class ReturnTypeProcessor extends Processor {
 
         // Special Rule: Lambda is a Consumer it must return nothing (void)
         else if (LambdaUtils.isOfTypeConsumer(lambda)) {
-            final Lambda copy = LambdaUtils.copy(lambda);
+            final LambdaEntity copy = LambdaUtils.copy(lambda);
             TypeEntity type = new TypeEntity(void.class, void.class.getSimpleName(), "ret");
             copy.setReturnType(type);
             lambdas.addAll(next(copy));
@@ -62,7 +62,7 @@ public final class ReturnTypeProcessor extends Processor {
 
         // Special Rule: Lambda is a Predicate it must return boolean
         else if (LambdaUtils.isOfTypePredicate(lambda)) {
-            final Lambda copy = LambdaUtils.copy(lambda);
+            final LambdaEntity copy = LambdaUtils.copy(lambda);
             TypeEntity type = new TypeEntity(boolean.class, boolean.class.getSimpleName(), "ret");
             copy.setReturnType(type);
             lambdas.addAll(next(copy));
@@ -70,7 +70,7 @@ public final class ReturnTypeProcessor extends Processor {
 
         // Special Rule: Lambda is a Runnable it must return nothing (void) and does not allow input -> end call stack
         else if (LambdaUtils.isOfTypeRunnable(lambda)) {
-            final Lambda copy = LambdaUtils.copy(lambda);
+            final LambdaEntity copy = LambdaUtils.copy(lambda);
             TypeEntity type = new TypeEntity(void.class, void.class.getSimpleName(), "ret");
             copy.setReturnType(type);
             lambdas.addAll(next(copy));
@@ -78,7 +78,6 @@ public final class ReturnTypeProcessor extends Processor {
 
         // All other types will return normally, so evaluate them
         else {
-            // TODO There is no prossibility to create boolean return for conversion functions
             // Loop over left primitives without boolean (we do not like the other lambda types to return boolean,
             // as this is only allowed for predicates)
             List<Class<?>> primitivesWithoutBoolean = PRIMITIVES;
@@ -88,14 +87,14 @@ public final class ReturnTypeProcessor extends Processor {
                         .collect(Collectors.toList());
             }
             for (final Class<?> typeClass : primitivesWithoutBoolean) {
-                final Lambda primitive = LambdaUtils.copy(lambda);
+                final LambdaEntity primitive = LambdaUtils.copy(lambda);
                 TypeEntity type = new TypeEntity(typeClass, typeClass.getSimpleName(), "ret");
                 primitive.setReturnType(type);
                 lambdas.addAll(next(primitive));
             }
 
             // Lambda returns generic; Special Rule: rename generic if lambda type is Supplier or a Operator
-            final Lambda generical = LambdaUtils.copy(lambda);
+            final LambdaEntity generical = LambdaUtils.copy(lambda);
             if (LambdaUtils.isOfTypeSupplier(lambda) && LambdaUtils.isOfTypeOperator(lambda)) {
                 TypeEntity type = new TypeEntity(Object.class, "T", "ret");
                 generical.setReturnType(type);

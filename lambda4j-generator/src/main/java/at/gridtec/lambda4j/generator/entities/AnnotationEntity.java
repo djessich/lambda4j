@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015 Gridtec. All rights reserved.
+ * Copyright (c) 2016 Gridtec. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,7 +20,6 @@ import java.io.Serializable;
 /**
  * The annotation entity defining all annotations to be used in Velocity templates.
  */
-// TODO Javadoc
 public class AnnotationEntity implements Serializable {
 
     /**
@@ -38,14 +37,29 @@ public class AnnotationEntity implements Serializable {
      */
     private static final String nonnegative = "@Nonnegative";
 
+    /**
+     * Returns the {@link javax.annotation.Nonnull} annotation for use in templates.
+     *
+     * @return The {@link javax.annotation.Nonnull} annotation for use in templates.
+     */
     public String getNonnull() {
         return nonnull;
     }
 
+    /**
+     * Returns the {@link javax.annotation.Nullable} annotation for use in templates.
+     *
+     * @return The {@link javax.annotation.Nullable} annotation for use in templates.
+     */
     public String getNullable() {
         return nullable;
     }
 
+    /**
+     * Returns the {@link javax.annotation.Nonnegative} annotation for use in templates.
+     *
+     * @return The {@link javax.annotation.Nonnegative} annotation for use in templates.
+     */
     public String getNonnegative() {
         return nonnegative;
     }
