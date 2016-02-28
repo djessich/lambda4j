@@ -59,7 +59,7 @@
     <modules>
         <module>lambda4j-parent</module>
         <module>lambda4j-core</module>
-        <module>lambda4j-functions</module>
         <module>lambda4j-generator</module>
+        <module>lambda4j-functions</module>
     </modules>
 </project>

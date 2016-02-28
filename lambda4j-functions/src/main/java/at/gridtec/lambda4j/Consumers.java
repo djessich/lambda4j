@@ -15,41 +15,41 @@
  */
 package at.gridtec.lambda4j;
 
-import at.gridtec.lambda4j.consumer.TriConsumer;
-import at.gridtec.lambda4j.consumer.primitives.BooleanConsumer;
-import at.gridtec.lambda4j.consumer.primitives.ByteConsumer;
-import at.gridtec.lambda4j.consumer.primitives.CharConsumer;
-import at.gridtec.lambda4j.consumer.primitives.FloatConsumer;
-import at.gridtec.lambda4j.consumer.primitives.ShortConsumer;
-import at.gridtec.lambda4j.consumer.primitives.bi.BooleanBiConsumer;
-import at.gridtec.lambda4j.consumer.primitives.bi.ByteBiConsumer;
-import at.gridtec.lambda4j.consumer.primitives.bi.CharBiConsumer;
-import at.gridtec.lambda4j.consumer.primitives.bi.DoubleBiConsumer;
-import at.gridtec.lambda4j.consumer.primitives.bi.FloatBiConsumer;
-import at.gridtec.lambda4j.consumer.primitives.bi.IntBiConsumer;
-import at.gridtec.lambda4j.consumer.primitives.bi.LongBiConsumer;
-import at.gridtec.lambda4j.consumer.primitives.bi.ShortBiConsumer;
-import at.gridtec.lambda4j.consumer.primitives.obj.BiObjBooleanConsumer;
-import at.gridtec.lambda4j.consumer.primitives.obj.BiObjByteConsumer;
-import at.gridtec.lambda4j.consumer.primitives.obj.BiObjCharConsumer;
-import at.gridtec.lambda4j.consumer.primitives.obj.BiObjDoubleConsumer;
-import at.gridtec.lambda4j.consumer.primitives.obj.BiObjFloatConsumer;
-import at.gridtec.lambda4j.consumer.primitives.obj.BiObjIntConsumer;
-import at.gridtec.lambda4j.consumer.primitives.obj.BiObjLongConsumer;
-import at.gridtec.lambda4j.consumer.primitives.obj.BiObjShortConsumer;
-import at.gridtec.lambda4j.consumer.primitives.obj.ObjBooleanConsumer;
-import at.gridtec.lambda4j.consumer.primitives.obj.ObjByteConsumer;
-import at.gridtec.lambda4j.consumer.primitives.obj.ObjCharConsumer;
-import at.gridtec.lambda4j.consumer.primitives.obj.ObjFloatConsumer;
-import at.gridtec.lambda4j.consumer.primitives.obj.ObjShortConsumer;
-import at.gridtec.lambda4j.consumer.primitives.tri.BooleanTriConsumer;
-import at.gridtec.lambda4j.consumer.primitives.tri.ByteTriConsumer;
-import at.gridtec.lambda4j.consumer.primitives.tri.CharTriConsumer;
-import at.gridtec.lambda4j.consumer.primitives.tri.DoubleTriConsumer;
-import at.gridtec.lambda4j.consumer.primitives.tri.FloatTriConsumer;
-import at.gridtec.lambda4j.consumer.primitives.tri.IntTriConsumer;
-import at.gridtec.lambda4j.consumer.primitives.tri.LongTriConsumer;
-import at.gridtec.lambda4j.consumer.primitives.tri.ShortTriConsumer;
+import at.gridtec.lambda4j.consumer.BooleanConsumer;
+import at.gridtec.lambda4j.consumer.ByteConsumer;
+import at.gridtec.lambda4j.consumer.CharConsumer;
+import at.gridtec.lambda4j.consumer.FloatConsumer;
+import at.gridtec.lambda4j.consumer.ShortConsumer;
+import at.gridtec.lambda4j.consumer.bi.BiBooleanConsumer;
+import at.gridtec.lambda4j.consumer.bi.BiByteConsumer;
+import at.gridtec.lambda4j.consumer.bi.BiCharConsumer;
+import at.gridtec.lambda4j.consumer.bi.BiDoubleConsumer;
+import at.gridtec.lambda4j.consumer.bi.BiFloatConsumer;
+import at.gridtec.lambda4j.consumer.bi.BiIntConsumer;
+import at.gridtec.lambda4j.consumer.bi.BiLongConsumer;
+import at.gridtec.lambda4j.consumer.bi.BiShortConsumer;
+import at.gridtec.lambda4j.consumer.bi.obj.ObjBooleanConsumer;
+import at.gridtec.lambda4j.consumer.bi.obj.ObjByteConsumer;
+import at.gridtec.lambda4j.consumer.bi.obj.ObjCharConsumer;
+import at.gridtec.lambda4j.consumer.bi.obj.ObjFloatConsumer;
+import at.gridtec.lambda4j.consumer.bi.obj.ObjShortConsumer;
+import at.gridtec.lambda4j.consumer.tri.TriBooleanConsumer;
+import at.gridtec.lambda4j.consumer.tri.TriByteConsumer;
+import at.gridtec.lambda4j.consumer.tri.TriCharConsumer;
+import at.gridtec.lambda4j.consumer.tri.TriConsumer;
+import at.gridtec.lambda4j.consumer.tri.TriDoubleConsumer;
+import at.gridtec.lambda4j.consumer.tri.TriFloatConsumer;
+import at.gridtec.lambda4j.consumer.tri.TriIntConsumer;
+import at.gridtec.lambda4j.consumer.tri.TriLongConsumer;
+import at.gridtec.lambda4j.consumer.tri.TriShortConsumer;
+import at.gridtec.lambda4j.consumer.tri.obj.BiObjBooleanConsumer;
+import at.gridtec.lambda4j.consumer.tri.obj.BiObjByteConsumer;
+import at.gridtec.lambda4j.consumer.tri.obj.BiObjCharConsumer;
+import at.gridtec.lambda4j.consumer.tri.obj.BiObjDoubleConsumer;
+import at.gridtec.lambda4j.consumer.tri.obj.BiObjFloatConsumer;
+import at.gridtec.lambda4j.consumer.tri.obj.BiObjIntConsumer;
+import at.gridtec.lambda4j.consumer.tri.obj.BiObjLongConsumer;
+import at.gridtec.lambda4j.consumer.tri.obj.BiObjShortConsumer;
 
 import javax.annotation.Nonnull;
 import java.util.Objects;
@@ -217,7 +217,7 @@ public final class Consumers {
     }
 
     /**
-     * Calls the given {@link BooleanBiConsumer} with the given arguments and returns its result.
+     * Calls the given {@link BiBooleanConsumer} with the given arguments and returns its result.
      *
      * @param consumer The consumer to be called
      * @param value1 The first argument to the operation to be consumed
@@ -226,12 +226,12 @@ public final class Consumers {
      * @apiNote This function mainly exists as a convenience helper. Each {@link FunctionalInterface} of this library
      * provides an identical public static {@code call()} method to this one, depending on its type.
      */
-    public static void call(@Nonnull final BooleanBiConsumer consumer, boolean value1, boolean value2) {
-        BooleanBiConsumer.call(consumer, value1, value2);
+    public static void call(@Nonnull final BiBooleanConsumer consumer, boolean value1, boolean value2) {
+        BiBooleanConsumer.call(consumer, value1, value2);
     }
 
     /**
-     * Calls the given {@link ByteBiConsumer} with the given arguments and returns its result.
+     * Calls the given {@link BiByteConsumer} with the given arguments and returns its result.
      *
      * @param consumer The consumer to be called
      * @param value1 The first argument to the operation to be consumed
@@ -240,12 +240,12 @@ public final class Consumers {
      * @apiNote This function mainly exists as a convenience helper. Each {@link FunctionalInterface} of this library
      * provides an identical public static {@code call()} method to this one, depending on its type.
      */
-    public static void call(@Nonnull final ByteBiConsumer consumer, byte value1, byte value2) {
-        ByteBiConsumer.call(consumer, value1, value2);
+    public static void call(@Nonnull final BiByteConsumer consumer, byte value1, byte value2) {
+        BiByteConsumer.call(consumer, value1, value2);
     }
 
     /**
-     * Calls the given {@link CharBiConsumer} with the given arguments and returns its result.
+     * Calls the given {@link BiCharConsumer} with the given arguments and returns its result.
      *
      * @param consumer The consumer to be called
      * @param value1 The first argument to the operation to be consumed
@@ -254,12 +254,12 @@ public final class Consumers {
      * @apiNote This function mainly exists as a convenience helper. Each {@link FunctionalInterface} of this library
      * provides an identical public static {@code call()} method to this one, depending on its type.
      */
-    public static void call(@Nonnull final CharBiConsumer consumer, char value1, char value2) {
-        CharBiConsumer.call(consumer, value1, value2);
+    public static void call(@Nonnull final BiCharConsumer consumer, char value1, char value2) {
+        BiCharConsumer.call(consumer, value1, value2);
     }
 
     /**
-     * Calls the given {@link DoubleBiConsumer} with the given arguments and returns its result.
+     * Calls the given {@link BiDoubleConsumer} with the given arguments and returns its result.
      *
      * @param consumer The consumer to be called
      * @param value1 The first argument to the operation to be consumed
@@ -268,12 +268,12 @@ public final class Consumers {
      * @apiNote This function mainly exists as a convenience helper. Each {@link FunctionalInterface} of this library
      * provides an identical public static {@code call()} method to this one, depending on its type.
      */
-    public static void call(@Nonnull final DoubleBiConsumer consumer, double value1, double value2) {
-        DoubleBiConsumer.call(consumer, value1, value2);
+    public static void call(@Nonnull final BiDoubleConsumer consumer, double value1, double value2) {
+        BiDoubleConsumer.call(consumer, value1, value2);
     }
 
     /**
-     * Calls the given {@link FloatBiConsumer} with the given arguments and returns its result.
+     * Calls the given {@link BiFloatConsumer} with the given arguments and returns its result.
      *
      * @param consumer The consumer to be called
      * @param value1 The first argument to the operation to be consumed
@@ -282,12 +282,12 @@ public final class Consumers {
      * @apiNote This function mainly exists as a convenience helper. Each {@link FunctionalInterface} of this library
      * provides an identical public static {@code call()} method to this one, depending on its type.
      */
-    public static void call(@Nonnull final FloatBiConsumer consumer, float value1, float value2) {
-        FloatBiConsumer.call(consumer, value1, value2);
+    public static void call(@Nonnull final BiFloatConsumer consumer, float value1, float value2) {
+        BiFloatConsumer.call(consumer, value1, value2);
     }
 
     /**
-     * Calls the given {@link IntBiConsumer} with the given arguments and returns its result.
+     * Calls the given {@link BiIntConsumer} with the given arguments and returns its result.
      *
      * @param consumer The consumer to be called
      * @param value1 The first argument to the operation to be consumed
@@ -296,12 +296,12 @@ public final class Consumers {
      * @apiNote This function mainly exists as a convenience helper. Each {@link FunctionalInterface} of this library
      * provides an identical public static {@code call()} method to this one, depending on its type.
      */
-    public static void call(@Nonnull final IntBiConsumer consumer, int value1, int value2) {
-        IntBiConsumer.call(consumer, value1, value2);
+    public static void call(@Nonnull final BiIntConsumer consumer, int value1, int value2) {
+        BiIntConsumer.call(consumer, value1, value2);
     }
 
     /**
-     * Calls the given {@link LongBiConsumer} with the given arguments and returns its result.
+     * Calls the given {@link BiLongConsumer} with the given arguments and returns its result.
      *
      * @param consumer The consumer to be called
      * @param value1 The first argument to the operation to be consumed
@@ -310,12 +310,12 @@ public final class Consumers {
      * @apiNote This function mainly exists as a convenience helper. Each {@link FunctionalInterface} of this library
      * provides an identical public static {@code call()} method to this one, depending on its type.
      */
-    public static void call(@Nonnull final LongBiConsumer consumer, long value1, long value2) {
-        LongBiConsumer.call(consumer, value1, value2);
+    public static void call(@Nonnull final BiLongConsumer consumer, long value1, long value2) {
+        BiLongConsumer.call(consumer, value1, value2);
     }
 
     /**
-     * Calls the given {@link ShortBiConsumer} with the given arguments and returns its result.
+     * Calls the given {@link BiShortConsumer} with the given arguments and returns its result.
      *
      * @param consumer The consumer to be called
      * @param value1 The first argument to the operation to be consumed
@@ -324,12 +324,12 @@ public final class Consumers {
      * @apiNote This function mainly exists as a convenience helper. Each {@link FunctionalInterface} of this library
      * provides an identical public static {@code call()} method to this one, depending on its type.
      */
-    public static void call(@Nonnull final ShortBiConsumer consumer, short value1, short value2) {
-        ShortBiConsumer.call(consumer, value1, value2);
+    public static void call(@Nonnull final BiShortConsumer consumer, short value1, short value2) {
+        BiShortConsumer.call(consumer, value1, value2);
     }
 
     /**
-     * Calls the given {@link BooleanTriConsumer} with the given arguments and returns its result.
+     * Calls the given {@link TriBooleanConsumer} with the given arguments and returns its result.
      *
      * @param consumer The consumer to be called
      * @param value1 The first argument to the operation to be consumed
@@ -339,13 +339,13 @@ public final class Consumers {
      * @apiNote This function mainly exists as a convenience helper. Each {@link FunctionalInterface} of this library
      * provides an identical public static {@code call()} method to this one, depending on its type.
      */
-    public static void call(@Nonnull final BooleanTriConsumer consumer, boolean value1, boolean value2,
+    public static void call(@Nonnull final TriBooleanConsumer consumer, boolean value1, boolean value2,
             boolean value3) {
-        BooleanTriConsumer.call(consumer, value1, value2, value3);
+        TriBooleanConsumer.call(consumer, value1, value2, value3);
     }
 
     /**
-     * Calls the given {@link ByteTriConsumer} with the given arguments and returns its result.
+     * Calls the given {@link TriByteConsumer} with the given arguments and returns its result.
      *
      * @param consumer The consumer to be called
      * @param value1 The first argument to the operation to be consumed
@@ -355,12 +355,12 @@ public final class Consumers {
      * @apiNote This function mainly exists as a convenience helper. Each {@link FunctionalInterface} of this library
      * provides an identical public static {@code call()} method to this one, depending on its type.
      */
-    public static void call(@Nonnull final ByteTriConsumer consumer, byte value1, byte value2, byte value3) {
-        ByteTriConsumer.call(consumer, value1, value2, value3);
+    public static void call(@Nonnull final TriByteConsumer consumer, byte value1, byte value2, byte value3) {
+        TriByteConsumer.call(consumer, value1, value2, value3);
     }
 
     /**
-     * Calls the given {@link CharTriConsumer} with the given arguments and returns its result.
+     * Calls the given {@link TriCharConsumer} with the given arguments and returns its result.
      *
      * @param consumer The consumer to be called
      * @param value1 The first argument to the operation to be consumed
@@ -370,12 +370,12 @@ public final class Consumers {
      * @apiNote This function mainly exists as a convenience helper. Each {@link FunctionalInterface} of this library
      * provides an identical public static {@code call()} method to this one, depending on its type.
      */
-    public static void call(@Nonnull final CharTriConsumer consumer, char value1, char value2, char value3) {
-        CharTriConsumer.call(consumer, value1, value2, value3);
+    public static void call(@Nonnull final TriCharConsumer consumer, char value1, char value2, char value3) {
+        TriCharConsumer.call(consumer, value1, value2, value3);
     }
 
     /**
-     * Calls the given {@link DoubleTriConsumer} with the given arguments and returns its result.
+     * Calls the given {@link TriDoubleConsumer} with the given arguments and returns its result.
      *
      * @param consumer The consumer to be called
      * @param value1 The first argument to the operation to be consumed
@@ -385,12 +385,12 @@ public final class Consumers {
      * @apiNote This function mainly exists as a convenience helper. Each {@link FunctionalInterface} of this library
      * provides an identical public static {@code call()} method to this one, depending on its type.
      */
-    public static void call(@Nonnull final DoubleTriConsumer consumer, double value1, double value2, double value3) {
-        DoubleTriConsumer.call(consumer, value1, value2, value3);
+    public static void call(@Nonnull final TriDoubleConsumer consumer, double value1, double value2, double value3) {
+        TriDoubleConsumer.call(consumer, value1, value2, value3);
     }
 
     /**
-     * Calls the given {@link FloatTriConsumer} with the given arguments and returns its result.
+     * Calls the given {@link TriFloatConsumer} with the given arguments and returns its result.
      *
      * @param consumer The consumer to be called
      * @param value1 The first argument to the operation to be consumed
@@ -400,12 +400,12 @@ public final class Consumers {
      * @apiNote This function mainly exists as a convenience helper. Each {@link FunctionalInterface} of this library
      * provides an identical public static {@code call()} method to this one, depending on its type.
      */
-    public static void call(@Nonnull final FloatTriConsumer consumer, float value1, float value2, float value3) {
-        FloatTriConsumer.call(consumer, value1, value2, value3);
+    public static void call(@Nonnull final TriFloatConsumer consumer, float value1, float value2, float value3) {
+        TriFloatConsumer.call(consumer, value1, value2, value3);
     }
 
     /**
-     * Calls the given {@link IntTriConsumer} with the given arguments and returns its result.
+     * Calls the given {@link TriIntConsumer} with the given arguments and returns its result.
      *
      * @param consumer The consumer to be called
      * @param value1 The first argument to the operation to be consumed
@@ -415,12 +415,12 @@ public final class Consumers {
      * @apiNote This function mainly exists as a convenience helper. Each {@link FunctionalInterface} of this library
      * provides an identical public static {@code call()} method to this one, depending on its type.
      */
-    public static void call(@Nonnull final IntTriConsumer consumer, int value1, int value2, int value3) {
-        IntTriConsumer.call(consumer, value1, value2, value3);
+    public static void call(@Nonnull final TriIntConsumer consumer, int value1, int value2, int value3) {
+        TriIntConsumer.call(consumer, value1, value2, value3);
     }
 
     /**
-     * Calls the given {@link LongTriConsumer} with the given arguments and returns its result.
+     * Calls the given {@link TriLongConsumer} with the given arguments and returns its result.
      *
      * @param consumer The consumer to be called
      * @param value1 The first argument to the operation to be consumed
@@ -430,12 +430,12 @@ public final class Consumers {
      * @apiNote This function mainly exists as a convenience helper. Each {@link FunctionalInterface} of this library
      * provides an identical public static {@code call()} method to this one, depending on its type.
      */
-    public static void call(@Nonnull final LongTriConsumer consumer, long value1, long value2, long value3) {
-        LongTriConsumer.call(consumer, value1, value2, value3);
+    public static void call(@Nonnull final TriLongConsumer consumer, long value1, long value2, long value3) {
+        TriLongConsumer.call(consumer, value1, value2, value3);
     }
 
     /**
-     * Calls the given {@link ShortTriConsumer} with the given arguments and returns its result.
+     * Calls the given {@link TriShortConsumer} with the given arguments and returns its result.
      *
      * @param consumer The consumer to be called
      * @param value1 The first argument to the operation to be consumed
@@ -445,8 +445,8 @@ public final class Consumers {
      * @apiNote This function mainly exists as a convenience helper. Each {@link FunctionalInterface} of this library
      * provides an identical public static {@code call()} method to this one, depending on its type.
      */
-    public static void call(@Nonnull final ShortTriConsumer consumer, short value1, short value2, short value3) {
-        ShortTriConsumer.call(consumer, value1, value2, value3);
+    public static void call(@Nonnull final TriShortConsumer consumer, short value1, short value2, short value3) {
+        TriShortConsumer.call(consumer, value1, value2, value3);
     }
 
     /**

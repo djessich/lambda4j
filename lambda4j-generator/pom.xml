@@ -30,9 +30,6 @@
     <name>Lambda4j Generator Module</name>
 
     <properties>
-        <generator.output>${project.basedir}/../lambda4j-generator/src-gen/main/java</generator.output>
-        <maven.clean.version>3.0.0</maven.clean.version>
-        <maven.exec.version>1.4.0</maven.exec.version>
         <freemarker.version>2.3.23</freemarker.version>
     </properties>
 
@@ -93,58 +90,4 @@
             </plugin>
         </plugins>
     </build>
-
-    <profiles>
-        <profile>
-            <id>generator</id>
-            <activation>
-                <activeByDefault>false</activeByDefault>
-            </activation>
-            <build>
-                <plugins>
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-clean-plugin</artifactId>
-                        <version>${maven.clean.version}</version>
-                        <executions>
-                            <execution>
-                                <id>clean-generated-sources</id>
-                                <phase>clean</phase>
-                                <goals>
-                                    <goal>clean</goal>
-                                </goals>
-                            </execution>
-                        </executions>
-                        <configuration>
-                            <filesets>
-                                <fileset>
-                                    <directory>${generator.output}</directory>
-                                </fileset>
-                            </filesets>
-                        </configuration>
-                    </plugin>
-                    <plugin>
-                        <groupId>org.codehaus.mojo</groupId>
-                        <artifactId>exec-maven-plugin</artifactId>
-                        <version>${maven.exec.version}</version>
-                        <executions>
-                            <execution>
-                                <id>run-generator</id>
-                                <phase>compile</phase>
-                                <goals>
-                                    <goal>java</goal>
-                                </goals>
-                            </execution>
-                        </executions>
-                        <configuration>
-                            <mainClass>at.gridtec.lambda4j.generator.Generator</mainClass>
-                            <arguments>
-                                <argument>${generator.output}</argument>
-                            </arguments>
-                        </configuration>
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
-    </profiles>
 </project>
