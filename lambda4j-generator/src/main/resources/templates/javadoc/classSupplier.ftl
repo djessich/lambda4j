@@ -3,7 +3,7 @@
 
 <#-- parse only if lambda is of type function -->
 <#if LambdaUtils.isOfTypeSupplier(lambda)>
-    <#assign codomain = LambdaUtils.searchByReturnType(lambda.type, lambda.arity, Object, lambda.throwable)>
+    <#assign codomain = LambdaUtils.searchByReturnType(lambda.type, lambda.arity, Object, lambda.throwable, false)>
     <@.namespace.supplierClassJavadoc codomain/>
 </#if>
 

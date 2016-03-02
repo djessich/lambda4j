@@ -9,9 +9,9 @@
     <#assign genericParameterTypeStringWithPrimitives = .namespace.buildGenericParameterTypeStringWithPrimitives()>
     <#-- search for correct output lambda, which gets object (generical) inputs and object (generical) output, unless if global lambda represents a type a predicate or consumer type) -->
     <#if LambdaUtils.isOfTypePredicate(lambda) || LambdaUtils.isOfTypeConsumer(lambda)>
-        <#assign outputLambda = LambdaUtils.searchByInputTypesAndReturnType(lambda.type, lambda.arity, Object, Object, Object,  lambda.returnType, lambda.throwable)>
+        <#assign outputLambda = LambdaUtils.searchByInputTypesAndReturnType(lambda.type, lambda.arity, Object, Object, Object,  lambda.returnType, lambda.throwable, false)>
     <#else>
-        <#assign outputLambda = LambdaUtils.searchByInputTypesAndReturnType(lambda.type, lambda.arity, Object, Object, Object,  Object, lambda.throwable)>
+        <#assign outputLambda = LambdaUtils.searchByInputTypesAndReturnType(lambda.type, lambda.arity, Object, Object, Object,  Object, lambda.throwable, false)>
     </#if>
     <#-- print boxed method -->
     <@.namespace.boxedMethod genericParameterTypeStringWithPrimitives outputLambda/>

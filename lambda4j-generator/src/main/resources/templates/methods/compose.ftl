@@ -7,22 +7,22 @@
     <#-- search for correct input lambdas depending on lambda arity -->
     <#if (lambda.arity >= 1)>
         <#assign type = (lambda.firstInputType.equals(boolean))?then(LambdaUtils.getPredicateType(), LambdaUtils.getFunctionType())>
-        <#assign inputLambda1 = LambdaUtils.searchByFirstInputAndReturnType(type, 1, Object, lambda.firstInputType, lambda.throwable)>
+        <#assign inputLambda1 = LambdaUtils.searchByFirstInputAndReturnType(type, 1, Object, lambda.firstInputType, lambda.throwable, true)>
     </#if>
     <#if (lambda.arity >= 2)>
         <#assign type = (lambda.secondInputType.equals(boolean))?then(LambdaUtils.getPredicateType(), LambdaUtils.getFunctionType())>
-        <#assign inputLambda2 = LambdaUtils.searchByFirstInputAndReturnType(type, 1, Object, lambda.secondInputType, lambda.throwable)>
+        <#assign inputLambda2 = LambdaUtils.searchByFirstInputAndReturnType(type, 1, Object, lambda.secondInputType, lambda.throwable, true)>
     </#if>
     <#if (lambda.arity >= 3)>
         <#assign type = (lambda.thirdInputType.equals(boolean))?then(LambdaUtils.getPredicateType(), LambdaUtils.getFunctionType())>
-        <#assign inputLambda3 = LambdaUtils.searchByFirstInputAndReturnType(type, 1, Object, lambda.thirdInputType, lambda.throwable)>
+        <#assign inputLambda3 = LambdaUtils.searchByFirstInputAndReturnType(type, 1, Object, lambda.thirdInputType, lambda.throwable, true)>
     </#if>
     <#-- find correct output lambda which is able to handle object inputs only and returns global lambda output, unless consumers which do not have outputs -->
     <#if LambdaUtils.isOfTypeConsumer(lambda)>
-        <#assign outputLambda = LambdaUtils.searchByInputTypes(LambdaUtils.getConsumerType(), lambda.arity, Object, Object, Object, lambda.throwable)>
+        <#assign outputLambda = LambdaUtils.searchByInputTypes(LambdaUtils.getConsumerType(), lambda.arity, Object, Object, Object, lambda.throwable, false)>
     <#else>
         <#assign type = (lambda.returnType.equals(boolean))?then(LambdaUtils.getPredicateType(), LambdaUtils.getFunctionType())>
-        <#assign outputLambda = LambdaUtils.searchByInputTypesAndReturnType(type, lambda.arity, Object, Object, Object, lambda.returnType, lambda.throwable)>
+        <#assign outputLambda = LambdaUtils.searchByInputTypesAndReturnType(type, lambda.arity, Object, Object, Object, lambda.returnType, lambda.throwable, false)>
     </#if>
     <#-- print compose method -->
     <@.namespace.composeMethod "A" "B" "C" outputLambda inputLambda1 inputLambda2 inputLambda3/>

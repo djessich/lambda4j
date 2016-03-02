@@ -3,7 +3,7 @@
 
 <#-- parse only if lambda is of type function -->
 <#if LambdaUtils.isOfTypePredicate(lambda)>
-    <#assign codomain = LambdaUtils.searchByInputTypesAndReturnType(lambda.type, lambda.arity, Object, Object, Object, lambda.returnType, lambda.throwable)>
+    <#assign codomain = LambdaUtils.searchByInputTypesAndReturnType(lambda.type, lambda.arity, Object, Object, Object, lambda.returnType, lambda.throwable, false)>
     <@.namespace.predicateClassJavadoc codomain/>
 </#if>
 

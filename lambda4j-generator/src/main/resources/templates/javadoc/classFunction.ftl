@@ -3,7 +3,7 @@
 
 <#-- parse only if lambda is of type function or operator -->
 <#if LambdaUtils.isOfTypeFunction(lambda) || LambdaUtils.isOfTypeOperator(lambda)>
-    <#assign codomain = LambdaUtils.searchByInputTypesAndReturnType(lambda.type, lambda.arity, Object, Object, Object, Object, lambda.throwable)>
+    <#assign codomain = LambdaUtils.searchByInputTypesAndReturnType(lambda.type, lambda.arity, Object, Object, Object, Object, lambda.throwable, false)>
     <@.namespace.functionClassJavadoc codomain/>
 </#if>
 

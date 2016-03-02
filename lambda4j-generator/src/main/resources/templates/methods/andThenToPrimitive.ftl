@@ -19,9 +19,9 @@
         <#-- get primitive type -->
         <#assign primitive = primitives[key]>
         <#-- search for correct input lambda which gets the return type from global lambda as input and returns a primitive value -->
-        <#assign inputLambda = LambdaUtils.searchByFirstInputAndReturnType(1, lambda.returnType, primitive, lambda.throwable)>
+        <#assign inputLambda = LambdaUtils.searchByFirstInputAndReturnType(1, lambda.returnType, primitive, lambda.throwable, true)>
         <#-- search for correct output lambda which get all input types from global lambda and returns a primitive value -->
-        <#assign outputLambda = LambdaUtils.searchByInputTypesAndReturnType(lambda.arity, lambda.firstInputType, lambda.secondInputType, lambda.thirdInputType, primitive, lambda.throwable)>
+        <#assign outputLambda = LambdaUtils.searchByInputTypesAndReturnType(lambda.arity, lambda.firstInputType, lambda.secondInputType, lambda.thirdInputType, primitive, lambda.throwable, false)>
         <#-- print andThenToPrimitive method -->
         <@.namespace.andThenToPrimitiveMethod inputLambda outputLambda primitive.typeSimpleName/>
     </#list>

@@ -20,7 +20,7 @@
         <#assign argumentName = argumentNames[current?index]>
         <#-- search for correct input lambda of only method, which is the global lambdas input type (depending on arity) and its return type -->
         <#assign type = (lambda.returnType.primitive && lambda.returnType.equals(argumentType))?then(LambdaUtils.getOperatorType(), lambda.type)>
-        <#assign inputLambda = LambdaUtils.searchByFirstInputAndReturnType(type, 1, argumentType, lambda.returnType, lambda.throwable)>
+        <#assign inputLambda = LambdaUtils.searchByFirstInputAndReturnType(type, 1, argumentType, lambda.returnType, lambda.throwable, true)>
         <#-- print only method -->
         <@.namespace.onlyMethod number capitalizedNumber inputLambda argumentType argumentName/>
     </#list>

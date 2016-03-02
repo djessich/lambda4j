@@ -15,8 +15,10 @@
  */
 package at.gridtec.lambda4j.generator.processors.impl;
 
+import at.gridtec.lambda4j.generator.cache.LambdaCache;
 import at.gridtec.lambda4j.generator.entities.LambdaEntity;
 import at.gridtec.lambda4j.generator.processors.Processor;
+import at.gridtec.lambda4j.generator.util.LambdaUtils;
 
 import org.apache.commons.lang3.ClassUtils;
 
@@ -46,7 +48,14 @@ public class JdkProcessor extends Processor {
     @Nonnull
     @Override
     protected List<LambdaEntity> process(@Nonnull final LambdaEntity lambda) {
-        lambda.setFromJDK(this.isLambdaFromJdk(lambda));
+        // Check if lambda is also available in the JDK
+        if (isLambdaFromJdk(lambda)) {
+            lambda.setFromJDK(true);
+            // Found jdk lambda so add it to list
+            LambdaCache.getInstance().getJdkLambdas().add(LambdaUtils.copy(lambda));
+        } else {
+            lambda.setFromJDK(false);
+        }
         return next(lambda);
     }
 

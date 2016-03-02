@@ -1,5 +1,5 @@
-<#import "../../utils/helpers.ftl" as helpers>
-<#import "../../utils/types.ftl" as types>
+<#import "./utils/helpers.ftl" as helpers>
+<#import "./utils/types.ftl" as types>
 
 <#global parameterString = types.buildParameterString()>
 <#global parameterNameString = types.buildParameterNameString()>
@@ -17,13 +17,19 @@
 <#global short = LambdaUtils.getShortTypeEntity()>
 <#global void = LambdaUtils.getVoidTypeEntity()>
 
-<#-- If lambda is of type operator and not primitive -->
-<#assign genericOperatorExtendsFunction = "">
+<#global extenderLambda = lambda>
+
+<#assign extends = "">
 <#assign isGenericOperator = (LambdaUtils.isOfTypeOperator(lambda) && !helpers.isPrimitive(lambda.returnType))>
-<#if isGenericOperator>
-    <#assign inheritedLambda = LambdaUtils.searchByInputTypesAndReturnType(LambdaUtils.getFunctionType(), lambda.arity, Object, Object, Object, Object, lambda.throwable)>
+
+<#-- If lambda is a JDK lambda or lambda is a generic operator, then prepare extends string -->
+<#if lambda.fromJDK>
+    <#assign extenderLambda = LambdaUtils.searchByInputTypesAndReturnType(lambda.type, lambda.arity, lambda.firstInputType, lambda.secondInputType, lambda.thirdInputType, lambda.returnType, lambda.throwable, true)>
+    <#assign extends = "extends " + extenderLambda.name + types.buildGenericParameterTypeString(extenderLambda)>
+<#elseif isGenericOperator>
+    <#assign extenderLambda = LambdaUtils.searchByInputTypesAndReturnType(LambdaUtils.getFunctionType(), lambda.arity, Object, Object, Object, Object, lambda.throwable, false)>
     <#assign returnTypeName = lambda.returnType.typeName>
-    <#assign genericOperatorExtendsFunction = "extends " + inheritedLambda.name + types.buildGenericParameterTypeString(inheritedLambda, returnTypeName, returnTypeName, returnTypeName, returnTypeName)>
+    <#assign extends = "extends " + extenderLambda.name + types.buildGenericParameterTypeString(extenderLambda, returnTypeName, returnTypeName, returnTypeName, returnTypeName)>
 </#if>
 
 <#include "header/copyright.ftl">
@@ -37,7 +43,7 @@ package ${lambda.packageName};
 
 @SuppressWarnings("unused")
 @FunctionalInterface
-public interface ${lambda.name}${genericParameterTypeString} ${genericOperatorExtendsFunction} {
+public interface ${lambda.name}${genericParameterTypeString} ${extends} {
 
 <#include "methods/static/of.ftl">
 <#include "methods/static/call.ftl">

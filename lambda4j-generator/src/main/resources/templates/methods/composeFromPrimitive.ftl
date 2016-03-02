@@ -20,16 +20,16 @@
         <#assign primitive = primitives[key]>
         <#-- search for correct input lambdas depending on global lambda arity with primitive input type and primitive return type (global lambda has primitive input) -->
         <#if (lambda.arity >= 1)>
-            <#assign inputLambda1 = LambdaUtils.searchByFirstInputAndReturnType(1, primitive, lambda.firstInputType, lambda.throwable)>
+            <#assign inputLambda1 = LambdaUtils.searchByFirstInputAndReturnType(1, primitive, lambda.firstInputType, lambda.throwable, true)>
         </#if>
         <#if (lambda.arity >= 2)>
-            <#assign inputLambda2 = LambdaUtils.searchByFirstInputAndReturnType(1, primitive, lambda.secondInputType, lambda.throwable)>
+            <#assign inputLambda2 = LambdaUtils.searchByFirstInputAndReturnType(1, primitive, lambda.secondInputType, lambda.throwable, true)>
         </#if>
         <#if (lambda.arity >= 3)>
-            <#assign inputLambda3 = LambdaUtils.searchByFirstInputAndReturnType(1, primitive, lambda.thirdInputType, lambda.throwable)>
+            <#assign inputLambda3 = LambdaUtils.searchByFirstInputAndReturnType(1, primitive, lambda.thirdInputType, lambda.throwable, true)>
         </#if>
         <#-- search for correct output lambda which has primitive input only and the same return type as this lambda -->
-        <#assign outputLambda = LambdaUtils.searchByInputTypesAndReturnType(lambda.arity, primitive, primitive, primitive, lambda.returnType, lambda.throwable)>
+        <#assign outputLambda = LambdaUtils.searchByInputTypesAndReturnType(lambda.arity, primitive, primitive, primitive, lambda.returnType, lambda.throwable, false)>
         <#-- print composeFromPrimitive method -->
         <@.namespace.composeFromPrimitiveMethod primitive.typeSimpleName outputLambda inputLambda1 inputLambda2 inputLambda3/>
     </#list>

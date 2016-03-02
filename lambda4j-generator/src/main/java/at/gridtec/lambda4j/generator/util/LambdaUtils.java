@@ -27,6 +27,7 @@ import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.Objects;
+import java.util.Optional;
 
 /**
  * LambdaEntity descriptor utils class.
@@ -54,97 +55,167 @@ public final class LambdaUtils {
     }
 
     /**
-     * Searches for a {@link LambdaEntity} using given lambda type, lambda arity and throwable flag. If the lambda exists, it
-     * will be returned as is, otherwise {@code null} is returned.
+     * Searches for a {@link LambdaEntity} using given lambda type, lambda arity and throwable flag. If the lambda
+     * exists, it will be returned as is, otherwise {@code null} is returned.
      *
      * @param type The lambdas type
      * @param arity The lambdas arity
      * @param isThrowable The flag indicating if lambda is throwable
+     * @param preferFromJdk A flag if we also search for {@code JDK} lambdas
      * @return The lambda from given lambda type, lambda arity and throwable flag, or {@code null} if no such lambda
      * exists.
      * @throws NullPointerException If given lambda type is {@code null}
      * @throws IllegalArgumentException If given lambda arity is < 0
+     * @implNote This implementation search for the lambda, which match the given arguments. If the {@code
+     * #preferFromJdk} flag is set to {@code true}, then {@code JDK} lambdas are preferred over those from this library.
+     * In either case, if no appropriate match could be found, {@code null} is returned.
      */
-    public static LambdaEntity search(@Nonnull final LambdaTypeEnum type, @Nonnegative int arity, boolean isThrowable) {
+    public static LambdaEntity search(@Nonnull final LambdaTypeEnum type, @Nonnegative int arity, boolean isThrowable,
+            boolean preferFromJdk) {
         // Check arguments
         Objects.requireNonNull(type);
         if (arity < 0) {
             throw new IllegalArgumentException("arity must be greater than 0");
         }
-        // Find lambda and return it if such or null
-        return LambdaCache.getInstance()
-                .getLambdas()
-                .stream()
-                .filter(l -> l.getType().equals(type))
-                .filter(l -> l.getArity() == arity)
-                .filter(l -> l.isThrowable() == isThrowable)
-                .findFirst()
-                .orElse(null);
+
+        // Default variable declaration
+        Optional<LambdaEntity> optionalLambda = Optional.empty();
+
+        // If jdk flag set, then find jdk lambda if such
+        if (preferFromJdk) {
+            optionalLambda = LambdaCache.getInstance()
+                    .getJdkLambdas()
+                    .stream()
+                    .filter(l -> l.getType().equals(type))
+                    .filter(l -> l.getArity() == arity)
+                    .filter(l -> l.isThrowable() == isThrowable)
+                    .findFirst();
+        }
+
+        // If jdk lambda not present find other non-jdk one and return if found or return null; if present return jdk lambda
+        if (!optionalLambda.isPresent()) {
+            return LambdaCache.getInstance()
+                    .getLambdas()
+                    .stream()
+                    .filter(l -> l.getType().equals(type))
+                    .filter(l -> l.getArity() == arity)
+                    .filter(l -> l.isThrowable() == isThrowable)
+                    .findFirst()
+                    .orElse(null);
+        } else {
+            return optionalLambda.get();
+        }
     }
 
     /**
-     * Searches for a {@link LambdaEntity} using given lambda arity, lambda return type and throwable flag. If the lambda
-     * exists, it will be returned as is, otherwise {@code null} is returned. Thereby the return type may be {@code
-     * null}.
+     * Searches for a {@link LambdaEntity} using given lambda arity, lambda return type and throwable flag. If the
+     * lambda exists, it will be returned as is, otherwise {@code null} is returned. Thereby the return type may be
+     * {@code null}.
      *
      * @param arity The lambdas arity
      * @param returnType The lambdas return type
      * @param isThrowable The flag indicating if lambda is throwable
+     * @param preferFromJdk A flag if we also search for {@code JDK} lambdas
      * @return The lambda from given lambda arity, lambda return type and throwable flag, or {@code null} if no such
      * lambda exists.
      * @throws NullPointerException If given lambda type is {@code null}
      * @throws IllegalArgumentException If given lambda arity is < 0
+     * @implNote This implementation search for the lambda, which match the given arguments. If the {@code
+     * #preferFromJdk} flag is set to {@code true}, then {@code JDK} lambdas are preferred over those from this library.
+     * In either case, if no appropriate match could be found, {@code null} is returned.
      */
     public static LambdaEntity searchByReturnType(@Nonnegative int arity, @Nullable final TypeEntity returnType,
-            boolean isThrowable) {
+            boolean isThrowable, boolean preferFromJdk) {
         // Check arguments
         if (arity < 0) {
             throw new IllegalArgumentException("arity must be greater than 0");
         }
 
-        // Find lambda and return it if such or null
-        return LambdaCache.getInstance()
-                .getLambdas()
-                .stream()
-                .filter(l -> l.getArity() == arity)
-                .filter(l -> l.getReturnType() == null || l.getReturnType().equals(returnType))
-                .filter(l -> l.isThrowable() == isThrowable)
-                .findFirst()
-                .orElse(null);
+        // Default variable declaration
+        Optional<LambdaEntity> optionalLambda = Optional.empty();
+
+        // If jdk flag set, then find jdk lambda if such
+        if (preferFromJdk) {
+            optionalLambda = LambdaCache.getInstance()
+                    .getJdkLambdas()
+                    .stream()
+                    .filter(l -> l.getArity() == arity)
+                    .filter(l -> l.getReturnType() == null || l.getReturnType().equals(returnType))
+                    .filter(l -> l.isThrowable() == isThrowable)
+                    .findFirst();
+        }
+
+        // If jdk lambda not present find other non-jdk one and return if found or return null; if present return jdk lambda
+        if (!optionalLambda.isPresent()) {
+            return LambdaCache.getInstance()
+                    .getLambdas()
+                    .stream()
+                    .filter(l -> l.getArity() == arity)
+                    .filter(l -> l.getReturnType() == null || l.getReturnType().equals(returnType))
+                    .filter(l -> l.isThrowable() == isThrowable)
+                    .findFirst()
+                    .orElse(null);
+        } else {
+            return optionalLambda.get();
+        }
     }
 
     /**
-     * Searches for a {@link LambdaEntity} using given lambda type, lambda arity, lambda return type and throwable flag. If
-     * the lambda exists, it will be returned as is, otherwise {@code null} is returned. Thereby the return type may be
-     * {@code null}.
+     * Searches for a {@link LambdaEntity} using given lambda type, lambda arity, lambda return type and throwable flag.
+     * If the lambda exists, it will be returned as is, otherwise {@code null} is returned. Thereby the return type may
+     * be {@code null}.
      *
      * @param type The lambdas type
      * @param arity The lambdas arity
      * @param returnType The lambdas return type
      * @param isThrowable The flag indicating if lambda is throwable
+     * @param preferFromJdk A flag if we also search for {@code JDK} lambdas
      * @return The lambda from given lambda type, lambda arity, lambda return type and throwable flag, or {@code null}
      * if no such lambda exists.
      * @throws NullPointerException If given lambda type is {@code null}
      * @throws IllegalArgumentException If given lambda arity is < 0
+     * @implNote This implementation search for the lambda, which match the given arguments. If the {@code
+     * #preferFromJdk} flag is set to {@code true}, then {@code JDK} lambdas are preferred over those from this library.
+     * In either case, if no appropriate match could be found, {@code null} is returned.
      */
     public static LambdaEntity searchByReturnType(@Nonnull final LambdaTypeEnum type, @Nonnegative int arity,
-            @Nullable final TypeEntity returnType, boolean isThrowable) {
+            @Nullable final TypeEntity returnType, boolean isThrowable, boolean preferFromJdk) {
         // Check arguments
         Objects.requireNonNull(type);
         if (arity < 0) {
             throw new IllegalArgumentException("arity must be greater than 0");
         }
 
-        // Find lambda and return it if such or null
-        return LambdaCache.getInstance()
-                .getLambdas()
-                .stream()
-                .filter(l -> l.getType().equals(type))
-                .filter(l -> l.getArity() == arity)
-                .filter(l -> l.getReturnType() == null || l.getReturnType().equals(returnType))
-                .filter(l -> l.isThrowable() == isThrowable)
-                .findFirst()
-                .orElse(null);
+        // Default variable declaration
+        Optional<LambdaEntity> optionalLambda = Optional.empty();
+
+        // If jdk flag set, then find jdk lambda if such
+        if (preferFromJdk) {
+            optionalLambda = LambdaCache.getInstance()
+                    .getJdkLambdas()
+                    .stream()
+                    .filter(l -> l.getType().equals(type))
+                    .filter(l -> l.getArity() == arity)
+                    .filter(l -> l.getReturnType() == null || l.getReturnType().equals(returnType))
+                    .filter(l -> l.isThrowable() == isThrowable)
+                    .findFirst();
+        }
+
+        // If jdk lambda not present find other non-jdk one and return if found or return null; if present return jdk lambda
+        if (!optionalLambda.isPresent()) {
+            // Find lambda and return it if such or null
+            return LambdaCache.getInstance()
+                    .getLambdas()
+                    .stream()
+                    .filter(l -> l.getType().equals(type))
+                    .filter(l -> l.getArity() == arity)
+                    .filter(l -> l.getReturnType() == null || l.getReturnType().equals(returnType))
+                    .filter(l -> l.isThrowable() == isThrowable)
+                    .findFirst()
+                    .orElse(null);
+        } else {
+            return optionalLambda.get();
+        }
     }
 
     /**
@@ -155,128 +226,223 @@ public final class LambdaUtils {
      * @param arity The lambdas arity
      * @param firstInputType The lambdas first input type
      * @param isThrowable The flag indicating if lambda is throwable
+     * @param preferFromJdk A flag if we also search for {@code JDK} lambdas
      * @return The lambda from given lambda arity, lambda first input type and throwable flag, or {@code null} if no
      * such lambda exists.
      * @throws NullPointerException If given lambda type is {@code null}
      * @throws IllegalArgumentException If given lambda arity is < 0
+     * @implNote This implementation search for the lambda, which match the given arguments. If the {@code
+     * #preferFromJdk} flag is set to {@code true}, then {@code JDK} lambdas are preferred over those from this library.
+     * In either case, if no appropriate match could be found, {@code null} is returned.
      */
     public static LambdaEntity searchByFirstInputType(@Nonnegative int arity, @Nullable final TypeEntity firstInputType,
-            boolean isThrowable) {
+            boolean isThrowable, boolean preferFromJdk) {
         if (arity < 0) {
             throw new IllegalArgumentException("arity must be greater than 0");
         }
 
-        // Find lambda and return it if such or null
-        return LambdaCache.getInstance()
-                .getLambdas()
-                .stream()
-                .filter(l -> l.getArity() == arity)
-                .filter(l -> l.getFirstInputType() == null || l.getFirstInputType().equals(firstInputType))
-                .filter(l -> l.isThrowable() == isThrowable)
-                .findFirst()
-                .orElse(null);
+        // Default variable declaration
+        Optional<LambdaEntity> optionalLambda = Optional.empty();
+
+        // If jdk flag set, then find jdk lambda if such
+        if (preferFromJdk) {
+            optionalLambda = LambdaCache.getInstance()
+                    .getJdkLambdas()
+                    .stream()
+                    .filter(l -> l.getArity() == arity)
+                    .filter(l -> l.getFirstInputType() == null || l.getFirstInputType().equals(firstInputType))
+                    .filter(l -> l.isThrowable() == isThrowable)
+                    .findFirst();
+        }
+
+        // If jdk lambda not present find other non-jdk one and return if found or return null; if present return jdk lambda
+        if (!optionalLambda.isPresent()) {
+            return LambdaCache.getInstance()
+                    .getLambdas()
+                    .stream()
+                    .filter(l -> l.getArity() == arity)
+                    .filter(l -> l.getFirstInputType() == null || l.getFirstInputType().equals(firstInputType))
+                    .filter(l -> l.isThrowable() == isThrowable)
+                    .findFirst()
+                    .orElse(null);
+        } else {
+            return optionalLambda.get();
+        }
     }
 
     /**
-     * Searches for a {@link LambdaEntity} using given lambda type, lambda arity, lambda first input type and throwable flag.
-     * If the lambda exists, it will be returned as is, otherwise {@code null} is returned. Thereby the first input type
-     * may be {@code null}.
+     * Searches for a {@link LambdaEntity} using given lambda type, lambda arity, lambda first input type and throwable
+     * flag. If the lambda exists, it will be returned as is, otherwise {@code null} is returned. Thereby the first
+     * input type may be {@code null}.
      *
      * @param type The lambdas type
      * @param arity The lambdas arity
      * @param firstInputType The lambdas first input type
      * @param isThrowable The flag indicating if lambda is throwable
+     * @param preferFromJdk A flag if we also search for {@code JDK} lambdas
      * @return The lambda from given lambda type, lambda arity, lambda first input type and throwable flag, or {@code
      * null} if no such lambda exists.
      * @throws NullPointerException If given lambda type is {@code null}
      * @throws IllegalArgumentException If given lambda arity is < 0
+     * @implNote This implementation search for the lambda, which match the given arguments. If the {@code
+     * #preferFromJdk} flag is set to {@code true}, then {@code JDK} lambdas are preferred over those from this library.
+     * In either case, if no appropriate match could be found, {@code null} is returned.
      */
     public static LambdaEntity searchByFirstInputType(@Nonnull final LambdaTypeEnum type, @Nonnegative int arity,
-            @Nullable final TypeEntity firstInputType, boolean isThrowable) {
+            @Nullable final TypeEntity firstInputType, boolean isThrowable, boolean preferFromJdk) {
         // Check arguments
         Objects.requireNonNull(type);
         if (arity < 0) {
             throw new IllegalArgumentException("arity must be greater than 0");
         }
 
-        // Find lambda and return it if such or null
-        return LambdaCache.getInstance()
-                .getLambdas()
-                .stream()
-                .filter(l -> l.getType().equals(type))
-                .filter(l -> l.getArity() == arity)
-                .filter(l -> l.getFirstInputType() == null || l.getFirstInputType().equals(firstInputType))
-                .filter(l -> l.isThrowable() == isThrowable)
-                .findFirst()
-                .orElse(null);
+        // Default variable declaration
+        Optional<LambdaEntity> optionalLambda = Optional.empty();
+
+        // If jdk flag set, then find jdk lambda if such
+        if (preferFromJdk) {
+            optionalLambda = LambdaCache.getInstance()
+                    .getJdkLambdas()
+                    .stream()
+                    .filter(l -> l.getType().equals(type))
+                    .filter(l -> l.getArity() == arity)
+                    .filter(l -> l.getFirstInputType() == null || l.getFirstInputType().equals(firstInputType))
+                    .filter(l -> l.isThrowable() == isThrowable)
+                    .findFirst();
+        }
+
+        // If jdk lambda not present find other non-jdk one and return if found or return null; if present return jdk lambda
+        if (!optionalLambda.isPresent()) {
+            return LambdaCache.getInstance()
+                    .getLambdas()
+                    .stream()
+                    .filter(l -> l.getType().equals(type))
+                    .filter(l -> l.getArity() == arity)
+                    .filter(l -> l.getFirstInputType() == null || l.getFirstInputType().equals(firstInputType))
+                    .filter(l -> l.isThrowable() == isThrowable)
+                    .findFirst()
+                    .orElse(null);
+        } else {
+            return optionalLambda.get();
+        }
     }
 
     /**
-     * Searches for a {@link LambdaEntity} using given lambda arity, lambda first input type, lambda return type and throwable
-     * flag. If the lambda exists, it will be returned as is, otherwise {@code null} is returned. Thereby the first
-     * input or return type may be {@code null}.
+     * Searches for a {@link LambdaEntity} using given lambda arity, lambda first input type, lambda return type and
+     * throwable flag. If the lambda exists, it will be returned as is, otherwise {@code null} is returned. Thereby the
+     * first input or return type may be {@code null}.
      *
      * @param arity The lambdas arity
      * @param firstInputType The lambdas first input type
      * @param returnType The lambdas return type
      * @param isThrowable The flag indicating if lambda is throwable
+     * @param preferFromJdk A flag if we also search for {@code JDK} lambdas
      * @return The lambda from given lambda arity, lambda first input type, lambda return type and throwable flag, or
      * {@code null} if no such lambda exists.
      * @throws NullPointerException If given lambda type is {@code null}
      * @throws IllegalArgumentException If given lambda arity is < 0
+     * @implNote This implementation search for the lambda, which match the given arguments. If the {@code
+     * #preferFromJdk} flag is set to {@code true}, then {@code JDK} lambdas are preferred over those from this library.
+     * In either case, if no appropriate match could be found, {@code null} is returned.
      */
     public static LambdaEntity searchByFirstInputAndReturnType(@Nonnegative int arity,
-            @Nullable final TypeEntity firstInputType, @Nullable final TypeEntity returnType, boolean isThrowable) {
+            @Nullable final TypeEntity firstInputType, @Nullable final TypeEntity returnType, boolean isThrowable,
+            boolean preferFromJdk) {
         // Check arguments
         if (arity < 0) {
             throw new IllegalArgumentException("arity must be greater than 0");
         }
-        // Find lambda and return it if such or null
-        return LambdaCache.getInstance()
-                .getLambdas()
-                .stream()
-                .filter(l -> l.getArity() == arity)
-                .filter(l -> l.getFirstInputType() == null || l.getFirstInputType().equals(firstInputType))
-                .filter(l -> l.getReturnType() == null || l.getReturnType().equals(returnType))
-                .filter(l -> l.isThrowable() == isThrowable)
-                .findFirst()
-                .orElse(null);
+
+        // Default variable declaration
+        Optional<LambdaEntity> optionalLambda = Optional.empty();
+
+        // If jdk flag set, then find jdk lambda if such
+        if (preferFromJdk) {
+            optionalLambda = LambdaCache.getInstance()
+                    .getJdkLambdas()
+                    .stream()
+                    .filter(l -> l.getArity() == arity)
+                    .filter(l -> l.getFirstInputType() == null || l.getFirstInputType().equals(firstInputType))
+                    .filter(l -> l.getReturnType() == null || l.getReturnType().equals(returnType))
+                    .filter(l -> l.isThrowable() == isThrowable)
+                    .findFirst();
+        }
+
+        // If jdk lambda not present find other non-jdk one and return if found or return null; if present return jdk lambda
+        if (!optionalLambda.isPresent()) {
+            return LambdaCache.getInstance()
+                    .getLambdas()
+                    .stream()
+                    .filter(l -> l.getArity() == arity)
+                    .filter(l -> l.getFirstInputType() == null || l.getFirstInputType().equals(firstInputType))
+                    .filter(l -> l.getReturnType() == null || l.getReturnType().equals(returnType))
+                    .filter(l -> l.isThrowable() == isThrowable)
+                    .findFirst()
+                    .orElse(null);
+        } else {
+            return optionalLambda.get();
+        }
     }
 
     /**
-     * Searches for a {@link LambdaEntity} using given lambda type, lambda arity, lambda first input type, lambda return type
-     * and throwable flag. If the lambda exists, it will be returned as is, otherwise {@code null} is returned. Thereby
-     * the first input or return type may be {@code null}.
+     * Searches for a {@link LambdaEntity} using given lambda type, lambda arity, lambda first input type, lambda return
+     * type and throwable flag. If the lambda exists, it will be returned as is, otherwise {@code null} is returned.
+     * Thereby the first input or return type may be {@code null}.
      *
      * @param type The lambdas type
      * @param arity The lambdas arity
      * @param firstInputType The lambdas first input type
      * @param returnType The lambdas return type
      * @param isThrowable The flag indicating if lambda is throwable
+     * @param preferFromJdk A flag if we also search for {@code JDK} lambdas
      * @return The lambda from given lambda type, lambda arity, lambda first input type, lambda return type and
      * throwable flag, or {@code null} if no such lambda exists.
      * @throws NullPointerException If given lambda type is {@code null}
      * @throws IllegalArgumentException If given lambda arity is < 0
+     * @implNote This implementation search for the lambda, which match the given arguments. If the {@code
+     * #preferFromJdk} flag is set to {@code true}, then {@code JDK} lambdas are preferred over those from this library.
+     * In either case, if no appropriate match could be found, {@code null} is returned.
      */
     public static LambdaEntity searchByFirstInputAndReturnType(@Nonnull final LambdaTypeEnum type,
-            @Nonnegative int arity,
-            @Nullable final TypeEntity firstInputType, @Nullable final TypeEntity returnType, boolean isThrowable) {
+            @Nonnegative int arity, @Nullable final TypeEntity firstInputType, @Nullable final TypeEntity returnType,
+            boolean isThrowable, boolean preferFromJdk) {
         // Check arguments
         Objects.requireNonNull(type);
         if (arity < 0) {
             throw new IllegalArgumentException("arity must be greater than 0");
         }
-        // Find lambda and return it if such or null
-        return LambdaCache.getInstance()
-                .getLambdas()
-                .stream()
-                .filter(l -> l.getType().equals(type))
-                .filter(l -> l.getArity() == arity)
-                .filter(l -> l.getFirstInputType() == null || l.getFirstInputType().equals(firstInputType))
-                .filter(l -> l.getReturnType() == null || l.getReturnType().equals(returnType))
-                .filter(l -> l.isThrowable() == isThrowable)
-                .findFirst()
-                .orElse(null);
+
+        // Default variable declaration
+        Optional<LambdaEntity> optionalLambda = Optional.empty();
+
+        // If jdk flag set, then find jdk lambda if such
+        if (preferFromJdk) {
+            optionalLambda = LambdaCache.getInstance()
+                    .getJdkLambdas()
+                    .stream()
+                    .filter(l -> l.getType().equals(type))
+                    .filter(l -> l.getArity() == arity)
+                    .filter(l -> l.getFirstInputType() == null || l.getFirstInputType().equals(firstInputType))
+                    .filter(l -> l.getReturnType() == null || l.getReturnType().equals(returnType))
+                    .filter(l -> l.isThrowable() == isThrowable)
+                    .findFirst();
+        }
+
+        // If jdk lambda not present find other non-jdk one and return if found or return null; if present return jdk lambda
+        if (!optionalLambda.isPresent()) {
+            return LambdaCache.getInstance()
+                    .getLambdas()
+                    .stream()
+                    .filter(l -> l.getType().equals(type))
+                    .filter(l -> l.getArity() == arity)
+                    .filter(l -> l.getFirstInputType() == null || l.getFirstInputType().equals(firstInputType))
+                    .filter(l -> l.getReturnType() == null || l.getReturnType().equals(returnType))
+                    .filter(l -> l.isThrowable() == isThrowable)
+                    .findFirst()
+                    .orElse(null);
+        } else {
+            return optionalLambda.get();
+        }
     }
 
     /**
@@ -287,61 +453,106 @@ public final class LambdaUtils {
      * @param arity The lambdas arity
      * @param secondInputType The lambdas second input type
      * @param isThrowable The flag indicating if lambda is throwable
+     * @param preferFromJdk A flag if we also search for {@code JDK} lambdas
      * @return The lambda from given lambda arity, lambda second input type and throwable flag, or {@code null} if no
      * such lambda exists.
      * @throws NullPointerException If given lambda type is {@code null}
      * @throws IllegalArgumentException If given lambda arity is < 0
+     * @implNote This implementation search for the lambda, which match the given arguments. If the {@code
+     * #preferFromJdk} flag is set to {@code true}, then {@code JDK} lambdas are preferred over those from this library.
+     * In either case, if no appropriate match could be found, {@code null} is returned.
      */
     public static LambdaEntity searchBySecondInputType(@Nonnegative int arity,
-            @Nullable final TypeEntity secondInputType, boolean isThrowable) {
+            @Nullable final TypeEntity secondInputType, boolean isThrowable, boolean preferFromJdk) {
         // Check arguments
         if (arity < 0) {
             throw new IllegalArgumentException("arity must be greater than 0");
         }
 
-        // Find lambda and return it if such or null
-        return LambdaCache.getInstance()
-                .getLambdas()
-                .stream()
-                .filter(l -> l.getArity() == arity)
-                .filter(l -> l.getSecondInputType() == null || l.getSecondInputType().equals(secondInputType))
-                .filter(l -> l.isThrowable() == isThrowable)
-                .findFirst()
-                .orElse(null);
+        // Default variable declaration
+        Optional<LambdaEntity> optionalLambda = Optional.empty();
+
+        // If jdk flag set, then find jdk lambda if such
+        if (preferFromJdk) {
+            optionalLambda = LambdaCache.getInstance()
+                    .getJdkLambdas()
+                    .stream()
+                    .filter(l -> l.getArity() == arity)
+                    .filter(l -> l.getSecondInputType() == null || l.getSecondInputType().equals(secondInputType))
+                    .filter(l -> l.isThrowable() == isThrowable)
+                    .findFirst();
+        }
+
+        // If jdk lambda not present find other non-jdk one and return if found or return null; if present return jdk lambda
+        if (!optionalLambda.isPresent()) {
+            return LambdaCache.getInstance()
+                    .getLambdas()
+                    .stream()
+                    .filter(l -> l.getArity() == arity)
+                    .filter(l -> l.getSecondInputType() == null || l.getSecondInputType().equals(secondInputType))
+                    .filter(l -> l.isThrowable() == isThrowable)
+                    .findFirst()
+                    .orElse(null);
+        } else {
+            return optionalLambda.get();
+        }
     }
 
     /**
-     * Searches for a {@link LambdaEntity} using given lambda type, lambda arity, lambda second input type and throwable flag.
-     * If the lambda exists, it will be returned as is, otherwise {@code null} is returned. Thereby the second input
-     * type may be {@code null}.
+     * Searches for a {@link LambdaEntity} using given lambda type, lambda arity, lambda second input type and throwable
+     * flag. If the lambda exists, it will be returned as is, otherwise {@code null} is returned. Thereby the second
+     * input type may be {@code null}.
      *
      * @param type The lambdas type
      * @param arity The lambdas arity
      * @param secondInputType The lambdas second input type
      * @param isThrowable The flag indicating if lambda is throwable
+     * @param preferFromJdk A flag if we also search for {@code JDK} lambdas
      * @return The lambda from given lambda type, lambda arity, lambda second input type and throwable flag, or {@code
      * null} if no such lambda exists.
      * @throws NullPointerException If given lambda type is {@code null}
      * @throws IllegalArgumentException If given lambda arity is < 0
+     * @implNote This implementation search for the lambda, which match the given arguments. If the {@code
+     * #preferFromJdk} flag is set to {@code true}, then {@code JDK} lambdas are preferred over those from this library.
+     * In either case, if no appropriate match could be found, {@code null} is returned.
      */
     public static LambdaEntity searchBySecondInputType(@Nonnull final LambdaTypeEnum type, @Nonnegative int arity,
-            @Nullable final TypeEntity secondInputType, boolean isThrowable) {
+            @Nullable final TypeEntity secondInputType, boolean isThrowable, boolean preferFromJdk) {
         // Check arguments
         Objects.requireNonNull(type);
         if (arity < 0) {
             throw new IllegalArgumentException("arity must be greater than 0");
         }
 
-        // Find lambda and return it if such or null
-        return LambdaCache.getInstance()
-                .getLambdas()
-                .stream()
-                .filter(l -> l.getType().equals(type))
-                .filter(l -> l.getArity() == arity)
-                .filter(l -> l.getSecondInputType() == null || l.getSecondInputType().equals(secondInputType))
-                .filter(l -> l.isThrowable() == isThrowable)
-                .findFirst()
-                .orElse(null);
+        // Default variable declaration
+        Optional<LambdaEntity> optionalLambda = Optional.empty();
+
+        // If jdk flag set, then find jdk lambda if such
+        if (preferFromJdk) {
+            optionalLambda = LambdaCache.getInstance()
+                    .getJdkLambdas()
+                    .stream()
+                    .filter(l -> l.getType().equals(type))
+                    .filter(l -> l.getArity() == arity)
+                    .filter(l -> l.getSecondInputType() == null || l.getSecondInputType().equals(secondInputType))
+                    .filter(l -> l.isThrowable() == isThrowable)
+                    .findFirst();
+        }
+
+        // If jdk lambda not present find other non-jdk one and return if found or return null; if present return jdk lambda
+        if (!optionalLambda.isPresent()) {
+            return LambdaCache.getInstance()
+                    .getLambdas()
+                    .stream()
+                    .filter(l -> l.getType().equals(type))
+                    .filter(l -> l.getArity() == arity)
+                    .filter(l -> l.getSecondInputType() == null || l.getSecondInputType().equals(secondInputType))
+                    .filter(l -> l.isThrowable() == isThrowable)
+                    .findFirst()
+                    .orElse(null);
+        } else {
+            return optionalLambda.get();
+        }
     }
 
     /**
@@ -353,200 +564,341 @@ public final class LambdaUtils {
      * @param secondInputType The lambdas second input type
      * @param returnType The lambdas return type
      * @param isThrowable The flag indicating if lambda is throwable
+     * @param preferFromJdk A flag if we also search for {@code JDK} lambdas
      * @return The lambda from given lambda arity, lambda second input type, lambda return type and throwable flag, or
      * {@code null} if no such lambda exists.
      * @throws NullPointerException If given lambda type is {@code null}
      * @throws IllegalArgumentException If given lambda arity is < 0
+     * @implNote This implementation search for the lambda, which match the given arguments. If the {@code
+     * #preferFromJdk} flag is set to {@code true}, then {@code JDK} lambdas are preferred over those from this library.
+     * In either case, if no appropriate match could be found, {@code null} is returned.
      */
     public static LambdaEntity searchBySecondInputAndReturnType(@Nonnegative int arity,
-            @Nullable final TypeEntity secondInputType, @Nullable final TypeEntity returnType, boolean isThrowable) {
+            @Nullable final TypeEntity secondInputType, @Nullable final TypeEntity returnType, boolean isThrowable,
+            boolean preferFromJdk) {
         // Check arguments
         if (arity < 0) {
             throw new IllegalArgumentException("arity must be greater than 0");
         }
 
-        // Find lambda and return it if such or null
-        return LambdaCache.getInstance()
-                .getLambdas()
-                .stream()
-                .filter(l -> l.getArity() == arity)
-                .filter(l -> l.getSecondInputType() == null || l.getSecondInputType().equals(secondInputType))
-                .filter(l -> l.getReturnType() == null || l.getReturnType().equals(returnType))
-                .filter(l -> l.isThrowable() == isThrowable)
-                .findFirst()
-                .orElse(null);
+        // Default variable declaration
+        Optional<LambdaEntity> optionalLambda = Optional.empty();
+
+        // If jdk flag set, then find jdk lambda if such
+        if (preferFromJdk) {
+            optionalLambda = LambdaCache.getInstance()
+                    .getJdkLambdas()
+                    .stream()
+                    .filter(l -> l.getArity() == arity)
+                    .filter(l -> l.getSecondInputType() == null || l.getSecondInputType().equals(secondInputType))
+                    .filter(l -> l.getReturnType() == null || l.getReturnType().equals(returnType))
+                    .filter(l -> l.isThrowable() == isThrowable)
+                    .findFirst();
+        }
+
+        // If jdk lambda not present find other non-jdk one and return if found or return null; if present return jdk lambda
+        if (!optionalLambda.isPresent()) {
+            return LambdaCache.getInstance()
+                    .getLambdas()
+                    .stream()
+                    .filter(l -> l.getArity() == arity)
+                    .filter(l -> l.getSecondInputType() == null || l.getSecondInputType().equals(secondInputType))
+                    .filter(l -> l.getReturnType() == null || l.getReturnType().equals(returnType))
+                    .filter(l -> l.isThrowable() == isThrowable)
+                    .findFirst()
+                    .orElse(null);
+        } else {
+            return optionalLambda.get();
+        }
     }
 
     /**
-     * Searches for a {@link LambdaEntity} using given lambda type, lambda arity, lambda second input type, lambda return type
-     * and throwable flag. If the lambda exists, it will be returned as is, otherwise {@code null} is returned. Thereby
-     * the second input or return type may be {@code null}.
+     * Searches for a {@link LambdaEntity} using given lambda type, lambda arity, lambda second input type, lambda
+     * return type and throwable flag. If the lambda exists, it will be returned as is, otherwise {@code null} is
+     * returned. Thereby the second input or return type may be {@code null}.
      *
      * @param type The lambdas type
      * @param arity The lambdas arity
      * @param secondInputType The lambdas second input type
      * @param returnType The lambdas return type
      * @param isThrowable The flag indicating if lambda is throwable
+     * @param preferFromJdk A flag if we also search for {@code JDK} lambdas
      * @return The lambda from given lambda type, lambda arity, lambda second input type, lambda return type and
      * throwable flag, or {@code null} if no such lambda exists.
      * @throws NullPointerException If given lambda type is {@code null}
      * @throws IllegalArgumentException If given lambda arity is < 0
+     * @implNote This implementation search for the lambda, which match the given arguments. If the {@code
+     * #preferFromJdk} flag is set to {@code true}, then {@code JDK} lambdas are preferred over those from this library.
+     * In either case, if no appropriate match could be found, {@code null} is returned.
      */
     public static LambdaEntity searchBySecondInputAndReturnType(@Nonnull final LambdaTypeEnum type,
-            @Nonnegative int arity,
-            @Nullable final TypeEntity secondInputType, @Nullable final TypeEntity returnType, boolean isThrowable) {
+            @Nonnegative int arity, @Nullable final TypeEntity secondInputType, @Nullable final TypeEntity returnType,
+            boolean isThrowable, boolean preferFromJdk) {
         // Check arguments
         Objects.requireNonNull(type);
         if (arity < 0) {
             throw new IllegalArgumentException("arity must be greater than 0");
         }
 
-        // Find lambda and return it if such or null
-        return LambdaCache.getInstance()
-                .getLambdas()
-                .stream()
-                .filter(l -> l.getType().equals(type))
-                .filter(l -> l.getArity() == arity)
-                .filter(l -> l.getSecondInputType() == null || l.getSecondInputType().equals(secondInputType))
-                .filter(l -> l.getReturnType() == null || l.getReturnType().equals(returnType))
-                .filter(l -> l.isThrowable() == isThrowable)
-                .findFirst()
-                .orElse(null);
+        // Default variable declaration
+        Optional<LambdaEntity> optionalLambda = Optional.empty();
+
+        // If jdk flag set, then find jdk lambda if such
+        if (preferFromJdk) {
+            optionalLambda = LambdaCache.getInstance()
+                    .getJdkLambdas()
+                    .stream()
+                    .filter(l -> l.getType().equals(type))
+                    .filter(l -> l.getArity() == arity)
+                    .filter(l -> l.getSecondInputType() == null || l.getSecondInputType().equals(secondInputType))
+                    .filter(l -> l.getReturnType() == null || l.getReturnType().equals(returnType))
+                    .filter(l -> l.isThrowable() == isThrowable)
+                    .findFirst();
+        }
+
+        // If jdk lambda not present find other non-jdk one and return if found or return null; if present return jdk lambda
+        if (!optionalLambda.isPresent()) {
+            return LambdaCache.getInstance()
+                    .getLambdas()
+                    .stream()
+                    .filter(l -> l.getType().equals(type))
+                    .filter(l -> l.getArity() == arity)
+                    .filter(l -> l.getSecondInputType() == null || l.getSecondInputType().equals(secondInputType))
+                    .filter(l -> l.getReturnType() == null || l.getReturnType().equals(returnType))
+                    .filter(l -> l.isThrowable() == isThrowable)
+                    .findFirst()
+                    .orElse(null);
+        } else {
+            return optionalLambda.get();
+        }
     }
 
     /**
-     * Searches for a {@link LambdaEntity} using given lambda arity, lambda third input type and throwable flag. If the lambda
-     * exists, it will be returned as is, otherwise {@code null} is returned. Thereby the third input type may be {@code
-     * null}.
+     * Searches for a {@link LambdaEntity} using given lambda arity, lambda third input type and throwable flag. If the
+     * lambda exists, it will be returned as is, otherwise {@code null} is returned. Thereby the third input type may be
+     * {@code null}.
      *
      * @param arity The lambdas arity
      * @param thirdInputType The lambdas third input type
      * @param isThrowable The flag indicating if lambda is throwable
+     * @param preferFromJdk A flag if we also search for {@code JDK} lambdas
      * @return The lambda from given lambda arity, lambda third  input type and throwable flag, or {@code null} if no
      * such lambda exists.
      * @throws NullPointerException If given lambda type is {@code null}
      * @throws IllegalArgumentException If given lambda arity is < 0
+     * @implNote This implementation search for the lambda, which match the given arguments. If the {@code
+     * #preferFromJdk} flag is set to {@code true}, then {@code JDK} lambdas are preferred over those from this library.
+     * In either case, if no appropriate match could be found, {@code null} is returned.
      */
     public static LambdaEntity searchByThirdInputType(@Nonnegative int arity, @Nullable final TypeEntity thirdInputType,
-            boolean isThrowable) {
+            boolean isThrowable, boolean preferFromJdk) {
         // Check arguments
         if (arity < 0) {
             throw new IllegalArgumentException("arity must be greater than 0");
         }
 
-        // Find lambda and return it if such or null
-        return LambdaCache.getInstance()
-                .getLambdas()
-                .stream()
-                .filter(l -> l.getArity() == arity)
-                .filter(l -> l.getThirdInputType() == null || l.getThirdInputType().equals(thirdInputType))
-                .filter(l -> l.isThrowable() == isThrowable)
-                .findFirst()
-                .orElse(null);
+        // Default variable declaration
+        Optional<LambdaEntity> optionalLambda = Optional.empty();
+
+        // If jdk flag set, then find jdk lambda if such
+        if (preferFromJdk) {
+            optionalLambda = LambdaCache.getInstance()
+                    .getJdkLambdas()
+                    .stream()
+                    .filter(l -> l.getArity() == arity)
+                    .filter(l -> l.getThirdInputType() == null || l.getThirdInputType().equals(thirdInputType))
+                    .filter(l -> l.isThrowable() == isThrowable)
+                    .findFirst();
+        }
+
+        // If jdk lambda not present find other non-jdk one and return if found or return null; if present return jdk lambda
+        if (!optionalLambda.isPresent()) {
+            return LambdaCache.getInstance()
+                    .getLambdas()
+                    .stream()
+                    .filter(l -> l.getArity() == arity)
+                    .filter(l -> l.getThirdInputType() == null || l.getThirdInputType().equals(thirdInputType))
+                    .filter(l -> l.isThrowable() == isThrowable)
+                    .findFirst()
+                    .orElse(null);
+        } else {
+            return optionalLambda.get();
+        }
     }
 
     /**
-     * Searches for a {@link LambdaEntity} using given lambda type, lambda arity, lambda third input type and throwable flag.
-     * If the lambda exists, it will be returned as is, otherwise {@code null} is returned. Thereby the third input type
-     * may be {@code null}.
+     * Searches for a {@link LambdaEntity} using given lambda type, lambda arity, lambda third input type and throwable
+     * flag. If the lambda exists, it will be returned as is, otherwise {@code null} is returned. Thereby the third
+     * input type may be {@code null}.
      *
      * @param type The lambdas type
      * @param arity The lambdas arity
      * @param thirdInputType The lambdas third input type
      * @param isThrowable The flag indicating if lambda is throwable
+     * @param preferFromJdk A flag if we also search for {@code JDK} lambdas
      * @return The lambda from given lambda type, lambda arity, lambda third  input type and throwable flag, or {@code
      * null} if no such lambda exists.
      * @throws NullPointerException If given lambda type is {@code null}
      * @throws IllegalArgumentException If given lambda arity is < 0
+     * @implNote This implementation search for the lambda, which match the given arguments. If the {@code
+     * #preferFromJdk} flag is set to {@code true}, then {@code JDK} lambdas are preferred over those from this library.
+     * In either case, if no appropriate match could be found, {@code null} is returned.
      */
     public static LambdaEntity searchByThirdInputType(@Nonnull final LambdaTypeEnum type, @Nonnegative int arity,
-            @Nullable final TypeEntity thirdInputType, boolean isThrowable) {
+            @Nullable final TypeEntity thirdInputType, boolean isThrowable, boolean preferFromJdk) {
         // Check arguments
         Objects.requireNonNull(type);
         if (arity < 0) {
             throw new IllegalArgumentException("arity must be greater than 0");
         }
 
-        // Find lambda and return it if such or null
-        return LambdaCache.getInstance()
-                .getLambdas()
-                .stream()
-                .filter(l -> l.getType().equals(type))
-                .filter(l -> l.getArity() == arity)
-                .filter(l -> l.getThirdInputType() == null || l.getThirdInputType().equals(thirdInputType))
-                .filter(l -> l.isThrowable() == isThrowable)
-                .findFirst()
-                .orElse(null);
+        // Default variable declaration
+        Optional<LambdaEntity> optionalLambda = Optional.empty();
+
+        // If jdk flag set, then find jdk lambda if such
+        if (preferFromJdk) {
+            optionalLambda = LambdaCache.getInstance()
+                    .getJdkLambdas()
+                    .stream()
+                    .filter(l -> l.getType().equals(type))
+                    .filter(l -> l.getArity() == arity)
+                    .filter(l -> l.getThirdInputType() == null || l.getThirdInputType().equals(thirdInputType))
+                    .filter(l -> l.isThrowable() == isThrowable)
+                    .findFirst();
+        }
+
+        // If jdk lambda not present find other non-jdk one and return if found or return null; if present return jdk lambda
+        if (!optionalLambda.isPresent()) {
+            return LambdaCache.getInstance()
+                    .getLambdas()
+                    .stream()
+                    .filter(l -> l.getType().equals(type))
+                    .filter(l -> l.getArity() == arity)
+                    .filter(l -> l.getThirdInputType() == null || l.getThirdInputType().equals(thirdInputType))
+                    .filter(l -> l.isThrowable() == isThrowable)
+                    .findFirst()
+                    .orElse(null);
+        } else {
+            return optionalLambda.get();
+        }
     }
 
     /**
-     * Searches for a {@link LambdaEntity} using given lambda arity, lambda third input type, lambda return type and throwable
-     * flag. If the lambda exists, it will be returned as is, otherwise {@code null} is returned. Thereby the third
-     * input or return type may be {@code null}.
+     * Searches for a {@link LambdaEntity} using given lambda arity, lambda third input type, lambda return type and
+     * throwable flag. If the lambda exists, it will be returned as is, otherwise {@code null} is returned. Thereby the
+     * third input or return type may be {@code null}.
      *
      * @param arity The lambdas arity
      * @param thirdInputType The lambdas third input type
      * @param returnType The lambdas return type
      * @param isThrowable The flag indicating if lambda is throwable
+     * @param preferFromJdk A flag if we also search for {@code JDK} lambdas
      * @return The lambda from given lambda arity, lambda third  input type, lambda return type and throwable flag, or
      * {@code null} if no such lambda exists.
      * @throws NullPointerException If given lambda type is {@code null}
      * @throws IllegalArgumentException If given lambda arity is < 0
+     * @implNote This implementation search for the lambda, which match the given arguments. If the {@code
+     * #preferFromJdk} flag is set to {@code true}, then {@code JDK} lambdas are preferred over those from this library.
+     * In either case, if no appropriate match could be found, {@code null} is returned.
      */
     public static LambdaEntity searchByThirdInputAndReturnType(@Nonnegative int arity,
-            @Nullable final TypeEntity thirdInputType, @Nullable final TypeEntity returnType, boolean isThrowable) {
+            @Nullable final TypeEntity thirdInputType, @Nullable final TypeEntity returnType, boolean isThrowable,
+            boolean preferFromJdk) {
         // Check arguments
         if (arity < 0) {
             throw new IllegalArgumentException("arity must be greater than 0");
         }
 
-        // Find lambda and return it if such or null
-        return LambdaCache.getInstance()
-                .getLambdas()
-                .stream()
-                .filter(l -> l.getArity() == arity)
-                .filter(l -> l.getThirdInputType() == null || l.getThirdInputType().equals(thirdInputType))
-                .filter(l -> l.getReturnType() == null || l.getReturnType().equals(returnType))
-                .filter(l -> l.isThrowable() == isThrowable)
-                .findFirst()
-                .orElse(null);
+        // Default variable declaration
+        Optional<LambdaEntity> optionalLambda = Optional.empty();
+
+        // If jdk flag set, then find jdk lambda if such
+        if (preferFromJdk) {
+            optionalLambda = LambdaCache.getInstance()
+                    .getJdkLambdas()
+                    .stream()
+                    .filter(l -> l.getArity() == arity)
+                    .filter(l -> l.getThirdInputType() == null || l.getThirdInputType().equals(thirdInputType))
+                    .filter(l -> l.getReturnType() == null || l.getReturnType().equals(returnType))
+                    .filter(l -> l.isThrowable() == isThrowable)
+                    .findFirst();
+        }
+
+        // If jdk lambda not present find other non-jdk one and return if found or return null; if present return jdk lambda
+        if (!optionalLambda.isPresent()) {
+            return LambdaCache.getInstance()
+                    .getLambdas()
+                    .stream()
+                    .filter(l -> l.getArity() == arity)
+                    .filter(l -> l.getThirdInputType() == null || l.getThirdInputType().equals(thirdInputType))
+                    .filter(l -> l.getReturnType() == null || l.getReturnType().equals(returnType))
+                    .filter(l -> l.isThrowable() == isThrowable)
+                    .findFirst()
+                    .orElse(null);
+        } else {
+            return optionalLambda.get();
+        }
     }
 
     /**
-     * Searches for a {@link LambdaEntity} using given lambda type, lambda arity, lambda third input type, lambda return type
-     * and throwable flag. If the lambda exists, it will be returned as is, otherwise {@code null} is returned. Thereby
-     * the third input or return type may be {@code null}.
+     * Searches for a {@link LambdaEntity} using given lambda type, lambda arity, lambda third input type, lambda return
+     * type and throwable flag. If the lambda exists, it will be returned as is, otherwise {@code null} is returned.
+     * Thereby the third input or return type may be {@code null}.
      *
      * @param type The lambdas type
      * @param arity The lambdas arity
      * @param thirdInputType The lambdas third input type
      * @param returnType The lambdas return type
      * @param isThrowable The flag indicating if lambda is throwable
+     * @param preferFromJdk A flag if we also search for {@code JDK} lambdas
      * @return The lambda from given lambda type, lambda arity, lambda third  input type, lambda return type and
      * throwable flag, or {@code null} if no such lambda exists.
      * @throws NullPointerException If given lambda type is {@code null}
      * @throws IllegalArgumentException If given lambda arity is < 0
+     * @implNote This implementation search for the lambda, which match the given arguments. If the {@code
+     * #preferFromJdk} flag is set to {@code true}, then {@code JDK} lambdas are preferred over those from this library.
+     * In either case, if no appropriate match could be found, {@code null} is returned.
      */
     public static LambdaEntity searchByThirdInputAndReturnType(@Nonnull final LambdaTypeEnum type,
-            @Nonnegative int arity,
-            @Nullable final TypeEntity thirdInputType, @Nullable final TypeEntity returnType, boolean isThrowable) {
+            @Nonnegative int arity, @Nullable final TypeEntity thirdInputType, @Nullable final TypeEntity returnType,
+            boolean isThrowable, boolean preferFromJdk) {
         // Check arguments
         Objects.requireNonNull(type);
         if (arity < 0) {
             throw new IllegalArgumentException("arity must be greater than 0");
         }
 
-        // Find lambda and return it if such or null
-        return LambdaCache.getInstance()
-                .getLambdas()
-                .stream()
-                .filter(l -> l.getType().equals(type))
-                .filter(l -> l.getArity() == arity)
-                .filter(l -> l.getThirdInputType() == null || l.getThirdInputType().equals(thirdInputType))
-                .filter(l -> l.getReturnType() == null || l.getReturnType().equals(returnType))
-                .filter(l -> l.isThrowable() == isThrowable)
-                .findFirst()
-                .orElse(null);
+        // Default variable declaration
+        Optional<LambdaEntity> optionalLambda = Optional.empty();
+
+        // If jdk flag set, then find jdk lambda if such
+        if (preferFromJdk) {
+            optionalLambda = LambdaCache.getInstance()
+                    .getJdkLambdas()
+                    .stream()
+                    .filter(l -> l.getType().equals(type))
+                    .filter(l -> l.getArity() == arity)
+                    .filter(l -> l.getThirdInputType() == null || l.getThirdInputType().equals(thirdInputType))
+                    .filter(l -> l.getReturnType() == null || l.getReturnType().equals(returnType))
+                    .filter(l -> l.isThrowable() == isThrowable)
+                    .findFirst();
+        }
+
+        // If jdk lambda not present find other non-jdk one and return if found or return null; if present return jdk lambda
+        if (!optionalLambda.isPresent()) {
+            return LambdaCache.getInstance()
+                    .getLambdas()
+                    .stream()
+                    .filter(l -> l.getType().equals(type))
+                    .filter(l -> l.getArity() == arity)
+                    .filter(l -> l.getThirdInputType() == null || l.getThirdInputType().equals(thirdInputType))
+                    .filter(l -> l.getReturnType() == null || l.getReturnType().equals(returnType))
+                    .filter(l -> l.isThrowable() == isThrowable)
+                    .findFirst()
+                    .orElse(null);
+        } else {
+            return optionalLambda.get();
+        }
     }
 
     /**
@@ -558,34 +910,59 @@ public final class LambdaUtils {
      * @param secondInputType The lambdas second input type
      * @param thirdInputType The lambdas third input type
      * @param isThrowable The flag indicating if lambda is throwable
+     * @param preferFromJdk A flag if we also search for {@code JDK} lambdas
      * @return The lambda from given input types and throwable flag, or {@code null} if no such lambda exists.
      * @throws NullPointerException If given lambda type is {@code null}
      * @throws IllegalArgumentException If given lambda arity is < 0
+     * @implNote This implementation search for the lambda, which match the given arguments. If the {@code
+     * #preferFromJdk} flag is set to {@code true}, then {@code JDK} lambdas are preferred over those from this library.
+     * In either case, if no appropriate match could be found, {@code null} is returned.
      */
     public static LambdaEntity searchByInputTypes(@Nonnegative int arity, @Nullable final TypeEntity firstInputType,
-            @Nullable final TypeEntity secondInputType, @Nullable final TypeEntity thirdInputType,
-            boolean isThrowable) {
+            @Nullable final TypeEntity secondInputType, @Nullable final TypeEntity thirdInputType, boolean isThrowable,
+            boolean preferFromJdk) {
         // Check arguments
         if (arity < 0) {
             throw new IllegalArgumentException("arity must be greater than 0");
         }
 
-        // Find lambda and return it if such or null
-        return LambdaCache.getInstance()
-                .getLambdas()
-                .stream()
-                .filter(l -> l.getArity() == arity)
-                .filter(l -> l.getFirstInputType() == null || l.getFirstInputType().equals(firstInputType))
-                .filter(l -> l.getSecondInputType() == null || l.getSecondInputType().equals(secondInputType))
-                .filter(l -> l.getThirdInputType() == null || l.getThirdInputType().equals(thirdInputType))
-                .filter(l -> l.isThrowable() == isThrowable)
-                .findFirst()
-                .orElse(null);
+        // Default variable declaration
+        Optional<LambdaEntity> optionalLambda = Optional.empty();
+
+        // If jdk flag set, then find jdk lambda if such
+        if (preferFromJdk) {
+            optionalLambda = LambdaCache.getInstance()
+                    .getJdkLambdas()
+                    .stream()
+                    .filter(l -> l.getArity() == arity)
+                    .filter(l -> l.getFirstInputType() == null || l.getFirstInputType().equals(firstInputType))
+                    .filter(l -> l.getSecondInputType() == null || l.getSecondInputType().equals(secondInputType))
+                    .filter(l -> l.getThirdInputType() == null || l.getThirdInputType().equals(thirdInputType))
+                    .filter(l -> l.isThrowable() == isThrowable)
+                    .findFirst();
+        }
+
+        // If jdk lambda not present find other non-jdk one and return if found or return null; if present return jdk lambda
+        if (!optionalLambda.isPresent()) {
+            return LambdaCache.getInstance()
+                    .getLambdas()
+                    .stream()
+                    .filter(l -> l.getArity() == arity)
+                    .filter(l -> l.getFirstInputType() == null || l.getFirstInputType().equals(firstInputType))
+                    .filter(l -> l.getSecondInputType() == null || l.getSecondInputType().equals(secondInputType))
+                    .filter(l -> l.getThirdInputType() == null || l.getThirdInputType().equals(thirdInputType))
+                    .filter(l -> l.isThrowable() == isThrowable)
+                    .findFirst()
+                    .orElse(null);
+        } else {
+            return optionalLambda.get();
+        }
     }
 
     /**
-     * Searches for a {@link LambdaEntity} using given lambda type, input types and throwable flag. If the lambda exists, it
-     * will be returned as is, otherwise {@code null} is returned. Thereby the input types may be {@code null}.
+     * Searches for a {@link LambdaEntity} using given lambda type, input types and throwable flag. If the lambda
+     * exists, it will be returned as is, otherwise {@code null} is returned. Thereby the input types may be {@code
+     * null}.
      *
      * @param type The lambdas type
      * @param arity The lambdas arity
@@ -593,38 +970,63 @@ public final class LambdaUtils {
      * @param secondInputType The lambdas second input type
      * @param thirdInputType The lambdas third input type
      * @param isThrowable The flag indicating if lambda is throwable
+     * @param preferFromJdk A flag if we also search for {@code JDK} lambdas
      * @return The lambda from given lambda type, input types and throwable flag, or {@code null} if no such lambda
      * exists.
      * @throws NullPointerException If given lambda type is {@code null}
      * @throws IllegalArgumentException If given lambda arity is < 0
+     * @implNote This implementation search for the lambda, which match the given arguments. If the {@code
+     * #preferFromJdk} flag is set to {@code true}, then {@code JDK} lambdas are preferred over those from this library.
+     * In either case, if no appropriate match could be found, {@code null} is returned.
      */
     public static LambdaEntity searchByInputTypes(@Nonnull final LambdaTypeEnum type, @Nonnegative int arity,
             @Nullable final TypeEntity firstInputType, @Nullable final TypeEntity secondInputType,
-            @Nullable final TypeEntity thirdInputType, boolean isThrowable) {
+            @Nullable final TypeEntity thirdInputType, boolean isThrowable, boolean preferFromJdk) {
         // Check arguments
         Objects.requireNonNull(type);
         if (arity < 0) {
             throw new IllegalArgumentException("arity must be greater than 0");
         }
 
-        // Find lambda and return it if such or null
-        return LambdaCache.getInstance()
-                .getLambdas()
-                .stream()
-                .filter(l -> l.getType().equals(type))
-                .filter(l -> l.getArity() == arity)
-                .filter(l -> l.getFirstInputType() == null || l.getFirstInputType().equals(firstInputType))
-                .filter(l -> l.getSecondInputType() == null || l.getSecondInputType().equals(secondInputType))
-                .filter(l -> l.getThirdInputType() == null || l.getThirdInputType().equals(thirdInputType))
-                .filter(l -> l.isThrowable() == isThrowable)
-                .findFirst()
-                .orElse(null);
+        // Default variable declaration
+        Optional<LambdaEntity> optionalLambda = Optional.empty();
+
+        // If jdk flag set, then find jdk lambda if such
+        if (preferFromJdk) {
+            optionalLambda = LambdaCache.getInstance()
+                    .getJdkLambdas()
+                    .stream()
+                    .filter(l -> l.getType().equals(type))
+                    .filter(l -> l.getArity() == arity)
+                    .filter(l -> l.getFirstInputType() == null || l.getFirstInputType().equals(firstInputType))
+                    .filter(l -> l.getSecondInputType() == null || l.getSecondInputType().equals(secondInputType))
+                    .filter(l -> l.getThirdInputType() == null || l.getThirdInputType().equals(thirdInputType))
+                    .filter(l -> l.isThrowable() == isThrowable)
+                    .findFirst();
+        }
+
+        // If jdk lambda not present find other non-jdk one and return if found or return null; if present return jdk lambda
+        if (!optionalLambda.isPresent()) {
+            return LambdaCache.getInstance()
+                    .getLambdas()
+                    .stream()
+                    .filter(l -> l.getType().equals(type))
+                    .filter(l -> l.getArity() == arity)
+                    .filter(l -> l.getFirstInputType() == null || l.getFirstInputType().equals(firstInputType))
+                    .filter(l -> l.getSecondInputType() == null || l.getSecondInputType().equals(secondInputType))
+                    .filter(l -> l.getThirdInputType() == null || l.getThirdInputType().equals(thirdInputType))
+                    .filter(l -> l.isThrowable() == isThrowable)
+                    .findFirst()
+                    .orElse(null);
+        } else {
+            return optionalLambda.get();
+        }
     }
 
     /**
-     * Searches for a {@link LambdaEntity} using given input types, return type and throwable flag. If the lambda exists, it
-     * will be returned as is, otherwise {@code null} is returned. Thereby the input types or return type may be {@code
-     * null}.
+     * Searches for a {@link LambdaEntity} using given input types, return type and throwable flag. If the lambda
+     * exists, it will be returned as is, otherwise {@code null} is returned. Thereby the input types or return type may
+     * be {@code null}.
      *
      * @param arity The lambdas arity
      * @param firstInputType The lambdas first input type
@@ -632,30 +1034,56 @@ public final class LambdaUtils {
      * @param thirdInputType The lambdas third input type
      * @param returnType The lambdas return type
      * @param isThrowable The flag indicating if lambda is throwable
+     * @param preferFromJdk A flag if we also search for {@code JDK} lambdas
      * @return The lambda from given input types and throwable flag, or {@code null} if no such lambda exists.
      * @throws NullPointerException If given lambda type is {@code null}
      * @throws IllegalArgumentException If given lambda arity is < 0
+     * @implNote This implementation search for the lambda, which match the given arguments. If the {@code
+     * #preferFromJdk} flag is set to {@code true}, then {@code JDK} lambdas are preferred over those from this library.
+     * In either case, if no appropriate match could be found, {@code null} is returned.
      */
     public static LambdaEntity searchByInputTypesAndReturnType(@Nonnegative int arity,
             @Nullable final TypeEntity firstInputType, @Nullable final TypeEntity secondInputType,
-            @Nullable final TypeEntity thirdInputType, @Nullable TypeEntity returnType, boolean isThrowable) {
+            @Nullable final TypeEntity thirdInputType, @Nullable TypeEntity returnType, boolean isThrowable,
+            boolean preferFromJdk) {
         // Check arguments
         if (arity < 0) {
             throw new IllegalArgumentException("arity must be greater than 0");
         }
 
-        // Find lambda and return it if such or null
-        return LambdaCache.getInstance()
-                .getLambdas()
-                .stream()
-                .filter(l -> l.getArity() == arity)
-                .filter(l -> l.getFirstInputType() == null || l.getFirstInputType().equals(firstInputType))
-                .filter(l -> l.getSecondInputType() == null || l.getSecondInputType().equals(secondInputType))
-                .filter(l -> l.getThirdInputType() == null || l.getThirdInputType().equals(thirdInputType))
-                .filter(l -> l.getReturnType() == null || l.getReturnType().equals(returnType))
-                .filter(l -> l.isThrowable() == isThrowable)
-                .findFirst()
-                .orElse(null);
+        // Default variable declaration
+        Optional<LambdaEntity> optionalLambda = Optional.empty();
+
+        // If jdk flag set, then find jdk lambda if such
+        if (preferFromJdk) {
+            optionalLambda = LambdaCache.getInstance()
+                    .getJdkLambdas()
+                    .stream()
+                    .filter(l -> l.getArity() == arity)
+                    .filter(l -> l.getFirstInputType() == null || l.getFirstInputType().equals(firstInputType))
+                    .filter(l -> l.getSecondInputType() == null || l.getSecondInputType().equals(secondInputType))
+                    .filter(l -> l.getThirdInputType() == null || l.getThirdInputType().equals(thirdInputType))
+                    .filter(l -> l.getReturnType() == null || l.getReturnType().equals(returnType))
+                    .filter(l -> l.isThrowable() == isThrowable)
+                    .findFirst();
+        }
+
+        // If jdk lambda not present find other non-jdk one and return if found or return null; if present return jdk lambda
+        if (!optionalLambda.isPresent()) {
+            return LambdaCache.getInstance()
+                    .getLambdas()
+                    .stream()
+                    .filter(l -> l.getArity() == arity)
+                    .filter(l -> l.getFirstInputType() == null || l.getFirstInputType().equals(firstInputType))
+                    .filter(l -> l.getSecondInputType() == null || l.getSecondInputType().equals(secondInputType))
+                    .filter(l -> l.getThirdInputType() == null || l.getThirdInputType().equals(thirdInputType))
+                    .filter(l -> l.getReturnType() == null || l.getReturnType().equals(returnType))
+                    .filter(l -> l.isThrowable() == isThrowable)
+                    .findFirst()
+                    .orElse(null);
+        } else {
+            return optionalLambda.get();
+        }
     }
 
     /**
@@ -670,33 +1098,60 @@ public final class LambdaUtils {
      * @param thirdInputType The lambdas third input type
      * @param returnType The lambdas return type
      * @param isThrowable The flag indicating if lambda is throwable
+     * @param preferFromJdk A flag if we also search for {@code JDK} lambdas
      * @return The lambda from given lambda type, input types and throwable flag, or {@code null} if no such lambda
      * exists.
      * @throws NullPointerException If given lambda type is {@code null}
      * @throws IllegalArgumentException If given lambda arity is < 0
+     * @implNote This implementation search for the lambda, which match the given arguments. If the {@code
+     * #preferFromJdk} flag is set to {@code true}, then {@code JDK} lambdas are preferred over those from this library.
+     * In either case, if no appropriate match could be found, {@code null} is returned.
      */
     public static LambdaEntity searchByInputTypesAndReturnType(@Nonnull final LambdaTypeEnum type,
-            @Nonnegative int arity,
-            @Nullable final TypeEntity firstInputType, @Nullable final TypeEntity secondInputType,
-            @Nullable final TypeEntity thirdInputType, @Nullable TypeEntity returnType, boolean isThrowable) {
+            @Nonnegative int arity, @Nullable final TypeEntity firstInputType,
+            @Nullable final TypeEntity secondInputType, @Nullable final TypeEntity thirdInputType,
+            @Nullable TypeEntity returnType, boolean isThrowable, boolean preferFromJdk) {
         // Check arguments
         Objects.requireNonNull(type);
         if (arity < 0) {
             throw new IllegalArgumentException("arity must be greater than 0");
         }
 
-        // Find lambda and return it if such or null
-        return LambdaCache.getInstance()
-                .getLambdas()
-                .stream().filter(l -> l.getType().equals(type))
-                .filter(l -> l.getArity() == arity)
-                .filter(l -> l.getFirstInputType() == null || l.getFirstInputType().equals(firstInputType))
-                .filter(l -> l.getSecondInputType() == null || l.getSecondInputType().equals(secondInputType))
-                .filter(l -> l.getThirdInputType() == null || l.getThirdInputType().equals(thirdInputType))
-                .filter(l -> l.getReturnType() == null || l.getReturnType().equals(returnType))
-                .filter(l -> l.isThrowable() == isThrowable)
-                .findFirst()
-                .orElse(null);
+        // Default variable declaration
+        Optional<LambdaEntity> optionalLambda = Optional.empty();
+
+        // If jdk flag set, then find jdk lambda if such
+        if (preferFromJdk) {
+            optionalLambda = LambdaCache.getInstance()
+                    .getJdkLambdas()
+                    .stream()
+                    .filter(l -> l.getType().equals(type))
+                    .filter(l -> l.getArity() == arity)
+                    .filter(l -> l.getFirstInputType() == null || l.getFirstInputType().equals(firstInputType))
+                    .filter(l -> l.getSecondInputType() == null || l.getSecondInputType().equals(secondInputType))
+                    .filter(l -> l.getThirdInputType() == null || l.getThirdInputType().equals(thirdInputType))
+                    .filter(l -> l.getReturnType() == null || l.getReturnType().equals(returnType))
+                    .filter(l -> l.isThrowable() == isThrowable)
+                    .findFirst();
+        }
+
+        // If jdk lambda not present find other non-jdk one and return if found or return null; if present return jdk lambda
+        if (!optionalLambda.isPresent()) {
+            return LambdaCache.getInstance()
+                    .getLambdas()
+                    .stream()
+                    .filter(l -> l.getType().equals(type))
+                    .filter(l -> l.getArity() == arity)
+                    .filter(l -> l.getFirstInputType() == null || l.getFirstInputType().equals(firstInputType))
+                    .filter(l -> l.getSecondInputType() == null || l.getSecondInputType().equals(secondInputType))
+                    .filter(l -> l.getThirdInputType() == null || l.getThirdInputType().equals(thirdInputType))
+                    .filter(l -> l.getReturnType() == null || l.getReturnType().equals(returnType))
+                    .filter(l -> l.isThrowable() == isThrowable)
+                    .findFirst()
+                    .orElse(null);
+        } else {
+            return optionalLambda.get();
+        }
     }
 
     /**

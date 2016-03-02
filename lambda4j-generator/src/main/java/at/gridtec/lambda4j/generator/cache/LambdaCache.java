@@ -36,6 +36,11 @@ public final class LambdaCache {
     private List<LambdaEntity> lambdas = new LinkedList<>();
 
     /**
+     * A list which holds references to {@link LambdaEntity}s representing those from the {@code JDK}.
+     */
+    private List<LambdaEntity> jdkLambdas = new LinkedList<>();
+
+    /**
      * Private constructor to prevent instantiation.
      */
     private LambdaCache() {
@@ -74,6 +79,24 @@ public final class LambdaCache {
      */
     public void setLambdas(List<LambdaEntity> lambdas) {
         this.lambdas = lambdas;
+    }
+
+    /**
+     * Returns a list of all {@link LambdaEntity}s representing those from the {@code JDK}.
+     *
+     * @return A list of all {@link LambdaEntity}s representing those from the {@code JDK}.
+     */
+    public List<LambdaEntity> getJdkLambdas() {
+        return jdkLambdas;
+    }
+
+    /**
+     * Sets the list of all {@link LambdaEntity}s representing those from the {@code JDK}.
+     *
+     * @param jdkLambdas The list of all {@link LambdaEntity}s representing those from the {@code JDK}.
+     */
+    public void setJdkLambdas(List<LambdaEntity> jdkLambdas) {
+        this.jdkLambdas = jdkLambdas;
     }
 
     @SuppressWarnings("CloneDoesntCallSuperClone")
