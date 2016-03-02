@@ -31,7 +31,7 @@ import java.util.function.Function;
  * defines if the lambda can also be found in the JDK. The lambda is handed over to next {@code Processor} to do further
  * processing. The result from next step is returned by this step.
  * <p>
- * There are no requirements by this step.
+ * Requirements of this processor is the lambdas throwable flag ({@link LambdaEntity#isThrowable()}) only.
  */
 public class JdkProcessor extends Processor {
 
@@ -48,13 +48,20 @@ public class JdkProcessor extends Processor {
     @Nonnull
     @Override
     protected List<LambdaEntity> process(@Nonnull final LambdaEntity lambda) {
-        // Check if lambda is also available in the JDK
-        if (isLambdaFromJdk(lambda)) {
-            lambda.setFromJDK(true);
-            // Found jdk lambda so add it to list
-            LambdaCache.getInstance().getJdkLambdas().add(LambdaUtils.copy(lambda));
-        } else {
-            lambda.setFromJDK(false);
+
+        // If lambda is not throwable, then set jdk flag (jdk does not provide us throwable lambdas)
+        if (!lambda.isThrowable()) {
+            // Check if lambda is from JDK or lambda is of type comparator or runnable (cannot be found in java.util.function package, but is also a jdk lambda (Special Case))
+            if (LambdaUtils.isOfTypeComparator(lambda) || LambdaUtils.isOfTypeRunnable(lambda) || isLambdaFromJdk(
+                    lambda)) {
+                lambda.setFromJDK(true);
+                // Found jdk lambda so add it to list
+                LambdaCache.getInstance().getJdkLambdas().add(LambdaUtils.copy(lambda));
+            }
+            // Lambda is not available in the JDK
+            else {
+                lambda.setFromJDK(false);
+            }
         }
         return next(lambda);
     }
