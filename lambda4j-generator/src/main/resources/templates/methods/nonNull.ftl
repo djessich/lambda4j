@@ -18,7 +18,7 @@
  *
  * @return An equal ${lambda.type.simpleName}, which ensures that its result is not {@code null}.
  */
-@Nonnull
+${annotation.nonnull}
 default ${lambda.name} ${genericTypeStringWithOptionalReturn} nonNull() {
     return (${parameterNameString}) -> Optional.ofNullable(${lambda.method}(${parameterNameString}));
 }
