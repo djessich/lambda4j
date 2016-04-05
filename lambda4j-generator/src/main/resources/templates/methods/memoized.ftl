@@ -25,10 +25,10 @@
  * forever.
  *
  * @return A memoized (caching) version of this {@code ${lambda.name}}.
- * @implNote The returned memoized ${lambda.type.simpleName} can be safely used concurrently from multiple threads which makes it
- * thread-safe.
  * @implSpec This implementation does not allow the input parameter${helpers.s()} or return value to be {@code null} for the
  * resulting memoized ${lambda.type.simpleName}, as the cache used internally does not permit {@code null} keys or values.
+ * @implNote The returned memoized ${lambda.type.simpleName} can be safely used concurrently from multiple threads which makes it
+ * thread-safe.
  */
 ${annotation.nonnull}
 default ${lambda.name}${genericParameterTypeString} memoized() {

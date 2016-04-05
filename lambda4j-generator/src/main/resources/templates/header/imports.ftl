@@ -1,5 +1,6 @@
 <#-- @formatter:off -->
-import at.gridtec.lambda4j.core.*;
+<#--import at.gridtec.lambda4j.core.*;-->
+import at.gridtec.lambda4j.core.exception.*;
 import at.gridtec.lambda4j.core.util.*;
 import at.gridtec.lambda4j.functions.*;
 <#--import at.gridtec.lambda4j.comparator.*;-->

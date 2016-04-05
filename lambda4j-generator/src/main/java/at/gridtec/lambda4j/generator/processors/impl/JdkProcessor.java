@@ -50,19 +50,18 @@ public class JdkProcessor extends Processor {
     protected List<LambdaEntity> process(@Nonnull final LambdaEntity lambda) {
 
         // If lambda is not throwable, then set jdk flag (jdk does not provide us throwable lambdas)
-        if (!lambda.isThrowable()) {
-            // Check if lambda is from JDK or lambda is of type comparator or runnable (cannot be found in java.util.function package, but is also a jdk lambda (Special Case))
-            if (LambdaUtils.isOfTypeComparator(lambda) || LambdaUtils.isOfTypeRunnable(lambda) || isLambdaFromJdk(
-                    lambda)) {
-                lambda.setFromJDK(true);
-                // Found jdk lambda so add it to list
-                LambdaCache.getInstance().getJdkLambdas().add(LambdaUtils.copy(lambda));
-            }
-            // Lambda is not available in the JDK
-            else {
-                lambda.setFromJDK(false);
-            }
+        //        if (!lambda.isThrowable()) {
+        // Check if lambda is from JDK or lambda is of type comparator or runnable (cannot be found in java.util.function package, but is also a jdk lambda (Special Case))
+        if (LambdaUtils.isOfTypeComparator(lambda) || LambdaUtils.isOfTypeRunnable(lambda) || isLambdaFromJdk(lambda)) {
+            lambda.setFromJDK(true);
+            // Found jdk lambda so add it to list
+            LambdaCache.getInstance().getJdkLambdas().add(LambdaUtils.copy(lambda));
         }
+        // Lambda is not available in the JDK
+        else {
+            lambda.setFromJDK(false);
+        }
+        //        }
         return next(lambda);
     }
 
@@ -74,7 +73,13 @@ public class JdkProcessor extends Processor {
      */
     private boolean isLambdaFromJdk(final LambdaEntity lambda) {
         try {
-            Class.forName(JAVA_UTIL_FUNCTION_PACKAGE + "." + lambda.getName());
+            String name = lambda.getName();
+            // If lambda is a throwable lambda, then add
+            if (lambda.isThrowable()) {
+                name = name.substring(9);
+            }
+            Class.forName(JAVA_UTIL_FUNCTION_PACKAGE + "." + name);
+            //            Class.forName(JAVA_UTIL_FUNCTION_PACKAGE + "." + lambda.getName());
         } catch (ClassNotFoundException ignored) {
             return false;
         }

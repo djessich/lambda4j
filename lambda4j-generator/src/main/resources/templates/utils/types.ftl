@@ -19,6 +19,14 @@
     <#return genericString>
 </#function>
 
+<#function buildParameterSimpleType param target = lambda>
+    <#local genericString = "">
+    <#if param?has_content>
+        <#local genericString = genericString + param.typeSimpleName>
+    </#if>
+    <#return genericString>
+</#function>
+
 <#function buildParameterName param target = lambda>
     <#local genericString = "">
     <#if param?has_content>
@@ -79,6 +87,22 @@
     <#if (types?has_content)>
         <#list types as type>
             <#local genericString = genericString + .namespace.buildParameterType(type, target)>
+            <#if type?has_next>
+                <#local genericString = genericString + ", ">
+            </#if>
+        </#list>
+    </#if>
+    <#return genericString>
+</#function>
+
+<#function buildParameterSimpleTypeString target = lambda other1 = "" other2 = "" other3 = "">
+    <#local target = .namespace.otherParametersToTarget(target, other1, other2, other3)>
+    <#local types = [target.firstInputType!"", target.secondInputType!"", target.thirdInputType!""]>
+    <#local types = filters.filterEmpties(types)>
+    <#local genericString = "">
+    <#if (types?has_content)>
+        <#list types as type>
+            <#local genericString = genericString + .namespace.buildParameterSimpleType(type, target)>
             <#if type?has_next>
                 <#local genericString = genericString + ", ">
             </#if>

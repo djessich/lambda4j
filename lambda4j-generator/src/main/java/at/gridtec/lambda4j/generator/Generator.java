@@ -72,7 +72,7 @@ public class Generator {
                 .filter(lambda -> !lambda.getType().equals(LambdaTypeEnum.COMPARATOR))
                 .sorted(Comparator.comparing(LambdaEntity::getType).thenComparing(LambdaEntity::getPackageName))
                 .map(lambda -> {
-                    if (lambda.isFromJDK()) {
+                    if (lambda.isFromJDK() && !lambda.isThrowable()) {
                         lambda.setName(lambda.getName() + "2");
                     }
                     return lambda;

@@ -2,6 +2,8 @@
 <#import "./utils/types.ftl" as types>
 
 <#global parameterString = types.buildParameterString()>
+<#global parameterTypeString = types.buildParameterTypeString()>
+<#global parameterSimpleTypeString = types.buildParameterSimpleTypeString()>
 <#global parameterNameString = types.buildParameterNameString()>
 <#global genericParameterTypeString = types.buildGenericParameterTypeString()>
 <#global genericParameterTypeStringWithErasure = types.buildGenericParameterTypeStringWithErasure()>
@@ -17,19 +19,21 @@
 <#global short = LambdaUtils.getShortTypeEntity()>
 <#global void = LambdaUtils.getVoidTypeEntity()>
 
-<#global extenderLambda = lambda>
-
+<#-- Prepare extends string -->
 <#assign extends = "">
-<#assign isGenericOperator = (LambdaUtils.isOfTypeOperator(lambda) && !helpers.isPrimitive(lambda.returnType))>
 
-<#-- If lambda is a JDK lambda or lambda is a generic operator, then prepare extends string -->
-<#if lambda.fromJDK>
-    <#assign extenderLambda = LambdaUtils.searchByInputTypesAndReturnType(lambda.type, lambda.arity, lambda.firstInputType, lambda.secondInputType, lambda.thirdInputType, lambda.returnType, lambda.throwable, true)>
-    <#assign extends = ", " + extenderLambda.name + types.buildGenericParameterTypeString(extenderLambda)>
-<#elseif isGenericOperator>
+<#-- If lambda is a generic operator, then append to extends string -->
+<#assign isGenericOperator = (LambdaUtils.isOfTypeOperator(lambda) && !helpers.isPrimitive(lambda.returnType))>
+<#if isGenericOperator>
     <#assign extenderLambda = LambdaUtils.searchByInputTypesAndReturnType(LambdaUtils.getFunctionType(), lambda.arity, Object, Object, Object, Object, lambda.throwable, false)>
     <#assign returnTypeName = lambda.returnType.typeName>
-    <#assign extends = ", " + extenderLambda.name + types.buildGenericParameterTypeString(extenderLambda, returnTypeName, returnTypeName, returnTypeName, returnTypeName)>
+    <#assign extends += ", " + extenderLambda.name + types.buildGenericParameterTypeString(extenderLambda, returnTypeName, returnTypeName, returnTypeName, returnTypeName)>
+</#if>
+
+<#-- If lambda is a JDK lambda, then append to extends string -->
+<#if lambda.fromJDK>
+    <#assign extenderLambda = LambdaUtils.searchByInputTypesAndReturnType(lambda.type, lambda.arity, lambda.firstInputType, lambda.secondInputType, lambda.thirdInputType, lambda.returnType, false, true)>
+    <#assign extends += ", " + extenderLambda.name + types.buildGenericParameterTypeString(extenderLambda)>
 </#if>
 
 <#include "header/copyright.ftl">
