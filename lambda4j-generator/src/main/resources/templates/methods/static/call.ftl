@@ -4,7 +4,7 @@
 <#import "../../utils/types.ftl" as types>
 
 /**
- * Calls the given {@link ${lambda.name}} with the given arguments and returns its result.
+ * Calls the given {@link ${lambda.name}} with the given argument${helpers.s()} and returns its result.
  *
 <#include "../../javadoc/paramGenericInput.ftl">
  * @param ${lambda.type.simpleName} The ${lambda.type.simpleName} to be called

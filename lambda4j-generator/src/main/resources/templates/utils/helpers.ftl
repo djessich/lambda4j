@@ -23,6 +23,11 @@
     <#return (target.arity > 1)?then("1", "")>
 </#function>
 
+<#-- prints a plural 's' if arity is greater than 1 -->
+<#function s target = lambda>
+    <#return (target.arity > 1)?then("s", "")>
+</#function>
+
 <#-- prints return keyword only if given lambda not consumer type -->
 <#function printReturnIfNotVoid target = lambda>
     <#local ret = "">

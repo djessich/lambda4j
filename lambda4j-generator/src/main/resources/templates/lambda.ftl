@@ -25,11 +25,11 @@
 <#-- If lambda is a JDK lambda or lambda is a generic operator, then prepare extends string -->
 <#if lambda.fromJDK>
     <#assign extenderLambda = LambdaUtils.searchByInputTypesAndReturnType(lambda.type, lambda.arity, lambda.firstInputType, lambda.secondInputType, lambda.thirdInputType, lambda.returnType, lambda.throwable, true)>
-    <#assign extends = "extends " + extenderLambda.name + types.buildGenericParameterTypeString(extenderLambda)>
+    <#assign extends = ", " + extenderLambda.name + types.buildGenericParameterTypeString(extenderLambda)>
 <#elseif isGenericOperator>
     <#assign extenderLambda = LambdaUtils.searchByInputTypesAndReturnType(LambdaUtils.getFunctionType(), lambda.arity, Object, Object, Object, Object, lambda.throwable, false)>
     <#assign returnTypeName = lambda.returnType.typeName>
-    <#assign extends = "extends " + extenderLambda.name + types.buildGenericParameterTypeString(extenderLambda, returnTypeName, returnTypeName, returnTypeName, returnTypeName)>
+    <#assign extends = ", " + extenderLambda.name + types.buildGenericParameterTypeString(extenderLambda, returnTypeName, returnTypeName, returnTypeName, returnTypeName)>
 </#if>
 
 <#include "header/copyright.ftl">
@@ -43,7 +43,7 @@ package ${lambda.packageName};
 
 @SuppressWarnings("unused")
 @FunctionalInterface
-public interface ${lambda.name}${genericParameterTypeString} ${extends} {
+public interface ${lambda.name}${genericParameterTypeString} extends Lambda ${extends} {
 
 <#include "methods/static/of.ftl">
 <#include "methods/static/call.ftl">
@@ -75,6 +75,7 @@ public interface ${lambda.name}${genericParameterTypeString} ${extends} {
     <#include "methods/curried.ftl">
     <#include "methods/tupled.ftl">
     <#include "methods/reversed.ftl">
+    <#include "methods/memoized.ftl">
     <#include "methods/nonNull.ftl">
     <#include "methods/boxed.ftl">
 </#if>

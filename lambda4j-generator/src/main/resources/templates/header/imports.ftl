@@ -1,4 +1,7 @@
 <#-- @formatter:off -->
+import at.gridtec.lambda4j.core.*;
+import at.gridtec.lambda4j.core.util.*;
+import at.gridtec.lambda4j.functions.*;
 <#--import at.gridtec.lambda4j.comparator.*;-->
 import at.gridtec.lambda4j.functions.consumer.*;
 import at.gridtec.lambda4j.functions.consumer.bi.*;
@@ -30,5 +33,6 @@ import at.gridtec.lambda4j.functions.supplier.*;
 import org.apache.commons.lang3.tuple.*;
 import javax.annotation.*;
 import java.util.*;
+import java.util.concurrent.*;
 import java.util.function.*;
 <#-- @formatter:on -->

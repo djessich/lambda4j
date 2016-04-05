@@ -5,7 +5,7 @@
     <@.namespace.xorMethod/>
 </#if>
 
-<#-- a helper macro to centralize and method xor to avoid unnecessary indenting -->
+<#-- a helper macro to centralize xor method and to avoid unnecessary indenting -->
 <#macro xorMethod>
 /**
  * Returns a composed {@link ${lambda.name}} that represents a short-circuiting logical XOR of this ${lambda.type.simpleName} and

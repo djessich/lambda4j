@@ -13,16 +13,25 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package at.gridtec.lambda4j.core.throwables;
+package at.gridtec.lambda4j.functions;
+
+import java.io.Serializable;
 
 /**
- * Created by Dominik Jessich on 24.11.2015.
+ * Created by domin on 04.04.2016.
  */
-// TODO
-@SuppressWarnings("unused")
-@FunctionalInterface
-public interface HandlingInstructions<T extends Throwable> {
+public interface Lambda extends Serializable {
 
-    void process(Handler.The<T> handler) throws Throwable;
+    /**
+     * The <a href="https://docs.oracle.com/javase/8/docs/api/index.html">serial version uid</a>.
+     */
+    long serialVersionUID = 1L;
 
+    /**
+     * Zero Abstract Method (ZAM) interface for marking lambdas as memoized lambdas. This is done by using a cast with
+     * this interface as additional bound (intersection type).
+     */
+    interface Memoized {
+
+    }
 }

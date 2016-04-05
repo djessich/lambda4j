@@ -10,11 +10,11 @@
 <#-- a helper macro to centralize isEqual method and to avoid unnecessary indenting -->
 <#macro isEqualMethod>
 /**
- * Returns a {@link ${lambda.name}} that tests if the given arguments are <b>equal</b> to the ones of this ${lambda.type.simpleName}.
+ * Returns a {@link ${lambda.name}} that tests if the given argument${helpers.s()} are <b>equal</b> to the one${helpers.s()} of this ${lambda.type.simpleName}.
  *
 <#include "../../javadoc/paramGenericInput.ftl">
 <@.namespace.javadocArgumentInputisEqualMethod/>
- * @return A {@code ${lambda.name}} that tests if the given arguments are <b>equal</b> to the ones of this ${lambda.type.simpleName}.
+ * @return A {@code ${lambda.name}} that tests if the given argument${helpers.s()} are <b>equal</b> to the one${helpers.s()} of this ${lambda.type.simpleName}.
  * @implNote This implementation checks equality according to {@link Objects#equals(Object)} operation for {@link Object}
  * references and {@code value == target} operation for primitive values.
  */

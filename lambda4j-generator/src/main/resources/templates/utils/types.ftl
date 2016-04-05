@@ -1,6 +1,8 @@
 <#import "filters.ftl" as filters>
 <#import "helpers.ftl" as helpers>
 
+<#-- ##### parameter functions START ##### -->
+
 <#function buildParameter param target = lambda>
     <#local genericString = "">
     <#if param?has_content>
@@ -12,12 +14,7 @@
 <#function buildParameterType param target = lambda>
     <#local genericString = "">
     <#if param?has_content>
-        <#if param.primitive>
-        <#--<#local genericString = genericString + param.typeSimpleName>-->
-            <#local genericString = genericString + param.typeName>
-        <#else>
-            <#local genericString = genericString + param.typeName>
-        </#if>
+        <#local genericString = genericString + param.typeName>
     </#if>
     <#return genericString>
 </#function>
@@ -40,6 +37,23 @@
     <#return genericString>
 </#function>
 
+<#function buildGenericParameterType param target = lambda>
+    <#local genericString = "">
+    <#if param?has_content>
+        <#local classMap = { "char":"Character", "int":"Integer" }>
+        <#local typeName = classMap[param.typeSimpleName]!"">
+        <#if typeName?has_content>
+            <#local genericString = genericString + typeName?cap_first>
+        <#else>
+            <#local genericString = genericString + param.typeName?cap_first>
+        </#if>
+    </#if>
+    <#return genericString>
+</#function>
+
+<#-- ##### parameter functions END ##### -->
+
+<#-- ##### parameter string functions START ##### -->
 
 <#function buildParameterString target = lambda other1 = "" other2 = "" other3 = "">
     <#local target = .namespace.otherParametersToTarget(target, other1, other2, other3)>
@@ -89,6 +103,9 @@
     <#return genericString>
 </#function>
 
+<#-- ##### parameter string functions END ##### -->
+
+<#-- ##### generic parameter string functions START ##### -->
 
 <#function buildGenericParameterTypeString target = lambda other1 = "" other2 = "" other3 = "" other4 = "">
     <#local target = .namespace.otherParametersToTarget(target, other1, other2, other3, other4)>
@@ -147,7 +164,6 @@
     <#return genericString>
 </#function>
 
-<#-- a helper function to build a generic input lambda string for boxed operation -->
 <#function buildGenericInputParameterTypeString target = lambda other1 = "" other2 = "" other3 = "">
     <#local target = .namespace.otherParametersToTarget(target, other1, other2, other3)>
     <#local types = []>
@@ -172,6 +188,10 @@
     <#return genericString>
 </#function>
 
+<#-- ##### generic parameter string functions END ##### -->
+
+<#-- ##### helpers functions START ##### -->
+
 <#function otherParametersToTarget target = lambda other1 = "" other2 = "" other3 = "" other4 = "">
     <#assign copy = LambdaUtils.copy(target)> <#-- copy lambda as we will change its input arguments -->
     <#if other1?has_content && copy.getFirstInputType()?has_content>
@@ -192,3 +212,5 @@
     </#if>
     <#return copy>
 </#function>
+
+<#-- ##### helpers functions END ##### -->
