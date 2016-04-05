@@ -9,7 +9,7 @@
     <#assign returnType = types.buildParameterType(lambda.returnType) />
     <#assign cacheGenericString = .namespace.buildCacheGenericStringKeyPart() + ", " + types.buildGenericParameterType(lambda.returnType) />
     <#assign cacheComputeIfAbsentKey = .namespace.buildComputeIfAbsentKey(types.buildParameterName(lambda.firstInputType!""), types.buildParameterName(lambda.secondInputType!""), types.buildParameterName(lambda.thirdInputType!"")) />
-    <#assign cacheComputeIfAbsentMappingFunction = .namespace.buildComputeIfAbsentMappingFunction() />
+    <#assign cacheComputeIfAbsentMappingFunction = lambda.throwable?then("ThrowableFunction.of(", "") + .namespace.buildComputeIfAbsentMappingFunction() + lambda.throwable?then(")", "")/>
     <#-- print memoized method -->
     <@.namespace.memoizedMethod returnType cacheGenericString cacheComputeIfAbsentKey cacheComputeIfAbsentMappingFunction/>
 </#if>
@@ -40,19 +40,7 @@ default ${lambda.name}${genericParameterTypeString} memoized() {
         return (${lambda.name}${genericParameterTypeString} & Memoized) (${parameterNameString}) -> {
             final ${returnType} returnValue;
             synchronized (lock) {
-                returnValue = cache.computeIfAbsent(${cacheComputeIfAbsentKey}, key ->
-                <#if (lambda.throwable)>
-                    {
-                        try {
-                            return ${cacheComputeIfAbsentMappingFunction};
-                        } catch (Throwable throwable) {
-                            throw ThrowableUtils.sneakyThrow(throwable);
-                        }
-                    }
-                <#else>
-                    ${cacheComputeIfAbsentMappingFunction}
-                </#if>
-                );
+                returnValue = cache.computeIfAbsent(${cacheComputeIfAbsentKey}, ${cacheComputeIfAbsentMappingFunction});
             }
             return returnValue;
         };
@@ -90,11 +78,11 @@ default ${lambda.name}${genericParameterTypeString} memoized() {
 <#function buildComputeIfAbsentMappingFunction target = lambda>
     <#local ret = "">
     <#if (target.arity == 1)>
-        <#local ret = target.method + "(key)">
+        <#local ret = "this::" + target.method>
     <#elseif (target.arity == 2)>
-        <#local ret = target.method + "(key.getLeft(), key.getRight())">
+        <#local ret = "key -> " + target.method + "(key.getLeft(), key.getRight())">
     <#elseif (target.arity == 3)>
-        <#local ret = target.method + "(key.getLeft(), key.getMiddle(), key.getRight())">
+        <#local ret = "key -> " + target.method + "(key.getLeft(), key.getMiddle(), key.getRight())">
     </#if>
     <#return ret>
 </#function>
