@@ -35,7 +35,7 @@ default ${lambda.name}${genericParameterTypeString} memoized() {
     if (this instanceof Memoized) {
         return this;
     } else {
-        final Map<${cacheGenericString}> cache = new ConcurrentHashMap<${cacheGenericString}>();
+        final Map<${cacheGenericString}> cache = new ConcurrentHashMap<>();
         final Object lock = new Object();
         return (${lambda.name}${genericParameterTypeString} & Memoized) (${parameterNameString}) -> {
             final ${returnType} returnValue;

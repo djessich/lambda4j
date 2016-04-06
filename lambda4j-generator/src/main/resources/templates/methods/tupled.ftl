@@ -12,21 +12,25 @@
     <#assign outputLambda = LambdaUtils.searchByInputTypesAndReturnType(lambda.type, arity, lambda.firstInputType, lambda.thirdInputType!lambda.secondInputType, lambda.thirdInputType, lambda.returnType, lambda.throwable, false)>
     <#-- if lambda does not have primitive return type, generate generic return for tupled method -->
     <#if !helpers.isPrimitive(outputLambda.returnType)>
-        <#assign return = ", ${lambda.returnType}">
+        <#assign returnString = ", ${lambda.returnType}">
+    </#if>
+    <#-- if lambda is throwable, then append throwable type -->
+    <#if outputLambda.throwable>
+        <#assign throwableString = ", ${lambda.throwableType}"/>
     </#if>
     <#-- print tupled method -->
-    <@.namespace.tupledMethod return!""/>
+    <@.namespace.tupledMethod returnString!"" throwableString!"" />
 </#if>
 
 <#-- a helper macro to centralize tupled method and to avoid unnecessary indenting -->
-<#macro tupledMethod return = "">
+<#macro tupledMethod returnString = "" throwableString = "">
 /**
  * Returns a tupled version of this ${lambda.type.simpleName}.
  *
  * @return A tupled version of this ${lambda.type.simpleName}.
  */
 ${annotation.nonnull}
-default ${outputLambda.name}<${tuple.printTuple()} ${return}> tupled() {
+default ${outputLambda.name}<${tuple.printTuple()} ${returnString} ${throwableString}> tupled() {
     return this::${lambda.method};
 }
 </#macro>

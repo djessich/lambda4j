@@ -13,7 +13,7 @@
  * @see <a href="https://docs.oracle.com/javase/tutorial/java/javaOO/methodreferences.html">Method Reference</a>
  */
 ${annotation.nonnull}
-static ${genericParameterTypeString} ${lambda.name}${genericParameterTypeString} of(${annotation.nonnull} final ${lambda.name}${genericParameterTypeString} expression) {
+static ${genericParameterTypeStringWithThrowableErasure} ${lambda.name}${genericParameterTypeString} of(${annotation.nonnull} final ${lambda.name}${genericParameterTypeString} expression) {
     return expression;
 }
 <#-- @formatter:on -->

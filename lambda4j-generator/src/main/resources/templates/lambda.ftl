@@ -6,6 +6,7 @@
 <#global parameterSimpleTypeString = types.buildParameterSimpleTypeString()>
 <#global parameterNameString = types.buildParameterNameString()>
 <#global genericParameterTypeString = types.buildGenericParameterTypeString()>
+<#global genericParameterTypeStringWithThrowableErasure = types.buildGenericParameterTypeStringWithThrowableErasure()>
 <#global genericParameterTypeStringWithErasure = types.buildGenericParameterTypeStringWithErasure()>
 
 <#global Object = LambdaUtils.getObjectTypeEntity()>
@@ -47,7 +48,7 @@ package ${lambda.packageName};
 
 @SuppressWarnings("unused")
 @FunctionalInterface
-public interface ${lambda.name}${genericParameterTypeString} extends Lambda ${extends} {
+public interface ${lambda.name}${genericParameterTypeStringWithThrowableErasure} extends Lambda ${extends} {
 
 <#include "methods/static/of.ftl">
 <#include "methods/static/call.ftl">
@@ -75,7 +76,6 @@ public interface ${lambda.name}${genericParameterTypeString} extends Lambda ${ex
     <#include "methods/and.ftl">
     <#include "methods/or.ftl">
     <#include "methods/xor.ftl">
-<#--<#include "methods/partial.ftl">-->
     <#include "methods/curried.ftl">
     <#include "methods/tupled.ftl">
     <#include "methods/reversed.ftl">

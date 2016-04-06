@@ -13,7 +13,7 @@
 <#include "../../javadoc/throwsNullPointerException.ftl">
 <#include "../../javadoc/throwsThrowable.ftl">
  */
-static ${genericParameterTypeString} ${types.buildParameterType(lambda.returnType)} call(${annotation.nonnull} final ${lambda.name}${genericParameterTypeStringWithErasure} ${lambda.type.simpleName} ${(lambda.arity > 0)?then(", ${parameterString}", "")}) <@throwable.printThrowableDeclaration/> {
+static ${genericParameterTypeStringWithThrowableErasure} ${types.buildParameterType(lambda.returnType)} call(${annotation.nonnull} final ${lambda.name}${genericParameterTypeStringWithErasure} ${lambda.type.simpleName} ${(lambda.arity > 0)?then(", ${parameterString}", "")}) <@throwable.printThrowableDeclaration/> {
     Objects.requireNonNull(${lambda.type.simpleName});
     ${helpers.printReturnIfNotVoid()} ${lambda.type.simpleName}.${lambda.method}(${parameterNameString});
 }

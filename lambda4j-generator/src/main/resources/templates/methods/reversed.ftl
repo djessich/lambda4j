@@ -32,7 +32,7 @@ default ${lambda.name}${genericParameterTypeStringReversed} reversed() {
     <#local parameters = ([lambda.firstInputType!"", lambda.secondInputType!"", lambda.thirdInputType!""])?reverse>
     <#local parameters = filters.filterEmpties(parameters)>
     <#-- create list made of reversed input types list and the return type -->
-    <#local parametersWithReturn = parameters + [lambda.returnType!""]>
+    <#local parametersWithReturn = parameters + [lambda.returnType!"", lambda.throwableType!""]>
     <#local parametersWithReturn = filters.filterEmpties(parametersWithReturn)>
     <#local parametersWithReturn = filters.filterPrimitives(parametersWithReturn)>
     <#-- create reversed generic parameter type string only if list has content -->

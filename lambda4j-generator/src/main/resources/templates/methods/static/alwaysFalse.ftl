@@ -15,7 +15,7 @@
  * @see #alwaysTrue()
  */
 ${annotation.nonnull}
-static ${genericParameterTypeString} ${lambda.name}${genericParameterTypeString} alwaysFalse() {
+static ${genericParameterTypeStringWithThrowableErasure} ${lambda.name}${genericParameterTypeString} alwaysFalse() {
     return (${parameterNameString}) -> false;
 }
 </#macro>

@@ -72,6 +72,11 @@ public class LambdaEntity implements Serializable {
     private TypeEntity thirdInputType;
 
     /**
+     * The lambdas throwable type which is only set if the {@link #throwable} flag is set to {@code true}.
+     */
+    private TypeEntity throwableType;
+
+    /**
      * A flag indicating if the lambda is throwable.
      */
     private boolean throwable;
@@ -248,6 +253,14 @@ public class LambdaEntity implements Serializable {
      */
     public void setThirdInputType(TypeEntity thirdInputType) {
         this.thirdInputType = thirdInputType;
+    }
+
+    public TypeEntity getThrowableType() {
+        return throwableType;
+    }
+
+    public void setThrowableType(TypeEntity throwableType) {
+        this.throwableType = throwableType;
     }
 
     /**

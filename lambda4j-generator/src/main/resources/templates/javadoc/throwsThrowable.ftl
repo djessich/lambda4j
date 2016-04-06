@@ -2,6 +2,6 @@
 
 <#-- if lambda is throwable, then print -->
 <#if lambda.throwable>
- * @throws Throwable Any throwable from the given functions action
+ * @throws ${lambda.throwableType.typeName} Any throwable from this ${lambda.type.simpleName}s action
 </#if>
 <#-- @formatter:on -->

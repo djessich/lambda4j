@@ -16,7 +16,7 @@
  * @return A {@code  ${lambda.name}} that always returns its input argument
  */
 ${annotation.nonnull}
-static ${types.buildGenericInputParameterTypeString()} ${lambda.name}${types.buildGenericParameterTypeString(lambda, lambda.firstInputType, "", "", lambda.firstInputType)} identity() {
+static ${types.buildGenericInputParameterTypeStringWithThrowableErasure()} ${lambda.name}${types.buildGenericParameterTypeString(lambda, lambda.firstInputType, "", "", lambda.firstInputType)} identity() {
     return (${parameterNameString}) -> ${parameterNameString};
 }
 </#macro>
@@ -25,6 +25,9 @@ static ${types.buildGenericInputParameterTypeString()} ${lambda.name}${types.bui
 <#macro javadocGenericInputIdentityMethod target = lambda>
 <#if !helpers.isPrimitive(target.firstInputType)>
  * @param <${target.firstInputType}> The type of the argument to the ${target.type.simpleName} and of return from the ${target.type.simpleName}
+</#if>
+<#if (lambda.throwable)>
+ * @param <${lambda.throwableType}> The type of the throwable to be thrown by this ${lambda.type.simpleName}
 </#if>
 </#macro>
 <#-- @formatter:on -->

@@ -37,7 +37,7 @@
 <#include "../../javadoc/throwsNullPointerException.ftl">
  */
 ${annotation.nonnull}
-static ${genericParameterTypeString} ${lambda.name}${genericParameterTypeString} only${capitalizedNumber}(${annotation.nonnull} final ${inputLambda.name}${types.buildGenericParameterTypeStringWithErasure(inputLambda, argumentType)} ${inputLambda.type.simpleName}) {
+static ${genericParameterTypeStringWithThrowableErasure} ${lambda.name}${genericParameterTypeString} only${capitalizedNumber}(${annotation.nonnull} final ${inputLambda.name}${types.buildGenericParameterTypeStringWithErasure(inputLambda, argumentType)} ${inputLambda.type.simpleName}) {
     Objects.requireNonNull(${inputLambda.type.simpleName});
     return (${parameterNameString}) -> ${inputLambda.type.simpleName}.${inputLambda.method}(${argumentName});
 }

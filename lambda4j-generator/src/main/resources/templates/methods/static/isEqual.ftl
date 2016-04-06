@@ -19,7 +19,7 @@
  * references and {@code value == target} operation for primitive values.
  */
 ${annotation.nonnull}
-static ${genericParameterTypeString} ${lambda.name}${genericParameterTypeString} isEqual(${.namespace.inputLambdasString()}) {
+static ${genericParameterTypeStringWithThrowableErasure} ${lambda.name}${genericParameterTypeString} isEqual(${.namespace.inputLambdasString()}) {
     return (${parameterNameString}) -> ${.namespace.callString()};
 }
 </#macro>

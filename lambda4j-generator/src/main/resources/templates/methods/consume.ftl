@@ -58,7 +58,7 @@ default ${outputLambda.name}${types.buildGenericParameterTypeString(outputLambda
  * called with {@code Consumer#accept(Object)}.
  */
 ${annotation.nonnull}
-default ${outputLambda.name}<Void> consume(${annotation.nonnull} final ${inputLambda.name}${types.buildGenericParameterTypeStringWithErasure(inputLambda, lambda.returnType)} ${inputLambda.type.simpleName}) {
+default ${outputLambda.name}${types.buildGenericParameterTypeString(outputLambda, "Void")} consume(${annotation.nonnull} final ${inputLambda.name}${types.buildGenericParameterTypeStringWithErasure(inputLambda, lambda.returnType)} ${inputLambda.type.simpleName}) {
     Objects.requireNonNull(${inputLambda.type.simpleName});
     return ignored -> ${inputLambda.type.simpleName}.${inputLambda.method}(${lambda.method}(${parameterNameString}));
 }

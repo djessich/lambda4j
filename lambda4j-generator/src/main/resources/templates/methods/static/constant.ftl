@@ -16,7 +16,7 @@
  * @return A {@code ${lambda.name}} which always returns a given value.
  */
 ${annotation.nonnull}
-static ${genericParameterTypeString} ${lambda.name}${genericParameterTypeString} constant(${types.buildParameter(lambda.returnType)}) {
+static ${genericParameterTypeStringWithThrowableErasure} ${lambda.name}${genericParameterTypeString} constant(${types.buildParameter(lambda.returnType)}) {
     return (${parameterNameString}) -> ${types.buildParameterName(lambda.returnType)};
 }
 </#macro>

@@ -1,4 +1,5 @@
 <#import "filters.ftl" as filters>
+<#import "throwable.ftl" as throwable>
 <#import "helpers.ftl" as helpers>
 
 <#-- ##### parameter functions START ##### -->
@@ -139,14 +140,68 @@
     <#else>
         <#local types = [target.firstInputType!"", target.secondInputType!"", target.thirdInputType!"", target.returnType!""]>
     </#if>
+    <#local types = types + [target.throwableType!""]>
     <#local types = filters.filterEmpties(types)>
     <#local types = filters.filterPrimitives(types)>
     <#local genericString = "">
     <#if (types?has_content)>
         <#local genericString = genericString + "<">
         <#list types as type>
-        <#--<#local genericString = genericString + "<" + types?join(", ", "", ">")>-->
             <#local genericString = genericString + .namespace.buildParameterType(type, target)>
+            <#if type?has_next>
+                <#local genericString = genericString + ", ">
+            </#if>
+        </#list>
+        <#local genericString = genericString + ">">
+    </#if>
+    <#return genericString>
+</#function>
+
+<#function buildGenericParameterTypeStringWithoutThrowable target = lambda other1 = "" other2 = "" other3 = "" other4 = "">
+    <#local target = .namespace.otherParametersToTarget(target, other1, other2, other3, other4)>
+    <#local types = []>
+    <#if LambdaUtils.isOfTypeOperator(target)>
+        <#local types = [target.returnType!""]>
+    <#else>
+        <#local types = [target.firstInputType!"", target.secondInputType!"", target.thirdInputType!"", target.returnType!""]>
+    </#if>
+    <#local types = types + [target.throwableType!""]>
+    <#local types = filters.filterEmpties(types)>
+    <#local types = filters.filterPrimitives(types)>
+    <#local genericString = "">
+    <#if (types?has_content)>
+        <#local genericString = genericString + "<">
+        <#list types as type>
+            <#local genericString = genericString + .namespace.buildParameterType(type, target)>
+            <#if type?has_next>
+                <#local genericString = genericString + ", ">
+            </#if>
+        </#list>
+        <#local genericString = genericString + ">">
+    </#if>
+    <#return genericString>
+</#function>
+
+<#function buildGenericParameterTypeStringWithThrowableErasure target = lambda other1 = "" other2 = "" other3 = "" other4 = "">
+    <#local target = .namespace.otherParametersToTarget(target, other1, other2, other3, other4)>
+    <#local types = []>
+    <#if LambdaUtils.isOfTypeOperator(target)>
+        <#local types = [target.returnType!""]>
+    <#else>
+        <#local types = [target.firstInputType!"", target.secondInputType!"", target.thirdInputType!"", target.returnType!""]>
+    </#if>
+    <#local types = types + [target.throwableType!""]>
+    <#local types = filters.filterEmpties(types)>
+    <#local types = filters.filterPrimitives(types)>
+    <#local genericString = "">
+    <#if (types?has_content)>
+        <#local genericString = genericString + "<">
+        <#list types as type>
+            <#if type == target.throwableType!"">
+                <#local genericString = genericString + .namespace.buildParameterType(type, target) + " extends Throwable">
+            <#else>
+                <#local genericString = genericString + .namespace.buildParameterType(type, target)>
+            </#if>
             <#if type?has_next>
                 <#local genericString = genericString + ", ">
             </#if>
@@ -164,13 +219,16 @@
     <#else>
         <#local types = [target.firstInputType!"", target.secondInputType!"", target.thirdInputType!"", target.returnType!""]>
     </#if>
+    <#local types = types + [target.throwableType!""]>
     <#local types = filters.filterEmpties(types)>
     <#local types = filters.filterPrimitives(types)>
     <#local genericString = "">
     <#if (types?has_content)>
         <#local genericString = genericString + "<">
         <#list types as type>
-            <#if type == target.returnType!"">
+            <#if type == target.throwableType!"">
+                <#local genericString = genericString + .namespace.buildParameterType(type, target)>
+            <#elseif type == target.returnType!"">
                 <#if LambdaUtils.isOfTypeOperator(target)>
                     <#local genericString = genericString + .namespace.buildParameterType(type, target)>
                 <#else>
@@ -196,6 +254,7 @@
     <#else>
         <#local types = [target.firstInputType!"", target.secondInputType!"", target.thirdInputType!""]>
     </#if>
+    <#local types = types + [target.throwableType!""]>
     <#local types = filters.filterEmpties(types)>
     <#local types = filters.filterPrimitives(types)>
     <#local genericString = "">
@@ -203,6 +262,59 @@
         <#local genericString = genericString + "<">
         <#list types as type>
             <#local genericString = genericString + .namespace.buildParameterType(type, target)>
+            <#if type?has_next>
+                <#local genericString = genericString + ", ">
+            </#if>
+        </#list>
+        <#local genericString = genericString + ">">
+    </#if>
+    <#return genericString>
+</#function>
+
+<#function buildGenericInputParameterTypeStringWithoutThrowable target = lambda other1 = "" other2 = "" other3 = "">
+    <#local target = .namespace.otherParametersToTarget(target, other1, other2, other3)>
+    <#local types = []>
+    <#if LambdaUtils.isOfTypeOperator(target)>
+        <#local types = [target.returnType!""]>
+    <#else>
+        <#local types = [target.firstInputType!"", target.secondInputType!"", target.thirdInputType!""]>
+    </#if>
+    <#local types = filters.filterEmpties(types)>
+    <#local types = filters.filterPrimitives(types)>
+    <#local genericString = "">
+    <#if (types?has_content)>
+        <#local genericString = genericString + "<">
+        <#list types as type>
+            <#local genericString = genericString + .namespace.buildParameterType(type, target)>
+            <#if type?has_next>
+                <#local genericString = genericString + ", ">
+            </#if>
+        </#list>
+        <#local genericString = genericString + ">">
+    </#if>
+    <#return genericString>
+</#function>
+
+<#function buildGenericInputParameterTypeStringWithThrowableErasure target = lambda other1 = "" other2 = "" other3 = "">
+    <#local target = .namespace.otherParametersToTarget(target, other1, other2, other3)>
+    <#local types = []>
+    <#if LambdaUtils.isOfTypeOperator(target)>
+        <#local types = [target.returnType!""]>
+    <#else>
+        <#local types = [target.firstInputType!"", target.secondInputType!"", target.thirdInputType!""]>
+    </#if>
+    <#local types = types + [target.throwableType!""]>
+    <#local types = filters.filterEmpties(types)>
+    <#local types = filters.filterPrimitives(types)>
+    <#local genericString = "">
+    <#if (types?has_content)>
+        <#local genericString = genericString + "<">
+        <#list types as type>
+            <#if type == target.throwableType!"">
+                <#local genericString = genericString + .namespace.buildParameterType(type, target) + " extends Throwable">
+            <#else>
+                <#local genericString = genericString + .namespace.buildParameterType(type, target)>
+            </#if>
             <#if type?has_next>
                 <#local genericString = genericString + ", ">
             </#if>

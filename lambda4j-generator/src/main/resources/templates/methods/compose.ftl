@@ -45,7 +45,7 @@
  * @implNote The input argument of this method is able to handle every type.
  */
 ${annotation.nonnull}
-default ${types.buildGenericInputParameterTypeString(outputLambda, generic1, generic2, generic3)} ${outputLambda.name}${types.buildGenericParameterTypeString(outputLambda, generic1, generic2, generic3)} compose(${.namespace.inputLambdasString(generic1, generic2, generic3, inputLambda1, inputLambda2, inputLambda3)}) {
+default ${types.buildGenericInputParameterTypeStringWithoutThrowable(outputLambda, generic1, generic2, generic3)} ${outputLambda.name}${types.buildGenericParameterTypeString(outputLambda, generic1, generic2, generic3)} compose(${.namespace.inputLambdasString(generic1, generic2, generic3, inputLambda1, inputLambda2, inputLambda3)}) {
     ${.namespace.inputLambdaChecking(inputLambda1, inputLambda2, inputLambda3)}
     return (${types.buildParameterNameString(outputLambda, generic1, generic2, generic3)}) -> ${lambda.method}(${.namespace.callLambdasString(inputLambda1, inputLambda2, inputLambda3)});
 }

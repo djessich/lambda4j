@@ -16,6 +16,7 @@
 package at.gridtec.lambda4j.generator.processors.impl;
 
 import at.gridtec.lambda4j.generator.entities.LambdaEntity;
+import at.gridtec.lambda4j.generator.entities.TypeEntity;
 import at.gridtec.lambda4j.generator.processors.Processor;
 import at.gridtec.lambda4j.generator.util.LambdaUtils;
 
@@ -45,6 +46,7 @@ public final class ThrowableProcessor extends Processor {
         final LambdaEntity copyThrowable = LambdaUtils.copy(lambda);
         copyNotThrowable.setThrowable(false);
         copyThrowable.setThrowable(true);
+        copyThrowable.setThrowableType(new TypeEntity(Throwable.class, "X", "throwable", 4));
         lambdas.addAll(next(copyNotThrowable));
         lambdas.addAll(next(copyThrowable));
         return lambdas;

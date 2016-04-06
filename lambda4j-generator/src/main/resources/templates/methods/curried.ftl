@@ -6,25 +6,30 @@
 <#if (lambda.arity >= 2) && !helpers.isPrimitiveLambda(lambda) && lambda.returnType?has_content>
     <#-- search for correct output lambda of curried method, which depends on global lambdas return type -->
     <#assign outputLambda = LambdaUtils.searchByReturnType(lambda.type, 1, lambda.returnType, lambda.throwable, false)>
+    <#-- if lambda is throwable, then append throwable type -->
+    <#if outputLambda.throwable>
+        <#assign throwableString = ", ${lambda.throwableType}"/>
+    </#if>
     <#-- if lambda has larity greater than or equal 3, generate variables for curried method -->
     <#if (lambda.arity >= 3)>
         <#assign lastStep = "${outputLambda.name}<${lambda.thirdInputType},">
         <#assign lastClosingTag = ">">
         <#assign lastArrow = "-> " + types.buildParameterName(lambda.thirdInputType)>
+        <#assign lastThrowableString = throwableString!"">
     </#if>
     <#-- print curried method -->
-    <@.namespace.curriedMethod lastStep!"" lastClosingTag!"" lastArrow!""/>
+    <@.namespace.curriedMethod throwableString!"" lastStep!"" lastClosingTag!"" lastArrow!"" lastThrowableString!""/>
 </#if>
 
 <#-- a helper macro to centralize curried method and to avoid unnecessary indenting -->
-<#macro curriedMethod lastStep = "" lastClosingTag = "" lastArrow = "">
+<#macro curriedMethod throwableString = "" lastStep = "" lastClosingTag = "" lastArrow = "" lastThrowableString = "">
 /**
 * Returns a curried version of this ${lambda.type.simpleName}.
 *
 * @return A curried version of this ${lambda.type.simpleName}.
 */
 ${annotation.nonnull}
-default ${outputLambda.name}<${lambda.firstInputType}, ${outputLambda.name}<${lambda.secondInputType}, ${lastStep} ${lambda.returnType} ${lastClosingTag}>> curried() {
+default ${outputLambda.name}<${lambda.firstInputType}, ${outputLambda.name}<${lambda.secondInputType}, ${lastStep} ${lambda.returnType} ${lastThrowableString} ${lastClosingTag} ${throwableString}> ${throwableString}> curried() {
     return t -> u ${lastArrow} -> ${lambda.method}(${parameterNameString});
 }
 </#macro>
