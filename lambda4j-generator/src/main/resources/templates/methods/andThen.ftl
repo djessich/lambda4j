@@ -4,8 +4,10 @@
 
 <#-- Consumers or Runnables will get special macro, as they will only sequence lambda calls; all other lambdas will use normal macro -->
 <#if LambdaUtils.isOfTypeConsumer(lambda) || LambdaUtils.isOfTypeRunnable(lambda)>
+    <#-- search for correct input lambda which represents the same lambda as this one, but may be from jdk if such one exists -->
+    <#assign inputLambda = LambdaUtils.searchByInputTypesAndReturnType(lambda.type, lambda.arity, lambda.firstInputType, lambda.secondInputType, lambda.thirdInputType, lambda.returnType, lambda.throwable, true)>
     <#-- print andThen method, only for consumers -->
-    <@.namespace.andThenMethodOnlyConsumers/>
+    <@.namespace.andThenMethodOnlyConsumers inputLambda/>
 <#else>
     <#-- search for function lambdas from global lambda return type as input lambdas input argument and only with object (generical) return -->
     <#assign inputLambda = LambdaUtils.searchByFirstInputAndReturnType(LambdaUtils.getFunctionType(), 1, lambda.returnType, Object, lambda.throwable, true)>
@@ -43,22 +45,22 @@ default <S> ${outputLambda.name}${types.buildGenericParameterTypeString(outputLa
 </#macro>
 
 <#-- a helper macro to centralize andThen method and to avoid unnecessary indenting but only for consumers -->
-<#macro andThenMethodOnlyConsumers>
+<#macro andThenMethodOnlyConsumers inputLambda>
  /**
  * Returns a composed {@link ${lambda.name}} that performs, in sequence, this ${lambda.type.simpleName} followed by the {@code after}
- * ${lambda.type.simpleName}.
+ * ${inputLambda.type.simpleName}.
 <#if !lambda.throwable>
  * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
 </#if>
- * If performing this ${lambda.type.simpleName} throws an exception, the {@code after} ${lambda.type.simpleName} will not be performed.
+ * If performing this ${lambda.type.simpleName} throws an exception, the {@code after} ${inputLambda.type.simpleName} will not be performed.
  *
- * @param after The ${lambda.type.simpleName} to apply after this ${lambda.type.simpleName} is applied
+ * @param after The ${inputLambda.type.simpleName} to apply after this ${lambda.type.simpleName} is applied
  * @return A composed {@link ${lambda.name}} that performs, in sequence, this ${lambda.type.simpleName} followed by the {@code after}
- * operation.
+ * ${inputLambda.type.simpleName}.
 <#include "../javadoc/throwsNullPointerException.ftl">
  */
 ${annotation.nonnull}
-default ${lambda.name}${genericParameterTypeString} andThen(${annotation.nonnull} final ${lambda.name}${genericParameterTypeStringWithErasure} after) {
+default ${lambda.name}${genericParameterTypeString} andThen(${annotation.nonnull} final ${inputLambda.name}${genericParameterTypeStringWithErasure} after) {
     Objects.requireNonNull(after);
     return (${parameterNameString}) -> {
         ${lambda.method}(${parameterNameString});
