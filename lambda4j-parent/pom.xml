@@ -150,6 +150,12 @@
                                 <head>Implementation Note:</head>
                             </tag>
                         </tags>
+                        <windowtitle>${project.name} ${project.version} API Specification</windowtitle>
+                        <doctitle>${project.name} ${project.version} API Specification</doctitle>
+                        <testWindowtitle>${project.name} ${project.version} API Tests</testWindowtitle>
+                        <testDoctitle>${project.name} ${project.version} API Tests</testDoctitle>
+                        <header>${project.name}</header>
+                        <author>false</author>
                         <notimestamp>true</notimestamp>
                         <failOnError>false</failOnError>
                     </configuration>
