@@ -5,7 +5,7 @@
     <@.namespace.orMethod/>
 </#if>
 
-<#-- a helper macro to centralize and method or to avoid unnecessary indenting -->
+<#-- a helper macro to centralize or method and to avoid unnecessary indenting -->
 <#macro orMethod>
 /**
  * Returns a composed {@link ${lambda.name}} that represents a short-circuiting logical OR of this ${lambda.type.simpleName} and

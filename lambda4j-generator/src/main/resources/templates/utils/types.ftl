@@ -227,7 +227,7 @@
         <#local genericString = genericString + "<">
         <#list types as type>
             <#if type == target.throwableType!"">
-                <#local genericString = genericString + .namespace.buildParameterType(type, target)>
+                <#local genericString = genericString +  "? extends " + .namespace.buildParameterType(type, target)>
             <#elseif type == target.returnType!"">
                 <#if LambdaUtils.isOfTypeOperator(target)>
                     <#local genericString = genericString + .namespace.buildParameterType(type, target)>

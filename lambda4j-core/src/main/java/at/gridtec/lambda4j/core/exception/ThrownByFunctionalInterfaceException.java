@@ -16,7 +16,7 @@
 package at.gridtec.lambda4j.core.exception;
 
 /**
- * Represents an exception which wraps any thrown {@link Throwable}s from a function interface.
+ * Represents an exception which wraps any thrown {@link Throwable} from a functional interface.
  */
 public class ThrownByFunctionalInterfaceException extends RuntimeException {
 
