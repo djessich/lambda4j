@@ -30,13 +30,15 @@ ${types.buildParameterType(lambda.returnType)} ${lambda.method}(${parameterStrin
  */
 @Override
 default ${types.buildParameterType(jdkLambda.returnType)} ${jdkLambda.method}(${parameterString}) {
-    try {
+    // TODO: Remove commented code below
+    /*try {
          ${helpers.printReturnIfNotVoid()} this.${lambda.method}(${parameterNameString});
     } catch (RuntimeException | Error e) {
         throw e;
     } catch (Throwable throwable) {
         throw new ThrownByFunctionalInterfaceException(throwable.getMessage(), throwable);
-    }
+    }*/
+    ${helpers.printReturnIfNotVoid()} nest().${jdkLambda.method}(${parameterNameString});
 }
 </#if>
 

@@ -82,5 +82,11 @@ public interface ${lambda.name}${genericParameterTypeStringWithThrowableErasure}
     <#include "methods/memoized.ftl">
     <#include "methods/nonNull.ftl">
     <#include "methods/boxed.ftl">
+    <#include "methods/nest.ftl">
+    <#include "methods/sneakyThrow.ftl">
+<#--<#include "methods/orElse.ftl">-->
+<#--<#include "methods/orReturn.ftl">-->
+<#--<#include "methods/orReturnTrue.ftl">-->
+<#--<#include "methods/orReturnFalse.ftl">-->
 </#if>
 }
