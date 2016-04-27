@@ -1,0 +1,726 @@
+/*
+ * Copyright (c) 2016 Gridtec. All rights reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+package at.gridtec.lambda4j.functions.predicate.bi.obj;
+
+import at.gridtec.lambda4j.functions.Lambda;
+import at.gridtec.lambda4j.functions.consumer.BooleanConsumer;
+import at.gridtec.lambda4j.functions.consumer.bi.obj.ObjFloatConsumer;
+import at.gridtec.lambda4j.functions.function.BooleanFunction;
+import at.gridtec.lambda4j.functions.function.ByteFunction;
+import at.gridtec.lambda4j.functions.function.CharFunction;
+import at.gridtec.lambda4j.functions.function.FloatFunction;
+import at.gridtec.lambda4j.functions.function.ShortFunction;
+import at.gridtec.lambda4j.functions.function.bi.obj.ObjFloatFunction;
+import at.gridtec.lambda4j.functions.function.bi.obj.ObjFloatToByteFunction;
+import at.gridtec.lambda4j.functions.function.bi.obj.ObjFloatToCharFunction;
+import at.gridtec.lambda4j.functions.function.bi.obj.ObjFloatToDoubleFunction;
+import at.gridtec.lambda4j.functions.function.bi.obj.ObjFloatToFloatFunction;
+import at.gridtec.lambda4j.functions.function.bi.obj.ObjFloatToIntFunction;
+import at.gridtec.lambda4j.functions.function.bi.obj.ObjFloatToLongFunction;
+import at.gridtec.lambda4j.functions.function.bi.obj.ObjFloatToShortFunction;
+import at.gridtec.lambda4j.functions.function.conversion.BooleanToByteFunction;
+import at.gridtec.lambda4j.functions.function.conversion.BooleanToCharFunction;
+import at.gridtec.lambda4j.functions.function.conversion.BooleanToDoubleFunction;
+import at.gridtec.lambda4j.functions.function.conversion.BooleanToFloatFunction;
+import at.gridtec.lambda4j.functions.function.conversion.BooleanToIntFunction;
+import at.gridtec.lambda4j.functions.function.conversion.BooleanToLongFunction;
+import at.gridtec.lambda4j.functions.function.conversion.BooleanToShortFunction;
+import at.gridtec.lambda4j.functions.function.conversion.ByteToFloatFunction;
+import at.gridtec.lambda4j.functions.function.conversion.CharToFloatFunction;
+import at.gridtec.lambda4j.functions.function.conversion.DoubleToFloatFunction;
+import at.gridtec.lambda4j.functions.function.conversion.IntToFloatFunction;
+import at.gridtec.lambda4j.functions.function.conversion.LongToFloatFunction;
+import at.gridtec.lambda4j.functions.function.conversion.ShortToFloatFunction;
+import at.gridtec.lambda4j.functions.function.to.ToFloatFunction;
+import at.gridtec.lambda4j.functions.operator.binary.BooleanBinaryOperator;
+import at.gridtec.lambda4j.functions.operator.unary.BooleanUnaryOperator;
+import at.gridtec.lambda4j.functions.operator.unary.FloatUnaryOperator;
+import at.gridtec.lambda4j.functions.predicate.FloatPredicate;
+import at.gridtec.lambda4j.functions.predicate.bi.BiBytePredicate;
+import at.gridtec.lambda4j.functions.predicate.bi.BiCharPredicate;
+import at.gridtec.lambda4j.functions.predicate.bi.BiDoublePredicate;
+import at.gridtec.lambda4j.functions.predicate.bi.BiFloatPredicate;
+import at.gridtec.lambda4j.functions.predicate.bi.BiIntPredicate;
+import at.gridtec.lambda4j.functions.predicate.bi.BiLongPredicate;
+import at.gridtec.lambda4j.functions.predicate.bi.BiPredicate2;
+import at.gridtec.lambda4j.functions.predicate.bi.BiShortPredicate;
+
+import org.apache.commons.lang3.tuple.Pair;
+
+import javax.annotation.Nonnegative;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import java.util.Map;
+import java.util.Objects;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.function.BiPredicate;
+import java.util.function.DoubleFunction;
+import java.util.function.Function;
+import java.util.function.IntFunction;
+import java.util.function.LongFunction;
+import java.util.function.Predicate;
+
+/**
+ * Represents an predicate (boolean-valued function) of one object-valued and one {@code float}-valued input argument.
+ * This is a (reference, float) specialization of {@link BiPredicate2}.
+ * <p>
+ * This is a {@link FunctionalInterface} whose functional method is {@link #test(Object, float)}.
+ *
+ * @param <T> The type of the first argument to the predicate
+ * @see BiPredicate2
+ */
+@SuppressWarnings("unused")
+@FunctionalInterface
+public interface ObjFloatPredicate<T> extends Lambda {
+
+    /**
+     * Constructs a {@link ObjFloatPredicate} based on a lambda expression or a method reference. Thereby the given
+     * lambda expression or method reference is returned on an as-is basis to implicitly transform it to the desired
+     * type. With this method, it is possible to ensure that correct type is used from lambda expression or method
+     * reference.
+     *
+     * @param <T> The type of the first argument to the predicate
+     * @param expression A lambda expression or (typically) a method reference, e.g. {@code this::method}
+     * @return A {@code ObjFloatPredicate} from given lambda expression or method reference.
+     * @implNote This implementation allows the given argument to be {@code null}, but if {@code null} given, {@code
+     * null} will be returned.
+     * @see <a href="https://docs.oracle.com/javase/tutorial/java/javaOO/lambdaexpressions.html#syntax">Lambda
+     * Expression</a>
+     * @see <a href="https://docs.oracle.com/javase/tutorial/java/javaOO/methodreferences.html">Method Reference</a>
+     */
+    @Nonnull
+    static <T> ObjFloatPredicate<T> of(@Nonnull final ObjFloatPredicate<T> expression) {
+        return expression;
+    }
+
+    /**
+     * Calls the given {@link ObjFloatPredicate} with the given arguments and returns its result.
+     *
+     * @param <T> The type of the first argument to the predicate
+     * @param predicate The predicate to be called
+     * @param t The first argument to the predicate
+     * @param value The second argument to the predicate
+     * @return The result from the given {@code ObjFloatPredicate}.
+     * @throws NullPointerException If given argument is {@code null}
+     */
+    static <T> boolean call(@Nonnull final ObjFloatPredicate<? super T> predicate, T t, float value) {
+        Objects.requireNonNull(predicate);
+        return predicate.test(t, value);
+    }
+
+    /**
+     * Creates a {@link ObjFloatPredicate} which uses the {@code first} parameter of this one as argument for the given
+     * {@link Predicate}.
+     *
+     * @param <T> The type of the first argument to the predicate
+     * @param predicate The predicate which accepts the {@code first} parameter of this one
+     * @return Creates a {@code ObjFloatPredicate} which uses the {@code first} parameter of this one as argument for
+     * the given {@code Predicate}.
+     * @throws NullPointerException If given argument is {@code null}
+     */
+    @Nonnull
+    static <T> ObjFloatPredicate<T> onlyFirst(@Nonnull final Predicate<? super T> predicate) {
+        Objects.requireNonNull(predicate);
+        return (t, value) -> predicate.test(t);
+    }
+
+    /**
+     * Creates a {@link ObjFloatPredicate} which uses the {@code second} parameter of this one as argument for the given
+     * {@link FloatPredicate}.
+     *
+     * @param <T> The type of the first argument to the predicate
+     * @param predicate The predicate which accepts the {@code second} parameter of this one
+     * @return Creates a {@code ObjFloatPredicate} which uses the {@code second} parameter of this one as argument for
+     * the given {@code FloatPredicate}.
+     * @throws NullPointerException If given argument is {@code null}
+     */
+    @Nonnull
+    static <T> ObjFloatPredicate<T> onlySecond(@Nonnull final FloatPredicate predicate) {
+        Objects.requireNonNull(predicate);
+        return (t, value) -> predicate.test(value);
+    }
+
+    /**
+     * Creates a {@link ObjFloatPredicate} which always returns a given value.
+     *
+     * @param <T> The type of the first argument to the predicate
+     * @param ret The return value for the constant
+     * @return A {@code ObjFloatPredicate} which always returns a given value.
+     */
+    @Nonnull
+    static <T> ObjFloatPredicate<T> constant(boolean ret) {
+        return (t, value) -> ret;
+    }
+
+    /**
+     * Returns a {@link ObjFloatPredicate} that always returns {@code true}.
+     *
+     * @param <T> The type of the first argument to the predicate
+     * @return A {@link ObjFloatPredicate} that always returns {@code true}.
+     * @see #alwaysFalse()
+     */
+    @Nonnull
+    static <T> ObjFloatPredicate<T> alwaysTrue() {
+        return (t, value) -> true;
+    }
+
+    /**
+     * Returns a {@link ObjFloatPredicate} that always returns {@code false}.
+     *
+     * @param <T> The type of the first argument to the predicate
+     * @return A {@link ObjFloatPredicate} that always returns {@code false}.
+     * @see #alwaysTrue()
+     */
+    @Nonnull
+    static <T> ObjFloatPredicate<T> alwaysFalse() {
+        return (t, value) -> false;
+    }
+
+    /**
+     * Returns a {@link ObjFloatPredicate} that tests if the given arguments are <b>equal</b> to the ones of this
+     * predicate.
+     *
+     * @param <T> The type of the first argument to the predicate
+     * @param target1 The first reference with which to compare for equality, which may be {@code null}
+     * @param target2 The second reference with which to compare for equality, which may be {@code null}
+     * @return A {@code ObjFloatPredicate} that tests if the given arguments are <b>equal</b> to the ones of this
+     * predicate.
+     * @implNote This implementation checks equality according to {@link Objects#equals(Object)} operation for {@link
+     * Object} references and {@code value == target} operation for primitive values.
+     */
+    @Nonnull
+    static <T> ObjFloatPredicate<T> isEqual(@Nullable Object target1, float target2) {
+        return (t, value) -> (t == null ? target1 == null : t.equals(target1)) && (value == target2);
+    }
+
+    /**
+     * Applies this predicate to the given arguments.
+     *
+     * @param t The first argument to the predicate
+     * @param value The second argument to the predicate
+     * @return The return value from the predicate, which is its result.
+     */
+    boolean test(T t, float value);
+
+    /**
+     * Returns the number of arguments for this predicate.
+     *
+     * @return The number of arguments for this predicate.
+     * @implSpec The default implementation always returns {@code 2}.
+     */
+    @Nonnegative
+    default int arity() {
+        return 2;
+    }
+
+    /**
+     * Returns a composed {@link BiPredicate2} that first applies the {@code before} functions to its input, and then
+     * applies this predicate to the result. If evaluation of either operation throws an exception, it is relayed to the
+     * caller of the composed operation.
+     *
+     * @param <A> The type of the argument to the first given function, and of composed predicate
+     * @param <B> The type of the argument to the second given function, and of composed predicate
+     * @param before1 The first function to apply before this predicate is applied
+     * @param before2 The second function to apply before this predicate is applied
+     * @return A composed {@code BiPredicate2} that first applies the {@code before} functions to its input, and then
+     * applies this predicate to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implNote The input argument of this method is able to handle every type.
+     */
+    @Nonnull
+    default <A, B> BiPredicate2<A, B> compose(@Nonnull final Function<? super A, ? extends T> before1,
+            @Nonnull final ToFloatFunction<? super B> before2) {
+        Objects.requireNonNull(before1);
+        Objects.requireNonNull(before2);
+        return (a, b) -> test(before1.apply(a), before2.applyAsFloat(b));
+    }
+
+    /**
+     * Returns a composed {@link BooleanBinaryOperator} that first applies the {@code before} functions to its input,
+     * and then applies this predicate to the result. If evaluation of either operation throws an exception, it is
+     * relayed to the caller of the composed operation. This method is just convenience, to provide the ability to
+     * execute an operation which accepts {@code boolean} input, before this primitive predicate is executed.
+     *
+     * @param before1 The first function to apply before this predicate is applied
+     * @param before2 The second function to apply before this predicate is applied
+     * @return A composed {@code BooleanBinaryOperator} that first applies the {@code before} functions to its input,
+     * and then applies this predicate to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implNote The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * boolean}.
+     */
+    @Nonnull
+    default BooleanBinaryOperator composeFromBoolean(@Nonnull final BooleanFunction<? extends T> before1,
+            @Nonnull final BooleanToFloatFunction before2) {
+        Objects.requireNonNull(before1);
+        Objects.requireNonNull(before2);
+        return (value1, value2) -> test(before1.apply(value1), before2.applyAsFloat(value2));
+    }
+
+    /**
+     * Returns a composed {@link BiBytePredicate} that first applies the {@code before} functions to its input, and then
+     * applies this predicate to the result. If evaluation of either operation throws an exception, it is relayed to the
+     * caller of the composed operation. This method is just convenience, to provide the ability to execute an operation
+     * which accepts {@code byte} input, before this primitive predicate is executed.
+     *
+     * @param before1 The first function to apply before this predicate is applied
+     * @param before2 The second function to apply before this predicate is applied
+     * @return A composed {@code BiBytePredicate} that first applies the {@code before} functions to its input, and then
+     * applies this predicate to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implNote The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * byte}.
+     */
+    @Nonnull
+    default BiBytePredicate composeFromByte(@Nonnull final ByteFunction<? extends T> before1,
+            @Nonnull final ByteToFloatFunction before2) {
+        Objects.requireNonNull(before1);
+        Objects.requireNonNull(before2);
+        return (value1, value2) -> test(before1.apply(value1), before2.applyAsFloat(value2));
+    }
+
+    /**
+     * Returns a composed {@link BiCharPredicate} that first applies the {@code before} functions to its input, and then
+     * applies this predicate to the result. If evaluation of either operation throws an exception, it is relayed to the
+     * caller of the composed operation. This method is just convenience, to provide the ability to execute an operation
+     * which accepts {@code char} input, before this primitive predicate is executed.
+     *
+     * @param before1 The first function to apply before this predicate is applied
+     * @param before2 The second function to apply before this predicate is applied
+     * @return A composed {@code BiCharPredicate} that first applies the {@code before} functions to its input, and then
+     * applies this predicate to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implNote The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * char}.
+     */
+    @Nonnull
+    default BiCharPredicate composeFromChar(@Nonnull final CharFunction<? extends T> before1,
+            @Nonnull final CharToFloatFunction before2) {
+        Objects.requireNonNull(before1);
+        Objects.requireNonNull(before2);
+        return (value1, value2) -> test(before1.apply(value1), before2.applyAsFloat(value2));
+    }
+
+    /**
+     * Returns a composed {@link BiDoublePredicate} that first applies the {@code before} functions to its input, and
+     * then applies this predicate to the result. If evaluation of either operation throws an exception, it is relayed
+     * to the caller of the composed operation. This method is just convenience, to provide the ability to execute an
+     * operation which accepts {@code double} input, before this primitive predicate is executed.
+     *
+     * @param before1 The first function to apply before this predicate is applied
+     * @param before2 The second function to apply before this predicate is applied
+     * @return A composed {@code BiDoublePredicate} that first applies the {@code before} functions to its input, and
+     * then applies this predicate to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implNote The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * double}.
+     */
+    @Nonnull
+    default BiDoublePredicate composeFromDouble(@Nonnull final DoubleFunction<? extends T> before1,
+            @Nonnull final DoubleToFloatFunction before2) {
+        Objects.requireNonNull(before1);
+        Objects.requireNonNull(before2);
+        return (value1, value2) -> test(before1.apply(value1), before2.applyAsFloat(value2));
+    }
+
+    /**
+     * Returns a composed {@link BiFloatPredicate} that first applies the {@code before} functions to its input, and
+     * then applies this predicate to the result. If evaluation of either operation throws an exception, it is relayed
+     * to the caller of the composed operation. This method is just convenience, to provide the ability to execute an
+     * operation which accepts {@code float} input, before this primitive predicate is executed.
+     *
+     * @param before1 The first function to apply before this predicate is applied
+     * @param before2 The second operator to apply before this predicate is applied
+     * @return A composed {@code BiFloatPredicate} that first applies the {@code before} functions to its input, and
+     * then applies this predicate to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implNote The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * float}.
+     */
+    @Nonnull
+    default BiFloatPredicate composeFromFloat(@Nonnull final FloatFunction<? extends T> before1,
+            @Nonnull final FloatUnaryOperator before2) {
+        Objects.requireNonNull(before1);
+        Objects.requireNonNull(before2);
+        return (value1, value2) -> test(before1.apply(value1), before2.applyAsFloat(value2));
+    }
+
+    /**
+     * Returns a composed {@link BiIntPredicate} that first applies the {@code before} functions to its input, and then
+     * applies this predicate to the result. If evaluation of either operation throws an exception, it is relayed to the
+     * caller of the composed operation. This method is just convenience, to provide the ability to execute an operation
+     * which accepts {@code int} input, before this primitive predicate is executed.
+     *
+     * @param before1 The first function to apply before this predicate is applied
+     * @param before2 The second function to apply before this predicate is applied
+     * @return A composed {@code BiIntPredicate} that first applies the {@code before} functions to its input, and then
+     * applies this predicate to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implNote The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * int}.
+     */
+    @Nonnull
+    default BiIntPredicate composeFromInt(@Nonnull final IntFunction<? extends T> before1,
+            @Nonnull final IntToFloatFunction before2) {
+        Objects.requireNonNull(before1);
+        Objects.requireNonNull(before2);
+        return (value1, value2) -> test(before1.apply(value1), before2.applyAsFloat(value2));
+    }
+
+    /**
+     * Returns a composed {@link BiLongPredicate} that first applies the {@code before} functions to its input, and then
+     * applies this predicate to the result. If evaluation of either operation throws an exception, it is relayed to the
+     * caller of the composed operation. This method is just convenience, to provide the ability to execute an operation
+     * which accepts {@code long} input, before this primitive predicate is executed.
+     *
+     * @param before1 The first function to apply before this predicate is applied
+     * @param before2 The second function to apply before this predicate is applied
+     * @return A composed {@code BiLongPredicate} that first applies the {@code before} functions to its input, and then
+     * applies this predicate to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implNote The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * long}.
+     */
+    @Nonnull
+    default BiLongPredicate composeFromLong(@Nonnull final LongFunction<? extends T> before1,
+            @Nonnull final LongToFloatFunction before2) {
+        Objects.requireNonNull(before1);
+        Objects.requireNonNull(before2);
+        return (value1, value2) -> test(before1.apply(value1), before2.applyAsFloat(value2));
+    }
+
+    /**
+     * Returns a composed {@link BiShortPredicate} that first applies the {@code before} functions to its input, and
+     * then applies this predicate to the result. If evaluation of either operation throws an exception, it is relayed
+     * to the caller of the composed operation. This method is just convenience, to provide the ability to execute an
+     * operation which accepts {@code short} input, before this primitive predicate is executed.
+     *
+     * @param before1 The first function to apply before this predicate is applied
+     * @param before2 The second function to apply before this predicate is applied
+     * @return A composed {@code BiShortPredicate} that first applies the {@code before} functions to its input, and
+     * then applies this predicate to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implNote The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * short}.
+     */
+    @Nonnull
+    default BiShortPredicate composeFromShort(@Nonnull final ShortFunction<? extends T> before1,
+            @Nonnull final ShortToFloatFunction before2) {
+        Objects.requireNonNull(before1);
+        Objects.requireNonNull(before2);
+        return (value1, value2) -> test(before1.apply(value1), before2.applyAsFloat(value2));
+    }
+
+    /**
+     * Returns a composed {@link ObjFloatFunction} that first applies this predicate to its input, and then applies the
+     * {@code after} function to the result. If evaluation of either operation throws an exception, it is relayed to the
+     * caller of the composed operation.
+     *
+     * @param <S> The type of return value from the {@code after} function, and of the composed function
+     * @param after The function to apply after this predicate is applied
+     * @return A composed {@code ObjFloatFunction} that first applies this predicate to its input, and then applies the
+     * {@code after} function to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implNote The input argument of this method is able to return every type.
+     */
+    @Nonnull
+    default <S> ObjFloatFunction<T, S> andThen(@Nonnull final BooleanFunction<? extends S> after) {
+        Objects.requireNonNull(after);
+        return (t, value) -> after.apply(test(t, value));
+    }
+
+    /**
+     * Returns a composed {@link ObjFloatPredicate} that first applies this predicate to its input, and then applies the
+     * {@code after} operator to the result. If evaluation of either operation throws an exception, it is relayed to the
+     * caller of the composed operation. This method is just convenience, to provide the ability to transform this
+     * primitive predicate to an operation returning {@code boolean}.
+     *
+     * @param after The operator to apply after this predicate is applied
+     * @return A composed {@code ObjFloatPredicate} that first applies this predicate to its input, and then applies the
+     * {@code after} operator to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implNote The input argument of this method is a able to return primitive values. In this case this is {@code
+     * boolean}.
+     */
+    @Nonnull
+    default ObjFloatPredicate<T> andThenToBoolean(@Nonnull final BooleanUnaryOperator after) {
+        Objects.requireNonNull(after);
+        return (t, value) -> after.applyAsBoolean(test(t, value));
+    }
+
+    /**
+     * Returns a composed {@link ObjFloatToByteFunction} that first applies this predicate to its input, and then
+     * applies the {@code after} function to the result. If evaluation of either operation throws an exception, it is
+     * relayed to the caller of the composed operation. This method is just convenience, to provide the ability to
+     * transform this primitive predicate to an operation returning {@code byte}.
+     *
+     * @param after The function to apply after this predicate is applied
+     * @return A composed {@code ObjFloatToByteFunction} that first applies this predicate to its input, and then
+     * applies the {@code after} function to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implNote The input argument of this method is a able to return primitive values. In this case this is {@code
+     * byte}.
+     */
+    @Nonnull
+    default ObjFloatToByteFunction<T> andThenToByte(@Nonnull final BooleanToByteFunction after) {
+        Objects.requireNonNull(after);
+        return (t, value) -> after.applyAsByte(test(t, value));
+    }
+
+    /**
+     * Returns a composed {@link ObjFloatToCharFunction} that first applies this predicate to its input, and then
+     * applies the {@code after} function to the result. If evaluation of either operation throws an exception, it is
+     * relayed to the caller of the composed operation. This method is just convenience, to provide the ability to
+     * transform this primitive predicate to an operation returning {@code char}.
+     *
+     * @param after The function to apply after this predicate is applied
+     * @return A composed {@code ObjFloatToCharFunction} that first applies this predicate to its input, and then
+     * applies the {@code after} function to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implNote The input argument of this method is a able to return primitive values. In this case this is {@code
+     * char}.
+     */
+    @Nonnull
+    default ObjFloatToCharFunction<T> andThenToChar(@Nonnull final BooleanToCharFunction after) {
+        Objects.requireNonNull(after);
+        return (t, value) -> after.applyAsChar(test(t, value));
+    }
+
+    /**
+     * Returns a composed {@link ObjFloatToDoubleFunction} that first applies this predicate to its input, and then
+     * applies the {@code after} function to the result. If evaluation of either operation throws an exception, it is
+     * relayed to the caller of the composed operation. This method is just convenience, to provide the ability to
+     * transform this primitive predicate to an operation returning {@code double}.
+     *
+     * @param after The function to apply after this predicate is applied
+     * @return A composed {@code ObjFloatToDoubleFunction} that first applies this predicate to its input, and then
+     * applies the {@code after} function to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implNote The input argument of this method is a able to return primitive values. In this case this is {@code
+     * double}.
+     */
+    @Nonnull
+    default ObjFloatToDoubleFunction<T> andThenToDouble(@Nonnull final BooleanToDoubleFunction after) {
+        Objects.requireNonNull(after);
+        return (t, value) -> after.applyAsDouble(test(t, value));
+    }
+
+    /**
+     * Returns a composed {@link ObjFloatToFloatFunction} that first applies this predicate to its input, and then
+     * applies the {@code after} function to the result. If evaluation of either operation throws an exception, it is
+     * relayed to the caller of the composed operation. This method is just convenience, to provide the ability to
+     * transform this primitive predicate to an operation returning {@code float}.
+     *
+     * @param after The function to apply after this predicate is applied
+     * @return A composed {@code ObjFloatToFloatFunction} that first applies this predicate to its input, and then
+     * applies the {@code after} function to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implNote The input argument of this method is a able to return primitive values. In this case this is {@code
+     * float}.
+     */
+    @Nonnull
+    default ObjFloatToFloatFunction<T> andThenToFloat(@Nonnull final BooleanToFloatFunction after) {
+        Objects.requireNonNull(after);
+        return (t, value) -> after.applyAsFloat(test(t, value));
+    }
+
+    /**
+     * Returns a composed {@link ObjFloatToIntFunction} that first applies this predicate to its input, and then applies
+     * the {@code after} function to the result. If evaluation of either operation throws an exception, it is relayed to
+     * the caller of the composed operation. This method is just convenience, to provide the ability to transform this
+     * primitive predicate to an operation returning {@code int}.
+     *
+     * @param after The function to apply after this predicate is applied
+     * @return A composed {@code ObjFloatToIntFunction} that first applies this predicate to its input, and then applies
+     * the {@code after} function to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implNote The input argument of this method is a able to return primitive values. In this case this is {@code
+     * int}.
+     */
+    @Nonnull
+    default ObjFloatToIntFunction<T> andThenToInt(@Nonnull final BooleanToIntFunction after) {
+        Objects.requireNonNull(after);
+        return (t, value) -> after.applyAsInt(test(t, value));
+    }
+
+    /**
+     * Returns a composed {@link ObjFloatToLongFunction} that first applies this predicate to its input, and then
+     * applies the {@code after} function to the result. If evaluation of either operation throws an exception, it is
+     * relayed to the caller of the composed operation. This method is just convenience, to provide the ability to
+     * transform this primitive predicate to an operation returning {@code long}.
+     *
+     * @param after The function to apply after this predicate is applied
+     * @return A composed {@code ObjFloatToLongFunction} that first applies this predicate to its input, and then
+     * applies the {@code after} function to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implNote The input argument of this method is a able to return primitive values. In this case this is {@code
+     * long}.
+     */
+    @Nonnull
+    default ObjFloatToLongFunction<T> andThenToLong(@Nonnull final BooleanToLongFunction after) {
+        Objects.requireNonNull(after);
+        return (t, value) -> after.applyAsLong(test(t, value));
+    }
+
+    /**
+     * Returns a composed {@link ObjFloatToShortFunction} that first applies this predicate to its input, and then
+     * applies the {@code after} function to the result. If evaluation of either operation throws an exception, it is
+     * relayed to the caller of the composed operation. This method is just convenience, to provide the ability to
+     * transform this primitive predicate to an operation returning {@code short}.
+     *
+     * @param after The function to apply after this predicate is applied
+     * @return A composed {@code ObjFloatToShortFunction} that first applies this predicate to its input, and then
+     * applies the {@code after} function to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implNote The input argument of this method is a able to return primitive values. In this case this is {@code
+     * short}.
+     */
+    @Nonnull
+    default ObjFloatToShortFunction<T> andThenToShort(@Nonnull final BooleanToShortFunction after) {
+        Objects.requireNonNull(after);
+        return (t, value) -> after.applyAsShort(test(t, value));
+    }
+
+    /**
+     * Returns a composed {@link ObjFloatConsumer} that fist applies this predicate to its input, and then consumes the
+     * result using the given {@link BooleanConsumer}. If evaluation of either operation throws an exception, it is
+     * relayed to the caller of the composed operation.
+     *
+     * @param consumer The operation which consumes the result from this operation
+     * @return A composed {@code ObjFloatConsumer} that first applies this predicate to its input, and then consumes the
+     * result using the given {@code BooleanConsumer}.
+     * @throws NullPointerException If given argument is {@code null}
+     */
+    @Nonnull
+    default ObjFloatConsumer<T> consume(@Nonnull final BooleanConsumer consumer) {
+        Objects.requireNonNull(consumer);
+        return (t, value) -> consumer.accept(test(t, value));
+    }
+
+    /**
+     * Returns a {@link ObjFloatPredicate} that represents the logical negation of this one.
+     *
+     * @return A {@code ObjFloatPredicate} that represents the logical negation of this one.
+     */
+    @Nonnull
+    default ObjFloatPredicate<T> negate() {
+        return (t, value) -> !test(t, value);
+    }
+
+    /**
+     * Returns a composed {@link ObjFloatPredicate} that represents a short-circuiting logical AND of this predicate and
+     * another. When evaluating the composed predicate, if this predicate is {@code false}, then the {@code other}
+     * predicate is not evaluated.
+     * <p>
+     * Any exceptions thrown during evaluation of either predicate is relayed to the caller; if evaluation of this
+     * {@code ObjFloatPredicate} throws an exception, the {@code other} predicate will not be evaluated.
+     *
+     * @param other A {@code ObjFloatPredicate} that will be logically-ANDed with this one
+     * @return A composed {@code ObjFloatPredicate} that represents the short-circuiting logical AND of this predicate
+     * and the {@code other} predicate.
+     * @throws NullPointerException If given argument is {@code null}
+     * @see #or(ObjFloatPredicate)
+     * @see #xor(ObjFloatPredicate)
+     */
+    @Nonnull
+    default ObjFloatPredicate<T> and(@Nonnull final ObjFloatPredicate<? super T> other) {
+        Objects.requireNonNull(other);
+        return (t, value) -> test(t, value) && other.test(t, value);
+    }
+
+    /**
+     * Returns a composed {@link ObjFloatPredicate} that represents a short-circuiting logical OR of this predicate and
+     * another. When evaluating the composed predicate, if this predicate is {@code true}, then the {@code other}
+     * predicate is not evaluated.
+     * <p>
+     * Any exceptions thrown during evaluation of either predicate is relayed to the caller; if evaluation of this
+     * {@code ObjFloatPredicate} throws an exception, the {@code other} predicate will not be evaluated.
+     *
+     * @param other A {@code ObjFloatPredicate} that will be logically-ORed with this one
+     * @return A composed {@code ObjFloatPredicate} that represents the short-circuiting logical OR of this predicate
+     * and the {@code other} predicate.
+     * @throws NullPointerException If given argument is {@code null}
+     * @see #and(ObjFloatPredicate)
+     * @see #xor(ObjFloatPredicate)
+     */
+    @Nonnull
+    default ObjFloatPredicate<T> or(@Nonnull final ObjFloatPredicate<? super T> other) {
+        Objects.requireNonNull(other);
+        return (t, value) -> test(t, value) || other.test(t, value);
+    }
+
+    /**
+     * Returns a composed {@link ObjFloatPredicate} that represents a short-circuiting logical XOR of this predicate and
+     * another. Any exceptions thrown during evaluation of either predicate is relayed to the caller; if evaluation of
+     * this {@code ObjFloatPredicate} throws an exception, the {@code other} predicate will not be evaluated.
+     *
+     * @param other A {@code ObjFloatPredicate} that will be logically-XORed with this one
+     * @return A composed {@code ObjFloatPredicate} that represents the short-circuiting logical XOR of this predicate
+     * and the {@code other} predicate.
+     * @throws NullPointerException If given argument is {@code null}
+     * @see #and(ObjFloatPredicate)
+     * @see #or(ObjFloatPredicate)
+     */
+    @Nonnull
+    default ObjFloatPredicate<T> xor(@Nonnull final ObjFloatPredicate<? super T> other) {
+        Objects.requireNonNull(other);
+        return (t, value) -> test(t, value) ^ other.test(t, value);
+    }
+
+    /**
+     * Returns a memoized (caching) version of this {@link ObjFloatPredicate}. Whenever it is called, the mapping
+     * between the input parameters and the return value is preserved in a cache, making subsequent calls returning the
+     * memoized value instead of computing the return value again.
+     * <p>
+     * Unless the predicate and therefore the used cache will be garbage-collected, it will keep all memoized values
+     * forever.
+     *
+     * @return A memoized (caching) version of this {@code ObjFloatPredicate}.
+     * @implSpec This implementation does not allow the input parameters or return value to be {@code null} for the
+     * resulting memoized predicate, as the cache used internally does not permit {@code null} keys or values.
+     * @implNote The returned memoized predicate can be safely used concurrently from multiple threads which makes it
+     * thread-safe.
+     */
+    @Nonnull
+    default ObjFloatPredicate<T> memoized() {
+        if (this instanceof Memoized) {
+            return this;
+        } else {
+            final Map<Pair<T, Float>, Boolean> cache = new ConcurrentHashMap<>();
+            final Object lock = new Object();
+            return (ObjFloatPredicate<T> & Memoized) (t, value) -> {
+                final boolean returnValue;
+                synchronized (lock) {
+                    returnValue = cache.computeIfAbsent(Pair.of(t, value), key -> test(key.getLeft(), key.getRight()));
+                }
+                return returnValue;
+            };
+        }
+    }
+
+    /**
+     * Returns a composed {@link BiPredicate} which represents this {@link ObjFloatPredicate}. Thereby the primitive
+     * input argument for this predicate is autoboxed. This method is just convenience to provide the ability to use
+     * this {@code ObjFloatPredicate} with JDK specific methods, only accepting {@code BiPredicate}.
+     *
+     * @return A composed {@code BiPredicate} which represents this {@code ObjFloatPredicate}.
+     */
+    @Nonnull
+    default BiPredicate<T, Float> boxed() {
+        return this::test;
+    }
+
+}
