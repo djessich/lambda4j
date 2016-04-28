@@ -18,19 +18,24 @@
          xmlns="http://maven.apache.org/POM/4.0.0"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>org.sonatype.oss</groupId>
+        <artifactId>oss-parent</artifactId>
+        <version>9</version>
+    </parent>
     <groupId>at.gridtec</groupId>
     <artifactId>lambda4j</artifactId>
-    <version>1.0.0-RELEASE</version>
+    <version>1.0.0</version>
     <packaging>pom</packaging>
     <name>Lambda4j</name>
-    <url>https://github.com/Gridtec/lambda4j</url>
-    <description>A project to improve Java 8 lambdas.</description>
+    <url>https://github.com/gridtec/lambda4j</url>
+    <description>A library for non-throwable and throwable Java 8 functional interfaces (lambdas).</description>
     <inceptionYear>2015</inceptionYear>
     <licenses>
         <license>
-            <name>Apache 2.0 License</name>
-            <url>http://www.apache.org/licenses/LICENSE-2.0</url>
-            <!--<distribution>repo</distribution>-->
+            <name>The Apache Software License, Version 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+            <distribution>repo</distribution>
         </license>
     </licenses>
     <organization>
@@ -55,6 +60,16 @@
     <prerequisites>
         <maven>${maven.version}</maven>
     </prerequisites>
+
+    <scm>
+        <connection>scm:git:git@github.com:gridtec/lambda4j.git</connection>
+        <developerConnection>scm:git:git@github.com:gridtec/lambda4j.git</developerConnection>
+        <url>https://github.com/gridtec/lambda4j</url>
+    </scm>
+    <issueManagement>
+        <system>GitHub Issues</system>
+        <url>https://github.com/gridtec/lambda4j/issues</url>
+    </issueManagement>
 
     <modules>
         <module>lambda4j-parent</module>

@@ -1,16 +1,12 @@
 Tests
 Wiki
 Examples
-Deployment to Maven Central and Github
+Deployment to Maven Central
 Factory for all lambdas
-New lambda methods need to be invented
-Functional Idioms Methods (Currying, Uncurrying, etc.)
-Boxed Functions
 Convertable Methods to throwable and back again
 Optional Accepting Methods
 Pair accepting methods (Apache Commons Lang, Java FX, javatuples)
 Triple accepting methods (Apache Commons Lang, Java FX)
-Throwable Lambdas
 Handlers for Throwable Lambdas (Instructions, etc.)
 Ability to use old school Guava Library Lambdas
 Lambda Builders

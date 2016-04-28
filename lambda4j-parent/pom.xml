@@ -21,7 +21,7 @@
     <parent>
         <groupId>at.gridtec</groupId>
         <artifactId>lambda4j</artifactId>
-        <version>1.0.0-RELEASE</version>
+        <version>1.0.0</version>
         <relativePath>..</relativePath>
     </parent>
 
@@ -40,9 +40,12 @@
         <maven.idea.version>2.2.1</maven.idea.version>
         <maven.source.version>2.4</maven.source.version>
         <maven.javadoc.version>2.10.2</maven.javadoc.version>
+        <maven.javadoc.sourceEncoding>${project.build.sourceEncoding}</maven.javadoc.sourceEncoding>
         <maven.enforcer.version>1.4.1</maven.enforcer.version>
         <maven.site.version>3.4</maven.site.version>
         <maven.rat.version>0.11</maven.rat.version>
+        <maven.release.version>2.5.1</maven.release.version>
+        <maven.deploy.version>2.8.2</maven.deploy.version>
         <maven.build-helper.version>1.10</maven.build-helper.version>
         <maven.findbugs.version>3.0.3</maven.findbugs.version>
         <maven.surefire.version>2.19</maven.surefire.version>
@@ -150,6 +153,9 @@
                                 <head>Implementation Note:</head>
                             </tag>
                         </tags>
+                        <encoding>${maven.javadoc.sourceEncoding}</encoding>
+                        <docencoding>${maven.javadoc.sourceEncoding}</docencoding>
+                        <charset>${maven.javadoc.sourceEncoding}</charset>
                         <windowtitle>${project.name} ${project.version} API Specification</windowtitle>
                         <doctitle>${project.name} ${project.version} API Specification</doctitle>
                         <testWindowtitle>${project.name} ${project.version} API Tests</testWindowtitle>
@@ -216,6 +222,16 @@
                     </dependencies>
                 </plugin>
                 <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-release-plugin</artifactId>
+                    <version>${maven.release.version}</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-deploy-plugin</artifactId>
+                    <version>${maven.deploy.version}</version>
+                </plugin>
+                <plugin>
                     <groupId>org.codehaus.mojo</groupId>
                     <artifactId>build-helper-maven-plugin</artifactId>
                     <version>${maven.build-helper.version}</version>
@@ -273,127 +289,6 @@
                     <downloadJavadocs>true</downloadJavadocs>
                 </configuration>
             </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>${maven.compiler.version}</version>
-                <configuration>
-                    <source>${maven.compiler.source}</source>
-                    <target>${maven.compiler.target}</target>
-                    <encoding>${project.build.sourceEncoding}</encoding>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-source-plugin</artifactId>
-                <version>${maven.source.version}</version>
-                <executions>
-                    <execution>
-                        <id>attach-sources</id>
-                        <goals>
-                            <goal>jar</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-javadoc-plugin</artifactId>
-                <version>${maven.javadoc.version}</version>
-                <executions>
-                    <execution>
-                        <id>attach-javadocs</id>
-                        <goals>
-                            <goal>jar</goal>
-                        </goals>
-                    </execution>
-                </executions>
-                <configuration>
-                    <links>
-                        <link>https://docs.oracle.com/javase/8/docs/api/</link>
-                        <link>https://commons.apache.org/proper/commons-lang/javadocs/api-release/</link>
-                    </links>
-                    <tags>
-                        <tag>
-                            <name>apiNote</name>
-                            <placement>a</placement>
-                            <head>API Note:</head>
-                        </tag>
-                        <tag>
-                            <name>implSpec</name>
-                            <placement>a</placement>
-                            <head>Implementation Requirements:</head>
-                        </tag>
-                        <tag>
-                            <name>implNote</name>
-                            <placement>a</placement>
-                            <head>Implementation Note:</head>
-                        </tag>
-                    </tags>
-                    <notimestamp>true</notimestamp>
-                    <failOnError>false</failOnError>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-enforcer-plugin</artifactId>
-                <version>${maven.enforcer.version}</version>
-                <inherited>false</inherited>
-                <executions>
-                    <execution>
-                        <id>clean</id>
-                        <phase>pre-clean</phase>
-                        <goals>
-                            <goal>enforce</goal>
-                        </goals>
-                    </execution>
-                    <execution>
-                        <id>default</id>
-                        <phase>validate</phase>
-                        <goals>
-                            <goal>enforce</goal>
-                        </goals>
-                    </execution>
-                    <execution>
-                        <id>site</id>
-                        <phase>pre-site</phase>
-                        <goals>
-                            <goal>enforce</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-site-plugin</artifactId>
-                <version>${maven.site.version}</version>
-                <executions>
-                    <execution>
-                        <id>attach-descriptor</id>
-                        <goals>
-                            <goal>attach-descriptor</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.rat</groupId>
-                <artifactId>apache-rat-plugin</artifactId>
-                <version>${maven.rat.version}</version>
-                <executions>
-                    <execution>
-                        <phase>verify</phase>
-                        <goals>
-                            <goal>check</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>findbugs-maven-plugin</artifactId>
-                <version>${maven.findbugs.version}</version>
-            </plugin>
         </plugins>
     </build>
 
@@ -413,6 +308,10 @@
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>findbugs-maven-plugin</artifactId>
                 <version>${maven.findbugs.version}</version>
+                <configuration>
+                    <!-- increase the maximum allowed heap size (default is 768M) to 1024M, as it will fail -->
+                    <maxHeap>1024</maxHeap>
+                </configuration>
             </plugin>
         </plugins>
     </reporting>
