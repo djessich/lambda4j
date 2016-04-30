@@ -1,24 +1,54 @@
-# Library Lambda4j
+Lambda4j: Improved Java 8 functional interfaces (lambdas)
+=========================================================
 
-**The current status represents a PRE-Release!!!**
+The Lambda4j project focuses on the implementation of non-throwable and throwable Java&trade; 8 functional interfaces (lambdas). It supports the following features:
 
-This library adds more lambdas to Java, as the default JDK ones, and provides the ability to use throwable lambdas, 
-both additional and original JDK lambdas. Currently there is no abstraction for JDK lambdas available, so please use 
-the default JDK ones.
+* new non-throwable functional interfaces
+* new throwable functional interfaces
+* JDK functional interfaces support/compatibility
+* JDK functional interfaces methods (f.e. composition)
+* additional functional interfaces methods (f.e. currying, memoization, ...)
+* additional throwable functional interfaces methods (f.e. nesting, sneaky throwing, ...)
+* functional interfaces until arity 3
+* serialization support
 
-This library is currently in development and may have some missing lambda types. Moreover there is no generated 
-documentation (except inline Javadoc) available at this point of development. This means, you will need to do some 
-learning by doing, which should not be very complicated because this library is very self-explanatory.  
+The new functional interface types support every object type and all primitive types (boolean, byte, char, double, float, int, long, short).
 
-Some points you should know:
+## Requirements
 
-* If you want to contribute, please get in contact with us. We would appreciate any further help.
-* If you have found any bugs, please let us know or raise a ticket. 
-* If you want to suggest new features, please get in contact with us or raise a ticket.
+The project requires Maven 3.0.3 and Java&trade; 8 or above to run.
 
-*During development, there will be some major changes in our project structure, interface/class naming convention, 
-functions naming, etc., so until release, we are not able to provide backwards compatibility.*
+## Maven Dependency
 
-This library is developed by Gridtec under Apache Licence 2.
+Lambda4j can be obtained using maven by adding the following dependency to your project.
 
-**See our website under www.gridtec.at.**
+```xml
+<dependency>
+  <groupId>at.gridtec.lambda4j</groupId>
+  <artifactId>lambda4j</artifactId>
+  <version>1.0.0</version>
+</dependency>
+```
+
+## Dependencies
+
+The Lambda4j projects has the following dependencies:
+
+ * [Apacha Commons Lang](https://commons.apache.org/proper/commons-lang/)
+ * [javax.annotation as per JSR-305](http://findbugs.sourceforge.net/)
+
+If you like to use Lambda4j in your project without Dependency Management suach as Maven, then the dependencies from above must be on your classpath.
+
+## Documentation
+
+The documentation is coming soon on the projects website.
+
+## Other
+
+If you would like to contribute, please get in contact with us. We would appreciate any further help. If you have found any bugs or want a new feature, please let us know through raising a ticket.
+
+## Links
+* [Project Page](http://www.gridtec.at/category/projects/lambda4j)
+* [API Doc](http://www.gridtec.at/doc/lambda4j/latest)
+* [Github Project](https://github.com/gridtec/lambda4j)
+* [Issue Tracker](https://github.com/gridtec/lambda4j/issues)
