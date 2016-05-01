@@ -40,10 +40,6 @@
             <artifactId>lambda4j-core</artifactId>
         </dependency>
         <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>lambda4j-generator</artifactId>
-        </dependency>
-        <dependency>
             <groupId>org.testng</groupId>
             <artifactId>testng</artifactId>
         </dependency>
@@ -98,6 +94,12 @@
             <activation>
                 <activeByDefault>false</activeByDefault>
             </activation>
+            <dependencies>
+                <dependency>
+                    <groupId>${project.groupId}</groupId>
+                    <artifactId>lambda4j-generator</artifactId>
+                </dependency>
+            </dependencies>
             <build>
                 <plugins>
                     <plugin>
