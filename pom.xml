@@ -62,6 +62,7 @@
         <connection>scm:git:git@github.com:gridtec/lambda4j.git</connection>
         <developerConnection>scm:git:git@github.com:gridtec/lambda4j.git</developerConnection>
         <url>https://github.com/gridtec/lambda4j</url>
+        <tag>HEAD</tag>
     </scm>
 
     <issueManagement>
