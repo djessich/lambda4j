@@ -70,6 +70,7 @@
     </issueManagement>
 
     <modules>
+        <module>lambda4j</module>
         <module>lambda4j-core</module>
         <module>lambda4j-functions</module>
     </modules>
@@ -108,17 +109,17 @@
     <dependencyManagement>
         <dependencies>
             <dependency>
-                <groupId>${project.groupId}</groupId>
+                <groupId>at.gridtec.lambda4j</groupId>
                 <artifactId>lambda4j-core</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
-                <groupId>${project.groupId}</groupId>
+                <groupId>at.gridtec.lambda4j</groupId>
                 <artifactId>lambda4j-functions</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
-                <groupId>${project.groupId}</groupId>
+                <groupId>at.gridtec.lambda4j</groupId>
                 <artifactId>lambda4j-generator</artifactId>
                 <version>${project.version}</version>
             </dependency>

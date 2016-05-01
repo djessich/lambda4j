@@ -36,7 +36,7 @@
 
     <dependencies>
         <dependency>
-            <groupId>${project.groupId}</groupId>
+            <groupId>at.gridtec.lambda4j</groupId>
             <artifactId>lambda4j-core</artifactId>
         </dependency>
         <dependency>
