@@ -27,7 +27,7 @@
 
     <artifactId>lambda4j-functions</artifactId>
     <packaging>jar</packaging>
-    <name>Lambda4j Functions Module</name>
+    <name>Lambda4j Functions</name>
 
     <properties>
         <generator.output>${project.basedir}/src-gen/main/java</generator.output>
@@ -70,10 +70,6 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-site-plugin</artifactId>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.rat</groupId>
-                <artifactId>apache-rat-plugin</artifactId>
             </plugin>
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>

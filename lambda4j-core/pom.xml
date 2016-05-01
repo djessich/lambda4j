@@ -27,7 +27,7 @@
 
     <artifactId>lambda4j-core</artifactId>
     <packaging>jar</packaging>
-    <name>Lambda4j Core Module</name>
+    <name>Lambda4j Core</name>
 
     <dependencies>
         <dependency>
@@ -57,10 +57,6 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-site-plugin</artifactId>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.rat</groupId>
-                <artifactId>apache-rat-plugin</artifactId>
             </plugin>
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>

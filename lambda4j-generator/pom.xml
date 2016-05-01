@@ -27,7 +27,7 @@
 
     <artifactId>lambda4j-generator</artifactId>
     <packaging>jar</packaging>
-    <name>Lambda4j Generator Module</name>
+    <name>Lambda4j Generator</name>
 
     <properties>
         <freemarker.version>2.3.23</freemarker.version>
@@ -72,26 +72,23 @@
                 <artifactId>maven-site-plugin</artifactId>
             </plugin>
             <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>findbugs-maven-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
+
+    <reporting>
+        <plugins>
+            <plugin>
                 <groupId>org.apache.rat</groupId>
                 <artifactId>apache-rat-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <phase>verify</phase>
-                        <goals>
-                            <goal>check</goal>
-                        </goals>
-                    </execution>
-                </executions>
                 <configuration>
                     <excludes>
                         <exclude>**/*.ftl</exclude>
                     </excludes>
                 </configuration>
             </plugin>
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>findbugs-maven-plugin</artifactId>
-            </plugin>
         </plugins>
-    </build>
+    </reporting>
 </project>
