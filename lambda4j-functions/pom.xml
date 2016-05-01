@@ -22,7 +22,7 @@
         <groupId>at.gridtec.lambda4j</groupId>
         <artifactId>lambda4j-parent</artifactId>
         <version>1.0.0-SNAPSHOT</version>
-        <relativePath>../lambda4j-parent</relativePath>
+        <relativePath>../pom.xml</relativePath>
     </parent>
 
     <artifactId>lambda4j-functions</artifactId>
@@ -31,7 +31,6 @@
 
     <properties>
         <generator.output>${project.basedir}/src-gen/main/java</generator.output>
-        <maven.clean.version>3.0.0</maven.clean.version>
         <maven.exec.version>1.4.0</maven.exec.version>
     </properties>
 
@@ -93,7 +92,9 @@
 
     <profiles>
         <profile>
-            <id>generator</id>
+            <!-- overriding the run-generator profile from parent to run the generator from this module; parent profile -->
+            <!-- is required to have generator module in reactor build -->
+            <id>run-generator</id>
             <activation>
                 <activeByDefault>false</activeByDefault>
             </activation>
@@ -102,7 +103,6 @@
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-clean-plugin</artifactId>
-                        <version>${maven.clean.version}</version>
                         <executions>
                             <execution>
                                 <id>clean-generated-sources</id>
@@ -127,7 +127,7 @@
                         <version>${maven.exec.version}</version>
                         <executions>
                             <execution>
-                                <id>run-generator</id>
+                                <id>exec-generator</id>
                                 <!-- not using generate-sources phase as maven-source-plugin will call the phase a second time -->
                                 <phase>process-sources</phase>
                                 <goals>
