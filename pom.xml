@@ -71,7 +71,6 @@
     </issueManagement>
 
     <modules>
-        <module>lambda4j</module>
         <module>lambda4j-core</module>
         <module>lambda4j-functions</module>
     </modules>
@@ -117,11 +116,6 @@
             <dependency>
                 <groupId>at.gridtec.lambda4j</groupId>
                 <artifactId>lambda4j-functions</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>at.gridtec.lambda4j</groupId>
-                <artifactId>lambda4j-generator</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
@@ -457,6 +451,15 @@
             <modules>
                 <module>lambda4j-generator</module>
             </modules>
+            <dependencyManagement>
+                <dependencies>
+                    <dependency>
+                        <groupId>at.gridtec.lambda4j</groupId>
+                        <artifactId>lambda4j-generator</artifactId>
+                        <version>${project.version}</version>
+                    </dependency>
+                </dependencies>
+            </dependencyManagement>
         </profile>
         <!-- adds the generator to reactor build and runs the generator (override this profile in modules which need to run the generator) -->
         <!-- if the "include-generator" profile is also active, the generator module gets added to the reactor build once -->
@@ -468,6 +471,15 @@
             <modules>
                 <module>lambda4j-generator</module>
             </modules>
+            <dependencyManagement>
+                <dependencies>
+                    <dependency>
+                        <groupId>at.gridtec.lambda4j</groupId>
+                        <artifactId>lambda4j-generator</artifactId>
+                        <version>${project.version}</version>
+                    </dependency>
+                </dependencies>
+            </dependencyManagement>
         </profile>
     </profiles>
 </project>
