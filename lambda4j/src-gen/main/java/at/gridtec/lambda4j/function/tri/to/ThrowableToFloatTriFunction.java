@@ -497,7 +497,7 @@ public interface ThrowableToFloatTriFunction<T, U, V, X extends Throwable> exten
      * message and the thrown throwable itself.
      *
      * @return A composed {@code ToFloatTriFunction} that applies this function to its input and nests the thrown {@code
-     * {@code Throwable} from it, unless it is of type {@code RuntimeException} or {@code Error}.
+     * Throwable} from it, unless it is of type {@code RuntimeException} or {@code Error}.
      */
     @Nonnull
     default ToFloatTriFunction<T, U, V> nest() {

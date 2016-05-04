@@ -533,7 +533,7 @@ public interface ThrowableBooleanUnaryOperator<X extends Throwable> extends Lamb
      * throwables message and the thrown throwable itself.
      *
      * @return A composed {@code BooleanUnaryOperator} that applies this operator to its input and nests the thrown
-     * {@code {@code Throwable} from it, unless it is of type {@code RuntimeException} or {@code Error}.
+     * {@code Throwable} from it, unless it is of type {@code RuntimeException} or {@code Error}.
      */
     @Nonnull
     default BooleanUnaryOperator nest() {

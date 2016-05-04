@@ -462,7 +462,7 @@ public interface ThrowableToCharBiFunction<T, U, X extends Throwable> extends La
      * message and the thrown throwable itself.
      *
      * @return A composed {@code ToCharBiFunction} that applies this function to its input and nests the thrown {@code
-     * {@code Throwable} from it, unless it is of type {@code RuntimeException} or {@code Error}.
+     * Throwable} from it, unless it is of type {@code RuntimeException} or {@code Error}.
      */
     @Nonnull
     default ToCharBiFunction<T, U> nest() {

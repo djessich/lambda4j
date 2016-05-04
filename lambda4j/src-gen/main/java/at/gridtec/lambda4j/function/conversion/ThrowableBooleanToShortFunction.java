@@ -524,7 +524,7 @@ public interface ThrowableBooleanToShortFunction<X extends Throwable> extends La
      * throwables message and the thrown throwable itself.
      *
      * @return A composed {@code BooleanToShortFunction} that applies this function to its input and nests the thrown
-     * {@code {@code Throwable} from it, unless it is of type {@code RuntimeException} or {@code Error}.
+     * {@code Throwable} from it, unless it is of type {@code RuntimeException} or {@code Error}.
      */
     @Nonnull
     default BooleanToShortFunction nest() {

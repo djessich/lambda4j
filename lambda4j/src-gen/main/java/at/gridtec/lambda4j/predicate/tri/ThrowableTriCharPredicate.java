@@ -786,7 +786,7 @@ public interface ThrowableTriCharPredicate<X extends Throwable> extends Lambda {
      * message and the thrown throwable itself.
      *
      * @return A composed {@code TriCharPredicate} that applies this predicate to its input and nests the thrown {@code
-     * {@code Throwable} from it, unless it is of type {@code RuntimeException} or {@code Error}.
+     * Throwable} from it, unless it is of type {@code RuntimeException} or {@code Error}.
      */
     @Nonnull
     default TriCharPredicate nest() {

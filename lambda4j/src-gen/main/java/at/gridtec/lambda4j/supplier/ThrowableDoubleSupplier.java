@@ -340,7 +340,7 @@ public interface ThrowableDoubleSupplier<X extends Throwable> extends Lambda, Do
      * message and the thrown throwable itself.
      *
      * @return A composed {@code DoubleSupplier2} that applies this supplier to its input and nests the thrown {@code
-     * {@code Throwable} from it, unless it is of type {@code RuntimeException} or {@code Error}.
+     * Throwable} from it, unless it is of type {@code RuntimeException} or {@code Error}.
      */
     @Nonnull
     default DoubleSupplier2 nest() {

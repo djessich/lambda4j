@@ -523,7 +523,7 @@ public interface ThrowableTriFloatFunction<R, X extends Throwable> extends Lambd
      * message and the thrown throwable itself.
      *
      * @return A composed {@code TriFloatFunction} that applies this function to its input and nests the thrown {@code
-     * {@code Throwable} from it, unless it is of type {@code RuntimeException} or {@code Error}.
+     * Throwable} from it, unless it is of type {@code RuntimeException} or {@code Error}.
      */
     @Nonnull
     default TriFloatFunction<R> nest() {

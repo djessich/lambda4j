@@ -619,7 +619,7 @@ public interface ThrowableTriPredicate<T, U, V, X extends Throwable> extends Lam
      * message and the thrown throwable itself.
      *
      * @return A composed {@code TriPredicate} that applies this predicate to its input and nests the thrown {@code
-     * {@code Throwable} from it, unless it is of type {@code RuntimeException} or {@code Error}.
+     * Throwable} from it, unless it is of type {@code RuntimeException} or {@code Error}.
      */
     @Nonnull
     default TriPredicate<T, U, V> nest() {

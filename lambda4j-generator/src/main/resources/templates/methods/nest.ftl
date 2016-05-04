@@ -18,7 +18,7 @@
  * (wrapped) in a {@link ThrownByFunctionalInterfaceException}, which is constructed from the thrown throwables
  * message and the thrown throwable itself.
  *
- * @return A composed {@code ${outputLambda.name}} that applies this ${lambda.type.simpleName} to its input and nests the thrown {@code
+ * @return A composed {@code ${outputLambda.name}} that applies this ${lambda.type.simpleName} to its input and nests the thrown
  * {@code Throwable} from it, unless it is of type {@code RuntimeException} or {@code Error}.
  */
 ${annotation.nonnull}

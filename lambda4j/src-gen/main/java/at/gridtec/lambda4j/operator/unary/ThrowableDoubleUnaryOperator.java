@@ -569,7 +569,7 @@ public interface ThrowableDoubleUnaryOperator<X extends Throwable> extends Lambd
      * throwables message and the thrown throwable itself.
      *
      * @return A composed {@code DoubleUnaryOperator2} that applies this operator to its input and nests the thrown
-     * {@code {@code Throwable} from it, unless it is of type {@code RuntimeException} or {@code Error}.
+     * {@code Throwable} from it, unless it is of type {@code RuntimeException} or {@code Error}.
      */
     @Nonnull
     default DoubleUnaryOperator2 nest() {

@@ -497,7 +497,7 @@ public interface ThrowableToShortTriFunction<T, U, V, X extends Throwable> exten
      * message and the thrown throwable itself.
      *
      * @return A composed {@code ToShortTriFunction} that applies this function to its input and nests the thrown {@code
-     * {@code Throwable} from it, unless it is of type {@code RuntimeException} or {@code Error}.
+     * Throwable} from it, unless it is of type {@code RuntimeException} or {@code Error}.
      */
     @Nonnull
     default ToShortTriFunction<T, U, V> nest() {

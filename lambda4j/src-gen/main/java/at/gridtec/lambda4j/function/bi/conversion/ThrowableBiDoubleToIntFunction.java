@@ -613,7 +613,7 @@ public interface ThrowableBiDoubleToIntFunction<X extends Throwable> extends Lam
      * throwables message and the thrown throwable itself.
      *
      * @return A composed {@code BiDoubleToIntFunction} that applies this function to its input and nests the thrown
-     * {@code {@code Throwable} from it, unless it is of type {@code RuntimeException} or {@code Error}.
+     * {@code Throwable} from it, unless it is of type {@code RuntimeException} or {@code Error}.
      */
     @Nonnull
     default BiDoubleToIntFunction nest() {

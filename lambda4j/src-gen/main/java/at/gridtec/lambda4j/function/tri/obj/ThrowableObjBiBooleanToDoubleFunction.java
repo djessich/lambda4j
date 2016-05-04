@@ -684,7 +684,7 @@ public interface ThrowableObjBiBooleanToDoubleFunction<T, X extends Throwable> e
      * throwables message and the thrown throwable itself.
      *
      * @return A composed {@code ObjBiBooleanToDoubleFunction} that applies this function to its input and nests the
-     * thrown {@code {@code Throwable} from it, unless it is of type {@code RuntimeException} or {@code Error}.
+     * thrown {@code Throwable} from it, unless it is of type {@code RuntimeException} or {@code Error}.
      */
     @Nonnull
     default ObjBiBooleanToDoubleFunction<T> nest() {

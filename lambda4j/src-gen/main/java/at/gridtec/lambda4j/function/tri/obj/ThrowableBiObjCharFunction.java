@@ -574,7 +574,7 @@ public interface ThrowableBiObjCharFunction<T, U, R, X extends Throwable> extend
      * message and the thrown throwable itself.
      *
      * @return A composed {@code BiObjCharFunction} that applies this function to its input and nests the thrown {@code
-     * {@code Throwable} from it, unless it is of type {@code RuntimeException} or {@code Error}.
+     * Throwable} from it, unless it is of type {@code RuntimeException} or {@code Error}.
      */
     @Nonnull
     default BiObjCharFunction<T, U, R> nest() {

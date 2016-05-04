@@ -255,7 +255,7 @@ public interface ThrowableTriConsumer<T, U, V, X extends Throwable> extends Lamb
      * (wrapped) in a {@link ThrownByFunctionalInterfaceException}, which is constructed from the thrown throwables
      * message and the thrown throwable itself.
      *
-     * @return A composed {@code TriConsumer} that applies this consumer to its input and nests the thrown {@code {@code
+     * @return A composed {@code TriConsumer} that applies this consumer to its input and nests the thrown {@code
      * Throwable} from it, unless it is of type {@code RuntimeException} or {@code Error}.
      */
     @Nonnull

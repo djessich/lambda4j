@@ -625,7 +625,7 @@ public interface ThrowableObjIntToDoubleFunction<T, X extends Throwable> extends
      * throwables message and the thrown throwable itself.
      *
      * @return A composed {@code ObjIntToDoubleFunction} that applies this function to its input and nests the thrown
-     * {@code {@code Throwable} from it, unless it is of type {@code RuntimeException} or {@code Error}.
+     * {@code Throwable} from it, unless it is of type {@code RuntimeException} or {@code Error}.
      */
     @Nonnull
     default ObjIntToDoubleFunction<T> nest() {

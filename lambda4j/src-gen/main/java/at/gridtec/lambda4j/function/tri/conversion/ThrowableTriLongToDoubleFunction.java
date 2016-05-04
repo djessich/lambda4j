@@ -669,7 +669,7 @@ public interface ThrowableTriLongToDoubleFunction<X extends Throwable> extends L
      * throwables message and the thrown throwable itself.
      *
      * @return A composed {@code TriLongToDoubleFunction} that applies this function to its input and nests the thrown
-     * {@code {@code Throwable} from it, unless it is of type {@code RuntimeException} or {@code Error}.
+     * {@code Throwable} from it, unless it is of type {@code RuntimeException} or {@code Error}.
      */
     @Nonnull
     default TriLongToDoubleFunction nest() {

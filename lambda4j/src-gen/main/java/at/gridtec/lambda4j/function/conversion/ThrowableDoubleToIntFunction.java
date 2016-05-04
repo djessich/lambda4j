@@ -549,7 +549,7 @@ public interface ThrowableDoubleToIntFunction<X extends Throwable> extends Lambd
      * throwables message and the thrown throwable itself.
      *
      * @return A composed {@code DoubleToIntFunction2} that applies this function to its input and nests the thrown
-     * {@code {@code Throwable} from it, unless it is of type {@code RuntimeException} or {@code Error}.
+     * {@code Throwable} from it, unless it is of type {@code RuntimeException} or {@code Error}.
      */
     @Nonnull
     default DoubleToIntFunction2 nest() {

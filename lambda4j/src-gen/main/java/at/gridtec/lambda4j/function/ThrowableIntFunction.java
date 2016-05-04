@@ -411,7 +411,7 @@ public interface ThrowableIntFunction<R, X extends Throwable> extends Lambda, In
      * message and the thrown throwable itself.
      *
      * @return A composed {@code IntFunction2} that applies this function to its input and nests the thrown {@code
-     * {@code Throwable} from it, unless it is of type {@code RuntimeException} or {@code Error}.
+     * Throwable} from it, unless it is of type {@code RuntimeException} or {@code Error}.
      */
     @Nonnull
     default IntFunction2<R> nest() {

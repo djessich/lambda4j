@@ -302,7 +302,7 @@ public interface ThrowableByteConsumer<X extends Throwable> extends Lambda {
      * message and the thrown throwable itself.
      *
      * @return A composed {@code ByteConsumer} that applies this consumer to its input and nests the thrown {@code
-     * {@code Throwable} from it, unless it is of type {@code RuntimeException} or {@code Error}.
+     * Throwable} from it, unless it is of type {@code RuntimeException} or {@code Error}.
      */
     @Nonnull
     default ByteConsumer nest() {

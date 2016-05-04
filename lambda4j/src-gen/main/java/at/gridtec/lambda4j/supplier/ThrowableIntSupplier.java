@@ -339,7 +339,7 @@ public interface ThrowableIntSupplier<X extends Throwable> extends Lambda, IntSu
      * message and the thrown throwable itself.
      *
      * @return A composed {@code IntSupplier2} that applies this supplier to its input and nests the thrown {@code
-     * {@code Throwable} from it, unless it is of type {@code RuntimeException} or {@code Error}.
+     * Throwable} from it, unless it is of type {@code RuntimeException} or {@code Error}.
      */
     @Nonnull
     default IntSupplier2 nest() {

@@ -496,7 +496,7 @@ public interface ThrowableToIntTriFunction<T, U, V, X extends Throwable> extends
      * message and the thrown throwable itself.
      *
      * @return A composed {@code ToIntTriFunction} that applies this function to its input and nests the thrown {@code
-     * {@code Throwable} from it, unless it is of type {@code RuntimeException} or {@code Error}.
+     * Throwable} from it, unless it is of type {@code RuntimeException} or {@code Error}.
      */
     @Nonnull
     default ToIntTriFunction<T, U, V> nest() {

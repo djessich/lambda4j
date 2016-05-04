@@ -611,7 +611,7 @@ public interface ThrowableBiPredicate<T, U, X extends Throwable> extends Lambda,
      * message and the thrown throwable itself.
      *
      * @return A composed {@code BiPredicate2} that applies this predicate to its input and nests the thrown {@code
-     * {@code Throwable} from it, unless it is of type {@code RuntimeException} or {@code Error}.
+     * Throwable} from it, unless it is of type {@code RuntimeException} or {@code Error}.
      */
     @Nonnull
     default BiPredicate2<T, U> nest() {

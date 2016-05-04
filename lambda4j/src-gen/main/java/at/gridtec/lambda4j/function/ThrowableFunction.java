@@ -267,7 +267,7 @@ public interface ThrowableFunction<T, R, X extends Throwable> extends Lambda, Fu
      * (wrapped) in a {@link ThrownByFunctionalInterfaceException}, which is constructed from the thrown throwables
      * message and the thrown throwable itself.
      *
-     * @return A composed {@code Function2} that applies this function to its input and nests the thrown {@code {@code
+     * @return A composed {@code Function2} that applies this function to its input and nests the thrown {@code
      * Throwable} from it, unless it is of type {@code RuntimeException} or {@code Error}.
      */
     @Nonnull

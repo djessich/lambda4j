@@ -849,7 +849,7 @@ public interface ThrowableBiObjDoublePredicate<T, U, X extends Throwable> extend
      * throwables message and the thrown throwable itself.
      *
      * @return A composed {@code BiObjDoublePredicate} that applies this predicate to its input and nests the thrown
-     * {@code {@code Throwable} from it, unless it is of type {@code RuntimeException} or {@code Error}.
+     * {@code Throwable} from it, unless it is of type {@code RuntimeException} or {@code Error}.
      */
     @Nonnull
     default BiObjDoublePredicate<T, U> nest() {

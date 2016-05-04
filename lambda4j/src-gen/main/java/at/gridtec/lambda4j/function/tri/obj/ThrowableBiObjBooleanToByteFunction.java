@@ -717,7 +717,7 @@ public interface ThrowableBiObjBooleanToByteFunction<T, U, X extends Throwable> 
      * throwables message and the thrown throwable itself.
      *
      * @return A composed {@code BiObjBooleanToByteFunction} that applies this function to its input and nests the
-     * thrown {@code {@code Throwable} from it, unless it is of type {@code RuntimeException} or {@code Error}.
+     * thrown {@code Throwable} from it, unless it is of type {@code RuntimeException} or {@code Error}.
      */
     @Nonnull
     default BiObjBooleanToByteFunction<T, U> nest() {

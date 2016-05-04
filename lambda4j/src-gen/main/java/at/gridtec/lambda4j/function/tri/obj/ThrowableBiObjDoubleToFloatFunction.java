@@ -718,7 +718,7 @@ public interface ThrowableBiObjDoubleToFloatFunction<T, U, X extends Throwable> 
      * throwables message and the thrown throwable itself.
      *
      * @return A composed {@code BiObjDoubleToFloatFunction} that applies this function to its input and nests the
-     * thrown {@code {@code Throwable} from it, unless it is of type {@code RuntimeException} or {@code Error}.
+     * thrown {@code Throwable} from it, unless it is of type {@code RuntimeException} or {@code Error}.
      */
     @Nonnull
     default BiObjDoubleToFloatFunction<T, U> nest() {

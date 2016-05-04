@@ -126,7 +126,7 @@ public interface ThrowableRunnable<X extends Throwable> extends Lambda, Runnable
      * (wrapped) in a {@link ThrownByFunctionalInterfaceException}, which is constructed from the thrown throwables
      * message and the thrown throwable itself.
      *
-     * @return A composed {@code Runnable2} that applies this runnable to its input and nests the thrown {@code {@code
+     * @return A composed {@code Runnable2} that applies this runnable to its input and nests the thrown {@code
      * Throwable} from it, unless it is of type {@code RuntimeException} or {@code Error}.
      */
     @Nonnull

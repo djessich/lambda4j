@@ -692,7 +692,7 @@ public interface ThrowableObjBiDoubleToShortFunction<T, X extends Throwable> ext
      * throwables message and the thrown throwable itself.
      *
      * @return A composed {@code ObjBiDoubleToShortFunction} that applies this function to its input and nests the
-     * thrown {@code {@code Throwable} from it, unless it is of type {@code RuntimeException} or {@code Error}.
+     * thrown {@code Throwable} from it, unless it is of type {@code RuntimeException} or {@code Error}.
      */
     @Nonnull
     default ObjBiDoubleToShortFunction<T> nest() {
