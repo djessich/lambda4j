@@ -38,7 +38,7 @@ public class PackageProcessor extends Processor {
     /**
      * Defines the default package prefix, representing the projects group id.
      */
-    private static final String PACKAGE_DEFAULT_PREFIX = "at.gridtec.lambda4j.functions";
+    private static final String PACKAGE_DEFAULT_PREFIX = "at.gridtec.lambda4j";
 
     /**
      * Defines the identifier for lambdas with arity 2.
