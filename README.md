@@ -1,4 +1,4 @@
-Lambda4j: Improved Java 8 functional interfaces (lambdas)
+Lambda4j: Improved Java 8 functional interfaces
 =========================================================
 
 The Lambda4j project focuses on the implementation of non-throwable and throwable Java&trade; 8 functional interfaces (lambdas). It supports the following features:
@@ -20,7 +20,7 @@ The project requires Maven 3.0.3 and Java&trade; 8 or above to run.
 
 ## Maven Dependency
 
-Lambda4j can be obtained using maven by adding the following dependency to your project.
+To add Lambda4j as dependency using Maven, use the following:
 
 ```xml
 <dependency>
@@ -29,6 +29,80 @@ Lambda4j can be obtained using maven by adding the following dependency to your 
   <version>1.0.0</version>
 </dependency>
 ```
+
+Using Gradle, use the following:
+
+```
+dependencies {
+  compile 'at.gridtec.lambda4j:lambda4j:1.0.0'
+}
+```
+
+## Maven Modules
+
+There are a number of modules in Lambda4j, here is a quick overview:
+
+### lambda4j
+
+The main library providing additional Java&trade; 8 functional interfaces. This
+includes non-throwable and throwable functional interfaces.
+
+### lambda4j-core
+
+The core library of Lambda4j for sharing code between different modules. At this point,
+this module seems to be unnecessary, but it is required for further features of Lambda4j.
+
+### lambda4j-generator
+
+This module includes the generator for Lambda4j. It is used to generate all
+non-throwable and throwable functional interfaces. This is just a helper, as the
+amount of functional interfaces are that high, as writing by hand would be a big
+cost of time. If a new feature needs to be applied to all functional interfaces
+of Lambda4j, the generator is changed and run to apply the changes.
+
+## Maven Build Profiles
+
+This project includes different useful profiles. Refer below for more info.
+
+### Generator
+
+To enable the *lambda4j-generator* module during reactor build, Lambda4j provides
+two different profiles. The `include-generator` profile is only used for adding
+the generator module to reactor build - nothing more.
+
+The `run-generator` is used for running the generator during reactor build. This
+profile binds to *process-sources* phase of reactor build. It deletes all previously
+generated files using generator module.
+
+Both profiles are by default disabled. The recommended way to use both are
+`mvn clean package -P include-generator` or `mvn clean package -P run-generator`.
+
+If both profiles are enabled at the same time, the `run-generator` profile overwrites
+the `include-generator` profile. This means that the `run-generator` adds the generator
+module to reactor build (same as `include-generator` profile) and then runs the
+generator during reactor build.
+
+### Source and Javadoc jars
+
+To enable generation of source and javadoc jars during reactor build, the `source`
+or `javadoc` profile needs to be enabled. This profiles are disabled by default,
+for faster building. The recommended way to use this profiles are `mvn <goal> -P source`
+or `mvn <goal> -P javadoc` respectively. Both profiles bind to *package* phase of
+reactor build.
+
+### Show compiler warnings
+
+To show compiler warnings during reactor build, the `show-compiler-warnings` profile
+needs to be enabled. This profile is by default disabled. The recommended way to
+use this profile is `mvn <goal> -P show-compiler-warnings`. The profile binds to
+*compile* phase of reactor build.
+
+### Disable tests
+
+To disable all tests during reactor build, the `disable-tests` profile needs to
+be enabled. This profile is by default disabled. The recommended way to use this
+profile is `mvn <goal> -P disable-tests`. The profile binds to *test* phase of
+reactor build.
 
 ## Dependencies
 
@@ -41,7 +115,7 @@ If you like to use Lambda4j in your project without Dependency Management suach 
 
 ## Documentation
 
-The documentation is coming soon on the projects website.
+The documentation with examples is coming soon on the projects website. However, API Documentation is already published (see below under *Links* section).
 
 ## Other
 
