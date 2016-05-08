@@ -24,7 +24,7 @@
 
     <groupId>at.gridtec.lambda4j</groupId>
     <artifactId>lambda4j-parent</artifactId>
-    <version>1.0.0</version>
+    <version>1.0.1-SNAPSHOT</version>
     <packaging>pom</packaging>
     <name>Lambda4j Project</name>
     <url>https://github.com/gridtec/lambda4j</url>
@@ -60,7 +60,7 @@
         <connection>scm:git:git@github.com:gridtec/lambda4j.git</connection>
         <developerConnection>scm:git:git@github.com:gridtec/lambda4j.git</developerConnection>
         <url>https://github.com/gridtec/lambda4j</url>
-        <tag>v1.0.0</tag>
+        <tag>HEAD</tag>
     </scm>
 
     <issueManagement>
