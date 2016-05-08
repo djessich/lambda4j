@@ -30,7 +30,7 @@
     <packaging>pom</packaging>
     <name>Lambda4j Project</name>
     <url>https://github.com/gridtec/lambda4j</url>
-    <description>A library for non-throwable and throwable Java 8 functional interfaces (lambdas).</description>
+    <description>Lambda4j provides non-throwable and throwable Java 8 functional interfaces (lambdas).</description>
     <inceptionYear>2015</inceptionYear>
     <licenses>
         <license>
@@ -236,6 +236,12 @@
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-release-plugin</artifactId>
                     <version>${maven.release.version}</version>
+                    <!--<configuration>-->
+                    <!--<autoVersionSubmodules>true</autoVersionSubmodules>-->
+                    <!--<mavenExecutorId>forked-path</mavenExecutorId>-->
+                    <!--<useReleaseProfile>false</useReleaseProfile>-->
+                    <!--<arguments>${arguments} -Psonatype-oss-release</arguments>-->
+                    <!--</configuration>-->
                 </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
@@ -358,6 +364,54 @@
                                 <showWarnings>true</showWarnings>
                                 <showDeprecation>true</showDeprecation>
                             </configuration>
+                        </plugin>
+                    </plugins>
+                </pluginManagement>
+            </build>
+        </profile>
+        <profile>
+            <id>sources</id>
+            <activation>
+                <activeByDefault>false</activeByDefault>
+            </activation>
+            <build>
+                <pluginManagement>
+                    <plugins>
+                        <plugin>
+                            <groupId>org.apache.maven.plugins</groupId>
+                            <artifactId>maven-source-plugin</artifactId>
+                            <executions>
+                                <execution>
+                                    <id>attach-sources</id>
+                                    <goals>
+                                        <goal>jar-no-fork</goal>
+                                    </goals>
+                                </execution>
+                            </executions>
+                        </plugin>
+                    </plugins>
+                </pluginManagement>
+            </build>
+        </profile>
+        <profile>
+            <id>javadoc</id>
+            <activation>
+                <activeByDefault>false</activeByDefault>
+            </activation>
+            <build>
+                <pluginManagement>
+                    <plugins>
+                        <plugin>
+                            <groupId>org.apache.maven.plugins</groupId>
+                            <artifactId>maven-javadoc-plugin</artifactId>
+                            <executions>
+                                <execution>
+                                    <id>attach-javadocs</id>
+                                    <goals>
+                                        <goal>jar</goal>
+                                    </goals>
+                                </execution>
+                            </executions>
                         </plugin>
                     </plugins>
                 </pluginManagement>
