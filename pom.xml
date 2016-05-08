@@ -237,6 +237,7 @@
                     <artifactId>maven-release-plugin</artifactId>
                     <version>${maven.release.version}</version>
                     <configuration>
+                        <tagNameFormat>v@{project.version}</tagNameFormat>
                         <autoVersionSubmodules>true</autoVersionSubmodules>
                         <mavenExecutorId>forked-path</mavenExecutorId>
                         <useReleaseProfile>false</useReleaseProfile>
