@@ -106,7 +106,7 @@ reactor build.
 
 ## Dependencies
 
-The Lambda4j projects has the following dependencies:
+The Lambda4j project has the following dependencies:
 
  * [Apacha Commons Lang](https://commons.apache.org/proper/commons-lang/)
  * [javax.annotation as per JSR-305](http://findbugs.sourceforge.net/)
@@ -123,6 +123,6 @@ If you would like to contribute, please get in contact with us. We would appreci
 
 ## Links
 * [Project Page](http://www.gridtec.at/category/projects/lambda4j)
-* [API Doc](http://www.gridtec.at/doc/lambda4j/latest)
+* [API Doc](http://doc.gridtec.at/lambda4j/latest)
 * [Github Project](https://github.com/gridtec/lambda4j)
 * [Issue Tracker](https://github.com/gridtec/lambda4j/issues)
