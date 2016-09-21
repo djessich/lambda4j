@@ -2,8 +2,7 @@
 
 [![Build Status](https://travis-ci.org/gridtec/lambda4j.svg?branch=master)](https://travis-ci.org/gridtec/lambda4j)
 [![License](https://img.shields.io/badge/license-Apache_2-blue.svg)](https://www.apache.org/licenses/LICENSE-2.0)
-[![Maven Central](https://maven-badges.herokuapp.com/maven-central/at.gridtec.lambda4j/lambda4j/badge.png)](https://maven-badges.herokuapp.com/maven-central/at.gridtec.lambda4j/lambda4j)
-[![GitHub release](https://img.shields.io/github/release/gridtec/lambda4j.svg)](https://img.shields.io/github/release/gridtec/lambda4j.svg)
+[![Maven Central](https://img.shields.io/maven-central/v/at.gridtec.lambda4j/lambda4j.svg)](https://maven-badges.herokuapp.com/maven-central/at.gridtec.lambda4j/lambda4j)
 
 The Lambda4j project focuses on the implementation of non-throwable and throwable Java&trade; 8 functional interfaces (lambdas). It supports the following features:
 
