@@ -18,7 +18,8 @@ package at.gridtec.lambda4j;
 import java.io.Serializable;
 
 /**
- * Created by domin on 04.04.2016.
+ * A general interface which each functional interface declared in this library is inherited from. It is used for
+ * general things which all functional interfaces have in common.
  */
 public interface Lambda extends Serializable {
 
