@@ -33,8 +33,7 @@ Just a few notes here. In general it is good to look at existing code to get a c
 
 ### Javadoc
 
-* Public API needs javadoc, e.g. public classes and public methods.
-* Non-trivial private methods need javadoc, too.
+* Public and private API need Javadoc
 * Javadocs need to be explanatory and should describe the code as good as possible
 * A package, which is part of the public API, contains a *package-info.java*.
 * Unit tests contain no javadoc at all (because they introduce no new API and contain no business logic).
@@ -72,16 +71,13 @@ We organize our classes and interfaces in the following way:
 
 1. Apache 2.0 license header.
 2. Package declaration
-3. Full import list, which means no use of imports with wildcards. This need to have the following suborder:
+3. Full import list, which means no use of imports with wildcards. Imports need to have the following order:
    * Static imports
    * Lambda4j imports (at.gridtec.lambda4j)
    * Every other domain, except Java (org, net, etc.)
    * Java imports (java/javax)
 4. The Javadoc of the type contains an overview of the API declared in the actual type.
-5. The type itself, in the following order:
-   * static API
-   * non-static API
-   Whereas each part is ordered by the following visibility: public, package private, protected, private.
+5. The type itself, seperated in static and non-static API, whereas each part is ordered by the following visibility: public, package private, protected, private.
 
 For further information, see the source code, as source code is the best documentation!
 
