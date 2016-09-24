@@ -95,6 +95,6 @@ If you made chages to the Generator, please run a full reactor build during deve
 
 ## Contribution Don't's
 
-Please do **not** modify the version number in the `VERSION` file or change the version section of `pom.xml`, a maintainer will select the appropriate version regarding your change.
+Please do **not** change the version section of `pom.xml`, a maintainer will select the appropriate version regarding your change.
 
 Please do **not** modify the following files of this project, which are `.gitignore`, `travis.yml`, `LICENSE`.
