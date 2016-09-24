@@ -1,6 +1,6 @@
-# Composition Methods
+# Composition Method
 
-With Lambda4j you can compose functional interfaces together, which is called composition. Lambda4j thereby provides either *compose* or *andThen* method in each functional interface. In addition to this, if the functional interface is a primitive one, there are also primitive mapping composition methods available. Below you will find some more information on composition methods proided by Lambda4j.
+Functional interfaces can be composed together which is called composition. For that you can use either *compose* or *andThen* method which are available in each functional interface. In addition to this, if the functional interface is a primitive one, there are also primitive mapping composition methods available. Below you will find some more information on composition methods.
 
 ## compose
 
