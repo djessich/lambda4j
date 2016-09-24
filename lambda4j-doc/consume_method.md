@@ -1,0 +1,5 @@
+# Consume Method
+
+Most of the functional interfaces provide a *consume* method, which consumes the return type directly after the function is applied using a consuming function. The consuming function must be a function with *void* as its return type, to indicate a "consume" of the result from the actual function (the function of which *compose* is called). In mathematics, we describe this with a function `f: T -> R` and a function `g: R -> 0`, whereas function `f` represents the actual function and function `g` represents a consuming one. This yields to a function `h: g(f(x)) -> 0`.
+
+This method is useful in situations where consuming functions are required but the actual object or primitive type must be changed before handed over to the consumer. So for example a function is declared and implements some altering operation. A method getting a consumer as argument, will use the consumer returned by `function#consume(Object)` rather then a consumer declared using lambda syntax. If the resulting/handed over consumer from *consume* method will implicitly alter the consumer function input.
