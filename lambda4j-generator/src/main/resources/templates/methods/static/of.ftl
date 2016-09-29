@@ -7,13 +7,12 @@
 <#include "../../javadoc/paramGenericInput.ftl">
  * @param expression A lambda expression or (typically) a method reference, e.g. {@code this::method}
  * @return A {@code ${lambda.name}} from given lambda expression or method reference.
- * @implNote This implementation allows the given argument to be {@code null}, but if {@code null} given, {@code
- * null} will be returned.
+ * @implNote This implementation allows the given argument to be {@code null}, but only if {@code null} given, {@code null} will be returned.
  * @see <a href="https://docs.oracle.com/javase/tutorial/java/javaOO/lambdaexpressions.html#syntax">Lambda Expression</a>
  * @see <a href="https://docs.oracle.com/javase/tutorial/java/javaOO/methodreferences.html">Method Reference</a>
  */
-${annotation.nonnull}
-static ${genericParameterTypeStringWithThrowableErasure} ${lambda.name}${genericParameterTypeString} of(${annotation.nonnull} final ${lambda.name}${genericParameterTypeString} expression) {
+${annotation.nullable}
+static ${genericParameterTypeStringWithThrowableErasure} ${lambda.name}${genericParameterTypeString} of(${annotation.nullable} final ${lambda.name}${genericParameterTypeString} expression) {
     return expression;
 }
 <#-- @formatter:on -->
