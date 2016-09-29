@@ -100,9 +100,10 @@
         <maven.gpg.version>1.6</maven.gpg.version>
         <extra.source.main>${project.basedir}/src-gen/main/java</extra.source.main>
         <extra.source.test>${project.basedir}/src-gen/test/java</extra.source.test>
-        <testng.version>6.1.1</testng.version>
         <jsr305.version>3.0.0</jsr305.version>
         <commons.lang3.version>3.4</commons.lang3.version>
+        <testng.version>6.1.1</testng.version>
+        <assertj.core.version>3.5.2</assertj.core.version>
     </properties>
 
     <dependencyManagement>
@@ -118,12 +119,6 @@
                 <version>${project.version}</version>
             </dependency>
             <dependency>
-                <groupId>org.testng</groupId>
-                <artifactId>testng</artifactId>
-                <version>${testng.version}</version>
-                <scope>test</scope>
-            </dependency>
-            <dependency>
                 <groupId>com.google.code.findbugs</groupId>
                 <artifactId>jsr305</artifactId>
                 <version>${jsr305.version}</version>
@@ -132,6 +127,18 @@
                 <groupId>org.apache.commons</groupId>
                 <artifactId>commons-lang3</artifactId>
                 <version>${commons.lang3.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.testng</groupId>
+                <artifactId>testng</artifactId>
+                <version>${testng.version}</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.assertj</groupId>
+                <artifactId>assertj-core</artifactId>
+                <version>${assertj.core.version}</version>
+                <scope>test</scope>
             </dependency>
         </dependencies>
     </dependencyManagement>
