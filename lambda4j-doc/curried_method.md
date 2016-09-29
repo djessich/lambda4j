@@ -5,7 +5,7 @@ Currying is a technique to partially apply a function by fixing values for some 
 So if a functional interface has one or more input parameters and returns a result of same type as its input parameters, it provides a *curried* method, which will return an equal curried version of the functional interface itself. The following example demonstrates the use of *curried* method:
 
 ```java
-BiFunction2<Integer, Integer, Integer> sum = (a, b) -> a + b; // n = 2; f
+BiFunction2<Integer, Integer, Integer> sum = (a, b) -> a + b; // f
 
 Function2<Integer, Function2<Integer, Integer>> curriedSum = sum.curried(); // curry(f) = a -> b -> a + b
 Function2<Integer, Integer> partiallyAppliedSum = curriedSum.apply(10); // first parameter a fixed to value 10; returns f'
