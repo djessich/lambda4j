@@ -132,6 +132,7 @@
 
 <#-- ##### generic parameter string functions START ##### -->
 
+# Builds: T, U, V, R, X (edgy brackets included)
 <#function buildGenericParameterTypeString target = lambda other1 = "" other2 = "" other3 = "" other4 = "">
     <#local target = .namespace.otherParametersToTarget(target, other1, other2, other3, other4)>
     <#local types = []>
@@ -157,6 +158,7 @@
     <#return genericString>
 </#function>
 
+# Builds: T, U, V, R (edgy brackets included)
 <#function buildGenericParameterTypeStringWithoutThrowable target = lambda other1 = "" other2 = "" other3 = "" other4 = "">
     <#local target = .namespace.otherParametersToTarget(target, other1, other2, other3, other4)>
     <#local types = []>
@@ -165,7 +167,6 @@
     <#else>
         <#local types = [target.firstInputType!"", target.secondInputType!"", target.thirdInputType!"", target.returnType!""]>
     </#if>
-    <#local types = types + [target.throwableType!""]>
     <#local types = filters.filterEmpties(types)>
     <#local types = filters.filterPrimitives(types)>
     <#local genericString = "">
@@ -182,6 +183,7 @@
     <#return genericString>
 </#function>
 
+# Builds: T, U, V, R, X extends Throwable (edgy brackets included)
 <#function buildGenericParameterTypeStringWithThrowableErasure target = lambda other1 = "" other2 = "" other3 = "" other4 = "">
     <#local target = .namespace.otherParametersToTarget(target, other1, other2, other3, other4)>
     <#local types = []>
@@ -211,6 +213,7 @@
     <#return genericString>
 </#function>
 
+# Builds: ? super T, ? super U, ? super V, ? extends R, ? extends X (with edgy brackets)
 <#function buildGenericParameterTypeStringWithErasure target = lambda other1 = "" other2 = "" other3 = "" other4 = "">
     <#local target = .namespace.otherParametersToTarget(target, other1, other2, other3, other4)>
     <#local types = []>
@@ -246,6 +249,7 @@
     <#return genericString>
 </#function>
 
+# Builds: T, U, V, X (includes edgy brackets)
 <#function buildGenericInputParameterTypeString target = lambda other1 = "" other2 = "" other3 = "">
     <#local target = .namespace.otherParametersToTarget(target, other1, other2, other3)>
     <#local types = []>
@@ -271,6 +275,7 @@
     <#return genericString>
 </#function>
 
+# Builds: T, U, V (includes edgy brackets)
 <#function buildGenericInputParameterTypeStringWithoutThrowable target = lambda other1 = "" other2 = "" other3 = "">
     <#local target = .namespace.otherParametersToTarget(target, other1, other2, other3)>
     <#local types = []>
@@ -295,6 +300,7 @@
     <#return genericString>
 </#function>
 
+# Builds: T, U, V, X extends Throwable (includes edgy brackets)
 <#function buildGenericInputParameterTypeStringWithThrowableErasure target = lambda other1 = "" other2 = "" other3 = "">
     <#local target = .namespace.otherParametersToTarget(target, other1, other2, other3)>
     <#local types = []>

@@ -63,7 +63,8 @@
  * // call the the method which surround the sneaky throwing functional interface
  * public void callingMethod() {
  *     try {
- *         final Class<?> sneakyThrowingFunctionalInterface("some illegal class name");
+ *         final Class<?> clazz = sneakyThrowingFunctionalInterface("some illegal class name");
+ *         // ... do something with clazz ...
  *     } catch(ClassNotFoundException e) {
  *         // ... do something with e ...
  *     }

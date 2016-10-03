@@ -60,8 +60,8 @@ public interface ${lambda.name}${genericParameterTypeStringWithThrowableErasure}
 <#include "methods/static/isEqual.ftl">
 <#--&lt;#&ndash;<#include "methods/static/min.ftl">&ndash;&gt;-->
 <#--&lt;#&ndash;<#include "methods/static/max.ftl">&ndash;&gt;-->
-<#--&lt;#&ndash;<#include "methods/static/minBy.ftl">&ndash;&gt;-->
-<#--&lt;#&ndash;<#include "methods/static/maxBy.ftl">&ndash;&gt;-->
+<#include "methods/static/minBy.ftl">
+<#include "methods/static/maxBy.ftl">
 
 <#-- if lambda is not a generic operator, include other methods (as generic operators will extend from their function codomain -->
 <#if !isGenericOperator>
@@ -80,7 +80,7 @@ public interface ${lambda.name}${genericParameterTypeStringWithThrowableErasure}
     <#include "methods/tupled.ftl">
     <#include "methods/reversed.ftl">
     <#include "methods/memoized.ftl">
-    <#include "methods/nonNull.ftl">
+<#--<#include "methods/nonNull.ftl">-->
     <#include "methods/boxed.ftl">
     <#include "methods/nest.ftl">
     <#include "methods/sneakyThrow.ftl">

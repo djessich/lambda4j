@@ -11,7 +11,6 @@
  * @see <a href="https://docs.oracle.com/javase/tutorial/java/javaOO/lambdaexpressions.html#syntax">Lambda Expression</a>
  * @see <a href="https://docs.oracle.com/javase/tutorial/java/javaOO/methodreferences.html">Method Reference</a>
  */
-${annotation.nullable}
 static ${genericParameterTypeStringWithThrowableErasure} ${lambda.name}${genericParameterTypeString} of(${annotation.nullable} final ${lambda.name}${genericParameterTypeString} expression) {
     return expression;
 }
