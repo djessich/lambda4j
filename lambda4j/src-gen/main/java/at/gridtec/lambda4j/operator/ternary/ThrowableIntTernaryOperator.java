@@ -59,6 +59,7 @@ import org.apache.commons.lang3.tuple.Triple;
 
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
@@ -86,15 +87,14 @@ public interface ThrowableIntTernaryOperator<X extends Throwable> extends Lambda
      * @param <X> The type of the throwable to be thrown by this operator
      * @param expression A lambda expression or (typically) a method reference, e.g. {@code this::method}
      * @return A {@code ThrowableIntTernaryOperator} from given lambda expression or method reference.
-     * @implNote This implementation allows the given argument to be {@code null}, but if {@code null} given, {@code
-     * null} will be returned.
+     * @implNote This implementation allows the given argument to be {@code null}, but only if {@code null} given,
+     * {@code null} will be returned.
      * @see <a href="https://docs.oracle.com/javase/tutorial/java/javaOO/lambdaexpressions.html#syntax">Lambda
      * Expression</a>
      * @see <a href="https://docs.oracle.com/javase/tutorial/java/javaOO/methodreferences.html">Method Reference</a>
      */
-    @Nonnull
     static <X extends Throwable> ThrowableIntTernaryOperator<X> of(
-            @Nonnull final ThrowableIntTernaryOperator<X> expression) {
+            @Nullable final ThrowableIntTernaryOperator<X> expression) {
         return expression;
     }
 
@@ -742,7 +742,8 @@ public interface ThrowableIntTernaryOperator<X extends Throwable> extends Lambda
      * // call the the method which surround the sneaky throwing functional interface
      * public void callingMethod() {
      *     try {
-     *         final Class<?> sneakyThrowingFunctionalInterface("some illegal class name");
+     *         final Class<?> clazz = sneakyThrowingFunctionalInterface("some illegal class name");
+     *         // ... do something with clazz ...
      *     } catch(ClassNotFoundException e) {
      *         // ... do something with e ...
      *     }

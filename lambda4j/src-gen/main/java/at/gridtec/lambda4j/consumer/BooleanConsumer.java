@@ -24,6 +24,7 @@ import at.gridtec.lambda4j.predicate.ShortPredicate;
 
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.util.Objects;
 import java.util.function.Consumer;
 import java.util.function.DoublePredicate;
@@ -51,14 +52,13 @@ public interface BooleanConsumer extends Lambda {
      *
      * @param expression A lambda expression or (typically) a method reference, e.g. {@code this::method}
      * @return A {@code BooleanConsumer} from given lambda expression or method reference.
-     * @implNote This implementation allows the given argument to be {@code null}, but if {@code null} given, {@code
-     * null} will be returned.
+     * @implNote This implementation allows the given argument to be {@code null}, but only if {@code null} given,
+     * {@code null} will be returned.
      * @see <a href="https://docs.oracle.com/javase/tutorial/java/javaOO/lambdaexpressions.html#syntax">Lambda
      * Expression</a>
      * @see <a href="https://docs.oracle.com/javase/tutorial/java/javaOO/methodreferences.html">Method Reference</a>
      */
-    @Nonnull
-    static BooleanConsumer of(@Nonnull final BooleanConsumer expression) {
+    static BooleanConsumer of(@Nullable final BooleanConsumer expression) {
         return expression;
     }
 

@@ -36,9 +36,9 @@ import org.apache.commons.lang3.tuple.Triple;
 
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
@@ -65,15 +65,14 @@ public interface ThrowableTriBooleanFunction<R, X extends Throwable> extends Lam
      * @param <X> The type of the throwable to be thrown by this function
      * @param expression A lambda expression or (typically) a method reference, e.g. {@code this::method}
      * @return A {@code ThrowableTriBooleanFunction} from given lambda expression or method reference.
-     * @implNote This implementation allows the given argument to be {@code null}, but if {@code null} given, {@code
-     * null} will be returned.
+     * @implNote This implementation allows the given argument to be {@code null}, but only if {@code null} given,
+     * {@code null} will be returned.
      * @see <a href="https://docs.oracle.com/javase/tutorial/java/javaOO/lambdaexpressions.html#syntax">Lambda
      * Expression</a>
      * @see <a href="https://docs.oracle.com/javase/tutorial/java/javaOO/methodreferences.html">Method Reference</a>
      */
-    @Nonnull
     static <R, X extends Throwable> ThrowableTriBooleanFunction<R, X> of(
-            @Nonnull final ThrowableTriBooleanFunction<R, X> expression) {
+            @Nullable final ThrowableTriBooleanFunction<R, X> expression) {
         return expression;
     }
 
@@ -483,18 +482,6 @@ public interface ThrowableTriBooleanFunction<R, X extends Throwable> extends Lam
     }
 
     /**
-     * Converts this function to an equal function, which ensures that its result is not {@code null} using {@link
-     * Optional}. This method mainly exists to avoid unnecessary {@code NullPointerException}s through referencing
-     * {@code null} from this function.
-     *
-     * @return An equal function, which ensures that its result is not {@code null}.
-     */
-    @Nonnull
-    default ThrowableTriBooleanFunction<Optional<R>, X> nonNull() {
-        return (value1, value2, value3) -> Optional.ofNullable(applyThrows(value1, value2, value3));
-    }
-
-    /**
      * Returns a composed {@link ThrowableTriFunction} which represents this {@link ThrowableTriBooleanFunction}.
      * Thereby the primitive input argument for this function is autoboxed.
      *
@@ -578,7 +565,8 @@ public interface ThrowableTriBooleanFunction<R, X extends Throwable> extends Lam
      * // call the the method which surround the sneaky throwing functional interface
      * public void callingMethod() {
      *     try {
-     *         final Class<?> sneakyThrowingFunctionalInterface("some illegal class name");
+     *         final Class<?> clazz = sneakyThrowingFunctionalInterface("some illegal class name");
+     *         // ... do something with clazz ...
      *     } catch(ClassNotFoundException e) {
      *         // ... do something with e ...
      *     }

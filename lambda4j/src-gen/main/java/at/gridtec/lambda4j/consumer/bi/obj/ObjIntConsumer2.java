@@ -38,6 +38,7 @@ import at.gridtec.lambda4j.function.conversion.ShortToIntFunction;
 
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.util.Objects;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
@@ -75,14 +76,13 @@ public interface ObjIntConsumer2<T> extends Lambda, ObjIntConsumer<T> {
      * @param <T> The type of the first argument to the consumer
      * @param expression A lambda expression or (typically) a method reference, e.g. {@code this::method}
      * @return A {@code ObjIntConsumer2} from given lambda expression or method reference.
-     * @implNote This implementation allows the given argument to be {@code null}, but if {@code null} given, {@code
-     * null} will be returned.
+     * @implNote This implementation allows the given argument to be {@code null}, but only if {@code null} given,
+     * {@code null} will be returned.
      * @see <a href="https://docs.oracle.com/javase/tutorial/java/javaOO/lambdaexpressions.html#syntax">Lambda
      * Expression</a>
      * @see <a href="https://docs.oracle.com/javase/tutorial/java/javaOO/methodreferences.html">Method Reference</a>
      */
-    @Nonnull
-    static <T> ObjIntConsumer2<T> of(@Nonnull final ObjIntConsumer2<T> expression) {
+    static <T> ObjIntConsumer2<T> of(@Nullable final ObjIntConsumer2<T> expression) {
         return expression;
     }
 

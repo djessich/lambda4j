@@ -32,9 +32,9 @@ import at.gridtec.lambda4j.operator.unary.ThrowableIntUnaryOperator;
 
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.IntFunction;
 
@@ -63,15 +63,14 @@ public interface ThrowableIntFunction<R, X extends Throwable> extends Lambda, In
      * @param <X> The type of the throwable to be thrown by this function
      * @param expression A lambda expression or (typically) a method reference, e.g. {@code this::method}
      * @return A {@code ThrowableIntFunction} from given lambda expression or method reference.
-     * @implNote This implementation allows the given argument to be {@code null}, but if {@code null} given, {@code
-     * null} will be returned.
+     * @implNote This implementation allows the given argument to be {@code null}, but only if {@code null} given,
+     * {@code null} will be returned.
      * @see <a href="https://docs.oracle.com/javase/tutorial/java/javaOO/lambdaexpressions.html#syntax">Lambda
      * Expression</a>
      * @see <a href="https://docs.oracle.com/javase/tutorial/java/javaOO/methodreferences.html">Method Reference</a>
      */
-    @Nonnull
     static <R, X extends Throwable> ThrowableIntFunction<R, X> of(
-            @Nonnull final ThrowableIntFunction<R, X> expression) {
+            @Nullable final ThrowableIntFunction<R, X> expression) {
         return expression;
     }
 
@@ -382,18 +381,6 @@ public interface ThrowableIntFunction<R, X extends Throwable> extends Lambda, In
     }
 
     /**
-     * Converts this function to an equal function, which ensures that its result is not {@code null} using {@link
-     * Optional}. This method mainly exists to avoid unnecessary {@code NullPointerException}s through referencing
-     * {@code null} from this function.
-     *
-     * @return An equal function, which ensures that its result is not {@code null}.
-     */
-    @Nonnull
-    default ThrowableIntFunction<Optional<R>, X> nonNull() {
-        return (value) -> Optional.ofNullable(applyThrows(value));
-    }
-
-    /**
      * Returns a composed {@link ThrowableFunction} which represents this {@link ThrowableIntFunction}. Thereby the
      * primitive input argument for this function is autoboxed.
      *
@@ -477,7 +464,8 @@ public interface ThrowableIntFunction<R, X extends Throwable> extends Lambda, In
      * // call the the method which surround the sneaky throwing functional interface
      * public void callingMethod() {
      *     try {
-     *         final Class<?> sneakyThrowingFunctionalInterface("some illegal class name");
+     *         final Class<?> clazz = sneakyThrowingFunctionalInterface("some illegal class name");
+     *         // ... do something with clazz ...
      *     } catch(ClassNotFoundException e) {
      *         // ... do something with e ...
      *     }

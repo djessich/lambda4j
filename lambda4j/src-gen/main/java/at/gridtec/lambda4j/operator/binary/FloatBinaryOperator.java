@@ -56,6 +56,8 @@ import org.apache.commons.lang3.tuple.Pair;
 
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import java.util.Comparator;
 import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
@@ -81,14 +83,13 @@ public interface FloatBinaryOperator extends Lambda {
      *
      * @param expression A lambda expression or (typically) a method reference, e.g. {@code this::method}
      * @return A {@code FloatBinaryOperator} from given lambda expression or method reference.
-     * @implNote This implementation allows the given argument to be {@code null}, but if {@code null} given, {@code
-     * null} will be returned.
+     * @implNote This implementation allows the given argument to be {@code null}, but only if {@code null} given,
+     * {@code null} will be returned.
      * @see <a href="https://docs.oracle.com/javase/tutorial/java/javaOO/lambdaexpressions.html#syntax">Lambda
      * Expression</a>
      * @see <a href="https://docs.oracle.com/javase/tutorial/java/javaOO/methodreferences.html">Method Reference</a>
      */
-    @Nonnull
-    static FloatBinaryOperator of(@Nonnull final FloatBinaryOperator expression) {
+    static FloatBinaryOperator of(@Nullable final FloatBinaryOperator expression) {
         return expression;
     }
 
@@ -145,6 +146,38 @@ public interface FloatBinaryOperator extends Lambda {
     @Nonnull
     static FloatBinaryOperator constant(float ret) {
         return (value1, value2) -> ret;
+    }
+
+    /**
+     * Returns a {@link FloatBinaryOperator} which returns the lesser of two elements according to the specified {@code
+     * Comparator}.
+     *
+     * @param comparator A {@code Comparator} for comparing the two values
+     * @return A {@code FloatBinaryOperator} which returns the lesser of its operands, according to the supplied {@code
+     * Comparator}.
+     * @throws NullPointerException If given argument is {@code null}
+     * @see BinaryOperator#minBy(Comparator)
+     */
+    @Nonnull
+    static FloatBinaryOperator minBy(@Nonnull final Comparator<Float> comparator) {
+        Objects.requireNonNull(comparator);
+        return (value1, value2) -> comparator.compare(value1, value2) <= 0 ? value1 : value2;
+    }
+
+    /**
+     * Returns a {@link FloatBinaryOperator} which returns the greater of two elements according to the specified {@code
+     * Comparator}.
+     *
+     * @param comparator A {@code Comparator} for comparing the two values
+     * @return A {@code FloatBinaryOperator} which returns the greater of its operands, according to the supplied {@code
+     * Comparator}.
+     * @throws NullPointerException If given argument is {@code null}
+     * @see BinaryOperator#maxBy(Comparator)
+     */
+    @Nonnull
+    static FloatBinaryOperator maxBy(@Nonnull final Comparator<Float> comparator) {
+        Objects.requireNonNull(comparator);
+        return (value1, value2) -> comparator.compare(value1, value2) >= 0 ? value1 : value2;
     }
 
     /**

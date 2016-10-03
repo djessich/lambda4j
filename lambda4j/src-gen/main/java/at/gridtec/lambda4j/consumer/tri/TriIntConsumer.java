@@ -24,6 +24,7 @@ import at.gridtec.lambda4j.function.conversion.ShortToIntFunction;
 
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.util.Objects;
 import java.util.function.DoubleToIntFunction;
 import java.util.function.IntConsumer;
@@ -51,14 +52,13 @@ public interface TriIntConsumer extends Lambda {
      *
      * @param expression A lambda expression or (typically) a method reference, e.g. {@code this::method}
      * @return A {@code TriIntConsumer} from given lambda expression or method reference.
-     * @implNote This implementation allows the given argument to be {@code null}, but if {@code null} given, {@code
-     * null} will be returned.
+     * @implNote This implementation allows the given argument to be {@code null}, but only if {@code null} given,
+     * {@code null} will be returned.
      * @see <a href="https://docs.oracle.com/javase/tutorial/java/javaOO/lambdaexpressions.html#syntax">Lambda
      * Expression</a>
      * @see <a href="https://docs.oracle.com/javase/tutorial/java/javaOO/methodreferences.html">Method Reference</a>
      */
-    @Nonnull
-    static TriIntConsumer of(@Nonnull final TriIntConsumer expression) {
+    static TriIntConsumer of(@Nullable final TriIntConsumer expression) {
         return expression;
     }
 

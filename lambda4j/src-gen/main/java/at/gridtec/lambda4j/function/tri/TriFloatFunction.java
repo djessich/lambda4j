@@ -32,9 +32,9 @@ import org.apache.commons.lang3.tuple.Triple;
 
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Consumer;
 import java.util.function.Function;
@@ -61,14 +61,13 @@ public interface TriFloatFunction<R> extends Lambda {
      * @param <R> The type of return value from the function
      * @param expression A lambda expression or (typically) a method reference, e.g. {@code this::method}
      * @return A {@code TriFloatFunction} from given lambda expression or method reference.
-     * @implNote This implementation allows the given argument to be {@code null}, but if {@code null} given, {@code
-     * null} will be returned.
+     * @implNote This implementation allows the given argument to be {@code null}, but only if {@code null} given,
+     * {@code null} will be returned.
      * @see <a href="https://docs.oracle.com/javase/tutorial/java/javaOO/lambdaexpressions.html#syntax">Lambda
      * Expression</a>
      * @see <a href="https://docs.oracle.com/javase/tutorial/java/javaOO/methodreferences.html">Method Reference</a>
      */
-    @Nonnull
-    static <R> TriFloatFunction<R> of(@Nonnull final TriFloatFunction<R> expression) {
+    static <R> TriFloatFunction<R> of(@Nullable final TriFloatFunction<R> expression) {
         return expression;
     }
 
@@ -458,18 +457,6 @@ public interface TriFloatFunction<R> extends Lambda {
                 return returnValue;
             };
         }
-    }
-
-    /**
-     * Converts this function to an equal function, which ensures that its result is not {@code null} using {@link
-     * Optional}. This method mainly exists to avoid unnecessary {@code NullPointerException}s through referencing
-     * {@code null} from this function.
-     *
-     * @return An equal function, which ensures that its result is not {@code null}.
-     */
-    @Nonnull
-    default TriFloatFunction<Optional<R>> nonNull() {
-        return (value1, value2, value3) -> Optional.ofNullable(apply(value1, value2, value3));
     }
 
     /**

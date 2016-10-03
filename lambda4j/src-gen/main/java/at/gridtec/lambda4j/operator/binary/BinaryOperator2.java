@@ -19,6 +19,8 @@ import at.gridtec.lambda4j.Lambda;
 import at.gridtec.lambda4j.function.bi.BiFunction2;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import java.util.Comparator;
 import java.util.Objects;
 import java.util.function.BinaryOperator;
 import java.util.function.UnaryOperator;
@@ -44,14 +46,13 @@ public interface BinaryOperator2<T> extends Lambda, BiFunction2<T, T, T>, Binary
      * @param <T> The type of the arguments to the operator and of return from the operator
      * @param expression A lambda expression or (typically) a method reference, e.g. {@code this::method}
      * @return A {@code BinaryOperator2} from given lambda expression or method reference.
-     * @implNote This implementation allows the given argument to be {@code null}, but if {@code null} given, {@code
-     * null} will be returned.
+     * @implNote This implementation allows the given argument to be {@code null}, but only if {@code null} given,
+     * {@code null} will be returned.
      * @see <a href="https://docs.oracle.com/javase/tutorial/java/javaOO/lambdaexpressions.html#syntax">Lambda
      * Expression</a>
      * @see <a href="https://docs.oracle.com/javase/tutorial/java/javaOO/methodreferences.html">Method Reference</a>
      */
-    @Nonnull
-    static <T> BinaryOperator2<T> of(@Nonnull final BinaryOperator2<T> expression) {
+    static <T> BinaryOperator2<T> of(@Nullable final BinaryOperator2<T> expression) {
         return expression;
     }
 
@@ -112,6 +113,40 @@ public interface BinaryOperator2<T> extends Lambda, BiFunction2<T, T, T>, Binary
     @Nonnull
     static <T> BinaryOperator2<T> constant(T ret) {
         return (t, u) -> ret;
+    }
+
+    /**
+     * Returns a {@link BinaryOperator2} which returns the lesser of two elements according to the specified {@code
+     * Comparator}.
+     *
+     * @param <T> The type of the arguments to the operator and of return from the operator
+     * @param comparator A {@code Comparator} for comparing the two values
+     * @return A {@code BinaryOperator2} which returns the lesser of its operands, according to the supplied {@code
+     * Comparator}.
+     * @throws NullPointerException If given argument is {@code null}
+     * @see BinaryOperator#minBy(Comparator)
+     */
+    @Nonnull
+    static <T> BinaryOperator2<T> minBy(@Nonnull final Comparator<T> comparator) {
+        Objects.requireNonNull(comparator);
+        return (t, u) -> comparator.compare(t, u) <= 0 ? t : u;
+    }
+
+    /**
+     * Returns a {@link BinaryOperator2} which returns the greater of two elements according to the specified {@code
+     * Comparator}.
+     *
+     * @param <T> The type of the arguments to the operator and of return from the operator
+     * @param comparator A {@code Comparator} for comparing the two values
+     * @return A {@code BinaryOperator2} which returns the greater of its operands, according to the supplied {@code
+     * Comparator}.
+     * @throws NullPointerException If given argument is {@code null}
+     * @see BinaryOperator#maxBy(Comparator)
+     */
+    @Nonnull
+    static <T> BinaryOperator2<T> maxBy(@Nonnull final Comparator<T> comparator) {
+        Objects.requireNonNull(comparator);
+        return (t, u) -> comparator.compare(t, u) >= 0 ? t : u;
     }
 
 }

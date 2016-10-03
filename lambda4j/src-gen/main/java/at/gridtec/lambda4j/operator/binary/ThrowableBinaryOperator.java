@@ -20,6 +20,8 @@ import at.gridtec.lambda4j.function.bi.ThrowableBiFunction;
 import at.gridtec.lambda4j.operator.unary.ThrowableUnaryOperator;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import java.util.Comparator;
 import java.util.Objects;
 import java.util.function.BinaryOperator;
 
@@ -49,15 +51,14 @@ public interface ThrowableBinaryOperator<T, X extends Throwable>
      * @param <X> The type of the throwable to be thrown by this operator
      * @param expression A lambda expression or (typically) a method reference, e.g. {@code this::method}
      * @return A {@code ThrowableBinaryOperator} from given lambda expression or method reference.
-     * @implNote This implementation allows the given argument to be {@code null}, but if {@code null} given, {@code
-     * null} will be returned.
+     * @implNote This implementation allows the given argument to be {@code null}, but only if {@code null} given,
+     * {@code null} will be returned.
      * @see <a href="https://docs.oracle.com/javase/tutorial/java/javaOO/lambdaexpressions.html#syntax">Lambda
      * Expression</a>
      * @see <a href="https://docs.oracle.com/javase/tutorial/java/javaOO/methodreferences.html">Method Reference</a>
      */
-    @Nonnull
     static <T, X extends Throwable> ThrowableBinaryOperator<T, X> of(
-            @Nonnull final ThrowableBinaryOperator<T, X> expression) {
+            @Nullable final ThrowableBinaryOperator<T, X> expression) {
         return expression;
     }
 
@@ -126,6 +127,42 @@ public interface ThrowableBinaryOperator<T, X extends Throwable>
     @Nonnull
     static <T, X extends Throwable> ThrowableBinaryOperator<T, X> constant(T ret) {
         return (t, u) -> ret;
+    }
+
+    /**
+     * Returns a {@link ThrowableBinaryOperator} which returns the lesser of two elements according to the specified
+     * {@code Comparator}.
+     *
+     * @param <T> The type of the arguments to the operator and of return from the operator
+     * @param <X> The type of the throwable to be thrown by this operator
+     * @param comparator A {@code Comparator} for comparing the two values
+     * @return A {@code ThrowableBinaryOperator} which returns the lesser of its operands, according to the supplied
+     * {@code Comparator}.
+     * @throws NullPointerException If given argument is {@code null}
+     * @see BinaryOperator#minBy(Comparator)
+     */
+    @Nonnull
+    static <T, X extends Throwable> ThrowableBinaryOperator<T, X> minBy(@Nonnull final Comparator<T> comparator) {
+        Objects.requireNonNull(comparator);
+        return (t, u) -> comparator.compare(t, u) <= 0 ? t : u;
+    }
+
+    /**
+     * Returns a {@link ThrowableBinaryOperator} which returns the greater of two elements according to the specified
+     * {@code Comparator}.
+     *
+     * @param <T> The type of the arguments to the operator and of return from the operator
+     * @param <X> The type of the throwable to be thrown by this operator
+     * @param comparator A {@code Comparator} for comparing the two values
+     * @return A {@code ThrowableBinaryOperator} which returns the greater of its operands, according to the supplied
+     * {@code Comparator}.
+     * @throws NullPointerException If given argument is {@code null}
+     * @see BinaryOperator#maxBy(Comparator)
+     */
+    @Nonnull
+    static <T, X extends Throwable> ThrowableBinaryOperator<T, X> maxBy(@Nonnull final Comparator<T> comparator) {
+        Objects.requireNonNull(comparator);
+        return (t, u) -> comparator.compare(t, u) >= 0 ? t : u;
     }
 
 }

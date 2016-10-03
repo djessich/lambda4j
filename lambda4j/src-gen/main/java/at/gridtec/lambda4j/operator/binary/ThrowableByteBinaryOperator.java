@@ -59,9 +59,12 @@ import org.apache.commons.lang3.tuple.Pair;
 
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import java.util.Comparator;
 import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.function.BinaryOperator;
 
 /**
  * Represents an operation that accepts two {@code byte}-valued input arguments and produces a {@code byte}-valued
@@ -86,15 +89,14 @@ public interface ThrowableByteBinaryOperator<X extends Throwable> extends Lambda
      * @param <X> The type of the throwable to be thrown by this operator
      * @param expression A lambda expression or (typically) a method reference, e.g. {@code this::method}
      * @return A {@code ThrowableByteBinaryOperator} from given lambda expression or method reference.
-     * @implNote This implementation allows the given argument to be {@code null}, but if {@code null} given, {@code
-     * null} will be returned.
+     * @implNote This implementation allows the given argument to be {@code null}, but only if {@code null} given,
+     * {@code null} will be returned.
      * @see <a href="https://docs.oracle.com/javase/tutorial/java/javaOO/lambdaexpressions.html#syntax">Lambda
      * Expression</a>
      * @see <a href="https://docs.oracle.com/javase/tutorial/java/javaOO/methodreferences.html">Method Reference</a>
      */
-    @Nonnull
     static <X extends Throwable> ThrowableByteBinaryOperator<X> of(
-            @Nonnull final ThrowableByteBinaryOperator<X> expression) {
+            @Nullable final ThrowableByteBinaryOperator<X> expression) {
         return expression;
     }
 
@@ -159,6 +161,40 @@ public interface ThrowableByteBinaryOperator<X extends Throwable> extends Lambda
     @Nonnull
     static <X extends Throwable> ThrowableByteBinaryOperator<X> constant(byte ret) {
         return (value1, value2) -> ret;
+    }
+
+    /**
+     * Returns a {@link ThrowableByteBinaryOperator} which returns the lesser of two elements according to the specified
+     * {@code Comparator}.
+     *
+     * @param <X> The type of the throwable to be thrown by this operator
+     * @param comparator A {@code Comparator} for comparing the two values
+     * @return A {@code ThrowableByteBinaryOperator} which returns the lesser of its operands, according to the supplied
+     * {@code Comparator}.
+     * @throws NullPointerException If given argument is {@code null}
+     * @see BinaryOperator#minBy(Comparator)
+     */
+    @Nonnull
+    static <X extends Throwable> ThrowableByteBinaryOperator<X> minBy(@Nonnull final Comparator<Byte> comparator) {
+        Objects.requireNonNull(comparator);
+        return (value1, value2) -> comparator.compare(value1, value2) <= 0 ? value1 : value2;
+    }
+
+    /**
+     * Returns a {@link ThrowableByteBinaryOperator} which returns the greater of two elements according to the
+     * specified {@code Comparator}.
+     *
+     * @param <X> The type of the throwable to be thrown by this operator
+     * @param comparator A {@code Comparator} for comparing the two values
+     * @return A {@code ThrowableByteBinaryOperator} which returns the greater of its operands, according to the
+     * supplied {@code Comparator}.
+     * @throws NullPointerException If given argument is {@code null}
+     * @see BinaryOperator#maxBy(Comparator)
+     */
+    @Nonnull
+    static <X extends Throwable> ThrowableByteBinaryOperator<X> maxBy(@Nonnull final Comparator<Byte> comparator) {
+        Objects.requireNonNull(comparator);
+        return (value1, value2) -> comparator.compare(value1, value2) >= 0 ? value1 : value2;
     }
 
     /**
@@ -686,7 +722,8 @@ public interface ThrowableByteBinaryOperator<X extends Throwable> extends Lambda
      * // call the the method which surround the sneaky throwing functional interface
      * public void callingMethod() {
      *     try {
-     *         final Class<?> sneakyThrowingFunctionalInterface("some illegal class name");
+     *         final Class<?> clazz = sneakyThrowingFunctionalInterface("some illegal class name");
+     *         // ... do something with clazz ...
      *     } catch(ClassNotFoundException e) {
      *         // ... do something with e ...
      *     }

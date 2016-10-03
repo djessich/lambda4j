@@ -24,6 +24,7 @@ import at.gridtec.lambda4j.function.conversion.LongToShortFunction;
 
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.util.Objects;
 import java.util.function.LongConsumer;
 import java.util.function.LongFunction;
@@ -55,14 +56,13 @@ public interface LongSupplier2 extends Lambda, LongSupplier {
      *
      * @param expression A lambda expression or (typically) a method reference, e.g. {@code this::method}
      * @return A {@code LongSupplier2} from given lambda expression or method reference.
-     * @implNote This implementation allows the given argument to be {@code null}, but if {@code null} given, {@code
-     * null} will be returned.
+     * @implNote This implementation allows the given argument to be {@code null}, but only if {@code null} given,
+     * {@code null} will be returned.
      * @see <a href="https://docs.oracle.com/javase/tutorial/java/javaOO/lambdaexpressions.html#syntax">Lambda
      * Expression</a>
      * @see <a href="https://docs.oracle.com/javase/tutorial/java/javaOO/methodreferences.html">Method Reference</a>
      */
-    @Nonnull
-    static LongSupplier2 of(@Nonnull final LongSupplier2 expression) {
+    static LongSupplier2 of(@Nullable final LongSupplier2 expression) {
         return expression;
     }
 

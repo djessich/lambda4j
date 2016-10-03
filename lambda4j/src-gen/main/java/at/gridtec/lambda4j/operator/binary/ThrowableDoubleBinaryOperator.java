@@ -59,9 +59,12 @@ import org.apache.commons.lang3.tuple.Pair;
 
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import java.util.Comparator;
 import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.function.BinaryOperator;
 import java.util.function.DoubleBinaryOperator;
 
 /**
@@ -88,15 +91,14 @@ public interface ThrowableDoubleBinaryOperator<X extends Throwable> extends Lamb
      * @param <X> The type of the throwable to be thrown by this operator
      * @param expression A lambda expression or (typically) a method reference, e.g. {@code this::method}
      * @return A {@code ThrowableDoubleBinaryOperator} from given lambda expression or method reference.
-     * @implNote This implementation allows the given argument to be {@code null}, but if {@code null} given, {@code
-     * null} will be returned.
+     * @implNote This implementation allows the given argument to be {@code null}, but only if {@code null} given,
+     * {@code null} will be returned.
      * @see <a href="https://docs.oracle.com/javase/tutorial/java/javaOO/lambdaexpressions.html#syntax">Lambda
      * Expression</a>
      * @see <a href="https://docs.oracle.com/javase/tutorial/java/javaOO/methodreferences.html">Method Reference</a>
      */
-    @Nonnull
     static <X extends Throwable> ThrowableDoubleBinaryOperator<X> of(
-            @Nonnull final ThrowableDoubleBinaryOperator<X> expression) {
+            @Nullable final ThrowableDoubleBinaryOperator<X> expression) {
         return expression;
     }
 
@@ -161,6 +163,40 @@ public interface ThrowableDoubleBinaryOperator<X extends Throwable> extends Lamb
     @Nonnull
     static <X extends Throwable> ThrowableDoubleBinaryOperator<X> constant(double ret) {
         return (value1, value2) -> ret;
+    }
+
+    /**
+     * Returns a {@link ThrowableDoubleBinaryOperator} which returns the lesser of two elements according to the
+     * specified {@code Comparator}.
+     *
+     * @param <X> The type of the throwable to be thrown by this operator
+     * @param comparator A {@code Comparator} for comparing the two values
+     * @return A {@code ThrowableDoubleBinaryOperator} which returns the lesser of its operands, according to the
+     * supplied {@code Comparator}.
+     * @throws NullPointerException If given argument is {@code null}
+     * @see BinaryOperator#minBy(Comparator)
+     */
+    @Nonnull
+    static <X extends Throwable> ThrowableDoubleBinaryOperator<X> minBy(@Nonnull final Comparator<Double> comparator) {
+        Objects.requireNonNull(comparator);
+        return (value1, value2) -> comparator.compare(value1, value2) <= 0 ? value1 : value2;
+    }
+
+    /**
+     * Returns a {@link ThrowableDoubleBinaryOperator} which returns the greater of two elements according to the
+     * specified {@code Comparator}.
+     *
+     * @param <X> The type of the throwable to be thrown by this operator
+     * @param comparator A {@code Comparator} for comparing the two values
+     * @return A {@code ThrowableDoubleBinaryOperator} which returns the greater of its operands, according to the
+     * supplied {@code Comparator}.
+     * @throws NullPointerException If given argument is {@code null}
+     * @see BinaryOperator#maxBy(Comparator)
+     */
+    @Nonnull
+    static <X extends Throwable> ThrowableDoubleBinaryOperator<X> maxBy(@Nonnull final Comparator<Double> comparator) {
+        Objects.requireNonNull(comparator);
+        return (value1, value2) -> comparator.compare(value1, value2) >= 0 ? value1 : value2;
     }
 
     /**
@@ -718,7 +754,8 @@ public interface ThrowableDoubleBinaryOperator<X extends Throwable> extends Lamb
      * // call the the method which surround the sneaky throwing functional interface
      * public void callingMethod() {
      *     try {
-     *         final Class<?> sneakyThrowingFunctionalInterface("some illegal class name");
+     *         final Class<?> clazz = sneakyThrowingFunctionalInterface("some illegal class name");
+     *         // ... do something with clazz ...
      *     } catch(ClassNotFoundException e) {
      *         // ... do something with e ...
      *     }

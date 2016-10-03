@@ -23,8 +23,8 @@ import at.gridtec.lambda4j.function.ThrowableFunction;
 
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.util.Objects;
-import java.util.Optional;
 import java.util.function.Supplier;
 
 /**
@@ -53,14 +53,13 @@ public interface ThrowableSupplier<R, X extends Throwable> extends Lambda, Suppl
      * @param <X> The type of the throwable to be thrown by this supplier
      * @param expression A lambda expression or (typically) a method reference, e.g. {@code this::method}
      * @return A {@code ThrowableSupplier} from given lambda expression or method reference.
-     * @implNote This implementation allows the given argument to be {@code null}, but if {@code null} given, {@code
-     * null} will be returned.
+     * @implNote This implementation allows the given argument to be {@code null}, but only if {@code null} given,
+     * {@code null} will be returned.
      * @see <a href="https://docs.oracle.com/javase/tutorial/java/javaOO/lambdaexpressions.html#syntax">Lambda
      * Expression</a>
      * @see <a href="https://docs.oracle.com/javase/tutorial/java/javaOO/methodreferences.html">Method Reference</a>
      */
-    @Nonnull
-    static <R, X extends Throwable> ThrowableSupplier<R, X> of(@Nonnull final ThrowableSupplier<R, X> expression) {
+    static <R, X extends Throwable> ThrowableSupplier<R, X> of(@Nullable final ThrowableSupplier<R, X> expression) {
         return expression;
     }
 
@@ -174,18 +173,6 @@ public interface ThrowableSupplier<R, X extends Throwable> extends Lambda, Suppl
     }
 
     /**
-     * Converts this supplier to an equal supplier, which ensures that its result is not {@code null} using {@link
-     * Optional}. This method mainly exists to avoid unnecessary {@code NullPointerException}s through referencing
-     * {@code null} from this supplier.
-     *
-     * @return An equal supplier, which ensures that its result is not {@code null}.
-     */
-    @Nonnull
-    default ThrowableSupplier<Optional<R>, X> nonNull() {
-        return () -> Optional.ofNullable(getThrows());
-    }
-
-    /**
      * Returns a composed {@link Supplier2} that applies this supplier to its input and nests the thrown {@link
      * Throwable} from it, unless it is of type {@link RuntimeException} or {@link Error}. The throwable is nested
      * (wrapped) in a {@link ThrownByFunctionalInterfaceException}, which is constructed from the thrown throwables
@@ -258,7 +245,8 @@ public interface ThrowableSupplier<R, X extends Throwable> extends Lambda, Suppl
      * // call the the method which surround the sneaky throwing functional interface
      * public void callingMethod() {
      *     try {
-     *         final Class<?> sneakyThrowingFunctionalInterface("some illegal class name");
+     *         final Class<?> clazz = sneakyThrowingFunctionalInterface("some illegal class name");
+     *         // ... do something with clazz ...
      *     } catch(ClassNotFoundException e) {
      *         // ... do something with e ...
      *     }

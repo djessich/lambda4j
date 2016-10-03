@@ -26,6 +26,7 @@ import at.gridtec.lambda4j.predicate.LongPredicate2;
 
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
@@ -62,14 +63,13 @@ public interface LongToIntFunction2 extends Lambda, LongToIntFunction {
      *
      * @param expression A lambda expression or (typically) a method reference, e.g. {@code this::method}
      * @return A {@code LongToIntFunction2} from given lambda expression or method reference.
-     * @implNote This implementation allows the given argument to be {@code null}, but if {@code null} given, {@code
-     * null} will be returned.
+     * @implNote This implementation allows the given argument to be {@code null}, but only if {@code null} given,
+     * {@code null} will be returned.
      * @see <a href="https://docs.oracle.com/javase/tutorial/java/javaOO/lambdaexpressions.html#syntax">Lambda
      * Expression</a>
      * @see <a href="https://docs.oracle.com/javase/tutorial/java/javaOO/methodreferences.html">Method Reference</a>
      */
-    @Nonnull
-    static LongToIntFunction2 of(@Nonnull final LongToIntFunction2 expression) {
+    static LongToIntFunction2 of(@Nullable final LongToIntFunction2 expression) {
         return expression;
     }
 

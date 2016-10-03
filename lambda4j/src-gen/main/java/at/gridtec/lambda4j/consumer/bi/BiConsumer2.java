@@ -22,6 +22,7 @@ import org.apache.commons.lang3.tuple.Pair;
 
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.util.Objects;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
@@ -51,14 +52,13 @@ public interface BiConsumer2<T, U> extends Lambda, BiConsumer<T, U> {
      * @param <U> The type of the second argument to the consumer
      * @param expression A lambda expression or (typically) a method reference, e.g. {@code this::method}
      * @return A {@code BiConsumer2} from given lambda expression or method reference.
-     * @implNote This implementation allows the given argument to be {@code null}, but if {@code null} given, {@code
-     * null} will be returned.
+     * @implNote This implementation allows the given argument to be {@code null}, but only if {@code null} given,
+     * {@code null} will be returned.
      * @see <a href="https://docs.oracle.com/javase/tutorial/java/javaOO/lambdaexpressions.html#syntax">Lambda
      * Expression</a>
      * @see <a href="https://docs.oracle.com/javase/tutorial/java/javaOO/methodreferences.html">Method Reference</a>
      */
-    @Nonnull
-    static <T, U> BiConsumer2<T, U> of(@Nonnull final BiConsumer2<T, U> expression) {
+    static <T, U> BiConsumer2<T, U> of(@Nullable final BiConsumer2<T, U> expression) {
         return expression;
     }
 

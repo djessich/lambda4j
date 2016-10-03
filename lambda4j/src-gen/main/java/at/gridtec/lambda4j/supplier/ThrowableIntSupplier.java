@@ -32,6 +32,7 @@ import at.gridtec.lambda4j.predicate.ThrowableIntPredicate;
 
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.util.Objects;
 import java.util.function.IntSupplier;
 
@@ -60,14 +61,13 @@ public interface ThrowableIntSupplier<X extends Throwable> extends Lambda, IntSu
      * @param <X> The type of the throwable to be thrown by this supplier
      * @param expression A lambda expression or (typically) a method reference, e.g. {@code this::method}
      * @return A {@code ThrowableIntSupplier} from given lambda expression or method reference.
-     * @implNote This implementation allows the given argument to be {@code null}, but if {@code null} given, {@code
-     * null} will be returned.
+     * @implNote This implementation allows the given argument to be {@code null}, but only if {@code null} given,
+     * {@code null} will be returned.
      * @see <a href="https://docs.oracle.com/javase/tutorial/java/javaOO/lambdaexpressions.html#syntax">Lambda
      * Expression</a>
      * @see <a href="https://docs.oracle.com/javase/tutorial/java/javaOO/methodreferences.html">Method Reference</a>
      */
-    @Nonnull
-    static <X extends Throwable> ThrowableIntSupplier<X> of(@Nonnull final ThrowableIntSupplier<X> expression) {
+    static <X extends Throwable> ThrowableIntSupplier<X> of(@Nullable final ThrowableIntSupplier<X> expression) {
         return expression;
     }
 
@@ -405,7 +405,8 @@ public interface ThrowableIntSupplier<X extends Throwable> extends Lambda, IntSu
      * // call the the method which surround the sneaky throwing functional interface
      * public void callingMethod() {
      *     try {
-     *         final Class<?> sneakyThrowingFunctionalInterface("some illegal class name");
+     *         final Class<?> clazz = sneakyThrowingFunctionalInterface("some illegal class name");
+     *         // ... do something with clazz ...
      *     } catch(ClassNotFoundException e) {
      *         // ... do something with e ...
      *     }

@@ -92,14 +92,13 @@ public interface ObjBiBooleanPredicate<T> extends Lambda {
      * @param <T> The type of the first argument to the predicate
      * @param expression A lambda expression or (typically) a method reference, e.g. {@code this::method}
      * @return A {@code ObjBiBooleanPredicate} from given lambda expression or method reference.
-     * @implNote This implementation allows the given argument to be {@code null}, but if {@code null} given, {@code
-     * null} will be returned.
+     * @implNote This implementation allows the given argument to be {@code null}, but only if {@code null} given,
+     * {@code null} will be returned.
      * @see <a href="https://docs.oracle.com/javase/tutorial/java/javaOO/lambdaexpressions.html#syntax">Lambda
      * Expression</a>
      * @see <a href="https://docs.oracle.com/javase/tutorial/java/javaOO/methodreferences.html">Method Reference</a>
      */
-    @Nonnull
-    static <T> ObjBiBooleanPredicate<T> of(@Nonnull final ObjBiBooleanPredicate<T> expression) {
+    static <T> ObjBiBooleanPredicate<T> of(@Nullable final ObjBiBooleanPredicate<T> expression) {
         return expression;
     }
 

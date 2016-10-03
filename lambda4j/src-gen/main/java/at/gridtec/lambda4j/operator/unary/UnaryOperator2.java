@@ -19,6 +19,7 @@ import at.gridtec.lambda4j.Lambda;
 import at.gridtec.lambda4j.function.Function2;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.util.Objects;
 import java.util.function.UnaryOperator;
 
@@ -43,14 +44,13 @@ public interface UnaryOperator2<T> extends Lambda, Function2<T, T>, UnaryOperato
      * @param <T> The type of the argument to the operator and of return from the operator
      * @param expression A lambda expression or (typically) a method reference, e.g. {@code this::method}
      * @return A {@code UnaryOperator2} from given lambda expression or method reference.
-     * @implNote This implementation allows the given argument to be {@code null}, but if {@code null} given, {@code
-     * null} will be returned.
+     * @implNote This implementation allows the given argument to be {@code null}, but only if {@code null} given,
+     * {@code null} will be returned.
      * @see <a href="https://docs.oracle.com/javase/tutorial/java/javaOO/lambdaexpressions.html#syntax">Lambda
      * Expression</a>
      * @see <a href="https://docs.oracle.com/javase/tutorial/java/javaOO/methodreferences.html">Method Reference</a>
      */
-    @Nonnull
-    static <T> UnaryOperator2<T> of(@Nonnull final UnaryOperator2<T> expression) {
+    static <T> UnaryOperator2<T> of(@Nullable final UnaryOperator2<T> expression) {
         return expression;
     }
 

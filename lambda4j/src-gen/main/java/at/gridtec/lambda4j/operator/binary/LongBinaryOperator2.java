@@ -47,6 +47,8 @@ import org.apache.commons.lang3.tuple.Pair;
 
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import java.util.Comparator;
 import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
@@ -83,14 +85,13 @@ public interface LongBinaryOperator2 extends Lambda, LongBinaryOperator {
      *
      * @param expression A lambda expression or (typically) a method reference, e.g. {@code this::method}
      * @return A {@code LongBinaryOperator2} from given lambda expression or method reference.
-     * @implNote This implementation allows the given argument to be {@code null}, but if {@code null} given, {@code
-     * null} will be returned.
+     * @implNote This implementation allows the given argument to be {@code null}, but only if {@code null} given,
+     * {@code null} will be returned.
      * @see <a href="https://docs.oracle.com/javase/tutorial/java/javaOO/lambdaexpressions.html#syntax">Lambda
      * Expression</a>
      * @see <a href="https://docs.oracle.com/javase/tutorial/java/javaOO/methodreferences.html">Method Reference</a>
      */
-    @Nonnull
-    static LongBinaryOperator2 of(@Nonnull final LongBinaryOperator2 expression) {
+    static LongBinaryOperator2 of(@Nullable final LongBinaryOperator2 expression) {
         return expression;
     }
 
@@ -147,6 +148,38 @@ public interface LongBinaryOperator2 extends Lambda, LongBinaryOperator {
     @Nonnull
     static LongBinaryOperator2 constant(long ret) {
         return (value1, value2) -> ret;
+    }
+
+    /**
+     * Returns a {@link LongBinaryOperator2} which returns the lesser of two elements according to the specified {@code
+     * Comparator}.
+     *
+     * @param comparator A {@code Comparator} for comparing the two values
+     * @return A {@code LongBinaryOperator2} which returns the lesser of its operands, according to the supplied {@code
+     * Comparator}.
+     * @throws NullPointerException If given argument is {@code null}
+     * @see BinaryOperator#minBy(Comparator)
+     */
+    @Nonnull
+    static LongBinaryOperator2 minBy(@Nonnull final Comparator<Long> comparator) {
+        Objects.requireNonNull(comparator);
+        return (value1, value2) -> comparator.compare(value1, value2) <= 0 ? value1 : value2;
+    }
+
+    /**
+     * Returns a {@link LongBinaryOperator2} which returns the greater of two elements according to the specified {@code
+     * Comparator}.
+     *
+     * @param comparator A {@code Comparator} for comparing the two values
+     * @return A {@code LongBinaryOperator2} which returns the greater of its operands, according to the supplied {@code
+     * Comparator}.
+     * @throws NullPointerException If given argument is {@code null}
+     * @see BinaryOperator#maxBy(Comparator)
+     */
+    @Nonnull
+    static LongBinaryOperator2 maxBy(@Nonnull final Comparator<Long> comparator) {
+        Objects.requireNonNull(comparator);
+        return (value1, value2) -> comparator.compare(value1, value2) >= 0 ? value1 : value2;
     }
 
     /**
