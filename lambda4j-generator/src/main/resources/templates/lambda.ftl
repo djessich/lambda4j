@@ -58,8 +58,6 @@ public interface ${lambda.name}${genericParameterTypeStringWithThrowableErasure}
 <#include "methods/static/alwaysTrue.ftl">
 <#include "methods/static/alwaysFalse.ftl">
 <#include "methods/static/isEqual.ftl">
-<#--&lt;#&ndash;<#include "methods/static/min.ftl">&ndash;&gt;-->
-<#--&lt;#&ndash;<#include "methods/static/max.ftl">&ndash;&gt;-->
 <#include "methods/static/minBy.ftl">
 <#include "methods/static/maxBy.ftl">
 

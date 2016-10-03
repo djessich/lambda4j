@@ -21,7 +21,7 @@
 ${annotation.nonnull}
 static ${genericParameterTypeStringWithThrowableErasure} ${lambda.name}${genericParameterTypeString} minBy(${annotation.nonnull} final Comparator<${types.buildGenericParameterType(lambda.returnType)}> comparator) {
     Objects.requireNonNull(comparator);
-    return (a, b) -> comparator.compare(a, b) <= 0 ? a : b;
+    return (${parameterNameString}) -> comparator.compare(${parameterNameString}) <= 0 ? ${types.buildParameterName(lambda.firstInputType)} : ${types.buildParameterName(lambda.secondInputType)};
 }
 </#macro>
 <#-- @formatter:on -->

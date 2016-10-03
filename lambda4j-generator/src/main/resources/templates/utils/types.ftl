@@ -64,6 +64,7 @@
 
 <#-- ##### parameter string functions START ##### -->
 
+# Builds: T t, U u, V v
 <#function buildParameterString target = lambda other1 = "" other2 = "" other3 = "">
     <#local target = .namespace.otherParametersToTarget(target, other1, other2, other3)>
     <#local types = [target.firstInputType!"", target.secondInputType!"", target.thirdInputType!""]>
@@ -80,6 +81,7 @@
     <#return genericString>
 </#function>
 
+# Builds: T, U, V
 <#function buildParameterTypeString target = lambda other1 = "" other2 = "" other3 = "">
     <#local target = .namespace.otherParametersToTarget(target, other1, other2, other3)>
     <#local types = [target.firstInputType!"", target.secondInputType!"", target.thirdInputType!""]>
