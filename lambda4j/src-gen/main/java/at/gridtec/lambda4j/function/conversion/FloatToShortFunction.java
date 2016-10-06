@@ -481,7 +481,7 @@ public interface FloatToShortFunction extends Lambda {
      */
     @Nonnull
     default FloatToShortFunction memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Float, Short> cache = new ConcurrentHashMap<>();

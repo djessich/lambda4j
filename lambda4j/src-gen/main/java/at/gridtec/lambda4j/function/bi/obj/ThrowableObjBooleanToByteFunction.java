@@ -592,7 +592,7 @@ public interface ThrowableObjBooleanToByteFunction<T, X extends Throwable> exten
      */
     @Nonnull
     default ThrowableObjBooleanToByteFunction<T, X> memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Pair<T, Boolean>, Byte> cache = new ConcurrentHashMap<>();

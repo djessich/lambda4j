@@ -623,7 +623,7 @@ public interface ObjBiBooleanToByteFunction<T> extends Lambda {
      */
     @Nonnull
     default ObjBiBooleanToByteFunction<T> memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Triple<T, Boolean, Boolean>, Byte> cache = new ConcurrentHashMap<>();

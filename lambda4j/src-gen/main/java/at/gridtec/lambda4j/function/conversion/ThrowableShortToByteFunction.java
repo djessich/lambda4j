@@ -488,7 +488,7 @@ public interface ThrowableShortToByteFunction<X extends Throwable> extends Lambd
      */
     @Nonnull
     default ThrowableShortToByteFunction<X> memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Short, Byte> cache = new ConcurrentHashMap<>();

@@ -601,7 +601,7 @@ public interface TriByteToShortFunction extends Lambda {
      */
     @Nonnull
     default TriByteToShortFunction memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Triple<Byte, Byte, Byte>, Short> cache = new ConcurrentHashMap<>();

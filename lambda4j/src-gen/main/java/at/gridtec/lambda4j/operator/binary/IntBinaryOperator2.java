@@ -602,7 +602,7 @@ public interface IntBinaryOperator2 extends Lambda, IntBinaryOperator {
      */
     @Nonnull
     default IntBinaryOperator2 memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Pair<Integer, Integer>, Integer> cache = new ConcurrentHashMap<>();

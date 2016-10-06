@@ -507,7 +507,7 @@ public interface LongUnaryOperator2 extends Lambda, LongUnaryOperator {
      */
     @Nonnull
     default LongUnaryOperator2 memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Long, Long> cache = new ConcurrentHashMap<>();

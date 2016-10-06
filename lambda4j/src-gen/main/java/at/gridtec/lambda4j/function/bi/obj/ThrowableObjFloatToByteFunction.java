@@ -592,7 +592,7 @@ public interface ThrowableObjFloatToByteFunction<T, X extends Throwable> extends
      */
     @Nonnull
     default ThrowableObjFloatToByteFunction<T, X> memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Pair<T, Float>, Byte> cache = new ConcurrentHashMap<>();

@@ -578,7 +578,7 @@ public interface ObjByteToShortFunction<T> extends Lambda {
      */
     @Nonnull
     default ObjByteToShortFunction<T> memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Pair<T, Byte>, Short> cache = new ConcurrentHashMap<>();

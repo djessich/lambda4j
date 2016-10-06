@@ -600,7 +600,7 @@ public interface TriBooleanToByteFunction extends Lambda {
      */
     @Nonnull
     default TriBooleanToByteFunction memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Triple<Boolean, Boolean, Boolean>, Byte> cache = new ConcurrentHashMap<>();

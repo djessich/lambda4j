@@ -610,7 +610,7 @@ public interface CharTernaryOperator extends Lambda {
      */
     @Nonnull
     default CharTernaryOperator memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Triple<Character, Character, Character>, Character> cache = new ConcurrentHashMap<>();

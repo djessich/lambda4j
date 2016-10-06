@@ -483,7 +483,7 @@ public interface ThrowableIntToCharFunction<X extends Throwable> extends Lambda 
      */
     @Nonnull
     default ThrowableIntToCharFunction<X> memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Integer, Character> cache = new ConcurrentHashMap<>();

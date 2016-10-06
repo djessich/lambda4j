@@ -507,7 +507,7 @@ public interface IntUnaryOperator2 extends Lambda, IntUnaryOperator {
      */
     @Nonnull
     default IntUnaryOperator2 memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Integer, Integer> cache = new ConcurrentHashMap<>();

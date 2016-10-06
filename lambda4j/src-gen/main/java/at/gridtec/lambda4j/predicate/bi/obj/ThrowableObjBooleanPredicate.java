@@ -715,7 +715,7 @@ public interface ThrowableObjBooleanPredicate<T, X extends Throwable> extends La
      */
     @Nonnull
     default ThrowableObjBooleanPredicate<T, X> memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Pair<T, Boolean>, Boolean> cache = new ConcurrentHashMap<>();

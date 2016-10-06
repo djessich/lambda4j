@@ -639,7 +639,7 @@ public interface ThrowableLongPredicate<X extends Throwable> extends Lambda, Lon
      */
     @Nonnull
     default ThrowableLongPredicate<X> memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Long, Boolean> cache = new ConcurrentHashMap<>();

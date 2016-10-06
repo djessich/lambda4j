@@ -600,7 +600,7 @@ public interface ShortBinaryOperator extends Lambda {
      */
     @Nonnull
     default ShortBinaryOperator memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Pair<Short, Short>, Short> cache = new ConcurrentHashMap<>();

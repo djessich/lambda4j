@@ -437,7 +437,7 @@ public interface TriBooleanFunction<R> extends Lambda {
      */
     @Nonnull
     default TriBooleanFunction<R> memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Triple<Boolean, Boolean, Boolean>, R> cache = new ConcurrentHashMap<>();

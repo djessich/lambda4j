@@ -332,7 +332,7 @@ public interface ByteFunction<R> extends Lambda {
      */
     @Nonnull
     default ByteFunction<R> memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Byte, R> cache = new ConcurrentHashMap<>();

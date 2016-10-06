@@ -610,7 +610,7 @@ public interface ByteTernaryOperator extends Lambda {
      */
     @Nonnull
     default ByteTernaryOperator memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Triple<Byte, Byte, Byte>, Byte> cache = new ConcurrentHashMap<>();

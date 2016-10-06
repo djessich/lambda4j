@@ -467,7 +467,7 @@ public interface ObjBiShortFunction<T, R> extends Lambda {
      */
     @Nonnull
     default ObjBiShortFunction<T, R> memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Triple<T, Short, Short>, R> cache = new ConcurrentHashMap<>();

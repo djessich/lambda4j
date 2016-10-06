@@ -334,7 +334,7 @@ public interface ThrowableBooleanFunction<R, X extends Throwable> extends Lambda
      */
     @Nonnull
     default ThrowableBooleanFunction<R, X> memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Boolean, R> cache = new ConcurrentHashMap<>();

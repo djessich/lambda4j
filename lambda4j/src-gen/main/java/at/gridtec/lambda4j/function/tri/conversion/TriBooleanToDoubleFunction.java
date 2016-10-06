@@ -601,7 +601,7 @@ public interface TriBooleanToDoubleFunction extends Lambda {
      */
     @Nonnull
     default TriBooleanToDoubleFunction memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Triple<Boolean, Boolean, Boolean>, Double> cache = new ConcurrentHashMap<>();

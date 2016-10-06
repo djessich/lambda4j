@@ -578,7 +578,7 @@ public interface ThrowableBiLongToByteFunction<X extends Throwable> extends Lamb
      */
     @Nonnull
     default ThrowableBiLongToByteFunction<X> memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Pair<Long, Long>, Byte> cache = new ConcurrentHashMap<>();

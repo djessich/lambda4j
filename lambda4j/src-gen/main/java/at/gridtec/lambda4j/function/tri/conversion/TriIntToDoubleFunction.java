@@ -601,7 +601,7 @@ public interface TriIntToDoubleFunction extends Lambda {
      */
     @Nonnull
     default TriIntToDoubleFunction memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Triple<Integer, Integer, Integer>, Double> cache = new ConcurrentHashMap<>();

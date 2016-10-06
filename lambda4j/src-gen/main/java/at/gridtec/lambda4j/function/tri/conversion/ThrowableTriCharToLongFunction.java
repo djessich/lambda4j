@@ -635,7 +635,7 @@ public interface ThrowableTriCharToLongFunction<X extends Throwable> extends Lam
      */
     @Nonnull
     default ThrowableTriCharToLongFunction<X> memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Triple<Character, Character, Character>, Long> cache = new ConcurrentHashMap<>();

@@ -558,7 +558,7 @@ public interface BiLongToCharFunction extends Lambda {
      */
     @Nonnull
     default BiLongToCharFunction memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Pair<Long, Long>, Character> cache = new ConcurrentHashMap<>();

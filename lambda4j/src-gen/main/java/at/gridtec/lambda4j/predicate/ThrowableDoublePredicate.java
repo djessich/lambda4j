@@ -643,7 +643,7 @@ public interface ThrowableDoublePredicate<X extends Throwable> extends Lambda, D
      */
     @Nonnull
     default ThrowableDoublePredicate<X> memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Double, Boolean> cache = new ConcurrentHashMap<>();

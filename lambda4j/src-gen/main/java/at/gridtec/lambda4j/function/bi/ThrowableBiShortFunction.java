@@ -410,7 +410,7 @@ public interface ThrowableBiShortFunction<R, X extends Throwable> extends Lambda
      */
     @Nonnull
     default ThrowableBiShortFunction<R, X> memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Pair<Short, Short>, R> cache = new ConcurrentHashMap<>();

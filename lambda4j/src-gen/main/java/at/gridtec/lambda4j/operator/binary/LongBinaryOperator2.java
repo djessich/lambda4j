@@ -602,7 +602,7 @@ public interface LongBinaryOperator2 extends Lambda, LongBinaryOperator {
      */
     @Nonnull
     default LongBinaryOperator2 memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Pair<Long, Long>, Long> cache = new ConcurrentHashMap<>();

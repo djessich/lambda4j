@@ -484,7 +484,7 @@ public interface FloatToLongFunction extends Lambda {
      */
     @Nonnull
     default FloatToLongFunction memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Float, Long> cache = new ConcurrentHashMap<>();

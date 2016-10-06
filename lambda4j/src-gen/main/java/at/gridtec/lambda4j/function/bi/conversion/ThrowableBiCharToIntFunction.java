@@ -575,7 +575,7 @@ public interface ThrowableBiCharToIntFunction<X extends Throwable> extends Lambd
      */
     @Nonnull
     default ThrowableBiCharToIntFunction<X> memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Pair<Character, Character>, Integer> cache = new ConcurrentHashMap<>();

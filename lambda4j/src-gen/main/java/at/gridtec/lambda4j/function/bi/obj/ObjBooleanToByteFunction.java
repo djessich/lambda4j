@@ -578,7 +578,7 @@ public interface ObjBooleanToByteFunction<T> extends Lambda {
      */
     @Nonnull
     default ObjBooleanToByteFunction<T> memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Pair<T, Boolean>, Byte> cache = new ConcurrentHashMap<>();

@@ -593,7 +593,7 @@ public interface TriBooleanToIntFunction extends Lambda {
      */
     @Nonnull
     default TriBooleanToIntFunction memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Triple<Boolean, Boolean, Boolean>, Integer> cache = new ConcurrentHashMap<>();

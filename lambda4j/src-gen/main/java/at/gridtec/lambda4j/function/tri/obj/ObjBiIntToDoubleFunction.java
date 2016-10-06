@@ -622,7 +622,7 @@ public interface ObjBiIntToDoubleFunction<T> extends Lambda {
      */
     @Nonnull
     default ObjBiIntToDoubleFunction<T> memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Triple<T, Integer, Integer>, Double> cache = new ConcurrentHashMap<>();

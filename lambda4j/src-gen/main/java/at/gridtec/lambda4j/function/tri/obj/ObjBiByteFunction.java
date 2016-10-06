@@ -467,7 +467,7 @@ public interface ObjBiByteFunction<T, R> extends Lambda {
      */
     @Nonnull
     default ObjBiByteFunction<T, R> memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Triple<T, Byte, Byte>, R> cache = new ConcurrentHashMap<>();

@@ -488,7 +488,7 @@ public interface IntToDoubleFunction2 extends Lambda, IntToDoubleFunction {
      */
     @Nonnull
     default IntToDoubleFunction2 memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Integer, Double> cache = new ConcurrentHashMap<>();

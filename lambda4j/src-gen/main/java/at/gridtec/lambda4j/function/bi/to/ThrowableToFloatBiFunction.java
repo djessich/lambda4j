@@ -428,7 +428,7 @@ public interface ThrowableToFloatBiFunction<T, U, X extends Throwable> extends L
      */
     @Nonnull
     default ThrowableToFloatBiFunction<T, U, X> memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Pair<T, U>, Float> cache = new ConcurrentHashMap<>();

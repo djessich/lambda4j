@@ -419,7 +419,7 @@ public interface ToLongBiFunction2<T, U> extends Lambda, ToLongBiFunction<T, U> 
      */
     @Nonnull
     default ToLongBiFunction2<T, U> memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Pair<T, U>, Long> cache = new ConcurrentHashMap<>();

@@ -346,7 +346,7 @@ public interface ToLongFunction2<T> extends Lambda, ToLongFunction<T> {
      */
     @Nonnull
     default ToLongFunction2<T> memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<T, Long> cache = new ConcurrentHashMap<>();

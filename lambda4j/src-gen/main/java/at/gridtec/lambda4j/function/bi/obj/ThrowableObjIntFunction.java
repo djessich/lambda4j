@@ -435,7 +435,7 @@ public interface ThrowableObjIntFunction<T, R, X extends Throwable> extends Lamb
      */
     @Nonnull
     default ThrowableObjIntFunction<T, R, X> memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Pair<T, Integer>, R> cache = new ConcurrentHashMap<>();

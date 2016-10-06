@@ -578,7 +578,7 @@ public interface ThrowableBiIntToShortFunction<X extends Throwable> extends Lamb
      */
     @Nonnull
     default ThrowableBiIntToShortFunction<X> memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Pair<Integer, Integer>, Short> cache = new ConcurrentHashMap<>();

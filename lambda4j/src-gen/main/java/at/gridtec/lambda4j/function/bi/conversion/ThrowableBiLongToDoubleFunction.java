@@ -579,7 +579,7 @@ public interface ThrowableBiLongToDoubleFunction<X extends Throwable> extends La
      */
     @Nonnull
     default ThrowableBiLongToDoubleFunction<X> memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Pair<Long, Long>, Double> cache = new ConcurrentHashMap<>();

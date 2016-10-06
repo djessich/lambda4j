@@ -488,7 +488,7 @@ public interface LongToIntFunction2 extends Lambda, LongToIntFunction {
      */
     @Nonnull
     default LongToIntFunction2 memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Long, Integer> cache = new ConcurrentHashMap<>();

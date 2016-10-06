@@ -682,7 +682,7 @@ public interface ThrowableBiObjBooleanToIntFunction<T, U, X extends Throwable> e
      */
     @Nonnull
     default ThrowableBiObjBooleanToIntFunction<T, U, X> memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Triple<T, U, Boolean>, Integer> cache = new ConcurrentHashMap<>();

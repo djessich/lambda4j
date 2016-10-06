@@ -517,7 +517,7 @@ public interface ThrowableDoubleToLongFunction<X extends Throwable> extends Lamb
      */
     @Nonnull
     default ThrowableDoubleToLongFunction<X> memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Double, Long> cache = new ConcurrentHashMap<>();

@@ -578,7 +578,7 @@ public interface ObjBooleanToCharFunction<T> extends Lambda {
      */
     @Nonnull
     default ObjBooleanToCharFunction<T> memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Pair<T, Boolean>, Character> cache = new ConcurrentHashMap<>();

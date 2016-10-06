@@ -316,7 +316,7 @@ public interface ThrowableTriFunction<T, U, V, R, X extends Throwable> extends L
      */
     @Nonnull
     default ThrowableTriFunction<T, U, V, R, X> memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Triple<T, U, V>, R> cache = new ConcurrentHashMap<>();

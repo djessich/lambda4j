@@ -603,7 +603,7 @@ public interface LongPredicate2 extends Lambda, LongPredicate {
      */
     @Nonnull
     default LongPredicate2 memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Long, Boolean> cache = new ConcurrentHashMap<>();

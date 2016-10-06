@@ -780,7 +780,7 @@ public interface BiObjFloatPredicate<T, U> extends Lambda {
      */
     @Nonnull
     default BiObjFloatPredicate<T, U> memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Triple<T, U, Float>, Boolean> cache = new ConcurrentHashMap<>();

@@ -484,7 +484,7 @@ public interface FloatToDoubleFunction extends Lambda {
      */
     @Nonnull
     default FloatToDoubleFunction memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Float, Double> cache = new ConcurrentHashMap<>();

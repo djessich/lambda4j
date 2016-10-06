@@ -592,7 +592,7 @@ public interface ThrowableObjShortToDoubleFunction<T, X extends Throwable> exten
      */
     @Nonnull
     default ThrowableObjShortToDoubleFunction<T, X> memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Pair<T, Short>, Double> cache = new ConcurrentHashMap<>();

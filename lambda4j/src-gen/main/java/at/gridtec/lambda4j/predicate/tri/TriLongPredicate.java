@@ -713,7 +713,7 @@ public interface TriLongPredicate extends Lambda {
      */
     @Nonnull
     default TriLongPredicate memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Triple<Long, Long, Long>, Boolean> cache = new ConcurrentHashMap<>();

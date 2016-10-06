@@ -635,7 +635,7 @@ public interface ThrowableTriByteToFloatFunction<X extends Throwable> extends La
      */
     @Nonnull
     default ThrowableTriByteToFloatFunction<X> memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Triple<Byte, Byte, Byte>, Float> cache = new ConcurrentHashMap<>();

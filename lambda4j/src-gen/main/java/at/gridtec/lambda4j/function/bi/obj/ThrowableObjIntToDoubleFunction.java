@@ -591,7 +591,7 @@ public interface ThrowableObjIntToDoubleFunction<T, X extends Throwable> extends
      */
     @Nonnull
     default ThrowableObjIntToDoubleFunction<T, X> memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Pair<T, Integer>, Double> cache = new ConcurrentHashMap<>();

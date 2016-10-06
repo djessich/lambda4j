@@ -683,7 +683,7 @@ public interface ThrowableBiObjFloatToIntFunction<T, U, X extends Throwable> ext
      */
     @Nonnull
     default ThrowableBiObjFloatToIntFunction<T, U, X> memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Triple<T, U, Float>, Integer> cache = new ConcurrentHashMap<>();

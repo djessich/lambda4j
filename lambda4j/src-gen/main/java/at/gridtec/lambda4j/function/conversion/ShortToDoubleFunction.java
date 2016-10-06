@@ -484,7 +484,7 @@ public interface ShortToDoubleFunction extends Lambda {
      */
     @Nonnull
     default ShortToDoubleFunction memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Short, Double> cache = new ConcurrentHashMap<>();

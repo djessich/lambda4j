@@ -590,7 +590,7 @@ public interface ThrowableObjShortToIntFunction<T, X extends Throwable> extends 
      */
     @Nonnull
     default ThrowableObjShortToIntFunction<T, X> memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Pair<T, Short>, Integer> cache = new ConcurrentHashMap<>();

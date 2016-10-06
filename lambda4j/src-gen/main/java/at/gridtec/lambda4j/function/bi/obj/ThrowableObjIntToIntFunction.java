@@ -588,7 +588,7 @@ public interface ThrowableObjIntToIntFunction<T, X extends Throwable> extends La
      */
     @Nonnull
     default ThrowableObjIntToIntFunction<T, X> memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Pair<T, Integer>, Integer> cache = new ConcurrentHashMap<>();

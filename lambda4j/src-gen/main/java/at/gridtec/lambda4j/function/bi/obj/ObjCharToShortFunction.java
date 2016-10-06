@@ -578,7 +578,7 @@ public interface ObjCharToShortFunction<T> extends Lambda {
      */
     @Nonnull
     default ObjCharToShortFunction<T> memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Pair<T, Character>, Short> cache = new ConcurrentHashMap<>();

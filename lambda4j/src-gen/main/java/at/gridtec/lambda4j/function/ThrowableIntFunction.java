@@ -365,7 +365,7 @@ public interface ThrowableIntFunction<R, X extends Throwable> extends Lambda, In
      */
     @Nonnull
     default ThrowableIntFunction<R, X> memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Integer, R> cache = new ConcurrentHashMap<>();

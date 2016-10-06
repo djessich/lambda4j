@@ -579,7 +579,7 @@ public interface ThrowableBiDoubleToCharFunction<X extends Throwable> extends La
      */
     @Nonnull
     default ThrowableBiDoubleToCharFunction<X> memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Pair<Double, Double>, Character> cache = new ConcurrentHashMap<>();

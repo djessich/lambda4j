@@ -497,7 +497,7 @@ public interface ByteUnaryOperator extends Lambda {
      */
     @Nonnull
     default ByteUnaryOperator memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Byte, Byte> cache = new ConcurrentHashMap<>();

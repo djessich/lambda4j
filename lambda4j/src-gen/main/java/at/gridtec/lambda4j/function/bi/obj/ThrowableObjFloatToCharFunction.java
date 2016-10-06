@@ -592,7 +592,7 @@ public interface ThrowableObjFloatToCharFunction<T, X extends Throwable> extends
      */
     @Nonnull
     default ThrowableObjFloatToCharFunction<T, X> memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Pair<T, Float>, Character> cache = new ConcurrentHashMap<>();

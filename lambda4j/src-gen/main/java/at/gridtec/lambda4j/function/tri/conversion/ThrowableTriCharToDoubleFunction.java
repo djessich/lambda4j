@@ -635,7 +635,7 @@ public interface ThrowableTriCharToDoubleFunction<X extends Throwable> extends L
      */
     @Nonnull
     default ThrowableTriCharToDoubleFunction<X> memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Triple<Character, Character, Character>, Double> cache = new ConcurrentHashMap<>();

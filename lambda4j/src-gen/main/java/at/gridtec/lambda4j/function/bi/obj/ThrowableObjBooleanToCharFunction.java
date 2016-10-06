@@ -592,7 +592,7 @@ public interface ThrowableObjBooleanToCharFunction<T, X extends Throwable> exten
      */
     @Nonnull
     default ThrowableObjBooleanToCharFunction<T, X> memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Pair<T, Boolean>, Character> cache = new ConcurrentHashMap<>();

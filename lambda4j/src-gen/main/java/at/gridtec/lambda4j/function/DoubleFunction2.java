@@ -334,7 +334,7 @@ public interface DoubleFunction2<R> extends Lambda, DoubleFunction<R> {
      */
     @Nonnull
     default DoubleFunction2<R> memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Double, R> cache = new ConcurrentHashMap<>();

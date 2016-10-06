@@ -669,7 +669,7 @@ public interface BiDoublePredicate extends Lambda {
      */
     @Nonnull
     default BiDoublePredicate memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Pair<Double, Double>, Boolean> cache = new ConcurrentHashMap<>();

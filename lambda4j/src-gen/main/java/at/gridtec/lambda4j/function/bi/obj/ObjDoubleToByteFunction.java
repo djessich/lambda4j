@@ -578,7 +578,7 @@ public interface ObjDoubleToByteFunction<T> extends Lambda {
      */
     @Nonnull
     default ObjDoubleToByteFunction<T> memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Pair<T, Double>, Byte> cache = new ConcurrentHashMap<>();

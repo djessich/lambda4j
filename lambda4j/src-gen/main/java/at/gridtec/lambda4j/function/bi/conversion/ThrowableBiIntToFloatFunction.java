@@ -578,7 +578,7 @@ public interface ThrowableBiIntToFloatFunction<X extends Throwable> extends Lamb
      */
     @Nonnull
     default ThrowableBiIntToFloatFunction<X> memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Pair<Integer, Integer>, Float> cache = new ConcurrentHashMap<>();

@@ -777,7 +777,7 @@ public interface ThrowableObjBiBytePredicate<T, X extends Throwable> extends Lam
      */
     @Nonnull
     default ThrowableObjBiBytePredicate<T, X> memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Triple<T, Byte, Byte>, Boolean> cache = new ConcurrentHashMap<>();

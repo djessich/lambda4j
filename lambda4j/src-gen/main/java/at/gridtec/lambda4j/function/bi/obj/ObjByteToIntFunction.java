@@ -578,7 +578,7 @@ public interface ObjByteToIntFunction<T> extends Lambda {
      */
     @Nonnull
     default ObjByteToIntFunction<T> memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Pair<T, Byte>, Integer> cache = new ConcurrentHashMap<>();

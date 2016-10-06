@@ -416,7 +416,7 @@ public interface ToCharBiFunction<T, U> extends Lambda {
      */
     @Nonnull
     default ToCharBiFunction<T, U> memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Pair<T, U>, Character> cache = new ConcurrentHashMap<>();

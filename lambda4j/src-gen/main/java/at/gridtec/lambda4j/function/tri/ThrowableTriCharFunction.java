@@ -475,7 +475,7 @@ public interface ThrowableTriCharFunction<R, X extends Throwable> extends Lambda
      */
     @Nonnull
     default ThrowableTriCharFunction<R, X> memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Triple<Character, Character, Character>, R> cache = new ConcurrentHashMap<>();

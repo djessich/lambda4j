@@ -611,7 +611,7 @@ public interface ThrowableShortPredicate<X extends Throwable> extends Lambda {
      */
     @Nonnull
     default ThrowableShortPredicate<X> memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Short, Boolean> cache = new ConcurrentHashMap<>();

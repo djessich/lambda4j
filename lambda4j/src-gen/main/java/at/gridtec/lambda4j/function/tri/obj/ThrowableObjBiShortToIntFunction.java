@@ -657,7 +657,7 @@ public interface ThrowableObjBiShortToIntFunction<T, X extends Throwable> extend
      */
     @Nonnull
     default ThrowableObjBiShortToIntFunction<T, X> memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Triple<T, Short, Short>, Integer> cache = new ConcurrentHashMap<>();

@@ -715,7 +715,7 @@ public interface ThrowableObjShortPredicate<T, X extends Throwable> extends Lamb
      */
     @Nonnull
     default ThrowableObjShortPredicate<T, X> memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Pair<T, Short>, Boolean> cache = new ConcurrentHashMap<>();

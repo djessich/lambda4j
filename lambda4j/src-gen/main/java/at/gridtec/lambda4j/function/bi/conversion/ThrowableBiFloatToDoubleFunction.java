@@ -579,7 +579,7 @@ public interface ThrowableBiFloatToDoubleFunction<X extends Throwable> extends L
      */
     @Nonnull
     default ThrowableBiFloatToDoubleFunction<X> memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Pair<Float, Float>, Double> cache = new ConcurrentHashMap<>();

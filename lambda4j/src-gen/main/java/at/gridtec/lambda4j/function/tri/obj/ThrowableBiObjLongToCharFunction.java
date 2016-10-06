@@ -683,7 +683,7 @@ public interface ThrowableBiObjLongToCharFunction<T, U, X extends Throwable> ext
      */
     @Nonnull
     default ThrowableBiObjLongToCharFunction<T, U, X> memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Triple<T, U, Long>, Character> cache = new ConcurrentHashMap<>();

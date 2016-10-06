@@ -713,7 +713,7 @@ public interface TriShortPredicate extends Lambda {
      */
     @Nonnull
     default TriShortPredicate memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Triple<Short, Short, Short>, Boolean> cache = new ConcurrentHashMap<>();

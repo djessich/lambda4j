@@ -446,7 +446,7 @@ public interface ToFloatTriFunction<T, U, V> extends Lambda {
      */
     @Nonnull
     default ToFloatTriFunction<T, U, V> memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Triple<T, U, V>, Float> cache = new ConcurrentHashMap<>();

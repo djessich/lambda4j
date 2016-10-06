@@ -635,7 +635,7 @@ public interface ThrowableTriShortToLongFunction<X extends Throwable> extends La
      */
     @Nonnull
     default ThrowableTriShortToLongFunction<X> memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Triple<Short, Short, Short>, Long> cache = new ConcurrentHashMap<>();

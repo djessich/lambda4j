@@ -557,7 +557,7 @@ public interface BiBooleanToCharFunction extends Lambda {
      */
     @Nonnull
     default BiBooleanToCharFunction memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Pair<Boolean, Boolean>, Character> cache = new ConcurrentHashMap<>();

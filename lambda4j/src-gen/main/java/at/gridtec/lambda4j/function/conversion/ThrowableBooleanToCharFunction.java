@@ -491,7 +491,7 @@ public interface ThrowableBooleanToCharFunction<X extends Throwable> extends Lam
      */
     @Nonnull
     default ThrowableBooleanToCharFunction<X> memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Boolean, Character> cache = new ConcurrentHashMap<>();

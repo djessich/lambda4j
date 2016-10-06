@@ -529,7 +529,7 @@ public interface ThrowableIntUnaryOperator<X extends Throwable> extends Lambda, 
      */
     @Nonnull
     default ThrowableIntUnaryOperator<X> memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Integer, Integer> cache = new ConcurrentHashMap<>();

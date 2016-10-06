@@ -344,7 +344,7 @@ public interface ToByteFunction<T> extends Lambda {
      */
     @Nonnull
     default ToByteFunction<T> memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<T, Byte> cache = new ConcurrentHashMap<>();

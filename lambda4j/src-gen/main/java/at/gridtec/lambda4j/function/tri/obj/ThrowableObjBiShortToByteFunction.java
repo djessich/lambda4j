@@ -657,7 +657,7 @@ public interface ThrowableObjBiShortToByteFunction<T, X extends Throwable> exten
      */
     @Nonnull
     default ThrowableObjBiShortToByteFunction<T, X> memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Triple<T, Short, Short>, Byte> cache = new ConcurrentHashMap<>();

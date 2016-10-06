@@ -600,7 +600,7 @@ public interface ShortPredicate extends Lambda {
      */
     @Nonnull
     default ShortPredicate memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Short, Boolean> cache = new ConcurrentHashMap<>();

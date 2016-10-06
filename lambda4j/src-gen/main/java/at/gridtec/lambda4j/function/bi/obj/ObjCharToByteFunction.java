@@ -578,7 +578,7 @@ public interface ObjCharToByteFunction<T> extends Lambda {
      */
     @Nonnull
     default ObjCharToByteFunction<T> memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Pair<T, Character>, Byte> cache = new ConcurrentHashMap<>();

@@ -444,7 +444,7 @@ public interface TriDoubleFunction<R> extends Lambda {
      */
     @Nonnull
     default TriDoubleFunction<R> memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Triple<Double, Double, Double>, R> cache = new ConcurrentHashMap<>();

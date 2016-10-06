@@ -595,7 +595,7 @@ public interface ThrowableTriPredicate<T, U, V, X extends Throwable> extends Lam
      */
     @Nonnull
     default ThrowableTriPredicate<T, U, V, X> memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Triple<T, U, V>, Boolean> cache = new ConcurrentHashMap<>();

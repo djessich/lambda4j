@@ -488,7 +488,7 @@ public interface ThrowableByteToFloatFunction<X extends Throwable> extends Lambd
      */
     @Nonnull
     default ThrowableByteToFloatFunction<X> memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Byte, Float> cache = new ConcurrentHashMap<>();

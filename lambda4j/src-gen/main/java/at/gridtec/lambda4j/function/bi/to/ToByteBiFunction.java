@@ -416,7 +416,7 @@ public interface ToByteBiFunction<T, U> extends Lambda {
      */
     @Nonnull
     default ToByteBiFunction<T, U> memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Pair<T, U>, Byte> cache = new ConcurrentHashMap<>();

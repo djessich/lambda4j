@@ -742,7 +742,7 @@ public interface ObjBiShortPredicate<T> extends Lambda {
      */
     @Nonnull
     default ObjBiShortPredicate<T> memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Triple<T, Short, Short>, Boolean> cache = new ConcurrentHashMap<>();

@@ -623,7 +623,7 @@ public interface ObjBiBooleanToCharFunction<T> extends Lambda {
      */
     @Nonnull
     default ObjBiBooleanToCharFunction<T> memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Triple<T, Boolean, Boolean>, Character> cache = new ConcurrentHashMap<>();

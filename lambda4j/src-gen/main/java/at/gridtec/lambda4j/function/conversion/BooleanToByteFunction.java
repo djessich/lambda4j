@@ -486,7 +486,7 @@ public interface BooleanToByteFunction extends Lambda {
      */
     @Nonnull
     default BooleanToByteFunction memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Boolean, Byte> cache = new ConcurrentHashMap<>();

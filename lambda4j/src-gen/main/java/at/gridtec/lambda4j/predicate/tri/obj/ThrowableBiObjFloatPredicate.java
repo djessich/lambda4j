@@ -814,7 +814,7 @@ public interface ThrowableBiObjFloatPredicate<T, U, X extends Throwable> extends
      */
     @Nonnull
     default ThrowableBiObjFloatPredicate<T, U, X> memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Triple<T, U, Float>, Boolean> cache = new ConcurrentHashMap<>();

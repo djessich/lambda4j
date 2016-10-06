@@ -419,7 +419,7 @@ public interface ToDoubleBiFunction2<T, U> extends Lambda, ToDoubleBiFunction<T,
      */
     @Nonnull
     default ToDoubleBiFunction2<T, U> memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Pair<T, U>, Double> cache = new ConcurrentHashMap<>();

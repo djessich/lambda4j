@@ -460,7 +460,7 @@ public interface ObjBiBooleanFunction<T, R> extends Lambda {
      */
     @Nonnull
     default ObjBiBooleanFunction<T, R> memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Triple<T, Boolean, Boolean>, R> cache = new ConcurrentHashMap<>();

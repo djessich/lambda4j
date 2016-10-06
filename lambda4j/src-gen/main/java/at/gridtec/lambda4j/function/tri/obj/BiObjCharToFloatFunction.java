@@ -656,7 +656,7 @@ public interface BiObjCharToFloatFunction<T, U> extends Lambda {
      */
     @Nonnull
     default BiObjCharToFloatFunction<T, U> memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Triple<T, U, Character>, Float> cache = new ConcurrentHashMap<>();

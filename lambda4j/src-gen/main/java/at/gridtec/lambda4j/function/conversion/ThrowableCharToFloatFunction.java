@@ -488,7 +488,7 @@ public interface ThrowableCharToFloatFunction<X extends Throwable> extends Lambd
      */
     @Nonnull
     default ThrowableCharToFloatFunction<X> memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Character, Float> cache = new ConcurrentHashMap<>();

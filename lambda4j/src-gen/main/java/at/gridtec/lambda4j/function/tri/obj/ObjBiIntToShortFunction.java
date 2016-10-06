@@ -622,7 +622,7 @@ public interface ObjBiIntToShortFunction<T> extends Lambda {
      */
     @Nonnull
     default ObjBiIntToShortFunction<T> memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Triple<T, Integer, Integer>, Short> cache = new ConcurrentHashMap<>();

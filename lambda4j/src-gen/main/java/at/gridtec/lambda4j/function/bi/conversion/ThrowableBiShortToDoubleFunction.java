@@ -579,7 +579,7 @@ public interface ThrowableBiShortToDoubleFunction<X extends Throwable> extends L
      */
     @Nonnull
     default ThrowableBiShortToDoubleFunction<X> memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Pair<Short, Short>, Double> cache = new ConcurrentHashMap<>();

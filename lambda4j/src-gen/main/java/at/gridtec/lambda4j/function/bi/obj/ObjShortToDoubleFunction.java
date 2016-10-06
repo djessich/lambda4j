@@ -578,7 +578,7 @@ public interface ObjShortToDoubleFunction<T> extends Lambda {
      */
     @Nonnull
     default ObjShortToDoubleFunction<T> memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Pair<T, Short>, Double> cache = new ConcurrentHashMap<>();

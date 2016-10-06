@@ -485,7 +485,7 @@ public interface ThrowableByteToLongFunction<X extends Throwable> extends Lambda
      */
     @Nonnull
     default ThrowableByteToLongFunction<X> memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Byte, Long> cache = new ConcurrentHashMap<>();

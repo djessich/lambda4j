@@ -557,7 +557,7 @@ public interface BiBooleanToIntFunction extends Lambda {
      */
     @Nonnull
     default BiBooleanToIntFunction memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Pair<Boolean, Boolean>, Integer> cache = new ConcurrentHashMap<>();

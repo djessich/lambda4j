@@ -657,7 +657,7 @@ public interface BiObjFloatToShortFunction<T, U> extends Lambda {
      */
     @Nonnull
     default BiObjFloatToShortFunction<T, U> memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Triple<T, U, Float>, Short> cache = new ConcurrentHashMap<>();

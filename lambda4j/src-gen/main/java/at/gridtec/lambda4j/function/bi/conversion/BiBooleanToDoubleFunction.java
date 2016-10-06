@@ -557,7 +557,7 @@ public interface BiBooleanToDoubleFunction extends Lambda {
      */
     @Nonnull
     default BiBooleanToDoubleFunction memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Pair<Boolean, Boolean>, Double> cache = new ConcurrentHashMap<>();

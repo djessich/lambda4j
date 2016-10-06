@@ -669,7 +669,7 @@ public interface BiShortPredicate extends Lambda {
      */
     @Nonnull
     default BiShortPredicate memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Pair<Short, Short>, Boolean> cache = new ConcurrentHashMap<>();

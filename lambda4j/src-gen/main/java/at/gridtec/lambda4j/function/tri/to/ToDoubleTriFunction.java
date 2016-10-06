@@ -447,7 +447,7 @@ public interface ToDoubleTriFunction<T, U, V> extends Lambda {
      */
     @Nonnull
     default ToDoubleTriFunction<T, U, V> memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Triple<T, U, V>, Double> cache = new ConcurrentHashMap<>();

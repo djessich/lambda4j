@@ -483,7 +483,7 @@ public interface ThrowableByteToIntFunction<X extends Throwable> extends Lambda 
      */
     @Nonnull
     default ThrowableByteToIntFunction<X> memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Byte, Integer> cache = new ConcurrentHashMap<>();

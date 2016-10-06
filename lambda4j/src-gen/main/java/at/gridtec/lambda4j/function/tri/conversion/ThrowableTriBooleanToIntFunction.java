@@ -624,7 +624,7 @@ public interface ThrowableTriBooleanToIntFunction<X extends Throwable> extends L
      */
     @Nonnull
     default ThrowableTriBooleanToIntFunction<X> memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Triple<Boolean, Boolean, Boolean>, Integer> cache = new ConcurrentHashMap<>();

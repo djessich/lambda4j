@@ -642,7 +642,7 @@ public interface ThrowableIntTernaryOperator<X extends Throwable> extends Lambda
      */
     @Nonnull
     default ThrowableIntTernaryOperator<X> memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Triple<Integer, Integer, Integer>, Integer> cache = new ConcurrentHashMap<>();

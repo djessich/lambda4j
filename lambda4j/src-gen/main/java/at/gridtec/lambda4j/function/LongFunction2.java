@@ -334,7 +334,7 @@ public interface LongFunction2<R> extends Lambda, LongFunction<R> {
      */
     @Nonnull
     default LongFunction2<R> memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Long, R> cache = new ConcurrentHashMap<>();

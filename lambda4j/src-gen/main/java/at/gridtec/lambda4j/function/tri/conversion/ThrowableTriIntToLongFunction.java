@@ -634,7 +634,7 @@ public interface ThrowableTriIntToLongFunction<X extends Throwable> extends Lamb
      */
     @Nonnull
     default ThrowableTriIntToLongFunction<X> memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Triple<Integer, Integer, Integer>, Long> cache = new ConcurrentHashMap<>();

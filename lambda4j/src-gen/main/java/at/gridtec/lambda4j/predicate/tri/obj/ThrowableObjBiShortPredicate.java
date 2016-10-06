@@ -777,7 +777,7 @@ public interface ThrowableObjBiShortPredicate<T, X extends Throwable> extends La
      */
     @Nonnull
     default ThrowableObjBiShortPredicate<T, X> memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Triple<T, Short, Short>, Boolean> cache = new ConcurrentHashMap<>();

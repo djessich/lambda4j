@@ -578,7 +578,7 @@ public interface ThrowableBiIntToDoubleFunction<X extends Throwable> extends Lam
      */
     @Nonnull
     default ThrowableBiIntToDoubleFunction<X> memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Pair<Integer, Integer>, Double> cache = new ConcurrentHashMap<>();

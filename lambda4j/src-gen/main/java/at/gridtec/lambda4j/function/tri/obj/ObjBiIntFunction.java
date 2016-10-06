@@ -467,7 +467,7 @@ public interface ObjBiIntFunction<T, R> extends Lambda {
      */
     @Nonnull
     default ObjBiIntFunction<T, R> memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Triple<T, Integer, Integer>, R> cache = new ConcurrentHashMap<>();

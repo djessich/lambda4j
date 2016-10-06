@@ -657,7 +657,7 @@ public interface ThrowableObjBiCharToLongFunction<T, X extends Throwable> extend
      */
     @Nonnull
     default ThrowableObjBiCharToLongFunction<T, X> memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Triple<T, Character, Character>, Long> cache = new ConcurrentHashMap<>();

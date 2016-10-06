@@ -500,7 +500,7 @@ public interface BiObjIntFunction<T, U, R> extends Lambda {
      */
     @Nonnull
     default BiObjIntFunction<T, U, R> memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Triple<T, U, Integer>, R> cache = new ConcurrentHashMap<>();

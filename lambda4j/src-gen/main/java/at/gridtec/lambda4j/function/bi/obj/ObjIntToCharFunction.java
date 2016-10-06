@@ -578,7 +578,7 @@ public interface ObjIntToCharFunction<T> extends Lambda {
      */
     @Nonnull
     default ObjIntToCharFunction<T> memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Pair<T, Integer>, Character> cache = new ConcurrentHashMap<>();

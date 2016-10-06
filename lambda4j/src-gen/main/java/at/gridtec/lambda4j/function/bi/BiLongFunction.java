@@ -398,7 +398,7 @@ public interface BiLongFunction<R> extends Lambda {
      */
     @Nonnull
     default BiLongFunction<R> memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Pair<Long, Long>, R> cache = new ConcurrentHashMap<>();

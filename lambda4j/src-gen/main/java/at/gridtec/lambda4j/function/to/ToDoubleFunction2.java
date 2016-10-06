@@ -347,7 +347,7 @@ public interface ToDoubleFunction2<T> extends Lambda, ToDoubleFunction<T> {
      */
     @Nonnull
     default ToDoubleFunction2<T> memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<T, Double> cache = new ConcurrentHashMap<>();

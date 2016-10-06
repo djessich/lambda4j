@@ -668,7 +668,7 @@ public interface BiCharPredicate extends Lambda {
      */
     @Nonnull
     default BiCharPredicate memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Pair<Character, Character>, Boolean> cache = new ConcurrentHashMap<>();

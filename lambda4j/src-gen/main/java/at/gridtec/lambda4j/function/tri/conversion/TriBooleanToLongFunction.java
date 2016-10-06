@@ -600,7 +600,7 @@ public interface TriBooleanToLongFunction extends Lambda {
      */
     @Nonnull
     default TriBooleanToLongFunction memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Triple<Boolean, Boolean, Boolean>, Long> cache = new ConcurrentHashMap<>();

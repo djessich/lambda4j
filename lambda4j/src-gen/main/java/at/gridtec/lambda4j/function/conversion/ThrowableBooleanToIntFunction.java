@@ -488,7 +488,7 @@ public interface ThrowableBooleanToIntFunction<X extends Throwable> extends Lamb
      */
     @Nonnull
     default ThrowableBooleanToIntFunction<X> memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Boolean, Integer> cache = new ConcurrentHashMap<>();

@@ -655,7 +655,7 @@ public interface BiObjByteToIntFunction<T, U> extends Lambda {
      */
     @Nonnull
     default BiObjByteToIntFunction<T, U> memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Triple<T, U, Byte>, Integer> cache = new ConcurrentHashMap<>();

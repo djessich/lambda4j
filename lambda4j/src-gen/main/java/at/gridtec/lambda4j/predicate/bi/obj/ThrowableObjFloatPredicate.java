@@ -715,7 +715,7 @@ public interface ThrowableObjFloatPredicate<T, X extends Throwable> extends Lamb
      */
     @Nonnull
     default ThrowableObjFloatPredicate<T, X> memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Pair<T, Float>, Boolean> cache = new ConcurrentHashMap<>();

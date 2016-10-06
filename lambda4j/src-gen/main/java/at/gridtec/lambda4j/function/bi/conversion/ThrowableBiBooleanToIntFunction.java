@@ -568,7 +568,7 @@ public interface ThrowableBiBooleanToIntFunction<X extends Throwable> extends La
      */
     @Nonnull
     default ThrowableBiBooleanToIntFunction<X> memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Pair<Boolean, Boolean>, Integer> cache = new ConcurrentHashMap<>();

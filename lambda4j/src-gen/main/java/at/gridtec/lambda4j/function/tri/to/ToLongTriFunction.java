@@ -447,7 +447,7 @@ public interface ToLongTriFunction<T, U, V> extends Lambda {
      */
     @Nonnull
     default ToLongTriFunction<T, U, V> memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Triple<T, U, V>, Long> cache = new ConcurrentHashMap<>();

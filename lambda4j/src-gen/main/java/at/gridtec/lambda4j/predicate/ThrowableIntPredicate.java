@@ -635,7 +635,7 @@ public interface ThrowableIntPredicate<X extends Throwable> extends Lambda, IntP
      */
     @Nonnull
     default ThrowableIntPredicate<X> memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Integer, Boolean> cache = new ConcurrentHashMap<>();

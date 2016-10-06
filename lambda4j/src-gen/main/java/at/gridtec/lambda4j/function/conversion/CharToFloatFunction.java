@@ -481,7 +481,7 @@ public interface CharToFloatFunction extends Lambda {
      */
     @Nonnull
     default CharToFloatFunction memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Character, Float> cache = new ConcurrentHashMap<>();

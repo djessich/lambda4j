@@ -752,7 +752,7 @@ public interface ThrowableTriBytePredicate<X extends Throwable> extends Lambda {
      */
     @Nonnull
     default ThrowableTriBytePredicate<X> memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Triple<Byte, Byte, Byte>, Boolean> cache = new ConcurrentHashMap<>();

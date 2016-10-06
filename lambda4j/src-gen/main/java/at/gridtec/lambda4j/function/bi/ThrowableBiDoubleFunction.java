@@ -419,7 +419,7 @@ public interface ThrowableBiDoubleFunction<R, X extends Throwable> extends Lambd
      */
     @Nonnull
     default ThrowableBiDoubleFunction<R, X> memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Pair<Double, Double>, R> cache = new ConcurrentHashMap<>();

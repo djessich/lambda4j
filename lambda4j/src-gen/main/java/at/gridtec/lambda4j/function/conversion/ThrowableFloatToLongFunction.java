@@ -488,7 +488,7 @@ public interface ThrowableFloatToLongFunction<X extends Throwable> extends Lambd
      */
     @Nonnull
     default ThrowableFloatToLongFunction<X> memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Float, Long> cache = new ConcurrentHashMap<>();

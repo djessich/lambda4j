@@ -436,7 +436,7 @@ public interface ThrowableObjBooleanFunction<T, R, X extends Throwable> extends 
      */
     @Nonnull
     default ThrowableObjBooleanFunction<T, R, X> memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Pair<T, Boolean>, R> cache = new ConcurrentHashMap<>();

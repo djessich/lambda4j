@@ -611,7 +611,7 @@ public interface ThrowableBytePredicate<X extends Throwable> extends Lambda {
      */
     @Nonnull
     default ThrowableBytePredicate<X> memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Byte, Boolean> cache = new ConcurrentHashMap<>();

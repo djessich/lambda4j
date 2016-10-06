@@ -622,7 +622,7 @@ public interface ObjBiByteToFloatFunction<T> extends Lambda {
      */
     @Nonnull
     default ObjBiByteToFloatFunction<T> memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Triple<T, Byte, Byte>, Float> cache = new ConcurrentHashMap<>();

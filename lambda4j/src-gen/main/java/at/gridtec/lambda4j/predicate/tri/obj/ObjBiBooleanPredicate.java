@@ -734,7 +734,7 @@ public interface ObjBiBooleanPredicate<T> extends Lambda {
      */
     @Nonnull
     default ObjBiBooleanPredicate<T> memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Triple<T, Boolean, Boolean>, Boolean> cache = new ConcurrentHashMap<>();

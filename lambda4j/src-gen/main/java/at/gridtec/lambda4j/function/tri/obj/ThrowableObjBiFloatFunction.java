@@ -494,7 +494,7 @@ public interface ThrowableObjBiFloatFunction<T, R, X extends Throwable> extends 
      */
     @Nonnull
     default ThrowableObjBiFloatFunction<T, R, X> memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Triple<T, Float, Float>, R> cache = new ConcurrentHashMap<>();

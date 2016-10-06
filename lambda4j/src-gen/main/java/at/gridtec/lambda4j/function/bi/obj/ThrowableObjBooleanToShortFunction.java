@@ -593,7 +593,7 @@ public interface ThrowableObjBooleanToShortFunction<T, X extends Throwable> exte
      */
     @Nonnull
     default ThrowableObjBooleanToShortFunction<T, X> memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Pair<T, Boolean>, Short> cache = new ConcurrentHashMap<>();

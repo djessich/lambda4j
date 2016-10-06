@@ -346,7 +346,7 @@ public interface ToIntFunction2<T> extends Lambda, ToIntFunction<T> {
      */
     @Nonnull
     default ToIntFunction2<T> memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<T, Integer> cache = new ConcurrentHashMap<>();

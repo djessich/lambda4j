@@ -489,7 +489,7 @@ public interface BooleanToLongFunction extends Lambda {
      */
     @Nonnull
     default BooleanToLongFunction memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Boolean, Long> cache = new ConcurrentHashMap<>();

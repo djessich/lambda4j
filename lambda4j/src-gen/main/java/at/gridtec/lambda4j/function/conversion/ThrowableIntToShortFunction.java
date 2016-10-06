@@ -487,7 +487,7 @@ public interface ThrowableIntToShortFunction<X extends Throwable> extends Lambda
      */
     @Nonnull
     default ThrowableIntToShortFunction<X> memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Integer, Short> cache = new ConcurrentHashMap<>();

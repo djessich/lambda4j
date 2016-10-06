@@ -494,7 +494,7 @@ public interface ThrowableObjBiBooleanFunction<T, R, X extends Throwable> extend
      */
     @Nonnull
     default ThrowableObjBiBooleanFunction<T, R, X> memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Triple<T, Boolean, Boolean>, R> cache = new ConcurrentHashMap<>();

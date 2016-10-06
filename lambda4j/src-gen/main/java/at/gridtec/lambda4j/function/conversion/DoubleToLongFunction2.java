@@ -488,7 +488,7 @@ public interface DoubleToLongFunction2 extends Lambda, DoubleToLongFunction {
      */
     @Nonnull
     default DoubleToLongFunction2 memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Double, Long> cache = new ConcurrentHashMap<>();

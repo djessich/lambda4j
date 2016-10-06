@@ -684,7 +684,7 @@ public interface ThrowableBiObjFloatToDoubleFunction<T, U, X extends Throwable> 
      */
     @Nonnull
     default ThrowableBiObjFloatToDoubleFunction<T, U, X> memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Triple<T, U, Float>, Double> cache = new ConcurrentHashMap<>();

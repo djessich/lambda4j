@@ -650,7 +650,7 @@ public interface ThrowableObjBiBooleanToDoubleFunction<T, X extends Throwable> e
      */
     @Nonnull
     default ThrowableObjBiBooleanToDoubleFunction<T, X> memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Triple<T, Boolean, Boolean>, Double> cache = new ConcurrentHashMap<>();

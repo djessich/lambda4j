@@ -399,7 +399,7 @@ public interface BiDoubleFunction<R> extends Lambda {
      */
     @Nonnull
     default BiDoubleFunction<R> memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Pair<Double, Double>, R> cache = new ConcurrentHashMap<>();

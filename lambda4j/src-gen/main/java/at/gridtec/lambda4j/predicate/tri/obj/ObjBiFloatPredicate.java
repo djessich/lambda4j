@@ -742,7 +742,7 @@ public interface ObjBiFloatPredicate<T> extends Lambda {
      */
     @Nonnull
     default ObjBiFloatPredicate<T> memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Triple<T, Float, Float>, Boolean> cache = new ConcurrentHashMap<>();

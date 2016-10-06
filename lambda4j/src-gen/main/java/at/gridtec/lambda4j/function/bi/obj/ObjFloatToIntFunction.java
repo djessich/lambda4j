@@ -578,7 +578,7 @@ public interface ObjFloatToIntFunction<T> extends Lambda {
      */
     @Nonnull
     default ObjFloatToIntFunction<T> memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Pair<T, Float>, Integer> cache = new ConcurrentHashMap<>();

@@ -669,7 +669,7 @@ public interface BiFloatPredicate extends Lambda {
      */
     @Nonnull
     default BiFloatPredicate memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Pair<Float, Float>, Boolean> cache = new ConcurrentHashMap<>();

@@ -558,7 +558,7 @@ public interface BiIntToDoubleFunction extends Lambda {
      */
     @Nonnull
     default BiIntToDoubleFunction memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Pair<Integer, Integer>, Double> cache = new ConcurrentHashMap<>();

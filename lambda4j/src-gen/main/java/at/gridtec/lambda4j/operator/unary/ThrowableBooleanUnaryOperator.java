@@ -500,7 +500,7 @@ public interface ThrowableBooleanUnaryOperator<X extends Throwable> extends Lamb
      */
     @Nonnull
     default ThrowableBooleanUnaryOperator<X> memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Boolean, Boolean> cache = new ConcurrentHashMap<>();

@@ -600,7 +600,7 @@ public interface TriBooleanToCharFunction extends Lambda {
      */
     @Nonnull
     default TriBooleanToCharFunction memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Triple<Boolean, Boolean, Boolean>, Character> cache = new ConcurrentHashMap<>();

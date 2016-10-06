@@ -632,7 +632,7 @@ public interface ThrowableBooleanTernaryOperator<X extends Throwable> extends La
      */
     @Nonnull
     default ThrowableBooleanTernaryOperator<X> memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Triple<Boolean, Boolean, Boolean>, Boolean> cache = new ConcurrentHashMap<>();

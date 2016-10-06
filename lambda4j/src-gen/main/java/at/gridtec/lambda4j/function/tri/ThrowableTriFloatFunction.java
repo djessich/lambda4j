@@ -476,7 +476,7 @@ public interface ThrowableTriFloatFunction<R, X extends Throwable> extends Lambd
      */
     @Nonnull
     default ThrowableTriFloatFunction<R, X> memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Triple<Float, Float, Float>, R> cache = new ConcurrentHashMap<>();

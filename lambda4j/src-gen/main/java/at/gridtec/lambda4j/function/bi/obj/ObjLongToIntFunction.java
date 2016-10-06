@@ -578,7 +578,7 @@ public interface ObjLongToIntFunction<T> extends Lambda {
      */
     @Nonnull
     default ObjLongToIntFunction<T> memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Pair<T, Long>, Integer> cache = new ConcurrentHashMap<>();

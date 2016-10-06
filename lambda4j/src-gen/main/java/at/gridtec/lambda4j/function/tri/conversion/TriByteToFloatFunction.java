@@ -601,7 +601,7 @@ public interface TriByteToFloatFunction extends Lambda {
      */
     @Nonnull
     default TriByteToFloatFunction memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Triple<Byte, Byte, Byte>, Float> cache = new ConcurrentHashMap<>();

@@ -813,7 +813,7 @@ public interface ThrowableBiObjCharPredicate<T, U, X extends Throwable> extends 
      */
     @Nonnull
     default ThrowableBiObjCharPredicate<T, U, X> memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Triple<T, U, Character>, Boolean> cache = new ConcurrentHashMap<>();

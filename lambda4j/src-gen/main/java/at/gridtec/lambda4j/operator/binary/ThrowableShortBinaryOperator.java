@@ -624,7 +624,7 @@ public interface ThrowableShortBinaryOperator<X extends Throwable> extends Lambd
      */
     @Nonnull
     default ThrowableShortBinaryOperator<X> memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Pair<Short, Short>, Short> cache = new ConcurrentHashMap<>();

@@ -627,7 +627,7 @@ public interface ThrowableTriBooleanToFloatFunction<X extends Throwable> extends
      */
     @Nonnull
     default ThrowableTriBooleanToFloatFunction<X> memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Triple<Boolean, Boolean, Boolean>, Float> cache = new ConcurrentHashMap<>();

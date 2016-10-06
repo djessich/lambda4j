@@ -652,7 +652,7 @@ public interface ThrowableLongBinaryOperator<X extends Throwable> extends Lambda
      */
     @Nonnull
     default ThrowableLongBinaryOperator<X> memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Pair<Long, Long>, Long> cache = new ConcurrentHashMap<>();

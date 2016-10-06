@@ -344,7 +344,7 @@ public interface ToShortFunction<T> extends Lambda {
      */
     @Nonnull
     default ToShortFunction<T> memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<T, Short> cache = new ConcurrentHashMap<>();

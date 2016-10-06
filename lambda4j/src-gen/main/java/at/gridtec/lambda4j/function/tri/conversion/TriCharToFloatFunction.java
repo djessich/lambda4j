@@ -601,7 +601,7 @@ public interface TriCharToFloatFunction extends Lambda {
      */
     @Nonnull
     default TriCharToFloatFunction memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Triple<Character, Character, Character>, Float> cache = new ConcurrentHashMap<>();

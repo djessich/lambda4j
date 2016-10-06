@@ -484,7 +484,7 @@ public interface IntToByteFunction extends Lambda {
      */
     @Nonnull
     default IntToByteFunction memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Integer, Byte> cache = new ConcurrentHashMap<>();

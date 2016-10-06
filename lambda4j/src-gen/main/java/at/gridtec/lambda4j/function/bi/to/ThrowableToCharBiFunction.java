@@ -428,7 +428,7 @@ public interface ThrowableToCharBiFunction<T, U, X extends Throwable> extends La
      */
     @Nonnull
     default ThrowableToCharBiFunction<T, U, X> memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Pair<T, U>, Character> cache = new ConcurrentHashMap<>();

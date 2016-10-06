@@ -656,7 +656,7 @@ public interface BiObjBooleanToFloatFunction<T, U> extends Lambda {
      */
     @Nonnull
     default BiObjBooleanToFloatFunction<T, U> memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Triple<T, U, Boolean>, Float> cache = new ConcurrentHashMap<>();

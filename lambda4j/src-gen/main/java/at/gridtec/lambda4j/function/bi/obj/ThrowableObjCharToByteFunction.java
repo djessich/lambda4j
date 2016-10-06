@@ -590,7 +590,7 @@ public interface ThrowableObjCharToByteFunction<T, X extends Throwable> extends 
      */
     @Nonnull
     default ThrowableObjCharToByteFunction<T, X> memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Pair<T, Character>, Byte> cache = new ConcurrentHashMap<>();

@@ -781,7 +781,7 @@ public interface BiObjDoublePredicate<T, U> extends Lambda {
      */
     @Nonnull
     default BiObjDoublePredicate<T, U> memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Triple<T, U, Double>, Boolean> cache = new ConcurrentHashMap<>();

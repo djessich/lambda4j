@@ -489,7 +489,7 @@ public interface ThrowableShortToDoubleFunction<X extends Throwable> extends Lam
      */
     @Nonnull
     default ThrowableShortToDoubleFunction<X> memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Short, Double> cache = new ConcurrentHashMap<>();

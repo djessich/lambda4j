@@ -592,7 +592,7 @@ public interface ThrowableObjBooleanToIntFunction<T, X extends Throwable> extend
      */
     @Nonnull
     default ThrowableObjBooleanToIntFunction<T, X> memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Pair<T, Boolean>, Integer> cache = new ConcurrentHashMap<>();

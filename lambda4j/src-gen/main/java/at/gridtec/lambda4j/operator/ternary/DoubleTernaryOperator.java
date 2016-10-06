@@ -610,7 +610,7 @@ public interface DoubleTernaryOperator extends Lambda {
      */
     @Nonnull
     default DoubleTernaryOperator memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Triple<Double, Double, Double>, Double> cache = new ConcurrentHashMap<>();

@@ -579,7 +579,7 @@ public interface ThrowableBiFloatToLongFunction<X extends Throwable> extends Lam
      */
     @Nonnull
     default ThrowableBiFloatToLongFunction<X> memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Pair<Float, Float>, Long> cache = new ConcurrentHashMap<>();

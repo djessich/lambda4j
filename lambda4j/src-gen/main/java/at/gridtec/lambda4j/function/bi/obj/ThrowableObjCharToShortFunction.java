@@ -591,7 +591,7 @@ public interface ThrowableObjCharToShortFunction<T, X extends Throwable> extends
      */
     @Nonnull
     default ThrowableObjCharToShortFunction<T, X> memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Pair<T, Character>, Short> cache = new ConcurrentHashMap<>();

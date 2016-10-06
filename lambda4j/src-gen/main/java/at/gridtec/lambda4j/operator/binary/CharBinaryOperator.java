@@ -600,7 +600,7 @@ public interface CharBinaryOperator extends Lambda {
      */
     @Nonnull
     default CharBinaryOperator memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Pair<Character, Character>, Character> cache = new ConcurrentHashMap<>();

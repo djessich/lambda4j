@@ -486,7 +486,7 @@ public interface BooleanToFloatFunction extends Lambda {
      */
     @Nonnull
     default BooleanToFloatFunction memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Boolean, Float> cache = new ConcurrentHashMap<>();

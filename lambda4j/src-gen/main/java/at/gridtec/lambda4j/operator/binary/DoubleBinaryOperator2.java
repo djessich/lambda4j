@@ -602,7 +602,7 @@ public interface DoubleBinaryOperator2 extends Lambda, DoubleBinaryOperator {
      */
     @Nonnull
     default DoubleBinaryOperator2 memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Pair<Double, Double>, Double> cache = new ConcurrentHashMap<>();

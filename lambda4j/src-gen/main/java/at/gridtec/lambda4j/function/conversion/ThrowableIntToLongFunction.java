@@ -511,7 +511,7 @@ public interface ThrowableIntToLongFunction<X extends Throwable> extends Lambda,
      */
     @Nonnull
     default ThrowableIntToLongFunction<X> memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Integer, Long> cache = new ConcurrentHashMap<>();

@@ -693,7 +693,7 @@ public interface ObjBooleanPredicate<T> extends Lambda {
      */
     @Nonnull
     default ObjBooleanPredicate<T> memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Pair<T, Boolean>, Boolean> cache = new ConcurrentHashMap<>();

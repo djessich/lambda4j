@@ -332,7 +332,7 @@ public interface BooleanFunction<R> extends Lambda {
      */
     @Nonnull
     default BooleanFunction<R> memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Boolean, R> cache = new ConcurrentHashMap<>();

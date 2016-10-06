@@ -334,7 +334,7 @@ public interface IntFunction2<R> extends Lambda, IntFunction<R> {
      */
     @Nonnull
     default IntFunction2<R> memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Integer, R> cache = new ConcurrentHashMap<>();

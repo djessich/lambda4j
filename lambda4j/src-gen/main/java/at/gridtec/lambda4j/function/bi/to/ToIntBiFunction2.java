@@ -419,7 +419,7 @@ public interface ToIntBiFunction2<T, U> extends Lambda, ToIntBiFunction<T, U> {
      */
     @Nonnull
     default ToIntBiFunction2<T, U> memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Pair<T, U>, Integer> cache = new ConcurrentHashMap<>();

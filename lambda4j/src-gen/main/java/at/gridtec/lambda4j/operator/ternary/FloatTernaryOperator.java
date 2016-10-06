@@ -610,7 +610,7 @@ public interface FloatTernaryOperator extends Lambda {
      */
     @Nonnull
     default FloatTernaryOperator memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Triple<Float, Float, Float>, Float> cache = new ConcurrentHashMap<>();

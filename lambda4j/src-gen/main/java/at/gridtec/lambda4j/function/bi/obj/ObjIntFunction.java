@@ -420,7 +420,7 @@ public interface ObjIntFunction<T, R> extends Lambda {
      */
     @Nonnull
     default ObjIntFunction<T, R> memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Pair<T, Integer>, R> cache = new ConcurrentHashMap<>();

@@ -713,7 +713,7 @@ public interface TriFloatPredicate extends Lambda {
      */
     @Nonnull
     default TriFloatPredicate memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Triple<Float, Float, Float>, Boolean> cache = new ConcurrentHashMap<>();

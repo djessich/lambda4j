@@ -578,7 +578,7 @@ public interface ObjBooleanToShortFunction<T> extends Lambda {
      */
     @Nonnull
     default ObjBooleanToShortFunction<T> memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Pair<T, Boolean>, Short> cache = new ConcurrentHashMap<>();

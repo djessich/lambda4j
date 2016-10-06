@@ -812,7 +812,7 @@ public interface ThrowableBiObjBooleanPredicate<T, U, X extends Throwable> exten
      */
     @Nonnull
     default ThrowableBiObjBooleanPredicate<T, U, X> memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Triple<T, U, Boolean>, Boolean> cache = new ConcurrentHashMap<>();

@@ -558,7 +558,7 @@ public interface BiFloatToCharFunction extends Lambda {
      */
     @Nonnull
     default BiFloatToCharFunction memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Pair<Float, Float>, Character> cache = new ConcurrentHashMap<>();

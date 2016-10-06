@@ -459,7 +459,7 @@ public interface Predicate2<T> extends Lambda, Predicate<T> {
      */
     @Nonnull
     default Predicate2<T> memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<T, Boolean> cache = new ConcurrentHashMap<>();

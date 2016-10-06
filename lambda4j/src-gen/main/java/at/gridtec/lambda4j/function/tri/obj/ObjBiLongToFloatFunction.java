@@ -622,7 +622,7 @@ public interface ObjBiLongToFloatFunction<T> extends Lambda {
      */
     @Nonnull
     default ObjBiLongToFloatFunction<T> memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Triple<T, Long, Long>, Float> cache = new ConcurrentHashMap<>();

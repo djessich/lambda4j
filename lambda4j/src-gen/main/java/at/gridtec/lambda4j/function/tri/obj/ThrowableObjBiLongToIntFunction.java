@@ -657,7 +657,7 @@ public interface ThrowableObjBiLongToIntFunction<T, X extends Throwable> extends
      */
     @Nonnull
     default ThrowableObjBiLongToIntFunction<T, X> memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Triple<T, Long, Long>, Integer> cache = new ConcurrentHashMap<>();

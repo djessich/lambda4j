@@ -458,7 +458,7 @@ public interface ThrowableToIntBiFunction<T, U, X extends Throwable> extends Lam
      */
     @Nonnull
     default ThrowableToIntBiFunction<T, U, X> memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Pair<T, U>, Integer> cache = new ConcurrentHashMap<>();

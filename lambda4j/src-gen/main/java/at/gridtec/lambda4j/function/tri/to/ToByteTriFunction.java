@@ -446,7 +446,7 @@ public interface ToByteTriFunction<T, U, V> extends Lambda {
      */
     @Nonnull
     default ToByteTriFunction<T, U, V> memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Triple<T, U, V>, Byte> cache = new ConcurrentHashMap<>();

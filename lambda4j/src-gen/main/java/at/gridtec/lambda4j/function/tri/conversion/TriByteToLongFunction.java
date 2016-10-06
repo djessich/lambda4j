@@ -601,7 +601,7 @@ public interface TriByteToLongFunction extends Lambda {
      */
     @Nonnull
     default TriByteToLongFunction memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Triple<Byte, Byte, Byte>, Long> cache = new ConcurrentHashMap<>();

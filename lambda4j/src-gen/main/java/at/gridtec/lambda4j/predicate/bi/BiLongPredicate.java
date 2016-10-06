@@ -668,7 +668,7 @@ public interface BiLongPredicate extends Lambda {
      */
     @Nonnull
     default BiLongPredicate memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Pair<Long, Long>, Boolean> cache = new ConcurrentHashMap<>();

@@ -332,7 +332,7 @@ public interface FloatFunction<R> extends Lambda {
      */
     @Nonnull
     default FloatFunction<R> memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Float, R> cache = new ConcurrentHashMap<>();

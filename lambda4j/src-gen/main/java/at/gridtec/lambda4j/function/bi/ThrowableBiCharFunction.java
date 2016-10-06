@@ -410,7 +410,7 @@ public interface ThrowableBiCharFunction<R, X extends Throwable> extends Lambda 
      */
     @Nonnull
     default ThrowableBiCharFunction<R, X> memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Pair<Character, Character>, R> cache = new ConcurrentHashMap<>();

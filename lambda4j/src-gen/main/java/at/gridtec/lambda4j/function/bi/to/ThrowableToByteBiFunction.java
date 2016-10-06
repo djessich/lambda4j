@@ -428,7 +428,7 @@ public interface ThrowableToByteBiFunction<T, U, X extends Throwable> extends La
      */
     @Nonnull
     default ThrowableToByteBiFunction<T, U, X> memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Pair<T, U>, Byte> cache = new ConcurrentHashMap<>();

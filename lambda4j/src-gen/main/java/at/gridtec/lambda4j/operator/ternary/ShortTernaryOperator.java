@@ -610,7 +610,7 @@ public interface ShortTernaryOperator extends Lambda {
      */
     @Nonnull
     default ShortTernaryOperator memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Triple<Short, Short, Short>, Short> cache = new ConcurrentHashMap<>();

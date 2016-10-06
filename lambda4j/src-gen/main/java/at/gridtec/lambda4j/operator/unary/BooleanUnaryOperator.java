@@ -501,7 +501,7 @@ public interface BooleanUnaryOperator extends Lambda {
      */
     @Nonnull
     default BooleanUnaryOperator memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Boolean, Boolean> cache = new ConcurrentHashMap<>();

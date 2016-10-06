@@ -536,7 +536,7 @@ public interface BiPredicate2<T, U> extends Lambda, BiPredicate<T, U> {
      */
     @Nonnull
     default BiPredicate2<T, U> memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Pair<T, U>, Boolean> cache = new ConcurrentHashMap<>();

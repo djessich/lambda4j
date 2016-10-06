@@ -742,7 +742,7 @@ public interface ObjBiLongPredicate<T> extends Lambda {
      */
     @Nonnull
     default ObjBiLongPredicate<T> memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Triple<T, Long, Long>, Boolean> cache = new ConcurrentHashMap<>();

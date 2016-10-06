@@ -571,7 +571,7 @@ public interface ThrowableBiBooleanToShortFunction<X extends Throwable> extends 
      */
     @Nonnull
     default ThrowableBiBooleanToShortFunction<X> memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Pair<Boolean, Boolean>, Short> cache = new ConcurrentHashMap<>();

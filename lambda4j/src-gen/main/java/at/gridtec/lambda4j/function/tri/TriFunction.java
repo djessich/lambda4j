@@ -298,7 +298,7 @@ public interface TriFunction<T, U, V, R> extends Lambda {
      */
     @Nonnull
     default TriFunction<T, U, V, R> memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Triple<T, U, V>, R> cache = new ConcurrentHashMap<>();

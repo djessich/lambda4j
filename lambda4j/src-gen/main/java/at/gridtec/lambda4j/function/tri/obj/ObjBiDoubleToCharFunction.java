@@ -623,7 +623,7 @@ public interface ObjBiDoubleToCharFunction<T> extends Lambda {
      */
     @Nonnull
     default ObjBiDoubleToCharFunction<T> memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Triple<T, Double, Double>, Character> cache = new ConcurrentHashMap<>();

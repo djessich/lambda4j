@@ -779,7 +779,7 @@ public interface BiObjLongPredicate<T, U> extends Lambda {
      */
     @Nonnull
     default BiObjLongPredicate<T, U> memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Triple<T, U, Long>, Boolean> cache = new ConcurrentHashMap<>();

@@ -599,7 +599,7 @@ public interface BooleanBinaryOperator extends Lambda {
      */
     @Nonnull
     default BooleanBinaryOperator memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Pair<Boolean, Boolean>, Boolean> cache = new ConcurrentHashMap<>();

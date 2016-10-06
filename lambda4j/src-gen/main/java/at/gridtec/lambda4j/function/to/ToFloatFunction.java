@@ -344,7 +344,7 @@ public interface ToFloatFunction<T> extends Lambda {
      */
     @Nonnull
     default ToFloatFunction<T> memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<T, Float> cache = new ConcurrentHashMap<>();

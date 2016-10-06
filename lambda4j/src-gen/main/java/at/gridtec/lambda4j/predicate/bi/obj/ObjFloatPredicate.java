@@ -695,7 +695,7 @@ public interface ObjFloatPredicate<T> extends Lambda {
      */
     @Nonnull
     default ObjFloatPredicate<T> memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Pair<T, Float>, Boolean> cache = new ConcurrentHashMap<>();

@@ -655,7 +655,7 @@ public interface BiObjDoubleToDoubleFunction<T, U> extends Lambda {
      */
     @Nonnull
     default BiObjDoubleToDoubleFunction<T, U> memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Triple<T, U, Double>, Double> cache = new ConcurrentHashMap<>();

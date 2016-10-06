@@ -635,7 +635,7 @@ public interface ThrowableTriFloatToIntFunction<X extends Throwable> extends Lam
      */
     @Nonnull
     default ThrowableTriFloatToIntFunction<X> memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Triple<Float, Float, Float>, Integer> cache = new ConcurrentHashMap<>();

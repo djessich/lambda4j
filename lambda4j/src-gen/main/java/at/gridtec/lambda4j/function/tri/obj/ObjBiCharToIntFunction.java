@@ -622,7 +622,7 @@ public interface ObjBiCharToIntFunction<T> extends Lambda {
      */
     @Nonnull
     default ObjBiCharToIntFunction<T> memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Triple<T, Character, Character>, Integer> cache = new ConcurrentHashMap<>();

@@ -570,7 +570,7 @@ public interface TriPredicate<T, U, V> extends Lambda {
      */
     @Nonnull
     default TriPredicate<T, U, V> memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Triple<T, U, V>, Boolean> cache = new ConcurrentHashMap<>();

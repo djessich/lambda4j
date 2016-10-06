@@ -398,7 +398,7 @@ public interface BiFloatFunction<R> extends Lambda {
      */
     @Nonnull
     default BiFloatFunction<R> memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Pair<Float, Float>, R> cache = new ConcurrentHashMap<>();

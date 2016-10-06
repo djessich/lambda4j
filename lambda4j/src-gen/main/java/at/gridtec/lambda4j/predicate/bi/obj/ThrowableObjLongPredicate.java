@@ -714,7 +714,7 @@ public interface ThrowableObjLongPredicate<T, X extends Throwable> extends Lambd
      */
     @Nonnull
     default ThrowableObjLongPredicate<T, X> memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Pair<T, Long>, Boolean> cache = new ConcurrentHashMap<>();

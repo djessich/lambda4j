@@ -481,7 +481,7 @@ public interface CharToShortFunction extends Lambda {
      */
     @Nonnull
     default CharToShortFunction memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Character, Short> cache = new ConcurrentHashMap<>();

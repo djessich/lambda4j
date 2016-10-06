@@ -410,7 +410,7 @@ public interface ThrowableBiByteFunction<R, X extends Throwable> extends Lambda 
      */
     @Nonnull
     default ThrowableBiByteFunction<R, X> memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Pair<Byte, Byte>, R> cache = new ConcurrentHashMap<>();

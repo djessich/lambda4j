@@ -435,7 +435,7 @@ public interface ThrowableObjShortFunction<T, R, X extends Throwable> extends La
      */
     @Nonnull
     default ThrowableObjShortFunction<T, R, X> memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Pair<T, Short>, R> cache = new ConcurrentHashMap<>();

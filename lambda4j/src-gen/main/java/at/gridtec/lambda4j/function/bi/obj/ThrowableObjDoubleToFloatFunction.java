@@ -592,7 +592,7 @@ public interface ThrowableObjDoubleToFloatFunction<T, X extends Throwable> exten
      */
     @Nonnull
     default ThrowableObjDoubleToFloatFunction<T, X> memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Pair<T, Double>, Float> cache = new ConcurrentHashMap<>();

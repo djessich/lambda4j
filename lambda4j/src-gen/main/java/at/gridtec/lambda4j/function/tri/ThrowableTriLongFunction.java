@@ -475,7 +475,7 @@ public interface ThrowableTriLongFunction<R, X extends Throwable> extends Lambda
      */
     @Nonnull
     default ThrowableTriLongFunction<R, X> memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Triple<Long, Long, Long>, R> cache = new ConcurrentHashMap<>();

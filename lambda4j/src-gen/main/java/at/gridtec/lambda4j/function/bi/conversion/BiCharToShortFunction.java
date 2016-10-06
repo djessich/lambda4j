@@ -558,7 +558,7 @@ public interface BiCharToShortFunction extends Lambda {
      */
     @Nonnull
     default BiCharToShortFunction memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Pair<Character, Character>, Short> cache = new ConcurrentHashMap<>();

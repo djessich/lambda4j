@@ -603,7 +603,7 @@ public interface IntPredicate2 extends Lambda, IntPredicate {
      */
     @Nonnull
     default IntPredicate2 memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Integer, Boolean> cache = new ConcurrentHashMap<>();

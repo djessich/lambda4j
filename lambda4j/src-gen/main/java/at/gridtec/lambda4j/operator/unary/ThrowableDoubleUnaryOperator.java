@@ -536,7 +536,7 @@ public interface ThrowableDoubleUnaryOperator<X extends Throwable> extends Lambd
      */
     @Nonnull
     default ThrowableDoubleUnaryOperator<X> memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Double, Double> cache = new ConcurrentHashMap<>();

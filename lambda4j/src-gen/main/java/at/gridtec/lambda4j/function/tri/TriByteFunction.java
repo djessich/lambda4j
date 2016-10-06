@@ -442,7 +442,7 @@ public interface TriByteFunction<R> extends Lambda {
      */
     @Nonnull
     default TriByteFunction<R> memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Triple<Byte, Byte, Byte>, R> cache = new ConcurrentHashMap<>();

@@ -593,7 +593,7 @@ public interface ThrowableObjBooleanToFloatFunction<T, X extends Throwable> exte
      */
     @Nonnull
     default ThrowableObjBooleanToFloatFunction<T, X> memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Pair<T, Boolean>, Float> cache = new ConcurrentHashMap<>();

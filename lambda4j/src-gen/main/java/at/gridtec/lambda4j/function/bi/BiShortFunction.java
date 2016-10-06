@@ -398,7 +398,7 @@ public interface BiShortFunction<R> extends Lambda {
      */
     @Nonnull
     default BiShortFunction<R> memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Pair<Short, Short>, R> cache = new ConcurrentHashMap<>();

@@ -443,7 +443,7 @@ public interface TriShortFunction<R> extends Lambda {
      */
     @Nonnull
     default TriShortFunction<R> memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Triple<Short, Short, Short>, R> cache = new ConcurrentHashMap<>();

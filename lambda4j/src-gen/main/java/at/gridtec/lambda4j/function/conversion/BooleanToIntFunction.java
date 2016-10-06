@@ -489,7 +489,7 @@ public interface BooleanToIntFunction extends Lambda {
      */
     @Nonnull
     default BooleanToIntFunction memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Boolean, Integer> cache = new ConcurrentHashMap<>();

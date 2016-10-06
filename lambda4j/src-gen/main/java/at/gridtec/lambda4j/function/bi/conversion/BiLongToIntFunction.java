@@ -558,7 +558,7 @@ public interface BiLongToIntFunction extends Lambda {
      */
     @Nonnull
     default BiLongToIntFunction memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Pair<Long, Long>, Integer> cache = new ConcurrentHashMap<>();

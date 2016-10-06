@@ -650,7 +650,7 @@ public interface ThrowableObjBiBooleanToByteFunction<T, X extends Throwable> ext
      */
     @Nonnull
     default ThrowableObjBiBooleanToByteFunction<T, X> memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Triple<T, Boolean, Boolean>, Byte> cache = new ConcurrentHashMap<>();

@@ -571,7 +571,7 @@ public interface ThrowableBiBooleanToFloatFunction<X extends Throwable> extends 
      */
     @Nonnull
     default ThrowableBiBooleanToFloatFunction<X> memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Pair<Boolean, Boolean>, Float> cache = new ConcurrentHashMap<>();

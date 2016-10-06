@@ -683,7 +683,7 @@ public interface ThrowableBiObjIntToCharFunction<T, U, X extends Throwable> exte
      */
     @Nonnull
     default ThrowableBiObjIntToCharFunction<T, U, X> memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Triple<T, U, Integer>, Character> cache = new ConcurrentHashMap<>();

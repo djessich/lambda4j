@@ -344,7 +344,7 @@ public interface ToCharFunction<T> extends Lambda {
      */
     @Nonnull
     default ToCharFunction<T> memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<T, Character> cache = new ConcurrentHashMap<>();

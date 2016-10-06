@@ -446,7 +446,7 @@ public interface ToCharTriFunction<T, U, V> extends Lambda {
      */
     @Nonnull
     default ToCharTriFunction<T, U, V> memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Triple<T, U, V>, Character> cache = new ConcurrentHashMap<>();

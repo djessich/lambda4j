@@ -578,7 +578,7 @@ public interface ObjBooleanToIntFunction<T> extends Lambda {
      */
     @Nonnull
     default ObjBooleanToIntFunction<T> memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Pair<T, Boolean>, Integer> cache = new ConcurrentHashMap<>();

@@ -494,7 +494,7 @@ public interface BiObjBooleanFunction<T, U, R> extends Lambda {
      */
     @Nonnull
     default BiObjBooleanFunction<T, U, R> memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Triple<T, U, Boolean>, R> cache = new ConcurrentHashMap<>();

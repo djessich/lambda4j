@@ -713,7 +713,7 @@ public interface TriCharPredicate extends Lambda {
      */
     @Nonnull
     default TriCharPredicate memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Triple<Character, Character, Character>, Boolean> cache = new ConcurrentHashMap<>();

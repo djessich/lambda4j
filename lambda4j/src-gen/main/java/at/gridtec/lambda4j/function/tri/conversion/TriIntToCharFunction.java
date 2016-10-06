@@ -601,7 +601,7 @@ public interface TriIntToCharFunction extends Lambda {
      */
     @Nonnull
     default TriIntToCharFunction memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Triple<Integer, Integer, Integer>, Character> cache = new ConcurrentHashMap<>();

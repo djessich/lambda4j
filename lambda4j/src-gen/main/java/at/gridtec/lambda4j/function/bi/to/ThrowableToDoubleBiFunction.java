@@ -458,7 +458,7 @@ public interface ThrowableToDoubleBiFunction<T, U, X extends Throwable> extends 
      */
     @Nonnull
     default ThrowableToDoubleBiFunction<T, U, X> memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Pair<T, U>, Double> cache = new ConcurrentHashMap<>();

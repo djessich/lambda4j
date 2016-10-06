@@ -447,7 +447,7 @@ public interface ToIntTriFunction<T, U, V> extends Lambda {
      */
     @Nonnull
     default ToIntTriFunction<T, U, V> memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Triple<T, U, V>, Integer> cache = new ConcurrentHashMap<>();

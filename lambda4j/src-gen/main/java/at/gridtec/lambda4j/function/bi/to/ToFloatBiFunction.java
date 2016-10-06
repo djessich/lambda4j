@@ -416,7 +416,7 @@ public interface ToFloatBiFunction<T, U> extends Lambda {
      */
     @Nonnull
     default ToFloatBiFunction<T, U> memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Pair<T, U>, Float> cache = new ConcurrentHashMap<>();

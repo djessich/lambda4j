@@ -590,7 +590,7 @@ public interface ThrowableObjCharToIntFunction<T, X extends Throwable> extends L
      */
     @Nonnull
     default ThrowableObjCharToIntFunction<T, X> memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Pair<T, Character>, Integer> cache = new ConcurrentHashMap<>();

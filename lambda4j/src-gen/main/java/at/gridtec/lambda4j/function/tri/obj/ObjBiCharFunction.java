@@ -467,7 +467,7 @@ public interface ObjBiCharFunction<T, R> extends Lambda {
      */
     @Nonnull
     default ObjBiCharFunction<T, R> memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Triple<T, Character, Character>, R> cache = new ConcurrentHashMap<>();

@@ -493,7 +493,7 @@ public interface ThrowableObjBiIntFunction<T, R, X extends Throwable> extends La
      */
     @Nonnull
     default ThrowableObjBiIntFunction<T, R, X> memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Triple<T, Integer, Integer>, R> cache = new ConcurrentHashMap<>();

@@ -233,7 +233,7 @@ public interface ThrowableFunction<T, R, X extends Throwable> extends Lambda, Fu
      */
     @Nonnull
     default ThrowableFunction<T, R, X> memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<T, R> cache = new ConcurrentHashMap<>();

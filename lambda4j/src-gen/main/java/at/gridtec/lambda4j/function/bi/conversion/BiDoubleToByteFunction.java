@@ -558,7 +558,7 @@ public interface BiDoubleToByteFunction extends Lambda {
      */
     @Nonnull
     default BiDoubleToByteFunction memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Pair<Double, Double>, Byte> cache = new ConcurrentHashMap<>();

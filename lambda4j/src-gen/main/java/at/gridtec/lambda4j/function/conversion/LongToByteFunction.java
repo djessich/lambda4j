@@ -484,7 +484,7 @@ public interface LongToByteFunction extends Lambda {
      */
     @Nonnull
     default LongToByteFunction memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Long, Byte> cache = new ConcurrentHashMap<>();

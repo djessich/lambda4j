@@ -196,7 +196,7 @@ public interface Function2<T, R> extends Lambda, Function<T, R> {
      */
     @Nonnull
     default Function2<T, R> memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<T, R> cache = new ConcurrentHashMap<>();

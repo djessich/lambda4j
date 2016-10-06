@@ -516,7 +516,7 @@ public interface ThrowableDoubleToIntFunction<X extends Throwable> extends Lambd
      */
     @Nonnull
     default ThrowableDoubleToIntFunction<X> memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Double, Integer> cache = new ConcurrentHashMap<>();

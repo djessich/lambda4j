@@ -592,7 +592,7 @@ public interface ThrowableObjShortToByteFunction<T, X extends Throwable> extends
      */
     @Nonnull
     default ThrowableObjShortToByteFunction<T, X> memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Pair<T, Short>, Byte> cache = new ConcurrentHashMap<>();

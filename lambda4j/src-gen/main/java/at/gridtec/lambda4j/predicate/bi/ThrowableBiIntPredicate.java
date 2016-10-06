@@ -681,7 +681,7 @@ public interface ThrowableBiIntPredicate<X extends Throwable> extends Lambda {
      */
     @Nonnull
     default ThrowableBiIntPredicate<X> memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Pair<Integer, Integer>, Boolean> cache = new ConcurrentHashMap<>();

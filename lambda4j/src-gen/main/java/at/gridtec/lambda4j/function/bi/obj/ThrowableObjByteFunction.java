@@ -435,7 +435,7 @@ public interface ThrowableObjByteFunction<T, R, X extends Throwable> extends Lam
      */
     @Nonnull
     default ThrowableObjByteFunction<T, R, X> memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Pair<T, Byte>, R> cache = new ConcurrentHashMap<>();

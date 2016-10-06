@@ -484,7 +484,7 @@ public interface IntToCharFunction extends Lambda {
      */
     @Nonnull
     default IntToCharFunction memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Integer, Character> cache = new ConcurrentHashMap<>();

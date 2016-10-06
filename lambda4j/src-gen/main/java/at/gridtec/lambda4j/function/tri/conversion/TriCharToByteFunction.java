@@ -601,7 +601,7 @@ public interface TriCharToByteFunction extends Lambda {
      */
     @Nonnull
     default TriCharToByteFunction memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Triple<Character, Character, Character>, Byte> cache = new ConcurrentHashMap<>();

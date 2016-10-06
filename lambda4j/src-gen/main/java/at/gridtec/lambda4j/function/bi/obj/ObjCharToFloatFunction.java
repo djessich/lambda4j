@@ -578,7 +578,7 @@ public interface ObjCharToFloatFunction<T> extends Lambda {
      */
     @Nonnull
     default ObjCharToFloatFunction<T> memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Pair<T, Character>, Float> cache = new ConcurrentHashMap<>();

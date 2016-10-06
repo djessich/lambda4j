@@ -485,7 +485,7 @@ public interface ThrowableCharToByteFunction<X extends Throwable> extends Lambda
      */
     @Nonnull
     default ThrowableCharToByteFunction<X> memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Character, Byte> cache = new ConcurrentHashMap<>();

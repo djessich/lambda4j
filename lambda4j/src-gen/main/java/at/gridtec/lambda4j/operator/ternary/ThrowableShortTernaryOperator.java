@@ -644,7 +644,7 @@ public interface ThrowableShortTernaryOperator<X extends Throwable> extends Lamb
      */
     @Nonnull
     default ThrowableShortTernaryOperator<X> memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Triple<Short, Short, Short>, Short> cache = new ConcurrentHashMap<>();

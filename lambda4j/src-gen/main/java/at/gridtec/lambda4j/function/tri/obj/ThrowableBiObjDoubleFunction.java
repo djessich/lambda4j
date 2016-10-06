@@ -527,7 +527,7 @@ public interface ThrowableBiObjDoubleFunction<T, U, R, X extends Throwable> exte
      */
     @Nonnull
     default ThrowableBiObjDoubleFunction<T, U, R, X> memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Triple<T, U, Double>, R> cache = new ConcurrentHashMap<>();

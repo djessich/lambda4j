@@ -578,7 +578,7 @@ public interface ObjCharToLongFunction<T> extends Lambda {
      */
     @Nonnull
     default ObjCharToLongFunction<T> memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Pair<T, Character>, Long> cache = new ConcurrentHashMap<>();

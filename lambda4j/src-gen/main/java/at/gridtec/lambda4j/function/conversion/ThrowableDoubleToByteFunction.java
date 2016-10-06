@@ -488,7 +488,7 @@ public interface ThrowableDoubleToByteFunction<X extends Throwable> extends Lamb
      */
     @Nonnull
     default ThrowableDoubleToByteFunction<X> memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Double, Byte> cache = new ConcurrentHashMap<>();

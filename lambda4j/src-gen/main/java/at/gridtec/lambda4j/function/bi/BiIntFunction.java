@@ -398,7 +398,7 @@ public interface BiIntFunction<R> extends Lambda {
      */
     @Nonnull
     default BiIntFunction<R> memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Pair<Integer, Integer>, R> cache = new ConcurrentHashMap<>();

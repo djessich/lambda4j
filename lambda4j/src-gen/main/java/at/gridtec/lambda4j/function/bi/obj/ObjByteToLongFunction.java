@@ -578,7 +578,7 @@ public interface ObjByteToLongFunction<T> extends Lambda {
      */
     @Nonnull
     default ObjByteToLongFunction<T> memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Pair<T, Byte>, Long> cache = new ConcurrentHashMap<>();

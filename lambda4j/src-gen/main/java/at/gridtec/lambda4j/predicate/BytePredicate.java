@@ -600,7 +600,7 @@ public interface BytePredicate extends Lambda {
      */
     @Nonnull
     default BytePredicate memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Byte, Boolean> cache = new ConcurrentHashMap<>();

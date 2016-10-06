@@ -351,7 +351,7 @@ public interface ThrowableToFloatFunction<T, X extends Throwable> extends Lambda
      */
     @Nonnull
     default ThrowableToFloatFunction<T, X> memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<T, Float> cache = new ConcurrentHashMap<>();

@@ -507,7 +507,7 @@ public interface DoubleUnaryOperator2 extends Lambda, DoubleUnaryOperator {
      */
     @Nonnull
     default DoubleUnaryOperator2 memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Double, Double> cache = new ConcurrentHashMap<>();

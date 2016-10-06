@@ -624,7 +624,7 @@ public interface ThrowableFloatBinaryOperator<X extends Throwable> extends Lambd
      */
     @Nonnull
     default ThrowableFloatBinaryOperator<X> memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Pair<Float, Float>, Float> cache = new ConcurrentHashMap<>();

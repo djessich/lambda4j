@@ -592,7 +592,7 @@ public interface ThrowableObjByteToDoubleFunction<T, X extends Throwable> extend
      */
     @Nonnull
     default ThrowableObjByteToDoubleFunction<T, X> memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Pair<T, Byte>, Double> cache = new ConcurrentHashMap<>();

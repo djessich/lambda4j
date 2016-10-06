@@ -463,7 +463,7 @@ public interface ThrowableToDoubleTriFunction<T, U, V, X extends Throwable> exte
      */
     @Nonnull
     default ThrowableToDoubleTriFunction<T, U, V, X> memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Triple<T, U, V>, Double> cache = new ConcurrentHashMap<>();

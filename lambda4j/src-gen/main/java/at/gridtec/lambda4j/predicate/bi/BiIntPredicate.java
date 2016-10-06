@@ -668,7 +668,7 @@ public interface BiIntPredicate extends Lambda {
      */
     @Nonnull
     default BiIntPredicate memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Pair<Integer, Integer>, Boolean> cache = new ConcurrentHashMap<>();

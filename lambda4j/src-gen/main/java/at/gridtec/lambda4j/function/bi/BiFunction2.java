@@ -268,7 +268,7 @@ public interface BiFunction2<T, U, R> extends Lambda, BiFunction<T, U, R> {
      */
     @Nonnull
     default BiFunction2<T, U, R> memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Pair<T, U>, R> cache = new ConcurrentHashMap<>();

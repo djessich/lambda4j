@@ -398,7 +398,7 @@ public interface BiBooleanFunction<R> extends Lambda {
      */
     @Nonnull
     default BiBooleanFunction<R> memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Pair<Boolean, Boolean>, R> cache = new ConcurrentHashMap<>();

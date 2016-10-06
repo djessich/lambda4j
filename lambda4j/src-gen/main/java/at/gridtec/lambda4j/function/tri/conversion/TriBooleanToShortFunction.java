@@ -601,7 +601,7 @@ public interface TriBooleanToShortFunction extends Lambda {
      */
     @Nonnull
     default TriBooleanToShortFunction memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Triple<Boolean, Boolean, Boolean>, Short> cache = new ConcurrentHashMap<>();

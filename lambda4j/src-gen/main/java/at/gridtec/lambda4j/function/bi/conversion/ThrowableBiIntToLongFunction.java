@@ -577,7 +577,7 @@ public interface ThrowableBiIntToLongFunction<X extends Throwable> extends Lambd
      */
     @Nonnull
     default ThrowableBiIntToLongFunction<X> memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Pair<Integer, Integer>, Long> cache = new ConcurrentHashMap<>();

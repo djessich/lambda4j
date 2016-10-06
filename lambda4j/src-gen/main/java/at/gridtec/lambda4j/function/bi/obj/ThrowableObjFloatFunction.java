@@ -435,7 +435,7 @@ public interface ThrowableObjFloatFunction<T, R, X extends Throwable> extends La
      */
     @Nonnull
     default ThrowableObjFloatFunction<T, R, X> memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Pair<T, Float>, R> cache = new ConcurrentHashMap<>();

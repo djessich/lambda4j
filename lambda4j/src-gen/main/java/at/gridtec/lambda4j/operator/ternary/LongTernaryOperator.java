@@ -610,7 +610,7 @@ public interface LongTernaryOperator extends Lambda {
      */
     @Nonnull
     default LongTernaryOperator memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Triple<Long, Long, Long>, Long> cache = new ConcurrentHashMap<>();

@@ -579,7 +579,7 @@ public interface ThrowableBiByteToShortFunction<X extends Throwable> extends Lam
      */
     @Nonnull
     default ThrowableBiByteToShortFunction<X> memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Pair<Byte, Byte>, Short> cache = new ConcurrentHashMap<>();

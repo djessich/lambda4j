@@ -406,7 +406,7 @@ public interface ThrowableBiBooleanFunction<R, X extends Throwable> extends Lamb
      */
     @Nonnull
     default ThrowableBiBooleanFunction<R, X> memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Pair<Boolean, Boolean>, R> cache = new ConcurrentHashMap<>();

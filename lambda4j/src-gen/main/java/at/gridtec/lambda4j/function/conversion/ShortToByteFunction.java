@@ -481,7 +481,7 @@ public interface ShortToByteFunction extends Lambda {
      */
     @Nonnull
     default ShortToByteFunction memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Short, Byte> cache = new ConcurrentHashMap<>();

@@ -458,7 +458,7 @@ public interface ThrowableToLongBiFunction<T, U, X extends Throwable> extends La
      */
     @Nonnull
     default ThrowableToLongBiFunction<T, U, X> memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Pair<T, U>, Long> cache = new ConcurrentHashMap<>();

@@ -494,7 +494,7 @@ public interface ThrowableBooleanToDoubleFunction<X extends Throwable> extends L
      */
     @Nonnull
     default ThrowableBooleanToDoubleFunction<X> memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Boolean, Double> cache = new ConcurrentHashMap<>();

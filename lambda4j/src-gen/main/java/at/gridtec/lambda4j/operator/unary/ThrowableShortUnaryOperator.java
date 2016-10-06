@@ -506,7 +506,7 @@ public interface ThrowableShortUnaryOperator<X extends Throwable> extends Lambda
      */
     @Nonnull
     default ThrowableShortUnaryOperator<X> memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Short, Short> cache = new ConcurrentHashMap<>();

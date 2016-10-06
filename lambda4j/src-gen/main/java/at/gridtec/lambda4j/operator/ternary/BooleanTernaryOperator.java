@@ -612,7 +612,7 @@ public interface BooleanTernaryOperator extends Lambda {
      */
     @Nonnull
     default BooleanTernaryOperator memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Triple<Boolean, Boolean, Boolean>, Boolean> cache = new ConcurrentHashMap<>();

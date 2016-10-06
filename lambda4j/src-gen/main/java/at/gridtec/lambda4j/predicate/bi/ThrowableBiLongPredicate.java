@@ -682,7 +682,7 @@ public interface ThrowableBiLongPredicate<X extends Throwable> extends Lambda {
      */
     @Nonnull
     default ThrowableBiLongPredicate<X> memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Pair<Long, Long>, Boolean> cache = new ConcurrentHashMap<>();

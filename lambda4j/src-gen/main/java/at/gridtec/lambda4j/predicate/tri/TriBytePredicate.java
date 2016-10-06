@@ -713,7 +713,7 @@ public interface TriBytePredicate extends Lambda {
      */
     @Nonnull
     default TriBytePredicate memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Triple<Byte, Byte, Byte>, Boolean> cache = new ConcurrentHashMap<>();

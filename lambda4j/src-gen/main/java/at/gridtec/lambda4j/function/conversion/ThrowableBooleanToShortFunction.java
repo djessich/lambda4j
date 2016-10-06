@@ -491,7 +491,7 @@ public interface ThrowableBooleanToShortFunction<X extends Throwable> extends La
      */
     @Nonnull
     default ThrowableBooleanToShortFunction<X> memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Boolean, Short> cache = new ConcurrentHashMap<>();

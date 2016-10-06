@@ -657,7 +657,7 @@ public interface ThrowableObjBiCharToFloatFunction<T, X extends Throwable> exten
      */
     @Nonnull
     default ThrowableObjBiCharToFloatFunction<T, X> memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Triple<T, Character, Character>, Float> cache = new ConcurrentHashMap<>();

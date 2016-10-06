@@ -627,7 +627,7 @@ public interface ThrowableTriBooleanToShortFunction<X extends Throwable> extends
      */
     @Nonnull
     default ThrowableTriBooleanToShortFunction<X> memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Triple<Boolean, Boolean, Boolean>, Short> cache = new ConcurrentHashMap<>();

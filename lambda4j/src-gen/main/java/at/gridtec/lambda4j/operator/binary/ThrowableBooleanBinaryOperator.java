@@ -614,7 +614,7 @@ public interface ThrowableBooleanBinaryOperator<X extends Throwable> extends Lam
      */
     @Nonnull
     default ThrowableBooleanBinaryOperator<X> memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Pair<Boolean, Boolean>, Boolean> cache = new ConcurrentHashMap<>();

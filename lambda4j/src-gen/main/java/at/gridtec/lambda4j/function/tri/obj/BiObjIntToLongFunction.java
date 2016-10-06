@@ -655,7 +655,7 @@ public interface BiObjIntToLongFunction<T, U> extends Lambda {
      */
     @Nonnull
     default BiObjIntToLongFunction<T, U> memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Triple<T, U, Integer>, Long> cache = new ConcurrentHashMap<>();

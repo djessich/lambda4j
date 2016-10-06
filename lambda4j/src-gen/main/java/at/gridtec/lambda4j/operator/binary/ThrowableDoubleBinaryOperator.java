@@ -654,7 +654,7 @@ public interface ThrowableDoubleBinaryOperator<X extends Throwable> extends Lamb
      */
     @Nonnull
     default ThrowableDoubleBinaryOperator<X> memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Pair<Double, Double>, Double> cache = new ConcurrentHashMap<>();

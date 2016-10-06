@@ -446,7 +446,7 @@ public interface ToShortTriFunction<T, U, V> extends Lambda {
      */
     @Nonnull
     default ToShortTriFunction<T, U, V> memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Triple<T, U, V>, Short> cache = new ConcurrentHashMap<>();

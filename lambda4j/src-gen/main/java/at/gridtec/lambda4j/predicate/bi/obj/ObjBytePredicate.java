@@ -695,7 +695,7 @@ public interface ObjBytePredicate<T> extends Lambda {
      */
     @Nonnull
     default ObjBytePredicate<T> memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Pair<T, Byte>, Boolean> cache = new ConcurrentHashMap<>();

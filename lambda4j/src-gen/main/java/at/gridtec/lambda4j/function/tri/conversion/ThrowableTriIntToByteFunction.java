@@ -634,7 +634,7 @@ public interface ThrowableTriIntToByteFunction<X extends Throwable> extends Lamb
      */
     @Nonnull
     default ThrowableTriIntToByteFunction<X> memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Triple<Integer, Integer, Integer>, Byte> cache = new ConcurrentHashMap<>();

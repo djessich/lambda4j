@@ -622,7 +622,7 @@ public interface ThrowableByteBinaryOperator<X extends Throwable> extends Lambda
      */
     @Nonnull
     default ThrowableByteBinaryOperator<X> memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Pair<Byte, Byte>, Byte> cache = new ConcurrentHashMap<>();

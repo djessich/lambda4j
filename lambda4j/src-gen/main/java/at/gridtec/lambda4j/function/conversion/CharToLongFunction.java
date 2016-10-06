@@ -484,7 +484,7 @@ public interface CharToLongFunction extends Lambda {
      */
     @Nonnull
     default CharToLongFunction memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Character, Long> cache = new ConcurrentHashMap<>();

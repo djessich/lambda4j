@@ -600,7 +600,7 @@ public interface CharPredicate extends Lambda {
      */
     @Nonnull
     default CharPredicate memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Character, Boolean> cache = new ConcurrentHashMap<>();

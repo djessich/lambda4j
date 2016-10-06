@@ -491,7 +491,7 @@ public interface ThrowableBooleanToLongFunction<X extends Throwable> extends Lam
      */
     @Nonnull
     default ThrowableBooleanToLongFunction<X> memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Boolean, Long> cache = new ConcurrentHashMap<>();

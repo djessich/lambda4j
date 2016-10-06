@@ -484,7 +484,7 @@ public interface CharToDoubleFunction extends Lambda {
      */
     @Nonnull
     default CharToDoubleFunction memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Character, Double> cache = new ConcurrentHashMap<>();

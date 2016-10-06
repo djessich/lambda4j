@@ -497,7 +497,7 @@ public interface FloatUnaryOperator extends Lambda {
      */
     @Nonnull
     default FloatUnaryOperator memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Float, Float> cache = new ConcurrentHashMap<>();

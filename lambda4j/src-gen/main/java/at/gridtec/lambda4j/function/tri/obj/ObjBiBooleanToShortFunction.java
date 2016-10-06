@@ -623,7 +623,7 @@ public interface ObjBiBooleanToShortFunction<T> extends Lambda {
      */
     @Nonnull
     default ObjBiBooleanToShortFunction<T> memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Triple<T, Boolean, Boolean>, Short> cache = new ConcurrentHashMap<>();

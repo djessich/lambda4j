@@ -601,7 +601,7 @@ public interface TriBooleanToFloatFunction extends Lambda {
      */
     @Nonnull
     default TriBooleanToFloatFunction memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Triple<Boolean, Boolean, Boolean>, Float> cache = new ConcurrentHashMap<>();

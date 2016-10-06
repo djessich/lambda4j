@@ -606,7 +606,7 @@ public interface DoublePredicate2 extends Lambda, DoublePredicate {
      */
     @Nonnull
     default DoublePredicate2 memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Double, Boolean> cache = new ConcurrentHashMap<>();

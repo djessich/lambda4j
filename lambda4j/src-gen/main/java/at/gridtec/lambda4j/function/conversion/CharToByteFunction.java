@@ -481,7 +481,7 @@ public interface CharToByteFunction extends Lambda {
      */
     @Nonnull
     default CharToByteFunction memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Character, Byte> cache = new ConcurrentHashMap<>();

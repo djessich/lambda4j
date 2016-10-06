@@ -600,7 +600,7 @@ public interface FloatPredicate extends Lambda {
      */
     @Nonnull
     default FloatPredicate memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Float, Boolean> cache = new ConcurrentHashMap<>();

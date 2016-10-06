@@ -488,7 +488,7 @@ public interface ThrowableFloatToShortFunction<X extends Throwable> extends Lamb
      */
     @Nonnull
     default ThrowableFloatToShortFunction<X> memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Float, Short> cache = new ConcurrentHashMap<>();

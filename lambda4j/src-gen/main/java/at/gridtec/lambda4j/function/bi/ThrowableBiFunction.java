@@ -311,7 +311,7 @@ public interface ThrowableBiFunction<T, U, R, X extends Throwable> extends Lambd
      */
     @Nonnull
     default ThrowableBiFunction<T, U, R, X> memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Pair<T, U>, R> cache = new ConcurrentHashMap<>();

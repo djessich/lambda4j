@@ -623,7 +623,7 @@ public interface ObjBiBooleanToIntFunction<T> extends Lambda {
      */
     @Nonnull
     default ObjBiBooleanToIntFunction<T> memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Triple<T, Boolean, Boolean>, Integer> cache = new ConcurrentHashMap<>();

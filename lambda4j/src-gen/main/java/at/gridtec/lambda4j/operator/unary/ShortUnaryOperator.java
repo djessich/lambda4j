@@ -497,7 +497,7 @@ public interface ShortUnaryOperator extends Lambda {
      */
     @Nonnull
     default ShortUnaryOperator memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Short, Short> cache = new ConcurrentHashMap<>();

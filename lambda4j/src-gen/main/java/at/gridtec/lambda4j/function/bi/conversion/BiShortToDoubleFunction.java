@@ -558,7 +558,7 @@ public interface BiShortToDoubleFunction extends Lambda {
      */
     @Nonnull
     default BiShortToDoubleFunction memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Pair<Short, Short>, Double> cache = new ConcurrentHashMap<>();

@@ -695,7 +695,7 @@ public interface ObjLongPredicate<T> extends Lambda {
      */
     @Nonnull
     default ObjLongPredicate<T> memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Pair<T, Long>, Boolean> cache = new ConcurrentHashMap<>();

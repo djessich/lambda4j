@@ -695,7 +695,7 @@ public interface ObjDoublePredicate<T> extends Lambda {
      */
     @Nonnull
     default ObjDoublePredicate<T> memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Pair<T, Double>, Boolean> cache = new ConcurrentHashMap<>();

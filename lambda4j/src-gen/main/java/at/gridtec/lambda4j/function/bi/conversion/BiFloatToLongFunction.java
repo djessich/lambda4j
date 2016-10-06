@@ -558,7 +558,7 @@ public interface BiFloatToLongFunction extends Lambda {
      */
     @Nonnull
     default BiFloatToLongFunction memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Pair<Float, Float>, Long> cache = new ConcurrentHashMap<>();

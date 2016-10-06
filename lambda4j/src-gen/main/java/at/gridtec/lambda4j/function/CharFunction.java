@@ -332,7 +332,7 @@ public interface CharFunction<R> extends Lambda {
      */
     @Nonnull
     default CharFunction<R> memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Character, R> cache = new ConcurrentHashMap<>();

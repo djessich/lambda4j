@@ -577,7 +577,7 @@ public interface ThrowableBiIntToByteFunction<X extends Throwable> extends Lambd
      */
     @Nonnull
     default ThrowableBiIntToByteFunction<X> memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Pair<Integer, Integer>, Byte> cache = new ConcurrentHashMap<>();

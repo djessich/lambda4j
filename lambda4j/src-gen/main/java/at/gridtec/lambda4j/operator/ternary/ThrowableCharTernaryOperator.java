@@ -644,7 +644,7 @@ public interface ThrowableCharTernaryOperator<X extends Throwable> extends Lambd
      */
     @Nonnull
     default ThrowableCharTernaryOperator<X> memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Triple<Character, Character, Character>, Character> cache = new ConcurrentHashMap<>();

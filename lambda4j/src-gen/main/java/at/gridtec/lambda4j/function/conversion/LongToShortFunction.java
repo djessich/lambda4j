@@ -484,7 +484,7 @@ public interface LongToShortFunction extends Lambda {
      */
     @Nonnull
     default LongToShortFunction memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Long, Short> cache = new ConcurrentHashMap<>();

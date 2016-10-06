@@ -644,7 +644,7 @@ public interface ThrowableFloatTernaryOperator<X extends Throwable> extends Lamb
      */
     @Nonnull
     default ThrowableFloatTernaryOperator<X> memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Triple<Float, Float, Float>, Float> cache = new ConcurrentHashMap<>();

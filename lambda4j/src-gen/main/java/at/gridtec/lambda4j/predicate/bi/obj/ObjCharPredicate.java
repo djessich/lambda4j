@@ -695,7 +695,7 @@ public interface ObjCharPredicate<T> extends Lambda {
      */
     @Nonnull
     default ObjCharPredicate<T> memoized() {
-        if (this instanceof Memoized) {
+        if (isMemoized()) {
             return this;
         } else {
             final Map<Pair<T, Character>, Boolean> cache = new ConcurrentHashMap<>();
