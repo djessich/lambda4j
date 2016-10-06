@@ -35,5 +35,6 @@ import org.apache.commons.lang3.tuple.*;
 import javax.annotation.*;
 import java.util.*;
 import java.util.concurrent.*;
+import java.util.concurrent.atomic.*;
 import java.util.function.*;
 <#-- @formatter:on -->

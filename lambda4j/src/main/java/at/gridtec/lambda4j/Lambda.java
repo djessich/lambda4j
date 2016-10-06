@@ -29,6 +29,15 @@ public interface Lambda extends Serializable {
     long serialVersionUID = 1L;
 
     /**
+     * Checks if this functional interface is memoizing (= caching) computed values.
+     *
+     * @return {@code true} if this functional interface is memoizing, {@code false} otherwise.
+     */
+    default boolean isMemoized() {
+        return this instanceof Memoized;
+    }
+
+    /**
      * Zero Abstract Method (ZAM) interface for marking lambdas as memoized lambdas. This is done by using a cast with
      * this interface as additional bound (intersection type).
      */
