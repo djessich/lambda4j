@@ -50,7 +50,7 @@
  * @return A composed {@code ${outputLambda.name}} that first applies the {@code before} ${.namespace.javadocInputLambdaSimpleNamePlural()} to
  * its input, and then applies this ${lambda.type.simpleName} to the result.
 <#include "../javadoc/throwsNullPointerException.ftl">
- * @implNote The input argument of this method is a able to handle primitive values. In this case this is {@code ${primitiveType}}.
+ * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code ${primitiveType}}.
  */
 ${annotation.nonnull}
 default ${outputLambda.name}${types.buildGenericParameterTypeString(outputLambda)} composeFrom${primitiveType?cap_first}(${.namespace.inputLambdasString(inputLambda1, inputLambda2, inputLambda3)}) {

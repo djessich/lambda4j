@@ -23,7 +23,7 @@ ${types.buildParameterType(lambda.returnType)} ${lambda.method}(${parameterStrin
 <@.namespace.javadocReturnIfNotVoidLambdaMethod/>
  * @apiNote This method mainly exists to use this {@link ${lambda.name}} in JRE specific methods only accepting {@link ${jdkLambda.name}}.
  * If this ${lambda.type.simpleName} should be applied, then the {@link #${lambda.method}(${parameterSimpleTypeString})} method should be used.
- * @implSpec Overrides the {@link ${jdkLambda.name}#${jdkLambda.method}(${parameterSimpleTypeString})} method by using a redefinition as default method. This
+ * @apiNote Overrides the {@link ${jdkLambda.name}#${jdkLambda.method}(${parameterSimpleTypeString})} method by using a redefinition as default method. This
  * implementation calls the {@link #${lambda.method}(${parameterSimpleTypeString})} method of this function and catches the eventually thrown
  * {@link Throwable} from it. If it is of type {@link RuntimeException} or {@link Error} it is rethrown as is. Other
  * {@code Throwable} types are wrapped in a {@link ThrownByFunctionalInterfaceException}.

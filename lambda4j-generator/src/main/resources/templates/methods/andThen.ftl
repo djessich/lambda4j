@@ -35,7 +35,7 @@
  * @return A composed {@code ${outputLambda.name}} that first applies this ${lambda.type.simpleName} to its input, and then applies the
  * {@code after} ${inputLambda.type.simpleName} to the result.
 <#include "../javadoc/throwsNullPointerException.ftl">
- * @implNote The input argument of this method is able to return every type.
+ * @implSpec The input argument of this method is able to return every type.
  */
 ${annotation.nonnull}
 default <S> ${outputLambda.name}${types.buildGenericParameterTypeString(outputLambda, "", "", "", "S")} andThen(${annotation.nonnull} final ${inputLambda.name}${types.buildGenericParameterTypeStringWithErasure(inputLambda, lambda.returnType, "", "", "S")} after) {

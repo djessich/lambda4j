@@ -42,7 +42,7 @@
  * @return A composed {@code ${outputLambda.name}} that first applies the {@code before} ${.namespace.javadocInputLambdaSimpleNamePlural()} to its input, and
  * then applies this ${lambda.type.simpleName} to the result.
 <#include "../javadoc/throwsNullPointerException.ftl">
- * @implNote The input argument of this method is able to handle every type.
+ * @implSpec The input argument of this method is able to handle every type.
  */
 ${annotation.nonnull}
 default ${types.buildGenericInputParameterTypeStringWithoutThrowable(outputLambda, generic1, generic2, generic3)} ${outputLambda.name}${types.buildGenericParameterTypeString(outputLambda, generic1, generic2, generic3)} compose(${.namespace.inputLambdasString(generic1, generic2, generic3, inputLambda1, inputLambda2, inputLambda3)}) {
