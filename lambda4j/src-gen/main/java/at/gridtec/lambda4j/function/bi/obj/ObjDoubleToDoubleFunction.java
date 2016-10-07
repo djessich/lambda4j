@@ -67,7 +67,8 @@ import java.util.function.ToDoubleFunction;
 
 /**
  * Represents an operation that accepts one object-valued and one {@code double}-valued input argument and produces a
- * {@code double}-valued result. This is a (reference, double) specialization of {@link BiFunction2}.
+ * {@code double}-valued result.
+ * This is a (reference, double) specialization of {@link BiFunction2}.
  * <p>
  * This is a {@link FunctionalInterface} whose functional method is {@link #applyAsDouble(Object, double)}.
  *
@@ -178,8 +179,8 @@ public interface ObjDoubleToDoubleFunction<T> extends Lambda {
 
     /**
      * Returns a composed {@link ToDoubleBiFunction2} that first applies the {@code before} functions to its input, and
-     * then applies this function to the result. If evaluation of either operation throws an exception, it is relayed to
-     * the caller of the composed operation.
+     * then applies this function to the result.
+     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
      *
      * @param <A> The type of the argument to the first given function, and of composed function
      * @param <B> The type of the argument to the second given function, and of composed function
@@ -188,7 +189,7 @@ public interface ObjDoubleToDoubleFunction<T> extends Lambda {
      * @return A composed {@code ToDoubleBiFunction2} that first applies the {@code before} functions to its input, and
      * then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is able to handle every type.
+     * @implSpec The input argument of this method is able to handle every type.
      */
     @Nonnull
     default <A, B> ToDoubleBiFunction2<A, B> compose(@Nonnull final Function<? super A, ? extends T> before1,
@@ -209,7 +210,7 @@ public interface ObjDoubleToDoubleFunction<T> extends Lambda {
      * @return A composed {@code BiBooleanToDoubleFunction} that first applies the {@code before} functions to its
      * input, and then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
      * boolean}.
      */
     @Nonnull
@@ -221,17 +222,18 @@ public interface ObjDoubleToDoubleFunction<T> extends Lambda {
     }
 
     /**
-     * Returns a composed {@link BiByteToDoubleFunction} that first applies the {@code before} functions to its input,
-     * and then applies this function to the result. If evaluation of either operation throws an exception, it is
-     * relayed to the caller of the composed operation. This method is just convenience, to provide the ability to
-     * execute an operation which accepts {@code byte} input, before this primitive function is executed.
+     * Returns a composed {@link BiByteToDoubleFunction} that first applies the {@code before} functions to
+     * its input, and then applies this function to the result.
+     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
+     * This method is just convenience, to provide the ability to execute an operation which accepts {@code byte} input,
+     * before this primitive function is executed.
      *
      * @param before1 The first function to apply before this function is applied
      * @param before2 The second function to apply before this function is applied
      * @return A composed {@code BiByteToDoubleFunction} that first applies the {@code before} functions to its input,
      * and then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
      * byte}.
      */
     @Nonnull
@@ -243,17 +245,18 @@ public interface ObjDoubleToDoubleFunction<T> extends Lambda {
     }
 
     /**
-     * Returns a composed {@link BiCharToDoubleFunction} that first applies the {@code before} functions to its input,
-     * and then applies this function to the result. If evaluation of either operation throws an exception, it is
-     * relayed to the caller of the composed operation. This method is just convenience, to provide the ability to
-     * execute an operation which accepts {@code char} input, before this primitive function is executed.
+     * Returns a composed {@link BiCharToDoubleFunction} that first applies the {@code before} functions to
+     * its input, and then applies this function to the result.
+     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
+     * This method is just convenience, to provide the ability to execute an operation which accepts {@code char} input,
+     * before this primitive function is executed.
      *
      * @param before1 The first function to apply before this function is applied
      * @param before2 The second function to apply before this function is applied
      * @return A composed {@code BiCharToDoubleFunction} that first applies the {@code before} functions to its input,
      * and then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
      * char}.
      */
     @Nonnull
@@ -275,7 +278,7 @@ public interface ObjDoubleToDoubleFunction<T> extends Lambda {
      * @return A composed {@code DoubleBinaryOperator2} that first applies the {@code before} functions to its input,
      * and then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
      * double}.
      */
     @Nonnull
@@ -297,7 +300,7 @@ public interface ObjDoubleToDoubleFunction<T> extends Lambda {
      * @return A composed {@code BiFloatToDoubleFunction} that first applies the {@code before} functions to its input,
      * and then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
      * float}.
      */
     @Nonnull
@@ -309,17 +312,18 @@ public interface ObjDoubleToDoubleFunction<T> extends Lambda {
     }
 
     /**
-     * Returns a composed {@link BiIntToDoubleFunction} that first applies the {@code before} functions to its input,
-     * and then applies this function to the result. If evaluation of either operation throws an exception, it is
-     * relayed to the caller of the composed operation. This method is just convenience, to provide the ability to
-     * execute an operation which accepts {@code int} input, before this primitive function is executed.
+     * Returns a composed {@link BiIntToDoubleFunction} that first applies the {@code before} functions to
+     * its input, and then applies this function to the result.
+     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
+     * This method is just convenience, to provide the ability to execute an operation which accepts {@code int} input,
+     * before this primitive function is executed.
      *
      * @param before1 The first function to apply before this function is applied
      * @param before2 The second function to apply before this function is applied
      * @return A composed {@code BiIntToDoubleFunction} that first applies the {@code before} functions to its input,
      * and then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
      * int}.
      */
     @Nonnull
@@ -331,17 +335,18 @@ public interface ObjDoubleToDoubleFunction<T> extends Lambda {
     }
 
     /**
-     * Returns a composed {@link BiLongToDoubleFunction} that first applies the {@code before} functions to its input,
-     * and then applies this function to the result. If evaluation of either operation throws an exception, it is
-     * relayed to the caller of the composed operation. This method is just convenience, to provide the ability to
-     * execute an operation which accepts {@code long} input, before this primitive function is executed.
+     * Returns a composed {@link BiLongToDoubleFunction} that first applies the {@code before} functions to
+     * its input, and then applies this function to the result.
+     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
+     * This method is just convenience, to provide the ability to execute an operation which accepts {@code long} input,
+     * before this primitive function is executed.
      *
      * @param before1 The first function to apply before this function is applied
      * @param before2 The second function to apply before this function is applied
      * @return A composed {@code BiLongToDoubleFunction} that first applies the {@code before} functions to its input,
      * and then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
      * long}.
      */
     @Nonnull
@@ -363,7 +368,7 @@ public interface ObjDoubleToDoubleFunction<T> extends Lambda {
      * @return A composed {@code BiShortToDoubleFunction} that first applies the {@code before} functions to its input,
      * and then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
      * short}.
      */
     @Nonnull
@@ -376,15 +381,15 @@ public interface ObjDoubleToDoubleFunction<T> extends Lambda {
 
     /**
      * Returns a composed {@link ObjDoubleFunction} that first applies this function to its input, and then applies the
-     * {@code after} function to the result. If evaluation of either operation throws an exception, it is relayed to the
-     * caller of the composed operation.
+     * {@code after} function to the result.
+     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
      *
      * @param <S> The type of return value from the {@code after} function, and of the composed function
      * @param after The function to apply after this function is applied
      * @return A composed {@code ObjDoubleFunction} that first applies this function to its input, and then applies the
      * {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is able to return every type.
+     * @implSpec The input argument of this method is able to return every type.
      */
     @Nonnull
     default <S> ObjDoubleFunction<T, S> andThen(@Nonnull final DoubleFunction<? extends S> after) {
@@ -402,7 +407,7 @@ public interface ObjDoubleToDoubleFunction<T> extends Lambda {
      * @return A composed {@code ObjDoublePredicate} that first applies this function to its input, and then applies the
      * {@code after} predicate to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
      * boolean}.
      */
     @Nonnull
@@ -421,7 +426,7 @@ public interface ObjDoubleToDoubleFunction<T> extends Lambda {
      * @return A composed {@code ObjDoubleToByteFunction} that first applies this function to its input, and then
      * applies the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
      * byte}.
      */
     @Nonnull
@@ -440,7 +445,7 @@ public interface ObjDoubleToDoubleFunction<T> extends Lambda {
      * @return A composed {@code ObjDoubleToCharFunction} that first applies this function to its input, and then
      * applies the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
      * char}.
      */
     @Nonnull
@@ -459,7 +464,7 @@ public interface ObjDoubleToDoubleFunction<T> extends Lambda {
      * @return A composed {@code ObjDoubleToDoubleFunction} that first applies this function to its input, and then
      * applies the {@code after} operator to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
      * double}.
      */
     @Nonnull
@@ -478,7 +483,7 @@ public interface ObjDoubleToDoubleFunction<T> extends Lambda {
      * @return A composed {@code ObjDoubleToFloatFunction} that first applies this function to its input, and then
      * applies the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
      * float}.
      */
     @Nonnull
@@ -497,7 +502,7 @@ public interface ObjDoubleToDoubleFunction<T> extends Lambda {
      * @return A composed {@code ObjDoubleToIntFunction} that first applies this function to its input, and then applies
      * the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
      * int}.
      */
     @Nonnull
@@ -516,7 +521,7 @@ public interface ObjDoubleToDoubleFunction<T> extends Lambda {
      * @return A composed {@code ObjDoubleToLongFunction} that first applies this function to its input, and then
      * applies the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
      * long}.
      */
     @Nonnull
@@ -535,7 +540,7 @@ public interface ObjDoubleToDoubleFunction<T> extends Lambda {
      * @return A composed {@code ObjDoubleToShortFunction} that first applies this function to its input, and then
      * applies the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
      * short}.
      */
     @Nonnull

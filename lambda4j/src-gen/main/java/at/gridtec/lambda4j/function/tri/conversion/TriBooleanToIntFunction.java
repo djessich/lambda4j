@@ -52,8 +52,9 @@ import java.util.function.LongPredicate;
 import java.util.function.Predicate;
 
 /**
- * Represents an operation that accepts three {@code boolean}-valued input arguments and produces a {@code int}-valued
- * result. This is a primitive specialization of {@link TriFunction}.
+ * Represents an operation that accepts three {@code boolean}-valued input arguments and produces a
+ * {@code int}-valued result.
+ * This is a primitive specialization of {@link TriFunction}.
  * <p>
  * This is a {@link FunctionalInterface} whose functional method is {@link #applyAsInt(boolean, boolean, boolean)}.
  *
@@ -175,8 +176,8 @@ public interface TriBooleanToIntFunction extends Lambda {
 
     /**
      * Returns a composed {@link ToIntTriFunction} that first applies the {@code before} predicates to its input, and
-     * then applies this function to the result. If evaluation of either operation throws an exception, it is relayed to
-     * the caller of the composed operation.
+     * then applies this function to the result.
+     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
      *
      * @param <A> The type of the argument to the first given predicate, and of composed function
      * @param <B> The type of the argument to the second given predicate, and of composed function
@@ -187,7 +188,7 @@ public interface TriBooleanToIntFunction extends Lambda {
      * @return A composed {@code ToIntTriFunction} that first applies the {@code before} predicates to its input, and
      * then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is able to handle every type.
+     * @implSpec The input argument of this method is able to handle every type.
      */
     @Nonnull
     default <A, B, C> ToIntTriFunction<A, B, C> compose(@Nonnull final Predicate<? super A> before1,
@@ -210,7 +211,7 @@ public interface TriBooleanToIntFunction extends Lambda {
      * @return A composed {@code TriBooleanToIntFunction} that first applies the {@code before} operators to its input,
      * and then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
      * boolean}.
      */
     @Nonnull
@@ -224,10 +225,11 @@ public interface TriBooleanToIntFunction extends Lambda {
     }
 
     /**
-     * Returns a composed {@link TriByteToIntFunction} that first applies the {@code before} predicates to its input,
-     * and then applies this function to the result. If evaluation of either operation throws an exception, it is
-     * relayed to the caller of the composed operation. This method is just convenience, to provide the ability to
-     * execute an operation which accepts {@code byte} input, before this primitive function is executed.
+     * Returns a composed {@link TriByteToIntFunction} that first applies the {@code before} predicates to
+     * its input, and then applies this function to the result.
+     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
+     * This method is just convenience, to provide the ability to execute an operation which accepts {@code byte} input,
+     * before this primitive function is executed.
      *
      * @param before1 The first predicate to apply before this function is applied
      * @param before2 The second predicate to apply before this function is applied
@@ -235,7 +237,7 @@ public interface TriBooleanToIntFunction extends Lambda {
      * @return A composed {@code TriByteToIntFunction} that first applies the {@code before} predicates to its input,
      * and then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
      * byte}.
      */
     @Nonnull
@@ -248,10 +250,11 @@ public interface TriBooleanToIntFunction extends Lambda {
     }
 
     /**
-     * Returns a composed {@link TriCharToIntFunction} that first applies the {@code before} predicates to its input,
-     * and then applies this function to the result. If evaluation of either operation throws an exception, it is
-     * relayed to the caller of the composed operation. This method is just convenience, to provide the ability to
-     * execute an operation which accepts {@code char} input, before this primitive function is executed.
+     * Returns a composed {@link TriCharToIntFunction} that first applies the {@code before} predicates to
+     * its input, and then applies this function to the result.
+     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
+     * This method is just convenience, to provide the ability to execute an operation which accepts {@code char} input,
+     * before this primitive function is executed.
      *
      * @param before1 The first predicate to apply before this function is applied
      * @param before2 The second predicate to apply before this function is applied
@@ -259,7 +262,7 @@ public interface TriBooleanToIntFunction extends Lambda {
      * @return A composed {@code TriCharToIntFunction} that first applies the {@code before} predicates to its input,
      * and then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
      * char}.
      */
     @Nonnull
@@ -283,7 +286,7 @@ public interface TriBooleanToIntFunction extends Lambda {
      * @return A composed {@code TriDoubleToIntFunction} that first applies the {@code before} predicates to its input,
      * and then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
      * double}.
      */
     @Nonnull
@@ -307,7 +310,7 @@ public interface TriBooleanToIntFunction extends Lambda {
      * @return A composed {@code TriFloatToIntFunction} that first applies the {@code before} predicates to its input,
      * and then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
      * float}.
      */
     @Nonnull
@@ -320,10 +323,11 @@ public interface TriBooleanToIntFunction extends Lambda {
     }
 
     /**
-     * Returns a composed {@link IntTernaryOperator} that first applies the {@code before} predicates to its input, and
-     * then applies this function to the result. If evaluation of either operation throws an exception, it is relayed to
-     * the caller of the composed operation. This method is just convenience, to provide the ability to execute an
-     * operation which accepts {@code int} input, before this primitive function is executed.
+     * Returns a composed {@link IntTernaryOperator} that first applies the {@code before} predicates to
+     * its input, and then applies this function to the result.
+     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
+     * This method is just convenience, to provide the ability to execute an operation which accepts {@code int} input,
+     * before this primitive function is executed.
      *
      * @param before1 The first predicate to apply before this function is applied
      * @param before2 The second predicate to apply before this function is applied
@@ -331,7 +335,7 @@ public interface TriBooleanToIntFunction extends Lambda {
      * @return A composed {@code IntTernaryOperator} that first applies the {@code before} predicates to its input, and
      * then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
      * int}.
      */
     @Nonnull
@@ -344,10 +348,11 @@ public interface TriBooleanToIntFunction extends Lambda {
     }
 
     /**
-     * Returns a composed {@link TriLongToIntFunction} that first applies the {@code before} predicates to its input,
-     * and then applies this function to the result. If evaluation of either operation throws an exception, it is
-     * relayed to the caller of the composed operation. This method is just convenience, to provide the ability to
-     * execute an operation which accepts {@code long} input, before this primitive function is executed.
+     * Returns a composed {@link TriLongToIntFunction} that first applies the {@code before} predicates to
+     * its input, and then applies this function to the result.
+     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
+     * This method is just convenience, to provide the ability to execute an operation which accepts {@code long} input,
+     * before this primitive function is executed.
      *
      * @param before1 The first predicate to apply before this function is applied
      * @param before2 The second predicate to apply before this function is applied
@@ -355,7 +360,7 @@ public interface TriBooleanToIntFunction extends Lambda {
      * @return A composed {@code TriLongToIntFunction} that first applies the {@code before} predicates to its input,
      * and then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
      * long}.
      */
     @Nonnull
@@ -379,7 +384,7 @@ public interface TriBooleanToIntFunction extends Lambda {
      * @return A composed {@code TriShortToIntFunction} that first applies the {@code before} predicates to its input,
      * and then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
      * short}.
      */
     @Nonnull
@@ -393,15 +398,15 @@ public interface TriBooleanToIntFunction extends Lambda {
 
     /**
      * Returns a composed {@link TriBooleanFunction} that first applies this function to its input, and then applies the
-     * {@code after} function to the result. If evaluation of either operation throws an exception, it is relayed to the
-     * caller of the composed operation.
+     * {@code after} function to the result.
+     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
      *
      * @param <S> The type of return value from the {@code after} function, and of the composed function
      * @param after The function to apply after this function is applied
      * @return A composed {@code TriBooleanFunction} that first applies this function to its input, and then applies the
      * {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is able to return every type.
+     * @implSpec The input argument of this method is able to return every type.
      */
     @Nonnull
     default <S> TriBooleanFunction<S> andThen(@Nonnull final IntFunction<? extends S> after) {
@@ -419,7 +424,7 @@ public interface TriBooleanToIntFunction extends Lambda {
      * @return A composed {@code BooleanTernaryOperator} that first applies this function to its input, and then applies
      * the {@code after} predicate to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
      * boolean}.
      */
     @Nonnull
@@ -438,7 +443,7 @@ public interface TriBooleanToIntFunction extends Lambda {
      * @return A composed {@code TriBooleanToByteFunction} that first applies this function to its input, and then
      * applies the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
      * byte}.
      */
     @Nonnull
@@ -457,7 +462,7 @@ public interface TriBooleanToIntFunction extends Lambda {
      * @return A composed {@code TriBooleanToCharFunction} that first applies this function to its input, and then
      * applies the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
      * char}.
      */
     @Nonnull
@@ -476,7 +481,7 @@ public interface TriBooleanToIntFunction extends Lambda {
      * @return A composed {@code TriBooleanToDoubleFunction} that first applies this function to its input, and then
      * applies the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
      * double}.
      */
     @Nonnull
@@ -495,7 +500,7 @@ public interface TriBooleanToIntFunction extends Lambda {
      * @return A composed {@code TriBooleanToFloatFunction} that first applies this function to its input, and then
      * applies the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
      * float}.
      */
     @Nonnull
@@ -514,7 +519,7 @@ public interface TriBooleanToIntFunction extends Lambda {
      * @return A composed {@code TriBooleanToIntFunction} that first applies this function to its input, and then
      * applies the {@code after} operator to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
      * int}.
      */
     @Nonnull
@@ -533,7 +538,7 @@ public interface TriBooleanToIntFunction extends Lambda {
      * @return A composed {@code TriBooleanToLongFunction} that first applies this function to its input, and then
      * applies the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
      * long}.
      */
     @Nonnull
@@ -552,7 +557,7 @@ public interface TriBooleanToIntFunction extends Lambda {
      * @return A composed {@code TriBooleanToShortFunction} that first applies this function to its input, and then
      * applies the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
      * short}.
      */
     @Nonnull

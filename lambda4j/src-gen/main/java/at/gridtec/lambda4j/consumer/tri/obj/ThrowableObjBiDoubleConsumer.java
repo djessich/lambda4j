@@ -52,6 +52,7 @@ import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.Objects;
+import java.util.function.Function;
 
 /**
  * Represents an operation that accepts one object-valued and two {@code double}-valued input arguments and returns no
@@ -197,7 +198,7 @@ public interface ThrowableObjBiDoubleConsumer<T, X extends Throwable> extends La
      * @return A composed {@code ThrowableTriConsumer} that first applies the {@code before} functions to its input, and
      * then applies this consumer to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is able to handle every type.
+     * @implSpec The input argument of this method is able to handle every type.
      */
     @Nonnull
     default <A, B, C> ThrowableTriConsumer<A, B, C, X> compose(
@@ -222,7 +223,7 @@ public interface ThrowableObjBiDoubleConsumer<T, X extends Throwable> extends La
      * @return A composed {@code ThrowableTriBooleanConsumer} that first applies the {@code before} functions to its
      * input, and then applies this consumer to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
      * boolean}.
      */
     @Nonnull
@@ -239,9 +240,10 @@ public interface ThrowableObjBiDoubleConsumer<T, X extends Throwable> extends La
     }
 
     /**
-     * Returns a composed {@link ThrowableTriByteConsumer} that first applies the {@code before} functions to its input,
-     * and then applies this consumer to the result. This method is just convenience, to provide the ability to execute
-     * an operation which accepts {@code byte} input, before this primitive consumer is executed.
+     * Returns a composed {@link ThrowableTriByteConsumer} that first applies the {@code before} functions to
+     * its input, and then applies this consumer to the result.
+     * This method is just convenience, to provide the ability to execute an operation which accepts {@code byte} input,
+     * before this primitive consumer is executed.
      *
      * @param before1 The first function to apply before this consumer is applied
      * @param before2 The second function to apply before this consumer is applied
@@ -249,7 +251,7 @@ public interface ThrowableObjBiDoubleConsumer<T, X extends Throwable> extends La
      * @return A composed {@code ThrowableTriByteConsumer} that first applies the {@code before} functions to its input,
      * and then applies this consumer to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
      * byte}.
      */
     @Nonnull
@@ -266,9 +268,10 @@ public interface ThrowableObjBiDoubleConsumer<T, X extends Throwable> extends La
     }
 
     /**
-     * Returns a composed {@link ThrowableTriCharConsumer} that first applies the {@code before} functions to its input,
-     * and then applies this consumer to the result. This method is just convenience, to provide the ability to execute
-     * an operation which accepts {@code char} input, before this primitive consumer is executed.
+     * Returns a composed {@link ThrowableTriCharConsumer} that first applies the {@code before} functions to
+     * its input, and then applies this consumer to the result.
+     * This method is just convenience, to provide the ability to execute an operation which accepts {@code char} input,
+     * before this primitive consumer is executed.
      *
      * @param before1 The first function to apply before this consumer is applied
      * @param before2 The second function to apply before this consumer is applied
@@ -276,7 +279,7 @@ public interface ThrowableObjBiDoubleConsumer<T, X extends Throwable> extends La
      * @return A composed {@code ThrowableTriCharConsumer} that first applies the {@code before} functions to its input,
      * and then applies this consumer to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
      * char}.
      */
     @Nonnull
@@ -303,7 +306,7 @@ public interface ThrowableObjBiDoubleConsumer<T, X extends Throwable> extends La
      * @return A composed {@code ThrowableTriDoubleConsumer} that first applies the {@code before} functions to its
      * input, and then applies this consumer to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
      * double}.
      */
     @Nonnull
@@ -330,7 +333,7 @@ public interface ThrowableObjBiDoubleConsumer<T, X extends Throwable> extends La
      * @return A composed {@code ThrowableTriFloatConsumer} that first applies the {@code before} functions to its
      * input, and then applies this consumer to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
      * float}.
      */
     @Nonnull
@@ -347,9 +350,10 @@ public interface ThrowableObjBiDoubleConsumer<T, X extends Throwable> extends La
     }
 
     /**
-     * Returns a composed {@link ThrowableTriIntConsumer} that first applies the {@code before} functions to its input,
-     * and then applies this consumer to the result. This method is just convenience, to provide the ability to execute
-     * an operation which accepts {@code int} input, before this primitive consumer is executed.
+     * Returns a composed {@link ThrowableTriIntConsumer} that first applies the {@code before} functions to
+     * its input, and then applies this consumer to the result.
+     * This method is just convenience, to provide the ability to execute an operation which accepts {@code int} input,
+     * before this primitive consumer is executed.
      *
      * @param before1 The first function to apply before this consumer is applied
      * @param before2 The second function to apply before this consumer is applied
@@ -357,7 +361,7 @@ public interface ThrowableObjBiDoubleConsumer<T, X extends Throwable> extends La
      * @return A composed {@code ThrowableTriIntConsumer} that first applies the {@code before} functions to its input,
      * and then applies this consumer to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
      * int}.
      */
     @Nonnull
@@ -374,9 +378,10 @@ public interface ThrowableObjBiDoubleConsumer<T, X extends Throwable> extends La
     }
 
     /**
-     * Returns a composed {@link ThrowableTriLongConsumer} that first applies the {@code before} functions to its input,
-     * and then applies this consumer to the result. This method is just convenience, to provide the ability to execute
-     * an operation which accepts {@code long} input, before this primitive consumer is executed.
+     * Returns a composed {@link ThrowableTriLongConsumer} that first applies the {@code before} functions to
+     * its input, and then applies this consumer to the result.
+     * This method is just convenience, to provide the ability to execute an operation which accepts {@code long} input,
+     * before this primitive consumer is executed.
      *
      * @param before1 The first function to apply before this consumer is applied
      * @param before2 The second function to apply before this consumer is applied
@@ -384,7 +389,7 @@ public interface ThrowableObjBiDoubleConsumer<T, X extends Throwable> extends La
      * @return A composed {@code ThrowableTriLongConsumer} that first applies the {@code before} functions to its input,
      * and then applies this consumer to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
      * long}.
      */
     @Nonnull
@@ -411,7 +416,7 @@ public interface ThrowableObjBiDoubleConsumer<T, X extends Throwable> extends La
      * @return A composed {@code ThrowableTriShortConsumer} that first applies the {@code before} functions to its
      * input, and then applies this consumer to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
      * short}.
      */
     @Nonnull
@@ -553,6 +558,35 @@ public interface ThrowableObjBiDoubleConsumer<T, X extends Throwable> extends La
                 throw e;
             } catch (Throwable throwable) {
                 throw ThrowableUtils.sneakyThrow(throwable);
+            }
+        };
+    }
+
+    /**
+     * Returns a composed {@link ObjBiDoubleConsumer} that first applies this consumer to its input, and then applies
+     * the {@code recover} operation if a {@link Throwable} is thrown from this one. The {@code recover} operation is
+     * represented by a curried operation which is called with throwable information and same arguments of this
+     * consumer.
+     *
+     * @param recover The operation to apply if this consumer throws a {@code Throwable}
+     * @return A composed {@link ObjBiDoubleConsumer} that first applies this consumer to its input, and then applies
+     * the {@code recover} operation if a {@link Throwable} is thrown from this one.
+     * @throws NullPointerException If given argument or the returned enclosing consumer is {@code null}
+     * @implNote The implementation checks that the returned enclosing consumer from {@code recover} operation is not
+     * {@code null}. If it is, then a {@link NullPointerException} with appropriate message is thrown.
+     */
+    @Nonnull
+    default ObjBiDoubleConsumer<T> recover(
+            @Nonnull final Function<? super Throwable, ? extends ObjBiDoubleConsumer<? super T>> recover) {
+        Objects.requireNonNull(recover);
+        return (t, value1, value2) -> {
+            try {
+                this.acceptThrows(t, value1, value2);
+            } catch (Throwable throwable) {
+                final ObjBiDoubleConsumer<? super T> consumer = recover.apply(throwable);
+                Objects.requireNonNull(consumer, () -> "recover returned null for " + throwable.getClass() + ": "
+                        + throwable.getMessage());
+                consumer.accept(t, value1, value2);
             }
         };
     }

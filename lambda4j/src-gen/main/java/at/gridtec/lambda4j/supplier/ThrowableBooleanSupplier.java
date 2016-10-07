@@ -36,10 +36,11 @@ import javax.annotation.Nullable;
 import java.util.Objects;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.BooleanSupplier;
+import java.util.function.Function;
 
 /**
- * Represents a supplier of {@code boolean}-valued results which is able to throw any {@link Throwable}. This is a
- * primitive specialization of {@link ThrowableSupplier}.
+ * Represents a supplier of {@code boolean}-valued results which is able to throw any {@link Throwable}.
+ * This is a primitive specialization of {@link ThrowableSupplier}.
  * <p>
  * There is no requirement that a distinct result be returned each time the supplier is invoked.
  * <p>
@@ -114,7 +115,7 @@ public interface ThrowableBooleanSupplier<X extends Throwable> extends Lambda, B
      * @apiNote This method mainly exists to use this {@link ThrowableBooleanSupplier} in JRE specific methods only
      * accepting {@link BooleanSupplier}. If this supplier should be applied, then the {@link #getAsBooleanThrows()}
      * method should be used.
-     * @implSpec Overrides the {@link BooleanSupplier#getAsBoolean()} method by using a redefinition as default method.
+     * @apiNote Overrides the {@link BooleanSupplier#getAsBoolean()} method by using a redefinition as default method.
      * This implementation calls the {@link #getAsBooleanThrows()} method of this function and catches the eventually
      * thrown {@link Throwable} from it. If it is of type {@link RuntimeException} or {@link Error} it is rethrown as
      * is. Other {@code Throwable} types are wrapped in a {@link ThrownByFunctionalInterfaceException}.
@@ -152,7 +153,7 @@ public interface ThrowableBooleanSupplier<X extends Throwable> extends Lambda, B
      * @return A composed {@code ThrowableSupplier} that first applies this supplier to its input, and then applies the
      * {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is able to return every type.
+     * @implSpec The input argument of this method is able to return every type.
      */
     @Nonnull
     default <S> ThrowableSupplier<S, X> andThen(
@@ -170,7 +171,7 @@ public interface ThrowableBooleanSupplier<X extends Throwable> extends Lambda, B
      * @return A composed {@code ThrowableBooleanSupplier} that first applies this supplier to its input, and then
      * applies the {@code after} operator to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
      * boolean}.
      */
     @Nonnull
@@ -189,7 +190,7 @@ public interface ThrowableBooleanSupplier<X extends Throwable> extends Lambda, B
      * @return A composed {@code ThrowableByteSupplier} that first applies this supplier to its input, and then applies
      * the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
      * byte}.
      */
     @Nonnull
@@ -207,7 +208,7 @@ public interface ThrowableBooleanSupplier<X extends Throwable> extends Lambda, B
      * @return A composed {@code ThrowableCharSupplier} that first applies this supplier to its input, and then applies
      * the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
      * char}.
      */
     @Nonnull
@@ -225,7 +226,7 @@ public interface ThrowableBooleanSupplier<X extends Throwable> extends Lambda, B
      * @return A composed {@code ThrowableDoubleSupplier} that first applies this supplier to its input, and then
      * applies the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
      * double}.
      */
     @Nonnull
@@ -244,7 +245,7 @@ public interface ThrowableBooleanSupplier<X extends Throwable> extends Lambda, B
      * @return A composed {@code ThrowableFloatSupplier} that first applies this supplier to its input, and then applies
      * the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
      * float}.
      */
     @Nonnull
@@ -263,7 +264,7 @@ public interface ThrowableBooleanSupplier<X extends Throwable> extends Lambda, B
      * @return A composed {@code ThrowableIntSupplier} that first applies this supplier to its input, and then applies
      * the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
      * int}.
      */
     @Nonnull
@@ -281,7 +282,7 @@ public interface ThrowableBooleanSupplier<X extends Throwable> extends Lambda, B
      * @return A composed {@code ThrowableLongSupplier} that first applies this supplier to its input, and then applies
      * the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
      * long}.
      */
     @Nonnull
@@ -299,7 +300,7 @@ public interface ThrowableBooleanSupplier<X extends Throwable> extends Lambda, B
      * @return A composed {@code ThrowableShortSupplier} that first applies this supplier to its input, and then applies
      * the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
      * short}.
      */
     @Nonnull
@@ -310,8 +311,8 @@ public interface ThrowableBooleanSupplier<X extends Throwable> extends Lambda, B
     }
 
     /**
-     * Returns a composed {@link ThrowableConsumer} that first gets the result from this supplier, and then consumes the
-     * result using the given {@link ThrowableBooleanConsumer}.
+     * Returns a composed {@link ThrowableConsumer} that first gets the result from this supplier, and then consumes
+     * the result using the given {@link ThrowableBooleanConsumer}.
      *
      * @param consumer The operation which consumes the result from this operation
      * @return A composed {@code ThrowableConsumer} that first gets the result from this supplier, and then consumes the
@@ -470,6 +471,34 @@ public interface ThrowableBooleanSupplier<X extends Throwable> extends Lambda, B
                 throw e;
             } catch (Throwable throwable) {
                 throw ThrowableUtils.sneakyThrow(throwable);
+            }
+        };
+    }
+
+    /**
+     * Returns a composed {@link BooleanSupplier2} that first applies this supplier to its input, and then applies the
+     * {@code recover} operation if a {@link Throwable} is thrown from this one. The {@code recover} operation is
+     * represented by a curried operation which is called with throwable information and same argument of this
+     * supplier.
+     *
+     * @param recover The operation to apply if this supplier throws a {@code Throwable}
+     * @return A composed {@link BooleanSupplier2} that first applies this supplier to its input, and then applies the
+     * {@code recover} operation if a {@link Throwable} is thrown from this one.
+     * @throws NullPointerException If given argument or the returned enclosing supplier is {@code null}
+     * @implNote The implementation checks that the returned enclosing supplier from {@code recover} operation is not
+     * {@code null}. If it is, then a {@link NullPointerException} with appropriate message is thrown.
+     */
+    @Nonnull
+    default BooleanSupplier2 recover(@Nonnull final Function<? super Throwable, ? extends BooleanSupplier> recover) {
+        Objects.requireNonNull(recover);
+        return () -> {
+            try {
+                return this.getAsBooleanThrows();
+            } catch (Throwable throwable) {
+                final BooleanSupplier supplier = recover.apply(throwable);
+                Objects.requireNonNull(supplier, () -> "recover returned null for " + throwable.getClass() + ": "
+                        + throwable.getMessage());
+                return supplier.getAsBoolean();
             }
         };
     }

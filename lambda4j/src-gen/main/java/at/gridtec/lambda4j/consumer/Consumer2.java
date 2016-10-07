@@ -25,8 +25,8 @@ import java.util.function.Consumer;
 import java.util.function.Function;
 
 /**
- * Represents an operation that accepts one input argument and returns no result. Unlike most other functional
- * interfaces, {@code Consumer2} is expected to operate via side-effects.
+ * Represents an operation that accepts one input argument and returns no result.
+ * Unlike most other functional interfaces, {@code Consumer2} is expected to operate via side-effects.
  * <p>
  * This is a {@link FunctionalInterface} whose functional method is {@link #accept(Object)}.
  *
@@ -88,16 +88,16 @@ public interface Consumer2<T> extends Lambda, Consumer<T> {
     }
 
     /**
-     * Returns a composed {@link Consumer2} that first applies the {@code before} function to its input, and then
-     * applies this consumer to the result. If evaluation of either operation throws an exception, it is relayed to the
-     * caller of the composed operation.
+     * Returns a composed {@link Consumer2} that first applies the {@code before} function to its input, and
+     * then applies this consumer to the result.
+     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
      *
      * @param <A> The type of the argument to the given function, and of composed consumer
      * @param before The function to apply before this consumer is applied
      * @return A composed {@code Consumer2} that first applies the {@code before} function to its input, and then
      * applies this consumer to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is able to handle every type.
+     * @implSpec The input argument of this method is able to handle every type.
      */
     @Nonnull
     default <A> Consumer2<A> compose(@Nonnull final Function<? super A, ? extends T> before) {
@@ -107,8 +107,9 @@ public interface Consumer2<T> extends Lambda, Consumer<T> {
 
     /**
      * Returns a composed {@link Consumer2} that performs, in sequence, this consumer followed by the {@code after}
-     * consumer. If evaluation of either operation throws an exception, it is relayed to the caller of the composed
-     * operation. If performing this consumer throws an exception, the {@code after} consumer will not be performed.
+     * consumer.
+     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
+     * If performing this consumer throws an exception, the {@code after} consumer will not be performed.
      *
      * @param after The consumer to apply after this consumer is applied
      * @return A composed {@link Consumer2} that performs, in sequence, this consumer followed by the {@code after}

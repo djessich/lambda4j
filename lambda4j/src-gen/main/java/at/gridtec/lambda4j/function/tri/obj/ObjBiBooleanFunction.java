@@ -57,7 +57,8 @@ import java.util.function.Predicate;
 
 /**
  * Represents an operation that accepts one object-valued and two {@code boolean}-valued input arguments and produces a
- * result. This is a (reference, boolean, boolean) specialization of {@link TriFunction}.
+ * result.
+ * This is a (reference, boolean, boolean) specialization of {@link TriFunction}.
  * <p>
  * This is a {@link FunctionalInterface} whose functional method is {@link #apply(Object, boolean, boolean)}.
  *
@@ -193,9 +194,9 @@ public interface ObjBiBooleanFunction<T, R> extends Lambda {
     }
 
     /**
-     * Returns a composed {@link TriFunction} that first applies the {@code before} functions to its input, and then
-     * applies this function to the result. If evaluation of either operation throws an exception, it is relayed to the
-     * caller of the composed operation.
+     * Returns a composed {@link TriFunction} that first applies the {@code before} functions to its input, and
+     * then applies this function to the result.
+     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
      *
      * @param <A> The type of the argument to the first given function, and of composed function
      * @param <B> The type of the argument to the second given predicate, and of composed function
@@ -206,7 +207,7 @@ public interface ObjBiBooleanFunction<T, R> extends Lambda {
      * @return A composed {@code TriFunction} that first applies the {@code before} functions to its input, and then
      * applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is able to handle every type.
+     * @implSpec The input argument of this method is able to handle every type.
      */
     @Nonnull
     default <A, B, C> TriFunction<A, B, C, R> compose(@Nonnull final Function<? super A, ? extends T> before1,
@@ -229,7 +230,7 @@ public interface ObjBiBooleanFunction<T, R> extends Lambda {
      * @return A composed {@code TriBooleanFunction} that first applies the {@code before} functions to its input, and
      * then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
      * boolean}.
      */
     @Nonnull
@@ -243,10 +244,11 @@ public interface ObjBiBooleanFunction<T, R> extends Lambda {
     }
 
     /**
-     * Returns a composed {@link TriByteFunction} that first applies the {@code before} functions to its input, and then
-     * applies this function to the result. If evaluation of either operation throws an exception, it is relayed to the
-     * caller of the composed operation. This method is just convenience, to provide the ability to execute an operation
-     * which accepts {@code byte} input, before this primitive function is executed.
+     * Returns a composed {@link TriByteFunction} that first applies the {@code before} functions to
+     * its input, and then applies this function to the result.
+     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
+     * This method is just convenience, to provide the ability to execute an operation which accepts {@code byte} input,
+     * before this primitive function is executed.
      *
      * @param before1 The first function to apply before this function is applied
      * @param before2 The second predicate to apply before this function is applied
@@ -254,7 +256,7 @@ public interface ObjBiBooleanFunction<T, R> extends Lambda {
      * @return A composed {@code TriByteFunction} that first applies the {@code before} functions to its input, and then
      * applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
      * byte}.
      */
     @Nonnull
@@ -267,10 +269,11 @@ public interface ObjBiBooleanFunction<T, R> extends Lambda {
     }
 
     /**
-     * Returns a composed {@link TriCharFunction} that first applies the {@code before} functions to its input, and then
-     * applies this function to the result. If evaluation of either operation throws an exception, it is relayed to the
-     * caller of the composed operation. This method is just convenience, to provide the ability to execute an operation
-     * which accepts {@code char} input, before this primitive function is executed.
+     * Returns a composed {@link TriCharFunction} that first applies the {@code before} functions to
+     * its input, and then applies this function to the result.
+     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
+     * This method is just convenience, to provide the ability to execute an operation which accepts {@code char} input,
+     * before this primitive function is executed.
      *
      * @param before1 The first function to apply before this function is applied
      * @param before2 The second predicate to apply before this function is applied
@@ -278,7 +281,7 @@ public interface ObjBiBooleanFunction<T, R> extends Lambda {
      * @return A composed {@code TriCharFunction} that first applies the {@code before} functions to its input, and then
      * applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
      * char}.
      */
     @Nonnull
@@ -302,7 +305,7 @@ public interface ObjBiBooleanFunction<T, R> extends Lambda {
      * @return A composed {@code TriDoubleFunction} that first applies the {@code before} functions to its input, and
      * then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
      * double}.
      */
     @Nonnull
@@ -326,7 +329,7 @@ public interface ObjBiBooleanFunction<T, R> extends Lambda {
      * @return A composed {@code TriFloatFunction} that first applies the {@code before} functions to its input, and
      * then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
      * float}.
      */
     @Nonnull
@@ -339,10 +342,11 @@ public interface ObjBiBooleanFunction<T, R> extends Lambda {
     }
 
     /**
-     * Returns a composed {@link TriIntFunction} that first applies the {@code before} functions to its input, and then
-     * applies this function to the result. If evaluation of either operation throws an exception, it is relayed to the
-     * caller of the composed operation. This method is just convenience, to provide the ability to execute an operation
-     * which accepts {@code int} input, before this primitive function is executed.
+     * Returns a composed {@link TriIntFunction} that first applies the {@code before} functions to
+     * its input, and then applies this function to the result.
+     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
+     * This method is just convenience, to provide the ability to execute an operation which accepts {@code int} input,
+     * before this primitive function is executed.
      *
      * @param before1 The first function to apply before this function is applied
      * @param before2 The second predicate to apply before this function is applied
@@ -350,7 +354,7 @@ public interface ObjBiBooleanFunction<T, R> extends Lambda {
      * @return A composed {@code TriIntFunction} that first applies the {@code before} functions to its input, and then
      * applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
      * int}.
      */
     @Nonnull
@@ -363,10 +367,11 @@ public interface ObjBiBooleanFunction<T, R> extends Lambda {
     }
 
     /**
-     * Returns a composed {@link TriLongFunction} that first applies the {@code before} functions to its input, and then
-     * applies this function to the result. If evaluation of either operation throws an exception, it is relayed to the
-     * caller of the composed operation. This method is just convenience, to provide the ability to execute an operation
-     * which accepts {@code long} input, before this primitive function is executed.
+     * Returns a composed {@link TriLongFunction} that first applies the {@code before} functions to
+     * its input, and then applies this function to the result.
+     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
+     * This method is just convenience, to provide the ability to execute an operation which accepts {@code long} input,
+     * before this primitive function is executed.
      *
      * @param before1 The first function to apply before this function is applied
      * @param before2 The second predicate to apply before this function is applied
@@ -374,7 +379,7 @@ public interface ObjBiBooleanFunction<T, R> extends Lambda {
      * @return A composed {@code TriLongFunction} that first applies the {@code before} functions to its input, and then
      * applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
      * long}.
      */
     @Nonnull
@@ -398,7 +403,7 @@ public interface ObjBiBooleanFunction<T, R> extends Lambda {
      * @return A composed {@code TriShortFunction} that first applies the {@code before} functions to its input, and
      * then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
      * short}.
      */
     @Nonnull
@@ -420,7 +425,7 @@ public interface ObjBiBooleanFunction<T, R> extends Lambda {
      * @return A composed {@code ObjBiBooleanFunction} that first applies this function to its input, and then applies
      * the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is able to return every type.
+     * @implSpec The input argument of this method is able to return every type.
      */
     @Nonnull
     default <S> ObjBiBooleanFunction<T, S> andThen(@Nonnull final Function<? super R, ? extends S> after) {

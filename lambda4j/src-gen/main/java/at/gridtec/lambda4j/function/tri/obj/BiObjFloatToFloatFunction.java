@@ -68,7 +68,8 @@ import java.util.function.LongFunction;
 
 /**
  * Represents an operation that accepts two object-valued and one {@code float}-valued input argument and produces a
- * {@code float}-valued result. This is a (reference, reference, float) specialization of {@link TriFunction}.
+ * {@code float}-valued result.
+ * This is a (reference, reference, float) specialization of {@link TriFunction}.
  * <p>
  * This is a {@link FunctionalInterface} whose functional method is {@link #applyAsFloat(Object, Object, float)}.
  *
@@ -219,8 +220,8 @@ public interface BiObjFloatToFloatFunction<T, U> extends Lambda {
 
     /**
      * Returns a composed {@link ToFloatTriFunction} that first applies the {@code before} functions to its input, and
-     * then applies this function to the result. If evaluation of either operation throws an exception, it is relayed to
-     * the caller of the composed operation.
+     * then applies this function to the result.
+     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
      *
      * @param <A> The type of the argument to the first given function, and of composed function
      * @param <B> The type of the argument to the second given function, and of composed function
@@ -231,7 +232,7 @@ public interface BiObjFloatToFloatFunction<T, U> extends Lambda {
      * @return A composed {@code ToFloatTriFunction} that first applies the {@code before} functions to its input, and
      * then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is able to handle every type.
+     * @implSpec The input argument of this method is able to handle every type.
      */
     @Nonnull
     default <A, B, C> ToFloatTriFunction<A, B, C> compose(@Nonnull final Function<? super A, ? extends T> before1,
@@ -255,7 +256,7 @@ public interface BiObjFloatToFloatFunction<T, U> extends Lambda {
      * @return A composed {@code TriBooleanToFloatFunction} that first applies the {@code before} functions to its
      * input, and then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
      * boolean}.
      */
     @Nonnull
@@ -269,10 +270,11 @@ public interface BiObjFloatToFloatFunction<T, U> extends Lambda {
     }
 
     /**
-     * Returns a composed {@link TriByteToFloatFunction} that first applies the {@code before} functions to its input,
-     * and then applies this function to the result. If evaluation of either operation throws an exception, it is
-     * relayed to the caller of the composed operation. This method is just convenience, to provide the ability to
-     * execute an operation which accepts {@code byte} input, before this primitive function is executed.
+     * Returns a composed {@link TriByteToFloatFunction} that first applies the {@code before} functions to
+     * its input, and then applies this function to the result.
+     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
+     * This method is just convenience, to provide the ability to execute an operation which accepts {@code byte} input,
+     * before this primitive function is executed.
      *
      * @param before1 The first function to apply before this function is applied
      * @param before2 The second function to apply before this function is applied
@@ -280,7 +282,7 @@ public interface BiObjFloatToFloatFunction<T, U> extends Lambda {
      * @return A composed {@code TriByteToFloatFunction} that first applies the {@code before} functions to its input,
      * and then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
      * byte}.
      */
     @Nonnull
@@ -294,10 +296,11 @@ public interface BiObjFloatToFloatFunction<T, U> extends Lambda {
     }
 
     /**
-     * Returns a composed {@link TriCharToFloatFunction} that first applies the {@code before} functions to its input,
-     * and then applies this function to the result. If evaluation of either operation throws an exception, it is
-     * relayed to the caller of the composed operation. This method is just convenience, to provide the ability to
-     * execute an operation which accepts {@code char} input, before this primitive function is executed.
+     * Returns a composed {@link TriCharToFloatFunction} that first applies the {@code before} functions to
+     * its input, and then applies this function to the result.
+     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
+     * This method is just convenience, to provide the ability to execute an operation which accepts {@code char} input,
+     * before this primitive function is executed.
      *
      * @param before1 The first function to apply before this function is applied
      * @param before2 The second function to apply before this function is applied
@@ -305,7 +308,7 @@ public interface BiObjFloatToFloatFunction<T, U> extends Lambda {
      * @return A composed {@code TriCharToFloatFunction} that first applies the {@code before} functions to its input,
      * and then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
      * char}.
      */
     @Nonnull
@@ -330,7 +333,7 @@ public interface BiObjFloatToFloatFunction<T, U> extends Lambda {
      * @return A composed {@code TriDoubleToFloatFunction} that first applies the {@code before} functions to its input,
      * and then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
      * double}.
      */
     @Nonnull
@@ -355,7 +358,7 @@ public interface BiObjFloatToFloatFunction<T, U> extends Lambda {
      * @return A composed {@code FloatTernaryOperator} that first applies the {@code before} functions to its input, and
      * then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
      * float}.
      */
     @Nonnull
@@ -369,10 +372,11 @@ public interface BiObjFloatToFloatFunction<T, U> extends Lambda {
     }
 
     /**
-     * Returns a composed {@link TriIntToFloatFunction} that first applies the {@code before} functions to its input,
-     * and then applies this function to the result. If evaluation of either operation throws an exception, it is
-     * relayed to the caller of the composed operation. This method is just convenience, to provide the ability to
-     * execute an operation which accepts {@code int} input, before this primitive function is executed.
+     * Returns a composed {@link TriIntToFloatFunction} that first applies the {@code before} functions to
+     * its input, and then applies this function to the result.
+     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
+     * This method is just convenience, to provide the ability to execute an operation which accepts {@code int} input,
+     * before this primitive function is executed.
      *
      * @param before1 The first function to apply before this function is applied
      * @param before2 The second function to apply before this function is applied
@@ -380,7 +384,7 @@ public interface BiObjFloatToFloatFunction<T, U> extends Lambda {
      * @return A composed {@code TriIntToFloatFunction} that first applies the {@code before} functions to its input,
      * and then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
      * int}.
      */
     @Nonnull
@@ -394,10 +398,11 @@ public interface BiObjFloatToFloatFunction<T, U> extends Lambda {
     }
 
     /**
-     * Returns a composed {@link TriLongToFloatFunction} that first applies the {@code before} functions to its input,
-     * and then applies this function to the result. If evaluation of either operation throws an exception, it is
-     * relayed to the caller of the composed operation. This method is just convenience, to provide the ability to
-     * execute an operation which accepts {@code long} input, before this primitive function is executed.
+     * Returns a composed {@link TriLongToFloatFunction} that first applies the {@code before} functions to
+     * its input, and then applies this function to the result.
+     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
+     * This method is just convenience, to provide the ability to execute an operation which accepts {@code long} input,
+     * before this primitive function is executed.
      *
      * @param before1 The first function to apply before this function is applied
      * @param before2 The second function to apply before this function is applied
@@ -405,7 +410,7 @@ public interface BiObjFloatToFloatFunction<T, U> extends Lambda {
      * @return A composed {@code TriLongToFloatFunction} that first applies the {@code before} functions to its input,
      * and then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
      * long}.
      */
     @Nonnull
@@ -430,7 +435,7 @@ public interface BiObjFloatToFloatFunction<T, U> extends Lambda {
      * @return A composed {@code TriShortToFloatFunction} that first applies the {@code before} functions to its input,
      * and then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
      * short}.
      */
     @Nonnull
@@ -445,15 +450,15 @@ public interface BiObjFloatToFloatFunction<T, U> extends Lambda {
 
     /**
      * Returns a composed {@link BiObjFloatFunction} that first applies this function to its input, and then applies the
-     * {@code after} function to the result. If evaluation of either operation throws an exception, it is relayed to the
-     * caller of the composed operation.
+     * {@code after} function to the result.
+     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
      *
      * @param <S> The type of return value from the {@code after} function, and of the composed function
      * @param after The function to apply after this function is applied
      * @return A composed {@code BiObjFloatFunction} that first applies this function to its input, and then applies the
      * {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is able to return every type.
+     * @implSpec The input argument of this method is able to return every type.
      */
     @Nonnull
     default <S> BiObjFloatFunction<T, U, S> andThen(@Nonnull final FloatFunction<? extends S> after) {
@@ -471,7 +476,7 @@ public interface BiObjFloatToFloatFunction<T, U> extends Lambda {
      * @return A composed {@code BiObjFloatPredicate} that first applies this function to its input, and then applies
      * the {@code after} predicate to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
      * boolean}.
      */
     @Nonnull
@@ -490,7 +495,7 @@ public interface BiObjFloatToFloatFunction<T, U> extends Lambda {
      * @return A composed {@code BiObjFloatToByteFunction} that first applies this function to its input, and then
      * applies the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
      * byte}.
      */
     @Nonnull
@@ -509,7 +514,7 @@ public interface BiObjFloatToFloatFunction<T, U> extends Lambda {
      * @return A composed {@code BiObjFloatToCharFunction} that first applies this function to its input, and then
      * applies the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
      * char}.
      */
     @Nonnull
@@ -528,7 +533,7 @@ public interface BiObjFloatToFloatFunction<T, U> extends Lambda {
      * @return A composed {@code BiObjFloatToDoubleFunction} that first applies this function to its input, and then
      * applies the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
      * double}.
      */
     @Nonnull
@@ -547,7 +552,7 @@ public interface BiObjFloatToFloatFunction<T, U> extends Lambda {
      * @return A composed {@code BiObjFloatToFloatFunction} that first applies this function to its input, and then
      * applies the {@code after} operator to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
      * float}.
      */
     @Nonnull
@@ -566,7 +571,7 @@ public interface BiObjFloatToFloatFunction<T, U> extends Lambda {
      * @return A composed {@code BiObjFloatToIntFunction} that first applies this function to its input, and then
      * applies the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
      * int}.
      */
     @Nonnull
@@ -585,7 +590,7 @@ public interface BiObjFloatToFloatFunction<T, U> extends Lambda {
      * @return A composed {@code BiObjFloatToLongFunction} that first applies this function to its input, and then
      * applies the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
      * long}.
      */
     @Nonnull
@@ -604,7 +609,7 @@ public interface BiObjFloatToFloatFunction<T, U> extends Lambda {
      * @return A composed {@code BiObjFloatToShortFunction} that first applies this function to its input, and then
      * applies the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
      * short}.
      */
     @Nonnull

@@ -24,7 +24,8 @@ import java.util.Objects;
 import java.util.function.UnaryOperator;
 
 /**
- * Represents an operation that accepts three input arguments and produces a result.
+ * Represents an operation that accepts three input arguments and produces a
+ * result.
  * <p>
  * This is a {@link FunctionalInterface} whose functional method is {@link #apply(Object, Object, Object)}.
  *

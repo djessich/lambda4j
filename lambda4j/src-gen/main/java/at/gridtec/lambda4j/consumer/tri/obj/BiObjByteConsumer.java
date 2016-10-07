@@ -190,9 +190,9 @@ public interface BiObjByteConsumer<T, U> extends Lambda {
     }
 
     /**
-     * Returns a composed {@link TriConsumer} that first applies the {@code before} functions to its input, and then
-     * applies this consumer to the result. If evaluation of either operation throws an exception, it is relayed to the
-     * caller of the composed operation.
+     * Returns a composed {@link TriConsumer} that first applies the {@code before} functions to its input, and
+     * then applies this consumer to the result.
+     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
      *
      * @param <A> The type of the argument to the first given function, and of composed consumer
      * @param <B> The type of the argument to the second given function, and of composed consumer
@@ -203,7 +203,7 @@ public interface BiObjByteConsumer<T, U> extends Lambda {
      * @return A composed {@code TriConsumer} that first applies the {@code before} functions to its input, and then
      * applies this consumer to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is able to handle every type.
+     * @implSpec The input argument of this method is able to handle every type.
      */
     @Nonnull
     default <A, B, C> TriConsumer<A, B, C> compose(@Nonnull final Function<? super A, ? extends T> before1,
@@ -226,7 +226,7 @@ public interface BiObjByteConsumer<T, U> extends Lambda {
      * @return A composed {@code TriBooleanConsumer} that first applies the {@code before} functions to its input, and
      * then applies this consumer to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
      * boolean}.
      */
     @Nonnull
@@ -240,10 +240,11 @@ public interface BiObjByteConsumer<T, U> extends Lambda {
     }
 
     /**
-     * Returns a composed {@link TriByteConsumer} that first applies the {@code before} functions to its input, and then
-     * applies this consumer to the result. If evaluation of either operation throws an exception, it is relayed to the
-     * caller of the composed operation. This method is just convenience, to provide the ability to execute an operation
-     * which accepts {@code byte} input, before this primitive consumer is executed.
+     * Returns a composed {@link TriByteConsumer} that first applies the {@code before} functions to
+     * its input, and then applies this consumer to the result.
+     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
+     * This method is just convenience, to provide the ability to execute an operation which accepts {@code byte} input,
+     * before this primitive consumer is executed.
      *
      * @param before1 The first function to apply before this consumer is applied
      * @param before2 The second function to apply before this consumer is applied
@@ -251,7 +252,7 @@ public interface BiObjByteConsumer<T, U> extends Lambda {
      * @return A composed {@code TriByteConsumer} that first applies the {@code before} functions to its input, and then
      * applies this consumer to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
      * byte}.
      */
     @Nonnull
@@ -265,10 +266,11 @@ public interface BiObjByteConsumer<T, U> extends Lambda {
     }
 
     /**
-     * Returns a composed {@link TriCharConsumer} that first applies the {@code before} functions to its input, and then
-     * applies this consumer to the result. If evaluation of either operation throws an exception, it is relayed to the
-     * caller of the composed operation. This method is just convenience, to provide the ability to execute an operation
-     * which accepts {@code char} input, before this primitive consumer is executed.
+     * Returns a composed {@link TriCharConsumer} that first applies the {@code before} functions to
+     * its input, and then applies this consumer to the result.
+     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
+     * This method is just convenience, to provide the ability to execute an operation which accepts {@code char} input,
+     * before this primitive consumer is executed.
      *
      * @param before1 The first function to apply before this consumer is applied
      * @param before2 The second function to apply before this consumer is applied
@@ -276,7 +278,7 @@ public interface BiObjByteConsumer<T, U> extends Lambda {
      * @return A composed {@code TriCharConsumer} that first applies the {@code before} functions to its input, and then
      * applies this consumer to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
      * char}.
      */
     @Nonnull
@@ -301,7 +303,7 @@ public interface BiObjByteConsumer<T, U> extends Lambda {
      * @return A composed {@code TriDoubleConsumer} that first applies the {@code before} functions to its input, and
      * then applies this consumer to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
      * double}.
      */
     @Nonnull
@@ -326,7 +328,7 @@ public interface BiObjByteConsumer<T, U> extends Lambda {
      * @return A composed {@code TriFloatConsumer} that first applies the {@code before} functions to its input, and
      * then applies this consumer to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
      * float}.
      */
     @Nonnull
@@ -340,10 +342,11 @@ public interface BiObjByteConsumer<T, U> extends Lambda {
     }
 
     /**
-     * Returns a composed {@link TriIntConsumer} that first applies the {@code before} functions to its input, and then
-     * applies this consumer to the result. If evaluation of either operation throws an exception, it is relayed to the
-     * caller of the composed operation. This method is just convenience, to provide the ability to execute an operation
-     * which accepts {@code int} input, before this primitive consumer is executed.
+     * Returns a composed {@link TriIntConsumer} that first applies the {@code before} functions to
+     * its input, and then applies this consumer to the result.
+     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
+     * This method is just convenience, to provide the ability to execute an operation which accepts {@code int} input,
+     * before this primitive consumer is executed.
      *
      * @param before1 The first function to apply before this consumer is applied
      * @param before2 The second function to apply before this consumer is applied
@@ -351,7 +354,7 @@ public interface BiObjByteConsumer<T, U> extends Lambda {
      * @return A composed {@code TriIntConsumer} that first applies the {@code before} functions to its input, and then
      * applies this consumer to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
      * int}.
      */
     @Nonnull
@@ -365,10 +368,11 @@ public interface BiObjByteConsumer<T, U> extends Lambda {
     }
 
     /**
-     * Returns a composed {@link TriLongConsumer} that first applies the {@code before} functions to its input, and then
-     * applies this consumer to the result. If evaluation of either operation throws an exception, it is relayed to the
-     * caller of the composed operation. This method is just convenience, to provide the ability to execute an operation
-     * which accepts {@code long} input, before this primitive consumer is executed.
+     * Returns a composed {@link TriLongConsumer} that first applies the {@code before} functions to
+     * its input, and then applies this consumer to the result.
+     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
+     * This method is just convenience, to provide the ability to execute an operation which accepts {@code long} input,
+     * before this primitive consumer is executed.
      *
      * @param before1 The first function to apply before this consumer is applied
      * @param before2 The second function to apply before this consumer is applied
@@ -376,7 +380,7 @@ public interface BiObjByteConsumer<T, U> extends Lambda {
      * @return A composed {@code TriLongConsumer} that first applies the {@code before} functions to its input, and then
      * applies this consumer to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
      * long}.
      */
     @Nonnull
@@ -401,7 +405,7 @@ public interface BiObjByteConsumer<T, U> extends Lambda {
      * @return A composed {@code TriShortConsumer} that first applies the {@code before} functions to its input, and
      * then applies this consumer to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
      * short}.
      */
     @Nonnull

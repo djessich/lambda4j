@@ -43,11 +43,12 @@ import javax.annotation.Nullable;
 import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.function.Function;
 
 /**
- * Represents an operation that accepts one {@code boolean}-valued input argument and produces a {@code boolean}-valued
- * result which is able to throw any {@link Throwable}. This is a primitive specialization of {@link
- * ThrowableUnaryOperator}.
+ * Represents an operation that accepts one {@code boolean}-valued input argument and produces a
+ * {@code boolean}-valued result which is able to throw any {@link Throwable}.
+ * This is a primitive specialization of {@link ThrowableUnaryOperator}.
  * <p>
  * This is a {@link FunctionalInterface} whose functional method is {@link #applyAsBooleanThrows(boolean)}.
  *
@@ -146,7 +147,7 @@ public interface ThrowableBooleanUnaryOperator<X extends Throwable> extends Lamb
      * @return A composed {@code ThrowablePredicate} that first applies the {@code before} predicate to its input, and
      * then applies this operator to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is able to handle every type.
+     * @implSpec The input argument of this method is able to handle every type.
      */
     @Nonnull
     default <A> ThrowablePredicate<A, X> compose(@Nonnull final ThrowablePredicate<? super A, ? extends X> before) {
@@ -163,7 +164,7 @@ public interface ThrowableBooleanUnaryOperator<X extends Throwable> extends Lamb
      * @return A composed {@code ThrowableBooleanUnaryOperator} that first applies the {@code before} operator to its
      * input, and then applies this operator to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
      * boolean}.
      */
     @Nonnull
@@ -174,15 +175,16 @@ public interface ThrowableBooleanUnaryOperator<X extends Throwable> extends Lamb
     }
 
     /**
-     * Returns a composed {@link ThrowableBytePredicate} that first applies the {@code before} predicate to its input,
-     * and then applies this operator to the result. This method is just convenience, to provide the ability to execute
-     * an operation which accepts {@code byte} input, before this primitive operator is executed.
+     * Returns a composed {@link ThrowableBytePredicate} that first applies the {@code before} predicate to
+     * its input, and then applies this operator to the result.
+     * This method is just convenience, to provide the ability to execute an operation which accepts {@code byte} input,
+     * before this primitive operator is executed.
      *
      * @param before The predicate to apply before this operator is applied
      * @return A composed {@code ThrowableBytePredicate} that first applies the {@code before} predicate to its input,
      * and then applies this operator to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
      * byte}.
      */
     @Nonnull
@@ -192,15 +194,16 @@ public interface ThrowableBooleanUnaryOperator<X extends Throwable> extends Lamb
     }
 
     /**
-     * Returns a composed {@link ThrowableCharPredicate} that first applies the {@code before} predicate to its input,
-     * and then applies this operator to the result. This method is just convenience, to provide the ability to execute
-     * an operation which accepts {@code char} input, before this primitive operator is executed.
+     * Returns a composed {@link ThrowableCharPredicate} that first applies the {@code before} predicate to
+     * its input, and then applies this operator to the result.
+     * This method is just convenience, to provide the ability to execute an operation which accepts {@code char} input,
+     * before this primitive operator is executed.
      *
      * @param before The predicate to apply before this operator is applied
      * @return A composed {@code ThrowableCharPredicate} that first applies the {@code before} predicate to its input,
      * and then applies this operator to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
      * char}.
      */
     @Nonnull
@@ -218,7 +221,7 @@ public interface ThrowableBooleanUnaryOperator<X extends Throwable> extends Lamb
      * @return A composed {@code ThrowableDoublePredicate} that first applies the {@code before} predicate to its input,
      * and then applies this operator to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
      * double}.
      */
     @Nonnull
@@ -236,7 +239,7 @@ public interface ThrowableBooleanUnaryOperator<X extends Throwable> extends Lamb
      * @return A composed {@code ThrowableFloatPredicate} that first applies the {@code before} predicate to its input,
      * and then applies this operator to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
      * float}.
      */
     @Nonnull
@@ -246,15 +249,16 @@ public interface ThrowableBooleanUnaryOperator<X extends Throwable> extends Lamb
     }
 
     /**
-     * Returns a composed {@link ThrowableIntPredicate} that first applies the {@code before} predicate to its input,
-     * and then applies this operator to the result. This method is just convenience, to provide the ability to execute
-     * an operation which accepts {@code int} input, before this primitive operator is executed.
+     * Returns a composed {@link ThrowableIntPredicate} that first applies the {@code before} predicate to
+     * its input, and then applies this operator to the result.
+     * This method is just convenience, to provide the ability to execute an operation which accepts {@code int} input,
+     * before this primitive operator is executed.
      *
      * @param before The predicate to apply before this operator is applied
      * @return A composed {@code ThrowableIntPredicate} that first applies the {@code before} predicate to its input,
      * and then applies this operator to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
      * int}.
      */
     @Nonnull
@@ -264,15 +268,16 @@ public interface ThrowableBooleanUnaryOperator<X extends Throwable> extends Lamb
     }
 
     /**
-     * Returns a composed {@link ThrowableLongPredicate} that first applies the {@code before} predicate to its input,
-     * and then applies this operator to the result. This method is just convenience, to provide the ability to execute
-     * an operation which accepts {@code long} input, before this primitive operator is executed.
+     * Returns a composed {@link ThrowableLongPredicate} that first applies the {@code before} predicate to
+     * its input, and then applies this operator to the result.
+     * This method is just convenience, to provide the ability to execute an operation which accepts {@code long} input,
+     * before this primitive operator is executed.
      *
      * @param before The predicate to apply before this operator is applied
      * @return A composed {@code ThrowableLongPredicate} that first applies the {@code before} predicate to its input,
      * and then applies this operator to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
      * long}.
      */
     @Nonnull
@@ -290,7 +295,7 @@ public interface ThrowableBooleanUnaryOperator<X extends Throwable> extends Lamb
      * @return A composed {@code ThrowableShortPredicate} that first applies the {@code before} predicate to its input,
      * and then applies this operator to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
      * short}.
      */
     @Nonnull
@@ -308,7 +313,7 @@ public interface ThrowableBooleanUnaryOperator<X extends Throwable> extends Lamb
      * @return A composed {@code ThrowableBooleanFunction} that first applies this operator to its input, and then
      * applies the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is able to return every type.
+     * @implSpec The input argument of this method is able to return every type.
      */
     @Nonnull
     default <S> ThrowableBooleanFunction<S, X> andThen(
@@ -326,7 +331,7 @@ public interface ThrowableBooleanUnaryOperator<X extends Throwable> extends Lamb
      * @return A composed {@code ThrowableBooleanUnaryOperator} that first applies this operator to its input, and then
      * applies the {@code after} operator to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
      * boolean}.
      */
     @Nonnull
@@ -345,7 +350,7 @@ public interface ThrowableBooleanUnaryOperator<X extends Throwable> extends Lamb
      * @return A composed {@code ThrowableBooleanToByteFunction} that first applies this operator to its input, and then
      * applies the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
      * byte}.
      */
     @Nonnull
@@ -364,7 +369,7 @@ public interface ThrowableBooleanUnaryOperator<X extends Throwable> extends Lamb
      * @return A composed {@code ThrowableBooleanToCharFunction} that first applies this operator to its input, and then
      * applies the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
      * char}.
      */
     @Nonnull
@@ -383,7 +388,7 @@ public interface ThrowableBooleanUnaryOperator<X extends Throwable> extends Lamb
      * @return A composed {@code ThrowableBooleanToDoubleFunction} that first applies this operator to its input, and
      * then applies the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
      * double}.
      */
     @Nonnull
@@ -402,7 +407,7 @@ public interface ThrowableBooleanUnaryOperator<X extends Throwable> extends Lamb
      * @return A composed {@code ThrowableBooleanToFloatFunction} that first applies this operator to its input, and
      * then applies the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
      * float}.
      */
     @Nonnull
@@ -421,7 +426,7 @@ public interface ThrowableBooleanUnaryOperator<X extends Throwable> extends Lamb
      * @return A composed {@code ThrowableBooleanToIntFunction} that first applies this operator to its input, and then
      * applies the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
      * int}.
      */
     @Nonnull
@@ -440,7 +445,7 @@ public interface ThrowableBooleanUnaryOperator<X extends Throwable> extends Lamb
      * @return A composed {@code ThrowableBooleanToLongFunction} that first applies this operator to its input, and then
      * applies the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
      * long}.
      */
     @Nonnull
@@ -459,7 +464,7 @@ public interface ThrowableBooleanUnaryOperator<X extends Throwable> extends Lamb
      * @return A composed {@code ThrowableBooleanToShortFunction} that first applies this operator to its input, and
      * then applies the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
      * short}.
      */
     @Nonnull
@@ -621,6 +626,35 @@ public interface ThrowableBooleanUnaryOperator<X extends Throwable> extends Lamb
                 throw e;
             } catch (Throwable throwable) {
                 throw ThrowableUtils.sneakyThrow(throwable);
+            }
+        };
+    }
+
+    /**
+     * Returns a composed {@link BooleanUnaryOperator} that first applies this operator to its input, and then applies
+     * the {@code recover} operation if a {@link Throwable} is thrown from this one. The {@code recover} operation is
+     * represented by a curried operation which is called with throwable information and same argument of this
+     * operator.
+     *
+     * @param recover The operation to apply if this operator throws a {@code Throwable}
+     * @return A composed {@link BooleanUnaryOperator} that first applies this operator to its input, and then applies
+     * the {@code recover} operation if a {@link Throwable} is thrown from this one.
+     * @throws NullPointerException If given argument or the returned enclosing operator is {@code null}
+     * @implNote The implementation checks that the returned enclosing operator from {@code recover} operation is not
+     * {@code null}. If it is, then a {@link NullPointerException} with appropriate message is thrown.
+     */
+    @Nonnull
+    default BooleanUnaryOperator recover(
+            @Nonnull final Function<? super Throwable, ? extends BooleanUnaryOperator> recover) {
+        Objects.requireNonNull(recover);
+        return (value) -> {
+            try {
+                return this.applyAsBooleanThrows(value);
+            } catch (Throwable throwable) {
+                final BooleanUnaryOperator operator = recover.apply(throwable);
+                Objects.requireNonNull(operator, () -> "recover returned null for " + throwable.getClass() + ": "
+                        + throwable.getMessage());
+                return operator.applyAsBoolean(value);
             }
         };
     }

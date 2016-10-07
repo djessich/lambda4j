@@ -65,8 +65,9 @@ import java.util.function.LongToDoubleFunction;
 import java.util.function.ToDoubleFunction;
 
 /**
- * Represents an operation that accepts two {@code double}-valued input arguments and produces a {@code double}-valued
- * result. This is a primitive specialization of {@link BinaryOperator2}.
+ * Represents an operation that accepts two {@code double}-valued input arguments and produces a
+ * {@code double}-valued result.
+ * This is a primitive specialization of {@link BinaryOperator2}.
  * <p>
  * This is a {@link FunctionalInterface} whose functional method is {@link #applyAsDouble(double, double)}.
  *
@@ -204,8 +205,8 @@ public interface DoubleBinaryOperator2 extends Lambda, DoubleBinaryOperator {
 
     /**
      * Returns a composed {@link ToDoubleBiFunction2} that first applies the {@code before} functions to its input, and
-     * then applies this operator to the result. If evaluation of either operation throws an exception, it is relayed to
-     * the caller of the composed operation.
+     * then applies this operator to the result.
+     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
      *
      * @param <A> The type of the argument to the first given function, and of composed function
      * @param <B> The type of the argument to the second given function, and of composed function
@@ -214,7 +215,7 @@ public interface DoubleBinaryOperator2 extends Lambda, DoubleBinaryOperator {
      * @return A composed {@code ToDoubleBiFunction2} that first applies the {@code before} functions to its input, and
      * then applies this operator to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is able to handle every type.
+     * @implSpec The input argument of this method is able to handle every type.
      */
     @Nonnull
     default <A, B> ToDoubleBiFunction2<A, B> compose(@Nonnull final ToDoubleFunction<? super A> before1,
@@ -235,7 +236,7 @@ public interface DoubleBinaryOperator2 extends Lambda, DoubleBinaryOperator {
      * @return A composed {@code BiBooleanToDoubleFunction} that first applies the {@code before} functions to its
      * input, and then applies this operator to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
      * boolean}.
      */
     @Nonnull
@@ -247,17 +248,18 @@ public interface DoubleBinaryOperator2 extends Lambda, DoubleBinaryOperator {
     }
 
     /**
-     * Returns a composed {@link BiByteToDoubleFunction} that first applies the {@code before} functions to its input,
-     * and then applies this operator to the result. If evaluation of either operation throws an exception, it is
-     * relayed to the caller of the composed operation. This method is just convenience, to provide the ability to
-     * execute an operation which accepts {@code byte} input, before this primitive operator is executed.
+     * Returns a composed {@link BiByteToDoubleFunction} that first applies the {@code before} functions to
+     * its input, and then applies this operator to the result.
+     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
+     * This method is just convenience, to provide the ability to execute an operation which accepts {@code byte} input,
+     * before this primitive operator is executed.
      *
      * @param before1 The first function to apply before this operator is applied
      * @param before2 The second function to apply before this operator is applied
      * @return A composed {@code BiByteToDoubleFunction} that first applies the {@code before} functions to its input,
      * and then applies this operator to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
      * byte}.
      */
     @Nonnull
@@ -269,17 +271,18 @@ public interface DoubleBinaryOperator2 extends Lambda, DoubleBinaryOperator {
     }
 
     /**
-     * Returns a composed {@link BiCharToDoubleFunction} that first applies the {@code before} functions to its input,
-     * and then applies this operator to the result. If evaluation of either operation throws an exception, it is
-     * relayed to the caller of the composed operation. This method is just convenience, to provide the ability to
-     * execute an operation which accepts {@code char} input, before this primitive operator is executed.
+     * Returns a composed {@link BiCharToDoubleFunction} that first applies the {@code before} functions to
+     * its input, and then applies this operator to the result.
+     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
+     * This method is just convenience, to provide the ability to execute an operation which accepts {@code char} input,
+     * before this primitive operator is executed.
      *
      * @param before1 The first function to apply before this operator is applied
      * @param before2 The second function to apply before this operator is applied
      * @return A composed {@code BiCharToDoubleFunction} that first applies the {@code before} functions to its input,
      * and then applies this operator to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
      * char}.
      */
     @Nonnull
@@ -301,7 +304,7 @@ public interface DoubleBinaryOperator2 extends Lambda, DoubleBinaryOperator {
      * @return A composed {@code DoubleBinaryOperator2} that first applies the {@code before} operators to its input,
      * and then applies this operator to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
      * double}.
      */
     @Nonnull
@@ -323,7 +326,7 @@ public interface DoubleBinaryOperator2 extends Lambda, DoubleBinaryOperator {
      * @return A composed {@code BiFloatToDoubleFunction} that first applies the {@code before} functions to its input,
      * and then applies this operator to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
      * float}.
      */
     @Nonnull
@@ -335,17 +338,18 @@ public interface DoubleBinaryOperator2 extends Lambda, DoubleBinaryOperator {
     }
 
     /**
-     * Returns a composed {@link BiIntToDoubleFunction} that first applies the {@code before} functions to its input,
-     * and then applies this operator to the result. If evaluation of either operation throws an exception, it is
-     * relayed to the caller of the composed operation. This method is just convenience, to provide the ability to
-     * execute an operation which accepts {@code int} input, before this primitive operator is executed.
+     * Returns a composed {@link BiIntToDoubleFunction} that first applies the {@code before} functions to
+     * its input, and then applies this operator to the result.
+     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
+     * This method is just convenience, to provide the ability to execute an operation which accepts {@code int} input,
+     * before this primitive operator is executed.
      *
      * @param before1 The first function to apply before this operator is applied
      * @param before2 The second function to apply before this operator is applied
      * @return A composed {@code BiIntToDoubleFunction} that first applies the {@code before} functions to its input,
      * and then applies this operator to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
      * int}.
      */
     @Nonnull
@@ -357,17 +361,18 @@ public interface DoubleBinaryOperator2 extends Lambda, DoubleBinaryOperator {
     }
 
     /**
-     * Returns a composed {@link BiLongToDoubleFunction} that first applies the {@code before} functions to its input,
-     * and then applies this operator to the result. If evaluation of either operation throws an exception, it is
-     * relayed to the caller of the composed operation. This method is just convenience, to provide the ability to
-     * execute an operation which accepts {@code long} input, before this primitive operator is executed.
+     * Returns a composed {@link BiLongToDoubleFunction} that first applies the {@code before} functions to
+     * its input, and then applies this operator to the result.
+     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
+     * This method is just convenience, to provide the ability to execute an operation which accepts {@code long} input,
+     * before this primitive operator is executed.
      *
      * @param before1 The first function to apply before this operator is applied
      * @param before2 The second function to apply before this operator is applied
      * @return A composed {@code BiLongToDoubleFunction} that first applies the {@code before} functions to its input,
      * and then applies this operator to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
      * long}.
      */
     @Nonnull
@@ -389,7 +394,7 @@ public interface DoubleBinaryOperator2 extends Lambda, DoubleBinaryOperator {
      * @return A composed {@code BiShortToDoubleFunction} that first applies the {@code before} functions to its input,
      * and then applies this operator to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
      * short}.
      */
     @Nonnull
@@ -402,15 +407,15 @@ public interface DoubleBinaryOperator2 extends Lambda, DoubleBinaryOperator {
 
     /**
      * Returns a composed {@link BiDoubleFunction} that first applies this operator to its input, and then applies the
-     * {@code after} function to the result. If evaluation of either operation throws an exception, it is relayed to the
-     * caller of the composed operation.
+     * {@code after} function to the result.
+     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
      *
      * @param <S> The type of return value from the {@code after} function, and of the composed function
      * @param after The function to apply after this operator is applied
      * @return A composed {@code BiDoubleFunction} that first applies this operator to its input, and then applies the
      * {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is able to return every type.
+     * @implSpec The input argument of this method is able to return every type.
      */
     @Nonnull
     default <S> BiDoubleFunction<S> andThen(@Nonnull final DoubleFunction<? extends S> after) {
@@ -428,7 +433,7 @@ public interface DoubleBinaryOperator2 extends Lambda, DoubleBinaryOperator {
      * @return A composed {@code BiDoublePredicate} that first applies this operator to its input, and then applies the
      * {@code after} predicate to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
      * boolean}.
      */
     @Nonnull
@@ -447,7 +452,7 @@ public interface DoubleBinaryOperator2 extends Lambda, DoubleBinaryOperator {
      * @return A composed {@code BiDoubleToByteFunction} that first applies this operator to its input, and then applies
      * the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
      * byte}.
      */
     @Nonnull
@@ -466,7 +471,7 @@ public interface DoubleBinaryOperator2 extends Lambda, DoubleBinaryOperator {
      * @return A composed {@code BiDoubleToCharFunction} that first applies this operator to its input, and then applies
      * the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
      * char}.
      */
     @Nonnull
@@ -485,7 +490,7 @@ public interface DoubleBinaryOperator2 extends Lambda, DoubleBinaryOperator {
      * @return A composed {@code DoubleBinaryOperator2} that first applies this operator to its input, and then applies
      * the {@code after} operator to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
      * double}.
      */
     @Nonnull
@@ -504,7 +509,7 @@ public interface DoubleBinaryOperator2 extends Lambda, DoubleBinaryOperator {
      * @return A composed {@code BiDoubleToFloatFunction} that first applies this operator to its input, and then
      * applies the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
      * float}.
      */
     @Nonnull
@@ -523,7 +528,7 @@ public interface DoubleBinaryOperator2 extends Lambda, DoubleBinaryOperator {
      * @return A composed {@code BiDoubleToIntFunction} that first applies this operator to its input, and then applies
      * the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
      * int}.
      */
     @Nonnull
@@ -542,7 +547,7 @@ public interface DoubleBinaryOperator2 extends Lambda, DoubleBinaryOperator {
      * @return A composed {@code BiDoubleToLongFunction} that first applies this operator to its input, and then applies
      * the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
      * long}.
      */
     @Nonnull
@@ -561,7 +566,7 @@ public interface DoubleBinaryOperator2 extends Lambda, DoubleBinaryOperator {
      * @return A composed {@code BiDoubleToShortFunction} that first applies this operator to its input, and then
      * applies the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
      * short}.
      */
     @Nonnull

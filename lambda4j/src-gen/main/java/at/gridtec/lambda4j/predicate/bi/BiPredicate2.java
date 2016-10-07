@@ -223,9 +223,9 @@ public interface BiPredicate2<T, U> extends Lambda, BiPredicate<T, U> {
     }
 
     /**
-     * Returns a composed {@link BiPredicate2} that first applies the {@code before} functions to its input, and then
-     * applies this predicate to the result. If evaluation of either operation throws an exception, it is relayed to the
-     * caller of the composed operation.
+     * Returns a composed {@link BiPredicate2} that first applies the {@code before} functions to its input, and
+     * then applies this predicate to the result.
+     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
      *
      * @param <A> The type of the argument to the first given function, and of composed predicate
      * @param <B> The type of the argument to the second given function, and of composed predicate
@@ -234,7 +234,7 @@ public interface BiPredicate2<T, U> extends Lambda, BiPredicate<T, U> {
      * @return A composed {@code BiPredicate2} that first applies the {@code before} functions to its input, and then
      * applies this predicate to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is able to handle every type.
+     * @implSpec The input argument of this method is able to handle every type.
      */
     @Nonnull
     default <A, B> BiPredicate2<A, B> compose(@Nonnull final Function<? super A, ? extends T> before1,
@@ -246,15 +246,15 @@ public interface BiPredicate2<T, U> extends Lambda, BiPredicate<T, U> {
 
     /**
      * Returns a composed {@link BiFunction2} that first applies this predicate to its input, and then applies the
-     * {@code after} function to the result. If evaluation of either operation throws an exception, it is relayed to the
-     * caller of the composed operation.
+     * {@code after} function to the result.
+     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
      *
      * @param <S> The type of return value from the {@code after} function, and of the composed function
      * @param after The function to apply after this predicate is applied
      * @return A composed {@code BiFunction2} that first applies this predicate to its input, and then applies the
      * {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is able to return every type.
+     * @implSpec The input argument of this method is able to return every type.
      */
     @Nonnull
     default <S> BiFunction2<T, U, S> andThen(@Nonnull final BooleanFunction<? extends S> after) {
@@ -272,7 +272,7 @@ public interface BiPredicate2<T, U> extends Lambda, BiPredicate<T, U> {
      * @return A composed {@code BiPredicate2} that first applies this predicate to its input, and then applies the
      * {@code after} operator to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
      * boolean}.
      */
     @Nonnull
@@ -291,7 +291,7 @@ public interface BiPredicate2<T, U> extends Lambda, BiPredicate<T, U> {
      * @return A composed {@code ToByteBiFunction} that first applies this predicate to its input, and then applies the
      * {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
      * byte}.
      */
     @Nonnull
@@ -310,7 +310,7 @@ public interface BiPredicate2<T, U> extends Lambda, BiPredicate<T, U> {
      * @return A composed {@code ToCharBiFunction} that first applies this predicate to its input, and then applies the
      * {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
      * char}.
      */
     @Nonnull
@@ -329,7 +329,7 @@ public interface BiPredicate2<T, U> extends Lambda, BiPredicate<T, U> {
      * @return A composed {@code ToDoubleBiFunction2} that first applies this predicate to its input, and then applies
      * the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
      * double}.
      */
     @Nonnull
@@ -348,7 +348,7 @@ public interface BiPredicate2<T, U> extends Lambda, BiPredicate<T, U> {
      * @return A composed {@code ToFloatBiFunction} that first applies this predicate to its input, and then applies the
      * {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
      * float}.
      */
     @Nonnull
@@ -367,7 +367,7 @@ public interface BiPredicate2<T, U> extends Lambda, BiPredicate<T, U> {
      * @return A composed {@code ToIntBiFunction2} that first applies this predicate to its input, and then applies the
      * {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
      * int}.
      */
     @Nonnull
@@ -386,7 +386,7 @@ public interface BiPredicate2<T, U> extends Lambda, BiPredicate<T, U> {
      * @return A composed {@code ToLongBiFunction2} that first applies this predicate to its input, and then applies the
      * {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
      * long}.
      */
     @Nonnull
@@ -405,7 +405,7 @@ public interface BiPredicate2<T, U> extends Lambda, BiPredicate<T, U> {
      * @return A composed {@code ToShortBiFunction} that first applies this predicate to its input, and then applies the
      * {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
      * short}.
      */
     @Nonnull

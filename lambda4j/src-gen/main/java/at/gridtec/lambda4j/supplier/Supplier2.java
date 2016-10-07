@@ -104,16 +104,16 @@ public interface Supplier2<R> extends Lambda, Supplier<R> {
     }
 
     /**
-     * Returns a composed {@link Supplier2} that first applies this supplier to its input, and then applies the {@code
-     * after} function to the result. If evaluation of either operation throws an exception, it is relayed to the caller
-     * of the composed operation.
+     * Returns a composed {@link Supplier2} that first applies this supplier to its input, and then applies the
+     * {@code after} function to the result.
+     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
      *
      * @param <S> The type of return value from the {@code after} function, and of the composed supplier
      * @param after The function to apply after this supplier is applied
      * @return A composed {@code Supplier2} that first applies this supplier to its input, and then applies the {@code
      * after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is able to return every type.
+     * @implSpec The input argument of this method is able to return every type.
      */
     @Nonnull
     default <S> Supplier2<S> andThen(@Nonnull final Function<? super R, ? extends S> after) {
@@ -122,9 +122,9 @@ public interface Supplier2<R> extends Lambda, Supplier<R> {
     }
 
     /**
-     * Returns a composed {@link Consumer2} that first gets the result from this supplier, and then consumes the result
-     * using the given {@link Consumer}. If evaluation of either operation throws an exception, it is relayed to the
-     * caller of the composed operation.
+     * Returns a composed {@link Consumer2} that first gets the result from this supplier, and then consumes
+     * the result using the given {@link Consumer}.
+     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
      *
      * @param consumer The operation which consumes the result from this operation
      * @return A composed {@code Consumer2} that first gets the result from this supplier, and then consumes the result

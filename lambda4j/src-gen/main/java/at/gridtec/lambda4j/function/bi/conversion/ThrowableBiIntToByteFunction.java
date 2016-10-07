@@ -54,10 +54,12 @@ import javax.annotation.Nullable;
 import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.function.Function;
 
 /**
- * Represents an operation that accepts two {@code int}-valued input arguments and produces a {@code byte}-valued result
- * which is able to throw any {@link Throwable}. This is a primitive specialization of {@link ThrowableBiFunction}.
+ * Represents an operation that accepts two {@code int}-valued input arguments and produces a
+ * {@code byte}-valued result which is able to throw any {@link Throwable}.
+ * This is a primitive specialization of {@link ThrowableBiFunction}.
  * <p>
  * This is a {@link FunctionalInterface} whose functional method is {@link #applyAsByteThrows(int, int)}.
  *
@@ -183,7 +185,7 @@ public interface ThrowableBiIntToByteFunction<X extends Throwable> extends Lambd
      * @return A composed {@code ThrowableToByteBiFunction} that first applies the {@code before} functions to its
      * input, and then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is able to handle every type.
+     * @implSpec The input argument of this method is able to handle every type.
      */
     @Nonnull
     default <A, B> ThrowableToByteBiFunction<A, B, X> compose(
@@ -204,7 +206,7 @@ public interface ThrowableBiIntToByteFunction<X extends Throwable> extends Lambd
      * @return A composed {@code ThrowableBiBooleanToByteFunction} that first applies the {@code before} functions to
      * its input, and then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
      * boolean}.
      */
     @Nonnull
@@ -218,16 +220,17 @@ public interface ThrowableBiIntToByteFunction<X extends Throwable> extends Lambd
     }
 
     /**
-     * Returns a composed {@link ThrowableByteBinaryOperator} that first applies the {@code before} functions to its
-     * input, and then applies this function to the result. This method is just convenience, to provide the ability to
-     * execute an operation which accepts {@code byte} input, before this primitive function is executed.
+     * Returns a composed {@link ThrowableByteBinaryOperator} that first applies the {@code before} functions to
+     * its input, and then applies this function to the result.
+     * This method is just convenience, to provide the ability to execute an operation which accepts {@code byte} input,
+     * before this primitive function is executed.
      *
      * @param before1 The first function to apply before this function is applied
      * @param before2 The second function to apply before this function is applied
      * @return A composed {@code ThrowableByteBinaryOperator} that first applies the {@code before} functions to its
      * input, and then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
      * byte}.
      */
     @Nonnull
@@ -241,16 +244,17 @@ public interface ThrowableBiIntToByteFunction<X extends Throwable> extends Lambd
     }
 
     /**
-     * Returns a composed {@link ThrowableBiCharToByteFunction} that first applies the {@code before} functions to its
-     * input, and then applies this function to the result. This method is just convenience, to provide the ability to
-     * execute an operation which accepts {@code char} input, before this primitive function is executed.
+     * Returns a composed {@link ThrowableBiCharToByteFunction} that first applies the {@code before} functions to
+     * its input, and then applies this function to the result.
+     * This method is just convenience, to provide the ability to execute an operation which accepts {@code char} input,
+     * before this primitive function is executed.
      *
      * @param before1 The first function to apply before this function is applied
      * @param before2 The second function to apply before this function is applied
      * @return A composed {@code ThrowableBiCharToByteFunction} that first applies the {@code before} functions to its
      * input, and then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
      * char}.
      */
     @Nonnull
@@ -273,7 +277,7 @@ public interface ThrowableBiIntToByteFunction<X extends Throwable> extends Lambd
      * @return A composed {@code ThrowableBiDoubleToByteFunction} that first applies the {@code before} functions to its
      * input, and then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
      * double}.
      */
     @Nonnull
@@ -296,7 +300,7 @@ public interface ThrowableBiIntToByteFunction<X extends Throwable> extends Lambd
      * @return A composed {@code ThrowableBiFloatToByteFunction} that first applies the {@code before} functions to its
      * input, and then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
      * float}.
      */
     @Nonnull
@@ -310,16 +314,17 @@ public interface ThrowableBiIntToByteFunction<X extends Throwable> extends Lambd
     }
 
     /**
-     * Returns a composed {@link ThrowableBiIntToByteFunction} that first applies the {@code before} operators to its
-     * input, and then applies this function to the result. This method is just convenience, to provide the ability to
-     * execute an operation which accepts {@code int} input, before this primitive function is executed.
+     * Returns a composed {@link ThrowableBiIntToByteFunction} that first applies the {@code before} operators to
+     * its input, and then applies this function to the result.
+     * This method is just convenience, to provide the ability to execute an operation which accepts {@code int} input,
+     * before this primitive function is executed.
      *
      * @param before1 The first operator to apply before this function is applied
      * @param before2 The second operator to apply before this function is applied
      * @return A composed {@code ThrowableBiIntToByteFunction} that first applies the {@code before} operators to its
      * input, and then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
      * int}.
      */
     @Nonnull
@@ -333,16 +338,17 @@ public interface ThrowableBiIntToByteFunction<X extends Throwable> extends Lambd
     }
 
     /**
-     * Returns a composed {@link ThrowableBiLongToByteFunction} that first applies the {@code before} functions to its
-     * input, and then applies this function to the result. This method is just convenience, to provide the ability to
-     * execute an operation which accepts {@code long} input, before this primitive function is executed.
+     * Returns a composed {@link ThrowableBiLongToByteFunction} that first applies the {@code before} functions to
+     * its input, and then applies this function to the result.
+     * This method is just convenience, to provide the ability to execute an operation which accepts {@code long} input,
+     * before this primitive function is executed.
      *
      * @param before1 The first function to apply before this function is applied
      * @param before2 The second function to apply before this function is applied
      * @return A composed {@code ThrowableBiLongToByteFunction} that first applies the {@code before} functions to its
      * input, and then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
      * long}.
      */
     @Nonnull
@@ -365,7 +371,7 @@ public interface ThrowableBiIntToByteFunction<X extends Throwable> extends Lambd
      * @return A composed {@code ThrowableBiShortToByteFunction} that first applies the {@code before} functions to its
      * input, and then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
      * short}.
      */
     @Nonnull
@@ -387,7 +393,7 @@ public interface ThrowableBiIntToByteFunction<X extends Throwable> extends Lambd
      * @return A composed {@code ThrowableBiIntFunction} that first applies this function to its input, and then applies
      * the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is able to return every type.
+     * @implSpec The input argument of this method is able to return every type.
      */
     @Nonnull
     default <S> ThrowableBiIntFunction<S, X> andThen(
@@ -405,7 +411,7 @@ public interface ThrowableBiIntToByteFunction<X extends Throwable> extends Lambd
      * @return A composed {@code ThrowableBiIntPredicate} that first applies this function to its input, and then
      * applies the {@code after} predicate to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
      * boolean}.
      */
     @Nonnull
@@ -423,7 +429,7 @@ public interface ThrowableBiIntToByteFunction<X extends Throwable> extends Lambd
      * @return A composed {@code ThrowableBiIntToByteFunction} that first applies this function to its input, and then
      * applies the {@code after} operator to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
      * byte}.
      */
     @Nonnull
@@ -442,7 +448,7 @@ public interface ThrowableBiIntToByteFunction<X extends Throwable> extends Lambd
      * @return A composed {@code ThrowableBiIntToCharFunction} that first applies this function to its input, and then
      * applies the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
      * char}.
      */
     @Nonnull
@@ -461,7 +467,7 @@ public interface ThrowableBiIntToByteFunction<X extends Throwable> extends Lambd
      * @return A composed {@code ThrowableBiIntToDoubleFunction} that first applies this function to its input, and then
      * applies the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
      * double}.
      */
     @Nonnull
@@ -480,7 +486,7 @@ public interface ThrowableBiIntToByteFunction<X extends Throwable> extends Lambd
      * @return A composed {@code ThrowableBiIntToFloatFunction} that first applies this function to its input, and then
      * applies the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
      * float}.
      */
     @Nonnull
@@ -499,7 +505,7 @@ public interface ThrowableBiIntToByteFunction<X extends Throwable> extends Lambd
      * @return A composed {@code ThrowableIntBinaryOperator} that first applies this function to its input, and then
      * applies the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
      * int}.
      */
     @Nonnull
@@ -517,7 +523,7 @@ public interface ThrowableBiIntToByteFunction<X extends Throwable> extends Lambd
      * @return A composed {@code ThrowableBiIntToLongFunction} that first applies this function to its input, and then
      * applies the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
      * long}.
      */
     @Nonnull
@@ -536,7 +542,7 @@ public interface ThrowableBiIntToByteFunction<X extends Throwable> extends Lambd
      * @return A composed {@code ThrowableBiIntToShortFunction} that first applies this function to its input, and then
      * applies the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
      * short}.
      */
     @Nonnull
@@ -699,6 +705,35 @@ public interface ThrowableBiIntToByteFunction<X extends Throwable> extends Lambd
                 throw e;
             } catch (Throwable throwable) {
                 throw ThrowableUtils.sneakyThrow(throwable);
+            }
+        };
+    }
+
+    /**
+     * Returns a composed {@link BiIntToByteFunction} that first applies this function to its input, and then applies
+     * the {@code recover} operation if a {@link Throwable} is thrown from this one. The {@code recover} operation is
+     * represented by a curried operation which is called with throwable information and same arguments of this
+     * function.
+     *
+     * @param recover The operation to apply if this function throws a {@code Throwable}
+     * @return A composed {@link BiIntToByteFunction} that first applies this function to its input, and then applies
+     * the {@code recover} operation if a {@link Throwable} is thrown from this one.
+     * @throws NullPointerException If given argument or the returned enclosing function is {@code null}
+     * @implNote The implementation checks that the returned enclosing function from {@code recover} operation is not
+     * {@code null}. If it is, then a {@link NullPointerException} with appropriate message is thrown.
+     */
+    @Nonnull
+    default BiIntToByteFunction recover(
+            @Nonnull final Function<? super Throwable, ? extends BiIntToByteFunction> recover) {
+        Objects.requireNonNull(recover);
+        return (value1, value2) -> {
+            try {
+                return this.applyAsByteThrows(value1, value2);
+            } catch (Throwable throwable) {
+                final BiIntToByteFunction function = recover.apply(throwable);
+                Objects.requireNonNull(function, () -> "recover returned null for " + throwable.getClass() + ": "
+                        + throwable.getMessage());
+                return function.applyAsByte(value1, value2);
             }
         };
     }

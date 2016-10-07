@@ -64,8 +64,9 @@ import java.util.function.LongPredicate;
 import java.util.function.Predicate;
 
 /**
- * Represents an operation that accepts two {@code boolean}-valued input arguments and produces a {@code boolean}-valued
- * result. This is a primitive specialization of {@link BinaryOperator2}.
+ * Represents an operation that accepts two {@code boolean}-valued input arguments and produces a
+ * {@code boolean}-valued result.
+ * This is a primitive specialization of {@link BinaryOperator2}.
  * <p>
  * This is a {@link FunctionalInterface} whose functional method is {@link #applyAsBoolean(boolean, boolean)}.
  *
@@ -201,9 +202,9 @@ public interface BooleanBinaryOperator extends Lambda {
     }
 
     /**
-     * Returns a composed {@link BiPredicate2} that first applies the {@code before} predicates to its input, and then
-     * applies this operator to the result. If evaluation of either operation throws an exception, it is relayed to the
-     * caller of the composed operation.
+     * Returns a composed {@link BiPredicate2} that first applies the {@code before} predicates to its input, and
+     * then applies this operator to the result.
+     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
      *
      * @param <A> The type of the argument to the first given predicate, and of composed predicate
      * @param <B> The type of the argument to the second given predicate, and of composed predicate
@@ -212,7 +213,7 @@ public interface BooleanBinaryOperator extends Lambda {
      * @return A composed {@code BiPredicate2} that first applies the {@code before} predicates to its input, and then
      * applies this operator to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is able to handle every type.
+     * @implSpec The input argument of this method is able to handle every type.
      */
     @Nonnull
     default <A, B> BiPredicate2<A, B> compose(@Nonnull final Predicate<? super A> before1,
@@ -233,7 +234,7 @@ public interface BooleanBinaryOperator extends Lambda {
      * @return A composed {@code BooleanBinaryOperator} that first applies the {@code before} operators to its input,
      * and then applies this operator to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
      * boolean}.
      */
     @Nonnull
@@ -245,17 +246,18 @@ public interface BooleanBinaryOperator extends Lambda {
     }
 
     /**
-     * Returns a composed {@link BiBytePredicate} that first applies the {@code before} predicates to its input, and
-     * then applies this operator to the result. If evaluation of either operation throws an exception, it is relayed to
-     * the caller of the composed operation. This method is just convenience, to provide the ability to execute an
-     * operation which accepts {@code byte} input, before this primitive operator is executed.
+     * Returns a composed {@link BiBytePredicate} that first applies the {@code before} predicates to
+     * its input, and then applies this operator to the result.
+     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
+     * This method is just convenience, to provide the ability to execute an operation which accepts {@code byte} input,
+     * before this primitive operator is executed.
      *
      * @param before1 The first predicate to apply before this operator is applied
      * @param before2 The second predicate to apply before this operator is applied
      * @return A composed {@code BiBytePredicate} that first applies the {@code before} predicates to its input, and
      * then applies this operator to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
      * byte}.
      */
     @Nonnull
@@ -267,17 +269,18 @@ public interface BooleanBinaryOperator extends Lambda {
     }
 
     /**
-     * Returns a composed {@link BiCharPredicate} that first applies the {@code before} predicates to its input, and
-     * then applies this operator to the result. If evaluation of either operation throws an exception, it is relayed to
-     * the caller of the composed operation. This method is just convenience, to provide the ability to execute an
-     * operation which accepts {@code char} input, before this primitive operator is executed.
+     * Returns a composed {@link BiCharPredicate} that first applies the {@code before} predicates to
+     * its input, and then applies this operator to the result.
+     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
+     * This method is just convenience, to provide the ability to execute an operation which accepts {@code char} input,
+     * before this primitive operator is executed.
      *
      * @param before1 The first predicate to apply before this operator is applied
      * @param before2 The second predicate to apply before this operator is applied
      * @return A composed {@code BiCharPredicate} that first applies the {@code before} predicates to its input, and
      * then applies this operator to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
      * char}.
      */
     @Nonnull
@@ -299,7 +302,7 @@ public interface BooleanBinaryOperator extends Lambda {
      * @return A composed {@code BiDoublePredicate} that first applies the {@code before} predicates to its input, and
      * then applies this operator to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
      * double}.
      */
     @Nonnull
@@ -321,7 +324,7 @@ public interface BooleanBinaryOperator extends Lambda {
      * @return A composed {@code BiFloatPredicate} that first applies the {@code before} predicates to its input, and
      * then applies this operator to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
      * float}.
      */
     @Nonnull
@@ -333,17 +336,18 @@ public interface BooleanBinaryOperator extends Lambda {
     }
 
     /**
-     * Returns a composed {@link BiIntPredicate} that first applies the {@code before} predicates to its input, and then
-     * applies this operator to the result. If evaluation of either operation throws an exception, it is relayed to the
-     * caller of the composed operation. This method is just convenience, to provide the ability to execute an operation
-     * which accepts {@code int} input, before this primitive operator is executed.
+     * Returns a composed {@link BiIntPredicate} that first applies the {@code before} predicates to
+     * its input, and then applies this operator to the result.
+     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
+     * This method is just convenience, to provide the ability to execute an operation which accepts {@code int} input,
+     * before this primitive operator is executed.
      *
      * @param before1 The first predicate to apply before this operator is applied
      * @param before2 The second predicate to apply before this operator is applied
      * @return A composed {@code BiIntPredicate} that first applies the {@code before} predicates to its input, and then
      * applies this operator to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
      * int}.
      */
     @Nonnull
@@ -354,17 +358,18 @@ public interface BooleanBinaryOperator extends Lambda {
     }
 
     /**
-     * Returns a composed {@link BiLongPredicate} that first applies the {@code before} predicates to its input, and
-     * then applies this operator to the result. If evaluation of either operation throws an exception, it is relayed to
-     * the caller of the composed operation. This method is just convenience, to provide the ability to execute an
-     * operation which accepts {@code long} input, before this primitive operator is executed.
+     * Returns a composed {@link BiLongPredicate} that first applies the {@code before} predicates to
+     * its input, and then applies this operator to the result.
+     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
+     * This method is just convenience, to provide the ability to execute an operation which accepts {@code long} input,
+     * before this primitive operator is executed.
      *
      * @param before1 The first predicate to apply before this operator is applied
      * @param before2 The second predicate to apply before this operator is applied
      * @return A composed {@code BiLongPredicate} that first applies the {@code before} predicates to its input, and
      * then applies this operator to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
      * long}.
      */
     @Nonnull
@@ -386,7 +391,7 @@ public interface BooleanBinaryOperator extends Lambda {
      * @return A composed {@code BiShortPredicate} that first applies the {@code before} predicates to its input, and
      * then applies this operator to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
      * short}.
      */
     @Nonnull
@@ -399,15 +404,15 @@ public interface BooleanBinaryOperator extends Lambda {
 
     /**
      * Returns a composed {@link BiBooleanFunction} that first applies this operator to its input, and then applies the
-     * {@code after} function to the result. If evaluation of either operation throws an exception, it is relayed to the
-     * caller of the composed operation.
+     * {@code after} function to the result.
+     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
      *
      * @param <S> The type of return value from the {@code after} function, and of the composed function
      * @param after The function to apply after this operator is applied
      * @return A composed {@code BiBooleanFunction} that first applies this operator to its input, and then applies the
      * {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is able to return every type.
+     * @implSpec The input argument of this method is able to return every type.
      */
     @Nonnull
     default <S> BiBooleanFunction<S> andThen(@Nonnull final BooleanFunction<? extends S> after) {
@@ -425,7 +430,7 @@ public interface BooleanBinaryOperator extends Lambda {
      * @return A composed {@code BooleanBinaryOperator} that first applies this operator to its input, and then applies
      * the {@code after} operator to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
      * boolean}.
      */
     @Nonnull
@@ -444,7 +449,7 @@ public interface BooleanBinaryOperator extends Lambda {
      * @return A composed {@code BiBooleanToByteFunction} that first applies this operator to its input, and then
      * applies the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
      * byte}.
      */
     @Nonnull
@@ -463,7 +468,7 @@ public interface BooleanBinaryOperator extends Lambda {
      * @return A composed {@code BiBooleanToCharFunction} that first applies this operator to its input, and then
      * applies the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
      * char}.
      */
     @Nonnull
@@ -482,7 +487,7 @@ public interface BooleanBinaryOperator extends Lambda {
      * @return A composed {@code BiBooleanToDoubleFunction} that first applies this operator to its input, and then
      * applies the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
      * double}.
      */
     @Nonnull
@@ -501,7 +506,7 @@ public interface BooleanBinaryOperator extends Lambda {
      * @return A composed {@code BiBooleanToFloatFunction} that first applies this operator to its input, and then
      * applies the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
      * float}.
      */
     @Nonnull
@@ -520,7 +525,7 @@ public interface BooleanBinaryOperator extends Lambda {
      * @return A composed {@code BiBooleanToIntFunction} that first applies this operator to its input, and then applies
      * the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
      * int}.
      */
     @Nonnull
@@ -539,7 +544,7 @@ public interface BooleanBinaryOperator extends Lambda {
      * @return A composed {@code BiBooleanToLongFunction} that first applies this operator to its input, and then
      * applies the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
      * long}.
      */
     @Nonnull
@@ -558,7 +563,7 @@ public interface BooleanBinaryOperator extends Lambda {
      * @return A composed {@code BiBooleanToShortFunction} that first applies this operator to its input, and then
      * applies the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
      * short}.
      */
     @Nonnull

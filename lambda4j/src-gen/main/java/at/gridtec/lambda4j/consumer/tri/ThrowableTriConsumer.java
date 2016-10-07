@@ -27,6 +27,7 @@ import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.Objects;
+import java.util.function.Function;
 
 /**
  * Represents an operation that accepts three input arguments and returns no result which is able to throw any {@link
@@ -196,7 +197,7 @@ public interface ThrowableTriConsumer<T, U, V, X extends Throwable> extends Lamb
      * @return A composed {@code ThrowableTriConsumer} that first applies the {@code before} functions to its input, and
      * then applies this consumer to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is able to handle every type.
+     * @implSpec The input argument of this method is able to handle every type.
      */
     @Nonnull
     default <A, B, C> ThrowableTriConsumer<A, B, C, X> compose(
@@ -272,12 +273,12 @@ public interface ThrowableTriConsumer<T, U, V, X extends Throwable> extends Lamb
     }
 
     /**
-     * Returns a composed {@link TriConsumer} that applies this consumer to its input and sneakily throws the thrown
-     * {@link Throwable} from it, unless it is of type {@link RuntimeException} or {@link Error}. This means that each
-     * throwable thrown from the returned composed consumer behaves exactly the same as an <em>unchecked</em> throwable
-     * does. As a result, there is no need to handle the throwable of this consumer in the returned composed consumer by
-     * either wrapping it in an <em>unchecked</em> throwable or to declare it in the {@code throws} clause, as it would
-     * be done in a non sneaky throwing consumer.
+     * Returns a composed {@link TriConsumer} that applies this consumer to its input and sneakily throws the
+     * thrown {@link Throwable} from it, unless it is of type {@link RuntimeException} or {@link Error}. This means that
+     * each throwable thrown from the returned composed consumer behaves exactly the same as an <em>unchecked</em>
+     * throwable does. As a result, there is no need to handle the throwable of this consumer in the returned composed
+     * consumer by either wrapping it in an <em>unchecked</em> throwable or to declare it in the {@code throws} clause,
+     * as it would be done in a non sneaky throwing consumer.
      * <p>
      * What sneaky throwing simply does, is to fake out the compiler and thus it bypasses the principle of
      * <em>checked</em> throwables. On the JVM (class file) level, all throwables, checked or not, can be thrown
@@ -344,6 +345,34 @@ public interface ThrowableTriConsumer<T, U, V, X extends Throwable> extends Lamb
                 throw e;
             } catch (Throwable throwable) {
                 throw ThrowableUtils.sneakyThrow(throwable);
+            }
+        };
+    }
+
+    /**
+     * Returns a composed {@link TriConsumer} that first applies this consumer to its input, and then applies the {@code
+     * recover} operation if a {@link Throwable} is thrown from this one. The {@code recover} operation is represented
+     * by a curried operation which is called with throwable information and same arguments of this consumer.
+     *
+     * @param recover The operation to apply if this consumer throws a {@code Throwable}
+     * @return A composed {@link TriConsumer} that first applies this consumer to its input, and then applies the {@code
+     * recover} operation if a {@link Throwable} is thrown from this one.
+     * @throws NullPointerException If given argument or the returned enclosing consumer is {@code null}
+     * @implNote The implementation checks that the returned enclosing consumer from {@code recover} operation is not
+     * {@code null}. If it is, then a {@link NullPointerException} with appropriate message is thrown.
+     */
+    @Nonnull
+    default TriConsumer<T, U, V> recover(
+            @Nonnull final Function<? super Throwable, ? extends TriConsumer<? super T, ? super U, ? super V>> recover) {
+        Objects.requireNonNull(recover);
+        return (t, u, v) -> {
+            try {
+                this.acceptThrows(t, u, v);
+            } catch (Throwable throwable) {
+                final TriConsumer<? super T, ? super U, ? super V> consumer = recover.apply(throwable);
+                Objects.requireNonNull(consumer, () -> "recover returned null for " + throwable.getClass() + ": "
+                        + throwable.getMessage());
+                consumer.accept(t, u, v);
             }
         };
     }

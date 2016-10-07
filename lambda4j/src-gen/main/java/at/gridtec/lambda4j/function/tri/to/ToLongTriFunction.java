@@ -43,8 +43,9 @@ import java.util.function.LongUnaryOperator;
 import java.util.function.ToLongFunction;
 
 /**
- * Represents an operation that accepts three input arguments and produces a {@code long}-valued result. This is a
- * primitive specialization of {@link TriFunction}.
+ * Represents an operation that accepts three input arguments and produces a
+ * {@code long}-valued result.
+ * This is a primitive specialization of {@link TriFunction}.
  * <p>
  * This is a {@link FunctionalInterface} whose functional method is {@link #applyAsLong(Object, Object, Object)}.
  *
@@ -201,8 +202,8 @@ public interface ToLongTriFunction<T, U, V> extends Lambda {
 
     /**
      * Returns a composed {@link ToLongTriFunction} that first applies the {@code before} functions to its input, and
-     * then applies this function to the result. If evaluation of either operation throws an exception, it is relayed to
-     * the caller of the composed operation.
+     * then applies this function to the result.
+     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
      *
      * @param <A> The type of the argument to the first given function, and of composed function
      * @param <B> The type of the argument to the second given function, and of composed function
@@ -213,7 +214,7 @@ public interface ToLongTriFunction<T, U, V> extends Lambda {
      * @return A composed {@code ToLongTriFunction} that first applies the {@code before} functions to its input, and
      * then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is able to handle every type.
+     * @implSpec The input argument of this method is able to handle every type.
      */
     @Nonnull
     default <A, B, C> ToLongTriFunction<A, B, C> compose(@Nonnull final Function<? super A, ? extends T> before1,
@@ -226,16 +227,16 @@ public interface ToLongTriFunction<T, U, V> extends Lambda {
     }
 
     /**
-     * Returns a composed {@link TriFunction} that first applies this function to its input, and then applies the {@code
-     * after} function to the result. If evaluation of either operation throws an exception, it is relayed to the caller
-     * of the composed operation.
+     * Returns a composed {@link TriFunction} that first applies this function to its input, and then applies the
+     * {@code after} function to the result.
+     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
      *
      * @param <S> The type of return value from the {@code after} function, and of the composed function
      * @param after The function to apply after this function is applied
      * @return A composed {@code TriFunction} that first applies this function to its input, and then applies the {@code
      * after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is able to return every type.
+     * @implSpec The input argument of this method is able to return every type.
      */
     @Nonnull
     default <S> TriFunction<T, U, V, S> andThen(@Nonnull final LongFunction<? extends S> after) {
@@ -253,7 +254,7 @@ public interface ToLongTriFunction<T, U, V> extends Lambda {
      * @return A composed {@code TriPredicate} that first applies this function to its input, and then applies the
      * {@code after} predicate to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
      * boolean}.
      */
     @Nonnull
@@ -272,7 +273,7 @@ public interface ToLongTriFunction<T, U, V> extends Lambda {
      * @return A composed {@code ToByteTriFunction} that first applies this function to its input, and then applies the
      * {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
      * byte}.
      */
     @Nonnull
@@ -291,7 +292,7 @@ public interface ToLongTriFunction<T, U, V> extends Lambda {
      * @return A composed {@code ToCharTriFunction} that first applies this function to its input, and then applies the
      * {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
      * char}.
      */
     @Nonnull
@@ -310,7 +311,7 @@ public interface ToLongTriFunction<T, U, V> extends Lambda {
      * @return A composed {@code ToDoubleTriFunction} that first applies this function to its input, and then applies
      * the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
      * double}.
      */
     @Nonnull
@@ -329,7 +330,7 @@ public interface ToLongTriFunction<T, U, V> extends Lambda {
      * @return A composed {@code ToFloatTriFunction} that first applies this function to its input, and then applies the
      * {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
      * float}.
      */
     @Nonnull
@@ -348,7 +349,7 @@ public interface ToLongTriFunction<T, U, V> extends Lambda {
      * @return A composed {@code ToIntTriFunction} that first applies this function to its input, and then applies the
      * {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
      * int}.
      */
     @Nonnull
@@ -367,7 +368,7 @@ public interface ToLongTriFunction<T, U, V> extends Lambda {
      * @return A composed {@code ToLongTriFunction} that first applies this function to its input, and then applies the
      * {@code after} operator to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
      * long}.
      */
     @Nonnull
@@ -386,7 +387,7 @@ public interface ToLongTriFunction<T, U, V> extends Lambda {
      * @return A composed {@code ToShortTriFunction} that first applies this function to its input, and then applies the
      * {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
      * short}.
      */
     @Nonnull
@@ -397,8 +398,8 @@ public interface ToLongTriFunction<T, U, V> extends Lambda {
 
     /**
      * Returns a composed {@link TriConsumer} that fist applies this function to its input, and then consumes the result
-     * using the given {@link LongConsumer}. If evaluation of either operation throws an exception, it is relayed to the
-     * caller of the composed operation.
+     * using the given {@link LongConsumer}.
+     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
      *
      * @param consumer The operation which consumes the result from this operation
      * @return A composed {@code TriConsumer} that first applies this function to its input, and then consumes the

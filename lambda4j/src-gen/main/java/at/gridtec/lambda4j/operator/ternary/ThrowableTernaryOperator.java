@@ -24,8 +24,8 @@ import javax.annotation.Nullable;
 import java.util.Objects;
 
 /**
- * Represents an operation that accepts three input arguments and produces a result which is able to throw any {@link
- * Throwable}.
+ * Represents an operation that accepts three input arguments and produces a
+ * result which is able to throw any {@link Throwable}.
  * <p>
  * This is a {@link FunctionalInterface} whose functional method is {@link #applyThrows(Object, Object, Object)}.
  *

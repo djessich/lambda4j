@@ -64,8 +64,9 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.BinaryOperator;
 
 /**
- * Represents an operation that accepts two {@code byte}-valued input arguments and produces a {@code byte}-valued
- * result. This is a primitive specialization of {@link BinaryOperator2}.
+ * Represents an operation that accepts two {@code byte}-valued input arguments and produces a
+ * {@code byte}-valued result.
+ * This is a primitive specialization of {@link BinaryOperator2}.
  * <p>
  * This is a {@link FunctionalInterface} whose functional method is {@link #applyAsByte(byte, byte)}.
  *
@@ -202,8 +203,8 @@ public interface ByteBinaryOperator extends Lambda {
 
     /**
      * Returns a composed {@link ToByteBiFunction} that first applies the {@code before} functions to its input, and
-     * then applies this operator to the result. If evaluation of either operation throws an exception, it is relayed to
-     * the caller of the composed operation.
+     * then applies this operator to the result.
+     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
      *
      * @param <A> The type of the argument to the first given function, and of composed function
      * @param <B> The type of the argument to the second given function, and of composed function
@@ -212,7 +213,7 @@ public interface ByteBinaryOperator extends Lambda {
      * @return A composed {@code ToByteBiFunction} that first applies the {@code before} functions to its input, and
      * then applies this operator to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is able to handle every type.
+     * @implSpec The input argument of this method is able to handle every type.
      */
     @Nonnull
     default <A, B> ToByteBiFunction<A, B> compose(@Nonnull final ToByteFunction<? super A> before1,
@@ -233,7 +234,7 @@ public interface ByteBinaryOperator extends Lambda {
      * @return A composed {@code BiBooleanToByteFunction} that first applies the {@code before} functions to its input,
      * and then applies this operator to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
      * boolean}.
      */
     @Nonnull
@@ -245,17 +246,18 @@ public interface ByteBinaryOperator extends Lambda {
     }
 
     /**
-     * Returns a composed {@link ByteBinaryOperator} that first applies the {@code before} operators to its input, and
-     * then applies this operator to the result. If evaluation of either operation throws an exception, it is relayed to
-     * the caller of the composed operation. This method is just convenience, to provide the ability to execute an
-     * operation which accepts {@code byte} input, before this primitive operator is executed.
+     * Returns a composed {@link ByteBinaryOperator} that first applies the {@code before} operators to
+     * its input, and then applies this operator to the result.
+     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
+     * This method is just convenience, to provide the ability to execute an operation which accepts {@code byte} input,
+     * before this primitive operator is executed.
      *
      * @param before1 The first operator to apply before this operator is applied
      * @param before2 The second operator to apply before this operator is applied
      * @return A composed {@code ByteBinaryOperator} that first applies the {@code before} operators to its input, and
      * then applies this operator to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
      * byte}.
      */
     @Nonnull
@@ -267,17 +269,18 @@ public interface ByteBinaryOperator extends Lambda {
     }
 
     /**
-     * Returns a composed {@link BiCharToByteFunction} that first applies the {@code before} functions to its input, and
-     * then applies this operator to the result. If evaluation of either operation throws an exception, it is relayed to
-     * the caller of the composed operation. This method is just convenience, to provide the ability to execute an
-     * operation which accepts {@code char} input, before this primitive operator is executed.
+     * Returns a composed {@link BiCharToByteFunction} that first applies the {@code before} functions to
+     * its input, and then applies this operator to the result.
+     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
+     * This method is just convenience, to provide the ability to execute an operation which accepts {@code char} input,
+     * before this primitive operator is executed.
      *
      * @param before1 The first function to apply before this operator is applied
      * @param before2 The second function to apply before this operator is applied
      * @return A composed {@code BiCharToByteFunction} that first applies the {@code before} functions to its input, and
      * then applies this operator to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
      * char}.
      */
     @Nonnull
@@ -299,7 +302,7 @@ public interface ByteBinaryOperator extends Lambda {
      * @return A composed {@code BiDoubleToByteFunction} that first applies the {@code before} functions to its input,
      * and then applies this operator to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
      * double}.
      */
     @Nonnull
@@ -321,7 +324,7 @@ public interface ByteBinaryOperator extends Lambda {
      * @return A composed {@code BiFloatToByteFunction} that first applies the {@code before} functions to its input,
      * and then applies this operator to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
      * float}.
      */
     @Nonnull
@@ -333,17 +336,18 @@ public interface ByteBinaryOperator extends Lambda {
     }
 
     /**
-     * Returns a composed {@link BiIntToByteFunction} that first applies the {@code before} functions to its input, and
-     * then applies this operator to the result. If evaluation of either operation throws an exception, it is relayed to
-     * the caller of the composed operation. This method is just convenience, to provide the ability to execute an
-     * operation which accepts {@code int} input, before this primitive operator is executed.
+     * Returns a composed {@link BiIntToByteFunction} that first applies the {@code before} functions to
+     * its input, and then applies this operator to the result.
+     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
+     * This method is just convenience, to provide the ability to execute an operation which accepts {@code int} input,
+     * before this primitive operator is executed.
      *
      * @param before1 The first function to apply before this operator is applied
      * @param before2 The second function to apply before this operator is applied
      * @return A composed {@code BiIntToByteFunction} that first applies the {@code before} functions to its input, and
      * then applies this operator to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
      * int}.
      */
     @Nonnull
@@ -355,17 +359,18 @@ public interface ByteBinaryOperator extends Lambda {
     }
 
     /**
-     * Returns a composed {@link BiLongToByteFunction} that first applies the {@code before} functions to its input, and
-     * then applies this operator to the result. If evaluation of either operation throws an exception, it is relayed to
-     * the caller of the composed operation. This method is just convenience, to provide the ability to execute an
-     * operation which accepts {@code long} input, before this primitive operator is executed.
+     * Returns a composed {@link BiLongToByteFunction} that first applies the {@code before} functions to
+     * its input, and then applies this operator to the result.
+     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
+     * This method is just convenience, to provide the ability to execute an operation which accepts {@code long} input,
+     * before this primitive operator is executed.
      *
      * @param before1 The first function to apply before this operator is applied
      * @param before2 The second function to apply before this operator is applied
      * @return A composed {@code BiLongToByteFunction} that first applies the {@code before} functions to its input, and
      * then applies this operator to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
      * long}.
      */
     @Nonnull
@@ -387,7 +392,7 @@ public interface ByteBinaryOperator extends Lambda {
      * @return A composed {@code BiShortToByteFunction} that first applies the {@code before} functions to its input,
      * and then applies this operator to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
      * short}.
      */
     @Nonnull
@@ -400,15 +405,15 @@ public interface ByteBinaryOperator extends Lambda {
 
     /**
      * Returns a composed {@link BiByteFunction} that first applies this operator to its input, and then applies the
-     * {@code after} function to the result. If evaluation of either operation throws an exception, it is relayed to the
-     * caller of the composed operation.
+     * {@code after} function to the result.
+     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
      *
      * @param <S> The type of return value from the {@code after} function, and of the composed function
      * @param after The function to apply after this operator is applied
      * @return A composed {@code BiByteFunction} that first applies this operator to its input, and then applies the
      * {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is able to return every type.
+     * @implSpec The input argument of this method is able to return every type.
      */
     @Nonnull
     default <S> BiByteFunction<S> andThen(@Nonnull final ByteFunction<? extends S> after) {
@@ -426,7 +431,7 @@ public interface ByteBinaryOperator extends Lambda {
      * @return A composed {@code BiBytePredicate} that first applies this operator to its input, and then applies the
      * {@code after} predicate to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
      * boolean}.
      */
     @Nonnull
@@ -445,7 +450,7 @@ public interface ByteBinaryOperator extends Lambda {
      * @return A composed {@code ByteBinaryOperator} that first applies this operator to its input, and then applies the
      * {@code after} operator to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
      * byte}.
      */
     @Nonnull
@@ -464,7 +469,7 @@ public interface ByteBinaryOperator extends Lambda {
      * @return A composed {@code BiByteToCharFunction} that first applies this operator to its input, and then applies
      * the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
      * char}.
      */
     @Nonnull
@@ -483,7 +488,7 @@ public interface ByteBinaryOperator extends Lambda {
      * @return A composed {@code BiByteToDoubleFunction} that first applies this operator to its input, and then applies
      * the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
      * double}.
      */
     @Nonnull
@@ -502,7 +507,7 @@ public interface ByteBinaryOperator extends Lambda {
      * @return A composed {@code BiByteToFloatFunction} that first applies this operator to its input, and then applies
      * the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
      * float}.
      */
     @Nonnull
@@ -521,7 +526,7 @@ public interface ByteBinaryOperator extends Lambda {
      * @return A composed {@code BiByteToIntFunction} that first applies this operator to its input, and then applies
      * the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
      * int}.
      */
     @Nonnull
@@ -540,7 +545,7 @@ public interface ByteBinaryOperator extends Lambda {
      * @return A composed {@code BiByteToLongFunction} that first applies this operator to its input, and then applies
      * the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
      * long}.
      */
     @Nonnull
@@ -559,7 +564,7 @@ public interface ByteBinaryOperator extends Lambda {
      * @return A composed {@code BiByteToShortFunction} that first applies this operator to its input, and then applies
      * the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
      * short}.
      */
     @Nonnull

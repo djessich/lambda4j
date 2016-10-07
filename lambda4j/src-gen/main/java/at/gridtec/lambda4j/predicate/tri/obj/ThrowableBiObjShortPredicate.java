@@ -75,6 +75,7 @@ import javax.annotation.Nullable;
 import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.function.Function;
 
 /**
  * Represents an predicate (boolean-valued function) of two object-valued and one {@code short}-valued input argument
@@ -307,7 +308,7 @@ public interface ThrowableBiObjShortPredicate<T, U, X extends Throwable> extends
      * @return A composed {@code ThrowableTriPredicate} that first applies the {@code before} functions to its input,
      * and then applies this predicate to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is able to handle every type.
+     * @implSpec The input argument of this method is able to handle every type.
      */
     @Nonnull
     default <A, B, C> ThrowableTriPredicate<A, B, C, X> compose(
@@ -331,7 +332,7 @@ public interface ThrowableBiObjShortPredicate<T, U, X extends Throwable> extends
      * @return A composed {@code ThrowableBooleanTernaryOperator} that first applies the {@code before} functions to its
      * input, and then applies this predicate to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
      * boolean}.
      */
     @Nonnull
@@ -347,9 +348,10 @@ public interface ThrowableBiObjShortPredicate<T, U, X extends Throwable> extends
     }
 
     /**
-     * Returns a composed {@link ThrowableTriBytePredicate} that first applies the {@code before} functions to its
-     * input, and then applies this predicate to the result. This method is just convenience, to provide the ability to
-     * execute an operation which accepts {@code byte} input, before this primitive predicate is executed.
+     * Returns a composed {@link ThrowableTriBytePredicate} that first applies the {@code before} functions to
+     * its input, and then applies this predicate to the result.
+     * This method is just convenience, to provide the ability to execute an operation which accepts {@code byte} input,
+     * before this primitive predicate is executed.
      *
      * @param before1 The first function to apply before this predicate is applied
      * @param before2 The second function to apply before this predicate is applied
@@ -357,7 +359,7 @@ public interface ThrowableBiObjShortPredicate<T, U, X extends Throwable> extends
      * @return A composed {@code ThrowableTriBytePredicate} that first applies the {@code before} functions to its
      * input, and then applies this predicate to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
      * byte}.
      */
     @Nonnull
@@ -373,9 +375,10 @@ public interface ThrowableBiObjShortPredicate<T, U, X extends Throwable> extends
     }
 
     /**
-     * Returns a composed {@link ThrowableTriCharPredicate} that first applies the {@code before} functions to its
-     * input, and then applies this predicate to the result. This method is just convenience, to provide the ability to
-     * execute an operation which accepts {@code char} input, before this primitive predicate is executed.
+     * Returns a composed {@link ThrowableTriCharPredicate} that first applies the {@code before} functions to
+     * its input, and then applies this predicate to the result.
+     * This method is just convenience, to provide the ability to execute an operation which accepts {@code char} input,
+     * before this primitive predicate is executed.
      *
      * @param before1 The first function to apply before this predicate is applied
      * @param before2 The second function to apply before this predicate is applied
@@ -383,7 +386,7 @@ public interface ThrowableBiObjShortPredicate<T, U, X extends Throwable> extends
      * @return A composed {@code ThrowableTriCharPredicate} that first applies the {@code before} functions to its
      * input, and then applies this predicate to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
      * char}.
      */
     @Nonnull
@@ -409,7 +412,7 @@ public interface ThrowableBiObjShortPredicate<T, U, X extends Throwable> extends
      * @return A composed {@code ThrowableTriDoublePredicate} that first applies the {@code before} functions to its
      * input, and then applies this predicate to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
      * double}.
      */
     @Nonnull
@@ -435,7 +438,7 @@ public interface ThrowableBiObjShortPredicate<T, U, X extends Throwable> extends
      * @return A composed {@code ThrowableTriFloatPredicate} that first applies the {@code before} functions to its
      * input, and then applies this predicate to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
      * float}.
      */
     @Nonnull
@@ -451,9 +454,10 @@ public interface ThrowableBiObjShortPredicate<T, U, X extends Throwable> extends
     }
 
     /**
-     * Returns a composed {@link ThrowableTriIntPredicate} that first applies the {@code before} functions to its input,
-     * and then applies this predicate to the result. This method is just convenience, to provide the ability to execute
-     * an operation which accepts {@code int} input, before this primitive predicate is executed.
+     * Returns a composed {@link ThrowableTriIntPredicate} that first applies the {@code before} functions to
+     * its input, and then applies this predicate to the result.
+     * This method is just convenience, to provide the ability to execute an operation which accepts {@code int} input,
+     * before this primitive predicate is executed.
      *
      * @param before1 The first function to apply before this predicate is applied
      * @param before2 The second function to apply before this predicate is applied
@@ -461,7 +465,7 @@ public interface ThrowableBiObjShortPredicate<T, U, X extends Throwable> extends
      * @return A composed {@code ThrowableTriIntPredicate} that first applies the {@code before} functions to its input,
      * and then applies this predicate to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
      * int}.
      */
     @Nonnull
@@ -477,9 +481,10 @@ public interface ThrowableBiObjShortPredicate<T, U, X extends Throwable> extends
     }
 
     /**
-     * Returns a composed {@link ThrowableTriLongPredicate} that first applies the {@code before} functions to its
-     * input, and then applies this predicate to the result. This method is just convenience, to provide the ability to
-     * execute an operation which accepts {@code long} input, before this primitive predicate is executed.
+     * Returns a composed {@link ThrowableTriLongPredicate} that first applies the {@code before} functions to
+     * its input, and then applies this predicate to the result.
+     * This method is just convenience, to provide the ability to execute an operation which accepts {@code long} input,
+     * before this primitive predicate is executed.
      *
      * @param before1 The first function to apply before this predicate is applied
      * @param before2 The second function to apply before this predicate is applied
@@ -487,7 +492,7 @@ public interface ThrowableBiObjShortPredicate<T, U, X extends Throwable> extends
      * @return A composed {@code ThrowableTriLongPredicate} that first applies the {@code before} functions to its
      * input, and then applies this predicate to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
      * long}.
      */
     @Nonnull
@@ -513,7 +518,7 @@ public interface ThrowableBiObjShortPredicate<T, U, X extends Throwable> extends
      * @return A composed {@code ThrowableTriShortPredicate} that first applies the {@code before} functions to its
      * input, and then applies this predicate to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
      * short}.
      */
     @Nonnull
@@ -537,7 +542,7 @@ public interface ThrowableBiObjShortPredicate<T, U, X extends Throwable> extends
      * @return A composed {@code ThrowableBiObjShortFunction} that first applies this predicate to its input, and then
      * applies the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is able to return every type.
+     * @implSpec The input argument of this method is able to return every type.
      */
     @Nonnull
     default <S> ThrowableBiObjShortFunction<T, U, S, X> andThen(
@@ -555,7 +560,7 @@ public interface ThrowableBiObjShortPredicate<T, U, X extends Throwable> extends
      * @return A composed {@code ThrowableBiObjShortPredicate} that first applies this predicate to its input, and then
      * applies the {@code after} operator to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
      * boolean}.
      */
     @Nonnull
@@ -574,7 +579,7 @@ public interface ThrowableBiObjShortPredicate<T, U, X extends Throwable> extends
      * @return A composed {@code ThrowableBiObjShortToByteFunction} that first applies this predicate to its input, and
      * then applies the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
      * byte}.
      */
     @Nonnull
@@ -593,7 +598,7 @@ public interface ThrowableBiObjShortPredicate<T, U, X extends Throwable> extends
      * @return A composed {@code ThrowableBiObjShortToCharFunction} that first applies this predicate to its input, and
      * then applies the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
      * char}.
      */
     @Nonnull
@@ -612,7 +617,7 @@ public interface ThrowableBiObjShortPredicate<T, U, X extends Throwable> extends
      * @return A composed {@code ThrowableBiObjShortToDoubleFunction} that first applies this predicate to its input,
      * and then applies the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
      * double}.
      */
     @Nonnull
@@ -631,7 +636,7 @@ public interface ThrowableBiObjShortPredicate<T, U, X extends Throwable> extends
      * @return A composed {@code ThrowableBiObjShortToFloatFunction} that first applies this predicate to its input, and
      * then applies the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
      * float}.
      */
     @Nonnull
@@ -650,7 +655,7 @@ public interface ThrowableBiObjShortPredicate<T, U, X extends Throwable> extends
      * @return A composed {@code ThrowableBiObjShortToIntFunction} that first applies this predicate to its input, and
      * then applies the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
      * int}.
      */
     @Nonnull
@@ -669,7 +674,7 @@ public interface ThrowableBiObjShortPredicate<T, U, X extends Throwable> extends
      * @return A composed {@code ThrowableBiObjShortToLongFunction} that first applies this predicate to its input, and
      * then applies the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
      * long}.
      */
     @Nonnull
@@ -688,7 +693,7 @@ public interface ThrowableBiObjShortPredicate<T, U, X extends Throwable> extends
      * @return A composed {@code ThrowableBiObjShortToShortFunction} that first applies this predicate to its input, and
      * then applies the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
      * short}.
      */
     @Nonnull
@@ -936,6 +941,35 @@ public interface ThrowableBiObjShortPredicate<T, U, X extends Throwable> extends
                 throw e;
             } catch (Throwable throwable) {
                 throw ThrowableUtils.sneakyThrow(throwable);
+            }
+        };
+    }
+
+    /**
+     * Returns a composed {@link BiObjShortPredicate} that first applies this predicate to its input, and then applies
+     * the {@code recover} operation if a {@link Throwable} is thrown from this one. The {@code recover} operation is
+     * represented by a curried operation which is called with throwable information and same arguments of this
+     * predicate.
+     *
+     * @param recover The operation to apply if this predicate throws a {@code Throwable}
+     * @return A composed {@link BiObjShortPredicate} that first applies this predicate to its input, and then applies
+     * the {@code recover} operation if a {@link Throwable} is thrown from this one.
+     * @throws NullPointerException If given argument or the returned enclosing predicate is {@code null}
+     * @implNote The implementation checks that the returned enclosing predicate from {@code recover} operation is not
+     * {@code null}. If it is, then a {@link NullPointerException} with appropriate message is thrown.
+     */
+    @Nonnull
+    default BiObjShortPredicate<T, U> recover(
+            @Nonnull final Function<? super Throwable, ? extends BiObjShortPredicate<? super T, ? super U>> recover) {
+        Objects.requireNonNull(recover);
+        return (t, u, value) -> {
+            try {
+                return this.testThrows(t, u, value);
+            } catch (Throwable throwable) {
+                final BiObjShortPredicate<? super T, ? super U> predicate = recover.apply(throwable);
+                Objects.requireNonNull(predicate, () -> "recover returned null for " + throwable.getClass() + ": "
+                        + throwable.getMessage());
+                return predicate.test(t, u, value);
             }
         };
     }

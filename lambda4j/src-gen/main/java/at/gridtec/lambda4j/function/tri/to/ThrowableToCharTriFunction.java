@@ -42,10 +42,12 @@ import javax.annotation.Nullable;
 import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.function.Function;
 
 /**
- * Represents an operation that accepts three input arguments and produces a {@code char}-valued result which is able to
- * throw any {@link Throwable}. This is a primitive specialization of {@link ThrowableTriFunction}.
+ * Represents an operation that accepts three input arguments and produces a
+ * {@code char}-valued result which is able to throw any {@link Throwable}.
+ * This is a primitive specialization of {@link ThrowableTriFunction}.
  * <p>
  * This is a {@link FunctionalInterface} whose functional method is {@link #applyAsCharThrows(Object, Object, Object)}.
  *
@@ -228,7 +230,7 @@ public interface ThrowableToCharTriFunction<T, U, V, X extends Throwable> extend
      * @return A composed {@code ThrowableToCharTriFunction} that first applies the {@code before} functions to its
      * input, and then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is able to handle every type.
+     * @implSpec The input argument of this method is able to handle every type.
      */
     @Nonnull
     default <A, B, C> ThrowableToCharTriFunction<A, B, C, X> compose(
@@ -250,7 +252,7 @@ public interface ThrowableToCharTriFunction<T, U, V, X extends Throwable> extend
      * @return A composed {@code ThrowableTriFunction} that first applies this function to its input, and then applies
      * the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is able to return every type.
+     * @implSpec The input argument of this method is able to return every type.
      */
     @Nonnull
     default <S> ThrowableTriFunction<T, U, V, S, X> andThen(
@@ -268,7 +270,7 @@ public interface ThrowableToCharTriFunction<T, U, V, X extends Throwable> extend
      * @return A composed {@code ThrowableTriPredicate} that first applies this function to its input, and then applies
      * the {@code after} predicate to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
      * boolean}.
      */
     @Nonnull
@@ -287,7 +289,7 @@ public interface ThrowableToCharTriFunction<T, U, V, X extends Throwable> extend
      * @return A composed {@code ThrowableToByteTriFunction} that first applies this function to its input, and then
      * applies the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
      * byte}.
      */
     @Nonnull
@@ -306,7 +308,7 @@ public interface ThrowableToCharTriFunction<T, U, V, X extends Throwable> extend
      * @return A composed {@code ThrowableToCharTriFunction} that first applies this function to its input, and then
      * applies the {@code after} operator to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
      * char}.
      */
     @Nonnull
@@ -325,7 +327,7 @@ public interface ThrowableToCharTriFunction<T, U, V, X extends Throwable> extend
      * @return A composed {@code ThrowableToDoubleTriFunction} that first applies this function to its input, and then
      * applies the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
      * double}.
      */
     @Nonnull
@@ -344,7 +346,7 @@ public interface ThrowableToCharTriFunction<T, U, V, X extends Throwable> extend
      * @return A composed {@code ThrowableToFloatTriFunction} that first applies this function to its input, and then
      * applies the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
      * float}.
      */
     @Nonnull
@@ -363,7 +365,7 @@ public interface ThrowableToCharTriFunction<T, U, V, X extends Throwable> extend
      * @return A composed {@code ThrowableToIntTriFunction} that first applies this function to its input, and then
      * applies the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
      * int}.
      */
     @Nonnull
@@ -382,7 +384,7 @@ public interface ThrowableToCharTriFunction<T, U, V, X extends Throwable> extend
      * @return A composed {@code ThrowableToLongTriFunction} that first applies this function to its input, and then
      * applies the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
      * long}.
      */
     @Nonnull
@@ -401,7 +403,7 @@ public interface ThrowableToCharTriFunction<T, U, V, X extends Throwable> extend
      * @return A composed {@code ThrowableToShortTriFunction} that first applies this function to its input, and then
      * applies the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
      * short}.
      */
     @Nonnull
@@ -584,6 +586,35 @@ public interface ThrowableToCharTriFunction<T, U, V, X extends Throwable> extend
                 throw e;
             } catch (Throwable throwable) {
                 throw ThrowableUtils.sneakyThrow(throwable);
+            }
+        };
+    }
+
+    /**
+     * Returns a composed {@link ToCharTriFunction} that first applies this function to its input, and then applies the
+     * {@code recover} operation if a {@link Throwable} is thrown from this one. The {@code recover} operation is
+     * represented by a curried operation which is called with throwable information and same arguments of this
+     * function.
+     *
+     * @param recover The operation to apply if this function throws a {@code Throwable}
+     * @return A composed {@link ToCharTriFunction} that first applies this function to its input, and then applies the
+     * {@code recover} operation if a {@link Throwable} is thrown from this one.
+     * @throws NullPointerException If given argument or the returned enclosing function is {@code null}
+     * @implNote The implementation checks that the returned enclosing function from {@code recover} operation is not
+     * {@code null}. If it is, then a {@link NullPointerException} with appropriate message is thrown.
+     */
+    @Nonnull
+    default ToCharTriFunction<T, U, V> recover(
+            @Nonnull final Function<? super Throwable, ? extends ToCharTriFunction<? super T, ? super U, ? super V>> recover) {
+        Objects.requireNonNull(recover);
+        return (t, u, v) -> {
+            try {
+                return this.applyAsCharThrows(t, u, v);
+            } catch (Throwable throwable) {
+                final ToCharTriFunction<? super T, ? super U, ? super V> function = recover.apply(throwable);
+                Objects.requireNonNull(function, () -> "recover returned null for " + throwable.getClass() + ": "
+                        + throwable.getMessage());
+                return function.applyAsChar(t, u, v);
             }
         };
     }

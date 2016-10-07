@@ -26,7 +26,8 @@ import java.util.function.BinaryOperator;
 import java.util.function.UnaryOperator;
 
 /**
- * Represents an operation that accepts two input arguments and produces a result.
+ * Represents an operation that accepts two input arguments and produces a
+ * result.
  * <p>
  * This is a {@link FunctionalInterface} whose functional method is {@link #apply(Object, Object)}.
  *

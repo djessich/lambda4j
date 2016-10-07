@@ -31,7 +31,8 @@ import java.util.function.Consumer;
 import java.util.function.Function;
 
 /**
- * Represents an operation that accepts three input arguments and produces a result.
+ * Represents an operation that accepts three input arguments and produces a
+ * result.
  * <p>
  * This is a {@link FunctionalInterface} whose functional method is {@link #apply(Object, Object, Object)}.
  *
@@ -193,9 +194,9 @@ public interface TriFunction<T, U, V, R> extends Lambda {
     }
 
     /**
-     * Returns a composed {@link TriFunction} that first applies the {@code before} functions to its input, and then
-     * applies this function to the result. If evaluation of either operation throws an exception, it is relayed to the
-     * caller of the composed operation.
+     * Returns a composed {@link TriFunction} that first applies the {@code before} functions to its input, and
+     * then applies this function to the result.
+     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
      *
      * @param <A> The type of the argument to the first given function, and of composed function
      * @param <B> The type of the argument to the second given function, and of composed function
@@ -206,7 +207,7 @@ public interface TriFunction<T, U, V, R> extends Lambda {
      * @return A composed {@code TriFunction} that first applies the {@code before} functions to its input, and then
      * applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is able to handle every type.
+     * @implSpec The input argument of this method is able to handle every type.
      */
     @Nonnull
     default <A, B, C> TriFunction<A, B, C, R> compose(@Nonnull final Function<? super A, ? extends T> before1,
@@ -219,16 +220,16 @@ public interface TriFunction<T, U, V, R> extends Lambda {
     }
 
     /**
-     * Returns a composed {@link TriFunction} that first applies this function to its input, and then applies the {@code
-     * after} function to the result. If evaluation of either operation throws an exception, it is relayed to the caller
-     * of the composed operation.
+     * Returns a composed {@link TriFunction} that first applies this function to its input, and then applies the
+     * {@code after} function to the result.
+     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
      *
      * @param <S> The type of return value from the {@code after} function, and of the composed function
      * @param after The function to apply after this function is applied
      * @return A composed {@code TriFunction} that first applies this function to its input, and then applies the {@code
      * after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is able to return every type.
+     * @implSpec The input argument of this method is able to return every type.
      */
     @Nonnull
     default <S> TriFunction<T, U, V, S> andThen(@Nonnull final Function<? super R, ? extends S> after) {
@@ -238,8 +239,8 @@ public interface TriFunction<T, U, V, R> extends Lambda {
 
     /**
      * Returns a composed {@link TriConsumer} that fist applies this function to its input, and then consumes the result
-     * using the given {@link Consumer}. If evaluation of either operation throws an exception, it is relayed to the
-     * caller of the composed operation.
+     * using the given {@link Consumer}.
+     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
      *
      * @param consumer The operation which consumes the result from this operation
      * @return A composed {@code TriConsumer} that first applies this function to its input, and then consumes the

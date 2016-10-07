@@ -36,7 +36,8 @@ import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.Supplier;
 
 /**
- * Represents a supplier of {@code float}-valued results. This is a primitive specialization of {@link Supplier2}.
+ * Represents a supplier of {@code float}-valued results.
+ * This is a primitive specialization of {@link Supplier2}.
  * <p>
  * There is no requirement that a distinct result be returned each time the supplier is invoked.
  * <p>
@@ -107,16 +108,16 @@ public interface FloatSupplier extends Lambda {
     }
 
     /**
-     * Returns a composed {@link Supplier2} that first applies this supplier to its input, and then applies the {@code
-     * after} function to the result. If evaluation of either operation throws an exception, it is relayed to the caller
-     * of the composed operation.
+     * Returns a composed {@link Supplier2} that first applies this supplier to its input, and then applies the
+     * {@code after} function to the result.
+     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
      *
      * @param <S> The type of return value from the {@code after} function, and of the composed supplier
      * @param after The function to apply after this supplier is applied
      * @return A composed {@code Supplier2} that first applies this supplier to its input, and then applies the {@code
      * after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is able to return every type.
+     * @implSpec The input argument of this method is able to return every type.
      */
     @Nonnull
     default <S> Supplier2<S> andThen(@Nonnull final FloatFunction<? extends S> after) {
@@ -134,7 +135,7 @@ public interface FloatSupplier extends Lambda {
      * @return A composed {@code BooleanSupplier2} that first applies this supplier to its input, and then applies the
      * {@code after} predicate to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
      * boolean}.
      */
     @Nonnull
@@ -153,7 +154,7 @@ public interface FloatSupplier extends Lambda {
      * @return A composed {@code ByteSupplier} that first applies this supplier to its input, and then applies the
      * {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
      * byte}.
      */
     @Nonnull
@@ -172,7 +173,7 @@ public interface FloatSupplier extends Lambda {
      * @return A composed {@code CharSupplier} that first applies this supplier to its input, and then applies the
      * {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
      * char}.
      */
     @Nonnull
@@ -191,7 +192,7 @@ public interface FloatSupplier extends Lambda {
      * @return A composed {@code DoubleSupplier2} that first applies this supplier to its input, and then applies the
      * {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
      * double}.
      */
     @Nonnull
@@ -210,7 +211,7 @@ public interface FloatSupplier extends Lambda {
      * @return A composed {@code FloatSupplier} that first applies this supplier to its input, and then applies the
      * {@code after} operator to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
      * float}.
      */
     @Nonnull
@@ -229,7 +230,7 @@ public interface FloatSupplier extends Lambda {
      * @return A composed {@code IntSupplier2} that first applies this supplier to its input, and then applies the
      * {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
      * int}.
      */
     @Nonnull
@@ -248,7 +249,7 @@ public interface FloatSupplier extends Lambda {
      * @return A composed {@code LongSupplier2} that first applies this supplier to its input, and then applies the
      * {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
      * long}.
      */
     @Nonnull
@@ -267,7 +268,7 @@ public interface FloatSupplier extends Lambda {
      * @return A composed {@code ShortSupplier} that first applies this supplier to its input, and then applies the
      * {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
      * short}.
      */
     @Nonnull
@@ -277,9 +278,9 @@ public interface FloatSupplier extends Lambda {
     }
 
     /**
-     * Returns a composed {@link Consumer2} that first gets the result from this supplier, and then consumes the result
-     * using the given {@link FloatConsumer}. If evaluation of either operation throws an exception, it is relayed to
-     * the caller of the composed operation.
+     * Returns a composed {@link Consumer2} that first gets the result from this supplier, and then consumes
+     * the result using the given {@link FloatConsumer}.
+     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
      *
      * @param consumer The operation which consumes the result from this operation
      * @return A composed {@code Consumer2} that first gets the result from this supplier, and then consumes the result

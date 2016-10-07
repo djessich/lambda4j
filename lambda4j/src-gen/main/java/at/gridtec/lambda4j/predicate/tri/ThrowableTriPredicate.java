@@ -48,6 +48,7 @@ import javax.annotation.Nullable;
 import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.function.Function;
 
 /**
  * Represents an predicate (boolean-valued function) of three input arguments which is able to throw any {@link
@@ -288,7 +289,7 @@ public interface ThrowableTriPredicate<T, U, V, X extends Throwable> extends Lam
      * @return A composed {@code ThrowableTriPredicate} that first applies the {@code before} functions to its input,
      * and then applies this predicate to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is able to handle every type.
+     * @implSpec The input argument of this method is able to handle every type.
      */
     @Nonnull
     default <A, B, C> ThrowableTriPredicate<A, B, C, X> compose(
@@ -310,7 +311,7 @@ public interface ThrowableTriPredicate<T, U, V, X extends Throwable> extends Lam
      * @return A composed {@code ThrowableTriFunction} that first applies this predicate to its input, and then applies
      * the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is able to return every type.
+     * @implSpec The input argument of this method is able to return every type.
      */
     @Nonnull
     default <S> ThrowableTriFunction<T, U, V, S, X> andThen(
@@ -328,7 +329,7 @@ public interface ThrowableTriPredicate<T, U, V, X extends Throwable> extends Lam
      * @return A composed {@code ThrowableTriPredicate} that first applies this predicate to its input, and then applies
      * the {@code after} operator to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
      * boolean}.
      */
     @Nonnull
@@ -347,7 +348,7 @@ public interface ThrowableTriPredicate<T, U, V, X extends Throwable> extends Lam
      * @return A composed {@code ThrowableToByteTriFunction} that first applies this predicate to its input, and then
      * applies the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
      * byte}.
      */
     @Nonnull
@@ -366,7 +367,7 @@ public interface ThrowableTriPredicate<T, U, V, X extends Throwable> extends Lam
      * @return A composed {@code ThrowableToCharTriFunction} that first applies this predicate to its input, and then
      * applies the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
      * char}.
      */
     @Nonnull
@@ -385,7 +386,7 @@ public interface ThrowableTriPredicate<T, U, V, X extends Throwable> extends Lam
      * @return A composed {@code ThrowableToDoubleTriFunction} that first applies this predicate to its input, and then
      * applies the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
      * double}.
      */
     @Nonnull
@@ -404,7 +405,7 @@ public interface ThrowableTriPredicate<T, U, V, X extends Throwable> extends Lam
      * @return A composed {@code ThrowableToFloatTriFunction} that first applies this predicate to its input, and then
      * applies the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
      * float}.
      */
     @Nonnull
@@ -423,7 +424,7 @@ public interface ThrowableTriPredicate<T, U, V, X extends Throwable> extends Lam
      * @return A composed {@code ThrowableToIntTriFunction} that first applies this predicate to its input, and then
      * applies the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
      * int}.
      */
     @Nonnull
@@ -442,7 +443,7 @@ public interface ThrowableTriPredicate<T, U, V, X extends Throwable> extends Lam
      * @return A composed {@code ThrowableToLongTriFunction} that first applies this predicate to its input, and then
      * applies the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
      * long}.
      */
     @Nonnull
@@ -461,7 +462,7 @@ public interface ThrowableTriPredicate<T, U, V, X extends Throwable> extends Lam
      * @return A composed {@code ThrowableToShortTriFunction} that first applies this predicate to its input, and then
      * applies the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
      * short}.
      */
     @Nonnull
@@ -634,12 +635,12 @@ public interface ThrowableTriPredicate<T, U, V, X extends Throwable> extends Lam
     }
 
     /**
-     * Returns a composed {@link TriPredicate} that applies this predicate to its input and sneakily throws the thrown
-     * {@link Throwable} from it, unless it is of type {@link RuntimeException} or {@link Error}. This means that each
-     * throwable thrown from the returned composed predicate behaves exactly the same as an <em>unchecked</em> throwable
-     * does. As a result, there is no need to handle the throwable of this predicate in the returned composed predicate
-     * by either wrapping it in an <em>unchecked</em> throwable or to declare it in the {@code throws} clause, as it
-     * would be done in a non sneaky throwing predicate.
+     * Returns a composed {@link TriPredicate} that applies this predicate to its input and sneakily throws the
+     * thrown {@link Throwable} from it, unless it is of type {@link RuntimeException} or {@link Error}. This means that
+     * each throwable thrown from the returned composed predicate behaves exactly the same as an <em>unchecked</em>
+     * throwable does. As a result, there is no need to handle the throwable of this predicate in the returned composed
+     * predicate by either wrapping it in an <em>unchecked</em> throwable or to declare it in the {@code throws} clause,
+     * as it would be done in a non sneaky throwing predicate.
      * <p>
      * What sneaky throwing simply does, is to fake out the compiler and thus it bypasses the principle of
      * <em>checked</em> throwables. On the JVM (class file) level, all throwables, checked or not, can be thrown
@@ -706,6 +707,35 @@ public interface ThrowableTriPredicate<T, U, V, X extends Throwable> extends Lam
                 throw e;
             } catch (Throwable throwable) {
                 throw ThrowableUtils.sneakyThrow(throwable);
+            }
+        };
+    }
+
+    /**
+     * Returns a composed {@link TriPredicate} that first applies this predicate to its input, and then applies the
+     * {@code recover} operation if a {@link Throwable} is thrown from this one. The {@code recover} operation is
+     * represented by a curried operation which is called with throwable information and same arguments of this
+     * predicate.
+     *
+     * @param recover The operation to apply if this predicate throws a {@code Throwable}
+     * @return A composed {@link TriPredicate} that first applies this predicate to its input, and then applies the
+     * {@code recover} operation if a {@link Throwable} is thrown from this one.
+     * @throws NullPointerException If given argument or the returned enclosing predicate is {@code null}
+     * @implNote The implementation checks that the returned enclosing predicate from {@code recover} operation is not
+     * {@code null}. If it is, then a {@link NullPointerException} with appropriate message is thrown.
+     */
+    @Nonnull
+    default TriPredicate<T, U, V> recover(
+            @Nonnull final Function<? super Throwable, ? extends TriPredicate<? super T, ? super U, ? super V>> recover) {
+        Objects.requireNonNull(recover);
+        return (t, u, v) -> {
+            try {
+                return this.testThrows(t, u, v);
+            } catch (Throwable throwable) {
+                final TriPredicate<? super T, ? super U, ? super V> predicate = recover.apply(throwable);
+                Objects.requireNonNull(predicate, () -> "recover returned null for " + throwable.getClass() + ": "
+                        + throwable.getMessage());
+                return predicate.test(t, u, v);
             }
         };
     }

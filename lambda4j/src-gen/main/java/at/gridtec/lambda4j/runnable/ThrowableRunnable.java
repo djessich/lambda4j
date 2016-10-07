@@ -23,6 +23,7 @@ import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.Objects;
+import java.util.function.Function;
 
 @SuppressWarnings("unused")
 @FunctionalInterface
@@ -72,7 +73,7 @@ public interface ThrowableRunnable<X extends Throwable> extends Lambda, Runnable
      *
      * @apiNote This method mainly exists to use this {@link ThrowableRunnable} in JRE specific methods only accepting
      * {@link Runnable}. If this runnable should be applied, then the {@link #runThrows()} method should be used.
-     * @implSpec Overrides the {@link Runnable#run()} method by using a redefinition as default method. This
+     * @apiNote Overrides the {@link Runnable#run()} method by using a redefinition as default method. This
      * implementation calls the {@link #runThrows()} method of this function and catches the eventually thrown {@link
      * Throwable} from it. If it is of type {@link RuntimeException} or {@link Error} it is rethrown as is. Other {@code
      * Throwable} types are wrapped in a {@link ThrownByFunctionalInterfaceException}.
@@ -143,12 +144,12 @@ public interface ThrowableRunnable<X extends Throwable> extends Lambda, Runnable
     }
 
     /**
-     * Returns a composed {@link Runnable2} that applies this runnable to its input and sneakily throws the thrown
-     * {@link Throwable} from it, unless it is of type {@link RuntimeException} or {@link Error}. This means that each
-     * throwable thrown from the returned composed runnable behaves exactly the same as an <em>unchecked</em> throwable
-     * does. As a result, there is no need to handle the throwable of this runnable in the returned composed runnable by
-     * either wrapping it in an <em>unchecked</em> throwable or to declare it in the {@code throws} clause, as it would
-     * be done in a non sneaky throwing runnable.
+     * Returns a composed {@link Runnable2} that applies this runnable to its input and sneakily throws the
+     * thrown {@link Throwable} from it, unless it is of type {@link RuntimeException} or {@link Error}. This means that
+     * each throwable thrown from the returned composed runnable behaves exactly the same as an <em>unchecked</em>
+     * throwable does. As a result, there is no need to handle the throwable of this runnable in the returned composed
+     * runnable by either wrapping it in an <em>unchecked</em> throwable or to declare it in the {@code throws} clause,
+     * as it would be done in a non sneaky throwing runnable.
      * <p>
      * What sneaky throwing simply does, is to fake out the compiler and thus it bypasses the principle of
      * <em>checked</em> throwables. On the JVM (class file) level, all throwables, checked or not, can be thrown
@@ -215,6 +216,33 @@ public interface ThrowableRunnable<X extends Throwable> extends Lambda, Runnable
                 throw e;
             } catch (Throwable throwable) {
                 throw ThrowableUtils.sneakyThrow(throwable);
+            }
+        };
+    }
+
+    /**
+     * Returns a composed {@link Runnable2} that first applies this runnable to its input, and then applies the {@code
+     * recover} operation if a {@link Throwable} is thrown from this one. The {@code recover} operation is represented
+     * by a curried operation which is called with throwable information and same argument of this runnable.
+     *
+     * @param recover The operation to apply if this runnable throws a {@code Throwable}
+     * @return A composed {@link Runnable2} that first applies this runnable to its input, and then applies the {@code
+     * recover} operation if a {@link Throwable} is thrown from this one.
+     * @throws NullPointerException If given argument or the returned enclosing runnable is {@code null}
+     * @implNote The implementation checks that the returned enclosing runnable from {@code recover} operation is not
+     * {@code null}. If it is, then a {@link NullPointerException} with appropriate message is thrown.
+     */
+    @Nonnull
+    default Runnable2 recover(@Nonnull final Function<? super Throwable, ? extends Runnable> recover) {
+        Objects.requireNonNull(recover);
+        return () -> {
+            try {
+                this.runThrows();
+            } catch (Throwable throwable) {
+                final Runnable runnable = recover.apply(throwable);
+                Objects.requireNonNull(runnable, () -> "recover returned null for " + throwable.getClass() + ": "
+                        + throwable.getMessage());
+                runnable.run();
             }
         };
     }

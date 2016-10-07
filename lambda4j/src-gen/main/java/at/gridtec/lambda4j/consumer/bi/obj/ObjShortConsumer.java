@@ -151,9 +151,9 @@ public interface ObjShortConsumer<T> extends Lambda {
     }
 
     /**
-     * Returns a composed {@link BiConsumer2} that first applies the {@code before} functions to its input, and then
-     * applies this consumer to the result. If evaluation of either operation throws an exception, it is relayed to the
-     * caller of the composed operation.
+     * Returns a composed {@link BiConsumer2} that first applies the {@code before} functions to its input, and
+     * then applies this consumer to the result.
+     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
      *
      * @param <A> The type of the argument to the first given function, and of composed consumer
      * @param <B> The type of the argument to the second given function, and of composed consumer
@@ -162,7 +162,7 @@ public interface ObjShortConsumer<T> extends Lambda {
      * @return A composed {@code BiConsumer2} that first applies the {@code before} functions to its input, and then
      * applies this consumer to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is able to handle every type.
+     * @implSpec The input argument of this method is able to handle every type.
      */
     @Nonnull
     default <A, B> BiConsumer2<A, B> compose(@Nonnull final Function<? super A, ? extends T> before1,
@@ -183,7 +183,7 @@ public interface ObjShortConsumer<T> extends Lambda {
      * @return A composed {@code BiBooleanConsumer} that first applies the {@code before} functions to its input, and
      * then applies this consumer to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
      * boolean}.
      */
     @Nonnull
@@ -195,17 +195,18 @@ public interface ObjShortConsumer<T> extends Lambda {
     }
 
     /**
-     * Returns a composed {@link BiByteConsumer} that first applies the {@code before} functions to its input, and then
-     * applies this consumer to the result. If evaluation of either operation throws an exception, it is relayed to the
-     * caller of the composed operation. This method is just convenience, to provide the ability to execute an operation
-     * which accepts {@code byte} input, before this primitive consumer is executed.
+     * Returns a composed {@link BiByteConsumer} that first applies the {@code before} functions to
+     * its input, and then applies this consumer to the result.
+     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
+     * This method is just convenience, to provide the ability to execute an operation which accepts {@code byte} input,
+     * before this primitive consumer is executed.
      *
      * @param before1 The first function to apply before this consumer is applied
      * @param before2 The second function to apply before this consumer is applied
      * @return A composed {@code BiByteConsumer} that first applies the {@code before} functions to its input, and then
      * applies this consumer to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
      * byte}.
      */
     @Nonnull
@@ -217,17 +218,18 @@ public interface ObjShortConsumer<T> extends Lambda {
     }
 
     /**
-     * Returns a composed {@link BiCharConsumer} that first applies the {@code before} functions to its input, and then
-     * applies this consumer to the result. If evaluation of either operation throws an exception, it is relayed to the
-     * caller of the composed operation. This method is just convenience, to provide the ability to execute an operation
-     * which accepts {@code char} input, before this primitive consumer is executed.
+     * Returns a composed {@link BiCharConsumer} that first applies the {@code before} functions to
+     * its input, and then applies this consumer to the result.
+     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
+     * This method is just convenience, to provide the ability to execute an operation which accepts {@code char} input,
+     * before this primitive consumer is executed.
      *
      * @param before1 The first function to apply before this consumer is applied
      * @param before2 The second function to apply before this consumer is applied
      * @return A composed {@code BiCharConsumer} that first applies the {@code before} functions to its input, and then
      * applies this consumer to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
      * char}.
      */
     @Nonnull
@@ -249,7 +251,7 @@ public interface ObjShortConsumer<T> extends Lambda {
      * @return A composed {@code BiDoubleConsumer} that first applies the {@code before} functions to its input, and
      * then applies this consumer to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
      * double}.
      */
     @Nonnull
@@ -271,7 +273,7 @@ public interface ObjShortConsumer<T> extends Lambda {
      * @return A composed {@code BiFloatConsumer} that first applies the {@code before} functions to its input, and then
      * applies this consumer to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
      * float}.
      */
     @Nonnull
@@ -283,17 +285,18 @@ public interface ObjShortConsumer<T> extends Lambda {
     }
 
     /**
-     * Returns a composed {@link BiIntConsumer} that first applies the {@code before} functions to its input, and then
-     * applies this consumer to the result. If evaluation of either operation throws an exception, it is relayed to the
-     * caller of the composed operation. This method is just convenience, to provide the ability to execute an operation
-     * which accepts {@code int} input, before this primitive consumer is executed.
+     * Returns a composed {@link BiIntConsumer} that first applies the {@code before} functions to
+     * its input, and then applies this consumer to the result.
+     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
+     * This method is just convenience, to provide the ability to execute an operation which accepts {@code int} input,
+     * before this primitive consumer is executed.
      *
      * @param before1 The first function to apply before this consumer is applied
      * @param before2 The second function to apply before this consumer is applied
      * @return A composed {@code BiIntConsumer} that first applies the {@code before} functions to its input, and then
      * applies this consumer to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
      * int}.
      */
     @Nonnull
@@ -305,17 +308,18 @@ public interface ObjShortConsumer<T> extends Lambda {
     }
 
     /**
-     * Returns a composed {@link BiLongConsumer} that first applies the {@code before} functions to its input, and then
-     * applies this consumer to the result. If evaluation of either operation throws an exception, it is relayed to the
-     * caller of the composed operation. This method is just convenience, to provide the ability to execute an operation
-     * which accepts {@code long} input, before this primitive consumer is executed.
+     * Returns a composed {@link BiLongConsumer} that first applies the {@code before} functions to
+     * its input, and then applies this consumer to the result.
+     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
+     * This method is just convenience, to provide the ability to execute an operation which accepts {@code long} input,
+     * before this primitive consumer is executed.
      *
      * @param before1 The first function to apply before this consumer is applied
      * @param before2 The second function to apply before this consumer is applied
      * @return A composed {@code BiLongConsumer} that first applies the {@code before} functions to its input, and then
      * applies this consumer to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
      * long}.
      */
     @Nonnull
@@ -337,7 +341,7 @@ public interface ObjShortConsumer<T> extends Lambda {
      * @return A composed {@code BiShortConsumer} that first applies the {@code before} functions to its input, and then
      * applies this consumer to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
      * short}.
      */
     @Nonnull

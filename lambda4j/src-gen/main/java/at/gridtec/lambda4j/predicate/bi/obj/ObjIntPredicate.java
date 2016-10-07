@@ -225,9 +225,9 @@ public interface ObjIntPredicate<T> extends Lambda {
     }
 
     /**
-     * Returns a composed {@link BiPredicate2} that first applies the {@code before} functions to its input, and then
-     * applies this predicate to the result. If evaluation of either operation throws an exception, it is relayed to the
-     * caller of the composed operation.
+     * Returns a composed {@link BiPredicate2} that first applies the {@code before} functions to its input, and
+     * then applies this predicate to the result.
+     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
      *
      * @param <A> The type of the argument to the first given function, and of composed predicate
      * @param <B> The type of the argument to the second given function, and of composed predicate
@@ -236,7 +236,7 @@ public interface ObjIntPredicate<T> extends Lambda {
      * @return A composed {@code BiPredicate2} that first applies the {@code before} functions to its input, and then
      * applies this predicate to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is able to handle every type.
+     * @implSpec The input argument of this method is able to handle every type.
      */
     @Nonnull
     default <A, B> BiPredicate2<A, B> compose(@Nonnull final Function<? super A, ? extends T> before1,
@@ -257,7 +257,7 @@ public interface ObjIntPredicate<T> extends Lambda {
      * @return A composed {@code BooleanBinaryOperator} that first applies the {@code before} functions to its input,
      * and then applies this predicate to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
      * boolean}.
      */
     @Nonnull
@@ -269,17 +269,18 @@ public interface ObjIntPredicate<T> extends Lambda {
     }
 
     /**
-     * Returns a composed {@link BiBytePredicate} that first applies the {@code before} functions to its input, and then
-     * applies this predicate to the result. If evaluation of either operation throws an exception, it is relayed to the
-     * caller of the composed operation. This method is just convenience, to provide the ability to execute an operation
-     * which accepts {@code byte} input, before this primitive predicate is executed.
+     * Returns a composed {@link BiBytePredicate} that first applies the {@code before} functions to
+     * its input, and then applies this predicate to the result.
+     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
+     * This method is just convenience, to provide the ability to execute an operation which accepts {@code byte} input,
+     * before this primitive predicate is executed.
      *
      * @param before1 The first function to apply before this predicate is applied
      * @param before2 The second function to apply before this predicate is applied
      * @return A composed {@code BiBytePredicate} that first applies the {@code before} functions to its input, and then
      * applies this predicate to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
      * byte}.
      */
     @Nonnull
@@ -291,17 +292,18 @@ public interface ObjIntPredicate<T> extends Lambda {
     }
 
     /**
-     * Returns a composed {@link BiCharPredicate} that first applies the {@code before} functions to its input, and then
-     * applies this predicate to the result. If evaluation of either operation throws an exception, it is relayed to the
-     * caller of the composed operation. This method is just convenience, to provide the ability to execute an operation
-     * which accepts {@code char} input, before this primitive predicate is executed.
+     * Returns a composed {@link BiCharPredicate} that first applies the {@code before} functions to
+     * its input, and then applies this predicate to the result.
+     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
+     * This method is just convenience, to provide the ability to execute an operation which accepts {@code char} input,
+     * before this primitive predicate is executed.
      *
      * @param before1 The first function to apply before this predicate is applied
      * @param before2 The second function to apply before this predicate is applied
      * @return A composed {@code BiCharPredicate} that first applies the {@code before} functions to its input, and then
      * applies this predicate to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
      * char}.
      */
     @Nonnull
@@ -323,7 +325,7 @@ public interface ObjIntPredicate<T> extends Lambda {
      * @return A composed {@code BiDoublePredicate} that first applies the {@code before} functions to its input, and
      * then applies this predicate to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
      * double}.
      */
     @Nonnull
@@ -345,7 +347,7 @@ public interface ObjIntPredicate<T> extends Lambda {
      * @return A composed {@code BiFloatPredicate} that first applies the {@code before} functions to its input, and
      * then applies this predicate to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
      * float}.
      */
     @Nonnull
@@ -357,17 +359,18 @@ public interface ObjIntPredicate<T> extends Lambda {
     }
 
     /**
-     * Returns a composed {@link BiIntPredicate} that first applies the {@code before} functions to its input, and then
-     * applies this predicate to the result. If evaluation of either operation throws an exception, it is relayed to the
-     * caller of the composed operation. This method is just convenience, to provide the ability to execute an operation
-     * which accepts {@code int} input, before this primitive predicate is executed.
+     * Returns a composed {@link BiIntPredicate} that first applies the {@code before} functions to
+     * its input, and then applies this predicate to the result.
+     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
+     * This method is just convenience, to provide the ability to execute an operation which accepts {@code int} input,
+     * before this primitive predicate is executed.
      *
      * @param before1 The first function to apply before this predicate is applied
      * @param before2 The second operator to apply before this predicate is applied
      * @return A composed {@code BiIntPredicate} that first applies the {@code before} functions to its input, and then
      * applies this predicate to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
      * int}.
      */
     @Nonnull
@@ -379,17 +382,18 @@ public interface ObjIntPredicate<T> extends Lambda {
     }
 
     /**
-     * Returns a composed {@link BiLongPredicate} that first applies the {@code before} functions to its input, and then
-     * applies this predicate to the result. If evaluation of either operation throws an exception, it is relayed to the
-     * caller of the composed operation. This method is just convenience, to provide the ability to execute an operation
-     * which accepts {@code long} input, before this primitive predicate is executed.
+     * Returns a composed {@link BiLongPredicate} that first applies the {@code before} functions to
+     * its input, and then applies this predicate to the result.
+     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
+     * This method is just convenience, to provide the ability to execute an operation which accepts {@code long} input,
+     * before this primitive predicate is executed.
      *
      * @param before1 The first function to apply before this predicate is applied
      * @param before2 The second function to apply before this predicate is applied
      * @return A composed {@code BiLongPredicate} that first applies the {@code before} functions to its input, and then
      * applies this predicate to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
      * long}.
      */
     @Nonnull
@@ -411,7 +415,7 @@ public interface ObjIntPredicate<T> extends Lambda {
      * @return A composed {@code BiShortPredicate} that first applies the {@code before} functions to its input, and
      * then applies this predicate to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
      * short}.
      */
     @Nonnull
@@ -424,15 +428,15 @@ public interface ObjIntPredicate<T> extends Lambda {
 
     /**
      * Returns a composed {@link ObjIntFunction} that first applies this predicate to its input, and then applies the
-     * {@code after} function to the result. If evaluation of either operation throws an exception, it is relayed to the
-     * caller of the composed operation.
+     * {@code after} function to the result.
+     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
      *
      * @param <S> The type of return value from the {@code after} function, and of the composed function
      * @param after The function to apply after this predicate is applied
      * @return A composed {@code ObjIntFunction} that first applies this predicate to its input, and then applies the
      * {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is able to return every type.
+     * @implSpec The input argument of this method is able to return every type.
      */
     @Nonnull
     default <S> ObjIntFunction<T, S> andThen(@Nonnull final BooleanFunction<? extends S> after) {
@@ -450,7 +454,7 @@ public interface ObjIntPredicate<T> extends Lambda {
      * @return A composed {@code ObjIntPredicate} that first applies this predicate to its input, and then applies the
      * {@code after} operator to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
      * boolean}.
      */
     @Nonnull
@@ -469,7 +473,7 @@ public interface ObjIntPredicate<T> extends Lambda {
      * @return A composed {@code ObjIntToByteFunction} that first applies this predicate to its input, and then applies
      * the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
      * byte}.
      */
     @Nonnull
@@ -488,7 +492,7 @@ public interface ObjIntPredicate<T> extends Lambda {
      * @return A composed {@code ObjIntToCharFunction} that first applies this predicate to its input, and then applies
      * the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
      * char}.
      */
     @Nonnull
@@ -507,7 +511,7 @@ public interface ObjIntPredicate<T> extends Lambda {
      * @return A composed {@code ObjIntToDoubleFunction} that first applies this predicate to its input, and then
      * applies the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
      * double}.
      */
     @Nonnull
@@ -526,7 +530,7 @@ public interface ObjIntPredicate<T> extends Lambda {
      * @return A composed {@code ObjIntToFloatFunction} that first applies this predicate to its input, and then applies
      * the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
      * float}.
      */
     @Nonnull
@@ -545,7 +549,7 @@ public interface ObjIntPredicate<T> extends Lambda {
      * @return A composed {@code ObjIntToIntFunction} that first applies this predicate to its input, and then applies
      * the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
      * int}.
      */
     @Nonnull
@@ -564,7 +568,7 @@ public interface ObjIntPredicate<T> extends Lambda {
      * @return A composed {@code ObjIntToLongFunction} that first applies this predicate to its input, and then applies
      * the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
      * long}.
      */
     @Nonnull
@@ -583,7 +587,7 @@ public interface ObjIntPredicate<T> extends Lambda {
      * @return A composed {@code ObjIntToShortFunction} that first applies this predicate to its input, and then applies
      * the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
      * short}.
      */
     @Nonnull

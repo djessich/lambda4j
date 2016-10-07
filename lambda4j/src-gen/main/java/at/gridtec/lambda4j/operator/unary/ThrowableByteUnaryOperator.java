@@ -43,10 +43,12 @@ import javax.annotation.Nullable;
 import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.function.Function;
 
 /**
- * Represents an operation that accepts one {@code byte}-valued input argument and produces a {@code byte}-valued result
- * which is able to throw any {@link Throwable}. This is a primitive specialization of {@link ThrowableUnaryOperator}.
+ * Represents an operation that accepts one {@code byte}-valued input argument and produces a
+ * {@code byte}-valued result which is able to throw any {@link Throwable}.
+ * This is a primitive specialization of {@link ThrowableUnaryOperator}.
  * <p>
  * This is a {@link FunctionalInterface} whose functional method is {@link #applyAsByteThrows(byte)}.
  *
@@ -145,7 +147,7 @@ public interface ThrowableByteUnaryOperator<X extends Throwable> extends Lambda 
      * @return A composed {@code ThrowableToByteFunction} that first applies the {@code before} function to its input,
      * and then applies this operator to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is able to handle every type.
+     * @implSpec The input argument of this method is able to handle every type.
      */
     @Nonnull
     default <A> ThrowableToByteFunction<A, X> compose(
@@ -163,7 +165,7 @@ public interface ThrowableByteUnaryOperator<X extends Throwable> extends Lambda 
      * @return A composed {@code ThrowableBooleanToByteFunction} that first applies the {@code before} function to its
      * input, and then applies this operator to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
      * boolean}.
      */
     @Nonnull
@@ -174,15 +176,16 @@ public interface ThrowableByteUnaryOperator<X extends Throwable> extends Lambda 
     }
 
     /**
-     * Returns a composed {@link ThrowableByteUnaryOperator} that first applies the {@code before} operator to its
-     * input, and then applies this operator to the result. This method is just convenience, to provide the ability to
-     * execute an operation which accepts {@code byte} input, before this primitive operator is executed.
+     * Returns a composed {@link ThrowableByteUnaryOperator} that first applies the {@code before} operator to
+     * its input, and then applies this operator to the result.
+     * This method is just convenience, to provide the ability to execute an operation which accepts {@code byte} input,
+     * before this primitive operator is executed.
      *
      * @param before The operator to apply before this operator is applied
      * @return A composed {@code ThrowableByteUnaryOperator} that first applies the {@code before} operator to its
      * input, and then applies this operator to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
      * byte}.
      */
     @Nonnull
@@ -193,15 +196,16 @@ public interface ThrowableByteUnaryOperator<X extends Throwable> extends Lambda 
     }
 
     /**
-     * Returns a composed {@link ThrowableCharToByteFunction} that first applies the {@code before} function to its
-     * input, and then applies this operator to the result. This method is just convenience, to provide the ability to
-     * execute an operation which accepts {@code char} input, before this primitive operator is executed.
+     * Returns a composed {@link ThrowableCharToByteFunction} that first applies the {@code before} function to
+     * its input, and then applies this operator to the result.
+     * This method is just convenience, to provide the ability to execute an operation which accepts {@code char} input,
+     * before this primitive operator is executed.
      *
      * @param before The function to apply before this operator is applied
      * @return A composed {@code ThrowableCharToByteFunction} that first applies the {@code before} function to its
      * input, and then applies this operator to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
      * char}.
      */
     @Nonnull
@@ -220,7 +224,7 @@ public interface ThrowableByteUnaryOperator<X extends Throwable> extends Lambda 
      * @return A composed {@code ThrowableDoubleToByteFunction} that first applies the {@code before} function to its
      * input, and then applies this operator to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
      * double}.
      */
     @Nonnull
@@ -239,7 +243,7 @@ public interface ThrowableByteUnaryOperator<X extends Throwable> extends Lambda 
      * @return A composed {@code ThrowableFloatToByteFunction} that first applies the {@code before} function to its
      * input, and then applies this operator to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
      * float}.
      */
     @Nonnull
@@ -250,15 +254,16 @@ public interface ThrowableByteUnaryOperator<X extends Throwable> extends Lambda 
     }
 
     /**
-     * Returns a composed {@link ThrowableIntToByteFunction} that first applies the {@code before} function to its
-     * input, and then applies this operator to the result. This method is just convenience, to provide the ability to
-     * execute an operation which accepts {@code int} input, before this primitive operator is executed.
+     * Returns a composed {@link ThrowableIntToByteFunction} that first applies the {@code before} function to
+     * its input, and then applies this operator to the result.
+     * This method is just convenience, to provide the ability to execute an operation which accepts {@code int} input,
+     * before this primitive operator is executed.
      *
      * @param before The function to apply before this operator is applied
      * @return A composed {@code ThrowableIntToByteFunction} that first applies the {@code before} function to its
      * input, and then applies this operator to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
      * int}.
      */
     @Nonnull
@@ -269,15 +274,16 @@ public interface ThrowableByteUnaryOperator<X extends Throwable> extends Lambda 
     }
 
     /**
-     * Returns a composed {@link ThrowableLongToByteFunction} that first applies the {@code before} function to its
-     * input, and then applies this operator to the result. This method is just convenience, to provide the ability to
-     * execute an operation which accepts {@code long} input, before this primitive operator is executed.
+     * Returns a composed {@link ThrowableLongToByteFunction} that first applies the {@code before} function to
+     * its input, and then applies this operator to the result.
+     * This method is just convenience, to provide the ability to execute an operation which accepts {@code long} input,
+     * before this primitive operator is executed.
      *
      * @param before The function to apply before this operator is applied
      * @return A composed {@code ThrowableLongToByteFunction} that first applies the {@code before} function to its
      * input, and then applies this operator to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
      * long}.
      */
     @Nonnull
@@ -296,7 +302,7 @@ public interface ThrowableByteUnaryOperator<X extends Throwable> extends Lambda 
      * @return A composed {@code ThrowableShortToByteFunction} that first applies the {@code before} function to its
      * input, and then applies this operator to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
      * short}.
      */
     @Nonnull
@@ -315,7 +321,7 @@ public interface ThrowableByteUnaryOperator<X extends Throwable> extends Lambda 
      * @return A composed {@code ThrowableByteFunction} that first applies this operator to its input, and then applies
      * the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is able to return every type.
+     * @implSpec The input argument of this method is able to return every type.
      */
     @Nonnull
     default <S> ThrowableByteFunction<S, X> andThen(
@@ -333,7 +339,7 @@ public interface ThrowableByteUnaryOperator<X extends Throwable> extends Lambda 
      * @return A composed {@code ThrowableBytePredicate} that first applies this operator to its input, and then applies
      * the {@code after} predicate to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
      * boolean}.
      */
     @Nonnull
@@ -351,7 +357,7 @@ public interface ThrowableByteUnaryOperator<X extends Throwable> extends Lambda 
      * @return A composed {@code ThrowableByteUnaryOperator} that first applies this operator to its input, and then
      * applies the {@code after} operator to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
      * byte}.
      */
     @Nonnull
@@ -369,7 +375,7 @@ public interface ThrowableByteUnaryOperator<X extends Throwable> extends Lambda 
      * @return A composed {@code ThrowableByteToCharFunction} that first applies this operator to its input, and then
      * applies the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
      * char}.
      */
     @Nonnull
@@ -388,7 +394,7 @@ public interface ThrowableByteUnaryOperator<X extends Throwable> extends Lambda 
      * @return A composed {@code ThrowableByteToDoubleFunction} that first applies this operator to its input, and then
      * applies the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
      * double}.
      */
     @Nonnull
@@ -407,7 +413,7 @@ public interface ThrowableByteUnaryOperator<X extends Throwable> extends Lambda 
      * @return A composed {@code ThrowableByteToFloatFunction} that first applies this operator to its input, and then
      * applies the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
      * float}.
      */
     @Nonnull
@@ -426,7 +432,7 @@ public interface ThrowableByteUnaryOperator<X extends Throwable> extends Lambda 
      * @return A composed {@code ThrowableByteToIntFunction} that first applies this operator to its input, and then
      * applies the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
      * int}.
      */
     @Nonnull
@@ -444,7 +450,7 @@ public interface ThrowableByteUnaryOperator<X extends Throwable> extends Lambda 
      * @return A composed {@code ThrowableByteToLongFunction} that first applies this operator to its input, and then
      * applies the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
      * long}.
      */
     @Nonnull
@@ -463,7 +469,7 @@ public interface ThrowableByteUnaryOperator<X extends Throwable> extends Lambda 
      * @return A composed {@code ThrowableByteToShortFunction} that first applies this operator to its input, and then
      * applies the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
      * short}.
      */
     @Nonnull
@@ -625,6 +631,34 @@ public interface ThrowableByteUnaryOperator<X extends Throwable> extends Lambda 
                 throw e;
             } catch (Throwable throwable) {
                 throw ThrowableUtils.sneakyThrow(throwable);
+            }
+        };
+    }
+
+    /**
+     * Returns a composed {@link ByteUnaryOperator} that first applies this operator to its input, and then applies the
+     * {@code recover} operation if a {@link Throwable} is thrown from this one. The {@code recover} operation is
+     * represented by a curried operation which is called with throwable information and same argument of this
+     * operator.
+     *
+     * @param recover The operation to apply if this operator throws a {@code Throwable}
+     * @return A composed {@link ByteUnaryOperator} that first applies this operator to its input, and then applies the
+     * {@code recover} operation if a {@link Throwable} is thrown from this one.
+     * @throws NullPointerException If given argument or the returned enclosing operator is {@code null}
+     * @implNote The implementation checks that the returned enclosing operator from {@code recover} operation is not
+     * {@code null}. If it is, then a {@link NullPointerException} with appropriate message is thrown.
+     */
+    @Nonnull
+    default ByteUnaryOperator recover(@Nonnull final Function<? super Throwable, ? extends ByteUnaryOperator> recover) {
+        Objects.requireNonNull(recover);
+        return (value) -> {
+            try {
+                return this.applyAsByteThrows(value);
+            } catch (Throwable throwable) {
+                final ByteUnaryOperator operator = recover.apply(throwable);
+                Objects.requireNonNull(operator, () -> "recover returned null for " + throwable.getClass() + ": "
+                        + throwable.getMessage());
+                return operator.applyAsByte(value);
             }
         };
     }

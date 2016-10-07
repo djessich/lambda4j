@@ -71,6 +71,7 @@ import javax.annotation.Nullable;
 import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.function.Function;
 
 /**
  * Represents an predicate (boolean-valued function) of one object-valued and two {@code boolean}-valued input arguments
@@ -239,8 +240,7 @@ public interface ThrowableObjBiBooleanPredicate<T, X extends Throwable> extends 
     static <T, X extends Throwable> ThrowableObjBiBooleanPredicate<T, X> isEqual(@Nullable Object target1,
             boolean target2, boolean target3) {
         return (t, value1, value2) -> (t == null ? target1 == null : t.equals(target1)) && (value1 == target2) && (
-                value2
-                        == target3);
+                value2 == target3);
     }
 
     /**
@@ -278,7 +278,7 @@ public interface ThrowableObjBiBooleanPredicate<T, X extends Throwable> extends 
      * @return A composed {@code ThrowableTriPredicate} that first applies the {@code before} functions to its input,
      * and then applies this predicate to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is able to handle every type.
+     * @implSpec The input argument of this method is able to handle every type.
      */
     @Nonnull
     default <A, B, C> ThrowableTriPredicate<A, B, C, X> compose(
@@ -302,7 +302,7 @@ public interface ThrowableObjBiBooleanPredicate<T, X extends Throwable> extends 
      * @return A composed {@code ThrowableBooleanTernaryOperator} that first applies the {@code before} functions to its
      * input, and then applies this predicate to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
      * boolean}.
      */
     @Nonnull
@@ -318,9 +318,10 @@ public interface ThrowableObjBiBooleanPredicate<T, X extends Throwable> extends 
     }
 
     /**
-     * Returns a composed {@link ThrowableTriBytePredicate} that first applies the {@code before} functions to its
-     * input, and then applies this predicate to the result. This method is just convenience, to provide the ability to
-     * execute an operation which accepts {@code byte} input, before this primitive predicate is executed.
+     * Returns a composed {@link ThrowableTriBytePredicate} that first applies the {@code before} functions to
+     * its input, and then applies this predicate to the result.
+     * This method is just convenience, to provide the ability to execute an operation which accepts {@code byte} input,
+     * before this primitive predicate is executed.
      *
      * @param before1 The first function to apply before this predicate is applied
      * @param before2 The second predicate to apply before this predicate is applied
@@ -328,7 +329,7 @@ public interface ThrowableObjBiBooleanPredicate<T, X extends Throwable> extends 
      * @return A composed {@code ThrowableTriBytePredicate} that first applies the {@code before} functions to its
      * input, and then applies this predicate to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
      * byte}.
      */
     @Nonnull
@@ -344,9 +345,10 @@ public interface ThrowableObjBiBooleanPredicate<T, X extends Throwable> extends 
     }
 
     /**
-     * Returns a composed {@link ThrowableTriCharPredicate} that first applies the {@code before} functions to its
-     * input, and then applies this predicate to the result. This method is just convenience, to provide the ability to
-     * execute an operation which accepts {@code char} input, before this primitive predicate is executed.
+     * Returns a composed {@link ThrowableTriCharPredicate} that first applies the {@code before} functions to
+     * its input, and then applies this predicate to the result.
+     * This method is just convenience, to provide the ability to execute an operation which accepts {@code char} input,
+     * before this primitive predicate is executed.
      *
      * @param before1 The first function to apply before this predicate is applied
      * @param before2 The second predicate to apply before this predicate is applied
@@ -354,7 +356,7 @@ public interface ThrowableObjBiBooleanPredicate<T, X extends Throwable> extends 
      * @return A composed {@code ThrowableTriCharPredicate} that first applies the {@code before} functions to its
      * input, and then applies this predicate to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
      * char}.
      */
     @Nonnull
@@ -380,7 +382,7 @@ public interface ThrowableObjBiBooleanPredicate<T, X extends Throwable> extends 
      * @return A composed {@code ThrowableTriDoublePredicate} that first applies the {@code before} functions to its
      * input, and then applies this predicate to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
      * double}.
      */
     @Nonnull
@@ -406,7 +408,7 @@ public interface ThrowableObjBiBooleanPredicate<T, X extends Throwable> extends 
      * @return A composed {@code ThrowableTriFloatPredicate} that first applies the {@code before} functions to its
      * input, and then applies this predicate to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
      * float}.
      */
     @Nonnull
@@ -422,9 +424,10 @@ public interface ThrowableObjBiBooleanPredicate<T, X extends Throwable> extends 
     }
 
     /**
-     * Returns a composed {@link ThrowableTriIntPredicate} that first applies the {@code before} functions to its input,
-     * and then applies this predicate to the result. This method is just convenience, to provide the ability to execute
-     * an operation which accepts {@code int} input, before this primitive predicate is executed.
+     * Returns a composed {@link ThrowableTriIntPredicate} that first applies the {@code before} functions to
+     * its input, and then applies this predicate to the result.
+     * This method is just convenience, to provide the ability to execute an operation which accepts {@code int} input,
+     * before this primitive predicate is executed.
      *
      * @param before1 The first function to apply before this predicate is applied
      * @param before2 The second predicate to apply before this predicate is applied
@@ -432,7 +435,7 @@ public interface ThrowableObjBiBooleanPredicate<T, X extends Throwable> extends 
      * @return A composed {@code ThrowableTriIntPredicate} that first applies the {@code before} functions to its input,
      * and then applies this predicate to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
      * int}.
      */
     @Nonnull
@@ -448,9 +451,10 @@ public interface ThrowableObjBiBooleanPredicate<T, X extends Throwable> extends 
     }
 
     /**
-     * Returns a composed {@link ThrowableTriLongPredicate} that first applies the {@code before} functions to its
-     * input, and then applies this predicate to the result. This method is just convenience, to provide the ability to
-     * execute an operation which accepts {@code long} input, before this primitive predicate is executed.
+     * Returns a composed {@link ThrowableTriLongPredicate} that first applies the {@code before} functions to
+     * its input, and then applies this predicate to the result.
+     * This method is just convenience, to provide the ability to execute an operation which accepts {@code long} input,
+     * before this primitive predicate is executed.
      *
      * @param before1 The first function to apply before this predicate is applied
      * @param before2 The second predicate to apply before this predicate is applied
@@ -458,7 +462,7 @@ public interface ThrowableObjBiBooleanPredicate<T, X extends Throwable> extends 
      * @return A composed {@code ThrowableTriLongPredicate} that first applies the {@code before} functions to its
      * input, and then applies this predicate to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
      * long}.
      */
     @Nonnull
@@ -484,7 +488,7 @@ public interface ThrowableObjBiBooleanPredicate<T, X extends Throwable> extends 
      * @return A composed {@code ThrowableTriShortPredicate} that first applies the {@code before} functions to its
      * input, and then applies this predicate to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
      * short}.
      */
     @Nonnull
@@ -508,7 +512,7 @@ public interface ThrowableObjBiBooleanPredicate<T, X extends Throwable> extends 
      * @return A composed {@code ThrowableObjBiBooleanFunction} that first applies this predicate to its input, and then
      * applies the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is able to return every type.
+     * @implSpec The input argument of this method is able to return every type.
      */
     @Nonnull
     default <S> ThrowableObjBiBooleanFunction<T, S, X> andThen(
@@ -526,7 +530,7 @@ public interface ThrowableObjBiBooleanPredicate<T, X extends Throwable> extends 
      * @return A composed {@code ThrowableObjBiBooleanPredicate} that first applies this predicate to its input, and
      * then applies the {@code after} operator to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
      * boolean}.
      */
     @Nonnull
@@ -545,7 +549,7 @@ public interface ThrowableObjBiBooleanPredicate<T, X extends Throwable> extends 
      * @return A composed {@code ThrowableObjBiBooleanToByteFunction} that first applies this predicate to its input,
      * and then applies the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
      * byte}.
      */
     @Nonnull
@@ -564,7 +568,7 @@ public interface ThrowableObjBiBooleanPredicate<T, X extends Throwable> extends 
      * @return A composed {@code ThrowableObjBiBooleanToCharFunction} that first applies this predicate to its input,
      * and then applies the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
      * char}.
      */
     @Nonnull
@@ -583,7 +587,7 @@ public interface ThrowableObjBiBooleanPredicate<T, X extends Throwable> extends 
      * @return A composed {@code ThrowableObjBiBooleanToDoubleFunction} that first applies this predicate to its input,
      * and then applies the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
      * double}.
      */
     @Nonnull
@@ -602,7 +606,7 @@ public interface ThrowableObjBiBooleanPredicate<T, X extends Throwable> extends 
      * @return A composed {@code ThrowableObjBiBooleanToFloatFunction} that first applies this predicate to its input,
      * and then applies the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
      * float}.
      */
     @Nonnull
@@ -621,7 +625,7 @@ public interface ThrowableObjBiBooleanPredicate<T, X extends Throwable> extends 
      * @return A composed {@code ThrowableObjBiBooleanToIntFunction} that first applies this predicate to its input, and
      * then applies the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
      * int}.
      */
     @Nonnull
@@ -640,7 +644,7 @@ public interface ThrowableObjBiBooleanPredicate<T, X extends Throwable> extends 
      * @return A composed {@code ThrowableObjBiBooleanToLongFunction} that first applies this predicate to its input,
      * and then applies the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
      * long}.
      */
     @Nonnull
@@ -659,7 +663,7 @@ public interface ThrowableObjBiBooleanPredicate<T, X extends Throwable> extends 
      * @return A composed {@code ThrowableObjBiBooleanToShortFunction} that first applies this predicate to its input,
      * and then applies the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
      * short}.
      */
     @Nonnull
@@ -896,6 +900,35 @@ public interface ThrowableObjBiBooleanPredicate<T, X extends Throwable> extends 
                 throw e;
             } catch (Throwable throwable) {
                 throw ThrowableUtils.sneakyThrow(throwable);
+            }
+        };
+    }
+
+    /**
+     * Returns a composed {@link ObjBiBooleanPredicate} that first applies this predicate to its input, and then applies
+     * the {@code recover} operation if a {@link Throwable} is thrown from this one. The {@code recover} operation is
+     * represented by a curried operation which is called with throwable information and same arguments of this
+     * predicate.
+     *
+     * @param recover The operation to apply if this predicate throws a {@code Throwable}
+     * @return A composed {@link ObjBiBooleanPredicate} that first applies this predicate to its input, and then applies
+     * the {@code recover} operation if a {@link Throwable} is thrown from this one.
+     * @throws NullPointerException If given argument or the returned enclosing predicate is {@code null}
+     * @implNote The implementation checks that the returned enclosing predicate from {@code recover} operation is not
+     * {@code null}. If it is, then a {@link NullPointerException} with appropriate message is thrown.
+     */
+    @Nonnull
+    default ObjBiBooleanPredicate<T> recover(
+            @Nonnull final Function<? super Throwable, ? extends ObjBiBooleanPredicate<? super T>> recover) {
+        Objects.requireNonNull(recover);
+        return (t, value1, value2) -> {
+            try {
+                return this.testThrows(t, value1, value2);
+            } catch (Throwable throwable) {
+                final ObjBiBooleanPredicate<? super T> predicate = recover.apply(throwable);
+                Objects.requireNonNull(predicate, () -> "recover returned null for " + throwable.getClass() + ": "
+                        + throwable.getMessage());
+                return predicate.test(t, value1, value2);
             }
         };
     }

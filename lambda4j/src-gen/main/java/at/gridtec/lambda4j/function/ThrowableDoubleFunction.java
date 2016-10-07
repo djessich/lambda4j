@@ -37,10 +37,12 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.DoubleFunction;
+import java.util.function.Function;
 
 /**
- * Represents an operation that accepts one {@code double}-valued input argument and produces a result which is able to
- * throw any {@link Throwable}. This is a primitive specialization of {@link ThrowableFunction}.
+ * Represents an operation that accepts one {@code double}-valued input argument and produces a
+ * result which is able to throw any {@link Throwable}.
+ * This is a primitive specialization of {@link ThrowableFunction}.
  * <p>
  * This is a {@link FunctionalInterface} whose functional method is {@link #applyThrows(double)}.
  *
@@ -121,7 +123,7 @@ public interface ThrowableDoubleFunction<R, X extends Throwable> extends Lambda,
      * @apiNote This method mainly exists to use this {@link ThrowableDoubleFunction} in JRE specific methods only
      * accepting {@link DoubleFunction}. If this function should be applied, then the {@link #applyThrows(double)}
      * method should be used.
-     * @implSpec Overrides the {@link DoubleFunction#apply(double)} method by using a redefinition as default method.
+     * @apiNote Overrides the {@link DoubleFunction#apply(double)} method by using a redefinition as default method.
      * This implementation calls the {@link #applyThrows(double)} method of this function and catches the eventually
      * thrown {@link Throwable} from it. If it is of type {@link RuntimeException} or {@link Error} it is rethrown as
      * is. Other {@code Throwable} types are wrapped in a {@link ThrownByFunctionalInterfaceException}.
@@ -159,7 +161,7 @@ public interface ThrowableDoubleFunction<R, X extends Throwable> extends Lambda,
      * @return A composed {@code ThrowableFunction} that first applies the {@code before} function to its input, and
      * then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is able to handle every type.
+     * @implSpec The input argument of this method is able to handle every type.
      */
     @Nonnull
     default <A> ThrowableFunction<A, R, X> compose(
@@ -177,7 +179,7 @@ public interface ThrowableDoubleFunction<R, X extends Throwable> extends Lambda,
      * @return A composed {@code ThrowableBooleanFunction} that first applies the {@code before} function to its input,
      * and then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
      * boolean}.
      */
     @Nonnull
@@ -188,15 +190,16 @@ public interface ThrowableDoubleFunction<R, X extends Throwable> extends Lambda,
     }
 
     /**
-     * Returns a composed {@link ThrowableByteFunction} that first applies the {@code before} function to its input, and
-     * then applies this function to the result. This method is just convenience, to provide the ability to execute an
-     * operation which accepts {@code byte} input, before this primitive function is executed.
+     * Returns a composed {@link ThrowableByteFunction} that first applies the {@code before} function to
+     * its input, and then applies this function to the result.
+     * This method is just convenience, to provide the ability to execute an operation which accepts {@code byte} input,
+     * before this primitive function is executed.
      *
      * @param before The function to apply before this function is applied
      * @return A composed {@code ThrowableByteFunction} that first applies the {@code before} function to its input, and
      * then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
      * byte}.
      */
     @Nonnull
@@ -207,15 +210,16 @@ public interface ThrowableDoubleFunction<R, X extends Throwable> extends Lambda,
     }
 
     /**
-     * Returns a composed {@link ThrowableCharFunction} that first applies the {@code before} function to its input, and
-     * then applies this function to the result. This method is just convenience, to provide the ability to execute an
-     * operation which accepts {@code char} input, before this primitive function is executed.
+     * Returns a composed {@link ThrowableCharFunction} that first applies the {@code before} function to
+     * its input, and then applies this function to the result.
+     * This method is just convenience, to provide the ability to execute an operation which accepts {@code char} input,
+     * before this primitive function is executed.
      *
      * @param before The function to apply before this function is applied
      * @return A composed {@code ThrowableCharFunction} that first applies the {@code before} function to its input, and
      * then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
      * char}.
      */
     @Nonnull
@@ -234,7 +238,7 @@ public interface ThrowableDoubleFunction<R, X extends Throwable> extends Lambda,
      * @return A composed {@code ThrowableDoubleFunction} that first applies the {@code before} operator to its input,
      * and then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
      * double}.
      */
     @Nonnull
@@ -253,7 +257,7 @@ public interface ThrowableDoubleFunction<R, X extends Throwable> extends Lambda,
      * @return A composed {@code ThrowableFloatFunction} that first applies the {@code before} function to its input,
      * and then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
      * float}.
      */
     @Nonnull
@@ -264,15 +268,16 @@ public interface ThrowableDoubleFunction<R, X extends Throwable> extends Lambda,
     }
 
     /**
-     * Returns a composed {@link ThrowableIntFunction} that first applies the {@code before} function to its input, and
-     * then applies this function to the result. This method is just convenience, to provide the ability to execute an
-     * operation which accepts {@code int} input, before this primitive function is executed.
+     * Returns a composed {@link ThrowableIntFunction} that first applies the {@code before} function to
+     * its input, and then applies this function to the result.
+     * This method is just convenience, to provide the ability to execute an operation which accepts {@code int} input,
+     * before this primitive function is executed.
      *
      * @param before The function to apply before this function is applied
      * @return A composed {@code ThrowableIntFunction} that first applies the {@code before} function to its input, and
      * then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
      * int}.
      */
     @Nonnull
@@ -282,15 +287,16 @@ public interface ThrowableDoubleFunction<R, X extends Throwable> extends Lambda,
     }
 
     /**
-     * Returns a composed {@link ThrowableLongFunction} that first applies the {@code before} function to its input, and
-     * then applies this function to the result. This method is just convenience, to provide the ability to execute an
-     * operation which accepts {@code long} input, before this primitive function is executed.
+     * Returns a composed {@link ThrowableLongFunction} that first applies the {@code before} function to
+     * its input, and then applies this function to the result.
+     * This method is just convenience, to provide the ability to execute an operation which accepts {@code long} input,
+     * before this primitive function is executed.
      *
      * @param before The function to apply before this function is applied
      * @return A composed {@code ThrowableLongFunction} that first applies the {@code before} function to its input, and
      * then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
      * long}.
      */
     @Nonnull
@@ -309,7 +315,7 @@ public interface ThrowableDoubleFunction<R, X extends Throwable> extends Lambda,
      * @return A composed {@code ThrowableShortFunction} that first applies the {@code before} function to its input,
      * and then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
      * short}.
      */
     @Nonnull
@@ -328,7 +334,7 @@ public interface ThrowableDoubleFunction<R, X extends Throwable> extends Lambda,
      * @return A composed {@code ThrowableDoubleFunction} that first applies this function to its input, and then
      * applies the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is able to return every type.
+     * @implSpec The input argument of this method is able to return every type.
      */
     @Nonnull
     default <S> ThrowableDoubleFunction<S, X> andThen(
@@ -417,12 +423,12 @@ public interface ThrowableDoubleFunction<R, X extends Throwable> extends Lambda,
     }
 
     /**
-     * Returns a composed {@link DoubleFunction2} that applies this function to its input and sneakily throws the thrown
-     * {@link Throwable} from it, unless it is of type {@link RuntimeException} or {@link Error}. This means that each
-     * throwable thrown from the returned composed function behaves exactly the same as an <em>unchecked</em> throwable
-     * does. As a result, there is no need to handle the throwable of this function in the returned composed function by
-     * either wrapping it in an <em>unchecked</em> throwable or to declare it in the {@code throws} clause, as it would
-     * be done in a non sneaky throwing function.
+     * Returns a composed {@link DoubleFunction2} that applies this function to its input and sneakily throws the
+     * thrown {@link Throwable} from it, unless it is of type {@link RuntimeException} or {@link Error}. This means that
+     * each throwable thrown from the returned composed function behaves exactly the same as an <em>unchecked</em>
+     * throwable does. As a result, there is no need to handle the throwable of this function in the returned composed
+     * function by either wrapping it in an <em>unchecked</em> throwable or to declare it in the {@code throws} clause,
+     * as it would be done in a non sneaky throwing function.
      * <p>
      * What sneaky throwing simply does, is to fake out the compiler and thus it bypasses the principle of
      * <em>checked</em> throwables. On the JVM (class file) level, all throwables, checked or not, can be thrown
@@ -489,6 +495,35 @@ public interface ThrowableDoubleFunction<R, X extends Throwable> extends Lambda,
                 throw e;
             } catch (Throwable throwable) {
                 throw ThrowableUtils.sneakyThrow(throwable);
+            }
+        };
+    }
+
+    /**
+     * Returns a composed {@link DoubleFunction2} that first applies this function to its input, and then applies the
+     * {@code recover} operation if a {@link Throwable} is thrown from this one. The {@code recover} operation is
+     * represented by a curried operation which is called with throwable information and same argument of this
+     * function.
+     *
+     * @param recover The operation to apply if this function throws a {@code Throwable}
+     * @return A composed {@link DoubleFunction2} that first applies this function to its input, and then applies the
+     * {@code recover} operation if a {@link Throwable} is thrown from this one.
+     * @throws NullPointerException If given argument or the returned enclosing function is {@code null}
+     * @implNote The implementation checks that the returned enclosing function from {@code recover} operation is not
+     * {@code null}. If it is, then a {@link NullPointerException} with appropriate message is thrown.
+     */
+    @Nonnull
+    default DoubleFunction2<R> recover(
+            @Nonnull final Function<? super Throwable, ? extends DoubleFunction<? extends R>> recover) {
+        Objects.requireNonNull(recover);
+        return (value) -> {
+            try {
+                return this.applyThrows(value);
+            } catch (Throwable throwable) {
+                final DoubleFunction<? extends R> function = recover.apply(throwable);
+                Objects.requireNonNull(function, () -> "recover returned null for " + throwable.getClass() + ": "
+                        + throwable.getMessage());
+                return function.apply(value);
             }
         };
     }

@@ -63,11 +63,12 @@ import javax.annotation.Nullable;
 import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.function.Function;
 
 /**
- * Represents an operation that accepts three {@code int}-valued input arguments and produces a {@code int}-valued
- * result which is able to throw any {@link Throwable}. This is a primitive specialization of {@link
- * ThrowableTernaryOperator}.
+ * Represents an operation that accepts three {@code int}-valued input arguments and produces a
+ * {@code int}-valued result which is able to throw any {@link Throwable}.
+ * This is a primitive specialization of {@link ThrowableTernaryOperator}.
  * <p>
  * This is a {@link FunctionalInterface} whose functional method is {@link #applyAsIntThrows(int, int, int)}.
  *
@@ -214,7 +215,7 @@ public interface ThrowableIntTernaryOperator<X extends Throwable> extends Lambda
      * @return A composed {@code ThrowableToIntTriFunction} that first applies the {@code before} functions to its
      * input, and then applies this operator to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is able to handle every type.
+     * @implSpec The input argument of this method is able to handle every type.
      */
     @Nonnull
     default <A, B, C> ThrowableToIntTriFunction<A, B, C, X> compose(
@@ -239,7 +240,7 @@ public interface ThrowableIntTernaryOperator<X extends Throwable> extends Lambda
      * @return A composed {@code ThrowableTriBooleanToIntFunction} that first applies the {@code before} functions to
      * its input, and then applies this operator to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
      * boolean}.
      */
     @Nonnull
@@ -256,9 +257,10 @@ public interface ThrowableIntTernaryOperator<X extends Throwable> extends Lambda
     }
 
     /**
-     * Returns a composed {@link ThrowableTriByteToIntFunction} that first applies the {@code before} functions to its
-     * input, and then applies this operator to the result. This method is just convenience, to provide the ability to
-     * execute an operation which accepts {@code byte} input, before this primitive operator is executed.
+     * Returns a composed {@link ThrowableTriByteToIntFunction} that first applies the {@code before} functions to
+     * its input, and then applies this operator to the result.
+     * This method is just convenience, to provide the ability to execute an operation which accepts {@code byte} input,
+     * before this primitive operator is executed.
      *
      * @param before1 The first function to apply before this operator is applied
      * @param before2 The second function to apply before this operator is applied
@@ -266,7 +268,7 @@ public interface ThrowableIntTernaryOperator<X extends Throwable> extends Lambda
      * @return A composed {@code ThrowableTriByteToIntFunction} that first applies the {@code before} functions to its
      * input, and then applies this operator to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
      * byte}.
      */
     @Nonnull
@@ -283,9 +285,10 @@ public interface ThrowableIntTernaryOperator<X extends Throwable> extends Lambda
     }
 
     /**
-     * Returns a composed {@link ThrowableTriCharToIntFunction} that first applies the {@code before} functions to its
-     * input, and then applies this operator to the result. This method is just convenience, to provide the ability to
-     * execute an operation which accepts {@code char} input, before this primitive operator is executed.
+     * Returns a composed {@link ThrowableTriCharToIntFunction} that first applies the {@code before} functions to
+     * its input, and then applies this operator to the result.
+     * This method is just convenience, to provide the ability to execute an operation which accepts {@code char} input,
+     * before this primitive operator is executed.
      *
      * @param before1 The first function to apply before this operator is applied
      * @param before2 The second function to apply before this operator is applied
@@ -293,7 +296,7 @@ public interface ThrowableIntTernaryOperator<X extends Throwable> extends Lambda
      * @return A composed {@code ThrowableTriCharToIntFunction} that first applies the {@code before} functions to its
      * input, and then applies this operator to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
      * char}.
      */
     @Nonnull
@@ -320,7 +323,7 @@ public interface ThrowableIntTernaryOperator<X extends Throwable> extends Lambda
      * @return A composed {@code ThrowableTriDoubleToIntFunction} that first applies the {@code before} functions to its
      * input, and then applies this operator to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
      * double}.
      */
     @Nonnull
@@ -347,7 +350,7 @@ public interface ThrowableIntTernaryOperator<X extends Throwable> extends Lambda
      * @return A composed {@code ThrowableTriFloatToIntFunction} that first applies the {@code before} functions to its
      * input, and then applies this operator to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
      * float}.
      */
     @Nonnull
@@ -364,9 +367,10 @@ public interface ThrowableIntTernaryOperator<X extends Throwable> extends Lambda
     }
 
     /**
-     * Returns a composed {@link ThrowableIntTernaryOperator} that first applies the {@code before} operators to its
-     * input, and then applies this operator to the result. This method is just convenience, to provide the ability to
-     * execute an operation which accepts {@code int} input, before this primitive operator is executed.
+     * Returns a composed {@link ThrowableIntTernaryOperator} that first applies the {@code before} operators to
+     * its input, and then applies this operator to the result.
+     * This method is just convenience, to provide the ability to execute an operation which accepts {@code int} input,
+     * before this primitive operator is executed.
      *
      * @param before1 The first operator to apply before this operator is applied
      * @param before2 The second operator to apply before this operator is applied
@@ -374,7 +378,7 @@ public interface ThrowableIntTernaryOperator<X extends Throwable> extends Lambda
      * @return A composed {@code ThrowableIntTernaryOperator} that first applies the {@code before} operators to its
      * input, and then applies this operator to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
      * int}.
      */
     @Nonnull
@@ -390,9 +394,10 @@ public interface ThrowableIntTernaryOperator<X extends Throwable> extends Lambda
     }
 
     /**
-     * Returns a composed {@link ThrowableTriLongToIntFunction} that first applies the {@code before} functions to its
-     * input, and then applies this operator to the result. This method is just convenience, to provide the ability to
-     * execute an operation which accepts {@code long} input, before this primitive operator is executed.
+     * Returns a composed {@link ThrowableTriLongToIntFunction} that first applies the {@code before} functions to
+     * its input, and then applies this operator to the result.
+     * This method is just convenience, to provide the ability to execute an operation which accepts {@code long} input,
+     * before this primitive operator is executed.
      *
      * @param before1 The first function to apply before this operator is applied
      * @param before2 The second function to apply before this operator is applied
@@ -400,7 +405,7 @@ public interface ThrowableIntTernaryOperator<X extends Throwable> extends Lambda
      * @return A composed {@code ThrowableTriLongToIntFunction} that first applies the {@code before} functions to its
      * input, and then applies this operator to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
      * long}.
      */
     @Nonnull
@@ -427,7 +432,7 @@ public interface ThrowableIntTernaryOperator<X extends Throwable> extends Lambda
      * @return A composed {@code ThrowableTriShortToIntFunction} that first applies the {@code before} functions to its
      * input, and then applies this operator to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
      * short}.
      */
     @Nonnull
@@ -452,7 +457,7 @@ public interface ThrowableIntTernaryOperator<X extends Throwable> extends Lambda
      * @return A composed {@code ThrowableTriIntFunction} that first applies this operator to its input, and then
      * applies the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is able to return every type.
+     * @implSpec The input argument of this method is able to return every type.
      */
     @Nonnull
     default <S> ThrowableTriIntFunction<S, X> andThen(
@@ -470,7 +475,7 @@ public interface ThrowableIntTernaryOperator<X extends Throwable> extends Lambda
      * @return A composed {@code ThrowableTriIntPredicate} that first applies this operator to its input, and then
      * applies the {@code after} predicate to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
      * boolean}.
      */
     @Nonnull
@@ -488,7 +493,7 @@ public interface ThrowableIntTernaryOperator<X extends Throwable> extends Lambda
      * @return A composed {@code ThrowableTriIntToByteFunction} that first applies this operator to its input, and then
      * applies the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
      * byte}.
      */
     @Nonnull
@@ -507,7 +512,7 @@ public interface ThrowableIntTernaryOperator<X extends Throwable> extends Lambda
      * @return A composed {@code ThrowableTriIntToCharFunction} that first applies this operator to its input, and then
      * applies the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
      * char}.
      */
     @Nonnull
@@ -526,7 +531,7 @@ public interface ThrowableIntTernaryOperator<X extends Throwable> extends Lambda
      * @return A composed {@code ThrowableTriIntToDoubleFunction} that first applies this operator to its input, and
      * then applies the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
      * double}.
      */
     @Nonnull
@@ -545,7 +550,7 @@ public interface ThrowableIntTernaryOperator<X extends Throwable> extends Lambda
      * @return A composed {@code ThrowableTriIntToFloatFunction} that first applies this operator to its input, and then
      * applies the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
      * float}.
      */
     @Nonnull
@@ -564,7 +569,7 @@ public interface ThrowableIntTernaryOperator<X extends Throwable> extends Lambda
      * @return A composed {@code ThrowableIntTernaryOperator} that first applies this operator to its input, and then
      * applies the {@code after} operator to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
      * int}.
      */
     @Nonnull
@@ -582,7 +587,7 @@ public interface ThrowableIntTernaryOperator<X extends Throwable> extends Lambda
      * @return A composed {@code ThrowableTriIntToLongFunction} that first applies this operator to its input, and then
      * applies the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
      * long}.
      */
     @Nonnull
@@ -601,7 +606,7 @@ public interface ThrowableIntTernaryOperator<X extends Throwable> extends Lambda
      * @return A composed {@code ThrowableTriIntToShortFunction} that first applies this operator to its input, and then
      * applies the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
      * short}.
      */
     @Nonnull
@@ -764,6 +769,35 @@ public interface ThrowableIntTernaryOperator<X extends Throwable> extends Lambda
                 throw e;
             } catch (Throwable throwable) {
                 throw ThrowableUtils.sneakyThrow(throwable);
+            }
+        };
+    }
+
+    /**
+     * Returns a composed {@link IntTernaryOperator} that first applies this operator to its input, and then applies the
+     * {@code recover} operation if a {@link Throwable} is thrown from this one. The {@code recover} operation is
+     * represented by a curried operation which is called with throwable information and same arguments of this
+     * operator.
+     *
+     * @param recover The operation to apply if this operator throws a {@code Throwable}
+     * @return A composed {@link IntTernaryOperator} that first applies this operator to its input, and then applies the
+     * {@code recover} operation if a {@link Throwable} is thrown from this one.
+     * @throws NullPointerException If given argument or the returned enclosing operator is {@code null}
+     * @implNote The implementation checks that the returned enclosing operator from {@code recover} operation is not
+     * {@code null}. If it is, then a {@link NullPointerException} with appropriate message is thrown.
+     */
+    @Nonnull
+    default IntTernaryOperator recover(
+            @Nonnull final Function<? super Throwable, ? extends IntTernaryOperator> recover) {
+        Objects.requireNonNull(recover);
+        return (value1, value2, value3) -> {
+            try {
+                return this.applyAsIntThrows(value1, value2, value3);
+            } catch (Throwable throwable) {
+                final IntTernaryOperator operator = recover.apply(throwable);
+                Objects.requireNonNull(operator, () -> "recover returned null for " + throwable.getClass() + ": "
+                        + throwable.getMessage());
+                return operator.applyAsInt(value1, value2, value3);
             }
         };
     }

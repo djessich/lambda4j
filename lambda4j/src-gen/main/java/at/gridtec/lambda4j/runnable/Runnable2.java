@@ -72,8 +72,9 @@ public interface Runnable2 extends Lambda, Runnable {
 
     /**
      * Returns a composed {@link Runnable2} that performs, in sequence, this runnable followed by the {@code after}
-     * runnable. If evaluation of either operation throws an exception, it is relayed to the caller of the composed
-     * operation. If performing this runnable throws an exception, the {@code after} runnable will not be performed.
+     * runnable.
+     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
+     * If performing this runnable throws an exception, the {@code after} runnable will not be performed.
      *
      * @param after The runnable to apply after this runnable is applied
      * @return A composed {@link Runnable2} that performs, in sequence, this runnable followed by the {@code after}

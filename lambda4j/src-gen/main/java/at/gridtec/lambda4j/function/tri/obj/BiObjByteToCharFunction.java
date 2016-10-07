@@ -70,7 +70,8 @@ import java.util.function.LongFunction;
 
 /**
  * Represents an operation that accepts two object-valued and one {@code byte}-valued input argument and produces a
- * {@code char}-valued result. This is a (reference, reference, byte) specialization of {@link TriFunction}.
+ * {@code char}-valued result.
+ * This is a (reference, reference, byte) specialization of {@link TriFunction}.
  * <p>
  * This is a {@link FunctionalInterface} whose functional method is {@link #applyAsChar(Object, Object, byte)}.
  *
@@ -221,8 +222,8 @@ public interface BiObjByteToCharFunction<T, U> extends Lambda {
 
     /**
      * Returns a composed {@link ToCharTriFunction} that first applies the {@code before} functions to its input, and
-     * then applies this function to the result. If evaluation of either operation throws an exception, it is relayed to
-     * the caller of the composed operation.
+     * then applies this function to the result.
+     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
      *
      * @param <A> The type of the argument to the first given function, and of composed function
      * @param <B> The type of the argument to the second given function, and of composed function
@@ -233,7 +234,7 @@ public interface BiObjByteToCharFunction<T, U> extends Lambda {
      * @return A composed {@code ToCharTriFunction} that first applies the {@code before} functions to its input, and
      * then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is able to handle every type.
+     * @implSpec The input argument of this method is able to handle every type.
      */
     @Nonnull
     default <A, B, C> ToCharTriFunction<A, B, C> compose(@Nonnull final Function<? super A, ? extends T> before1,
@@ -256,7 +257,7 @@ public interface BiObjByteToCharFunction<T, U> extends Lambda {
      * @return A composed {@code TriBooleanToCharFunction} that first applies the {@code before} functions to its input,
      * and then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
      * boolean}.
      */
     @Nonnull
@@ -270,10 +271,11 @@ public interface BiObjByteToCharFunction<T, U> extends Lambda {
     }
 
     /**
-     * Returns a composed {@link TriByteToCharFunction} that first applies the {@code before} functions to its input,
-     * and then applies this function to the result. If evaluation of either operation throws an exception, it is
-     * relayed to the caller of the composed operation. This method is just convenience, to provide the ability to
-     * execute an operation which accepts {@code byte} input, before this primitive function is executed.
+     * Returns a composed {@link TriByteToCharFunction} that first applies the {@code before} functions to
+     * its input, and then applies this function to the result.
+     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
+     * This method is just convenience, to provide the ability to execute an operation which accepts {@code byte} input,
+     * before this primitive function is executed.
      *
      * @param before1 The first function to apply before this function is applied
      * @param before2 The second function to apply before this function is applied
@@ -281,7 +283,7 @@ public interface BiObjByteToCharFunction<T, U> extends Lambda {
      * @return A composed {@code TriByteToCharFunction} that first applies the {@code before} functions to its input,
      * and then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
      * byte}.
      */
     @Nonnull
@@ -295,10 +297,11 @@ public interface BiObjByteToCharFunction<T, U> extends Lambda {
     }
 
     /**
-     * Returns a composed {@link CharTernaryOperator} that first applies the {@code before} functions to its input, and
-     * then applies this function to the result. If evaluation of either operation throws an exception, it is relayed to
-     * the caller of the composed operation. This method is just convenience, to provide the ability to execute an
-     * operation which accepts {@code char} input, before this primitive function is executed.
+     * Returns a composed {@link CharTernaryOperator} that first applies the {@code before} functions to
+     * its input, and then applies this function to the result.
+     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
+     * This method is just convenience, to provide the ability to execute an operation which accepts {@code char} input,
+     * before this primitive function is executed.
      *
      * @param before1 The first function to apply before this function is applied
      * @param before2 The second function to apply before this function is applied
@@ -306,7 +309,7 @@ public interface BiObjByteToCharFunction<T, U> extends Lambda {
      * @return A composed {@code CharTernaryOperator} that first applies the {@code before} functions to its input, and
      * then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
      * char}.
      */
     @Nonnull
@@ -331,7 +334,7 @@ public interface BiObjByteToCharFunction<T, U> extends Lambda {
      * @return A composed {@code TriDoubleToCharFunction} that first applies the {@code before} functions to its input,
      * and then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
      * double}.
      */
     @Nonnull
@@ -356,7 +359,7 @@ public interface BiObjByteToCharFunction<T, U> extends Lambda {
      * @return A composed {@code TriFloatToCharFunction} that first applies the {@code before} functions to its input,
      * and then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
      * float}.
      */
     @Nonnull
@@ -370,10 +373,11 @@ public interface BiObjByteToCharFunction<T, U> extends Lambda {
     }
 
     /**
-     * Returns a composed {@link TriIntToCharFunction} that first applies the {@code before} functions to its input, and
-     * then applies this function to the result. If evaluation of either operation throws an exception, it is relayed to
-     * the caller of the composed operation. This method is just convenience, to provide the ability to execute an
-     * operation which accepts {@code int} input, before this primitive function is executed.
+     * Returns a composed {@link TriIntToCharFunction} that first applies the {@code before} functions to
+     * its input, and then applies this function to the result.
+     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
+     * This method is just convenience, to provide the ability to execute an operation which accepts {@code int} input,
+     * before this primitive function is executed.
      *
      * @param before1 The first function to apply before this function is applied
      * @param before2 The second function to apply before this function is applied
@@ -381,7 +385,7 @@ public interface BiObjByteToCharFunction<T, U> extends Lambda {
      * @return A composed {@code TriIntToCharFunction} that first applies the {@code before} functions to its input, and
      * then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
      * int}.
      */
     @Nonnull
@@ -395,10 +399,11 @@ public interface BiObjByteToCharFunction<T, U> extends Lambda {
     }
 
     /**
-     * Returns a composed {@link TriLongToCharFunction} that first applies the {@code before} functions to its input,
-     * and then applies this function to the result. If evaluation of either operation throws an exception, it is
-     * relayed to the caller of the composed operation. This method is just convenience, to provide the ability to
-     * execute an operation which accepts {@code long} input, before this primitive function is executed.
+     * Returns a composed {@link TriLongToCharFunction} that first applies the {@code before} functions to
+     * its input, and then applies this function to the result.
+     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
+     * This method is just convenience, to provide the ability to execute an operation which accepts {@code long} input,
+     * before this primitive function is executed.
      *
      * @param before1 The first function to apply before this function is applied
      * @param before2 The second function to apply before this function is applied
@@ -406,7 +411,7 @@ public interface BiObjByteToCharFunction<T, U> extends Lambda {
      * @return A composed {@code TriLongToCharFunction} that first applies the {@code before} functions to its input,
      * and then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
      * long}.
      */
     @Nonnull
@@ -431,7 +436,7 @@ public interface BiObjByteToCharFunction<T, U> extends Lambda {
      * @return A composed {@code TriShortToCharFunction} that first applies the {@code before} functions to its input,
      * and then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
      * short}.
      */
     @Nonnull
@@ -446,15 +451,15 @@ public interface BiObjByteToCharFunction<T, U> extends Lambda {
 
     /**
      * Returns a composed {@link BiObjByteFunction} that first applies this function to its input, and then applies the
-     * {@code after} function to the result. If evaluation of either operation throws an exception, it is relayed to the
-     * caller of the composed operation.
+     * {@code after} function to the result.
+     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
      *
      * @param <S> The type of return value from the {@code after} function, and of the composed function
      * @param after The function to apply after this function is applied
      * @return A composed {@code BiObjByteFunction} that first applies this function to its input, and then applies the
      * {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is able to return every type.
+     * @implSpec The input argument of this method is able to return every type.
      */
     @Nonnull
     default <S> BiObjByteFunction<T, U, S> andThen(@Nonnull final CharFunction<? extends S> after) {
@@ -472,7 +477,7 @@ public interface BiObjByteToCharFunction<T, U> extends Lambda {
      * @return A composed {@code BiObjBytePredicate} that first applies this function to its input, and then applies the
      * {@code after} predicate to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
      * boolean}.
      */
     @Nonnull
@@ -491,7 +496,7 @@ public interface BiObjByteToCharFunction<T, U> extends Lambda {
      * @return A composed {@code BiObjByteToByteFunction} that first applies this function to its input, and then
      * applies the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
      * byte}.
      */
     @Nonnull
@@ -510,7 +515,7 @@ public interface BiObjByteToCharFunction<T, U> extends Lambda {
      * @return A composed {@code BiObjByteToCharFunction} that first applies this function to its input, and then
      * applies the {@code after} operator to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
      * char}.
      */
     @Nonnull
@@ -529,7 +534,7 @@ public interface BiObjByteToCharFunction<T, U> extends Lambda {
      * @return A composed {@code BiObjByteToDoubleFunction} that first applies this function to its input, and then
      * applies the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
      * double}.
      */
     @Nonnull
@@ -548,7 +553,7 @@ public interface BiObjByteToCharFunction<T, U> extends Lambda {
      * @return A composed {@code BiObjByteToFloatFunction} that first applies this function to its input, and then
      * applies the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
      * float}.
      */
     @Nonnull
@@ -567,7 +572,7 @@ public interface BiObjByteToCharFunction<T, U> extends Lambda {
      * @return A composed {@code BiObjByteToIntFunction} that first applies this function to its input, and then applies
      * the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
      * int}.
      */
     @Nonnull
@@ -586,7 +591,7 @@ public interface BiObjByteToCharFunction<T, U> extends Lambda {
      * @return A composed {@code BiObjByteToLongFunction} that first applies this function to its input, and then
      * applies the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
      * long}.
      */
     @Nonnull
@@ -605,7 +610,7 @@ public interface BiObjByteToCharFunction<T, U> extends Lambda {
      * @return A composed {@code BiObjByteToShortFunction} that first applies this function to its input, and then
      * applies the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
      * short}.
      */
     @Nonnull

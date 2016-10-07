@@ -43,8 +43,9 @@ import java.util.function.BiFunction;
 import java.util.function.Function;
 
 /**
- * Represents an operation that accepts two input arguments and produces a {@code float}-valued result. This is a
- * primitive specialization of {@link BiFunction2}.
+ * Represents an operation that accepts two input arguments and produces a
+ * {@code float}-valued result.
+ * This is a primitive specialization of {@link BiFunction2}.
  * <p>
  * This is a {@link FunctionalInterface} whose functional method is {@link #applyAsFloat(Object, Object)}.
  *
@@ -174,8 +175,8 @@ public interface ToFloatBiFunction<T, U> extends Lambda {
 
     /**
      * Returns a composed {@link ToFloatBiFunction} that first applies the {@code before} functions to its input, and
-     * then applies this function to the result. If evaluation of either operation throws an exception, it is relayed to
-     * the caller of the composed operation.
+     * then applies this function to the result.
+     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
      *
      * @param <A> The type of the argument to the first given function, and of composed function
      * @param <B> The type of the argument to the second given function, and of composed function
@@ -184,7 +185,7 @@ public interface ToFloatBiFunction<T, U> extends Lambda {
      * @return A composed {@code ToFloatBiFunction} that first applies the {@code before} functions to its input, and
      * then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is able to handle every type.
+     * @implSpec The input argument of this method is able to handle every type.
      */
     @Nonnull
     default <A, B> ToFloatBiFunction<A, B> compose(@Nonnull final Function<? super A, ? extends T> before1,
@@ -195,16 +196,16 @@ public interface ToFloatBiFunction<T, U> extends Lambda {
     }
 
     /**
-     * Returns a composed {@link BiFunction2} that first applies this function to its input, and then applies the {@code
-     * after} function to the result. If evaluation of either operation throws an exception, it is relayed to the caller
-     * of the composed operation.
+     * Returns a composed {@link BiFunction2} that first applies this function to its input, and then applies the
+     * {@code after} function to the result.
+     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
      *
      * @param <S> The type of return value from the {@code after} function, and of the composed function
      * @param after The function to apply after this function is applied
      * @return A composed {@code BiFunction2} that first applies this function to its input, and then applies the {@code
      * after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is able to return every type.
+     * @implSpec The input argument of this method is able to return every type.
      */
     @Nonnull
     default <S> BiFunction2<T, U, S> andThen(@Nonnull final FloatFunction<? extends S> after) {
@@ -222,7 +223,7 @@ public interface ToFloatBiFunction<T, U> extends Lambda {
      * @return A composed {@code BiPredicate2} that first applies this function to its input, and then applies the
      * {@code after} predicate to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
      * boolean}.
      */
     @Nonnull
@@ -241,7 +242,7 @@ public interface ToFloatBiFunction<T, U> extends Lambda {
      * @return A composed {@code ToByteBiFunction} that first applies this function to its input, and then applies the
      * {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
      * byte}.
      */
     @Nonnull
@@ -260,7 +261,7 @@ public interface ToFloatBiFunction<T, U> extends Lambda {
      * @return A composed {@code ToCharBiFunction} that first applies this function to its input, and then applies the
      * {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
      * char}.
      */
     @Nonnull
@@ -279,7 +280,7 @@ public interface ToFloatBiFunction<T, U> extends Lambda {
      * @return A composed {@code ToDoubleBiFunction2} that first applies this function to its input, and then applies
      * the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
      * double}.
      */
     @Nonnull
@@ -298,7 +299,7 @@ public interface ToFloatBiFunction<T, U> extends Lambda {
      * @return A composed {@code ToFloatBiFunction} that first applies this function to its input, and then applies the
      * {@code after} operator to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
      * float}.
      */
     @Nonnull
@@ -317,7 +318,7 @@ public interface ToFloatBiFunction<T, U> extends Lambda {
      * @return A composed {@code ToIntBiFunction2} that first applies this function to its input, and then applies the
      * {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
      * int}.
      */
     @Nonnull
@@ -336,7 +337,7 @@ public interface ToFloatBiFunction<T, U> extends Lambda {
      * @return A composed {@code ToLongBiFunction2} that first applies this function to its input, and then applies the
      * {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
      * long}.
      */
     @Nonnull
@@ -355,7 +356,7 @@ public interface ToFloatBiFunction<T, U> extends Lambda {
      * @return A composed {@code ToShortBiFunction} that first applies this function to its input, and then applies the
      * {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
      * short}.
      */
     @Nonnull
@@ -366,8 +367,8 @@ public interface ToFloatBiFunction<T, U> extends Lambda {
 
     /**
      * Returns a composed {@link BiConsumer2} that fist applies this function to its input, and then consumes the result
-     * using the given {@link FloatConsumer}. If evaluation of either operation throws an exception, it is relayed to
-     * the caller of the composed operation.
+     * using the given {@link FloatConsumer}.
+     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
      *
      * @param consumer The operation which consumes the result from this operation
      * @return A composed {@code BiConsumer2} that first applies this function to its input, and then consumes the

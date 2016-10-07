@@ -28,7 +28,8 @@ import java.util.function.Consumer;
 import java.util.function.Function;
 
 /**
- * Represents an operation that accepts one input argument and produces a result.
+ * Represents an operation that accepts one input argument and produces a
+ * result.
  * <p>
  * This is a {@link FunctionalInterface} whose functional method is {@link #apply(Object)}.
  *
@@ -119,16 +120,16 @@ public interface Function2<T, R> extends Lambda, Function<T, R> {
     }
 
     /**
-     * Returns a composed {@link Function2} that first applies the {@code before} function to its input, and then
-     * applies this function to the result. If evaluation of either operation throws an exception, it is relayed to the
-     * caller of the composed operation.
+     * Returns a composed {@link Function2} that first applies the {@code before} function to its input, and
+     * then applies this function to the result.
+     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
      *
      * @param <A> The type of the argument to the given function, and of composed function
      * @param before The function to apply before this function is applied
      * @return A composed {@code Function2} that first applies the {@code before} function to its input, and then
      * applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is able to handle every type.
+     * @implSpec The input argument of this method is able to handle every type.
      */
     @Nonnull
     default <A> Function2<A, R> compose(@Nonnull final Function<? super A, ? extends T> before) {
@@ -137,16 +138,16 @@ public interface Function2<T, R> extends Lambda, Function<T, R> {
     }
 
     /**
-     * Returns a composed {@link Function2} that first applies this function to its input, and then applies the {@code
-     * after} function to the result. If evaluation of either operation throws an exception, it is relayed to the caller
-     * of the composed operation.
+     * Returns a composed {@link Function2} that first applies this function to its input, and then applies the
+     * {@code after} function to the result.
+     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
      *
      * @param <S> The type of return value from the {@code after} function, and of the composed function
      * @param after The function to apply after this function is applied
      * @return A composed {@code Function2} that first applies this function to its input, and then applies the {@code
      * after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is able to return every type.
+     * @implSpec The input argument of this method is able to return every type.
      */
     @Nonnull
     default <S> Function2<T, S> andThen(@Nonnull final Function<? super R, ? extends S> after) {
@@ -156,8 +157,8 @@ public interface Function2<T, R> extends Lambda, Function<T, R> {
 
     /**
      * Returns a composed {@link Consumer2} that fist applies this function to its input, and then consumes the result
-     * using the given {@link Consumer}. If evaluation of either operation throws an exception, it is relayed to the
-     * caller of the composed operation.
+     * using the given {@link Consumer}.
+     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
      *
      * @param consumer The operation which consumes the result from this operation
      * @return A composed {@code Consumer2} that first applies this function to its input, and then consumes the result

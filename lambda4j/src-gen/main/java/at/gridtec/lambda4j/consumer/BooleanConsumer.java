@@ -33,9 +33,9 @@ import java.util.function.LongPredicate;
 import java.util.function.Predicate;
 
 /**
- * Represents an operation that accepts one {@code boolean}-valued input argument and returns no result. This is a
- * primitive specialization of {@link Consumer2}. Unlike most other functional interfaces, {@code BooleanConsumer} is
- * expected to operate via side-effects.
+ * Represents an operation that accepts one {@code boolean}-valued input argument and returns no result.
+ * This is a primitive specialization of {@link Consumer2}.
+ * Unlike most other functional interfaces, {@code BooleanConsumer} is expected to operate via side-effects.
  * <p>
  * This is a {@link FunctionalInterface} whose functional method is {@link #accept(boolean)}.
  *
@@ -93,16 +93,16 @@ public interface BooleanConsumer extends Lambda {
     }
 
     /**
-     * Returns a composed {@link Consumer2} that first applies the {@code before} predicate to its input, and then
-     * applies this consumer to the result. If evaluation of either operation throws an exception, it is relayed to the
-     * caller of the composed operation.
+     * Returns a composed {@link Consumer2} that first applies the {@code before} predicate to its input, and
+     * then applies this consumer to the result.
+     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
      *
      * @param <A> The type of the argument to the given predicate, and of composed consumer
      * @param before The predicate to apply before this consumer is applied
      * @return A composed {@code Consumer2} that first applies the {@code before} predicate to its input, and then
      * applies this consumer to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is able to handle every type.
+     * @implSpec The input argument of this method is able to handle every type.
      */
     @Nonnull
     default <A> Consumer2<A> compose(@Nonnull final Predicate<? super A> before) {
@@ -120,7 +120,7 @@ public interface BooleanConsumer extends Lambda {
      * @return A composed {@code BooleanConsumer} that first applies the {@code before} operator to its input, and then
      * applies this consumer to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
      * boolean}.
      */
     @Nonnull
@@ -130,16 +130,17 @@ public interface BooleanConsumer extends Lambda {
     }
 
     /**
-     * Returns a composed {@link ByteConsumer} that first applies the {@code before} predicate to its input, and then
-     * applies this consumer to the result. If evaluation of either operation throws an exception, it is relayed to the
-     * caller of the composed operation. This method is just convenience, to provide the ability to execute an operation
-     * which accepts {@code byte} input, before this primitive consumer is executed.
+     * Returns a composed {@link ByteConsumer} that first applies the {@code before} predicate to
+     * its input, and then applies this consumer to the result.
+     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
+     * This method is just convenience, to provide the ability to execute an operation which accepts {@code byte} input,
+     * before this primitive consumer is executed.
      *
      * @param before The predicate to apply before this consumer is applied
      * @return A composed {@code ByteConsumer} that first applies the {@code before} predicate to its input, and then
      * applies this consumer to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
      * byte}.
      */
     @Nonnull
@@ -149,16 +150,17 @@ public interface BooleanConsumer extends Lambda {
     }
 
     /**
-     * Returns a composed {@link CharConsumer} that first applies the {@code before} predicate to its input, and then
-     * applies this consumer to the result. If evaluation of either operation throws an exception, it is relayed to the
-     * caller of the composed operation. This method is just convenience, to provide the ability to execute an operation
-     * which accepts {@code char} input, before this primitive consumer is executed.
+     * Returns a composed {@link CharConsumer} that first applies the {@code before} predicate to
+     * its input, and then applies this consumer to the result.
+     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
+     * This method is just convenience, to provide the ability to execute an operation which accepts {@code char} input,
+     * before this primitive consumer is executed.
      *
      * @param before The predicate to apply before this consumer is applied
      * @return A composed {@code CharConsumer} that first applies the {@code before} predicate to its input, and then
      * applies this consumer to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
      * char}.
      */
     @Nonnull
@@ -177,7 +179,7 @@ public interface BooleanConsumer extends Lambda {
      * @return A composed {@code DoubleConsumer2} that first applies the {@code before} predicate to its input, and then
      * applies this consumer to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
      * double}.
      */
     @Nonnull
@@ -196,7 +198,7 @@ public interface BooleanConsumer extends Lambda {
      * @return A composed {@code FloatConsumer} that first applies the {@code before} predicate to its input, and then
      * applies this consumer to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
      * float}.
      */
     @Nonnull
@@ -206,16 +208,17 @@ public interface BooleanConsumer extends Lambda {
     }
 
     /**
-     * Returns a composed {@link IntConsumer2} that first applies the {@code before} predicate to its input, and then
-     * applies this consumer to the result. If evaluation of either operation throws an exception, it is relayed to the
-     * caller of the composed operation. This method is just convenience, to provide the ability to execute an operation
-     * which accepts {@code int} input, before this primitive consumer is executed.
+     * Returns a composed {@link IntConsumer2} that first applies the {@code before} predicate to
+     * its input, and then applies this consumer to the result.
+     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
+     * This method is just convenience, to provide the ability to execute an operation which accepts {@code int} input,
+     * before this primitive consumer is executed.
      *
      * @param before The predicate to apply before this consumer is applied
      * @return A composed {@code IntConsumer2} that first applies the {@code before} predicate to its input, and then
      * applies this consumer to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
      * int}.
      */
     @Nonnull
@@ -225,16 +228,17 @@ public interface BooleanConsumer extends Lambda {
     }
 
     /**
-     * Returns a composed {@link LongConsumer2} that first applies the {@code before} predicate to its input, and then
-     * applies this consumer to the result. If evaluation of either operation throws an exception, it is relayed to the
-     * caller of the composed operation. This method is just convenience, to provide the ability to execute an operation
-     * which accepts {@code long} input, before this primitive consumer is executed.
+     * Returns a composed {@link LongConsumer2} that first applies the {@code before} predicate to
+     * its input, and then applies this consumer to the result.
+     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
+     * This method is just convenience, to provide the ability to execute an operation which accepts {@code long} input,
+     * before this primitive consumer is executed.
      *
      * @param before The predicate to apply before this consumer is applied
      * @return A composed {@code LongConsumer2} that first applies the {@code before} predicate to its input, and then
      * applies this consumer to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
      * long}.
      */
     @Nonnull
@@ -253,7 +257,7 @@ public interface BooleanConsumer extends Lambda {
      * @return A composed {@code ShortConsumer} that first applies the {@code before} predicate to its input, and then
      * applies this consumer to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
      * short}.
      */
     @Nonnull

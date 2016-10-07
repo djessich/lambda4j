@@ -37,8 +37,9 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Function;
 
 /**
- * Represents an operation that accepts one {@code byte}-valued input argument and produces a {@code char}-valued
- * result. This is a primitive specialization of {@link Function2}.
+ * Represents an operation that accepts one {@code byte}-valued input argument and produces a
+ * {@code char}-valued result.
+ * This is a primitive specialization of {@link Function2}.
  * <p>
  * This is a {@link FunctionalInterface} whose functional method is {@link #applyAsChar(byte)}.
  *
@@ -110,16 +111,16 @@ public interface ByteToCharFunction extends Lambda {
     }
 
     /**
-     * Returns a composed {@link ToCharFunction} that first applies the {@code before} function to its input, and then
-     * applies this function to the result. If evaluation of either operation throws an exception, it is relayed to the
-     * caller of the composed operation.
+     * Returns a composed {@link ToCharFunction} that first applies the {@code before} function to its input, and
+     * then applies this function to the result.
+     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
      *
      * @param <A> The type of the argument to the given function, and of composed function
      * @param before The function to apply before this function is applied
      * @return A composed {@code ToCharFunction} that first applies the {@code before} function to its input, and then
      * applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is able to handle every type.
+     * @implSpec The input argument of this method is able to handle every type.
      */
     @Nonnull
     default <A> ToCharFunction<A> compose(@Nonnull final ToByteFunction<? super A> before) {
@@ -137,7 +138,7 @@ public interface ByteToCharFunction extends Lambda {
      * @return A composed {@code BooleanToCharFunction} that first applies the {@code before} function to its input, and
      * then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
      * boolean}.
      */
     @Nonnull
@@ -147,16 +148,17 @@ public interface ByteToCharFunction extends Lambda {
     }
 
     /**
-     * Returns a composed {@link ByteToCharFunction} that first applies the {@code before} operator to its input, and
-     * then applies this function to the result. If evaluation of either operation throws an exception, it is relayed to
-     * the caller of the composed operation. This method is just convenience, to provide the ability to execute an
-     * operation which accepts {@code byte} input, before this primitive function is executed.
+     * Returns a composed {@link ByteToCharFunction} that first applies the {@code before} operator to
+     * its input, and then applies this function to the result.
+     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
+     * This method is just convenience, to provide the ability to execute an operation which accepts {@code byte} input,
+     * before this primitive function is executed.
      *
      * @param before The operator to apply before this function is applied
      * @return A composed {@code ByteToCharFunction} that first applies the {@code before} operator to its input, and
      * then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
      * byte}.
      */
     @Nonnull
@@ -166,16 +168,17 @@ public interface ByteToCharFunction extends Lambda {
     }
 
     /**
-     * Returns a composed {@link CharUnaryOperator} that first applies the {@code before} function to its input, and
-     * then applies this function to the result. If evaluation of either operation throws an exception, it is relayed to
-     * the caller of the composed operation. This method is just convenience, to provide the ability to execute an
-     * operation which accepts {@code char} input, before this primitive function is executed.
+     * Returns a composed {@link CharUnaryOperator} that first applies the {@code before} function to
+     * its input, and then applies this function to the result.
+     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
+     * This method is just convenience, to provide the ability to execute an operation which accepts {@code char} input,
+     * before this primitive function is executed.
      *
      * @param before The function to apply before this function is applied
      * @return A composed {@code CharUnaryOperator} that first applies the {@code before} function to its input, and
      * then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
      * char}.
      */
     @Nonnull
@@ -194,7 +197,7 @@ public interface ByteToCharFunction extends Lambda {
      * @return A composed {@code DoubleToCharFunction} that first applies the {@code before} function to its input, and
      * then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
      * double}.
      */
     @Nonnull
@@ -213,7 +216,7 @@ public interface ByteToCharFunction extends Lambda {
      * @return A composed {@code FloatToCharFunction} that first applies the {@code before} function to its input, and
      * then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
      * float}.
      */
     @Nonnull
@@ -223,16 +226,17 @@ public interface ByteToCharFunction extends Lambda {
     }
 
     /**
-     * Returns a composed {@link IntToCharFunction} that first applies the {@code before} function to its input, and
-     * then applies this function to the result. If evaluation of either operation throws an exception, it is relayed to
-     * the caller of the composed operation. This method is just convenience, to provide the ability to execute an
-     * operation which accepts {@code int} input, before this primitive function is executed.
+     * Returns a composed {@link IntToCharFunction} that first applies the {@code before} function to
+     * its input, and then applies this function to the result.
+     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
+     * This method is just convenience, to provide the ability to execute an operation which accepts {@code int} input,
+     * before this primitive function is executed.
      *
      * @param before The function to apply before this function is applied
      * @return A composed {@code IntToCharFunction} that first applies the {@code before} function to its input, and
      * then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
      * int}.
      */
     @Nonnull
@@ -242,16 +246,17 @@ public interface ByteToCharFunction extends Lambda {
     }
 
     /**
-     * Returns a composed {@link LongToCharFunction} that first applies the {@code before} function to its input, and
-     * then applies this function to the result. If evaluation of either operation throws an exception, it is relayed to
-     * the caller of the composed operation. This method is just convenience, to provide the ability to execute an
-     * operation which accepts {@code long} input, before this primitive function is executed.
+     * Returns a composed {@link LongToCharFunction} that first applies the {@code before} function to
+     * its input, and then applies this function to the result.
+     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
+     * This method is just convenience, to provide the ability to execute an operation which accepts {@code long} input,
+     * before this primitive function is executed.
      *
      * @param before The function to apply before this function is applied
      * @return A composed {@code LongToCharFunction} that first applies the {@code before} function to its input, and
      * then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
      * long}.
      */
     @Nonnull
@@ -270,7 +275,7 @@ public interface ByteToCharFunction extends Lambda {
      * @return A composed {@code ShortToCharFunction} that first applies the {@code before} function to its input, and
      * then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
      * short}.
      */
     @Nonnull
@@ -281,15 +286,15 @@ public interface ByteToCharFunction extends Lambda {
 
     /**
      * Returns a composed {@link ByteFunction} that first applies this function to its input, and then applies the
-     * {@code after} function to the result. If evaluation of either operation throws an exception, it is relayed to the
-     * caller of the composed operation.
+     * {@code after} function to the result.
+     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
      *
      * @param <S> The type of return value from the {@code after} function, and of the composed function
      * @param after The function to apply after this function is applied
      * @return A composed {@code ByteFunction} that first applies this function to its input, and then applies the
      * {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is able to return every type.
+     * @implSpec The input argument of this method is able to return every type.
      */
     @Nonnull
     default <S> ByteFunction<S> andThen(@Nonnull final CharFunction<? extends S> after) {
@@ -307,7 +312,7 @@ public interface ByteToCharFunction extends Lambda {
      * @return A composed {@code BytePredicate} that first applies this function to its input, and then applies the
      * {@code after} predicate to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
      * boolean}.
      */
     @Nonnull
@@ -326,7 +331,7 @@ public interface ByteToCharFunction extends Lambda {
      * @return A composed {@code ByteUnaryOperator} that first applies this function to its input, and then applies the
      * {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
      * byte}.
      */
     @Nonnull
@@ -345,7 +350,7 @@ public interface ByteToCharFunction extends Lambda {
      * @return A composed {@code ByteToCharFunction} that first applies this function to its input, and then applies the
      * {@code after} operator to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
      * char}.
      */
     @Nonnull
@@ -364,7 +369,7 @@ public interface ByteToCharFunction extends Lambda {
      * @return A composed {@code ByteToDoubleFunction} that first applies this function to its input, and then applies
      * the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
      * double}.
      */
     @Nonnull
@@ -383,7 +388,7 @@ public interface ByteToCharFunction extends Lambda {
      * @return A composed {@code ByteToFloatFunction} that first applies this function to its input, and then applies
      * the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
      * float}.
      */
     @Nonnull
@@ -402,7 +407,7 @@ public interface ByteToCharFunction extends Lambda {
      * @return A composed {@code ByteToIntFunction} that first applies this function to its input, and then applies the
      * {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
      * int}.
      */
     @Nonnull
@@ -421,7 +426,7 @@ public interface ByteToCharFunction extends Lambda {
      * @return A composed {@code ByteToLongFunction} that first applies this function to its input, and then applies the
      * {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
      * long}.
      */
     @Nonnull
@@ -440,7 +445,7 @@ public interface ByteToCharFunction extends Lambda {
      * @return A composed {@code ByteToShortFunction} that first applies this function to its input, and then applies
      * the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
      * short}.
      */
     @Nonnull

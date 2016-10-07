@@ -42,8 +42,9 @@ import java.util.function.LongPredicate;
 import java.util.function.Predicate;
 
 /**
- * Represents an operation that accepts one {@code boolean}-valued input argument and produces a {@code short}-valued
- * result. This is a primitive specialization of {@link Function2}.
+ * Represents an operation that accepts one {@code boolean}-valued input argument and produces a
+ * {@code short}-valued result.
+ * This is a primitive specialization of {@link Function2}.
  * <p>
  * This is a {@link FunctionalInterface} whose functional method is {@link #applyAsShort(boolean)}.
  *
@@ -115,16 +116,16 @@ public interface BooleanToShortFunction extends Lambda {
     }
 
     /**
-     * Returns a composed {@link ToShortFunction} that first applies the {@code before} predicate to its input, and then
-     * applies this function to the result. If evaluation of either operation throws an exception, it is relayed to the
-     * caller of the composed operation.
+     * Returns a composed {@link ToShortFunction} that first applies the {@code before} predicate to its input, and
+     * then applies this function to the result.
+     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
      *
      * @param <A> The type of the argument to the given predicate, and of composed function
      * @param before The predicate to apply before this function is applied
      * @return A composed {@code ToShortFunction} that first applies the {@code before} predicate to its input, and then
      * applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is able to handle every type.
+     * @implSpec The input argument of this method is able to handle every type.
      */
     @Nonnull
     default <A> ToShortFunction<A> compose(@Nonnull final Predicate<? super A> before) {
@@ -142,7 +143,7 @@ public interface BooleanToShortFunction extends Lambda {
      * @return A composed {@code BooleanToShortFunction} that first applies the {@code before} operator to its input,
      * and then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
      * boolean}.
      */
     @Nonnull
@@ -152,16 +153,17 @@ public interface BooleanToShortFunction extends Lambda {
     }
 
     /**
-     * Returns a composed {@link ByteToShortFunction} that first applies the {@code before} predicate to its input, and
-     * then applies this function to the result. If evaluation of either operation throws an exception, it is relayed to
-     * the caller of the composed operation. This method is just convenience, to provide the ability to execute an
-     * operation which accepts {@code byte} input, before this primitive function is executed.
+     * Returns a composed {@link ByteToShortFunction} that first applies the {@code before} predicate to
+     * its input, and then applies this function to the result.
+     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
+     * This method is just convenience, to provide the ability to execute an operation which accepts {@code byte} input,
+     * before this primitive function is executed.
      *
      * @param before The predicate to apply before this function is applied
      * @return A composed {@code ByteToShortFunction} that first applies the {@code before} predicate to its input, and
      * then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
      * byte}.
      */
     @Nonnull
@@ -171,16 +173,17 @@ public interface BooleanToShortFunction extends Lambda {
     }
 
     /**
-     * Returns a composed {@link CharToShortFunction} that first applies the {@code before} predicate to its input, and
-     * then applies this function to the result. If evaluation of either operation throws an exception, it is relayed to
-     * the caller of the composed operation. This method is just convenience, to provide the ability to execute an
-     * operation which accepts {@code char} input, before this primitive function is executed.
+     * Returns a composed {@link CharToShortFunction} that first applies the {@code before} predicate to
+     * its input, and then applies this function to the result.
+     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
+     * This method is just convenience, to provide the ability to execute an operation which accepts {@code char} input,
+     * before this primitive function is executed.
      *
      * @param before The predicate to apply before this function is applied
      * @return A composed {@code CharToShortFunction} that first applies the {@code before} predicate to its input, and
      * then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
      * char}.
      */
     @Nonnull
@@ -199,7 +202,7 @@ public interface BooleanToShortFunction extends Lambda {
      * @return A composed {@code DoubleToShortFunction} that first applies the {@code before} predicate to its input,
      * and then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
      * double}.
      */
     @Nonnull
@@ -218,7 +221,7 @@ public interface BooleanToShortFunction extends Lambda {
      * @return A composed {@code FloatToShortFunction} that first applies the {@code before} predicate to its input, and
      * then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
      * float}.
      */
     @Nonnull
@@ -228,16 +231,17 @@ public interface BooleanToShortFunction extends Lambda {
     }
 
     /**
-     * Returns a composed {@link IntToShortFunction} that first applies the {@code before} predicate to its input, and
-     * then applies this function to the result. If evaluation of either operation throws an exception, it is relayed to
-     * the caller of the composed operation. This method is just convenience, to provide the ability to execute an
-     * operation which accepts {@code int} input, before this primitive function is executed.
+     * Returns a composed {@link IntToShortFunction} that first applies the {@code before} predicate to
+     * its input, and then applies this function to the result.
+     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
+     * This method is just convenience, to provide the ability to execute an operation which accepts {@code int} input,
+     * before this primitive function is executed.
      *
      * @param before The predicate to apply before this function is applied
      * @return A composed {@code IntToShortFunction} that first applies the {@code before} predicate to its input, and
      * then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
      * int}.
      */
     @Nonnull
@@ -247,16 +251,17 @@ public interface BooleanToShortFunction extends Lambda {
     }
 
     /**
-     * Returns a composed {@link LongToShortFunction} that first applies the {@code before} predicate to its input, and
-     * then applies this function to the result. If evaluation of either operation throws an exception, it is relayed to
-     * the caller of the composed operation. This method is just convenience, to provide the ability to execute an
-     * operation which accepts {@code long} input, before this primitive function is executed.
+     * Returns a composed {@link LongToShortFunction} that first applies the {@code before} predicate to
+     * its input, and then applies this function to the result.
+     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
+     * This method is just convenience, to provide the ability to execute an operation which accepts {@code long} input,
+     * before this primitive function is executed.
      *
      * @param before The predicate to apply before this function is applied
      * @return A composed {@code LongToShortFunction} that first applies the {@code before} predicate to its input, and
      * then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
      * long}.
      */
     @Nonnull
@@ -275,7 +280,7 @@ public interface BooleanToShortFunction extends Lambda {
      * @return A composed {@code ShortUnaryOperator} that first applies the {@code before} predicate to its input, and
      * then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
      * short}.
      */
     @Nonnull
@@ -286,15 +291,15 @@ public interface BooleanToShortFunction extends Lambda {
 
     /**
      * Returns a composed {@link BooleanFunction} that first applies this function to its input, and then applies the
-     * {@code after} function to the result. If evaluation of either operation throws an exception, it is relayed to the
-     * caller of the composed operation.
+     * {@code after} function to the result.
+     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
      *
      * @param <S> The type of return value from the {@code after} function, and of the composed function
      * @param after The function to apply after this function is applied
      * @return A composed {@code BooleanFunction} that first applies this function to its input, and then applies the
      * {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is able to return every type.
+     * @implSpec The input argument of this method is able to return every type.
      */
     @Nonnull
     default <S> BooleanFunction<S> andThen(@Nonnull final ShortFunction<? extends S> after) {
@@ -312,7 +317,7 @@ public interface BooleanToShortFunction extends Lambda {
      * @return A composed {@code BooleanUnaryOperator} that first applies this function to its input, and then applies
      * the {@code after} predicate to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
      * boolean}.
      */
     @Nonnull
@@ -331,7 +336,7 @@ public interface BooleanToShortFunction extends Lambda {
      * @return A composed {@code BooleanToByteFunction} that first applies this function to its input, and then applies
      * the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
      * byte}.
      */
     @Nonnull
@@ -350,7 +355,7 @@ public interface BooleanToShortFunction extends Lambda {
      * @return A composed {@code BooleanToCharFunction} that first applies this function to its input, and then applies
      * the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
      * char}.
      */
     @Nonnull
@@ -369,7 +374,7 @@ public interface BooleanToShortFunction extends Lambda {
      * @return A composed {@code BooleanToDoubleFunction} that first applies this function to its input, and then
      * applies the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
      * double}.
      */
     @Nonnull
@@ -388,7 +393,7 @@ public interface BooleanToShortFunction extends Lambda {
      * @return A composed {@code BooleanToFloatFunction} that first applies this function to its input, and then applies
      * the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
      * float}.
      */
     @Nonnull
@@ -407,7 +412,7 @@ public interface BooleanToShortFunction extends Lambda {
      * @return A composed {@code BooleanToIntFunction} that first applies this function to its input, and then applies
      * the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
      * int}.
      */
     @Nonnull
@@ -426,7 +431,7 @@ public interface BooleanToShortFunction extends Lambda {
      * @return A composed {@code BooleanToLongFunction} that first applies this function to its input, and then applies
      * the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
      * long}.
      */
     @Nonnull
@@ -445,7 +450,7 @@ public interface BooleanToShortFunction extends Lambda {
      * @return A composed {@code BooleanToShortFunction} that first applies this function to its input, and then applies
      * the {@code after} operator to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
      * short}.
      */
     @Nonnull

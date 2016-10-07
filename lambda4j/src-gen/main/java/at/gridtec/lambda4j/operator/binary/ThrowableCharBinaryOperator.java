@@ -65,11 +65,12 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.BinaryOperator;
+import java.util.function.Function;
 
 /**
- * Represents an operation that accepts two {@code char}-valued input arguments and produces a {@code char}-valued
- * result which is able to throw any {@link Throwable}. This is a primitive specialization of {@link
- * ThrowableBinaryOperator}.
+ * Represents an operation that accepts two {@code char}-valued input arguments and produces a
+ * {@code char}-valued result which is able to throw any {@link Throwable}.
+ * This is a primitive specialization of {@link ThrowableBinaryOperator}.
  * <p>
  * This is a {@link FunctionalInterface} whose functional method is {@link #applyAsCharThrows(char, char)}.
  *
@@ -229,7 +230,7 @@ public interface ThrowableCharBinaryOperator<X extends Throwable> extends Lambda
      * @return A composed {@code ThrowableToCharBiFunction} that first applies the {@code before} functions to its
      * input, and then applies this operator to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is able to handle every type.
+     * @implSpec The input argument of this method is able to handle every type.
      */
     @Nonnull
     default <A, B> ThrowableToCharBiFunction<A, B, X> compose(
@@ -250,7 +251,7 @@ public interface ThrowableCharBinaryOperator<X extends Throwable> extends Lambda
      * @return A composed {@code ThrowableBiBooleanToCharFunction} that first applies the {@code before} functions to
      * its input, and then applies this operator to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
      * boolean}.
      */
     @Nonnull
@@ -264,16 +265,17 @@ public interface ThrowableCharBinaryOperator<X extends Throwable> extends Lambda
     }
 
     /**
-     * Returns a composed {@link ThrowableBiByteToCharFunction} that first applies the {@code before} functions to its
-     * input, and then applies this operator to the result. This method is just convenience, to provide the ability to
-     * execute an operation which accepts {@code byte} input, before this primitive operator is executed.
+     * Returns a composed {@link ThrowableBiByteToCharFunction} that first applies the {@code before} functions to
+     * its input, and then applies this operator to the result.
+     * This method is just convenience, to provide the ability to execute an operation which accepts {@code byte} input,
+     * before this primitive operator is executed.
      *
      * @param before1 The first function to apply before this operator is applied
      * @param before2 The second function to apply before this operator is applied
      * @return A composed {@code ThrowableBiByteToCharFunction} that first applies the {@code before} functions to its
      * input, and then applies this operator to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
      * byte}.
      */
     @Nonnull
@@ -287,16 +289,17 @@ public interface ThrowableCharBinaryOperator<X extends Throwable> extends Lambda
     }
 
     /**
-     * Returns a composed {@link ThrowableCharBinaryOperator} that first applies the {@code before} operators to its
-     * input, and then applies this operator to the result. This method is just convenience, to provide the ability to
-     * execute an operation which accepts {@code char} input, before this primitive operator is executed.
+     * Returns a composed {@link ThrowableCharBinaryOperator} that first applies the {@code before} operators to
+     * its input, and then applies this operator to the result.
+     * This method is just convenience, to provide the ability to execute an operation which accepts {@code char} input,
+     * before this primitive operator is executed.
      *
      * @param before1 The first operator to apply before this operator is applied
      * @param before2 The second operator to apply before this operator is applied
      * @return A composed {@code ThrowableCharBinaryOperator} that first applies the {@code before} operators to its
      * input, and then applies this operator to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
      * char}.
      */
     @Nonnull
@@ -319,7 +322,7 @@ public interface ThrowableCharBinaryOperator<X extends Throwable> extends Lambda
      * @return A composed {@code ThrowableBiDoubleToCharFunction} that first applies the {@code before} functions to its
      * input, and then applies this operator to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
      * double}.
      */
     @Nonnull
@@ -342,7 +345,7 @@ public interface ThrowableCharBinaryOperator<X extends Throwable> extends Lambda
      * @return A composed {@code ThrowableBiFloatToCharFunction} that first applies the {@code before} functions to its
      * input, and then applies this operator to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
      * float}.
      */
     @Nonnull
@@ -356,16 +359,17 @@ public interface ThrowableCharBinaryOperator<X extends Throwable> extends Lambda
     }
 
     /**
-     * Returns a composed {@link ThrowableBiIntToCharFunction} that first applies the {@code before} functions to its
-     * input, and then applies this operator to the result. This method is just convenience, to provide the ability to
-     * execute an operation which accepts {@code int} input, before this primitive operator is executed.
+     * Returns a composed {@link ThrowableBiIntToCharFunction} that first applies the {@code before} functions to
+     * its input, and then applies this operator to the result.
+     * This method is just convenience, to provide the ability to execute an operation which accepts {@code int} input,
+     * before this primitive operator is executed.
      *
      * @param before1 The first function to apply before this operator is applied
      * @param before2 The second function to apply before this operator is applied
      * @return A composed {@code ThrowableBiIntToCharFunction} that first applies the {@code before} functions to its
      * input, and then applies this operator to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
      * int}.
      */
     @Nonnull
@@ -379,16 +383,17 @@ public interface ThrowableCharBinaryOperator<X extends Throwable> extends Lambda
     }
 
     /**
-     * Returns a composed {@link ThrowableBiLongToCharFunction} that first applies the {@code before} functions to its
-     * input, and then applies this operator to the result. This method is just convenience, to provide the ability to
-     * execute an operation which accepts {@code long} input, before this primitive operator is executed.
+     * Returns a composed {@link ThrowableBiLongToCharFunction} that first applies the {@code before} functions to
+     * its input, and then applies this operator to the result.
+     * This method is just convenience, to provide the ability to execute an operation which accepts {@code long} input,
+     * before this primitive operator is executed.
      *
      * @param before1 The first function to apply before this operator is applied
      * @param before2 The second function to apply before this operator is applied
      * @return A composed {@code ThrowableBiLongToCharFunction} that first applies the {@code before} functions to its
      * input, and then applies this operator to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
      * long}.
      */
     @Nonnull
@@ -411,7 +416,7 @@ public interface ThrowableCharBinaryOperator<X extends Throwable> extends Lambda
      * @return A composed {@code ThrowableBiShortToCharFunction} that first applies the {@code before} functions to its
      * input, and then applies this operator to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
      * short}.
      */
     @Nonnull
@@ -433,7 +438,7 @@ public interface ThrowableCharBinaryOperator<X extends Throwable> extends Lambda
      * @return A composed {@code ThrowableBiCharFunction} that first applies this operator to its input, and then
      * applies the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is able to return every type.
+     * @implSpec The input argument of this method is able to return every type.
      */
     @Nonnull
     default <S> ThrowableBiCharFunction<S, X> andThen(
@@ -451,7 +456,7 @@ public interface ThrowableCharBinaryOperator<X extends Throwable> extends Lambda
      * @return A composed {@code ThrowableBiCharPredicate} that first applies this operator to its input, and then
      * applies the {@code after} predicate to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
      * boolean}.
      */
     @Nonnull
@@ -469,7 +474,7 @@ public interface ThrowableCharBinaryOperator<X extends Throwable> extends Lambda
      * @return A composed {@code ThrowableBiCharToByteFunction} that first applies this operator to its input, and then
      * applies the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
      * byte}.
      */
     @Nonnull
@@ -488,7 +493,7 @@ public interface ThrowableCharBinaryOperator<X extends Throwable> extends Lambda
      * @return A composed {@code ThrowableCharBinaryOperator} that first applies this operator to its input, and then
      * applies the {@code after} operator to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
      * char}.
      */
     @Nonnull
@@ -506,7 +511,7 @@ public interface ThrowableCharBinaryOperator<X extends Throwable> extends Lambda
      * @return A composed {@code ThrowableBiCharToDoubleFunction} that first applies this operator to its input, and
      * then applies the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
      * double}.
      */
     @Nonnull
@@ -525,7 +530,7 @@ public interface ThrowableCharBinaryOperator<X extends Throwable> extends Lambda
      * @return A composed {@code ThrowableBiCharToFloatFunction} that first applies this operator to its input, and then
      * applies the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
      * float}.
      */
     @Nonnull
@@ -544,7 +549,7 @@ public interface ThrowableCharBinaryOperator<X extends Throwable> extends Lambda
      * @return A composed {@code ThrowableBiCharToIntFunction} that first applies this operator to its input, and then
      * applies the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
      * int}.
      */
     @Nonnull
@@ -562,7 +567,7 @@ public interface ThrowableCharBinaryOperator<X extends Throwable> extends Lambda
      * @return A composed {@code ThrowableBiCharToLongFunction} that first applies this operator to its input, and then
      * applies the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
      * long}.
      */
     @Nonnull
@@ -581,7 +586,7 @@ public interface ThrowableCharBinaryOperator<X extends Throwable> extends Lambda
      * @return A composed {@code ThrowableBiCharToShortFunction} that first applies this operator to its input, and then
      * applies the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
      * short}.
      */
     @Nonnull
@@ -744,6 +749,35 @@ public interface ThrowableCharBinaryOperator<X extends Throwable> extends Lambda
                 throw e;
             } catch (Throwable throwable) {
                 throw ThrowableUtils.sneakyThrow(throwable);
+            }
+        };
+    }
+
+    /**
+     * Returns a composed {@link CharBinaryOperator} that first applies this operator to its input, and then applies the
+     * {@code recover} operation if a {@link Throwable} is thrown from this one. The {@code recover} operation is
+     * represented by a curried operation which is called with throwable information and same arguments of this
+     * operator.
+     *
+     * @param recover The operation to apply if this operator throws a {@code Throwable}
+     * @return A composed {@link CharBinaryOperator} that first applies this operator to its input, and then applies the
+     * {@code recover} operation if a {@link Throwable} is thrown from this one.
+     * @throws NullPointerException If given argument or the returned enclosing operator is {@code null}
+     * @implNote The implementation checks that the returned enclosing operator from {@code recover} operation is not
+     * {@code null}. If it is, then a {@link NullPointerException} with appropriate message is thrown.
+     */
+    @Nonnull
+    default CharBinaryOperator recover(
+            @Nonnull final Function<? super Throwable, ? extends CharBinaryOperator> recover) {
+        Objects.requireNonNull(recover);
+        return (value1, value2) -> {
+            try {
+                return this.applyAsCharThrows(value1, value2);
+            } catch (Throwable throwable) {
+                final CharBinaryOperator operator = recover.apply(throwable);
+                Objects.requireNonNull(operator, () -> "recover returned null for " + throwable.getClass() + ": "
+                        + throwable.getMessage());
+                return operator.applyAsChar(value1, value2);
             }
         };
     }

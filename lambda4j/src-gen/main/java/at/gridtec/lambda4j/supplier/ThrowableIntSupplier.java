@@ -35,11 +35,12 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.Objects;
 import java.util.concurrent.atomic.AtomicReference;
+import java.util.function.Function;
 import java.util.function.IntSupplier;
 
 /**
- * Represents a supplier of {@code int}-valued results which is able to throw any {@link Throwable}. This is a primitive
- * specialization of {@link ThrowableSupplier}.
+ * Represents a supplier of {@code int}-valued results which is able to throw any {@link Throwable}.
+ * This is a primitive specialization of {@link ThrowableSupplier}.
  * <p>
  * There is no requirement that a distinct result be returned each time the supplier is invoked.
  * <p>
@@ -113,7 +114,7 @@ public interface ThrowableIntSupplier<X extends Throwable> extends Lambda, IntSu
      * @apiNote This method mainly exists to use this {@link ThrowableIntSupplier} in JRE specific methods only
      * accepting {@link IntSupplier}. If this supplier should be applied, then the {@link #getAsIntThrows()} method
      * should be used.
-     * @implSpec Overrides the {@link IntSupplier#getAsInt()} method by using a redefinition as default method. This
+     * @apiNote Overrides the {@link IntSupplier#getAsInt()} method by using a redefinition as default method. This
      * implementation calls the {@link #getAsIntThrows()} method of this function and catches the eventually thrown
      * {@link Throwable} from it. If it is of type {@link RuntimeException} or {@link Error} it is rethrown as is. Other
      * {@code Throwable} types are wrapped in a {@link ThrownByFunctionalInterfaceException}.
@@ -151,7 +152,7 @@ public interface ThrowableIntSupplier<X extends Throwable> extends Lambda, IntSu
      * @return A composed {@code ThrowableSupplier} that first applies this supplier to its input, and then applies the
      * {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is able to return every type.
+     * @implSpec The input argument of this method is able to return every type.
      */
     @Nonnull
     default <S> ThrowableSupplier<S, X> andThen(@Nonnull final ThrowableIntFunction<? extends S, ? extends X> after) {
@@ -168,7 +169,7 @@ public interface ThrowableIntSupplier<X extends Throwable> extends Lambda, IntSu
      * @return A composed {@code ThrowableBooleanSupplier} that first applies this supplier to its input, and then
      * applies the {@code after} predicate to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
      * boolean}.
      */
     @Nonnull
@@ -186,7 +187,7 @@ public interface ThrowableIntSupplier<X extends Throwable> extends Lambda, IntSu
      * @return A composed {@code ThrowableByteSupplier} that first applies this supplier to its input, and then applies
      * the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
      * byte}.
      */
     @Nonnull
@@ -204,7 +205,7 @@ public interface ThrowableIntSupplier<X extends Throwable> extends Lambda, IntSu
      * @return A composed {@code ThrowableCharSupplier} that first applies this supplier to its input, and then applies
      * the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
      * char}.
      */
     @Nonnull
@@ -222,7 +223,7 @@ public interface ThrowableIntSupplier<X extends Throwable> extends Lambda, IntSu
      * @return A composed {@code ThrowableDoubleSupplier} that first applies this supplier to its input, and then
      * applies the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
      * double}.
      */
     @Nonnull
@@ -240,7 +241,7 @@ public interface ThrowableIntSupplier<X extends Throwable> extends Lambda, IntSu
      * @return A composed {@code ThrowableFloatSupplier} that first applies this supplier to its input, and then applies
      * the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
      * float}.
      */
     @Nonnull
@@ -258,7 +259,7 @@ public interface ThrowableIntSupplier<X extends Throwable> extends Lambda, IntSu
      * @return A composed {@code ThrowableIntSupplier} that first applies this supplier to its input, and then applies
      * the {@code after} operator to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
      * int}.
      */
     @Nonnull
@@ -276,7 +277,7 @@ public interface ThrowableIntSupplier<X extends Throwable> extends Lambda, IntSu
      * @return A composed {@code ThrowableLongSupplier} that first applies this supplier to its input, and then applies
      * the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
      * long}.
      */
     @Nonnull
@@ -294,7 +295,7 @@ public interface ThrowableIntSupplier<X extends Throwable> extends Lambda, IntSu
      * @return A composed {@code ThrowableShortSupplier} that first applies this supplier to its input, and then applies
      * the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
      * short}.
      */
     @Nonnull
@@ -304,8 +305,8 @@ public interface ThrowableIntSupplier<X extends Throwable> extends Lambda, IntSu
     }
 
     /**
-     * Returns a composed {@link ThrowableConsumer} that first gets the result from this supplier, and then consumes the
-     * result using the given {@link ThrowableIntConsumer}.
+     * Returns a composed {@link ThrowableConsumer} that first gets the result from this supplier, and then consumes
+     * the result using the given {@link ThrowableIntConsumer}.
      *
      * @param consumer The operation which consumes the result from this operation
      * @return A composed {@code ThrowableConsumer} that first gets the result from this supplier, and then consumes the
@@ -392,12 +393,12 @@ public interface ThrowableIntSupplier<X extends Throwable> extends Lambda, IntSu
     }
 
     /**
-     * Returns a composed {@link IntSupplier2} that applies this supplier to its input and sneakily throws the thrown
-     * {@link Throwable} from it, unless it is of type {@link RuntimeException} or {@link Error}. This means that each
-     * throwable thrown from the returned composed supplier behaves exactly the same as an <em>unchecked</em> throwable
-     * does. As a result, there is no need to handle the throwable of this supplier in the returned composed supplier by
-     * either wrapping it in an <em>unchecked</em> throwable or to declare it in the {@code throws} clause, as it would
-     * be done in a non sneaky throwing supplier.
+     * Returns a composed {@link IntSupplier2} that applies this supplier to its input and sneakily throws the
+     * thrown {@link Throwable} from it, unless it is of type {@link RuntimeException} or {@link Error}. This means that
+     * each throwable thrown from the returned composed supplier behaves exactly the same as an <em>unchecked</em>
+     * throwable does. As a result, there is no need to handle the throwable of this supplier in the returned composed
+     * supplier by either wrapping it in an <em>unchecked</em> throwable or to declare it in the {@code throws} clause,
+     * as it would be done in a non sneaky throwing supplier.
      * <p>
      * What sneaky throwing simply does, is to fake out the compiler and thus it bypasses the principle of
      * <em>checked</em> throwables. On the JVM (class file) level, all throwables, checked or not, can be thrown
@@ -464,6 +465,34 @@ public interface ThrowableIntSupplier<X extends Throwable> extends Lambda, IntSu
                 throw e;
             } catch (Throwable throwable) {
                 throw ThrowableUtils.sneakyThrow(throwable);
+            }
+        };
+    }
+
+    /**
+     * Returns a composed {@link IntSupplier2} that first applies this supplier to its input, and then applies the
+     * {@code recover} operation if a {@link Throwable} is thrown from this one. The {@code recover} operation is
+     * represented by a curried operation which is called with throwable information and same argument of this
+     * supplier.
+     *
+     * @param recover The operation to apply if this supplier throws a {@code Throwable}
+     * @return A composed {@link IntSupplier2} that first applies this supplier to its input, and then applies the
+     * {@code recover} operation if a {@link Throwable} is thrown from this one.
+     * @throws NullPointerException If given argument or the returned enclosing supplier is {@code null}
+     * @implNote The implementation checks that the returned enclosing supplier from {@code recover} operation is not
+     * {@code null}. If it is, then a {@link NullPointerException} with appropriate message is thrown.
+     */
+    @Nonnull
+    default IntSupplier2 recover(@Nonnull final Function<? super Throwable, ? extends IntSupplier> recover) {
+        Objects.requireNonNull(recover);
+        return () -> {
+            try {
+                return this.getAsIntThrows();
+            } catch (Throwable throwable) {
+                final IntSupplier supplier = recover.apply(throwable);
+                Objects.requireNonNull(supplier, () -> "recover returned null for " + throwable.getClass() + ": "
+                        + throwable.getMessage());
+                return supplier.getAsInt();
             }
         };
     }

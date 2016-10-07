@@ -28,6 +28,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.Objects;
 import java.util.function.BiConsumer;
+import java.util.function.Function;
 
 /**
  * Represents an operation that accepts two input arguments and returns no result which is able to throw any {@link
@@ -141,7 +142,7 @@ public interface ThrowableBiConsumer<T, U, X extends Throwable> extends Lambda, 
      * @apiNote This method mainly exists to use this {@link ThrowableBiConsumer} in JRE specific methods only accepting
      * {@link BiConsumer}. If this consumer should be applied, then the {@link #acceptThrows(Object, Object)} method
      * should be used.
-     * @implSpec Overrides the {@link BiConsumer#accept(Object, Object)} method by using a redefinition as default
+     * @apiNote Overrides the {@link BiConsumer#accept(Object, Object)} method by using a redefinition as default
      * method. This implementation calls the {@link #acceptThrows(Object, Object)} method of this function and catches
      * the eventually thrown {@link Throwable} from it. If it is of type {@link RuntimeException} or {@link Error} it is
      * rethrown as is. Other {@code Throwable} types are wrapped in a {@link ThrownByFunctionalInterfaceException}.
@@ -194,7 +195,7 @@ public interface ThrowableBiConsumer<T, U, X extends Throwable> extends Lambda, 
      * @return A composed {@code ThrowableBiConsumer} that first applies the {@code before} functions to its input, and
      * then applies this consumer to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is able to handle every type.
+     * @implSpec The input argument of this method is able to handle every type.
      */
     @Nonnull
     default <A, B> ThrowableBiConsumer<A, B, X> compose(
@@ -268,12 +269,12 @@ public interface ThrowableBiConsumer<T, U, X extends Throwable> extends Lambda, 
     }
 
     /**
-     * Returns a composed {@link BiConsumer2} that applies this consumer to its input and sneakily throws the thrown
-     * {@link Throwable} from it, unless it is of type {@link RuntimeException} or {@link Error}. This means that each
-     * throwable thrown from the returned composed consumer behaves exactly the same as an <em>unchecked</em> throwable
-     * does. As a result, there is no need to handle the throwable of this consumer in the returned composed consumer by
-     * either wrapping it in an <em>unchecked</em> throwable or to declare it in the {@code throws} clause, as it would
-     * be done in a non sneaky throwing consumer.
+     * Returns a composed {@link BiConsumer2} that applies this consumer to its input and sneakily throws the
+     * thrown {@link Throwable} from it, unless it is of type {@link RuntimeException} or {@link Error}. This means that
+     * each throwable thrown from the returned composed consumer behaves exactly the same as an <em>unchecked</em>
+     * throwable does. As a result, there is no need to handle the throwable of this consumer in the returned composed
+     * consumer by either wrapping it in an <em>unchecked</em> throwable or to declare it in the {@code throws} clause,
+     * as it would be done in a non sneaky throwing consumer.
      * <p>
      * What sneaky throwing simply does, is to fake out the compiler and thus it bypasses the principle of
      * <em>checked</em> throwables. On the JVM (class file) level, all throwables, checked or not, can be thrown
@@ -340,6 +341,34 @@ public interface ThrowableBiConsumer<T, U, X extends Throwable> extends Lambda, 
                 throw e;
             } catch (Throwable throwable) {
                 throw ThrowableUtils.sneakyThrow(throwable);
+            }
+        };
+    }
+
+    /**
+     * Returns a composed {@link BiConsumer2} that first applies this consumer to its input, and then applies the {@code
+     * recover} operation if a {@link Throwable} is thrown from this one. The {@code recover} operation is represented
+     * by a curried operation which is called with throwable information and same arguments of this consumer.
+     *
+     * @param recover The operation to apply if this consumer throws a {@code Throwable}
+     * @return A composed {@link BiConsumer2} that first applies this consumer to its input, and then applies the {@code
+     * recover} operation if a {@link Throwable} is thrown from this one.
+     * @throws NullPointerException If given argument or the returned enclosing consumer is {@code null}
+     * @implNote The implementation checks that the returned enclosing consumer from {@code recover} operation is not
+     * {@code null}. If it is, then a {@link NullPointerException} with appropriate message is thrown.
+     */
+    @Nonnull
+    default BiConsumer2<T, U> recover(
+            @Nonnull final Function<? super Throwable, ? extends BiConsumer<? super T, ? super U>> recover) {
+        Objects.requireNonNull(recover);
+        return (t, u) -> {
+            try {
+                this.acceptThrows(t, u);
+            } catch (Throwable throwable) {
+                final BiConsumer<? super T, ? super U> consumer = recover.apply(throwable);
+                Objects.requireNonNull(consumer, () -> "recover returned null for " + throwable.getClass() + ": "
+                        + throwable.getMessage());
+                consumer.accept(t, u);
             }
         };
     }

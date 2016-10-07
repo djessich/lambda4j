@@ -62,8 +62,9 @@ import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
- * Represents an operation that accepts three {@code byte}-valued input arguments and produces a {@code byte}-valued
- * result. This is a primitive specialization of {@link TernaryOperator}.
+ * Represents an operation that accepts three {@code byte}-valued input arguments and produces a
+ * {@code byte}-valued result.
+ * This is a primitive specialization of {@link TernaryOperator}.
  * <p>
  * This is a {@link FunctionalInterface} whose functional method is {@link #applyAsByte(byte, byte, byte)}.
  *
@@ -185,8 +186,8 @@ public interface ByteTernaryOperator extends Lambda {
 
     /**
      * Returns a composed {@link ToByteTriFunction} that first applies the {@code before} functions to its input, and
-     * then applies this operator to the result. If evaluation of either operation throws an exception, it is relayed to
-     * the caller of the composed operation.
+     * then applies this operator to the result.
+     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
      *
      * @param <A> The type of the argument to the first given function, and of composed function
      * @param <B> The type of the argument to the second given function, and of composed function
@@ -197,7 +198,7 @@ public interface ByteTernaryOperator extends Lambda {
      * @return A composed {@code ToByteTriFunction} that first applies the {@code before} functions to its input, and
      * then applies this operator to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is able to handle every type.
+     * @implSpec The input argument of this method is able to handle every type.
      */
     @Nonnull
     default <A, B, C> ToByteTriFunction<A, B, C> compose(@Nonnull final ToByteFunction<? super A> before1,
@@ -220,7 +221,7 @@ public interface ByteTernaryOperator extends Lambda {
      * @return A composed {@code TriBooleanToByteFunction} that first applies the {@code before} functions to its input,
      * and then applies this operator to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
      * boolean}.
      */
     @Nonnull
@@ -234,10 +235,11 @@ public interface ByteTernaryOperator extends Lambda {
     }
 
     /**
-     * Returns a composed {@link ByteTernaryOperator} that first applies the {@code before} operators to its input, and
-     * then applies this operator to the result. If evaluation of either operation throws an exception, it is relayed to
-     * the caller of the composed operation. This method is just convenience, to provide the ability to execute an
-     * operation which accepts {@code byte} input, before this primitive operator is executed.
+     * Returns a composed {@link ByteTernaryOperator} that first applies the {@code before} operators to
+     * its input, and then applies this operator to the result.
+     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
+     * This method is just convenience, to provide the ability to execute an operation which accepts {@code byte} input,
+     * before this primitive operator is executed.
      *
      * @param before1 The first operator to apply before this operator is applied
      * @param before2 The second operator to apply before this operator is applied
@@ -245,7 +247,7 @@ public interface ByteTernaryOperator extends Lambda {
      * @return A composed {@code ByteTernaryOperator} that first applies the {@code before} operators to its input, and
      * then applies this operator to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
      * byte}.
      */
     @Nonnull
@@ -259,10 +261,11 @@ public interface ByteTernaryOperator extends Lambda {
     }
 
     /**
-     * Returns a composed {@link TriCharToByteFunction} that first applies the {@code before} functions to its input,
-     * and then applies this operator to the result. If evaluation of either operation throws an exception, it is
-     * relayed to the caller of the composed operation. This method is just convenience, to provide the ability to
-     * execute an operation which accepts {@code char} input, before this primitive operator is executed.
+     * Returns a composed {@link TriCharToByteFunction} that first applies the {@code before} functions to
+     * its input, and then applies this operator to the result.
+     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
+     * This method is just convenience, to provide the ability to execute an operation which accepts {@code char} input,
+     * before this primitive operator is executed.
      *
      * @param before1 The first function to apply before this operator is applied
      * @param before2 The second function to apply before this operator is applied
@@ -270,7 +273,7 @@ public interface ByteTernaryOperator extends Lambda {
      * @return A composed {@code TriCharToByteFunction} that first applies the {@code before} functions to its input,
      * and then applies this operator to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
      * char}.
      */
     @Nonnull
@@ -295,7 +298,7 @@ public interface ByteTernaryOperator extends Lambda {
      * @return A composed {@code TriDoubleToByteFunction} that first applies the {@code before} functions to its input,
      * and then applies this operator to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
      * double}.
      */
     @Nonnull
@@ -320,7 +323,7 @@ public interface ByteTernaryOperator extends Lambda {
      * @return A composed {@code TriFloatToByteFunction} that first applies the {@code before} functions to its input,
      * and then applies this operator to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
      * float}.
      */
     @Nonnull
@@ -334,10 +337,11 @@ public interface ByteTernaryOperator extends Lambda {
     }
 
     /**
-     * Returns a composed {@link TriIntToByteFunction} that first applies the {@code before} functions to its input, and
-     * then applies this operator to the result. If evaluation of either operation throws an exception, it is relayed to
-     * the caller of the composed operation. This method is just convenience, to provide the ability to execute an
-     * operation which accepts {@code int} input, before this primitive operator is executed.
+     * Returns a composed {@link TriIntToByteFunction} that first applies the {@code before} functions to
+     * its input, and then applies this operator to the result.
+     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
+     * This method is just convenience, to provide the ability to execute an operation which accepts {@code int} input,
+     * before this primitive operator is executed.
      *
      * @param before1 The first function to apply before this operator is applied
      * @param before2 The second function to apply before this operator is applied
@@ -345,7 +349,7 @@ public interface ByteTernaryOperator extends Lambda {
      * @return A composed {@code TriIntToByteFunction} that first applies the {@code before} functions to its input, and
      * then applies this operator to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
      * int}.
      */
     @Nonnull
@@ -359,10 +363,11 @@ public interface ByteTernaryOperator extends Lambda {
     }
 
     /**
-     * Returns a composed {@link TriLongToByteFunction} that first applies the {@code before} functions to its input,
-     * and then applies this operator to the result. If evaluation of either operation throws an exception, it is
-     * relayed to the caller of the composed operation. This method is just convenience, to provide the ability to
-     * execute an operation which accepts {@code long} input, before this primitive operator is executed.
+     * Returns a composed {@link TriLongToByteFunction} that first applies the {@code before} functions to
+     * its input, and then applies this operator to the result.
+     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
+     * This method is just convenience, to provide the ability to execute an operation which accepts {@code long} input,
+     * before this primitive operator is executed.
      *
      * @param before1 The first function to apply before this operator is applied
      * @param before2 The second function to apply before this operator is applied
@@ -370,7 +375,7 @@ public interface ByteTernaryOperator extends Lambda {
      * @return A composed {@code TriLongToByteFunction} that first applies the {@code before} functions to its input,
      * and then applies this operator to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
      * long}.
      */
     @Nonnull
@@ -395,7 +400,7 @@ public interface ByteTernaryOperator extends Lambda {
      * @return A composed {@code TriShortToByteFunction} that first applies the {@code before} functions to its input,
      * and then applies this operator to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
      * short}.
      */
     @Nonnull
@@ -410,15 +415,15 @@ public interface ByteTernaryOperator extends Lambda {
 
     /**
      * Returns a composed {@link TriByteFunction} that first applies this operator to its input, and then applies the
-     * {@code after} function to the result. If evaluation of either operation throws an exception, it is relayed to the
-     * caller of the composed operation.
+     * {@code after} function to the result.
+     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
      *
      * @param <S> The type of return value from the {@code after} function, and of the composed function
      * @param after The function to apply after this operator is applied
      * @return A composed {@code TriByteFunction} that first applies this operator to its input, and then applies the
      * {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is able to return every type.
+     * @implSpec The input argument of this method is able to return every type.
      */
     @Nonnull
     default <S> TriByteFunction<S> andThen(@Nonnull final ByteFunction<? extends S> after) {
@@ -436,7 +441,7 @@ public interface ByteTernaryOperator extends Lambda {
      * @return A composed {@code TriBytePredicate} that first applies this operator to its input, and then applies the
      * {@code after} predicate to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
      * boolean}.
      */
     @Nonnull
@@ -455,7 +460,7 @@ public interface ByteTernaryOperator extends Lambda {
      * @return A composed {@code ByteTernaryOperator} that first applies this operator to its input, and then applies
      * the {@code after} operator to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
      * byte}.
      */
     @Nonnull
@@ -474,7 +479,7 @@ public interface ByteTernaryOperator extends Lambda {
      * @return A composed {@code TriByteToCharFunction} that first applies this operator to its input, and then applies
      * the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
      * char}.
      */
     @Nonnull
@@ -493,7 +498,7 @@ public interface ByteTernaryOperator extends Lambda {
      * @return A composed {@code TriByteToDoubleFunction} that first applies this operator to its input, and then
      * applies the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
      * double}.
      */
     @Nonnull
@@ -512,7 +517,7 @@ public interface ByteTernaryOperator extends Lambda {
      * @return A composed {@code TriByteToFloatFunction} that first applies this operator to its input, and then applies
      * the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
      * float}.
      */
     @Nonnull
@@ -531,7 +536,7 @@ public interface ByteTernaryOperator extends Lambda {
      * @return A composed {@code TriByteToIntFunction} that first applies this operator to its input, and then applies
      * the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
      * int}.
      */
     @Nonnull
@@ -550,7 +555,7 @@ public interface ByteTernaryOperator extends Lambda {
      * @return A composed {@code TriByteToLongFunction} that first applies this operator to its input, and then applies
      * the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
      * long}.
      */
     @Nonnull
@@ -569,7 +574,7 @@ public interface ByteTernaryOperator extends Lambda {
      * @return A composed {@code TriByteToShortFunction} that first applies this operator to its input, and then applies
      * the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
      * short}.
      */
     @Nonnull

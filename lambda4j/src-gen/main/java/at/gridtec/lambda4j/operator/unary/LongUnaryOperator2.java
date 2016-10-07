@@ -52,8 +52,9 @@ import java.util.function.ToLongFunction;
 import java.util.function.UnaryOperator;
 
 /**
- * Represents an operation that accepts one {@code long}-valued input argument and produces a {@code long}-valued
- * result. This is a primitive specialization of {@link UnaryOperator2}.
+ * Represents an operation that accepts one {@code long}-valued input argument and produces a
+ * {@code long}-valued result.
+ * This is a primitive specialization of {@link UnaryOperator2}.
  * <p>
  * This is a {@link FunctionalInterface} whose functional method is {@link #applyAsLong(long)}.
  *
@@ -136,16 +137,16 @@ public interface LongUnaryOperator2 extends Lambda, LongUnaryOperator {
     }
 
     /**
-     * Returns a composed {@link ToLongFunction2} that first applies the {@code before} function to its input, and then
-     * applies this operator to the result. If evaluation of either operation throws an exception, it is relayed to the
-     * caller of the composed operation.
+     * Returns a composed {@link ToLongFunction2} that first applies the {@code before} function to its input, and
+     * then applies this operator to the result.
+     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
      *
      * @param <A> The type of the argument to the given function, and of composed function
      * @param before The function to apply before this operator is applied
      * @return A composed {@code ToLongFunction2} that first applies the {@code before} function to its input, and then
      * applies this operator to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is able to handle every type.
+     * @implSpec The input argument of this method is able to handle every type.
      */
     @Nonnull
     default <A> ToLongFunction2<A> compose(@Nonnull final ToLongFunction<? super A> before) {
@@ -163,7 +164,7 @@ public interface LongUnaryOperator2 extends Lambda, LongUnaryOperator {
      * @return A composed {@code BooleanToLongFunction} that first applies the {@code before} function to its input, and
      * then applies this operator to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
      * boolean}.
      */
     @Nonnull
@@ -173,16 +174,17 @@ public interface LongUnaryOperator2 extends Lambda, LongUnaryOperator {
     }
 
     /**
-     * Returns a composed {@link ByteToLongFunction} that first applies the {@code before} function to its input, and
-     * then applies this operator to the result. If evaluation of either operation throws an exception, it is relayed to
-     * the caller of the composed operation. This method is just convenience, to provide the ability to execute an
-     * operation which accepts {@code byte} input, before this primitive operator is executed.
+     * Returns a composed {@link ByteToLongFunction} that first applies the {@code before} function to
+     * its input, and then applies this operator to the result.
+     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
+     * This method is just convenience, to provide the ability to execute an operation which accepts {@code byte} input,
+     * before this primitive operator is executed.
      *
      * @param before The function to apply before this operator is applied
      * @return A composed {@code ByteToLongFunction} that first applies the {@code before} function to its input, and
      * then applies this operator to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
      * byte}.
      */
     @Nonnull
@@ -192,16 +194,17 @@ public interface LongUnaryOperator2 extends Lambda, LongUnaryOperator {
     }
 
     /**
-     * Returns a composed {@link CharToLongFunction} that first applies the {@code before} function to its input, and
-     * then applies this operator to the result. If evaluation of either operation throws an exception, it is relayed to
-     * the caller of the composed operation. This method is just convenience, to provide the ability to execute an
-     * operation which accepts {@code char} input, before this primitive operator is executed.
+     * Returns a composed {@link CharToLongFunction} that first applies the {@code before} function to
+     * its input, and then applies this operator to the result.
+     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
+     * This method is just convenience, to provide the ability to execute an operation which accepts {@code char} input,
+     * before this primitive operator is executed.
      *
      * @param before The function to apply before this operator is applied
      * @return A composed {@code CharToLongFunction} that first applies the {@code before} function to its input, and
      * then applies this operator to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
      * char}.
      */
     @Nonnull
@@ -220,7 +223,7 @@ public interface LongUnaryOperator2 extends Lambda, LongUnaryOperator {
      * @return A composed {@code DoubleToLongFunction2} that first applies the {@code before} function to its input, and
      * then applies this operator to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
      * double}.
      */
     @Nonnull
@@ -239,7 +242,7 @@ public interface LongUnaryOperator2 extends Lambda, LongUnaryOperator {
      * @return A composed {@code FloatToLongFunction} that first applies the {@code before} function to its input, and
      * then applies this operator to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
      * float}.
      */
     @Nonnull
@@ -249,16 +252,17 @@ public interface LongUnaryOperator2 extends Lambda, LongUnaryOperator {
     }
 
     /**
-     * Returns a composed {@link IntToLongFunction2} that first applies the {@code before} function to its input, and
-     * then applies this operator to the result. If evaluation of either operation throws an exception, it is relayed to
-     * the caller of the composed operation. This method is just convenience, to provide the ability to execute an
-     * operation which accepts {@code int} input, before this primitive operator is executed.
+     * Returns a composed {@link IntToLongFunction2} that first applies the {@code before} function to
+     * its input, and then applies this operator to the result.
+     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
+     * This method is just convenience, to provide the ability to execute an operation which accepts {@code int} input,
+     * before this primitive operator is executed.
      *
      * @param before The function to apply before this operator is applied
      * @return A composed {@code IntToLongFunction2} that first applies the {@code before} function to its input, and
      * then applies this operator to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
      * int}.
      */
     @Nonnull
@@ -268,16 +272,17 @@ public interface LongUnaryOperator2 extends Lambda, LongUnaryOperator {
     }
 
     /**
-     * Returns a composed {@link LongUnaryOperator2} that first applies the {@code before} operator to its input, and
-     * then applies this operator to the result. If evaluation of either operation throws an exception, it is relayed to
-     * the caller of the composed operation. This method is just convenience, to provide the ability to execute an
-     * operation which accepts {@code long} input, before this primitive operator is executed.
+     * Returns a composed {@link LongUnaryOperator2} that first applies the {@code before} operator to
+     * its input, and then applies this operator to the result.
+     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
+     * This method is just convenience, to provide the ability to execute an operation which accepts {@code long} input,
+     * before this primitive operator is executed.
      *
      * @param before The operator to apply before this operator is applied
      * @return A composed {@code LongUnaryOperator2} that first applies the {@code before} operator to its input, and
      * then applies this operator to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
      * long}.
      */
     @Nonnull
@@ -296,7 +301,7 @@ public interface LongUnaryOperator2 extends Lambda, LongUnaryOperator {
      * @return A composed {@code ShortToLongFunction} that first applies the {@code before} function to its input, and
      * then applies this operator to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
      * short}.
      */
     @Nonnull
@@ -307,15 +312,15 @@ public interface LongUnaryOperator2 extends Lambda, LongUnaryOperator {
 
     /**
      * Returns a composed {@link LongFunction2} that first applies this operator to its input, and then applies the
-     * {@code after} function to the result. If evaluation of either operation throws an exception, it is relayed to the
-     * caller of the composed operation.
+     * {@code after} function to the result.
+     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
      *
      * @param <S> The type of return value from the {@code after} function, and of the composed function
      * @param after The function to apply after this operator is applied
      * @return A composed {@code LongFunction2} that first applies this operator to its input, and then applies the
      * {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is able to return every type.
+     * @implSpec The input argument of this method is able to return every type.
      */
     @Nonnull
     default <S> LongFunction2<S> andThen(@Nonnull final LongFunction<? extends S> after) {
@@ -333,7 +338,7 @@ public interface LongUnaryOperator2 extends Lambda, LongUnaryOperator {
      * @return A composed {@code LongPredicate2} that first applies this operator to its input, and then applies the
      * {@code after} predicate to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
      * boolean}.
      */
     @Nonnull
@@ -352,7 +357,7 @@ public interface LongUnaryOperator2 extends Lambda, LongUnaryOperator {
      * @return A composed {@code LongToByteFunction} that first applies this operator to its input, and then applies the
      * {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
      * byte}.
      */
     @Nonnull
@@ -371,7 +376,7 @@ public interface LongUnaryOperator2 extends Lambda, LongUnaryOperator {
      * @return A composed {@code LongToCharFunction} that first applies this operator to its input, and then applies the
      * {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
      * char}.
      */
     @Nonnull
@@ -390,7 +395,7 @@ public interface LongUnaryOperator2 extends Lambda, LongUnaryOperator {
      * @return A composed {@code LongToDoubleFunction2} that first applies this operator to its input, and then applies
      * the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
      * double}.
      */
     @Nonnull
@@ -409,7 +414,7 @@ public interface LongUnaryOperator2 extends Lambda, LongUnaryOperator {
      * @return A composed {@code LongToFloatFunction} that first applies this operator to its input, and then applies
      * the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
      * float}.
      */
     @Nonnull
@@ -428,7 +433,7 @@ public interface LongUnaryOperator2 extends Lambda, LongUnaryOperator {
      * @return A composed {@code LongToIntFunction2} that first applies this operator to its input, and then applies the
      * {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
      * int}.
      */
     @Nonnull
@@ -447,7 +452,7 @@ public interface LongUnaryOperator2 extends Lambda, LongUnaryOperator {
      * @return A composed {@code LongUnaryOperator2} that first applies this operator to its input, and then applies the
      * {@code after} operator to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
      * long}.
      */
     @Nonnull
@@ -466,7 +471,7 @@ public interface LongUnaryOperator2 extends Lambda, LongUnaryOperator {
      * @return A composed {@code LongToShortFunction} that first applies this operator to its input, and then applies
      * the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
      * short}.
      */
     @Nonnull

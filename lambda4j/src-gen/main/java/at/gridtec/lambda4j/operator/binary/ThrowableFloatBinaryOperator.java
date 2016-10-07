@@ -65,11 +65,12 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.BinaryOperator;
+import java.util.function.Function;
 
 /**
- * Represents an operation that accepts two {@code float}-valued input arguments and produces a {@code float}-valued
- * result which is able to throw any {@link Throwable}. This is a primitive specialization of {@link
- * ThrowableBinaryOperator}.
+ * Represents an operation that accepts two {@code float}-valued input arguments and produces a
+ * {@code float}-valued result which is able to throw any {@link Throwable}.
+ * This is a primitive specialization of {@link ThrowableBinaryOperator}.
  * <p>
  * This is a {@link FunctionalInterface} whose functional method is {@link #applyAsFloatThrows(float, float)}.
  *
@@ -229,7 +230,7 @@ public interface ThrowableFloatBinaryOperator<X extends Throwable> extends Lambd
      * @return A composed {@code ThrowableToFloatBiFunction} that first applies the {@code before} functions to its
      * input, and then applies this operator to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is able to handle every type.
+     * @implSpec The input argument of this method is able to handle every type.
      */
     @Nonnull
     default <A, B> ThrowableToFloatBiFunction<A, B, X> compose(
@@ -250,7 +251,7 @@ public interface ThrowableFloatBinaryOperator<X extends Throwable> extends Lambd
      * @return A composed {@code ThrowableBiBooleanToFloatFunction} that first applies the {@code before} functions to
      * its input, and then applies this operator to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
      * boolean}.
      */
     @Nonnull
@@ -264,16 +265,17 @@ public interface ThrowableFloatBinaryOperator<X extends Throwable> extends Lambd
     }
 
     /**
-     * Returns a composed {@link ThrowableBiByteToFloatFunction} that first applies the {@code before} functions to its
-     * input, and then applies this operator to the result. This method is just convenience, to provide the ability to
-     * execute an operation which accepts {@code byte} input, before this primitive operator is executed.
+     * Returns a composed {@link ThrowableBiByteToFloatFunction} that first applies the {@code before} functions to
+     * its input, and then applies this operator to the result.
+     * This method is just convenience, to provide the ability to execute an operation which accepts {@code byte} input,
+     * before this primitive operator is executed.
      *
      * @param before1 The first function to apply before this operator is applied
      * @param before2 The second function to apply before this operator is applied
      * @return A composed {@code ThrowableBiByteToFloatFunction} that first applies the {@code before} functions to its
      * input, and then applies this operator to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
      * byte}.
      */
     @Nonnull
@@ -287,16 +289,17 @@ public interface ThrowableFloatBinaryOperator<X extends Throwable> extends Lambd
     }
 
     /**
-     * Returns a composed {@link ThrowableBiCharToFloatFunction} that first applies the {@code before} functions to its
-     * input, and then applies this operator to the result. This method is just convenience, to provide the ability to
-     * execute an operation which accepts {@code char} input, before this primitive operator is executed.
+     * Returns a composed {@link ThrowableBiCharToFloatFunction} that first applies the {@code before} functions to
+     * its input, and then applies this operator to the result.
+     * This method is just convenience, to provide the ability to execute an operation which accepts {@code char} input,
+     * before this primitive operator is executed.
      *
      * @param before1 The first function to apply before this operator is applied
      * @param before2 The second function to apply before this operator is applied
      * @return A composed {@code ThrowableBiCharToFloatFunction} that first applies the {@code before} functions to its
      * input, and then applies this operator to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
      * char}.
      */
     @Nonnull
@@ -319,7 +322,7 @@ public interface ThrowableFloatBinaryOperator<X extends Throwable> extends Lambd
      * @return A composed {@code ThrowableBiDoubleToFloatFunction} that first applies the {@code before} functions to
      * its input, and then applies this operator to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
      * double}.
      */
     @Nonnull
@@ -342,7 +345,7 @@ public interface ThrowableFloatBinaryOperator<X extends Throwable> extends Lambd
      * @return A composed {@code ThrowableFloatBinaryOperator} that first applies the {@code before} operators to its
      * input, and then applies this operator to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
      * float}.
      */
     @Nonnull
@@ -356,16 +359,17 @@ public interface ThrowableFloatBinaryOperator<X extends Throwable> extends Lambd
     }
 
     /**
-     * Returns a composed {@link ThrowableBiIntToFloatFunction} that first applies the {@code before} functions to its
-     * input, and then applies this operator to the result. This method is just convenience, to provide the ability to
-     * execute an operation which accepts {@code int} input, before this primitive operator is executed.
+     * Returns a composed {@link ThrowableBiIntToFloatFunction} that first applies the {@code before} functions to
+     * its input, and then applies this operator to the result.
+     * This method is just convenience, to provide the ability to execute an operation which accepts {@code int} input,
+     * before this primitive operator is executed.
      *
      * @param before1 The first function to apply before this operator is applied
      * @param before2 The second function to apply before this operator is applied
      * @return A composed {@code ThrowableBiIntToFloatFunction} that first applies the {@code before} functions to its
      * input, and then applies this operator to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
      * int}.
      */
     @Nonnull
@@ -379,16 +383,17 @@ public interface ThrowableFloatBinaryOperator<X extends Throwable> extends Lambd
     }
 
     /**
-     * Returns a composed {@link ThrowableBiLongToFloatFunction} that first applies the {@code before} functions to its
-     * input, and then applies this operator to the result. This method is just convenience, to provide the ability to
-     * execute an operation which accepts {@code long} input, before this primitive operator is executed.
+     * Returns a composed {@link ThrowableBiLongToFloatFunction} that first applies the {@code before} functions to
+     * its input, and then applies this operator to the result.
+     * This method is just convenience, to provide the ability to execute an operation which accepts {@code long} input,
+     * before this primitive operator is executed.
      *
      * @param before1 The first function to apply before this operator is applied
      * @param before2 The second function to apply before this operator is applied
      * @return A composed {@code ThrowableBiLongToFloatFunction} that first applies the {@code before} functions to its
      * input, and then applies this operator to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
      * long}.
      */
     @Nonnull
@@ -411,7 +416,7 @@ public interface ThrowableFloatBinaryOperator<X extends Throwable> extends Lambd
      * @return A composed {@code ThrowableBiShortToFloatFunction} that first applies the {@code before} functions to its
      * input, and then applies this operator to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
      * short}.
      */
     @Nonnull
@@ -433,7 +438,7 @@ public interface ThrowableFloatBinaryOperator<X extends Throwable> extends Lambd
      * @return A composed {@code ThrowableBiFloatFunction} that first applies this operator to its input, and then
      * applies the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is able to return every type.
+     * @implSpec The input argument of this method is able to return every type.
      */
     @Nonnull
     default <S> ThrowableBiFloatFunction<S, X> andThen(
@@ -451,7 +456,7 @@ public interface ThrowableFloatBinaryOperator<X extends Throwable> extends Lambd
      * @return A composed {@code ThrowableBiFloatPredicate} that first applies this operator to its input, and then
      * applies the {@code after} predicate to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
      * boolean}.
      */
     @Nonnull
@@ -469,7 +474,7 @@ public interface ThrowableFloatBinaryOperator<X extends Throwable> extends Lambd
      * @return A composed {@code ThrowableBiFloatToByteFunction} that first applies this operator to its input, and then
      * applies the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
      * byte}.
      */
     @Nonnull
@@ -488,7 +493,7 @@ public interface ThrowableFloatBinaryOperator<X extends Throwable> extends Lambd
      * @return A composed {@code ThrowableBiFloatToCharFunction} that first applies this operator to its input, and then
      * applies the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
      * char}.
      */
     @Nonnull
@@ -507,7 +512,7 @@ public interface ThrowableFloatBinaryOperator<X extends Throwable> extends Lambd
      * @return A composed {@code ThrowableBiFloatToDoubleFunction} that first applies this operator to its input, and
      * then applies the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
      * double}.
      */
     @Nonnull
@@ -526,7 +531,7 @@ public interface ThrowableFloatBinaryOperator<X extends Throwable> extends Lambd
      * @return A composed {@code ThrowableFloatBinaryOperator} that first applies this operator to its input, and then
      * applies the {@code after} operator to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
      * float}.
      */
     @Nonnull
@@ -545,7 +550,7 @@ public interface ThrowableFloatBinaryOperator<X extends Throwable> extends Lambd
      * @return A composed {@code ThrowableBiFloatToIntFunction} that first applies this operator to its input, and then
      * applies the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
      * int}.
      */
     @Nonnull
@@ -564,7 +569,7 @@ public interface ThrowableFloatBinaryOperator<X extends Throwable> extends Lambd
      * @return A composed {@code ThrowableBiFloatToLongFunction} that first applies this operator to its input, and then
      * applies the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
      * long}.
      */
     @Nonnull
@@ -583,7 +588,7 @@ public interface ThrowableFloatBinaryOperator<X extends Throwable> extends Lambd
      * @return A composed {@code ThrowableBiFloatToShortFunction} that first applies this operator to its input, and
      * then applies the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
      * short}.
      */
     @Nonnull
@@ -746,6 +751,35 @@ public interface ThrowableFloatBinaryOperator<X extends Throwable> extends Lambd
                 throw e;
             } catch (Throwable throwable) {
                 throw ThrowableUtils.sneakyThrow(throwable);
+            }
+        };
+    }
+
+    /**
+     * Returns a composed {@link FloatBinaryOperator} that first applies this operator to its input, and then applies
+     * the {@code recover} operation if a {@link Throwable} is thrown from this one. The {@code recover} operation is
+     * represented by a curried operation which is called with throwable information and same arguments of this
+     * operator.
+     *
+     * @param recover The operation to apply if this operator throws a {@code Throwable}
+     * @return A composed {@link FloatBinaryOperator} that first applies this operator to its input, and then applies
+     * the {@code recover} operation if a {@link Throwable} is thrown from this one.
+     * @throws NullPointerException If given argument or the returned enclosing operator is {@code null}
+     * @implNote The implementation checks that the returned enclosing operator from {@code recover} operation is not
+     * {@code null}. If it is, then a {@link NullPointerException} with appropriate message is thrown.
+     */
+    @Nonnull
+    default FloatBinaryOperator recover(
+            @Nonnull final Function<? super Throwable, ? extends FloatBinaryOperator> recover) {
+        Objects.requireNonNull(recover);
+        return (value1, value2) -> {
+            try {
+                return this.applyAsFloatThrows(value1, value2);
+            } catch (Throwable throwable) {
+                final FloatBinaryOperator operator = recover.apply(throwable);
+                Objects.requireNonNull(operator, () -> "recover returned null for " + throwable.getClass() + ": "
+                        + throwable.getMessage());
+                return operator.applyAsFloat(value1, value2);
             }
         };
     }

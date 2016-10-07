@@ -29,8 +29,8 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Function;
 
 /**
- * Represents an operation that accepts one input argument and produces a result which is able to throw any {@link
- * Throwable}.
+ * Represents an operation that accepts one input argument and produces a
+ * result which is able to throw any {@link Throwable}.
  * <p>
  * This is a {@link FunctionalInterface} whose functional method is {@link #applyThrows(Object)}.
  *
@@ -127,7 +127,7 @@ public interface ThrowableFunction<T, R, X extends Throwable> extends Lambda, Fu
      * @apiNote This method mainly exists to use this {@link ThrowableFunction} in JRE specific methods only accepting
      * {@link Function}. If this function should be applied, then the {@link #applyThrows(Object)} method should be
      * used.
-     * @implSpec Overrides the {@link Function#apply(Object)} method by using a redefinition as default method. This
+     * @apiNote Overrides the {@link Function#apply(Object)} method by using a redefinition as default method. This
      * implementation calls the {@link #applyThrows(Object)} method of this function and catches the eventually thrown
      * {@link Throwable} from it. If it is of type {@link RuntimeException} or {@link Error} it is rethrown as is. Other
      * {@code Throwable} types are wrapped in a {@link ThrownByFunctionalInterfaceException}.
@@ -165,7 +165,7 @@ public interface ThrowableFunction<T, R, X extends Throwable> extends Lambda, Fu
      * @return A composed {@code ThrowableFunction} that first applies the {@code before} function to its input, and
      * then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is able to handle every type.
+     * @implSpec The input argument of this method is able to handle every type.
      */
     @Nonnull
     default <A> ThrowableFunction<A, R, X> compose(
@@ -183,7 +183,7 @@ public interface ThrowableFunction<T, R, X extends Throwable> extends Lambda, Fu
      * @return A composed {@code ThrowableFunction} that first applies this function to its input, and then applies the
      * {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is able to return every type.
+     * @implSpec The input argument of this method is able to return every type.
      */
     @Nonnull
     default <S> ThrowableFunction<T, S, X> andThen(
@@ -271,12 +271,12 @@ public interface ThrowableFunction<T, R, X extends Throwable> extends Lambda, Fu
     }
 
     /**
-     * Returns a composed {@link Function2} that applies this function to its input and sneakily throws the thrown
-     * {@link Throwable} from it, unless it is of type {@link RuntimeException} or {@link Error}. This means that each
-     * throwable thrown from the returned composed function behaves exactly the same as an <em>unchecked</em> throwable
-     * does. As a result, there is no need to handle the throwable of this function in the returned composed function by
-     * either wrapping it in an <em>unchecked</em> throwable or to declare it in the {@code throws} clause, as it would
-     * be done in a non sneaky throwing function.
+     * Returns a composed {@link Function2} that applies this function to its input and sneakily throws the
+     * thrown {@link Throwable} from it, unless it is of type {@link RuntimeException} or {@link Error}. This means that
+     * each throwable thrown from the returned composed function behaves exactly the same as an <em>unchecked</em>
+     * throwable does. As a result, there is no need to handle the throwable of this function in the returned composed
+     * function by either wrapping it in an <em>unchecked</em> throwable or to declare it in the {@code throws} clause,
+     * as it would be done in a non sneaky throwing function.
      * <p>
      * What sneaky throwing simply does, is to fake out the compiler and thus it bypasses the principle of
      * <em>checked</em> throwables. On the JVM (class file) level, all throwables, checked or not, can be thrown
@@ -343,6 +343,34 @@ public interface ThrowableFunction<T, R, X extends Throwable> extends Lambda, Fu
                 throw e;
             } catch (Throwable throwable) {
                 throw ThrowableUtils.sneakyThrow(throwable);
+            }
+        };
+    }
+
+    /**
+     * Returns a composed {@link Function2} that first applies this function to its input, and then applies the {@code
+     * recover} operation if a {@link Throwable} is thrown from this one. The {@code recover} operation is represented
+     * by a curried operation which is called with throwable information and same argument of this function.
+     *
+     * @param recover The operation to apply if this function throws a {@code Throwable}
+     * @return A composed {@link Function2} that first applies this function to its input, and then applies the {@code
+     * recover} operation if a {@link Throwable} is thrown from this one.
+     * @throws NullPointerException If given argument or the returned enclosing function is {@code null}
+     * @implNote The implementation checks that the returned enclosing function from {@code recover} operation is not
+     * {@code null}. If it is, then a {@link NullPointerException} with appropriate message is thrown.
+     */
+    @Nonnull
+    default Function2<T, R> recover(
+            @Nonnull final Function<? super Throwable, ? extends Function<? super T, ? extends R>> recover) {
+        Objects.requireNonNull(recover);
+        return (t) -> {
+            try {
+                return this.applyThrows(t);
+            } catch (Throwable throwable) {
+                final Function<? super T, ? extends R> function = recover.apply(throwable);
+                Objects.requireNonNull(function, () -> "recover returned null for " + throwable.getClass() + ": "
+                        + throwable.getMessage());
+                return function.apply(t);
             }
         };
     }

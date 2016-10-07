@@ -29,8 +29,8 @@ import java.util.function.Consumer;
 import java.util.function.Function;
 
 /**
- * Represents an operation that accepts two input arguments and returns no result. Unlike most other functional
- * interfaces, {@code BiConsumer2} is expected to operate via side-effects.
+ * Represents an operation that accepts two input arguments and returns no result.
+ * Unlike most other functional interfaces, {@code BiConsumer2} is expected to operate via side-effects.
  * <p>
  * This is a {@link FunctionalInterface} whose functional method is {@link #accept(Object, Object)}.
  *
@@ -143,9 +143,9 @@ public interface BiConsumer2<T, U> extends Lambda, BiConsumer<T, U> {
     }
 
     /**
-     * Returns a composed {@link BiConsumer2} that first applies the {@code before} functions to its input, and then
-     * applies this consumer to the result. If evaluation of either operation throws an exception, it is relayed to the
-     * caller of the composed operation.
+     * Returns a composed {@link BiConsumer2} that first applies the {@code before} functions to its input, and
+     * then applies this consumer to the result.
+     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
      *
      * @param <A> The type of the argument to the first given function, and of composed consumer
      * @param <B> The type of the argument to the second given function, and of composed consumer
@@ -154,7 +154,7 @@ public interface BiConsumer2<T, U> extends Lambda, BiConsumer<T, U> {
      * @return A composed {@code BiConsumer2} that first applies the {@code before} functions to its input, and then
      * applies this consumer to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is able to handle every type.
+     * @implSpec The input argument of this method is able to handle every type.
      */
     @Nonnull
     default <A, B> BiConsumer2<A, B> compose(@Nonnull final Function<? super A, ? extends T> before1,
@@ -166,8 +166,9 @@ public interface BiConsumer2<T, U> extends Lambda, BiConsumer<T, U> {
 
     /**
      * Returns a composed {@link BiConsumer2} that performs, in sequence, this consumer followed by the {@code after}
-     * consumer. If evaluation of either operation throws an exception, it is relayed to the caller of the composed
-     * operation. If performing this consumer throws an exception, the {@code after} consumer will not be performed.
+     * consumer.
+     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
+     * If performing this consumer throws an exception, the {@code after} consumer will not be performed.
      *
      * @param after The consumer to apply after this consumer is applied
      * @return A composed {@link BiConsumer2} that performs, in sequence, this consumer followed by the {@code after}

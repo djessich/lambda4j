@@ -54,8 +54,8 @@ import java.util.function.Predicate;
 import java.util.function.ToDoubleFunction;
 
 /**
- * Represents an predicate (boolean-valued function) of one {@code double}-valued input argument. This is a primitive
- * specialization of {@link Predicate2}.
+ * Represents an predicate (boolean-valued function) of one {@code double}-valued input argument.
+ * This is a primitive specialization of {@link Predicate2}.
  * <p>
  * This is a {@link FunctionalInterface} whose functional method is {@link #test(double)}.
  *
@@ -165,16 +165,16 @@ public interface DoublePredicate2 extends Lambda, DoublePredicate {
     }
 
     /**
-     * Returns a composed {@link Predicate2} that first applies the {@code before} function to its input, and then
-     * applies this predicate to the result. If evaluation of either operation throws an exception, it is relayed to the
-     * caller of the composed operation.
+     * Returns a composed {@link Predicate2} that first applies the {@code before} function to its input, and
+     * then applies this predicate to the result.
+     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
      *
      * @param <A> The type of the argument to the given function, and of composed predicate
      * @param before The function to apply before this predicate is applied
      * @return A composed {@code Predicate2} that first applies the {@code before} function to its input, and then
      * applies this predicate to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is able to handle every type.
+     * @implSpec The input argument of this method is able to handle every type.
      */
     @Nonnull
     default <A> Predicate2<A> compose(@Nonnull final ToDoubleFunction<? super A> before) {
@@ -192,7 +192,7 @@ public interface DoublePredicate2 extends Lambda, DoublePredicate {
      * @return A composed {@code BooleanUnaryOperator} that first applies the {@code before} function to its input, and
      * then applies this predicate to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
      * boolean}.
      */
     @Nonnull
@@ -202,16 +202,17 @@ public interface DoublePredicate2 extends Lambda, DoublePredicate {
     }
 
     /**
-     * Returns a composed {@link BytePredicate} that first applies the {@code before} function to its input, and then
-     * applies this predicate to the result. If evaluation of either operation throws an exception, it is relayed to the
-     * caller of the composed operation. This method is just convenience, to provide the ability to execute an operation
-     * which accepts {@code byte} input, before this primitive predicate is executed.
+     * Returns a composed {@link BytePredicate} that first applies the {@code before} function to
+     * its input, and then applies this predicate to the result.
+     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
+     * This method is just convenience, to provide the ability to execute an operation which accepts {@code byte} input,
+     * before this primitive predicate is executed.
      *
      * @param before The function to apply before this predicate is applied
      * @return A composed {@code BytePredicate} that first applies the {@code before} function to its input, and then
      * applies this predicate to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
      * byte}.
      */
     @Nonnull
@@ -221,16 +222,17 @@ public interface DoublePredicate2 extends Lambda, DoublePredicate {
     }
 
     /**
-     * Returns a composed {@link CharPredicate} that first applies the {@code before} function to its input, and then
-     * applies this predicate to the result. If evaluation of either operation throws an exception, it is relayed to the
-     * caller of the composed operation. This method is just convenience, to provide the ability to execute an operation
-     * which accepts {@code char} input, before this primitive predicate is executed.
+     * Returns a composed {@link CharPredicate} that first applies the {@code before} function to
+     * its input, and then applies this predicate to the result.
+     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
+     * This method is just convenience, to provide the ability to execute an operation which accepts {@code char} input,
+     * before this primitive predicate is executed.
      *
      * @param before The function to apply before this predicate is applied
      * @return A composed {@code CharPredicate} that first applies the {@code before} function to its input, and then
      * applies this predicate to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
      * char}.
      */
     @Nonnull
@@ -249,7 +251,7 @@ public interface DoublePredicate2 extends Lambda, DoublePredicate {
      * @return A composed {@code DoublePredicate2} that first applies the {@code before} operator to its input, and then
      * applies this predicate to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
      * double}.
      */
     @Nonnull
@@ -268,7 +270,7 @@ public interface DoublePredicate2 extends Lambda, DoublePredicate {
      * @return A composed {@code FloatPredicate} that first applies the {@code before} function to its input, and then
      * applies this predicate to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
      * float}.
      */
     @Nonnull
@@ -278,16 +280,17 @@ public interface DoublePredicate2 extends Lambda, DoublePredicate {
     }
 
     /**
-     * Returns a composed {@link IntPredicate2} that first applies the {@code before} function to its input, and then
-     * applies this predicate to the result. If evaluation of either operation throws an exception, it is relayed to the
-     * caller of the composed operation. This method is just convenience, to provide the ability to execute an operation
-     * which accepts {@code int} input, before this primitive predicate is executed.
+     * Returns a composed {@link IntPredicate2} that first applies the {@code before} function to
+     * its input, and then applies this predicate to the result.
+     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
+     * This method is just convenience, to provide the ability to execute an operation which accepts {@code int} input,
+     * before this primitive predicate is executed.
      *
      * @param before The function to apply before this predicate is applied
      * @return A composed {@code IntPredicate2} that first applies the {@code before} function to its input, and then
      * applies this predicate to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
      * int}.
      */
     @Nonnull
@@ -297,16 +300,17 @@ public interface DoublePredicate2 extends Lambda, DoublePredicate {
     }
 
     /**
-     * Returns a composed {@link LongPredicate2} that first applies the {@code before} function to its input, and then
-     * applies this predicate to the result. If evaluation of either operation throws an exception, it is relayed to the
-     * caller of the composed operation. This method is just convenience, to provide the ability to execute an operation
-     * which accepts {@code long} input, before this primitive predicate is executed.
+     * Returns a composed {@link LongPredicate2} that first applies the {@code before} function to
+     * its input, and then applies this predicate to the result.
+     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
+     * This method is just convenience, to provide the ability to execute an operation which accepts {@code long} input,
+     * before this primitive predicate is executed.
      *
      * @param before The function to apply before this predicate is applied
      * @return A composed {@code LongPredicate2} that first applies the {@code before} function to its input, and then
      * applies this predicate to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
      * long}.
      */
     @Nonnull
@@ -325,7 +329,7 @@ public interface DoublePredicate2 extends Lambda, DoublePredicate {
      * @return A composed {@code ShortPredicate} that first applies the {@code before} function to its input, and then
      * applies this predicate to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
      * short}.
      */
     @Nonnull
@@ -336,15 +340,15 @@ public interface DoublePredicate2 extends Lambda, DoublePredicate {
 
     /**
      * Returns a composed {@link DoubleFunction2} that first applies this predicate to its input, and then applies the
-     * {@code after} function to the result. If evaluation of either operation throws an exception, it is relayed to the
-     * caller of the composed operation.
+     * {@code after} function to the result.
+     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
      *
      * @param <S> The type of return value from the {@code after} function, and of the composed function
      * @param after The function to apply after this predicate is applied
      * @return A composed {@code DoubleFunction2} that first applies this predicate to its input, and then applies the
      * {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is able to return every type.
+     * @implSpec The input argument of this method is able to return every type.
      */
     @Nonnull
     default <S> DoubleFunction2<S> andThen(@Nonnull final BooleanFunction<? extends S> after) {
@@ -362,7 +366,7 @@ public interface DoublePredicate2 extends Lambda, DoublePredicate {
      * @return A composed {@code DoublePredicate2} that first applies this predicate to its input, and then applies the
      * {@code after} operator to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
      * boolean}.
      */
     @Nonnull
@@ -381,7 +385,7 @@ public interface DoublePredicate2 extends Lambda, DoublePredicate {
      * @return A composed {@code DoubleToByteFunction} that first applies this predicate to its input, and then applies
      * the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
      * byte}.
      */
     @Nonnull
@@ -400,7 +404,7 @@ public interface DoublePredicate2 extends Lambda, DoublePredicate {
      * @return A composed {@code DoubleToCharFunction} that first applies this predicate to its input, and then applies
      * the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
      * char}.
      */
     @Nonnull
@@ -419,7 +423,7 @@ public interface DoublePredicate2 extends Lambda, DoublePredicate {
      * @return A composed {@code DoubleUnaryOperator2} that first applies this predicate to its input, and then applies
      * the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
      * double}.
      */
     @Nonnull
@@ -438,7 +442,7 @@ public interface DoublePredicate2 extends Lambda, DoublePredicate {
      * @return A composed {@code DoubleToFloatFunction} that first applies this predicate to its input, and then applies
      * the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
      * float}.
      */
     @Nonnull
@@ -457,7 +461,7 @@ public interface DoublePredicate2 extends Lambda, DoublePredicate {
      * @return A composed {@code DoubleToIntFunction2} that first applies this predicate to its input, and then applies
      * the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
      * int}.
      */
     @Nonnull
@@ -476,7 +480,7 @@ public interface DoublePredicate2 extends Lambda, DoublePredicate {
      * @return A composed {@code DoubleToLongFunction2} that first applies this predicate to its input, and then applies
      * the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
      * long}.
      */
     @Nonnull
@@ -495,7 +499,7 @@ public interface DoublePredicate2 extends Lambda, DoublePredicate {
      * @return A composed {@code DoubleToShortFunction} that first applies this predicate to its input, and then applies
      * the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
      * short}.
      */
     @Nonnull

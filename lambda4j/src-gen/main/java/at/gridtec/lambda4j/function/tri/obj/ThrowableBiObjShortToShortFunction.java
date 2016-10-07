@@ -67,11 +67,12 @@ import javax.annotation.Nullable;
 import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.function.Function;
 
 /**
  * Represents an operation that accepts two object-valued and one {@code short}-valued input argument and produces a
- * {@code short}-valued result which is able to throw any {@link Throwable}. This is a (reference, reference, short)
- * specialization of {@link ThrowableTriFunction}.
+ * {@code short}-valued result which is able to throw any {@link Throwable}.
+ * This is a (reference, reference, short) specialization of {@link ThrowableTriFunction}.
  * <p>
  * This is a {@link FunctionalInterface} whose functional method is {@link #applyAsShortThrows(Object, Object, short)}.
  *
@@ -248,7 +249,7 @@ public interface ThrowableBiObjShortToShortFunction<T, U, X extends Throwable> e
      * @return A composed {@code ThrowableToShortTriFunction} that first applies the {@code before} functions to its
      * input, and then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is able to handle every type.
+     * @implSpec The input argument of this method is able to handle every type.
      */
     @Nonnull
     default <A, B, C> ThrowableToShortTriFunction<A, B, C, X> compose(
@@ -273,7 +274,7 @@ public interface ThrowableBiObjShortToShortFunction<T, U, X extends Throwable> e
      * @return A composed {@code ThrowableTriBooleanToShortFunction} that first applies the {@code before} functions to
      * its input, and then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
      * boolean}.
      */
     @Nonnull
@@ -289,9 +290,10 @@ public interface ThrowableBiObjShortToShortFunction<T, U, X extends Throwable> e
     }
 
     /**
-     * Returns a composed {@link ThrowableTriByteToShortFunction} that first applies the {@code before} functions to its
-     * input, and then applies this function to the result. This method is just convenience, to provide the ability to
-     * execute an operation which accepts {@code byte} input, before this primitive function is executed.
+     * Returns a composed {@link ThrowableTriByteToShortFunction} that first applies the {@code before} functions to
+     * its input, and then applies this function to the result.
+     * This method is just convenience, to provide the ability to execute an operation which accepts {@code byte} input,
+     * before this primitive function is executed.
      *
      * @param before1 The first function to apply before this function is applied
      * @param before2 The second function to apply before this function is applied
@@ -299,7 +301,7 @@ public interface ThrowableBiObjShortToShortFunction<T, U, X extends Throwable> e
      * @return A composed {@code ThrowableTriByteToShortFunction} that first applies the {@code before} functions to its
      * input, and then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
      * byte}.
      */
     @Nonnull
@@ -315,9 +317,10 @@ public interface ThrowableBiObjShortToShortFunction<T, U, X extends Throwable> e
     }
 
     /**
-     * Returns a composed {@link ThrowableTriCharToShortFunction} that first applies the {@code before} functions to its
-     * input, and then applies this function to the result. This method is just convenience, to provide the ability to
-     * execute an operation which accepts {@code char} input, before this primitive function is executed.
+     * Returns a composed {@link ThrowableTriCharToShortFunction} that first applies the {@code before} functions to
+     * its input, and then applies this function to the result.
+     * This method is just convenience, to provide the ability to execute an operation which accepts {@code char} input,
+     * before this primitive function is executed.
      *
      * @param before1 The first function to apply before this function is applied
      * @param before2 The second function to apply before this function is applied
@@ -325,7 +328,7 @@ public interface ThrowableBiObjShortToShortFunction<T, U, X extends Throwable> e
      * @return A composed {@code ThrowableTriCharToShortFunction} that first applies the {@code before} functions to its
      * input, and then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
      * char}.
      */
     @Nonnull
@@ -351,7 +354,7 @@ public interface ThrowableBiObjShortToShortFunction<T, U, X extends Throwable> e
      * @return A composed {@code ThrowableTriDoubleToShortFunction} that first applies the {@code before} functions to
      * its input, and then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
      * double}.
      */
     @Nonnull
@@ -377,7 +380,7 @@ public interface ThrowableBiObjShortToShortFunction<T, U, X extends Throwable> e
      * @return A composed {@code ThrowableTriFloatToShortFunction} that first applies the {@code before} functions to
      * its input, and then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
      * float}.
      */
     @Nonnull
@@ -393,9 +396,10 @@ public interface ThrowableBiObjShortToShortFunction<T, U, X extends Throwable> e
     }
 
     /**
-     * Returns a composed {@link ThrowableTriIntToShortFunction} that first applies the {@code before} functions to its
-     * input, and then applies this function to the result. This method is just convenience, to provide the ability to
-     * execute an operation which accepts {@code int} input, before this primitive function is executed.
+     * Returns a composed {@link ThrowableTriIntToShortFunction} that first applies the {@code before} functions to
+     * its input, and then applies this function to the result.
+     * This method is just convenience, to provide the ability to execute an operation which accepts {@code int} input,
+     * before this primitive function is executed.
      *
      * @param before1 The first function to apply before this function is applied
      * @param before2 The second function to apply before this function is applied
@@ -403,7 +407,7 @@ public interface ThrowableBiObjShortToShortFunction<T, U, X extends Throwable> e
      * @return A composed {@code ThrowableTriIntToShortFunction} that first applies the {@code before} functions to its
      * input, and then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
      * int}.
      */
     @Nonnull
@@ -419,9 +423,10 @@ public interface ThrowableBiObjShortToShortFunction<T, U, X extends Throwable> e
     }
 
     /**
-     * Returns a composed {@link ThrowableTriLongToShortFunction} that first applies the {@code before} functions to its
-     * input, and then applies this function to the result. This method is just convenience, to provide the ability to
-     * execute an operation which accepts {@code long} input, before this primitive function is executed.
+     * Returns a composed {@link ThrowableTriLongToShortFunction} that first applies the {@code before} functions to
+     * its input, and then applies this function to the result.
+     * This method is just convenience, to provide the ability to execute an operation which accepts {@code long} input,
+     * before this primitive function is executed.
      *
      * @param before1 The first function to apply before this function is applied
      * @param before2 The second function to apply before this function is applied
@@ -429,7 +434,7 @@ public interface ThrowableBiObjShortToShortFunction<T, U, X extends Throwable> e
      * @return A composed {@code ThrowableTriLongToShortFunction} that first applies the {@code before} functions to its
      * input, and then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
      * long}.
      */
     @Nonnull
@@ -455,7 +460,7 @@ public interface ThrowableBiObjShortToShortFunction<T, U, X extends Throwable> e
      * @return A composed {@code ThrowableShortTernaryOperator} that first applies the {@code before} functions to its
      * input, and then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
      * short}.
      */
     @Nonnull
@@ -479,7 +484,7 @@ public interface ThrowableBiObjShortToShortFunction<T, U, X extends Throwable> e
      * @return A composed {@code ThrowableBiObjShortFunction} that first applies this function to its input, and then
      * applies the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is able to return every type.
+     * @implSpec The input argument of this method is able to return every type.
      */
     @Nonnull
     default <S> ThrowableBiObjShortFunction<T, U, S, X> andThen(
@@ -497,7 +502,7 @@ public interface ThrowableBiObjShortToShortFunction<T, U, X extends Throwable> e
      * @return A composed {@code ThrowableBiObjShortPredicate} that first applies this function to its input, and then
      * applies the {@code after} predicate to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
      * boolean}.
      */
     @Nonnull
@@ -516,7 +521,7 @@ public interface ThrowableBiObjShortToShortFunction<T, U, X extends Throwable> e
      * @return A composed {@code ThrowableBiObjShortToByteFunction} that first applies this function to its input, and
      * then applies the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
      * byte}.
      */
     @Nonnull
@@ -535,7 +540,7 @@ public interface ThrowableBiObjShortToShortFunction<T, U, X extends Throwable> e
      * @return A composed {@code ThrowableBiObjShortToCharFunction} that first applies this function to its input, and
      * then applies the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
      * char}.
      */
     @Nonnull
@@ -554,7 +559,7 @@ public interface ThrowableBiObjShortToShortFunction<T, U, X extends Throwable> e
      * @return A composed {@code ThrowableBiObjShortToDoubleFunction} that first applies this function to its input, and
      * then applies the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
      * double}.
      */
     @Nonnull
@@ -573,7 +578,7 @@ public interface ThrowableBiObjShortToShortFunction<T, U, X extends Throwable> e
      * @return A composed {@code ThrowableBiObjShortToFloatFunction} that first applies this function to its input, and
      * then applies the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
      * float}.
      */
     @Nonnull
@@ -592,7 +597,7 @@ public interface ThrowableBiObjShortToShortFunction<T, U, X extends Throwable> e
      * @return A composed {@code ThrowableBiObjShortToIntFunction} that first applies this function to its input, and
      * then applies the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
      * int}.
      */
     @Nonnull
@@ -611,7 +616,7 @@ public interface ThrowableBiObjShortToShortFunction<T, U, X extends Throwable> e
      * @return A composed {@code ThrowableBiObjShortToLongFunction} that first applies this function to its input, and
      * then applies the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
      * long}.
      */
     @Nonnull
@@ -630,7 +635,7 @@ public interface ThrowableBiObjShortToShortFunction<T, U, X extends Throwable> e
      * @return A composed {@code ThrowableBiObjShortToShortFunction} that first applies this function to its input, and
      * then applies the {@code after} operator to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
      * short}.
      */
     @Nonnull
@@ -803,6 +808,35 @@ public interface ThrowableBiObjShortToShortFunction<T, U, X extends Throwable> e
                 throw e;
             } catch (Throwable throwable) {
                 throw ThrowableUtils.sneakyThrow(throwable);
+            }
+        };
+    }
+
+    /**
+     * Returns a composed {@link BiObjShortToShortFunction} that first applies this function to its input, and then
+     * applies the {@code recover} operation if a {@link Throwable} is thrown from this one. The {@code recover}
+     * operation is represented by a curried operation which is called with throwable information and same arguments of
+     * this function.
+     *
+     * @param recover The operation to apply if this function throws a {@code Throwable}
+     * @return A composed {@link BiObjShortToShortFunction} that first applies this function to its input, and then
+     * applies the {@code recover} operation if a {@link Throwable} is thrown from this one.
+     * @throws NullPointerException If given argument or the returned enclosing function is {@code null}
+     * @implNote The implementation checks that the returned enclosing function from {@code recover} operation is not
+     * {@code null}. If it is, then a {@link NullPointerException} with appropriate message is thrown.
+     */
+    @Nonnull
+    default BiObjShortToShortFunction<T, U> recover(
+            @Nonnull final Function<? super Throwable, ? extends BiObjShortToShortFunction<? super T, ? super U>> recover) {
+        Objects.requireNonNull(recover);
+        return (t, u, value) -> {
+            try {
+                return this.applyAsShortThrows(t, u, value);
+            } catch (Throwable throwable) {
+                final BiObjShortToShortFunction<? super T, ? super U> function = recover.apply(throwable);
+                Objects.requireNonNull(function, () -> "recover returned null for " + throwable.getClass() + ": "
+                        + throwable.getMessage());
+                return function.applyAsShort(t, u, value);
             }
         };
     }

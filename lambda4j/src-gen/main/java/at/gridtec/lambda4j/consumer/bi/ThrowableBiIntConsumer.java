@@ -33,6 +33,7 @@ import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.Objects;
+import java.util.function.Function;
 
 /**
  * Represents an operation that accepts two {@code int}-valued input arguments and returns no result which is able to
@@ -148,7 +149,7 @@ public interface ThrowableBiIntConsumer<X extends Throwable> extends Lambda {
      * @return A composed {@code ThrowableBiConsumer} that first applies the {@code before} functions to its input, and
      * then applies this consumer to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is able to handle every type.
+     * @implSpec The input argument of this method is able to handle every type.
      */
     @Nonnull
     default <A, B> ThrowableBiConsumer<A, B, X> compose(
@@ -169,7 +170,7 @@ public interface ThrowableBiIntConsumer<X extends Throwable> extends Lambda {
      * @return A composed {@code ThrowableBiBooleanConsumer} that first applies the {@code before} functions to its
      * input, and then applies this consumer to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
      * boolean}.
      */
     @Nonnull
@@ -182,16 +183,17 @@ public interface ThrowableBiIntConsumer<X extends Throwable> extends Lambda {
     }
 
     /**
-     * Returns a composed {@link ThrowableBiByteConsumer} that first applies the {@code before} functions to its input,
-     * and then applies this consumer to the result. This method is just convenience, to provide the ability to execute
-     * an operation which accepts {@code byte} input, before this primitive consumer is executed.
+     * Returns a composed {@link ThrowableBiByteConsumer} that first applies the {@code before} functions to
+     * its input, and then applies this consumer to the result.
+     * This method is just convenience, to provide the ability to execute an operation which accepts {@code byte} input,
+     * before this primitive consumer is executed.
      *
      * @param before1 The first function to apply before this consumer is applied
      * @param before2 The second function to apply before this consumer is applied
      * @return A composed {@code ThrowableBiByteConsumer} that first applies the {@code before} functions to its input,
      * and then applies this consumer to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
      * byte}.
      */
     @Nonnull
@@ -203,16 +205,17 @@ public interface ThrowableBiIntConsumer<X extends Throwable> extends Lambda {
     }
 
     /**
-     * Returns a composed {@link ThrowableBiCharConsumer} that first applies the {@code before} functions to its input,
-     * and then applies this consumer to the result. This method is just convenience, to provide the ability to execute
-     * an operation which accepts {@code char} input, before this primitive consumer is executed.
+     * Returns a composed {@link ThrowableBiCharConsumer} that first applies the {@code before} functions to
+     * its input, and then applies this consumer to the result.
+     * This method is just convenience, to provide the ability to execute an operation which accepts {@code char} input,
+     * before this primitive consumer is executed.
      *
      * @param before1 The first function to apply before this consumer is applied
      * @param before2 The second function to apply before this consumer is applied
      * @return A composed {@code ThrowableBiCharConsumer} that first applies the {@code before} functions to its input,
      * and then applies this consumer to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
      * char}.
      */
     @Nonnull
@@ -233,7 +236,7 @@ public interface ThrowableBiIntConsumer<X extends Throwable> extends Lambda {
      * @return A composed {@code ThrowableBiDoubleConsumer} that first applies the {@code before} functions to its
      * input, and then applies this consumer to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
      * double}.
      */
     @Nonnull
@@ -255,7 +258,7 @@ public interface ThrowableBiIntConsumer<X extends Throwable> extends Lambda {
      * @return A composed {@code ThrowableBiFloatConsumer} that first applies the {@code before} functions to its input,
      * and then applies this consumer to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
      * float}.
      */
     @Nonnull
@@ -268,16 +271,17 @@ public interface ThrowableBiIntConsumer<X extends Throwable> extends Lambda {
     }
 
     /**
-     * Returns a composed {@link ThrowableBiIntConsumer} that first applies the {@code before} operators to its input,
-     * and then applies this consumer to the result. This method is just convenience, to provide the ability to execute
-     * an operation which accepts {@code int} input, before this primitive consumer is executed.
+     * Returns a composed {@link ThrowableBiIntConsumer} that first applies the {@code before} operators to
+     * its input, and then applies this consumer to the result.
+     * This method is just convenience, to provide the ability to execute an operation which accepts {@code int} input,
+     * before this primitive consumer is executed.
      *
      * @param before1 The first operator to apply before this consumer is applied
      * @param before2 The second operator to apply before this consumer is applied
      * @return A composed {@code ThrowableBiIntConsumer} that first applies the {@code before} operators to its input,
      * and then applies this consumer to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
      * int}.
      */
     @Nonnull
@@ -289,16 +293,17 @@ public interface ThrowableBiIntConsumer<X extends Throwable> extends Lambda {
     }
 
     /**
-     * Returns a composed {@link ThrowableBiLongConsumer} that first applies the {@code before} functions to its input,
-     * and then applies this consumer to the result. This method is just convenience, to provide the ability to execute
-     * an operation which accepts {@code long} input, before this primitive consumer is executed.
+     * Returns a composed {@link ThrowableBiLongConsumer} that first applies the {@code before} functions to
+     * its input, and then applies this consumer to the result.
+     * This method is just convenience, to provide the ability to execute an operation which accepts {@code long} input,
+     * before this primitive consumer is executed.
      *
      * @param before1 The first function to apply before this consumer is applied
      * @param before2 The second function to apply before this consumer is applied
      * @return A composed {@code ThrowableBiLongConsumer} that first applies the {@code before} functions to its input,
      * and then applies this consumer to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
      * long}.
      */
     @Nonnull
@@ -319,7 +324,7 @@ public interface ThrowableBiIntConsumer<X extends Throwable> extends Lambda {
      * @return A composed {@code ThrowableBiShortConsumer} that first applies the {@code before} functions to its input,
      * and then applies this consumer to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implNote The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
      * short}.
      */
     @Nonnull
@@ -384,12 +389,12 @@ public interface ThrowableBiIntConsumer<X extends Throwable> extends Lambda {
     }
 
     /**
-     * Returns a composed {@link BiIntConsumer} that applies this consumer to its input and sneakily throws the thrown
-     * {@link Throwable} from it, unless it is of type {@link RuntimeException} or {@link Error}. This means that each
-     * throwable thrown from the returned composed consumer behaves exactly the same as an <em>unchecked</em> throwable
-     * does. As a result, there is no need to handle the throwable of this consumer in the returned composed consumer by
-     * either wrapping it in an <em>unchecked</em> throwable or to declare it in the {@code throws} clause, as it would
-     * be done in a non sneaky throwing consumer.
+     * Returns a composed {@link BiIntConsumer} that applies this consumer to its input and sneakily throws the
+     * thrown {@link Throwable} from it, unless it is of type {@link RuntimeException} or {@link Error}. This means that
+     * each throwable thrown from the returned composed consumer behaves exactly the same as an <em>unchecked</em>
+     * throwable does. As a result, there is no need to handle the throwable of this consumer in the returned composed
+     * consumer by either wrapping it in an <em>unchecked</em> throwable or to declare it in the {@code throws} clause,
+     * as it would be done in a non sneaky throwing consumer.
      * <p>
      * What sneaky throwing simply does, is to fake out the compiler and thus it bypasses the principle of
      * <em>checked</em> throwables. On the JVM (class file) level, all throwables, checked or not, can be thrown
@@ -456,6 +461,34 @@ public interface ThrowableBiIntConsumer<X extends Throwable> extends Lambda {
                 throw e;
             } catch (Throwable throwable) {
                 throw ThrowableUtils.sneakyThrow(throwable);
+            }
+        };
+    }
+
+    /**
+     * Returns a composed {@link BiIntConsumer} that first applies this consumer to its input, and then applies the
+     * {@code recover} operation if a {@link Throwable} is thrown from this one. The {@code recover} operation is
+     * represented by a curried operation which is called with throwable information and same arguments of this
+     * consumer.
+     *
+     * @param recover The operation to apply if this consumer throws a {@code Throwable}
+     * @return A composed {@link BiIntConsumer} that first applies this consumer to its input, and then applies the
+     * {@code recover} operation if a {@link Throwable} is thrown from this one.
+     * @throws NullPointerException If given argument or the returned enclosing consumer is {@code null}
+     * @implNote The implementation checks that the returned enclosing consumer from {@code recover} operation is not
+     * {@code null}. If it is, then a {@link NullPointerException} with appropriate message is thrown.
+     */
+    @Nonnull
+    default BiIntConsumer recover(@Nonnull final Function<? super Throwable, ? extends BiIntConsumer> recover) {
+        Objects.requireNonNull(recover);
+        return (value1, value2) -> {
+            try {
+                this.acceptThrows(value1, value2);
+            } catch (Throwable throwable) {
+                final BiIntConsumer consumer = recover.apply(throwable);
+                Objects.requireNonNull(consumer, () -> "recover returned null for " + throwable.getClass() + ": "
+                        + throwable.getMessage());
+                consumer.accept(value1, value2);
             }
         };
     }
