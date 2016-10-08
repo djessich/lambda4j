@@ -20,10 +20,11 @@
  *
  * @param recover The operation to apply if this ${lambda.type.simpleName} throws a {@code Throwable}
  * @return A composed {@link ${outputLambda.name}} that first applies this ${lambda.type.simpleName} to its input, and then applies the
- * {@code recover} operation if a {@link Throwable} is thrown from this one.
+ * {@code recover} operation if a {@code Throwable} is thrown from this one.
  * @throws NullPointerException If given argument or the returned enclosing ${enclosingLambda.type.simpleName} is {@code null}
- * @implNote The implementation checks that the returned enclosing ${enclosingLambda.type.simpleName} from {@code recover} operation is not {@code null}.
+ * @implSpec The implementation checks that the returned enclosing ${enclosingLambda.type.simpleName} from {@code recover} operation is not {@code null}.
  * If it is, then a {@link NullPointerException} with appropriate message is thrown.
+ * @implNote If thrown {@code Throwable} is of type {@link Error}, it is thrown as-is and thus not passed to {@code recover} operation.
  */
 ${annotation.nonnull}
 default ${outputLambda.name}${types.buildGenericParameterTypeString(outputLambda)} recover(${annotation.nonnull} final Function<? super Throwable, ? extends ${enclosingLambda.name}${types.buildGenericParameterTypeStringWithErasure(enclosingLambda)}> recover) {
@@ -31,6 +32,8 @@ default ${outputLambda.name}${types.buildGenericParameterTypeString(outputLambda
     return (${parameterNameString}) -> {
         try {
             ${helpers.printReturnIfNotVoid(outputLambda)} this.${lambda.method}(${parameterNameString});
+        } catch (Error e) {
+            throw e;
         } catch (Throwable throwable) {
             final ${enclosingLambda.name}${types.buildGenericParameterTypeStringWithErasure(enclosingLambda)} ${enclosingLambda.type.simpleName} = recover.apply(throwable);
             Objects.requireNonNull(${enclosingLambda.type.simpleName}, () -> "recover returned null for " + throwable.getClass() + ": " + throwable.getMessage());

@@ -14,7 +14,7 @@
 <#macro sneakyThrowMethod outputLambda>
 /**
  * Returns a composed {@link ${outputLambda.name}} that applies this ${lambda.type.simpleName} to its input and sneakily throws the
- * thrown {@link Throwable} from it, unless it is of type {@link RuntimeException} or {@link Error}. This means that
+ * thrown {@link Throwable} from it, if it is not of type {@link RuntimeException} or {@link Error}. This means that
  * each throwable thrown from the returned composed ${outputLambda.type.simpleName} behaves exactly the same as an <em>unchecked</em>
  * throwable does. As a result, there is no need to handle the throwable of this ${lambda.type.simpleName} in the returned composed
  * ${outputLambda.type.simpleName} by either wrapping it in an <em>unchecked</em> throwable or to declare it in the {@code throws} clause,
@@ -75,6 +75,7 @@
  *
  * @return A composed {@link ${outputLambda.name}} that applies this ${lambda.type.simpleName} to its input and sneakily throws the
  * thrown {@link Throwable} from it, unless it is of type {@link RuntimeException} or {@link Error}.
+ * @implNote If thrown {@link Throwable} is of type {@link RuntimeException} or {@link Error}, it is thrown as-is and thus not sneakily thrown.
  */
 ${annotation.nonnull}
 default ${outputLambda.name}${types.buildGenericParameterTypeString(outputLambda)} sneakyThrow() {
