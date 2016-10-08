@@ -74,7 +74,8 @@ import java.util.function.Function;
  * {@code double}-valued result which is able to throw any {@link Throwable}. This is a (reference, boolean, boolean)
  * specialization of {@link ThrowableTriFunction}.
  * <p>
- * This is a {@link FunctionalInterface} whose functional method is {@link #applyAsDoubleThrows(Object, boolean, * boolean)}.
+ * This is a {@link FunctionalInterface} whose functional method is {@link #applyAsDoubleThrows(Object, boolean, *
+ * boolean)}.
  *
  * @param <T> The type of the first argument to the function
  * @param <X> The type of the throwable to be thrown by this function
@@ -683,29 +684,44 @@ public interface ThrowableObjBiBooleanToDoubleFunction<T, X extends Throwable> e
 
     /**
      * Returns a composed {@link ObjBiBooleanToDoubleFunction} that applies this function to its input and nests the
-     * thrown {@link Throwable} from it, unless it is of type {@link RuntimeException} or {@link Error}. The throwable
-     * is nested (wrapped) in a {@link ThrownByFunctionalInterfaceException}, which is constructed from the thrown
-     * throwables message and the thrown throwable itself.
+     * thrown {@link Throwable} from it. The {@code Throwable} is nested (wrapped) in a {@link
+     * ThrownByFunctionalInterfaceException}, which is constructed from the thrown {@code Throwable}s message and the
+     * thrown {@code Throwable} itself.
      *
-     * @return A composed {@code ObjBiBooleanToDoubleFunction} that applies this function to its input and nests the
-     * thrown {@code Throwable} from it, unless it is of type {@code RuntimeException} or {@code Error}.
+     * @return A composed {@link ObjBiBooleanToDoubleFunction} that applies this function to its input and nests the
+     * thrown {@code Throwable} from it.
+     * @implNote If thrown {@code Throwable} is of type {@link Error} it is thrown as-is and thus not nested.
+     * @see #nestWith(Function)
+     * @see ThrownByFunctionalInterfaceException
      */
     @Nonnull
     default ObjBiBooleanToDoubleFunction<T> nest() {
-        return (t, value1, value2) -> {
-            try {
-                return this.applyAsDoubleThrows(t, value1, value2);
-            } catch (RuntimeException | Error e) {
-                throw e;
-            } catch (Throwable throwable) {
-                throw new ThrownByFunctionalInterfaceException(throwable.getMessage(), throwable);
-            }
-        };
+        return nestWith(throwable -> new ThrownByFunctionalInterfaceException(throwable.getMessage(), throwable));
+    }
+
+    /**
+     * Returns a composed {@link ObjBiBooleanToDoubleFunction} that applies this function to its input and nests the
+     * thrown {@link Throwable} from it using {@code mapper} operation. Thereby {@code mapper} may modify the thrown
+     * {@code Throwable}, regarding its implementation, and returns it nested (wrapped) in a {@link RuntimeException}.
+     *
+     * @param mapper The operation to map the thrown {@code Throwable} to {@code RuntimeException}
+     * @return A composed {@link ObjBiBooleanToDoubleFunction} that applies this function to its input and nests the
+     * thrown {@code Throwable} from it using {@code mapper} operation.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implNote If thrown {@code Throwable} is of type {@link Error} it is thrown as-is and thus not nested.
+     * @see #nest()
+     */
+    @Nonnull
+    default ObjBiBooleanToDoubleFunction<T> nestWith(
+            @Nonnull final Function<? super Throwable, ? extends RuntimeException> mapper) {
+        return recover(throwable -> {
+            throw mapper.apply(throwable);
+        });
     }
 
     /**
      * Returns a composed {@link ObjBiBooleanToDoubleFunction} that applies this function to its input and sneakily
-     * throws the thrown {@link Throwable} from it, unless it is of type {@link RuntimeException} or {@link Error}. This
+     * throws the thrown {@link Throwable} from it, if it is not of type {@link RuntimeException} or {@link Error}. This
      * means that each throwable thrown from the returned composed function behaves exactly the same as an
      * <em>unchecked</em> throwable does. As a result, there is no need to handle the throwable of this function in the
      * returned composed function by either wrapping it in an <em>unchecked</em> throwable or to declare it in the
@@ -766,6 +782,8 @@ public interface ThrowableObjBiBooleanToDoubleFunction<T, X extends Throwable> e
      *
      * @return A composed {@link ObjBiBooleanToDoubleFunction} that applies this function to its input and sneakily
      * throws the thrown {@link Throwable} from it, unless it is of type {@link RuntimeException} or {@link Error}.
+     * @implNote If thrown {@link Throwable} is of type {@link RuntimeException} or {@link Error}, it is thrown as-is
+     * and thus not sneakily thrown.
      */
     @Nonnull
     default ObjBiBooleanToDoubleFunction<T> sneakyThrow() {
@@ -788,10 +806,12 @@ public interface ThrowableObjBiBooleanToDoubleFunction<T, X extends Throwable> e
      *
      * @param recover The operation to apply if this function throws a {@code Throwable}
      * @return A composed {@link ObjBiBooleanToDoubleFunction} that first applies this function to its input, and then
-     * applies the {@code recover} operation if a {@link Throwable} is thrown from this one.
+     * applies the {@code recover} operation if a {@code Throwable} is thrown from this one.
      * @throws NullPointerException If given argument or the returned enclosing function is {@code null}
-     * @implNote The implementation checks that the returned enclosing function from {@code recover} operation is not
+     * @implSpec The implementation checks that the returned enclosing function from {@code recover} operation is not
      * {@code null}. If it is, then a {@link NullPointerException} with appropriate message is thrown.
+     * @implNote If thrown {@code Throwable} is of type {@link Error}, it is thrown as-is and thus not passed to {@code
+     * recover} operation.
      */
     @Nonnull
     default ObjBiBooleanToDoubleFunction<T> recover(
@@ -800,6 +820,8 @@ public interface ThrowableObjBiBooleanToDoubleFunction<T, X extends Throwable> e
         return (t, value1, value2) -> {
             try {
                 return this.applyAsDoubleThrows(t, value1, value2);
+            } catch (Error e) {
+                throw e;
             } catch (Throwable throwable) {
                 final ObjBiBooleanToDoubleFunction<? super T> function = recover.apply(throwable);
                 Objects.requireNonNull(function, () -> "recover returned null for " + throwable.getClass() + ": "

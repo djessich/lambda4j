@@ -48,7 +48,8 @@ import java.util.function.Function;
  * Represents an operation that accepts three input arguments and produces a {@code double}-valued result which is able
  * to throw any {@link Throwable}. This is a primitive specialization of {@link ThrowableTriFunction}.
  * <p>
- * This is a {@link FunctionalInterface} whose functional method is {@link #applyAsDoubleThrows(Object, Object, * Object)}.
+ * This is a {@link FunctionalInterface} whose functional method is {@link #applyAsDoubleThrows(Object, Object, *
+ * Object)}.
  *
  * @param <T> The type of the first argument to the function
  * @param <U> The type of the second argument to the function
@@ -492,29 +493,44 @@ public interface ThrowableToDoubleTriFunction<T, U, V, X extends Throwable> exte
 
     /**
      * Returns a composed {@link ToDoubleTriFunction} that applies this function to its input and nests the thrown
-     * {@link Throwable} from it, unless it is of type {@link RuntimeException} or {@link Error}. The throwable is
-     * nested (wrapped) in a {@link ThrownByFunctionalInterfaceException}, which is constructed from the thrown
-     * throwables message and the thrown throwable itself.
+     * {@link Throwable} from it. The {@code Throwable} is nested (wrapped) in a {@link
+     * ThrownByFunctionalInterfaceException}, which is constructed from the thrown {@code Throwable}s message and the
+     * thrown {@code Throwable} itself.
      *
-     * @return A composed {@code ToDoubleTriFunction} that applies this function to its input and nests the thrown
-     * {@code Throwable} from it, unless it is of type {@code RuntimeException} or {@code Error}.
+     * @return A composed {@link ToDoubleTriFunction} that applies this function to its input and nests the thrown
+     * {@code Throwable} from it.
+     * @implNote If thrown {@code Throwable} is of type {@link Error} it is thrown as-is and thus not nested.
+     * @see #nestWith(Function)
+     * @see ThrownByFunctionalInterfaceException
      */
     @Nonnull
     default ToDoubleTriFunction<T, U, V> nest() {
-        return (t, u, v) -> {
-            try {
-                return this.applyAsDoubleThrows(t, u, v);
-            } catch (RuntimeException | Error e) {
-                throw e;
-            } catch (Throwable throwable) {
-                throw new ThrownByFunctionalInterfaceException(throwable.getMessage(), throwable);
-            }
-        };
+        return nestWith(throwable -> new ThrownByFunctionalInterfaceException(throwable.getMessage(), throwable));
+    }
+
+    /**
+     * Returns a composed {@link ToDoubleTriFunction} that applies this function to its input and nests the thrown
+     * {@link Throwable} from it using {@code mapper} operation. Thereby {@code mapper} may modify the thrown {@code
+     * Throwable}, regarding its implementation, and returns it nested (wrapped) in a {@link RuntimeException}.
+     *
+     * @param mapper The operation to map the thrown {@code Throwable} to {@code RuntimeException}
+     * @return A composed {@link ToDoubleTriFunction} that applies this function to its input and nests the thrown
+     * {@code Throwable} from it using {@code mapper} operation.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implNote If thrown {@code Throwable} is of type {@link Error} it is thrown as-is and thus not nested.
+     * @see #nest()
+     */
+    @Nonnull
+    default ToDoubleTriFunction<T, U, V> nestWith(
+            @Nonnull final Function<? super Throwable, ? extends RuntimeException> mapper) {
+        return recover(throwable -> {
+            throw mapper.apply(throwable);
+        });
     }
 
     /**
      * Returns a composed {@link ToDoubleTriFunction} that applies this function to its input and sneakily throws the
-     * thrown {@link Throwable} from it, unless it is of type {@link RuntimeException} or {@link Error}. This means that
+     * thrown {@link Throwable} from it, if it is not of type {@link RuntimeException} or {@link Error}. This means that
      * each throwable thrown from the returned composed function behaves exactly the same as an <em>unchecked</em>
      * throwable does. As a result, there is no need to handle the throwable of this function in the returned composed
      * function by either wrapping it in an <em>unchecked</em> throwable or to declare it in the {@code throws} clause,
@@ -575,6 +591,8 @@ public interface ThrowableToDoubleTriFunction<T, U, V, X extends Throwable> exte
      *
      * @return A composed {@link ToDoubleTriFunction} that applies this function to its input and sneakily throws the
      * thrown {@link Throwable} from it, unless it is of type {@link RuntimeException} or {@link Error}.
+     * @implNote If thrown {@link Throwable} is of type {@link RuntimeException} or {@link Error}, it is thrown as-is
+     * and thus not sneakily thrown.
      */
     @Nonnull
     default ToDoubleTriFunction<T, U, V> sneakyThrow() {
@@ -597,10 +615,12 @@ public interface ThrowableToDoubleTriFunction<T, U, V, X extends Throwable> exte
      *
      * @param recover The operation to apply if this function throws a {@code Throwable}
      * @return A composed {@link ToDoubleTriFunction} that first applies this function to its input, and then applies
-     * the {@code recover} operation if a {@link Throwable} is thrown from this one.
+     * the {@code recover} operation if a {@code Throwable} is thrown from this one.
      * @throws NullPointerException If given argument or the returned enclosing function is {@code null}
-     * @implNote The implementation checks that the returned enclosing function from {@code recover} operation is not
+     * @implSpec The implementation checks that the returned enclosing function from {@code recover} operation is not
      * {@code null}. If it is, then a {@link NullPointerException} with appropriate message is thrown.
+     * @implNote If thrown {@code Throwable} is of type {@link Error}, it is thrown as-is and thus not passed to {@code
+     * recover} operation.
      */
     @Nonnull
     default ToDoubleTriFunction<T, U, V> recover(
@@ -609,6 +629,8 @@ public interface ThrowableToDoubleTriFunction<T, U, V, X extends Throwable> exte
         return (t, u, v) -> {
             try {
                 return this.applyAsDoubleThrows(t, u, v);
+            } catch (Error e) {
+                throw e;
             } catch (Throwable throwable) {
                 final ToDoubleTriFunction<? super T, ? super U, ? super V> function = recover.apply(throwable);
                 Objects.requireNonNull(function, () -> "recover returned null for " + throwable.getClass() + ": "

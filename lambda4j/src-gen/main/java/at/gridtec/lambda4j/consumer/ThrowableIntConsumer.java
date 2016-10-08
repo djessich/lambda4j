@@ -327,29 +327,42 @@ public interface ThrowableIntConsumer<X extends Throwable> extends Lambda, IntCo
 
     /**
      * Returns a composed {@link IntConsumer2} that applies this consumer to its input and nests the thrown {@link
-     * Throwable} from it, unless it is of type {@link RuntimeException} or {@link Error}. The throwable is nested
-     * (wrapped) in a {@link ThrownByFunctionalInterfaceException}, which is constructed from the thrown throwables
-     * message and the thrown throwable itself.
+     * Throwable} from it. The {@code Throwable} is nested (wrapped) in a {@link ThrownByFunctionalInterfaceException},
+     * which is constructed from the thrown {@code Throwable}s message and the thrown {@code Throwable} itself.
      *
-     * @return A composed {@code IntConsumer2} that applies this consumer to its input and nests the thrown {@code
-     * Throwable} from it, unless it is of type {@code RuntimeException} or {@code Error}.
+     * @return A composed {@link IntConsumer2} that applies this consumer to its input and nests the thrown {@code
+     * Throwable} from it.
+     * @implNote If thrown {@code Throwable} is of type {@link Error} it is thrown as-is and thus not nested.
+     * @see #nestWith(Function)
+     * @see ThrownByFunctionalInterfaceException
      */
     @Nonnull
     default IntConsumer2 nest() {
-        return (value) -> {
-            try {
-                this.acceptThrows(value);
-            } catch (RuntimeException | Error e) {
-                throw e;
-            } catch (Throwable throwable) {
-                throw new ThrownByFunctionalInterfaceException(throwable.getMessage(), throwable);
-            }
-        };
+        return nestWith(throwable -> new ThrownByFunctionalInterfaceException(throwable.getMessage(), throwable));
+    }
+
+    /**
+     * Returns a composed {@link IntConsumer2} that applies this consumer to its input and nests the thrown {@link
+     * Throwable} from it using {@code mapper} operation. Thereby {@code mapper} may modify the thrown {@code
+     * Throwable}, regarding its implementation, and returns it nested (wrapped) in a {@link RuntimeException}.
+     *
+     * @param mapper The operation to map the thrown {@code Throwable} to {@code RuntimeException}
+     * @return A composed {@link IntConsumer2} that applies this consumer to its input and nests the thrown {@code
+     * Throwable} from it using {@code mapper} operation.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implNote If thrown {@code Throwable} is of type {@link Error} it is thrown as-is and thus not nested.
+     * @see #nest()
+     */
+    @Nonnull
+    default IntConsumer2 nestWith(@Nonnull final Function<? super Throwable, ? extends RuntimeException> mapper) {
+        return recover(throwable -> {
+            throw mapper.apply(throwable);
+        });
     }
 
     /**
      * Returns a composed {@link IntConsumer2} that applies this consumer to its input and sneakily throws the
-     * thrown {@link Throwable} from it, unless it is of type {@link RuntimeException} or {@link Error}. This means that
+     * thrown {@link Throwable} from it, if it is not of type {@link RuntimeException} or {@link Error}. This means that
      * each throwable thrown from the returned composed consumer behaves exactly the same as an <em>unchecked</em>
      * throwable does. As a result, there is no need to handle the throwable of this consumer in the returned composed
      * consumer by either wrapping it in an <em>unchecked</em> throwable or to declare it in the {@code throws} clause,
@@ -410,6 +423,8 @@ public interface ThrowableIntConsumer<X extends Throwable> extends Lambda, IntCo
      *
      * @return A composed {@link IntConsumer2} that applies this consumer to its input and sneakily throws the thrown
      * {@link Throwable} from it, unless it is of type {@link RuntimeException} or {@link Error}.
+     * @implNote If thrown {@link Throwable} is of type {@link RuntimeException} or {@link Error}, it is thrown as-is
+     * and thus not sneakily thrown.
      */
     @Nonnull
     default IntConsumer2 sneakyThrow() {
@@ -432,10 +447,12 @@ public interface ThrowableIntConsumer<X extends Throwable> extends Lambda, IntCo
      *
      * @param recover The operation to apply if this consumer throws a {@code Throwable}
      * @return A composed {@link IntConsumer2} that first applies this consumer to its input, and then applies the
-     * {@code recover} operation if a {@link Throwable} is thrown from this one.
+     * {@code recover} operation if a {@code Throwable} is thrown from this one.
      * @throws NullPointerException If given argument or the returned enclosing consumer is {@code null}
-     * @implNote The implementation checks that the returned enclosing consumer from {@code recover} operation is not
+     * @implSpec The implementation checks that the returned enclosing consumer from {@code recover} operation is not
      * {@code null}. If it is, then a {@link NullPointerException} with appropriate message is thrown.
+     * @implNote If thrown {@code Throwable} is of type {@link Error}, it is thrown as-is and thus not passed to {@code
+     * recover} operation.
      */
     @Nonnull
     default IntConsumer2 recover(@Nonnull final Function<? super Throwable, ? extends IntConsumer> recover) {
@@ -443,6 +460,8 @@ public interface ThrowableIntConsumer<X extends Throwable> extends Lambda, IntCo
         return (value) -> {
             try {
                 this.acceptThrows(value);
+            } catch (Error e) {
+                throw e;
             } catch (Throwable throwable) {
                 final IntConsumer consumer = recover.apply(throwable);
                 Objects.requireNonNull(consumer, () -> "recover returned null for " + throwable.getClass() + ": "
