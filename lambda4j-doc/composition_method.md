@@ -1,4 +1,4 @@
-# Composition Method
+# Composition Methods
 
 Functional interfaces can be composed together which is called composition. For that you can use either *compose* or *andThen* method which are available in each functional interface. In addition to this, if the functional interface is a primitive one, there are also primitive mapping composition methods available. Below you will find some more information on composition methods.
 
