@@ -76,8 +76,7 @@ import java.util.function.Function;
  * {@code double}-valued result which is able to throw any {@link Throwable}. This is a (reference, reference, boolean)
  * specialization of {@link ThrowableTriFunction}.
  * <p>
- * This is a {@link FunctionalInterface} whose functional method is {@link #applyAsDoubleThrows(Object, Object, *
- * boolean)}.
+ * This is a {@link FunctionalInterface} whose functional method is {@link #applyAsDoubleThrows(Object, Object, * boolean)}.
  *
  * @param <T> The type of the first argument to the function
  * @param <U> The type of the second argument to the function

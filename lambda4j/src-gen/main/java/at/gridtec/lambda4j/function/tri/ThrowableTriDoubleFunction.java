@@ -39,6 +39,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Function;
 
@@ -76,6 +77,24 @@ public interface ThrowableTriDoubleFunction<R, X extends Throwable> extends Lamb
     static <R, X extends Throwable> ThrowableTriDoubleFunction<R, X> of(
             @Nullable final ThrowableTriDoubleFunction<R, X> expression) {
         return expression;
+    }
+
+    /**
+     * Lifts a partial {@link ThrowableTriDoubleFunction} into a total {@link ThrowableTriDoubleFunction} that returns
+     * an {@link Optional} result.
+     *
+     * @param <R> The type of return value from the function
+     * @param <X> The type of the throwable to be thrown by this function
+     * @param partial A function that is only defined for some values in its domain
+     * @return A partial {@code ThrowableTriDoubleFunction} lifted into a total {@code ThrowableTriDoubleFunction} that
+     * returns an {@code Optional} result.
+     * @throws NullPointerException If given argument is {@code null}
+     */
+    @Nonnull
+    static <R, X extends Throwable> ThrowableTriDoubleFunction<Optional<R>, X> lift(
+            @Nonnull final ThrowableTriDoubleFunction<? extends R, ? extends X> partial) {
+        Objects.requireNonNull(partial);
+        return (value1, value2, value3) -> Optional.ofNullable(partial.applyThrows(value1, value2, value3));
     }
 
     /**

@@ -30,6 +30,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.BiFunction;
 import java.util.function.Consumer;
@@ -71,6 +72,22 @@ public interface BiDoubleFunction<R> extends Lambda {
      */
     static <R> BiDoubleFunction<R> of(@Nullable final BiDoubleFunction<R> expression) {
         return expression;
+    }
+
+    /**
+     * Lifts a partial {@link BiDoubleFunction} into a total {@link BiDoubleFunction} that returns an {@link Optional}
+     * result.
+     *
+     * @param <R> The type of return value from the function
+     * @param partial A function that is only defined for some values in its domain
+     * @return A partial {@code BiDoubleFunction} lifted into a total {@code BiDoubleFunction} that returns an {@code
+     * Optional} result.
+     * @throws NullPointerException If given argument is {@code null}
+     */
+    @Nonnull
+    static <R> BiDoubleFunction<Optional<R>> lift(@Nonnull final BiDoubleFunction<? extends R> partial) {
+        Objects.requireNonNull(partial);
+        return (value1, value2) -> Optional.ofNullable(partial.apply(value1, value2));
     }
 
     /**

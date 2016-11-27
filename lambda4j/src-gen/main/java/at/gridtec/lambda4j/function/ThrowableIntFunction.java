@@ -35,6 +35,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Function;
 import java.util.function.IntFunction;
@@ -74,6 +75,24 @@ public interface ThrowableIntFunction<R, X extends Throwable> extends Lambda, In
     static <R, X extends Throwable> ThrowableIntFunction<R, X> of(
             @Nullable final ThrowableIntFunction<R, X> expression) {
         return expression;
+    }
+
+    /**
+     * Lifts a partial {@link ThrowableIntFunction} into a total {@link ThrowableIntFunction} that returns an {@link
+     * Optional} result.
+     *
+     * @param <R> The type of return value from the function
+     * @param <X> The type of the throwable to be thrown by this function
+     * @param partial A function that is only defined for some values in its domain
+     * @return A partial {@code ThrowableIntFunction} lifted into a total {@code ThrowableIntFunction} that returns an
+     * {@code Optional} result.
+     * @throws NullPointerException If given argument is {@code null}
+     */
+    @Nonnull
+    static <R, X extends Throwable> ThrowableIntFunction<Optional<R>, X> lift(
+            @Nonnull final ThrowableIntFunction<? extends R, ? extends X> partial) {
+        Objects.requireNonNull(partial);
+        return (value) -> Optional.ofNullable(partial.applyThrows(value));
     }
 
     /**

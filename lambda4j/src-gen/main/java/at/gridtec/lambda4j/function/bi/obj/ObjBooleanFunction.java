@@ -44,6 +44,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.BiFunction;
 import java.util.function.Consumer;
@@ -89,6 +90,24 @@ public interface ObjBooleanFunction<T, R> extends Lambda {
      */
     static <T, R> ObjBooleanFunction<T, R> of(@Nullable final ObjBooleanFunction<T, R> expression) {
         return expression;
+    }
+
+    /**
+     * Lifts a partial {@link ObjBooleanFunction} into a total {@link ObjBooleanFunction} that returns an {@link
+     * Optional} result.
+     *
+     * @param <T> The type of the first argument to the function
+     * @param <R> The type of return value from the function
+     * @param partial A function that is only defined for some values in its domain
+     * @return A partial {@code ObjBooleanFunction} lifted into a total {@code ObjBooleanFunction} that returns an
+     * {@code Optional} result.
+     * @throws NullPointerException If given argument is {@code null}
+     */
+    @Nonnull
+    static <T, R> ObjBooleanFunction<T, Optional<R>> lift(
+            @Nonnull final ObjBooleanFunction<? super T, ? extends R> partial) {
+        Objects.requireNonNull(partial);
+        return (t, value) -> Optional.ofNullable(partial.apply(t, value));
     }
 
     /**

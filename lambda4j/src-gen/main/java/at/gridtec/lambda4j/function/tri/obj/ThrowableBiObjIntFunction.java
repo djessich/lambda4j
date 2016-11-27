@@ -57,6 +57,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Function;
 
@@ -98,6 +99,26 @@ public interface ThrowableBiObjIntFunction<T, U, R, X extends Throwable> extends
     static <T, U, R, X extends Throwable> ThrowableBiObjIntFunction<T, U, R, X> of(
             @Nullable final ThrowableBiObjIntFunction<T, U, R, X> expression) {
         return expression;
+    }
+
+    /**
+     * Lifts a partial {@link ThrowableBiObjIntFunction} into a total {@link ThrowableBiObjIntFunction} that returns an
+     * {@link Optional} result.
+     *
+     * @param <T> The type of the first argument to the function
+     * @param <U> The type of the second argument to the function
+     * @param <R> The type of return value from the function
+     * @param <X> The type of the throwable to be thrown by this function
+     * @param partial A function that is only defined for some values in its domain
+     * @return A partial {@code ThrowableBiObjIntFunction} lifted into a total {@code ThrowableBiObjIntFunction} that
+     * returns an {@code Optional} result.
+     * @throws NullPointerException If given argument is {@code null}
+     */
+    @Nonnull
+    static <T, U, R, X extends Throwable> ThrowableBiObjIntFunction<T, U, Optional<R>, X> lift(
+            @Nonnull final ThrowableBiObjIntFunction<? super T, ? super U, ? extends R, ? extends X> partial) {
+        Objects.requireNonNull(partial);
+        return (t, u, value) -> Optional.ofNullable(partial.applyThrows(t, u, value));
     }
 
     /**

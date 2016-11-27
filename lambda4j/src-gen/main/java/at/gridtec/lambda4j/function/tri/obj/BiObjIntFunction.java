@@ -46,6 +46,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Consumer;
 import java.util.function.DoubleFunction;
@@ -92,6 +93,25 @@ public interface BiObjIntFunction<T, U, R> extends Lambda {
      */
     static <T, U, R> BiObjIntFunction<T, U, R> of(@Nullable final BiObjIntFunction<T, U, R> expression) {
         return expression;
+    }
+
+    /**
+     * Lifts a partial {@link BiObjIntFunction} into a total {@link BiObjIntFunction} that returns an {@link Optional}
+     * result.
+     *
+     * @param <T> The type of the first argument to the function
+     * @param <U> The type of the second argument to the function
+     * @param <R> The type of return value from the function
+     * @param partial A function that is only defined for some values in its domain
+     * @return A partial {@code BiObjIntFunction} lifted into a total {@code BiObjIntFunction} that returns an {@code
+     * Optional} result.
+     * @throws NullPointerException If given argument is {@code null}
+     */
+    @Nonnull
+    static <T, U, R> BiObjIntFunction<T, U, Optional<R>> lift(
+            @Nonnull final BiObjIntFunction<? super T, ? super U, ? extends R> partial) {
+        Objects.requireNonNull(partial);
+        return (t, u, value) -> Optional.ofNullable(partial.apply(t, u, value));
     }
 
     /**

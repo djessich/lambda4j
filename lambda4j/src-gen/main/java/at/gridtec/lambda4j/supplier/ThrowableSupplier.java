@@ -25,6 +25,7 @@ import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.Function;
 import java.util.function.Supplier;
@@ -63,6 +64,24 @@ public interface ThrowableSupplier<R, X extends Throwable> extends Lambda, Suppl
      */
     static <R, X extends Throwable> ThrowableSupplier<R, X> of(@Nullable final ThrowableSupplier<R, X> expression) {
         return expression;
+    }
+
+    /**
+     * Lifts a partial {@link ThrowableSupplier} into a total {@link ThrowableSupplier} that returns an {@link Optional}
+     * result.
+     *
+     * @param <R> The type of return value from the supplier
+     * @param <X> The type of the throwable to be thrown by this supplier
+     * @param partial A function that is only defined for some values in its domain
+     * @return A partial {@code ThrowableSupplier} lifted into a total {@code ThrowableSupplier} that returns an {@code
+     * Optional} result.
+     * @throws NullPointerException If given argument is {@code null}
+     */
+    @Nonnull
+    static <R, X extends Throwable> ThrowableSupplier<Optional<R>, X> lift(
+            @Nonnull final ThrowableSupplier<? extends R, ? extends X> partial) {
+        Objects.requireNonNull(partial);
+        return () -> Optional.ofNullable(partial.getThrows());
     }
 
     /**

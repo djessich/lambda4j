@@ -60,8 +60,7 @@ import java.util.function.Function;
  * result which is able to throw any {@link Throwable}. This is a primitive specialization of {@link
  * ThrowableTriFunction}.
  * <p>
- * This is a {@link FunctionalInterface} whose functional method is {@link #applyAsByteThrows(boolean, boolean, *
- * boolean)}.
+ * This is a {@link FunctionalInterface} whose functional method is {@link #applyAsByteThrows(boolean, boolean, * boolean)}.
  *
  * @param <X> The type of the throwable to be thrown by this function
  * @see ThrowableTriFunction

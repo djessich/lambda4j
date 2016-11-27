@@ -48,6 +48,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Consumer;
 import java.util.function.DoubleFunction;
@@ -88,6 +89,24 @@ public interface ObjBiCharFunction<T, R> extends Lambda {
      */
     static <T, R> ObjBiCharFunction<T, R> of(@Nullable final ObjBiCharFunction<T, R> expression) {
         return expression;
+    }
+
+    /**
+     * Lifts a partial {@link ObjBiCharFunction} into a total {@link ObjBiCharFunction} that returns an {@link Optional}
+     * result.
+     *
+     * @param <T> The type of the first argument to the function
+     * @param <R> The type of return value from the function
+     * @param partial A function that is only defined for some values in its domain
+     * @return A partial {@code ObjBiCharFunction} lifted into a total {@code ObjBiCharFunction} that returns an {@code
+     * Optional} result.
+     * @throws NullPointerException If given argument is {@code null}
+     */
+    @Nonnull
+    static <T, R> ObjBiCharFunction<T, Optional<R>> lift(
+            @Nonnull final ObjBiCharFunction<? super T, ? extends R> partial) {
+        Objects.requireNonNull(partial);
+        return (t, value1, value2) -> Optional.ofNullable(partial.apply(t, value1, value2));
     }
 
     /**

@@ -55,6 +55,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Function;
 
@@ -94,6 +95,25 @@ public interface ThrowableObjBiFloatFunction<T, R, X extends Throwable> extends 
     static <T, R, X extends Throwable> ThrowableObjBiFloatFunction<T, R, X> of(
             @Nullable final ThrowableObjBiFloatFunction<T, R, X> expression) {
         return expression;
+    }
+
+    /**
+     * Lifts a partial {@link ThrowableObjBiFloatFunction} into a total {@link ThrowableObjBiFloatFunction} that returns
+     * an {@link Optional} result.
+     *
+     * @param <T> The type of the first argument to the function
+     * @param <R> The type of return value from the function
+     * @param <X> The type of the throwable to be thrown by this function
+     * @param partial A function that is only defined for some values in its domain
+     * @return A partial {@code ThrowableObjBiFloatFunction} lifted into a total {@code ThrowableObjBiFloatFunction}
+     * that returns an {@code Optional} result.
+     * @throws NullPointerException If given argument is {@code null}
+     */
+    @Nonnull
+    static <T, R, X extends Throwable> ThrowableObjBiFloatFunction<T, Optional<R>, X> lift(
+            @Nonnull final ThrowableObjBiFloatFunction<? super T, ? extends R, ? extends X> partial) {
+        Objects.requireNonNull(partial);
+        return (t, value1, value2) -> Optional.ofNullable(partial.applyThrows(t, value1, value2));
     }
 
     /**

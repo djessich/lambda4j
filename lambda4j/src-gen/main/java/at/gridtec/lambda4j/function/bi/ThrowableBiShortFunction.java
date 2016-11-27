@@ -39,6 +39,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Function;
 
@@ -76,6 +77,24 @@ public interface ThrowableBiShortFunction<R, X extends Throwable> extends Lambda
     static <R, X extends Throwable> ThrowableBiShortFunction<R, X> of(
             @Nullable final ThrowableBiShortFunction<R, X> expression) {
         return expression;
+    }
+
+    /**
+     * Lifts a partial {@link ThrowableBiShortFunction} into a total {@link ThrowableBiShortFunction} that returns an
+     * {@link Optional} result.
+     *
+     * @param <R> The type of return value from the function
+     * @param <X> The type of the throwable to be thrown by this function
+     * @param partial A function that is only defined for some values in its domain
+     * @return A partial {@code ThrowableBiShortFunction} lifted into a total {@code ThrowableBiShortFunction} that
+     * returns an {@code Optional} result.
+     * @throws NullPointerException If given argument is {@code null}
+     */
+    @Nonnull
+    static <R, X extends Throwable> ThrowableBiShortFunction<Optional<R>, X> lift(
+            @Nonnull final ThrowableBiShortFunction<? extends R, ? extends X> partial) {
+        Objects.requireNonNull(partial);
+        return (value1, value2) -> Optional.ofNullable(partial.applyThrows(value1, value2));
     }
 
     /**

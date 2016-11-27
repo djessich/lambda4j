@@ -29,6 +29,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.BiFunction;
 import java.util.function.Function;
@@ -71,6 +72,26 @@ public interface ThrowableBiFunction<T, U, R, X extends Throwable> extends Lambd
     static <T, U, R, X extends Throwable> ThrowableBiFunction<T, U, R, X> of(
             @Nullable final ThrowableBiFunction<T, U, R, X> expression) {
         return expression;
+    }
+
+    /**
+     * Lifts a partial {@link ThrowableBiFunction} into a total {@link ThrowableBiFunction} that returns an {@link
+     * Optional} result.
+     *
+     * @param <T> The type of the first argument to the function
+     * @param <U> The type of the second argument to the function
+     * @param <R> The type of return value from the function
+     * @param <X> The type of the throwable to be thrown by this function
+     * @param partial A function that is only defined for some values in its domain
+     * @return A partial {@code ThrowableBiFunction} lifted into a total {@code ThrowableBiFunction} that returns an
+     * {@code Optional} result.
+     * @throws NullPointerException If given argument is {@code null}
+     */
+    @Nonnull
+    static <T, U, R, X extends Throwable> ThrowableBiFunction<T, U, Optional<R>, X> lift(
+            @Nonnull final ThrowableBiFunction<? super T, ? super U, ? extends R, ? extends X> partial) {
+        Objects.requireNonNull(partial);
+        return (t, u) -> Optional.ofNullable(partial.applyThrows(t, u));
     }
 
     /**

@@ -28,6 +28,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Consumer;
 import java.util.function.DoubleFunction;
@@ -68,6 +69,22 @@ public interface DoubleFunction2<R> extends Lambda, DoubleFunction<R> {
      */
     static <R> DoubleFunction2<R> of(@Nullable final DoubleFunction2<R> expression) {
         return expression;
+    }
+
+    /**
+     * Lifts a partial {@link DoubleFunction} into a total {@link DoubleFunction2} that returns an {@link Optional}
+     * result.
+     *
+     * @param <R> The type of return value from the function
+     * @param partial A function that is only defined for some values in its domain
+     * @return A partial {@code DoubleFunction} lifted into a total {@code DoubleFunction2} that returns an {@code
+     * Optional} result.
+     * @throws NullPointerException If given argument is {@code null}
+     */
+    @Nonnull
+    static <R> DoubleFunction2<Optional<R>> lift(@Nonnull final DoubleFunction<? extends R> partial) {
+        Objects.requireNonNull(partial);
+        return (value) -> Optional.ofNullable(partial.apply(value));
     }
 
     /**

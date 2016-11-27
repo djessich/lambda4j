@@ -26,6 +26,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Consumer;
 import java.util.function.Function;
@@ -65,6 +66,25 @@ public interface TriFunction<T, U, V, R> extends Lambda {
      */
     static <T, U, V, R> TriFunction<T, U, V, R> of(@Nullable final TriFunction<T, U, V, R> expression) {
         return expression;
+    }
+
+    /**
+     * Lifts a partial {@link TriFunction} into a total {@link TriFunction} that returns an {@link Optional} result.
+     *
+     * @param <T> The type of the first argument to the function
+     * @param <U> The type of the second argument to the function
+     * @param <V> The type of the third argument to the function
+     * @param <R> The type of return value from the function
+     * @param partial A function that is only defined for some values in its domain
+     * @return A partial {@code TriFunction} lifted into a total {@code TriFunction} that returns an {@code Optional}
+     * result.
+     * @throws NullPointerException If given argument is {@code null}
+     */
+    @Nonnull
+    static <T, U, V, R> TriFunction<T, U, V, Optional<R>> lift(
+            @Nonnull final TriFunction<? super T, ? super U, ? super V, ? extends R> partial) {
+        Objects.requireNonNull(partial);
+        return (t, u, v) -> Optional.ofNullable(partial.apply(t, u, v));
     }
 
     /**

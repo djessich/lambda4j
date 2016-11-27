@@ -32,6 +32,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Consumer;
 import java.util.function.Function;
@@ -66,6 +67,21 @@ public interface ByteFunction<R> extends Lambda {
      */
     static <R> ByteFunction<R> of(@Nullable final ByteFunction<R> expression) {
         return expression;
+    }
+
+    /**
+     * Lifts a partial {@link ByteFunction} into a total {@link ByteFunction} that returns an {@link Optional} result.
+     *
+     * @param <R> The type of return value from the function
+     * @param partial A function that is only defined for some values in its domain
+     * @return A partial {@code ByteFunction} lifted into a total {@code ByteFunction} that returns an {@code Optional}
+     * result.
+     * @throws NullPointerException If given argument is {@code null}
+     */
+    @Nonnull
+    static <R> ByteFunction<Optional<R>> lift(@Nonnull final ByteFunction<? extends R> partial) {
+        Objects.requireNonNull(partial);
+        return (value) -> Optional.ofNullable(partial.apply(value));
     }
 
     /**

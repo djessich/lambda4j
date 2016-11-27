@@ -39,6 +39,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Function;
 
@@ -76,6 +77,24 @@ public interface ThrowableBiBooleanFunction<R, X extends Throwable> extends Lamb
     static <R, X extends Throwable> ThrowableBiBooleanFunction<R, X> of(
             @Nullable final ThrowableBiBooleanFunction<R, X> expression) {
         return expression;
+    }
+
+    /**
+     * Lifts a partial {@link ThrowableBiBooleanFunction} into a total {@link ThrowableBiBooleanFunction} that returns
+     * an {@link Optional} result.
+     *
+     * @param <R> The type of return value from the function
+     * @param <X> The type of the throwable to be thrown by this function
+     * @param partial A function that is only defined for some values in its domain
+     * @return A partial {@code ThrowableBiBooleanFunction} lifted into a total {@code ThrowableBiBooleanFunction} that
+     * returns an {@code Optional} result.
+     * @throws NullPointerException If given argument is {@code null}
+     */
+    @Nonnull
+    static <R, X extends Throwable> ThrowableBiBooleanFunction<Optional<R>, X> lift(
+            @Nonnull final ThrowableBiBooleanFunction<? extends R, ? extends X> partial) {
+        Objects.requireNonNull(partial);
+        return (value1, value2) -> Optional.ofNullable(partial.applyThrows(value1, value2));
     }
 
     /**

@@ -48,8 +48,7 @@ import java.util.function.Function;
  * Represents an operation that accepts three input arguments and produces a {@code double}-valued result which is able
  * to throw any {@link Throwable}. This is a primitive specialization of {@link ThrowableTriFunction}.
  * <p>
- * This is a {@link FunctionalInterface} whose functional method is {@link #applyAsDoubleThrows(Object, Object, *
- * Object)}.
+ * This is a {@link FunctionalInterface} whose functional method is {@link #applyAsDoubleThrows(Object, Object, * Object)}.
  *
  * @param <T> The type of the first argument to the function
  * @param <U> The type of the second argument to the function

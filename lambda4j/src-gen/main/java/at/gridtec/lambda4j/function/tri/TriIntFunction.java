@@ -30,6 +30,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Consumer;
 import java.util.function.DoubleToIntFunction;
@@ -69,6 +70,22 @@ public interface TriIntFunction<R> extends Lambda {
      */
     static <R> TriIntFunction<R> of(@Nullable final TriIntFunction<R> expression) {
         return expression;
+    }
+
+    /**
+     * Lifts a partial {@link TriIntFunction} into a total {@link TriIntFunction} that returns an {@link Optional}
+     * result.
+     *
+     * @param <R> The type of return value from the function
+     * @param partial A function that is only defined for some values in its domain
+     * @return A partial {@code TriIntFunction} lifted into a total {@code TriIntFunction} that returns an {@code
+     * Optional} result.
+     * @throws NullPointerException If given argument is {@code null}
+     */
+    @Nonnull
+    static <R> TriIntFunction<Optional<R>> lift(@Nonnull final TriIntFunction<? extends R> partial) {
+        Objects.requireNonNull(partial);
+        return (value1, value2, value3) -> Optional.ofNullable(partial.apply(value1, value2, value3));
     }
 
     /**

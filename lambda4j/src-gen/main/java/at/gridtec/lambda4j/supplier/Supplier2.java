@@ -22,6 +22,7 @@ import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.Consumer;
 import java.util.function.Function;
@@ -58,6 +59,20 @@ public interface Supplier2<R> extends Lambda, Supplier<R> {
      */
     static <R> Supplier2<R> of(@Nullable final Supplier2<R> expression) {
         return expression;
+    }
+
+    /**
+     * Lifts a partial {@link Supplier} into a total {@link Supplier2} that returns an {@link Optional} result.
+     *
+     * @param <R> The type of return value from the supplier
+     * @param partial A function that is only defined for some values in its domain
+     * @return A partial {@code Supplier} lifted into a total {@code Supplier2} that returns an {@code Optional} result.
+     * @throws NullPointerException If given argument is {@code null}
+     */
+    @Nonnull
+    static <R> Supplier2<Optional<R>> lift(@Nonnull final Supplier<? extends R> partial) {
+        Objects.requireNonNull(partial);
+        return () -> Optional.ofNullable(partial.get());
     }
 
     /**

@@ -35,6 +35,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.BiFunction;
 import java.util.function.Consumer;
@@ -70,6 +71,22 @@ public interface BiCharFunction<R> extends Lambda {
      */
     static <R> BiCharFunction<R> of(@Nullable final BiCharFunction<R> expression) {
         return expression;
+    }
+
+    /**
+     * Lifts a partial {@link BiCharFunction} into a total {@link BiCharFunction} that returns an {@link Optional}
+     * result.
+     *
+     * @param <R> The type of return value from the function
+     * @param partial A function that is only defined for some values in its domain
+     * @return A partial {@code BiCharFunction} lifted into a total {@code BiCharFunction} that returns an {@code
+     * Optional} result.
+     * @throws NullPointerException If given argument is {@code null}
+     */
+    @Nonnull
+    static <R> BiCharFunction<Optional<R>> lift(@Nonnull final BiCharFunction<? extends R> partial) {
+        Objects.requireNonNull(partial);
+        return (value1, value2) -> Optional.ofNullable(partial.apply(value1, value2));
     }
 
     /**

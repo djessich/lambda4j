@@ -35,6 +35,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Function;
 
@@ -72,6 +73,24 @@ public interface ThrowableShortFunction<R, X extends Throwable> extends Lambda {
     static <R, X extends Throwable> ThrowableShortFunction<R, X> of(
             @Nullable final ThrowableShortFunction<R, X> expression) {
         return expression;
+    }
+
+    /**
+     * Lifts a partial {@link ThrowableShortFunction} into a total {@link ThrowableShortFunction} that returns an {@link
+     * Optional} result.
+     *
+     * @param <R> The type of return value from the function
+     * @param <X> The type of the throwable to be thrown by this function
+     * @param partial A function that is only defined for some values in its domain
+     * @return A partial {@code ThrowableShortFunction} lifted into a total {@code ThrowableShortFunction} that returns
+     * an {@code Optional} result.
+     * @throws NullPointerException If given argument is {@code null}
+     */
+    @Nonnull
+    static <R, X extends Throwable> ThrowableShortFunction<Optional<R>, X> lift(
+            @Nonnull final ThrowableShortFunction<? extends R, ? extends X> partial) {
+        Objects.requireNonNull(partial);
+        return (value) -> Optional.ofNullable(partial.applyThrows(value));
     }
 
     /**
