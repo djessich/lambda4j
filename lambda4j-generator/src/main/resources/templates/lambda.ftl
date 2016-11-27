@@ -51,6 +51,7 @@ package ${lambda.packageName};
 public interface ${lambda.name}${genericParameterTypeStringWithThrowableErasure} extends Lambda ${extends} {
 
 <#include "methods/static/of.ftl">
+<#include "methods/static/lift.ftl">
 <#include "methods/static/call.ftl">
 <#include "methods/static/only.ftl">
 <#include "methods/static/identity.ftl">
