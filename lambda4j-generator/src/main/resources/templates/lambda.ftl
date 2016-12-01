@@ -79,7 +79,7 @@ public interface ${lambda.name}${genericParameterTypeStringWithThrowableErasure}
     <#include "methods/tupled.ftl">
     <#include "methods/reversed.ftl">
     <#include "methods/memoized.ftl">
-<#--<#include "methods/nonNull.ftl">-->
+    <#include "methods/nonNull.ftl">
     <#include "methods/boxed.ftl">
     <#include "methods/nest.ftl">
     <#include "methods/sneakyThrow.ftl">

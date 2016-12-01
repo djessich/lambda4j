@@ -17,7 +17,9 @@
  * through referencing {@code null} from this ${lambda.type.simpleName}.
  *
  * @return An equal ${lambda.type.simpleName}, which ensures that its result is not {@code null}.
+ * @deprecated Use {@code lift} method for lifting this function.
  */
+@Deprecated
 ${annotation.nonnull}
 default ${lambda.name} ${genericTypeStringWithOptionalReturn} nonNull() {
     return (${parameterNameString}) -> Optional.ofNullable(${lambda.method}(${parameterNameString}));
