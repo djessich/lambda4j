@@ -175,6 +175,18 @@ public interface ThrowableBiCharFunction<R, X extends Throwable> extends Lambda 
     R applyThrows(char value1, char value2) throws X;
 
     /**
+     * Applies this function partially to some arguments of this one, producing a {@link ThrowableCharFunction} as
+     * result.
+     *
+     * @param value1 The first argument to this function used to partially apply this function
+     * @return A {@code ThrowableCharFunction} that represents this function partially applied the some arguments.
+     */
+    @Nonnull
+    default ThrowableCharFunction<R, X> papplyThrows(char value1) {
+        return (value2) -> this.applyThrows(value1, value2);
+    }
+
+    /**
      * Returns the number of arguments for this function.
      *
      * @return The number of arguments for this function.

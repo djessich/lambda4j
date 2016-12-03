@@ -49,6 +49,9 @@ import at.gridtec.lambda4j.operator.ternary.BooleanTernaryOperator;
 import at.gridtec.lambda4j.operator.unary.BooleanUnaryOperator;
 import at.gridtec.lambda4j.operator.unary.FloatUnaryOperator;
 import at.gridtec.lambda4j.predicate.FloatPredicate;
+import at.gridtec.lambda4j.predicate.Predicate2;
+import at.gridtec.lambda4j.predicate.bi.BiFloatPredicate;
+import at.gridtec.lambda4j.predicate.bi.obj.ObjFloatPredicate;
 import at.gridtec.lambda4j.predicate.tri.TriBytePredicate;
 import at.gridtec.lambda4j.predicate.tri.TriCharPredicate;
 import at.gridtec.lambda4j.predicate.tri.TriDoublePredicate;
@@ -232,6 +235,52 @@ public interface ObjBiFloatPredicate<T> extends Lambda {
      * @return The return value from the predicate, which is its result.
      */
     boolean test(T t, float value1, float value2);
+
+    /**
+     * Applies this predicate partially to some arguments of this one, producing a {@link BiFloatPredicate} as result.
+     *
+     * @param t The first argument to this predicate used to partially apply this function
+     * @return A {@code BiFloatPredicate} that represents this predicate partially applied the some arguments.
+     */
+    @Nonnull
+    default BiFloatPredicate ptest(T t) {
+        return (value1, value2) -> this.test(t, value1, value2);
+    }
+
+    /**
+     * Applies this predicate partially to some arguments of this one, producing a {@link FloatPredicate} as result.
+     *
+     * @param t The first argument to this predicate used to partially apply this function
+     * @param value1 The second argument to this predicate used to partially apply this function
+     * @return A {@code FloatPredicate} that represents this predicate partially applied the some arguments.
+     */
+    @Nonnull
+    default FloatPredicate ptest(T t, float value1) {
+        return (value2) -> this.test(t, value1, value2);
+    }
+
+    /**
+     * Applies this predicate partially to some arguments of this one, producing a {@link ObjFloatPredicate} as result.
+     *
+     * @param value1 The second argument to this predicate used to partially apply this function
+     * @return A {@code ObjFloatPredicate} that represents this predicate partially applied the some arguments.
+     */
+    @Nonnull
+    default ObjFloatPredicate<T> ptest(float value1) {
+        return (t, value2) -> this.test(t, value1, value2);
+    }
+
+    /**
+     * Applies this predicate partially to some arguments of this one, producing a {@link Predicate2} as result.
+     *
+     * @param value1 The second argument to this predicate used to partially apply this function
+     * @param value2 The third argument to this predicate used to partially apply this function
+     * @return A {@code Predicate2} that represents this predicate partially applied the some arguments.
+     */
+    @Nonnull
+    default Predicate2<T> ptest(float value1, float value2) {
+        return (t) -> this.test(t, value1, value2);
+    }
 
     /**
      * Returns the number of arguments for this predicate.

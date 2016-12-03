@@ -30,6 +30,7 @@ import at.gridtec.lambda4j.function.ThrowableIntFunction;
 import at.gridtec.lambda4j.function.ThrowableLongFunction;
 import at.gridtec.lambda4j.function.ThrowableShortFunction;
 import at.gridtec.lambda4j.function.bi.obj.ThrowableObjByteToByteFunction;
+import at.gridtec.lambda4j.function.bi.to.ThrowableToByteBiFunction;
 import at.gridtec.lambda4j.function.conversion.ThrowableBooleanToByteFunction;
 import at.gridtec.lambda4j.function.conversion.ThrowableByteToCharFunction;
 import at.gridtec.lambda4j.function.conversion.ThrowableByteToDoubleFunction;
@@ -223,6 +224,57 @@ public interface ThrowableBiObjByteToByteFunction<T, U, X extends Throwable> ext
     default byte applyAsByteThrows(@Nonnull Pair<T, U> tuple, byte value) throws X {
         Objects.requireNonNull(tuple);
         return applyAsByteThrows(tuple.getLeft(), tuple.getRight(), value);
+    }
+
+    /**
+     * Applies this operator partially to some arguments of this one, producing a {@link ThrowableObjByteToByteFunction}
+     * as result.
+     *
+     * @param t The first argument to this function used to partially apply this function
+     * @return A {@code ThrowableObjByteToByteFunction} that represents this operator partially applied the some
+     * arguments.
+     */
+    @Nonnull
+    default ThrowableObjByteToByteFunction<U, X> papplyAsByteThrows(T t) {
+        return (u, value) -> this.applyAsByteThrows(t, u, value);
+    }
+
+    /**
+     * Applies this operator partially to some arguments of this one, producing a {@link ThrowableByteUnaryOperator} as
+     * result.
+     *
+     * @param t The first argument to this function used to partially apply this function
+     * @param u The second argument to this function used to partially apply this function
+     * @return A {@code ThrowableByteUnaryOperator} that represents this operator partially applied the some arguments.
+     */
+    @Nonnull
+    default ThrowableByteUnaryOperator<X> papplyAsByteThrows(T t, U u) {
+        return (value) -> this.applyAsByteThrows(t, u, value);
+    }
+
+    /**
+     * Applies this operator partially to some arguments of this one, producing a {@link ThrowableToByteBiFunction} as
+     * result.
+     *
+     * @param value The third argument to this function used to partially apply this function
+     * @return A {@code ThrowableToByteBiFunction} that represents this operator partially applied the some arguments.
+     */
+    @Nonnull
+    default ThrowableToByteBiFunction<T, U, X> papplyAsByteThrows(byte value) {
+        return (t, u) -> this.applyAsByteThrows(t, u, value);
+    }
+
+    /**
+     * Applies this operator partially to some arguments of this one, producing a {@link ThrowableToByteFunction} as
+     * result.
+     *
+     * @param t The first argument to this function used to partially apply this function
+     * @param value The third argument to this function used to partially apply this function
+     * @return A {@code ThrowableToByteFunction} that represents this operator partially applied the some arguments.
+     */
+    @Nonnull
+    default ThrowableToByteFunction<U, X> papplyAsByteThrows(T t, byte value) {
+        return (u) -> this.applyAsByteThrows(t, u, value);
     }
 
     /**

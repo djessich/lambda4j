@@ -165,6 +165,17 @@ public interface ToIntBiFunction2<T, U> extends Lambda, ToIntBiFunction<T, U> {
     }
 
     /**
+     * Applies this function partially to some arguments of this one, producing a {@link ToIntFunction2} as result.
+     *
+     * @param t The first argument to this function used to partially apply this function
+     * @return A {@code ToIntFunction2} that represents this function partially applied the some arguments.
+     */
+    @Nonnull
+    default ToIntFunction2<U> papplyAsInt(T t) {
+        return (u) -> this.applyAsInt(t, u);
+    }
+
+    /**
      * Returns the number of arguments for this function.
      *
      * @return The number of arguments for this function.

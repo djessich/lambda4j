@@ -163,6 +163,19 @@ public interface ThrowableBiBooleanToIntFunction<X extends Throwable> extends La
     int applyAsIntThrows(boolean value1, boolean value2) throws X;
 
     /**
+     * Applies this function partially to some arguments of this one, producing a {@link ThrowableBooleanToIntFunction}
+     * as result.
+     *
+     * @param value1 The first argument to this function used to partially apply this function
+     * @return A {@code ThrowableBooleanToIntFunction} that represents this function partially applied the some
+     * arguments.
+     */
+    @Nonnull
+    default ThrowableBooleanToIntFunction<X> papplyAsIntThrows(boolean value1) {
+        return (value2) -> this.applyAsIntThrows(value1, value2);
+    }
+
+    /**
      * Returns the number of arguments for this function.
      *
      * @return The number of arguments for this function.

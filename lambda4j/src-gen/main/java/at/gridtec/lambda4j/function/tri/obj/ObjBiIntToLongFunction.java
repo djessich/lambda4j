@@ -22,15 +22,19 @@ import at.gridtec.lambda4j.function.ByteFunction;
 import at.gridtec.lambda4j.function.CharFunction;
 import at.gridtec.lambda4j.function.FloatFunction;
 import at.gridtec.lambda4j.function.ShortFunction;
+import at.gridtec.lambda4j.function.bi.conversion.BiIntToLongFunction;
+import at.gridtec.lambda4j.function.bi.obj.ObjIntToLongFunction;
 import at.gridtec.lambda4j.function.conversion.BooleanToIntFunction;
 import at.gridtec.lambda4j.function.conversion.ByteToIntFunction;
 import at.gridtec.lambda4j.function.conversion.CharToIntFunction;
 import at.gridtec.lambda4j.function.conversion.FloatToIntFunction;
+import at.gridtec.lambda4j.function.conversion.IntToLongFunction2;
 import at.gridtec.lambda4j.function.conversion.LongToByteFunction;
 import at.gridtec.lambda4j.function.conversion.LongToCharFunction;
 import at.gridtec.lambda4j.function.conversion.LongToFloatFunction;
 import at.gridtec.lambda4j.function.conversion.LongToShortFunction;
 import at.gridtec.lambda4j.function.conversion.ShortToIntFunction;
+import at.gridtec.lambda4j.function.to.ToLongFunction2;
 import at.gridtec.lambda4j.function.tri.TriFunction;
 import at.gridtec.lambda4j.function.tri.conversion.TriBooleanToLongFunction;
 import at.gridtec.lambda4j.function.tri.conversion.TriByteToLongFunction;
@@ -184,6 +188,53 @@ public interface ObjBiIntToLongFunction<T> extends Lambda {
      * @return The return value from the function, which is its result.
      */
     long applyAsLong(T t, int value1, int value2);
+
+    /**
+     * Applies this function partially to some arguments of this one, producing a {@link BiIntToLongFunction} as result.
+     *
+     * @param t The first argument to this function used to partially apply this function
+     * @return A {@code BiIntToLongFunction} that represents this function partially applied the some arguments.
+     */
+    @Nonnull
+    default BiIntToLongFunction papplyAsLong(T t) {
+        return (value1, value2) -> this.applyAsLong(t, value1, value2);
+    }
+
+    /**
+     * Applies this function partially to some arguments of this one, producing a {@link IntToLongFunction2} as result.
+     *
+     * @param t The first argument to this function used to partially apply this function
+     * @param value1 The second argument to this function used to partially apply this function
+     * @return A {@code IntToLongFunction2} that represents this function partially applied the some arguments.
+     */
+    @Nonnull
+    default IntToLongFunction2 papplyAsLong(T t, int value1) {
+        return (value2) -> this.applyAsLong(t, value1, value2);
+    }
+
+    /**
+     * Applies this function partially to some arguments of this one, producing a {@link ObjIntToLongFunction} as
+     * result.
+     *
+     * @param value1 The second argument to this function used to partially apply this function
+     * @return A {@code ObjIntToLongFunction} that represents this function partially applied the some arguments.
+     */
+    @Nonnull
+    default ObjIntToLongFunction<T> papplyAsLong(int value1) {
+        return (t, value2) -> this.applyAsLong(t, value1, value2);
+    }
+
+    /**
+     * Applies this function partially to some arguments of this one, producing a {@link ToLongFunction2} as result.
+     *
+     * @param value1 The second argument to this function used to partially apply this function
+     * @param value2 The third argument to this function used to partially apply this function
+     * @return A {@code ToLongFunction2} that represents this function partially applied the some arguments.
+     */
+    @Nonnull
+    default ToLongFunction2<T> papplyAsLong(int value1, int value2) {
+        return (t) -> this.applyAsLong(t, value1, value2);
+    }
 
     /**
      * Returns the number of arguments for this function.

@@ -23,6 +23,7 @@ import at.gridtec.lambda4j.function.CharFunction;
 import at.gridtec.lambda4j.function.FloatFunction;
 import at.gridtec.lambda4j.function.ShortFunction;
 import at.gridtec.lambda4j.function.bi.obj.ObjDoubleToDoubleFunction;
+import at.gridtec.lambda4j.function.bi.to.ToDoubleBiFunction2;
 import at.gridtec.lambda4j.function.conversion.BooleanToDoubleFunction;
 import at.gridtec.lambda4j.function.conversion.ByteToDoubleFunction;
 import at.gridtec.lambda4j.function.conversion.CharToDoubleFunction;
@@ -32,6 +33,7 @@ import at.gridtec.lambda4j.function.conversion.DoubleToFloatFunction;
 import at.gridtec.lambda4j.function.conversion.DoubleToShortFunction;
 import at.gridtec.lambda4j.function.conversion.FloatToDoubleFunction;
 import at.gridtec.lambda4j.function.conversion.ShortToDoubleFunction;
+import at.gridtec.lambda4j.function.to.ToDoubleFunction2;
 import at.gridtec.lambda4j.function.tri.TriFunction;
 import at.gridtec.lambda4j.function.tri.conversion.TriBooleanToDoubleFunction;
 import at.gridtec.lambda4j.function.tri.conversion.TriByteToDoubleFunction;
@@ -42,6 +44,7 @@ import at.gridtec.lambda4j.function.tri.conversion.TriLongToDoubleFunction;
 import at.gridtec.lambda4j.function.tri.conversion.TriShortToDoubleFunction;
 import at.gridtec.lambda4j.function.tri.to.ToDoubleTriFunction;
 import at.gridtec.lambda4j.operator.ternary.DoubleTernaryOperator;
+import at.gridtec.lambda4j.operator.unary.DoubleUnaryOperator2;
 import at.gridtec.lambda4j.predicate.tri.obj.BiObjDoublePredicate;
 
 import org.apache.commons.lang3.tuple.Pair;
@@ -205,6 +208,54 @@ public interface BiObjDoubleToDoubleFunction<T, U> extends Lambda {
     default double applyAsDouble(@Nonnull Pair<T, U> tuple, double value) {
         Objects.requireNonNull(tuple);
         return applyAsDouble(tuple.getLeft(), tuple.getRight(), value);
+    }
+
+    /**
+     * Applies this operator partially to some arguments of this one, producing a {@link ObjDoubleToDoubleFunction} as
+     * result.
+     *
+     * @param t The first argument to this function used to partially apply this function
+     * @return A {@code ObjDoubleToDoubleFunction} that represents this operator partially applied the some arguments.
+     */
+    @Nonnull
+    default ObjDoubleToDoubleFunction<U> papplyAsDouble(T t) {
+        return (u, value) -> this.applyAsDouble(t, u, value);
+    }
+
+    /**
+     * Applies this operator partially to some arguments of this one, producing a {@link DoubleUnaryOperator2} as
+     * result.
+     *
+     * @param t The first argument to this function used to partially apply this function
+     * @param u The second argument to this function used to partially apply this function
+     * @return A {@code DoubleUnaryOperator2} that represents this operator partially applied the some arguments.
+     */
+    @Nonnull
+    default DoubleUnaryOperator2 papplyAsDouble(T t, U u) {
+        return (value) -> this.applyAsDouble(t, u, value);
+    }
+
+    /**
+     * Applies this operator partially to some arguments of this one, producing a {@link ToDoubleBiFunction2} as result.
+     *
+     * @param value The third argument to this function used to partially apply this function
+     * @return A {@code ToDoubleBiFunction2} that represents this operator partially applied the some arguments.
+     */
+    @Nonnull
+    default ToDoubleBiFunction2<T, U> papplyAsDouble(double value) {
+        return (t, u) -> this.applyAsDouble(t, u, value);
+    }
+
+    /**
+     * Applies this operator partially to some arguments of this one, producing a {@link ToDoubleFunction2} as result.
+     *
+     * @param t The first argument to this function used to partially apply this function
+     * @param value The third argument to this function used to partially apply this function
+     * @return A {@code ToDoubleFunction2} that represents this operator partially applied the some arguments.
+     */
+    @Nonnull
+    default ToDoubleFunction2<U> papplyAsDouble(T t, double value) {
+        return (u) -> this.applyAsDouble(t, u, value);
     }
 
     /**

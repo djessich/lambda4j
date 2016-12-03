@@ -233,6 +233,29 @@ public interface ThrowableObjFloatPredicate<T, X extends Throwable> extends Lamb
     boolean testThrows(T t, float value) throws X;
 
     /**
+     * Applies this predicate partially to some arguments of this one, producing a {@link ThrowableFloatPredicate} as
+     * result.
+     *
+     * @param t The first argument to this predicate used to partially apply this function
+     * @return A {@code ThrowableFloatPredicate} that represents this predicate partially applied the some arguments.
+     */
+    @Nonnull
+    default ThrowableFloatPredicate<X> ptestThrows(T t) {
+        return (value) -> this.testThrows(t, value);
+    }
+
+    /**
+     * Applies this predicate partially to some arguments of this one, producing a {@link ThrowablePredicate} as result.
+     *
+     * @param value The second argument to this predicate used to partially apply this function
+     * @return A {@code ThrowablePredicate} that represents this predicate partially applied the some arguments.
+     */
+    @Nonnull
+    default ThrowablePredicate<T, X> ptestThrows(float value) {
+        return (t) -> this.testThrows(t, value);
+    }
+
+    /**
      * Returns the number of arguments for this predicate.
      *
      * @return The number of arguments for this predicate.

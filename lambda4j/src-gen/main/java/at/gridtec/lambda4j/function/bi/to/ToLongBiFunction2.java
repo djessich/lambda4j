@@ -165,6 +165,17 @@ public interface ToLongBiFunction2<T, U> extends Lambda, ToLongBiFunction<T, U> 
     }
 
     /**
+     * Applies this function partially to some arguments of this one, producing a {@link ToLongFunction2} as result.
+     *
+     * @param t The first argument to this function used to partially apply this function
+     * @return A {@code ToLongFunction2} that represents this function partially applied the some arguments.
+     */
+    @Nonnull
+    default ToLongFunction2<U> papplyAsLong(T t) {
+        return (u) -> this.applyAsLong(t, u);
+    }
+
+    /**
      * Returns the number of arguments for this function.
      *
      * @return The number of arguments for this function.

@@ -24,6 +24,7 @@ import at.gridtec.lambda4j.function.CharFunction;
 import at.gridtec.lambda4j.function.FloatFunction;
 import at.gridtec.lambda4j.function.ShortFunction;
 import at.gridtec.lambda4j.function.bi.obj.ObjDoubleToCharFunction;
+import at.gridtec.lambda4j.function.bi.to.ToCharBiFunction;
 import at.gridtec.lambda4j.function.conversion.BooleanToDoubleFunction;
 import at.gridtec.lambda4j.function.conversion.ByteToDoubleFunction;
 import at.gridtec.lambda4j.function.conversion.CharToByteFunction;
@@ -207,6 +208,54 @@ public interface BiObjDoubleToCharFunction<T, U> extends Lambda {
     default char applyAsChar(@Nonnull Pair<T, U> tuple, double value) {
         Objects.requireNonNull(tuple);
         return applyAsChar(tuple.getLeft(), tuple.getRight(), value);
+    }
+
+    /**
+     * Applies this function partially to some arguments of this one, producing a {@link ObjDoubleToCharFunction} as
+     * result.
+     *
+     * @param t The first argument to this function used to partially apply this function
+     * @return A {@code ObjDoubleToCharFunction} that represents this function partially applied the some arguments.
+     */
+    @Nonnull
+    default ObjDoubleToCharFunction<U> papplyAsChar(T t) {
+        return (u, value) -> this.applyAsChar(t, u, value);
+    }
+
+    /**
+     * Applies this function partially to some arguments of this one, producing a {@link DoubleToCharFunction} as
+     * result.
+     *
+     * @param t The first argument to this function used to partially apply this function
+     * @param u The second argument to this function used to partially apply this function
+     * @return A {@code DoubleToCharFunction} that represents this function partially applied the some arguments.
+     */
+    @Nonnull
+    default DoubleToCharFunction papplyAsChar(T t, U u) {
+        return (value) -> this.applyAsChar(t, u, value);
+    }
+
+    /**
+     * Applies this function partially to some arguments of this one, producing a {@link ToCharBiFunction} as result.
+     *
+     * @param value The third argument to this function used to partially apply this function
+     * @return A {@code ToCharBiFunction} that represents this function partially applied the some arguments.
+     */
+    @Nonnull
+    default ToCharBiFunction<T, U> papplyAsChar(double value) {
+        return (t, u) -> this.applyAsChar(t, u, value);
+    }
+
+    /**
+     * Applies this function partially to some arguments of this one, producing a {@link ToCharFunction} as result.
+     *
+     * @param t The first argument to this function used to partially apply this function
+     * @param value The third argument to this function used to partially apply this function
+     * @return A {@code ToCharFunction} that represents this function partially applied the some arguments.
+     */
+    @Nonnull
+    default ToCharFunction<U> papplyAsChar(T t, double value) {
+        return (u) -> this.applyAsChar(t, u, value);
     }
 
     /**

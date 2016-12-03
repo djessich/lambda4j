@@ -17,10 +17,12 @@ package at.gridtec.lambda4j.function.tri.conversion;
 
 import at.gridtec.lambda4j.Lambda;
 import at.gridtec.lambda4j.consumer.tri.TriIntConsumer;
+import at.gridtec.lambda4j.function.bi.conversion.BiIntToLongFunction;
 import at.gridtec.lambda4j.function.conversion.BooleanToIntFunction;
 import at.gridtec.lambda4j.function.conversion.ByteToIntFunction;
 import at.gridtec.lambda4j.function.conversion.CharToIntFunction;
 import at.gridtec.lambda4j.function.conversion.FloatToIntFunction;
+import at.gridtec.lambda4j.function.conversion.IntToLongFunction2;
 import at.gridtec.lambda4j.function.conversion.LongToByteFunction;
 import at.gridtec.lambda4j.function.conversion.LongToCharFunction;
 import at.gridtec.lambda4j.function.conversion.LongToFloatFunction;
@@ -163,6 +165,29 @@ public interface TriIntToLongFunction extends Lambda {
      * @return The return value from the function, which is its result.
      */
     long applyAsLong(int value1, int value2, int value3);
+
+    /**
+     * Applies this function partially to some arguments of this one, producing a {@link BiIntToLongFunction} as result.
+     *
+     * @param value1 The first argument to this function used to partially apply this function
+     * @return A {@code BiIntToLongFunction} that represents this function partially applied the some arguments.
+     */
+    @Nonnull
+    default BiIntToLongFunction papplyAsLong(int value1) {
+        return (value2, value3) -> this.applyAsLong(value1, value2, value3);
+    }
+
+    /**
+     * Applies this function partially to some arguments of this one, producing a {@link IntToLongFunction2} as result.
+     *
+     * @param value1 The first argument to this function used to partially apply this function
+     * @param value2 The second argument to this function used to partially apply this function
+     * @return A {@code IntToLongFunction2} that represents this function partially applied the some arguments.
+     */
+    @Nonnull
+    default IntToLongFunction2 papplyAsLong(int value1, int value2) {
+        return (value3) -> this.applyAsLong(value1, value2, value3);
+    }
 
     /**
      * Returns the number of arguments for this function.

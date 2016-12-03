@@ -181,6 +181,30 @@ public interface ThrowableObjCharToCharFunction<T, X extends Throwable> extends 
     char applyAsCharThrows(T t, char value) throws X;
 
     /**
+     * Applies this operator partially to some arguments of this one, producing a {@link ThrowableCharUnaryOperator} as
+     * result.
+     *
+     * @param t The first argument to this function used to partially apply this function
+     * @return A {@code ThrowableCharUnaryOperator} that represents this operator partially applied the some arguments.
+     */
+    @Nonnull
+    default ThrowableCharUnaryOperator<X> papplyAsCharThrows(T t) {
+        return (value) -> this.applyAsCharThrows(t, value);
+    }
+
+    /**
+     * Applies this operator partially to some arguments of this one, producing a {@link ThrowableToCharFunction} as
+     * result.
+     *
+     * @param value The second argument to this function used to partially apply this function
+     * @return A {@code ThrowableToCharFunction} that represents this operator partially applied the some arguments.
+     */
+    @Nonnull
+    default ThrowableToCharFunction<T, X> papplyAsCharThrows(char value) {
+        return (t) -> this.applyAsCharThrows(t, value);
+    }
+
+    /**
      * Returns the number of arguments for this function.
      *
      * @return The number of arguments for this function.

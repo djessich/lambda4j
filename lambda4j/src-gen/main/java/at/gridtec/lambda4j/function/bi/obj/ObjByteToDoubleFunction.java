@@ -43,6 +43,7 @@ import at.gridtec.lambda4j.function.conversion.IntToByteFunction;
 import at.gridtec.lambda4j.function.conversion.LongToByteFunction;
 import at.gridtec.lambda4j.function.conversion.ShortToByteFunction;
 import at.gridtec.lambda4j.function.to.ToByteFunction;
+import at.gridtec.lambda4j.function.to.ToDoubleFunction2;
 import at.gridtec.lambda4j.operator.binary.DoubleBinaryOperator2;
 import at.gridtec.lambda4j.operator.unary.ByteUnaryOperator;
 import at.gridtec.lambda4j.predicate.bi.obj.ObjBytePredicate;
@@ -166,6 +167,29 @@ public interface ObjByteToDoubleFunction<T> extends Lambda {
      * @return The return value from the function, which is its result.
      */
     double applyAsDouble(T t, byte value);
+
+    /**
+     * Applies this function partially to some arguments of this one, producing a {@link ByteToDoubleFunction} as
+     * result.
+     *
+     * @param t The first argument to this function used to partially apply this function
+     * @return A {@code ByteToDoubleFunction} that represents this function partially applied the some arguments.
+     */
+    @Nonnull
+    default ByteToDoubleFunction papplyAsDouble(T t) {
+        return (value) -> this.applyAsDouble(t, value);
+    }
+
+    /**
+     * Applies this function partially to some arguments of this one, producing a {@link ToDoubleFunction2} as result.
+     *
+     * @param value The second argument to this function used to partially apply this function
+     * @return A {@code ToDoubleFunction2} that represents this function partially applied the some arguments.
+     */
+    @Nonnull
+    default ToDoubleFunction2<T> papplyAsDouble(byte value) {
+        return (t) -> this.applyAsDouble(t, value);
+    }
 
     /**
      * Returns the number of arguments for this function.

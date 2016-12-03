@@ -182,6 +182,30 @@ public interface ThrowableObjShortToShortFunction<T, X extends Throwable> extend
     short applyAsShortThrows(T t, short value) throws X;
 
     /**
+     * Applies this operator partially to some arguments of this one, producing a {@link ThrowableShortUnaryOperator} as
+     * result.
+     *
+     * @param t The first argument to this function used to partially apply this function
+     * @return A {@code ThrowableShortUnaryOperator} that represents this operator partially applied the some arguments.
+     */
+    @Nonnull
+    default ThrowableShortUnaryOperator<X> papplyAsShortThrows(T t) {
+        return (value) -> this.applyAsShortThrows(t, value);
+    }
+
+    /**
+     * Applies this operator partially to some arguments of this one, producing a {@link ThrowableToShortFunction} as
+     * result.
+     *
+     * @param value The second argument to this function used to partially apply this function
+     * @return A {@code ThrowableToShortFunction} that represents this operator partially applied the some arguments.
+     */
+    @Nonnull
+    default ThrowableToShortFunction<T, X> papplyAsShortThrows(short value) {
+        return (t) -> this.applyAsShortThrows(t, value);
+    }
+
+    /**
      * Returns the number of arguments for this function.
      *
      * @return The number of arguments for this function.

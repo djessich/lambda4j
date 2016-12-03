@@ -35,11 +35,13 @@ import at.gridtec.lambda4j.function.conversion.BooleanToIntFunction;
 import at.gridtec.lambda4j.function.conversion.ByteToIntFunction;
 import at.gridtec.lambda4j.function.conversion.CharToIntFunction;
 import at.gridtec.lambda4j.function.conversion.FloatToIntFunction;
+import at.gridtec.lambda4j.function.conversion.IntToLongFunction2;
 import at.gridtec.lambda4j.function.conversion.LongToByteFunction;
 import at.gridtec.lambda4j.function.conversion.LongToCharFunction;
 import at.gridtec.lambda4j.function.conversion.LongToFloatFunction;
 import at.gridtec.lambda4j.function.conversion.LongToShortFunction;
 import at.gridtec.lambda4j.function.conversion.ShortToIntFunction;
+import at.gridtec.lambda4j.function.to.ToLongFunction2;
 import at.gridtec.lambda4j.operator.binary.LongBinaryOperator2;
 import at.gridtec.lambda4j.predicate.bi.obj.ObjIntPredicate;
 
@@ -166,6 +168,28 @@ public interface ObjIntToLongFunction<T> extends Lambda {
      * @return The return value from the function, which is its result.
      */
     long applyAsLong(T t, int value);
+
+    /**
+     * Applies this function partially to some arguments of this one, producing a {@link IntToLongFunction2} as result.
+     *
+     * @param t The first argument to this function used to partially apply this function
+     * @return A {@code IntToLongFunction2} that represents this function partially applied the some arguments.
+     */
+    @Nonnull
+    default IntToLongFunction2 papplyAsLong(T t) {
+        return (value) -> this.applyAsLong(t, value);
+    }
+
+    /**
+     * Applies this function partially to some arguments of this one, producing a {@link ToLongFunction2} as result.
+     *
+     * @param value The second argument to this function used to partially apply this function
+     * @return A {@code ToLongFunction2} that represents this function partially applied the some arguments.
+     */
+    @Nonnull
+    default ToLongFunction2<T> papplyAsLong(int value) {
+        return (t) -> this.applyAsLong(t, value);
+    }
 
     /**
      * Returns the number of arguments for this function.

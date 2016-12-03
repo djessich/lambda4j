@@ -19,6 +19,7 @@ import at.gridtec.lambda4j.Lambda;
 import at.gridtec.lambda4j.consumer.ByteConsumer;
 import at.gridtec.lambda4j.consumer.tri.TriConsumer;
 import at.gridtec.lambda4j.function.ByteFunction;
+import at.gridtec.lambda4j.function.bi.to.ToByteBiFunction;
 import at.gridtec.lambda4j.function.conversion.ByteToCharFunction;
 import at.gridtec.lambda4j.function.conversion.ByteToDoubleFunction;
 import at.gridtec.lambda4j.function.conversion.ByteToFloatFunction;
@@ -186,6 +187,29 @@ public interface ToByteTriFunction<T, U, V> extends Lambda {
     default byte applyAsByte(@Nonnull Triple<T, U, V> tuple) {
         Objects.requireNonNull(tuple);
         return applyAsByte(tuple.getLeft(), tuple.getMiddle(), tuple.getRight());
+    }
+
+    /**
+     * Applies this function partially to some arguments of this one, producing a {@link ToByteBiFunction} as result.
+     *
+     * @param t The first argument to this function used to partially apply this function
+     * @return A {@code ToByteBiFunction} that represents this function partially applied the some arguments.
+     */
+    @Nonnull
+    default ToByteBiFunction<U, V> papplyAsByte(T t) {
+        return (u, v) -> this.applyAsByte(t, u, v);
+    }
+
+    /**
+     * Applies this function partially to some arguments of this one, producing a {@link ToByteFunction} as result.
+     *
+     * @param t The first argument to this function used to partially apply this function
+     * @param u The second argument to this function used to partially apply this function
+     * @return A {@code ToByteFunction} that represents this function partially applied the some arguments.
+     */
+    @Nonnull
+    default ToByteFunction<V> papplyAsByte(T t, U u) {
+        return (v) -> this.applyAsByte(t, u, v);
     }
 
     /**

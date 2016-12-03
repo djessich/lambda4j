@@ -23,6 +23,7 @@ import at.gridtec.lambda4j.function.CharFunction;
 import at.gridtec.lambda4j.function.FloatFunction;
 import at.gridtec.lambda4j.function.ShortFunction;
 import at.gridtec.lambda4j.function.bi.obj.ObjLongToLongFunction;
+import at.gridtec.lambda4j.function.bi.to.ToLongBiFunction2;
 import at.gridtec.lambda4j.function.conversion.BooleanToLongFunction;
 import at.gridtec.lambda4j.function.conversion.ByteToLongFunction;
 import at.gridtec.lambda4j.function.conversion.CharToLongFunction;
@@ -32,6 +33,7 @@ import at.gridtec.lambda4j.function.conversion.LongToCharFunction;
 import at.gridtec.lambda4j.function.conversion.LongToFloatFunction;
 import at.gridtec.lambda4j.function.conversion.LongToShortFunction;
 import at.gridtec.lambda4j.function.conversion.ShortToLongFunction;
+import at.gridtec.lambda4j.function.to.ToLongFunction2;
 import at.gridtec.lambda4j.function.tri.TriFunction;
 import at.gridtec.lambda4j.function.tri.conversion.TriBooleanToLongFunction;
 import at.gridtec.lambda4j.function.tri.conversion.TriByteToLongFunction;
@@ -42,6 +44,7 @@ import at.gridtec.lambda4j.function.tri.conversion.TriIntToLongFunction;
 import at.gridtec.lambda4j.function.tri.conversion.TriShortToLongFunction;
 import at.gridtec.lambda4j.function.tri.to.ToLongTriFunction;
 import at.gridtec.lambda4j.operator.ternary.LongTernaryOperator;
+import at.gridtec.lambda4j.operator.unary.LongUnaryOperator2;
 import at.gridtec.lambda4j.predicate.tri.obj.BiObjLongPredicate;
 
 import org.apache.commons.lang3.tuple.Pair;
@@ -205,6 +208,53 @@ public interface BiObjLongToLongFunction<T, U> extends Lambda {
     default long applyAsLong(@Nonnull Pair<T, U> tuple, long value) {
         Objects.requireNonNull(tuple);
         return applyAsLong(tuple.getLeft(), tuple.getRight(), value);
+    }
+
+    /**
+     * Applies this operator partially to some arguments of this one, producing a {@link ObjLongToLongFunction} as
+     * result.
+     *
+     * @param t The first argument to this function used to partially apply this function
+     * @return A {@code ObjLongToLongFunction} that represents this operator partially applied the some arguments.
+     */
+    @Nonnull
+    default ObjLongToLongFunction<U> papplyAsLong(T t) {
+        return (u, value) -> this.applyAsLong(t, u, value);
+    }
+
+    /**
+     * Applies this operator partially to some arguments of this one, producing a {@link LongUnaryOperator2} as result.
+     *
+     * @param t The first argument to this function used to partially apply this function
+     * @param u The second argument to this function used to partially apply this function
+     * @return A {@code LongUnaryOperator2} that represents this operator partially applied the some arguments.
+     */
+    @Nonnull
+    default LongUnaryOperator2 papplyAsLong(T t, U u) {
+        return (value) -> this.applyAsLong(t, u, value);
+    }
+
+    /**
+     * Applies this operator partially to some arguments of this one, producing a {@link ToLongBiFunction2} as result.
+     *
+     * @param value The third argument to this function used to partially apply this function
+     * @return A {@code ToLongBiFunction2} that represents this operator partially applied the some arguments.
+     */
+    @Nonnull
+    default ToLongBiFunction2<T, U> papplyAsLong(long value) {
+        return (t, u) -> this.applyAsLong(t, u, value);
+    }
+
+    /**
+     * Applies this operator partially to some arguments of this one, producing a {@link ToLongFunction2} as result.
+     *
+     * @param t The first argument to this function used to partially apply this function
+     * @param value The third argument to this function used to partially apply this function
+     * @return A {@code ToLongFunction2} that represents this operator partially applied the some arguments.
+     */
+    @Nonnull
+    default ToLongFunction2<U> papplyAsLong(T t, long value) {
+        return (u) -> this.applyAsLong(t, u, value);
     }
 
     /**

@@ -29,6 +29,8 @@ import at.gridtec.lambda4j.function.ThrowableFunction;
 import at.gridtec.lambda4j.function.ThrowableIntFunction;
 import at.gridtec.lambda4j.function.ThrowableLongFunction;
 import at.gridtec.lambda4j.function.ThrowableShortFunction;
+import at.gridtec.lambda4j.function.bi.conversion.ThrowableBiCharToIntFunction;
+import at.gridtec.lambda4j.function.bi.obj.ThrowableObjCharToIntFunction;
 import at.gridtec.lambda4j.function.conversion.ThrowableBooleanToCharFunction;
 import at.gridtec.lambda4j.function.conversion.ThrowableByteToCharFunction;
 import at.gridtec.lambda4j.function.conversion.ThrowableCharToIntFunction;
@@ -202,6 +204,58 @@ public interface ThrowableObjBiCharToIntFunction<T, X extends Throwable> extends
      * @throws X Any throwable from this functions action
      */
     int applyAsIntThrows(T t, char value1, char value2) throws X;
+
+    /**
+     * Applies this function partially to some arguments of this one, producing a {@link ThrowableBiCharToIntFunction}
+     * as result.
+     *
+     * @param t The first argument to this function used to partially apply this function
+     * @return A {@code ThrowableBiCharToIntFunction} that represents this function partially applied the some
+     * arguments.
+     */
+    @Nonnull
+    default ThrowableBiCharToIntFunction<X> papplyAsIntThrows(T t) {
+        return (value1, value2) -> this.applyAsIntThrows(t, value1, value2);
+    }
+
+    /**
+     * Applies this function partially to some arguments of this one, producing a {@link ThrowableCharToIntFunction} as
+     * result.
+     *
+     * @param t The first argument to this function used to partially apply this function
+     * @param value1 The second argument to this function used to partially apply this function
+     * @return A {@code ThrowableCharToIntFunction} that represents this function partially applied the some arguments.
+     */
+    @Nonnull
+    default ThrowableCharToIntFunction<X> papplyAsIntThrows(T t, char value1) {
+        return (value2) -> this.applyAsIntThrows(t, value1, value2);
+    }
+
+    /**
+     * Applies this function partially to some arguments of this one, producing a {@link ThrowableObjCharToIntFunction}
+     * as result.
+     *
+     * @param value1 The second argument to this function used to partially apply this function
+     * @return A {@code ThrowableObjCharToIntFunction} that represents this function partially applied the some
+     * arguments.
+     */
+    @Nonnull
+    default ThrowableObjCharToIntFunction<T, X> papplyAsIntThrows(char value1) {
+        return (t, value2) -> this.applyAsIntThrows(t, value1, value2);
+    }
+
+    /**
+     * Applies this function partially to some arguments of this one, producing a {@link ThrowableToIntFunction} as
+     * result.
+     *
+     * @param value1 The second argument to this function used to partially apply this function
+     * @param value2 The third argument to this function used to partially apply this function
+     * @return A {@code ThrowableToIntFunction} that represents this function partially applied the some arguments.
+     */
+    @Nonnull
+    default ThrowableToIntFunction<T, X> papplyAsIntThrows(char value1, char value2) {
+        return (t) -> this.applyAsIntThrows(t, value1, value2);
+    }
 
     /**
      * Returns the number of arguments for this function.

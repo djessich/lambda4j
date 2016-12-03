@@ -166,6 +166,28 @@ public interface ObjShortToShortFunction<T> extends Lambda {
     short applyAsShort(T t, short value);
 
     /**
+     * Applies this operator partially to some arguments of this one, producing a {@link ShortUnaryOperator} as result.
+     *
+     * @param t The first argument to this function used to partially apply this function
+     * @return A {@code ShortUnaryOperator} that represents this operator partially applied the some arguments.
+     */
+    @Nonnull
+    default ShortUnaryOperator papplyAsShort(T t) {
+        return (value) -> this.applyAsShort(t, value);
+    }
+
+    /**
+     * Applies this operator partially to some arguments of this one, producing a {@link ToShortFunction} as result.
+     *
+     * @param value The second argument to this function used to partially apply this function
+     * @return A {@code ToShortFunction} that represents this operator partially applied the some arguments.
+     */
+    @Nonnull
+    default ToShortFunction<T> papplyAsShort(short value) {
+        return (t) -> this.applyAsShort(t, value);
+    }
+
+    /**
      * Returns the number of arguments for this function.
      *
      * @return The number of arguments for this function.

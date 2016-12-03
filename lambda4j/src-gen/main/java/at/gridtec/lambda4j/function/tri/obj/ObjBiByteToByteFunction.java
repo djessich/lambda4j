@@ -23,6 +23,7 @@ import at.gridtec.lambda4j.function.ByteFunction;
 import at.gridtec.lambda4j.function.CharFunction;
 import at.gridtec.lambda4j.function.FloatFunction;
 import at.gridtec.lambda4j.function.ShortFunction;
+import at.gridtec.lambda4j.function.bi.obj.ObjByteToByteFunction;
 import at.gridtec.lambda4j.function.conversion.BooleanToByteFunction;
 import at.gridtec.lambda4j.function.conversion.ByteToCharFunction;
 import at.gridtec.lambda4j.function.conversion.ByteToDoubleFunction;
@@ -46,6 +47,7 @@ import at.gridtec.lambda4j.function.tri.conversion.TriIntToByteFunction;
 import at.gridtec.lambda4j.function.tri.conversion.TriLongToByteFunction;
 import at.gridtec.lambda4j.function.tri.conversion.TriShortToByteFunction;
 import at.gridtec.lambda4j.function.tri.to.ToByteTriFunction;
+import at.gridtec.lambda4j.operator.binary.ByteBinaryOperator;
 import at.gridtec.lambda4j.operator.ternary.ByteTernaryOperator;
 import at.gridtec.lambda4j.operator.unary.ByteUnaryOperator;
 import at.gridtec.lambda4j.predicate.BytePredicate;
@@ -182,6 +184,53 @@ public interface ObjBiByteToByteFunction<T> extends Lambda {
      * @return The return value from the function, which is its result.
      */
     byte applyAsByte(T t, byte value1, byte value2);
+
+    /**
+     * Applies this operator partially to some arguments of this one, producing a {@link ByteBinaryOperator} as result.
+     *
+     * @param t The first argument to this function used to partially apply this function
+     * @return A {@code ByteBinaryOperator} that represents this operator partially applied the some arguments.
+     */
+    @Nonnull
+    default ByteBinaryOperator papplyAsByte(T t) {
+        return (value1, value2) -> this.applyAsByte(t, value1, value2);
+    }
+
+    /**
+     * Applies this operator partially to some arguments of this one, producing a {@link ByteUnaryOperator} as result.
+     *
+     * @param t The first argument to this function used to partially apply this function
+     * @param value1 The second argument to this function used to partially apply this function
+     * @return A {@code ByteUnaryOperator} that represents this operator partially applied the some arguments.
+     */
+    @Nonnull
+    default ByteUnaryOperator papplyAsByte(T t, byte value1) {
+        return (value2) -> this.applyAsByte(t, value1, value2);
+    }
+
+    /**
+     * Applies this operator partially to some arguments of this one, producing a {@link ObjByteToByteFunction} as
+     * result.
+     *
+     * @param value1 The second argument to this function used to partially apply this function
+     * @return A {@code ObjByteToByteFunction} that represents this operator partially applied the some arguments.
+     */
+    @Nonnull
+    default ObjByteToByteFunction<T> papplyAsByte(byte value1) {
+        return (t, value2) -> this.applyAsByte(t, value1, value2);
+    }
+
+    /**
+     * Applies this operator partially to some arguments of this one, producing a {@link ToByteFunction} as result.
+     *
+     * @param value1 The second argument to this function used to partially apply this function
+     * @param value2 The third argument to this function used to partially apply this function
+     * @return A {@code ToByteFunction} that represents this operator partially applied the some arguments.
+     */
+    @Nonnull
+    default ToByteFunction<T> papplyAsByte(byte value1, byte value2) {
+        return (t) -> this.applyAsByte(t, value1, value2);
+    }
 
     /**
      * Returns the number of arguments for this function.

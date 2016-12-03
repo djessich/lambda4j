@@ -19,6 +19,7 @@ import at.gridtec.lambda4j.Lambda;
 import at.gridtec.lambda4j.consumer.FloatConsumer;
 import at.gridtec.lambda4j.consumer.tri.TriLongConsumer;
 import at.gridtec.lambda4j.function.FloatFunction;
+import at.gridtec.lambda4j.function.bi.conversion.BiLongToFloatFunction;
 import at.gridtec.lambda4j.function.conversion.BooleanToLongFunction;
 import at.gridtec.lambda4j.function.conversion.ByteToLongFunction;
 import at.gridtec.lambda4j.function.conversion.CharToLongFunction;
@@ -163,6 +164,30 @@ public interface TriLongToFloatFunction extends Lambda {
      * @return The return value from the function, which is its result.
      */
     float applyAsFloat(long value1, long value2, long value3);
+
+    /**
+     * Applies this function partially to some arguments of this one, producing a {@link BiLongToFloatFunction} as
+     * result.
+     *
+     * @param value1 The first argument to this function used to partially apply this function
+     * @return A {@code BiLongToFloatFunction} that represents this function partially applied the some arguments.
+     */
+    @Nonnull
+    default BiLongToFloatFunction papplyAsFloat(long value1) {
+        return (value2, value3) -> this.applyAsFloat(value1, value2, value3);
+    }
+
+    /**
+     * Applies this function partially to some arguments of this one, producing a {@link LongToFloatFunction} as result.
+     *
+     * @param value1 The first argument to this function used to partially apply this function
+     * @param value2 The second argument to this function used to partially apply this function
+     * @return A {@code LongToFloatFunction} that represents this function partially applied the some arguments.
+     */
+    @Nonnull
+    default LongToFloatFunction papplyAsFloat(long value1, long value2) {
+        return (value3) -> this.applyAsFloat(value1, value2, value3);
+    }
 
     /**
      * Returns the number of arguments for this function.

@@ -222,6 +222,17 @@ public interface ThrowableBiFunction<T, U, R, X extends Throwable> extends Lambd
     }
 
     /**
+     * Applies this function partially to some arguments of this one, producing a {@link ThrowableFunction} as result.
+     *
+     * @param t The first argument to this function used to partially apply this function
+     * @return A {@code ThrowableFunction} that represents this function partially applied the some arguments.
+     */
+    @Nonnull
+    default ThrowableFunction<U, R, X> papplyThrows(T t) {
+        return (u) -> this.applyThrows(t, u);
+    }
+
+    /**
      * Returns the number of arguments for this function.
      *
      * @return The number of arguments for this function.

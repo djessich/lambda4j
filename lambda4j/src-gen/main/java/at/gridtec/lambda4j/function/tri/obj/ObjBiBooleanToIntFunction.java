@@ -22,11 +22,14 @@ import at.gridtec.lambda4j.function.ByteFunction;
 import at.gridtec.lambda4j.function.CharFunction;
 import at.gridtec.lambda4j.function.FloatFunction;
 import at.gridtec.lambda4j.function.ShortFunction;
+import at.gridtec.lambda4j.function.bi.conversion.BiBooleanToIntFunction;
+import at.gridtec.lambda4j.function.bi.obj.ObjBooleanToIntFunction;
 import at.gridtec.lambda4j.function.conversion.BooleanToIntFunction;
 import at.gridtec.lambda4j.function.conversion.IntToByteFunction;
 import at.gridtec.lambda4j.function.conversion.IntToCharFunction;
 import at.gridtec.lambda4j.function.conversion.IntToFloatFunction;
 import at.gridtec.lambda4j.function.conversion.IntToShortFunction;
+import at.gridtec.lambda4j.function.to.ToIntFunction2;
 import at.gridtec.lambda4j.function.tri.TriFunction;
 import at.gridtec.lambda4j.function.tri.conversion.TriBooleanToIntFunction;
 import at.gridtec.lambda4j.function.tri.conversion.TriByteToIntFunction;
@@ -185,6 +188,55 @@ public interface ObjBiBooleanToIntFunction<T> extends Lambda {
      * @return The return value from the function, which is its result.
      */
     int applyAsInt(T t, boolean value1, boolean value2);
+
+    /**
+     * Applies this function partially to some arguments of this one, producing a {@link BiBooleanToIntFunction} as
+     * result.
+     *
+     * @param t The first argument to this function used to partially apply this function
+     * @return A {@code BiBooleanToIntFunction} that represents this function partially applied the some arguments.
+     */
+    @Nonnull
+    default BiBooleanToIntFunction papplyAsInt(T t) {
+        return (value1, value2) -> this.applyAsInt(t, value1, value2);
+    }
+
+    /**
+     * Applies this function partially to some arguments of this one, producing a {@link BooleanToIntFunction} as
+     * result.
+     *
+     * @param t The first argument to this function used to partially apply this function
+     * @param value1 The second argument to this function used to partially apply this function
+     * @return A {@code BooleanToIntFunction} that represents this function partially applied the some arguments.
+     */
+    @Nonnull
+    default BooleanToIntFunction papplyAsInt(T t, boolean value1) {
+        return (value2) -> this.applyAsInt(t, value1, value2);
+    }
+
+    /**
+     * Applies this function partially to some arguments of this one, producing a {@link ObjBooleanToIntFunction} as
+     * result.
+     *
+     * @param value1 The second argument to this function used to partially apply this function
+     * @return A {@code ObjBooleanToIntFunction} that represents this function partially applied the some arguments.
+     */
+    @Nonnull
+    default ObjBooleanToIntFunction<T> papplyAsInt(boolean value1) {
+        return (t, value2) -> this.applyAsInt(t, value1, value2);
+    }
+
+    /**
+     * Applies this function partially to some arguments of this one, producing a {@link ToIntFunction2} as result.
+     *
+     * @param value1 The second argument to this function used to partially apply this function
+     * @param value2 The third argument to this function used to partially apply this function
+     * @return A {@code ToIntFunction2} that represents this function partially applied the some arguments.
+     */
+    @Nonnull
+    default ToIntFunction2<T> papplyAsInt(boolean value1, boolean value2) {
+        return (t) -> this.applyAsInt(t, value1, value2);
+    }
 
     /**
      * Returns the number of arguments for this function.

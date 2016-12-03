@@ -51,6 +51,7 @@ import at.gridtec.lambda4j.function.tri.conversion.ThrowableTriIntToFloatFunctio
 import at.gridtec.lambda4j.function.tri.conversion.ThrowableTriLongToFloatFunction;
 import at.gridtec.lambda4j.function.tri.conversion.ThrowableTriShortToFloatFunction;
 import at.gridtec.lambda4j.function.tri.to.ThrowableToFloatTriFunction;
+import at.gridtec.lambda4j.operator.binary.ThrowableFloatBinaryOperator;
 import at.gridtec.lambda4j.operator.unary.ThrowableFloatUnaryOperator;
 import at.gridtec.lambda4j.predicate.ThrowableFloatPredicate;
 import at.gridtec.lambda4j.predicate.tri.ThrowableTriFloatPredicate;
@@ -190,6 +191,32 @@ public interface ThrowableFloatTernaryOperator<X extends Throwable> extends Lamb
      * @throws X Any throwable from this operators action
      */
     float applyAsFloatThrows(float value1, float value2, float value3) throws X;
+
+    /**
+     * Applies this operator partially to some arguments of this one, producing a {@link ThrowableFloatBinaryOperator}
+     * as result.
+     *
+     * @param value1 The first argument to this operator used to partially apply this function
+     * @return A {@code ThrowableFloatBinaryOperator} that represents this operator partially applied the some
+     * arguments.
+     */
+    @Nonnull
+    default ThrowableFloatBinaryOperator<X> papplyAsFloatThrows(float value1) {
+        return (value2, value3) -> this.applyAsFloatThrows(value1, value2, value3);
+    }
+
+    /**
+     * Applies this operator partially to some arguments of this one, producing a {@link ThrowableFloatUnaryOperator} as
+     * result.
+     *
+     * @param value1 The first argument to this operator used to partially apply this function
+     * @param value2 The second argument to this operator used to partially apply this function
+     * @return A {@code ThrowableFloatUnaryOperator} that represents this operator partially applied the some arguments.
+     */
+    @Nonnull
+    default ThrowableFloatUnaryOperator<X> papplyAsFloatThrows(float value1, float value2) {
+        return (value3) -> this.applyAsFloatThrows(value1, value2, value3);
+    }
 
     /**
      * Returns the number of arguments for this operator.

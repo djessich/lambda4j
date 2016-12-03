@@ -184,6 +184,31 @@ public interface ThrowableObjBooleanToFloatFunction<T, X extends Throwable> exte
     float applyAsFloatThrows(T t, boolean value) throws X;
 
     /**
+     * Applies this function partially to some arguments of this one, producing a {@link
+     * ThrowableBooleanToFloatFunction} as result.
+     *
+     * @param t The first argument to this function used to partially apply this function
+     * @return A {@code ThrowableBooleanToFloatFunction} that represents this function partially applied the some
+     * arguments.
+     */
+    @Nonnull
+    default ThrowableBooleanToFloatFunction<X> papplyAsFloatThrows(T t) {
+        return (value) -> this.applyAsFloatThrows(t, value);
+    }
+
+    /**
+     * Applies this function partially to some arguments of this one, producing a {@link ThrowableToFloatFunction} as
+     * result.
+     *
+     * @param value The second argument to this function used to partially apply this function
+     * @return A {@code ThrowableToFloatFunction} that represents this function partially applied the some arguments.
+     */
+    @Nonnull
+    default ThrowableToFloatFunction<T, X> papplyAsFloatThrows(boolean value) {
+        return (t) -> this.applyAsFloatThrows(t, value);
+    }
+
+    /**
      * Returns the number of arguments for this function.
      *
      * @return The number of arguments for this function.

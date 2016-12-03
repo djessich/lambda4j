@@ -17,6 +17,7 @@ package at.gridtec.lambda4j.function.bi;
 
 import at.gridtec.lambda4j.Lambda;
 import at.gridtec.lambda4j.consumer.bi.BiIntConsumer;
+import at.gridtec.lambda4j.function.IntFunction2;
 import at.gridtec.lambda4j.function.conversion.BooleanToIntFunction;
 import at.gridtec.lambda4j.function.conversion.ByteToIntFunction;
 import at.gridtec.lambda4j.function.conversion.CharToIntFunction;
@@ -154,6 +155,17 @@ public interface BiIntFunction<R> extends Lambda {
      * @return The return value from the function, which is its result.
      */
     R apply(int value1, int value2);
+
+    /**
+     * Applies this function partially to some arguments of this one, producing a {@link IntFunction2} as result.
+     *
+     * @param value1 The first argument to this function used to partially apply this function
+     * @return A {@code IntFunction2} that represents this function partially applied the some arguments.
+     */
+    @Nonnull
+    default IntFunction2<R> papply(int value1) {
+        return (value2) -> this.apply(value1, value2);
+    }
 
     /**
      * Returns the number of arguments for this function.

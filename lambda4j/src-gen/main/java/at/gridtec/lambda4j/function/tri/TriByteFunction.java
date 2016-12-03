@@ -18,6 +18,7 @@ package at.gridtec.lambda4j.function.tri;
 import at.gridtec.lambda4j.Lambda;
 import at.gridtec.lambda4j.consumer.tri.TriByteConsumer;
 import at.gridtec.lambda4j.function.ByteFunction;
+import at.gridtec.lambda4j.function.bi.BiByteFunction;
 import at.gridtec.lambda4j.function.conversion.BooleanToByteFunction;
 import at.gridtec.lambda4j.function.conversion.CharToByteFunction;
 import at.gridtec.lambda4j.function.conversion.DoubleToByteFunction;
@@ -173,6 +174,29 @@ public interface TriByteFunction<R> extends Lambda {
      * @return The return value from the function, which is its result.
      */
     R apply(byte value1, byte value2, byte value3);
+
+    /**
+     * Applies this function partially to some arguments of this one, producing a {@link BiByteFunction} as result.
+     *
+     * @param value1 The first argument to this function used to partially apply this function
+     * @return A {@code BiByteFunction} that represents this function partially applied the some arguments.
+     */
+    @Nonnull
+    default BiByteFunction<R> papply(byte value1) {
+        return (value2, value3) -> this.apply(value1, value2, value3);
+    }
+
+    /**
+     * Applies this function partially to some arguments of this one, producing a {@link ByteFunction} as result.
+     *
+     * @param value1 The first argument to this function used to partially apply this function
+     * @param value2 The second argument to this function used to partially apply this function
+     * @return A {@code ByteFunction} that represents this function partially applied the some arguments.
+     */
+    @Nonnull
+    default ByteFunction<R> papply(byte value1, byte value2) {
+        return (value3) -> this.apply(value1, value2, value3);
+    }
 
     /**
      * Returns the number of arguments for this function.

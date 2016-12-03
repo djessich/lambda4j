@@ -23,6 +23,8 @@ import at.gridtec.lambda4j.function.ByteFunction;
 import at.gridtec.lambda4j.function.CharFunction;
 import at.gridtec.lambda4j.function.FloatFunction;
 import at.gridtec.lambda4j.function.ShortFunction;
+import at.gridtec.lambda4j.function.bi.conversion.BiShortToCharFunction;
+import at.gridtec.lambda4j.function.bi.obj.ObjShortToCharFunction;
 import at.gridtec.lambda4j.function.conversion.BooleanToShortFunction;
 import at.gridtec.lambda4j.function.conversion.ByteToShortFunction;
 import at.gridtec.lambda4j.function.conversion.CharToByteFunction;
@@ -184,6 +186,54 @@ public interface ObjBiShortToCharFunction<T> extends Lambda {
      * @return The return value from the function, which is its result.
      */
     char applyAsChar(T t, short value1, short value2);
+
+    /**
+     * Applies this function partially to some arguments of this one, producing a {@link BiShortToCharFunction} as
+     * result.
+     *
+     * @param t The first argument to this function used to partially apply this function
+     * @return A {@code BiShortToCharFunction} that represents this function partially applied the some arguments.
+     */
+    @Nonnull
+    default BiShortToCharFunction papplyAsChar(T t) {
+        return (value1, value2) -> this.applyAsChar(t, value1, value2);
+    }
+
+    /**
+     * Applies this function partially to some arguments of this one, producing a {@link ShortToCharFunction} as result.
+     *
+     * @param t The first argument to this function used to partially apply this function
+     * @param value1 The second argument to this function used to partially apply this function
+     * @return A {@code ShortToCharFunction} that represents this function partially applied the some arguments.
+     */
+    @Nonnull
+    default ShortToCharFunction papplyAsChar(T t, short value1) {
+        return (value2) -> this.applyAsChar(t, value1, value2);
+    }
+
+    /**
+     * Applies this function partially to some arguments of this one, producing a {@link ObjShortToCharFunction} as
+     * result.
+     *
+     * @param value1 The second argument to this function used to partially apply this function
+     * @return A {@code ObjShortToCharFunction} that represents this function partially applied the some arguments.
+     */
+    @Nonnull
+    default ObjShortToCharFunction<T> papplyAsChar(short value1) {
+        return (t, value2) -> this.applyAsChar(t, value1, value2);
+    }
+
+    /**
+     * Applies this function partially to some arguments of this one, producing a {@link ToCharFunction} as result.
+     *
+     * @param value1 The second argument to this function used to partially apply this function
+     * @param value2 The third argument to this function used to partially apply this function
+     * @return A {@code ToCharFunction} that represents this function partially applied the some arguments.
+     */
+    @Nonnull
+    default ToCharFunction<T> papplyAsChar(short value1, short value2) {
+        return (t) -> this.applyAsChar(t, value1, value2);
+    }
 
     /**
      * Returns the number of arguments for this function.

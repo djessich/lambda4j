@@ -29,6 +29,7 @@ import at.gridtec.lambda4j.function.ThrowableFunction;
 import at.gridtec.lambda4j.function.ThrowableIntFunction;
 import at.gridtec.lambda4j.function.ThrowableLongFunction;
 import at.gridtec.lambda4j.function.ThrowableShortFunction;
+import at.gridtec.lambda4j.function.bi.obj.ThrowableObjCharToCharFunction;
 import at.gridtec.lambda4j.function.conversion.ThrowableBooleanToCharFunction;
 import at.gridtec.lambda4j.function.conversion.ThrowableByteToCharFunction;
 import at.gridtec.lambda4j.function.conversion.ThrowableCharToByteFunction;
@@ -52,6 +53,7 @@ import at.gridtec.lambda4j.function.tri.conversion.ThrowableTriIntToCharFunction
 import at.gridtec.lambda4j.function.tri.conversion.ThrowableTriLongToCharFunction;
 import at.gridtec.lambda4j.function.tri.conversion.ThrowableTriShortToCharFunction;
 import at.gridtec.lambda4j.function.tri.to.ThrowableToCharTriFunction;
+import at.gridtec.lambda4j.operator.binary.ThrowableCharBinaryOperator;
 import at.gridtec.lambda4j.operator.ternary.ThrowableCharTernaryOperator;
 import at.gridtec.lambda4j.operator.unary.ThrowableCharUnaryOperator;
 import at.gridtec.lambda4j.predicate.ThrowableCharPredicate;
@@ -200,6 +202,57 @@ public interface ThrowableObjBiCharToCharFunction<T, X extends Throwable> extend
      * @throws X Any throwable from this functions action
      */
     char applyAsCharThrows(T t, char value1, char value2) throws X;
+
+    /**
+     * Applies this operator partially to some arguments of this one, producing a {@link ThrowableCharBinaryOperator} as
+     * result.
+     *
+     * @param t The first argument to this function used to partially apply this function
+     * @return A {@code ThrowableCharBinaryOperator} that represents this operator partially applied the some arguments.
+     */
+    @Nonnull
+    default ThrowableCharBinaryOperator<X> papplyAsCharThrows(T t) {
+        return (value1, value2) -> this.applyAsCharThrows(t, value1, value2);
+    }
+
+    /**
+     * Applies this operator partially to some arguments of this one, producing a {@link ThrowableCharUnaryOperator} as
+     * result.
+     *
+     * @param t The first argument to this function used to partially apply this function
+     * @param value1 The second argument to this function used to partially apply this function
+     * @return A {@code ThrowableCharUnaryOperator} that represents this operator partially applied the some arguments.
+     */
+    @Nonnull
+    default ThrowableCharUnaryOperator<X> papplyAsCharThrows(T t, char value1) {
+        return (value2) -> this.applyAsCharThrows(t, value1, value2);
+    }
+
+    /**
+     * Applies this operator partially to some arguments of this one, producing a {@link ThrowableObjCharToCharFunction}
+     * as result.
+     *
+     * @param value1 The second argument to this function used to partially apply this function
+     * @return A {@code ThrowableObjCharToCharFunction} that represents this operator partially applied the some
+     * arguments.
+     */
+    @Nonnull
+    default ThrowableObjCharToCharFunction<T, X> papplyAsCharThrows(char value1) {
+        return (t, value2) -> this.applyAsCharThrows(t, value1, value2);
+    }
+
+    /**
+     * Applies this operator partially to some arguments of this one, producing a {@link ThrowableToCharFunction} as
+     * result.
+     *
+     * @param value1 The second argument to this function used to partially apply this function
+     * @param value2 The third argument to this function used to partially apply this function
+     * @return A {@code ThrowableToCharFunction} that represents this operator partially applied the some arguments.
+     */
+    @Nonnull
+    default ThrowableToCharFunction<T, X> papplyAsCharThrows(char value1, char value2) {
+        return (t) -> this.applyAsCharThrows(t, value1, value2);
+    }
 
     /**
      * Returns the number of arguments for this function.

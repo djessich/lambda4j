@@ -17,6 +17,7 @@ package at.gridtec.lambda4j.consumer.tri;
 
 import at.gridtec.lambda4j.Lambda;
 import at.gridtec.lambda4j.consumer.ThrowableConsumer;
+import at.gridtec.lambda4j.consumer.bi.ThrowableBiConsumer;
 import at.gridtec.lambda4j.core.exception.ThrownByFunctionalInterfaceException;
 import at.gridtec.lambda4j.core.util.ThrowableUtils;
 import at.gridtec.lambda4j.function.ThrowableFunction;
@@ -171,6 +172,29 @@ public interface ThrowableTriConsumer<T, U, V, X extends Throwable> extends Lamb
     default void acceptThrows(@Nonnull Triple<T, U, V> tuple) throws X {
         Objects.requireNonNull(tuple);
         acceptThrows(tuple.getLeft(), tuple.getMiddle(), tuple.getRight());
+    }
+
+    /**
+     * Applies this consumer partially to some arguments of this one, producing a {@link ThrowableBiConsumer} as result.
+     *
+     * @param t The first argument to this consumer used to partially apply this function
+     * @return A {@code ThrowableBiConsumer} that represents this consumer partially applied the some arguments.
+     */
+    @Nonnull
+    default ThrowableBiConsumer<U, V, X> pacceptThrows(T t) {
+        return (u, v) -> this.acceptThrows(t, u, v);
+    }
+
+    /**
+     * Applies this consumer partially to some arguments of this one, producing a {@link ThrowableConsumer} as result.
+     *
+     * @param t The first argument to this consumer used to partially apply this function
+     * @param u The second argument to this consumer used to partially apply this function
+     * @return A {@code ThrowableConsumer} that represents this consumer partially applied the some arguments.
+     */
+    @Nonnull
+    default ThrowableConsumer<V, X> pacceptThrows(T t, U u) {
+        return (v) -> this.acceptThrows(t, u, v);
     }
 
     /**

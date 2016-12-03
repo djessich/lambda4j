@@ -29,6 +29,8 @@ import at.gridtec.lambda4j.function.ThrowableFunction;
 import at.gridtec.lambda4j.function.ThrowableIntFunction;
 import at.gridtec.lambda4j.function.ThrowableLongFunction;
 import at.gridtec.lambda4j.function.ThrowableShortFunction;
+import at.gridtec.lambda4j.function.bi.ThrowableBiIntFunction;
+import at.gridtec.lambda4j.function.bi.obj.ThrowableObjIntFunction;
 import at.gridtec.lambda4j.function.conversion.ThrowableBooleanToIntFunction;
 import at.gridtec.lambda4j.function.conversion.ThrowableByteToIntFunction;
 import at.gridtec.lambda4j.function.conversion.ThrowableCharToIntFunction;
@@ -218,6 +220,55 @@ public interface ThrowableObjBiIntFunction<T, R, X extends Throwable> extends La
      * @throws X Any throwable from this functions action
      */
     R applyThrows(T t, int value1, int value2) throws X;
+
+    /**
+     * Applies this function partially to some arguments of this one, producing a {@link ThrowableBiIntFunction} as
+     * result.
+     *
+     * @param t The first argument to this function used to partially apply this function
+     * @return A {@code ThrowableBiIntFunction} that represents this function partially applied the some arguments.
+     */
+    @Nonnull
+    default ThrowableBiIntFunction<R, X> papplyThrows(T t) {
+        return (value1, value2) -> this.applyThrows(t, value1, value2);
+    }
+
+    /**
+     * Applies this function partially to some arguments of this one, producing a {@link ThrowableIntFunction} as
+     * result.
+     *
+     * @param t The first argument to this function used to partially apply this function
+     * @param value1 The second argument to this function used to partially apply this function
+     * @return A {@code ThrowableIntFunction} that represents this function partially applied the some arguments.
+     */
+    @Nonnull
+    default ThrowableIntFunction<R, X> papplyThrows(T t, int value1) {
+        return (value2) -> this.applyThrows(t, value1, value2);
+    }
+
+    /**
+     * Applies this function partially to some arguments of this one, producing a {@link ThrowableObjIntFunction} as
+     * result.
+     *
+     * @param value1 The second argument to this function used to partially apply this function
+     * @return A {@code ThrowableObjIntFunction} that represents this function partially applied the some arguments.
+     */
+    @Nonnull
+    default ThrowableObjIntFunction<T, R, X> papplyThrows(int value1) {
+        return (t, value2) -> this.applyThrows(t, value1, value2);
+    }
+
+    /**
+     * Applies this function partially to some arguments of this one, producing a {@link ThrowableFunction} as result.
+     *
+     * @param value1 The second argument to this function used to partially apply this function
+     * @param value2 The third argument to this function used to partially apply this function
+     * @return A {@code ThrowableFunction} that represents this function partially applied the some arguments.
+     */
+    @Nonnull
+    default ThrowableFunction<T, R, X> papplyThrows(int value1, int value2) {
+        return (t) -> this.applyThrows(t, value1, value2);
+    }
 
     /**
      * Returns the number of arguments for this function.

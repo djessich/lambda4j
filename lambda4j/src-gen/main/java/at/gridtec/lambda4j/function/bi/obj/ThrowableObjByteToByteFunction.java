@@ -181,6 +181,30 @@ public interface ThrowableObjByteToByteFunction<T, X extends Throwable> extends 
     byte applyAsByteThrows(T t, byte value) throws X;
 
     /**
+     * Applies this operator partially to some arguments of this one, producing a {@link ThrowableByteUnaryOperator} as
+     * result.
+     *
+     * @param t The first argument to this function used to partially apply this function
+     * @return A {@code ThrowableByteUnaryOperator} that represents this operator partially applied the some arguments.
+     */
+    @Nonnull
+    default ThrowableByteUnaryOperator<X> papplyAsByteThrows(T t) {
+        return (value) -> this.applyAsByteThrows(t, value);
+    }
+
+    /**
+     * Applies this operator partially to some arguments of this one, producing a {@link ThrowableToByteFunction} as
+     * result.
+     *
+     * @param value The second argument to this function used to partially apply this function
+     * @return A {@code ThrowableToByteFunction} that represents this operator partially applied the some arguments.
+     */
+    @Nonnull
+    default ThrowableToByteFunction<T, X> papplyAsByteThrows(byte value) {
+        return (t) -> this.applyAsByteThrows(t, value);
+    }
+
+    /**
      * Returns the number of arguments for this function.
      *
      * @return The number of arguments for this function.

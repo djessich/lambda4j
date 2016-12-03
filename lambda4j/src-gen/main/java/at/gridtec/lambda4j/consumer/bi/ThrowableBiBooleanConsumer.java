@@ -129,6 +129,18 @@ public interface ThrowableBiBooleanConsumer<X extends Throwable> extends Lambda 
     void acceptThrows(boolean value1, boolean value2) throws X;
 
     /**
+     * Applies this consumer partially to some arguments of this one, producing a {@link ThrowableBooleanConsumer} as
+     * result.
+     *
+     * @param value1 The first argument to this consumer used to partially apply this function
+     * @return A {@code ThrowableBooleanConsumer} that represents this consumer partially applied the some arguments.
+     */
+    @Nonnull
+    default ThrowableBooleanConsumer<X> pacceptThrows(boolean value1) {
+        return (value2) -> this.acceptThrows(value1, value2);
+    }
+
+    /**
      * Returns the number of arguments for this consumer.
      *
      * @return The number of arguments for this consumer.

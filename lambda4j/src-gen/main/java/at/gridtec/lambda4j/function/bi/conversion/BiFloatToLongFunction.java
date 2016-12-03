@@ -148,6 +148,17 @@ public interface BiFloatToLongFunction extends Lambda {
     long applyAsLong(float value1, float value2);
 
     /**
+     * Applies this function partially to some arguments of this one, producing a {@link FloatToLongFunction} as result.
+     *
+     * @param value1 The first argument to this function used to partially apply this function
+     * @return A {@code FloatToLongFunction} that represents this function partially applied the some arguments.
+     */
+    @Nonnull
+    default FloatToLongFunction papplyAsLong(float value1) {
+        return (value2) -> this.applyAsLong(value1, value2);
+    }
+
+    /**
      * Returns the number of arguments for this function.
      *
      * @return The number of arguments for this function.

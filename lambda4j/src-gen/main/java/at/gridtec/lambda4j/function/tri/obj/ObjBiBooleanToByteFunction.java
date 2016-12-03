@@ -23,6 +23,8 @@ import at.gridtec.lambda4j.function.ByteFunction;
 import at.gridtec.lambda4j.function.CharFunction;
 import at.gridtec.lambda4j.function.FloatFunction;
 import at.gridtec.lambda4j.function.ShortFunction;
+import at.gridtec.lambda4j.function.bi.conversion.BiBooleanToByteFunction;
+import at.gridtec.lambda4j.function.bi.obj.ObjBooleanToByteFunction;
 import at.gridtec.lambda4j.function.conversion.BooleanToByteFunction;
 import at.gridtec.lambda4j.function.conversion.ByteToCharFunction;
 import at.gridtec.lambda4j.function.conversion.ByteToDoubleFunction;
@@ -185,6 +187,55 @@ public interface ObjBiBooleanToByteFunction<T> extends Lambda {
      * @return The return value from the function, which is its result.
      */
     byte applyAsByte(T t, boolean value1, boolean value2);
+
+    /**
+     * Applies this function partially to some arguments of this one, producing a {@link BiBooleanToByteFunction} as
+     * result.
+     *
+     * @param t The first argument to this function used to partially apply this function
+     * @return A {@code BiBooleanToByteFunction} that represents this function partially applied the some arguments.
+     */
+    @Nonnull
+    default BiBooleanToByteFunction papplyAsByte(T t) {
+        return (value1, value2) -> this.applyAsByte(t, value1, value2);
+    }
+
+    /**
+     * Applies this function partially to some arguments of this one, producing a {@link BooleanToByteFunction} as
+     * result.
+     *
+     * @param t The first argument to this function used to partially apply this function
+     * @param value1 The second argument to this function used to partially apply this function
+     * @return A {@code BooleanToByteFunction} that represents this function partially applied the some arguments.
+     */
+    @Nonnull
+    default BooleanToByteFunction papplyAsByte(T t, boolean value1) {
+        return (value2) -> this.applyAsByte(t, value1, value2);
+    }
+
+    /**
+     * Applies this function partially to some arguments of this one, producing a {@link ObjBooleanToByteFunction} as
+     * result.
+     *
+     * @param value1 The second argument to this function used to partially apply this function
+     * @return A {@code ObjBooleanToByteFunction} that represents this function partially applied the some arguments.
+     */
+    @Nonnull
+    default ObjBooleanToByteFunction<T> papplyAsByte(boolean value1) {
+        return (t, value2) -> this.applyAsByte(t, value1, value2);
+    }
+
+    /**
+     * Applies this function partially to some arguments of this one, producing a {@link ToByteFunction} as result.
+     *
+     * @param value1 The second argument to this function used to partially apply this function
+     * @param value2 The third argument to this function used to partially apply this function
+     * @return A {@code ToByteFunction} that represents this function partially applied the some arguments.
+     */
+    @Nonnull
+    default ToByteFunction<T> papplyAsByte(boolean value1, boolean value2) {
+        return (t) -> this.applyAsByte(t, value1, value2);
+    }
 
     /**
      * Returns the number of arguments for this function.

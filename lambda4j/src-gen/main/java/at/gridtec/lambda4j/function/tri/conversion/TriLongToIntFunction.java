@@ -17,6 +17,7 @@ package at.gridtec.lambda4j.function.tri.conversion;
 
 import at.gridtec.lambda4j.Lambda;
 import at.gridtec.lambda4j.consumer.tri.TriLongConsumer;
+import at.gridtec.lambda4j.function.bi.conversion.BiLongToIntFunction;
 import at.gridtec.lambda4j.function.conversion.BooleanToLongFunction;
 import at.gridtec.lambda4j.function.conversion.ByteToLongFunction;
 import at.gridtec.lambda4j.function.conversion.CharToLongFunction;
@@ -25,6 +26,7 @@ import at.gridtec.lambda4j.function.conversion.IntToByteFunction;
 import at.gridtec.lambda4j.function.conversion.IntToCharFunction;
 import at.gridtec.lambda4j.function.conversion.IntToFloatFunction;
 import at.gridtec.lambda4j.function.conversion.IntToShortFunction;
+import at.gridtec.lambda4j.function.conversion.LongToIntFunction2;
 import at.gridtec.lambda4j.function.conversion.ShortToLongFunction;
 import at.gridtec.lambda4j.function.tri.TriFunction;
 import at.gridtec.lambda4j.function.tri.TriLongFunction;
@@ -163,6 +165,29 @@ public interface TriLongToIntFunction extends Lambda {
      * @return The return value from the function, which is its result.
      */
     int applyAsInt(long value1, long value2, long value3);
+
+    /**
+     * Applies this function partially to some arguments of this one, producing a {@link BiLongToIntFunction} as result.
+     *
+     * @param value1 The first argument to this function used to partially apply this function
+     * @return A {@code BiLongToIntFunction} that represents this function partially applied the some arguments.
+     */
+    @Nonnull
+    default BiLongToIntFunction papplyAsInt(long value1) {
+        return (value2, value3) -> this.applyAsInt(value1, value2, value3);
+    }
+
+    /**
+     * Applies this function partially to some arguments of this one, producing a {@link LongToIntFunction2} as result.
+     *
+     * @param value1 The first argument to this function used to partially apply this function
+     * @param value2 The second argument to this function used to partially apply this function
+     * @return A {@code LongToIntFunction2} that represents this function partially applied the some arguments.
+     */
+    @Nonnull
+    default LongToIntFunction2 papplyAsInt(long value1, long value2) {
+        return (value3) -> this.applyAsInt(value1, value2, value3);
+    }
 
     /**
      * Returns the number of arguments for this function.

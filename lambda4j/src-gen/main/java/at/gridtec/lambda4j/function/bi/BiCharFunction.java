@@ -157,6 +157,17 @@ public interface BiCharFunction<R> extends Lambda {
     R apply(char value1, char value2);
 
     /**
+     * Applies this function partially to some arguments of this one, producing a {@link CharFunction} as result.
+     *
+     * @param value1 The first argument to this function used to partially apply this function
+     * @return A {@code CharFunction} that represents this function partially applied the some arguments.
+     */
+    @Nonnull
+    default CharFunction<R> papply(char value1) {
+        return (value2) -> this.apply(value1, value2);
+    }
+
+    /**
      * Returns the number of arguments for this function.
      *
      * @return The number of arguments for this function.

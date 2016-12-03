@@ -18,6 +18,8 @@ package at.gridtec.lambda4j.consumer.tri.obj;
 import at.gridtec.lambda4j.Lambda;
 import at.gridtec.lambda4j.consumer.ThrowableCharConsumer;
 import at.gridtec.lambda4j.consumer.ThrowableConsumer;
+import at.gridtec.lambda4j.consumer.bi.ThrowableBiCharConsumer;
+import at.gridtec.lambda4j.consumer.bi.obj.ThrowableObjCharConsumer;
 import at.gridtec.lambda4j.consumer.tri.ThrowableTriBooleanConsumer;
 import at.gridtec.lambda4j.consumer.tri.ThrowableTriByteConsumer;
 import at.gridtec.lambda4j.consumer.tri.ThrowableTriCharConsumer;
@@ -173,6 +175,55 @@ public interface ThrowableObjBiCharConsumer<T, X extends Throwable> extends Lamb
      * @throws X Any throwable from this consumers action
      */
     void acceptThrows(T t, char value1, char value2) throws X;
+
+    /**
+     * Applies this consumer partially to some arguments of this one, producing a {@link ThrowableBiCharConsumer} as
+     * result.
+     *
+     * @param t The first argument to this consumer used to partially apply this function
+     * @return A {@code ThrowableBiCharConsumer} that represents this consumer partially applied the some arguments.
+     */
+    @Nonnull
+    default ThrowableBiCharConsumer<X> pacceptThrows(T t) {
+        return (value1, value2) -> this.acceptThrows(t, value1, value2);
+    }
+
+    /**
+     * Applies this consumer partially to some arguments of this one, producing a {@link ThrowableCharConsumer} as
+     * result.
+     *
+     * @param t The first argument to this consumer used to partially apply this function
+     * @param value1 The second argument to this consumer used to partially apply this function
+     * @return A {@code ThrowableCharConsumer} that represents this consumer partially applied the some arguments.
+     */
+    @Nonnull
+    default ThrowableCharConsumer<X> pacceptThrows(T t, char value1) {
+        return (value2) -> this.acceptThrows(t, value1, value2);
+    }
+
+    /**
+     * Applies this consumer partially to some arguments of this one, producing a {@link ThrowableObjCharConsumer} as
+     * result.
+     *
+     * @param value1 The second argument to this consumer used to partially apply this function
+     * @return A {@code ThrowableObjCharConsumer} that represents this consumer partially applied the some arguments.
+     */
+    @Nonnull
+    default ThrowableObjCharConsumer<T, X> pacceptThrows(char value1) {
+        return (t, value2) -> this.acceptThrows(t, value1, value2);
+    }
+
+    /**
+     * Applies this consumer partially to some arguments of this one, producing a {@link ThrowableConsumer} as result.
+     *
+     * @param value1 The second argument to this consumer used to partially apply this function
+     * @param value2 The third argument to this consumer used to partially apply this function
+     * @return A {@code ThrowableConsumer} that represents this consumer partially applied the some arguments.
+     */
+    @Nonnull
+    default ThrowableConsumer<T, X> pacceptThrows(char value1, char value2) {
+        return (t) -> this.acceptThrows(t, value1, value2);
+    }
 
     /**
      * Returns the number of arguments for this consumer.

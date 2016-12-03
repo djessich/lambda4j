@@ -30,6 +30,7 @@ import at.gridtec.lambda4j.function.ThrowableIntFunction;
 import at.gridtec.lambda4j.function.ThrowableLongFunction;
 import at.gridtec.lambda4j.function.ThrowableShortFunction;
 import at.gridtec.lambda4j.function.bi.obj.ThrowableObjShortToLongFunction;
+import at.gridtec.lambda4j.function.bi.to.ThrowableToLongBiFunction;
 import at.gridtec.lambda4j.function.conversion.ThrowableBooleanToShortFunction;
 import at.gridtec.lambda4j.function.conversion.ThrowableByteToShortFunction;
 import at.gridtec.lambda4j.function.conversion.ThrowableCharToShortFunction;
@@ -225,6 +226,58 @@ public interface ThrowableBiObjShortToLongFunction<T, U, X extends Throwable> ex
     default long applyAsLongThrows(@Nonnull Pair<T, U> tuple, short value) throws X {
         Objects.requireNonNull(tuple);
         return applyAsLongThrows(tuple.getLeft(), tuple.getRight(), value);
+    }
+
+    /**
+     * Applies this function partially to some arguments of this one, producing a {@link
+     * ThrowableObjShortToLongFunction} as result.
+     *
+     * @param t The first argument to this function used to partially apply this function
+     * @return A {@code ThrowableObjShortToLongFunction} that represents this function partially applied the some
+     * arguments.
+     */
+    @Nonnull
+    default ThrowableObjShortToLongFunction<U, X> papplyAsLongThrows(T t) {
+        return (u, value) -> this.applyAsLongThrows(t, u, value);
+    }
+
+    /**
+     * Applies this function partially to some arguments of this one, producing a {@link ThrowableShortToLongFunction}
+     * as result.
+     *
+     * @param t The first argument to this function used to partially apply this function
+     * @param u The second argument to this function used to partially apply this function
+     * @return A {@code ThrowableShortToLongFunction} that represents this function partially applied the some
+     * arguments.
+     */
+    @Nonnull
+    default ThrowableShortToLongFunction<X> papplyAsLongThrows(T t, U u) {
+        return (value) -> this.applyAsLongThrows(t, u, value);
+    }
+
+    /**
+     * Applies this function partially to some arguments of this one, producing a {@link ThrowableToLongBiFunction} as
+     * result.
+     *
+     * @param value The third argument to this function used to partially apply this function
+     * @return A {@code ThrowableToLongBiFunction} that represents this function partially applied the some arguments.
+     */
+    @Nonnull
+    default ThrowableToLongBiFunction<T, U, X> papplyAsLongThrows(short value) {
+        return (t, u) -> this.applyAsLongThrows(t, u, value);
+    }
+
+    /**
+     * Applies this function partially to some arguments of this one, producing a {@link ThrowableToLongFunction} as
+     * result.
+     *
+     * @param t The first argument to this function used to partially apply this function
+     * @param value The third argument to this function used to partially apply this function
+     * @return A {@code ThrowableToLongFunction} that represents this function partially applied the some arguments.
+     */
+    @Nonnull
+    default ThrowableToLongFunction<U, X> papplyAsLongThrows(T t, short value) {
+        return (u) -> this.applyAsLongThrows(t, u, value);
     }
 
     /**

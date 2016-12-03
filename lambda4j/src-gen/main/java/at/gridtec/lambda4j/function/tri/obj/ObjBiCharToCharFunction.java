@@ -23,6 +23,7 @@ import at.gridtec.lambda4j.function.ByteFunction;
 import at.gridtec.lambda4j.function.CharFunction;
 import at.gridtec.lambda4j.function.FloatFunction;
 import at.gridtec.lambda4j.function.ShortFunction;
+import at.gridtec.lambda4j.function.bi.obj.ObjCharToCharFunction;
 import at.gridtec.lambda4j.function.conversion.BooleanToCharFunction;
 import at.gridtec.lambda4j.function.conversion.ByteToCharFunction;
 import at.gridtec.lambda4j.function.conversion.CharToByteFunction;
@@ -46,6 +47,7 @@ import at.gridtec.lambda4j.function.tri.conversion.TriIntToCharFunction;
 import at.gridtec.lambda4j.function.tri.conversion.TriLongToCharFunction;
 import at.gridtec.lambda4j.function.tri.conversion.TriShortToCharFunction;
 import at.gridtec.lambda4j.function.tri.to.ToCharTriFunction;
+import at.gridtec.lambda4j.operator.binary.CharBinaryOperator;
 import at.gridtec.lambda4j.operator.ternary.CharTernaryOperator;
 import at.gridtec.lambda4j.operator.unary.CharUnaryOperator;
 import at.gridtec.lambda4j.predicate.CharPredicate;
@@ -182,6 +184,53 @@ public interface ObjBiCharToCharFunction<T> extends Lambda {
      * @return The return value from the function, which is its result.
      */
     char applyAsChar(T t, char value1, char value2);
+
+    /**
+     * Applies this operator partially to some arguments of this one, producing a {@link CharBinaryOperator} as result.
+     *
+     * @param t The first argument to this function used to partially apply this function
+     * @return A {@code CharBinaryOperator} that represents this operator partially applied the some arguments.
+     */
+    @Nonnull
+    default CharBinaryOperator papplyAsChar(T t) {
+        return (value1, value2) -> this.applyAsChar(t, value1, value2);
+    }
+
+    /**
+     * Applies this operator partially to some arguments of this one, producing a {@link CharUnaryOperator} as result.
+     *
+     * @param t The first argument to this function used to partially apply this function
+     * @param value1 The second argument to this function used to partially apply this function
+     * @return A {@code CharUnaryOperator} that represents this operator partially applied the some arguments.
+     */
+    @Nonnull
+    default CharUnaryOperator papplyAsChar(T t, char value1) {
+        return (value2) -> this.applyAsChar(t, value1, value2);
+    }
+
+    /**
+     * Applies this operator partially to some arguments of this one, producing a {@link ObjCharToCharFunction} as
+     * result.
+     *
+     * @param value1 The second argument to this function used to partially apply this function
+     * @return A {@code ObjCharToCharFunction} that represents this operator partially applied the some arguments.
+     */
+    @Nonnull
+    default ObjCharToCharFunction<T> papplyAsChar(char value1) {
+        return (t, value2) -> this.applyAsChar(t, value1, value2);
+    }
+
+    /**
+     * Applies this operator partially to some arguments of this one, producing a {@link ToCharFunction} as result.
+     *
+     * @param value1 The second argument to this function used to partially apply this function
+     * @param value2 The third argument to this function used to partially apply this function
+     * @return A {@code ToCharFunction} that represents this operator partially applied the some arguments.
+     */
+    @Nonnull
+    default ToCharFunction<T> papplyAsChar(char value1, char value2) {
+        return (t) -> this.applyAsChar(t, value1, value2);
+    }
 
     /**
      * Returns the number of arguments for this function.

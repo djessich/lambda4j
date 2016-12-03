@@ -28,6 +28,7 @@ import at.gridtec.lambda4j.function.conversion.DoubleToCharFunction;
 import at.gridtec.lambda4j.function.conversion.DoubleToFloatFunction;
 import at.gridtec.lambda4j.function.conversion.DoubleToShortFunction;
 import at.gridtec.lambda4j.function.conversion.FloatToLongFunction;
+import at.gridtec.lambda4j.function.conversion.LongToDoubleFunction2;
 import at.gridtec.lambda4j.function.conversion.ShortToLongFunction;
 import at.gridtec.lambda4j.operator.binary.DoubleBinaryOperator2;
 import at.gridtec.lambda4j.operator.binary.LongBinaryOperator2;
@@ -146,6 +147,18 @@ public interface BiLongToDoubleFunction extends Lambda {
      * @return The return value from the function, which is its result.
      */
     double applyAsDouble(long value1, long value2);
+
+    /**
+     * Applies this function partially to some arguments of this one, producing a {@link LongToDoubleFunction2} as
+     * result.
+     *
+     * @param value1 The first argument to this function used to partially apply this function
+     * @return A {@code LongToDoubleFunction2} that represents this function partially applied the some arguments.
+     */
+    @Nonnull
+    default LongToDoubleFunction2 papplyAsDouble(long value1) {
+        return (value2) -> this.applyAsDouble(value1, value2);
+    }
 
     /**
      * Returns the number of arguments for this function.

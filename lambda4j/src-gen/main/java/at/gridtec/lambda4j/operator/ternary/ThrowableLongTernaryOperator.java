@@ -51,6 +51,7 @@ import at.gridtec.lambda4j.function.tri.conversion.ThrowableTriLongToIntFunction
 import at.gridtec.lambda4j.function.tri.conversion.ThrowableTriLongToShortFunction;
 import at.gridtec.lambda4j.function.tri.conversion.ThrowableTriShortToLongFunction;
 import at.gridtec.lambda4j.function.tri.to.ThrowableToLongTriFunction;
+import at.gridtec.lambda4j.operator.binary.ThrowableLongBinaryOperator;
 import at.gridtec.lambda4j.operator.unary.ThrowableLongUnaryOperator;
 import at.gridtec.lambda4j.predicate.ThrowableLongPredicate;
 import at.gridtec.lambda4j.predicate.tri.ThrowableTriLongPredicate;
@@ -190,6 +191,31 @@ public interface ThrowableLongTernaryOperator<X extends Throwable> extends Lambd
      * @throws X Any throwable from this operators action
      */
     long applyAsLongThrows(long value1, long value2, long value3) throws X;
+
+    /**
+     * Applies this operator partially to some arguments of this one, producing a {@link ThrowableLongBinaryOperator} as
+     * result.
+     *
+     * @param value1 The first argument to this operator used to partially apply this function
+     * @return A {@code ThrowableLongBinaryOperator} that represents this operator partially applied the some arguments.
+     */
+    @Nonnull
+    default ThrowableLongBinaryOperator<X> papplyAsLongThrows(long value1) {
+        return (value2, value3) -> this.applyAsLongThrows(value1, value2, value3);
+    }
+
+    /**
+     * Applies this operator partially to some arguments of this one, producing a {@link ThrowableLongUnaryOperator} as
+     * result.
+     *
+     * @param value1 The first argument to this operator used to partially apply this function
+     * @param value2 The second argument to this operator used to partially apply this function
+     * @return A {@code ThrowableLongUnaryOperator} that represents this operator partially applied the some arguments.
+     */
+    @Nonnull
+    default ThrowableLongUnaryOperator<X> papplyAsLongThrows(long value1, long value2) {
+        return (value3) -> this.applyAsLongThrows(value1, value2, value3);
+    }
 
     /**
      * Returns the number of arguments for this operator.

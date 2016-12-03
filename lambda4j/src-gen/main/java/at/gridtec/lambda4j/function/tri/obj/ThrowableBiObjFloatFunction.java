@@ -29,6 +29,7 @@ import at.gridtec.lambda4j.function.ThrowableFunction;
 import at.gridtec.lambda4j.function.ThrowableIntFunction;
 import at.gridtec.lambda4j.function.ThrowableLongFunction;
 import at.gridtec.lambda4j.function.ThrowableShortFunction;
+import at.gridtec.lambda4j.function.bi.ThrowableBiFunction;
 import at.gridtec.lambda4j.function.bi.obj.ThrowableObjFloatFunction;
 import at.gridtec.lambda4j.function.conversion.ThrowableBooleanToFloatFunction;
 import at.gridtec.lambda4j.function.conversion.ThrowableByteToFloatFunction;
@@ -242,6 +243,54 @@ public interface ThrowableBiObjFloatFunction<T, U, R, X extends Throwable> exten
     default R applyThrows(@Nonnull Pair<T, U> tuple, float value) throws X {
         Objects.requireNonNull(tuple);
         return applyThrows(tuple.getLeft(), tuple.getRight(), value);
+    }
+
+    /**
+     * Applies this function partially to some arguments of this one, producing a {@link ThrowableObjFloatFunction} as
+     * result.
+     *
+     * @param t The first argument to this function used to partially apply this function
+     * @return A {@code ThrowableObjFloatFunction} that represents this function partially applied the some arguments.
+     */
+    @Nonnull
+    default ThrowableObjFloatFunction<U, R, X> papplyThrows(T t) {
+        return (u, value) -> this.applyThrows(t, u, value);
+    }
+
+    /**
+     * Applies this function partially to some arguments of this one, producing a {@link ThrowableFloatFunction} as
+     * result.
+     *
+     * @param t The first argument to this function used to partially apply this function
+     * @param u The second argument to this function used to partially apply this function
+     * @return A {@code ThrowableFloatFunction} that represents this function partially applied the some arguments.
+     */
+    @Nonnull
+    default ThrowableFloatFunction<R, X> papplyThrows(T t, U u) {
+        return (value) -> this.applyThrows(t, u, value);
+    }
+
+    /**
+     * Applies this function partially to some arguments of this one, producing a {@link ThrowableBiFunction} as result.
+     *
+     * @param value The third argument to this function used to partially apply this function
+     * @return A {@code ThrowableBiFunction} that represents this function partially applied the some arguments.
+     */
+    @Nonnull
+    default ThrowableBiFunction<T, U, R, X> papplyThrows(float value) {
+        return (t, u) -> this.applyThrows(t, u, value);
+    }
+
+    /**
+     * Applies this function partially to some arguments of this one, producing a {@link ThrowableFunction} as result.
+     *
+     * @param t The first argument to this function used to partially apply this function
+     * @param value The third argument to this function used to partially apply this function
+     * @return A {@code ThrowableFunction} that represents this function partially applied the some arguments.
+     */
+    @Nonnull
+    default ThrowableFunction<U, R, X> papplyThrows(T t, float value) {
+        return (u) -> this.applyThrows(t, u, value);
     }
 
     /**

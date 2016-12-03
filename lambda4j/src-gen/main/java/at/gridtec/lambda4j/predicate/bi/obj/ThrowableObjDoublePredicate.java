@@ -234,6 +234,29 @@ public interface ThrowableObjDoublePredicate<T, X extends Throwable> extends Lam
     boolean testThrows(T t, double value) throws X;
 
     /**
+     * Applies this predicate partially to some arguments of this one, producing a {@link ThrowableDoublePredicate} as
+     * result.
+     *
+     * @param t The first argument to this predicate used to partially apply this function
+     * @return A {@code ThrowableDoublePredicate} that represents this predicate partially applied the some arguments.
+     */
+    @Nonnull
+    default ThrowableDoublePredicate<X> ptestThrows(T t) {
+        return (value) -> this.testThrows(t, value);
+    }
+
+    /**
+     * Applies this predicate partially to some arguments of this one, producing a {@link ThrowablePredicate} as result.
+     *
+     * @param value The second argument to this predicate used to partially apply this function
+     * @return A {@code ThrowablePredicate} that represents this predicate partially applied the some arguments.
+     */
+    @Nonnull
+    default ThrowablePredicate<T, X> ptestThrows(double value) {
+        return (t) -> this.testThrows(t, value);
+    }
+
+    /**
      * Returns the number of arguments for this predicate.
      *
      * @return The number of arguments for this predicate.

@@ -49,6 +49,9 @@ import at.gridtec.lambda4j.operator.ternary.BooleanTernaryOperator;
 import at.gridtec.lambda4j.operator.unary.BooleanUnaryOperator;
 import at.gridtec.lambda4j.operator.unary.ByteUnaryOperator;
 import at.gridtec.lambda4j.predicate.BytePredicate;
+import at.gridtec.lambda4j.predicate.Predicate2;
+import at.gridtec.lambda4j.predicate.bi.BiBytePredicate;
+import at.gridtec.lambda4j.predicate.bi.obj.ObjBytePredicate;
 import at.gridtec.lambda4j.predicate.tri.TriBytePredicate;
 import at.gridtec.lambda4j.predicate.tri.TriCharPredicate;
 import at.gridtec.lambda4j.predicate.tri.TriDoublePredicate;
@@ -232,6 +235,52 @@ public interface ObjBiBytePredicate<T> extends Lambda {
      * @return The return value from the predicate, which is its result.
      */
     boolean test(T t, byte value1, byte value2);
+
+    /**
+     * Applies this predicate partially to some arguments of this one, producing a {@link BiBytePredicate} as result.
+     *
+     * @param t The first argument to this predicate used to partially apply this function
+     * @return A {@code BiBytePredicate} that represents this predicate partially applied the some arguments.
+     */
+    @Nonnull
+    default BiBytePredicate ptest(T t) {
+        return (value1, value2) -> this.test(t, value1, value2);
+    }
+
+    /**
+     * Applies this predicate partially to some arguments of this one, producing a {@link BytePredicate} as result.
+     *
+     * @param t The first argument to this predicate used to partially apply this function
+     * @param value1 The second argument to this predicate used to partially apply this function
+     * @return A {@code BytePredicate} that represents this predicate partially applied the some arguments.
+     */
+    @Nonnull
+    default BytePredicate ptest(T t, byte value1) {
+        return (value2) -> this.test(t, value1, value2);
+    }
+
+    /**
+     * Applies this predicate partially to some arguments of this one, producing a {@link ObjBytePredicate} as result.
+     *
+     * @param value1 The second argument to this predicate used to partially apply this function
+     * @return A {@code ObjBytePredicate} that represents this predicate partially applied the some arguments.
+     */
+    @Nonnull
+    default ObjBytePredicate<T> ptest(byte value1) {
+        return (t, value2) -> this.test(t, value1, value2);
+    }
+
+    /**
+     * Applies this predicate partially to some arguments of this one, producing a {@link Predicate2} as result.
+     *
+     * @param value1 The second argument to this predicate used to partially apply this function
+     * @param value2 The third argument to this predicate used to partially apply this function
+     * @return A {@code Predicate2} that represents this predicate partially applied the some arguments.
+     */
+    @Nonnull
+    default Predicate2<T> ptest(byte value1, byte value2) {
+        return (t) -> this.test(t, value1, value2);
+    }
 
     /**
      * Returns the number of arguments for this predicate.

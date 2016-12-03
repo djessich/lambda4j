@@ -183,6 +183,31 @@ public interface ThrowableObjByteToShortFunction<T, X extends Throwable> extends
     short applyAsShortThrows(T t, byte value) throws X;
 
     /**
+     * Applies this function partially to some arguments of this one, producing a {@link ThrowableByteToShortFunction}
+     * as result.
+     *
+     * @param t The first argument to this function used to partially apply this function
+     * @return A {@code ThrowableByteToShortFunction} that represents this function partially applied the some
+     * arguments.
+     */
+    @Nonnull
+    default ThrowableByteToShortFunction<X> papplyAsShortThrows(T t) {
+        return (value) -> this.applyAsShortThrows(t, value);
+    }
+
+    /**
+     * Applies this function partially to some arguments of this one, producing a {@link ThrowableToShortFunction} as
+     * result.
+     *
+     * @param value The second argument to this function used to partially apply this function
+     * @return A {@code ThrowableToShortFunction} that represents this function partially applied the some arguments.
+     */
+    @Nonnull
+    default ThrowableToShortFunction<T, X> papplyAsShortThrows(byte value) {
+        return (t) -> this.applyAsShortThrows(t, value);
+    }
+
+    /**
      * Returns the number of arguments for this function.
      *
      * @return The number of arguments for this function.

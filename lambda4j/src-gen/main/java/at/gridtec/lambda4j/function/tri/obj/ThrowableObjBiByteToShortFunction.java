@@ -29,6 +29,8 @@ import at.gridtec.lambda4j.function.ThrowableFunction;
 import at.gridtec.lambda4j.function.ThrowableIntFunction;
 import at.gridtec.lambda4j.function.ThrowableLongFunction;
 import at.gridtec.lambda4j.function.ThrowableShortFunction;
+import at.gridtec.lambda4j.function.bi.conversion.ThrowableBiByteToShortFunction;
+import at.gridtec.lambda4j.function.bi.obj.ThrowableObjByteToShortFunction;
 import at.gridtec.lambda4j.function.conversion.ThrowableBooleanToByteFunction;
 import at.gridtec.lambda4j.function.conversion.ThrowableByteToShortFunction;
 import at.gridtec.lambda4j.function.conversion.ThrowableCharToByteFunction;
@@ -202,6 +204,59 @@ public interface ThrowableObjBiByteToShortFunction<T, X extends Throwable> exten
      * @throws X Any throwable from this functions action
      */
     short applyAsShortThrows(T t, byte value1, byte value2) throws X;
+
+    /**
+     * Applies this function partially to some arguments of this one, producing a {@link ThrowableBiByteToShortFunction}
+     * as result.
+     *
+     * @param t The first argument to this function used to partially apply this function
+     * @return A {@code ThrowableBiByteToShortFunction} that represents this function partially applied the some
+     * arguments.
+     */
+    @Nonnull
+    default ThrowableBiByteToShortFunction<X> papplyAsShortThrows(T t) {
+        return (value1, value2) -> this.applyAsShortThrows(t, value1, value2);
+    }
+
+    /**
+     * Applies this function partially to some arguments of this one, producing a {@link ThrowableByteToShortFunction}
+     * as result.
+     *
+     * @param t The first argument to this function used to partially apply this function
+     * @param value1 The second argument to this function used to partially apply this function
+     * @return A {@code ThrowableByteToShortFunction} that represents this function partially applied the some
+     * arguments.
+     */
+    @Nonnull
+    default ThrowableByteToShortFunction<X> papplyAsShortThrows(T t, byte value1) {
+        return (value2) -> this.applyAsShortThrows(t, value1, value2);
+    }
+
+    /**
+     * Applies this function partially to some arguments of this one, producing a {@link
+     * ThrowableObjByteToShortFunction} as result.
+     *
+     * @param value1 The second argument to this function used to partially apply this function
+     * @return A {@code ThrowableObjByteToShortFunction} that represents this function partially applied the some
+     * arguments.
+     */
+    @Nonnull
+    default ThrowableObjByteToShortFunction<T, X> papplyAsShortThrows(byte value1) {
+        return (t, value2) -> this.applyAsShortThrows(t, value1, value2);
+    }
+
+    /**
+     * Applies this function partially to some arguments of this one, producing a {@link ThrowableToShortFunction} as
+     * result.
+     *
+     * @param value1 The second argument to this function used to partially apply this function
+     * @param value2 The third argument to this function used to partially apply this function
+     * @return A {@code ThrowableToShortFunction} that represents this function partially applied the some arguments.
+     */
+    @Nonnull
+    default ThrowableToShortFunction<T, X> papplyAsShortThrows(byte value1, byte value2) {
+        return (t) -> this.applyAsShortThrows(t, value1, value2);
+    }
 
     /**
      * Returns the number of arguments for this function.

@@ -19,6 +19,7 @@ import at.gridtec.lambda4j.Lambda;
 import at.gridtec.lambda4j.consumer.FloatConsumer;
 import at.gridtec.lambda4j.consumer.tri.TriBooleanConsumer;
 import at.gridtec.lambda4j.function.FloatFunction;
+import at.gridtec.lambda4j.function.bi.conversion.BiBooleanToFloatFunction;
 import at.gridtec.lambda4j.function.conversion.BooleanToFloatFunction;
 import at.gridtec.lambda4j.function.conversion.FloatToByteFunction;
 import at.gridtec.lambda4j.function.conversion.FloatToCharFunction;
@@ -163,6 +164,31 @@ public interface TriBooleanToFloatFunction extends Lambda {
      * @return The return value from the function, which is its result.
      */
     float applyAsFloat(boolean value1, boolean value2, boolean value3);
+
+    /**
+     * Applies this function partially to some arguments of this one, producing a {@link BiBooleanToFloatFunction} as
+     * result.
+     *
+     * @param value1 The first argument to this function used to partially apply this function
+     * @return A {@code BiBooleanToFloatFunction} that represents this function partially applied the some arguments.
+     */
+    @Nonnull
+    default BiBooleanToFloatFunction papplyAsFloat(boolean value1) {
+        return (value2, value3) -> this.applyAsFloat(value1, value2, value3);
+    }
+
+    /**
+     * Applies this function partially to some arguments of this one, producing a {@link BooleanToFloatFunction} as
+     * result.
+     *
+     * @param value1 The first argument to this function used to partially apply this function
+     * @param value2 The second argument to this function used to partially apply this function
+     * @return A {@code BooleanToFloatFunction} that represents this function partially applied the some arguments.
+     */
+    @Nonnull
+    default BooleanToFloatFunction papplyAsFloat(boolean value1, boolean value2) {
+        return (value3) -> this.applyAsFloat(value1, value2, value3);
+    }
 
     /**
      * Returns the number of arguments for this function.

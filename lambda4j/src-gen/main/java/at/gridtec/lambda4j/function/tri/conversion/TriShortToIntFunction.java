@@ -17,6 +17,7 @@ package at.gridtec.lambda4j.function.tri.conversion;
 
 import at.gridtec.lambda4j.Lambda;
 import at.gridtec.lambda4j.consumer.tri.TriShortConsumer;
+import at.gridtec.lambda4j.function.bi.conversion.BiShortToIntFunction;
 import at.gridtec.lambda4j.function.conversion.BooleanToShortFunction;
 import at.gridtec.lambda4j.function.conversion.ByteToShortFunction;
 import at.gridtec.lambda4j.function.conversion.CharToShortFunction;
@@ -163,6 +164,30 @@ public interface TriShortToIntFunction extends Lambda {
      * @return The return value from the function, which is its result.
      */
     int applyAsInt(short value1, short value2, short value3);
+
+    /**
+     * Applies this function partially to some arguments of this one, producing a {@link BiShortToIntFunction} as
+     * result.
+     *
+     * @param value1 The first argument to this function used to partially apply this function
+     * @return A {@code BiShortToIntFunction} that represents this function partially applied the some arguments.
+     */
+    @Nonnull
+    default BiShortToIntFunction papplyAsInt(short value1) {
+        return (value2, value3) -> this.applyAsInt(value1, value2, value3);
+    }
+
+    /**
+     * Applies this function partially to some arguments of this one, producing a {@link ShortToIntFunction} as result.
+     *
+     * @param value1 The first argument to this function used to partially apply this function
+     * @param value2 The second argument to this function used to partially apply this function
+     * @return A {@code ShortToIntFunction} that represents this function partially applied the some arguments.
+     */
+    @Nonnull
+    default ShortToIntFunction papplyAsInt(short value1, short value2) {
+        return (value3) -> this.applyAsInt(value1, value2, value3);
+    }
 
     /**
      * Returns the number of arguments for this function.

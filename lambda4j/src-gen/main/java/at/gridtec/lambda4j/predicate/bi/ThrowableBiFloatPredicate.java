@@ -207,6 +207,18 @@ public interface ThrowableBiFloatPredicate<X extends Throwable> extends Lambda {
     boolean testThrows(float value1, float value2) throws X;
 
     /**
+     * Applies this predicate partially to some arguments of this one, producing a {@link ThrowableFloatPredicate} as
+     * result.
+     *
+     * @param value1 The first argument to this predicate used to partially apply this function
+     * @return A {@code ThrowableFloatPredicate} that represents this predicate partially applied the some arguments.
+     */
+    @Nonnull
+    default ThrowableFloatPredicate<X> ptestThrows(float value1) {
+        return (value2) -> this.testThrows(value1, value2);
+    }
+
+    /**
      * Returns the number of arguments for this predicate.
      *
      * @return The number of arguments for this predicate.

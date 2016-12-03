@@ -29,6 +29,8 @@ import at.gridtec.lambda4j.function.ThrowableFunction;
 import at.gridtec.lambda4j.function.ThrowableIntFunction;
 import at.gridtec.lambda4j.function.ThrowableLongFunction;
 import at.gridtec.lambda4j.function.ThrowableShortFunction;
+import at.gridtec.lambda4j.function.bi.conversion.ThrowableBiLongToCharFunction;
+import at.gridtec.lambda4j.function.bi.obj.ThrowableObjLongToCharFunction;
 import at.gridtec.lambda4j.function.conversion.ThrowableBooleanToLongFunction;
 import at.gridtec.lambda4j.function.conversion.ThrowableByteToLongFunction;
 import at.gridtec.lambda4j.function.conversion.ThrowableCharToByteFunction;
@@ -202,6 +204,58 @@ public interface ThrowableObjBiLongToCharFunction<T, X extends Throwable> extend
      * @throws X Any throwable from this functions action
      */
     char applyAsCharThrows(T t, long value1, long value2) throws X;
+
+    /**
+     * Applies this function partially to some arguments of this one, producing a {@link ThrowableBiLongToCharFunction}
+     * as result.
+     *
+     * @param t The first argument to this function used to partially apply this function
+     * @return A {@code ThrowableBiLongToCharFunction} that represents this function partially applied the some
+     * arguments.
+     */
+    @Nonnull
+    default ThrowableBiLongToCharFunction<X> papplyAsCharThrows(T t) {
+        return (value1, value2) -> this.applyAsCharThrows(t, value1, value2);
+    }
+
+    /**
+     * Applies this function partially to some arguments of this one, producing a {@link ThrowableLongToCharFunction} as
+     * result.
+     *
+     * @param t The first argument to this function used to partially apply this function
+     * @param value1 The second argument to this function used to partially apply this function
+     * @return A {@code ThrowableLongToCharFunction} that represents this function partially applied the some arguments.
+     */
+    @Nonnull
+    default ThrowableLongToCharFunction<X> papplyAsCharThrows(T t, long value1) {
+        return (value2) -> this.applyAsCharThrows(t, value1, value2);
+    }
+
+    /**
+     * Applies this function partially to some arguments of this one, producing a {@link ThrowableObjLongToCharFunction}
+     * as result.
+     *
+     * @param value1 The second argument to this function used to partially apply this function
+     * @return A {@code ThrowableObjLongToCharFunction} that represents this function partially applied the some
+     * arguments.
+     */
+    @Nonnull
+    default ThrowableObjLongToCharFunction<T, X> papplyAsCharThrows(long value1) {
+        return (t, value2) -> this.applyAsCharThrows(t, value1, value2);
+    }
+
+    /**
+     * Applies this function partially to some arguments of this one, producing a {@link ThrowableToCharFunction} as
+     * result.
+     *
+     * @param value1 The second argument to this function used to partially apply this function
+     * @param value2 The third argument to this function used to partially apply this function
+     * @return A {@code ThrowableToCharFunction} that represents this function partially applied the some arguments.
+     */
+    @Nonnull
+    default ThrowableToCharFunction<T, X> papplyAsCharThrows(long value1, long value2) {
+        return (t) -> this.applyAsCharThrows(t, value1, value2);
+    }
 
     /**
      * Returns the number of arguments for this function.

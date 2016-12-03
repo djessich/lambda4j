@@ -43,6 +43,7 @@ import at.gridtec.lambda4j.operator.unary.BooleanUnaryOperator;
 import at.gridtec.lambda4j.predicate.BytePredicate;
 import at.gridtec.lambda4j.predicate.CharPredicate;
 import at.gridtec.lambda4j.predicate.FloatPredicate;
+import at.gridtec.lambda4j.predicate.Predicate2;
 import at.gridtec.lambda4j.predicate.ShortPredicate;
 import at.gridtec.lambda4j.predicate.bi.BiBytePredicate;
 import at.gridtec.lambda4j.predicate.bi.BiCharPredicate;
@@ -210,6 +211,29 @@ public interface ObjBooleanPredicate<T> extends Lambda {
      * @return The return value from the predicate, which is its result.
      */
     boolean test(T t, boolean value);
+
+    /**
+     * Applies this operator partially to some arguments of this one, producing a {@link BooleanUnaryOperator} as
+     * result.
+     *
+     * @param t The first argument to this predicate used to partially apply this function
+     * @return A {@code BooleanUnaryOperator} that represents this operator partially applied the some arguments.
+     */
+    @Nonnull
+    default BooleanUnaryOperator ptest(T t) {
+        return (value) -> this.test(t, value);
+    }
+
+    /**
+     * Applies this operator partially to some arguments of this one, producing a {@link Predicate2} as result.
+     *
+     * @param value The second argument to this predicate used to partially apply this function
+     * @return A {@code Predicate2} that represents this operator partially applied the some arguments.
+     */
+    @Nonnull
+    default Predicate2<T> ptest(boolean value) {
+        return (t) -> this.test(t, value);
+    }
 
     /**
      * Returns the number of arguments for this predicate.

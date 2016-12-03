@@ -191,6 +191,17 @@ public interface ByteBinaryOperator extends Lambda {
     byte applyAsByte(byte value1, byte value2);
 
     /**
+     * Applies this operator partially to some arguments of this one, producing a {@link ByteUnaryOperator} as result.
+     *
+     * @param value1 The first argument to this operator used to partially apply this function
+     * @return A {@code ByteUnaryOperator} that represents this operator partially applied the some arguments.
+     */
+    @Nonnull
+    default ByteUnaryOperator papplyAsByte(byte value1) {
+        return (value2) -> this.applyAsByte(value1, value2);
+    }
+
+    /**
      * Returns the number of arguments for this operator.
      *
      * @return The number of arguments for this operator.

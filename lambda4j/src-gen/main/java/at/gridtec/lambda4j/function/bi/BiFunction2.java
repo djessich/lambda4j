@@ -176,6 +176,17 @@ public interface BiFunction2<T, U, R> extends Lambda, BiFunction<T, U, R> {
     }
 
     /**
+     * Applies this function partially to some arguments of this one, producing a {@link Function2} as result.
+     *
+     * @param t The first argument to this function used to partially apply this function
+     * @return A {@code Function2} that represents this function partially applied the some arguments.
+     */
+    @Nonnull
+    default Function2<U, R> papply(T t) {
+        return (u) -> this.apply(t, u);
+    }
+
+    /**
      * Returns the number of arguments for this function.
      *
      * @return The number of arguments for this function.

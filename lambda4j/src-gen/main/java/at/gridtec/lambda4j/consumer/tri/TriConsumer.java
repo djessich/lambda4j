@@ -17,6 +17,7 @@ package at.gridtec.lambda4j.consumer.tri;
 
 import at.gridtec.lambda4j.Lambda;
 import at.gridtec.lambda4j.consumer.Consumer2;
+import at.gridtec.lambda4j.consumer.bi.BiConsumer2;
 
 import org.apache.commons.lang3.tuple.Triple;
 
@@ -152,6 +153,29 @@ public interface TriConsumer<T, U, V> extends Lambda {
     default void accept(@Nonnull Triple<T, U, V> tuple) {
         Objects.requireNonNull(tuple);
         accept(tuple.getLeft(), tuple.getMiddle(), tuple.getRight());
+    }
+
+    /**
+     * Applies this consumer partially to some arguments of this one, producing a {@link BiConsumer2} as result.
+     *
+     * @param t The first argument to this consumer used to partially apply this function
+     * @return A {@code BiConsumer2} that represents this consumer partially applied the some arguments.
+     */
+    @Nonnull
+    default BiConsumer2<U, V> paccept(T t) {
+        return (u, v) -> this.accept(t, u, v);
+    }
+
+    /**
+     * Applies this consumer partially to some arguments of this one, producing a {@link Consumer2} as result.
+     *
+     * @param t The first argument to this consumer used to partially apply this function
+     * @param u The second argument to this consumer used to partially apply this function
+     * @return A {@code Consumer2} that represents this consumer partially applied the some arguments.
+     */
+    @Nonnull
+    default Consumer2<V> paccept(T t, U u) {
+        return (v) -> this.accept(t, u, v);
     }
 
     /**

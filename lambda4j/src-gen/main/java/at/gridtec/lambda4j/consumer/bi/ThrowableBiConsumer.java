@@ -174,6 +174,17 @@ public interface ThrowableBiConsumer<T, U, X extends Throwable> extends Lambda, 
     }
 
     /**
+     * Applies this consumer partially to some arguments of this one, producing a {@link ThrowableConsumer} as result.
+     *
+     * @param t The first argument to this consumer used to partially apply this function
+     * @return A {@code ThrowableConsumer} that represents this consumer partially applied the some arguments.
+     */
+    @Nonnull
+    default ThrowableConsumer<U, X> pacceptThrows(T t) {
+        return (u) -> this.acceptThrows(t, u);
+    }
+
+    /**
      * Returns the number of arguments for this consumer.
      *
      * @return The number of arguments for this consumer.

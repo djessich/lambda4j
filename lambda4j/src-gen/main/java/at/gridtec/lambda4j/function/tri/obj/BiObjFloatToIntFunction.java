@@ -23,6 +23,7 @@ import at.gridtec.lambda4j.function.CharFunction;
 import at.gridtec.lambda4j.function.FloatFunction;
 import at.gridtec.lambda4j.function.ShortFunction;
 import at.gridtec.lambda4j.function.bi.obj.ObjFloatToIntFunction;
+import at.gridtec.lambda4j.function.bi.to.ToIntBiFunction2;
 import at.gridtec.lambda4j.function.conversion.BooleanToFloatFunction;
 import at.gridtec.lambda4j.function.conversion.ByteToFloatFunction;
 import at.gridtec.lambda4j.function.conversion.CharToFloatFunction;
@@ -35,6 +36,7 @@ import at.gridtec.lambda4j.function.conversion.IntToShortFunction;
 import at.gridtec.lambda4j.function.conversion.LongToFloatFunction;
 import at.gridtec.lambda4j.function.conversion.ShortToFloatFunction;
 import at.gridtec.lambda4j.function.to.ToFloatFunction;
+import at.gridtec.lambda4j.function.to.ToIntFunction2;
 import at.gridtec.lambda4j.function.tri.TriFunction;
 import at.gridtec.lambda4j.function.tri.conversion.TriBooleanToIntFunction;
 import at.gridtec.lambda4j.function.tri.conversion.TriByteToIntFunction;
@@ -207,6 +209,53 @@ public interface BiObjFloatToIntFunction<T, U> extends Lambda {
     default int applyAsInt(@Nonnull Pair<T, U> tuple, float value) {
         Objects.requireNonNull(tuple);
         return applyAsInt(tuple.getLeft(), tuple.getRight(), value);
+    }
+
+    /**
+     * Applies this function partially to some arguments of this one, producing a {@link ObjFloatToIntFunction} as
+     * result.
+     *
+     * @param t The first argument to this function used to partially apply this function
+     * @return A {@code ObjFloatToIntFunction} that represents this function partially applied the some arguments.
+     */
+    @Nonnull
+    default ObjFloatToIntFunction<U> papplyAsInt(T t) {
+        return (u, value) -> this.applyAsInt(t, u, value);
+    }
+
+    /**
+     * Applies this function partially to some arguments of this one, producing a {@link FloatToIntFunction} as result.
+     *
+     * @param t The first argument to this function used to partially apply this function
+     * @param u The second argument to this function used to partially apply this function
+     * @return A {@code FloatToIntFunction} that represents this function partially applied the some arguments.
+     */
+    @Nonnull
+    default FloatToIntFunction papplyAsInt(T t, U u) {
+        return (value) -> this.applyAsInt(t, u, value);
+    }
+
+    /**
+     * Applies this function partially to some arguments of this one, producing a {@link ToIntBiFunction2} as result.
+     *
+     * @param value The third argument to this function used to partially apply this function
+     * @return A {@code ToIntBiFunction2} that represents this function partially applied the some arguments.
+     */
+    @Nonnull
+    default ToIntBiFunction2<T, U> papplyAsInt(float value) {
+        return (t, u) -> this.applyAsInt(t, u, value);
+    }
+
+    /**
+     * Applies this function partially to some arguments of this one, producing a {@link ToIntFunction2} as result.
+     *
+     * @param t The first argument to this function used to partially apply this function
+     * @param value The third argument to this function used to partially apply this function
+     * @return A {@code ToIntFunction2} that represents this function partially applied the some arguments.
+     */
+    @Nonnull
+    default ToIntFunction2<U> papplyAsInt(T t, float value) {
+        return (u) -> this.applyAsInt(t, u, value);
     }
 
     /**

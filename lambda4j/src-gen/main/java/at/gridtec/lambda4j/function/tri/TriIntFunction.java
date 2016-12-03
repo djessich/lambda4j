@@ -17,6 +17,8 @@ package at.gridtec.lambda4j.function.tri;
 
 import at.gridtec.lambda4j.Lambda;
 import at.gridtec.lambda4j.consumer.tri.TriIntConsumer;
+import at.gridtec.lambda4j.function.IntFunction2;
+import at.gridtec.lambda4j.function.bi.BiIntFunction;
 import at.gridtec.lambda4j.function.conversion.BooleanToIntFunction;
 import at.gridtec.lambda4j.function.conversion.ByteToIntFunction;
 import at.gridtec.lambda4j.function.conversion.CharToIntFunction;
@@ -173,6 +175,29 @@ public interface TriIntFunction<R> extends Lambda {
      * @return The return value from the function, which is its result.
      */
     R apply(int value1, int value2, int value3);
+
+    /**
+     * Applies this function partially to some arguments of this one, producing a {@link BiIntFunction} as result.
+     *
+     * @param value1 The first argument to this function used to partially apply this function
+     * @return A {@code BiIntFunction} that represents this function partially applied the some arguments.
+     */
+    @Nonnull
+    default BiIntFunction<R> papply(int value1) {
+        return (value2, value3) -> this.apply(value1, value2, value3);
+    }
+
+    /**
+     * Applies this function partially to some arguments of this one, producing a {@link IntFunction2} as result.
+     *
+     * @param value1 The first argument to this function used to partially apply this function
+     * @param value2 The second argument to this function used to partially apply this function
+     * @return A {@code IntFunction2} that represents this function partially applied the some arguments.
+     */
+    @Nonnull
+    default IntFunction2<R> papply(int value1, int value2) {
+        return (value3) -> this.apply(value1, value2, value3);
+    }
 
     /**
      * Returns the number of arguments for this function.

@@ -18,6 +18,7 @@ package at.gridtec.lambda4j.function.tri;
 import at.gridtec.lambda4j.Lambda;
 import at.gridtec.lambda4j.consumer.tri.TriFloatConsumer;
 import at.gridtec.lambda4j.function.FloatFunction;
+import at.gridtec.lambda4j.function.bi.BiFloatFunction;
 import at.gridtec.lambda4j.function.conversion.BooleanToFloatFunction;
 import at.gridtec.lambda4j.function.conversion.ByteToFloatFunction;
 import at.gridtec.lambda4j.function.conversion.CharToFloatFunction;
@@ -174,6 +175,29 @@ public interface TriFloatFunction<R> extends Lambda {
      * @return The return value from the function, which is its result.
      */
     R apply(float value1, float value2, float value3);
+
+    /**
+     * Applies this function partially to some arguments of this one, producing a {@link BiFloatFunction} as result.
+     *
+     * @param value1 The first argument to this function used to partially apply this function
+     * @return A {@code BiFloatFunction} that represents this function partially applied the some arguments.
+     */
+    @Nonnull
+    default BiFloatFunction<R> papply(float value1) {
+        return (value2, value3) -> this.apply(value1, value2, value3);
+    }
+
+    /**
+     * Applies this function partially to some arguments of this one, producing a {@link FloatFunction} as result.
+     *
+     * @param value1 The first argument to this function used to partially apply this function
+     * @param value2 The second argument to this function used to partially apply this function
+     * @return A {@code FloatFunction} that represents this function partially applied the some arguments.
+     */
+    @Nonnull
+    default FloatFunction<R> papply(float value1, float value2) {
+        return (value3) -> this.apply(value1, value2, value3);
+    }
 
     /**
      * Returns the number of arguments for this function.

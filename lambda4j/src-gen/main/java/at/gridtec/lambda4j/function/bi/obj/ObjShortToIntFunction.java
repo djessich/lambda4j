@@ -42,6 +42,7 @@ import at.gridtec.lambda4j.function.conversion.IntToFloatFunction;
 import at.gridtec.lambda4j.function.conversion.IntToShortFunction;
 import at.gridtec.lambda4j.function.conversion.LongToShortFunction;
 import at.gridtec.lambda4j.function.conversion.ShortToIntFunction;
+import at.gridtec.lambda4j.function.to.ToIntFunction2;
 import at.gridtec.lambda4j.function.to.ToShortFunction;
 import at.gridtec.lambda4j.operator.binary.IntBinaryOperator2;
 import at.gridtec.lambda4j.operator.unary.ShortUnaryOperator;
@@ -166,6 +167,28 @@ public interface ObjShortToIntFunction<T> extends Lambda {
      * @return The return value from the function, which is its result.
      */
     int applyAsInt(T t, short value);
+
+    /**
+     * Applies this function partially to some arguments of this one, producing a {@link ShortToIntFunction} as result.
+     *
+     * @param t The first argument to this function used to partially apply this function
+     * @return A {@code ShortToIntFunction} that represents this function partially applied the some arguments.
+     */
+    @Nonnull
+    default ShortToIntFunction papplyAsInt(T t) {
+        return (value) -> this.applyAsInt(t, value);
+    }
+
+    /**
+     * Applies this function partially to some arguments of this one, producing a {@link ToIntFunction2} as result.
+     *
+     * @param value The second argument to this function used to partially apply this function
+     * @return A {@code ToIntFunction2} that represents this function partially applied the some arguments.
+     */
+    @Nonnull
+    default ToIntFunction2<T> papplyAsInt(short value) {
+        return (t) -> this.applyAsInt(t, value);
+    }
 
     /**
      * Returns the number of arguments for this function.

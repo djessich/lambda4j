@@ -34,6 +34,7 @@ import at.gridtec.lambda4j.function.tri.conversion.TriBooleanToFloatFunction;
 import at.gridtec.lambda4j.function.tri.conversion.TriBooleanToIntFunction;
 import at.gridtec.lambda4j.function.tri.conversion.TriBooleanToLongFunction;
 import at.gridtec.lambda4j.function.tri.conversion.TriBooleanToShortFunction;
+import at.gridtec.lambda4j.operator.binary.BooleanBinaryOperator;
 import at.gridtec.lambda4j.operator.unary.BooleanUnaryOperator;
 import at.gridtec.lambda4j.predicate.BytePredicate;
 import at.gridtec.lambda4j.predicate.CharPredicate;
@@ -173,6 +174,31 @@ public interface BooleanTernaryOperator extends Lambda {
      * @return The return value from the operator, which is its result.
      */
     boolean applyAsBoolean(boolean value1, boolean value2, boolean value3);
+
+    /**
+     * Applies this operator partially to some arguments of this one, producing a {@link BooleanBinaryOperator} as
+     * result.
+     *
+     * @param value1 The first argument to this operator used to partially apply this function
+     * @return A {@code BooleanBinaryOperator} that represents this operator partially applied the some arguments.
+     */
+    @Nonnull
+    default BooleanBinaryOperator papplyAsBoolean(boolean value1) {
+        return (value2, value3) -> this.applyAsBoolean(value1, value2, value3);
+    }
+
+    /**
+     * Applies this operator partially to some arguments of this one, producing a {@link BooleanUnaryOperator} as
+     * result.
+     *
+     * @param value1 The first argument to this operator used to partially apply this function
+     * @param value2 The second argument to this operator used to partially apply this function
+     * @return A {@code BooleanUnaryOperator} that represents this operator partially applied the some arguments.
+     */
+    @Nonnull
+    default BooleanUnaryOperator papplyAsBoolean(boolean value1, boolean value2) {
+        return (value3) -> this.applyAsBoolean(value1, value2, value3);
+    }
 
     /**
      * Returns the number of arguments for this operator.

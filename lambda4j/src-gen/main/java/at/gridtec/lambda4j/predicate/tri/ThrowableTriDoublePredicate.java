@@ -48,6 +48,7 @@ import at.gridtec.lambda4j.operator.ternary.ThrowableDoubleTernaryOperator;
 import at.gridtec.lambda4j.operator.unary.ThrowableBooleanUnaryOperator;
 import at.gridtec.lambda4j.operator.unary.ThrowableDoubleUnaryOperator;
 import at.gridtec.lambda4j.predicate.ThrowableDoublePredicate;
+import at.gridtec.lambda4j.predicate.bi.ThrowableBiDoublePredicate;
 
 import org.apache.commons.lang3.tuple.Triple;
 
@@ -226,6 +227,31 @@ public interface ThrowableTriDoublePredicate<X extends Throwable> extends Lambda
      * @throws X Any throwable from this predicates action
      */
     boolean testThrows(double value1, double value2, double value3) throws X;
+
+    /**
+     * Applies this predicate partially to some arguments of this one, producing a {@link ThrowableBiDoublePredicate} as
+     * result.
+     *
+     * @param value1 The first argument to this predicate used to partially apply this function
+     * @return A {@code ThrowableBiDoublePredicate} that represents this predicate partially applied the some arguments.
+     */
+    @Nonnull
+    default ThrowableBiDoublePredicate<X> ptestThrows(double value1) {
+        return (value2, value3) -> this.testThrows(value1, value2, value3);
+    }
+
+    /**
+     * Applies this predicate partially to some arguments of this one, producing a {@link ThrowableDoublePredicate} as
+     * result.
+     *
+     * @param value1 The first argument to this predicate used to partially apply this function
+     * @param value2 The second argument to this predicate used to partially apply this function
+     * @return A {@code ThrowableDoublePredicate} that represents this predicate partially applied the some arguments.
+     */
+    @Nonnull
+    default ThrowableDoublePredicate<X> ptestThrows(double value1, double value2) {
+        return (value3) -> this.testThrows(value1, value2, value3);
+    }
 
     /**
      * Returns the number of arguments for this predicate.

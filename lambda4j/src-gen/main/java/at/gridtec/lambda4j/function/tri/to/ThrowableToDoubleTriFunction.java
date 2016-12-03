@@ -22,6 +22,7 @@ import at.gridtec.lambda4j.core.exception.ThrownByFunctionalInterfaceException;
 import at.gridtec.lambda4j.core.util.ThrowableUtils;
 import at.gridtec.lambda4j.function.ThrowableDoubleFunction;
 import at.gridtec.lambda4j.function.ThrowableFunction;
+import at.gridtec.lambda4j.function.bi.to.ThrowableToDoubleBiFunction;
 import at.gridtec.lambda4j.function.conversion.ThrowableDoubleToByteFunction;
 import at.gridtec.lambda4j.function.conversion.ThrowableDoubleToCharFunction;
 import at.gridtec.lambda4j.function.conversion.ThrowableDoubleToFloatFunction;
@@ -204,6 +205,31 @@ public interface ThrowableToDoubleTriFunction<T, U, V, X extends Throwable> exte
     default double applyAsDoubleThrows(@Nonnull Triple<T, U, V> tuple) throws X {
         Objects.requireNonNull(tuple);
         return applyAsDoubleThrows(tuple.getLeft(), tuple.getMiddle(), tuple.getRight());
+    }
+
+    /**
+     * Applies this function partially to some arguments of this one, producing a {@link ThrowableToDoubleBiFunction} as
+     * result.
+     *
+     * @param t The first argument to this function used to partially apply this function
+     * @return A {@code ThrowableToDoubleBiFunction} that represents this function partially applied the some arguments.
+     */
+    @Nonnull
+    default ThrowableToDoubleBiFunction<U, V, X> papplyAsDoubleThrows(T t) {
+        return (u, v) -> this.applyAsDoubleThrows(t, u, v);
+    }
+
+    /**
+     * Applies this function partially to some arguments of this one, producing a {@link ThrowableToDoubleFunction} as
+     * result.
+     *
+     * @param t The first argument to this function used to partially apply this function
+     * @param u The second argument to this function used to partially apply this function
+     * @return A {@code ThrowableToDoubleFunction} that represents this function partially applied the some arguments.
+     */
+    @Nonnull
+    default ThrowableToDoubleFunction<V, X> papplyAsDoubleThrows(T t, U u) {
+        return (v) -> this.applyAsDoubleThrows(t, u, v);
     }
 
     /**

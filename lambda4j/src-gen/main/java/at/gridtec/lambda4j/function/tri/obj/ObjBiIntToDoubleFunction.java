@@ -22,6 +22,8 @@ import at.gridtec.lambda4j.function.ByteFunction;
 import at.gridtec.lambda4j.function.CharFunction;
 import at.gridtec.lambda4j.function.FloatFunction;
 import at.gridtec.lambda4j.function.ShortFunction;
+import at.gridtec.lambda4j.function.bi.conversion.BiIntToDoubleFunction;
+import at.gridtec.lambda4j.function.bi.obj.ObjIntToDoubleFunction;
 import at.gridtec.lambda4j.function.conversion.BooleanToIntFunction;
 import at.gridtec.lambda4j.function.conversion.ByteToIntFunction;
 import at.gridtec.lambda4j.function.conversion.CharToIntFunction;
@@ -30,7 +32,9 @@ import at.gridtec.lambda4j.function.conversion.DoubleToCharFunction;
 import at.gridtec.lambda4j.function.conversion.DoubleToFloatFunction;
 import at.gridtec.lambda4j.function.conversion.DoubleToShortFunction;
 import at.gridtec.lambda4j.function.conversion.FloatToIntFunction;
+import at.gridtec.lambda4j.function.conversion.IntToDoubleFunction2;
 import at.gridtec.lambda4j.function.conversion.ShortToIntFunction;
+import at.gridtec.lambda4j.function.to.ToDoubleFunction2;
 import at.gridtec.lambda4j.function.tri.TriFunction;
 import at.gridtec.lambda4j.function.tri.conversion.TriBooleanToDoubleFunction;
 import at.gridtec.lambda4j.function.tri.conversion.TriByteToDoubleFunction;
@@ -184,6 +188,55 @@ public interface ObjBiIntToDoubleFunction<T> extends Lambda {
      * @return The return value from the function, which is its result.
      */
     double applyAsDouble(T t, int value1, int value2);
+
+    /**
+     * Applies this function partially to some arguments of this one, producing a {@link BiIntToDoubleFunction} as
+     * result.
+     *
+     * @param t The first argument to this function used to partially apply this function
+     * @return A {@code BiIntToDoubleFunction} that represents this function partially applied the some arguments.
+     */
+    @Nonnull
+    default BiIntToDoubleFunction papplyAsDouble(T t) {
+        return (value1, value2) -> this.applyAsDouble(t, value1, value2);
+    }
+
+    /**
+     * Applies this function partially to some arguments of this one, producing a {@link IntToDoubleFunction2} as
+     * result.
+     *
+     * @param t The first argument to this function used to partially apply this function
+     * @param value1 The second argument to this function used to partially apply this function
+     * @return A {@code IntToDoubleFunction2} that represents this function partially applied the some arguments.
+     */
+    @Nonnull
+    default IntToDoubleFunction2 papplyAsDouble(T t, int value1) {
+        return (value2) -> this.applyAsDouble(t, value1, value2);
+    }
+
+    /**
+     * Applies this function partially to some arguments of this one, producing a {@link ObjIntToDoubleFunction} as
+     * result.
+     *
+     * @param value1 The second argument to this function used to partially apply this function
+     * @return A {@code ObjIntToDoubleFunction} that represents this function partially applied the some arguments.
+     */
+    @Nonnull
+    default ObjIntToDoubleFunction<T> papplyAsDouble(int value1) {
+        return (t, value2) -> this.applyAsDouble(t, value1, value2);
+    }
+
+    /**
+     * Applies this function partially to some arguments of this one, producing a {@link ToDoubleFunction2} as result.
+     *
+     * @param value1 The second argument to this function used to partially apply this function
+     * @param value2 The third argument to this function used to partially apply this function
+     * @return A {@code ToDoubleFunction2} that represents this function partially applied the some arguments.
+     */
+    @Nonnull
+    default ToDoubleFunction2<T> papplyAsDouble(int value1, int value2) {
+        return (t) -> this.applyAsDouble(t, value1, value2);
+    }
 
     /**
      * Returns the number of arguments for this function.

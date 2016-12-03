@@ -168,6 +168,28 @@ public interface ObjCharToShortFunction<T> extends Lambda {
     short applyAsShort(T t, char value);
 
     /**
+     * Applies this function partially to some arguments of this one, producing a {@link CharToShortFunction} as result.
+     *
+     * @param t The first argument to this function used to partially apply this function
+     * @return A {@code CharToShortFunction} that represents this function partially applied the some arguments.
+     */
+    @Nonnull
+    default CharToShortFunction papplyAsShort(T t) {
+        return (value) -> this.applyAsShort(t, value);
+    }
+
+    /**
+     * Applies this function partially to some arguments of this one, producing a {@link ToShortFunction} as result.
+     *
+     * @param value The second argument to this function used to partially apply this function
+     * @return A {@code ToShortFunction} that represents this function partially applied the some arguments.
+     */
+    @Nonnull
+    default ToShortFunction<T> papplyAsShort(char value) {
+        return (t) -> this.applyAsShort(t, value);
+    }
+
+    /**
      * Returns the number of arguments for this function.
      *
      * @return The number of arguments for this function.

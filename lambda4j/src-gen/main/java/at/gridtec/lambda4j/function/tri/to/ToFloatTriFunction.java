@@ -19,6 +19,7 @@ import at.gridtec.lambda4j.Lambda;
 import at.gridtec.lambda4j.consumer.FloatConsumer;
 import at.gridtec.lambda4j.consumer.tri.TriConsumer;
 import at.gridtec.lambda4j.function.FloatFunction;
+import at.gridtec.lambda4j.function.bi.to.ToFloatBiFunction;
 import at.gridtec.lambda4j.function.conversion.FloatToByteFunction;
 import at.gridtec.lambda4j.function.conversion.FloatToCharFunction;
 import at.gridtec.lambda4j.function.conversion.FloatToDoubleFunction;
@@ -186,6 +187,29 @@ public interface ToFloatTriFunction<T, U, V> extends Lambda {
     default float applyAsFloat(@Nonnull Triple<T, U, V> tuple) {
         Objects.requireNonNull(tuple);
         return applyAsFloat(tuple.getLeft(), tuple.getMiddle(), tuple.getRight());
+    }
+
+    /**
+     * Applies this function partially to some arguments of this one, producing a {@link ToFloatBiFunction} as result.
+     *
+     * @param t The first argument to this function used to partially apply this function
+     * @return A {@code ToFloatBiFunction} that represents this function partially applied the some arguments.
+     */
+    @Nonnull
+    default ToFloatBiFunction<U, V> papplyAsFloat(T t) {
+        return (u, v) -> this.applyAsFloat(t, u, v);
+    }
+
+    /**
+     * Applies this function partially to some arguments of this one, producing a {@link ToFloatFunction} as result.
+     *
+     * @param t The first argument to this function used to partially apply this function
+     * @param u The second argument to this function used to partially apply this function
+     * @return A {@code ToFloatFunction} that represents this function partially applied the some arguments.
+     */
+    @Nonnull
+    default ToFloatFunction<V> papplyAsFloat(T t, U u) {
+        return (v) -> this.applyAsFloat(t, u, v);
     }
 
     /**

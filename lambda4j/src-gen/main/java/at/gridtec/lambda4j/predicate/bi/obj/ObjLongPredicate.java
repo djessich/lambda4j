@@ -44,6 +44,8 @@ import at.gridtec.lambda4j.function.conversion.FloatToLongFunction;
 import at.gridtec.lambda4j.function.conversion.ShortToLongFunction;
 import at.gridtec.lambda4j.operator.binary.BooleanBinaryOperator;
 import at.gridtec.lambda4j.operator.unary.BooleanUnaryOperator;
+import at.gridtec.lambda4j.predicate.LongPredicate2;
+import at.gridtec.lambda4j.predicate.Predicate2;
 import at.gridtec.lambda4j.predicate.bi.BiBytePredicate;
 import at.gridtec.lambda4j.predicate.bi.BiCharPredicate;
 import at.gridtec.lambda4j.predicate.bi.BiDoublePredicate;
@@ -212,6 +214,28 @@ public interface ObjLongPredicate<T> extends Lambda {
      * @return The return value from the predicate, which is its result.
      */
     boolean test(T t, long value);
+
+    /**
+     * Applies this predicate partially to some arguments of this one, producing a {@link LongPredicate2} as result.
+     *
+     * @param t The first argument to this predicate used to partially apply this function
+     * @return A {@code LongPredicate2} that represents this predicate partially applied the some arguments.
+     */
+    @Nonnull
+    default LongPredicate2 ptest(T t) {
+        return (value) -> this.test(t, value);
+    }
+
+    /**
+     * Applies this predicate partially to some arguments of this one, producing a {@link Predicate2} as result.
+     *
+     * @param value The second argument to this predicate used to partially apply this function
+     * @return A {@code Predicate2} that represents this predicate partially applied the some arguments.
+     */
+    @Nonnull
+    default Predicate2<T> ptest(long value) {
+        return (t) -> this.test(t, value);
+    }
 
     /**
      * Returns the number of arguments for this predicate.

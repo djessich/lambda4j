@@ -29,6 +29,8 @@ import at.gridtec.lambda4j.function.ThrowableFunction;
 import at.gridtec.lambda4j.function.ThrowableIntFunction;
 import at.gridtec.lambda4j.function.ThrowableLongFunction;
 import at.gridtec.lambda4j.function.ThrowableShortFunction;
+import at.gridtec.lambda4j.function.bi.conversion.ThrowableBiBooleanToFloatFunction;
+import at.gridtec.lambda4j.function.bi.obj.ThrowableObjBooleanToFloatFunction;
 import at.gridtec.lambda4j.function.conversion.ThrowableBooleanToFloatFunction;
 import at.gridtec.lambda4j.function.conversion.ThrowableFloatToByteFunction;
 import at.gridtec.lambda4j.function.conversion.ThrowableFloatToCharFunction;
@@ -203,6 +205,59 @@ public interface ThrowableObjBiBooleanToFloatFunction<T, X extends Throwable> ex
      * @throws X Any throwable from this functions action
      */
     float applyAsFloatThrows(T t, boolean value1, boolean value2) throws X;
+
+    /**
+     * Applies this function partially to some arguments of this one, producing a {@link
+     * ThrowableBiBooleanToFloatFunction} as result.
+     *
+     * @param t The first argument to this function used to partially apply this function
+     * @return A {@code ThrowableBiBooleanToFloatFunction} that represents this function partially applied the some
+     * arguments.
+     */
+    @Nonnull
+    default ThrowableBiBooleanToFloatFunction<X> papplyAsFloatThrows(T t) {
+        return (value1, value2) -> this.applyAsFloatThrows(t, value1, value2);
+    }
+
+    /**
+     * Applies this function partially to some arguments of this one, producing a {@link
+     * ThrowableBooleanToFloatFunction} as result.
+     *
+     * @param t The first argument to this function used to partially apply this function
+     * @param value1 The second argument to this function used to partially apply this function
+     * @return A {@code ThrowableBooleanToFloatFunction} that represents this function partially applied the some
+     * arguments.
+     */
+    @Nonnull
+    default ThrowableBooleanToFloatFunction<X> papplyAsFloatThrows(T t, boolean value1) {
+        return (value2) -> this.applyAsFloatThrows(t, value1, value2);
+    }
+
+    /**
+     * Applies this function partially to some arguments of this one, producing a {@link
+     * ThrowableObjBooleanToFloatFunction} as result.
+     *
+     * @param value1 The second argument to this function used to partially apply this function
+     * @return A {@code ThrowableObjBooleanToFloatFunction} that represents this function partially applied the some
+     * arguments.
+     */
+    @Nonnull
+    default ThrowableObjBooleanToFloatFunction<T, X> papplyAsFloatThrows(boolean value1) {
+        return (t, value2) -> this.applyAsFloatThrows(t, value1, value2);
+    }
+
+    /**
+     * Applies this function partially to some arguments of this one, producing a {@link ThrowableToFloatFunction} as
+     * result.
+     *
+     * @param value1 The second argument to this function used to partially apply this function
+     * @param value2 The third argument to this function used to partially apply this function
+     * @return A {@code ThrowableToFloatFunction} that represents this function partially applied the some arguments.
+     */
+    @Nonnull
+    default ThrowableToFloatFunction<T, X> papplyAsFloatThrows(boolean value1, boolean value2) {
+        return (t) -> this.applyAsFloatThrows(t, value1, value2);
+    }
 
     /**
      * Returns the number of arguments for this function.

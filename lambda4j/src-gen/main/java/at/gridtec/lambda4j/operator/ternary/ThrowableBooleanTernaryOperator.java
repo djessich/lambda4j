@@ -37,6 +37,7 @@ import at.gridtec.lambda4j.function.tri.conversion.ThrowableTriBooleanToFloatFun
 import at.gridtec.lambda4j.function.tri.conversion.ThrowableTriBooleanToIntFunction;
 import at.gridtec.lambda4j.function.tri.conversion.ThrowableTriBooleanToLongFunction;
 import at.gridtec.lambda4j.function.tri.conversion.ThrowableTriBooleanToShortFunction;
+import at.gridtec.lambda4j.operator.binary.ThrowableBooleanBinaryOperator;
 import at.gridtec.lambda4j.operator.unary.ThrowableBooleanUnaryOperator;
 import at.gridtec.lambda4j.predicate.ThrowableBytePredicate;
 import at.gridtec.lambda4j.predicate.ThrowableCharPredicate;
@@ -191,6 +192,33 @@ public interface ThrowableBooleanTernaryOperator<X extends Throwable> extends La
      * @throws X Any throwable from this operators action
      */
     boolean applyAsBooleanThrows(boolean value1, boolean value2, boolean value3) throws X;
+
+    /**
+     * Applies this operator partially to some arguments of this one, producing a {@link ThrowableBooleanBinaryOperator}
+     * as result.
+     *
+     * @param value1 The first argument to this operator used to partially apply this function
+     * @return A {@code ThrowableBooleanBinaryOperator} that represents this operator partially applied the some
+     * arguments.
+     */
+    @Nonnull
+    default ThrowableBooleanBinaryOperator<X> papplyAsBooleanThrows(boolean value1) {
+        return (value2, value3) -> this.applyAsBooleanThrows(value1, value2, value3);
+    }
+
+    /**
+     * Applies this operator partially to some arguments of this one, producing a {@link ThrowableBooleanUnaryOperator}
+     * as result.
+     *
+     * @param value1 The first argument to this operator used to partially apply this function
+     * @param value2 The second argument to this operator used to partially apply this function
+     * @return A {@code ThrowableBooleanUnaryOperator} that represents this operator partially applied the some
+     * arguments.
+     */
+    @Nonnull
+    default ThrowableBooleanUnaryOperator<X> papplyAsBooleanThrows(boolean value1, boolean value2) {
+        return (value3) -> this.applyAsBooleanThrows(value1, value2, value3);
+    }
 
     /**
      * Returns the number of arguments for this operator.

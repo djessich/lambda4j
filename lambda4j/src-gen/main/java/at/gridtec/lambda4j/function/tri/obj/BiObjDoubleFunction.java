@@ -20,8 +20,11 @@ import at.gridtec.lambda4j.consumer.tri.obj.BiObjDoubleConsumer;
 import at.gridtec.lambda4j.function.BooleanFunction;
 import at.gridtec.lambda4j.function.ByteFunction;
 import at.gridtec.lambda4j.function.CharFunction;
+import at.gridtec.lambda4j.function.DoubleFunction2;
 import at.gridtec.lambda4j.function.FloatFunction;
+import at.gridtec.lambda4j.function.Function2;
 import at.gridtec.lambda4j.function.ShortFunction;
+import at.gridtec.lambda4j.function.bi.BiFunction2;
 import at.gridtec.lambda4j.function.bi.obj.ObjDoubleFunction;
 import at.gridtec.lambda4j.function.conversion.BooleanToDoubleFunction;
 import at.gridtec.lambda4j.function.conversion.ByteToDoubleFunction;
@@ -223,6 +226,52 @@ public interface BiObjDoubleFunction<T, U, R> extends Lambda {
     default R apply(@Nonnull Pair<T, U> tuple, double value) {
         Objects.requireNonNull(tuple);
         return apply(tuple.getLeft(), tuple.getRight(), value);
+    }
+
+    /**
+     * Applies this function partially to some arguments of this one, producing a {@link ObjDoubleFunction} as result.
+     *
+     * @param t The first argument to this function used to partially apply this function
+     * @return A {@code ObjDoubleFunction} that represents this function partially applied the some arguments.
+     */
+    @Nonnull
+    default ObjDoubleFunction<U, R> papply(T t) {
+        return (u, value) -> this.apply(t, u, value);
+    }
+
+    /**
+     * Applies this function partially to some arguments of this one, producing a {@link DoubleFunction2} as result.
+     *
+     * @param t The first argument to this function used to partially apply this function
+     * @param u The second argument to this function used to partially apply this function
+     * @return A {@code DoubleFunction2} that represents this function partially applied the some arguments.
+     */
+    @Nonnull
+    default DoubleFunction2<R> papply(T t, U u) {
+        return (value) -> this.apply(t, u, value);
+    }
+
+    /**
+     * Applies this function partially to some arguments of this one, producing a {@link BiFunction2} as result.
+     *
+     * @param value The third argument to this function used to partially apply this function
+     * @return A {@code BiFunction2} that represents this function partially applied the some arguments.
+     */
+    @Nonnull
+    default BiFunction2<T, U, R> papply(double value) {
+        return (t, u) -> this.apply(t, u, value);
+    }
+
+    /**
+     * Applies this function partially to some arguments of this one, producing a {@link Function2} as result.
+     *
+     * @param t The first argument to this function used to partially apply this function
+     * @param value The third argument to this function used to partially apply this function
+     * @return A {@code Function2} that represents this function partially applied the some arguments.
+     */
+    @Nonnull
+    default Function2<U, R> papply(T t, double value) {
+        return (u) -> this.apply(t, u, value);
     }
 
     /**

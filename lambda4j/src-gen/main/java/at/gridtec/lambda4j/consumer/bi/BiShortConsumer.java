@@ -114,6 +114,17 @@ public interface BiShortConsumer extends Lambda {
     void accept(short value1, short value2);
 
     /**
+     * Applies this consumer partially to some arguments of this one, producing a {@link ShortConsumer} as result.
+     *
+     * @param value1 The first argument to this consumer used to partially apply this function
+     * @return A {@code ShortConsumer} that represents this consumer partially applied the some arguments.
+     */
+    @Nonnull
+    default ShortConsumer paccept(short value1) {
+        return (value2) -> this.accept(value1, value2);
+    }
+
+    /**
      * Returns the number of arguments for this consumer.
      *
      * @return The number of arguments for this consumer.

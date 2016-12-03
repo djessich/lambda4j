@@ -29,6 +29,7 @@ import at.gridtec.lambda4j.function.ThrowableFunction;
 import at.gridtec.lambda4j.function.ThrowableIntFunction;
 import at.gridtec.lambda4j.function.ThrowableLongFunction;
 import at.gridtec.lambda4j.function.ThrowableShortFunction;
+import at.gridtec.lambda4j.function.bi.obj.ThrowableObjLongToLongFunction;
 import at.gridtec.lambda4j.function.conversion.ThrowableBooleanToLongFunction;
 import at.gridtec.lambda4j.function.conversion.ThrowableByteToLongFunction;
 import at.gridtec.lambda4j.function.conversion.ThrowableCharToLongFunction;
@@ -52,6 +53,7 @@ import at.gridtec.lambda4j.function.tri.conversion.ThrowableTriFloatToLongFuncti
 import at.gridtec.lambda4j.function.tri.conversion.ThrowableTriIntToLongFunction;
 import at.gridtec.lambda4j.function.tri.conversion.ThrowableTriShortToLongFunction;
 import at.gridtec.lambda4j.function.tri.to.ThrowableToLongTriFunction;
+import at.gridtec.lambda4j.operator.binary.ThrowableLongBinaryOperator;
 import at.gridtec.lambda4j.operator.ternary.ThrowableLongTernaryOperator;
 import at.gridtec.lambda4j.operator.unary.ThrowableLongUnaryOperator;
 import at.gridtec.lambda4j.predicate.ThrowableLongPredicate;
@@ -200,6 +202,57 @@ public interface ThrowableObjBiLongToLongFunction<T, X extends Throwable> extend
      * @throws X Any throwable from this functions action
      */
     long applyAsLongThrows(T t, long value1, long value2) throws X;
+
+    /**
+     * Applies this operator partially to some arguments of this one, producing a {@link ThrowableLongBinaryOperator} as
+     * result.
+     *
+     * @param t The first argument to this function used to partially apply this function
+     * @return A {@code ThrowableLongBinaryOperator} that represents this operator partially applied the some arguments.
+     */
+    @Nonnull
+    default ThrowableLongBinaryOperator<X> papplyAsLongThrows(T t) {
+        return (value1, value2) -> this.applyAsLongThrows(t, value1, value2);
+    }
+
+    /**
+     * Applies this operator partially to some arguments of this one, producing a {@link ThrowableLongUnaryOperator} as
+     * result.
+     *
+     * @param t The first argument to this function used to partially apply this function
+     * @param value1 The second argument to this function used to partially apply this function
+     * @return A {@code ThrowableLongUnaryOperator} that represents this operator partially applied the some arguments.
+     */
+    @Nonnull
+    default ThrowableLongUnaryOperator<X> papplyAsLongThrows(T t, long value1) {
+        return (value2) -> this.applyAsLongThrows(t, value1, value2);
+    }
+
+    /**
+     * Applies this operator partially to some arguments of this one, producing a {@link ThrowableObjLongToLongFunction}
+     * as result.
+     *
+     * @param value1 The second argument to this function used to partially apply this function
+     * @return A {@code ThrowableObjLongToLongFunction} that represents this operator partially applied the some
+     * arguments.
+     */
+    @Nonnull
+    default ThrowableObjLongToLongFunction<T, X> papplyAsLongThrows(long value1) {
+        return (t, value2) -> this.applyAsLongThrows(t, value1, value2);
+    }
+
+    /**
+     * Applies this operator partially to some arguments of this one, producing a {@link ThrowableToLongFunction} as
+     * result.
+     *
+     * @param value1 The second argument to this function used to partially apply this function
+     * @param value2 The third argument to this function used to partially apply this function
+     * @return A {@code ThrowableToLongFunction} that represents this operator partially applied the some arguments.
+     */
+    @Nonnull
+    default ThrowableToLongFunction<T, X> papplyAsLongThrows(long value1, long value2) {
+        return (t) -> this.applyAsLongThrows(t, value1, value2);
+    }
 
     /**
      * Returns the number of arguments for this function.

@@ -148,6 +148,17 @@ public interface BiIntToFloatFunction extends Lambda {
     float applyAsFloat(int value1, int value2);
 
     /**
+     * Applies this function partially to some arguments of this one, producing a {@link IntToFloatFunction} as result.
+     *
+     * @param value1 The first argument to this function used to partially apply this function
+     * @return A {@code IntToFloatFunction} that represents this function partially applied the some arguments.
+     */
+    @Nonnull
+    default IntToFloatFunction papplyAsFloat(int value1) {
+        return (value2) -> this.applyAsFloat(value1, value2);
+    }
+
+    /**
      * Returns the number of arguments for this function.
      *
      * @return The number of arguments for this function.

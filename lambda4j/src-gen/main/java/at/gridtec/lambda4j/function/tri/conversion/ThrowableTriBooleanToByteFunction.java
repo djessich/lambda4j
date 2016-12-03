@@ -22,6 +22,7 @@ import at.gridtec.lambda4j.core.exception.ThrownByFunctionalInterfaceException;
 import at.gridtec.lambda4j.core.util.ThrowableUtils;
 import at.gridtec.lambda4j.function.ThrowableByteFunction;
 import at.gridtec.lambda4j.function.ThrowableFunction;
+import at.gridtec.lambda4j.function.bi.conversion.ThrowableBiBooleanToByteFunction;
 import at.gridtec.lambda4j.function.conversion.ThrowableBooleanToByteFunction;
 import at.gridtec.lambda4j.function.conversion.ThrowableByteToCharFunction;
 import at.gridtec.lambda4j.function.conversion.ThrowableByteToDoubleFunction;
@@ -181,6 +182,33 @@ public interface ThrowableTriBooleanToByteFunction<X extends Throwable> extends 
      * @throws X Any throwable from this functions action
      */
     byte applyAsByteThrows(boolean value1, boolean value2, boolean value3) throws X;
+
+    /**
+     * Applies this function partially to some arguments of this one, producing a {@link
+     * ThrowableBiBooleanToByteFunction} as result.
+     *
+     * @param value1 The first argument to this function used to partially apply this function
+     * @return A {@code ThrowableBiBooleanToByteFunction} that represents this function partially applied the some
+     * arguments.
+     */
+    @Nonnull
+    default ThrowableBiBooleanToByteFunction<X> papplyAsByteThrows(boolean value1) {
+        return (value2, value3) -> this.applyAsByteThrows(value1, value2, value3);
+    }
+
+    /**
+     * Applies this function partially to some arguments of this one, producing a {@link ThrowableBooleanToByteFunction}
+     * as result.
+     *
+     * @param value1 The first argument to this function used to partially apply this function
+     * @param value2 The second argument to this function used to partially apply this function
+     * @return A {@code ThrowableBooleanToByteFunction} that represents this function partially applied the some
+     * arguments.
+     */
+    @Nonnull
+    default ThrowableBooleanToByteFunction<X> papplyAsByteThrows(boolean value1, boolean value2) {
+        return (value3) -> this.applyAsByteThrows(value1, value2, value3);
+    }
 
     /**
      * Returns the number of arguments for this function.

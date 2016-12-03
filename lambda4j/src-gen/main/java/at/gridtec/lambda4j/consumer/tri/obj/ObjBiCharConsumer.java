@@ -17,6 +17,9 @@ package at.gridtec.lambda4j.consumer.tri.obj;
 
 import at.gridtec.lambda4j.Lambda;
 import at.gridtec.lambda4j.consumer.CharConsumer;
+import at.gridtec.lambda4j.consumer.Consumer2;
+import at.gridtec.lambda4j.consumer.bi.BiCharConsumer;
+import at.gridtec.lambda4j.consumer.bi.obj.ObjCharConsumer;
 import at.gridtec.lambda4j.consumer.tri.TriBooleanConsumer;
 import at.gridtec.lambda4j.consumer.tri.TriByteConsumer;
 import at.gridtec.lambda4j.consumer.tri.TriCharConsumer;
@@ -155,6 +158,52 @@ public interface ObjBiCharConsumer<T> extends Lambda {
      * @param value2 The third argument to the consumer
      */
     void accept(T t, char value1, char value2);
+
+    /**
+     * Applies this consumer partially to some arguments of this one, producing a {@link BiCharConsumer} as result.
+     *
+     * @param t The first argument to this consumer used to partially apply this function
+     * @return A {@code BiCharConsumer} that represents this consumer partially applied the some arguments.
+     */
+    @Nonnull
+    default BiCharConsumer paccept(T t) {
+        return (value1, value2) -> this.accept(t, value1, value2);
+    }
+
+    /**
+     * Applies this consumer partially to some arguments of this one, producing a {@link CharConsumer} as result.
+     *
+     * @param t The first argument to this consumer used to partially apply this function
+     * @param value1 The second argument to this consumer used to partially apply this function
+     * @return A {@code CharConsumer} that represents this consumer partially applied the some arguments.
+     */
+    @Nonnull
+    default CharConsumer paccept(T t, char value1) {
+        return (value2) -> this.accept(t, value1, value2);
+    }
+
+    /**
+     * Applies this consumer partially to some arguments of this one, producing a {@link ObjCharConsumer} as result.
+     *
+     * @param value1 The second argument to this consumer used to partially apply this function
+     * @return A {@code ObjCharConsumer} that represents this consumer partially applied the some arguments.
+     */
+    @Nonnull
+    default ObjCharConsumer<T> paccept(char value1) {
+        return (t, value2) -> this.accept(t, value1, value2);
+    }
+
+    /**
+     * Applies this consumer partially to some arguments of this one, producing a {@link Consumer2} as result.
+     *
+     * @param value1 The second argument to this consumer used to partially apply this function
+     * @param value2 The third argument to this consumer used to partially apply this function
+     * @return A {@code Consumer2} that represents this consumer partially applied the some arguments.
+     */
+    @Nonnull
+    default Consumer2<T> paccept(char value1, char value2) {
+        return (t) -> this.accept(t, value1, value2);
+    }
 
     /**
      * Returns the number of arguments for this consumer.

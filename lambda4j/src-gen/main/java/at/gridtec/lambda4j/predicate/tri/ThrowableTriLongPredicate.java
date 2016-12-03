@@ -48,6 +48,7 @@ import at.gridtec.lambda4j.operator.ternary.ThrowableLongTernaryOperator;
 import at.gridtec.lambda4j.operator.unary.ThrowableBooleanUnaryOperator;
 import at.gridtec.lambda4j.operator.unary.ThrowableLongUnaryOperator;
 import at.gridtec.lambda4j.predicate.ThrowableLongPredicate;
+import at.gridtec.lambda4j.predicate.bi.ThrowableBiLongPredicate;
 
 import org.apache.commons.lang3.tuple.Triple;
 
@@ -225,6 +226,31 @@ public interface ThrowableTriLongPredicate<X extends Throwable> extends Lambda {
      * @throws X Any throwable from this predicates action
      */
     boolean testThrows(long value1, long value2, long value3) throws X;
+
+    /**
+     * Applies this predicate partially to some arguments of this one, producing a {@link ThrowableBiLongPredicate} as
+     * result.
+     *
+     * @param value1 The first argument to this predicate used to partially apply this function
+     * @return A {@code ThrowableBiLongPredicate} that represents this predicate partially applied the some arguments.
+     */
+    @Nonnull
+    default ThrowableBiLongPredicate<X> ptestThrows(long value1) {
+        return (value2, value3) -> this.testThrows(value1, value2, value3);
+    }
+
+    /**
+     * Applies this predicate partially to some arguments of this one, producing a {@link ThrowableLongPredicate} as
+     * result.
+     *
+     * @param value1 The first argument to this predicate used to partially apply this function
+     * @param value2 The second argument to this predicate used to partially apply this function
+     * @return A {@code ThrowableLongPredicate} that represents this predicate partially applied the some arguments.
+     */
+    @Nonnull
+    default ThrowableLongPredicate<X> ptestThrows(long value1, long value2) {
+        return (value3) -> this.testThrows(value1, value2, value3);
+    }
 
     /**
      * Returns the number of arguments for this predicate.

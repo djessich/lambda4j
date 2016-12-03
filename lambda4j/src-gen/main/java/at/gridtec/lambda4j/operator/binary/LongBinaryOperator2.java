@@ -41,6 +41,7 @@ import at.gridtec.lambda4j.function.conversion.LongToCharFunction;
 import at.gridtec.lambda4j.function.conversion.LongToFloatFunction;
 import at.gridtec.lambda4j.function.conversion.LongToShortFunction;
 import at.gridtec.lambda4j.function.conversion.ShortToLongFunction;
+import at.gridtec.lambda4j.operator.unary.LongUnaryOperator2;
 import at.gridtec.lambda4j.predicate.bi.BiLongPredicate;
 
 import org.apache.commons.lang3.tuple.Pair;
@@ -191,6 +192,17 @@ public interface LongBinaryOperator2 extends Lambda, LongBinaryOperator {
      * @return The return value from the operator, which is its result.
      */
     long applyAsLong(long value1, long value2);
+
+    /**
+     * Applies this operator partially to some arguments of this one, producing a {@link LongUnaryOperator2} as result.
+     *
+     * @param value1 The first argument to this operator used to partially apply this function
+     * @return A {@code LongUnaryOperator2} that represents this operator partially applied the some arguments.
+     */
+    @Nonnull
+    default LongUnaryOperator2 papplyAsLong(long value1) {
+        return (value2) -> this.applyAsLong(value1, value2);
+    }
 
     /**
      * Returns the number of arguments for this operator.

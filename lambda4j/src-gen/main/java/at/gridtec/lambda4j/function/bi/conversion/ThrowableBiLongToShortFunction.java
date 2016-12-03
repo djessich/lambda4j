@@ -164,6 +164,19 @@ public interface ThrowableBiLongToShortFunction<X extends Throwable> extends Lam
     short applyAsShortThrows(long value1, long value2) throws X;
 
     /**
+     * Applies this function partially to some arguments of this one, producing a {@link ThrowableLongToShortFunction}
+     * as result.
+     *
+     * @param value1 The first argument to this function used to partially apply this function
+     * @return A {@code ThrowableLongToShortFunction} that represents this function partially applied the some
+     * arguments.
+     */
+    @Nonnull
+    default ThrowableLongToShortFunction<X> papplyAsShortThrows(long value1) {
+        return (value2) -> this.applyAsShortThrows(value1, value2);
+    }
+
+    /**
      * Returns the number of arguments for this function.
      *
      * @return The number of arguments for this function.

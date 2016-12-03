@@ -22,6 +22,7 @@ import at.gridtec.lambda4j.core.exception.ThrownByFunctionalInterfaceException;
 import at.gridtec.lambda4j.core.util.ThrowableUtils;
 import at.gridtec.lambda4j.function.ThrowableFunction;
 import at.gridtec.lambda4j.function.ThrowableLongFunction;
+import at.gridtec.lambda4j.function.bi.to.ThrowableToLongBiFunction;
 import at.gridtec.lambda4j.function.conversion.ThrowableLongToByteFunction;
 import at.gridtec.lambda4j.function.conversion.ThrowableLongToCharFunction;
 import at.gridtec.lambda4j.function.conversion.ThrowableLongToDoubleFunction;
@@ -204,6 +205,31 @@ public interface ThrowableToLongTriFunction<T, U, V, X extends Throwable> extend
     default long applyAsLongThrows(@Nonnull Triple<T, U, V> tuple) throws X {
         Objects.requireNonNull(tuple);
         return applyAsLongThrows(tuple.getLeft(), tuple.getMiddle(), tuple.getRight());
+    }
+
+    /**
+     * Applies this function partially to some arguments of this one, producing a {@link ThrowableToLongBiFunction} as
+     * result.
+     *
+     * @param t The first argument to this function used to partially apply this function
+     * @return A {@code ThrowableToLongBiFunction} that represents this function partially applied the some arguments.
+     */
+    @Nonnull
+    default ThrowableToLongBiFunction<U, V, X> papplyAsLongThrows(T t) {
+        return (u, v) -> this.applyAsLongThrows(t, u, v);
+    }
+
+    /**
+     * Applies this function partially to some arguments of this one, producing a {@link ThrowableToLongFunction} as
+     * result.
+     *
+     * @param t The first argument to this function used to partially apply this function
+     * @param u The second argument to this function used to partially apply this function
+     * @return A {@code ThrowableToLongFunction} that represents this function partially applied the some arguments.
+     */
+    @Nonnull
+    default ThrowableToLongFunction<V, X> papplyAsLongThrows(T t, U u) {
+        return (v) -> this.applyAsLongThrows(t, u, v);
     }
 
     /**

@@ -51,6 +51,7 @@ import at.gridtec.lambda4j.function.tri.conversion.ThrowableTriIntToShortFunctio
 import at.gridtec.lambda4j.function.tri.conversion.ThrowableTriLongToIntFunction;
 import at.gridtec.lambda4j.function.tri.conversion.ThrowableTriShortToIntFunction;
 import at.gridtec.lambda4j.function.tri.to.ThrowableToIntTriFunction;
+import at.gridtec.lambda4j.operator.binary.ThrowableIntBinaryOperator;
 import at.gridtec.lambda4j.operator.unary.ThrowableIntUnaryOperator;
 import at.gridtec.lambda4j.predicate.ThrowableIntPredicate;
 import at.gridtec.lambda4j.predicate.tri.ThrowableTriIntPredicate;
@@ -190,6 +191,31 @@ public interface ThrowableIntTernaryOperator<X extends Throwable> extends Lambda
      * @throws X Any throwable from this operators action
      */
     int applyAsIntThrows(int value1, int value2, int value3) throws X;
+
+    /**
+     * Applies this operator partially to some arguments of this one, producing a {@link ThrowableIntBinaryOperator} as
+     * result.
+     *
+     * @param value1 The first argument to this operator used to partially apply this function
+     * @return A {@code ThrowableIntBinaryOperator} that represents this operator partially applied the some arguments.
+     */
+    @Nonnull
+    default ThrowableIntBinaryOperator<X> papplyAsIntThrows(int value1) {
+        return (value2, value3) -> this.applyAsIntThrows(value1, value2, value3);
+    }
+
+    /**
+     * Applies this operator partially to some arguments of this one, producing a {@link ThrowableIntUnaryOperator} as
+     * result.
+     *
+     * @param value1 The first argument to this operator used to partially apply this function
+     * @param value2 The second argument to this operator used to partially apply this function
+     * @return A {@code ThrowableIntUnaryOperator} that represents this operator partially applied the some arguments.
+     */
+    @Nonnull
+    default ThrowableIntUnaryOperator<X> papplyAsIntThrows(int value1, int value2) {
+        return (value3) -> this.applyAsIntThrows(value1, value2, value3);
+    }
 
     /**
      * Returns the number of arguments for this operator.

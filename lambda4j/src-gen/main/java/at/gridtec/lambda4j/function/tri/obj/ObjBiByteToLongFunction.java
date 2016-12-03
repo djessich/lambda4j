@@ -22,6 +22,8 @@ import at.gridtec.lambda4j.function.ByteFunction;
 import at.gridtec.lambda4j.function.CharFunction;
 import at.gridtec.lambda4j.function.FloatFunction;
 import at.gridtec.lambda4j.function.ShortFunction;
+import at.gridtec.lambda4j.function.bi.conversion.BiByteToLongFunction;
+import at.gridtec.lambda4j.function.bi.obj.ObjByteToLongFunction;
 import at.gridtec.lambda4j.function.conversion.BooleanToByteFunction;
 import at.gridtec.lambda4j.function.conversion.ByteToLongFunction;
 import at.gridtec.lambda4j.function.conversion.CharToByteFunction;
@@ -34,6 +36,7 @@ import at.gridtec.lambda4j.function.conversion.LongToFloatFunction;
 import at.gridtec.lambda4j.function.conversion.LongToShortFunction;
 import at.gridtec.lambda4j.function.conversion.ShortToByteFunction;
 import at.gridtec.lambda4j.function.to.ToByteFunction;
+import at.gridtec.lambda4j.function.to.ToLongFunction2;
 import at.gridtec.lambda4j.function.tri.TriFunction;
 import at.gridtec.lambda4j.function.tri.conversion.TriBooleanToLongFunction;
 import at.gridtec.lambda4j.function.tri.conversion.TriByteToLongFunction;
@@ -184,6 +187,54 @@ public interface ObjBiByteToLongFunction<T> extends Lambda {
      * @return The return value from the function, which is its result.
      */
     long applyAsLong(T t, byte value1, byte value2);
+
+    /**
+     * Applies this function partially to some arguments of this one, producing a {@link BiByteToLongFunction} as
+     * result.
+     *
+     * @param t The first argument to this function used to partially apply this function
+     * @return A {@code BiByteToLongFunction} that represents this function partially applied the some arguments.
+     */
+    @Nonnull
+    default BiByteToLongFunction papplyAsLong(T t) {
+        return (value1, value2) -> this.applyAsLong(t, value1, value2);
+    }
+
+    /**
+     * Applies this function partially to some arguments of this one, producing a {@link ByteToLongFunction} as result.
+     *
+     * @param t The first argument to this function used to partially apply this function
+     * @param value1 The second argument to this function used to partially apply this function
+     * @return A {@code ByteToLongFunction} that represents this function partially applied the some arguments.
+     */
+    @Nonnull
+    default ByteToLongFunction papplyAsLong(T t, byte value1) {
+        return (value2) -> this.applyAsLong(t, value1, value2);
+    }
+
+    /**
+     * Applies this function partially to some arguments of this one, producing a {@link ObjByteToLongFunction} as
+     * result.
+     *
+     * @param value1 The second argument to this function used to partially apply this function
+     * @return A {@code ObjByteToLongFunction} that represents this function partially applied the some arguments.
+     */
+    @Nonnull
+    default ObjByteToLongFunction<T> papplyAsLong(byte value1) {
+        return (t, value2) -> this.applyAsLong(t, value1, value2);
+    }
+
+    /**
+     * Applies this function partially to some arguments of this one, producing a {@link ToLongFunction2} as result.
+     *
+     * @param value1 The second argument to this function used to partially apply this function
+     * @param value2 The third argument to this function used to partially apply this function
+     * @return A {@code ToLongFunction2} that represents this function partially applied the some arguments.
+     */
+    @Nonnull
+    default ToLongFunction2<T> papplyAsLong(byte value1, byte value2) {
+        return (t) -> this.applyAsLong(t, value1, value2);
+    }
 
     /**
      * Returns the number of arguments for this function.

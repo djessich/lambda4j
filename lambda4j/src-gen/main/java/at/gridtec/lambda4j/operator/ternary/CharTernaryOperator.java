@@ -48,6 +48,7 @@ import at.gridtec.lambda4j.function.tri.conversion.TriIntToCharFunction;
 import at.gridtec.lambda4j.function.tri.conversion.TriLongToCharFunction;
 import at.gridtec.lambda4j.function.tri.conversion.TriShortToCharFunction;
 import at.gridtec.lambda4j.function.tri.to.ToCharTriFunction;
+import at.gridtec.lambda4j.operator.binary.CharBinaryOperator;
 import at.gridtec.lambda4j.operator.unary.CharUnaryOperator;
 import at.gridtec.lambda4j.predicate.CharPredicate;
 import at.gridtec.lambda4j.predicate.tri.TriCharPredicate;
@@ -172,6 +173,29 @@ public interface CharTernaryOperator extends Lambda {
      * @return The return value from the operator, which is its result.
      */
     char applyAsChar(char value1, char value2, char value3);
+
+    /**
+     * Applies this operator partially to some arguments of this one, producing a {@link CharBinaryOperator} as result.
+     *
+     * @param value1 The first argument to this operator used to partially apply this function
+     * @return A {@code CharBinaryOperator} that represents this operator partially applied the some arguments.
+     */
+    @Nonnull
+    default CharBinaryOperator papplyAsChar(char value1) {
+        return (value2, value3) -> this.applyAsChar(value1, value2, value3);
+    }
+
+    /**
+     * Applies this operator partially to some arguments of this one, producing a {@link CharUnaryOperator} as result.
+     *
+     * @param value1 The first argument to this operator used to partially apply this function
+     * @param value2 The second argument to this operator used to partially apply this function
+     * @return A {@code CharUnaryOperator} that represents this operator partially applied the some arguments.
+     */
+    @Nonnull
+    default CharUnaryOperator papplyAsChar(char value1, char value2) {
+        return (value3) -> this.applyAsChar(value1, value2, value3);
+    }
 
     /**
      * Returns the number of arguments for this operator.

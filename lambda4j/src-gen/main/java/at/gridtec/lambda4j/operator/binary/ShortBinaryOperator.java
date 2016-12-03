@@ -191,6 +191,17 @@ public interface ShortBinaryOperator extends Lambda {
     short applyAsShort(short value1, short value2);
 
     /**
+     * Applies this operator partially to some arguments of this one, producing a {@link ShortUnaryOperator} as result.
+     *
+     * @param value1 The first argument to this operator used to partially apply this function
+     * @return A {@code ShortUnaryOperator} that represents this operator partially applied the some arguments.
+     */
+    @Nonnull
+    default ShortUnaryOperator papplyAsShort(short value1) {
+        return (value2) -> this.applyAsShort(value1, value2);
+    }
+
+    /**
      * Returns the number of arguments for this operator.
      *
      * @return The number of arguments for this operator.

@@ -29,6 +29,8 @@ import at.gridtec.lambda4j.function.ThrowableFunction;
 import at.gridtec.lambda4j.function.ThrowableIntFunction;
 import at.gridtec.lambda4j.function.ThrowableLongFunction;
 import at.gridtec.lambda4j.function.ThrowableShortFunction;
+import at.gridtec.lambda4j.function.bi.conversion.ThrowableBiBooleanToShortFunction;
+import at.gridtec.lambda4j.function.bi.obj.ThrowableObjBooleanToShortFunction;
 import at.gridtec.lambda4j.function.conversion.ThrowableBooleanToShortFunction;
 import at.gridtec.lambda4j.function.conversion.ThrowableShortToByteFunction;
 import at.gridtec.lambda4j.function.conversion.ThrowableShortToCharFunction;
@@ -203,6 +205,59 @@ public interface ThrowableObjBiBooleanToShortFunction<T, X extends Throwable> ex
      * @throws X Any throwable from this functions action
      */
     short applyAsShortThrows(T t, boolean value1, boolean value2) throws X;
+
+    /**
+     * Applies this function partially to some arguments of this one, producing a {@link
+     * ThrowableBiBooleanToShortFunction} as result.
+     *
+     * @param t The first argument to this function used to partially apply this function
+     * @return A {@code ThrowableBiBooleanToShortFunction} that represents this function partially applied the some
+     * arguments.
+     */
+    @Nonnull
+    default ThrowableBiBooleanToShortFunction<X> papplyAsShortThrows(T t) {
+        return (value1, value2) -> this.applyAsShortThrows(t, value1, value2);
+    }
+
+    /**
+     * Applies this function partially to some arguments of this one, producing a {@link
+     * ThrowableBooleanToShortFunction} as result.
+     *
+     * @param t The first argument to this function used to partially apply this function
+     * @param value1 The second argument to this function used to partially apply this function
+     * @return A {@code ThrowableBooleanToShortFunction} that represents this function partially applied the some
+     * arguments.
+     */
+    @Nonnull
+    default ThrowableBooleanToShortFunction<X> papplyAsShortThrows(T t, boolean value1) {
+        return (value2) -> this.applyAsShortThrows(t, value1, value2);
+    }
+
+    /**
+     * Applies this function partially to some arguments of this one, producing a {@link
+     * ThrowableObjBooleanToShortFunction} as result.
+     *
+     * @param value1 The second argument to this function used to partially apply this function
+     * @return A {@code ThrowableObjBooleanToShortFunction} that represents this function partially applied the some
+     * arguments.
+     */
+    @Nonnull
+    default ThrowableObjBooleanToShortFunction<T, X> papplyAsShortThrows(boolean value1) {
+        return (t, value2) -> this.applyAsShortThrows(t, value1, value2);
+    }
+
+    /**
+     * Applies this function partially to some arguments of this one, producing a {@link ThrowableToShortFunction} as
+     * result.
+     *
+     * @param value1 The second argument to this function used to partially apply this function
+     * @param value2 The third argument to this function used to partially apply this function
+     * @return A {@code ThrowableToShortFunction} that represents this function partially applied the some arguments.
+     */
+    @Nonnull
+    default ThrowableToShortFunction<T, X> papplyAsShortThrows(boolean value1, boolean value2) {
+        return (t) -> this.applyAsShortThrows(t, value1, value2);
+    }
 
     /**
      * Returns the number of arguments for this function.

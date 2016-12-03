@@ -29,6 +29,8 @@ import at.gridtec.lambda4j.function.ThrowableFunction;
 import at.gridtec.lambda4j.function.ThrowableIntFunction;
 import at.gridtec.lambda4j.function.ThrowableLongFunction;
 import at.gridtec.lambda4j.function.ThrowableShortFunction;
+import at.gridtec.lambda4j.function.bi.conversion.ThrowableBiShortToFloatFunction;
+import at.gridtec.lambda4j.function.bi.obj.ThrowableObjShortToFloatFunction;
 import at.gridtec.lambda4j.function.conversion.ThrowableBooleanToShortFunction;
 import at.gridtec.lambda4j.function.conversion.ThrowableByteToShortFunction;
 import at.gridtec.lambda4j.function.conversion.ThrowableCharToShortFunction;
@@ -202,6 +204,59 @@ public interface ThrowableObjBiShortToFloatFunction<T, X extends Throwable> exte
      * @throws X Any throwable from this functions action
      */
     float applyAsFloatThrows(T t, short value1, short value2) throws X;
+
+    /**
+     * Applies this function partially to some arguments of this one, producing a {@link
+     * ThrowableBiShortToFloatFunction} as result.
+     *
+     * @param t The first argument to this function used to partially apply this function
+     * @return A {@code ThrowableBiShortToFloatFunction} that represents this function partially applied the some
+     * arguments.
+     */
+    @Nonnull
+    default ThrowableBiShortToFloatFunction<X> papplyAsFloatThrows(T t) {
+        return (value1, value2) -> this.applyAsFloatThrows(t, value1, value2);
+    }
+
+    /**
+     * Applies this function partially to some arguments of this one, producing a {@link ThrowableShortToFloatFunction}
+     * as result.
+     *
+     * @param t The first argument to this function used to partially apply this function
+     * @param value1 The second argument to this function used to partially apply this function
+     * @return A {@code ThrowableShortToFloatFunction} that represents this function partially applied the some
+     * arguments.
+     */
+    @Nonnull
+    default ThrowableShortToFloatFunction<X> papplyAsFloatThrows(T t, short value1) {
+        return (value2) -> this.applyAsFloatThrows(t, value1, value2);
+    }
+
+    /**
+     * Applies this function partially to some arguments of this one, producing a {@link
+     * ThrowableObjShortToFloatFunction} as result.
+     *
+     * @param value1 The second argument to this function used to partially apply this function
+     * @return A {@code ThrowableObjShortToFloatFunction} that represents this function partially applied the some
+     * arguments.
+     */
+    @Nonnull
+    default ThrowableObjShortToFloatFunction<T, X> papplyAsFloatThrows(short value1) {
+        return (t, value2) -> this.applyAsFloatThrows(t, value1, value2);
+    }
+
+    /**
+     * Applies this function partially to some arguments of this one, producing a {@link ThrowableToFloatFunction} as
+     * result.
+     *
+     * @param value1 The second argument to this function used to partially apply this function
+     * @param value2 The third argument to this function used to partially apply this function
+     * @return A {@code ThrowableToFloatFunction} that represents this function partially applied the some arguments.
+     */
+    @Nonnull
+    default ThrowableToFloatFunction<T, X> papplyAsFloatThrows(short value1, short value2) {
+        return (t) -> this.applyAsFloatThrows(t, value1, value2);
+    }
 
     /**
      * Returns the number of arguments for this function.

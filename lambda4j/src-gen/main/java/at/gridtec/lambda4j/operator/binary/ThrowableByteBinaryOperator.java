@@ -209,6 +209,18 @@ public interface ThrowableByteBinaryOperator<X extends Throwable> extends Lambda
     byte applyAsByteThrows(byte value1, byte value2) throws X;
 
     /**
+     * Applies this operator partially to some arguments of this one, producing a {@link ThrowableByteUnaryOperator} as
+     * result.
+     *
+     * @param value1 The first argument to this operator used to partially apply this function
+     * @return A {@code ThrowableByteUnaryOperator} that represents this operator partially applied the some arguments.
+     */
+    @Nonnull
+    default ThrowableByteUnaryOperator<X> papplyAsByteThrows(byte value1) {
+        return (value2) -> this.applyAsByteThrows(value1, value2);
+    }
+
+    /**
      * Returns the number of arguments for this operator.
      *
      * @return The number of arguments for this operator.

@@ -148,6 +148,18 @@ public interface BiDoubleToCharFunction extends Lambda {
     char applyAsChar(double value1, double value2);
 
     /**
+     * Applies this function partially to some arguments of this one, producing a {@link DoubleToCharFunction} as
+     * result.
+     *
+     * @param value1 The first argument to this function used to partially apply this function
+     * @return A {@code DoubleToCharFunction} that represents this function partially applied the some arguments.
+     */
+    @Nonnull
+    default DoubleToCharFunction papplyAsChar(double value1) {
+        return (value2) -> this.applyAsChar(value1, value2);
+    }
+
+    /**
      * Returns the number of arguments for this function.
      *
      * @return The number of arguments for this function.

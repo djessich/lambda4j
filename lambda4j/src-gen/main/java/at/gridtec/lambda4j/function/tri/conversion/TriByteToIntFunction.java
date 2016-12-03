@@ -17,6 +17,7 @@ package at.gridtec.lambda4j.function.tri.conversion;
 
 import at.gridtec.lambda4j.Lambda;
 import at.gridtec.lambda4j.consumer.tri.TriByteConsumer;
+import at.gridtec.lambda4j.function.bi.conversion.BiByteToIntFunction;
 import at.gridtec.lambda4j.function.conversion.BooleanToByteFunction;
 import at.gridtec.lambda4j.function.conversion.ByteToIntFunction;
 import at.gridtec.lambda4j.function.conversion.CharToByteFunction;
@@ -163,6 +164,29 @@ public interface TriByteToIntFunction extends Lambda {
      * @return The return value from the function, which is its result.
      */
     int applyAsInt(byte value1, byte value2, byte value3);
+
+    /**
+     * Applies this function partially to some arguments of this one, producing a {@link BiByteToIntFunction} as result.
+     *
+     * @param value1 The first argument to this function used to partially apply this function
+     * @return A {@code BiByteToIntFunction} that represents this function partially applied the some arguments.
+     */
+    @Nonnull
+    default BiByteToIntFunction papplyAsInt(byte value1) {
+        return (value2, value3) -> this.applyAsInt(value1, value2, value3);
+    }
+
+    /**
+     * Applies this function partially to some arguments of this one, producing a {@link ByteToIntFunction} as result.
+     *
+     * @param value1 The first argument to this function used to partially apply this function
+     * @param value2 The second argument to this function used to partially apply this function
+     * @return A {@code ByteToIntFunction} that represents this function partially applied the some arguments.
+     */
+    @Nonnull
+    default ByteToIntFunction papplyAsInt(byte value1, byte value2) {
+        return (value3) -> this.applyAsInt(value1, value2, value3);
+    }
 
     /**
      * Returns the number of arguments for this function.

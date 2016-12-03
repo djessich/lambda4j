@@ -40,6 +40,8 @@ import at.gridtec.lambda4j.function.tri.conversion.TriLongToShortFunction;
 import at.gridtec.lambda4j.operator.ternary.BooleanTernaryOperator;
 import at.gridtec.lambda4j.operator.ternary.LongTernaryOperator;
 import at.gridtec.lambda4j.operator.unary.BooleanUnaryOperator;
+import at.gridtec.lambda4j.predicate.LongPredicate2;
+import at.gridtec.lambda4j.predicate.bi.BiLongPredicate;
 
 import org.apache.commons.lang3.tuple.Triple;
 
@@ -204,6 +206,29 @@ public interface TriLongPredicate extends Lambda {
      * @return The return value from the predicate, which is its result.
      */
     boolean test(long value1, long value2, long value3);
+
+    /**
+     * Applies this predicate partially to some arguments of this one, producing a {@link BiLongPredicate} as result.
+     *
+     * @param value1 The first argument to this predicate used to partially apply this function
+     * @return A {@code BiLongPredicate} that represents this predicate partially applied the some arguments.
+     */
+    @Nonnull
+    default BiLongPredicate ptest(long value1) {
+        return (value2, value3) -> this.test(value1, value2, value3);
+    }
+
+    /**
+     * Applies this predicate partially to some arguments of this one, producing a {@link LongPredicate2} as result.
+     *
+     * @param value1 The first argument to this predicate used to partially apply this function
+     * @param value2 The second argument to this predicate used to partially apply this function
+     * @return A {@code LongPredicate2} that represents this predicate partially applied the some arguments.
+     */
+    @Nonnull
+    default LongPredicate2 ptest(long value1, long value2) {
+        return (value3) -> this.test(value1, value2, value3);
+    }
 
     /**
      * Returns the number of arguments for this predicate.

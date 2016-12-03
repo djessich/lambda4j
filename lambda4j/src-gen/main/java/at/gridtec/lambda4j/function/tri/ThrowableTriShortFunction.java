@@ -22,6 +22,7 @@ import at.gridtec.lambda4j.core.exception.ThrownByFunctionalInterfaceException;
 import at.gridtec.lambda4j.core.util.ThrowableUtils;
 import at.gridtec.lambda4j.function.ThrowableFunction;
 import at.gridtec.lambda4j.function.ThrowableShortFunction;
+import at.gridtec.lambda4j.function.bi.ThrowableBiShortFunction;
 import at.gridtec.lambda4j.function.conversion.ThrowableBooleanToShortFunction;
 import at.gridtec.lambda4j.function.conversion.ThrowableByteToShortFunction;
 import at.gridtec.lambda4j.function.conversion.ThrowableCharToShortFunction;
@@ -193,6 +194,31 @@ public interface ThrowableTriShortFunction<R, X extends Throwable> extends Lambd
      * @throws X Any throwable from this functions action
      */
     R applyThrows(short value1, short value2, short value3) throws X;
+
+    /**
+     * Applies this function partially to some arguments of this one, producing a {@link ThrowableBiShortFunction} as
+     * result.
+     *
+     * @param value1 The first argument to this function used to partially apply this function
+     * @return A {@code ThrowableBiShortFunction} that represents this function partially applied the some arguments.
+     */
+    @Nonnull
+    default ThrowableBiShortFunction<R, X> papplyThrows(short value1) {
+        return (value2, value3) -> this.applyThrows(value1, value2, value3);
+    }
+
+    /**
+     * Applies this function partially to some arguments of this one, producing a {@link ThrowableShortFunction} as
+     * result.
+     *
+     * @param value1 The first argument to this function used to partially apply this function
+     * @param value2 The second argument to this function used to partially apply this function
+     * @return A {@code ThrowableShortFunction} that represents this function partially applied the some arguments.
+     */
+    @Nonnull
+    default ThrowableShortFunction<R, X> papplyThrows(short value1, short value2) {
+        return (value3) -> this.applyThrows(value1, value2, value3);
+    }
 
     /**
      * Returns the number of arguments for this function.

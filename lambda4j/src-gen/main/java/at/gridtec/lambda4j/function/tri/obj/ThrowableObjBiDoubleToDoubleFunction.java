@@ -29,6 +29,7 @@ import at.gridtec.lambda4j.function.ThrowableFunction;
 import at.gridtec.lambda4j.function.ThrowableIntFunction;
 import at.gridtec.lambda4j.function.ThrowableLongFunction;
 import at.gridtec.lambda4j.function.ThrowableShortFunction;
+import at.gridtec.lambda4j.function.bi.obj.ThrowableObjDoubleToDoubleFunction;
 import at.gridtec.lambda4j.function.conversion.ThrowableBooleanToDoubleFunction;
 import at.gridtec.lambda4j.function.conversion.ThrowableByteToDoubleFunction;
 import at.gridtec.lambda4j.function.conversion.ThrowableCharToDoubleFunction;
@@ -52,6 +53,7 @@ import at.gridtec.lambda4j.function.tri.conversion.ThrowableTriIntToDoubleFuncti
 import at.gridtec.lambda4j.function.tri.conversion.ThrowableTriLongToDoubleFunction;
 import at.gridtec.lambda4j.function.tri.conversion.ThrowableTriShortToDoubleFunction;
 import at.gridtec.lambda4j.function.tri.to.ThrowableToDoubleTriFunction;
+import at.gridtec.lambda4j.operator.binary.ThrowableDoubleBinaryOperator;
 import at.gridtec.lambda4j.operator.ternary.ThrowableDoubleTernaryOperator;
 import at.gridtec.lambda4j.operator.unary.ThrowableDoubleUnaryOperator;
 import at.gridtec.lambda4j.predicate.ThrowableDoublePredicate;
@@ -201,6 +203,59 @@ public interface ThrowableObjBiDoubleToDoubleFunction<T, X extends Throwable> ex
      * @throws X Any throwable from this functions action
      */
     double applyAsDoubleThrows(T t, double value1, double value2) throws X;
+
+    /**
+     * Applies this operator partially to some arguments of this one, producing a {@link ThrowableDoubleBinaryOperator}
+     * as result.
+     *
+     * @param t The first argument to this function used to partially apply this function
+     * @return A {@code ThrowableDoubleBinaryOperator} that represents this operator partially applied the some
+     * arguments.
+     */
+    @Nonnull
+    default ThrowableDoubleBinaryOperator<X> papplyAsDoubleThrows(T t) {
+        return (value1, value2) -> this.applyAsDoubleThrows(t, value1, value2);
+    }
+
+    /**
+     * Applies this operator partially to some arguments of this one, producing a {@link ThrowableDoubleUnaryOperator}
+     * as result.
+     *
+     * @param t The first argument to this function used to partially apply this function
+     * @param value1 The second argument to this function used to partially apply this function
+     * @return A {@code ThrowableDoubleUnaryOperator} that represents this operator partially applied the some
+     * arguments.
+     */
+    @Nonnull
+    default ThrowableDoubleUnaryOperator<X> papplyAsDoubleThrows(T t, double value1) {
+        return (value2) -> this.applyAsDoubleThrows(t, value1, value2);
+    }
+
+    /**
+     * Applies this operator partially to some arguments of this one, producing a {@link
+     * ThrowableObjDoubleToDoubleFunction} as result.
+     *
+     * @param value1 The second argument to this function used to partially apply this function
+     * @return A {@code ThrowableObjDoubleToDoubleFunction} that represents this operator partially applied the some
+     * arguments.
+     */
+    @Nonnull
+    default ThrowableObjDoubleToDoubleFunction<T, X> papplyAsDoubleThrows(double value1) {
+        return (t, value2) -> this.applyAsDoubleThrows(t, value1, value2);
+    }
+
+    /**
+     * Applies this operator partially to some arguments of this one, producing a {@link ThrowableToDoubleFunction} as
+     * result.
+     *
+     * @param value1 The second argument to this function used to partially apply this function
+     * @param value2 The third argument to this function used to partially apply this function
+     * @return A {@code ThrowableToDoubleFunction} that represents this operator partially applied the some arguments.
+     */
+    @Nonnull
+    default ThrowableToDoubleFunction<T, X> papplyAsDoubleThrows(double value1, double value2) {
+        return (t) -> this.applyAsDoubleThrows(t, value1, value2);
+    }
 
     /**
      * Returns the number of arguments for this function.

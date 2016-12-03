@@ -199,6 +199,29 @@ public interface ThrowableObjDoubleFunction<T, R, X extends Throwable> extends L
     R applyThrows(T t, double value) throws X;
 
     /**
+     * Applies this function partially to some arguments of this one, producing a {@link ThrowableDoubleFunction} as
+     * result.
+     *
+     * @param t The first argument to this function used to partially apply this function
+     * @return A {@code ThrowableDoubleFunction} that represents this function partially applied the some arguments.
+     */
+    @Nonnull
+    default ThrowableDoubleFunction<R, X> papplyThrows(T t) {
+        return (value) -> this.applyThrows(t, value);
+    }
+
+    /**
+     * Applies this function partially to some arguments of this one, producing a {@link ThrowableFunction} as result.
+     *
+     * @param value The second argument to this function used to partially apply this function
+     * @return A {@code ThrowableFunction} that represents this function partially applied the some arguments.
+     */
+    @Nonnull
+    default ThrowableFunction<T, R, X> papplyThrows(double value) {
+        return (t) -> this.applyThrows(t, value);
+    }
+
+    /**
      * Returns the number of arguments for this function.
      *
      * @return The number of arguments for this function.

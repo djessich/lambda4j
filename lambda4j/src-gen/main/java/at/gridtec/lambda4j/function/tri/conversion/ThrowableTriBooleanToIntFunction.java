@@ -22,6 +22,7 @@ import at.gridtec.lambda4j.core.exception.ThrownByFunctionalInterfaceException;
 import at.gridtec.lambda4j.core.util.ThrowableUtils;
 import at.gridtec.lambda4j.function.ThrowableFunction;
 import at.gridtec.lambda4j.function.ThrowableIntFunction;
+import at.gridtec.lambda4j.function.bi.conversion.ThrowableBiBooleanToIntFunction;
 import at.gridtec.lambda4j.function.conversion.ThrowableBooleanToIntFunction;
 import at.gridtec.lambda4j.function.conversion.ThrowableIntToByteFunction;
 import at.gridtec.lambda4j.function.conversion.ThrowableIntToCharFunction;
@@ -181,6 +182,33 @@ public interface ThrowableTriBooleanToIntFunction<X extends Throwable> extends L
      * @throws X Any throwable from this functions action
      */
     int applyAsIntThrows(boolean value1, boolean value2, boolean value3) throws X;
+
+    /**
+     * Applies this function partially to some arguments of this one, producing a {@link
+     * ThrowableBiBooleanToIntFunction} as result.
+     *
+     * @param value1 The first argument to this function used to partially apply this function
+     * @return A {@code ThrowableBiBooleanToIntFunction} that represents this function partially applied the some
+     * arguments.
+     */
+    @Nonnull
+    default ThrowableBiBooleanToIntFunction<X> papplyAsIntThrows(boolean value1) {
+        return (value2, value3) -> this.applyAsIntThrows(value1, value2, value3);
+    }
+
+    /**
+     * Applies this function partially to some arguments of this one, producing a {@link ThrowableBooleanToIntFunction}
+     * as result.
+     *
+     * @param value1 The first argument to this function used to partially apply this function
+     * @param value2 The second argument to this function used to partially apply this function
+     * @return A {@code ThrowableBooleanToIntFunction} that represents this function partially applied the some
+     * arguments.
+     */
+    @Nonnull
+    default ThrowableBooleanToIntFunction<X> papplyAsIntThrows(boolean value1, boolean value2) {
+        return (value3) -> this.applyAsIntThrows(value1, value2, value3);
+    }
 
     /**
      * Returns the number of arguments for this function.

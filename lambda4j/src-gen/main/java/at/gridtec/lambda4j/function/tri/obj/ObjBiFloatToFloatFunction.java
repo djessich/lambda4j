@@ -23,6 +23,7 @@ import at.gridtec.lambda4j.function.ByteFunction;
 import at.gridtec.lambda4j.function.CharFunction;
 import at.gridtec.lambda4j.function.FloatFunction;
 import at.gridtec.lambda4j.function.ShortFunction;
+import at.gridtec.lambda4j.function.bi.obj.ObjFloatToFloatFunction;
 import at.gridtec.lambda4j.function.conversion.BooleanToFloatFunction;
 import at.gridtec.lambda4j.function.conversion.ByteToFloatFunction;
 import at.gridtec.lambda4j.function.conversion.CharToFloatFunction;
@@ -46,6 +47,7 @@ import at.gridtec.lambda4j.function.tri.conversion.TriIntToFloatFunction;
 import at.gridtec.lambda4j.function.tri.conversion.TriLongToFloatFunction;
 import at.gridtec.lambda4j.function.tri.conversion.TriShortToFloatFunction;
 import at.gridtec.lambda4j.function.tri.to.ToFloatTriFunction;
+import at.gridtec.lambda4j.operator.binary.FloatBinaryOperator;
 import at.gridtec.lambda4j.operator.ternary.FloatTernaryOperator;
 import at.gridtec.lambda4j.operator.unary.FloatUnaryOperator;
 import at.gridtec.lambda4j.predicate.FloatPredicate;
@@ -183,6 +185,53 @@ public interface ObjBiFloatToFloatFunction<T> extends Lambda {
      * @return The return value from the function, which is its result.
      */
     float applyAsFloat(T t, float value1, float value2);
+
+    /**
+     * Applies this operator partially to some arguments of this one, producing a {@link FloatBinaryOperator} as result.
+     *
+     * @param t The first argument to this function used to partially apply this function
+     * @return A {@code FloatBinaryOperator} that represents this operator partially applied the some arguments.
+     */
+    @Nonnull
+    default FloatBinaryOperator papplyAsFloat(T t) {
+        return (value1, value2) -> this.applyAsFloat(t, value1, value2);
+    }
+
+    /**
+     * Applies this operator partially to some arguments of this one, producing a {@link FloatUnaryOperator} as result.
+     *
+     * @param t The first argument to this function used to partially apply this function
+     * @param value1 The second argument to this function used to partially apply this function
+     * @return A {@code FloatUnaryOperator} that represents this operator partially applied the some arguments.
+     */
+    @Nonnull
+    default FloatUnaryOperator papplyAsFloat(T t, float value1) {
+        return (value2) -> this.applyAsFloat(t, value1, value2);
+    }
+
+    /**
+     * Applies this operator partially to some arguments of this one, producing a {@link ObjFloatToFloatFunction} as
+     * result.
+     *
+     * @param value1 The second argument to this function used to partially apply this function
+     * @return A {@code ObjFloatToFloatFunction} that represents this operator partially applied the some arguments.
+     */
+    @Nonnull
+    default ObjFloatToFloatFunction<T> papplyAsFloat(float value1) {
+        return (t, value2) -> this.applyAsFloat(t, value1, value2);
+    }
+
+    /**
+     * Applies this operator partially to some arguments of this one, producing a {@link ToFloatFunction} as result.
+     *
+     * @param value1 The second argument to this function used to partially apply this function
+     * @param value2 The third argument to this function used to partially apply this function
+     * @return A {@code ToFloatFunction} that represents this operator partially applied the some arguments.
+     */
+    @Nonnull
+    default ToFloatFunction<T> papplyAsFloat(float value1, float value2) {
+        return (t) -> this.applyAsFloat(t, value1, value2);
+    }
 
     /**
      * Returns the number of arguments for this function.

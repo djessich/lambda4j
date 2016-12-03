@@ -208,6 +208,18 @@ public interface ThrowableToLongBiFunction<T, U, X extends Throwable> extends La
     }
 
     /**
+     * Applies this function partially to some arguments of this one, producing a {@link ThrowableToLongFunction} as
+     * result.
+     *
+     * @param t The first argument to this function used to partially apply this function
+     * @return A {@code ThrowableToLongFunction} that represents this function partially applied the some arguments.
+     */
+    @Nonnull
+    default ThrowableToLongFunction<U, X> papplyAsLongThrows(T t) {
+        return (u) -> this.applyAsLongThrows(t, u);
+    }
+
+    /**
      * Returns the number of arguments for this function.
      *
      * @return The number of arguments for this function.

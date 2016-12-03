@@ -54,6 +54,7 @@ import at.gridtec.lambda4j.predicate.ThrowableIntPredicate;
 import at.gridtec.lambda4j.predicate.ThrowableLongPredicate;
 import at.gridtec.lambda4j.predicate.ThrowablePredicate;
 import at.gridtec.lambda4j.predicate.ThrowableShortPredicate;
+import at.gridtec.lambda4j.predicate.bi.ThrowableBiPredicate;
 import at.gridtec.lambda4j.predicate.bi.obj.ThrowableObjBooleanPredicate;
 import at.gridtec.lambda4j.predicate.tri.ThrowableTriBytePredicate;
 import at.gridtec.lambda4j.predicate.tri.ThrowableTriCharPredicate;
@@ -280,6 +281,57 @@ public interface ThrowableBiObjBooleanPredicate<T, U, X extends Throwable> exten
     default boolean testThrows(@Nonnull Pair<T, U> tuple, boolean value) throws X {
         Objects.requireNonNull(tuple);
         return testThrows(tuple.getLeft(), tuple.getRight(), value);
+    }
+
+    /**
+     * Applies this operator partially to some arguments of this one, producing a {@link ThrowableObjBooleanPredicate}
+     * as result.
+     *
+     * @param t The first argument to this predicate used to partially apply this function
+     * @return A {@code ThrowableObjBooleanPredicate} that represents this operator partially applied the some
+     * arguments.
+     */
+    @Nonnull
+    default ThrowableObjBooleanPredicate<U, X> ptestThrows(T t) {
+        return (u, value) -> this.testThrows(t, u, value);
+    }
+
+    /**
+     * Applies this operator partially to some arguments of this one, producing a {@link ThrowableBooleanUnaryOperator}
+     * as result.
+     *
+     * @param t The first argument to this predicate used to partially apply this function
+     * @param u The second argument to this predicate used to partially apply this function
+     * @return A {@code ThrowableBooleanUnaryOperator} that represents this operator partially applied the some
+     * arguments.
+     */
+    @Nonnull
+    default ThrowableBooleanUnaryOperator<X> ptestThrows(T t, U u) {
+        return (value) -> this.testThrows(t, u, value);
+    }
+
+    /**
+     * Applies this operator partially to some arguments of this one, producing a {@link ThrowableBiPredicate} as
+     * result.
+     *
+     * @param value The third argument to this predicate used to partially apply this function
+     * @return A {@code ThrowableBiPredicate} that represents this operator partially applied the some arguments.
+     */
+    @Nonnull
+    default ThrowableBiPredicate<T, U, X> ptestThrows(boolean value) {
+        return (t, u) -> this.testThrows(t, u, value);
+    }
+
+    /**
+     * Applies this operator partially to some arguments of this one, producing a {@link ThrowablePredicate} as result.
+     *
+     * @param t The first argument to this predicate used to partially apply this function
+     * @param value The third argument to this predicate used to partially apply this function
+     * @return A {@code ThrowablePredicate} that represents this operator partially applied the some arguments.
+     */
+    @Nonnull
+    default ThrowablePredicate<U, X> ptestThrows(T t, boolean value) {
+        return (u) -> this.testThrows(t, u, value);
     }
 
     /**

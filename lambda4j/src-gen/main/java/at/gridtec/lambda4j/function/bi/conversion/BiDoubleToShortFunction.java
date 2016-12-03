@@ -148,6 +148,18 @@ public interface BiDoubleToShortFunction extends Lambda {
     short applyAsShort(double value1, double value2);
 
     /**
+     * Applies this function partially to some arguments of this one, producing a {@link DoubleToShortFunction} as
+     * result.
+     *
+     * @param value1 The first argument to this function used to partially apply this function
+     * @return A {@code DoubleToShortFunction} that represents this function partially applied the some arguments.
+     */
+    @Nonnull
+    default DoubleToShortFunction papplyAsShort(double value1) {
+        return (value2) -> this.applyAsShort(value1, value2);
+    }
+
+    /**
      * Returns the number of arguments for this function.
      *
      * @return The number of arguments for this function.

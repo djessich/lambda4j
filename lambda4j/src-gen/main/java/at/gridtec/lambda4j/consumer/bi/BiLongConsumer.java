@@ -16,6 +16,7 @@
 package at.gridtec.lambda4j.consumer.bi;
 
 import at.gridtec.lambda4j.Lambda;
+import at.gridtec.lambda4j.consumer.LongConsumer2;
 import at.gridtec.lambda4j.function.conversion.BooleanToLongFunction;
 import at.gridtec.lambda4j.function.conversion.ByteToLongFunction;
 import at.gridtec.lambda4j.function.conversion.CharToLongFunction;
@@ -112,6 +113,17 @@ public interface BiLongConsumer extends Lambda {
      * @param value2 The second argument to the consumer
      */
     void accept(long value1, long value2);
+
+    /**
+     * Applies this consumer partially to some arguments of this one, producing a {@link LongConsumer2} as result.
+     *
+     * @param value1 The first argument to this consumer used to partially apply this function
+     * @return A {@code LongConsumer2} that represents this consumer partially applied the some arguments.
+     */
+    @Nonnull
+    default LongConsumer2 paccept(long value1) {
+        return (value2) -> this.accept(value1, value2);
+    }
 
     /**
      * Returns the number of arguments for this consumer.

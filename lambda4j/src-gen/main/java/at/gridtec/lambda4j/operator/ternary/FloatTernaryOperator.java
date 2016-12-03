@@ -48,6 +48,7 @@ import at.gridtec.lambda4j.function.tri.conversion.TriIntToFloatFunction;
 import at.gridtec.lambda4j.function.tri.conversion.TriLongToFloatFunction;
 import at.gridtec.lambda4j.function.tri.conversion.TriShortToFloatFunction;
 import at.gridtec.lambda4j.function.tri.to.ToFloatTriFunction;
+import at.gridtec.lambda4j.operator.binary.FloatBinaryOperator;
 import at.gridtec.lambda4j.operator.unary.FloatUnaryOperator;
 import at.gridtec.lambda4j.predicate.FloatPredicate;
 import at.gridtec.lambda4j.predicate.tri.TriFloatPredicate;
@@ -172,6 +173,29 @@ public interface FloatTernaryOperator extends Lambda {
      * @return The return value from the operator, which is its result.
      */
     float applyAsFloat(float value1, float value2, float value3);
+
+    /**
+     * Applies this operator partially to some arguments of this one, producing a {@link FloatBinaryOperator} as result.
+     *
+     * @param value1 The first argument to this operator used to partially apply this function
+     * @return A {@code FloatBinaryOperator} that represents this operator partially applied the some arguments.
+     */
+    @Nonnull
+    default FloatBinaryOperator papplyAsFloat(float value1) {
+        return (value2, value3) -> this.applyAsFloat(value1, value2, value3);
+    }
+
+    /**
+     * Applies this operator partially to some arguments of this one, producing a {@link FloatUnaryOperator} as result.
+     *
+     * @param value1 The first argument to this operator used to partially apply this function
+     * @param value2 The second argument to this operator used to partially apply this function
+     * @return A {@code FloatUnaryOperator} that represents this operator partially applied the some arguments.
+     */
+    @Nonnull
+    default FloatUnaryOperator papplyAsFloat(float value1, float value2) {
+        return (value3) -> this.applyAsFloat(value1, value2, value3);
+    }
 
     /**
      * Returns the number of arguments for this operator.

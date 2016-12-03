@@ -22,6 +22,7 @@ import at.gridtec.lambda4j.core.exception.ThrownByFunctionalInterfaceException;
 import at.gridtec.lambda4j.core.util.ThrowableUtils;
 import at.gridtec.lambda4j.function.ThrowableDoubleFunction;
 import at.gridtec.lambda4j.function.ThrowableFunction;
+import at.gridtec.lambda4j.function.bi.conversion.ThrowableBiFloatToDoubleFunction;
 import at.gridtec.lambda4j.function.conversion.ThrowableBooleanToFloatFunction;
 import at.gridtec.lambda4j.function.conversion.ThrowableByteToFloatFunction;
 import at.gridtec.lambda4j.function.conversion.ThrowableCharToFloatFunction;
@@ -181,6 +182,33 @@ public interface ThrowableTriFloatToDoubleFunction<X extends Throwable> extends 
      * @throws X Any throwable from this functions action
      */
     double applyAsDoubleThrows(float value1, float value2, float value3) throws X;
+
+    /**
+     * Applies this function partially to some arguments of this one, producing a {@link
+     * ThrowableBiFloatToDoubleFunction} as result.
+     *
+     * @param value1 The first argument to this function used to partially apply this function
+     * @return A {@code ThrowableBiFloatToDoubleFunction} that represents this function partially applied the some
+     * arguments.
+     */
+    @Nonnull
+    default ThrowableBiFloatToDoubleFunction<X> papplyAsDoubleThrows(float value1) {
+        return (value2, value3) -> this.applyAsDoubleThrows(value1, value2, value3);
+    }
+
+    /**
+     * Applies this function partially to some arguments of this one, producing a {@link ThrowableFloatToDoubleFunction}
+     * as result.
+     *
+     * @param value1 The first argument to this function used to partially apply this function
+     * @param value2 The second argument to this function used to partially apply this function
+     * @return A {@code ThrowableFloatToDoubleFunction} that represents this function partially applied the some
+     * arguments.
+     */
+    @Nonnull
+    default ThrowableFloatToDoubleFunction<X> papplyAsDoubleThrows(float value1, float value2) {
+        return (value3) -> this.applyAsDoubleThrows(value1, value2, value3);
+    }
 
     /**
      * Returns the number of arguments for this function.

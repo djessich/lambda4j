@@ -51,6 +51,7 @@ import at.gridtec.lambda4j.function.tri.conversion.ThrowableTriShortToFloatFunct
 import at.gridtec.lambda4j.function.tri.conversion.ThrowableTriShortToIntFunction;
 import at.gridtec.lambda4j.function.tri.conversion.ThrowableTriShortToLongFunction;
 import at.gridtec.lambda4j.function.tri.to.ThrowableToShortTriFunction;
+import at.gridtec.lambda4j.operator.binary.ThrowableShortBinaryOperator;
 import at.gridtec.lambda4j.operator.unary.ThrowableShortUnaryOperator;
 import at.gridtec.lambda4j.predicate.ThrowableShortPredicate;
 import at.gridtec.lambda4j.predicate.tri.ThrowableTriShortPredicate;
@@ -190,6 +191,32 @@ public interface ThrowableShortTernaryOperator<X extends Throwable> extends Lamb
      * @throws X Any throwable from this operators action
      */
     short applyAsShortThrows(short value1, short value2, short value3) throws X;
+
+    /**
+     * Applies this operator partially to some arguments of this one, producing a {@link ThrowableShortBinaryOperator}
+     * as result.
+     *
+     * @param value1 The first argument to this operator used to partially apply this function
+     * @return A {@code ThrowableShortBinaryOperator} that represents this operator partially applied the some
+     * arguments.
+     */
+    @Nonnull
+    default ThrowableShortBinaryOperator<X> papplyAsShortThrows(short value1) {
+        return (value2, value3) -> this.applyAsShortThrows(value1, value2, value3);
+    }
+
+    /**
+     * Applies this operator partially to some arguments of this one, producing a {@link ThrowableShortUnaryOperator} as
+     * result.
+     *
+     * @param value1 The first argument to this operator used to partially apply this function
+     * @param value2 The second argument to this operator used to partially apply this function
+     * @return A {@code ThrowableShortUnaryOperator} that represents this operator partially applied the some arguments.
+     */
+    @Nonnull
+    default ThrowableShortUnaryOperator<X> papplyAsShortThrows(short value1, short value2) {
+        return (value3) -> this.applyAsShortThrows(value1, value2, value3);
+    }
 
     /**
      * Returns the number of arguments for this operator.

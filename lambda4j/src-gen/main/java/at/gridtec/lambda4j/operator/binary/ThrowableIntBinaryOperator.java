@@ -238,6 +238,18 @@ public interface ThrowableIntBinaryOperator<X extends Throwable> extends Lambda,
     }
 
     /**
+     * Applies this operator partially to some arguments of this one, producing a {@link ThrowableIntUnaryOperator} as
+     * result.
+     *
+     * @param value1 The first argument to this operator used to partially apply this function
+     * @return A {@code ThrowableIntUnaryOperator} that represents this operator partially applied the some arguments.
+     */
+    @Nonnull
+    default ThrowableIntUnaryOperator<X> papplyAsIntThrows(int value1) {
+        return (value2) -> this.applyAsIntThrows(value1, value2);
+    }
+
+    /**
      * Returns the number of arguments for this operator.
      *
      * @return The number of arguments for this operator.

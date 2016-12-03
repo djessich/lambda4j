@@ -164,6 +164,19 @@ public interface ThrowableBiDoubleToLongFunction<X extends Throwable> extends La
     long applyAsLongThrows(double value1, double value2) throws X;
 
     /**
+     * Applies this function partially to some arguments of this one, producing a {@link ThrowableDoubleToLongFunction}
+     * as result.
+     *
+     * @param value1 The first argument to this function used to partially apply this function
+     * @return A {@code ThrowableDoubleToLongFunction} that represents this function partially applied the some
+     * arguments.
+     */
+    @Nonnull
+    default ThrowableDoubleToLongFunction<X> papplyAsLongThrows(double value1) {
+        return (value2) -> this.applyAsLongThrows(value1, value2);
+    }
+
+    /**
      * Returns the number of arguments for this function.
      *
      * @return The number of arguments for this function.

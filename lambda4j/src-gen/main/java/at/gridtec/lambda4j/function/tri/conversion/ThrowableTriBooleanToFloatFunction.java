@@ -22,6 +22,7 @@ import at.gridtec.lambda4j.core.exception.ThrownByFunctionalInterfaceException;
 import at.gridtec.lambda4j.core.util.ThrowableUtils;
 import at.gridtec.lambda4j.function.ThrowableFloatFunction;
 import at.gridtec.lambda4j.function.ThrowableFunction;
+import at.gridtec.lambda4j.function.bi.conversion.ThrowableBiBooleanToFloatFunction;
 import at.gridtec.lambda4j.function.conversion.ThrowableBooleanToFloatFunction;
 import at.gridtec.lambda4j.function.conversion.ThrowableFloatToByteFunction;
 import at.gridtec.lambda4j.function.conversion.ThrowableFloatToCharFunction;
@@ -181,6 +182,33 @@ public interface ThrowableTriBooleanToFloatFunction<X extends Throwable> extends
      * @throws X Any throwable from this functions action
      */
     float applyAsFloatThrows(boolean value1, boolean value2, boolean value3) throws X;
+
+    /**
+     * Applies this function partially to some arguments of this one, producing a {@link
+     * ThrowableBiBooleanToFloatFunction} as result.
+     *
+     * @param value1 The first argument to this function used to partially apply this function
+     * @return A {@code ThrowableBiBooleanToFloatFunction} that represents this function partially applied the some
+     * arguments.
+     */
+    @Nonnull
+    default ThrowableBiBooleanToFloatFunction<X> papplyAsFloatThrows(boolean value1) {
+        return (value2, value3) -> this.applyAsFloatThrows(value1, value2, value3);
+    }
+
+    /**
+     * Applies this function partially to some arguments of this one, producing a {@link
+     * ThrowableBooleanToFloatFunction} as result.
+     *
+     * @param value1 The first argument to this function used to partially apply this function
+     * @param value2 The second argument to this function used to partially apply this function
+     * @return A {@code ThrowableBooleanToFloatFunction} that represents this function partially applied the some
+     * arguments.
+     */
+    @Nonnull
+    default ThrowableBooleanToFloatFunction<X> papplyAsFloatThrows(boolean value1, boolean value2) {
+        return (value3) -> this.applyAsFloatThrows(value1, value2, value3);
+    }
 
     /**
      * Returns the number of arguments for this function.

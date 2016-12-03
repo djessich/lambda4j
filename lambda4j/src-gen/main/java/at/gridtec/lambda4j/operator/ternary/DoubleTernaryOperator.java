@@ -41,6 +41,8 @@ import at.gridtec.lambda4j.function.tri.conversion.TriIntToDoubleFunction;
 import at.gridtec.lambda4j.function.tri.conversion.TriLongToDoubleFunction;
 import at.gridtec.lambda4j.function.tri.conversion.TriShortToDoubleFunction;
 import at.gridtec.lambda4j.function.tri.to.ToDoubleTriFunction;
+import at.gridtec.lambda4j.operator.binary.DoubleBinaryOperator2;
+import at.gridtec.lambda4j.operator.unary.DoubleUnaryOperator2;
 import at.gridtec.lambda4j.predicate.tri.TriDoublePredicate;
 
 import org.apache.commons.lang3.tuple.Triple;
@@ -172,6 +174,31 @@ public interface DoubleTernaryOperator extends Lambda {
      * @return The return value from the operator, which is its result.
      */
     double applyAsDouble(double value1, double value2, double value3);
+
+    /**
+     * Applies this operator partially to some arguments of this one, producing a {@link DoubleBinaryOperator2} as
+     * result.
+     *
+     * @param value1 The first argument to this operator used to partially apply this function
+     * @return A {@code DoubleBinaryOperator2} that represents this operator partially applied the some arguments.
+     */
+    @Nonnull
+    default DoubleBinaryOperator2 papplyAsDouble(double value1) {
+        return (value2, value3) -> this.applyAsDouble(value1, value2, value3);
+    }
+
+    /**
+     * Applies this operator partially to some arguments of this one, producing a {@link DoubleUnaryOperator2} as
+     * result.
+     *
+     * @param value1 The first argument to this operator used to partially apply this function
+     * @param value2 The second argument to this operator used to partially apply this function
+     * @return A {@code DoubleUnaryOperator2} that represents this operator partially applied the some arguments.
+     */
+    @Nonnull
+    default DoubleUnaryOperator2 papplyAsDouble(double value1, double value2) {
+        return (value3) -> this.applyAsDouble(value1, value2, value3);
+    }
 
     /**
      * Returns the number of arguments for this operator.

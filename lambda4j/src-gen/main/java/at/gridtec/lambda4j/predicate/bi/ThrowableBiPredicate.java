@@ -262,6 +262,17 @@ public interface ThrowableBiPredicate<T, U, X extends Throwable> extends Lambda,
     }
 
     /**
+     * Applies this predicate partially to some arguments of this one, producing a {@link ThrowablePredicate} as result.
+     *
+     * @param t The first argument to this predicate used to partially apply this function
+     * @return A {@code ThrowablePredicate} that represents this predicate partially applied the some arguments.
+     */
+    @Nonnull
+    default ThrowablePredicate<U, X> ptestThrows(T t) {
+        return (u) -> this.testThrows(t, u);
+    }
+
+    /**
      * Returns the number of arguments for this predicate.
      *
      * @return The number of arguments for this predicate.

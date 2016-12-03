@@ -40,7 +40,9 @@ import at.gridtec.lambda4j.function.conversion.DoubleToFloatFunction;
 import at.gridtec.lambda4j.function.conversion.DoubleToShortFunction;
 import at.gridtec.lambda4j.function.conversion.FloatToDoubleFunction;
 import at.gridtec.lambda4j.function.conversion.ShortToDoubleFunction;
+import at.gridtec.lambda4j.function.to.ToDoubleFunction2;
 import at.gridtec.lambda4j.operator.binary.DoubleBinaryOperator2;
+import at.gridtec.lambda4j.operator.unary.DoubleUnaryOperator2;
 import at.gridtec.lambda4j.predicate.bi.obj.ObjDoublePredicate;
 
 import org.apache.commons.lang3.tuple.Pair;
@@ -164,6 +166,29 @@ public interface ObjDoubleToDoubleFunction<T> extends Lambda {
      * @return The return value from the function, which is its result.
      */
     double applyAsDouble(T t, double value);
+
+    /**
+     * Applies this operator partially to some arguments of this one, producing a {@link DoubleUnaryOperator2} as
+     * result.
+     *
+     * @param t The first argument to this function used to partially apply this function
+     * @return A {@code DoubleUnaryOperator2} that represents this operator partially applied the some arguments.
+     */
+    @Nonnull
+    default DoubleUnaryOperator2 papplyAsDouble(T t) {
+        return (value) -> this.applyAsDouble(t, value);
+    }
+
+    /**
+     * Applies this operator partially to some arguments of this one, producing a {@link ToDoubleFunction2} as result.
+     *
+     * @param value The second argument to this function used to partially apply this function
+     * @return A {@code ToDoubleFunction2} that represents this operator partially applied the some arguments.
+     */
+    @Nonnull
+    default ToDoubleFunction2<T> papplyAsDouble(double value) {
+        return (t) -> this.applyAsDouble(t, value);
+    }
 
     /**
      * Returns the number of arguments for this function.

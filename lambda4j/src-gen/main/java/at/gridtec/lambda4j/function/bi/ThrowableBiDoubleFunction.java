@@ -175,6 +175,18 @@ public interface ThrowableBiDoubleFunction<R, X extends Throwable> extends Lambd
     R applyThrows(double value1, double value2) throws X;
 
     /**
+     * Applies this function partially to some arguments of this one, producing a {@link ThrowableDoubleFunction} as
+     * result.
+     *
+     * @param value1 The first argument to this function used to partially apply this function
+     * @return A {@code ThrowableDoubleFunction} that represents this function partially applied the some arguments.
+     */
+    @Nonnull
+    default ThrowableDoubleFunction<R, X> papplyThrows(double value1) {
+        return (value2) -> this.applyThrows(value1, value2);
+    }
+
+    /**
      * Returns the number of arguments for this function.
      *
      * @return The number of arguments for this function.

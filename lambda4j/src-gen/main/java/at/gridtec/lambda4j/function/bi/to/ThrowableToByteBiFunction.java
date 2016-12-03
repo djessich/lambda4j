@@ -178,6 +178,18 @@ public interface ThrowableToByteBiFunction<T, U, X extends Throwable> extends La
     }
 
     /**
+     * Applies this function partially to some arguments of this one, producing a {@link ThrowableToByteFunction} as
+     * result.
+     *
+     * @param t The first argument to this function used to partially apply this function
+     * @return A {@code ThrowableToByteFunction} that represents this function partially applied the some arguments.
+     */
+    @Nonnull
+    default ThrowableToByteFunction<U, X> papplyAsByteThrows(T t) {
+        return (u) -> this.applyAsByteThrows(t, u);
+    }
+
+    /**
      * Returns the number of arguments for this function.
      *
      * @return The number of arguments for this function.

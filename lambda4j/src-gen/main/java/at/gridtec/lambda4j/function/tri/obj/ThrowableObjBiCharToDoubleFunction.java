@@ -29,6 +29,8 @@ import at.gridtec.lambda4j.function.ThrowableFunction;
 import at.gridtec.lambda4j.function.ThrowableIntFunction;
 import at.gridtec.lambda4j.function.ThrowableLongFunction;
 import at.gridtec.lambda4j.function.ThrowableShortFunction;
+import at.gridtec.lambda4j.function.bi.conversion.ThrowableBiCharToDoubleFunction;
+import at.gridtec.lambda4j.function.bi.obj.ThrowableObjCharToDoubleFunction;
 import at.gridtec.lambda4j.function.conversion.ThrowableBooleanToCharFunction;
 import at.gridtec.lambda4j.function.conversion.ThrowableByteToCharFunction;
 import at.gridtec.lambda4j.function.conversion.ThrowableCharToDoubleFunction;
@@ -202,6 +204,59 @@ public interface ThrowableObjBiCharToDoubleFunction<T, X extends Throwable> exte
      * @throws X Any throwable from this functions action
      */
     double applyAsDoubleThrows(T t, char value1, char value2) throws X;
+
+    /**
+     * Applies this function partially to some arguments of this one, producing a {@link
+     * ThrowableBiCharToDoubleFunction} as result.
+     *
+     * @param t The first argument to this function used to partially apply this function
+     * @return A {@code ThrowableBiCharToDoubleFunction} that represents this function partially applied the some
+     * arguments.
+     */
+    @Nonnull
+    default ThrowableBiCharToDoubleFunction<X> papplyAsDoubleThrows(T t) {
+        return (value1, value2) -> this.applyAsDoubleThrows(t, value1, value2);
+    }
+
+    /**
+     * Applies this function partially to some arguments of this one, producing a {@link ThrowableCharToDoubleFunction}
+     * as result.
+     *
+     * @param t The first argument to this function used to partially apply this function
+     * @param value1 The second argument to this function used to partially apply this function
+     * @return A {@code ThrowableCharToDoubleFunction} that represents this function partially applied the some
+     * arguments.
+     */
+    @Nonnull
+    default ThrowableCharToDoubleFunction<X> papplyAsDoubleThrows(T t, char value1) {
+        return (value2) -> this.applyAsDoubleThrows(t, value1, value2);
+    }
+
+    /**
+     * Applies this function partially to some arguments of this one, producing a {@link
+     * ThrowableObjCharToDoubleFunction} as result.
+     *
+     * @param value1 The second argument to this function used to partially apply this function
+     * @return A {@code ThrowableObjCharToDoubleFunction} that represents this function partially applied the some
+     * arguments.
+     */
+    @Nonnull
+    default ThrowableObjCharToDoubleFunction<T, X> papplyAsDoubleThrows(char value1) {
+        return (t, value2) -> this.applyAsDoubleThrows(t, value1, value2);
+    }
+
+    /**
+     * Applies this function partially to some arguments of this one, producing a {@link ThrowableToDoubleFunction} as
+     * result.
+     *
+     * @param value1 The second argument to this function used to partially apply this function
+     * @param value2 The third argument to this function used to partially apply this function
+     * @return A {@code ThrowableToDoubleFunction} that represents this function partially applied the some arguments.
+     */
+    @Nonnull
+    default ThrowableToDoubleFunction<T, X> papplyAsDoubleThrows(char value1, char value2) {
+        return (t) -> this.applyAsDoubleThrows(t, value1, value2);
+    }
 
     /**
      * Returns the number of arguments for this function.

@@ -182,6 +182,30 @@ public interface ThrowableObjFloatToFloatFunction<T, X extends Throwable> extend
     float applyAsFloatThrows(T t, float value) throws X;
 
     /**
+     * Applies this operator partially to some arguments of this one, producing a {@link ThrowableFloatUnaryOperator} as
+     * result.
+     *
+     * @param t The first argument to this function used to partially apply this function
+     * @return A {@code ThrowableFloatUnaryOperator} that represents this operator partially applied the some arguments.
+     */
+    @Nonnull
+    default ThrowableFloatUnaryOperator<X> papplyAsFloatThrows(T t) {
+        return (value) -> this.applyAsFloatThrows(t, value);
+    }
+
+    /**
+     * Applies this operator partially to some arguments of this one, producing a {@link ThrowableToFloatFunction} as
+     * result.
+     *
+     * @param value The second argument to this function used to partially apply this function
+     * @return A {@code ThrowableToFloatFunction} that represents this operator partially applied the some arguments.
+     */
+    @Nonnull
+    default ThrowableToFloatFunction<T, X> papplyAsFloatThrows(float value) {
+        return (t) -> this.applyAsFloatThrows(t, value);
+    }
+
+    /**
      * Returns the number of arguments for this function.
      *
      * @return The number of arguments for this function.

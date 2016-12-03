@@ -129,6 +129,18 @@ public interface ThrowableBiShortConsumer<X extends Throwable> extends Lambda {
     void acceptThrows(short value1, short value2) throws X;
 
     /**
+     * Applies this consumer partially to some arguments of this one, producing a {@link ThrowableShortConsumer} as
+     * result.
+     *
+     * @param value1 The first argument to this consumer used to partially apply this function
+     * @return A {@code ThrowableShortConsumer} that represents this consumer partially applied the some arguments.
+     */
+    @Nonnull
+    default ThrowableShortConsumer<X> pacceptThrows(short value1) {
+        return (value2) -> this.acceptThrows(value1, value2);
+    }
+
+    /**
      * Returns the number of arguments for this consumer.
      *
      * @return The number of arguments for this consumer.

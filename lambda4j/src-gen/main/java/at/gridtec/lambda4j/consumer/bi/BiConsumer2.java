@@ -132,6 +132,17 @@ public interface BiConsumer2<T, U> extends Lambda, BiConsumer<T, U> {
     }
 
     /**
+     * Applies this consumer partially to some arguments of this one, producing a {@link Consumer2} as result.
+     *
+     * @param t The first argument to this consumer used to partially apply this function
+     * @return A {@code Consumer2} that represents this consumer partially applied the some arguments.
+     */
+    @Nonnull
+    default Consumer2<U> paccept(T t) {
+        return (u) -> this.accept(t, u);
+    }
+
+    /**
      * Returns the number of arguments for this consumer.
      *
      * @return The number of arguments for this consumer.

@@ -30,6 +30,7 @@ import at.gridtec.lambda4j.function.ThrowableIntFunction;
 import at.gridtec.lambda4j.function.ThrowableLongFunction;
 import at.gridtec.lambda4j.function.ThrowableShortFunction;
 import at.gridtec.lambda4j.function.bi.obj.ThrowableObjByteToIntFunction;
+import at.gridtec.lambda4j.function.bi.to.ThrowableToIntBiFunction;
 import at.gridtec.lambda4j.function.conversion.ThrowableBooleanToByteFunction;
 import at.gridtec.lambda4j.function.conversion.ThrowableByteToIntFunction;
 import at.gridtec.lambda4j.function.conversion.ThrowableCharToByteFunction;
@@ -225,6 +226,57 @@ public interface ThrowableBiObjByteToIntFunction<T, U, X extends Throwable> exte
     default int applyAsIntThrows(@Nonnull Pair<T, U> tuple, byte value) throws X {
         Objects.requireNonNull(tuple);
         return applyAsIntThrows(tuple.getLeft(), tuple.getRight(), value);
+    }
+
+    /**
+     * Applies this function partially to some arguments of this one, producing a {@link ThrowableObjByteToIntFunction}
+     * as result.
+     *
+     * @param t The first argument to this function used to partially apply this function
+     * @return A {@code ThrowableObjByteToIntFunction} that represents this function partially applied the some
+     * arguments.
+     */
+    @Nonnull
+    default ThrowableObjByteToIntFunction<U, X> papplyAsIntThrows(T t) {
+        return (u, value) -> this.applyAsIntThrows(t, u, value);
+    }
+
+    /**
+     * Applies this function partially to some arguments of this one, producing a {@link ThrowableByteToIntFunction} as
+     * result.
+     *
+     * @param t The first argument to this function used to partially apply this function
+     * @param u The second argument to this function used to partially apply this function
+     * @return A {@code ThrowableByteToIntFunction} that represents this function partially applied the some arguments.
+     */
+    @Nonnull
+    default ThrowableByteToIntFunction<X> papplyAsIntThrows(T t, U u) {
+        return (value) -> this.applyAsIntThrows(t, u, value);
+    }
+
+    /**
+     * Applies this function partially to some arguments of this one, producing a {@link ThrowableToIntBiFunction} as
+     * result.
+     *
+     * @param value The third argument to this function used to partially apply this function
+     * @return A {@code ThrowableToIntBiFunction} that represents this function partially applied the some arguments.
+     */
+    @Nonnull
+    default ThrowableToIntBiFunction<T, U, X> papplyAsIntThrows(byte value) {
+        return (t, u) -> this.applyAsIntThrows(t, u, value);
+    }
+
+    /**
+     * Applies this function partially to some arguments of this one, producing a {@link ThrowableToIntFunction} as
+     * result.
+     *
+     * @param t The first argument to this function used to partially apply this function
+     * @param value The third argument to this function used to partially apply this function
+     * @return A {@code ThrowableToIntFunction} that represents this function partially applied the some arguments.
+     */
+    @Nonnull
+    default ThrowableToIntFunction<U, X> papplyAsIntThrows(T t, byte value) {
+        return (u) -> this.applyAsIntThrows(t, u, value);
     }
 
     /**

@@ -129,6 +129,18 @@ public interface ThrowableBiDoubleConsumer<X extends Throwable> extends Lambda {
     void acceptThrows(double value1, double value2) throws X;
 
     /**
+     * Applies this consumer partially to some arguments of this one, producing a {@link ThrowableDoubleConsumer} as
+     * result.
+     *
+     * @param value1 The first argument to this consumer used to partially apply this function
+     * @return A {@code ThrowableDoubleConsumer} that represents this consumer partially applied the some arguments.
+     */
+    @Nonnull
+    default ThrowableDoubleConsumer<X> pacceptThrows(double value1) {
+        return (value2) -> this.acceptThrows(value1, value2);
+    }
+
+    /**
      * Returns the number of arguments for this consumer.
      *
      * @return The number of arguments for this consumer.

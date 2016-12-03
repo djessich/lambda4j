@@ -24,6 +24,7 @@ import at.gridtec.lambda4j.function.CharFunction;
 import at.gridtec.lambda4j.function.FloatFunction;
 import at.gridtec.lambda4j.function.ShortFunction;
 import at.gridtec.lambda4j.function.bi.obj.ObjDoubleToFloatFunction;
+import at.gridtec.lambda4j.function.bi.to.ToFloatBiFunction;
 import at.gridtec.lambda4j.function.conversion.BooleanToDoubleFunction;
 import at.gridtec.lambda4j.function.conversion.ByteToDoubleFunction;
 import at.gridtec.lambda4j.function.conversion.CharToDoubleFunction;
@@ -207,6 +208,54 @@ public interface BiObjDoubleToFloatFunction<T, U> extends Lambda {
     default float applyAsFloat(@Nonnull Pair<T, U> tuple, double value) {
         Objects.requireNonNull(tuple);
         return applyAsFloat(tuple.getLeft(), tuple.getRight(), value);
+    }
+
+    /**
+     * Applies this function partially to some arguments of this one, producing a {@link ObjDoubleToFloatFunction} as
+     * result.
+     *
+     * @param t The first argument to this function used to partially apply this function
+     * @return A {@code ObjDoubleToFloatFunction} that represents this function partially applied the some arguments.
+     */
+    @Nonnull
+    default ObjDoubleToFloatFunction<U> papplyAsFloat(T t) {
+        return (u, value) -> this.applyAsFloat(t, u, value);
+    }
+
+    /**
+     * Applies this function partially to some arguments of this one, producing a {@link DoubleToFloatFunction} as
+     * result.
+     *
+     * @param t The first argument to this function used to partially apply this function
+     * @param u The second argument to this function used to partially apply this function
+     * @return A {@code DoubleToFloatFunction} that represents this function partially applied the some arguments.
+     */
+    @Nonnull
+    default DoubleToFloatFunction papplyAsFloat(T t, U u) {
+        return (value) -> this.applyAsFloat(t, u, value);
+    }
+
+    /**
+     * Applies this function partially to some arguments of this one, producing a {@link ToFloatBiFunction} as result.
+     *
+     * @param value The third argument to this function used to partially apply this function
+     * @return A {@code ToFloatBiFunction} that represents this function partially applied the some arguments.
+     */
+    @Nonnull
+    default ToFloatBiFunction<T, U> papplyAsFloat(double value) {
+        return (t, u) -> this.applyAsFloat(t, u, value);
+    }
+
+    /**
+     * Applies this function partially to some arguments of this one, producing a {@link ToFloatFunction} as result.
+     *
+     * @param t The first argument to this function used to partially apply this function
+     * @param value The third argument to this function used to partially apply this function
+     * @return A {@code ToFloatFunction} that represents this function partially applied the some arguments.
+     */
+    @Nonnull
+    default ToFloatFunction<U> papplyAsFloat(T t, double value) {
+        return (u) -> this.applyAsFloat(t, u, value);
     }
 
     /**

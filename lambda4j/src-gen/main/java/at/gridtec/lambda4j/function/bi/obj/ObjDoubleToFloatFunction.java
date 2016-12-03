@@ -168,6 +168,29 @@ public interface ObjDoubleToFloatFunction<T> extends Lambda {
     float applyAsFloat(T t, double value);
 
     /**
+     * Applies this function partially to some arguments of this one, producing a {@link DoubleToFloatFunction} as
+     * result.
+     *
+     * @param t The first argument to this function used to partially apply this function
+     * @return A {@code DoubleToFloatFunction} that represents this function partially applied the some arguments.
+     */
+    @Nonnull
+    default DoubleToFloatFunction papplyAsFloat(T t) {
+        return (value) -> this.applyAsFloat(t, value);
+    }
+
+    /**
+     * Applies this function partially to some arguments of this one, producing a {@link ToFloatFunction} as result.
+     *
+     * @param value The second argument to this function used to partially apply this function
+     * @return A {@code ToFloatFunction} that represents this function partially applied the some arguments.
+     */
+    @Nonnull
+    default ToFloatFunction<T> papplyAsFloat(double value) {
+        return (t) -> this.applyAsFloat(t, value);
+    }
+
+    /**
      * Returns the number of arguments for this function.
      *
      * @return The number of arguments for this function.

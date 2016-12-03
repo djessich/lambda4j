@@ -17,6 +17,7 @@ package at.gridtec.lambda4j.function.tri.conversion;
 
 import at.gridtec.lambda4j.Lambda;
 import at.gridtec.lambda4j.consumer.tri.TriBooleanConsumer;
+import at.gridtec.lambda4j.function.bi.conversion.BiBooleanToIntFunction;
 import at.gridtec.lambda4j.function.conversion.BooleanToIntFunction;
 import at.gridtec.lambda4j.function.conversion.IntToByteFunction;
 import at.gridtec.lambda4j.function.conversion.IntToCharFunction;
@@ -162,6 +163,31 @@ public interface TriBooleanToIntFunction extends Lambda {
      * @return The return value from the function, which is its result.
      */
     int applyAsInt(boolean value1, boolean value2, boolean value3);
+
+    /**
+     * Applies this function partially to some arguments of this one, producing a {@link BiBooleanToIntFunction} as
+     * result.
+     *
+     * @param value1 The first argument to this function used to partially apply this function
+     * @return A {@code BiBooleanToIntFunction} that represents this function partially applied the some arguments.
+     */
+    @Nonnull
+    default BiBooleanToIntFunction papplyAsInt(boolean value1) {
+        return (value2, value3) -> this.applyAsInt(value1, value2, value3);
+    }
+
+    /**
+     * Applies this function partially to some arguments of this one, producing a {@link BooleanToIntFunction} as
+     * result.
+     *
+     * @param value1 The first argument to this function used to partially apply this function
+     * @param value2 The second argument to this function used to partially apply this function
+     * @return A {@code BooleanToIntFunction} that represents this function partially applied the some arguments.
+     */
+    @Nonnull
+    default BooleanToIntFunction papplyAsInt(boolean value1, boolean value2) {
+        return (value3) -> this.applyAsInt(value1, value2, value3);
+    }
 
     /**
      * Returns the number of arguments for this function.

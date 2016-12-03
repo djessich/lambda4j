@@ -40,7 +40,9 @@ import at.gridtec.lambda4j.function.conversion.IntToCharFunction;
 import at.gridtec.lambda4j.function.conversion.IntToFloatFunction;
 import at.gridtec.lambda4j.function.conversion.IntToShortFunction;
 import at.gridtec.lambda4j.function.conversion.ShortToIntFunction;
+import at.gridtec.lambda4j.function.to.ToIntFunction2;
 import at.gridtec.lambda4j.operator.binary.IntBinaryOperator2;
+import at.gridtec.lambda4j.operator.unary.IntUnaryOperator2;
 import at.gridtec.lambda4j.predicate.bi.obj.ObjIntPredicate;
 
 import org.apache.commons.lang3.tuple.Pair;
@@ -164,6 +166,28 @@ public interface ObjIntToIntFunction<T> extends Lambda {
      * @return The return value from the function, which is its result.
      */
     int applyAsInt(T t, int value);
+
+    /**
+     * Applies this operator partially to some arguments of this one, producing a {@link IntUnaryOperator2} as result.
+     *
+     * @param t The first argument to this function used to partially apply this function
+     * @return A {@code IntUnaryOperator2} that represents this operator partially applied the some arguments.
+     */
+    @Nonnull
+    default IntUnaryOperator2 papplyAsInt(T t) {
+        return (value) -> this.applyAsInt(t, value);
+    }
+
+    /**
+     * Applies this operator partially to some arguments of this one, producing a {@link ToIntFunction2} as result.
+     *
+     * @param value The second argument to this function used to partially apply this function
+     * @return A {@code ToIntFunction2} that represents this operator partially applied the some arguments.
+     */
+    @Nonnull
+    default ToIntFunction2<T> papplyAsInt(int value) {
+        return (t) -> this.applyAsInt(t, value);
+    }
 
     /**
      * Returns the number of arguments for this function.

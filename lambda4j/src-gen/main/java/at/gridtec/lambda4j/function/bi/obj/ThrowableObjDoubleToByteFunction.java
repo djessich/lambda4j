@@ -184,6 +184,31 @@ public interface ThrowableObjDoubleToByteFunction<T, X extends Throwable> extend
     byte applyAsByteThrows(T t, double value) throws X;
 
     /**
+     * Applies this function partially to some arguments of this one, producing a {@link ThrowableDoubleToByteFunction}
+     * as result.
+     *
+     * @param t The first argument to this function used to partially apply this function
+     * @return A {@code ThrowableDoubleToByteFunction} that represents this function partially applied the some
+     * arguments.
+     */
+    @Nonnull
+    default ThrowableDoubleToByteFunction<X> papplyAsByteThrows(T t) {
+        return (value) -> this.applyAsByteThrows(t, value);
+    }
+
+    /**
+     * Applies this function partially to some arguments of this one, producing a {@link ThrowableToByteFunction} as
+     * result.
+     *
+     * @param value The second argument to this function used to partially apply this function
+     * @return A {@code ThrowableToByteFunction} that represents this function partially applied the some arguments.
+     */
+    @Nonnull
+    default ThrowableToByteFunction<T, X> papplyAsByteThrows(double value) {
+        return (t) -> this.applyAsByteThrows(t, value);
+    }
+
+    /**
      * Returns the number of arguments for this function.
      *
      * @return The number of arguments for this function.

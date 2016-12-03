@@ -162,6 +162,17 @@ public interface ToCharBiFunction<T, U> extends Lambda {
     }
 
     /**
+     * Applies this function partially to some arguments of this one, producing a {@link ToCharFunction} as result.
+     *
+     * @param t The first argument to this function used to partially apply this function
+     * @return A {@code ToCharFunction} that represents this function partially applied the some arguments.
+     */
+    @Nonnull
+    default ToCharFunction<U> papplyAsChar(T t) {
+        return (u) -> this.applyAsChar(t, u);
+    }
+
+    /**
      * Returns the number of arguments for this function.
      *
      * @return The number of arguments for this function.

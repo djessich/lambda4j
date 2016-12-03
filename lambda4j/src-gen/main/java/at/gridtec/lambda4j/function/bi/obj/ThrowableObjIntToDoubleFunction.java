@@ -183,6 +183,31 @@ public interface ThrowableObjIntToDoubleFunction<T, X extends Throwable> extends
     double applyAsDoubleThrows(T t, int value) throws X;
 
     /**
+     * Applies this function partially to some arguments of this one, producing a {@link ThrowableIntToDoubleFunction}
+     * as result.
+     *
+     * @param t The first argument to this function used to partially apply this function
+     * @return A {@code ThrowableIntToDoubleFunction} that represents this function partially applied the some
+     * arguments.
+     */
+    @Nonnull
+    default ThrowableIntToDoubleFunction<X> papplyAsDoubleThrows(T t) {
+        return (value) -> this.applyAsDoubleThrows(t, value);
+    }
+
+    /**
+     * Applies this function partially to some arguments of this one, producing a {@link ThrowableToDoubleFunction} as
+     * result.
+     *
+     * @param value The second argument to this function used to partially apply this function
+     * @return A {@code ThrowableToDoubleFunction} that represents this function partially applied the some arguments.
+     */
+    @Nonnull
+    default ThrowableToDoubleFunction<T, X> papplyAsDoubleThrows(int value) {
+        return (t) -> this.applyAsDoubleThrows(t, value);
+    }
+
+    /**
      * Returns the number of arguments for this function.
      *
      * @return The number of arguments for this function.

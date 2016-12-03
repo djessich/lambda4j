@@ -19,6 +19,7 @@ import at.gridtec.lambda4j.Lambda;
 import at.gridtec.lambda4j.consumer.CharConsumer;
 import at.gridtec.lambda4j.consumer.tri.TriConsumer;
 import at.gridtec.lambda4j.function.CharFunction;
+import at.gridtec.lambda4j.function.bi.to.ToCharBiFunction;
 import at.gridtec.lambda4j.function.conversion.CharToByteFunction;
 import at.gridtec.lambda4j.function.conversion.CharToDoubleFunction;
 import at.gridtec.lambda4j.function.conversion.CharToFloatFunction;
@@ -186,6 +187,29 @@ public interface ToCharTriFunction<T, U, V> extends Lambda {
     default char applyAsChar(@Nonnull Triple<T, U, V> tuple) {
         Objects.requireNonNull(tuple);
         return applyAsChar(tuple.getLeft(), tuple.getMiddle(), tuple.getRight());
+    }
+
+    /**
+     * Applies this function partially to some arguments of this one, producing a {@link ToCharBiFunction} as result.
+     *
+     * @param t The first argument to this function used to partially apply this function
+     * @return A {@code ToCharBiFunction} that represents this function partially applied the some arguments.
+     */
+    @Nonnull
+    default ToCharBiFunction<U, V> papplyAsChar(T t) {
+        return (u, v) -> this.applyAsChar(t, u, v);
+    }
+
+    /**
+     * Applies this function partially to some arguments of this one, producing a {@link ToCharFunction} as result.
+     *
+     * @param t The first argument to this function used to partially apply this function
+     * @param u The second argument to this function used to partially apply this function
+     * @return A {@code ToCharFunction} that represents this function partially applied the some arguments.
+     */
+    @Nonnull
+    default ToCharFunction<V> papplyAsChar(T t, U u) {
+        return (v) -> this.applyAsChar(t, u, v);
     }
 
     /**

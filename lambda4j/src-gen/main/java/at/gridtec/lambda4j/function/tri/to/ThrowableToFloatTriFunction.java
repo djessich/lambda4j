@@ -22,6 +22,7 @@ import at.gridtec.lambda4j.core.exception.ThrownByFunctionalInterfaceException;
 import at.gridtec.lambda4j.core.util.ThrowableUtils;
 import at.gridtec.lambda4j.function.ThrowableFloatFunction;
 import at.gridtec.lambda4j.function.ThrowableFunction;
+import at.gridtec.lambda4j.function.bi.to.ThrowableToFloatBiFunction;
 import at.gridtec.lambda4j.function.conversion.ThrowableFloatToByteFunction;
 import at.gridtec.lambda4j.function.conversion.ThrowableFloatToCharFunction;
 import at.gridtec.lambda4j.function.conversion.ThrowableFloatToDoubleFunction;
@@ -204,6 +205,31 @@ public interface ThrowableToFloatTriFunction<T, U, V, X extends Throwable> exten
     default float applyAsFloatThrows(@Nonnull Triple<T, U, V> tuple) throws X {
         Objects.requireNonNull(tuple);
         return applyAsFloatThrows(tuple.getLeft(), tuple.getMiddle(), tuple.getRight());
+    }
+
+    /**
+     * Applies this function partially to some arguments of this one, producing a {@link ThrowableToFloatBiFunction} as
+     * result.
+     *
+     * @param t The first argument to this function used to partially apply this function
+     * @return A {@code ThrowableToFloatBiFunction} that represents this function partially applied the some arguments.
+     */
+    @Nonnull
+    default ThrowableToFloatBiFunction<U, V, X> papplyAsFloatThrows(T t) {
+        return (u, v) -> this.applyAsFloatThrows(t, u, v);
+    }
+
+    /**
+     * Applies this function partially to some arguments of this one, producing a {@link ThrowableToFloatFunction} as
+     * result.
+     *
+     * @param t The first argument to this function used to partially apply this function
+     * @param u The second argument to this function used to partially apply this function
+     * @return A {@code ThrowableToFloatFunction} that represents this function partially applied the some arguments.
+     */
+    @Nonnull
+    default ThrowableToFloatFunction<V, X> papplyAsFloatThrows(T t, U u) {
+        return (v) -> this.applyAsFloatThrows(t, u, v);
     }
 
     /**

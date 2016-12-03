@@ -40,6 +40,7 @@ import at.gridtec.lambda4j.function.conversion.ShortToIntFunction;
 import at.gridtec.lambda4j.operator.binary.BooleanBinaryOperator;
 import at.gridtec.lambda4j.operator.binary.IntBinaryOperator2;
 import at.gridtec.lambda4j.operator.unary.BooleanUnaryOperator;
+import at.gridtec.lambda4j.predicate.IntPredicate2;
 
 import org.apache.commons.lang3.tuple.Pair;
 
@@ -185,6 +186,17 @@ public interface BiIntPredicate extends Lambda {
      * @return The return value from the predicate, which is its result.
      */
     boolean test(int value1, int value2);
+
+    /**
+     * Applies this predicate partially to some arguments of this one, producing a {@link IntPredicate2} as result.
+     *
+     * @param value1 The first argument to this predicate used to partially apply this function
+     * @return A {@code IntPredicate2} that represents this predicate partially applied the some arguments.
+     */
+    @Nonnull
+    default IntPredicate2 ptest(int value1) {
+        return (value2) -> this.test(value1, value2);
+    }
 
     /**
      * Returns the number of arguments for this predicate.

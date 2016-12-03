@@ -22,6 +22,7 @@ import at.gridtec.lambda4j.core.exception.ThrownByFunctionalInterfaceException;
 import at.gridtec.lambda4j.core.util.ThrowableUtils;
 import at.gridtec.lambda4j.function.ThrowableFunction;
 import at.gridtec.lambda4j.function.ThrowableLongFunction;
+import at.gridtec.lambda4j.function.bi.conversion.ThrowableBiBooleanToLongFunction;
 import at.gridtec.lambda4j.function.conversion.ThrowableBooleanToLongFunction;
 import at.gridtec.lambda4j.function.conversion.ThrowableLongToByteFunction;
 import at.gridtec.lambda4j.function.conversion.ThrowableLongToCharFunction;
@@ -181,6 +182,33 @@ public interface ThrowableTriBooleanToLongFunction<X extends Throwable> extends 
      * @throws X Any throwable from this functions action
      */
     long applyAsLongThrows(boolean value1, boolean value2, boolean value3) throws X;
+
+    /**
+     * Applies this function partially to some arguments of this one, producing a {@link
+     * ThrowableBiBooleanToLongFunction} as result.
+     *
+     * @param value1 The first argument to this function used to partially apply this function
+     * @return A {@code ThrowableBiBooleanToLongFunction} that represents this function partially applied the some
+     * arguments.
+     */
+    @Nonnull
+    default ThrowableBiBooleanToLongFunction<X> papplyAsLongThrows(boolean value1) {
+        return (value2, value3) -> this.applyAsLongThrows(value1, value2, value3);
+    }
+
+    /**
+     * Applies this function partially to some arguments of this one, producing a {@link ThrowableBooleanToLongFunction}
+     * as result.
+     *
+     * @param value1 The first argument to this function used to partially apply this function
+     * @param value2 The second argument to this function used to partially apply this function
+     * @return A {@code ThrowableBooleanToLongFunction} that represents this function partially applied the some
+     * arguments.
+     */
+    @Nonnull
+    default ThrowableBooleanToLongFunction<X> papplyAsLongThrows(boolean value1, boolean value2) {
+        return (value3) -> this.applyAsLongThrows(value1, value2, value3);
+    }
 
     /**
      * Returns the number of arguments for this function.

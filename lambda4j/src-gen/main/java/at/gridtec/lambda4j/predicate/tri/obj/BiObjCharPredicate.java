@@ -49,6 +49,8 @@ import at.gridtec.lambda4j.operator.ternary.BooleanTernaryOperator;
 import at.gridtec.lambda4j.operator.unary.BooleanUnaryOperator;
 import at.gridtec.lambda4j.operator.unary.CharUnaryOperator;
 import at.gridtec.lambda4j.predicate.CharPredicate;
+import at.gridtec.lambda4j.predicate.Predicate2;
+import at.gridtec.lambda4j.predicate.bi.BiPredicate2;
 import at.gridtec.lambda4j.predicate.bi.obj.ObjCharPredicate;
 import at.gridtec.lambda4j.predicate.tri.TriBytePredicate;
 import at.gridtec.lambda4j.predicate.tri.TriCharPredicate;
@@ -259,6 +261,52 @@ public interface BiObjCharPredicate<T, U> extends Lambda {
     default boolean test(@Nonnull Pair<T, U> tuple, char value) {
         Objects.requireNonNull(tuple);
         return test(tuple.getLeft(), tuple.getRight(), value);
+    }
+
+    /**
+     * Applies this predicate partially to some arguments of this one, producing a {@link ObjCharPredicate} as result.
+     *
+     * @param t The first argument to this predicate used to partially apply this function
+     * @return A {@code ObjCharPredicate} that represents this predicate partially applied the some arguments.
+     */
+    @Nonnull
+    default ObjCharPredicate<U> ptest(T t) {
+        return (u, value) -> this.test(t, u, value);
+    }
+
+    /**
+     * Applies this predicate partially to some arguments of this one, producing a {@link CharPredicate} as result.
+     *
+     * @param t The first argument to this predicate used to partially apply this function
+     * @param u The second argument to this predicate used to partially apply this function
+     * @return A {@code CharPredicate} that represents this predicate partially applied the some arguments.
+     */
+    @Nonnull
+    default CharPredicate ptest(T t, U u) {
+        return (value) -> this.test(t, u, value);
+    }
+
+    /**
+     * Applies this predicate partially to some arguments of this one, producing a {@link BiPredicate2} as result.
+     *
+     * @param value The third argument to this predicate used to partially apply this function
+     * @return A {@code BiPredicate2} that represents this predicate partially applied the some arguments.
+     */
+    @Nonnull
+    default BiPredicate2<T, U> ptest(char value) {
+        return (t, u) -> this.test(t, u, value);
+    }
+
+    /**
+     * Applies this predicate partially to some arguments of this one, producing a {@link Predicate2} as result.
+     *
+     * @param t The first argument to this predicate used to partially apply this function
+     * @param value The third argument to this predicate used to partially apply this function
+     * @return A {@code Predicate2} that represents this predicate partially applied the some arguments.
+     */
+    @Nonnull
+    default Predicate2<U> ptest(T t, char value) {
+        return (u) -> this.test(t, u, value);
     }
 
     /**

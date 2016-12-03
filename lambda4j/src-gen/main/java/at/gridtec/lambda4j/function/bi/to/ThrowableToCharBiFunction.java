@@ -178,6 +178,18 @@ public interface ThrowableToCharBiFunction<T, U, X extends Throwable> extends La
     }
 
     /**
+     * Applies this function partially to some arguments of this one, producing a {@link ThrowableToCharFunction} as
+     * result.
+     *
+     * @param t The first argument to this function used to partially apply this function
+     * @return A {@code ThrowableToCharFunction} that represents this function partially applied the some arguments.
+     */
+    @Nonnull
+    default ThrowableToCharFunction<U, X> papplyAsCharThrows(T t) {
+        return (u) -> this.applyAsCharThrows(t, u);
+    }
+
+    /**
      * Returns the number of arguments for this function.
      *
      * @return The number of arguments for this function.

@@ -29,6 +29,8 @@ import at.gridtec.lambda4j.function.ThrowableFunction;
 import at.gridtec.lambda4j.function.ThrowableIntFunction;
 import at.gridtec.lambda4j.function.ThrowableLongFunction;
 import at.gridtec.lambda4j.function.ThrowableShortFunction;
+import at.gridtec.lambda4j.function.bi.conversion.ThrowableBiCharToByteFunction;
+import at.gridtec.lambda4j.function.bi.obj.ThrowableObjCharToByteFunction;
 import at.gridtec.lambda4j.function.conversion.ThrowableBooleanToCharFunction;
 import at.gridtec.lambda4j.function.conversion.ThrowableByteToCharFunction;
 import at.gridtec.lambda4j.function.conversion.ThrowableByteToDoubleFunction;
@@ -202,6 +204,58 @@ public interface ThrowableObjBiCharToByteFunction<T, X extends Throwable> extend
      * @throws X Any throwable from this functions action
      */
     byte applyAsByteThrows(T t, char value1, char value2) throws X;
+
+    /**
+     * Applies this function partially to some arguments of this one, producing a {@link ThrowableBiCharToByteFunction}
+     * as result.
+     *
+     * @param t The first argument to this function used to partially apply this function
+     * @return A {@code ThrowableBiCharToByteFunction} that represents this function partially applied the some
+     * arguments.
+     */
+    @Nonnull
+    default ThrowableBiCharToByteFunction<X> papplyAsByteThrows(T t) {
+        return (value1, value2) -> this.applyAsByteThrows(t, value1, value2);
+    }
+
+    /**
+     * Applies this function partially to some arguments of this one, producing a {@link ThrowableCharToByteFunction} as
+     * result.
+     *
+     * @param t The first argument to this function used to partially apply this function
+     * @param value1 The second argument to this function used to partially apply this function
+     * @return A {@code ThrowableCharToByteFunction} that represents this function partially applied the some arguments.
+     */
+    @Nonnull
+    default ThrowableCharToByteFunction<X> papplyAsByteThrows(T t, char value1) {
+        return (value2) -> this.applyAsByteThrows(t, value1, value2);
+    }
+
+    /**
+     * Applies this function partially to some arguments of this one, producing a {@link ThrowableObjCharToByteFunction}
+     * as result.
+     *
+     * @param value1 The second argument to this function used to partially apply this function
+     * @return A {@code ThrowableObjCharToByteFunction} that represents this function partially applied the some
+     * arguments.
+     */
+    @Nonnull
+    default ThrowableObjCharToByteFunction<T, X> papplyAsByteThrows(char value1) {
+        return (t, value2) -> this.applyAsByteThrows(t, value1, value2);
+    }
+
+    /**
+     * Applies this function partially to some arguments of this one, producing a {@link ThrowableToByteFunction} as
+     * result.
+     *
+     * @param value1 The second argument to this function used to partially apply this function
+     * @param value2 The third argument to this function used to partially apply this function
+     * @return A {@code ThrowableToByteFunction} that represents this function partially applied the some arguments.
+     */
+    @Nonnull
+    default ThrowableToByteFunction<T, X> papplyAsByteThrows(char value1, char value2) {
+        return (t) -> this.applyAsByteThrows(t, value1, value2);
+    }
 
     /**
      * Returns the number of arguments for this function.

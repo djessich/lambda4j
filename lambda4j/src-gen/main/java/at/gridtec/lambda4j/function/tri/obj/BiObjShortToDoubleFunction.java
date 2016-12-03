@@ -23,6 +23,7 @@ import at.gridtec.lambda4j.function.CharFunction;
 import at.gridtec.lambda4j.function.FloatFunction;
 import at.gridtec.lambda4j.function.ShortFunction;
 import at.gridtec.lambda4j.function.bi.obj.ObjShortToDoubleFunction;
+import at.gridtec.lambda4j.function.bi.to.ToDoubleBiFunction2;
 import at.gridtec.lambda4j.function.conversion.BooleanToShortFunction;
 import at.gridtec.lambda4j.function.conversion.ByteToShortFunction;
 import at.gridtec.lambda4j.function.conversion.CharToShortFunction;
@@ -34,6 +35,7 @@ import at.gridtec.lambda4j.function.conversion.FloatToShortFunction;
 import at.gridtec.lambda4j.function.conversion.IntToShortFunction;
 import at.gridtec.lambda4j.function.conversion.LongToShortFunction;
 import at.gridtec.lambda4j.function.conversion.ShortToDoubleFunction;
+import at.gridtec.lambda4j.function.to.ToDoubleFunction2;
 import at.gridtec.lambda4j.function.to.ToShortFunction;
 import at.gridtec.lambda4j.function.tri.TriFunction;
 import at.gridtec.lambda4j.function.tri.conversion.TriBooleanToDoubleFunction;
@@ -207,6 +209,54 @@ public interface BiObjShortToDoubleFunction<T, U> extends Lambda {
     default double applyAsDouble(@Nonnull Pair<T, U> tuple, short value) {
         Objects.requireNonNull(tuple);
         return applyAsDouble(tuple.getLeft(), tuple.getRight(), value);
+    }
+
+    /**
+     * Applies this function partially to some arguments of this one, producing a {@link ObjShortToDoubleFunction} as
+     * result.
+     *
+     * @param t The first argument to this function used to partially apply this function
+     * @return A {@code ObjShortToDoubleFunction} that represents this function partially applied the some arguments.
+     */
+    @Nonnull
+    default ObjShortToDoubleFunction<U> papplyAsDouble(T t) {
+        return (u, value) -> this.applyAsDouble(t, u, value);
+    }
+
+    /**
+     * Applies this function partially to some arguments of this one, producing a {@link ShortToDoubleFunction} as
+     * result.
+     *
+     * @param t The first argument to this function used to partially apply this function
+     * @param u The second argument to this function used to partially apply this function
+     * @return A {@code ShortToDoubleFunction} that represents this function partially applied the some arguments.
+     */
+    @Nonnull
+    default ShortToDoubleFunction papplyAsDouble(T t, U u) {
+        return (value) -> this.applyAsDouble(t, u, value);
+    }
+
+    /**
+     * Applies this function partially to some arguments of this one, producing a {@link ToDoubleBiFunction2} as result.
+     *
+     * @param value The third argument to this function used to partially apply this function
+     * @return A {@code ToDoubleBiFunction2} that represents this function partially applied the some arguments.
+     */
+    @Nonnull
+    default ToDoubleBiFunction2<T, U> papplyAsDouble(short value) {
+        return (t, u) -> this.applyAsDouble(t, u, value);
+    }
+
+    /**
+     * Applies this function partially to some arguments of this one, producing a {@link ToDoubleFunction2} as result.
+     *
+     * @param t The first argument to this function used to partially apply this function
+     * @param value The third argument to this function used to partially apply this function
+     * @return A {@code ToDoubleFunction2} that represents this function partially applied the some arguments.
+     */
+    @Nonnull
+    default ToDoubleFunction2<U> papplyAsDouble(T t, short value) {
+        return (u) -> this.applyAsDouble(t, u, value);
     }
 
     /**

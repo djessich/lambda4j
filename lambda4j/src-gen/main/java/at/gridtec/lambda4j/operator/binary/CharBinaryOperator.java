@@ -191,6 +191,17 @@ public interface CharBinaryOperator extends Lambda {
     char applyAsChar(char value1, char value2);
 
     /**
+     * Applies this operator partially to some arguments of this one, producing a {@link CharUnaryOperator} as result.
+     *
+     * @param value1 The first argument to this operator used to partially apply this function
+     * @return A {@code CharUnaryOperator} that represents this operator partially applied the some arguments.
+     */
+    @Nonnull
+    default CharUnaryOperator papplyAsChar(char value1) {
+        return (value2) -> this.applyAsChar(value1, value2);
+    }
+
+    /**
      * Returns the number of arguments for this operator.
      *
      * @return The number of arguments for this operator.

@@ -18,6 +18,7 @@ package at.gridtec.lambda4j.function.tri;
 import at.gridtec.lambda4j.Lambda;
 import at.gridtec.lambda4j.consumer.tri.TriCharConsumer;
 import at.gridtec.lambda4j.function.CharFunction;
+import at.gridtec.lambda4j.function.bi.BiCharFunction;
 import at.gridtec.lambda4j.function.conversion.BooleanToCharFunction;
 import at.gridtec.lambda4j.function.conversion.ByteToCharFunction;
 import at.gridtec.lambda4j.function.conversion.DoubleToCharFunction;
@@ -173,6 +174,29 @@ public interface TriCharFunction<R> extends Lambda {
      * @return The return value from the function, which is its result.
      */
     R apply(char value1, char value2, char value3);
+
+    /**
+     * Applies this function partially to some arguments of this one, producing a {@link BiCharFunction} as result.
+     *
+     * @param value1 The first argument to this function used to partially apply this function
+     * @return A {@code BiCharFunction} that represents this function partially applied the some arguments.
+     */
+    @Nonnull
+    default BiCharFunction<R> papply(char value1) {
+        return (value2, value3) -> this.apply(value1, value2, value3);
+    }
+
+    /**
+     * Applies this function partially to some arguments of this one, producing a {@link CharFunction} as result.
+     *
+     * @param value1 The first argument to this function used to partially apply this function
+     * @param value2 The second argument to this function used to partially apply this function
+     * @return A {@code CharFunction} that represents this function partially applied the some arguments.
+     */
+    @Nonnull
+    default CharFunction<R> papply(char value1, char value2) {
+        return (value3) -> this.apply(value1, value2, value3);
+    }
 
     /**
      * Returns the number of arguments for this function.

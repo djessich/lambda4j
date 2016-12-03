@@ -181,6 +181,30 @@ public interface ThrowableObjIntToIntFunction<T, X extends Throwable> extends La
     int applyAsIntThrows(T t, int value) throws X;
 
     /**
+     * Applies this operator partially to some arguments of this one, producing a {@link ThrowableIntUnaryOperator} as
+     * result.
+     *
+     * @param t The first argument to this function used to partially apply this function
+     * @return A {@code ThrowableIntUnaryOperator} that represents this operator partially applied the some arguments.
+     */
+    @Nonnull
+    default ThrowableIntUnaryOperator<X> papplyAsIntThrows(T t) {
+        return (value) -> this.applyAsIntThrows(t, value);
+    }
+
+    /**
+     * Applies this operator partially to some arguments of this one, producing a {@link ThrowableToIntFunction} as
+     * result.
+     *
+     * @param value The second argument to this function used to partially apply this function
+     * @return A {@code ThrowableToIntFunction} that represents this operator partially applied the some arguments.
+     */
+    @Nonnull
+    default ThrowableToIntFunction<T, X> papplyAsIntThrows(int value) {
+        return (t) -> this.applyAsIntThrows(t, value);
+    }
+
+    /**
      * Returns the number of arguments for this function.
      *
      * @return The number of arguments for this function.

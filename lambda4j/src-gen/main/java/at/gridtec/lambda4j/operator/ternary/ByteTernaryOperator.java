@@ -48,6 +48,7 @@ import at.gridtec.lambda4j.function.tri.conversion.TriIntToByteFunction;
 import at.gridtec.lambda4j.function.tri.conversion.TriLongToByteFunction;
 import at.gridtec.lambda4j.function.tri.conversion.TriShortToByteFunction;
 import at.gridtec.lambda4j.function.tri.to.ToByteTriFunction;
+import at.gridtec.lambda4j.operator.binary.ByteBinaryOperator;
 import at.gridtec.lambda4j.operator.unary.ByteUnaryOperator;
 import at.gridtec.lambda4j.predicate.BytePredicate;
 import at.gridtec.lambda4j.predicate.tri.TriBytePredicate;
@@ -172,6 +173,29 @@ public interface ByteTernaryOperator extends Lambda {
      * @return The return value from the operator, which is its result.
      */
     byte applyAsByte(byte value1, byte value2, byte value3);
+
+    /**
+     * Applies this operator partially to some arguments of this one, producing a {@link ByteBinaryOperator} as result.
+     *
+     * @param value1 The first argument to this operator used to partially apply this function
+     * @return A {@code ByteBinaryOperator} that represents this operator partially applied the some arguments.
+     */
+    @Nonnull
+    default ByteBinaryOperator papplyAsByte(byte value1) {
+        return (value2, value3) -> this.applyAsByte(value1, value2, value3);
+    }
+
+    /**
+     * Applies this operator partially to some arguments of this one, producing a {@link ByteUnaryOperator} as result.
+     *
+     * @param value1 The first argument to this operator used to partially apply this function
+     * @param value2 The second argument to this operator used to partially apply this function
+     * @return A {@code ByteUnaryOperator} that represents this operator partially applied the some arguments.
+     */
+    @Nonnull
+    default ByteUnaryOperator papplyAsByte(byte value1, byte value2) {
+        return (value3) -> this.applyAsByte(value1, value2, value3);
+    }
 
     /**
      * Returns the number of arguments for this operator.

@@ -21,7 +21,11 @@ import at.gridtec.lambda4j.function.BooleanFunction;
 import at.gridtec.lambda4j.function.ByteFunction;
 import at.gridtec.lambda4j.function.CharFunction;
 import at.gridtec.lambda4j.function.FloatFunction;
+import at.gridtec.lambda4j.function.Function2;
+import at.gridtec.lambda4j.function.IntFunction2;
 import at.gridtec.lambda4j.function.ShortFunction;
+import at.gridtec.lambda4j.function.bi.BiIntFunction;
+import at.gridtec.lambda4j.function.bi.obj.ObjIntFunction;
 import at.gridtec.lambda4j.function.conversion.BooleanToIntFunction;
 import at.gridtec.lambda4j.function.conversion.ByteToIntFunction;
 import at.gridtec.lambda4j.function.conversion.CharToIntFunction;
@@ -200,6 +204,52 @@ public interface ObjBiIntFunction<T, R> extends Lambda {
      * @return The return value from the function, which is its result.
      */
     R apply(T t, int value1, int value2);
+
+    /**
+     * Applies this function partially to some arguments of this one, producing a {@link BiIntFunction} as result.
+     *
+     * @param t The first argument to this function used to partially apply this function
+     * @return A {@code BiIntFunction} that represents this function partially applied the some arguments.
+     */
+    @Nonnull
+    default BiIntFunction<R> papply(T t) {
+        return (value1, value2) -> this.apply(t, value1, value2);
+    }
+
+    /**
+     * Applies this function partially to some arguments of this one, producing a {@link IntFunction2} as result.
+     *
+     * @param t The first argument to this function used to partially apply this function
+     * @param value1 The second argument to this function used to partially apply this function
+     * @return A {@code IntFunction2} that represents this function partially applied the some arguments.
+     */
+    @Nonnull
+    default IntFunction2<R> papply(T t, int value1) {
+        return (value2) -> this.apply(t, value1, value2);
+    }
+
+    /**
+     * Applies this function partially to some arguments of this one, producing a {@link ObjIntFunction} as result.
+     *
+     * @param value1 The second argument to this function used to partially apply this function
+     * @return A {@code ObjIntFunction} that represents this function partially applied the some arguments.
+     */
+    @Nonnull
+    default ObjIntFunction<T, R> papply(int value1) {
+        return (t, value2) -> this.apply(t, value1, value2);
+    }
+
+    /**
+     * Applies this function partially to some arguments of this one, producing a {@link Function2} as result.
+     *
+     * @param value1 The second argument to this function used to partially apply this function
+     * @param value2 The third argument to this function used to partially apply this function
+     * @return A {@code Function2} that represents this function partially applied the some arguments.
+     */
+    @Nonnull
+    default Function2<T, R> papply(int value1, int value2) {
+        return (t) -> this.apply(t, value1, value2);
+    }
 
     /**
      * Returns the number of arguments for this function.

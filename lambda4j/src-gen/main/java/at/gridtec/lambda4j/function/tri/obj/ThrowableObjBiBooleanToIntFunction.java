@@ -29,6 +29,8 @@ import at.gridtec.lambda4j.function.ThrowableFunction;
 import at.gridtec.lambda4j.function.ThrowableIntFunction;
 import at.gridtec.lambda4j.function.ThrowableLongFunction;
 import at.gridtec.lambda4j.function.ThrowableShortFunction;
+import at.gridtec.lambda4j.function.bi.conversion.ThrowableBiBooleanToIntFunction;
+import at.gridtec.lambda4j.function.bi.obj.ThrowableObjBooleanToIntFunction;
 import at.gridtec.lambda4j.function.conversion.ThrowableBooleanToIntFunction;
 import at.gridtec.lambda4j.function.conversion.ThrowableIntToByteFunction;
 import at.gridtec.lambda4j.function.conversion.ThrowableIntToCharFunction;
@@ -202,6 +204,59 @@ public interface ThrowableObjBiBooleanToIntFunction<T, X extends Throwable> exte
      * @throws X Any throwable from this functions action
      */
     int applyAsIntThrows(T t, boolean value1, boolean value2) throws X;
+
+    /**
+     * Applies this function partially to some arguments of this one, producing a {@link
+     * ThrowableBiBooleanToIntFunction} as result.
+     *
+     * @param t The first argument to this function used to partially apply this function
+     * @return A {@code ThrowableBiBooleanToIntFunction} that represents this function partially applied the some
+     * arguments.
+     */
+    @Nonnull
+    default ThrowableBiBooleanToIntFunction<X> papplyAsIntThrows(T t) {
+        return (value1, value2) -> this.applyAsIntThrows(t, value1, value2);
+    }
+
+    /**
+     * Applies this function partially to some arguments of this one, producing a {@link ThrowableBooleanToIntFunction}
+     * as result.
+     *
+     * @param t The first argument to this function used to partially apply this function
+     * @param value1 The second argument to this function used to partially apply this function
+     * @return A {@code ThrowableBooleanToIntFunction} that represents this function partially applied the some
+     * arguments.
+     */
+    @Nonnull
+    default ThrowableBooleanToIntFunction<X> papplyAsIntThrows(T t, boolean value1) {
+        return (value2) -> this.applyAsIntThrows(t, value1, value2);
+    }
+
+    /**
+     * Applies this function partially to some arguments of this one, producing a {@link
+     * ThrowableObjBooleanToIntFunction} as result.
+     *
+     * @param value1 The second argument to this function used to partially apply this function
+     * @return A {@code ThrowableObjBooleanToIntFunction} that represents this function partially applied the some
+     * arguments.
+     */
+    @Nonnull
+    default ThrowableObjBooleanToIntFunction<T, X> papplyAsIntThrows(boolean value1) {
+        return (t, value2) -> this.applyAsIntThrows(t, value1, value2);
+    }
+
+    /**
+     * Applies this function partially to some arguments of this one, producing a {@link ThrowableToIntFunction} as
+     * result.
+     *
+     * @param value1 The second argument to this function used to partially apply this function
+     * @param value2 The third argument to this function used to partially apply this function
+     * @return A {@code ThrowableToIntFunction} that represents this function partially applied the some arguments.
+     */
+    @Nonnull
+    default ThrowableToIntFunction<T, X> papplyAsIntThrows(boolean value1, boolean value2) {
+        return (t) -> this.applyAsIntThrows(t, value1, value2);
+    }
 
     /**
      * Returns the number of arguments for this function.

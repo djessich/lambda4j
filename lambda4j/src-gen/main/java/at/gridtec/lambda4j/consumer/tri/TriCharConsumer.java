@@ -17,6 +17,7 @@ package at.gridtec.lambda4j.consumer.tri;
 
 import at.gridtec.lambda4j.Lambda;
 import at.gridtec.lambda4j.consumer.CharConsumer;
+import at.gridtec.lambda4j.consumer.bi.BiCharConsumer;
 import at.gridtec.lambda4j.function.conversion.BooleanToCharFunction;
 import at.gridtec.lambda4j.function.conversion.ByteToCharFunction;
 import at.gridtec.lambda4j.function.conversion.DoubleToCharFunction;
@@ -129,6 +130,29 @@ public interface TriCharConsumer extends Lambda {
      * @param value3 The third argument to the consumer
      */
     void accept(char value1, char value2, char value3);
+
+    /**
+     * Applies this consumer partially to some arguments of this one, producing a {@link BiCharConsumer} as result.
+     *
+     * @param value1 The first argument to this consumer used to partially apply this function
+     * @return A {@code BiCharConsumer} that represents this consumer partially applied the some arguments.
+     */
+    @Nonnull
+    default BiCharConsumer paccept(char value1) {
+        return (value2, value3) -> this.accept(value1, value2, value3);
+    }
+
+    /**
+     * Applies this consumer partially to some arguments of this one, producing a {@link CharConsumer} as result.
+     *
+     * @param value1 The first argument to this consumer used to partially apply this function
+     * @param value2 The second argument to this consumer used to partially apply this function
+     * @return A {@code CharConsumer} that represents this consumer partially applied the some arguments.
+     */
+    @Nonnull
+    default CharConsumer paccept(char value1, char value2) {
+        return (value3) -> this.accept(value1, value2, value3);
+    }
 
     /**
      * Returns the number of arguments for this consumer.

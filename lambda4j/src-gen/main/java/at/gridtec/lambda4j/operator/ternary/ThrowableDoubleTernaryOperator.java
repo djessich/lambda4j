@@ -51,6 +51,7 @@ import at.gridtec.lambda4j.function.tri.conversion.ThrowableTriIntToDoubleFuncti
 import at.gridtec.lambda4j.function.tri.conversion.ThrowableTriLongToDoubleFunction;
 import at.gridtec.lambda4j.function.tri.conversion.ThrowableTriShortToDoubleFunction;
 import at.gridtec.lambda4j.function.tri.to.ThrowableToDoubleTriFunction;
+import at.gridtec.lambda4j.operator.binary.ThrowableDoubleBinaryOperator;
 import at.gridtec.lambda4j.operator.unary.ThrowableDoubleUnaryOperator;
 import at.gridtec.lambda4j.predicate.ThrowableDoublePredicate;
 import at.gridtec.lambda4j.predicate.tri.ThrowableTriDoublePredicate;
@@ -191,6 +192,33 @@ public interface ThrowableDoubleTernaryOperator<X extends Throwable> extends Lam
      * @throws X Any throwable from this operators action
      */
     double applyAsDoubleThrows(double value1, double value2, double value3) throws X;
+
+    /**
+     * Applies this operator partially to some arguments of this one, producing a {@link ThrowableDoubleBinaryOperator}
+     * as result.
+     *
+     * @param value1 The first argument to this operator used to partially apply this function
+     * @return A {@code ThrowableDoubleBinaryOperator} that represents this operator partially applied the some
+     * arguments.
+     */
+    @Nonnull
+    default ThrowableDoubleBinaryOperator<X> papplyAsDoubleThrows(double value1) {
+        return (value2, value3) -> this.applyAsDoubleThrows(value1, value2, value3);
+    }
+
+    /**
+     * Applies this operator partially to some arguments of this one, producing a {@link ThrowableDoubleUnaryOperator}
+     * as result.
+     *
+     * @param value1 The first argument to this operator used to partially apply this function
+     * @param value2 The second argument to this operator used to partially apply this function
+     * @return A {@code ThrowableDoubleUnaryOperator} that represents this operator partially applied the some
+     * arguments.
+     */
+    @Nonnull
+    default ThrowableDoubleUnaryOperator<X> papplyAsDoubleThrows(double value1, double value2) {
+        return (value3) -> this.applyAsDoubleThrows(value1, value2, value3);
+    }
 
     /**
      * Returns the number of arguments for this operator.

@@ -164,6 +164,18 @@ public interface ThrowableBiCharToIntFunction<X extends Throwable> extends Lambd
     int applyAsIntThrows(char value1, char value2) throws X;
 
     /**
+     * Applies this function partially to some arguments of this one, producing a {@link ThrowableCharToIntFunction} as
+     * result.
+     *
+     * @param value1 The first argument to this function used to partially apply this function
+     * @return A {@code ThrowableCharToIntFunction} that represents this function partially applied the some arguments.
+     */
+    @Nonnull
+    default ThrowableCharToIntFunction<X> papplyAsIntThrows(char value1) {
+        return (value2) -> this.applyAsIntThrows(value1, value2);
+    }
+
+    /**
      * Returns the number of arguments for this function.
      *
      * @return The number of arguments for this function.

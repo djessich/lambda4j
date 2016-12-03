@@ -22,6 +22,7 @@ import at.gridtec.lambda4j.core.exception.ThrownByFunctionalInterfaceException;
 import at.gridtec.lambda4j.core.util.ThrowableUtils;
 import at.gridtec.lambda4j.function.ThrowableDoubleFunction;
 import at.gridtec.lambda4j.function.ThrowableFunction;
+import at.gridtec.lambda4j.function.bi.conversion.ThrowableBiByteToDoubleFunction;
 import at.gridtec.lambda4j.function.conversion.ThrowableBooleanToByteFunction;
 import at.gridtec.lambda4j.function.conversion.ThrowableByteToDoubleFunction;
 import at.gridtec.lambda4j.function.conversion.ThrowableCharToByteFunction;
@@ -181,6 +182,33 @@ public interface ThrowableTriByteToDoubleFunction<X extends Throwable> extends L
      * @throws X Any throwable from this functions action
      */
     double applyAsDoubleThrows(byte value1, byte value2, byte value3) throws X;
+
+    /**
+     * Applies this function partially to some arguments of this one, producing a {@link
+     * ThrowableBiByteToDoubleFunction} as result.
+     *
+     * @param value1 The first argument to this function used to partially apply this function
+     * @return A {@code ThrowableBiByteToDoubleFunction} that represents this function partially applied the some
+     * arguments.
+     */
+    @Nonnull
+    default ThrowableBiByteToDoubleFunction<X> papplyAsDoubleThrows(byte value1) {
+        return (value2, value3) -> this.applyAsDoubleThrows(value1, value2, value3);
+    }
+
+    /**
+     * Applies this function partially to some arguments of this one, producing a {@link ThrowableByteToDoubleFunction}
+     * as result.
+     *
+     * @param value1 The first argument to this function used to partially apply this function
+     * @param value2 The second argument to this function used to partially apply this function
+     * @return A {@code ThrowableByteToDoubleFunction} that represents this function partially applied the some
+     * arguments.
+     */
+    @Nonnull
+    default ThrowableByteToDoubleFunction<X> papplyAsDoubleThrows(byte value1, byte value2) {
+        return (value3) -> this.applyAsDoubleThrows(value1, value2, value3);
+    }
 
     /**
      * Returns the number of arguments for this function.

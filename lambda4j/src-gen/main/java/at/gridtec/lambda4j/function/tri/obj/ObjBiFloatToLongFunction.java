@@ -22,6 +22,8 @@ import at.gridtec.lambda4j.function.ByteFunction;
 import at.gridtec.lambda4j.function.CharFunction;
 import at.gridtec.lambda4j.function.FloatFunction;
 import at.gridtec.lambda4j.function.ShortFunction;
+import at.gridtec.lambda4j.function.bi.conversion.BiFloatToLongFunction;
+import at.gridtec.lambda4j.function.bi.obj.ObjFloatToLongFunction;
 import at.gridtec.lambda4j.function.conversion.BooleanToFloatFunction;
 import at.gridtec.lambda4j.function.conversion.ByteToFloatFunction;
 import at.gridtec.lambda4j.function.conversion.CharToFloatFunction;
@@ -34,6 +36,7 @@ import at.gridtec.lambda4j.function.conversion.LongToFloatFunction;
 import at.gridtec.lambda4j.function.conversion.LongToShortFunction;
 import at.gridtec.lambda4j.function.conversion.ShortToFloatFunction;
 import at.gridtec.lambda4j.function.to.ToFloatFunction;
+import at.gridtec.lambda4j.function.to.ToLongFunction2;
 import at.gridtec.lambda4j.function.tri.TriFunction;
 import at.gridtec.lambda4j.function.tri.conversion.TriBooleanToLongFunction;
 import at.gridtec.lambda4j.function.tri.conversion.TriByteToLongFunction;
@@ -184,6 +187,54 @@ public interface ObjBiFloatToLongFunction<T> extends Lambda {
      * @return The return value from the function, which is its result.
      */
     long applyAsLong(T t, float value1, float value2);
+
+    /**
+     * Applies this function partially to some arguments of this one, producing a {@link BiFloatToLongFunction} as
+     * result.
+     *
+     * @param t The first argument to this function used to partially apply this function
+     * @return A {@code BiFloatToLongFunction} that represents this function partially applied the some arguments.
+     */
+    @Nonnull
+    default BiFloatToLongFunction papplyAsLong(T t) {
+        return (value1, value2) -> this.applyAsLong(t, value1, value2);
+    }
+
+    /**
+     * Applies this function partially to some arguments of this one, producing a {@link FloatToLongFunction} as result.
+     *
+     * @param t The first argument to this function used to partially apply this function
+     * @param value1 The second argument to this function used to partially apply this function
+     * @return A {@code FloatToLongFunction} that represents this function partially applied the some arguments.
+     */
+    @Nonnull
+    default FloatToLongFunction papplyAsLong(T t, float value1) {
+        return (value2) -> this.applyAsLong(t, value1, value2);
+    }
+
+    /**
+     * Applies this function partially to some arguments of this one, producing a {@link ObjFloatToLongFunction} as
+     * result.
+     *
+     * @param value1 The second argument to this function used to partially apply this function
+     * @return A {@code ObjFloatToLongFunction} that represents this function partially applied the some arguments.
+     */
+    @Nonnull
+    default ObjFloatToLongFunction<T> papplyAsLong(float value1) {
+        return (t, value2) -> this.applyAsLong(t, value1, value2);
+    }
+
+    /**
+     * Applies this function partially to some arguments of this one, producing a {@link ToLongFunction2} as result.
+     *
+     * @param value1 The second argument to this function used to partially apply this function
+     * @param value2 The third argument to this function used to partially apply this function
+     * @return A {@code ToLongFunction2} that represents this function partially applied the some arguments.
+     */
+    @Nonnull
+    default ToLongFunction2<T> papplyAsLong(float value1, float value2) {
+        return (t) -> this.applyAsLong(t, value1, value2);
+    }
 
     /**
      * Returns the number of arguments for this function.

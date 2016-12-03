@@ -17,6 +17,7 @@ package at.gridtec.lambda4j.consumer.tri;
 
 import at.gridtec.lambda4j.Lambda;
 import at.gridtec.lambda4j.consumer.ThrowableCharConsumer;
+import at.gridtec.lambda4j.consumer.bi.ThrowableBiCharConsumer;
 import at.gridtec.lambda4j.core.exception.ThrownByFunctionalInterfaceException;
 import at.gridtec.lambda4j.core.util.ThrowableUtils;
 import at.gridtec.lambda4j.function.conversion.ThrowableBooleanToCharFunction;
@@ -146,6 +147,31 @@ public interface ThrowableTriCharConsumer<X extends Throwable> extends Lambda {
      * @throws X Any throwable from this consumers action
      */
     void acceptThrows(char value1, char value2, char value3) throws X;
+
+    /**
+     * Applies this consumer partially to some arguments of this one, producing a {@link ThrowableBiCharConsumer} as
+     * result.
+     *
+     * @param value1 The first argument to this consumer used to partially apply this function
+     * @return A {@code ThrowableBiCharConsumer} that represents this consumer partially applied the some arguments.
+     */
+    @Nonnull
+    default ThrowableBiCharConsumer<X> pacceptThrows(char value1) {
+        return (value2, value3) -> this.acceptThrows(value1, value2, value3);
+    }
+
+    /**
+     * Applies this consumer partially to some arguments of this one, producing a {@link ThrowableCharConsumer} as
+     * result.
+     *
+     * @param value1 The first argument to this consumer used to partially apply this function
+     * @param value2 The second argument to this consumer used to partially apply this function
+     * @return A {@code ThrowableCharConsumer} that represents this consumer partially applied the some arguments.
+     */
+    @Nonnull
+    default ThrowableCharConsumer<X> pacceptThrows(char value1, char value2) {
+        return (value3) -> this.acceptThrows(value1, value2, value3);
+    }
 
     /**
      * Returns the number of arguments for this consumer.

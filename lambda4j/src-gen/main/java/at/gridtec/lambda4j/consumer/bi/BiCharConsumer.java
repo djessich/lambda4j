@@ -114,6 +114,17 @@ public interface BiCharConsumer extends Lambda {
     void accept(char value1, char value2);
 
     /**
+     * Applies this consumer partially to some arguments of this one, producing a {@link CharConsumer} as result.
+     *
+     * @param value1 The first argument to this consumer used to partially apply this function
+     * @return A {@code CharConsumer} that represents this consumer partially applied the some arguments.
+     */
+    @Nonnull
+    default CharConsumer paccept(char value1) {
+        return (value2) -> this.accept(value1, value2);
+    }
+
+    /**
      * Returns the number of arguments for this consumer.
      *
      * @return The number of arguments for this consumer.

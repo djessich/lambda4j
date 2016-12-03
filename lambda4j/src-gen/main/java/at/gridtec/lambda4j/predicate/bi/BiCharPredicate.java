@@ -187,6 +187,17 @@ public interface BiCharPredicate extends Lambda {
     boolean test(char value1, char value2);
 
     /**
+     * Applies this predicate partially to some arguments of this one, producing a {@link CharPredicate} as result.
+     *
+     * @param value1 The first argument to this predicate used to partially apply this function
+     * @return A {@code CharPredicate} that represents this predicate partially applied the some arguments.
+     */
+    @Nonnull
+    default CharPredicate ptest(char value1) {
+        return (value2) -> this.test(value1, value2);
+    }
+
+    /**
      * Returns the number of arguments for this predicate.
      *
      * @return The number of arguments for this predicate.

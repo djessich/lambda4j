@@ -166,6 +166,28 @@ public interface ObjByteToByteFunction<T> extends Lambda {
     byte applyAsByte(T t, byte value);
 
     /**
+     * Applies this operator partially to some arguments of this one, producing a {@link ByteUnaryOperator} as result.
+     *
+     * @param t The first argument to this function used to partially apply this function
+     * @return A {@code ByteUnaryOperator} that represents this operator partially applied the some arguments.
+     */
+    @Nonnull
+    default ByteUnaryOperator papplyAsByte(T t) {
+        return (value) -> this.applyAsByte(t, value);
+    }
+
+    /**
+     * Applies this operator partially to some arguments of this one, producing a {@link ToByteFunction} as result.
+     *
+     * @param value The second argument to this function used to partially apply this function
+     * @return A {@code ToByteFunction} that represents this operator partially applied the some arguments.
+     */
+    @Nonnull
+    default ToByteFunction<T> papplyAsByte(byte value) {
+        return (t) -> this.applyAsByte(t, value);
+    }
+
+    /**
      * Returns the number of arguments for this function.
      *
      * @return The number of arguments for this function.

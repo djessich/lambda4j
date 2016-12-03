@@ -29,6 +29,7 @@ import at.gridtec.lambda4j.function.ThrowableFunction;
 import at.gridtec.lambda4j.function.ThrowableIntFunction;
 import at.gridtec.lambda4j.function.ThrowableLongFunction;
 import at.gridtec.lambda4j.function.ThrowableShortFunction;
+import at.gridtec.lambda4j.function.bi.obj.ThrowableObjIntToIntFunction;
 import at.gridtec.lambda4j.function.conversion.ThrowableBooleanToIntFunction;
 import at.gridtec.lambda4j.function.conversion.ThrowableByteToIntFunction;
 import at.gridtec.lambda4j.function.conversion.ThrowableCharToIntFunction;
@@ -52,6 +53,7 @@ import at.gridtec.lambda4j.function.tri.conversion.ThrowableTriFloatToIntFunctio
 import at.gridtec.lambda4j.function.tri.conversion.ThrowableTriLongToIntFunction;
 import at.gridtec.lambda4j.function.tri.conversion.ThrowableTriShortToIntFunction;
 import at.gridtec.lambda4j.function.tri.to.ThrowableToIntTriFunction;
+import at.gridtec.lambda4j.operator.binary.ThrowableIntBinaryOperator;
 import at.gridtec.lambda4j.operator.ternary.ThrowableIntTernaryOperator;
 import at.gridtec.lambda4j.operator.unary.ThrowableIntUnaryOperator;
 import at.gridtec.lambda4j.predicate.ThrowableIntPredicate;
@@ -200,6 +202,57 @@ public interface ThrowableObjBiIntToIntFunction<T, X extends Throwable> extends 
      * @throws X Any throwable from this functions action
      */
     int applyAsIntThrows(T t, int value1, int value2) throws X;
+
+    /**
+     * Applies this operator partially to some arguments of this one, producing a {@link ThrowableIntBinaryOperator} as
+     * result.
+     *
+     * @param t The first argument to this function used to partially apply this function
+     * @return A {@code ThrowableIntBinaryOperator} that represents this operator partially applied the some arguments.
+     */
+    @Nonnull
+    default ThrowableIntBinaryOperator<X> papplyAsIntThrows(T t) {
+        return (value1, value2) -> this.applyAsIntThrows(t, value1, value2);
+    }
+
+    /**
+     * Applies this operator partially to some arguments of this one, producing a {@link ThrowableIntUnaryOperator} as
+     * result.
+     *
+     * @param t The first argument to this function used to partially apply this function
+     * @param value1 The second argument to this function used to partially apply this function
+     * @return A {@code ThrowableIntUnaryOperator} that represents this operator partially applied the some arguments.
+     */
+    @Nonnull
+    default ThrowableIntUnaryOperator<X> papplyAsIntThrows(T t, int value1) {
+        return (value2) -> this.applyAsIntThrows(t, value1, value2);
+    }
+
+    /**
+     * Applies this operator partially to some arguments of this one, producing a {@link ThrowableObjIntToIntFunction}
+     * as result.
+     *
+     * @param value1 The second argument to this function used to partially apply this function
+     * @return A {@code ThrowableObjIntToIntFunction} that represents this operator partially applied the some
+     * arguments.
+     */
+    @Nonnull
+    default ThrowableObjIntToIntFunction<T, X> papplyAsIntThrows(int value1) {
+        return (t, value2) -> this.applyAsIntThrows(t, value1, value2);
+    }
+
+    /**
+     * Applies this operator partially to some arguments of this one, producing a {@link ThrowableToIntFunction} as
+     * result.
+     *
+     * @param value1 The second argument to this function used to partially apply this function
+     * @param value2 The third argument to this function used to partially apply this function
+     * @return A {@code ThrowableToIntFunction} that represents this operator partially applied the some arguments.
+     */
+    @Nonnull
+    default ThrowableToIntFunction<T, X> papplyAsIntThrows(int value1, int value2) {
+        return (t) -> this.applyAsIntThrows(t, value1, value2);
+    }
 
     /**
      * Returns the number of arguments for this function.

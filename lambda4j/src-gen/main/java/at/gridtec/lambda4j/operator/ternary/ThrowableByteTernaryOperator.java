@@ -51,6 +51,7 @@ import at.gridtec.lambda4j.function.tri.conversion.ThrowableTriIntToByteFunction
 import at.gridtec.lambda4j.function.tri.conversion.ThrowableTriLongToByteFunction;
 import at.gridtec.lambda4j.function.tri.conversion.ThrowableTriShortToByteFunction;
 import at.gridtec.lambda4j.function.tri.to.ThrowableToByteTriFunction;
+import at.gridtec.lambda4j.operator.binary.ThrowableByteBinaryOperator;
 import at.gridtec.lambda4j.operator.unary.ThrowableByteUnaryOperator;
 import at.gridtec.lambda4j.predicate.ThrowableBytePredicate;
 import at.gridtec.lambda4j.predicate.tri.ThrowableTriBytePredicate;
@@ -190,6 +191,31 @@ public interface ThrowableByteTernaryOperator<X extends Throwable> extends Lambd
      * @throws X Any throwable from this operators action
      */
     byte applyAsByteThrows(byte value1, byte value2, byte value3) throws X;
+
+    /**
+     * Applies this operator partially to some arguments of this one, producing a {@link ThrowableByteBinaryOperator} as
+     * result.
+     *
+     * @param value1 The first argument to this operator used to partially apply this function
+     * @return A {@code ThrowableByteBinaryOperator} that represents this operator partially applied the some arguments.
+     */
+    @Nonnull
+    default ThrowableByteBinaryOperator<X> papplyAsByteThrows(byte value1) {
+        return (value2, value3) -> this.applyAsByteThrows(value1, value2, value3);
+    }
+
+    /**
+     * Applies this operator partially to some arguments of this one, producing a {@link ThrowableByteUnaryOperator} as
+     * result.
+     *
+     * @param value1 The first argument to this operator used to partially apply this function
+     * @param value2 The second argument to this operator used to partially apply this function
+     * @return A {@code ThrowableByteUnaryOperator} that represents this operator partially applied the some arguments.
+     */
+    @Nonnull
+    default ThrowableByteUnaryOperator<X> papplyAsByteThrows(byte value1, byte value2) {
+        return (value3) -> this.applyAsByteThrows(value1, value2, value3);
+    }
 
     /**
      * Returns the number of arguments for this operator.

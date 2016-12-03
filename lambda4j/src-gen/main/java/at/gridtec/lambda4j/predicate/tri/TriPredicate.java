@@ -36,6 +36,7 @@ import at.gridtec.lambda4j.function.tri.to.ToLongTriFunction;
 import at.gridtec.lambda4j.function.tri.to.ToShortTriFunction;
 import at.gridtec.lambda4j.operator.unary.BooleanUnaryOperator;
 import at.gridtec.lambda4j.predicate.Predicate2;
+import at.gridtec.lambda4j.predicate.bi.BiPredicate2;
 
 import org.apache.commons.lang3.tuple.Triple;
 
@@ -239,6 +240,29 @@ public interface TriPredicate<T, U, V> extends Lambda {
     default boolean test(@Nonnull Triple<T, U, V> tuple) {
         Objects.requireNonNull(tuple);
         return test(tuple.getLeft(), tuple.getMiddle(), tuple.getRight());
+    }
+
+    /**
+     * Applies this predicate partially to some arguments of this one, producing a {@link BiPredicate2} as result.
+     *
+     * @param t The first argument to this predicate used to partially apply this function
+     * @return A {@code BiPredicate2} that represents this predicate partially applied the some arguments.
+     */
+    @Nonnull
+    default BiPredicate2<U, V> ptest(T t) {
+        return (u, v) -> this.test(t, u, v);
+    }
+
+    /**
+     * Applies this predicate partially to some arguments of this one, producing a {@link Predicate2} as result.
+     *
+     * @param t The first argument to this predicate used to partially apply this function
+     * @param u The second argument to this predicate used to partially apply this function
+     * @return A {@code Predicate2} that represents this predicate partially applied the some arguments.
+     */
+    @Nonnull
+    default Predicate2<V> ptest(T t, U u) {
+        return (v) -> this.test(t, u, v);
     }
 
     /**

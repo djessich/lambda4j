@@ -16,6 +16,7 @@
 package at.gridtec.lambda4j.consumer.bi;
 
 import at.gridtec.lambda4j.Lambda;
+import at.gridtec.lambda4j.consumer.DoubleConsumer2;
 import at.gridtec.lambda4j.function.conversion.BooleanToDoubleFunction;
 import at.gridtec.lambda4j.function.conversion.ByteToDoubleFunction;
 import at.gridtec.lambda4j.function.conversion.CharToDoubleFunction;
@@ -113,6 +114,17 @@ public interface BiDoubleConsumer extends Lambda {
      * @param value2 The second argument to the consumer
      */
     void accept(double value1, double value2);
+
+    /**
+     * Applies this consumer partially to some arguments of this one, producing a {@link DoubleConsumer2} as result.
+     *
+     * @param value1 The first argument to this consumer used to partially apply this function
+     * @return A {@code DoubleConsumer2} that represents this consumer partially applied the some arguments.
+     */
+    @Nonnull
+    default DoubleConsumer2 paccept(double value1) {
+        return (value2) -> this.accept(value1, value2);
+    }
 
     /**
      * Returns the number of arguments for this consumer.

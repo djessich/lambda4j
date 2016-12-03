@@ -21,7 +21,9 @@ import at.gridtec.lambda4j.function.BooleanFunction;
 import at.gridtec.lambda4j.function.ByteFunction;
 import at.gridtec.lambda4j.function.CharFunction;
 import at.gridtec.lambda4j.function.FloatFunction;
+import at.gridtec.lambda4j.function.Function2;
 import at.gridtec.lambda4j.function.ShortFunction;
+import at.gridtec.lambda4j.function.bi.BiFunction2;
 import at.gridtec.lambda4j.function.bi.obj.ObjFloatFunction;
 import at.gridtec.lambda4j.function.conversion.BooleanToFloatFunction;
 import at.gridtec.lambda4j.function.conversion.ByteToFloatFunction;
@@ -223,6 +225,52 @@ public interface BiObjFloatFunction<T, U, R> extends Lambda {
     default R apply(@Nonnull Pair<T, U> tuple, float value) {
         Objects.requireNonNull(tuple);
         return apply(tuple.getLeft(), tuple.getRight(), value);
+    }
+
+    /**
+     * Applies this function partially to some arguments of this one, producing a {@link ObjFloatFunction} as result.
+     *
+     * @param t The first argument to this function used to partially apply this function
+     * @return A {@code ObjFloatFunction} that represents this function partially applied the some arguments.
+     */
+    @Nonnull
+    default ObjFloatFunction<U, R> papply(T t) {
+        return (u, value) -> this.apply(t, u, value);
+    }
+
+    /**
+     * Applies this function partially to some arguments of this one, producing a {@link FloatFunction} as result.
+     *
+     * @param t The first argument to this function used to partially apply this function
+     * @param u The second argument to this function used to partially apply this function
+     * @return A {@code FloatFunction} that represents this function partially applied the some arguments.
+     */
+    @Nonnull
+    default FloatFunction<R> papply(T t, U u) {
+        return (value) -> this.apply(t, u, value);
+    }
+
+    /**
+     * Applies this function partially to some arguments of this one, producing a {@link BiFunction2} as result.
+     *
+     * @param value The third argument to this function used to partially apply this function
+     * @return A {@code BiFunction2} that represents this function partially applied the some arguments.
+     */
+    @Nonnull
+    default BiFunction2<T, U, R> papply(float value) {
+        return (t, u) -> this.apply(t, u, value);
+    }
+
+    /**
+     * Applies this function partially to some arguments of this one, producing a {@link Function2} as result.
+     *
+     * @param t The first argument to this function used to partially apply this function
+     * @param value The third argument to this function used to partially apply this function
+     * @return A {@code Function2} that represents this function partially applied the some arguments.
+     */
+    @Nonnull
+    default Function2<U, R> papply(T t, float value) {
+        return (u) -> this.apply(t, u, value);
     }
 
     /**

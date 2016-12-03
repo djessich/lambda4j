@@ -22,6 +22,7 @@ import at.gridtec.lambda4j.core.exception.ThrownByFunctionalInterfaceException;
 import at.gridtec.lambda4j.core.util.ThrowableUtils;
 import at.gridtec.lambda4j.function.ThrowableCharFunction;
 import at.gridtec.lambda4j.function.ThrowableFunction;
+import at.gridtec.lambda4j.function.bi.conversion.ThrowableBiIntToCharFunction;
 import at.gridtec.lambda4j.function.conversion.ThrowableBooleanToIntFunction;
 import at.gridtec.lambda4j.function.conversion.ThrowableByteToIntFunction;
 import at.gridtec.lambda4j.function.conversion.ThrowableCharToByteFunction;
@@ -181,6 +182,32 @@ public interface ThrowableTriIntToCharFunction<X extends Throwable> extends Lamb
      * @throws X Any throwable from this functions action
      */
     char applyAsCharThrows(int value1, int value2, int value3) throws X;
+
+    /**
+     * Applies this function partially to some arguments of this one, producing a {@link ThrowableBiIntToCharFunction}
+     * as result.
+     *
+     * @param value1 The first argument to this function used to partially apply this function
+     * @return A {@code ThrowableBiIntToCharFunction} that represents this function partially applied the some
+     * arguments.
+     */
+    @Nonnull
+    default ThrowableBiIntToCharFunction<X> papplyAsCharThrows(int value1) {
+        return (value2, value3) -> this.applyAsCharThrows(value1, value2, value3);
+    }
+
+    /**
+     * Applies this function partially to some arguments of this one, producing a {@link ThrowableIntToCharFunction} as
+     * result.
+     *
+     * @param value1 The first argument to this function used to partially apply this function
+     * @param value2 The second argument to this function used to partially apply this function
+     * @return A {@code ThrowableIntToCharFunction} that represents this function partially applied the some arguments.
+     */
+    @Nonnull
+    default ThrowableIntToCharFunction<X> papplyAsCharThrows(int value1, int value2) {
+        return (value3) -> this.applyAsCharThrows(value1, value2, value3);
+    }
 
     /**
      * Returns the number of arguments for this function.

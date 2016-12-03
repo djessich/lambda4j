@@ -239,6 +239,18 @@ public interface ThrowableLongBinaryOperator<X extends Throwable> extends Lambda
     }
 
     /**
+     * Applies this operator partially to some arguments of this one, producing a {@link ThrowableLongUnaryOperator} as
+     * result.
+     *
+     * @param value1 The first argument to this operator used to partially apply this function
+     * @return A {@code ThrowableLongUnaryOperator} that represents this operator partially applied the some arguments.
+     */
+    @Nonnull
+    default ThrowableLongUnaryOperator<X> papplyAsLongThrows(long value1) {
+        return (value2) -> this.applyAsLongThrows(value1, value2);
+    }
+
+    /**
      * Returns the number of arguments for this operator.
      *
      * @return The number of arguments for this operator.

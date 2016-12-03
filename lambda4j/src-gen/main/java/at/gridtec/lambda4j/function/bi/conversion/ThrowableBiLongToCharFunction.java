@@ -164,6 +164,18 @@ public interface ThrowableBiLongToCharFunction<X extends Throwable> extends Lamb
     char applyAsCharThrows(long value1, long value2) throws X;
 
     /**
+     * Applies this function partially to some arguments of this one, producing a {@link ThrowableLongToCharFunction} as
+     * result.
+     *
+     * @param value1 The first argument to this function used to partially apply this function
+     * @return A {@code ThrowableLongToCharFunction} that represents this function partially applied the some arguments.
+     */
+    @Nonnull
+    default ThrowableLongToCharFunction<X> papplyAsCharThrows(long value1) {
+        return (value2) -> this.applyAsCharThrows(value1, value2);
+    }
+
+    /**
      * Returns the number of arguments for this function.
      *
      * @return The number of arguments for this function.

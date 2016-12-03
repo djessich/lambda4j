@@ -24,6 +24,7 @@ import at.gridtec.lambda4j.function.CharFunction;
 import at.gridtec.lambda4j.function.FloatFunction;
 import at.gridtec.lambda4j.function.ShortFunction;
 import at.gridtec.lambda4j.function.bi.obj.ObjIntToShortFunction;
+import at.gridtec.lambda4j.function.bi.to.ToShortBiFunction;
 import at.gridtec.lambda4j.function.conversion.BooleanToIntFunction;
 import at.gridtec.lambda4j.function.conversion.ByteToIntFunction;
 import at.gridtec.lambda4j.function.conversion.CharToIntFunction;
@@ -207,6 +208,53 @@ public interface BiObjIntToShortFunction<T, U> extends Lambda {
     default short applyAsShort(@Nonnull Pair<T, U> tuple, int value) {
         Objects.requireNonNull(tuple);
         return applyAsShort(tuple.getLeft(), tuple.getRight(), value);
+    }
+
+    /**
+     * Applies this function partially to some arguments of this one, producing a {@link ObjIntToShortFunction} as
+     * result.
+     *
+     * @param t The first argument to this function used to partially apply this function
+     * @return A {@code ObjIntToShortFunction} that represents this function partially applied the some arguments.
+     */
+    @Nonnull
+    default ObjIntToShortFunction<U> papplyAsShort(T t) {
+        return (u, value) -> this.applyAsShort(t, u, value);
+    }
+
+    /**
+     * Applies this function partially to some arguments of this one, producing a {@link IntToShortFunction} as result.
+     *
+     * @param t The first argument to this function used to partially apply this function
+     * @param u The second argument to this function used to partially apply this function
+     * @return A {@code IntToShortFunction} that represents this function partially applied the some arguments.
+     */
+    @Nonnull
+    default IntToShortFunction papplyAsShort(T t, U u) {
+        return (value) -> this.applyAsShort(t, u, value);
+    }
+
+    /**
+     * Applies this function partially to some arguments of this one, producing a {@link ToShortBiFunction} as result.
+     *
+     * @param value The third argument to this function used to partially apply this function
+     * @return A {@code ToShortBiFunction} that represents this function partially applied the some arguments.
+     */
+    @Nonnull
+    default ToShortBiFunction<T, U> papplyAsShort(int value) {
+        return (t, u) -> this.applyAsShort(t, u, value);
+    }
+
+    /**
+     * Applies this function partially to some arguments of this one, producing a {@link ToShortFunction} as result.
+     *
+     * @param t The first argument to this function used to partially apply this function
+     * @param value The third argument to this function used to partially apply this function
+     * @return A {@code ToShortFunction} that represents this function partially applied the some arguments.
+     */
+    @Nonnull
+    default ToShortFunction<U> papplyAsShort(T t, int value) {
+        return (u) -> this.applyAsShort(t, u, value);
     }
 
     /**

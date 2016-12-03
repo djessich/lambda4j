@@ -17,6 +17,7 @@ package at.gridtec.lambda4j.function.bi;
 
 import at.gridtec.lambda4j.Lambda;
 import at.gridtec.lambda4j.consumer.bi.BiLongConsumer;
+import at.gridtec.lambda4j.function.LongFunction2;
 import at.gridtec.lambda4j.function.conversion.BooleanToLongFunction;
 import at.gridtec.lambda4j.function.conversion.ByteToLongFunction;
 import at.gridtec.lambda4j.function.conversion.CharToLongFunction;
@@ -155,6 +156,17 @@ public interface BiLongFunction<R> extends Lambda {
      * @return The return value from the function, which is its result.
      */
     R apply(long value1, long value2);
+
+    /**
+     * Applies this function partially to some arguments of this one, producing a {@link LongFunction2} as result.
+     *
+     * @param value1 The first argument to this function used to partially apply this function
+     * @return A {@code LongFunction2} that represents this function partially applied the some arguments.
+     */
+    @Nonnull
+    default LongFunction2<R> papply(long value1) {
+        return (value2) -> this.apply(value1, value2);
+    }
 
     /**
      * Returns the number of arguments for this function.

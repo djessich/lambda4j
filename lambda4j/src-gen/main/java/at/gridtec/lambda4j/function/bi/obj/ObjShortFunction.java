@@ -21,6 +21,7 @@ import at.gridtec.lambda4j.function.BooleanFunction;
 import at.gridtec.lambda4j.function.ByteFunction;
 import at.gridtec.lambda4j.function.CharFunction;
 import at.gridtec.lambda4j.function.FloatFunction;
+import at.gridtec.lambda4j.function.Function2;
 import at.gridtec.lambda4j.function.ShortFunction;
 import at.gridtec.lambda4j.function.bi.BiBooleanFunction;
 import at.gridtec.lambda4j.function.bi.BiByteFunction;
@@ -180,6 +181,28 @@ public interface ObjShortFunction<T, R> extends Lambda {
      * @return The return value from the function, which is its result.
      */
     R apply(T t, short value);
+
+    /**
+     * Applies this function partially to some arguments of this one, producing a {@link ShortFunction} as result.
+     *
+     * @param t The first argument to this function used to partially apply this function
+     * @return A {@code ShortFunction} that represents this function partially applied the some arguments.
+     */
+    @Nonnull
+    default ShortFunction<R> papply(T t) {
+        return (value) -> this.apply(t, value);
+    }
+
+    /**
+     * Applies this function partially to some arguments of this one, producing a {@link Function2} as result.
+     *
+     * @param value The second argument to this function used to partially apply this function
+     * @return A {@code Function2} that represents this function partially applied the some arguments.
+     */
+    @Nonnull
+    default Function2<T, R> papply(short value) {
+        return (t) -> this.apply(t, value);
+    }
 
     /**
      * Returns the number of arguments for this function.

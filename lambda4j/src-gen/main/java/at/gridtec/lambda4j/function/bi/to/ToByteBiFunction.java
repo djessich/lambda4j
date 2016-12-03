@@ -162,6 +162,17 @@ public interface ToByteBiFunction<T, U> extends Lambda {
     }
 
     /**
+     * Applies this function partially to some arguments of this one, producing a {@link ToByteFunction} as result.
+     *
+     * @param t The first argument to this function used to partially apply this function
+     * @return A {@code ToByteFunction} that represents this function partially applied the some arguments.
+     */
+    @Nonnull
+    default ToByteFunction<U> papplyAsByte(T t) {
+        return (u) -> this.applyAsByte(t, u);
+    }
+
+    /**
      * Returns the number of arguments for this function.
      *
      * @return The number of arguments for this function.

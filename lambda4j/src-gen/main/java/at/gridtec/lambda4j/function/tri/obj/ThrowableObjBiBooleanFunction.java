@@ -29,6 +29,8 @@ import at.gridtec.lambda4j.function.ThrowableFunction;
 import at.gridtec.lambda4j.function.ThrowableIntFunction;
 import at.gridtec.lambda4j.function.ThrowableLongFunction;
 import at.gridtec.lambda4j.function.ThrowableShortFunction;
+import at.gridtec.lambda4j.function.bi.ThrowableBiBooleanFunction;
+import at.gridtec.lambda4j.function.bi.obj.ThrowableObjBooleanFunction;
 import at.gridtec.lambda4j.function.tri.ThrowableTriBooleanFunction;
 import at.gridtec.lambda4j.function.tri.ThrowableTriByteFunction;
 import at.gridtec.lambda4j.function.tri.ThrowableTriCharFunction;
@@ -218,6 +220,55 @@ public interface ThrowableObjBiBooleanFunction<T, R, X extends Throwable> extend
      * @throws X Any throwable from this functions action
      */
     R applyThrows(T t, boolean value1, boolean value2) throws X;
+
+    /**
+     * Applies this function partially to some arguments of this one, producing a {@link ThrowableBiBooleanFunction} as
+     * result.
+     *
+     * @param t The first argument to this function used to partially apply this function
+     * @return A {@code ThrowableBiBooleanFunction} that represents this function partially applied the some arguments.
+     */
+    @Nonnull
+    default ThrowableBiBooleanFunction<R, X> papplyThrows(T t) {
+        return (value1, value2) -> this.applyThrows(t, value1, value2);
+    }
+
+    /**
+     * Applies this function partially to some arguments of this one, producing a {@link ThrowableBooleanFunction} as
+     * result.
+     *
+     * @param t The first argument to this function used to partially apply this function
+     * @param value1 The second argument to this function used to partially apply this function
+     * @return A {@code ThrowableBooleanFunction} that represents this function partially applied the some arguments.
+     */
+    @Nonnull
+    default ThrowableBooleanFunction<R, X> papplyThrows(T t, boolean value1) {
+        return (value2) -> this.applyThrows(t, value1, value2);
+    }
+
+    /**
+     * Applies this function partially to some arguments of this one, producing a {@link ThrowableObjBooleanFunction} as
+     * result.
+     *
+     * @param value1 The second argument to this function used to partially apply this function
+     * @return A {@code ThrowableObjBooleanFunction} that represents this function partially applied the some arguments.
+     */
+    @Nonnull
+    default ThrowableObjBooleanFunction<T, R, X> papplyThrows(boolean value1) {
+        return (t, value2) -> this.applyThrows(t, value1, value2);
+    }
+
+    /**
+     * Applies this function partially to some arguments of this one, producing a {@link ThrowableFunction} as result.
+     *
+     * @param value1 The second argument to this function used to partially apply this function
+     * @param value2 The third argument to this function used to partially apply this function
+     * @return A {@code ThrowableFunction} that represents this function partially applied the some arguments.
+     */
+    @Nonnull
+    default ThrowableFunction<T, R, X> papplyThrows(boolean value1, boolean value2) {
+        return (t) -> this.applyThrows(t, value1, value2);
+    }
 
     /**
      * Returns the number of arguments for this function.

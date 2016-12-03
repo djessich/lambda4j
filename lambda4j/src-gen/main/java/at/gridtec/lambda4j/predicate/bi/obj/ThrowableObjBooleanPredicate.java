@@ -233,6 +233,30 @@ public interface ThrowableObjBooleanPredicate<T, X extends Throwable> extends La
     boolean testThrows(T t, boolean value) throws X;
 
     /**
+     * Applies this operator partially to some arguments of this one, producing a {@link ThrowableBooleanUnaryOperator}
+     * as result.
+     *
+     * @param t The first argument to this predicate used to partially apply this function
+     * @return A {@code ThrowableBooleanUnaryOperator} that represents this operator partially applied the some
+     * arguments.
+     */
+    @Nonnull
+    default ThrowableBooleanUnaryOperator<X> ptestThrows(T t) {
+        return (value) -> this.testThrows(t, value);
+    }
+
+    /**
+     * Applies this operator partially to some arguments of this one, producing a {@link ThrowablePredicate} as result.
+     *
+     * @param value The second argument to this predicate used to partially apply this function
+     * @return A {@code ThrowablePredicate} that represents this operator partially applied the some arguments.
+     */
+    @Nonnull
+    default ThrowablePredicate<T, X> ptestThrows(boolean value) {
+        return (t) -> this.testThrows(t, value);
+    }
+
+    /**
      * Returns the number of arguments for this predicate.
      *
      * @return The number of arguments for this predicate.

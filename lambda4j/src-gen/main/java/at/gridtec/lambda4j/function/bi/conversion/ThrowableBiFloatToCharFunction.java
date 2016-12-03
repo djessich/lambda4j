@@ -164,6 +164,19 @@ public interface ThrowableBiFloatToCharFunction<X extends Throwable> extends Lam
     char applyAsCharThrows(float value1, float value2) throws X;
 
     /**
+     * Applies this function partially to some arguments of this one, producing a {@link ThrowableFloatToCharFunction}
+     * as result.
+     *
+     * @param value1 The first argument to this function used to partially apply this function
+     * @return A {@code ThrowableFloatToCharFunction} that represents this function partially applied the some
+     * arguments.
+     */
+    @Nonnull
+    default ThrowableFloatToCharFunction<X> papplyAsCharThrows(float value1) {
+        return (value2) -> this.applyAsCharThrows(value1, value2);
+    }
+
+    /**
      * Returns the number of arguments for this function.
      *
      * @return The number of arguments for this function.

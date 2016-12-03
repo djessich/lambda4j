@@ -21,6 +21,7 @@ import at.gridtec.lambda4j.consumer.tri.ThrowableTriConsumer;
 import at.gridtec.lambda4j.core.exception.ThrownByFunctionalInterfaceException;
 import at.gridtec.lambda4j.core.util.ThrowableUtils;
 import at.gridtec.lambda4j.function.ThrowableFunction;
+import at.gridtec.lambda4j.function.bi.ThrowableBiFunction;
 
 import org.apache.commons.lang3.tuple.Triple;
 
@@ -220,6 +221,29 @@ public interface ThrowableTriFunction<T, U, V, R, X extends Throwable> extends L
     default R applyThrows(@Nonnull Triple<T, U, V> tuple) throws X {
         Objects.requireNonNull(tuple);
         return applyThrows(tuple.getLeft(), tuple.getMiddle(), tuple.getRight());
+    }
+
+    /**
+     * Applies this function partially to some arguments of this one, producing a {@link ThrowableBiFunction} as result.
+     *
+     * @param t The first argument to this function used to partially apply this function
+     * @return A {@code ThrowableBiFunction} that represents this function partially applied the some arguments.
+     */
+    @Nonnull
+    default ThrowableBiFunction<U, V, R, X> papplyThrows(T t) {
+        return (u, v) -> this.applyThrows(t, u, v);
+    }
+
+    /**
+     * Applies this function partially to some arguments of this one, producing a {@link ThrowableFunction} as result.
+     *
+     * @param t The first argument to this function used to partially apply this function
+     * @param u The second argument to this function used to partially apply this function
+     * @return A {@code ThrowableFunction} that represents this function partially applied the some arguments.
+     */
+    @Nonnull
+    default ThrowableFunction<V, R, X> papplyThrows(T t, U u) {
+        return (v) -> this.applyThrows(t, u, v);
     }
 
     /**

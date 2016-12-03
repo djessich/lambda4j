@@ -48,6 +48,7 @@ import at.gridtec.lambda4j.function.tri.conversion.TriShortToFloatFunction;
 import at.gridtec.lambda4j.function.tri.conversion.TriShortToIntFunction;
 import at.gridtec.lambda4j.function.tri.conversion.TriShortToLongFunction;
 import at.gridtec.lambda4j.function.tri.to.ToShortTriFunction;
+import at.gridtec.lambda4j.operator.binary.ShortBinaryOperator;
 import at.gridtec.lambda4j.operator.unary.ShortUnaryOperator;
 import at.gridtec.lambda4j.predicate.ShortPredicate;
 import at.gridtec.lambda4j.predicate.tri.TriShortPredicate;
@@ -172,6 +173,29 @@ public interface ShortTernaryOperator extends Lambda {
      * @return The return value from the operator, which is its result.
      */
     short applyAsShort(short value1, short value2, short value3);
+
+    /**
+     * Applies this operator partially to some arguments of this one, producing a {@link ShortBinaryOperator} as result.
+     *
+     * @param value1 The first argument to this operator used to partially apply this function
+     * @return A {@code ShortBinaryOperator} that represents this operator partially applied the some arguments.
+     */
+    @Nonnull
+    default ShortBinaryOperator papplyAsShort(short value1) {
+        return (value2, value3) -> this.applyAsShort(value1, value2, value3);
+    }
+
+    /**
+     * Applies this operator partially to some arguments of this one, producing a {@link ShortUnaryOperator} as result.
+     *
+     * @param value1 The first argument to this operator used to partially apply this function
+     * @param value2 The second argument to this operator used to partially apply this function
+     * @return A {@code ShortUnaryOperator} that represents this operator partially applied the some arguments.
+     */
+    @Nonnull
+    default ShortUnaryOperator papplyAsShort(short value1, short value2) {
+        return (value3) -> this.applyAsShort(value1, value2, value3);
+    }
 
     /**
      * Returns the number of arguments for this operator.

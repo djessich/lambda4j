@@ -22,6 +22,8 @@ import at.gridtec.lambda4j.function.ByteFunction;
 import at.gridtec.lambda4j.function.CharFunction;
 import at.gridtec.lambda4j.function.FloatFunction;
 import at.gridtec.lambda4j.function.ShortFunction;
+import at.gridtec.lambda4j.function.bi.conversion.BiByteToIntFunction;
+import at.gridtec.lambda4j.function.bi.obj.ObjByteToIntFunction;
 import at.gridtec.lambda4j.function.conversion.BooleanToByteFunction;
 import at.gridtec.lambda4j.function.conversion.ByteToIntFunction;
 import at.gridtec.lambda4j.function.conversion.CharToByteFunction;
@@ -34,6 +36,7 @@ import at.gridtec.lambda4j.function.conversion.IntToShortFunction;
 import at.gridtec.lambda4j.function.conversion.LongToByteFunction;
 import at.gridtec.lambda4j.function.conversion.ShortToByteFunction;
 import at.gridtec.lambda4j.function.to.ToByteFunction;
+import at.gridtec.lambda4j.function.to.ToIntFunction2;
 import at.gridtec.lambda4j.function.tri.TriFunction;
 import at.gridtec.lambda4j.function.tri.conversion.TriBooleanToIntFunction;
 import at.gridtec.lambda4j.function.tri.conversion.TriByteToIntFunction;
@@ -184,6 +187,53 @@ public interface ObjBiByteToIntFunction<T> extends Lambda {
      * @return The return value from the function, which is its result.
      */
     int applyAsInt(T t, byte value1, byte value2);
+
+    /**
+     * Applies this function partially to some arguments of this one, producing a {@link BiByteToIntFunction} as result.
+     *
+     * @param t The first argument to this function used to partially apply this function
+     * @return A {@code BiByteToIntFunction} that represents this function partially applied the some arguments.
+     */
+    @Nonnull
+    default BiByteToIntFunction papplyAsInt(T t) {
+        return (value1, value2) -> this.applyAsInt(t, value1, value2);
+    }
+
+    /**
+     * Applies this function partially to some arguments of this one, producing a {@link ByteToIntFunction} as result.
+     *
+     * @param t The first argument to this function used to partially apply this function
+     * @param value1 The second argument to this function used to partially apply this function
+     * @return A {@code ByteToIntFunction} that represents this function partially applied the some arguments.
+     */
+    @Nonnull
+    default ByteToIntFunction papplyAsInt(T t, byte value1) {
+        return (value2) -> this.applyAsInt(t, value1, value2);
+    }
+
+    /**
+     * Applies this function partially to some arguments of this one, producing a {@link ObjByteToIntFunction} as
+     * result.
+     *
+     * @param value1 The second argument to this function used to partially apply this function
+     * @return A {@code ObjByteToIntFunction} that represents this function partially applied the some arguments.
+     */
+    @Nonnull
+    default ObjByteToIntFunction<T> papplyAsInt(byte value1) {
+        return (t, value2) -> this.applyAsInt(t, value1, value2);
+    }
+
+    /**
+     * Applies this function partially to some arguments of this one, producing a {@link ToIntFunction2} as result.
+     *
+     * @param value1 The second argument to this function used to partially apply this function
+     * @param value2 The third argument to this function used to partially apply this function
+     * @return A {@code ToIntFunction2} that represents this function partially applied the some arguments.
+     */
+    @Nonnull
+    default ToIntFunction2<T> papplyAsInt(byte value1, byte value2) {
+        return (t) -> this.applyAsInt(t, value1, value2);
+    }
 
     /**
      * Returns the number of arguments for this function.

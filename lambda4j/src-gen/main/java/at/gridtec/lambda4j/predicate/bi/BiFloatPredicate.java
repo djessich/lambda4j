@@ -188,6 +188,17 @@ public interface BiFloatPredicate extends Lambda {
     boolean test(float value1, float value2);
 
     /**
+     * Applies this predicate partially to some arguments of this one, producing a {@link FloatPredicate} as result.
+     *
+     * @param value1 The first argument to this predicate used to partially apply this function
+     * @return A {@code FloatPredicate} that represents this predicate partially applied the some arguments.
+     */
+    @Nonnull
+    default FloatPredicate ptest(float value1) {
+        return (value2) -> this.test(value1, value2);
+    }
+
+    /**
      * Returns the number of arguments for this predicate.
      *
      * @return The number of arguments for this predicate.

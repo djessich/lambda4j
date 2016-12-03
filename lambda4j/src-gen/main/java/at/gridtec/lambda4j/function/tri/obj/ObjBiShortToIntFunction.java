@@ -22,6 +22,8 @@ import at.gridtec.lambda4j.function.ByteFunction;
 import at.gridtec.lambda4j.function.CharFunction;
 import at.gridtec.lambda4j.function.FloatFunction;
 import at.gridtec.lambda4j.function.ShortFunction;
+import at.gridtec.lambda4j.function.bi.conversion.BiShortToIntFunction;
+import at.gridtec.lambda4j.function.bi.obj.ObjShortToIntFunction;
 import at.gridtec.lambda4j.function.conversion.BooleanToShortFunction;
 import at.gridtec.lambda4j.function.conversion.ByteToShortFunction;
 import at.gridtec.lambda4j.function.conversion.CharToShortFunction;
@@ -33,6 +35,7 @@ import at.gridtec.lambda4j.function.conversion.IntToFloatFunction;
 import at.gridtec.lambda4j.function.conversion.IntToShortFunction;
 import at.gridtec.lambda4j.function.conversion.LongToShortFunction;
 import at.gridtec.lambda4j.function.conversion.ShortToIntFunction;
+import at.gridtec.lambda4j.function.to.ToIntFunction2;
 import at.gridtec.lambda4j.function.to.ToShortFunction;
 import at.gridtec.lambda4j.function.tri.TriFunction;
 import at.gridtec.lambda4j.function.tri.conversion.TriBooleanToIntFunction;
@@ -184,6 +187,54 @@ public interface ObjBiShortToIntFunction<T> extends Lambda {
      * @return The return value from the function, which is its result.
      */
     int applyAsInt(T t, short value1, short value2);
+
+    /**
+     * Applies this function partially to some arguments of this one, producing a {@link BiShortToIntFunction} as
+     * result.
+     *
+     * @param t The first argument to this function used to partially apply this function
+     * @return A {@code BiShortToIntFunction} that represents this function partially applied the some arguments.
+     */
+    @Nonnull
+    default BiShortToIntFunction papplyAsInt(T t) {
+        return (value1, value2) -> this.applyAsInt(t, value1, value2);
+    }
+
+    /**
+     * Applies this function partially to some arguments of this one, producing a {@link ShortToIntFunction} as result.
+     *
+     * @param t The first argument to this function used to partially apply this function
+     * @param value1 The second argument to this function used to partially apply this function
+     * @return A {@code ShortToIntFunction} that represents this function partially applied the some arguments.
+     */
+    @Nonnull
+    default ShortToIntFunction papplyAsInt(T t, short value1) {
+        return (value2) -> this.applyAsInt(t, value1, value2);
+    }
+
+    /**
+     * Applies this function partially to some arguments of this one, producing a {@link ObjShortToIntFunction} as
+     * result.
+     *
+     * @param value1 The second argument to this function used to partially apply this function
+     * @return A {@code ObjShortToIntFunction} that represents this function partially applied the some arguments.
+     */
+    @Nonnull
+    default ObjShortToIntFunction<T> papplyAsInt(short value1) {
+        return (t, value2) -> this.applyAsInt(t, value1, value2);
+    }
+
+    /**
+     * Applies this function partially to some arguments of this one, producing a {@link ToIntFunction2} as result.
+     *
+     * @param value1 The second argument to this function used to partially apply this function
+     * @param value2 The third argument to this function used to partially apply this function
+     * @return A {@code ToIntFunction2} that represents this function partially applied the some arguments.
+     */
+    @Nonnull
+    default ToIntFunction2<T> papplyAsInt(short value1, short value2) {
+        return (t) -> this.applyAsInt(t, value1, value2);
+    }
 
     /**
      * Returns the number of arguments for this function.

@@ -19,6 +19,7 @@ import at.gridtec.lambda4j.Lambda;
 import at.gridtec.lambda4j.consumer.CharConsumer;
 import at.gridtec.lambda4j.consumer.tri.TriDoubleConsumer;
 import at.gridtec.lambda4j.function.CharFunction;
+import at.gridtec.lambda4j.function.bi.conversion.BiDoubleToCharFunction;
 import at.gridtec.lambda4j.function.conversion.BooleanToDoubleFunction;
 import at.gridtec.lambda4j.function.conversion.ByteToDoubleFunction;
 import at.gridtec.lambda4j.function.conversion.CharToByteFunction;
@@ -163,6 +164,31 @@ public interface TriDoubleToCharFunction extends Lambda {
      * @return The return value from the function, which is its result.
      */
     char applyAsChar(double value1, double value2, double value3);
+
+    /**
+     * Applies this function partially to some arguments of this one, producing a {@link BiDoubleToCharFunction} as
+     * result.
+     *
+     * @param value1 The first argument to this function used to partially apply this function
+     * @return A {@code BiDoubleToCharFunction} that represents this function partially applied the some arguments.
+     */
+    @Nonnull
+    default BiDoubleToCharFunction papplyAsChar(double value1) {
+        return (value2, value3) -> this.applyAsChar(value1, value2, value3);
+    }
+
+    /**
+     * Applies this function partially to some arguments of this one, producing a {@link DoubleToCharFunction} as
+     * result.
+     *
+     * @param value1 The first argument to this function used to partially apply this function
+     * @param value2 The second argument to this function used to partially apply this function
+     * @return A {@code DoubleToCharFunction} that represents this function partially applied the some arguments.
+     */
+    @Nonnull
+    default DoubleToCharFunction papplyAsChar(double value1, double value2) {
+        return (value3) -> this.applyAsChar(value1, value2, value3);
+    }
 
     /**
      * Returns the number of arguments for this function.

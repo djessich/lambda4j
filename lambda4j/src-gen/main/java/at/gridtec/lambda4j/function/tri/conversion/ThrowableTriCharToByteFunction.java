@@ -22,6 +22,7 @@ import at.gridtec.lambda4j.core.exception.ThrownByFunctionalInterfaceException;
 import at.gridtec.lambda4j.core.util.ThrowableUtils;
 import at.gridtec.lambda4j.function.ThrowableByteFunction;
 import at.gridtec.lambda4j.function.ThrowableFunction;
+import at.gridtec.lambda4j.function.bi.conversion.ThrowableBiCharToByteFunction;
 import at.gridtec.lambda4j.function.conversion.ThrowableBooleanToCharFunction;
 import at.gridtec.lambda4j.function.conversion.ThrowableByteToCharFunction;
 import at.gridtec.lambda4j.function.conversion.ThrowableByteToDoubleFunction;
@@ -181,6 +182,32 @@ public interface ThrowableTriCharToByteFunction<X extends Throwable> extends Lam
      * @throws X Any throwable from this functions action
      */
     byte applyAsByteThrows(char value1, char value2, char value3) throws X;
+
+    /**
+     * Applies this function partially to some arguments of this one, producing a {@link ThrowableBiCharToByteFunction}
+     * as result.
+     *
+     * @param value1 The first argument to this function used to partially apply this function
+     * @return A {@code ThrowableBiCharToByteFunction} that represents this function partially applied the some
+     * arguments.
+     */
+    @Nonnull
+    default ThrowableBiCharToByteFunction<X> papplyAsByteThrows(char value1) {
+        return (value2, value3) -> this.applyAsByteThrows(value1, value2, value3);
+    }
+
+    /**
+     * Applies this function partially to some arguments of this one, producing a {@link ThrowableCharToByteFunction} as
+     * result.
+     *
+     * @param value1 The first argument to this function used to partially apply this function
+     * @param value2 The second argument to this function used to partially apply this function
+     * @return A {@code ThrowableCharToByteFunction} that represents this function partially applied the some arguments.
+     */
+    @Nonnull
+    default ThrowableCharToByteFunction<X> papplyAsByteThrows(char value1, char value2) {
+        return (value3) -> this.applyAsByteThrows(value1, value2, value3);
+    }
 
     /**
      * Returns the number of arguments for this function.

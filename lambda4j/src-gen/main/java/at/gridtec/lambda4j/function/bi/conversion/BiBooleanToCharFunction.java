@@ -147,6 +147,18 @@ public interface BiBooleanToCharFunction extends Lambda {
     char applyAsChar(boolean value1, boolean value2);
 
     /**
+     * Applies this function partially to some arguments of this one, producing a {@link BooleanToCharFunction} as
+     * result.
+     *
+     * @param value1 The first argument to this function used to partially apply this function
+     * @return A {@code BooleanToCharFunction} that represents this function partially applied the some arguments.
+     */
+    @Nonnull
+    default BooleanToCharFunction papplyAsChar(boolean value1) {
+        return (value2) -> this.applyAsChar(value1, value2);
+    }
+
+    /**
      * Returns the number of arguments for this function.
      *
      * @return The number of arguments for this function.

@@ -22,6 +22,7 @@ import at.gridtec.lambda4j.core.exception.ThrownByFunctionalInterfaceException;
 import at.gridtec.lambda4j.core.util.ThrowableUtils;
 import at.gridtec.lambda4j.function.ThrowableFunction;
 import at.gridtec.lambda4j.function.ThrowableShortFunction;
+import at.gridtec.lambda4j.function.bi.conversion.ThrowableBiBooleanToShortFunction;
 import at.gridtec.lambda4j.function.conversion.ThrowableBooleanToShortFunction;
 import at.gridtec.lambda4j.function.conversion.ThrowableShortToByteFunction;
 import at.gridtec.lambda4j.function.conversion.ThrowableShortToCharFunction;
@@ -181,6 +182,33 @@ public interface ThrowableTriBooleanToShortFunction<X extends Throwable> extends
      * @throws X Any throwable from this functions action
      */
     short applyAsShortThrows(boolean value1, boolean value2, boolean value3) throws X;
+
+    /**
+     * Applies this function partially to some arguments of this one, producing a {@link
+     * ThrowableBiBooleanToShortFunction} as result.
+     *
+     * @param value1 The first argument to this function used to partially apply this function
+     * @return A {@code ThrowableBiBooleanToShortFunction} that represents this function partially applied the some
+     * arguments.
+     */
+    @Nonnull
+    default ThrowableBiBooleanToShortFunction<X> papplyAsShortThrows(boolean value1) {
+        return (value2, value3) -> this.applyAsShortThrows(value1, value2, value3);
+    }
+
+    /**
+     * Applies this function partially to some arguments of this one, producing a {@link
+     * ThrowableBooleanToShortFunction} as result.
+     *
+     * @param value1 The first argument to this function used to partially apply this function
+     * @param value2 The second argument to this function used to partially apply this function
+     * @return A {@code ThrowableBooleanToShortFunction} that represents this function partially applied the some
+     * arguments.
+     */
+    @Nonnull
+    default ThrowableBooleanToShortFunction<X> papplyAsShortThrows(boolean value1, boolean value2) {
+        return (value3) -> this.applyAsShortThrows(value1, value2, value3);
+    }
 
     /**
      * Returns the number of arguments for this function.

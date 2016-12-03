@@ -182,6 +182,31 @@ public interface ThrowableObjDoubleToDoubleFunction<T, X extends Throwable> exte
     double applyAsDoubleThrows(T t, double value) throws X;
 
     /**
+     * Applies this operator partially to some arguments of this one, producing a {@link ThrowableDoubleUnaryOperator}
+     * as result.
+     *
+     * @param t The first argument to this function used to partially apply this function
+     * @return A {@code ThrowableDoubleUnaryOperator} that represents this operator partially applied the some
+     * arguments.
+     */
+    @Nonnull
+    default ThrowableDoubleUnaryOperator<X> papplyAsDoubleThrows(T t) {
+        return (value) -> this.applyAsDoubleThrows(t, value);
+    }
+
+    /**
+     * Applies this operator partially to some arguments of this one, producing a {@link ThrowableToDoubleFunction} as
+     * result.
+     *
+     * @param value The second argument to this function used to partially apply this function
+     * @return A {@code ThrowableToDoubleFunction} that represents this operator partially applied the some arguments.
+     */
+    @Nonnull
+    default ThrowableToDoubleFunction<T, X> papplyAsDoubleThrows(double value) {
+        return (t) -> this.applyAsDoubleThrows(t, value);
+    }
+
+    /**
      * Returns the number of arguments for this function.
      *
      * @return The number of arguments for this function.

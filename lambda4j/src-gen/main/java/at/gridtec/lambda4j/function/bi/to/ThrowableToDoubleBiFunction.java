@@ -208,6 +208,18 @@ public interface ThrowableToDoubleBiFunction<T, U, X extends Throwable> extends 
     }
 
     /**
+     * Applies this function partially to some arguments of this one, producing a {@link ThrowableToDoubleFunction} as
+     * result.
+     *
+     * @param t The first argument to this function used to partially apply this function
+     * @return A {@code ThrowableToDoubleFunction} that represents this function partially applied the some arguments.
+     */
+    @Nonnull
+    default ThrowableToDoubleFunction<U, X> papplyAsDoubleThrows(T t) {
+        return (u) -> this.applyAsDoubleThrows(t, u);
+    }
+
+    /**
      * Returns the number of arguments for this function.
      *
      * @return The number of arguments for this function.

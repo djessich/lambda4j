@@ -148,6 +148,17 @@ public interface BiShortToLongFunction extends Lambda {
     long applyAsLong(short value1, short value2);
 
     /**
+     * Applies this function partially to some arguments of this one, producing a {@link ShortToLongFunction} as result.
+     *
+     * @param value1 The first argument to this function used to partially apply this function
+     * @return A {@code ShortToLongFunction} that represents this function partially applied the some arguments.
+     */
+    @Nonnull
+    default ShortToLongFunction papplyAsLong(short value1) {
+        return (value2) -> this.applyAsLong(value1, value2);
+    }
+
+    /**
      * Returns the number of arguments for this function.
      *
      * @return The number of arguments for this function.

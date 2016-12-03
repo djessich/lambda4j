@@ -17,6 +17,7 @@ package at.gridtec.lambda4j.consumer.bi.obj;
 
 import at.gridtec.lambda4j.Lambda;
 import at.gridtec.lambda4j.consumer.BooleanConsumer;
+import at.gridtec.lambda4j.consumer.Consumer2;
 import at.gridtec.lambda4j.consumer.bi.BiBooleanConsumer;
 import at.gridtec.lambda4j.consumer.bi.BiByteConsumer;
 import at.gridtec.lambda4j.consumer.bi.BiCharConsumer;
@@ -137,6 +138,28 @@ public interface ObjBooleanConsumer<T> extends Lambda {
      * @param value The second argument to the consumer
      */
     void accept(T t, boolean value);
+
+    /**
+     * Applies this consumer partially to some arguments of this one, producing a {@link BooleanConsumer} as result.
+     *
+     * @param t The first argument to this consumer used to partially apply this function
+     * @return A {@code BooleanConsumer} that represents this consumer partially applied the some arguments.
+     */
+    @Nonnull
+    default BooleanConsumer paccept(T t) {
+        return (value) -> this.accept(t, value);
+    }
+
+    /**
+     * Applies this consumer partially to some arguments of this one, producing a {@link Consumer2} as result.
+     *
+     * @param value The second argument to this consumer used to partially apply this function
+     * @return A {@code Consumer2} that represents this consumer partially applied the some arguments.
+     */
+    @Nonnull
+    default Consumer2<T> paccept(boolean value) {
+        return (t) -> this.accept(t, value);
+    }
 
     /**
      * Returns the number of arguments for this consumer.

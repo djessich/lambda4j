@@ -22,6 +22,8 @@ import at.gridtec.lambda4j.function.ByteFunction;
 import at.gridtec.lambda4j.function.CharFunction;
 import at.gridtec.lambda4j.function.FloatFunction;
 import at.gridtec.lambda4j.function.ShortFunction;
+import at.gridtec.lambda4j.function.bi.conversion.BiShortToLongFunction;
+import at.gridtec.lambda4j.function.bi.obj.ObjShortToLongFunction;
 import at.gridtec.lambda4j.function.conversion.BooleanToShortFunction;
 import at.gridtec.lambda4j.function.conversion.ByteToShortFunction;
 import at.gridtec.lambda4j.function.conversion.CharToShortFunction;
@@ -33,6 +35,7 @@ import at.gridtec.lambda4j.function.conversion.LongToCharFunction;
 import at.gridtec.lambda4j.function.conversion.LongToFloatFunction;
 import at.gridtec.lambda4j.function.conversion.LongToShortFunction;
 import at.gridtec.lambda4j.function.conversion.ShortToLongFunction;
+import at.gridtec.lambda4j.function.to.ToLongFunction2;
 import at.gridtec.lambda4j.function.to.ToShortFunction;
 import at.gridtec.lambda4j.function.tri.TriFunction;
 import at.gridtec.lambda4j.function.tri.conversion.TriBooleanToLongFunction;
@@ -184,6 +187,54 @@ public interface ObjBiShortToLongFunction<T> extends Lambda {
      * @return The return value from the function, which is its result.
      */
     long applyAsLong(T t, short value1, short value2);
+
+    /**
+     * Applies this function partially to some arguments of this one, producing a {@link BiShortToLongFunction} as
+     * result.
+     *
+     * @param t The first argument to this function used to partially apply this function
+     * @return A {@code BiShortToLongFunction} that represents this function partially applied the some arguments.
+     */
+    @Nonnull
+    default BiShortToLongFunction papplyAsLong(T t) {
+        return (value1, value2) -> this.applyAsLong(t, value1, value2);
+    }
+
+    /**
+     * Applies this function partially to some arguments of this one, producing a {@link ShortToLongFunction} as result.
+     *
+     * @param t The first argument to this function used to partially apply this function
+     * @param value1 The second argument to this function used to partially apply this function
+     * @return A {@code ShortToLongFunction} that represents this function partially applied the some arguments.
+     */
+    @Nonnull
+    default ShortToLongFunction papplyAsLong(T t, short value1) {
+        return (value2) -> this.applyAsLong(t, value1, value2);
+    }
+
+    /**
+     * Applies this function partially to some arguments of this one, producing a {@link ObjShortToLongFunction} as
+     * result.
+     *
+     * @param value1 The second argument to this function used to partially apply this function
+     * @return A {@code ObjShortToLongFunction} that represents this function partially applied the some arguments.
+     */
+    @Nonnull
+    default ObjShortToLongFunction<T> papplyAsLong(short value1) {
+        return (t, value2) -> this.applyAsLong(t, value1, value2);
+    }
+
+    /**
+     * Applies this function partially to some arguments of this one, producing a {@link ToLongFunction2} as result.
+     *
+     * @param value1 The second argument to this function used to partially apply this function
+     * @param value2 The third argument to this function used to partially apply this function
+     * @return A {@code ToLongFunction2} that represents this function partially applied the some arguments.
+     */
+    @Nonnull
+    default ToLongFunction2<T> papplyAsLong(short value1, short value2) {
+        return (t) -> this.applyAsLong(t, value1, value2);
+    }
 
     /**
      * Returns the number of arguments for this function.

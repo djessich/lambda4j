@@ -166,6 +166,28 @@ public interface ObjCharToCharFunction<T> extends Lambda {
     char applyAsChar(T t, char value);
 
     /**
+     * Applies this operator partially to some arguments of this one, producing a {@link CharUnaryOperator} as result.
+     *
+     * @param t The first argument to this function used to partially apply this function
+     * @return A {@code CharUnaryOperator} that represents this operator partially applied the some arguments.
+     */
+    @Nonnull
+    default CharUnaryOperator papplyAsChar(T t) {
+        return (value) -> this.applyAsChar(t, value);
+    }
+
+    /**
+     * Applies this operator partially to some arguments of this one, producing a {@link ToCharFunction} as result.
+     *
+     * @param value The second argument to this function used to partially apply this function
+     * @return A {@code ToCharFunction} that represents this operator partially applied the some arguments.
+     */
+    @Nonnull
+    default ToCharFunction<T> papplyAsChar(char value) {
+        return (t) -> this.applyAsChar(t, value);
+    }
+
+    /**
      * Returns the number of arguments for this function.
      *
      * @return The number of arguments for this function.

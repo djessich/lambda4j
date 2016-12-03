@@ -19,6 +19,7 @@ import at.gridtec.lambda4j.Lambda;
 import at.gridtec.lambda4j.consumer.CharConsumer;
 import at.gridtec.lambda4j.consumer.tri.TriIntConsumer;
 import at.gridtec.lambda4j.function.CharFunction;
+import at.gridtec.lambda4j.function.bi.conversion.BiIntToCharFunction;
 import at.gridtec.lambda4j.function.conversion.BooleanToIntFunction;
 import at.gridtec.lambda4j.function.conversion.ByteToIntFunction;
 import at.gridtec.lambda4j.function.conversion.CharToByteFunction;
@@ -163,6 +164,29 @@ public interface TriIntToCharFunction extends Lambda {
      * @return The return value from the function, which is its result.
      */
     char applyAsChar(int value1, int value2, int value3);
+
+    /**
+     * Applies this function partially to some arguments of this one, producing a {@link BiIntToCharFunction} as result.
+     *
+     * @param value1 The first argument to this function used to partially apply this function
+     * @return A {@code BiIntToCharFunction} that represents this function partially applied the some arguments.
+     */
+    @Nonnull
+    default BiIntToCharFunction papplyAsChar(int value1) {
+        return (value2, value3) -> this.applyAsChar(value1, value2, value3);
+    }
+
+    /**
+     * Applies this function partially to some arguments of this one, producing a {@link IntToCharFunction} as result.
+     *
+     * @param value1 The first argument to this function used to partially apply this function
+     * @param value2 The second argument to this function used to partially apply this function
+     * @return A {@code IntToCharFunction} that represents this function partially applied the some arguments.
+     */
+    @Nonnull
+    default IntToCharFunction papplyAsChar(int value1, int value2) {
+        return (value3) -> this.applyAsChar(value1, value2, value3);
+    }
 
     /**
      * Returns the number of arguments for this function.

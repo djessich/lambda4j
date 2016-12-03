@@ -45,6 +45,7 @@ import at.gridtec.lambda4j.operator.ternary.ShortTernaryOperator;
 import at.gridtec.lambda4j.operator.unary.BooleanUnaryOperator;
 import at.gridtec.lambda4j.operator.unary.ShortUnaryOperator;
 import at.gridtec.lambda4j.predicate.ShortPredicate;
+import at.gridtec.lambda4j.predicate.bi.BiShortPredicate;
 
 import org.apache.commons.lang3.tuple.Triple;
 
@@ -204,6 +205,29 @@ public interface TriShortPredicate extends Lambda {
      * @return The return value from the predicate, which is its result.
      */
     boolean test(short value1, short value2, short value3);
+
+    /**
+     * Applies this predicate partially to some arguments of this one, producing a {@link BiShortPredicate} as result.
+     *
+     * @param value1 The first argument to this predicate used to partially apply this function
+     * @return A {@code BiShortPredicate} that represents this predicate partially applied the some arguments.
+     */
+    @Nonnull
+    default BiShortPredicate ptest(short value1) {
+        return (value2, value3) -> this.test(value1, value2, value3);
+    }
+
+    /**
+     * Applies this predicate partially to some arguments of this one, producing a {@link ShortPredicate} as result.
+     *
+     * @param value1 The first argument to this predicate used to partially apply this function
+     * @param value2 The second argument to this predicate used to partially apply this function
+     * @return A {@code ShortPredicate} that represents this predicate partially applied the some arguments.
+     */
+    @Nonnull
+    default ShortPredicate ptest(short value1, short value2) {
+        return (value3) -> this.test(value1, value2, value3);
+    }
 
     /**
      * Returns the number of arguments for this predicate.

@@ -207,6 +207,18 @@ public interface ThrowableBiCharPredicate<X extends Throwable> extends Lambda {
     boolean testThrows(char value1, char value2) throws X;
 
     /**
+     * Applies this predicate partially to some arguments of this one, producing a {@link ThrowableCharPredicate} as
+     * result.
+     *
+     * @param value1 The first argument to this predicate used to partially apply this function
+     * @return A {@code ThrowableCharPredicate} that represents this predicate partially applied the some arguments.
+     */
+    @Nonnull
+    default ThrowableCharPredicate<X> ptestThrows(char value1) {
+        return (value2) -> this.testThrows(value1, value2);
+    }
+
+    /**
      * Returns the number of arguments for this predicate.
      *
      * @return The number of arguments for this predicate.

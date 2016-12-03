@@ -42,6 +42,7 @@ import at.gridtec.lambda4j.function.conversion.LongToCharFunction;
 import at.gridtec.lambda4j.function.conversion.LongToFloatFunction;
 import at.gridtec.lambda4j.function.conversion.LongToShortFunction;
 import at.gridtec.lambda4j.function.conversion.ShortToLongFunction;
+import at.gridtec.lambda4j.function.to.ToLongFunction2;
 import at.gridtec.lambda4j.function.to.ToShortFunction;
 import at.gridtec.lambda4j.operator.binary.LongBinaryOperator2;
 import at.gridtec.lambda4j.operator.unary.ShortUnaryOperator;
@@ -166,6 +167,28 @@ public interface ObjShortToLongFunction<T> extends Lambda {
      * @return The return value from the function, which is its result.
      */
     long applyAsLong(T t, short value);
+
+    /**
+     * Applies this function partially to some arguments of this one, producing a {@link ShortToLongFunction} as result.
+     *
+     * @param t The first argument to this function used to partially apply this function
+     * @return A {@code ShortToLongFunction} that represents this function partially applied the some arguments.
+     */
+    @Nonnull
+    default ShortToLongFunction papplyAsLong(T t) {
+        return (value) -> this.applyAsLong(t, value);
+    }
+
+    /**
+     * Applies this function partially to some arguments of this one, producing a {@link ToLongFunction2} as result.
+     *
+     * @param value The second argument to this function used to partially apply this function
+     * @return A {@code ToLongFunction2} that represents this function partially applied the some arguments.
+     */
+    @Nonnull
+    default ToLongFunction2<T> papplyAsLong(short value) {
+        return (t) -> this.applyAsLong(t, value);
+    }
 
     /**
      * Returns the number of arguments for this function.

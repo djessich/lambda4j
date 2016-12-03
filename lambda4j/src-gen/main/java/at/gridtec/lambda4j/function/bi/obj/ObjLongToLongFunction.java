@@ -40,7 +40,9 @@ import at.gridtec.lambda4j.function.conversion.LongToCharFunction;
 import at.gridtec.lambda4j.function.conversion.LongToFloatFunction;
 import at.gridtec.lambda4j.function.conversion.LongToShortFunction;
 import at.gridtec.lambda4j.function.conversion.ShortToLongFunction;
+import at.gridtec.lambda4j.function.to.ToLongFunction2;
 import at.gridtec.lambda4j.operator.binary.LongBinaryOperator2;
+import at.gridtec.lambda4j.operator.unary.LongUnaryOperator2;
 import at.gridtec.lambda4j.predicate.bi.obj.ObjLongPredicate;
 
 import org.apache.commons.lang3.tuple.Pair;
@@ -164,6 +166,28 @@ public interface ObjLongToLongFunction<T> extends Lambda {
      * @return The return value from the function, which is its result.
      */
     long applyAsLong(T t, long value);
+
+    /**
+     * Applies this operator partially to some arguments of this one, producing a {@link LongUnaryOperator2} as result.
+     *
+     * @param t The first argument to this function used to partially apply this function
+     * @return A {@code LongUnaryOperator2} that represents this operator partially applied the some arguments.
+     */
+    @Nonnull
+    default LongUnaryOperator2 papplyAsLong(T t) {
+        return (value) -> this.applyAsLong(t, value);
+    }
+
+    /**
+     * Applies this operator partially to some arguments of this one, producing a {@link ToLongFunction2} as result.
+     *
+     * @param value The second argument to this function used to partially apply this function
+     * @return A {@code ToLongFunction2} that represents this operator partially applied the some arguments.
+     */
+    @Nonnull
+    default ToLongFunction2<T> papplyAsLong(long value) {
+        return (t) -> this.applyAsLong(t, value);
+    }
 
     /**
      * Returns the number of arguments for this function.

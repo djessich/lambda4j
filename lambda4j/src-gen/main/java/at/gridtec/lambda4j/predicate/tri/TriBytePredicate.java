@@ -45,6 +45,7 @@ import at.gridtec.lambda4j.operator.ternary.ByteTernaryOperator;
 import at.gridtec.lambda4j.operator.unary.BooleanUnaryOperator;
 import at.gridtec.lambda4j.operator.unary.ByteUnaryOperator;
 import at.gridtec.lambda4j.predicate.BytePredicate;
+import at.gridtec.lambda4j.predicate.bi.BiBytePredicate;
 
 import org.apache.commons.lang3.tuple.Triple;
 
@@ -204,6 +205,29 @@ public interface TriBytePredicate extends Lambda {
      * @return The return value from the predicate, which is its result.
      */
     boolean test(byte value1, byte value2, byte value3);
+
+    /**
+     * Applies this predicate partially to some arguments of this one, producing a {@link BiBytePredicate} as result.
+     *
+     * @param value1 The first argument to this predicate used to partially apply this function
+     * @return A {@code BiBytePredicate} that represents this predicate partially applied the some arguments.
+     */
+    @Nonnull
+    default BiBytePredicate ptest(byte value1) {
+        return (value2, value3) -> this.test(value1, value2, value3);
+    }
+
+    /**
+     * Applies this predicate partially to some arguments of this one, producing a {@link BytePredicate} as result.
+     *
+     * @param value1 The first argument to this predicate used to partially apply this function
+     * @param value2 The second argument to this predicate used to partially apply this function
+     * @return A {@code BytePredicate} that represents this predicate partially applied the some arguments.
+     */
+    @Nonnull
+    default BytePredicate ptest(byte value1, byte value2) {
+        return (value3) -> this.test(value1, value2, value3);
+    }
 
     /**
      * Returns the number of arguments for this predicate.

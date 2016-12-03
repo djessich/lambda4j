@@ -168,6 +168,28 @@ public interface ObjByteToCharFunction<T> extends Lambda {
     char applyAsChar(T t, byte value);
 
     /**
+     * Applies this function partially to some arguments of this one, producing a {@link ByteToCharFunction} as result.
+     *
+     * @param t The first argument to this function used to partially apply this function
+     * @return A {@code ByteToCharFunction} that represents this function partially applied the some arguments.
+     */
+    @Nonnull
+    default ByteToCharFunction papplyAsChar(T t) {
+        return (value) -> this.applyAsChar(t, value);
+    }
+
+    /**
+     * Applies this function partially to some arguments of this one, producing a {@link ToCharFunction} as result.
+     *
+     * @param value The second argument to this function used to partially apply this function
+     * @return A {@code ToCharFunction} that represents this function partially applied the some arguments.
+     */
+    @Nonnull
+    default ToCharFunction<T> papplyAsChar(byte value) {
+        return (t) -> this.applyAsChar(t, value);
+    }
+
+    /**
      * Returns the number of arguments for this function.
      *
      * @return The number of arguments for this function.

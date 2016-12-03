@@ -17,6 +17,7 @@ package at.gridtec.lambda4j.function.tri.to;
 
 import at.gridtec.lambda4j.Lambda;
 import at.gridtec.lambda4j.consumer.tri.TriConsumer;
+import at.gridtec.lambda4j.function.bi.to.ToLongBiFunction2;
 import at.gridtec.lambda4j.function.conversion.LongToByteFunction;
 import at.gridtec.lambda4j.function.conversion.LongToCharFunction;
 import at.gridtec.lambda4j.function.conversion.LongToFloatFunction;
@@ -187,6 +188,29 @@ public interface ToLongTriFunction<T, U, V> extends Lambda {
     default long applyAsLong(@Nonnull Triple<T, U, V> tuple) {
         Objects.requireNonNull(tuple);
         return applyAsLong(tuple.getLeft(), tuple.getMiddle(), tuple.getRight());
+    }
+
+    /**
+     * Applies this function partially to some arguments of this one, producing a {@link ToLongBiFunction2} as result.
+     *
+     * @param t The first argument to this function used to partially apply this function
+     * @return A {@code ToLongBiFunction2} that represents this function partially applied the some arguments.
+     */
+    @Nonnull
+    default ToLongBiFunction2<U, V> papplyAsLong(T t) {
+        return (u, v) -> this.applyAsLong(t, u, v);
+    }
+
+    /**
+     * Applies this function partially to some arguments of this one, producing a {@link ToLongFunction2} as result.
+     *
+     * @param t The first argument to this function used to partially apply this function
+     * @param u The second argument to this function used to partially apply this function
+     * @return A {@code ToLongFunction2} that represents this function partially applied the some arguments.
+     */
+    @Nonnull
+    default ToLongFunction2<V> papplyAsLong(T t, U u) {
+        return (v) -> this.applyAsLong(t, u, v);
     }
 
     /**

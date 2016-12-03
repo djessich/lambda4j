@@ -56,6 +56,8 @@ import at.gridtec.lambda4j.operator.unary.ThrowableBooleanUnaryOperator;
 import at.gridtec.lambda4j.operator.unary.ThrowableDoubleUnaryOperator;
 import at.gridtec.lambda4j.predicate.ThrowableDoublePredicate;
 import at.gridtec.lambda4j.predicate.ThrowablePredicate;
+import at.gridtec.lambda4j.predicate.bi.ThrowableBiDoublePredicate;
+import at.gridtec.lambda4j.predicate.bi.obj.ThrowableObjDoublePredicate;
 import at.gridtec.lambda4j.predicate.tri.ThrowableTriBytePredicate;
 import at.gridtec.lambda4j.predicate.tri.ThrowableTriCharPredicate;
 import at.gridtec.lambda4j.predicate.tri.ThrowableTriDoublePredicate;
@@ -255,6 +257,56 @@ public interface ThrowableObjBiDoublePredicate<T, X extends Throwable> extends L
      * @throws X Any throwable from this predicates action
      */
     boolean testThrows(T t, double value1, double value2) throws X;
+
+    /**
+     * Applies this predicate partially to some arguments of this one, producing a {@link ThrowableBiDoublePredicate} as
+     * result.
+     *
+     * @param t The first argument to this predicate used to partially apply this function
+     * @return A {@code ThrowableBiDoublePredicate} that represents this predicate partially applied the some arguments.
+     */
+    @Nonnull
+    default ThrowableBiDoublePredicate<X> ptestThrows(T t) {
+        return (value1, value2) -> this.testThrows(t, value1, value2);
+    }
+
+    /**
+     * Applies this predicate partially to some arguments of this one, producing a {@link ThrowableDoublePredicate} as
+     * result.
+     *
+     * @param t The first argument to this predicate used to partially apply this function
+     * @param value1 The second argument to this predicate used to partially apply this function
+     * @return A {@code ThrowableDoublePredicate} that represents this predicate partially applied the some arguments.
+     */
+    @Nonnull
+    default ThrowableDoublePredicate<X> ptestThrows(T t, double value1) {
+        return (value2) -> this.testThrows(t, value1, value2);
+    }
+
+    /**
+     * Applies this predicate partially to some arguments of this one, producing a {@link ThrowableObjDoublePredicate}
+     * as result.
+     *
+     * @param value1 The second argument to this predicate used to partially apply this function
+     * @return A {@code ThrowableObjDoublePredicate} that represents this predicate partially applied the some
+     * arguments.
+     */
+    @Nonnull
+    default ThrowableObjDoublePredicate<T, X> ptestThrows(double value1) {
+        return (t, value2) -> this.testThrows(t, value1, value2);
+    }
+
+    /**
+     * Applies this predicate partially to some arguments of this one, producing a {@link ThrowablePredicate} as result.
+     *
+     * @param value1 The second argument to this predicate used to partially apply this function
+     * @param value2 The third argument to this predicate used to partially apply this function
+     * @return A {@code ThrowablePredicate} that represents this predicate partially applied the some arguments.
+     */
+    @Nonnull
+    default ThrowablePredicate<T, X> ptestThrows(double value1, double value2) {
+        return (t) -> this.testThrows(t, value1, value2);
+    }
 
     /**
      * Returns the number of arguments for this predicate.

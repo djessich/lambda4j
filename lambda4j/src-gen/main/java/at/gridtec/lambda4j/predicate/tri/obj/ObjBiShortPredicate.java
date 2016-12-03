@@ -48,7 +48,10 @@ import at.gridtec.lambda4j.function.tri.obj.ObjBiShortToShortFunction;
 import at.gridtec.lambda4j.operator.ternary.BooleanTernaryOperator;
 import at.gridtec.lambda4j.operator.unary.BooleanUnaryOperator;
 import at.gridtec.lambda4j.operator.unary.ShortUnaryOperator;
+import at.gridtec.lambda4j.predicate.Predicate2;
 import at.gridtec.lambda4j.predicate.ShortPredicate;
+import at.gridtec.lambda4j.predicate.bi.BiShortPredicate;
+import at.gridtec.lambda4j.predicate.bi.obj.ObjShortPredicate;
 import at.gridtec.lambda4j.predicate.tri.TriBytePredicate;
 import at.gridtec.lambda4j.predicate.tri.TriCharPredicate;
 import at.gridtec.lambda4j.predicate.tri.TriDoublePredicate;
@@ -232,6 +235,52 @@ public interface ObjBiShortPredicate<T> extends Lambda {
      * @return The return value from the predicate, which is its result.
      */
     boolean test(T t, short value1, short value2);
+
+    /**
+     * Applies this predicate partially to some arguments of this one, producing a {@link BiShortPredicate} as result.
+     *
+     * @param t The first argument to this predicate used to partially apply this function
+     * @return A {@code BiShortPredicate} that represents this predicate partially applied the some arguments.
+     */
+    @Nonnull
+    default BiShortPredicate ptest(T t) {
+        return (value1, value2) -> this.test(t, value1, value2);
+    }
+
+    /**
+     * Applies this predicate partially to some arguments of this one, producing a {@link ShortPredicate} as result.
+     *
+     * @param t The first argument to this predicate used to partially apply this function
+     * @param value1 The second argument to this predicate used to partially apply this function
+     * @return A {@code ShortPredicate} that represents this predicate partially applied the some arguments.
+     */
+    @Nonnull
+    default ShortPredicate ptest(T t, short value1) {
+        return (value2) -> this.test(t, value1, value2);
+    }
+
+    /**
+     * Applies this predicate partially to some arguments of this one, producing a {@link ObjShortPredicate} as result.
+     *
+     * @param value1 The second argument to this predicate used to partially apply this function
+     * @return A {@code ObjShortPredicate} that represents this predicate partially applied the some arguments.
+     */
+    @Nonnull
+    default ObjShortPredicate<T> ptest(short value1) {
+        return (t, value2) -> this.test(t, value1, value2);
+    }
+
+    /**
+     * Applies this predicate partially to some arguments of this one, producing a {@link Predicate2} as result.
+     *
+     * @param value1 The second argument to this predicate used to partially apply this function
+     * @param value2 The third argument to this predicate used to partially apply this function
+     * @return A {@code Predicate2} that represents this predicate partially applied the some arguments.
+     */
+    @Nonnull
+    default Predicate2<T> ptest(short value1, short value2) {
+        return (t) -> this.test(t, value1, value2);
+    }
 
     /**
      * Returns the number of arguments for this predicate.

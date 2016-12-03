@@ -183,6 +183,31 @@ public interface ThrowableObjLongToFloatFunction<T, X extends Throwable> extends
     float applyAsFloatThrows(T t, long value) throws X;
 
     /**
+     * Applies this function partially to some arguments of this one, producing a {@link ThrowableLongToFloatFunction}
+     * as result.
+     *
+     * @param t The first argument to this function used to partially apply this function
+     * @return A {@code ThrowableLongToFloatFunction} that represents this function partially applied the some
+     * arguments.
+     */
+    @Nonnull
+    default ThrowableLongToFloatFunction<X> papplyAsFloatThrows(T t) {
+        return (value) -> this.applyAsFloatThrows(t, value);
+    }
+
+    /**
+     * Applies this function partially to some arguments of this one, producing a {@link ThrowableToFloatFunction} as
+     * result.
+     *
+     * @param value The second argument to this function used to partially apply this function
+     * @return A {@code ThrowableToFloatFunction} that represents this function partially applied the some arguments.
+     */
+    @Nonnull
+    default ThrowableToFloatFunction<T, X> papplyAsFloatThrows(long value) {
+        return (t) -> this.applyAsFloatThrows(t, value);
+    }
+
+    /**
      * Returns the number of arguments for this function.
      *
      * @return The number of arguments for this function.

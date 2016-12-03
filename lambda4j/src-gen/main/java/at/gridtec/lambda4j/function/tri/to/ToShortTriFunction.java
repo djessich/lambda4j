@@ -19,6 +19,7 @@ import at.gridtec.lambda4j.Lambda;
 import at.gridtec.lambda4j.consumer.ShortConsumer;
 import at.gridtec.lambda4j.consumer.tri.TriConsumer;
 import at.gridtec.lambda4j.function.ShortFunction;
+import at.gridtec.lambda4j.function.bi.to.ToShortBiFunction;
 import at.gridtec.lambda4j.function.conversion.ShortToByteFunction;
 import at.gridtec.lambda4j.function.conversion.ShortToCharFunction;
 import at.gridtec.lambda4j.function.conversion.ShortToDoubleFunction;
@@ -186,6 +187,29 @@ public interface ToShortTriFunction<T, U, V> extends Lambda {
     default short applyAsShort(@Nonnull Triple<T, U, V> tuple) {
         Objects.requireNonNull(tuple);
         return applyAsShort(tuple.getLeft(), tuple.getMiddle(), tuple.getRight());
+    }
+
+    /**
+     * Applies this function partially to some arguments of this one, producing a {@link ToShortBiFunction} as result.
+     *
+     * @param t The first argument to this function used to partially apply this function
+     * @return A {@code ToShortBiFunction} that represents this function partially applied the some arguments.
+     */
+    @Nonnull
+    default ToShortBiFunction<U, V> papplyAsShort(T t) {
+        return (u, v) -> this.applyAsShort(t, u, v);
+    }
+
+    /**
+     * Applies this function partially to some arguments of this one, producing a {@link ToShortFunction} as result.
+     *
+     * @param t The first argument to this function used to partially apply this function
+     * @param u The second argument to this function used to partially apply this function
+     * @return A {@code ToShortFunction} that represents this function partially applied the some arguments.
+     */
+    @Nonnull
+    default ToShortFunction<V> papplyAsShort(T t, U u) {
+        return (v) -> this.applyAsShort(t, u, v);
     }
 
     /**

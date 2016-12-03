@@ -128,6 +128,18 @@ public interface ThrowableBiCharConsumer<X extends Throwable> extends Lambda {
     void acceptThrows(char value1, char value2) throws X;
 
     /**
+     * Applies this consumer partially to some arguments of this one, producing a {@link ThrowableCharConsumer} as
+     * result.
+     *
+     * @param value1 The first argument to this consumer used to partially apply this function
+     * @return A {@code ThrowableCharConsumer} that represents this consumer partially applied the some arguments.
+     */
+    @Nonnull
+    default ThrowableCharConsumer<X> pacceptThrows(char value1) {
+        return (value2) -> this.acceptThrows(value1, value2);
+    }
+
+    /**
      * Returns the number of arguments for this consumer.
      *
      * @return The number of arguments for this consumer.

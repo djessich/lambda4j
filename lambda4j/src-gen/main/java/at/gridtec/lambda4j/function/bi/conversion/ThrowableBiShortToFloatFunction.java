@@ -164,6 +164,19 @@ public interface ThrowableBiShortToFloatFunction<X extends Throwable> extends La
     float applyAsFloatThrows(short value1, short value2) throws X;
 
     /**
+     * Applies this function partially to some arguments of this one, producing a {@link ThrowableShortToFloatFunction}
+     * as result.
+     *
+     * @param value1 The first argument to this function used to partially apply this function
+     * @return A {@code ThrowableShortToFloatFunction} that represents this function partially applied the some
+     * arguments.
+     */
+    @Nonnull
+    default ThrowableShortToFloatFunction<X> papplyAsFloatThrows(short value1) {
+        return (value2) -> this.applyAsFloatThrows(value1, value2);
+    }
+
+    /**
      * Returns the number of arguments for this function.
      *
      * @return The number of arguments for this function.

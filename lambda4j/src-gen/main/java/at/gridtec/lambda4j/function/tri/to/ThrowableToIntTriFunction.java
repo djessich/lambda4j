@@ -22,6 +22,7 @@ import at.gridtec.lambda4j.core.exception.ThrownByFunctionalInterfaceException;
 import at.gridtec.lambda4j.core.util.ThrowableUtils;
 import at.gridtec.lambda4j.function.ThrowableFunction;
 import at.gridtec.lambda4j.function.ThrowableIntFunction;
+import at.gridtec.lambda4j.function.bi.to.ThrowableToIntBiFunction;
 import at.gridtec.lambda4j.function.conversion.ThrowableIntToByteFunction;
 import at.gridtec.lambda4j.function.conversion.ThrowableIntToCharFunction;
 import at.gridtec.lambda4j.function.conversion.ThrowableIntToDoubleFunction;
@@ -204,6 +205,31 @@ public interface ThrowableToIntTriFunction<T, U, V, X extends Throwable> extends
     default int applyAsIntThrows(@Nonnull Triple<T, U, V> tuple) throws X {
         Objects.requireNonNull(tuple);
         return applyAsIntThrows(tuple.getLeft(), tuple.getMiddle(), tuple.getRight());
+    }
+
+    /**
+     * Applies this function partially to some arguments of this one, producing a {@link ThrowableToIntBiFunction} as
+     * result.
+     *
+     * @param t The first argument to this function used to partially apply this function
+     * @return A {@code ThrowableToIntBiFunction} that represents this function partially applied the some arguments.
+     */
+    @Nonnull
+    default ThrowableToIntBiFunction<U, V, X> papplyAsIntThrows(T t) {
+        return (u, v) -> this.applyAsIntThrows(t, u, v);
+    }
+
+    /**
+     * Applies this function partially to some arguments of this one, producing a {@link ThrowableToIntFunction} as
+     * result.
+     *
+     * @param t The first argument to this function used to partially apply this function
+     * @param u The second argument to this function used to partially apply this function
+     * @return A {@code ThrowableToIntFunction} that represents this function partially applied the some arguments.
+     */
+    @Nonnull
+    default ThrowableToIntFunction<V, X> papplyAsIntThrows(T t, U u) {
+        return (v) -> this.applyAsIntThrows(t, u, v);
     }
 
     /**

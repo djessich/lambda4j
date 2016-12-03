@@ -154,6 +154,29 @@ public interface ThrowableObjFloatConsumer<T, X extends Throwable> extends Lambd
     void acceptThrows(T t, float value) throws X;
 
     /**
+     * Applies this consumer partially to some arguments of this one, producing a {@link ThrowableFloatConsumer} as
+     * result.
+     *
+     * @param t The first argument to this consumer used to partially apply this function
+     * @return A {@code ThrowableFloatConsumer} that represents this consumer partially applied the some arguments.
+     */
+    @Nonnull
+    default ThrowableFloatConsumer<X> pacceptThrows(T t) {
+        return (value) -> this.acceptThrows(t, value);
+    }
+
+    /**
+     * Applies this consumer partially to some arguments of this one, producing a {@link ThrowableConsumer} as result.
+     *
+     * @param value The second argument to this consumer used to partially apply this function
+     * @return A {@code ThrowableConsumer} that represents this consumer partially applied the some arguments.
+     */
+    @Nonnull
+    default ThrowableConsumer<T, X> pacceptThrows(float value) {
+        return (t) -> this.acceptThrows(t, value);
+    }
+
+    /**
      * Returns the number of arguments for this consumer.
      *
      * @return The number of arguments for this consumer.

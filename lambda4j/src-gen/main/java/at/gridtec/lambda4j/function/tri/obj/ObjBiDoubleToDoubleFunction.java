@@ -22,6 +22,7 @@ import at.gridtec.lambda4j.function.ByteFunction;
 import at.gridtec.lambda4j.function.CharFunction;
 import at.gridtec.lambda4j.function.FloatFunction;
 import at.gridtec.lambda4j.function.ShortFunction;
+import at.gridtec.lambda4j.function.bi.obj.ObjDoubleToDoubleFunction;
 import at.gridtec.lambda4j.function.conversion.BooleanToDoubleFunction;
 import at.gridtec.lambda4j.function.conversion.ByteToDoubleFunction;
 import at.gridtec.lambda4j.function.conversion.CharToDoubleFunction;
@@ -31,6 +32,7 @@ import at.gridtec.lambda4j.function.conversion.DoubleToFloatFunction;
 import at.gridtec.lambda4j.function.conversion.DoubleToShortFunction;
 import at.gridtec.lambda4j.function.conversion.FloatToDoubleFunction;
 import at.gridtec.lambda4j.function.conversion.ShortToDoubleFunction;
+import at.gridtec.lambda4j.function.to.ToDoubleFunction2;
 import at.gridtec.lambda4j.function.tri.TriFunction;
 import at.gridtec.lambda4j.function.tri.conversion.TriBooleanToDoubleFunction;
 import at.gridtec.lambda4j.function.tri.conversion.TriByteToDoubleFunction;
@@ -40,7 +42,9 @@ import at.gridtec.lambda4j.function.tri.conversion.TriIntToDoubleFunction;
 import at.gridtec.lambda4j.function.tri.conversion.TriLongToDoubleFunction;
 import at.gridtec.lambda4j.function.tri.conversion.TriShortToDoubleFunction;
 import at.gridtec.lambda4j.function.tri.to.ToDoubleTriFunction;
+import at.gridtec.lambda4j.operator.binary.DoubleBinaryOperator2;
 import at.gridtec.lambda4j.operator.ternary.DoubleTernaryOperator;
+import at.gridtec.lambda4j.operator.unary.DoubleUnaryOperator2;
 import at.gridtec.lambda4j.predicate.tri.obj.ObjBiDoublePredicate;
 
 import org.apache.commons.lang3.tuple.Triple;
@@ -183,6 +187,55 @@ public interface ObjBiDoubleToDoubleFunction<T> extends Lambda {
      * @return The return value from the function, which is its result.
      */
     double applyAsDouble(T t, double value1, double value2);
+
+    /**
+     * Applies this operator partially to some arguments of this one, producing a {@link DoubleBinaryOperator2} as
+     * result.
+     *
+     * @param t The first argument to this function used to partially apply this function
+     * @return A {@code DoubleBinaryOperator2} that represents this operator partially applied the some arguments.
+     */
+    @Nonnull
+    default DoubleBinaryOperator2 papplyAsDouble(T t) {
+        return (value1, value2) -> this.applyAsDouble(t, value1, value2);
+    }
+
+    /**
+     * Applies this operator partially to some arguments of this one, producing a {@link DoubleUnaryOperator2} as
+     * result.
+     *
+     * @param t The first argument to this function used to partially apply this function
+     * @param value1 The second argument to this function used to partially apply this function
+     * @return A {@code DoubleUnaryOperator2} that represents this operator partially applied the some arguments.
+     */
+    @Nonnull
+    default DoubleUnaryOperator2 papplyAsDouble(T t, double value1) {
+        return (value2) -> this.applyAsDouble(t, value1, value2);
+    }
+
+    /**
+     * Applies this operator partially to some arguments of this one, producing a {@link ObjDoubleToDoubleFunction} as
+     * result.
+     *
+     * @param value1 The second argument to this function used to partially apply this function
+     * @return A {@code ObjDoubleToDoubleFunction} that represents this operator partially applied the some arguments.
+     */
+    @Nonnull
+    default ObjDoubleToDoubleFunction<T> papplyAsDouble(double value1) {
+        return (t, value2) -> this.applyAsDouble(t, value1, value2);
+    }
+
+    /**
+     * Applies this operator partially to some arguments of this one, producing a {@link ToDoubleFunction2} as result.
+     *
+     * @param value1 The second argument to this function used to partially apply this function
+     * @param value2 The third argument to this function used to partially apply this function
+     * @return A {@code ToDoubleFunction2} that represents this operator partially applied the some arguments.
+     */
+    @Nonnull
+    default ToDoubleFunction2<T> papplyAsDouble(double value1, double value2) {
+        return (t) -> this.applyAsDouble(t, value1, value2);
+    }
 
     /**
      * Returns the number of arguments for this function.

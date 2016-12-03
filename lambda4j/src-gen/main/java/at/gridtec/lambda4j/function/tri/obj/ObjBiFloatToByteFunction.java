@@ -23,6 +23,8 @@ import at.gridtec.lambda4j.function.ByteFunction;
 import at.gridtec.lambda4j.function.CharFunction;
 import at.gridtec.lambda4j.function.FloatFunction;
 import at.gridtec.lambda4j.function.ShortFunction;
+import at.gridtec.lambda4j.function.bi.conversion.BiFloatToByteFunction;
+import at.gridtec.lambda4j.function.bi.obj.ObjFloatToByteFunction;
 import at.gridtec.lambda4j.function.conversion.BooleanToFloatFunction;
 import at.gridtec.lambda4j.function.conversion.ByteToCharFunction;
 import at.gridtec.lambda4j.function.conversion.ByteToDoubleFunction;
@@ -184,6 +186,54 @@ public interface ObjBiFloatToByteFunction<T> extends Lambda {
      * @return The return value from the function, which is its result.
      */
     byte applyAsByte(T t, float value1, float value2);
+
+    /**
+     * Applies this function partially to some arguments of this one, producing a {@link BiFloatToByteFunction} as
+     * result.
+     *
+     * @param t The first argument to this function used to partially apply this function
+     * @return A {@code BiFloatToByteFunction} that represents this function partially applied the some arguments.
+     */
+    @Nonnull
+    default BiFloatToByteFunction papplyAsByte(T t) {
+        return (value1, value2) -> this.applyAsByte(t, value1, value2);
+    }
+
+    /**
+     * Applies this function partially to some arguments of this one, producing a {@link FloatToByteFunction} as result.
+     *
+     * @param t The first argument to this function used to partially apply this function
+     * @param value1 The second argument to this function used to partially apply this function
+     * @return A {@code FloatToByteFunction} that represents this function partially applied the some arguments.
+     */
+    @Nonnull
+    default FloatToByteFunction papplyAsByte(T t, float value1) {
+        return (value2) -> this.applyAsByte(t, value1, value2);
+    }
+
+    /**
+     * Applies this function partially to some arguments of this one, producing a {@link ObjFloatToByteFunction} as
+     * result.
+     *
+     * @param value1 The second argument to this function used to partially apply this function
+     * @return A {@code ObjFloatToByteFunction} that represents this function partially applied the some arguments.
+     */
+    @Nonnull
+    default ObjFloatToByteFunction<T> papplyAsByte(float value1) {
+        return (t, value2) -> this.applyAsByte(t, value1, value2);
+    }
+
+    /**
+     * Applies this function partially to some arguments of this one, producing a {@link ToByteFunction} as result.
+     *
+     * @param value1 The second argument to this function used to partially apply this function
+     * @param value2 The third argument to this function used to partially apply this function
+     * @return A {@code ToByteFunction} that represents this function partially applied the some arguments.
+     */
+    @Nonnull
+    default ToByteFunction<T> papplyAsByte(float value1, float value2) {
+        return (t) -> this.applyAsByte(t, value1, value2);
+    }
 
     /**
      * Returns the number of arguments for this function.

@@ -212,6 +212,17 @@ public interface BiPredicate2<T, U> extends Lambda, BiPredicate<T, U> {
     }
 
     /**
+     * Applies this predicate partially to some arguments of this one, producing a {@link Predicate2} as result.
+     *
+     * @param t The first argument to this predicate used to partially apply this function
+     * @return A {@code Predicate2} that represents this predicate partially applied the some arguments.
+     */
+    @Nonnull
+    default Predicate2<U> ptest(T t) {
+        return (u) -> this.test(t, u);
+    }
+
+    /**
      * Returns the number of arguments for this predicate.
      *
      * @return The number of arguments for this predicate.

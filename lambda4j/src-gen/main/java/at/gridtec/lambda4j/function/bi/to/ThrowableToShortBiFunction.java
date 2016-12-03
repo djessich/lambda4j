@@ -178,6 +178,18 @@ public interface ThrowableToShortBiFunction<T, U, X extends Throwable> extends L
     }
 
     /**
+     * Applies this function partially to some arguments of this one, producing a {@link ThrowableToShortFunction} as
+     * result.
+     *
+     * @param t The first argument to this function used to partially apply this function
+     * @return A {@code ThrowableToShortFunction} that represents this function partially applied the some arguments.
+     */
+    @Nonnull
+    default ThrowableToShortFunction<U, X> papplyAsShortThrows(T t) {
+        return (u) -> this.applyAsShortThrows(t, u);
+    }
+
+    /**
      * Returns the number of arguments for this function.
      *
      * @return The number of arguments for this function.

@@ -183,6 +183,30 @@ public interface ThrowableObjCharToLongFunction<T, X extends Throwable> extends 
     long applyAsLongThrows(T t, char value) throws X;
 
     /**
+     * Applies this function partially to some arguments of this one, producing a {@link ThrowableCharToLongFunction} as
+     * result.
+     *
+     * @param t The first argument to this function used to partially apply this function
+     * @return A {@code ThrowableCharToLongFunction} that represents this function partially applied the some arguments.
+     */
+    @Nonnull
+    default ThrowableCharToLongFunction<X> papplyAsLongThrows(T t) {
+        return (value) -> this.applyAsLongThrows(t, value);
+    }
+
+    /**
+     * Applies this function partially to some arguments of this one, producing a {@link ThrowableToLongFunction} as
+     * result.
+     *
+     * @param value The second argument to this function used to partially apply this function
+     * @return A {@code ThrowableToLongFunction} that represents this function partially applied the some arguments.
+     */
+    @Nonnull
+    default ThrowableToLongFunction<T, X> papplyAsLongThrows(char value) {
+        return (t) -> this.applyAsLongThrows(t, value);
+    }
+
+    /**
      * Returns the number of arguments for this function.
      *
      * @return The number of arguments for this function.

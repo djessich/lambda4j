@@ -16,6 +16,7 @@
 package at.gridtec.lambda4j.consumer.bi;
 
 import at.gridtec.lambda4j.Lambda;
+import at.gridtec.lambda4j.consumer.IntConsumer2;
 import at.gridtec.lambda4j.function.conversion.BooleanToIntFunction;
 import at.gridtec.lambda4j.function.conversion.ByteToIntFunction;
 import at.gridtec.lambda4j.function.conversion.CharToIntFunction;
@@ -112,6 +113,17 @@ public interface BiIntConsumer extends Lambda {
      * @param value2 The second argument to the consumer
      */
     void accept(int value1, int value2);
+
+    /**
+     * Applies this consumer partially to some arguments of this one, producing a {@link IntConsumer2} as result.
+     *
+     * @param value1 The first argument to this consumer used to partially apply this function
+     * @return A {@code IntConsumer2} that represents this consumer partially applied the some arguments.
+     */
+    @Nonnull
+    default IntConsumer2 paccept(int value1) {
+        return (value2) -> this.accept(value1, value2);
+    }
 
     /**
      * Returns the number of arguments for this consumer.

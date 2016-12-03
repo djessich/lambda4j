@@ -29,6 +29,8 @@ import at.gridtec.lambda4j.function.ThrowableFunction;
 import at.gridtec.lambda4j.function.ThrowableIntFunction;
 import at.gridtec.lambda4j.function.ThrowableLongFunction;
 import at.gridtec.lambda4j.function.ThrowableShortFunction;
+import at.gridtec.lambda4j.function.bi.conversion.ThrowableBiBooleanToCharFunction;
+import at.gridtec.lambda4j.function.bi.obj.ThrowableObjBooleanToCharFunction;
 import at.gridtec.lambda4j.function.conversion.ThrowableBooleanToCharFunction;
 import at.gridtec.lambda4j.function.conversion.ThrowableCharToByteFunction;
 import at.gridtec.lambda4j.function.conversion.ThrowableCharToDoubleFunction;
@@ -203,6 +205,59 @@ public interface ThrowableObjBiBooleanToCharFunction<T, X extends Throwable> ext
      * @throws X Any throwable from this functions action
      */
     char applyAsCharThrows(T t, boolean value1, boolean value2) throws X;
+
+    /**
+     * Applies this function partially to some arguments of this one, producing a {@link
+     * ThrowableBiBooleanToCharFunction} as result.
+     *
+     * @param t The first argument to this function used to partially apply this function
+     * @return A {@code ThrowableBiBooleanToCharFunction} that represents this function partially applied the some
+     * arguments.
+     */
+    @Nonnull
+    default ThrowableBiBooleanToCharFunction<X> papplyAsCharThrows(T t) {
+        return (value1, value2) -> this.applyAsCharThrows(t, value1, value2);
+    }
+
+    /**
+     * Applies this function partially to some arguments of this one, producing a {@link ThrowableBooleanToCharFunction}
+     * as result.
+     *
+     * @param t The first argument to this function used to partially apply this function
+     * @param value1 The second argument to this function used to partially apply this function
+     * @return A {@code ThrowableBooleanToCharFunction} that represents this function partially applied the some
+     * arguments.
+     */
+    @Nonnull
+    default ThrowableBooleanToCharFunction<X> papplyAsCharThrows(T t, boolean value1) {
+        return (value2) -> this.applyAsCharThrows(t, value1, value2);
+    }
+
+    /**
+     * Applies this function partially to some arguments of this one, producing a {@link
+     * ThrowableObjBooleanToCharFunction} as result.
+     *
+     * @param value1 The second argument to this function used to partially apply this function
+     * @return A {@code ThrowableObjBooleanToCharFunction} that represents this function partially applied the some
+     * arguments.
+     */
+    @Nonnull
+    default ThrowableObjBooleanToCharFunction<T, X> papplyAsCharThrows(boolean value1) {
+        return (t, value2) -> this.applyAsCharThrows(t, value1, value2);
+    }
+
+    /**
+     * Applies this function partially to some arguments of this one, producing a {@link ThrowableToCharFunction} as
+     * result.
+     *
+     * @param value1 The second argument to this function used to partially apply this function
+     * @param value2 The third argument to this function used to partially apply this function
+     * @return A {@code ThrowableToCharFunction} that represents this function partially applied the some arguments.
+     */
+    @Nonnull
+    default ThrowableToCharFunction<T, X> papplyAsCharThrows(boolean value1, boolean value2) {
+        return (t) -> this.applyAsCharThrows(t, value1, value2);
+    }
 
     /**
      * Returns the number of arguments for this function.

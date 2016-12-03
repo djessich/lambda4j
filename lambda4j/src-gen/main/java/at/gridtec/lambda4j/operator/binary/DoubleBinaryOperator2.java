@@ -41,6 +41,7 @@ import at.gridtec.lambda4j.function.conversion.DoubleToFloatFunction;
 import at.gridtec.lambda4j.function.conversion.DoubleToShortFunction;
 import at.gridtec.lambda4j.function.conversion.FloatToDoubleFunction;
 import at.gridtec.lambda4j.function.conversion.ShortToDoubleFunction;
+import at.gridtec.lambda4j.operator.unary.DoubleUnaryOperator2;
 import at.gridtec.lambda4j.predicate.bi.BiDoublePredicate;
 
 import org.apache.commons.lang3.tuple.Pair;
@@ -191,6 +192,18 @@ public interface DoubleBinaryOperator2 extends Lambda, DoubleBinaryOperator {
      * @return The return value from the operator, which is its result.
      */
     double applyAsDouble(double value1, double value2);
+
+    /**
+     * Applies this operator partially to some arguments of this one, producing a {@link DoubleUnaryOperator2} as
+     * result.
+     *
+     * @param value1 The first argument to this operator used to partially apply this function
+     * @return A {@code DoubleUnaryOperator2} that represents this operator partially applied the some arguments.
+     */
+    @Nonnull
+    default DoubleUnaryOperator2 papplyAsDouble(double value1) {
+        return (value2) -> this.applyAsDouble(value1, value2);
+    }
 
     /**
      * Returns the number of arguments for this operator.

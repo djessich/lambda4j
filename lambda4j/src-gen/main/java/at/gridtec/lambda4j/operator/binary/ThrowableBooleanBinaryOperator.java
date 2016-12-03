@@ -211,6 +211,19 @@ public interface ThrowableBooleanBinaryOperator<X extends Throwable> extends Lam
     boolean applyAsBooleanThrows(boolean value1, boolean value2) throws X;
 
     /**
+     * Applies this operator partially to some arguments of this one, producing a {@link ThrowableBooleanUnaryOperator}
+     * as result.
+     *
+     * @param value1 The first argument to this operator used to partially apply this function
+     * @return A {@code ThrowableBooleanUnaryOperator} that represents this operator partially applied the some
+     * arguments.
+     */
+    @Nonnull
+    default ThrowableBooleanUnaryOperator<X> papplyAsBooleanThrows(boolean value1) {
+        return (value2) -> this.applyAsBooleanThrows(value1, value2);
+    }
+
+    /**
      * Returns the number of arguments for this operator.
      *
      * @return The number of arguments for this operator.

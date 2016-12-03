@@ -148,6 +148,17 @@ public interface BiCharToFloatFunction extends Lambda {
     float applyAsFloat(char value1, char value2);
 
     /**
+     * Applies this function partially to some arguments of this one, producing a {@link CharToFloatFunction} as result.
+     *
+     * @param value1 The first argument to this function used to partially apply this function
+     * @return A {@code CharToFloatFunction} that represents this function partially applied the some arguments.
+     */
+    @Nonnull
+    default CharToFloatFunction papplyAsFloat(char value1) {
+        return (value2) -> this.applyAsFloat(value1, value2);
+    }
+
+    /**
      * Returns the number of arguments for this function.
      *
      * @return The number of arguments for this function.

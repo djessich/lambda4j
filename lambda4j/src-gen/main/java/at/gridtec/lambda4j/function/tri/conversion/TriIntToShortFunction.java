@@ -19,6 +19,7 @@ import at.gridtec.lambda4j.Lambda;
 import at.gridtec.lambda4j.consumer.ShortConsumer;
 import at.gridtec.lambda4j.consumer.tri.TriIntConsumer;
 import at.gridtec.lambda4j.function.ShortFunction;
+import at.gridtec.lambda4j.function.bi.conversion.BiIntToShortFunction;
 import at.gridtec.lambda4j.function.conversion.BooleanToIntFunction;
 import at.gridtec.lambda4j.function.conversion.ByteToIntFunction;
 import at.gridtec.lambda4j.function.conversion.CharToIntFunction;
@@ -163,6 +164,30 @@ public interface TriIntToShortFunction extends Lambda {
      * @return The return value from the function, which is its result.
      */
     short applyAsShort(int value1, int value2, int value3);
+
+    /**
+     * Applies this function partially to some arguments of this one, producing a {@link BiIntToShortFunction} as
+     * result.
+     *
+     * @param value1 The first argument to this function used to partially apply this function
+     * @return A {@code BiIntToShortFunction} that represents this function partially applied the some arguments.
+     */
+    @Nonnull
+    default BiIntToShortFunction papplyAsShort(int value1) {
+        return (value2, value3) -> this.applyAsShort(value1, value2, value3);
+    }
+
+    /**
+     * Applies this function partially to some arguments of this one, producing a {@link IntToShortFunction} as result.
+     *
+     * @param value1 The first argument to this function used to partially apply this function
+     * @param value2 The second argument to this function used to partially apply this function
+     * @return A {@code IntToShortFunction} that represents this function partially applied the some arguments.
+     */
+    @Nonnull
+    default IntToShortFunction papplyAsShort(int value1, int value2) {
+        return (value3) -> this.applyAsShort(value1, value2, value3);
+    }
 
     /**
      * Returns the number of arguments for this function.

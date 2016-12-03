@@ -164,6 +164,18 @@ public interface ThrowableBiByteToLongFunction<X extends Throwable> extends Lamb
     long applyAsLongThrows(byte value1, byte value2) throws X;
 
     /**
+     * Applies this function partially to some arguments of this one, producing a {@link ThrowableByteToLongFunction} as
+     * result.
+     *
+     * @param value1 The first argument to this function used to partially apply this function
+     * @return A {@code ThrowableByteToLongFunction} that represents this function partially applied the some arguments.
+     */
+    @Nonnull
+    default ThrowableByteToLongFunction<X> papplyAsLongThrows(byte value1) {
+        return (value2) -> this.applyAsLongThrows(value1, value2);
+    }
+
+    /**
      * Returns the number of arguments for this function.
      *
      * @return The number of arguments for this function.

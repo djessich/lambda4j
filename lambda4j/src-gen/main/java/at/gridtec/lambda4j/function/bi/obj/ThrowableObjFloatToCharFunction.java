@@ -184,6 +184,31 @@ public interface ThrowableObjFloatToCharFunction<T, X extends Throwable> extends
     char applyAsCharThrows(T t, float value) throws X;
 
     /**
+     * Applies this function partially to some arguments of this one, producing a {@link ThrowableFloatToCharFunction}
+     * as result.
+     *
+     * @param t The first argument to this function used to partially apply this function
+     * @return A {@code ThrowableFloatToCharFunction} that represents this function partially applied the some
+     * arguments.
+     */
+    @Nonnull
+    default ThrowableFloatToCharFunction<X> papplyAsCharThrows(T t) {
+        return (value) -> this.applyAsCharThrows(t, value);
+    }
+
+    /**
+     * Applies this function partially to some arguments of this one, producing a {@link ThrowableToCharFunction} as
+     * result.
+     *
+     * @param value The second argument to this function used to partially apply this function
+     * @return A {@code ThrowableToCharFunction} that represents this function partially applied the some arguments.
+     */
+    @Nonnull
+    default ThrowableToCharFunction<T, X> papplyAsCharThrows(float value) {
+        return (t) -> this.applyAsCharThrows(t, value);
+    }
+
+    /**
      * Returns the number of arguments for this function.
      *
      * @return The number of arguments for this function.

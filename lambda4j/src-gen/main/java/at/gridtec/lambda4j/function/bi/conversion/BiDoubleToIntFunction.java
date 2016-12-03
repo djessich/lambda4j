@@ -23,6 +23,7 @@ import at.gridtec.lambda4j.function.bi.to.ToIntBiFunction2;
 import at.gridtec.lambda4j.function.conversion.BooleanToDoubleFunction;
 import at.gridtec.lambda4j.function.conversion.ByteToDoubleFunction;
 import at.gridtec.lambda4j.function.conversion.CharToDoubleFunction;
+import at.gridtec.lambda4j.function.conversion.DoubleToIntFunction2;
 import at.gridtec.lambda4j.function.conversion.FloatToDoubleFunction;
 import at.gridtec.lambda4j.function.conversion.IntToByteFunction;
 import at.gridtec.lambda4j.function.conversion.IntToCharFunction;
@@ -146,6 +147,18 @@ public interface BiDoubleToIntFunction extends Lambda {
      * @return The return value from the function, which is its result.
      */
     int applyAsInt(double value1, double value2);
+
+    /**
+     * Applies this function partially to some arguments of this one, producing a {@link DoubleToIntFunction2} as
+     * result.
+     *
+     * @param value1 The first argument to this function used to partially apply this function
+     * @return A {@code DoubleToIntFunction2} that represents this function partially applied the some arguments.
+     */
+    @Nonnull
+    default DoubleToIntFunction2 papplyAsInt(double value1) {
+        return (value2) -> this.applyAsInt(value1, value2);
+    }
 
     /**
      * Returns the number of arguments for this function.

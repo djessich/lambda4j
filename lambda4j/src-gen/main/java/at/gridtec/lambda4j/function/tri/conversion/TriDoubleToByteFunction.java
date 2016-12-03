@@ -19,6 +19,7 @@ import at.gridtec.lambda4j.Lambda;
 import at.gridtec.lambda4j.consumer.ByteConsumer;
 import at.gridtec.lambda4j.consumer.tri.TriDoubleConsumer;
 import at.gridtec.lambda4j.function.ByteFunction;
+import at.gridtec.lambda4j.function.bi.conversion.BiDoubleToByteFunction;
 import at.gridtec.lambda4j.function.conversion.BooleanToDoubleFunction;
 import at.gridtec.lambda4j.function.conversion.ByteToCharFunction;
 import at.gridtec.lambda4j.function.conversion.ByteToDoubleFunction;
@@ -163,6 +164,31 @@ public interface TriDoubleToByteFunction extends Lambda {
      * @return The return value from the function, which is its result.
      */
     byte applyAsByte(double value1, double value2, double value3);
+
+    /**
+     * Applies this function partially to some arguments of this one, producing a {@link BiDoubleToByteFunction} as
+     * result.
+     *
+     * @param value1 The first argument to this function used to partially apply this function
+     * @return A {@code BiDoubleToByteFunction} that represents this function partially applied the some arguments.
+     */
+    @Nonnull
+    default BiDoubleToByteFunction papplyAsByte(double value1) {
+        return (value2, value3) -> this.applyAsByte(value1, value2, value3);
+    }
+
+    /**
+     * Applies this function partially to some arguments of this one, producing a {@link DoubleToByteFunction} as
+     * result.
+     *
+     * @param value1 The first argument to this function used to partially apply this function
+     * @param value2 The second argument to this function used to partially apply this function
+     * @return A {@code DoubleToByteFunction} that represents this function partially applied the some arguments.
+     */
+    @Nonnull
+    default DoubleToByteFunction papplyAsByte(double value1, double value2) {
+        return (value3) -> this.applyAsByte(value1, value2, value3);
+    }
 
     /**
      * Returns the number of arguments for this function.

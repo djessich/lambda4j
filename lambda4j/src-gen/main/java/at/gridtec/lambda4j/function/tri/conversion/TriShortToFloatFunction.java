@@ -19,6 +19,7 @@ import at.gridtec.lambda4j.Lambda;
 import at.gridtec.lambda4j.consumer.FloatConsumer;
 import at.gridtec.lambda4j.consumer.tri.TriShortConsumer;
 import at.gridtec.lambda4j.function.FloatFunction;
+import at.gridtec.lambda4j.function.bi.conversion.BiShortToFloatFunction;
 import at.gridtec.lambda4j.function.conversion.BooleanToShortFunction;
 import at.gridtec.lambda4j.function.conversion.ByteToShortFunction;
 import at.gridtec.lambda4j.function.conversion.CharToShortFunction;
@@ -163,6 +164,31 @@ public interface TriShortToFloatFunction extends Lambda {
      * @return The return value from the function, which is its result.
      */
     float applyAsFloat(short value1, short value2, short value3);
+
+    /**
+     * Applies this function partially to some arguments of this one, producing a {@link BiShortToFloatFunction} as
+     * result.
+     *
+     * @param value1 The first argument to this function used to partially apply this function
+     * @return A {@code BiShortToFloatFunction} that represents this function partially applied the some arguments.
+     */
+    @Nonnull
+    default BiShortToFloatFunction papplyAsFloat(short value1) {
+        return (value2, value3) -> this.applyAsFloat(value1, value2, value3);
+    }
+
+    /**
+     * Applies this function partially to some arguments of this one, producing a {@link ShortToFloatFunction} as
+     * result.
+     *
+     * @param value1 The first argument to this function used to partially apply this function
+     * @param value2 The second argument to this function used to partially apply this function
+     * @return A {@code ShortToFloatFunction} that represents this function partially applied the some arguments.
+     */
+    @Nonnull
+    default ShortToFloatFunction papplyAsFloat(short value1, short value2) {
+        return (value3) -> this.applyAsFloat(value1, value2, value3);
+    }
 
     /**
      * Returns the number of arguments for this function.

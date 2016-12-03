@@ -199,6 +199,29 @@ public interface ThrowableObjFloatFunction<T, R, X extends Throwable> extends La
     R applyThrows(T t, float value) throws X;
 
     /**
+     * Applies this function partially to some arguments of this one, producing a {@link ThrowableFloatFunction} as
+     * result.
+     *
+     * @param t The first argument to this function used to partially apply this function
+     * @return A {@code ThrowableFloatFunction} that represents this function partially applied the some arguments.
+     */
+    @Nonnull
+    default ThrowableFloatFunction<R, X> papplyThrows(T t) {
+        return (value) -> this.applyThrows(t, value);
+    }
+
+    /**
+     * Applies this function partially to some arguments of this one, producing a {@link ThrowableFunction} as result.
+     *
+     * @param value The second argument to this function used to partially apply this function
+     * @return A {@code ThrowableFunction} that represents this function partially applied the some arguments.
+     */
+    @Nonnull
+    default ThrowableFunction<T, R, X> papplyThrows(float value) {
+        return (t) -> this.applyThrows(t, value);
+    }
+
+    /**
      * Returns the number of arguments for this function.
      *
      * @return The number of arguments for this function.

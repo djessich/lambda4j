@@ -16,6 +16,10 @@
 package at.gridtec.lambda4j.consumer.tri.obj;
 
 import at.gridtec.lambda4j.Lambda;
+import at.gridtec.lambda4j.consumer.Consumer2;
+import at.gridtec.lambda4j.consumer.LongConsumer2;
+import at.gridtec.lambda4j.consumer.bi.BiLongConsumer;
+import at.gridtec.lambda4j.consumer.bi.obj.ObjLongConsumer2;
 import at.gridtec.lambda4j.consumer.tri.TriBooleanConsumer;
 import at.gridtec.lambda4j.consumer.tri.TriByteConsumer;
 import at.gridtec.lambda4j.consumer.tri.TriCharConsumer;
@@ -155,6 +159,52 @@ public interface ObjBiLongConsumer<T> extends Lambda {
      * @param value2 The third argument to the consumer
      */
     void accept(T t, long value1, long value2);
+
+    /**
+     * Applies this consumer partially to some arguments of this one, producing a {@link BiLongConsumer} as result.
+     *
+     * @param t The first argument to this consumer used to partially apply this function
+     * @return A {@code BiLongConsumer} that represents this consumer partially applied the some arguments.
+     */
+    @Nonnull
+    default BiLongConsumer paccept(T t) {
+        return (value1, value2) -> this.accept(t, value1, value2);
+    }
+
+    /**
+     * Applies this consumer partially to some arguments of this one, producing a {@link LongConsumer2} as result.
+     *
+     * @param t The first argument to this consumer used to partially apply this function
+     * @param value1 The second argument to this consumer used to partially apply this function
+     * @return A {@code LongConsumer2} that represents this consumer partially applied the some arguments.
+     */
+    @Nonnull
+    default LongConsumer2 paccept(T t, long value1) {
+        return (value2) -> this.accept(t, value1, value2);
+    }
+
+    /**
+     * Applies this consumer partially to some arguments of this one, producing a {@link ObjLongConsumer2} as result.
+     *
+     * @param value1 The second argument to this consumer used to partially apply this function
+     * @return A {@code ObjLongConsumer2} that represents this consumer partially applied the some arguments.
+     */
+    @Nonnull
+    default ObjLongConsumer2<T> paccept(long value1) {
+        return (t, value2) -> this.accept(t, value1, value2);
+    }
+
+    /**
+     * Applies this consumer partially to some arguments of this one, producing a {@link Consumer2} as result.
+     *
+     * @param value1 The second argument to this consumer used to partially apply this function
+     * @param value2 The third argument to this consumer used to partially apply this function
+     * @return A {@code Consumer2} that represents this consumer partially applied the some arguments.
+     */
+    @Nonnull
+    default Consumer2<T> paccept(long value1, long value2) {
+        return (t) -> this.accept(t, value1, value2);
+    }
 
     /**
      * Returns the number of arguments for this consumer.

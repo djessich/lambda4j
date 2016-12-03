@@ -184,6 +184,31 @@ public interface ThrowableObjDoubleToFloatFunction<T, X extends Throwable> exten
     float applyAsFloatThrows(T t, double value) throws X;
 
     /**
+     * Applies this function partially to some arguments of this one, producing a {@link ThrowableDoubleToFloatFunction}
+     * as result.
+     *
+     * @param t The first argument to this function used to partially apply this function
+     * @return A {@code ThrowableDoubleToFloatFunction} that represents this function partially applied the some
+     * arguments.
+     */
+    @Nonnull
+    default ThrowableDoubleToFloatFunction<X> papplyAsFloatThrows(T t) {
+        return (value) -> this.applyAsFloatThrows(t, value);
+    }
+
+    /**
+     * Applies this function partially to some arguments of this one, producing a {@link ThrowableToFloatFunction} as
+     * result.
+     *
+     * @param value The second argument to this function used to partially apply this function
+     * @return A {@code ThrowableToFloatFunction} that represents this function partially applied the some arguments.
+     */
+    @Nonnull
+    default ThrowableToFloatFunction<T, X> papplyAsFloatThrows(double value) {
+        return (t) -> this.applyAsFloatThrows(t, value);
+    }
+
+    /**
      * Returns the number of arguments for this function.
      *
      * @return The number of arguments for this function.

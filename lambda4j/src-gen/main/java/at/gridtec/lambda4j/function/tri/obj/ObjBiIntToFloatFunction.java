@@ -23,6 +23,8 @@ import at.gridtec.lambda4j.function.ByteFunction;
 import at.gridtec.lambda4j.function.CharFunction;
 import at.gridtec.lambda4j.function.FloatFunction;
 import at.gridtec.lambda4j.function.ShortFunction;
+import at.gridtec.lambda4j.function.bi.conversion.BiIntToFloatFunction;
+import at.gridtec.lambda4j.function.bi.obj.ObjIntToFloatFunction;
 import at.gridtec.lambda4j.function.conversion.BooleanToIntFunction;
 import at.gridtec.lambda4j.function.conversion.ByteToIntFunction;
 import at.gridtec.lambda4j.function.conversion.CharToIntFunction;
@@ -184,6 +186,54 @@ public interface ObjBiIntToFloatFunction<T> extends Lambda {
      * @return The return value from the function, which is its result.
      */
     float applyAsFloat(T t, int value1, int value2);
+
+    /**
+     * Applies this function partially to some arguments of this one, producing a {@link BiIntToFloatFunction} as
+     * result.
+     *
+     * @param t The first argument to this function used to partially apply this function
+     * @return A {@code BiIntToFloatFunction} that represents this function partially applied the some arguments.
+     */
+    @Nonnull
+    default BiIntToFloatFunction papplyAsFloat(T t) {
+        return (value1, value2) -> this.applyAsFloat(t, value1, value2);
+    }
+
+    /**
+     * Applies this function partially to some arguments of this one, producing a {@link IntToFloatFunction} as result.
+     *
+     * @param t The first argument to this function used to partially apply this function
+     * @param value1 The second argument to this function used to partially apply this function
+     * @return A {@code IntToFloatFunction} that represents this function partially applied the some arguments.
+     */
+    @Nonnull
+    default IntToFloatFunction papplyAsFloat(T t, int value1) {
+        return (value2) -> this.applyAsFloat(t, value1, value2);
+    }
+
+    /**
+     * Applies this function partially to some arguments of this one, producing a {@link ObjIntToFloatFunction} as
+     * result.
+     *
+     * @param value1 The second argument to this function used to partially apply this function
+     * @return A {@code ObjIntToFloatFunction} that represents this function partially applied the some arguments.
+     */
+    @Nonnull
+    default ObjIntToFloatFunction<T> papplyAsFloat(int value1) {
+        return (t, value2) -> this.applyAsFloat(t, value1, value2);
+    }
+
+    /**
+     * Applies this function partially to some arguments of this one, producing a {@link ToFloatFunction} as result.
+     *
+     * @param value1 The second argument to this function used to partially apply this function
+     * @param value2 The third argument to this function used to partially apply this function
+     * @return A {@code ToFloatFunction} that represents this function partially applied the some arguments.
+     */
+    @Nonnull
+    default ToFloatFunction<T> papplyAsFloat(int value1, int value2) {
+        return (t) -> this.applyAsFloat(t, value1, value2);
+    }
 
     /**
      * Returns the number of arguments for this function.

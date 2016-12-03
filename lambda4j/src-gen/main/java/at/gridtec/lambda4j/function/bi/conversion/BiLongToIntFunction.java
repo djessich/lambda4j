@@ -28,6 +28,7 @@ import at.gridtec.lambda4j.function.conversion.IntToByteFunction;
 import at.gridtec.lambda4j.function.conversion.IntToCharFunction;
 import at.gridtec.lambda4j.function.conversion.IntToFloatFunction;
 import at.gridtec.lambda4j.function.conversion.IntToShortFunction;
+import at.gridtec.lambda4j.function.conversion.LongToIntFunction2;
 import at.gridtec.lambda4j.function.conversion.ShortToLongFunction;
 import at.gridtec.lambda4j.operator.binary.IntBinaryOperator2;
 import at.gridtec.lambda4j.operator.binary.LongBinaryOperator2;
@@ -146,6 +147,17 @@ public interface BiLongToIntFunction extends Lambda {
      * @return The return value from the function, which is its result.
      */
     int applyAsInt(long value1, long value2);
+
+    /**
+     * Applies this function partially to some arguments of this one, producing a {@link LongToIntFunction2} as result.
+     *
+     * @param value1 The first argument to this function used to partially apply this function
+     * @return A {@code LongToIntFunction2} that represents this function partially applied the some arguments.
+     */
+    @Nonnull
+    default LongToIntFunction2 papplyAsInt(long value1) {
+        return (value2) -> this.applyAsInt(value1, value2);
+    }
 
     /**
      * Returns the number of arguments for this function.

@@ -22,6 +22,7 @@ import at.gridtec.lambda4j.core.exception.ThrownByFunctionalInterfaceException;
 import at.gridtec.lambda4j.core.util.ThrowableUtils;
 import at.gridtec.lambda4j.function.ThrowableFunction;
 import at.gridtec.lambda4j.function.ThrowableIntFunction;
+import at.gridtec.lambda4j.function.bi.conversion.ThrowableBiDoubleToIntFunction;
 import at.gridtec.lambda4j.function.conversion.ThrowableBooleanToDoubleFunction;
 import at.gridtec.lambda4j.function.conversion.ThrowableByteToDoubleFunction;
 import at.gridtec.lambda4j.function.conversion.ThrowableCharToDoubleFunction;
@@ -181,6 +182,33 @@ public interface ThrowableTriDoubleToIntFunction<X extends Throwable> extends La
      * @throws X Any throwable from this functions action
      */
     int applyAsIntThrows(double value1, double value2, double value3) throws X;
+
+    /**
+     * Applies this function partially to some arguments of this one, producing a {@link ThrowableBiDoubleToIntFunction}
+     * as result.
+     *
+     * @param value1 The first argument to this function used to partially apply this function
+     * @return A {@code ThrowableBiDoubleToIntFunction} that represents this function partially applied the some
+     * arguments.
+     */
+    @Nonnull
+    default ThrowableBiDoubleToIntFunction<X> papplyAsIntThrows(double value1) {
+        return (value2, value3) -> this.applyAsIntThrows(value1, value2, value3);
+    }
+
+    /**
+     * Applies this function partially to some arguments of this one, producing a {@link ThrowableDoubleToIntFunction}
+     * as result.
+     *
+     * @param value1 The first argument to this function used to partially apply this function
+     * @param value2 The second argument to this function used to partially apply this function
+     * @return A {@code ThrowableDoubleToIntFunction} that represents this function partially applied the some
+     * arguments.
+     */
+    @Nonnull
+    default ThrowableDoubleToIntFunction<X> papplyAsIntThrows(double value1, double value2) {
+        return (value3) -> this.applyAsIntThrows(value1, value2, value3);
+    }
 
     /**
      * Returns the number of arguments for this function.

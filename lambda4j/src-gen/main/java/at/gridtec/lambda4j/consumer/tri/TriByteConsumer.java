@@ -17,6 +17,7 @@ package at.gridtec.lambda4j.consumer.tri;
 
 import at.gridtec.lambda4j.Lambda;
 import at.gridtec.lambda4j.consumer.ByteConsumer;
+import at.gridtec.lambda4j.consumer.bi.BiByteConsumer;
 import at.gridtec.lambda4j.function.conversion.BooleanToByteFunction;
 import at.gridtec.lambda4j.function.conversion.CharToByteFunction;
 import at.gridtec.lambda4j.function.conversion.DoubleToByteFunction;
@@ -129,6 +130,29 @@ public interface TriByteConsumer extends Lambda {
      * @param value3 The third argument to the consumer
      */
     void accept(byte value1, byte value2, byte value3);
+
+    /**
+     * Applies this consumer partially to some arguments of this one, producing a {@link BiByteConsumer} as result.
+     *
+     * @param value1 The first argument to this consumer used to partially apply this function
+     * @return A {@code BiByteConsumer} that represents this consumer partially applied the some arguments.
+     */
+    @Nonnull
+    default BiByteConsumer paccept(byte value1) {
+        return (value2, value3) -> this.accept(value1, value2, value3);
+    }
+
+    /**
+     * Applies this consumer partially to some arguments of this one, producing a {@link ByteConsumer} as result.
+     *
+     * @param value1 The first argument to this consumer used to partially apply this function
+     * @param value2 The second argument to this consumer used to partially apply this function
+     * @return A {@code ByteConsumer} that represents this consumer partially applied the some arguments.
+     */
+    @Nonnull
+    default ByteConsumer paccept(byte value1, byte value2) {
+        return (value3) -> this.accept(value1, value2, value3);
+    }
 
     /**
      * Returns the number of arguments for this consumer.

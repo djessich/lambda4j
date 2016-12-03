@@ -17,6 +17,7 @@ package at.gridtec.lambda4j.function.tri.conversion;
 
 import at.gridtec.lambda4j.Lambda;
 import at.gridtec.lambda4j.consumer.tri.TriByteConsumer;
+import at.gridtec.lambda4j.function.bi.conversion.BiByteToLongFunction;
 import at.gridtec.lambda4j.function.conversion.BooleanToByteFunction;
 import at.gridtec.lambda4j.function.conversion.ByteToLongFunction;
 import at.gridtec.lambda4j.function.conversion.CharToByteFunction;
@@ -163,6 +164,30 @@ public interface TriByteToLongFunction extends Lambda {
      * @return The return value from the function, which is its result.
      */
     long applyAsLong(byte value1, byte value2, byte value3);
+
+    /**
+     * Applies this function partially to some arguments of this one, producing a {@link BiByteToLongFunction} as
+     * result.
+     *
+     * @param value1 The first argument to this function used to partially apply this function
+     * @return A {@code BiByteToLongFunction} that represents this function partially applied the some arguments.
+     */
+    @Nonnull
+    default BiByteToLongFunction papplyAsLong(byte value1) {
+        return (value2, value3) -> this.applyAsLong(value1, value2, value3);
+    }
+
+    /**
+     * Applies this function partially to some arguments of this one, producing a {@link ByteToLongFunction} as result.
+     *
+     * @param value1 The first argument to this function used to partially apply this function
+     * @param value2 The second argument to this function used to partially apply this function
+     * @return A {@code ByteToLongFunction} that represents this function partially applied the some arguments.
+     */
+    @Nonnull
+    default ByteToLongFunction papplyAsLong(byte value1, byte value2) {
+        return (value3) -> this.applyAsLong(value1, value2, value3);
+    }
 
     /**
      * Returns the number of arguments for this function.

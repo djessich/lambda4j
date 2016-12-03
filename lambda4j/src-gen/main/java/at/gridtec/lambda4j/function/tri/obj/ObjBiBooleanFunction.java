@@ -21,7 +21,10 @@ import at.gridtec.lambda4j.function.BooleanFunction;
 import at.gridtec.lambda4j.function.ByteFunction;
 import at.gridtec.lambda4j.function.CharFunction;
 import at.gridtec.lambda4j.function.FloatFunction;
+import at.gridtec.lambda4j.function.Function2;
 import at.gridtec.lambda4j.function.ShortFunction;
+import at.gridtec.lambda4j.function.bi.BiBooleanFunction;
+import at.gridtec.lambda4j.function.bi.obj.ObjBooleanFunction;
 import at.gridtec.lambda4j.function.tri.TriBooleanFunction;
 import at.gridtec.lambda4j.function.tri.TriByteFunction;
 import at.gridtec.lambda4j.function.tri.TriCharFunction;
@@ -200,6 +203,52 @@ public interface ObjBiBooleanFunction<T, R> extends Lambda {
      * @return The return value from the function, which is its result.
      */
     R apply(T t, boolean value1, boolean value2);
+
+    /**
+     * Applies this function partially to some arguments of this one, producing a {@link BiBooleanFunction} as result.
+     *
+     * @param t The first argument to this function used to partially apply this function
+     * @return A {@code BiBooleanFunction} that represents this function partially applied the some arguments.
+     */
+    @Nonnull
+    default BiBooleanFunction<R> papply(T t) {
+        return (value1, value2) -> this.apply(t, value1, value2);
+    }
+
+    /**
+     * Applies this function partially to some arguments of this one, producing a {@link BooleanFunction} as result.
+     *
+     * @param t The first argument to this function used to partially apply this function
+     * @param value1 The second argument to this function used to partially apply this function
+     * @return A {@code BooleanFunction} that represents this function partially applied the some arguments.
+     */
+    @Nonnull
+    default BooleanFunction<R> papply(T t, boolean value1) {
+        return (value2) -> this.apply(t, value1, value2);
+    }
+
+    /**
+     * Applies this function partially to some arguments of this one, producing a {@link ObjBooleanFunction} as result.
+     *
+     * @param value1 The second argument to this function used to partially apply this function
+     * @return A {@code ObjBooleanFunction} that represents this function partially applied the some arguments.
+     */
+    @Nonnull
+    default ObjBooleanFunction<T, R> papply(boolean value1) {
+        return (t, value2) -> this.apply(t, value1, value2);
+    }
+
+    /**
+     * Applies this function partially to some arguments of this one, producing a {@link Function2} as result.
+     *
+     * @param value1 The second argument to this function used to partially apply this function
+     * @param value2 The third argument to this function used to partially apply this function
+     * @return A {@code Function2} that represents this function partially applied the some arguments.
+     */
+    @Nonnull
+    default Function2<T, R> papply(boolean value1, boolean value2) {
+        return (t) -> this.apply(t, value1, value2);
+    }
 
     /**
      * Returns the number of arguments for this function.

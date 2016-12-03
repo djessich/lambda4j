@@ -17,6 +17,7 @@ package at.gridtec.lambda4j.function.tri.to;
 
 import at.gridtec.lambda4j.Lambda;
 import at.gridtec.lambda4j.consumer.tri.TriConsumer;
+import at.gridtec.lambda4j.function.bi.to.ToDoubleBiFunction2;
 import at.gridtec.lambda4j.function.conversion.DoubleToByteFunction;
 import at.gridtec.lambda4j.function.conversion.DoubleToCharFunction;
 import at.gridtec.lambda4j.function.conversion.DoubleToFloatFunction;
@@ -187,6 +188,29 @@ public interface ToDoubleTriFunction<T, U, V> extends Lambda {
     default double applyAsDouble(@Nonnull Triple<T, U, V> tuple) {
         Objects.requireNonNull(tuple);
         return applyAsDouble(tuple.getLeft(), tuple.getMiddle(), tuple.getRight());
+    }
+
+    /**
+     * Applies this function partially to some arguments of this one, producing a {@link ToDoubleBiFunction2} as result.
+     *
+     * @param t The first argument to this function used to partially apply this function
+     * @return A {@code ToDoubleBiFunction2} that represents this function partially applied the some arguments.
+     */
+    @Nonnull
+    default ToDoubleBiFunction2<U, V> papplyAsDouble(T t) {
+        return (u, v) -> this.applyAsDouble(t, u, v);
+    }
+
+    /**
+     * Applies this function partially to some arguments of this one, producing a {@link ToDoubleFunction2} as result.
+     *
+     * @param t The first argument to this function used to partially apply this function
+     * @param u The second argument to this function used to partially apply this function
+     * @return A {@code ToDoubleFunction2} that represents this function partially applied the some arguments.
+     */
+    @Nonnull
+    default ToDoubleFunction2<V> papplyAsDouble(T t, U u) {
+        return (v) -> this.applyAsDouble(t, u, v);
     }
 
     /**

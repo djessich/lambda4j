@@ -191,6 +191,17 @@ public interface FloatBinaryOperator extends Lambda {
     float applyAsFloat(float value1, float value2);
 
     /**
+     * Applies this operator partially to some arguments of this one, producing a {@link FloatUnaryOperator} as result.
+     *
+     * @param value1 The first argument to this operator used to partially apply this function
+     * @return A {@code FloatUnaryOperator} that represents this operator partially applied the some arguments.
+     */
+    @Nonnull
+    default FloatUnaryOperator papplyAsFloat(float value1) {
+        return (value2) -> this.applyAsFloat(value1, value2);
+    }
+
+    /**
      * Returns the number of arguments for this operator.
      *
      * @return The number of arguments for this operator.

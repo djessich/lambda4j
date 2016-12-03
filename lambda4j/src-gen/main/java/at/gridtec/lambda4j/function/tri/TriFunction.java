@@ -18,6 +18,7 @@ package at.gridtec.lambda4j.function.tri;
 import at.gridtec.lambda4j.Lambda;
 import at.gridtec.lambda4j.consumer.tri.TriConsumer;
 import at.gridtec.lambda4j.function.Function2;
+import at.gridtec.lambda4j.function.bi.BiFunction2;
 
 import org.apache.commons.lang3.tuple.Triple;
 
@@ -200,6 +201,29 @@ public interface TriFunction<T, U, V, R> extends Lambda {
     default R apply(@Nonnull Triple<T, U, V> tuple) {
         Objects.requireNonNull(tuple);
         return apply(tuple.getLeft(), tuple.getMiddle(), tuple.getRight());
+    }
+
+    /**
+     * Applies this function partially to some arguments of this one, producing a {@link BiFunction2} as result.
+     *
+     * @param t The first argument to this function used to partially apply this function
+     * @return A {@code BiFunction2} that represents this function partially applied the some arguments.
+     */
+    @Nonnull
+    default BiFunction2<U, V, R> papply(T t) {
+        return (u, v) -> this.apply(t, u, v);
+    }
+
+    /**
+     * Applies this function partially to some arguments of this one, producing a {@link Function2} as result.
+     *
+     * @param t The first argument to this function used to partially apply this function
+     * @param u The second argument to this function used to partially apply this function
+     * @return A {@code Function2} that represents this function partially applied the some arguments.
+     */
+    @Nonnull
+    default Function2<V, R> papply(T t, U u) {
+        return (v) -> this.apply(t, u, v);
     }
 
     /**

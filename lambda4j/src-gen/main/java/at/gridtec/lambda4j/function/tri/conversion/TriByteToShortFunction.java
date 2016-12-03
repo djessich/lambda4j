@@ -19,6 +19,7 @@ import at.gridtec.lambda4j.Lambda;
 import at.gridtec.lambda4j.consumer.ShortConsumer;
 import at.gridtec.lambda4j.consumer.tri.TriByteConsumer;
 import at.gridtec.lambda4j.function.ShortFunction;
+import at.gridtec.lambda4j.function.bi.conversion.BiByteToShortFunction;
 import at.gridtec.lambda4j.function.conversion.BooleanToByteFunction;
 import at.gridtec.lambda4j.function.conversion.ByteToShortFunction;
 import at.gridtec.lambda4j.function.conversion.CharToByteFunction;
@@ -163,6 +164,30 @@ public interface TriByteToShortFunction extends Lambda {
      * @return The return value from the function, which is its result.
      */
     short applyAsShort(byte value1, byte value2, byte value3);
+
+    /**
+     * Applies this function partially to some arguments of this one, producing a {@link BiByteToShortFunction} as
+     * result.
+     *
+     * @param value1 The first argument to this function used to partially apply this function
+     * @return A {@code BiByteToShortFunction} that represents this function partially applied the some arguments.
+     */
+    @Nonnull
+    default BiByteToShortFunction papplyAsShort(byte value1) {
+        return (value2, value3) -> this.applyAsShort(value1, value2, value3);
+    }
+
+    /**
+     * Applies this function partially to some arguments of this one, producing a {@link ByteToShortFunction} as result.
+     *
+     * @param value1 The first argument to this function used to partially apply this function
+     * @param value2 The second argument to this function used to partially apply this function
+     * @return A {@code ByteToShortFunction} that represents this function partially applied the some arguments.
+     */
+    @Nonnull
+    default ByteToShortFunction papplyAsShort(byte value1, byte value2) {
+        return (value3) -> this.applyAsShort(value1, value2, value3);
+    }
 
     /**
      * Returns the number of arguments for this function.

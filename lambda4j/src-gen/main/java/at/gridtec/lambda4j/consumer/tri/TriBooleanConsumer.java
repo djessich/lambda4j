@@ -17,6 +17,7 @@ package at.gridtec.lambda4j.consumer.tri;
 
 import at.gridtec.lambda4j.Lambda;
 import at.gridtec.lambda4j.consumer.BooleanConsumer;
+import at.gridtec.lambda4j.consumer.bi.BiBooleanConsumer;
 import at.gridtec.lambda4j.operator.unary.BooleanUnaryOperator;
 import at.gridtec.lambda4j.predicate.BytePredicate;
 import at.gridtec.lambda4j.predicate.CharPredicate;
@@ -130,6 +131,29 @@ public interface TriBooleanConsumer extends Lambda {
      * @param value3 The third argument to the consumer
      */
     void accept(boolean value1, boolean value2, boolean value3);
+
+    /**
+     * Applies this consumer partially to some arguments of this one, producing a {@link BiBooleanConsumer} as result.
+     *
+     * @param value1 The first argument to this consumer used to partially apply this function
+     * @return A {@code BiBooleanConsumer} that represents this consumer partially applied the some arguments.
+     */
+    @Nonnull
+    default BiBooleanConsumer paccept(boolean value1) {
+        return (value2, value3) -> this.accept(value1, value2, value3);
+    }
+
+    /**
+     * Applies this consumer partially to some arguments of this one, producing a {@link BooleanConsumer} as result.
+     *
+     * @param value1 The first argument to this consumer used to partially apply this function
+     * @param value2 The second argument to this consumer used to partially apply this function
+     * @return A {@code BooleanConsumer} that represents this consumer partially applied the some arguments.
+     */
+    @Nonnull
+    default BooleanConsumer paccept(boolean value1, boolean value2) {
+        return (value3) -> this.accept(value1, value2, value3);
+    }
 
     /**
      * Returns the number of arguments for this consumer.

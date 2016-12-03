@@ -29,6 +29,7 @@ import at.gridtec.lambda4j.function.ThrowableFunction;
 import at.gridtec.lambda4j.function.ThrowableIntFunction;
 import at.gridtec.lambda4j.function.ThrowableLongFunction;
 import at.gridtec.lambda4j.function.ThrowableShortFunction;
+import at.gridtec.lambda4j.function.bi.obj.ThrowableObjFloatToFloatFunction;
 import at.gridtec.lambda4j.function.conversion.ThrowableBooleanToFloatFunction;
 import at.gridtec.lambda4j.function.conversion.ThrowableByteToFloatFunction;
 import at.gridtec.lambda4j.function.conversion.ThrowableCharToFloatFunction;
@@ -52,6 +53,7 @@ import at.gridtec.lambda4j.function.tri.conversion.ThrowableTriIntToFloatFunctio
 import at.gridtec.lambda4j.function.tri.conversion.ThrowableTriLongToFloatFunction;
 import at.gridtec.lambda4j.function.tri.conversion.ThrowableTriShortToFloatFunction;
 import at.gridtec.lambda4j.function.tri.to.ThrowableToFloatTriFunction;
+import at.gridtec.lambda4j.operator.binary.ThrowableFloatBinaryOperator;
 import at.gridtec.lambda4j.operator.ternary.ThrowableFloatTernaryOperator;
 import at.gridtec.lambda4j.operator.unary.ThrowableFloatUnaryOperator;
 import at.gridtec.lambda4j.predicate.ThrowableFloatPredicate;
@@ -200,6 +202,58 @@ public interface ThrowableObjBiFloatToFloatFunction<T, X extends Throwable> exte
      * @throws X Any throwable from this functions action
      */
     float applyAsFloatThrows(T t, float value1, float value2) throws X;
+
+    /**
+     * Applies this operator partially to some arguments of this one, producing a {@link ThrowableFloatBinaryOperator}
+     * as result.
+     *
+     * @param t The first argument to this function used to partially apply this function
+     * @return A {@code ThrowableFloatBinaryOperator} that represents this operator partially applied the some
+     * arguments.
+     */
+    @Nonnull
+    default ThrowableFloatBinaryOperator<X> papplyAsFloatThrows(T t) {
+        return (value1, value2) -> this.applyAsFloatThrows(t, value1, value2);
+    }
+
+    /**
+     * Applies this operator partially to some arguments of this one, producing a {@link ThrowableFloatUnaryOperator} as
+     * result.
+     *
+     * @param t The first argument to this function used to partially apply this function
+     * @param value1 The second argument to this function used to partially apply this function
+     * @return A {@code ThrowableFloatUnaryOperator} that represents this operator partially applied the some arguments.
+     */
+    @Nonnull
+    default ThrowableFloatUnaryOperator<X> papplyAsFloatThrows(T t, float value1) {
+        return (value2) -> this.applyAsFloatThrows(t, value1, value2);
+    }
+
+    /**
+     * Applies this operator partially to some arguments of this one, producing a {@link
+     * ThrowableObjFloatToFloatFunction} as result.
+     *
+     * @param value1 The second argument to this function used to partially apply this function
+     * @return A {@code ThrowableObjFloatToFloatFunction} that represents this operator partially applied the some
+     * arguments.
+     */
+    @Nonnull
+    default ThrowableObjFloatToFloatFunction<T, X> papplyAsFloatThrows(float value1) {
+        return (t, value2) -> this.applyAsFloatThrows(t, value1, value2);
+    }
+
+    /**
+     * Applies this operator partially to some arguments of this one, producing a {@link ThrowableToFloatFunction} as
+     * result.
+     *
+     * @param value1 The second argument to this function used to partially apply this function
+     * @param value2 The third argument to this function used to partially apply this function
+     * @return A {@code ThrowableToFloatFunction} that represents this operator partially applied the some arguments.
+     */
+    @Nonnull
+    default ThrowableToFloatFunction<T, X> papplyAsFloatThrows(float value1, float value2) {
+        return (t) -> this.applyAsFloatThrows(t, value1, value2);
+    }
 
     /**
      * Returns the number of arguments for this function.

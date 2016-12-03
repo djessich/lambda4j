@@ -17,6 +17,7 @@ package at.gridtec.lambda4j.function.tri.conversion;
 
 import at.gridtec.lambda4j.Lambda;
 import at.gridtec.lambda4j.consumer.tri.TriIntConsumer;
+import at.gridtec.lambda4j.function.bi.conversion.BiIntToDoubleFunction;
 import at.gridtec.lambda4j.function.conversion.BooleanToIntFunction;
 import at.gridtec.lambda4j.function.conversion.ByteToIntFunction;
 import at.gridtec.lambda4j.function.conversion.CharToIntFunction;
@@ -25,6 +26,7 @@ import at.gridtec.lambda4j.function.conversion.DoubleToCharFunction;
 import at.gridtec.lambda4j.function.conversion.DoubleToFloatFunction;
 import at.gridtec.lambda4j.function.conversion.DoubleToShortFunction;
 import at.gridtec.lambda4j.function.conversion.FloatToIntFunction;
+import at.gridtec.lambda4j.function.conversion.IntToDoubleFunction2;
 import at.gridtec.lambda4j.function.conversion.ShortToIntFunction;
 import at.gridtec.lambda4j.function.tri.TriFunction;
 import at.gridtec.lambda4j.function.tri.TriIntFunction;
@@ -163,6 +165,31 @@ public interface TriIntToDoubleFunction extends Lambda {
      * @return The return value from the function, which is its result.
      */
     double applyAsDouble(int value1, int value2, int value3);
+
+    /**
+     * Applies this function partially to some arguments of this one, producing a {@link BiIntToDoubleFunction} as
+     * result.
+     *
+     * @param value1 The first argument to this function used to partially apply this function
+     * @return A {@code BiIntToDoubleFunction} that represents this function partially applied the some arguments.
+     */
+    @Nonnull
+    default BiIntToDoubleFunction papplyAsDouble(int value1) {
+        return (value2, value3) -> this.applyAsDouble(value1, value2, value3);
+    }
+
+    /**
+     * Applies this function partially to some arguments of this one, producing a {@link IntToDoubleFunction2} as
+     * result.
+     *
+     * @param value1 The first argument to this function used to partially apply this function
+     * @param value2 The second argument to this function used to partially apply this function
+     * @return A {@code IntToDoubleFunction2} that represents this function partially applied the some arguments.
+     */
+    @Nonnull
+    default IntToDoubleFunction2 papplyAsDouble(int value1, int value2) {
+        return (value3) -> this.applyAsDouble(value1, value2, value3);
+    }
 
     /**
      * Returns the number of arguments for this function.

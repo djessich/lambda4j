@@ -40,6 +40,8 @@ import at.gridtec.lambda4j.function.tri.conversion.TriDoubleToShortFunction;
 import at.gridtec.lambda4j.operator.ternary.BooleanTernaryOperator;
 import at.gridtec.lambda4j.operator.ternary.DoubleTernaryOperator;
 import at.gridtec.lambda4j.operator.unary.BooleanUnaryOperator;
+import at.gridtec.lambda4j.predicate.DoublePredicate2;
+import at.gridtec.lambda4j.predicate.bi.BiDoublePredicate;
 
 import org.apache.commons.lang3.tuple.Triple;
 
@@ -204,6 +206,29 @@ public interface TriDoublePredicate extends Lambda {
      * @return The return value from the predicate, which is its result.
      */
     boolean test(double value1, double value2, double value3);
+
+    /**
+     * Applies this predicate partially to some arguments of this one, producing a {@link BiDoublePredicate} as result.
+     *
+     * @param value1 The first argument to this predicate used to partially apply this function
+     * @return A {@code BiDoublePredicate} that represents this predicate partially applied the some arguments.
+     */
+    @Nonnull
+    default BiDoublePredicate ptest(double value1) {
+        return (value2, value3) -> this.test(value1, value2, value3);
+    }
+
+    /**
+     * Applies this predicate partially to some arguments of this one, producing a {@link DoublePredicate2} as result.
+     *
+     * @param value1 The first argument to this predicate used to partially apply this function
+     * @param value2 The second argument to this predicate used to partially apply this function
+     * @return A {@code DoublePredicate2} that represents this predicate partially applied the some arguments.
+     */
+    @Nonnull
+    default DoublePredicate2 ptest(double value1, double value2) {
+        return (value3) -> this.test(value1, value2, value3);
+    }
 
     /**
      * Returns the number of arguments for this predicate.

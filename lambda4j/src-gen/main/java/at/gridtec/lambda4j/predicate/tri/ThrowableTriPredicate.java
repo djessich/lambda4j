@@ -39,6 +39,7 @@ import at.gridtec.lambda4j.function.tri.to.ThrowableToLongTriFunction;
 import at.gridtec.lambda4j.function.tri.to.ThrowableToShortTriFunction;
 import at.gridtec.lambda4j.operator.unary.ThrowableBooleanUnaryOperator;
 import at.gridtec.lambda4j.predicate.ThrowablePredicate;
+import at.gridtec.lambda4j.predicate.bi.ThrowableBiPredicate;
 
 import org.apache.commons.lang3.tuple.Triple;
 
@@ -263,6 +264,30 @@ public interface ThrowableTriPredicate<T, U, V, X extends Throwable> extends Lam
     default boolean testThrows(@Nonnull Triple<T, U, V> tuple) throws X {
         Objects.requireNonNull(tuple);
         return testThrows(tuple.getLeft(), tuple.getMiddle(), tuple.getRight());
+    }
+
+    /**
+     * Applies this predicate partially to some arguments of this one, producing a {@link ThrowableBiPredicate} as
+     * result.
+     *
+     * @param t The first argument to this predicate used to partially apply this function
+     * @return A {@code ThrowableBiPredicate} that represents this predicate partially applied the some arguments.
+     */
+    @Nonnull
+    default ThrowableBiPredicate<U, V, X> ptestThrows(T t) {
+        return (u, v) -> this.testThrows(t, u, v);
+    }
+
+    /**
+     * Applies this predicate partially to some arguments of this one, producing a {@link ThrowablePredicate} as result.
+     *
+     * @param t The first argument to this predicate used to partially apply this function
+     * @param u The second argument to this predicate used to partially apply this function
+     * @return A {@code ThrowablePredicate} that represents this predicate partially applied the some arguments.
+     */
+    @Nonnull
+    default ThrowablePredicate<V, X> ptestThrows(T t, U u) {
+        return (v) -> this.testThrows(t, u, v);
     }
 
     /**

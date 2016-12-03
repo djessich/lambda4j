@@ -17,6 +17,7 @@ package at.gridtec.lambda4j.consumer.tri;
 
 import at.gridtec.lambda4j.Lambda;
 import at.gridtec.lambda4j.consumer.ShortConsumer;
+import at.gridtec.lambda4j.consumer.bi.BiShortConsumer;
 import at.gridtec.lambda4j.function.conversion.BooleanToShortFunction;
 import at.gridtec.lambda4j.function.conversion.ByteToShortFunction;
 import at.gridtec.lambda4j.function.conversion.CharToShortFunction;
@@ -130,6 +131,29 @@ public interface TriShortConsumer extends Lambda {
      * @param value3 The third argument to the consumer
      */
     void accept(short value1, short value2, short value3);
+
+    /**
+     * Applies this consumer partially to some arguments of this one, producing a {@link BiShortConsumer} as result.
+     *
+     * @param value1 The first argument to this consumer used to partially apply this function
+     * @return A {@code BiShortConsumer} that represents this consumer partially applied the some arguments.
+     */
+    @Nonnull
+    default BiShortConsumer paccept(short value1) {
+        return (value2, value3) -> this.accept(value1, value2, value3);
+    }
+
+    /**
+     * Applies this consumer partially to some arguments of this one, producing a {@link ShortConsumer} as result.
+     *
+     * @param value1 The first argument to this consumer used to partially apply this function
+     * @param value2 The second argument to this consumer used to partially apply this function
+     * @return A {@code ShortConsumer} that represents this consumer partially applied the some arguments.
+     */
+    @Nonnull
+    default ShortConsumer paccept(short value1, short value2) {
+        return (value3) -> this.accept(value1, value2, value3);
+    }
 
     /**
      * Returns the number of arguments for this consumer.

@@ -17,6 +17,7 @@ package at.gridtec.lambda4j.function.tri.to;
 
 import at.gridtec.lambda4j.Lambda;
 import at.gridtec.lambda4j.consumer.tri.TriConsumer;
+import at.gridtec.lambda4j.function.bi.to.ToIntBiFunction2;
 import at.gridtec.lambda4j.function.conversion.IntToByteFunction;
 import at.gridtec.lambda4j.function.conversion.IntToCharFunction;
 import at.gridtec.lambda4j.function.conversion.IntToFloatFunction;
@@ -187,6 +188,29 @@ public interface ToIntTriFunction<T, U, V> extends Lambda {
     default int applyAsInt(@Nonnull Triple<T, U, V> tuple) {
         Objects.requireNonNull(tuple);
         return applyAsInt(tuple.getLeft(), tuple.getMiddle(), tuple.getRight());
+    }
+
+    /**
+     * Applies this function partially to some arguments of this one, producing a {@link ToIntBiFunction2} as result.
+     *
+     * @param t The first argument to this function used to partially apply this function
+     * @return A {@code ToIntBiFunction2} that represents this function partially applied the some arguments.
+     */
+    @Nonnull
+    default ToIntBiFunction2<U, V> papplyAsInt(T t) {
+        return (u, v) -> this.applyAsInt(t, u, v);
+    }
+
+    /**
+     * Applies this function partially to some arguments of this one, producing a {@link ToIntFunction2} as result.
+     *
+     * @param t The first argument to this function used to partially apply this function
+     * @param u The second argument to this function used to partially apply this function
+     * @return A {@code ToIntFunction2} that represents this function partially applied the some arguments.
+     */
+    @Nonnull
+    default ToIntFunction2<V> papplyAsInt(T t, U u) {
+        return (v) -> this.applyAsInt(t, u, v);
     }
 
     /**

@@ -17,6 +17,9 @@ package at.gridtec.lambda4j.consumer.tri.obj;
 
 import at.gridtec.lambda4j.Lambda;
 import at.gridtec.lambda4j.consumer.BooleanConsumer;
+import at.gridtec.lambda4j.consumer.Consumer2;
+import at.gridtec.lambda4j.consumer.bi.BiBooleanConsumer;
+import at.gridtec.lambda4j.consumer.bi.obj.ObjBooleanConsumer;
 import at.gridtec.lambda4j.consumer.tri.TriBooleanConsumer;
 import at.gridtec.lambda4j.consumer.tri.TriByteConsumer;
 import at.gridtec.lambda4j.consumer.tri.TriCharConsumer;
@@ -155,6 +158,52 @@ public interface ObjBiBooleanConsumer<T> extends Lambda {
      * @param value2 The third argument to the consumer
      */
     void accept(T t, boolean value1, boolean value2);
+
+    /**
+     * Applies this consumer partially to some arguments of this one, producing a {@link BiBooleanConsumer} as result.
+     *
+     * @param t The first argument to this consumer used to partially apply this function
+     * @return A {@code BiBooleanConsumer} that represents this consumer partially applied the some arguments.
+     */
+    @Nonnull
+    default BiBooleanConsumer paccept(T t) {
+        return (value1, value2) -> this.accept(t, value1, value2);
+    }
+
+    /**
+     * Applies this consumer partially to some arguments of this one, producing a {@link BooleanConsumer} as result.
+     *
+     * @param t The first argument to this consumer used to partially apply this function
+     * @param value1 The second argument to this consumer used to partially apply this function
+     * @return A {@code BooleanConsumer} that represents this consumer partially applied the some arguments.
+     */
+    @Nonnull
+    default BooleanConsumer paccept(T t, boolean value1) {
+        return (value2) -> this.accept(t, value1, value2);
+    }
+
+    /**
+     * Applies this consumer partially to some arguments of this one, producing a {@link ObjBooleanConsumer} as result.
+     *
+     * @param value1 The second argument to this consumer used to partially apply this function
+     * @return A {@code ObjBooleanConsumer} that represents this consumer partially applied the some arguments.
+     */
+    @Nonnull
+    default ObjBooleanConsumer<T> paccept(boolean value1) {
+        return (t, value2) -> this.accept(t, value1, value2);
+    }
+
+    /**
+     * Applies this consumer partially to some arguments of this one, producing a {@link Consumer2} as result.
+     *
+     * @param value1 The second argument to this consumer used to partially apply this function
+     * @param value2 The third argument to this consumer used to partially apply this function
+     * @return A {@code Consumer2} that represents this consumer partially applied the some arguments.
+     */
+    @Nonnull
+    default Consumer2<T> paccept(boolean value1, boolean value2) {
+        return (t) -> this.accept(t, value1, value2);
+    }
 
     /**
      * Returns the number of arguments for this consumer.

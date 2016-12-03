@@ -30,6 +30,7 @@ import at.gridtec.lambda4j.function.ThrowableIntFunction;
 import at.gridtec.lambda4j.function.ThrowableLongFunction;
 import at.gridtec.lambda4j.function.ThrowableShortFunction;
 import at.gridtec.lambda4j.function.bi.obj.ThrowableObjShortToShortFunction;
+import at.gridtec.lambda4j.function.bi.to.ThrowableToShortBiFunction;
 import at.gridtec.lambda4j.function.conversion.ThrowableBooleanToShortFunction;
 import at.gridtec.lambda4j.function.conversion.ThrowableByteToShortFunction;
 import at.gridtec.lambda4j.function.conversion.ThrowableCharToShortFunction;
@@ -223,6 +224,57 @@ public interface ThrowableBiObjShortToShortFunction<T, U, X extends Throwable> e
     default short applyAsShortThrows(@Nonnull Pair<T, U> tuple, short value) throws X {
         Objects.requireNonNull(tuple);
         return applyAsShortThrows(tuple.getLeft(), tuple.getRight(), value);
+    }
+
+    /**
+     * Applies this operator partially to some arguments of this one, producing a {@link
+     * ThrowableObjShortToShortFunction} as result.
+     *
+     * @param t The first argument to this function used to partially apply this function
+     * @return A {@code ThrowableObjShortToShortFunction} that represents this operator partially applied the some
+     * arguments.
+     */
+    @Nonnull
+    default ThrowableObjShortToShortFunction<U, X> papplyAsShortThrows(T t) {
+        return (u, value) -> this.applyAsShortThrows(t, u, value);
+    }
+
+    /**
+     * Applies this operator partially to some arguments of this one, producing a {@link ThrowableShortUnaryOperator} as
+     * result.
+     *
+     * @param t The first argument to this function used to partially apply this function
+     * @param u The second argument to this function used to partially apply this function
+     * @return A {@code ThrowableShortUnaryOperator} that represents this operator partially applied the some arguments.
+     */
+    @Nonnull
+    default ThrowableShortUnaryOperator<X> papplyAsShortThrows(T t, U u) {
+        return (value) -> this.applyAsShortThrows(t, u, value);
+    }
+
+    /**
+     * Applies this operator partially to some arguments of this one, producing a {@link ThrowableToShortBiFunction} as
+     * result.
+     *
+     * @param value The third argument to this function used to partially apply this function
+     * @return A {@code ThrowableToShortBiFunction} that represents this operator partially applied the some arguments.
+     */
+    @Nonnull
+    default ThrowableToShortBiFunction<T, U, X> papplyAsShortThrows(short value) {
+        return (t, u) -> this.applyAsShortThrows(t, u, value);
+    }
+
+    /**
+     * Applies this operator partially to some arguments of this one, producing a {@link ThrowableToShortFunction} as
+     * result.
+     *
+     * @param t The first argument to this function used to partially apply this function
+     * @param value The third argument to this function used to partially apply this function
+     * @return A {@code ThrowableToShortFunction} that represents this operator partially applied the some arguments.
+     */
+    @Nonnull
+    default ThrowableToShortFunction<U, X> papplyAsShortThrows(T t, short value) {
+        return (u) -> this.applyAsShortThrows(t, u, value);
     }
 
     /**

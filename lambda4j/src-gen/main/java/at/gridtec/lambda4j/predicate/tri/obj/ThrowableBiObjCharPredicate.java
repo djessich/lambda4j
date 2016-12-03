@@ -56,6 +56,7 @@ import at.gridtec.lambda4j.operator.unary.ThrowableBooleanUnaryOperator;
 import at.gridtec.lambda4j.operator.unary.ThrowableCharUnaryOperator;
 import at.gridtec.lambda4j.predicate.ThrowableCharPredicate;
 import at.gridtec.lambda4j.predicate.ThrowablePredicate;
+import at.gridtec.lambda4j.predicate.bi.ThrowableBiPredicate;
 import at.gridtec.lambda4j.predicate.bi.obj.ThrowableObjCharPredicate;
 import at.gridtec.lambda4j.predicate.tri.ThrowableTriBytePredicate;
 import at.gridtec.lambda4j.predicate.tri.ThrowableTriCharPredicate;
@@ -282,6 +283,55 @@ public interface ThrowableBiObjCharPredicate<T, U, X extends Throwable> extends 
     default boolean testThrows(@Nonnull Pair<T, U> tuple, char value) throws X {
         Objects.requireNonNull(tuple);
         return testThrows(tuple.getLeft(), tuple.getRight(), value);
+    }
+
+    /**
+     * Applies this predicate partially to some arguments of this one, producing a {@link ThrowableObjCharPredicate} as
+     * result.
+     *
+     * @param t The first argument to this predicate used to partially apply this function
+     * @return A {@code ThrowableObjCharPredicate} that represents this predicate partially applied the some arguments.
+     */
+    @Nonnull
+    default ThrowableObjCharPredicate<U, X> ptestThrows(T t) {
+        return (u, value) -> this.testThrows(t, u, value);
+    }
+
+    /**
+     * Applies this predicate partially to some arguments of this one, producing a {@link ThrowableCharPredicate} as
+     * result.
+     *
+     * @param t The first argument to this predicate used to partially apply this function
+     * @param u The second argument to this predicate used to partially apply this function
+     * @return A {@code ThrowableCharPredicate} that represents this predicate partially applied the some arguments.
+     */
+    @Nonnull
+    default ThrowableCharPredicate<X> ptestThrows(T t, U u) {
+        return (value) -> this.testThrows(t, u, value);
+    }
+
+    /**
+     * Applies this predicate partially to some arguments of this one, producing a {@link ThrowableBiPredicate} as
+     * result.
+     *
+     * @param value The third argument to this predicate used to partially apply this function
+     * @return A {@code ThrowableBiPredicate} that represents this predicate partially applied the some arguments.
+     */
+    @Nonnull
+    default ThrowableBiPredicate<T, U, X> ptestThrows(char value) {
+        return (t, u) -> this.testThrows(t, u, value);
+    }
+
+    /**
+     * Applies this predicate partially to some arguments of this one, producing a {@link ThrowablePredicate} as result.
+     *
+     * @param t The first argument to this predicate used to partially apply this function
+     * @param value The third argument to this predicate used to partially apply this function
+     * @return A {@code ThrowablePredicate} that represents this predicate partially applied the some arguments.
+     */
+    @Nonnull
+    default ThrowablePredicate<U, X> ptestThrows(T t, char value) {
+        return (u) -> this.testThrows(t, u, value);
     }
 
     /**

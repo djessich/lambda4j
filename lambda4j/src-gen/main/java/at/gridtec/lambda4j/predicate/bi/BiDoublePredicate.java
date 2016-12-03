@@ -40,6 +40,7 @@ import at.gridtec.lambda4j.function.conversion.ShortToDoubleFunction;
 import at.gridtec.lambda4j.operator.binary.BooleanBinaryOperator;
 import at.gridtec.lambda4j.operator.binary.DoubleBinaryOperator2;
 import at.gridtec.lambda4j.operator.unary.BooleanUnaryOperator;
+import at.gridtec.lambda4j.predicate.DoublePredicate2;
 
 import org.apache.commons.lang3.tuple.Pair;
 
@@ -186,6 +187,17 @@ public interface BiDoublePredicate extends Lambda {
      * @return The return value from the predicate, which is its result.
      */
     boolean test(double value1, double value2);
+
+    /**
+     * Applies this predicate partially to some arguments of this one, producing a {@link DoublePredicate2} as result.
+     *
+     * @param value1 The first argument to this predicate used to partially apply this function
+     * @return A {@code DoublePredicate2} that represents this predicate partially applied the some arguments.
+     */
+    @Nonnull
+    default DoublePredicate2 ptest(double value1) {
+        return (value2) -> this.test(value1, value2);
+    }
 
     /**
      * Returns the number of arguments for this predicate.

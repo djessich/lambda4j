@@ -239,6 +239,19 @@ public interface ThrowableDoubleBinaryOperator<X extends Throwable> extends Lamb
     }
 
     /**
+     * Applies this operator partially to some arguments of this one, producing a {@link ThrowableDoubleUnaryOperator}
+     * as result.
+     *
+     * @param value1 The first argument to this operator used to partially apply this function
+     * @return A {@code ThrowableDoubleUnaryOperator} that represents this operator partially applied the some
+     * arguments.
+     */
+    @Nonnull
+    default ThrowableDoubleUnaryOperator<X> papplyAsDoubleThrows(double value1) {
+        return (value2) -> this.applyAsDoubleThrows(value1, value2);
+    }
+
+    /**
      * Returns the number of arguments for this operator.
      *
      * @return The number of arguments for this operator.

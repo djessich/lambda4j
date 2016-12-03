@@ -41,6 +41,7 @@ import at.gridtec.lambda4j.function.conversion.IntToCharFunction;
 import at.gridtec.lambda4j.function.conversion.IntToFloatFunction;
 import at.gridtec.lambda4j.function.conversion.IntToShortFunction;
 import at.gridtec.lambda4j.function.conversion.ShortToIntFunction;
+import at.gridtec.lambda4j.operator.unary.IntUnaryOperator2;
 import at.gridtec.lambda4j.predicate.bi.BiIntPredicate;
 
 import org.apache.commons.lang3.tuple.Pair;
@@ -191,6 +192,17 @@ public interface IntBinaryOperator2 extends Lambda, IntBinaryOperator {
      * @return The return value from the operator, which is its result.
      */
     int applyAsInt(int value1, int value2);
+
+    /**
+     * Applies this operator partially to some arguments of this one, producing a {@link IntUnaryOperator2} as result.
+     *
+     * @param value1 The first argument to this operator used to partially apply this function
+     * @return A {@code IntUnaryOperator2} that represents this operator partially applied the some arguments.
+     */
+    @Nonnull
+    default IntUnaryOperator2 papplyAsInt(int value1) {
+        return (value2) -> this.applyAsInt(value1, value2);
+    }
 
     /**
      * Returns the number of arguments for this operator.

@@ -209,6 +209,18 @@ public interface ThrowableCharBinaryOperator<X extends Throwable> extends Lambda
     char applyAsCharThrows(char value1, char value2) throws X;
 
     /**
+     * Applies this operator partially to some arguments of this one, producing a {@link ThrowableCharUnaryOperator} as
+     * result.
+     *
+     * @param value1 The first argument to this operator used to partially apply this function
+     * @return A {@code ThrowableCharUnaryOperator} that represents this operator partially applied the some arguments.
+     */
+    @Nonnull
+    default ThrowableCharUnaryOperator<X> papplyAsCharThrows(char value1) {
+        return (value2) -> this.applyAsCharThrows(value1, value2);
+    }
+
+    /**
      * Returns the number of arguments for this operator.
      *
      * @return The number of arguments for this operator.

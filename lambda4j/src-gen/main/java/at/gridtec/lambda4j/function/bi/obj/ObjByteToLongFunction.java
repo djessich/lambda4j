@@ -43,6 +43,7 @@ import at.gridtec.lambda4j.function.conversion.LongToFloatFunction;
 import at.gridtec.lambda4j.function.conversion.LongToShortFunction;
 import at.gridtec.lambda4j.function.conversion.ShortToByteFunction;
 import at.gridtec.lambda4j.function.to.ToByteFunction;
+import at.gridtec.lambda4j.function.to.ToLongFunction2;
 import at.gridtec.lambda4j.operator.binary.LongBinaryOperator2;
 import at.gridtec.lambda4j.operator.unary.ByteUnaryOperator;
 import at.gridtec.lambda4j.predicate.bi.obj.ObjBytePredicate;
@@ -166,6 +167,28 @@ public interface ObjByteToLongFunction<T> extends Lambda {
      * @return The return value from the function, which is its result.
      */
     long applyAsLong(T t, byte value);
+
+    /**
+     * Applies this function partially to some arguments of this one, producing a {@link ByteToLongFunction} as result.
+     *
+     * @param t The first argument to this function used to partially apply this function
+     * @return A {@code ByteToLongFunction} that represents this function partially applied the some arguments.
+     */
+    @Nonnull
+    default ByteToLongFunction papplyAsLong(T t) {
+        return (value) -> this.applyAsLong(t, value);
+    }
+
+    /**
+     * Applies this function partially to some arguments of this one, producing a {@link ToLongFunction2} as result.
+     *
+     * @param value The second argument to this function used to partially apply this function
+     * @return A {@code ToLongFunction2} that represents this function partially applied the some arguments.
+     */
+    @Nonnull
+    default ToLongFunction2<T> papplyAsLong(byte value) {
+        return (t) -> this.applyAsLong(t, value);
+    }
 
     /**
      * Returns the number of arguments for this function.

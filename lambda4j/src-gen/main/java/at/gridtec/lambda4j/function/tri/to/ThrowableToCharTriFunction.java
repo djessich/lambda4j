@@ -22,6 +22,7 @@ import at.gridtec.lambda4j.core.exception.ThrownByFunctionalInterfaceException;
 import at.gridtec.lambda4j.core.util.ThrowableUtils;
 import at.gridtec.lambda4j.function.ThrowableCharFunction;
 import at.gridtec.lambda4j.function.ThrowableFunction;
+import at.gridtec.lambda4j.function.bi.to.ThrowableToCharBiFunction;
 import at.gridtec.lambda4j.function.conversion.ThrowableCharToByteFunction;
 import at.gridtec.lambda4j.function.conversion.ThrowableCharToDoubleFunction;
 import at.gridtec.lambda4j.function.conversion.ThrowableCharToFloatFunction;
@@ -204,6 +205,31 @@ public interface ThrowableToCharTriFunction<T, U, V, X extends Throwable> extend
     default char applyAsCharThrows(@Nonnull Triple<T, U, V> tuple) throws X {
         Objects.requireNonNull(tuple);
         return applyAsCharThrows(tuple.getLeft(), tuple.getMiddle(), tuple.getRight());
+    }
+
+    /**
+     * Applies this function partially to some arguments of this one, producing a {@link ThrowableToCharBiFunction} as
+     * result.
+     *
+     * @param t The first argument to this function used to partially apply this function
+     * @return A {@code ThrowableToCharBiFunction} that represents this function partially applied the some arguments.
+     */
+    @Nonnull
+    default ThrowableToCharBiFunction<U, V, X> papplyAsCharThrows(T t) {
+        return (u, v) -> this.applyAsCharThrows(t, u, v);
+    }
+
+    /**
+     * Applies this function partially to some arguments of this one, producing a {@link ThrowableToCharFunction} as
+     * result.
+     *
+     * @param t The first argument to this function used to partially apply this function
+     * @param u The second argument to this function used to partially apply this function
+     * @return A {@code ThrowableToCharFunction} that represents this function partially applied the some arguments.
+     */
+    @Nonnull
+    default ThrowableToCharFunction<V, X> papplyAsCharThrows(T t, U u) {
+        return (v) -> this.applyAsCharThrows(t, u, v);
     }
 
     /**

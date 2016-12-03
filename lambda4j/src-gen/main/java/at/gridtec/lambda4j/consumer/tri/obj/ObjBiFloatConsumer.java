@@ -16,7 +16,10 @@
 package at.gridtec.lambda4j.consumer.tri.obj;
 
 import at.gridtec.lambda4j.Lambda;
+import at.gridtec.lambda4j.consumer.Consumer2;
 import at.gridtec.lambda4j.consumer.FloatConsumer;
+import at.gridtec.lambda4j.consumer.bi.BiFloatConsumer;
+import at.gridtec.lambda4j.consumer.bi.obj.ObjFloatConsumer;
 import at.gridtec.lambda4j.consumer.tri.TriBooleanConsumer;
 import at.gridtec.lambda4j.consumer.tri.TriByteConsumer;
 import at.gridtec.lambda4j.consumer.tri.TriCharConsumer;
@@ -155,6 +158,52 @@ public interface ObjBiFloatConsumer<T> extends Lambda {
      * @param value2 The third argument to the consumer
      */
     void accept(T t, float value1, float value2);
+
+    /**
+     * Applies this consumer partially to some arguments of this one, producing a {@link BiFloatConsumer} as result.
+     *
+     * @param t The first argument to this consumer used to partially apply this function
+     * @return A {@code BiFloatConsumer} that represents this consumer partially applied the some arguments.
+     */
+    @Nonnull
+    default BiFloatConsumer paccept(T t) {
+        return (value1, value2) -> this.accept(t, value1, value2);
+    }
+
+    /**
+     * Applies this consumer partially to some arguments of this one, producing a {@link FloatConsumer} as result.
+     *
+     * @param t The first argument to this consumer used to partially apply this function
+     * @param value1 The second argument to this consumer used to partially apply this function
+     * @return A {@code FloatConsumer} that represents this consumer partially applied the some arguments.
+     */
+    @Nonnull
+    default FloatConsumer paccept(T t, float value1) {
+        return (value2) -> this.accept(t, value1, value2);
+    }
+
+    /**
+     * Applies this consumer partially to some arguments of this one, producing a {@link ObjFloatConsumer} as result.
+     *
+     * @param value1 The second argument to this consumer used to partially apply this function
+     * @return A {@code ObjFloatConsumer} that represents this consumer partially applied the some arguments.
+     */
+    @Nonnull
+    default ObjFloatConsumer<T> paccept(float value1) {
+        return (t, value2) -> this.accept(t, value1, value2);
+    }
+
+    /**
+     * Applies this consumer partially to some arguments of this one, producing a {@link Consumer2} as result.
+     *
+     * @param value1 The second argument to this consumer used to partially apply this function
+     * @param value2 The third argument to this consumer used to partially apply this function
+     * @return A {@code Consumer2} that represents this consumer partially applied the some arguments.
+     */
+    @Nonnull
+    default Consumer2<T> paccept(float value1, float value2) {
+        return (t) -> this.accept(t, value1, value2);
+    }
 
     /**
      * Returns the number of arguments for this consumer.

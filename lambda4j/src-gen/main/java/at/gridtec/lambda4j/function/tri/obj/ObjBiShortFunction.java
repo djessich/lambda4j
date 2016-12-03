@@ -21,7 +21,10 @@ import at.gridtec.lambda4j.function.BooleanFunction;
 import at.gridtec.lambda4j.function.ByteFunction;
 import at.gridtec.lambda4j.function.CharFunction;
 import at.gridtec.lambda4j.function.FloatFunction;
+import at.gridtec.lambda4j.function.Function2;
 import at.gridtec.lambda4j.function.ShortFunction;
+import at.gridtec.lambda4j.function.bi.BiShortFunction;
+import at.gridtec.lambda4j.function.bi.obj.ObjShortFunction;
 import at.gridtec.lambda4j.function.conversion.BooleanToShortFunction;
 import at.gridtec.lambda4j.function.conversion.ByteToShortFunction;
 import at.gridtec.lambda4j.function.conversion.CharToShortFunction;
@@ -200,6 +203,52 @@ public interface ObjBiShortFunction<T, R> extends Lambda {
      * @return The return value from the function, which is its result.
      */
     R apply(T t, short value1, short value2);
+
+    /**
+     * Applies this function partially to some arguments of this one, producing a {@link BiShortFunction} as result.
+     *
+     * @param t The first argument to this function used to partially apply this function
+     * @return A {@code BiShortFunction} that represents this function partially applied the some arguments.
+     */
+    @Nonnull
+    default BiShortFunction<R> papply(T t) {
+        return (value1, value2) -> this.apply(t, value1, value2);
+    }
+
+    /**
+     * Applies this function partially to some arguments of this one, producing a {@link ShortFunction} as result.
+     *
+     * @param t The first argument to this function used to partially apply this function
+     * @param value1 The second argument to this function used to partially apply this function
+     * @return A {@code ShortFunction} that represents this function partially applied the some arguments.
+     */
+    @Nonnull
+    default ShortFunction<R> papply(T t, short value1) {
+        return (value2) -> this.apply(t, value1, value2);
+    }
+
+    /**
+     * Applies this function partially to some arguments of this one, producing a {@link ObjShortFunction} as result.
+     *
+     * @param value1 The second argument to this function used to partially apply this function
+     * @return A {@code ObjShortFunction} that represents this function partially applied the some arguments.
+     */
+    @Nonnull
+    default ObjShortFunction<T, R> papply(short value1) {
+        return (t, value2) -> this.apply(t, value1, value2);
+    }
+
+    /**
+     * Applies this function partially to some arguments of this one, producing a {@link Function2} as result.
+     *
+     * @param value1 The second argument to this function used to partially apply this function
+     * @param value2 The third argument to this function used to partially apply this function
+     * @return A {@code Function2} that represents this function partially applied the some arguments.
+     */
+    @Nonnull
+    default Function2<T, R> papply(short value1, short value2) {
+        return (t) -> this.apply(t, value1, value2);
+    }
 
     /**
      * Returns the number of arguments for this function.

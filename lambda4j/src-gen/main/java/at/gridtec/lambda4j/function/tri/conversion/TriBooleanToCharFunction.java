@@ -19,6 +19,7 @@ import at.gridtec.lambda4j.Lambda;
 import at.gridtec.lambda4j.consumer.CharConsumer;
 import at.gridtec.lambda4j.consumer.tri.TriBooleanConsumer;
 import at.gridtec.lambda4j.function.CharFunction;
+import at.gridtec.lambda4j.function.bi.conversion.BiBooleanToCharFunction;
 import at.gridtec.lambda4j.function.conversion.BooleanToCharFunction;
 import at.gridtec.lambda4j.function.conversion.CharToByteFunction;
 import at.gridtec.lambda4j.function.conversion.CharToDoubleFunction;
@@ -162,6 +163,31 @@ public interface TriBooleanToCharFunction extends Lambda {
      * @return The return value from the function, which is its result.
      */
     char applyAsChar(boolean value1, boolean value2, boolean value3);
+
+    /**
+     * Applies this function partially to some arguments of this one, producing a {@link BiBooleanToCharFunction} as
+     * result.
+     *
+     * @param value1 The first argument to this function used to partially apply this function
+     * @return A {@code BiBooleanToCharFunction} that represents this function partially applied the some arguments.
+     */
+    @Nonnull
+    default BiBooleanToCharFunction papplyAsChar(boolean value1) {
+        return (value2, value3) -> this.applyAsChar(value1, value2, value3);
+    }
+
+    /**
+     * Applies this function partially to some arguments of this one, producing a {@link BooleanToCharFunction} as
+     * result.
+     *
+     * @param value1 The first argument to this function used to partially apply this function
+     * @param value2 The second argument to this function used to partially apply this function
+     * @return A {@code BooleanToCharFunction} that represents this function partially applied the some arguments.
+     */
+    @Nonnull
+    default BooleanToCharFunction papplyAsChar(boolean value1, boolean value2) {
+        return (value3) -> this.applyAsChar(value1, value2, value3);
+    }
 
     /**
      * Returns the number of arguments for this function.

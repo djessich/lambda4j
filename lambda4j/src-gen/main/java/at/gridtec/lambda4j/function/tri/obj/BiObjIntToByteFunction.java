@@ -24,6 +24,7 @@ import at.gridtec.lambda4j.function.CharFunction;
 import at.gridtec.lambda4j.function.FloatFunction;
 import at.gridtec.lambda4j.function.ShortFunction;
 import at.gridtec.lambda4j.function.bi.obj.ObjIntToByteFunction;
+import at.gridtec.lambda4j.function.bi.to.ToByteBiFunction;
 import at.gridtec.lambda4j.function.conversion.BooleanToIntFunction;
 import at.gridtec.lambda4j.function.conversion.ByteToCharFunction;
 import at.gridtec.lambda4j.function.conversion.ByteToDoubleFunction;
@@ -206,6 +207,53 @@ public interface BiObjIntToByteFunction<T, U> extends Lambda {
     default byte applyAsByte(@Nonnull Pair<T, U> tuple, int value) {
         Objects.requireNonNull(tuple);
         return applyAsByte(tuple.getLeft(), tuple.getRight(), value);
+    }
+
+    /**
+     * Applies this function partially to some arguments of this one, producing a {@link ObjIntToByteFunction} as
+     * result.
+     *
+     * @param t The first argument to this function used to partially apply this function
+     * @return A {@code ObjIntToByteFunction} that represents this function partially applied the some arguments.
+     */
+    @Nonnull
+    default ObjIntToByteFunction<U> papplyAsByte(T t) {
+        return (u, value) -> this.applyAsByte(t, u, value);
+    }
+
+    /**
+     * Applies this function partially to some arguments of this one, producing a {@link IntToByteFunction} as result.
+     *
+     * @param t The first argument to this function used to partially apply this function
+     * @param u The second argument to this function used to partially apply this function
+     * @return A {@code IntToByteFunction} that represents this function partially applied the some arguments.
+     */
+    @Nonnull
+    default IntToByteFunction papplyAsByte(T t, U u) {
+        return (value) -> this.applyAsByte(t, u, value);
+    }
+
+    /**
+     * Applies this function partially to some arguments of this one, producing a {@link ToByteBiFunction} as result.
+     *
+     * @param value The third argument to this function used to partially apply this function
+     * @return A {@code ToByteBiFunction} that represents this function partially applied the some arguments.
+     */
+    @Nonnull
+    default ToByteBiFunction<T, U> papplyAsByte(int value) {
+        return (t, u) -> this.applyAsByte(t, u, value);
+    }
+
+    /**
+     * Applies this function partially to some arguments of this one, producing a {@link ToByteFunction} as result.
+     *
+     * @param t The first argument to this function used to partially apply this function
+     * @param value The third argument to this function used to partially apply this function
+     * @return A {@code ToByteFunction} that represents this function partially applied the some arguments.
+     */
+    @Nonnull
+    default ToByteFunction<U> papplyAsByte(T t, int value) {
+        return (u) -> this.applyAsByte(t, u, value);
     }
 
     /**

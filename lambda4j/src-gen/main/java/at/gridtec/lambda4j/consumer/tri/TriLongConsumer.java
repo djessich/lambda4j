@@ -16,6 +16,8 @@
 package at.gridtec.lambda4j.consumer.tri;
 
 import at.gridtec.lambda4j.Lambda;
+import at.gridtec.lambda4j.consumer.LongConsumer2;
+import at.gridtec.lambda4j.consumer.bi.BiLongConsumer;
 import at.gridtec.lambda4j.function.conversion.BooleanToLongFunction;
 import at.gridtec.lambda4j.function.conversion.ByteToLongFunction;
 import at.gridtec.lambda4j.function.conversion.CharToLongFunction;
@@ -129,6 +131,29 @@ public interface TriLongConsumer extends Lambda {
      * @param value3 The third argument to the consumer
      */
     void accept(long value1, long value2, long value3);
+
+    /**
+     * Applies this consumer partially to some arguments of this one, producing a {@link BiLongConsumer} as result.
+     *
+     * @param value1 The first argument to this consumer used to partially apply this function
+     * @return A {@code BiLongConsumer} that represents this consumer partially applied the some arguments.
+     */
+    @Nonnull
+    default BiLongConsumer paccept(long value1) {
+        return (value2, value3) -> this.accept(value1, value2, value3);
+    }
+
+    /**
+     * Applies this consumer partially to some arguments of this one, producing a {@link LongConsumer2} as result.
+     *
+     * @param value1 The first argument to this consumer used to partially apply this function
+     * @param value2 The second argument to this consumer used to partially apply this function
+     * @return A {@code LongConsumer2} that represents this consumer partially applied the some arguments.
+     */
+    @Nonnull
+    default LongConsumer2 paccept(long value1, long value2) {
+        return (value3) -> this.accept(value1, value2, value3);
+    }
 
     /**
      * Returns the number of arguments for this consumer.

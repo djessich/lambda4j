@@ -16,6 +16,8 @@
 package at.gridtec.lambda4j.consumer.tri;
 
 import at.gridtec.lambda4j.Lambda;
+import at.gridtec.lambda4j.consumer.DoubleConsumer2;
+import at.gridtec.lambda4j.consumer.bi.BiDoubleConsumer;
 import at.gridtec.lambda4j.function.conversion.BooleanToDoubleFunction;
 import at.gridtec.lambda4j.function.conversion.ByteToDoubleFunction;
 import at.gridtec.lambda4j.function.conversion.CharToDoubleFunction;
@@ -130,6 +132,29 @@ public interface TriDoubleConsumer extends Lambda {
      * @param value3 The third argument to the consumer
      */
     void accept(double value1, double value2, double value3);
+
+    /**
+     * Applies this consumer partially to some arguments of this one, producing a {@link BiDoubleConsumer} as result.
+     *
+     * @param value1 The first argument to this consumer used to partially apply this function
+     * @return A {@code BiDoubleConsumer} that represents this consumer partially applied the some arguments.
+     */
+    @Nonnull
+    default BiDoubleConsumer paccept(double value1) {
+        return (value2, value3) -> this.accept(value1, value2, value3);
+    }
+
+    /**
+     * Applies this consumer partially to some arguments of this one, producing a {@link DoubleConsumer2} as result.
+     *
+     * @param value1 The first argument to this consumer used to partially apply this function
+     * @param value2 The second argument to this consumer used to partially apply this function
+     * @return A {@code DoubleConsumer2} that represents this consumer partially applied the some arguments.
+     */
+    @Nonnull
+    default DoubleConsumer2 paccept(double value1, double value2) {
+        return (value3) -> this.accept(value1, value2, value3);
+    }
 
     /**
      * Returns the number of arguments for this consumer.
