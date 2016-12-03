@@ -9,9 +9,9 @@
     <#assign genericParameterTypeStringWithPrimitives = .namespace.buildGenericParameterTypeStringWithPrimitives()>
     <#-- search for correct output lambda, which gets object (generical) inputs and object (generical) output, unless if global lambda represents a type a predicate or consumer type) -->
     <#if LambdaUtils.isOfTypePredicate(lambda) || LambdaUtils.isOfTypeConsumer(lambda)>
-        <#assign outputLambda = LambdaUtils.searchByInputTypesAndReturnType(lambda.type, lambda.arity, Object, Object, Object,  lambda.returnType, lambda.throwable, true)>
+        <#assign outputLambda = LambdaUtils.searchByInputTypesAndReturnType(lambda.type, lambda.arity, Object, Object, Object,  lambda.returnType, lambda.throwable, false)>
     <#else>
-        <#assign outputLambda = LambdaUtils.searchByInputTypesAndReturnType(lambda.type, lambda.arity, Object, Object, Object,  Object, lambda.throwable, true)>
+        <#assign outputLambda = LambdaUtils.searchByInputTypesAndReturnType(lambda.type, lambda.arity, Object, Object, Object,  Object, lambda.throwable, false)>
     </#if>
     <#-- print boxed method -->
     <@.namespace.boxedMethod genericParameterTypeStringWithPrimitives outputLambda/>
@@ -21,11 +21,8 @@
 <#macro boxedMethod genericParameterTypeStringWithPrimitives outputLambda>
 /**
  * Returns a composed {@link ${outputLambda.name}} which represents this {@link ${lambda.name}}. Thereby the primitive
- * input argument for this ${lambda.type.simpleName} is autoboxed.
-<#if !lambda.throwable>
- * This method is just convenience to provide the ability to use this {@code ${lambda.name}} with JDK specific methods,
- * only accepting {@code ${outputLambda.name}}.
-</#if>
+ * input argument for this ${lambda.type.simpleName} is autoboxed. This method provides the possibility to use this
+ * {@code ${lambda.name}} with methods provided by the {@code JDK}.
  *
  * @return A composed {@code ${outputLambda.name}} which represents this {@code ${lambda.name}}.
  */
