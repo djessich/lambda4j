@@ -34,7 +34,6 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.DoublePredicate;
-import java.util.function.Function;
 import java.util.function.IntConsumer;
 import java.util.function.IntFunction;
 import java.util.function.IntPredicate;
@@ -510,14 +509,14 @@ public interface BooleanToIntFunction extends Lambda {
     }
 
     /**
-     * Returns a composed {@link Function} which represents this {@link BooleanToIntFunction}. Thereby the primitive
-     * input argument for this function is autoboxed. This method is just convenience to provide the ability to use this
-     * {@code BooleanToIntFunction} with JDK specific methods, only accepting {@code Function}.
+     * Returns a composed {@link Function2} which represents this {@link BooleanToIntFunction}. Thereby the primitive
+     * input argument for this function is autoboxed. This method provides the possibility to use this
+     * {@code BooleanToIntFunction} with methods provided by the {@code JDK}.
      *
-     * @return A composed {@code Function} which represents this {@code BooleanToIntFunction}.
+     * @return A composed {@code Function2} which represents this {@code BooleanToIntFunction}.
      */
     @Nonnull
-    default Function<Boolean, Integer> boxed() {
+    default Function2<Boolean, Integer> boxed() {
         return this::applyAsInt;
     }
 

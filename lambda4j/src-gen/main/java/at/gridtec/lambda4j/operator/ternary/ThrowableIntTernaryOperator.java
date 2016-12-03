@@ -665,7 +665,8 @@ public interface ThrowableIntTernaryOperator<X extends Throwable> extends Lambda
 
     /**
      * Returns a composed {@link ThrowableTernaryOperator} which represents this {@link ThrowableIntTernaryOperator}.
-     * Thereby the primitive input argument for this operator is autoboxed.
+     * Thereby the primitive input argument for this operator is autoboxed. This method provides the possibility to use
+     * this {@code ThrowableIntTernaryOperator} with methods provided by the {@code JDK}.
      *
      * @return A composed {@code ThrowableTernaryOperator} which represents this {@code ThrowableIntTernaryOperator}.
      */

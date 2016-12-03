@@ -451,8 +451,8 @@ public interface BiObjShortConsumer<T, U> extends Lambda {
 
     /**
      * Returns a composed {@link TriConsumer} which represents this {@link BiObjShortConsumer}. Thereby the primitive
-     * input argument for this consumer is autoboxed. This method is just convenience to provide the ability to use this
-     * {@code BiObjShortConsumer} with JDK specific methods, only accepting {@code TriConsumer}.
+     * input argument for this consumer is autoboxed. This method provides the possibility to use this
+     * {@code BiObjShortConsumer} with methods provided by the {@code JDK}.
      *
      * @return A composed {@code TriConsumer} which represents this {@code BiObjShortConsumer}.
      */

@@ -362,7 +362,8 @@ public interface ThrowableLongSupplier<X extends Throwable> extends Lambda, Long
 
     /**
      * Returns a composed {@link ThrowableSupplier} which represents this {@link ThrowableLongSupplier}. Thereby the
-     * primitive input argument for this supplier is autoboxed.
+     * primitive input argument for this supplier is autoboxed. This method provides the possibility to use this {@code
+     * ThrowableLongSupplier} with methods provided by the {@code JDK}.
      *
      * @return A composed {@code ThrowableSupplier} which represents this {@code ThrowableLongSupplier}.
      */

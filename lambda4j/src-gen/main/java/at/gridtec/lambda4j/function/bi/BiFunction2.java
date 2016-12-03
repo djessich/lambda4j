@@ -303,4 +303,18 @@ public interface BiFunction2<T, U, R> extends Lambda, BiFunction<T, U, R> {
         }
     }
 
+    /**
+     * Converts this function to an equal function, which ensures that its result is not
+     * {@code null} using {@link Optional}. This method mainly exists to avoid unnecessary {@code NullPointerException}s
+     * through referencing {@code null} from this function.
+     *
+     * @return An equal function, which ensures that its result is not {@code null}.
+     * @deprecated Use {@code lift} method for lifting this function.
+     */
+    @Deprecated
+    @Nonnull
+    default BiFunction2<T, U, Optional<R>> nonNull() {
+        return (t, u) -> Optional.ofNullable(apply(t, u));
+    }
+
 }

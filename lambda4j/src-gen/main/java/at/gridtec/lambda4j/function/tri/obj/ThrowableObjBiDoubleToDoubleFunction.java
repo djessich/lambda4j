@@ -72,7 +72,8 @@ import java.util.function.Function;
  * {@code double}-valued result which is able to throw any {@link Throwable}. This is a (reference, double, double)
  * specialization of {@link ThrowableTriFunction}.
  * <p>
- * This is a {@link FunctionalInterface} whose functional method is {@link #applyAsDoubleThrows(Object, double, * double)}.
+ * This is a {@link FunctionalInterface} whose functional method is {@link #applyAsDoubleThrows(Object, double, *
+ * double)}.
  *
  * @param <T> The type of the first argument to the function
  * @param <X> The type of the throwable to be thrown by this function
@@ -678,7 +679,9 @@ public interface ThrowableObjBiDoubleToDoubleFunction<T, X extends Throwable> ex
 
     /**
      * Returns a composed {@link ThrowableTriFunction} which represents this {@link
-     * ThrowableObjBiDoubleToDoubleFunction}. Thereby the primitive input argument for this function is autoboxed.
+     * ThrowableObjBiDoubleToDoubleFunction}. Thereby the primitive input argument for this function is autoboxed. This
+     * method provides the possibility to use this {@code ThrowableObjBiDoubleToDoubleFunction} with methods provided by
+     * the {@code JDK}.
      *
      * @return A composed {@code ThrowableTriFunction} which represents this {@code ThrowableObjBiDoubleToDoubleFunction}.
      */

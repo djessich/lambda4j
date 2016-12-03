@@ -61,7 +61,6 @@ import javax.annotation.Nullable;
 import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.function.BiPredicate;
 import java.util.function.DoubleFunction;
 import java.util.function.DoubleToLongFunction;
 import java.util.function.Function;
@@ -715,14 +714,14 @@ public interface ObjLongPredicate<T> extends Lambda {
     }
 
     /**
-     * Returns a composed {@link BiPredicate} which represents this {@link ObjLongPredicate}. Thereby the primitive
-     * input argument for this predicate is autoboxed. This method is just convenience to provide the ability to use
-     * this {@code ObjLongPredicate} with JDK specific methods, only accepting {@code BiPredicate}.
+     * Returns a composed {@link BiPredicate2} which represents this {@link ObjLongPredicate}. Thereby the primitive
+     * input argument for this predicate is autoboxed. This method provides the possibility to use this
+     * {@code ObjLongPredicate} with methods provided by the {@code JDK}.
      *
-     * @return A composed {@code BiPredicate} which represents this {@code ObjLongPredicate}.
+     * @return A composed {@code BiPredicate2} which represents this {@code ObjLongPredicate}.
      */
     @Nonnull
-    default BiPredicate<T, Long> boxed() {
+    default BiPredicate2<T, Long> boxed() {
         return this::test;
     }
 

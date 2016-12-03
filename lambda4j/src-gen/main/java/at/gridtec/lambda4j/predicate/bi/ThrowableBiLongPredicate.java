@@ -705,7 +705,8 @@ public interface ThrowableBiLongPredicate<X extends Throwable> extends Lambda {
 
     /**
      * Returns a composed {@link ThrowableBiPredicate} which represents this {@link ThrowableBiLongPredicate}. Thereby
-     * the primitive input argument for this predicate is autoboxed.
+     * the primitive input argument for this predicate is autoboxed. This method provides the possibility to use this
+     * {@code ThrowableBiLongPredicate} with methods provided by the {@code JDK}.
      *
      * @return A composed {@code ThrowableBiPredicate} which represents this {@code ThrowableBiLongPredicate}.
      */

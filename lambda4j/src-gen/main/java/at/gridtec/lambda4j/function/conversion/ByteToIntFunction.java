@@ -31,7 +31,6 @@ import javax.annotation.Nullable;
 import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.function.Function;
 import java.util.function.IntConsumer;
 import java.util.function.IntFunction;
 import java.util.function.IntPredicate;
@@ -505,14 +504,14 @@ public interface ByteToIntFunction extends Lambda {
     }
 
     /**
-     * Returns a composed {@link Function} which represents this {@link ByteToIntFunction}. Thereby the primitive input
-     * argument for this function is autoboxed. This method is just convenience to provide the ability to use this
-     * {@code ByteToIntFunction} with JDK specific methods, only accepting {@code Function}.
+     * Returns a composed {@link Function2} which represents this {@link ByteToIntFunction}. Thereby the primitive
+     * input argument for this function is autoboxed. This method provides the possibility to use this
+     * {@code ByteToIntFunction} with methods provided by the {@code JDK}.
      *
-     * @return A composed {@code Function} which represents this {@code ByteToIntFunction}.
+     * @return A composed {@code Function2} which represents this {@code ByteToIntFunction}.
      */
     @Nonnull
-    default Function<Byte, Integer> boxed() {
+    default Function2<Byte, Integer> boxed() {
         return this::applyAsInt;
     }
 

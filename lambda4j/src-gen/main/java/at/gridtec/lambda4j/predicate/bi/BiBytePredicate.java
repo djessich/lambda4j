@@ -54,7 +54,6 @@ import javax.annotation.Nullable;
 import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.function.BiPredicate;
 
 /**
  * Represents an predicate (boolean-valued function) of two {@code byte}-valued input arguments.
@@ -689,14 +688,14 @@ public interface BiBytePredicate extends Lambda {
     }
 
     /**
-     * Returns a composed {@link BiPredicate} which represents this {@link BiBytePredicate}. Thereby the primitive input
-     * argument for this predicate is autoboxed. This method is just convenience to provide the ability to use this
-     * {@code BiBytePredicate} with JDK specific methods, only accepting {@code BiPredicate}.
+     * Returns a composed {@link BiPredicate2} which represents this {@link BiBytePredicate}. Thereby the primitive
+     * input argument for this predicate is autoboxed. This method provides the possibility to use this
+     * {@code BiBytePredicate} with methods provided by the {@code JDK}.
      *
-     * @return A composed {@code BiPredicate} which represents this {@code BiBytePredicate}.
+     * @return A composed {@code BiPredicate2} which represents this {@code BiBytePredicate}.
      */
     @Nonnull
-    default BiPredicate<Byte, Byte> boxed() {
+    default BiPredicate2<Byte, Byte> boxed() {
         return this::test;
     }
 

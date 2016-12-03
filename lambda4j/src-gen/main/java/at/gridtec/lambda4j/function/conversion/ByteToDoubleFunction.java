@@ -37,7 +37,6 @@ import java.util.function.DoublePredicate;
 import java.util.function.DoubleToIntFunction;
 import java.util.function.DoubleToLongFunction;
 import java.util.function.DoubleUnaryOperator;
-import java.util.function.Function;
 
 /**
  * Represents an operation that accepts one {@code byte}-valued input argument and produces a
@@ -505,14 +504,14 @@ public interface ByteToDoubleFunction extends Lambda {
     }
 
     /**
-     * Returns a composed {@link Function} which represents this {@link ByteToDoubleFunction}. Thereby the primitive
-     * input argument for this function is autoboxed. This method is just convenience to provide the ability to use this
-     * {@code ByteToDoubleFunction} with JDK specific methods, only accepting {@code Function}.
+     * Returns a composed {@link Function2} which represents this {@link ByteToDoubleFunction}. Thereby the primitive
+     * input argument for this function is autoboxed. This method provides the possibility to use this
+     * {@code ByteToDoubleFunction} with methods provided by the {@code JDK}.
      *
-     * @return A composed {@code Function} which represents this {@code ByteToDoubleFunction}.
+     * @return A composed {@code Function2} which represents this {@code ByteToDoubleFunction}.
      */
     @Nonnull
-    default Function<Byte, Double> boxed() {
+    default Function2<Byte, Double> boxed() {
         return this::applyAsDouble;
     }
 

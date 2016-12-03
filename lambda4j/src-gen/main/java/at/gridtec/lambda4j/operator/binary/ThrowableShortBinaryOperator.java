@@ -647,7 +647,8 @@ public interface ThrowableShortBinaryOperator<X extends Throwable> extends Lambd
 
     /**
      * Returns a composed {@link ThrowableBinaryOperator} which represents this {@link ThrowableShortBinaryOperator}.
-     * Thereby the primitive input argument for this operator is autoboxed.
+     * Thereby the primitive input argument for this operator is autoboxed. This method provides the possibility to use
+     * this {@code ThrowableShortBinaryOperator} with methods provided by the {@code JDK}.
      *
      * @return A composed {@code ThrowableBinaryOperator} which represents this {@code ThrowableShortBinaryOperator}.
      */

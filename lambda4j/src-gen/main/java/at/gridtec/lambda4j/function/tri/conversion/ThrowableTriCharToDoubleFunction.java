@@ -658,7 +658,8 @@ public interface ThrowableTriCharToDoubleFunction<X extends Throwable> extends L
 
     /**
      * Returns a composed {@link ThrowableTriFunction} which represents this {@link ThrowableTriCharToDoubleFunction}.
-     * Thereby the primitive input argument for this function is autoboxed.
+     * Thereby the primitive input argument for this function is autoboxed. This method provides the possibility to use
+     * this {@code ThrowableTriCharToDoubleFunction} with methods provided by the {@code JDK}.
      *
      * @return A composed {@code ThrowableTriFunction} which represents this {@code ThrowableTriCharToDoubleFunction}.
      */

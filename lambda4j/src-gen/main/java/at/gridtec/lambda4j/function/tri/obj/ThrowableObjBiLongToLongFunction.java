@@ -678,7 +678,8 @@ public interface ThrowableObjBiLongToLongFunction<T, X extends Throwable> extend
 
     /**
      * Returns a composed {@link ThrowableTriFunction} which represents this {@link ThrowableObjBiLongToLongFunction}.
-     * Thereby the primitive input argument for this function is autoboxed.
+     * Thereby the primitive input argument for this function is autoboxed. This method provides the possibility to use
+     * this {@code ThrowableObjBiLongToLongFunction} with methods provided by the {@code JDK}.
      *
      * @return A composed {@code ThrowableTriFunction} which represents this {@code ThrowableObjBiLongToLongFunction}.
      */

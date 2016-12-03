@@ -680,7 +680,9 @@ public interface ThrowableObjBiDoubleToShortFunction<T, X extends Throwable> ext
 
     /**
      * Returns a composed {@link ThrowableTriFunction} which represents this {@link
-     * ThrowableObjBiDoubleToShortFunction}. Thereby the primitive input argument for this function is autoboxed.
+     * ThrowableObjBiDoubleToShortFunction}. Thereby the primitive input argument for this function is autoboxed. This
+     * method provides the possibility to use this {@code ThrowableObjBiDoubleToShortFunction} with methods provided by
+     * the {@code JDK}.
      *
      * @return A composed {@code ThrowableTriFunction} which represents this {@code ThrowableObjBiDoubleToShortFunction}.
      */

@@ -50,7 +50,6 @@ import java.util.function.DoublePredicate;
 import java.util.function.DoubleUnaryOperator;
 import java.util.function.IntToDoubleFunction;
 import java.util.function.LongToDoubleFunction;
-import java.util.function.Predicate;
 import java.util.function.ToDoubleFunction;
 
 /**
@@ -626,14 +625,14 @@ public interface DoublePredicate2 extends Lambda, DoublePredicate {
     }
 
     /**
-     * Returns a composed {@link Predicate} which represents this {@link DoublePredicate2}. Thereby the primitive input
-     * argument for this predicate is autoboxed. This method is just convenience to provide the ability to use this
-     * {@code DoublePredicate2} with JDK specific methods, only accepting {@code Predicate}.
+     * Returns a composed {@link Predicate2} which represents this {@link DoublePredicate2}. Thereby the primitive
+     * input argument for this predicate is autoboxed. This method provides the possibility to use this
+     * {@code DoublePredicate2} with methods provided by the {@code JDK}.
      *
-     * @return A composed {@code Predicate} which represents this {@code DoublePredicate2}.
+     * @return A composed {@code Predicate2} which represents this {@code DoublePredicate2}.
      */
     @Nonnull
-    default Predicate<Double> boxed() {
+    default Predicate2<Double> boxed() {
         return this::test;
     }
 

@@ -34,7 +34,6 @@ import java.util.function.DoubleSupplier;
 import java.util.function.DoubleToIntFunction;
 import java.util.function.DoubleToLongFunction;
 import java.util.function.DoubleUnaryOperator;
-import java.util.function.Supplier;
 
 /**
  * Represents a supplier of {@code double}-valued results.
@@ -336,14 +335,14 @@ public interface DoubleSupplier2 extends Lambda, DoubleSupplier {
     }
 
     /**
-     * Returns a composed {@link Supplier} which represents this {@link DoubleSupplier2}. Thereby the primitive input
-     * argument for this supplier is autoboxed. This method is just convenience to provide the ability to use this
-     * {@code DoubleSupplier2} with JDK specific methods, only accepting {@code Supplier}.
+     * Returns a composed {@link Supplier2} which represents this {@link DoubleSupplier2}. Thereby the primitive
+     * input argument for this supplier is autoboxed. This method provides the possibility to use this
+     * {@code DoubleSupplier2} with methods provided by the {@code JDK}.
      *
-     * @return A composed {@code Supplier} which represents this {@code DoubleSupplier2}.
+     * @return A composed {@code Supplier2} which represents this {@code DoubleSupplier2}.
      */
     @Nonnull
-    default Supplier<Double> boxed() {
+    default Supplier2<Double> boxed() {
         return this::getAsDouble;
     }
 

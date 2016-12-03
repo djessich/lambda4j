@@ -478,7 +478,8 @@ public interface ThrowableBiObjByteConsumer<T, U, X extends Throwable> extends L
 
     /**
      * Returns a composed {@link ThrowableTriConsumer} which represents this {@link ThrowableBiObjByteConsumer}. Thereby
-     * the primitive input argument for this consumer is autoboxed.
+     * the primitive input argument for this consumer is autoboxed. This method provides the possibility to use this
+     * {@code ThrowableBiObjByteConsumer} with methods provided by the {@code JDK}.
      *
      * @return A composed {@code ThrowableTriConsumer} which represents this {@code ThrowableBiObjByteConsumer}.
      */

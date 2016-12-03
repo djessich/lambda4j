@@ -33,7 +33,6 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.Objects;
 import java.util.concurrent.atomic.AtomicReference;
-import java.util.function.Supplier;
 
 /**
  * Represents a supplier of {@code float}-valued results.
@@ -334,14 +333,14 @@ public interface FloatSupplier extends Lambda {
     }
 
     /**
-     * Returns a composed {@link Supplier} which represents this {@link FloatSupplier}. Thereby the primitive input
-     * argument for this supplier is autoboxed. This method is just convenience to provide the ability to use this
-     * {@code FloatSupplier} with JDK specific methods, only accepting {@code Supplier}.
+     * Returns a composed {@link Supplier2} which represents this {@link FloatSupplier}. Thereby the primitive
+     * input argument for this supplier is autoboxed. This method provides the possibility to use this
+     * {@code FloatSupplier} with methods provided by the {@code JDK}.
      *
-     * @return A composed {@code Supplier} which represents this {@code FloatSupplier}.
+     * @return A composed {@code Supplier2} which represents this {@code FloatSupplier}.
      */
     @Nonnull
-    default Supplier<Float> boxed() {
+    default Supplier2<Float> boxed() {
         return this::getAsFloat;
     }
 

@@ -31,7 +31,6 @@ import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.Objects;
-import java.util.function.BiConsumer;
 
 /**
  * Represents an operation that accepts two {@code float}-valued input arguments and returns no result.
@@ -348,14 +347,14 @@ public interface BiFloatConsumer extends Lambda {
     }
 
     /**
-     * Returns a composed {@link BiConsumer} which represents this {@link BiFloatConsumer}. Thereby the primitive input
-     * argument for this consumer is autoboxed. This method is just convenience to provide the ability to use this
-     * {@code BiFloatConsumer} with JDK specific methods, only accepting {@code BiConsumer}.
+     * Returns a composed {@link BiConsumer2} which represents this {@link BiFloatConsumer}. Thereby the primitive
+     * input argument for this consumer is autoboxed. This method provides the possibility to use this
+     * {@code BiFloatConsumer} with methods provided by the {@code JDK}.
      *
-     * @return A composed {@code BiConsumer} which represents this {@code BiFloatConsumer}.
+     * @return A composed {@code BiConsumer2} which represents this {@code BiFloatConsumer}.
      */
     @Nonnull
-    default BiConsumer<Float, Float> boxed() {
+    default BiConsumer2<Float, Float> boxed() {
         return this::accept;
     }
 

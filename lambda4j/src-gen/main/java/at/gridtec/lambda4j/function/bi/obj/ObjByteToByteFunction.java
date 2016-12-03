@@ -59,7 +59,6 @@ import javax.annotation.Nullable;
 import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.function.BiFunction;
 import java.util.function.DoubleFunction;
 import java.util.function.Function;
 import java.util.function.IntFunction;
@@ -598,14 +597,14 @@ public interface ObjByteToByteFunction<T> extends Lambda {
     }
 
     /**
-     * Returns a composed {@link BiFunction} which represents this {@link ObjByteToByteFunction}. Thereby the primitive
-     * input argument for this function is autoboxed. This method is just convenience to provide the ability to use this
-     * {@code ObjByteToByteFunction} with JDK specific methods, only accepting {@code BiFunction}.
+     * Returns a composed {@link BiFunction2} which represents this {@link ObjByteToByteFunction}. Thereby the primitive
+     * input argument for this function is autoboxed. This method provides the possibility to use this
+     * {@code ObjByteToByteFunction} with methods provided by the {@code JDK}.
      *
-     * @return A composed {@code BiFunction} which represents this {@code ObjByteToByteFunction}.
+     * @return A composed {@code BiFunction2} which represents this {@code ObjByteToByteFunction}.
      */
     @Nonnull
-    default BiFunction<T, Byte, Byte> boxed() {
+    default BiFunction2<T, Byte, Byte> boxed() {
         return this::applyAsByte;
     }
 

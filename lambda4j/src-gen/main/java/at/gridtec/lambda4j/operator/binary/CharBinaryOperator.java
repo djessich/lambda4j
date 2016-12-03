@@ -622,14 +622,14 @@ public interface CharBinaryOperator extends Lambda {
     }
 
     /**
-     * Returns a composed {@link BinaryOperator} which represents this {@link CharBinaryOperator}. Thereby the primitive
-     * input argument for this operator is autoboxed. This method is just convenience to provide the ability to use this
-     * {@code CharBinaryOperator} with JDK specific methods, only accepting {@code BinaryOperator}.
+     * Returns a composed {@link BinaryOperator2} which represents this {@link CharBinaryOperator}. Thereby the
+     * primitive input argument for this operator is autoboxed. This method provides the possibility to use this {@code
+     * CharBinaryOperator} with methods provided by the {@code JDK}.
      *
-     * @return A composed {@code BinaryOperator} which represents this {@code CharBinaryOperator}.
+     * @return A composed {@code BinaryOperator2} which represents this {@code CharBinaryOperator}.
      */
     @Nonnull
-    default BinaryOperator<Character> boxed() {
+    default BinaryOperator2<Character> boxed() {
         return this::applyAsChar;
     }
 

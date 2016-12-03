@@ -448,7 +448,8 @@ public interface ThrowableToByteBiFunction<T, U, X extends Throwable> extends La
 
     /**
      * Returns a composed {@link ThrowableBiFunction} which represents this {@link ThrowableToByteBiFunction}. Thereby
-     * the primitive input argument for this function is autoboxed.
+     * the primitive input argument for this function is autoboxed. This method provides the possibility to use this
+     * {@code ThrowableToByteBiFunction} with methods provided by the {@code JDK}.
      *
      * @return A composed {@code ThrowableBiFunction} which represents this {@code ThrowableToByteBiFunction}.
      */

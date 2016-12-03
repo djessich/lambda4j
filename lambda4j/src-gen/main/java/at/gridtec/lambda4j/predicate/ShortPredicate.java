@@ -49,7 +49,6 @@ import javax.annotation.Nullable;
 import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.function.Predicate;
 
 /**
  * Represents an predicate (boolean-valued function) of one {@code short}-valued input argument.
@@ -620,14 +619,14 @@ public interface ShortPredicate extends Lambda {
     }
 
     /**
-     * Returns a composed {@link Predicate} which represents this {@link ShortPredicate}. Thereby the primitive input
-     * argument for this predicate is autoboxed. This method is just convenience to provide the ability to use this
-     * {@code ShortPredicate} with JDK specific methods, only accepting {@code Predicate}.
+     * Returns a composed {@link Predicate2} which represents this {@link ShortPredicate}. Thereby the primitive
+     * input argument for this predicate is autoboxed. This method provides the possibility to use this
+     * {@code ShortPredicate} with methods provided by the {@code JDK}.
      *
-     * @return A composed {@code Predicate} which represents this {@code ShortPredicate}.
+     * @return A composed {@code Predicate2} which represents this {@code ShortPredicate}.
      */
     @Nonnull
-    default Predicate<Short> boxed() {
+    default Predicate2<Short> boxed() {
         return this::test;
     }
 

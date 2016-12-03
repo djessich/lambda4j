@@ -33,7 +33,6 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.Objects;
 import java.util.concurrent.atomic.AtomicReference;
-import java.util.function.Supplier;
 
 /**
  * Represents a supplier of {@code short}-valued results.
@@ -334,14 +333,14 @@ public interface ShortSupplier extends Lambda {
     }
 
     /**
-     * Returns a composed {@link Supplier} which represents this {@link ShortSupplier}. Thereby the primitive input
-     * argument for this supplier is autoboxed. This method is just convenience to provide the ability to use this
-     * {@code ShortSupplier} with JDK specific methods, only accepting {@code Supplier}.
+     * Returns a composed {@link Supplier2} which represents this {@link ShortSupplier}. Thereby the primitive
+     * input argument for this supplier is autoboxed. This method provides the possibility to use this
+     * {@code ShortSupplier} with methods provided by the {@code JDK}.
      *
-     * @return A composed {@code Supplier} which represents this {@code ShortSupplier}.
+     * @return A composed {@code Supplier2} which represents this {@code ShortSupplier}.
      */
     @Nonnull
-    default Supplier<Short> boxed() {
+    default Supplier2<Short> boxed() {
         return this::getAsShort;
     }
 

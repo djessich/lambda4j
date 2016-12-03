@@ -680,7 +680,9 @@ public interface ThrowableObjBiFloatToDoubleFunction<T, X extends Throwable> ext
 
     /**
      * Returns a composed {@link ThrowableTriFunction} which represents this {@link
-     * ThrowableObjBiFloatToDoubleFunction}. Thereby the primitive input argument for this function is autoboxed.
+     * ThrowableObjBiFloatToDoubleFunction}. Thereby the primitive input argument for this function is autoboxed. This
+     * method provides the possibility to use this {@code ThrowableObjBiFloatToDoubleFunction} with methods provided by
+     * the {@code JDK}.
      *
      * @return A composed {@code ThrowableTriFunction} which represents this {@code ThrowableObjBiFloatToDoubleFunction}.
      */

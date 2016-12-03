@@ -30,7 +30,6 @@ import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.Objects;
-import java.util.function.Consumer;
 
 /**
  * Represents an operation that accepts one {@code byte}-valued input argument and returns no result.
@@ -287,14 +286,14 @@ public interface ByteConsumer extends Lambda {
     }
 
     /**
-     * Returns a composed {@link Consumer} which represents this {@link ByteConsumer}. Thereby the primitive input
-     * argument for this consumer is autoboxed. This method is just convenience to provide the ability to use this
-     * {@code ByteConsumer} with JDK specific methods, only accepting {@code Consumer}.
+     * Returns a composed {@link Consumer2} which represents this {@link ByteConsumer}. Thereby the primitive
+     * input argument for this consumer is autoboxed. This method provides the possibility to use this
+     * {@code ByteConsumer} with methods provided by the {@code JDK}.
      *
-     * @return A composed {@code Consumer} which represents this {@code ByteConsumer}.
+     * @return A composed {@code Consumer2} which represents this {@code ByteConsumer}.
      */
     @Nonnull
-    default Consumer<Byte> boxed() {
+    default Consumer2<Byte> boxed() {
         return this::accept;
     }
 

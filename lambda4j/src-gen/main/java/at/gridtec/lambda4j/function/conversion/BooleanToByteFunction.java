@@ -36,7 +36,6 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.DoublePredicate;
-import java.util.function.Function;
 import java.util.function.IntPredicate;
 import java.util.function.LongPredicate;
 import java.util.function.Predicate;
@@ -507,14 +506,14 @@ public interface BooleanToByteFunction extends Lambda {
     }
 
     /**
-     * Returns a composed {@link Function} which represents this {@link BooleanToByteFunction}. Thereby the primitive
-     * input argument for this function is autoboxed. This method is just convenience to provide the ability to use this
-     * {@code BooleanToByteFunction} with JDK specific methods, only accepting {@code Function}.
+     * Returns a composed {@link Function2} which represents this {@link BooleanToByteFunction}. Thereby the primitive
+     * input argument for this function is autoboxed. This method provides the possibility to use this
+     * {@code BooleanToByteFunction} with methods provided by the {@code JDK}.
      *
-     * @return A composed {@code Function} which represents this {@code BooleanToByteFunction}.
+     * @return A composed {@code Function2} which represents this {@code BooleanToByteFunction}.
      */
     @Nonnull
-    default Function<Boolean, Byte> boxed() {
+    default Function2<Boolean, Byte> boxed() {
         return this::applyAsByte;
     }
 

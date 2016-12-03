@@ -45,7 +45,6 @@ import javax.annotation.Nullable;
 import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.function.BiFunction;
 import java.util.function.LongConsumer;
 import java.util.function.LongFunction;
 import java.util.function.LongPredicate;
@@ -580,14 +579,14 @@ public interface BiShortToLongFunction extends Lambda {
     }
 
     /**
-     * Returns a composed {@link BiFunction} which represents this {@link BiShortToLongFunction}. Thereby the primitive
-     * input argument for this function is autoboxed. This method is just convenience to provide the ability to use this
-     * {@code BiShortToLongFunction} with JDK specific methods, only accepting {@code BiFunction}.
+     * Returns a composed {@link BiFunction2} which represents this {@link BiShortToLongFunction}. Thereby the primitive
+     * input argument for this function is autoboxed. This method provides the possibility to use this
+     * {@code BiShortToLongFunction} with methods provided by the {@code JDK}.
      *
-     * @return A composed {@code BiFunction} which represents this {@code BiShortToLongFunction}.
+     * @return A composed {@code BiFunction2} which represents this {@code BiShortToLongFunction}.
      */
     @Nonnull
-    default BiFunction<Short, Short, Long> boxed() {
+    default BiFunction2<Short, Short, Long> boxed() {
         return this::applyAsLong;
     }
 

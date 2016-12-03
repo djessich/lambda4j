@@ -34,7 +34,6 @@ import javax.annotation.Nullable;
 import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.function.Function;
 
 /**
  * Represents an operation that accepts one {@code float}-valued input argument and produces a
@@ -502,14 +501,14 @@ public interface FloatToByteFunction extends Lambda {
     }
 
     /**
-     * Returns a composed {@link Function} which represents this {@link FloatToByteFunction}. Thereby the primitive
-     * input argument for this function is autoboxed. This method is just convenience to provide the ability to use this
-     * {@code FloatToByteFunction} with JDK specific methods, only accepting {@code Function}.
+     * Returns a composed {@link Function2} which represents this {@link FloatToByteFunction}. Thereby the primitive
+     * input argument for this function is autoboxed. This method provides the possibility to use this
+     * {@code FloatToByteFunction} with methods provided by the {@code JDK}.
      *
-     * @return A composed {@code Function} which represents this {@code FloatToByteFunction}.
+     * @return A composed {@code Function2} which represents this {@code FloatToByteFunction}.
      */
     @Nonnull
-    default Function<Float, Byte> boxed() {
+    default Function2<Float, Byte> boxed() {
         return this::applyAsByte;
     }
 

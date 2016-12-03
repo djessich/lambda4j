@@ -192,4 +192,18 @@ public interface Supplier2<R> extends Lambda, Supplier<R> {
         }
     }
 
+    /**
+     * Converts this supplier to an equal supplier, which ensures that its result is not
+     * {@code null} using {@link Optional}. This method mainly exists to avoid unnecessary {@code NullPointerException}s
+     * through referencing {@code null} from this supplier.
+     *
+     * @return An equal supplier, which ensures that its result is not {@code null}.
+     * @deprecated Use {@code lift} method for lifting this function.
+     */
+    @Deprecated
+    @Nonnull
+    default Supplier2<Optional<R>> nonNull() {
+        return () -> Optional.ofNullable(get());
+    }
+
 }

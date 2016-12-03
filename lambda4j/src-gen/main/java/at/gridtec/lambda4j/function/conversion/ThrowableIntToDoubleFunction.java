@@ -538,7 +538,8 @@ public interface ThrowableIntToDoubleFunction<X extends Throwable> extends Lambd
 
     /**
      * Returns a composed {@link ThrowableFunction} which represents this {@link ThrowableIntToDoubleFunction}. Thereby
-     * the primitive input argument for this function is autoboxed.
+     * the primitive input argument for this function is autoboxed. This method provides the possibility to use this
+     * {@code ThrowableIntToDoubleFunction} with methods provided by the {@code JDK}.
      *
      * @return A composed {@code ThrowableFunction} which represents this {@code ThrowableIntToDoubleFunction}.
      */

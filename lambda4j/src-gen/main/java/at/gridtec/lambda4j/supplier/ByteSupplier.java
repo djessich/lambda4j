@@ -33,7 +33,6 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.Objects;
 import java.util.concurrent.atomic.AtomicReference;
-import java.util.function.Supplier;
 
 /**
  * Represents a supplier of {@code byte}-valued results.
@@ -334,14 +333,14 @@ public interface ByteSupplier extends Lambda {
     }
 
     /**
-     * Returns a composed {@link Supplier} which represents this {@link ByteSupplier}. Thereby the primitive input
-     * argument for this supplier is autoboxed. This method is just convenience to provide the ability to use this
-     * {@code ByteSupplier} with JDK specific methods, only accepting {@code Supplier}.
+     * Returns a composed {@link Supplier2} which represents this {@link ByteSupplier}. Thereby the primitive
+     * input argument for this supplier is autoboxed. This method provides the possibility to use this
+     * {@code ByteSupplier} with methods provided by the {@code JDK}.
      *
-     * @return A composed {@code Supplier} which represents this {@code ByteSupplier}.
+     * @return A composed {@code Supplier2} which represents this {@code ByteSupplier}.
      */
     @Nonnull
-    default Supplier<Byte> boxed() {
+    default Supplier2<Byte> boxed() {
         return this::getAsByte;
     }
 

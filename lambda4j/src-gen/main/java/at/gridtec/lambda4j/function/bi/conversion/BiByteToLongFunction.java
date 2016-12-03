@@ -45,7 +45,6 @@ import javax.annotation.Nullable;
 import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.function.BiFunction;
 import java.util.function.LongConsumer;
 import java.util.function.LongFunction;
 import java.util.function.LongPredicate;
@@ -580,14 +579,14 @@ public interface BiByteToLongFunction extends Lambda {
     }
 
     /**
-     * Returns a composed {@link BiFunction} which represents this {@link BiByteToLongFunction}. Thereby the primitive
-     * input argument for this function is autoboxed. This method is just convenience to provide the ability to use this
-     * {@code BiByteToLongFunction} with JDK specific methods, only accepting {@code BiFunction}.
+     * Returns a composed {@link BiFunction2} which represents this {@link BiByteToLongFunction}. Thereby the primitive
+     * input argument for this function is autoboxed. This method provides the possibility to use this
+     * {@code BiByteToLongFunction} with methods provided by the {@code JDK}.
      *
-     * @return A composed {@code BiFunction} which represents this {@code BiByteToLongFunction}.
+     * @return A composed {@code BiFunction2} which represents this {@code BiByteToLongFunction}.
      */
     @Nonnull
-    default BiFunction<Byte, Byte, Long> boxed() {
+    default BiFunction2<Byte, Byte, Long> boxed() {
         return this::applyAsLong;
     }
 

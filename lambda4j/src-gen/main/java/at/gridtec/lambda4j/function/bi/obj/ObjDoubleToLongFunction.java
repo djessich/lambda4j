@@ -51,7 +51,6 @@ import javax.annotation.Nullable;
 import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.function.BiFunction;
 import java.util.function.DoubleFunction;
 import java.util.function.DoubleToLongFunction;
 import java.util.function.DoubleUnaryOperator;
@@ -600,14 +599,14 @@ public interface ObjDoubleToLongFunction<T> extends Lambda {
     }
 
     /**
-     * Returns a composed {@link BiFunction} which represents this {@link ObjDoubleToLongFunction}. Thereby the
-     * primitive input argument for this function is autoboxed. This method is just convenience to provide the ability
-     * to use this {@code ObjDoubleToLongFunction} with JDK specific methods, only accepting {@code BiFunction}.
+     * Returns a composed {@link BiFunction2} which represents this {@link ObjDoubleToLongFunction}. Thereby the
+     * primitive input argument for this function is autoboxed. This method provides the possibility to use this {@code
+     * ObjDoubleToLongFunction} with methods provided by the {@code JDK}.
      *
-     * @return A composed {@code BiFunction} which represents this {@code ObjDoubleToLongFunction}.
+     * @return A composed {@code BiFunction2} which represents this {@code ObjDoubleToLongFunction}.
      */
     @Nonnull
-    default BiFunction<T, Double, Long> boxed() {
+    default BiFunction2<T, Double, Long> boxed() {
         return this::applyAsLong;
     }
 

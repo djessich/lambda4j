@@ -527,7 +527,8 @@ public interface ThrowableCharUnaryOperator<X extends Throwable> extends Lambda 
 
     /**
      * Returns a composed {@link ThrowableUnaryOperator} which represents this {@link ThrowableCharUnaryOperator}.
-     * Thereby the primitive input argument for this operator is autoboxed.
+     * Thereby the primitive input argument for this operator is autoboxed. This method provides the possibility to use
+     * this {@code ThrowableCharUnaryOperator} with methods provided by the {@code JDK}.
      *
      * @return A composed {@code ThrowableUnaryOperator} which represents this {@code ThrowableCharUnaryOperator}.
      */

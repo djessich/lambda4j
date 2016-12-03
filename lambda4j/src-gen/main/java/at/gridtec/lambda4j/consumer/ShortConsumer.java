@@ -30,7 +30,6 @@ import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.Objects;
-import java.util.function.Consumer;
 
 /**
  * Represents an operation that accepts one {@code short}-valued input argument and returns no result.
@@ -287,14 +286,14 @@ public interface ShortConsumer extends Lambda {
     }
 
     /**
-     * Returns a composed {@link Consumer} which represents this {@link ShortConsumer}. Thereby the primitive input
-     * argument for this consumer is autoboxed. This method is just convenience to provide the ability to use this
-     * {@code ShortConsumer} with JDK specific methods, only accepting {@code Consumer}.
+     * Returns a composed {@link Consumer2} which represents this {@link ShortConsumer}. Thereby the primitive
+     * input argument for this consumer is autoboxed. This method provides the possibility to use this
+     * {@code ShortConsumer} with methods provided by the {@code JDK}.
      *
-     * @return A composed {@code Consumer} which represents this {@code ShortConsumer}.
+     * @return A composed {@code Consumer2} which represents this {@code ShortConsumer}.
      */
     @Nonnull
-    default Consumer<Short> boxed() {
+    default Consumer2<Short> boxed() {
         return this::accept;
     }
 

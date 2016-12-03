@@ -706,7 +706,8 @@ public interface ThrowableBiObjIntToShortFunction<T, U, X extends Throwable> ext
 
     /**
      * Returns a composed {@link ThrowableTriFunction} which represents this {@link ThrowableBiObjIntToShortFunction}.
-     * Thereby the primitive input argument for this function is autoboxed.
+     * Thereby the primitive input argument for this function is autoboxed. This method provides the possibility to use
+     * this {@code ThrowableBiObjIntToShortFunction} with methods provided by the {@code JDK}.
      *
      * @return A composed {@code ThrowableTriFunction} which represents this {@code ThrowableBiObjIntToShortFunction}.
      */

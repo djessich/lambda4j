@@ -34,7 +34,6 @@ import javax.annotation.Nullable;
 import java.util.Objects;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.BooleanSupplier;
-import java.util.function.Supplier;
 
 /**
  * Represents a supplier of {@code boolean}-valued results.
@@ -90,6 +89,28 @@ public interface BooleanSupplier2 extends Lambda, BooleanSupplier {
     @Nonnull
     static BooleanSupplier2 constant(boolean ret) {
         return () -> ret;
+    }
+
+    /**
+     * Returns a {@link BooleanSupplier2} that always returns {@code true}.
+     *
+     * @return A {@link BooleanSupplier2} that always returns {@code true}.
+     * @see #alwaysFalse()
+     */
+    @Nonnull
+    static BooleanSupplier2 alwaysTrue() {
+        return () -> true;
+    }
+
+    /**
+     * Returns a {@link BooleanSupplier2} that always returns {@code false}.
+     *
+     * @return A {@link BooleanSupplier2} that always returns {@code false}.
+     * @see #alwaysTrue()
+     */
+    @Nonnull
+    static BooleanSupplier2 alwaysFalse() {
+        return () -> false;
     }
 
     /**
@@ -337,14 +358,14 @@ public interface BooleanSupplier2 extends Lambda, BooleanSupplier {
     }
 
     /**
-     * Returns a composed {@link Supplier} which represents this {@link BooleanSupplier2}. Thereby the primitive input
-     * argument for this supplier is autoboxed. This method is just convenience to provide the ability to use this
-     * {@code BooleanSupplier2} with JDK specific methods, only accepting {@code Supplier}.
+     * Returns a composed {@link Supplier2} which represents this {@link BooleanSupplier2}. Thereby the primitive
+     * input argument for this supplier is autoboxed. This method provides the possibility to use this
+     * {@code BooleanSupplier2} with methods provided by the {@code JDK}.
      *
-     * @return A composed {@code Supplier} which represents this {@code BooleanSupplier2}.
+     * @return A composed {@code Supplier2} which represents this {@code BooleanSupplier2}.
      */
     @Nonnull
-    default Supplier<Boolean> boxed() {
+    default Supplier2<Boolean> boxed() {
         return this::getAsBoolean;
     }
 

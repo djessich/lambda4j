@@ -764,8 +764,8 @@ public interface ObjBiDoublePredicate<T> extends Lambda {
 
     /**
      * Returns a composed {@link TriPredicate} which represents this {@link ObjBiDoublePredicate}. Thereby the primitive
-     * input argument for this predicate is autoboxed. This method is just convenience to provide the ability to use
-     * this {@code ObjBiDoublePredicate} with JDK specific methods, only accepting {@code TriPredicate}.
+     * input argument for this predicate is autoboxed. This method provides the possibility to use this
+     * {@code ObjBiDoublePredicate} with methods provided by the {@code JDK}.
      *
      * @return A composed {@code TriPredicate} which represents this {@code ObjBiDoublePredicate}.
      */

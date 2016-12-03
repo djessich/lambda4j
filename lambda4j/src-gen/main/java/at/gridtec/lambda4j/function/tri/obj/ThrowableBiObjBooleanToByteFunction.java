@@ -705,7 +705,9 @@ public interface ThrowableBiObjBooleanToByteFunction<T, U, X extends Throwable> 
 
     /**
      * Returns a composed {@link ThrowableTriFunction} which represents this {@link
-     * ThrowableBiObjBooleanToByteFunction}. Thereby the primitive input argument for this function is autoboxed.
+     * ThrowableBiObjBooleanToByteFunction}. Thereby the primitive input argument for this function is autoboxed. This
+     * method provides the possibility to use this {@code ThrowableBiObjBooleanToByteFunction} with methods provided by
+     * the {@code JDK}.
      *
      * @return A composed {@code ThrowableTriFunction} which represents this {@code ThrowableBiObjBooleanToByteFunction}.
      */

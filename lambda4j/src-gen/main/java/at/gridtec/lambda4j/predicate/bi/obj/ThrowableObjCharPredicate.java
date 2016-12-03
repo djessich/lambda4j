@@ -737,7 +737,8 @@ public interface ThrowableObjCharPredicate<T, X extends Throwable> extends Lambd
 
     /**
      * Returns a composed {@link ThrowableBiPredicate} which represents this {@link ThrowableObjCharPredicate}. Thereby
-     * the primitive input argument for this predicate is autoboxed.
+     * the primitive input argument for this predicate is autoboxed. This method provides the possibility to use this
+     * {@code ThrowableObjCharPredicate} with methods provided by the {@code JDK}.
      *
      * @return A composed {@code ThrowableBiPredicate} which represents this {@code ThrowableObjCharPredicate}.
      */

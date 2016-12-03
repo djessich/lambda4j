@@ -601,7 +601,8 @@ public interface ThrowableBiCharToLongFunction<X extends Throwable> extends Lamb
 
     /**
      * Returns a composed {@link ThrowableBiFunction} which represents this {@link ThrowableBiCharToLongFunction}.
-     * Thereby the primitive input argument for this function is autoboxed.
+     * Thereby the primitive input argument for this function is autoboxed. This method provides the possibility to use
+     * this {@code ThrowableBiCharToLongFunction} with methods provided by the {@code JDK}.
      *
      * @return A composed {@code ThrowableBiFunction} which represents this {@code ThrowableBiCharToLongFunction}.
      */

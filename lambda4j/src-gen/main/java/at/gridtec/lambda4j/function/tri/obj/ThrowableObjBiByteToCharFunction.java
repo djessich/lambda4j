@@ -680,7 +680,8 @@ public interface ThrowableObjBiByteToCharFunction<T, X extends Throwable> extend
 
     /**
      * Returns a composed {@link ThrowableTriFunction} which represents this {@link ThrowableObjBiByteToCharFunction}.
-     * Thereby the primitive input argument for this function is autoboxed.
+     * Thereby the primitive input argument for this function is autoboxed. This method provides the possibility to use
+     * this {@code ThrowableObjBiByteToCharFunction} with methods provided by the {@code JDK}.
      *
      * @return A composed {@code ThrowableTriFunction} which represents this {@code ThrowableObjBiByteToCharFunction}.
      */

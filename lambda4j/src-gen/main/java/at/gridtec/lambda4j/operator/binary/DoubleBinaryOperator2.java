@@ -624,14 +624,14 @@ public interface DoubleBinaryOperator2 extends Lambda, DoubleBinaryOperator {
     }
 
     /**
-     * Returns a composed {@link BinaryOperator} which represents this {@link DoubleBinaryOperator2}. Thereby the
-     * primitive input argument for this operator is autoboxed. This method is just convenience to provide the ability
-     * to use this {@code DoubleBinaryOperator2} with JDK specific methods, only accepting {@code BinaryOperator}.
+     * Returns a composed {@link BinaryOperator2} which represents this {@link DoubleBinaryOperator2}. Thereby the
+     * primitive input argument for this operator is autoboxed. This method provides the possibility to use this {@code
+     * DoubleBinaryOperator2} with methods provided by the {@code JDK}.
      *
-     * @return A composed {@code BinaryOperator} which represents this {@code DoubleBinaryOperator2}.
+     * @return A composed {@code BinaryOperator2} which represents this {@code DoubleBinaryOperator2}.
      */
     @Nonnull
-    default BinaryOperator<Double> boxed() {
+    default BinaryOperator2<Double> boxed() {
         return this::applyAsDouble;
     }
 

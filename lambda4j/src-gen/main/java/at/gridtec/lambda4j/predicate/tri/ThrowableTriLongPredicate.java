@@ -775,7 +775,8 @@ public interface ThrowableTriLongPredicate<X extends Throwable> extends Lambda {
 
     /**
      * Returns a composed {@link ThrowableTriPredicate} which represents this {@link ThrowableTriLongPredicate}. Thereby
-     * the primitive input argument for this predicate is autoboxed.
+     * the primitive input argument for this predicate is autoboxed. This method provides the possibility to use this
+     * {@code ThrowableTriLongPredicate} with methods provided by the {@code JDK}.
      *
      * @return A composed {@code ThrowableTriPredicate} which represents this {@code ThrowableTriLongPredicate}.
      */

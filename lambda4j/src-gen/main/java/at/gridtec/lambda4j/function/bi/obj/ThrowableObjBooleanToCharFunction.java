@@ -615,7 +615,8 @@ public interface ThrowableObjBooleanToCharFunction<T, X extends Throwable> exten
 
     /**
      * Returns a composed {@link ThrowableBiFunction} which represents this {@link ThrowableObjBooleanToCharFunction}.
-     * Thereby the primitive input argument for this function is autoboxed.
+     * Thereby the primitive input argument for this function is autoboxed. This method provides the possibility to use
+     * this {@code ThrowableObjBooleanToCharFunction} with methods provided by the {@code JDK}.
      *
      * @return A composed {@code ThrowableBiFunction} which represents this {@code ThrowableObjBooleanToCharFunction}.
      */

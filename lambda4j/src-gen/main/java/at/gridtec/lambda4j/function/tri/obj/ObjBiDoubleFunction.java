@@ -508,9 +508,23 @@ public interface ObjBiDoubleFunction<T, R> extends Lambda {
     }
 
     /**
+     * Converts this function to an equal function, which ensures that its result is not
+     * {@code null} using {@link Optional}. This method mainly exists to avoid unnecessary {@code NullPointerException}s
+     * through referencing {@code null} from this function.
+     *
+     * @return An equal function, which ensures that its result is not {@code null}.
+     * @deprecated Use {@code lift} method for lifting this function.
+     */
+    @Deprecated
+    @Nonnull
+    default ObjBiDoubleFunction<T, Optional<R>> nonNull() {
+        return (t, value1, value2) -> Optional.ofNullable(apply(t, value1, value2));
+    }
+
+    /**
      * Returns a composed {@link TriFunction} which represents this {@link ObjBiDoubleFunction}. Thereby the primitive
-     * input argument for this function is autoboxed. This method is just convenience to provide the ability to use this
-     * {@code ObjBiDoubleFunction} with JDK specific methods, only accepting {@code TriFunction}.
+     * input argument for this function is autoboxed. This method provides the possibility to use this
+     * {@code ObjBiDoubleFunction} with methods provided by the {@code JDK}.
      *
      * @return A composed {@code TriFunction} which represents this {@code ObjBiDoubleFunction}.
      */

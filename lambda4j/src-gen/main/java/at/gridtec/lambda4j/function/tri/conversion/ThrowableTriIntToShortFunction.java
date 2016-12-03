@@ -657,7 +657,8 @@ public interface ThrowableTriIntToShortFunction<X extends Throwable> extends Lam
 
     /**
      * Returns a composed {@link ThrowableTriFunction} which represents this {@link ThrowableTriIntToShortFunction}.
-     * Thereby the primitive input argument for this function is autoboxed.
+     * Thereby the primitive input argument for this function is autoboxed. This method provides the possibility to use
+     * this {@code ThrowableTriIntToShortFunction} with methods provided by the {@code JDK}.
      *
      * @return A composed {@code ThrowableTriFunction} which represents this {@code ThrowableTriIntToShortFunction}.
      */

@@ -316,7 +316,8 @@ public interface ThrowableIntConsumer<X extends Throwable> extends Lambda, IntCo
 
     /**
      * Returns a composed {@link ThrowableConsumer} which represents this {@link ThrowableIntConsumer}. Thereby the
-     * primitive input argument for this consumer is autoboxed.
+     * primitive input argument for this consumer is autoboxed. This method provides the possibility to use this {@code
+     * ThrowableIntConsumer} with methods provided by the {@code JDK}.
      *
      * @return A composed {@code ThrowableConsumer} which represents this {@code ThrowableIntConsumer}.
      */

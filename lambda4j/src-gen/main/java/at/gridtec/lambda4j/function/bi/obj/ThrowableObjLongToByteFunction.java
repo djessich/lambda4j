@@ -613,7 +613,8 @@ public interface ThrowableObjLongToByteFunction<T, X extends Throwable> extends 
 
     /**
      * Returns a composed {@link ThrowableBiFunction} which represents this {@link ThrowableObjLongToByteFunction}.
-     * Thereby the primitive input argument for this function is autoboxed.
+     * Thereby the primitive input argument for this function is autoboxed. This method provides the possibility to use
+     * this {@code ThrowableObjLongToByteFunction} with methods provided by the {@code JDK}.
      *
      * @return A composed {@code ThrowableBiFunction} which represents this {@code ThrowableObjLongToByteFunction}.
      */

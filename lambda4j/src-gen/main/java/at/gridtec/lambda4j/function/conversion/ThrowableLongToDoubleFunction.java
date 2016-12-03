@@ -538,7 +538,8 @@ public interface ThrowableLongToDoubleFunction<X extends Throwable> extends Lamb
 
     /**
      * Returns a composed {@link ThrowableFunction} which represents this {@link ThrowableLongToDoubleFunction}. Thereby
-     * the primitive input argument for this function is autoboxed.
+     * the primitive input argument for this function is autoboxed. This method provides the possibility to use this
+     * {@code ThrowableLongToDoubleFunction} with methods provided by the {@code JDK}.
      *
      * @return A composed {@code ThrowableFunction} which represents this {@code ThrowableLongToDoubleFunction}.
      */

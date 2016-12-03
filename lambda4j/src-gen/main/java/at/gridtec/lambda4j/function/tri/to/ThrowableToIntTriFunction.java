@@ -482,7 +482,8 @@ public interface ThrowableToIntTriFunction<T, U, V, X extends Throwable> extends
 
     /**
      * Returns a composed {@link ThrowableTriFunction} which represents this {@link ThrowableToIntTriFunction}. Thereby
-     * the primitive input argument for this function is autoboxed.
+     * the primitive input argument for this function is autoboxed. This method provides the possibility to use this
+     * {@code ThrowableToIntTriFunction} with methods provided by the {@code JDK}.
      *
      * @return A composed {@code ThrowableTriFunction} which represents this {@code ThrowableToIntTriFunction}.
      */

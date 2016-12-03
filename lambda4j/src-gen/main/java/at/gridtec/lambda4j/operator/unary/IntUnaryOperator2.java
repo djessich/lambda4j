@@ -49,7 +49,6 @@ import java.util.function.IntToLongFunction;
 import java.util.function.IntUnaryOperator;
 import java.util.function.LongToIntFunction;
 import java.util.function.ToIntFunction;
-import java.util.function.UnaryOperator;
 
 /**
  * Represents an operation that accepts one {@code int}-valued input argument and produces a
@@ -528,14 +527,14 @@ public interface IntUnaryOperator2 extends Lambda, IntUnaryOperator {
     }
 
     /**
-     * Returns a composed {@link UnaryOperator} which represents this {@link IntUnaryOperator2}. Thereby the primitive
-     * input argument for this operator is autoboxed. This method is just convenience to provide the ability to use this
-     * {@code IntUnaryOperator2} with JDK specific methods, only accepting {@code UnaryOperator}.
+     * Returns a composed {@link UnaryOperator2} which represents this {@link IntUnaryOperator2}. Thereby the primitive
+     * input argument for this operator is autoboxed. This method provides the possibility to use this
+     * {@code IntUnaryOperator2} with methods provided by the {@code JDK}.
      *
-     * @return A composed {@code UnaryOperator} which represents this {@code IntUnaryOperator2}.
+     * @return A composed {@code UnaryOperator2} which represents this {@code IntUnaryOperator2}.
      */
     @Nonnull
-    default UnaryOperator<Integer> boxed() {
+    default UnaryOperator2<Integer> boxed() {
         return this::applyAsInt;
     }
 

@@ -388,7 +388,8 @@ public interface ThrowableObjShortConsumer<T, X extends Throwable> extends Lambd
 
     /**
      * Returns a composed {@link ThrowableBiConsumer} which represents this {@link ThrowableObjShortConsumer}. Thereby
-     * the primitive input argument for this consumer is autoboxed.
+     * the primitive input argument for this consumer is autoboxed. This method provides the possibility to use this
+     * {@code ThrowableObjShortConsumer} with methods provided by the {@code JDK}.
      *
      * @return A composed {@code ThrowableBiConsumer} which represents this {@code ThrowableObjShortConsumer}.
      */

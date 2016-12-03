@@ -40,7 +40,6 @@ import javax.annotation.Nullable;
 import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.function.UnaryOperator;
 
 /**
  * Represents an operation that accepts one {@code char}-valued input argument and produces a
@@ -518,14 +517,14 @@ public interface CharUnaryOperator extends Lambda {
     }
 
     /**
-     * Returns a composed {@link UnaryOperator} which represents this {@link CharUnaryOperator}. Thereby the primitive
-     * input argument for this operator is autoboxed. This method is just convenience to provide the ability to use this
-     * {@code CharUnaryOperator} with JDK specific methods, only accepting {@code UnaryOperator}.
+     * Returns a composed {@link UnaryOperator2} which represents this {@link CharUnaryOperator}. Thereby the primitive
+     * input argument for this operator is autoboxed. This method provides the possibility to use this
+     * {@code CharUnaryOperator} with methods provided by the {@code JDK}.
      *
-     * @return A composed {@code UnaryOperator} which represents this {@code CharUnaryOperator}.
+     * @return A composed {@code UnaryOperator2} which represents this {@code CharUnaryOperator}.
      */
     @Nonnull
-    default UnaryOperator<Character> boxed() {
+    default UnaryOperator2<Character> boxed() {
         return this::applyAsChar;
     }
 

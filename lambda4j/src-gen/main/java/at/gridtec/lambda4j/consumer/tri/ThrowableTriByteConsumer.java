@@ -422,7 +422,8 @@ public interface ThrowableTriByteConsumer<X extends Throwable> extends Lambda {
 
     /**
      * Returns a composed {@link ThrowableTriConsumer} which represents this {@link ThrowableTriByteConsumer}. Thereby
-     * the primitive input argument for this consumer is autoboxed.
+     * the primitive input argument for this consumer is autoboxed. This method provides the possibility to use this
+     * {@code ThrowableTriByteConsumer} with methods provided by the {@code JDK}.
      *
      * @return A composed {@code ThrowableTriConsumer} which represents this {@code ThrowableTriByteConsumer}.
      */

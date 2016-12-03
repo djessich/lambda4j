@@ -371,14 +371,28 @@ public interface LongFunction2<R> extends Lambda, LongFunction<R> {
     }
 
     /**
-     * Returns a composed {@link Function} which represents this {@link LongFunction2}. Thereby the primitive input
-     * argument for this function is autoboxed. This method is just convenience to provide the ability to use this
-     * {@code LongFunction2} with JDK specific methods, only accepting {@code Function}.
+     * Converts this function to an equal function, which ensures that its result is not
+     * {@code null} using {@link Optional}. This method mainly exists to avoid unnecessary {@code NullPointerException}s
+     * through referencing {@code null} from this function.
      *
-     * @return A composed {@code Function} which represents this {@code LongFunction2}.
+     * @return An equal function, which ensures that its result is not {@code null}.
+     * @deprecated Use {@code lift} method for lifting this function.
+     */
+    @Deprecated
+    @Nonnull
+    default LongFunction2<Optional<R>> nonNull() {
+        return (value) -> Optional.ofNullable(apply(value));
+    }
+
+    /**
+     * Returns a composed {@link Function2} which represents this {@link LongFunction2}. Thereby the primitive
+     * input argument for this function is autoboxed. This method provides the possibility to use this
+     * {@code LongFunction2} with methods provided by the {@code JDK}.
+     *
+     * @return A composed {@code Function2} which represents this {@code LongFunction2}.
      */
     @Nonnull
-    default Function<Long, R> boxed() {
+    default Function2<Long, R> boxed() {
         return this::apply;
     }
 

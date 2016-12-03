@@ -335,7 +335,8 @@ public interface ThrowableShortSupplier<X extends Throwable> extends Lambda {
 
     /**
      * Returns a composed {@link ThrowableSupplier} which represents this {@link ThrowableShortSupplier}. Thereby the
-     * primitive input argument for this supplier is autoboxed.
+     * primitive input argument for this supplier is autoboxed. This method provides the possibility to use this {@code
+     * ThrowableShortSupplier} with methods provided by the {@code JDK}.
      *
      * @return A composed {@code ThrowableSupplier} which represents this {@code ThrowableShortSupplier}.
      */

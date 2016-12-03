@@ -26,7 +26,6 @@ import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.Objects;
-import java.util.function.BiConsumer;
 import java.util.function.DoubleConsumer;
 import java.util.function.DoubleUnaryOperator;
 import java.util.function.IntToDoubleFunction;
@@ -349,14 +348,14 @@ public interface BiDoubleConsumer extends Lambda {
     }
 
     /**
-     * Returns a composed {@link BiConsumer} which represents this {@link BiDoubleConsumer}. Thereby the primitive input
-     * argument for this consumer is autoboxed. This method is just convenience to provide the ability to use this
-     * {@code BiDoubleConsumer} with JDK specific methods, only accepting {@code BiConsumer}.
+     * Returns a composed {@link BiConsumer2} which represents this {@link BiDoubleConsumer}. Thereby the primitive
+     * input argument for this consumer is autoboxed. This method provides the possibility to use this
+     * {@code BiDoubleConsumer} with methods provided by the {@code JDK}.
      *
-     * @return A composed {@code BiConsumer} which represents this {@code BiDoubleConsumer}.
+     * @return A composed {@code BiConsumer2} which represents this {@code BiDoubleConsumer}.
      */
     @Nonnull
-    default BiConsumer<Double, Double> boxed() {
+    default BiConsumer2<Double, Double> boxed() {
         return this::accept;
     }
 

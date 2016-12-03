@@ -36,7 +36,6 @@ import java.util.function.DoublePredicate;
 import java.util.function.DoubleToIntFunction;
 import java.util.function.DoubleToLongFunction;
 import java.util.function.DoubleUnaryOperator;
-import java.util.function.Function;
 import java.util.function.IntToLongFunction;
 import java.util.function.LongToDoubleFunction;
 import java.util.function.LongUnaryOperator;
@@ -509,14 +508,14 @@ public interface LongToDoubleFunction2 extends Lambda, LongToDoubleFunction {
     }
 
     /**
-     * Returns a composed {@link Function} which represents this {@link LongToDoubleFunction2}. Thereby the primitive
-     * input argument for this function is autoboxed. This method is just convenience to provide the ability to use this
-     * {@code LongToDoubleFunction2} with JDK specific methods, only accepting {@code Function}.
+     * Returns a composed {@link Function2} which represents this {@link LongToDoubleFunction2}. Thereby the primitive
+     * input argument for this function is autoboxed. This method provides the possibility to use this
+     * {@code LongToDoubleFunction2} with methods provided by the {@code JDK}.
      *
-     * @return A composed {@code Function} which represents this {@code LongToDoubleFunction2}.
+     * @return A composed {@code Function2} which represents this {@code LongToDoubleFunction2}.
      */
     @Nonnull
-    default Function<Long, Double> boxed() {
+    default Function2<Long, Double> boxed() {
         return this::applyAsDouble;
     }
 

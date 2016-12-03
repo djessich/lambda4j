@@ -615,7 +615,8 @@ public interface ThrowableObjFloatToShortFunction<T, X extends Throwable> extend
 
     /**
      * Returns a composed {@link ThrowableBiFunction} which represents this {@link ThrowableObjFloatToShortFunction}.
-     * Thereby the primitive input argument for this function is autoboxed.
+     * Thereby the primitive input argument for this function is autoboxed. This method provides the possibility to use
+     * this {@code ThrowableObjFloatToShortFunction} with methods provided by the {@code JDK}.
      *
      * @return A composed {@code ThrowableBiFunction} which represents this {@code ThrowableObjFloatToShortFunction}.
      */

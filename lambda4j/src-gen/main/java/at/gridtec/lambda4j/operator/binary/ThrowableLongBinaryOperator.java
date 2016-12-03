@@ -675,7 +675,8 @@ public interface ThrowableLongBinaryOperator<X extends Throwable> extends Lambda
 
     /**
      * Returns a composed {@link ThrowableBinaryOperator} which represents this {@link ThrowableLongBinaryOperator}.
-     * Thereby the primitive input argument for this operator is autoboxed.
+     * Thereby the primitive input argument for this operator is autoboxed. This method provides the possibility to use
+     * this {@code ThrowableLongBinaryOperator} with methods provided by the {@code JDK}.
      *
      * @return A composed {@code ThrowableBinaryOperator} which represents this {@code ThrowableLongBinaryOperator}.
      */

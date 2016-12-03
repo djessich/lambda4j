@@ -33,7 +33,6 @@ import javax.annotation.Nullable;
 import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.function.BiFunction;
 import java.util.function.DoubleConsumer;
 import java.util.function.DoubleFunction;
 import java.util.function.DoublePredicate;
@@ -437,14 +436,14 @@ public interface ToDoubleBiFunction2<T, U> extends Lambda, ToDoubleBiFunction<T,
     }
 
     /**
-     * Returns a composed {@link BiFunction} which represents this {@link ToDoubleBiFunction2}. Thereby the primitive
-     * input argument for this function is autoboxed. This method is just convenience to provide the ability to use this
-     * {@code ToDoubleBiFunction2} with JDK specific methods, only accepting {@code BiFunction}.
+     * Returns a composed {@link BiFunction2} which represents this {@link ToDoubleBiFunction2}. Thereby the primitive
+     * input argument for this function is autoboxed. This method provides the possibility to use this
+     * {@code ToDoubleBiFunction2} with methods provided by the {@code JDK}.
      *
-     * @return A composed {@code BiFunction} which represents this {@code ToDoubleBiFunction2}.
+     * @return A composed {@code BiFunction2} which represents this {@code ToDoubleBiFunction2}.
      */
     @Nonnull
-    default BiFunction<T, U, Double> boxed() {
+    default BiFunction2<T, U, Double> boxed() {
         return this::applyAsDouble;
     }
 

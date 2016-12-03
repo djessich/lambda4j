@@ -34,7 +34,6 @@ import java.util.function.LongSupplier;
 import java.util.function.LongToDoubleFunction;
 import java.util.function.LongToIntFunction;
 import java.util.function.LongUnaryOperator;
-import java.util.function.Supplier;
 
 /**
  * Represents a supplier of {@code long}-valued results.
@@ -336,14 +335,14 @@ public interface LongSupplier2 extends Lambda, LongSupplier {
     }
 
     /**
-     * Returns a composed {@link Supplier} which represents this {@link LongSupplier2}. Thereby the primitive input
-     * argument for this supplier is autoboxed. This method is just convenience to provide the ability to use this
-     * {@code LongSupplier2} with JDK specific methods, only accepting {@code Supplier}.
+     * Returns a composed {@link Supplier2} which represents this {@link LongSupplier2}. Thereby the primitive
+     * input argument for this supplier is autoboxed. This method provides the possibility to use this
+     * {@code LongSupplier2} with methods provided by the {@code JDK}.
      *
-     * @return A composed {@code Supplier} which represents this {@code LongSupplier2}.
+     * @return A composed {@code Supplier2} which represents this {@code LongSupplier2}.
      */
     @Nonnull
-    default Supplier<Long> boxed() {
+    default Supplier2<Long> boxed() {
         return this::getAsLong;
     }
 

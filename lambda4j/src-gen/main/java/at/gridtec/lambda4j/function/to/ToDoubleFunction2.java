@@ -364,14 +364,14 @@ public interface ToDoubleFunction2<T> extends Lambda, ToDoubleFunction<T> {
     }
 
     /**
-     * Returns a composed {@link Function} which represents this {@link ToDoubleFunction2}. Thereby the primitive input
-     * argument for this function is autoboxed. This method is just convenience to provide the ability to use this
-     * {@code ToDoubleFunction2} with JDK specific methods, only accepting {@code Function}.
+     * Returns a composed {@link Function2} which represents this {@link ToDoubleFunction2}. Thereby the primitive
+     * input argument for this function is autoboxed. This method provides the possibility to use this
+     * {@code ToDoubleFunction2} with methods provided by the {@code JDK}.
      *
-     * @return A composed {@code Function} which represents this {@code ToDoubleFunction2}.
+     * @return A composed {@code Function2} which represents this {@code ToDoubleFunction2}.
      */
     @Nonnull
-    default Function<T, Double> boxed() {
+    default Function2<T, Double> boxed() {
         return this::applyAsDouble;
     }
 

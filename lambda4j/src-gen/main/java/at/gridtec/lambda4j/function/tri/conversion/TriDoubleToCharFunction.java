@@ -625,8 +625,8 @@ public interface TriDoubleToCharFunction extends Lambda {
 
     /**
      * Returns a composed {@link TriFunction} which represents this {@link TriDoubleToCharFunction}. Thereby the
-     * primitive input argument for this function is autoboxed. This method is just convenience to provide the ability
-     * to use this {@code TriDoubleToCharFunction} with JDK specific methods, only accepting {@code TriFunction}.
+     * primitive input argument for this function is autoboxed. This method provides the possibility to use this {@code
+     * TriDoubleToCharFunction} with methods provided by the {@code JDK}.
      *
      * @return A composed {@code TriFunction} which represents this {@code TriDoubleToCharFunction}.
      */

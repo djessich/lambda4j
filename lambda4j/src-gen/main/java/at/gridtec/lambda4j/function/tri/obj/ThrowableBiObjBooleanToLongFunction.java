@@ -705,7 +705,9 @@ public interface ThrowableBiObjBooleanToLongFunction<T, U, X extends Throwable> 
 
     /**
      * Returns a composed {@link ThrowableTriFunction} which represents this {@link
-     * ThrowableBiObjBooleanToLongFunction}. Thereby the primitive input argument for this function is autoboxed.
+     * ThrowableBiObjBooleanToLongFunction}. Thereby the primitive input argument for this function is autoboxed. This
+     * method provides the possibility to use this {@code ThrowableBiObjBooleanToLongFunction} with methods provided by
+     * the {@code JDK}.
      *
      * @return A composed {@code ThrowableTriFunction} which represents this {@code ThrowableBiObjBooleanToLongFunction}.
      */

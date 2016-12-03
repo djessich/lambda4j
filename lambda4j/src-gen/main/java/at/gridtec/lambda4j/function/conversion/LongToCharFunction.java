@@ -34,7 +34,6 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.DoubleToLongFunction;
-import java.util.function.Function;
 import java.util.function.IntToLongFunction;
 import java.util.function.LongUnaryOperator;
 import java.util.function.ToLongFunction;
@@ -505,14 +504,14 @@ public interface LongToCharFunction extends Lambda {
     }
 
     /**
-     * Returns a composed {@link Function} which represents this {@link LongToCharFunction}. Thereby the primitive input
-     * argument for this function is autoboxed. This method is just convenience to provide the ability to use this
-     * {@code LongToCharFunction} with JDK specific methods, only accepting {@code Function}.
+     * Returns a composed {@link Function2} which represents this {@link LongToCharFunction}. Thereby the primitive
+     * input argument for this function is autoboxed. This method provides the possibility to use this
+     * {@code LongToCharFunction} with methods provided by the {@code JDK}.
      *
-     * @return A composed {@code Function} which represents this {@code LongToCharFunction}.
+     * @return A composed {@code Function2} which represents this {@code LongToCharFunction}.
      */
     @Nonnull
-    default Function<Long, Character> boxed() {
+    default Function2<Long, Character> boxed() {
         return this::applyAsChar;
     }
 

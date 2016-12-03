@@ -76,7 +76,8 @@ import java.util.function.Function;
  * {@code short}-valued result which is able to throw any {@link Throwable}. This is a (reference, reference, boolean)
  * specialization of {@link ThrowableTriFunction}.
  * <p>
- * This is a {@link FunctionalInterface} whose functional method is {@link #applyAsShortThrows(Object, Object, * boolean)}.
+ * This is a {@link FunctionalInterface} whose functional method is {@link #applyAsShortThrows(Object, Object, *
+ * boolean)}.
  *
  * @param <T> The type of the first argument to the function
  * @param <U> The type of the second argument to the function
@@ -706,7 +707,9 @@ public interface ThrowableBiObjBooleanToShortFunction<T, U, X extends Throwable>
 
     /**
      * Returns a composed {@link ThrowableTriFunction} which represents this {@link
-     * ThrowableBiObjBooleanToShortFunction}. Thereby the primitive input argument for this function is autoboxed.
+     * ThrowableBiObjBooleanToShortFunction}. Thereby the primitive input argument for this function is autoboxed. This
+     * method provides the possibility to use this {@code ThrowableBiObjBooleanToShortFunction} with methods provided by
+     * the {@code JDK}.
      *
      * @return A composed {@code ThrowableTriFunction} which represents this {@code ThrowableBiObjBooleanToShortFunction}.
      */

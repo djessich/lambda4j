@@ -369,14 +369,28 @@ public interface ShortFunction<R> extends Lambda {
     }
 
     /**
-     * Returns a composed {@link Function} which represents this {@link ShortFunction}. Thereby the primitive input
-     * argument for this function is autoboxed. This method is just convenience to provide the ability to use this
-     * {@code ShortFunction} with JDK specific methods, only accepting {@code Function}.
+     * Converts this function to an equal function, which ensures that its result is not
+     * {@code null} using {@link Optional}. This method mainly exists to avoid unnecessary {@code NullPointerException}s
+     * through referencing {@code null} from this function.
      *
-     * @return A composed {@code Function} which represents this {@code ShortFunction}.
+     * @return An equal function, which ensures that its result is not {@code null}.
+     * @deprecated Use {@code lift} method for lifting this function.
+     */
+    @Deprecated
+    @Nonnull
+    default ShortFunction<Optional<R>> nonNull() {
+        return (value) -> Optional.ofNullable(apply(value));
+    }
+
+    /**
+     * Returns a composed {@link Function2} which represents this {@link ShortFunction}. Thereby the primitive
+     * input argument for this function is autoboxed. This method provides the possibility to use this
+     * {@code ShortFunction} with methods provided by the {@code JDK}.
+     *
+     * @return A composed {@code Function2} which represents this {@code ShortFunction}.
      */
     @Nonnull
-    default Function<Short, R> boxed() {
+    default Function2<Short, R> boxed() {
         return this::apply;
     }
 

@@ -510,7 +510,8 @@ public interface ThrowableByteToShortFunction<X extends Throwable> extends Lambd
 
     /**
      * Returns a composed {@link ThrowableFunction} which represents this {@link ThrowableByteToShortFunction}. Thereby
-     * the primitive input argument for this function is autoboxed.
+     * the primitive input argument for this function is autoboxed. This method provides the possibility to use this
+     * {@code ThrowableByteToShortFunction} with methods provided by the {@code JDK}.
      *
      * @return A composed {@code ThrowableFunction} which represents this {@code ThrowableByteToShortFunction}.
      */

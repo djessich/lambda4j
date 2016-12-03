@@ -40,7 +40,6 @@ import javax.annotation.Nullable;
 import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.function.UnaryOperator;
 
 /**
  * Represents an operation that accepts one {@code byte}-valued input argument and produces a
@@ -518,14 +517,14 @@ public interface ByteUnaryOperator extends Lambda {
     }
 
     /**
-     * Returns a composed {@link UnaryOperator} which represents this {@link ByteUnaryOperator}. Thereby the primitive
-     * input argument for this operator is autoboxed. This method is just convenience to provide the ability to use this
-     * {@code ByteUnaryOperator} with JDK specific methods, only accepting {@code UnaryOperator}.
+     * Returns a composed {@link UnaryOperator2} which represents this {@link ByteUnaryOperator}. Thereby the primitive
+     * input argument for this operator is autoboxed. This method provides the possibility to use this
+     * {@code ByteUnaryOperator} with methods provided by the {@code JDK}.
      *
-     * @return A composed {@code UnaryOperator} which represents this {@code ByteUnaryOperator}.
+     * @return A composed {@code UnaryOperator2} which represents this {@code ByteUnaryOperator}.
      */
     @Nonnull
-    default UnaryOperator<Byte> boxed() {
+    default UnaryOperator2<Byte> boxed() {
         return this::applyAsByte;
     }
 

@@ -363,14 +363,14 @@ public interface ToLongFunction2<T> extends Lambda, ToLongFunction<T> {
     }
 
     /**
-     * Returns a composed {@link Function} which represents this {@link ToLongFunction2}. Thereby the primitive input
-     * argument for this function is autoboxed. This method is just convenience to provide the ability to use this
-     * {@code ToLongFunction2} with JDK specific methods, only accepting {@code Function}.
+     * Returns a composed {@link Function2} which represents this {@link ToLongFunction2}. Thereby the primitive
+     * input argument for this function is autoboxed. This method provides the possibility to use this
+     * {@code ToLongFunction2} with methods provided by the {@code JDK}.
      *
-     * @return A composed {@code Function} which represents this {@code ToLongFunction2}.
+     * @return A composed {@code Function2} which represents this {@code ToLongFunction2}.
      */
     @Nonnull
-    default Function<T, Long> boxed() {
+    default Function2<T, Long> boxed() {
         return this::applyAsLong;
     }
 

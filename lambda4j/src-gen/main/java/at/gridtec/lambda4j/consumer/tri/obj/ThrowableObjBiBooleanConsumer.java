@@ -446,7 +446,8 @@ public interface ThrowableObjBiBooleanConsumer<T, X extends Throwable> extends L
 
     /**
      * Returns a composed {@link ThrowableTriConsumer} which represents this {@link ThrowableObjBiBooleanConsumer}.
-     * Thereby the primitive input argument for this consumer is autoboxed.
+     * Thereby the primitive input argument for this consumer is autoboxed. This method provides the possibility to use
+     * this {@code ThrowableObjBiBooleanConsumer} with methods provided by the {@code JDK}.
      *
      * @return A composed {@code ThrowableTriConsumer} which represents this {@code ThrowableObjBiBooleanConsumer}.
      */

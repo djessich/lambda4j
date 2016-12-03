@@ -836,7 +836,8 @@ public interface ThrowableBiObjIntPredicate<T, U, X extends Throwable> extends L
 
     /**
      * Returns a composed {@link ThrowableTriPredicate} which represents this {@link ThrowableBiObjIntPredicate}.
-     * Thereby the primitive input argument for this predicate is autoboxed.
+     * Thereby the primitive input argument for this predicate is autoboxed. This method provides the possibility to use
+     * this {@code ThrowableBiObjIntPredicate} with methods provided by the {@code JDK}.
      *
      * @return A composed {@code ThrowableTriPredicate} which represents this {@code ThrowableBiObjIntPredicate}.
      */

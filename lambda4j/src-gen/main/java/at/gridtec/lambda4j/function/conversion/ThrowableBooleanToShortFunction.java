@@ -513,7 +513,8 @@ public interface ThrowableBooleanToShortFunction<X extends Throwable> extends La
 
     /**
      * Returns a composed {@link ThrowableFunction} which represents this {@link ThrowableBooleanToShortFunction}.
-     * Thereby the primitive input argument for this function is autoboxed.
+     * Thereby the primitive input argument for this function is autoboxed. This method provides the possibility to use
+     * this {@code ThrowableBooleanToShortFunction} with methods provided by the {@code JDK}.
      *
      * @return A composed {@code ThrowableFunction} which represents this {@code ThrowableBooleanToShortFunction}.
      */

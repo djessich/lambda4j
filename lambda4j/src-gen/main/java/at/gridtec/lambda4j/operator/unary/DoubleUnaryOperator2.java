@@ -49,7 +49,6 @@ import java.util.function.DoubleUnaryOperator;
 import java.util.function.IntToDoubleFunction;
 import java.util.function.LongToDoubleFunction;
 import java.util.function.ToDoubleFunction;
-import java.util.function.UnaryOperator;
 
 /**
  * Represents an operation that accepts one {@code double}-valued input argument and produces a
@@ -528,14 +527,14 @@ public interface DoubleUnaryOperator2 extends Lambda, DoubleUnaryOperator {
     }
 
     /**
-     * Returns a composed {@link UnaryOperator} which represents this {@link DoubleUnaryOperator2}. Thereby the
-     * primitive input argument for this operator is autoboxed. This method is just convenience to provide the ability
-     * to use this {@code DoubleUnaryOperator2} with JDK specific methods, only accepting {@code UnaryOperator}.
+     * Returns a composed {@link UnaryOperator2} which represents this {@link DoubleUnaryOperator2}. Thereby the
+     * primitive input argument for this operator is autoboxed. This method provides the possibility to use this {@code
+     * DoubleUnaryOperator2} with methods provided by the {@code JDK}.
      *
-     * @return A composed {@code UnaryOperator} which represents this {@code DoubleUnaryOperator2}.
+     * @return A composed {@code UnaryOperator2} which represents this {@code DoubleUnaryOperator2}.
      */
     @Nonnull
-    default UnaryOperator<Double> boxed() {
+    default UnaryOperator2<Double> boxed() {
         return this::applyAsDouble;
     }
 

@@ -369,14 +369,28 @@ public interface CharFunction<R> extends Lambda {
     }
 
     /**
-     * Returns a composed {@link Function} which represents this {@link CharFunction}. Thereby the primitive input
-     * argument for this function is autoboxed. This method is just convenience to provide the ability to use this
-     * {@code CharFunction} with JDK specific methods, only accepting {@code Function}.
+     * Converts this function to an equal function, which ensures that its result is not
+     * {@code null} using {@link Optional}. This method mainly exists to avoid unnecessary {@code NullPointerException}s
+     * through referencing {@code null} from this function.
      *
-     * @return A composed {@code Function} which represents this {@code CharFunction}.
+     * @return An equal function, which ensures that its result is not {@code null}.
+     * @deprecated Use {@code lift} method for lifting this function.
+     */
+    @Deprecated
+    @Nonnull
+    default CharFunction<Optional<R>> nonNull() {
+        return (value) -> Optional.ofNullable(apply(value));
+    }
+
+    /**
+     * Returns a composed {@link Function2} which represents this {@link CharFunction}. Thereby the primitive
+     * input argument for this function is autoboxed. This method provides the possibility to use this
+     * {@code CharFunction} with methods provided by the {@code JDK}.
+     *
+     * @return A composed {@code Function2} which represents this {@code CharFunction}.
      */
     @Nonnull
-    default Function<Character, R> boxed() {
+    default Function2<Character, R> boxed() {
         return this::apply;
     }
 

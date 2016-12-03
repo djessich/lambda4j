@@ -667,7 +667,8 @@ public interface ThrowableLongTernaryOperator<X extends Throwable> extends Lambd
 
     /**
      * Returns a composed {@link ThrowableTernaryOperator} which represents this {@link ThrowableLongTernaryOperator}.
-     * Thereby the primitive input argument for this operator is autoboxed.
+     * Thereby the primitive input argument for this operator is autoboxed. This method provides the possibility to use
+     * this {@code ThrowableLongTernaryOperator} with methods provided by the {@code JDK}.
      *
      * @return A composed {@code ThrowableTernaryOperator} which represents this {@code ThrowableLongTernaryOperator}.
      */

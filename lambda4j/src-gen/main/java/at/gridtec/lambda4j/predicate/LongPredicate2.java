@@ -50,7 +50,6 @@ import java.util.function.DoubleToLongFunction;
 import java.util.function.IntToLongFunction;
 import java.util.function.LongPredicate;
 import java.util.function.LongUnaryOperator;
-import java.util.function.Predicate;
 import java.util.function.ToLongFunction;
 
 /**
@@ -623,14 +622,14 @@ public interface LongPredicate2 extends Lambda, LongPredicate {
     }
 
     /**
-     * Returns a composed {@link Predicate} which represents this {@link LongPredicate2}. Thereby the primitive input
-     * argument for this predicate is autoboxed. This method is just convenience to provide the ability to use this
-     * {@code LongPredicate2} with JDK specific methods, only accepting {@code Predicate}.
+     * Returns a composed {@link Predicate2} which represents this {@link LongPredicate2}. Thereby the primitive
+     * input argument for this predicate is autoboxed. This method provides the possibility to use this
+     * {@code LongPredicate2} with methods provided by the {@code JDK}.
      *
-     * @return A composed {@code Predicate} which represents this {@code LongPredicate2}.
+     * @return A composed {@code Predicate2} which represents this {@code LongPredicate2}.
      */
     @Nonnull
-    default Predicate<Long> boxed() {
+    default Predicate2<Long> boxed() {
         return this::test;
     }
 

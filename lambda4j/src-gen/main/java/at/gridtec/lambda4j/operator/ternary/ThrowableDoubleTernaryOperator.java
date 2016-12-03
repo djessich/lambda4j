@@ -70,7 +70,8 @@ import java.util.function.Function;
  * result which is able to throw any {@link Throwable}. This is a primitive specialization of {@link
  * ThrowableTernaryOperator}.
  * <p>
- * This is a {@link FunctionalInterface} whose functional method is {@link #applyAsDoubleThrows(double, double, * double)}.
+ * This is a {@link FunctionalInterface} whose functional method is {@link #applyAsDoubleThrows(double, double, *
+ * double)}.
  *
  * @param <X> The type of the throwable to be thrown by this operator
  * @see ThrowableTernaryOperator
@@ -668,7 +669,8 @@ public interface ThrowableDoubleTernaryOperator<X extends Throwable> extends Lam
 
     /**
      * Returns a composed {@link ThrowableTernaryOperator} which represents this {@link ThrowableDoubleTernaryOperator}.
-     * Thereby the primitive input argument for this operator is autoboxed.
+     * Thereby the primitive input argument for this operator is autoboxed. This method provides the possibility to use
+     * this {@code ThrowableDoubleTernaryOperator} with methods provided by the {@code JDK}.
      *
      * @return A composed {@code ThrowableTernaryOperator} which represents this {@code ThrowableDoubleTernaryOperator}.
      */

@@ -636,8 +636,8 @@ public interface BooleanTernaryOperator extends Lambda {
 
     /**
      * Returns a composed {@link TernaryOperator} which represents this {@link BooleanTernaryOperator}. Thereby the
-     * primitive input argument for this operator is autoboxed. This method is just convenience to provide the ability
-     * to use this {@code BooleanTernaryOperator} with JDK specific methods, only accepting {@code TernaryOperator}.
+     * primitive input argument for this operator is autoboxed. This method provides the possibility to use this {@code
+     * BooleanTernaryOperator} with methods provided by the {@code JDK}.
      *
      * @return A composed {@code TernaryOperator} which represents this {@code BooleanTernaryOperator}.
      */

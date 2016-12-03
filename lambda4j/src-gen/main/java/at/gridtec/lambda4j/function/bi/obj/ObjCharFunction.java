@@ -50,7 +50,6 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.function.BiFunction;
 import java.util.function.Consumer;
 import java.util.function.DoubleFunction;
 import java.util.function.Function;
@@ -459,14 +458,28 @@ public interface ObjCharFunction<T, R> extends Lambda {
     }
 
     /**
-     * Returns a composed {@link BiFunction} which represents this {@link ObjCharFunction}. Thereby the primitive input
-     * argument for this function is autoboxed. This method is just convenience to provide the ability to use this
-     * {@code ObjCharFunction} with JDK specific methods, only accepting {@code BiFunction}.
+     * Converts this function to an equal function, which ensures that its result is not
+     * {@code null} using {@link Optional}. This method mainly exists to avoid unnecessary {@code NullPointerException}s
+     * through referencing {@code null} from this function.
      *
-     * @return A composed {@code BiFunction} which represents this {@code ObjCharFunction}.
+     * @return An equal function, which ensures that its result is not {@code null}.
+     * @deprecated Use {@code lift} method for lifting this function.
+     */
+    @Deprecated
+    @Nonnull
+    default ObjCharFunction<T, Optional<R>> nonNull() {
+        return (t, value) -> Optional.ofNullable(apply(t, value));
+    }
+
+    /**
+     * Returns a composed {@link BiFunction2} which represents this {@link ObjCharFunction}. Thereby the primitive
+     * input argument for this function is autoboxed. This method provides the possibility to use this
+     * {@code ObjCharFunction} with methods provided by the {@code JDK}.
+     *
+     * @return A composed {@code BiFunction2} which represents this {@code ObjCharFunction}.
      */
     @Nonnull
-    default BiFunction<T, Character, R> boxed() {
+    default BiFunction2<T, Character, R> boxed() {
         return this::apply;
     }
 

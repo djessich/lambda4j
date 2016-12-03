@@ -44,7 +44,6 @@ import java.util.function.DoublePredicate;
 import java.util.function.IntPredicate;
 import java.util.function.LongPredicate;
 import java.util.function.Predicate;
-import java.util.function.UnaryOperator;
 
 /**
  * Represents an operation that accepts one {@code boolean}-valued input argument and produces a
@@ -522,14 +521,14 @@ public interface BooleanUnaryOperator extends Lambda {
     }
 
     /**
-     * Returns a composed {@link UnaryOperator} which represents this {@link BooleanUnaryOperator}. Thereby the
-     * primitive input argument for this operator is autoboxed. This method is just convenience to provide the ability
-     * to use this {@code BooleanUnaryOperator} with JDK specific methods, only accepting {@code UnaryOperator}.
+     * Returns a composed {@link UnaryOperator2} which represents this {@link BooleanUnaryOperator}. Thereby the
+     * primitive input argument for this operator is autoboxed. This method provides the possibility to use this {@code
+     * BooleanUnaryOperator} with methods provided by the {@code JDK}.
      *
-     * @return A composed {@code UnaryOperator} which represents this {@code BooleanUnaryOperator}.
+     * @return A composed {@code UnaryOperator2} which represents this {@code BooleanUnaryOperator}.
      */
     @Nonnull
-    default UnaryOperator<Boolean> boxed() {
+    default UnaryOperator2<Boolean> boxed() {
         return this::applyAsBoolean;
     }
 

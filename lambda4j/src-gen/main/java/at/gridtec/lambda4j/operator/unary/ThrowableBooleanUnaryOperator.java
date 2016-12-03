@@ -522,7 +522,8 @@ public interface ThrowableBooleanUnaryOperator<X extends Throwable> extends Lamb
 
     /**
      * Returns a composed {@link ThrowableUnaryOperator} which represents this {@link ThrowableBooleanUnaryOperator}.
-     * Thereby the primitive input argument for this operator is autoboxed.
+     * Thereby the primitive input argument for this operator is autoboxed. This method provides the possibility to use
+     * this {@code ThrowableBooleanUnaryOperator} with methods provided by the {@code JDK}.
      *
      * @return A composed {@code ThrowableUnaryOperator} which represents this {@code ThrowableBooleanUnaryOperator}.
      */

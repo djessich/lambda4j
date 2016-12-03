@@ -26,7 +26,6 @@ import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.Objects;
-import java.util.function.Consumer;
 import java.util.function.DoubleToIntFunction;
 import java.util.function.IntConsumer;
 import java.util.function.IntUnaryOperator;
@@ -289,14 +288,14 @@ public interface IntConsumer2 extends Lambda, IntConsumer {
     }
 
     /**
-     * Returns a composed {@link Consumer} which represents this {@link IntConsumer2}. Thereby the primitive input
-     * argument for this consumer is autoboxed. This method is just convenience to provide the ability to use this
-     * {@code IntConsumer2} with JDK specific methods, only accepting {@code Consumer}.
+     * Returns a composed {@link Consumer2} which represents this {@link IntConsumer2}. Thereby the primitive
+     * input argument for this consumer is autoboxed. This method provides the possibility to use this
+     * {@code IntConsumer2} with methods provided by the {@code JDK}.
      *
-     * @return A composed {@code Consumer} which represents this {@code IntConsumer2}.
+     * @return A composed {@code Consumer2} which represents this {@code IntConsumer2}.
      */
     @Nonnull
-    default Consumer<Integer> boxed() {
+    default Consumer2<Integer> boxed() {
         return this::accept;
     }
 

@@ -37,7 +37,6 @@ import java.util.function.DoublePredicate;
 import java.util.function.DoubleToIntFunction;
 import java.util.function.DoubleToLongFunction;
 import java.util.function.DoubleUnaryOperator;
-import java.util.function.Function;
 
 /**
  * Represents an operation that accepts one {@code short}-valued input argument and produces a
@@ -505,14 +504,14 @@ public interface ShortToDoubleFunction extends Lambda {
     }
 
     /**
-     * Returns a composed {@link Function} which represents this {@link ShortToDoubleFunction}. Thereby the primitive
-     * input argument for this function is autoboxed. This method is just convenience to provide the ability to use this
-     * {@code ShortToDoubleFunction} with JDK specific methods, only accepting {@code Function}.
+     * Returns a composed {@link Function2} which represents this {@link ShortToDoubleFunction}. Thereby the primitive
+     * input argument for this function is autoboxed. This method provides the possibility to use this
+     * {@code ShortToDoubleFunction} with methods provided by the {@code JDK}.
      *
-     * @return A composed {@code Function} which represents this {@code ShortToDoubleFunction}.
+     * @return A composed {@code Function2} which represents this {@code ShortToDoubleFunction}.
      */
     @Nonnull
-    default Function<Short, Double> boxed() {
+    default Function2<Short, Double> boxed() {
         return this::applyAsDouble;
     }
 

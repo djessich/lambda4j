@@ -34,7 +34,6 @@ import java.util.function.IntSupplier;
 import java.util.function.IntToDoubleFunction;
 import java.util.function.IntToLongFunction;
 import java.util.function.IntUnaryOperator;
-import java.util.function.Supplier;
 
 /**
  * Represents a supplier of {@code int}-valued results.
@@ -336,14 +335,14 @@ public interface IntSupplier2 extends Lambda, IntSupplier {
     }
 
     /**
-     * Returns a composed {@link Supplier} which represents this {@link IntSupplier2}. Thereby the primitive input
-     * argument for this supplier is autoboxed. This method is just convenience to provide the ability to use this
-     * {@code IntSupplier2} with JDK specific methods, only accepting {@code Supplier}.
+     * Returns a composed {@link Supplier2} which represents this {@link IntSupplier2}. Thereby the primitive
+     * input argument for this supplier is autoboxed. This method provides the possibility to use this
+     * {@code IntSupplier2} with methods provided by the {@code JDK}.
      *
-     * @return A composed {@code Supplier} which represents this {@code IntSupplier2}.
+     * @return A composed {@code Supplier2} which represents this {@code IntSupplier2}.
      */
     @Nonnull
-    default Supplier<Integer> boxed() {
+    default Supplier2<Integer> boxed() {
         return this::getAsInt;
     }
 

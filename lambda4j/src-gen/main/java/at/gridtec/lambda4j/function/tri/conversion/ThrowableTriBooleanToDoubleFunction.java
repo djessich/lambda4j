@@ -60,7 +60,8 @@ import java.util.function.Function;
  * double}-valued result which is able to throw any {@link Throwable}. This is a primitive specialization of {@link
  * ThrowableTriFunction}.
  * <p>
- * This is a {@link FunctionalInterface} whose functional method is {@link #applyAsDoubleThrows(boolean, boolean, * boolean)}.
+ * This is a {@link FunctionalInterface} whose functional method is {@link #applyAsDoubleThrows(boolean, boolean, *
+ * boolean)}.
  *
  * @param <X> The type of the throwable to be thrown by this function
  * @see ThrowableTriFunction
@@ -649,7 +650,9 @@ public interface ThrowableTriBooleanToDoubleFunction<X extends Throwable> extend
 
     /**
      * Returns a composed {@link ThrowableTriFunction} which represents this {@link
-     * ThrowableTriBooleanToDoubleFunction}. Thereby the primitive input argument for this function is autoboxed.
+     * ThrowableTriBooleanToDoubleFunction}. Thereby the primitive input argument for this function is autoboxed. This
+     * method provides the possibility to use this {@code ThrowableTriBooleanToDoubleFunction} with methods provided by
+     * the {@code JDK}.
      *
      * @return A composed {@code ThrowableTriFunction} which represents this {@code ThrowableTriBooleanToDoubleFunction}.
      */

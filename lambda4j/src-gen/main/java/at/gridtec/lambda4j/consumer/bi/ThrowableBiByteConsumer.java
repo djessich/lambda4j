@@ -357,7 +357,8 @@ public interface ThrowableBiByteConsumer<X extends Throwable> extends Lambda {
 
     /**
      * Returns a composed {@link ThrowableBiConsumer} which represents this {@link ThrowableBiByteConsumer}. Thereby the
-     * primitive input argument for this consumer is autoboxed.
+     * primitive input argument for this consumer is autoboxed. This method provides the possibility to use this {@code
+     * ThrowableBiByteConsumer} with methods provided by the {@code JDK}.
      *
      * @return A composed {@code ThrowableBiConsumer} which represents this {@code ThrowableBiByteConsumer}.
      */

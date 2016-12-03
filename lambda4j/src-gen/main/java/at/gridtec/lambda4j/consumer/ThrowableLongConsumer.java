@@ -318,7 +318,8 @@ public interface ThrowableLongConsumer<X extends Throwable> extends Lambda, Long
 
     /**
      * Returns a composed {@link ThrowableConsumer} which represents this {@link ThrowableLongConsumer}. Thereby the
-     * primitive input argument for this consumer is autoboxed.
+     * primitive input argument for this consumer is autoboxed. This method provides the possibility to use this {@code
+     * ThrowableLongConsumer} with methods provided by the {@code JDK}.
      *
      * @return A composed {@code ThrowableConsumer} which represents this {@code ThrowableLongConsumer}.
      */

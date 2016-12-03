@@ -739,7 +739,8 @@ public interface ThrowableObjDoublePredicate<T, X extends Throwable> extends Lam
 
     /**
      * Returns a composed {@link ThrowableBiPredicate} which represents this {@link ThrowableObjDoublePredicate}.
-     * Thereby the primitive input argument for this predicate is autoboxed.
+     * Thereby the primitive input argument for this predicate is autoboxed. This method provides the possibility to use
+     * this {@code ThrowableObjDoublePredicate} with methods provided by the {@code JDK}.
      *
      * @return A composed {@code ThrowableBiPredicate} which represents this {@code ThrowableObjDoublePredicate}.
      */

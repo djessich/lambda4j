@@ -602,7 +602,8 @@ public interface ThrowableBiCharToDoubleFunction<X extends Throwable> extends La
 
     /**
      * Returns a composed {@link ThrowableBiFunction} which represents this {@link ThrowableBiCharToDoubleFunction}.
-     * Thereby the primitive input argument for this function is autoboxed.
+     * Thereby the primitive input argument for this function is autoboxed. This method provides the possibility to use
+     * this {@code ThrowableBiCharToDoubleFunction} with methods provided by the {@code JDK}.
      *
      * @return A composed {@code ThrowableBiFunction} which represents this {@code ThrowableBiCharToDoubleFunction}.
      */

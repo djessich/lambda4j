@@ -61,7 +61,6 @@ import javax.annotation.Nullable;
 import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.function.BiPredicate;
 import java.util.function.DoubleFunction;
 import java.util.function.DoublePredicate;
 import java.util.function.DoubleUnaryOperator;
@@ -715,14 +714,14 @@ public interface ObjDoublePredicate<T> extends Lambda {
     }
 
     /**
-     * Returns a composed {@link BiPredicate} which represents this {@link ObjDoublePredicate}. Thereby the primitive
-     * input argument for this predicate is autoboxed. This method is just convenience to provide the ability to use
-     * this {@code ObjDoublePredicate} with JDK specific methods, only accepting {@code BiPredicate}.
+     * Returns a composed {@link BiPredicate2} which represents this {@link ObjDoublePredicate}. Thereby the primitive
+     * input argument for this predicate is autoboxed. This method provides the possibility to use this
+     * {@code ObjDoublePredicate} with methods provided by the {@code JDK}.
      *
-     * @return A composed {@code BiPredicate} which represents this {@code ObjDoublePredicate}.
+     * @return A composed {@code BiPredicate2} which represents this {@code ObjDoublePredicate}.
      */
     @Nonnull
-    default BiPredicate<T, Double> boxed() {
+    default BiPredicate2<T, Double> boxed() {
         return this::test;
     }
 

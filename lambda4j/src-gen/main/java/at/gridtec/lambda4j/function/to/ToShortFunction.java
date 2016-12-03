@@ -361,14 +361,14 @@ public interface ToShortFunction<T> extends Lambda {
     }
 
     /**
-     * Returns a composed {@link Function} which represents this {@link ToShortFunction}. Thereby the primitive input
-     * argument for this function is autoboxed. This method is just convenience to provide the ability to use this
-     * {@code ToShortFunction} with JDK specific methods, only accepting {@code Function}.
+     * Returns a composed {@link Function2} which represents this {@link ToShortFunction}. Thereby the primitive
+     * input argument for this function is autoboxed. This method provides the possibility to use this
+     * {@code ToShortFunction} with methods provided by the {@code JDK}.
      *
-     * @return A composed {@code Function} which represents this {@code ToShortFunction}.
+     * @return A composed {@code Function2} which represents this {@code ToShortFunction}.
      */
     @Nonnull
-    default Function<T, Short> boxed() {
+    default Function2<T, Short> boxed() {
         return this::applyAsShort;
     }
 

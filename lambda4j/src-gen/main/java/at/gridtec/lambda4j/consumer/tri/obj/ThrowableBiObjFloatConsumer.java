@@ -478,7 +478,8 @@ public interface ThrowableBiObjFloatConsumer<T, U, X extends Throwable> extends 
 
     /**
      * Returns a composed {@link ThrowableTriConsumer} which represents this {@link ThrowableBiObjFloatConsumer}.
-     * Thereby the primitive input argument for this consumer is autoboxed.
+     * Thereby the primitive input argument for this consumer is autoboxed. This method provides the possibility to use
+     * this {@code ThrowableBiObjFloatConsumer} with methods provided by the {@code JDK}.
      *
      * @return A composed {@code ThrowableTriConsumer} which represents this {@code ThrowableBiObjFloatConsumer}.
      */

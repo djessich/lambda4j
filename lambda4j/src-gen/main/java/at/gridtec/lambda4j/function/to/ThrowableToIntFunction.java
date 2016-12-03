@@ -395,7 +395,8 @@ public interface ThrowableToIntFunction<T, X extends Throwable> extends Lambda, 
 
     /**
      * Returns a composed {@link ThrowableFunction} which represents this {@link ThrowableToIntFunction}. Thereby the
-     * primitive input argument for this function is autoboxed.
+     * primitive input argument for this function is autoboxed. This method provides the possibility to use this {@code
+     * ThrowableToIntFunction} with methods provided by the {@code JDK}.
      *
      * @return A composed {@code ThrowableFunction} which represents this {@code ThrowableToIntFunction}.
      */

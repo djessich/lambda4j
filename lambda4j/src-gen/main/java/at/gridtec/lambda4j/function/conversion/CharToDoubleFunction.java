@@ -37,7 +37,6 @@ import java.util.function.DoublePredicate;
 import java.util.function.DoubleToIntFunction;
 import java.util.function.DoubleToLongFunction;
 import java.util.function.DoubleUnaryOperator;
-import java.util.function.Function;
 
 /**
  * Represents an operation that accepts one {@code char}-valued input argument and produces a
@@ -505,14 +504,14 @@ public interface CharToDoubleFunction extends Lambda {
     }
 
     /**
-     * Returns a composed {@link Function} which represents this {@link CharToDoubleFunction}. Thereby the primitive
-     * input argument for this function is autoboxed. This method is just convenience to provide the ability to use this
-     * {@code CharToDoubleFunction} with JDK specific methods, only accepting {@code Function}.
+     * Returns a composed {@link Function2} which represents this {@link CharToDoubleFunction}. Thereby the primitive
+     * input argument for this function is autoboxed. This method provides the possibility to use this
+     * {@code CharToDoubleFunction} with methods provided by the {@code JDK}.
      *
-     * @return A composed {@code Function} which represents this {@code CharToDoubleFunction}.
+     * @return A composed {@code Function2} which represents this {@code CharToDoubleFunction}.
      */
     @Nonnull
-    default Function<Character, Double> boxed() {
+    default Function2<Character, Double> boxed() {
         return this::applyAsDouble;
     }
 

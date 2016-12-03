@@ -510,7 +510,8 @@ public interface ThrowableCharToDoubleFunction<X extends Throwable> extends Lamb
 
     /**
      * Returns a composed {@link ThrowableFunction} which represents this {@link ThrowableCharToDoubleFunction}. Thereby
-     * the primitive input argument for this function is autoboxed.
+     * the primitive input argument for this function is autoboxed. This method provides the possibility to use this
+     * {@code ThrowableCharToDoubleFunction} with methods provided by the {@code JDK}.
      *
      * @return A composed {@code ThrowableFunction} which represents this {@code ThrowableCharToDoubleFunction}.
      */

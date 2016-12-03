@@ -34,7 +34,6 @@ import javax.annotation.Nullable;
 import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.function.Function;
 
 /**
  * Represents an operation that accepts one {@code short}-valued input argument and produces a
@@ -502,14 +501,14 @@ public interface ShortToFloatFunction extends Lambda {
     }
 
     /**
-     * Returns a composed {@link Function} which represents this {@link ShortToFloatFunction}. Thereby the primitive
-     * input argument for this function is autoboxed. This method is just convenience to provide the ability to use this
-     * {@code ShortToFloatFunction} with JDK specific methods, only accepting {@code Function}.
+     * Returns a composed {@link Function2} which represents this {@link ShortToFloatFunction}. Thereby the primitive
+     * input argument for this function is autoboxed. This method provides the possibility to use this
+     * {@code ShortToFloatFunction} with methods provided by the {@code JDK}.
      *
-     * @return A composed {@code Function} which represents this {@code ShortToFloatFunction}.
+     * @return A composed {@code Function2} which represents this {@code ShortToFloatFunction}.
      */
     @Nonnull
-    default Function<Short, Float> boxed() {
+    default Function2<Short, Float> boxed() {
         return this::applyAsFloat;
     }
 

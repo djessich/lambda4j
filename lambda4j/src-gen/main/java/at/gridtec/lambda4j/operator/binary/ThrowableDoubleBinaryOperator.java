@@ -677,7 +677,8 @@ public interface ThrowableDoubleBinaryOperator<X extends Throwable> extends Lamb
 
     /**
      * Returns a composed {@link ThrowableBinaryOperator} which represents this {@link ThrowableDoubleBinaryOperator}.
-     * Thereby the primitive input argument for this operator is autoboxed.
+     * Thereby the primitive input argument for this operator is autoboxed. This method provides the possibility to use
+     * this {@code ThrowableDoubleBinaryOperator} with methods provided by the {@code JDK}.
      *
      * @return A composed {@code ThrowableBinaryOperator} which represents this {@code ThrowableDoubleBinaryOperator}.
      */

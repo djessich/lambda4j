@@ -621,14 +621,14 @@ public interface BooleanBinaryOperator extends Lambda {
     }
 
     /**
-     * Returns a composed {@link BinaryOperator} which represents this {@link BooleanBinaryOperator}. Thereby the
-     * primitive input argument for this operator is autoboxed. This method is just convenience to provide the ability
-     * to use this {@code BooleanBinaryOperator} with JDK specific methods, only accepting {@code BinaryOperator}.
+     * Returns a composed {@link BinaryOperator2} which represents this {@link BooleanBinaryOperator}. Thereby the
+     * primitive input argument for this operator is autoboxed. This method provides the possibility to use this {@code
+     * BooleanBinaryOperator} with methods provided by the {@code JDK}.
      *
-     * @return A composed {@code BinaryOperator} which represents this {@code BooleanBinaryOperator}.
+     * @return A composed {@code BinaryOperator2} which represents this {@code BooleanBinaryOperator}.
      */
     @Nonnull
-    default BinaryOperator<Boolean> boxed() {
+    default BinaryOperator2<Boolean> boxed() {
         return this::applyAsBoolean;
     }
 

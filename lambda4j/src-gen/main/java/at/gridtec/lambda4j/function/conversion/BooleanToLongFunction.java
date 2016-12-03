@@ -34,7 +34,6 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.DoublePredicate;
-import java.util.function.Function;
 import java.util.function.IntPredicate;
 import java.util.function.LongConsumer;
 import java.util.function.LongFunction;
@@ -510,14 +509,14 @@ public interface BooleanToLongFunction extends Lambda {
     }
 
     /**
-     * Returns a composed {@link Function} which represents this {@link BooleanToLongFunction}. Thereby the primitive
-     * input argument for this function is autoboxed. This method is just convenience to provide the ability to use this
-     * {@code BooleanToLongFunction} with JDK specific methods, only accepting {@code Function}.
+     * Returns a composed {@link Function2} which represents this {@link BooleanToLongFunction}. Thereby the primitive
+     * input argument for this function is autoboxed. This method provides the possibility to use this
+     * {@code BooleanToLongFunction} with methods provided by the {@code JDK}.
      *
-     * @return A composed {@code Function} which represents this {@code BooleanToLongFunction}.
+     * @return A composed {@code Function2} which represents this {@code BooleanToLongFunction}.
      */
     @Nonnull
-    default Function<Boolean, Long> boxed() {
+    default Function2<Boolean, Long> boxed() {
         return this::applyAsLong;
     }
 

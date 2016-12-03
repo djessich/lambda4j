@@ -624,14 +624,14 @@ public interface LongBinaryOperator2 extends Lambda, LongBinaryOperator {
     }
 
     /**
-     * Returns a composed {@link BinaryOperator} which represents this {@link LongBinaryOperator2}. Thereby the
-     * primitive input argument for this operator is autoboxed. This method is just convenience to provide the ability
-     * to use this {@code LongBinaryOperator2} with JDK specific methods, only accepting {@code BinaryOperator}.
+     * Returns a composed {@link BinaryOperator2} which represents this {@link LongBinaryOperator2}. Thereby the
+     * primitive input argument for this operator is autoboxed. This method provides the possibility to use this {@code
+     * LongBinaryOperator2} with methods provided by the {@code JDK}.
      *
-     * @return A composed {@code BinaryOperator} which represents this {@code LongBinaryOperator2}.
+     * @return A composed {@code BinaryOperator2} which represents this {@code LongBinaryOperator2}.
      */
     @Nonnull
-    default BinaryOperator<Long> boxed() {
+    default BinaryOperator2<Long> boxed() {
         return this::applyAsLong;
     }
 

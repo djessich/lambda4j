@@ -615,7 +615,8 @@ public interface ThrowableObjCharToDoubleFunction<T, X extends Throwable> extend
 
     /**
      * Returns a composed {@link ThrowableBiFunction} which represents this {@link ThrowableObjCharToDoubleFunction}.
-     * Thereby the primitive input argument for this function is autoboxed.
+     * Thereby the primitive input argument for this function is autoboxed. This method provides the possibility to use
+     * this {@code ThrowableObjCharToDoubleFunction} with methods provided by the {@code JDK}.
      *
      * @return A composed {@code ThrowableBiFunction} which represents this {@code ThrowableObjCharToDoubleFunction}.
      */

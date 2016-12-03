@@ -45,7 +45,6 @@ import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.Objects;
-import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 import java.util.function.DoubleFunction;
 import java.util.function.Function;
@@ -373,14 +372,14 @@ public interface ObjFloatConsumer<T> extends Lambda {
     }
 
     /**
-     * Returns a composed {@link BiConsumer} which represents this {@link ObjFloatConsumer}. Thereby the primitive input
-     * argument for this consumer is autoboxed. This method is just convenience to provide the ability to use this
-     * {@code ObjFloatConsumer} with JDK specific methods, only accepting {@code BiConsumer}.
+     * Returns a composed {@link BiConsumer2} which represents this {@link ObjFloatConsumer}. Thereby the primitive
+     * input argument for this consumer is autoboxed. This method provides the possibility to use this
+     * {@code ObjFloatConsumer} with methods provided by the {@code JDK}.
      *
-     * @return A composed {@code BiConsumer} which represents this {@code ObjFloatConsumer}.
+     * @return A composed {@code BiConsumer2} which represents this {@code ObjFloatConsumer}.
      */
     @Nonnull
-    default BiConsumer<T, Float> boxed() {
+    default BiConsumer2<T, Float> boxed() {
         return this::accept;
     }
 

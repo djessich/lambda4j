@@ -74,7 +74,8 @@ import java.util.function.Function;
  * {@code long}-valued result which is able to throw any {@link Throwable}. This is a (reference, boolean, boolean)
  * specialization of {@link ThrowableTriFunction}.
  * <p>
- * This is a {@link FunctionalInterface} whose functional method is {@link #applyAsLongThrows(Object, boolean, * boolean)}.
+ * This is a {@link FunctionalInterface} whose functional method is {@link #applyAsLongThrows(Object, boolean, *
+ * boolean)}.
  *
  * @param <T> The type of the first argument to the function
  * @param <X> The type of the throwable to be thrown by this function
@@ -672,7 +673,9 @@ public interface ThrowableObjBiBooleanToLongFunction<T, X extends Throwable> ext
 
     /**
      * Returns a composed {@link ThrowableTriFunction} which represents this {@link
-     * ThrowableObjBiBooleanToLongFunction}. Thereby the primitive input argument for this function is autoboxed.
+     * ThrowableObjBiBooleanToLongFunction}. Thereby the primitive input argument for this function is autoboxed. This
+     * method provides the possibility to use this {@code ThrowableObjBiBooleanToLongFunction} with methods provided by
+     * the {@code JDK}.
      *
      * @return A composed {@code ThrowableTriFunction} which represents this {@code ThrowableObjBiBooleanToLongFunction}.
      */

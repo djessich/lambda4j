@@ -50,7 +50,6 @@ import java.util.function.DoubleToIntFunction;
 import java.util.function.IntPredicate;
 import java.util.function.IntUnaryOperator;
 import java.util.function.LongToIntFunction;
-import java.util.function.Predicate;
 import java.util.function.ToIntFunction;
 
 /**
@@ -623,14 +622,14 @@ public interface IntPredicate2 extends Lambda, IntPredicate {
     }
 
     /**
-     * Returns a composed {@link Predicate} which represents this {@link IntPredicate2}. Thereby the primitive input
-     * argument for this predicate is autoboxed. This method is just convenience to provide the ability to use this
-     * {@code IntPredicate2} with JDK specific methods, only accepting {@code Predicate}.
+     * Returns a composed {@link Predicate2} which represents this {@link IntPredicate2}. Thereby the primitive
+     * input argument for this predicate is autoboxed. This method provides the possibility to use this
+     * {@code IntPredicate2} with methods provided by the {@code JDK}.
      *
-     * @return A composed {@code Predicate} which represents this {@code IntPredicate2}.
+     * @return A composed {@code Predicate2} which represents this {@code IntPredicate2}.
      */
     @Nonnull
-    default Predicate<Integer> boxed() {
+    default Predicate2<Integer> boxed() {
         return this::test;
     }
 

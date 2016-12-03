@@ -799,7 +799,8 @@ public interface ThrowableObjBiIntPredicate<T, X extends Throwable> extends Lamb
 
     /**
      * Returns a composed {@link ThrowableTriPredicate} which represents this {@link ThrowableObjBiIntPredicate}.
-     * Thereby the primitive input argument for this predicate is autoboxed.
+     * Thereby the primitive input argument for this predicate is autoboxed. This method provides the possibility to use
+     * this {@code ThrowableObjBiIntPredicate} with methods provided by the {@code JDK}.
      *
      * @return A composed {@code ThrowableTriPredicate} which represents this {@code ThrowableObjBiIntPredicate}.
      */

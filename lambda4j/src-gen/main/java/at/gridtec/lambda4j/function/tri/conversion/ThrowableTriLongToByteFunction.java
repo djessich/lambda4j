@@ -658,7 +658,8 @@ public interface ThrowableTriLongToByteFunction<X extends Throwable> extends Lam
 
     /**
      * Returns a composed {@link ThrowableTriFunction} which represents this {@link ThrowableTriLongToByteFunction}.
-     * Thereby the primitive input argument for this function is autoboxed.
+     * Thereby the primitive input argument for this function is autoboxed. This method provides the possibility to use
+     * this {@code ThrowableTriLongToByteFunction} with methods provided by the {@code JDK}.
      *
      * @return A composed {@code ThrowableTriFunction} which represents this {@code ThrowableTriLongToByteFunction}.
      */

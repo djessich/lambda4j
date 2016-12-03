@@ -362,7 +362,8 @@ public interface ThrowableDoubleSupplier<X extends Throwable> extends Lambda, Do
 
     /**
      * Returns a composed {@link ThrowableSupplier} which represents this {@link ThrowableDoubleSupplier}. Thereby the
-     * primitive input argument for this supplier is autoboxed.
+     * primitive input argument for this supplier is autoboxed. This method provides the possibility to use this {@code
+     * ThrowableDoubleSupplier} with methods provided by the {@code JDK}.
      *
      * @return A composed {@code ThrowableSupplier} which represents this {@code ThrowableDoubleSupplier}.
      */

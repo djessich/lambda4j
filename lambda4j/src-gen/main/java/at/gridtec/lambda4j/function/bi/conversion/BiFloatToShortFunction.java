@@ -51,7 +51,6 @@ import javax.annotation.Nullable;
 import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.function.BiFunction;
 
 /**
  * Represents an operation that accepts two {@code float}-valued input arguments and produces a
@@ -580,14 +579,14 @@ public interface BiFloatToShortFunction extends Lambda {
     }
 
     /**
-     * Returns a composed {@link BiFunction} which represents this {@link BiFloatToShortFunction}. Thereby the primitive
-     * input argument for this function is autoboxed. This method is just convenience to provide the ability to use this
-     * {@code BiFloatToShortFunction} with JDK specific methods, only accepting {@code BiFunction}.
+     * Returns a composed {@link BiFunction2} which represents this {@link BiFloatToShortFunction}. Thereby the
+     * primitive input argument for this function is autoboxed. This method provides the possibility to use this {@code
+     * BiFloatToShortFunction} with methods provided by the {@code JDK}.
      *
-     * @return A composed {@code BiFunction} which represents this {@code BiFloatToShortFunction}.
+     * @return A composed {@code BiFunction2} which represents this {@code BiFloatToShortFunction}.
      */
     @Nonnull
-    default BiFunction<Float, Float, Short> boxed() {
+    default BiFunction2<Float, Float, Short> boxed() {
         return this::applyAsShort;
     }
 

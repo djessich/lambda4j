@@ -361,7 +361,8 @@ public interface ThrowableIntSupplier<X extends Throwable> extends Lambda, IntSu
 
     /**
      * Returns a composed {@link ThrowableSupplier} which represents this {@link ThrowableIntSupplier}. Thereby the
-     * primitive input argument for this supplier is autoboxed.
+     * primitive input argument for this supplier is autoboxed. This method provides the possibility to use this {@code
+     * ThrowableIntSupplier} with methods provided by the {@code JDK}.
      *
      * @return A composed {@code ThrowableSupplier} which represents this {@code ThrowableIntSupplier}.
      */

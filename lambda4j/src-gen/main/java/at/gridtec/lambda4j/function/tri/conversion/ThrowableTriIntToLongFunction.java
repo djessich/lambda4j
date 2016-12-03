@@ -657,7 +657,8 @@ public interface ThrowableTriIntToLongFunction<X extends Throwable> extends Lamb
 
     /**
      * Returns a composed {@link ThrowableTriFunction} which represents this {@link ThrowableTriIntToLongFunction}.
-     * Thereby the primitive input argument for this function is autoboxed.
+     * Thereby the primitive input argument for this function is autoboxed. This method provides the possibility to use
+     * this {@code ThrowableTriIntToLongFunction} with methods provided by the {@code JDK}.
      *
      * @return A composed {@code ThrowableTriFunction} which represents this {@code ThrowableTriIntToLongFunction}.
      */

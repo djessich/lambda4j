@@ -665,7 +665,8 @@ public interface ThrowableDoublePredicate<X extends Throwable> extends Lambda, D
 
     /**
      * Returns a composed {@link ThrowablePredicate} which represents this {@link ThrowableDoublePredicate}. Thereby the
-     * primitive input argument for this predicate is autoboxed.
+     * primitive input argument for this predicate is autoboxed. This method provides the possibility to use this {@code
+     * ThrowableDoublePredicate} with methods provided by the {@code JDK}.
      *
      * @return A composed {@code ThrowablePredicate} which represents this {@code ThrowableDoublePredicate}.
      */

@@ -27,7 +27,6 @@ import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.Objects;
-import java.util.function.BiConsumer;
 import java.util.function.DoublePredicate;
 import java.util.function.IntPredicate;
 import java.util.function.LongPredicate;
@@ -345,14 +344,14 @@ public interface BiBooleanConsumer extends Lambda {
     }
 
     /**
-     * Returns a composed {@link BiConsumer} which represents this {@link BiBooleanConsumer}. Thereby the primitive
-     * input argument for this consumer is autoboxed. This method is just convenience to provide the ability to use this
-     * {@code BiBooleanConsumer} with JDK specific methods, only accepting {@code BiConsumer}.
+     * Returns a composed {@link BiConsumer2} which represents this {@link BiBooleanConsumer}. Thereby the primitive
+     * input argument for this consumer is autoboxed. This method provides the possibility to use this
+     * {@code BiBooleanConsumer} with methods provided by the {@code JDK}.
      *
-     * @return A composed {@code BiConsumer} which represents this {@code BiBooleanConsumer}.
+     * @return A composed {@code BiConsumer2} which represents this {@code BiBooleanConsumer}.
      */
     @Nonnull
-    default BiConsumer<Boolean, Boolean> boxed() {
+    default BiConsumer2<Boolean, Boolean> boxed() {
         return this::accept;
     }
 

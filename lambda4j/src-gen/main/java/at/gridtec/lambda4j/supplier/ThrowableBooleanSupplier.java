@@ -101,6 +101,30 @@ public interface ThrowableBooleanSupplier<X extends Throwable> extends Lambda, B
     }
 
     /**
+     * Returns a {@link ThrowableBooleanSupplier} that always returns {@code true}.
+     *
+     * @param <X> The type of the throwable to be thrown by this supplier
+     * @return A {@link ThrowableBooleanSupplier} that always returns {@code true}.
+     * @see #alwaysFalse()
+     */
+    @Nonnull
+    static <X extends Throwable> ThrowableBooleanSupplier<X> alwaysTrue() {
+        return () -> true;
+    }
+
+    /**
+     * Returns a {@link ThrowableBooleanSupplier} that always returns {@code false}.
+     *
+     * @param <X> The type of the throwable to be thrown by this supplier
+     * @return A {@link ThrowableBooleanSupplier} that always returns {@code false}.
+     * @see #alwaysTrue()
+     */
+    @Nonnull
+    static <X extends Throwable> ThrowableBooleanSupplier<X> alwaysFalse() {
+        return () -> false;
+    }
+
+    /**
      * Applies this supplier to the given argument.
      *
      * @return The return value from the supplier, which is its result.
@@ -367,7 +391,8 @@ public interface ThrowableBooleanSupplier<X extends Throwable> extends Lambda, B
 
     /**
      * Returns a composed {@link ThrowableSupplier} which represents this {@link ThrowableBooleanSupplier}. Thereby the
-     * primitive input argument for this supplier is autoboxed.
+     * primitive input argument for this supplier is autoboxed. This method provides the possibility to use this {@code
+     * ThrowableBooleanSupplier} with methods provided by the {@code JDK}.
      *
      * @return A composed {@code ThrowableSupplier} which represents this {@code ThrowableBooleanSupplier}.
      */

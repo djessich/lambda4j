@@ -594,7 +594,8 @@ public interface ThrowableBiBooleanToFloatFunction<X extends Throwable> extends 
 
     /**
      * Returns a composed {@link ThrowableBiFunction} which represents this {@link ThrowableBiBooleanToFloatFunction}.
-     * Thereby the primitive input argument for this function is autoboxed.
+     * Thereby the primitive input argument for this function is autoboxed. This method provides the possibility to use
+     * this {@code ThrowableBiBooleanToFloatFunction} with methods provided by the {@code JDK}.
      *
      * @return A composed {@code ThrowableBiFunction} which represents this {@code ThrowableBiBooleanToFloatFunction}.
      */

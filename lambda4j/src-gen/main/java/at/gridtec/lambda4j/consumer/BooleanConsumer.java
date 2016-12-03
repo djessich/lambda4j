@@ -26,7 +26,6 @@ import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.Objects;
-import java.util.function.Consumer;
 import java.util.function.DoublePredicate;
 import java.util.function.IntPredicate;
 import java.util.function.LongPredicate;
@@ -287,14 +286,14 @@ public interface BooleanConsumer extends Lambda {
     }
 
     /**
-     * Returns a composed {@link Consumer} which represents this {@link BooleanConsumer}. Thereby the primitive input
-     * argument for this consumer is autoboxed. This method is just convenience to provide the ability to use this
-     * {@code BooleanConsumer} with JDK specific methods, only accepting {@code Consumer}.
+     * Returns a composed {@link Consumer2} which represents this {@link BooleanConsumer}. Thereby the primitive
+     * input argument for this consumer is autoboxed. This method provides the possibility to use this
+     * {@code BooleanConsumer} with methods provided by the {@code JDK}.
      *
-     * @return A composed {@code Consumer} which represents this {@code BooleanConsumer}.
+     * @return A composed {@code Consumer2} which represents this {@code BooleanConsumer}.
      */
     @Nonnull
-    default Consumer<Boolean> boxed() {
+    default Consumer2<Boolean> boxed() {
         return this::accept;
     }
 

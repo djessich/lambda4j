@@ -657,7 +657,8 @@ public interface ThrowableIntPredicate<X extends Throwable> extends Lambda, IntP
 
     /**
      * Returns a composed {@link ThrowablePredicate} which represents this {@link ThrowableIntPredicate}. Thereby the
-     * primitive input argument for this predicate is autoboxed.
+     * primitive input argument for this predicate is autoboxed. This method provides the possibility to use this {@code
+     * ThrowableIntPredicate} with methods provided by the {@code JDK}.
      *
      * @return A composed {@code ThrowablePredicate} which represents this {@code ThrowableIntPredicate}.
      */

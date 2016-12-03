@@ -34,7 +34,6 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.DoubleUnaryOperator;
-import java.util.function.Function;
 import java.util.function.IntToDoubleFunction;
 import java.util.function.LongToDoubleFunction;
 import java.util.function.ToDoubleFunction;
@@ -505,14 +504,14 @@ public interface DoubleToFloatFunction extends Lambda {
     }
 
     /**
-     * Returns a composed {@link Function} which represents this {@link DoubleToFloatFunction}. Thereby the primitive
-     * input argument for this function is autoboxed. This method is just convenience to provide the ability to use this
-     * {@code DoubleToFloatFunction} with JDK specific methods, only accepting {@code Function}.
+     * Returns a composed {@link Function2} which represents this {@link DoubleToFloatFunction}. Thereby the primitive
+     * input argument for this function is autoboxed. This method provides the possibility to use this
+     * {@code DoubleToFloatFunction} with methods provided by the {@code JDK}.
      *
-     * @return A composed {@code Function} which represents this {@code DoubleToFloatFunction}.
+     * @return A composed {@code Function2} which represents this {@code DoubleToFloatFunction}.
      */
     @Nonnull
-    default Function<Double, Float> boxed() {
+    default Function2<Double, Float> boxed() {
         return this::applyAsFloat;
     }
 
