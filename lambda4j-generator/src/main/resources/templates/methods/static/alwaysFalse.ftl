@@ -1,7 +1,7 @@
 <#-- @formatter:off -->
 
 <#-- parse only if lambda is of type predicate -->
-<#if LambdaUtils.isOfTypePredicate(lambda)>
+<#if LambdaUtils.isOfTypePredicate(lambda) || (LambdaUtils.isOfTypeSupplier(lambda) && (lambda.returnType == boolean))>
     <@.namespace.alwaysFalseMethod/>
 </#if>
 
