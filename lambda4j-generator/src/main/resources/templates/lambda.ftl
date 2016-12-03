@@ -65,6 +65,7 @@ public interface ${lambda.name}${genericParameterTypeStringWithThrowableErasure}
 <#-- if lambda is not a generic operator, include other methods (as generic operators will extend from their function codomain -->
 <#if !isGenericOperator>
     <#include "methods/lambdaMethod.ftl">
+    <#include "methods/partial.ftl">
     <#include "methods/arity.ftl">
     <#include "methods/compose.ftl">
     <#include "methods/composeFromPrimitive.ftl">
