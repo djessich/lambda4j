@@ -25,9 +25,6 @@ import org.apache.commons.lang3.tuple.Triple;
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
@@ -181,17 +178,6 @@ public interface TriFunction<T, U, V, R> extends Lambda {
     @Nonnull
     static <T, U, V, R> TriFunction<T, U, V, R> constant(R ret) {
         return (t, u, v) -> ret;
-    }
-
-    public static void main(String[] args) {
-        List<String> list = new ArrayList<>();
-        list.add("Hello");
-        list.add("World");
-        list.forEach(Function2.of(str -> "?" + str + "!")
-                             .consume(System.out::println)); // mapper function for which the result is consumed
-
-        // Use of a mapper function where each result in the list is consumed by printing to console
-        Arrays.asList("Hello", "World").forEach(Function2.of(str -> "?" + str + "!").consume(System.out::println));
     }
 
     /**
