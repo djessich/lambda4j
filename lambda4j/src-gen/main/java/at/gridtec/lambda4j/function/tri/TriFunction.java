@@ -19,6 +19,8 @@ import at.gridtec.lambda4j.Lambda;
 import at.gridtec.lambda4j.consumer.tri.TriConsumer;
 import at.gridtec.lambda4j.function.Function2;
 import at.gridtec.lambda4j.function.bi.BiFunction2;
+import at.gridtec.lambda4j.operator.binary.IntBinaryOperator2;
+import at.gridtec.lambda4j.operator.unary.IntUnaryOperator2;
 
 import org.apache.commons.lang3.tuple.Triple;
 
@@ -224,6 +226,12 @@ public interface TriFunction<T, U, V, R> extends Lambda {
     @Nonnull
     default Function2<V, R> papply(T t, U u) {
         return (v) -> this.apply(t, u, v);
+    }
+
+    public static void main(String[] args) {
+        IntBinaryOperator2 sum = (a, b) -> a + b;
+        IntUnaryOperator2 partiallyAppliedSum = sum.papplyAsInt(3); // (b) -> 3 + b
+        partiallyAppliedSum.applyAsInt(7); // 10
     }
 
     /**
