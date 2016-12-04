@@ -1,6 +1,6 @@
-# Memoized Method
+# Memoization
 
-Memoization is an optimization technique to speed a functions execution using caching. A memoized function executes with given parameters once and caches the result before returning it using an internal cache. When the same inputs occur again, then the cached result is returned, instead of computing the result again. We can say, that a memoized function "remembers" the result regarding its input parameters.
+Memoization is an optimization technique to speed up a functions execution using caching. A memoized function executes with given parameters once and caches the result before returning it using an internal cache. When the function is called with the same arguments again, then the cached result is returned, instead of computing the result again. We can say, that a memoized function "remembers" the result regarding its input parameters.
 
 If a functional interface has at least one input parameter and returns a result which can be referred to in the cache, the functional interface provides the *memoized* method. This method returns an equal function which represents a memoized version of the actual function (the function of which *memoized* is called), which therefore caches its computed values. The following example will implement the calculation of the factorial of a given number, but as we will use *memoized* method, the result is only computed once.
 
