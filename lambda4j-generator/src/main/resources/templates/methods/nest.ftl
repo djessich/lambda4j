@@ -21,12 +21,12 @@
  * @return A composed {@link ${outputLambda.name}} that applies this ${lambda.type.simpleName} to its input and nests the
  * thrown {@code Throwable} from it.
  * @implNote If thrown {@code Throwable} is of type {@link Error} it is thrown as-is and thus not nested.
- * @see #nestWith(Function)
+ * @see #nest(Function)
  * @see ThrownByFunctionalInterfaceException
  */
 ${annotation.nonnull}
 default ${outputLambda.name}${types.buildGenericParameterTypeString(outputLambda)} nest() {
-    return nestWith(throwable -> new ThrownByFunctionalInterfaceException(throwable.getMessage(), throwable));
+    return nest(throwable -> new ThrownByFunctionalInterfaceException(throwable.getMessage(), throwable));
 }
 </#macro>
 
@@ -45,7 +45,7 @@ default ${outputLambda.name}${types.buildGenericParameterTypeString(outputLambda
  * @see #nest()
  */
 ${annotation.nonnull}
-default ${outputLambda.name}${types.buildGenericParameterTypeString(outputLambda)} nestWith(${annotation.nonnull} final Function<? super Throwable, ? extends RuntimeException> mapper) {
+default ${outputLambda.name}${types.buildGenericParameterTypeString(outputLambda)} nest(${annotation.nonnull} final Function<? super Throwable, ? extends RuntimeException> mapper) {
     return recover(throwable -> {
         throw mapper.apply(throwable);
     });
