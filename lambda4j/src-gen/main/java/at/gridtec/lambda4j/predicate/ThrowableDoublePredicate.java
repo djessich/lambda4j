@@ -683,12 +683,12 @@ public interface ThrowableDoublePredicate<X extends Throwable> extends Lambda, D
      * @return A composed {@link DoublePredicate2} that applies this predicate to its input and nests the thrown {@code
      * Throwable} from it.
      * @implNote If thrown {@code Throwable} is of type {@link Error} it is thrown as-is and thus not nested.
-     * @see #nestWith(Function)
+     * @see #nest(Function)
      * @see ThrownByFunctionalInterfaceException
      */
     @Nonnull
     default DoublePredicate2 nest() {
-        return nestWith(throwable -> new ThrownByFunctionalInterfaceException(throwable.getMessage(), throwable));
+        return nest(throwable -> new ThrownByFunctionalInterfaceException(throwable.getMessage(), throwable));
     }
 
     /**
@@ -704,10 +704,42 @@ public interface ThrowableDoublePredicate<X extends Throwable> extends Lambda, D
      * @see #nest()
      */
     @Nonnull
-    default DoublePredicate2 nestWith(@Nonnull final Function<? super Throwable, ? extends RuntimeException> mapper) {
+    default DoublePredicate2 nest(@Nonnull final Function<? super Throwable, ? extends RuntimeException> mapper) {
         return recover(throwable -> {
             throw mapper.apply(throwable);
         });
+    }
+
+    /**
+     * Returns a composed {@link DoublePredicate2} that first applies this predicate to its input, and then applies the
+     * {@code recover} operation if a {@link Throwable} is thrown from this one. The {@code recover} operation is
+     * represented by a curried operation which is called with throwable information and same argument of this
+     * predicate.
+     *
+     * @param recover The operation to apply if this predicate throws a {@code Throwable}
+     * @return A composed {@link DoublePredicate2} that first applies this predicate to its input, and then applies the
+     * {@code recover} operation if a {@code Throwable} is thrown from this one.
+     * @throws NullPointerException If given argument or the returned enclosing predicate is {@code null}
+     * @implSpec The implementation checks that the returned enclosing predicate from {@code recover} operation is not
+     * {@code null}. If it is, then a {@link NullPointerException} with appropriate message is thrown.
+     * @implNote If thrown {@code Throwable} is of type {@link Error}, it is thrown as-is and thus not passed to {@code
+     * recover} operation.
+     */
+    @Nonnull
+    default DoublePredicate2 recover(@Nonnull final Function<? super Throwable, ? extends DoublePredicate> recover) {
+        Objects.requireNonNull(recover);
+        return (value) -> {
+            try {
+                return this.testThrows(value);
+            } catch (Error e) {
+                throw e;
+            } catch (Throwable throwable) {
+                final DoublePredicate predicate = recover.apply(throwable);
+                Objects.requireNonNull(predicate, () -> "recover returned null for " + throwable.getClass() + ": "
+                        + throwable.getMessage());
+                return predicate.test(value);
+            }
+        };
     }
 
     /**
@@ -785,38 +817,6 @@ public interface ThrowableDoublePredicate<X extends Throwable> extends Lambda, D
                 throw e;
             } catch (Throwable throwable) {
                 throw ThrowableUtils.sneakyThrow(throwable);
-            }
-        };
-    }
-
-    /**
-     * Returns a composed {@link DoublePredicate2} that first applies this predicate to its input, and then applies the
-     * {@code recover} operation if a {@link Throwable} is thrown from this one. The {@code recover} operation is
-     * represented by a curried operation which is called with throwable information and same argument of this
-     * predicate.
-     *
-     * @param recover The operation to apply if this predicate throws a {@code Throwable}
-     * @return A composed {@link DoublePredicate2} that first applies this predicate to its input, and then applies the
-     * {@code recover} operation if a {@code Throwable} is thrown from this one.
-     * @throws NullPointerException If given argument or the returned enclosing predicate is {@code null}
-     * @implSpec The implementation checks that the returned enclosing predicate from {@code recover} operation is not
-     * {@code null}. If it is, then a {@link NullPointerException} with appropriate message is thrown.
-     * @implNote If thrown {@code Throwable} is of type {@link Error}, it is thrown as-is and thus not passed to {@code
-     * recover} operation.
-     */
-    @Nonnull
-    default DoublePredicate2 recover(@Nonnull final Function<? super Throwable, ? extends DoublePredicate> recover) {
-        Objects.requireNonNull(recover);
-        return (value) -> {
-            try {
-                return this.testThrows(value);
-            } catch (Error e) {
-                throw e;
-            } catch (Throwable throwable) {
-                final DoublePredicate predicate = recover.apply(throwable);
-                Objects.requireNonNull(predicate, () -> "recover returned null for " + throwable.getClass() + ": "
-                        + throwable.getMessage());
-                return predicate.test(value);
             }
         };
     }

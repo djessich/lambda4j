@@ -328,7 +328,7 @@ public interface ToLongFunction2<T> extends Lambda, ToLongFunction<T> {
      */
     @Nonnull
     default ToLongFunction2<T> reversed() {
-        return (t) -> applyAsLong(t);
+        return this;
     }
 
     /**

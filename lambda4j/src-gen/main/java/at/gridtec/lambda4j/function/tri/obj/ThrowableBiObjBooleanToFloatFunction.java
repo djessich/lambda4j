@@ -780,12 +780,12 @@ public interface ThrowableBiObjBooleanToFloatFunction<T, U, X extends Throwable>
      * @return A composed {@link BiObjBooleanToFloatFunction} that applies this function to its input and nests the
      * thrown {@code Throwable} from it.
      * @implNote If thrown {@code Throwable} is of type {@link Error} it is thrown as-is and thus not nested.
-     * @see #nestWith(Function)
+     * @see #nest(Function)
      * @see ThrownByFunctionalInterfaceException
      */
     @Nonnull
     default BiObjBooleanToFloatFunction<T, U> nest() {
-        return nestWith(throwable -> new ThrownByFunctionalInterfaceException(throwable.getMessage(), throwable));
+        return nest(throwable -> new ThrownByFunctionalInterfaceException(throwable.getMessage(), throwable));
     }
 
     /**
@@ -801,11 +801,44 @@ public interface ThrowableBiObjBooleanToFloatFunction<T, U, X extends Throwable>
      * @see #nest()
      */
     @Nonnull
-    default BiObjBooleanToFloatFunction<T, U> nestWith(
+    default BiObjBooleanToFloatFunction<T, U> nest(
             @Nonnull final Function<? super Throwable, ? extends RuntimeException> mapper) {
         return recover(throwable -> {
             throw mapper.apply(throwable);
         });
+    }
+
+    /**
+     * Returns a composed {@link BiObjBooleanToFloatFunction} that first applies this function to its input, and then
+     * applies the {@code recover} operation if a {@link Throwable} is thrown from this one. The {@code recover}
+     * operation is represented by a curried operation which is called with throwable information and same arguments of
+     * this function.
+     *
+     * @param recover The operation to apply if this function throws a {@code Throwable}
+     * @return A composed {@link BiObjBooleanToFloatFunction} that first applies this function to its input, and then
+     * applies the {@code recover} operation if a {@code Throwable} is thrown from this one.
+     * @throws NullPointerException If given argument or the returned enclosing function is {@code null}
+     * @implSpec The implementation checks that the returned enclosing function from {@code recover} operation is not
+     * {@code null}. If it is, then a {@link NullPointerException} with appropriate message is thrown.
+     * @implNote If thrown {@code Throwable} is of type {@link Error}, it is thrown as-is and thus not passed to {@code
+     * recover} operation.
+     */
+    @Nonnull
+    default BiObjBooleanToFloatFunction<T, U> recover(
+            @Nonnull final Function<? super Throwable, ? extends BiObjBooleanToFloatFunction<? super T, ? super U>> recover) {
+        Objects.requireNonNull(recover);
+        return (t, u, value) -> {
+            try {
+                return this.applyAsFloatThrows(t, u, value);
+            } catch (Error e) {
+                throw e;
+            } catch (Throwable throwable) {
+                final BiObjBooleanToFloatFunction<? super T, ? super U> function = recover.apply(throwable);
+                Objects.requireNonNull(function, () -> "recover returned null for " + throwable.getClass() + ": "
+                        + throwable.getMessage());
+                return function.applyAsFloat(t, u, value);
+            }
+        };
     }
 
     /**
@@ -883,39 +916,6 @@ public interface ThrowableBiObjBooleanToFloatFunction<T, U, X extends Throwable>
                 throw e;
             } catch (Throwable throwable) {
                 throw ThrowableUtils.sneakyThrow(throwable);
-            }
-        };
-    }
-
-    /**
-     * Returns a composed {@link BiObjBooleanToFloatFunction} that first applies this function to its input, and then
-     * applies the {@code recover} operation if a {@link Throwable} is thrown from this one. The {@code recover}
-     * operation is represented by a curried operation which is called with throwable information and same arguments of
-     * this function.
-     *
-     * @param recover The operation to apply if this function throws a {@code Throwable}
-     * @return A composed {@link BiObjBooleanToFloatFunction} that first applies this function to its input, and then
-     * applies the {@code recover} operation if a {@code Throwable} is thrown from this one.
-     * @throws NullPointerException If given argument or the returned enclosing function is {@code null}
-     * @implSpec The implementation checks that the returned enclosing function from {@code recover} operation is not
-     * {@code null}. If it is, then a {@link NullPointerException} with appropriate message is thrown.
-     * @implNote If thrown {@code Throwable} is of type {@link Error}, it is thrown as-is and thus not passed to {@code
-     * recover} operation.
-     */
-    @Nonnull
-    default BiObjBooleanToFloatFunction<T, U> recover(
-            @Nonnull final Function<? super Throwable, ? extends BiObjBooleanToFloatFunction<? super T, ? super U>> recover) {
-        Objects.requireNonNull(recover);
-        return (t, u, value) -> {
-            try {
-                return this.applyAsFloatThrows(t, u, value);
-            } catch (Error e) {
-                throw e;
-            } catch (Throwable throwable) {
-                final BiObjBooleanToFloatFunction<? super T, ? super U> function = recover.apply(throwable);
-                Objects.requireNonNull(function, () -> "recover returned null for " + throwable.getClass() + ": "
-                        + throwable.getMessage());
-                return function.applyAsFloat(t, u, value);
             }
         };
     }

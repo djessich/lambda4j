@@ -129,12 +129,12 @@ public interface ThrowableRunnable<X extends Throwable> extends Lambda, Runnable
      * @return A composed {@link Runnable2} that applies this runnable to its input and nests the thrown {@code
      * Throwable} from it.
      * @implNote If thrown {@code Throwable} is of type {@link Error} it is thrown as-is and thus not nested.
-     * @see #nestWith(Function)
+     * @see #nest(Function)
      * @see ThrownByFunctionalInterfaceException
      */
     @Nonnull
     default Runnable2 nest() {
-        return nestWith(throwable -> new ThrownByFunctionalInterfaceException(throwable.getMessage(), throwable));
+        return nest(throwable -> new ThrownByFunctionalInterfaceException(throwable.getMessage(), throwable));
     }
 
     /**
@@ -150,10 +150,41 @@ public interface ThrowableRunnable<X extends Throwable> extends Lambda, Runnable
      * @see #nest()
      */
     @Nonnull
-    default Runnable2 nestWith(@Nonnull final Function<? super Throwable, ? extends RuntimeException> mapper) {
+    default Runnable2 nest(@Nonnull final Function<? super Throwable, ? extends RuntimeException> mapper) {
         return recover(throwable -> {
             throw mapper.apply(throwable);
         });
+    }
+
+    /**
+     * Returns a composed {@link Runnable2} that first applies this runnable to its input, and then applies the {@code
+     * recover} operation if a {@link Throwable} is thrown from this one. The {@code recover} operation is represented
+     * by a curried operation which is called with throwable information and same argument of this runnable.
+     *
+     * @param recover The operation to apply if this runnable throws a {@code Throwable}
+     * @return A composed {@link Runnable2} that first applies this runnable to its input, and then applies the {@code
+     * recover} operation if a {@code Throwable} is thrown from this one.
+     * @throws NullPointerException If given argument or the returned enclosing runnable is {@code null}
+     * @implSpec The implementation checks that the returned enclosing runnable from {@code recover} operation is not
+     * {@code null}. If it is, then a {@link NullPointerException} with appropriate message is thrown.
+     * @implNote If thrown {@code Throwable} is of type {@link Error}, it is thrown as-is and thus not passed to {@code
+     * recover} operation.
+     */
+    @Nonnull
+    default Runnable2 recover(@Nonnull final Function<? super Throwable, ? extends Runnable> recover) {
+        Objects.requireNonNull(recover);
+        return () -> {
+            try {
+                this.runThrows();
+            } catch (Error e) {
+                throw e;
+            } catch (Throwable throwable) {
+                final Runnable runnable = recover.apply(throwable);
+                Objects.requireNonNull(runnable, () -> "recover returned null for " + throwable.getClass() + ": "
+                        + throwable.getMessage());
+                runnable.run();
+            }
+        };
     }
 
     /**
@@ -231,37 +262,6 @@ public interface ThrowableRunnable<X extends Throwable> extends Lambda, Runnable
                 throw e;
             } catch (Throwable throwable) {
                 throw ThrowableUtils.sneakyThrow(throwable);
-            }
-        };
-    }
-
-    /**
-     * Returns a composed {@link Runnable2} that first applies this runnable to its input, and then applies the {@code
-     * recover} operation if a {@link Throwable} is thrown from this one. The {@code recover} operation is represented
-     * by a curried operation which is called with throwable information and same argument of this runnable.
-     *
-     * @param recover The operation to apply if this runnable throws a {@code Throwable}
-     * @return A composed {@link Runnable2} that first applies this runnable to its input, and then applies the {@code
-     * recover} operation if a {@code Throwable} is thrown from this one.
-     * @throws NullPointerException If given argument or the returned enclosing runnable is {@code null}
-     * @implSpec The implementation checks that the returned enclosing runnable from {@code recover} operation is not
-     * {@code null}. If it is, then a {@link NullPointerException} with appropriate message is thrown.
-     * @implNote If thrown {@code Throwable} is of type {@link Error}, it is thrown as-is and thus not passed to {@code
-     * recover} operation.
-     */
-    @Nonnull
-    default Runnable2 recover(@Nonnull final Function<? super Throwable, ? extends Runnable> recover) {
-        Objects.requireNonNull(recover);
-        return () -> {
-            try {
-                this.runThrows();
-            } catch (Error e) {
-                throw e;
-            } catch (Throwable throwable) {
-                final Runnable runnable = recover.apply(throwable);
-                Objects.requireNonNull(runnable, () -> "recover returned null for " + throwable.getClass() + ": "
-                        + throwable.getMessage());
-                runnable.run();
             }
         };
     }

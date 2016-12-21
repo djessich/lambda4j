@@ -440,7 +440,7 @@ public interface Predicate2<T> extends Lambda, Predicate<T> {
      */
     @Nonnull
     default Predicate2<T> reversed() {
-        return (t) -> test(t);
+        return this;
     }
 
     /**

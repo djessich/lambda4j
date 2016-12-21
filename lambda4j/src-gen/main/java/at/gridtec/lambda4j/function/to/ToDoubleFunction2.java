@@ -329,7 +329,7 @@ public interface ToDoubleFunction2<T> extends Lambda, ToDoubleFunction<T> {
      */
     @Nonnull
     default ToDoubleFunction2<T> reversed() {
-        return (t) -> applyAsDouble(t);
+        return this;
     }
 
     /**

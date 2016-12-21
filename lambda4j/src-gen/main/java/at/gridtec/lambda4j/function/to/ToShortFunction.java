@@ -326,7 +326,7 @@ public interface ToShortFunction<T> extends Lambda {
      */
     @Nonnull
     default ToShortFunction<T> reversed() {
-        return (t) -> applyAsShort(t);
+        return this;
     }
 
     /**

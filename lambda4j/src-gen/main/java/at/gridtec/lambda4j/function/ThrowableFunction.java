@@ -228,13 +228,23 @@ public interface ThrowableFunction<T, R, X extends Throwable> extends Lambda, Fu
     }
 
     /**
+     * Returns a curried version of this function.
+     *
+     * @return A curried version of this function.
+     */
+    @Nonnull
+    default ThrowableFunction<T, R, X> curried() {
+        return this;
+    }
+
+    /**
      * Returns a reversed version of this function. This may be useful in recursive context.
      *
      * @return A reversed version of this function.
      */
     @Nonnull
     default ThrowableFunction<T, R, X> reversed() {
-        return (t) -> applyThrows(t);
+        return this;
     }
 
     /**
@@ -290,12 +300,12 @@ public interface ThrowableFunction<T, R, X extends Throwable> extends Lambda, Fu
      * @return A composed {@link Function2} that applies this function to its input and nests the thrown {@code
      * Throwable} from it.
      * @implNote If thrown {@code Throwable} is of type {@link Error} it is thrown as-is and thus not nested.
-     * @see #nestWith(Function)
+     * @see #nest(Function)
      * @see ThrownByFunctionalInterfaceException
      */
     @Nonnull
     default Function2<T, R> nest() {
-        return nestWith(throwable -> new ThrownByFunctionalInterfaceException(throwable.getMessage(), throwable));
+        return nest(throwable -> new ThrownByFunctionalInterfaceException(throwable.getMessage(), throwable));
     }
 
     /**
@@ -311,10 +321,42 @@ public interface ThrowableFunction<T, R, X extends Throwable> extends Lambda, Fu
      * @see #nest()
      */
     @Nonnull
-    default Function2<T, R> nestWith(@Nonnull final Function<? super Throwable, ? extends RuntimeException> mapper) {
+    default Function2<T, R> nest(@Nonnull final Function<? super Throwable, ? extends RuntimeException> mapper) {
         return recover(throwable -> {
             throw mapper.apply(throwable);
         });
+    }
+
+    /**
+     * Returns a composed {@link Function2} that first applies this function to its input, and then applies the {@code
+     * recover} operation if a {@link Throwable} is thrown from this one. The {@code recover} operation is represented
+     * by a curried operation which is called with throwable information and same argument of this function.
+     *
+     * @param recover The operation to apply if this function throws a {@code Throwable}
+     * @return A composed {@link Function2} that first applies this function to its input, and then applies the {@code
+     * recover} operation if a {@code Throwable} is thrown from this one.
+     * @throws NullPointerException If given argument or the returned enclosing function is {@code null}
+     * @implSpec The implementation checks that the returned enclosing function from {@code recover} operation is not
+     * {@code null}. If it is, then a {@link NullPointerException} with appropriate message is thrown.
+     * @implNote If thrown {@code Throwable} is of type {@link Error}, it is thrown as-is and thus not passed to {@code
+     * recover} operation.
+     */
+    @Nonnull
+    default Function2<T, R> recover(
+            @Nonnull final Function<? super Throwable, ? extends Function<? super T, ? extends R>> recover) {
+        Objects.requireNonNull(recover);
+        return (t) -> {
+            try {
+                return this.applyThrows(t);
+            } catch (Error e) {
+                throw e;
+            } catch (Throwable throwable) {
+                final Function<? super T, ? extends R> function = recover.apply(throwable);
+                Objects.requireNonNull(function, () -> "recover returned null for " + throwable.getClass() + ": "
+                        + throwable.getMessage());
+                return function.apply(t);
+            }
+        };
     }
 
     /**
@@ -392,38 +434,6 @@ public interface ThrowableFunction<T, R, X extends Throwable> extends Lambda, Fu
                 throw e;
             } catch (Throwable throwable) {
                 throw ThrowableUtils.sneakyThrow(throwable);
-            }
-        };
-    }
-
-    /**
-     * Returns a composed {@link Function2} that first applies this function to its input, and then applies the {@code
-     * recover} operation if a {@link Throwable} is thrown from this one. The {@code recover} operation is represented
-     * by a curried operation which is called with throwable information and same argument of this function.
-     *
-     * @param recover The operation to apply if this function throws a {@code Throwable}
-     * @return A composed {@link Function2} that first applies this function to its input, and then applies the {@code
-     * recover} operation if a {@code Throwable} is thrown from this one.
-     * @throws NullPointerException If given argument or the returned enclosing function is {@code null}
-     * @implSpec The implementation checks that the returned enclosing function from {@code recover} operation is not
-     * {@code null}. If it is, then a {@link NullPointerException} with appropriate message is thrown.
-     * @implNote If thrown {@code Throwable} is of type {@link Error}, it is thrown as-is and thus not passed to {@code
-     * recover} operation.
-     */
-    @Nonnull
-    default Function2<T, R> recover(
-            @Nonnull final Function<? super Throwable, ? extends Function<? super T, ? extends R>> recover) {
-        Objects.requireNonNull(recover);
-        return (t) -> {
-            try {
-                return this.applyThrows(t);
-            } catch (Error e) {
-                throw e;
-            } catch (Throwable throwable) {
-                final Function<? super T, ? extends R> function = recover.apply(throwable);
-                Objects.requireNonNull(function, () -> "recover returned null for " + throwable.getClass() + ": "
-                        + throwable.getMessage());
-                return function.apply(t);
             }
         };
     }

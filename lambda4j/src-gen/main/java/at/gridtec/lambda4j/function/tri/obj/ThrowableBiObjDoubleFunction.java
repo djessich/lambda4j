@@ -653,12 +653,12 @@ public interface ThrowableBiObjDoubleFunction<T, U, R, X extends Throwable> exte
      * @return A composed {@link BiObjDoubleFunction} that applies this function to its input and nests the thrown
      * {@code Throwable} from it.
      * @implNote If thrown {@code Throwable} is of type {@link Error} it is thrown as-is and thus not nested.
-     * @see #nestWith(Function)
+     * @see #nest(Function)
      * @see ThrownByFunctionalInterfaceException
      */
     @Nonnull
     default BiObjDoubleFunction<T, U, R> nest() {
-        return nestWith(throwable -> new ThrownByFunctionalInterfaceException(throwable.getMessage(), throwable));
+        return nest(throwable -> new ThrownByFunctionalInterfaceException(throwable.getMessage(), throwable));
     }
 
     /**
@@ -674,11 +674,44 @@ public interface ThrowableBiObjDoubleFunction<T, U, R, X extends Throwable> exte
      * @see #nest()
      */
     @Nonnull
-    default BiObjDoubleFunction<T, U, R> nestWith(
+    default BiObjDoubleFunction<T, U, R> nest(
             @Nonnull final Function<? super Throwable, ? extends RuntimeException> mapper) {
         return recover(throwable -> {
             throw mapper.apply(throwable);
         });
+    }
+
+    /**
+     * Returns a composed {@link BiObjDoubleFunction} that first applies this function to its input, and then applies
+     * the {@code recover} operation if a {@link Throwable} is thrown from this one. The {@code recover} operation is
+     * represented by a curried operation which is called with throwable information and same arguments of this
+     * function.
+     *
+     * @param recover The operation to apply if this function throws a {@code Throwable}
+     * @return A composed {@link BiObjDoubleFunction} that first applies this function to its input, and then applies
+     * the {@code recover} operation if a {@code Throwable} is thrown from this one.
+     * @throws NullPointerException If given argument or the returned enclosing function is {@code null}
+     * @implSpec The implementation checks that the returned enclosing function from {@code recover} operation is not
+     * {@code null}. If it is, then a {@link NullPointerException} with appropriate message is thrown.
+     * @implNote If thrown {@code Throwable} is of type {@link Error}, it is thrown as-is and thus not passed to {@code
+     * recover} operation.
+     */
+    @Nonnull
+    default BiObjDoubleFunction<T, U, R> recover(
+            @Nonnull final Function<? super Throwable, ? extends BiObjDoubleFunction<? super T, ? super U, ? extends R>> recover) {
+        Objects.requireNonNull(recover);
+        return (t, u, value) -> {
+            try {
+                return this.applyThrows(t, u, value);
+            } catch (Error e) {
+                throw e;
+            } catch (Throwable throwable) {
+                final BiObjDoubleFunction<? super T, ? super U, ? extends R> function = recover.apply(throwable);
+                Objects.requireNonNull(function, () -> "recover returned null for " + throwable.getClass() + ": "
+                        + throwable.getMessage());
+                return function.apply(t, u, value);
+            }
+        };
     }
 
     /**
@@ -756,39 +789,6 @@ public interface ThrowableBiObjDoubleFunction<T, U, R, X extends Throwable> exte
                 throw e;
             } catch (Throwable throwable) {
                 throw ThrowableUtils.sneakyThrow(throwable);
-            }
-        };
-    }
-
-    /**
-     * Returns a composed {@link BiObjDoubleFunction} that first applies this function to its input, and then applies
-     * the {@code recover} operation if a {@link Throwable} is thrown from this one. The {@code recover} operation is
-     * represented by a curried operation which is called with throwable information and same arguments of this
-     * function.
-     *
-     * @param recover The operation to apply if this function throws a {@code Throwable}
-     * @return A composed {@link BiObjDoubleFunction} that first applies this function to its input, and then applies
-     * the {@code recover} operation if a {@code Throwable} is thrown from this one.
-     * @throws NullPointerException If given argument or the returned enclosing function is {@code null}
-     * @implSpec The implementation checks that the returned enclosing function from {@code recover} operation is not
-     * {@code null}. If it is, then a {@link NullPointerException} with appropriate message is thrown.
-     * @implNote If thrown {@code Throwable} is of type {@link Error}, it is thrown as-is and thus not passed to {@code
-     * recover} operation.
-     */
-    @Nonnull
-    default BiObjDoubleFunction<T, U, R> recover(
-            @Nonnull final Function<? super Throwable, ? extends BiObjDoubleFunction<? super T, ? super U, ? extends R>> recover) {
-        Objects.requireNonNull(recover);
-        return (t, u, value) -> {
-            try {
-                return this.applyThrows(t, u, value);
-            } catch (Error e) {
-                throw e;
-            } catch (Throwable throwable) {
-                final BiObjDoubleFunction<? super T, ? super U, ? extends R> function = recover.apply(throwable);
-                Objects.requireNonNull(function, () -> "recover returned null for " + throwable.getClass() + ": "
-                        + throwable.getMessage());
-                return function.apply(t, u, value);
             }
         };
     }

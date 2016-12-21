@@ -282,12 +282,12 @@ public interface ThrowableTriConsumer<T, U, V, X extends Throwable> extends Lamb
      * @return A composed {@link TriConsumer} that applies this consumer to its input and nests the thrown {@code
      * Throwable} from it.
      * @implNote If thrown {@code Throwable} is of type {@link Error} it is thrown as-is and thus not nested.
-     * @see #nestWith(Function)
+     * @see #nest(Function)
      * @see ThrownByFunctionalInterfaceException
      */
     @Nonnull
     default TriConsumer<T, U, V> nest() {
-        return nestWith(throwable -> new ThrownByFunctionalInterfaceException(throwable.getMessage(), throwable));
+        return nest(throwable -> new ThrownByFunctionalInterfaceException(throwable.getMessage(), throwable));
     }
 
     /**
@@ -303,11 +303,42 @@ public interface ThrowableTriConsumer<T, U, V, X extends Throwable> extends Lamb
      * @see #nest()
      */
     @Nonnull
-    default TriConsumer<T, U, V> nestWith(
-            @Nonnull final Function<? super Throwable, ? extends RuntimeException> mapper) {
+    default TriConsumer<T, U, V> nest(@Nonnull final Function<? super Throwable, ? extends RuntimeException> mapper) {
         return recover(throwable -> {
             throw mapper.apply(throwable);
         });
+    }
+
+    /**
+     * Returns a composed {@link TriConsumer} that first applies this consumer to its input, and then applies the {@code
+     * recover} operation if a {@link Throwable} is thrown from this one. The {@code recover} operation is represented
+     * by a curried operation which is called with throwable information and same arguments of this consumer.
+     *
+     * @param recover The operation to apply if this consumer throws a {@code Throwable}
+     * @return A composed {@link TriConsumer} that first applies this consumer to its input, and then applies the {@code
+     * recover} operation if a {@code Throwable} is thrown from this one.
+     * @throws NullPointerException If given argument or the returned enclosing consumer is {@code null}
+     * @implSpec The implementation checks that the returned enclosing consumer from {@code recover} operation is not
+     * {@code null}. If it is, then a {@link NullPointerException} with appropriate message is thrown.
+     * @implNote If thrown {@code Throwable} is of type {@link Error}, it is thrown as-is and thus not passed to {@code
+     * recover} operation.
+     */
+    @Nonnull
+    default TriConsumer<T, U, V> recover(
+            @Nonnull final Function<? super Throwable, ? extends TriConsumer<? super T, ? super U, ? super V>> recover) {
+        Objects.requireNonNull(recover);
+        return (t, u, v) -> {
+            try {
+                this.acceptThrows(t, u, v);
+            } catch (Error e) {
+                throw e;
+            } catch (Throwable throwable) {
+                final TriConsumer<? super T, ? super U, ? super V> consumer = recover.apply(throwable);
+                Objects.requireNonNull(consumer, () -> "recover returned null for " + throwable.getClass() + ": "
+                        + throwable.getMessage());
+                consumer.accept(t, u, v);
+            }
+        };
     }
 
     /**
@@ -385,38 +416,6 @@ public interface ThrowableTriConsumer<T, U, V, X extends Throwable> extends Lamb
                 throw e;
             } catch (Throwable throwable) {
                 throw ThrowableUtils.sneakyThrow(throwable);
-            }
-        };
-    }
-
-    /**
-     * Returns a composed {@link TriConsumer} that first applies this consumer to its input, and then applies the {@code
-     * recover} operation if a {@link Throwable} is thrown from this one. The {@code recover} operation is represented
-     * by a curried operation which is called with throwable information and same arguments of this consumer.
-     *
-     * @param recover The operation to apply if this consumer throws a {@code Throwable}
-     * @return A composed {@link TriConsumer} that first applies this consumer to its input, and then applies the {@code
-     * recover} operation if a {@code Throwable} is thrown from this one.
-     * @throws NullPointerException If given argument or the returned enclosing consumer is {@code null}
-     * @implSpec The implementation checks that the returned enclosing consumer from {@code recover} operation is not
-     * {@code null}. If it is, then a {@link NullPointerException} with appropriate message is thrown.
-     * @implNote If thrown {@code Throwable} is of type {@link Error}, it is thrown as-is and thus not passed to {@code
-     * recover} operation.
-     */
-    @Nonnull
-    default TriConsumer<T, U, V> recover(
-            @Nonnull final Function<? super Throwable, ? extends TriConsumer<? super T, ? super U, ? super V>> recover) {
-        Objects.requireNonNull(recover);
-        return (t, u, v) -> {
-            try {
-                this.acceptThrows(t, u, v);
-            } catch (Error e) {
-                throw e;
-            } catch (Throwable throwable) {
-                final TriConsumer<? super T, ? super U, ? super V> consumer = recover.apply(throwable);
-                Objects.requireNonNull(consumer, () -> "recover returned null for " + throwable.getClass() + ": "
-                        + throwable.getMessage());
-                consumer.accept(t, u, v);
             }
         };
     }

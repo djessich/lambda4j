@@ -388,12 +388,12 @@ public interface ThrowableBiShortConsumer<X extends Throwable> extends Lambda {
      * @return A composed {@link BiShortConsumer} that applies this consumer to its input and nests the thrown {@code
      * Throwable} from it.
      * @implNote If thrown {@code Throwable} is of type {@link Error} it is thrown as-is and thus not nested.
-     * @see #nestWith(Function)
+     * @see #nest(Function)
      * @see ThrownByFunctionalInterfaceException
      */
     @Nonnull
     default BiShortConsumer nest() {
-        return nestWith(throwable -> new ThrownByFunctionalInterfaceException(throwable.getMessage(), throwable));
+        return nest(throwable -> new ThrownByFunctionalInterfaceException(throwable.getMessage(), throwable));
     }
 
     /**
@@ -409,10 +409,42 @@ public interface ThrowableBiShortConsumer<X extends Throwable> extends Lambda {
      * @see #nest()
      */
     @Nonnull
-    default BiShortConsumer nestWith(@Nonnull final Function<? super Throwable, ? extends RuntimeException> mapper) {
+    default BiShortConsumer nest(@Nonnull final Function<? super Throwable, ? extends RuntimeException> mapper) {
         return recover(throwable -> {
             throw mapper.apply(throwable);
         });
+    }
+
+    /**
+     * Returns a composed {@link BiShortConsumer} that first applies this consumer to its input, and then applies the
+     * {@code recover} operation if a {@link Throwable} is thrown from this one. The {@code recover} operation is
+     * represented by a curried operation which is called with throwable information and same arguments of this
+     * consumer.
+     *
+     * @param recover The operation to apply if this consumer throws a {@code Throwable}
+     * @return A composed {@link BiShortConsumer} that first applies this consumer to its input, and then applies the
+     * {@code recover} operation if a {@code Throwable} is thrown from this one.
+     * @throws NullPointerException If given argument or the returned enclosing consumer is {@code null}
+     * @implSpec The implementation checks that the returned enclosing consumer from {@code recover} operation is not
+     * {@code null}. If it is, then a {@link NullPointerException} with appropriate message is thrown.
+     * @implNote If thrown {@code Throwable} is of type {@link Error}, it is thrown as-is and thus not passed to {@code
+     * recover} operation.
+     */
+    @Nonnull
+    default BiShortConsumer recover(@Nonnull final Function<? super Throwable, ? extends BiShortConsumer> recover) {
+        Objects.requireNonNull(recover);
+        return (value1, value2) -> {
+            try {
+                this.acceptThrows(value1, value2);
+            } catch (Error e) {
+                throw e;
+            } catch (Throwable throwable) {
+                final BiShortConsumer consumer = recover.apply(throwable);
+                Objects.requireNonNull(consumer, () -> "recover returned null for " + throwable.getClass() + ": "
+                        + throwable.getMessage());
+                consumer.accept(value1, value2);
+            }
+        };
     }
 
     /**
@@ -490,38 +522,6 @@ public interface ThrowableBiShortConsumer<X extends Throwable> extends Lambda {
                 throw e;
             } catch (Throwable throwable) {
                 throw ThrowableUtils.sneakyThrow(throwable);
-            }
-        };
-    }
-
-    /**
-     * Returns a composed {@link BiShortConsumer} that first applies this consumer to its input, and then applies the
-     * {@code recover} operation if a {@link Throwable} is thrown from this one. The {@code recover} operation is
-     * represented by a curried operation which is called with throwable information and same arguments of this
-     * consumer.
-     *
-     * @param recover The operation to apply if this consumer throws a {@code Throwable}
-     * @return A composed {@link BiShortConsumer} that first applies this consumer to its input, and then applies the
-     * {@code recover} operation if a {@code Throwable} is thrown from this one.
-     * @throws NullPointerException If given argument or the returned enclosing consumer is {@code null}
-     * @implSpec The implementation checks that the returned enclosing consumer from {@code recover} operation is not
-     * {@code null}. If it is, then a {@link NullPointerException} with appropriate message is thrown.
-     * @implNote If thrown {@code Throwable} is of type {@link Error}, it is thrown as-is and thus not passed to {@code
-     * recover} operation.
-     */
-    @Nonnull
-    default BiShortConsumer recover(@Nonnull final Function<? super Throwable, ? extends BiShortConsumer> recover) {
-        Objects.requireNonNull(recover);
-        return (value1, value2) -> {
-            try {
-                this.acceptThrows(value1, value2);
-            } catch (Error e) {
-                throw e;
-            } catch (Throwable throwable) {
-                final BiShortConsumer consumer = recover.apply(throwable);
-                Objects.requireNonNull(consumer, () -> "recover returned null for " + throwable.getClass() + ": "
-                        + throwable.getMessage());
-                consumer.accept(value1, value2);
             }
         };
     }

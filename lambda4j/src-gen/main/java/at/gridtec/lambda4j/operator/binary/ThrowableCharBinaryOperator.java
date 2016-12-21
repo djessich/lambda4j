@@ -675,12 +675,12 @@ public interface ThrowableCharBinaryOperator<X extends Throwable> extends Lambda
      * @return A composed {@link CharBinaryOperator} that applies this operator to its input and nests the thrown {@code
      * Throwable} from it.
      * @implNote If thrown {@code Throwable} is of type {@link Error} it is thrown as-is and thus not nested.
-     * @see #nestWith(Function)
+     * @see #nest(Function)
      * @see ThrownByFunctionalInterfaceException
      */
     @Nonnull
     default CharBinaryOperator nest() {
-        return nestWith(throwable -> new ThrownByFunctionalInterfaceException(throwable.getMessage(), throwable));
+        return nest(throwable -> new ThrownByFunctionalInterfaceException(throwable.getMessage(), throwable));
     }
 
     /**
@@ -696,10 +696,43 @@ public interface ThrowableCharBinaryOperator<X extends Throwable> extends Lambda
      * @see #nest()
      */
     @Nonnull
-    default CharBinaryOperator nestWith(@Nonnull final Function<? super Throwable, ? extends RuntimeException> mapper) {
+    default CharBinaryOperator nest(@Nonnull final Function<? super Throwable, ? extends RuntimeException> mapper) {
         return recover(throwable -> {
             throw mapper.apply(throwable);
         });
+    }
+
+    /**
+     * Returns a composed {@link CharBinaryOperator} that first applies this operator to its input, and then applies the
+     * {@code recover} operation if a {@link Throwable} is thrown from this one. The {@code recover} operation is
+     * represented by a curried operation which is called with throwable information and same arguments of this
+     * operator.
+     *
+     * @param recover The operation to apply if this operator throws a {@code Throwable}
+     * @return A composed {@link CharBinaryOperator} that first applies this operator to its input, and then applies the
+     * {@code recover} operation if a {@code Throwable} is thrown from this one.
+     * @throws NullPointerException If given argument or the returned enclosing operator is {@code null}
+     * @implSpec The implementation checks that the returned enclosing operator from {@code recover} operation is not
+     * {@code null}. If it is, then a {@link NullPointerException} with appropriate message is thrown.
+     * @implNote If thrown {@code Throwable} is of type {@link Error}, it is thrown as-is and thus not passed to {@code
+     * recover} operation.
+     */
+    @Nonnull
+    default CharBinaryOperator recover(
+            @Nonnull final Function<? super Throwable, ? extends CharBinaryOperator> recover) {
+        Objects.requireNonNull(recover);
+        return (value1, value2) -> {
+            try {
+                return this.applyAsCharThrows(value1, value2);
+            } catch (Error e) {
+                throw e;
+            } catch (Throwable throwable) {
+                final CharBinaryOperator operator = recover.apply(throwable);
+                Objects.requireNonNull(operator, () -> "recover returned null for " + throwable.getClass() + ": "
+                        + throwable.getMessage());
+                return operator.applyAsChar(value1, value2);
+            }
+        };
     }
 
     /**
@@ -777,39 +810,6 @@ public interface ThrowableCharBinaryOperator<X extends Throwable> extends Lambda
                 throw e;
             } catch (Throwable throwable) {
                 throw ThrowableUtils.sneakyThrow(throwable);
-            }
-        };
-    }
-
-    /**
-     * Returns a composed {@link CharBinaryOperator} that first applies this operator to its input, and then applies the
-     * {@code recover} operation if a {@link Throwable} is thrown from this one. The {@code recover} operation is
-     * represented by a curried operation which is called with throwable information and same arguments of this
-     * operator.
-     *
-     * @param recover The operation to apply if this operator throws a {@code Throwable}
-     * @return A composed {@link CharBinaryOperator} that first applies this operator to its input, and then applies the
-     * {@code recover} operation if a {@code Throwable} is thrown from this one.
-     * @throws NullPointerException If given argument or the returned enclosing operator is {@code null}
-     * @implSpec The implementation checks that the returned enclosing operator from {@code recover} operation is not
-     * {@code null}. If it is, then a {@link NullPointerException} with appropriate message is thrown.
-     * @implNote If thrown {@code Throwable} is of type {@link Error}, it is thrown as-is and thus not passed to {@code
-     * recover} operation.
-     */
-    @Nonnull
-    default CharBinaryOperator recover(
-            @Nonnull final Function<? super Throwable, ? extends CharBinaryOperator> recover) {
-        Objects.requireNonNull(recover);
-        return (value1, value2) -> {
-            try {
-                return this.applyAsCharThrows(value1, value2);
-            } catch (Error e) {
-                throw e;
-            } catch (Throwable throwable) {
-                final CharBinaryOperator operator = recover.apply(throwable);
-                Objects.requireNonNull(operator, () -> "recover returned null for " + throwable.getClass() + ": "
-                        + throwable.getMessage());
-                return operator.applyAsChar(value1, value2);
             }
         };
     }

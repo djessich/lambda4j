@@ -328,7 +328,7 @@ public interface ToIntFunction2<T> extends Lambda, ToIntFunction<T> {
      */
     @Nonnull
     default ToIntFunction2<T> reversed() {
-        return (t) -> applyAsInt(t);
+        return this;
     }
 
     /**

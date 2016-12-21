@@ -380,12 +380,12 @@ public interface ThrowableLongSupplier<X extends Throwable> extends Lambda, Long
      * @return A composed {@link LongSupplier2} that applies this supplier to its input and nests the thrown {@code
      * Throwable} from it.
      * @implNote If thrown {@code Throwable} is of type {@link Error} it is thrown as-is and thus not nested.
-     * @see #nestWith(Function)
+     * @see #nest(Function)
      * @see ThrownByFunctionalInterfaceException
      */
     @Nonnull
     default LongSupplier2 nest() {
-        return nestWith(throwable -> new ThrownByFunctionalInterfaceException(throwable.getMessage(), throwable));
+        return nest(throwable -> new ThrownByFunctionalInterfaceException(throwable.getMessage(), throwable));
     }
 
     /**
@@ -401,10 +401,42 @@ public interface ThrowableLongSupplier<X extends Throwable> extends Lambda, Long
      * @see #nest()
      */
     @Nonnull
-    default LongSupplier2 nestWith(@Nonnull final Function<? super Throwable, ? extends RuntimeException> mapper) {
+    default LongSupplier2 nest(@Nonnull final Function<? super Throwable, ? extends RuntimeException> mapper) {
         return recover(throwable -> {
             throw mapper.apply(throwable);
         });
+    }
+
+    /**
+     * Returns a composed {@link LongSupplier2} that first applies this supplier to its input, and then applies the
+     * {@code recover} operation if a {@link Throwable} is thrown from this one. The {@code recover} operation is
+     * represented by a curried operation which is called with throwable information and same argument of this
+     * supplier.
+     *
+     * @param recover The operation to apply if this supplier throws a {@code Throwable}
+     * @return A composed {@link LongSupplier2} that first applies this supplier to its input, and then applies the
+     * {@code recover} operation if a {@code Throwable} is thrown from this one.
+     * @throws NullPointerException If given argument or the returned enclosing supplier is {@code null}
+     * @implSpec The implementation checks that the returned enclosing supplier from {@code recover} operation is not
+     * {@code null}. If it is, then a {@link NullPointerException} with appropriate message is thrown.
+     * @implNote If thrown {@code Throwable} is of type {@link Error}, it is thrown as-is and thus not passed to {@code
+     * recover} operation.
+     */
+    @Nonnull
+    default LongSupplier2 recover(@Nonnull final Function<? super Throwable, ? extends LongSupplier> recover) {
+        Objects.requireNonNull(recover);
+        return () -> {
+            try {
+                return this.getAsLongThrows();
+            } catch (Error e) {
+                throw e;
+            } catch (Throwable throwable) {
+                final LongSupplier supplier = recover.apply(throwable);
+                Objects.requireNonNull(supplier, () -> "recover returned null for " + throwable.getClass() + ": "
+                        + throwable.getMessage());
+                return supplier.getAsLong();
+            }
+        };
     }
 
     /**
@@ -482,38 +514,6 @@ public interface ThrowableLongSupplier<X extends Throwable> extends Lambda, Long
                 throw e;
             } catch (Throwable throwable) {
                 throw ThrowableUtils.sneakyThrow(throwable);
-            }
-        };
-    }
-
-    /**
-     * Returns a composed {@link LongSupplier2} that first applies this supplier to its input, and then applies the
-     * {@code recover} operation if a {@link Throwable} is thrown from this one. The {@code recover} operation is
-     * represented by a curried operation which is called with throwable information and same argument of this
-     * supplier.
-     *
-     * @param recover The operation to apply if this supplier throws a {@code Throwable}
-     * @return A composed {@link LongSupplier2} that first applies this supplier to its input, and then applies the
-     * {@code recover} operation if a {@code Throwable} is thrown from this one.
-     * @throws NullPointerException If given argument or the returned enclosing supplier is {@code null}
-     * @implSpec The implementation checks that the returned enclosing supplier from {@code recover} operation is not
-     * {@code null}. If it is, then a {@link NullPointerException} with appropriate message is thrown.
-     * @implNote If thrown {@code Throwable} is of type {@link Error}, it is thrown as-is and thus not passed to {@code
-     * recover} operation.
-     */
-    @Nonnull
-    default LongSupplier2 recover(@Nonnull final Function<? super Throwable, ? extends LongSupplier> recover) {
-        Objects.requireNonNull(recover);
-        return () -> {
-            try {
-                return this.getAsLongThrows();
-            } catch (Error e) {
-                throw e;
-            } catch (Throwable throwable) {
-                final LongSupplier supplier = recover.apply(throwable);
-                Objects.requireNonNull(supplier, () -> "recover returned null for " + throwable.getClass() + ": "
-                        + throwable.getMessage());
-                return supplier.getAsLong();
             }
         };
     }

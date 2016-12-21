@@ -326,7 +326,7 @@ public interface ToByteFunction<T> extends Lambda {
      */
     @Nonnull
     default ToByteFunction<T> reversed() {
-        return (t) -> applyAsByte(t);
+        return this;
     }
 
     /**

@@ -132,7 +132,7 @@ public interface Consumer2<T> extends Lambda, Consumer<T> {
      */
     @Nonnull
     default Consumer2<T> reversed() {
-        return (t) -> accept(t);
+        return this;
     }
 
 }

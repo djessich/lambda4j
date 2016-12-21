@@ -188,13 +188,23 @@ public interface Function2<T, R> extends Lambda, Function<T, R> {
     }
 
     /**
+     * Returns a curried version of this function.
+     *
+     * @return A curried version of this function.
+     */
+    @Nonnull
+    default Function2<T, R> curried() {
+        return this;
+    }
+
+    /**
      * Returns a reversed version of this function. This may be useful in recursive context.
      *
      * @return A reversed version of this function.
      */
     @Nonnull
     default Function2<T, R> reversed() {
-        return (t) -> apply(t);
+        return this;
     }
 
     /**

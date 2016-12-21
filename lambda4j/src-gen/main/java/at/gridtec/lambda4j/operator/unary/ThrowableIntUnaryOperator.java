@@ -570,12 +570,12 @@ public interface ThrowableIntUnaryOperator<X extends Throwable> extends Lambda, 
      * @return A composed {@link IntUnaryOperator2} that applies this operator to its input and nests the thrown {@code
      * Throwable} from it.
      * @implNote If thrown {@code Throwable} is of type {@link Error} it is thrown as-is and thus not nested.
-     * @see #nestWith(Function)
+     * @see #nest(Function)
      * @see ThrownByFunctionalInterfaceException
      */
     @Nonnull
     default IntUnaryOperator2 nest() {
-        return nestWith(throwable -> new ThrownByFunctionalInterfaceException(throwable.getMessage(), throwable));
+        return nest(throwable -> new ThrownByFunctionalInterfaceException(throwable.getMessage(), throwable));
     }
 
     /**
@@ -591,10 +591,42 @@ public interface ThrowableIntUnaryOperator<X extends Throwable> extends Lambda, 
      * @see #nest()
      */
     @Nonnull
-    default IntUnaryOperator2 nestWith(@Nonnull final Function<? super Throwable, ? extends RuntimeException> mapper) {
+    default IntUnaryOperator2 nest(@Nonnull final Function<? super Throwable, ? extends RuntimeException> mapper) {
         return recover(throwable -> {
             throw mapper.apply(throwable);
         });
+    }
+
+    /**
+     * Returns a composed {@link IntUnaryOperator2} that first applies this operator to its input, and then applies the
+     * {@code recover} operation if a {@link Throwable} is thrown from this one. The {@code recover} operation is
+     * represented by a curried operation which is called with throwable information and same argument of this
+     * operator.
+     *
+     * @param recover The operation to apply if this operator throws a {@code Throwable}
+     * @return A composed {@link IntUnaryOperator2} that first applies this operator to its input, and then applies the
+     * {@code recover} operation if a {@code Throwable} is thrown from this one.
+     * @throws NullPointerException If given argument or the returned enclosing operator is {@code null}
+     * @implSpec The implementation checks that the returned enclosing operator from {@code recover} operation is not
+     * {@code null}. If it is, then a {@link NullPointerException} with appropriate message is thrown.
+     * @implNote If thrown {@code Throwable} is of type {@link Error}, it is thrown as-is and thus not passed to {@code
+     * recover} operation.
+     */
+    @Nonnull
+    default IntUnaryOperator2 recover(@Nonnull final Function<? super Throwable, ? extends IntUnaryOperator> recover) {
+        Objects.requireNonNull(recover);
+        return (value) -> {
+            try {
+                return this.applyAsIntThrows(value);
+            } catch (Error e) {
+                throw e;
+            } catch (Throwable throwable) {
+                final IntUnaryOperator operator = recover.apply(throwable);
+                Objects.requireNonNull(operator, () -> "recover returned null for " + throwable.getClass() + ": "
+                        + throwable.getMessage());
+                return operator.applyAsInt(value);
+            }
+        };
     }
 
     /**
@@ -672,38 +704,6 @@ public interface ThrowableIntUnaryOperator<X extends Throwable> extends Lambda, 
                 throw e;
             } catch (Throwable throwable) {
                 throw ThrowableUtils.sneakyThrow(throwable);
-            }
-        };
-    }
-
-    /**
-     * Returns a composed {@link IntUnaryOperator2} that first applies this operator to its input, and then applies the
-     * {@code recover} operation if a {@link Throwable} is thrown from this one. The {@code recover} operation is
-     * represented by a curried operation which is called with throwable information and same argument of this
-     * operator.
-     *
-     * @param recover The operation to apply if this operator throws a {@code Throwable}
-     * @return A composed {@link IntUnaryOperator2} that first applies this operator to its input, and then applies the
-     * {@code recover} operation if a {@code Throwable} is thrown from this one.
-     * @throws NullPointerException If given argument or the returned enclosing operator is {@code null}
-     * @implSpec The implementation checks that the returned enclosing operator from {@code recover} operation is not
-     * {@code null}. If it is, then a {@link NullPointerException} with appropriate message is thrown.
-     * @implNote If thrown {@code Throwable} is of type {@link Error}, it is thrown as-is and thus not passed to {@code
-     * recover} operation.
-     */
-    @Nonnull
-    default IntUnaryOperator2 recover(@Nonnull final Function<? super Throwable, ? extends IntUnaryOperator> recover) {
-        Objects.requireNonNull(recover);
-        return (value) -> {
-            try {
-                return this.applyAsIntThrows(value);
-            } catch (Error e) {
-                throw e;
-            } catch (Throwable throwable) {
-                final IntUnaryOperator operator = recover.apply(throwable);
-                Objects.requireNonNull(operator, () -> "recover returned null for " + throwable.getClass() + ": "
-                        + throwable.getMessage());
-                return operator.applyAsInt(value);
             }
         };
     }

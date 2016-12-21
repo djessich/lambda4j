@@ -326,7 +326,7 @@ public interface ToFloatFunction<T> extends Lambda {
      */
     @Nonnull
     default ToFloatFunction<T> reversed() {
-        return (t) -> applyAsFloat(t);
+        return this;
     }
 
     /**

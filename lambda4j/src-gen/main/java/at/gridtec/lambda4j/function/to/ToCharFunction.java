@@ -326,7 +326,7 @@ public interface ToCharFunction<T> extends Lambda {
      */
     @Nonnull
     default ToCharFunction<T> reversed() {
-        return (t) -> applyAsChar(t);
+        return this;
     }
 
     /**
