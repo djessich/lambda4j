@@ -1,0 +1,9 @@
+plugins {
+    id 'java-library'
+    id 'idea'
+}
+
+dependencies {
+    implementation "com.google.code.findbugs:jsr305:${project.jsr305Version}"
+    implementation "org.apache.commons:commons-lang3:${project.commonsLangVersion}"
+}

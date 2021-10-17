@@ -1,0 +1,49 @@
+plugins {
+    id 'java-library'
+    id 'idea'
+}
+
+allprojects {
+    repositories {
+        mavenCentral()
+        google()
+        gradlePluginPortal()
+    }
+}
+
+subprojects {
+    apply plugin: 'java-library'
+    apply plugin: 'idea'
+
+    dependencies {
+        testImplementation "org.junit.jupiter:junit-jupiter-api:${project.junitVersion}"
+        testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:${project.junitVersion}"
+    }
+
+    java {
+        sourceCompatibility = JavaVersion.VERSION_1_8
+        targetCompatibility = JavaVersion.VERSION_1_8
+
+        withSourcesJar()
+        withJavadocJar()
+    }
+
+    tasks.withType(JavaCompile) {
+        options.compilerArgs << '-Werror' << '-Xlint:unchecked' << '-Xlint:deprecation'
+        options.encoding = 'UTF-8'
+    }
+
+    javadoc {
+        options.addBooleanOption('Xwerror', true)
+        options.encoding = 'UTF-8'
+        options.tags = ["apiNote:a:API Note:", "implSpec:a:Implementation Requirements:", "implNote:a:Implementation Note:"]
+
+        if (JavaVersion.current().isJava9Compatible()) {
+            options.addBooleanOption('html5', true)
+        }
+    }
+
+    test {
+        useJUnitPlatform()
+    }
+}
