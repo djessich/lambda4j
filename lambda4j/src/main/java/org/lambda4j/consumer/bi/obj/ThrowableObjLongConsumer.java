@@ -161,7 +161,7 @@ public interface ThrowableObjLongConsumer<T, X extends Throwable> extends Lambda
      * @param t The first argument to the consumer
      * @param value The second argument to the consumer
      * @apiNote This method mainly exists to use this {@link ThrowableObjLongConsumer} in JRE specific methods only
-     * accepting {@link ObjLongConsumer}. If this consumer should be applied, then the {@link #acceptThrows(Object, *
+     * accepting {@link ObjLongConsumer}. If this consumer should be applied, then the {@link #acceptThrows(Object,
      * long)} method should be used.
      * @apiNote Overrides the {@link ObjLongConsumer#accept(Object, long)} method by using a redefinition as default
      * method. This implementation calls the {@link #acceptThrows(Object, long)} method of this function and catches the

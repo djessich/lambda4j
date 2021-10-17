@@ -71,7 +71,7 @@ import java.util.function.Function;
  * boolean}-valued result which is able to throw any {@link Throwable}. This is a primitive specialization of {@link
  * ThrowableTernaryOperator}.
  * <p>
- * This is a {@link FunctionalInterface} whose functional method is {@link #applyAsBooleanThrows(boolean, boolean, *
+ * This is a {@link FunctionalInterface} whose functional method is {@link #applyAsBooleanThrows(boolean, boolean,
  * boolean)}.
  *
  * @param <X> The type of the throwable to be thrown by this operator

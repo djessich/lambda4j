@@ -217,7 +217,7 @@ public interface ThrowableIntBinaryOperator<X extends Throwable> extends Lambda,
      * @param value2 The second argument to the operator
      * @return The return value from the operator, which is its result.
      * @apiNote This method mainly exists to use this {@link ThrowableIntBinaryOperator} in JRE specific methods only
-     * accepting {@link IntBinaryOperator}. If this operator should be applied, then the {@link #applyAsIntThrows(int, *
+     * accepting {@link IntBinaryOperator}. If this operator should be applied, then the {@link #applyAsIntThrows(int,
      * int)} method should be used.
      * @apiNote Overrides the {@link IntBinaryOperator#applyAsInt(int, int)} method by using a redefinition as default
      * method. This implementation calls the {@link #applyAsIntThrows(int, int)} method of this function and catches the

@@ -76,7 +76,7 @@ import java.util.function.Function;
  * {@code float}-valued result which is able to throw any {@link Throwable}. This is a (reference, boolean, boolean)
  * specialization of {@link ThrowableTriFunction}.
  * <p>
- * This is a {@link FunctionalInterface} whose functional method is {@link #applyAsFloatThrows(Object, boolean, *
+ * This is a {@link FunctionalInterface} whose functional method is {@link #applyAsFloatThrows(Object, boolean,
  * boolean)}.
  *
  * @param <T> The type of the first argument to the function

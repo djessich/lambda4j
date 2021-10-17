@@ -173,7 +173,7 @@ public interface ThrowableToIntBiFunction<T, U, X extends Throwable> extends Lam
      * @return The return value from the function, which is its result.
      * @apiNote This method mainly exists to use this {@link ThrowableToIntBiFunction} in JRE specific methods only
      * accepting {@link ToIntBiFunction}. If this function should be applied, then the {@link #applyAsIntThrows(Object,
-     * * Object)} method should be used.
+     * Object)} method should be used.
      * @apiNote Overrides the {@link ToIntBiFunction#applyAsInt(Object, Object)} method by using a redefinition as
      * default method. This implementation calls the {@link #applyAsIntThrows(Object, Object)} method of this function
      * and catches the eventually thrown {@link Throwable} from it. If it is of type {@link RuntimeException} or {@link

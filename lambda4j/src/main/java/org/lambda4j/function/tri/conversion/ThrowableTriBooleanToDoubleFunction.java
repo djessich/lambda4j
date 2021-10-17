@@ -61,7 +61,7 @@ import java.util.function.Function;
  * double}-valued result which is able to throw any {@link Throwable}. This is a primitive specialization of {@link
  * ThrowableTriFunction}.
  * <p>
- * This is a {@link FunctionalInterface} whose functional method is {@link #applyAsDoubleThrows(boolean, boolean, *
+ * This is a {@link FunctionalInterface} whose functional method is {@link #applyAsDoubleThrows(boolean, boolean,
  * boolean)}.
  *
  * @param <X> The type of the throwable to be thrown by this function
