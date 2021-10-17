@@ -16,6 +16,7 @@ allprojects {
 subprojects {
     apply plugin: 'java-library'
     apply plugin: 'idea'
+    apply plugin: 'checkstyle'
 
     apply plugin: 'com.github.spotbugs'
 
@@ -49,6 +50,20 @@ subprojects {
 
     test {
         useJUnitPlatform()
+    }
+
+    checkstyle {
+        toolVersion = '9.0.1'
+        configProperties = [
+                "checkstyle.suppressions.file": file("${rootProject.projectDir}/config/checkstyle/suppressions.xml")
+        ]
+    }
+
+    tasks.withType(Checkstyle) {
+        reports {
+            html.enabled = true
+            xml.enabled = true
+        }
     }
 
     spotbugs {
