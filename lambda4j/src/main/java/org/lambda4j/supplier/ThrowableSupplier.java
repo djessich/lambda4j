@@ -216,7 +216,7 @@ public interface ThrowableSupplier<R, X extends Throwable> extends Lambda, Suppl
             return (ThrowableSupplier<R, X> & Memoized) () -> {
                 R returnValue = cache.get();
                 if (returnValue == null) {
-                    synchronized (cache) {
+                    synchronized (this) {
                         returnValue = cache.get();
                         if (returnValue == null) {
                             returnValue = this.getThrows();

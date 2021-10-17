@@ -321,7 +321,7 @@ public interface DoubleSupplier2 extends Lambda, DoubleSupplier {
             return (DoubleSupplier2 & Memoized) () -> {
                 Double returnValue = cache.get();
                 if (returnValue == null) {
-                    synchronized (cache) {
+                    synchronized (this) {
                         returnValue = cache.get();
                         if (returnValue == null) {
                             returnValue = this.getAsDouble();

@@ -321,7 +321,7 @@ public interface LongSupplier2 extends Lambda, LongSupplier {
             return (LongSupplier2 & Memoized) () -> {
                 Long returnValue = cache.get();
                 if (returnValue == null) {
-                    synchronized (cache) {
+                    synchronized (this) {
                         returnValue = cache.get();
                         if (returnValue == null) {
                             returnValue = this.getAsLong();

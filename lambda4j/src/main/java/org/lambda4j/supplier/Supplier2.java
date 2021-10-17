@@ -179,10 +179,10 @@ public interface Supplier2<R> extends Lambda, Supplier<R> {
             return (Supplier2<R> & Memoized) () -> {
                 R returnValue = cache.get();
                 if (returnValue == null) {
-                    synchronized (cache) {
+                    synchronized (this) {
                         returnValue = cache.get();
                         if (returnValue == null) {
-                            returnValue = this.get();
+                            returnValue = Objects.requireNonNull(this.get());
                             cache.set(returnValue);
                         }
                     }

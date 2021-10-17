@@ -320,7 +320,7 @@ public interface ThrowableShortSupplier<X extends Throwable> extends Lambda {
             return (ThrowableShortSupplier<X> & Memoized) () -> {
                 Short returnValue = cache.get();
                 if (returnValue == null) {
-                    synchronized (cache) {
+                    synchronized (this) {
                         returnValue = cache.get();
                         if (returnValue == null) {
                             returnValue = this.getAsShortThrows();

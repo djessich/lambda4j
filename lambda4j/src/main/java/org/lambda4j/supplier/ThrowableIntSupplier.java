@@ -346,7 +346,7 @@ public interface ThrowableIntSupplier<X extends Throwable> extends Lambda, IntSu
             return (ThrowableIntSupplier<X> & Memoized) () -> {
                 Integer returnValue = cache.get();
                 if (returnValue == null) {
-                    synchronized (cache) {
+                    synchronized (this) {
                         returnValue = cache.get();
                         if (returnValue == null) {
                             returnValue = this.getAsIntThrows();

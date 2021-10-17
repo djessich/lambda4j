@@ -347,7 +347,7 @@ public interface ThrowableLongSupplier<X extends Throwable> extends Lambda, Long
             return (ThrowableLongSupplier<X> & Memoized) () -> {
                 Long returnValue = cache.get();
                 if (returnValue == null) {
-                    synchronized (cache) {
+                    synchronized (this) {
                         returnValue = cache.get();
                         if (returnValue == null) {
                             returnValue = this.getAsLongThrows();

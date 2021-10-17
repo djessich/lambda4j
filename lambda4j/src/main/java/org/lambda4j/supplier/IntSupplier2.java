@@ -321,7 +321,7 @@ public interface IntSupplier2 extends Lambda, IntSupplier {
             return (IntSupplier2 & Memoized) () -> {
                 Integer returnValue = cache.get();
                 if (returnValue == null) {
-                    synchronized (cache) {
+                    synchronized (this) {
                         returnValue = cache.get();
                         if (returnValue == null) {
                             returnValue = this.getAsInt();

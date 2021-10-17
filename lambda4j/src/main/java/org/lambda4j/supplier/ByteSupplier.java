@@ -319,7 +319,7 @@ public interface ByteSupplier extends Lambda {
             return (ByteSupplier & Memoized) () -> {
                 Byte returnValue = cache.get();
                 if (returnValue == null) {
-                    synchronized (cache) {
+                    synchronized (this) {
                         returnValue = cache.get();
                         if (returnValue == null) {
                             returnValue = this.getAsByte();

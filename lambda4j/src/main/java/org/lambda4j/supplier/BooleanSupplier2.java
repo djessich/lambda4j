@@ -344,7 +344,7 @@ public interface BooleanSupplier2 extends Lambda, BooleanSupplier {
             return (BooleanSupplier2 & Memoized) () -> {
                 Boolean returnValue = cache.get();
                 if (returnValue == null) {
-                    synchronized (cache) {
+                    synchronized (this) {
                         returnValue = cache.get();
                         if (returnValue == null) {
                             returnValue = this.getAsBoolean();

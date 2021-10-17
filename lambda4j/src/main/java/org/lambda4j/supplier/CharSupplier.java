@@ -319,7 +319,7 @@ public interface CharSupplier extends Lambda {
             return (CharSupplier & Memoized) () -> {
                 Character returnValue = cache.get();
                 if (returnValue == null) {
-                    synchronized (cache) {
+                    synchronized (this) {
                         returnValue = cache.get();
                         if (returnValue == null) {
                             returnValue = this.getAsChar();

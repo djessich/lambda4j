@@ -319,7 +319,7 @@ public interface ShortSupplier extends Lambda {
             return (ShortSupplier & Memoized) () -> {
                 Short returnValue = cache.get();
                 if (returnValue == null) {
-                    synchronized (cache) {
+                    synchronized (this) {
                         returnValue = cache.get();
                         if (returnValue == null) {
                             returnValue = this.getAsShort();

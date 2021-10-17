@@ -347,7 +347,7 @@ public interface ThrowableDoubleSupplier<X extends Throwable> extends Lambda, Do
             return (ThrowableDoubleSupplier<X> & Memoized) () -> {
                 Double returnValue = cache.get();
                 if (returnValue == null) {
-                    synchronized (cache) {
+                    synchronized (this) {
                         returnValue = cache.get();
                         if (returnValue == null) {
                             returnValue = this.getAsDoubleThrows();

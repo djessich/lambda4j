@@ -320,7 +320,7 @@ public interface ThrowableFloatSupplier<X extends Throwable> extends Lambda {
             return (ThrowableFloatSupplier<X> & Memoized) () -> {
                 Float returnValue = cache.get();
                 if (returnValue == null) {
-                    synchronized (cache) {
+                    synchronized (this) {
                         returnValue = cache.get();
                         if (returnValue == null) {
                             returnValue = this.getAsFloatThrows();

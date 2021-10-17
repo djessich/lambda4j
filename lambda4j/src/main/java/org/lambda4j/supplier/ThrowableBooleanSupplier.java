@@ -376,7 +376,7 @@ public interface ThrowableBooleanSupplier<X extends Throwable> extends Lambda, B
             return (ThrowableBooleanSupplier<X> & Memoized) () -> {
                 Boolean returnValue = cache.get();
                 if (returnValue == null) {
-                    synchronized (cache) {
+                    synchronized (this) {
                         returnValue = cache.get();
                         if (returnValue == null) {
                             returnValue = this.getAsBooleanThrows();

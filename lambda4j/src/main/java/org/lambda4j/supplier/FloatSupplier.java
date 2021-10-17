@@ -319,7 +319,7 @@ public interface FloatSupplier extends Lambda {
             return (FloatSupplier & Memoized) () -> {
                 Float returnValue = cache.get();
                 if (returnValue == null) {
-                    synchronized (cache) {
+                    synchronized (this) {
                         returnValue = cache.get();
                         if (returnValue == null) {
                             returnValue = this.getAsFloat();
