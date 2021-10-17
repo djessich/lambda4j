@@ -1,6 +1,8 @@
 plugins {
     id 'java-library'
     id 'idea'
+
+    id 'com.github.spotbugs' version '4.7.8' apply false
 }
 
 allprojects {
@@ -14,6 +16,8 @@ allprojects {
 subprojects {
     apply plugin: 'java-library'
     apply plugin: 'idea'
+
+    apply plugin: 'com.github.spotbugs'
 
     dependencies {
         testImplementation "org.junit.jupiter:junit-jupiter-api:${project.junitVersion}"
@@ -45,5 +49,24 @@ subprojects {
 
     test {
         useJUnitPlatform()
+    }
+
+    spotbugs {
+        effort = 'max'
+        excludeFilter = file("${rootProject.projectDir}/config/spotbugs/exclude.xml")
+    }
+
+    spotbugsMain {
+        reports {
+            html.enabled = true
+            xml.enabled = true
+        }
+    }
+
+    spotbugsTest {
+        reports {
+            html.enabled = true
+            xml.enabled = true
+        }
     }
 }

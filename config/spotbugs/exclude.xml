@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FindBugsFilter>
+    <!-- Ignore generated Java sources. -->
+    <Match>
+        <Source name="~.*src.generated.java.*\.java"/>
+    </Match>
+</FindBugsFilter>
