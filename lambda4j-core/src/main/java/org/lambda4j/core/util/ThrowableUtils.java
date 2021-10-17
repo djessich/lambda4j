@@ -51,12 +51,11 @@ public final class ThrowableUtils {
      * this method as argument to the {@code throw} statement to avoid compiler errors regarding no return statement and
      * similar problems. This method won't, of course, return an actual {@code RuntimeException}. It never returns, it
      * always throws the provided exception.
-     * <p>
-     * Warning: This method should be save, but use with care.
      *
      * @param t The throwable to throw without requiring you to catch its type.
      * @return A dummy RuntimeException; this method never returns normally, it <em>always</em> throws an exception.
      * @throws NullPointerException If given argument was {@code null}
+     * @implNote This method should be safe, but use with care.
      */
     public static RuntimeException sneakyThrow(@Nonnull Throwable t) {
         Objects.requireNonNull(t);

@@ -21,12 +21,14 @@ package org.lambda4j.core.exception;
  */
 public class ThrownByFunctionalInterfaceException extends RuntimeException {
 
+    private static final long serialVersionUID = -6427088851299452019L;
+
     /**
      * Creates this exception from given {@link Throwable} cause.
      *
      * @param cause The cause of this exception.
      */
-    public ThrownByFunctionalInterfaceException(final Throwable cause) {
+    public ThrownByFunctionalInterfaceException(Throwable cause) {
         super(cause);
     }
 
@@ -36,7 +38,7 @@ public class ThrownByFunctionalInterfaceException extends RuntimeException {
      * @param message The message for this throwable.
      * @param cause The cause of this exception.
      */
-    public ThrownByFunctionalInterfaceException(final String message, final Throwable cause) {
+    public ThrownByFunctionalInterfaceException(String message, Throwable cause) {
         super(message, cause);
     }
 }

@@ -132,6 +132,7 @@ public interface ThrowableBooleanSupplier<X extends Throwable> extends Lambda, B
      * @return The return value from the supplier, which is its result.
      * @throws X Any throwable from this suppliers action
      */
+    @SuppressWarnings("PMD.BooleanGetMethodName")
     boolean getAsBooleanThrows() throws X;
 
     /**
