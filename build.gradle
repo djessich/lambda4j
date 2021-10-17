@@ -18,6 +18,7 @@ subprojects {
     apply plugin: 'idea'
     apply plugin: 'checkstyle'
     apply plugin: 'pmd'
+    apply plugin: 'jacoco'
 
     apply plugin: 'com.github.spotbugs'
 
@@ -49,8 +50,23 @@ subprojects {
         }
     }
 
-    test {
-        useJUnitPlatform()
+    jacocoTestReport {
+        dependsOn test
+
+        reports {
+            xml.enabled = true
+            html.enabled = true
+        }
+    }
+
+    jacocoTestCoverageVerification {
+        violationRules {
+            rule {
+                limit {
+                    minimum = 0.0
+                }
+            }
+        }
     }
 
     checkstyle {
@@ -91,5 +107,15 @@ subprojects {
             html.enabled = true
             xml.enabled = true
         }
+    }
+
+    test {
+        useJUnitPlatform()
+
+        finalizedBy jacocoTestReport
+    }
+
+    check {
+        dependsOn jacocoTestCoverageVerification
     }
 }
