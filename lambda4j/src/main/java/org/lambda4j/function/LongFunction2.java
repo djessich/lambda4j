@@ -13,19 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package org.lambda4j.function;
 
-import org.lambda4j.Lambda;
-import org.lambda4j.consumer.LongConsumer2;
-import org.lambda4j.function.conversion.BooleanToLongFunction;
-import org.lambda4j.function.conversion.ByteToLongFunction;
-import org.lambda4j.function.conversion.CharToLongFunction;
-import org.lambda4j.function.conversion.FloatToLongFunction;
-import org.lambda4j.function.conversion.ShortToLongFunction;
-
-import javax.annotation.Nonnegative;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
@@ -38,10 +28,21 @@ import java.util.function.LongFunction;
 import java.util.function.LongUnaryOperator;
 import java.util.function.ToLongFunction;
 
+import javax.annotation.Nonnegative;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
+import org.lambda4j.Lambda;
+import org.lambda4j.consumer.LongConsumer2;
+import org.lambda4j.function.conversion.BooleanToLongFunction;
+import org.lambda4j.function.conversion.ByteToLongFunction;
+import org.lambda4j.function.conversion.CharToLongFunction;
+import org.lambda4j.function.conversion.FloatToLongFunction;
+import org.lambda4j.function.conversion.ShortToLongFunction;
+
 /**
- * Represents an operation that accepts one {@code long}-valued input argument and produces a
- * result.
- * This is a primitive specialization of {@link Function2}.
+ * Represents an operation that accepts one {@code long}-valued input argument and produces a result. This is a
+ * primitive specialization of {@link Function2}.
  * <p>
  * This is a {@link FunctionalInterface} whose functional method is {@link #apply(long)}.
  *
@@ -67,7 +68,7 @@ public interface LongFunction2<R> extends Lambda, LongFunction<R> {
      * Expression</a>
      * @see <a href="https://docs.oracle.com/javase/tutorial/java/javaOO/methodreferences.html">Method Reference</a>
      */
-    static <R> LongFunction2<R> of(@Nullable final LongFunction2<R> expression) {
+    static <R> LongFunction2<R> of(@Nullable LongFunction2<R> expression) {
         return expression;
     }
 
@@ -81,9 +82,9 @@ public interface LongFunction2<R> extends Lambda, LongFunction<R> {
      * @throws NullPointerException If given argument is {@code null}
      */
     @Nonnull
-    static <R> LongFunction2<Optional<R>> lift(@Nonnull final LongFunction<? extends R> partial) {
+    static <R> LongFunction2<Optional<R>> lift(@Nonnull LongFunction<? extends R> partial) {
         Objects.requireNonNull(partial);
-        return (value) -> Optional.ofNullable(partial.apply(value));
+        return value -> Optional.ofNullable(partial.apply(value));
     }
 
     /**
@@ -95,7 +96,7 @@ public interface LongFunction2<R> extends Lambda, LongFunction<R> {
      * @return The result from the given {@code LongFunction2}.
      * @throws NullPointerException If given argument is {@code null}
      */
-    static <R> R call(@Nonnull final LongFunction<? extends R> function, long value) {
+    static <R> R call(@Nonnull LongFunction<? extends R> function, long value) {
         Objects.requireNonNull(function);
         return function.apply(value);
     }
@@ -109,7 +110,7 @@ public interface LongFunction2<R> extends Lambda, LongFunction<R> {
      */
     @Nonnull
     static <R> LongFunction2<R> constant(R ret) {
-        return (value) -> ret;
+        return value -> ret;
     }
 
     /**
@@ -118,6 +119,7 @@ public interface LongFunction2<R> extends Lambda, LongFunction<R> {
      * @param value The argument to the function
      * @return The return value from the function, which is its result.
      */
+    @Override
     R apply(long value);
 
     /**
@@ -132,9 +134,9 @@ public interface LongFunction2<R> extends Lambda, LongFunction<R> {
     }
 
     /**
-     * Returns a composed {@link Function2} that first applies the {@code before} function to its input, and
-     * then applies this function to the result.
-     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
+     * Returns a composed {@link Function2} that first applies the {@code before} function to its input, and then
+     * applies this function to the result. If evaluation of either operation throws an exception, it is relayed to the
+     * caller of the composed operation.
      *
      * @param <A> The type of the argument to the given function, and of composed function
      * @param before The function to apply before this function is applied
@@ -144,9 +146,9 @@ public interface LongFunction2<R> extends Lambda, LongFunction<R> {
      * @implSpec The input argument of this method is able to handle every type.
      */
     @Nonnull
-    default <A> Function2<A, R> compose(@Nonnull final ToLongFunction<? super A> before) {
+    default <A> Function2<A, R> compose(@Nonnull ToLongFunction<? super A> before) {
         Objects.requireNonNull(before);
-        return (a) -> apply(before.applyAsLong(a));
+        return a -> apply(before.applyAsLong(a));
     }
 
     /**
@@ -159,53 +161,51 @@ public interface LongFunction2<R> extends Lambda, LongFunction<R> {
      * @return A composed {@code BooleanFunction} that first applies the {@code before} function to its input, and then
      * applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * boolean}.
      */
     @Nonnull
-    default BooleanFunction<R> composeFromBoolean(@Nonnull final BooleanToLongFunction before) {
+    default BooleanFunction<R> composeFromBoolean(@Nonnull BooleanToLongFunction before) {
         Objects.requireNonNull(before);
-        return (value) -> apply(before.applyAsLong(value));
+        return value -> apply(before.applyAsLong(value));
     }
 
     /**
-     * Returns a composed {@link ByteFunction} that first applies the {@code before} function to
-     * its input, and then applies this function to the result.
-     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
-     * This method is just convenience, to provide the ability to execute an operation which accepts {@code byte} input,
-     * before this primitive function is executed.
+     * Returns a composed {@link ByteFunction} that first applies the {@code before} function to its input, and then
+     * applies this function to the result. If evaluation of either operation throws an exception, it is relayed to the
+     * caller of the composed operation. This method is just convenience, to provide the ability to execute an operation
+     * which accepts {@code byte} input, before this primitive function is executed.
      *
      * @param before The function to apply before this function is applied
      * @return A composed {@code ByteFunction} that first applies the {@code before} function to its input, and then
      * applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * byte}.
      */
     @Nonnull
-    default ByteFunction<R> composeFromByte(@Nonnull final ByteToLongFunction before) {
+    default ByteFunction<R> composeFromByte(@Nonnull ByteToLongFunction before) {
         Objects.requireNonNull(before);
-        return (value) -> apply(before.applyAsLong(value));
+        return value -> apply(before.applyAsLong(value));
     }
 
     /**
-     * Returns a composed {@link CharFunction} that first applies the {@code before} function to
-     * its input, and then applies this function to the result.
-     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
-     * This method is just convenience, to provide the ability to execute an operation which accepts {@code char} input,
-     * before this primitive function is executed.
+     * Returns a composed {@link CharFunction} that first applies the {@code before} function to its input, and then
+     * applies this function to the result. If evaluation of either operation throws an exception, it is relayed to the
+     * caller of the composed operation. This method is just convenience, to provide the ability to execute an operation
+     * which accepts {@code char} input, before this primitive function is executed.
      *
      * @param before The function to apply before this function is applied
      * @return A composed {@code CharFunction} that first applies the {@code before} function to its input, and then
      * applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * char}.
      */
     @Nonnull
-    default CharFunction<R> composeFromChar(@Nonnull final CharToLongFunction before) {
+    default CharFunction<R> composeFromChar(@Nonnull CharToLongFunction before) {
         Objects.requireNonNull(before);
-        return (value) -> apply(before.applyAsLong(value));
+        return value -> apply(before.applyAsLong(value));
     }
 
     /**
@@ -218,13 +218,13 @@ public interface LongFunction2<R> extends Lambda, LongFunction<R> {
      * @return A composed {@code DoubleFunction2} that first applies the {@code before} function to its input, and then
      * applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * double}.
      */
     @Nonnull
-    default DoubleFunction2<R> composeFromDouble(@Nonnull final DoubleToLongFunction before) {
+    default DoubleFunction2<R> composeFromDouble(@Nonnull DoubleToLongFunction before) {
         Objects.requireNonNull(before);
-        return (value) -> apply(before.applyAsLong(value));
+        return value -> apply(before.applyAsLong(value));
     }
 
     /**
@@ -237,53 +237,51 @@ public interface LongFunction2<R> extends Lambda, LongFunction<R> {
      * @return A composed {@code FloatFunction} that first applies the {@code before} function to its input, and then
      * applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * float}.
      */
     @Nonnull
-    default FloatFunction<R> composeFromFloat(@Nonnull final FloatToLongFunction before) {
+    default FloatFunction<R> composeFromFloat(@Nonnull FloatToLongFunction before) {
         Objects.requireNonNull(before);
-        return (value) -> apply(before.applyAsLong(value));
+        return value -> apply(before.applyAsLong(value));
     }
 
     /**
-     * Returns a composed {@link IntFunction2} that first applies the {@code before} function to
-     * its input, and then applies this function to the result.
-     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
-     * This method is just convenience, to provide the ability to execute an operation which accepts {@code int} input,
-     * before this primitive function is executed.
+     * Returns a composed {@link IntFunction2} that first applies the {@code before} function to its input, and then
+     * applies this function to the result. If evaluation of either operation throws an exception, it is relayed to the
+     * caller of the composed operation. This method is just convenience, to provide the ability to execute an operation
+     * which accepts {@code int} input, before this primitive function is executed.
      *
      * @param before The function to apply before this function is applied
      * @return A composed {@code IntFunction2} that first applies the {@code before} function to its input, and then
      * applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * int}.
      */
     @Nonnull
-    default IntFunction2<R> composeFromInt(@Nonnull final IntToLongFunction before) {
+    default IntFunction2<R> composeFromInt(@Nonnull IntToLongFunction before) {
         Objects.requireNonNull(before);
-        return (value) -> apply(before.applyAsLong(value));
+        return value -> apply(before.applyAsLong(value));
     }
 
     /**
-     * Returns a composed {@link LongFunction2} that first applies the {@code before} operator to
-     * its input, and then applies this function to the result.
-     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
-     * This method is just convenience, to provide the ability to execute an operation which accepts {@code long} input,
-     * before this primitive function is executed.
+     * Returns a composed {@link LongFunction2} that first applies the {@code before} operator to its input, and then
+     * applies this function to the result. If evaluation of either operation throws an exception, it is relayed to the
+     * caller of the composed operation. This method is just convenience, to provide the ability to execute an operation
+     * which accepts {@code long} input, before this primitive function is executed.
      *
      * @param before The operator to apply before this function is applied
      * @return A composed {@code LongFunction2} that first applies the {@code before} operator to its input, and then
      * applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * long}.
      */
     @Nonnull
-    default LongFunction2<R> composeFromLong(@Nonnull final LongUnaryOperator before) {
+    default LongFunction2<R> composeFromLong(@Nonnull LongUnaryOperator before) {
         Objects.requireNonNull(before);
-        return (value) -> apply(before.applyAsLong(value));
+        return value -> apply(before.applyAsLong(value));
     }
 
     /**
@@ -296,19 +294,19 @@ public interface LongFunction2<R> extends Lambda, LongFunction<R> {
      * @return A composed {@code ShortFunction} that first applies the {@code before} function to its input, and then
      * applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * short}.
      */
     @Nonnull
-    default ShortFunction<R> composeFromShort(@Nonnull final ShortToLongFunction before) {
+    default ShortFunction<R> composeFromShort(@Nonnull ShortToLongFunction before) {
         Objects.requireNonNull(before);
-        return (value) -> apply(before.applyAsLong(value));
+        return value -> apply(before.applyAsLong(value));
     }
 
     /**
      * Returns a composed {@link LongFunction2} that first applies this function to its input, and then applies the
-     * {@code after} function to the result.
-     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
+     * {@code after} function to the result. If evaluation of either operation throws an exception, it is relayed to the
+     * caller of the composed operation.
      *
      * @param <S> The type of return value from the {@code after} function, and of the composed function
      * @param after The function to apply after this function is applied
@@ -318,9 +316,9 @@ public interface LongFunction2<R> extends Lambda, LongFunction<R> {
      * @implSpec The input argument of this method is able to return every type.
      */
     @Nonnull
-    default <S> LongFunction2<S> andThen(@Nonnull final Function<? super R, ? extends S> after) {
+    default <S> LongFunction2<S> andThen(@Nonnull Function<? super R, ? extends S> after) {
         Objects.requireNonNull(after);
-        return (value) -> after.apply(apply(value));
+        return value -> after.apply(apply(value));
     }
 
     /**
@@ -334,9 +332,9 @@ public interface LongFunction2<R> extends Lambda, LongFunction<R> {
      * @throws NullPointerException If given argument is {@code null}
      */
     @Nonnull
-    default LongConsumer2 consume(@Nonnull final Consumer<? super R> consumer) {
+    default LongConsumer2 consume(@Nonnull Consumer<? super R> consumer) {
         Objects.requireNonNull(consumer);
-        return (value) -> consumer.accept(apply(value));
+        return value -> consumer.accept(apply(value));
     }
 
     /**
@@ -358,10 +356,10 @@ public interface LongFunction2<R> extends Lambda, LongFunction<R> {
         if (isMemoized()) {
             return this;
         } else {
-            final Map<Long, R> cache = new ConcurrentHashMap<>();
-            final Object lock = new Object();
-            return (LongFunction2<R> & Memoized) (value) -> {
-                final R returnValue;
+            Map<Long, R> cache = new ConcurrentHashMap<>();
+            Object lock = new Object();
+            return (LongFunction2<R> & Memoized) value -> {
+                R returnValue;
                 synchronized (lock) {
                     returnValue = cache.computeIfAbsent(value, this::apply);
                 }
@@ -371,9 +369,9 @@ public interface LongFunction2<R> extends Lambda, LongFunction<R> {
     }
 
     /**
-     * Converts this function to an equal function, which ensures that its result is not
-     * {@code null} using {@link Optional}. This method mainly exists to avoid unnecessary {@code NullPointerException}s
-     * through referencing {@code null} from this function.
+     * Converts this function to an equal function, which ensures that its result is not {@code null} using {@link
+     * Optional}. This method mainly exists to avoid unnecessary {@code NullPointerException}s through referencing
+     * {@code null} from this function.
      *
      * @return An equal function, which ensures that its result is not {@code null}.
      * @deprecated Use {@code lift} method for lifting this function.
@@ -381,13 +379,13 @@ public interface LongFunction2<R> extends Lambda, LongFunction<R> {
     @Deprecated
     @Nonnull
     default LongFunction2<Optional<R>> nonNull() {
-        return (value) -> Optional.ofNullable(apply(value));
+        return value -> Optional.ofNullable(apply(value));
     }
 
     /**
-     * Returns a composed {@link Function2} which represents this {@link LongFunction2}. Thereby the primitive
-     * input argument for this function is autoboxed. This method provides the possibility to use this
-     * {@code LongFunction2} with methods provided by the {@code JDK}.
+     * Returns a composed {@link Function2} which represents this {@link LongFunction2}. Thereby the primitive input
+     * argument for this function is autoboxed. This method provides the possibility to use this {@code LongFunction2}
+     * with methods provided by the {@code JDK}.
      *
      * @return A composed {@code Function2} which represents this {@code LongFunction2}.
      */

@@ -13,7 +13,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package org.lambda4j.function.tri.conversion;
+
+import java.util.Map;
+import java.util.Objects;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.function.Function;
+
+import javax.annotation.Nonnegative;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
+import org.apache.commons.lang3.tuple.Triple;
 
 import org.lambda4j.Lambda;
 import org.lambda4j.consumer.ThrowableIntConsumer;
@@ -46,16 +58,6 @@ import org.lambda4j.predicate.ThrowableLongPredicate;
 import org.lambda4j.predicate.ThrowablePredicate;
 import org.lambda4j.predicate.ThrowableShortPredicate;
 
-import org.apache.commons.lang3.tuple.Triple;
-
-import javax.annotation.Nonnegative;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import java.util.Map;
-import java.util.Objects;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.function.Function;
-
 /**
  * Represents an operation that accepts three {@code boolean}-valued input arguments and produces a {@code int}-valued
  * result which is able to throw any {@link Throwable}. This is a primitive specialization of {@link
@@ -87,7 +89,7 @@ public interface ThrowableTriBooleanToIntFunction<X extends Throwable> extends L
      * @see <a href="https://docs.oracle.com/javase/tutorial/java/javaOO/methodreferences.html">Method Reference</a>
      */
     static <X extends Throwable> ThrowableTriBooleanToIntFunction<X> of(
-            @Nullable final ThrowableTriBooleanToIntFunction<X> expression) {
+            @Nullable ThrowableTriBooleanToIntFunction<X> expression) {
         return expression;
     }
 
@@ -103,7 +105,7 @@ public interface ThrowableTriBooleanToIntFunction<X extends Throwable> extends L
      * @throws NullPointerException If given argument is {@code null}
      * @throws X Any throwable from this functions action
      */
-    static <X extends Throwable> int call(@Nonnull final ThrowableTriBooleanToIntFunction<? extends X> function,
+    static <X extends Throwable> int call(@Nonnull ThrowableTriBooleanToIntFunction<? extends X> function,
             boolean value1, boolean value2, boolean value3) throws X {
         Objects.requireNonNull(function);
         return function.applyAsIntThrows(value1, value2, value3);
@@ -121,7 +123,7 @@ public interface ThrowableTriBooleanToIntFunction<X extends Throwable> extends L
      */
     @Nonnull
     static <X extends Throwable> ThrowableTriBooleanToIntFunction<X> onlyFirst(
-            @Nonnull final ThrowableBooleanToIntFunction<? extends X> function) {
+            @Nonnull ThrowableBooleanToIntFunction<? extends X> function) {
         Objects.requireNonNull(function);
         return (value1, value2, value3) -> function.applyAsIntThrows(value1);
     }
@@ -138,7 +140,7 @@ public interface ThrowableTriBooleanToIntFunction<X extends Throwable> extends L
      */
     @Nonnull
     static <X extends Throwable> ThrowableTriBooleanToIntFunction<X> onlySecond(
-            @Nonnull final ThrowableBooleanToIntFunction<? extends X> function) {
+            @Nonnull ThrowableBooleanToIntFunction<? extends X> function) {
         Objects.requireNonNull(function);
         return (value1, value2, value3) -> function.applyAsIntThrows(value2);
     }
@@ -155,7 +157,7 @@ public interface ThrowableTriBooleanToIntFunction<X extends Throwable> extends L
      */
     @Nonnull
     static <X extends Throwable> ThrowableTriBooleanToIntFunction<X> onlyThird(
-            @Nonnull final ThrowableBooleanToIntFunction<? extends X> function) {
+            @Nonnull ThrowableBooleanToIntFunction<? extends X> function) {
         Objects.requireNonNull(function);
         return (value1, value2, value3) -> function.applyAsIntThrows(value3);
     }
@@ -193,7 +195,7 @@ public interface ThrowableTriBooleanToIntFunction<X extends Throwable> extends L
      */
     @Nonnull
     default ThrowableBiBooleanToIntFunction<X> papplyAsIntThrows(boolean value1) {
-        return (value2, value3) -> this.applyAsIntThrows(value1, value2, value3);
+        return (value2, value3) -> applyAsIntThrows(value1, value2, value3);
     }
 
     /**
@@ -207,7 +209,7 @@ public interface ThrowableTriBooleanToIntFunction<X extends Throwable> extends L
      */
     @Nonnull
     default ThrowableBooleanToIntFunction<X> papplyAsIntThrows(boolean value1, boolean value2) {
-        return (value3) -> this.applyAsIntThrows(value1, value2, value3);
+        return value3 -> applyAsIntThrows(value1, value2, value3);
     }
 
     /**
@@ -238,9 +240,9 @@ public interface ThrowableTriBooleanToIntFunction<X extends Throwable> extends L
      */
     @Nonnull
     default <A, B, C> ThrowableToIntTriFunction<A, B, C, X> compose(
-            @Nonnull final ThrowablePredicate<? super A, ? extends X> before1,
-            @Nonnull final ThrowablePredicate<? super B, ? extends X> before2,
-            @Nonnull final ThrowablePredicate<? super C, ? extends X> before3) {
+            @Nonnull ThrowablePredicate<? super A, ? extends X> before1,
+            @Nonnull ThrowablePredicate<? super B, ? extends X> before2,
+            @Nonnull ThrowablePredicate<? super C, ? extends X> before3) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         Objects.requireNonNull(before3);
@@ -258,27 +260,26 @@ public interface ThrowableTriBooleanToIntFunction<X extends Throwable> extends L
      * @return A composed {@code ThrowableTriBooleanToIntFunction} that first applies the {@code before} operators to
      * its input, and then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * boolean}.
      */
     @Nonnull
     default ThrowableTriBooleanToIntFunction<X> composeFromBoolean(
-            @Nonnull final ThrowableBooleanUnaryOperator<? extends X> before1,
-            @Nonnull final ThrowableBooleanUnaryOperator<? extends X> before2,
-            @Nonnull final ThrowableBooleanUnaryOperator<? extends X> before3) {
+            @Nonnull ThrowableBooleanUnaryOperator<? extends X> before1,
+            @Nonnull ThrowableBooleanUnaryOperator<? extends X> before2,
+            @Nonnull ThrowableBooleanUnaryOperator<? extends X> before3) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         Objects.requireNonNull(before3);
         return (value1, value2, value3) -> applyAsIntThrows(before1.applyAsBooleanThrows(value1),
-                                                            before2.applyAsBooleanThrows(value2),
-                                                            before3.applyAsBooleanThrows(value3));
+                before2.applyAsBooleanThrows(value2),
+                before3.applyAsBooleanThrows(value3));
     }
 
     /**
-     * Returns a composed {@link ThrowableTriByteToIntFunction} that first applies the {@code before} predicates to
-     * its input, and then applies this function to the result.
-     * This method is just convenience, to provide the ability to execute an operation which accepts {@code byte} input,
-     * before this primitive function is executed.
+     * Returns a composed {@link ThrowableTriByteToIntFunction} that first applies the {@code before} predicates to its
+     * input, and then applies this function to the result. This method is just convenience, to provide the ability to
+     * execute an operation which accepts {@code byte} input, before this primitive function is executed.
      *
      * @param before1 The first predicate to apply before this function is applied
      * @param before2 The second predicate to apply before this function is applied
@@ -286,25 +287,24 @@ public interface ThrowableTriBooleanToIntFunction<X extends Throwable> extends L
      * @return A composed {@code ThrowableTriByteToIntFunction} that first applies the {@code before} predicates to its
      * input, and then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * byte}.
      */
     @Nonnull
-    default ThrowableTriByteToIntFunction<X> composeFromByte(@Nonnull final ThrowableBytePredicate<? extends X> before1,
-            @Nonnull final ThrowableBytePredicate<? extends X> before2,
-            @Nonnull final ThrowableBytePredicate<? extends X> before3) {
+    default ThrowableTriByteToIntFunction<X> composeFromByte(@Nonnull ThrowableBytePredicate<? extends X> before1,
+            @Nonnull ThrowableBytePredicate<? extends X> before2,
+            @Nonnull ThrowableBytePredicate<? extends X> before3) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         Objects.requireNonNull(before3);
         return (value1, value2, value3) -> applyAsIntThrows(before1.testThrows(value1), before2.testThrows(value2),
-                                                            before3.testThrows(value3));
+                before3.testThrows(value3));
     }
 
     /**
-     * Returns a composed {@link ThrowableTriCharToIntFunction} that first applies the {@code before} predicates to
-     * its input, and then applies this function to the result.
-     * This method is just convenience, to provide the ability to execute an operation which accepts {@code char} input,
-     * before this primitive function is executed.
+     * Returns a composed {@link ThrowableTriCharToIntFunction} that first applies the {@code before} predicates to its
+     * input, and then applies this function to the result. This method is just convenience, to provide the ability to
+     * execute an operation which accepts {@code char} input, before this primitive function is executed.
      *
      * @param before1 The first predicate to apply before this function is applied
      * @param before2 The second predicate to apply before this function is applied
@@ -312,18 +312,18 @@ public interface ThrowableTriBooleanToIntFunction<X extends Throwable> extends L
      * @return A composed {@code ThrowableTriCharToIntFunction} that first applies the {@code before} predicates to its
      * input, and then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * char}.
      */
     @Nonnull
-    default ThrowableTriCharToIntFunction<X> composeFromChar(@Nonnull final ThrowableCharPredicate<? extends X> before1,
-            @Nonnull final ThrowableCharPredicate<? extends X> before2,
-            @Nonnull final ThrowableCharPredicate<? extends X> before3) {
+    default ThrowableTriCharToIntFunction<X> composeFromChar(@Nonnull ThrowableCharPredicate<? extends X> before1,
+            @Nonnull ThrowableCharPredicate<? extends X> before2,
+            @Nonnull ThrowableCharPredicate<? extends X> before3) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         Objects.requireNonNull(before3);
         return (value1, value2, value3) -> applyAsIntThrows(before1.testThrows(value1), before2.testThrows(value2),
-                                                            before3.testThrows(value3));
+                before3.testThrows(value3));
     }
 
     /**
@@ -337,19 +337,19 @@ public interface ThrowableTriBooleanToIntFunction<X extends Throwable> extends L
      * @return A composed {@code ThrowableTriDoubleToIntFunction} that first applies the {@code before} predicates to
      * its input, and then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * double}.
      */
     @Nonnull
     default ThrowableTriDoubleToIntFunction<X> composeFromDouble(
-            @Nonnull final ThrowableDoublePredicate<? extends X> before1,
-            @Nonnull final ThrowableDoublePredicate<? extends X> before2,
-            @Nonnull final ThrowableDoublePredicate<? extends X> before3) {
+            @Nonnull ThrowableDoublePredicate<? extends X> before1,
+            @Nonnull ThrowableDoublePredicate<? extends X> before2,
+            @Nonnull ThrowableDoublePredicate<? extends X> before3) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         Objects.requireNonNull(before3);
         return (value1, value2, value3) -> applyAsIntThrows(before1.testThrows(value1), before2.testThrows(value2),
-                                                            before3.testThrows(value3));
+                before3.testThrows(value3));
     }
 
     /**
@@ -363,26 +363,25 @@ public interface ThrowableTriBooleanToIntFunction<X extends Throwable> extends L
      * @return A composed {@code ThrowableTriFloatToIntFunction} that first applies the {@code before} predicates to its
      * input, and then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * float}.
      */
     @Nonnull
     default ThrowableTriFloatToIntFunction<X> composeFromFloat(
-            @Nonnull final ThrowableFloatPredicate<? extends X> before1,
-            @Nonnull final ThrowableFloatPredicate<? extends X> before2,
-            @Nonnull final ThrowableFloatPredicate<? extends X> before3) {
+            @Nonnull ThrowableFloatPredicate<? extends X> before1,
+            @Nonnull ThrowableFloatPredicate<? extends X> before2,
+            @Nonnull ThrowableFloatPredicate<? extends X> before3) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         Objects.requireNonNull(before3);
         return (value1, value2, value3) -> applyAsIntThrows(before1.testThrows(value1), before2.testThrows(value2),
-                                                            before3.testThrows(value3));
+                before3.testThrows(value3));
     }
 
     /**
-     * Returns a composed {@link ThrowableIntTernaryOperator} that first applies the {@code before} predicates to
-     * its input, and then applies this function to the result.
-     * This method is just convenience, to provide the ability to execute an operation which accepts {@code int} input,
-     * before this primitive function is executed.
+     * Returns a composed {@link ThrowableIntTernaryOperator} that first applies the {@code before} predicates to its
+     * input, and then applies this function to the result. This method is just convenience, to provide the ability to
+     * execute an operation which accepts {@code int} input, before this primitive function is executed.
      *
      * @param before1 The first predicate to apply before this function is applied
      * @param before2 The second predicate to apply before this function is applied
@@ -390,25 +389,24 @@ public interface ThrowableTriBooleanToIntFunction<X extends Throwable> extends L
      * @return A composed {@code ThrowableIntTernaryOperator} that first applies the {@code before} predicates to its
      * input, and then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * int}.
      */
     @Nonnull
-    default ThrowableIntTernaryOperator<X> composeFromInt(@Nonnull final ThrowableIntPredicate<? extends X> before1,
-            @Nonnull final ThrowableIntPredicate<? extends X> before2,
-            @Nonnull final ThrowableIntPredicate<? extends X> before3) {
+    default ThrowableIntTernaryOperator<X> composeFromInt(@Nonnull ThrowableIntPredicate<? extends X> before1,
+            @Nonnull ThrowableIntPredicate<? extends X> before2,
+            @Nonnull ThrowableIntPredicate<? extends X> before3) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         Objects.requireNonNull(before3);
         return (value1, value2, value3) -> applyAsIntThrows(before1.testThrows(value1), before2.testThrows(value2),
-                                                            before3.testThrows(value3));
+                before3.testThrows(value3));
     }
 
     /**
-     * Returns a composed {@link ThrowableTriLongToIntFunction} that first applies the {@code before} predicates to
-     * its input, and then applies this function to the result.
-     * This method is just convenience, to provide the ability to execute an operation which accepts {@code long} input,
-     * before this primitive function is executed.
+     * Returns a composed {@link ThrowableTriLongToIntFunction} that first applies the {@code before} predicates to its
+     * input, and then applies this function to the result. This method is just convenience, to provide the ability to
+     * execute an operation which accepts {@code long} input, before this primitive function is executed.
      *
      * @param before1 The first predicate to apply before this function is applied
      * @param before2 The second predicate to apply before this function is applied
@@ -416,18 +414,18 @@ public interface ThrowableTriBooleanToIntFunction<X extends Throwable> extends L
      * @return A composed {@code ThrowableTriLongToIntFunction} that first applies the {@code before} predicates to its
      * input, and then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * long}.
      */
     @Nonnull
-    default ThrowableTriLongToIntFunction<X> composeFromLong(@Nonnull final ThrowableLongPredicate<? extends X> before1,
-            @Nonnull final ThrowableLongPredicate<? extends X> before2,
-            @Nonnull final ThrowableLongPredicate<? extends X> before3) {
+    default ThrowableTriLongToIntFunction<X> composeFromLong(@Nonnull ThrowableLongPredicate<? extends X> before1,
+            @Nonnull ThrowableLongPredicate<? extends X> before2,
+            @Nonnull ThrowableLongPredicate<? extends X> before3) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         Objects.requireNonNull(before3);
         return (value1, value2, value3) -> applyAsIntThrows(before1.testThrows(value1), before2.testThrows(value2),
-                                                            before3.testThrows(value3));
+                before3.testThrows(value3));
     }
 
     /**
@@ -441,19 +439,19 @@ public interface ThrowableTriBooleanToIntFunction<X extends Throwable> extends L
      * @return A composed {@code ThrowableTriShortToIntFunction} that first applies the {@code before} predicates to its
      * input, and then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * short}.
      */
     @Nonnull
     default ThrowableTriShortToIntFunction<X> composeFromShort(
-            @Nonnull final ThrowableShortPredicate<? extends X> before1,
-            @Nonnull final ThrowableShortPredicate<? extends X> before2,
-            @Nonnull final ThrowableShortPredicate<? extends X> before3) {
+            @Nonnull ThrowableShortPredicate<? extends X> before1,
+            @Nonnull ThrowableShortPredicate<? extends X> before2,
+            @Nonnull ThrowableShortPredicate<? extends X> before3) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         Objects.requireNonNull(before3);
         return (value1, value2, value3) -> applyAsIntThrows(before1.testThrows(value1), before2.testThrows(value2),
-                                                            before3.testThrows(value3));
+                before3.testThrows(value3));
     }
 
     /**
@@ -469,7 +467,7 @@ public interface ThrowableTriBooleanToIntFunction<X extends Throwable> extends L
      */
     @Nonnull
     default <S> ThrowableTriBooleanFunction<S, X> andThen(
-            @Nonnull final ThrowableIntFunction<? extends S, ? extends X> after) {
+            @Nonnull ThrowableIntFunction<? extends S, ? extends X> after) {
         Objects.requireNonNull(after);
         return (value1, value2, value3) -> after.applyThrows(applyAsIntThrows(value1, value2, value3));
     }
@@ -483,12 +481,12 @@ public interface ThrowableTriBooleanToIntFunction<X extends Throwable> extends L
      * @return A composed {@code ThrowableBooleanTernaryOperator} that first applies this function to its input, and
      * then applies the {@code after} predicate to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * boolean}.
      */
     @Nonnull
     default ThrowableBooleanTernaryOperator<X> andThenToBoolean(
-            @Nonnull final ThrowableIntPredicate<? extends X> after) {
+            @Nonnull ThrowableIntPredicate<? extends X> after) {
         Objects.requireNonNull(after);
         return (value1, value2, value3) -> after.testThrows(applyAsIntThrows(value1, value2, value3));
     }
@@ -502,12 +500,12 @@ public interface ThrowableTriBooleanToIntFunction<X extends Throwable> extends L
      * @return A composed {@code ThrowableTriBooleanToByteFunction} that first applies this function to its input, and
      * then applies the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * byte}.
      */
     @Nonnull
     default ThrowableTriBooleanToByteFunction<X> andThenToByte(
-            @Nonnull final ThrowableIntToByteFunction<? extends X> after) {
+            @Nonnull ThrowableIntToByteFunction<? extends X> after) {
         Objects.requireNonNull(after);
         return (value1, value2, value3) -> after.applyAsByteThrows(applyAsIntThrows(value1, value2, value3));
     }
@@ -521,12 +519,12 @@ public interface ThrowableTriBooleanToIntFunction<X extends Throwable> extends L
      * @return A composed {@code ThrowableTriBooleanToCharFunction} that first applies this function to its input, and
      * then applies the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * char}.
      */
     @Nonnull
     default ThrowableTriBooleanToCharFunction<X> andThenToChar(
-            @Nonnull final ThrowableIntToCharFunction<? extends X> after) {
+            @Nonnull ThrowableIntToCharFunction<? extends X> after) {
         Objects.requireNonNull(after);
         return (value1, value2, value3) -> after.applyAsCharThrows(applyAsIntThrows(value1, value2, value3));
     }
@@ -540,12 +538,12 @@ public interface ThrowableTriBooleanToIntFunction<X extends Throwable> extends L
      * @return A composed {@code ThrowableTriBooleanToDoubleFunction} that first applies this function to its input, and
      * then applies the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * double}.
      */
     @Nonnull
     default ThrowableTriBooleanToDoubleFunction<X> andThenToDouble(
-            @Nonnull final ThrowableIntToDoubleFunction<? extends X> after) {
+            @Nonnull ThrowableIntToDoubleFunction<? extends X> after) {
         Objects.requireNonNull(after);
         return (value1, value2, value3) -> after.applyAsDoubleThrows(applyAsIntThrows(value1, value2, value3));
     }
@@ -559,12 +557,12 @@ public interface ThrowableTriBooleanToIntFunction<X extends Throwable> extends L
      * @return A composed {@code ThrowableTriBooleanToFloatFunction} that first applies this function to its input, and
      * then applies the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * float}.
      */
     @Nonnull
     default ThrowableTriBooleanToFloatFunction<X> andThenToFloat(
-            @Nonnull final ThrowableIntToFloatFunction<? extends X> after) {
+            @Nonnull ThrowableIntToFloatFunction<? extends X> after) {
         Objects.requireNonNull(after);
         return (value1, value2, value3) -> after.applyAsFloatThrows(applyAsIntThrows(value1, value2, value3));
     }
@@ -578,12 +576,12 @@ public interface ThrowableTriBooleanToIntFunction<X extends Throwable> extends L
      * @return A composed {@code ThrowableTriBooleanToIntFunction} that first applies this function to its input, and
      * then applies the {@code after} operator to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * int}.
      */
     @Nonnull
     default ThrowableTriBooleanToIntFunction<X> andThenToInt(
-            @Nonnull final ThrowableIntUnaryOperator<? extends X> after) {
+            @Nonnull ThrowableIntUnaryOperator<? extends X> after) {
         Objects.requireNonNull(after);
         return (value1, value2, value3) -> after.applyAsIntThrows(applyAsIntThrows(value1, value2, value3));
     }
@@ -597,12 +595,12 @@ public interface ThrowableTriBooleanToIntFunction<X extends Throwable> extends L
      * @return A composed {@code ThrowableTriBooleanToLongFunction} that first applies this function to its input, and
      * then applies the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * long}.
      */
     @Nonnull
     default ThrowableTriBooleanToLongFunction<X> andThenToLong(
-            @Nonnull final ThrowableIntToLongFunction<? extends X> after) {
+            @Nonnull ThrowableIntToLongFunction<? extends X> after) {
         Objects.requireNonNull(after);
         return (value1, value2, value3) -> after.applyAsLongThrows(applyAsIntThrows(value1, value2, value3));
     }
@@ -616,12 +614,12 @@ public interface ThrowableTriBooleanToIntFunction<X extends Throwable> extends L
      * @return A composed {@code ThrowableTriBooleanToShortFunction} that first applies this function to its input, and
      * then applies the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * short}.
      */
     @Nonnull
     default ThrowableTriBooleanToShortFunction<X> andThenToShort(
-            @Nonnull final ThrowableIntToShortFunction<? extends X> after) {
+            @Nonnull ThrowableIntToShortFunction<? extends X> after) {
         Objects.requireNonNull(after);
         return (value1, value2, value3) -> after.applyAsShortThrows(applyAsIntThrows(value1, value2, value3));
     }
@@ -636,7 +634,7 @@ public interface ThrowableTriBooleanToIntFunction<X extends Throwable> extends L
      * @throws NullPointerException If given argument is {@code null}
      */
     @Nonnull
-    default ThrowableTriBooleanConsumer<X> consume(@Nonnull final ThrowableIntConsumer<? extends X> consumer) {
+    default ThrowableTriBooleanConsumer<X> consume(@Nonnull ThrowableIntConsumer<? extends X> consumer) {
         Objects.requireNonNull(consumer);
         return (value1, value2, value3) -> consumer.acceptThrows(applyAsIntThrows(value1, value2, value3));
     }
@@ -660,10 +658,10 @@ public interface ThrowableTriBooleanToIntFunction<X extends Throwable> extends L
         if (isMemoized()) {
             return this;
         } else {
-            final Map<Triple<Boolean, Boolean, Boolean>, Integer> cache = new ConcurrentHashMap<>();
-            final Object lock = new Object();
+            Map<Triple<Boolean, Boolean, Boolean>, Integer> cache = new ConcurrentHashMap<>();
+            Object lock = new Object();
             return (ThrowableTriBooleanToIntFunction<X> & Memoized) (value1, value2, value3) -> {
-                final int returnValue;
+                int returnValue;
                 synchronized (lock) {
                     returnValue = cache.computeIfAbsent(Triple.of(value1, value2, value3), ThrowableFunction.of(
                             key -> applyAsIntThrows(key.getLeft(), key.getMiddle(), key.getRight())));
@@ -716,7 +714,7 @@ public interface ThrowableTriBooleanToIntFunction<X extends Throwable> extends L
      */
     @Nonnull
     default TriBooleanToIntFunction nest(
-            @Nonnull final Function<? super Throwable, ? extends RuntimeException> mapper) {
+            @Nonnull Function<? super Throwable, ? extends RuntimeException> mapper) {
         return recover(throwable -> {
             throw mapper.apply(throwable);
         });
@@ -739,15 +737,15 @@ public interface ThrowableTriBooleanToIntFunction<X extends Throwable> extends L
      */
     @Nonnull
     default TriBooleanToIntFunction recover(
-            @Nonnull final Function<? super Throwable, ? extends TriBooleanToIntFunction> recover) {
+            @Nonnull Function<? super Throwable, ? extends TriBooleanToIntFunction> recover) {
         Objects.requireNonNull(recover);
         return (value1, value2, value3) -> {
             try {
-                return this.applyAsIntThrows(value1, value2, value3);
+                return applyAsIntThrows(value1, value2, value3);
             } catch (Error e) {
                 throw e;
             } catch (Throwable throwable) {
-                final TriBooleanToIntFunction function = recover.apply(throwable);
+                TriBooleanToIntFunction function = recover.apply(throwable);
                 Objects.requireNonNull(function, () -> "recover returned null for " + throwable.getClass() + ": "
                         + throwable.getMessage());
                 return function.applyAsInt(value1, value2, value3);
@@ -825,7 +823,7 @@ public interface ThrowableTriBooleanToIntFunction<X extends Throwable> extends L
     default TriBooleanToIntFunction sneakyThrow() {
         return (value1, value2, value3) -> {
             try {
-                return this.applyAsIntThrows(value1, value2, value3);
+                return applyAsIntThrows(value1, value2, value3);
             } catch (RuntimeException | Error e) {
                 throw e;
             } catch (Throwable throwable) {

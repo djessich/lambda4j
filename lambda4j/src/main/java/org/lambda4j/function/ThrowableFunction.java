@@ -13,25 +13,27 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package org.lambda4j.function;
 
-import org.lambda4j.Lambda;
-import org.lambda4j.consumer.ThrowableConsumer;
-import org.lambda4j.core.exception.ThrownByFunctionalInterfaceException;
-import org.lambda4j.core.util.ThrowableUtils;
-
-import javax.annotation.Nonnegative;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Function;
 
+import javax.annotation.Nonnegative;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
+import org.lambda4j.Lambda;
+import org.lambda4j.consumer.ThrowableConsumer;
+import org.lambda4j.core.exception.ThrownByFunctionalInterfaceException;
+import org.lambda4j.core.util.ThrowableUtils;
+
 /**
- * Represents an operation that accepts one input argument and produces a
- * result which is able to throw any {@link Throwable}.
+ * Represents an operation that accepts one input argument and produces a result which is able to throw any {@link
+ * Throwable}.
  * <p>
  * This is a {@link FunctionalInterface} whose functional method is {@link #applyThrows(Object)}.
  *
@@ -63,7 +65,7 @@ public interface ThrowableFunction<T, R, X extends Throwable> extends Lambda, Fu
      * @see <a href="https://docs.oracle.com/javase/tutorial/java/javaOO/methodreferences.html">Method Reference</a>
      */
     static <T, R, X extends Throwable> ThrowableFunction<T, R, X> of(
-            @Nullable final ThrowableFunction<T, R, X> expression) {
+            @Nullable ThrowableFunction<T, R, X> expression) {
         return expression;
     }
 
@@ -81,9 +83,9 @@ public interface ThrowableFunction<T, R, X extends Throwable> extends Lambda, Fu
      */
     @Nonnull
     static <T, R, X extends Throwable> ThrowableFunction<T, Optional<R>, X> lift(
-            @Nonnull final ThrowableFunction<? super T, ? extends R, ? extends X> partial) {
+            @Nonnull ThrowableFunction<? super T, ? extends R, ? extends X> partial) {
         Objects.requireNonNull(partial);
-        return (t) -> Optional.ofNullable(partial.applyThrows(t));
+        return t -> Optional.ofNullable(partial.applyThrows(t));
     }
 
     /**
@@ -99,7 +101,7 @@ public interface ThrowableFunction<T, R, X extends Throwable> extends Lambda, Fu
      * @throws X Any throwable from this functions action
      */
     static <T, R, X extends Throwable> R call(
-            @Nonnull final ThrowableFunction<? super T, ? extends R, ? extends X> function, T t) throws X {
+            @Nonnull ThrowableFunction<? super T, ? extends R, ? extends X> function, T t) throws X {
         Objects.requireNonNull(function);
         return function.applyThrows(t);
     }
@@ -109,11 +111,11 @@ public interface ThrowableFunction<T, R, X extends Throwable> extends Lambda, Fu
      *
      * @param <T> The type of the argument to the function and of return from the function
      * @param <X> The type of the throwable to be thrown by this function
-     * @return A {@code  ThrowableFunction} that always returns its input argument
+     * @return A {@code ThrowableFunction} that always returns its input argument
      */
     @Nonnull
     static <T, X extends Throwable> ThrowableFunction<T, T, X> identity() {
-        return (t) -> t;
+        return t -> t;
     }
 
     /**
@@ -127,7 +129,7 @@ public interface ThrowableFunction<T, R, X extends Throwable> extends Lambda, Fu
      */
     @Nonnull
     static <T, R, X extends Throwable> ThrowableFunction<T, R, X> constant(R ret) {
-        return (t) -> ret;
+        return t -> ret;
     }
 
     /**
@@ -154,14 +156,6 @@ public interface ThrowableFunction<T, R, X extends Throwable> extends Lambda, Fu
      */
     @Override
     default R apply(T t) {
-        // TODO: Remove commented code below
-    /*try {
-         return this.applyThrows(t);
-    } catch (RuntimeException | Error e) {
-        throw e;
-    } catch (Throwable throwable) {
-        throw new ThrownByFunctionalInterfaceException(throwable.getMessage(), throwable);
-    }*/
         return nest().apply(t);
     }
 
@@ -189,9 +183,9 @@ public interface ThrowableFunction<T, R, X extends Throwable> extends Lambda, Fu
      */
     @Nonnull
     default <A> ThrowableFunction<A, R, X> compose(
-            @Nonnull final ThrowableFunction<? super A, ? extends T, ? extends X> before) {
+            @Nonnull ThrowableFunction<? super A, ? extends T, ? extends X> before) {
         Objects.requireNonNull(before);
-        return (a) -> applyThrows(before.applyThrows(a));
+        return a -> applyThrows(before.applyThrows(a));
     }
 
     /**
@@ -207,9 +201,9 @@ public interface ThrowableFunction<T, R, X extends Throwable> extends Lambda, Fu
      */
     @Nonnull
     default <S> ThrowableFunction<T, S, X> andThen(
-            @Nonnull final ThrowableFunction<? super R, ? extends S, ? extends X> after) {
+            @Nonnull ThrowableFunction<? super R, ? extends S, ? extends X> after) {
         Objects.requireNonNull(after);
-        return (t) -> after.applyThrows(applyThrows(t));
+        return t -> after.applyThrows(applyThrows(t));
     }
 
     /**
@@ -222,9 +216,9 @@ public interface ThrowableFunction<T, R, X extends Throwable> extends Lambda, Fu
      * @throws NullPointerException If given argument is {@code null}
      */
     @Nonnull
-    default ThrowableConsumer<T, X> consume(@Nonnull final ThrowableConsumer<? super R, ? extends X> consumer) {
+    default ThrowableConsumer<T, X> consume(@Nonnull ThrowableConsumer<? super R, ? extends X> consumer) {
         Objects.requireNonNull(consumer);
-        return (t) -> consumer.acceptThrows(applyThrows(t));
+        return t -> consumer.acceptThrows(applyThrows(t));
     }
 
     /**
@@ -266,10 +260,10 @@ public interface ThrowableFunction<T, R, X extends Throwable> extends Lambda, Fu
         if (isMemoized()) {
             return this;
         } else {
-            final Map<T, R> cache = new ConcurrentHashMap<>();
-            final Object lock = new Object();
-            return (ThrowableFunction<T, R, X> & Memoized) (t) -> {
-                final R returnValue;
+            Map<T, R> cache = new ConcurrentHashMap<>();
+            Object lock = new Object();
+            return (ThrowableFunction<T, R, X> & Memoized) t -> {
+                R returnValue;
                 synchronized (lock) {
                     returnValue = cache.computeIfAbsent(t, ThrowableFunction.of(this::applyThrows));
                 }
@@ -279,9 +273,9 @@ public interface ThrowableFunction<T, R, X extends Throwable> extends Lambda, Fu
     }
 
     /**
-     * Converts this function to an equal function, which ensures that its result is not
-     * {@code null} using {@link Optional}. This method mainly exists to avoid unnecessary {@code NullPointerException}s
-     * through referencing {@code null} from this function.
+     * Converts this function to an equal function, which ensures that its result is not {@code null} using {@link
+     * Optional}. This method mainly exists to avoid unnecessary {@code NullPointerException}s through referencing
+     * {@code null} from this function.
      *
      * @return An equal function, which ensures that its result is not {@code null}.
      * @deprecated Use {@code lift} method for lifting this function.
@@ -289,7 +283,7 @@ public interface ThrowableFunction<T, R, X extends Throwable> extends Lambda, Fu
     @Deprecated
     @Nonnull
     default ThrowableFunction<T, Optional<R>, X> nonNull() {
-        return (t) -> Optional.ofNullable(applyThrows(t));
+        return t -> Optional.ofNullable(applyThrows(t));
     }
 
     /**
@@ -321,7 +315,7 @@ public interface ThrowableFunction<T, R, X extends Throwable> extends Lambda, Fu
      * @see #nest()
      */
     @Nonnull
-    default Function2<T, R> nest(@Nonnull final Function<? super Throwable, ? extends RuntimeException> mapper) {
+    default Function2<T, R> nest(@Nonnull Function<? super Throwable, ? extends RuntimeException> mapper) {
         return recover(throwable -> {
             throw mapper.apply(throwable);
         });
@@ -343,15 +337,15 @@ public interface ThrowableFunction<T, R, X extends Throwable> extends Lambda, Fu
      */
     @Nonnull
     default Function2<T, R> recover(
-            @Nonnull final Function<? super Throwable, ? extends Function<? super T, ? extends R>> recover) {
+            @Nonnull Function<? super Throwable, ? extends Function<? super T, ? extends R>> recover) {
         Objects.requireNonNull(recover);
-        return (t) -> {
+        return t -> {
             try {
-                return this.applyThrows(t);
+                return applyThrows(t);
             } catch (Error e) {
                 throw e;
             } catch (Throwable throwable) {
-                final Function<? super T, ? extends R> function = recover.apply(throwable);
+                Function<? super T, ? extends R> function = recover.apply(throwable);
                 Objects.requireNonNull(function, () -> "recover returned null for " + throwable.getClass() + ": "
                         + throwable.getMessage());
                 return function.apply(t);
@@ -360,12 +354,12 @@ public interface ThrowableFunction<T, R, X extends Throwable> extends Lambda, Fu
     }
 
     /**
-     * Returns a composed {@link Function2} that applies this function to its input and sneakily throws the
-     * thrown {@link Throwable} from it, if it is not of type {@link RuntimeException} or {@link Error}. This means that
-     * each throwable thrown from the returned composed function behaves exactly the same as an <em>unchecked</em>
-     * throwable does. As a result, there is no need to handle the throwable of this function in the returned composed
-     * function by either wrapping it in an <em>unchecked</em> throwable or to declare it in the {@code throws} clause,
-     * as it would be done in a non sneaky throwing function.
+     * Returns a composed {@link Function2} that applies this function to its input and sneakily throws the thrown
+     * {@link Throwable} from it, if it is not of type {@link RuntimeException} or {@link Error}. This means that each
+     * throwable thrown from the returned composed function behaves exactly the same as an <em>unchecked</em> throwable
+     * does. As a result, there is no need to handle the throwable of this function in the returned composed function by
+     * either wrapping it in an <em>unchecked</em> throwable or to declare it in the {@code throws} clause, as it would
+     * be done in a non sneaky throwing function.
      * <p>
      * What sneaky throwing simply does, is to fake out the compiler and thus it bypasses the principle of
      * <em>checked</em> throwables. On the JVM (class file) level, all throwables, checked or not, can be thrown
@@ -427,9 +421,9 @@ public interface ThrowableFunction<T, R, X extends Throwable> extends Lambda, Fu
      */
     @Nonnull
     default Function2<T, R> sneakyThrow() {
-        return (t) -> {
+        return t -> {
             try {
-                return this.applyThrows(t);
+                return applyThrows(t);
             } catch (RuntimeException | Error e) {
                 throw e;
             } catch (Throwable throwable) {

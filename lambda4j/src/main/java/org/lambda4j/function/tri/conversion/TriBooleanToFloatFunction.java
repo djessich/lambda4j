@@ -13,7 +13,22 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package org.lambda4j.function.tri.conversion;
+
+import java.util.Map;
+import java.util.Objects;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.function.DoublePredicate;
+import java.util.function.IntPredicate;
+import java.util.function.LongPredicate;
+import java.util.function.Predicate;
+
+import javax.annotation.Nonnegative;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
+import org.apache.commons.lang3.tuple.Triple;
 
 import org.lambda4j.Lambda;
 import org.lambda4j.consumer.FloatConsumer;
@@ -39,23 +54,9 @@ import org.lambda4j.predicate.CharPredicate;
 import org.lambda4j.predicate.FloatPredicate;
 import org.lambda4j.predicate.ShortPredicate;
 
-import org.apache.commons.lang3.tuple.Triple;
-
-import javax.annotation.Nonnegative;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import java.util.Map;
-import java.util.Objects;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.function.DoublePredicate;
-import java.util.function.IntPredicate;
-import java.util.function.LongPredicate;
-import java.util.function.Predicate;
-
 /**
- * Represents an operation that accepts three {@code boolean}-valued input arguments and produces a
- * {@code float}-valued result.
- * This is a primitive specialization of {@link TriFunction}.
+ * Represents an operation that accepts three {@code boolean}-valued input arguments and produces a {@code float}-valued
+ * result. This is a primitive specialization of {@link TriFunction}.
  * <p>
  * This is a {@link FunctionalInterface} whose functional method is {@link #applyAsFloat(boolean, boolean, boolean)}.
  *
@@ -79,7 +80,7 @@ public interface TriBooleanToFloatFunction extends Lambda {
      * Expression</a>
      * @see <a href="https://docs.oracle.com/javase/tutorial/java/javaOO/methodreferences.html">Method Reference</a>
      */
-    static TriBooleanToFloatFunction of(@Nullable final TriBooleanToFloatFunction expression) {
+    static TriBooleanToFloatFunction of(@Nullable TriBooleanToFloatFunction expression) {
         return expression;
     }
 
@@ -93,7 +94,7 @@ public interface TriBooleanToFloatFunction extends Lambda {
      * @return The result from the given {@code TriBooleanToFloatFunction}.
      * @throws NullPointerException If given argument is {@code null}
      */
-    static float call(@Nonnull final TriBooleanToFloatFunction function, boolean value1, boolean value2,
+    static float call(@Nonnull TriBooleanToFloatFunction function, boolean value1, boolean value2,
             boolean value3) {
         Objects.requireNonNull(function);
         return function.applyAsFloat(value1, value2, value3);
@@ -109,7 +110,7 @@ public interface TriBooleanToFloatFunction extends Lambda {
      * @throws NullPointerException If given argument is {@code null}
      */
     @Nonnull
-    static TriBooleanToFloatFunction onlyFirst(@Nonnull final BooleanToFloatFunction function) {
+    static TriBooleanToFloatFunction onlyFirst(@Nonnull BooleanToFloatFunction function) {
         Objects.requireNonNull(function);
         return (value1, value2, value3) -> function.applyAsFloat(value1);
     }
@@ -124,7 +125,7 @@ public interface TriBooleanToFloatFunction extends Lambda {
      * @throws NullPointerException If given argument is {@code null}
      */
     @Nonnull
-    static TriBooleanToFloatFunction onlySecond(@Nonnull final BooleanToFloatFunction function) {
+    static TriBooleanToFloatFunction onlySecond(@Nonnull BooleanToFloatFunction function) {
         Objects.requireNonNull(function);
         return (value1, value2, value3) -> function.applyAsFloat(value2);
     }
@@ -139,7 +140,7 @@ public interface TriBooleanToFloatFunction extends Lambda {
      * @throws NullPointerException If given argument is {@code null}
      */
     @Nonnull
-    static TriBooleanToFloatFunction onlyThird(@Nonnull final BooleanToFloatFunction function) {
+    static TriBooleanToFloatFunction onlyThird(@Nonnull BooleanToFloatFunction function) {
         Objects.requireNonNull(function);
         return (value1, value2, value3) -> function.applyAsFloat(value3);
     }
@@ -174,7 +175,7 @@ public interface TriBooleanToFloatFunction extends Lambda {
      */
     @Nonnull
     default BiBooleanToFloatFunction papplyAsFloat(boolean value1) {
-        return (value2, value3) -> this.applyAsFloat(value1, value2, value3);
+        return (value2, value3) -> applyAsFloat(value1, value2, value3);
     }
 
     /**
@@ -187,7 +188,7 @@ public interface TriBooleanToFloatFunction extends Lambda {
      */
     @Nonnull
     default BooleanToFloatFunction papplyAsFloat(boolean value1, boolean value2) {
-        return (value3) -> this.applyAsFloat(value1, value2, value3);
+        return value3 -> applyAsFloat(value1, value2, value3);
     }
 
     /**
@@ -203,8 +204,8 @@ public interface TriBooleanToFloatFunction extends Lambda {
 
     /**
      * Returns a composed {@link ToFloatTriFunction} that first applies the {@code before} predicates to its input, and
-     * then applies this function to the result.
-     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
+     * then applies this function to the result. If evaluation of either operation throws an exception, it is relayed to
+     * the caller of the composed operation.
      *
      * @param <A> The type of the argument to the first given predicate, and of composed function
      * @param <B> The type of the argument to the second given predicate, and of composed function
@@ -218,8 +219,8 @@ public interface TriBooleanToFloatFunction extends Lambda {
      * @implSpec The input argument of this method is able to handle every type.
      */
     @Nonnull
-    default <A, B, C> ToFloatTriFunction<A, B, C> compose(@Nonnull final Predicate<? super A> before1,
-            @Nonnull final Predicate<? super B> before2, @Nonnull final Predicate<? super C> before3) {
+    default <A, B, C> ToFloatTriFunction<A, B, C> compose(@Nonnull Predicate<? super A> before1,
+            @Nonnull Predicate<? super B> before2, @Nonnull Predicate<? super C> before3) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         Objects.requireNonNull(before3);
@@ -238,25 +239,24 @@ public interface TriBooleanToFloatFunction extends Lambda {
      * @return A composed {@code TriBooleanToFloatFunction} that first applies the {@code before} operators to its
      * input, and then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * boolean}.
      */
     @Nonnull
-    default TriBooleanToFloatFunction composeFromBoolean(@Nonnull final BooleanUnaryOperator before1,
-            @Nonnull final BooleanUnaryOperator before2, @Nonnull final BooleanUnaryOperator before3) {
+    default TriBooleanToFloatFunction composeFromBoolean(@Nonnull BooleanUnaryOperator before1,
+            @Nonnull BooleanUnaryOperator before2, @Nonnull BooleanUnaryOperator before3) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         Objects.requireNonNull(before3);
         return (value1, value2, value3) -> applyAsFloat(before1.applyAsBoolean(value1), before2.applyAsBoolean(value2),
-                                                        before3.applyAsBoolean(value3));
+                before3.applyAsBoolean(value3));
     }
 
     /**
-     * Returns a composed {@link TriByteToFloatFunction} that first applies the {@code before} predicates to
-     * its input, and then applies this function to the result.
-     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
-     * This method is just convenience, to provide the ability to execute an operation which accepts {@code byte} input,
-     * before this primitive function is executed.
+     * Returns a composed {@link TriByteToFloatFunction} that first applies the {@code before} predicates to its input,
+     * and then applies this function to the result. If evaluation of either operation throws an exception, it is
+     * relayed to the caller of the composed operation. This method is just convenience, to provide the ability to
+     * execute an operation which accepts {@code byte} input, before this primitive function is executed.
      *
      * @param before1 The first predicate to apply before this function is applied
      * @param before2 The second predicate to apply before this function is applied
@@ -264,25 +264,24 @@ public interface TriBooleanToFloatFunction extends Lambda {
      * @return A composed {@code TriByteToFloatFunction} that first applies the {@code before} predicates to its input,
      * and then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * byte}.
      */
     @Nonnull
-    default TriByteToFloatFunction composeFromByte(@Nonnull final BytePredicate before1,
-            @Nonnull final BytePredicate before2, @Nonnull final BytePredicate before3) {
+    default TriByteToFloatFunction composeFromByte(@Nonnull BytePredicate before1,
+            @Nonnull BytePredicate before2, @Nonnull BytePredicate before3) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         Objects.requireNonNull(before3);
         return (value1, value2, value3) -> applyAsFloat(before1.test(value1), before2.test(value2),
-                                                        before3.test(value3));
+                before3.test(value3));
     }
 
     /**
-     * Returns a composed {@link TriCharToFloatFunction} that first applies the {@code before} predicates to
-     * its input, and then applies this function to the result.
-     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
-     * This method is just convenience, to provide the ability to execute an operation which accepts {@code char} input,
-     * before this primitive function is executed.
+     * Returns a composed {@link TriCharToFloatFunction} that first applies the {@code before} predicates to its input,
+     * and then applies this function to the result. If evaluation of either operation throws an exception, it is
+     * relayed to the caller of the composed operation. This method is just convenience, to provide the ability to
+     * execute an operation which accepts {@code char} input, before this primitive function is executed.
      *
      * @param before1 The first predicate to apply before this function is applied
      * @param before2 The second predicate to apply before this function is applied
@@ -290,17 +289,17 @@ public interface TriBooleanToFloatFunction extends Lambda {
      * @return A composed {@code TriCharToFloatFunction} that first applies the {@code before} predicates to its input,
      * and then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * char}.
      */
     @Nonnull
-    default TriCharToFloatFunction composeFromChar(@Nonnull final CharPredicate before1,
-            @Nonnull final CharPredicate before2, @Nonnull final CharPredicate before3) {
+    default TriCharToFloatFunction composeFromChar(@Nonnull CharPredicate before1,
+            @Nonnull CharPredicate before2, @Nonnull CharPredicate before3) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         Objects.requireNonNull(before3);
         return (value1, value2, value3) -> applyAsFloat(before1.test(value1), before2.test(value2),
-                                                        before3.test(value3));
+                before3.test(value3));
     }
 
     /**
@@ -315,17 +314,17 @@ public interface TriBooleanToFloatFunction extends Lambda {
      * @return A composed {@code TriDoubleToFloatFunction} that first applies the {@code before} predicates to its
      * input, and then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * double}.
      */
     @Nonnull
-    default TriDoubleToFloatFunction composeFromDouble(@Nonnull final DoublePredicate before1,
-            @Nonnull final DoublePredicate before2, @Nonnull final DoublePredicate before3) {
+    default TriDoubleToFloatFunction composeFromDouble(@Nonnull DoublePredicate before1,
+            @Nonnull DoublePredicate before2, @Nonnull DoublePredicate before3) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         Objects.requireNonNull(before3);
         return (value1, value2, value3) -> applyAsFloat(before1.test(value1), before2.test(value2),
-                                                        before3.test(value3));
+                before3.test(value3));
     }
 
     /**
@@ -340,25 +339,24 @@ public interface TriBooleanToFloatFunction extends Lambda {
      * @return A composed {@code FloatTernaryOperator} that first applies the {@code before} predicates to its input,
      * and then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * float}.
      */
     @Nonnull
-    default FloatTernaryOperator composeFromFloat(@Nonnull final FloatPredicate before1,
-            @Nonnull final FloatPredicate before2, @Nonnull final FloatPredicate before3) {
+    default FloatTernaryOperator composeFromFloat(@Nonnull FloatPredicate before1,
+            @Nonnull FloatPredicate before2, @Nonnull FloatPredicate before3) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         Objects.requireNonNull(before3);
         return (value1, value2, value3) -> applyAsFloat(before1.test(value1), before2.test(value2),
-                                                        before3.test(value3));
+                before3.test(value3));
     }
 
     /**
-     * Returns a composed {@link TriIntToFloatFunction} that first applies the {@code before} predicates to
-     * its input, and then applies this function to the result.
-     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
-     * This method is just convenience, to provide the ability to execute an operation which accepts {@code int} input,
-     * before this primitive function is executed.
+     * Returns a composed {@link TriIntToFloatFunction} that first applies the {@code before} predicates to its input,
+     * and then applies this function to the result. If evaluation of either operation throws an exception, it is
+     * relayed to the caller of the composed operation. This method is just convenience, to provide the ability to
+     * execute an operation which accepts {@code int} input, before this primitive function is executed.
      *
      * @param before1 The first predicate to apply before this function is applied
      * @param before2 The second predicate to apply before this function is applied
@@ -366,25 +364,24 @@ public interface TriBooleanToFloatFunction extends Lambda {
      * @return A composed {@code TriIntToFloatFunction} that first applies the {@code before} predicates to its input,
      * and then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * int}.
      */
     @Nonnull
-    default TriIntToFloatFunction composeFromInt(@Nonnull final IntPredicate before1,
-            @Nonnull final IntPredicate before2, @Nonnull final IntPredicate before3) {
+    default TriIntToFloatFunction composeFromInt(@Nonnull IntPredicate before1,
+            @Nonnull IntPredicate before2, @Nonnull IntPredicate before3) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         Objects.requireNonNull(before3);
         return (value1, value2, value3) -> applyAsFloat(before1.test(value1), before2.test(value2),
-                                                        before3.test(value3));
+                before3.test(value3));
     }
 
     /**
-     * Returns a composed {@link TriLongToFloatFunction} that first applies the {@code before} predicates to
-     * its input, and then applies this function to the result.
-     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
-     * This method is just convenience, to provide the ability to execute an operation which accepts {@code long} input,
-     * before this primitive function is executed.
+     * Returns a composed {@link TriLongToFloatFunction} that first applies the {@code before} predicates to its input,
+     * and then applies this function to the result. If evaluation of either operation throws an exception, it is
+     * relayed to the caller of the composed operation. This method is just convenience, to provide the ability to
+     * execute an operation which accepts {@code long} input, before this primitive function is executed.
      *
      * @param before1 The first predicate to apply before this function is applied
      * @param before2 The second predicate to apply before this function is applied
@@ -392,17 +389,17 @@ public interface TriBooleanToFloatFunction extends Lambda {
      * @return A composed {@code TriLongToFloatFunction} that first applies the {@code before} predicates to its input,
      * and then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * long}.
      */
     @Nonnull
-    default TriLongToFloatFunction composeFromLong(@Nonnull final LongPredicate before1,
-            @Nonnull final LongPredicate before2, @Nonnull final LongPredicate before3) {
+    default TriLongToFloatFunction composeFromLong(@Nonnull LongPredicate before1,
+            @Nonnull LongPredicate before2, @Nonnull LongPredicate before3) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         Objects.requireNonNull(before3);
         return (value1, value2, value3) -> applyAsFloat(before1.test(value1), before2.test(value2),
-                                                        before3.test(value3));
+                before3.test(value3));
     }
 
     /**
@@ -417,23 +414,23 @@ public interface TriBooleanToFloatFunction extends Lambda {
      * @return A composed {@code TriShortToFloatFunction} that first applies the {@code before} predicates to its input,
      * and then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * short}.
      */
     @Nonnull
-    default TriShortToFloatFunction composeFromShort(@Nonnull final ShortPredicate before1,
-            @Nonnull final ShortPredicate before2, @Nonnull final ShortPredicate before3) {
+    default TriShortToFloatFunction composeFromShort(@Nonnull ShortPredicate before1,
+            @Nonnull ShortPredicate before2, @Nonnull ShortPredicate before3) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         Objects.requireNonNull(before3);
         return (value1, value2, value3) -> applyAsFloat(before1.test(value1), before2.test(value2),
-                                                        before3.test(value3));
+                before3.test(value3));
     }
 
     /**
      * Returns a composed {@link TriBooleanFunction} that first applies this function to its input, and then applies the
-     * {@code after} function to the result.
-     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
+     * {@code after} function to the result. If evaluation of either operation throws an exception, it is relayed to the
+     * caller of the composed operation.
      *
      * @param <S> The type of return value from the {@code after} function, and of the composed function
      * @param after The function to apply after this function is applied
@@ -443,7 +440,7 @@ public interface TriBooleanToFloatFunction extends Lambda {
      * @implSpec The input argument of this method is able to return every type.
      */
     @Nonnull
-    default <S> TriBooleanFunction<S> andThen(@Nonnull final FloatFunction<? extends S> after) {
+    default <S> TriBooleanFunction<S> andThen(@Nonnull FloatFunction<? extends S> after) {
         Objects.requireNonNull(after);
         return (value1, value2, value3) -> after.apply(applyAsFloat(value1, value2, value3));
     }
@@ -458,11 +455,11 @@ public interface TriBooleanToFloatFunction extends Lambda {
      * @return A composed {@code BooleanTernaryOperator} that first applies this function to its input, and then applies
      * the {@code after} predicate to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * boolean}.
      */
     @Nonnull
-    default BooleanTernaryOperator andThenToBoolean(@Nonnull final FloatPredicate after) {
+    default BooleanTernaryOperator andThenToBoolean(@Nonnull FloatPredicate after) {
         Objects.requireNonNull(after);
         return (value1, value2, value3) -> after.test(applyAsFloat(value1, value2, value3));
     }
@@ -477,11 +474,11 @@ public interface TriBooleanToFloatFunction extends Lambda {
      * @return A composed {@code TriBooleanToByteFunction} that first applies this function to its input, and then
      * applies the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * byte}.
      */
     @Nonnull
-    default TriBooleanToByteFunction andThenToByte(@Nonnull final FloatToByteFunction after) {
+    default TriBooleanToByteFunction andThenToByte(@Nonnull FloatToByteFunction after) {
         Objects.requireNonNull(after);
         return (value1, value2, value3) -> after.applyAsByte(applyAsFloat(value1, value2, value3));
     }
@@ -496,11 +493,11 @@ public interface TriBooleanToFloatFunction extends Lambda {
      * @return A composed {@code TriBooleanToCharFunction} that first applies this function to its input, and then
      * applies the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * char}.
      */
     @Nonnull
-    default TriBooleanToCharFunction andThenToChar(@Nonnull final FloatToCharFunction after) {
+    default TriBooleanToCharFunction andThenToChar(@Nonnull FloatToCharFunction after) {
         Objects.requireNonNull(after);
         return (value1, value2, value3) -> after.applyAsChar(applyAsFloat(value1, value2, value3));
     }
@@ -515,11 +512,11 @@ public interface TriBooleanToFloatFunction extends Lambda {
      * @return A composed {@code TriBooleanToDoubleFunction} that first applies this function to its input, and then
      * applies the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * double}.
      */
     @Nonnull
-    default TriBooleanToDoubleFunction andThenToDouble(@Nonnull final FloatToDoubleFunction after) {
+    default TriBooleanToDoubleFunction andThenToDouble(@Nonnull FloatToDoubleFunction after) {
         Objects.requireNonNull(after);
         return (value1, value2, value3) -> after.applyAsDouble(applyAsFloat(value1, value2, value3));
     }
@@ -534,11 +531,11 @@ public interface TriBooleanToFloatFunction extends Lambda {
      * @return A composed {@code TriBooleanToFloatFunction} that first applies this function to its input, and then
      * applies the {@code after} operator to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * float}.
      */
     @Nonnull
-    default TriBooleanToFloatFunction andThenToFloat(@Nonnull final FloatUnaryOperator after) {
+    default TriBooleanToFloatFunction andThenToFloat(@Nonnull FloatUnaryOperator after) {
         Objects.requireNonNull(after);
         return (value1, value2, value3) -> after.applyAsFloat(applyAsFloat(value1, value2, value3));
     }
@@ -553,11 +550,11 @@ public interface TriBooleanToFloatFunction extends Lambda {
      * @return A composed {@code TriBooleanToIntFunction} that first applies this function to its input, and then
      * applies the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * int}.
      */
     @Nonnull
-    default TriBooleanToIntFunction andThenToInt(@Nonnull final FloatToIntFunction after) {
+    default TriBooleanToIntFunction andThenToInt(@Nonnull FloatToIntFunction after) {
         Objects.requireNonNull(after);
         return (value1, value2, value3) -> after.applyAsInt(applyAsFloat(value1, value2, value3));
     }
@@ -572,11 +569,11 @@ public interface TriBooleanToFloatFunction extends Lambda {
      * @return A composed {@code TriBooleanToLongFunction} that first applies this function to its input, and then
      * applies the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * long}.
      */
     @Nonnull
-    default TriBooleanToLongFunction andThenToLong(@Nonnull final FloatToLongFunction after) {
+    default TriBooleanToLongFunction andThenToLong(@Nonnull FloatToLongFunction after) {
         Objects.requireNonNull(after);
         return (value1, value2, value3) -> after.applyAsLong(applyAsFloat(value1, value2, value3));
     }
@@ -591,11 +588,11 @@ public interface TriBooleanToFloatFunction extends Lambda {
      * @return A composed {@code TriBooleanToShortFunction} that first applies this function to its input, and then
      * applies the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * short}.
      */
     @Nonnull
-    default TriBooleanToShortFunction andThenToShort(@Nonnull final FloatToShortFunction after) {
+    default TriBooleanToShortFunction andThenToShort(@Nonnull FloatToShortFunction after) {
         Objects.requireNonNull(after);
         return (value1, value2, value3) -> after.applyAsShort(applyAsFloat(value1, value2, value3));
     }
@@ -611,7 +608,7 @@ public interface TriBooleanToFloatFunction extends Lambda {
      * @throws NullPointerException If given argument is {@code null}
      */
     @Nonnull
-    default TriBooleanConsumer consume(@Nonnull final FloatConsumer consumer) {
+    default TriBooleanConsumer consume(@Nonnull FloatConsumer consumer) {
         Objects.requireNonNull(consumer);
         return (value1, value2, value3) -> consumer.accept(applyAsFloat(value1, value2, value3));
     }
@@ -635,14 +632,14 @@ public interface TriBooleanToFloatFunction extends Lambda {
         if (isMemoized()) {
             return this;
         } else {
-            final Map<Triple<Boolean, Boolean, Boolean>, Float> cache = new ConcurrentHashMap<>();
-            final Object lock = new Object();
+            Map<Triple<Boolean, Boolean, Boolean>, Float> cache = new ConcurrentHashMap<>();
+            Object lock = new Object();
             return (TriBooleanToFloatFunction & Memoized) (value1, value2, value3) -> {
-                final float returnValue;
+                float returnValue;
                 synchronized (lock) {
                     returnValue = cache.computeIfAbsent(Triple.of(value1, value2, value3),
-                                                        key -> applyAsFloat(key.getLeft(), key.getMiddle(),
-                                                                            key.getRight()));
+                            key -> applyAsFloat(key.getLeft(), key.getMiddle(),
+                                    key.getRight()));
                 }
                 return returnValue;
             };

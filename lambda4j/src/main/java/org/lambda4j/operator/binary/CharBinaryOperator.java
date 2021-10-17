@@ -13,7 +13,20 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package org.lambda4j.operator.binary;
+
+import java.util.Comparator;
+import java.util.Map;
+import java.util.Objects;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.function.BinaryOperator;
+
+import javax.annotation.Nonnegative;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
+import org.apache.commons.lang3.tuple.Pair;
 
 import org.lambda4j.Lambda;
 import org.lambda4j.consumer.CharConsumer;
@@ -52,21 +65,9 @@ import org.lambda4j.operator.unary.CharUnaryOperator;
 import org.lambda4j.predicate.CharPredicate;
 import org.lambda4j.predicate.bi.BiCharPredicate;
 
-import org.apache.commons.lang3.tuple.Pair;
-
-import javax.annotation.Nonnegative;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import java.util.Comparator;
-import java.util.Map;
-import java.util.Objects;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.function.BinaryOperator;
-
 /**
- * Represents an operation that accepts two {@code char}-valued input arguments and produces a
- * {@code char}-valued result.
- * This is a primitive specialization of {@link BinaryOperator2}.
+ * Represents an operation that accepts two {@code char}-valued input arguments and produces a {@code char}-valued
+ * result. This is a primitive specialization of {@link BinaryOperator2}.
  * <p>
  * This is a {@link FunctionalInterface} whose functional method is {@link #applyAsChar(char, char)}.
  *
@@ -90,7 +91,7 @@ public interface CharBinaryOperator extends Lambda {
      * Expression</a>
      * @see <a href="https://docs.oracle.com/javase/tutorial/java/javaOO/methodreferences.html">Method Reference</a>
      */
-    static CharBinaryOperator of(@Nullable final CharBinaryOperator expression) {
+    static CharBinaryOperator of(@Nullable CharBinaryOperator expression) {
         return expression;
     }
 
@@ -103,7 +104,7 @@ public interface CharBinaryOperator extends Lambda {
      * @return The result from the given {@code CharBinaryOperator}.
      * @throws NullPointerException If given argument is {@code null}
      */
-    static char call(@Nonnull final CharBinaryOperator operator, char value1, char value2) {
+    static char call(@Nonnull CharBinaryOperator operator, char value1, char value2) {
         Objects.requireNonNull(operator);
         return operator.applyAsChar(value1, value2);
     }
@@ -118,7 +119,7 @@ public interface CharBinaryOperator extends Lambda {
      * @throws NullPointerException If given argument is {@code null}
      */
     @Nonnull
-    static CharBinaryOperator onlyFirst(@Nonnull final CharUnaryOperator operator) {
+    static CharBinaryOperator onlyFirst(@Nonnull CharUnaryOperator operator) {
         Objects.requireNonNull(operator);
         return (value1, value2) -> operator.applyAsChar(value1);
     }
@@ -133,7 +134,7 @@ public interface CharBinaryOperator extends Lambda {
      * @throws NullPointerException If given argument is {@code null}
      */
     @Nonnull
-    static CharBinaryOperator onlySecond(@Nonnull final CharUnaryOperator operator) {
+    static CharBinaryOperator onlySecond(@Nonnull CharUnaryOperator operator) {
         Objects.requireNonNull(operator);
         return (value1, value2) -> operator.applyAsChar(value2);
     }
@@ -160,7 +161,7 @@ public interface CharBinaryOperator extends Lambda {
      * @see BinaryOperator#minBy(Comparator)
      */
     @Nonnull
-    static CharBinaryOperator minBy(@Nonnull final Comparator<Character> comparator) {
+    static CharBinaryOperator minBy(@Nonnull Comparator<Character> comparator) {
         Objects.requireNonNull(comparator);
         return (value1, value2) -> comparator.compare(value1, value2) <= 0 ? value1 : value2;
     }
@@ -176,7 +177,7 @@ public interface CharBinaryOperator extends Lambda {
      * @see BinaryOperator#maxBy(Comparator)
      */
     @Nonnull
-    static CharBinaryOperator maxBy(@Nonnull final Comparator<Character> comparator) {
+    static CharBinaryOperator maxBy(@Nonnull Comparator<Character> comparator) {
         Objects.requireNonNull(comparator);
         return (value1, value2) -> comparator.compare(value1, value2) >= 0 ? value1 : value2;
     }
@@ -198,7 +199,7 @@ public interface CharBinaryOperator extends Lambda {
      */
     @Nonnull
     default CharUnaryOperator papplyAsChar(char value1) {
-        return (value2) -> this.applyAsChar(value1, value2);
+        return value2 -> applyAsChar(value1, value2);
     }
 
     /**
@@ -214,8 +215,8 @@ public interface CharBinaryOperator extends Lambda {
 
     /**
      * Returns a composed {@link ToCharBiFunction} that first applies the {@code before} functions to its input, and
-     * then applies this operator to the result.
-     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
+     * then applies this operator to the result. If evaluation of either operation throws an exception, it is relayed to
+     * the caller of the composed operation.
      *
      * @param <A> The type of the argument to the first given function, and of composed function
      * @param <B> The type of the argument to the second given function, and of composed function
@@ -227,8 +228,8 @@ public interface CharBinaryOperator extends Lambda {
      * @implSpec The input argument of this method is able to handle every type.
      */
     @Nonnull
-    default <A, B> ToCharBiFunction<A, B> compose(@Nonnull final ToCharFunction<? super A> before1,
-            @Nonnull final ToCharFunction<? super B> before2) {
+    default <A, B> ToCharBiFunction<A, B> compose(@Nonnull ToCharFunction<? super A> before1,
+            @Nonnull ToCharFunction<? super B> before2) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         return (a, b) -> applyAsChar(before1.applyAsChar(a), before2.applyAsChar(b));
@@ -245,58 +246,56 @@ public interface CharBinaryOperator extends Lambda {
      * @return A composed {@code BiBooleanToCharFunction} that first applies the {@code before} functions to its input,
      * and then applies this operator to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * boolean}.
      */
     @Nonnull
-    default BiBooleanToCharFunction composeFromBoolean(@Nonnull final BooleanToCharFunction before1,
-            @Nonnull final BooleanToCharFunction before2) {
+    default BiBooleanToCharFunction composeFromBoolean(@Nonnull BooleanToCharFunction before1,
+            @Nonnull BooleanToCharFunction before2) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         return (value1, value2) -> applyAsChar(before1.applyAsChar(value1), before2.applyAsChar(value2));
     }
 
     /**
-     * Returns a composed {@link BiByteToCharFunction} that first applies the {@code before} functions to
-     * its input, and then applies this operator to the result.
-     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
-     * This method is just convenience, to provide the ability to execute an operation which accepts {@code byte} input,
-     * before this primitive operator is executed.
+     * Returns a composed {@link BiByteToCharFunction} that first applies the {@code before} functions to its input, and
+     * then applies this operator to the result. If evaluation of either operation throws an exception, it is relayed to
+     * the caller of the composed operation. This method is just convenience, to provide the ability to execute an
+     * operation which accepts {@code byte} input, before this primitive operator is executed.
      *
      * @param before1 The first function to apply before this operator is applied
      * @param before2 The second function to apply before this operator is applied
      * @return A composed {@code BiByteToCharFunction} that first applies the {@code before} functions to its input, and
      * then applies this operator to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * byte}.
      */
     @Nonnull
-    default BiByteToCharFunction composeFromByte(@Nonnull final ByteToCharFunction before1,
-            @Nonnull final ByteToCharFunction before2) {
+    default BiByteToCharFunction composeFromByte(@Nonnull ByteToCharFunction before1,
+            @Nonnull ByteToCharFunction before2) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         return (value1, value2) -> applyAsChar(before1.applyAsChar(value1), before2.applyAsChar(value2));
     }
 
     /**
-     * Returns a composed {@link CharBinaryOperator} that first applies the {@code before} operators to
-     * its input, and then applies this operator to the result.
-     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
-     * This method is just convenience, to provide the ability to execute an operation which accepts {@code char} input,
-     * before this primitive operator is executed.
+     * Returns a composed {@link CharBinaryOperator} that first applies the {@code before} operators to its input, and
+     * then applies this operator to the result. If evaluation of either operation throws an exception, it is relayed to
+     * the caller of the composed operation. This method is just convenience, to provide the ability to execute an
+     * operation which accepts {@code char} input, before this primitive operator is executed.
      *
      * @param before1 The first operator to apply before this operator is applied
      * @param before2 The second operator to apply before this operator is applied
      * @return A composed {@code CharBinaryOperator} that first applies the {@code before} operators to its input, and
      * then applies this operator to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * char}.
      */
     @Nonnull
-    default CharBinaryOperator composeFromChar(@Nonnull final CharUnaryOperator before1,
-            @Nonnull final CharUnaryOperator before2) {
+    default CharBinaryOperator composeFromChar(@Nonnull CharUnaryOperator before1,
+            @Nonnull CharUnaryOperator before2) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         return (value1, value2) -> applyAsChar(before1.applyAsChar(value1), before2.applyAsChar(value2));
@@ -313,12 +312,12 @@ public interface CharBinaryOperator extends Lambda {
      * @return A composed {@code BiDoubleToCharFunction} that first applies the {@code before} functions to its input,
      * and then applies this operator to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * double}.
      */
     @Nonnull
-    default BiDoubleToCharFunction composeFromDouble(@Nonnull final DoubleToCharFunction before1,
-            @Nonnull final DoubleToCharFunction before2) {
+    default BiDoubleToCharFunction composeFromDouble(@Nonnull DoubleToCharFunction before1,
+            @Nonnull DoubleToCharFunction before2) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         return (value1, value2) -> applyAsChar(before1.applyAsChar(value1), before2.applyAsChar(value2));
@@ -335,58 +334,56 @@ public interface CharBinaryOperator extends Lambda {
      * @return A composed {@code BiFloatToCharFunction} that first applies the {@code before} functions to its input,
      * and then applies this operator to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * float}.
      */
     @Nonnull
-    default BiFloatToCharFunction composeFromFloat(@Nonnull final FloatToCharFunction before1,
-            @Nonnull final FloatToCharFunction before2) {
+    default BiFloatToCharFunction composeFromFloat(@Nonnull FloatToCharFunction before1,
+            @Nonnull FloatToCharFunction before2) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         return (value1, value2) -> applyAsChar(before1.applyAsChar(value1), before2.applyAsChar(value2));
     }
 
     /**
-     * Returns a composed {@link BiIntToCharFunction} that first applies the {@code before} functions to
-     * its input, and then applies this operator to the result.
-     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
-     * This method is just convenience, to provide the ability to execute an operation which accepts {@code int} input,
-     * before this primitive operator is executed.
+     * Returns a composed {@link BiIntToCharFunction} that first applies the {@code before} functions to its input, and
+     * then applies this operator to the result. If evaluation of either operation throws an exception, it is relayed to
+     * the caller of the composed operation. This method is just convenience, to provide the ability to execute an
+     * operation which accepts {@code int} input, before this primitive operator is executed.
      *
      * @param before1 The first function to apply before this operator is applied
      * @param before2 The second function to apply before this operator is applied
      * @return A composed {@code BiIntToCharFunction} that first applies the {@code before} functions to its input, and
      * then applies this operator to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * int}.
      */
     @Nonnull
-    default BiIntToCharFunction composeFromInt(@Nonnull final IntToCharFunction before1,
-            @Nonnull final IntToCharFunction before2) {
+    default BiIntToCharFunction composeFromInt(@Nonnull IntToCharFunction before1,
+            @Nonnull IntToCharFunction before2) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         return (value1, value2) -> applyAsChar(before1.applyAsChar(value1), before2.applyAsChar(value2));
     }
 
     /**
-     * Returns a composed {@link BiLongToCharFunction} that first applies the {@code before} functions to
-     * its input, and then applies this operator to the result.
-     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
-     * This method is just convenience, to provide the ability to execute an operation which accepts {@code long} input,
-     * before this primitive operator is executed.
+     * Returns a composed {@link BiLongToCharFunction} that first applies the {@code before} functions to its input, and
+     * then applies this operator to the result. If evaluation of either operation throws an exception, it is relayed to
+     * the caller of the composed operation. This method is just convenience, to provide the ability to execute an
+     * operation which accepts {@code long} input, before this primitive operator is executed.
      *
      * @param before1 The first function to apply before this operator is applied
      * @param before2 The second function to apply before this operator is applied
      * @return A composed {@code BiLongToCharFunction} that first applies the {@code before} functions to its input, and
      * then applies this operator to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * long}.
      */
     @Nonnull
-    default BiLongToCharFunction composeFromLong(@Nonnull final LongToCharFunction before1,
-            @Nonnull final LongToCharFunction before2) {
+    default BiLongToCharFunction composeFromLong(@Nonnull LongToCharFunction before1,
+            @Nonnull LongToCharFunction before2) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         return (value1, value2) -> applyAsChar(before1.applyAsChar(value1), before2.applyAsChar(value2));
@@ -403,12 +400,12 @@ public interface CharBinaryOperator extends Lambda {
      * @return A composed {@code BiShortToCharFunction} that first applies the {@code before} functions to its input,
      * and then applies this operator to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * short}.
      */
     @Nonnull
-    default BiShortToCharFunction composeFromShort(@Nonnull final ShortToCharFunction before1,
-            @Nonnull final ShortToCharFunction before2) {
+    default BiShortToCharFunction composeFromShort(@Nonnull ShortToCharFunction before1,
+            @Nonnull ShortToCharFunction before2) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         return (value1, value2) -> applyAsChar(before1.applyAsChar(value1), before2.applyAsChar(value2));
@@ -416,8 +413,8 @@ public interface CharBinaryOperator extends Lambda {
 
     /**
      * Returns a composed {@link BiCharFunction} that first applies this operator to its input, and then applies the
-     * {@code after} function to the result.
-     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
+     * {@code after} function to the result. If evaluation of either operation throws an exception, it is relayed to the
+     * caller of the composed operation.
      *
      * @param <S> The type of return value from the {@code after} function, and of the composed function
      * @param after The function to apply after this operator is applied
@@ -427,7 +424,7 @@ public interface CharBinaryOperator extends Lambda {
      * @implSpec The input argument of this method is able to return every type.
      */
     @Nonnull
-    default <S> BiCharFunction<S> andThen(@Nonnull final CharFunction<? extends S> after) {
+    default <S> BiCharFunction<S> andThen(@Nonnull CharFunction<? extends S> after) {
         Objects.requireNonNull(after);
         return (value1, value2) -> after.apply(applyAsChar(value1, value2));
     }
@@ -442,11 +439,11 @@ public interface CharBinaryOperator extends Lambda {
      * @return A composed {@code BiCharPredicate} that first applies this operator to its input, and then applies the
      * {@code after} predicate to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * boolean}.
      */
     @Nonnull
-    default BiCharPredicate andThenToBoolean(@Nonnull final CharPredicate after) {
+    default BiCharPredicate andThenToBoolean(@Nonnull CharPredicate after) {
         Objects.requireNonNull(after);
         return (value1, value2) -> after.test(applyAsChar(value1, value2));
     }
@@ -461,11 +458,11 @@ public interface CharBinaryOperator extends Lambda {
      * @return A composed {@code BiCharToByteFunction} that first applies this operator to its input, and then applies
      * the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * byte}.
      */
     @Nonnull
-    default BiCharToByteFunction andThenToByte(@Nonnull final CharToByteFunction after) {
+    default BiCharToByteFunction andThenToByte(@Nonnull CharToByteFunction after) {
         Objects.requireNonNull(after);
         return (value1, value2) -> after.applyAsByte(applyAsChar(value1, value2));
     }
@@ -480,11 +477,11 @@ public interface CharBinaryOperator extends Lambda {
      * @return A composed {@code CharBinaryOperator} that first applies this operator to its input, and then applies the
      * {@code after} operator to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * char}.
      */
     @Nonnull
-    default CharBinaryOperator andThenToChar(@Nonnull final CharUnaryOperator after) {
+    default CharBinaryOperator andThenToChar(@Nonnull CharUnaryOperator after) {
         Objects.requireNonNull(after);
         return (value1, value2) -> after.applyAsChar(applyAsChar(value1, value2));
     }
@@ -499,11 +496,11 @@ public interface CharBinaryOperator extends Lambda {
      * @return A composed {@code BiCharToDoubleFunction} that first applies this operator to its input, and then applies
      * the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * double}.
      */
     @Nonnull
-    default BiCharToDoubleFunction andThenToDouble(@Nonnull final CharToDoubleFunction after) {
+    default BiCharToDoubleFunction andThenToDouble(@Nonnull CharToDoubleFunction after) {
         Objects.requireNonNull(after);
         return (value1, value2) -> after.applyAsDouble(applyAsChar(value1, value2));
     }
@@ -518,11 +515,11 @@ public interface CharBinaryOperator extends Lambda {
      * @return A composed {@code BiCharToFloatFunction} that first applies this operator to its input, and then applies
      * the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * float}.
      */
     @Nonnull
-    default BiCharToFloatFunction andThenToFloat(@Nonnull final CharToFloatFunction after) {
+    default BiCharToFloatFunction andThenToFloat(@Nonnull CharToFloatFunction after) {
         Objects.requireNonNull(after);
         return (value1, value2) -> after.applyAsFloat(applyAsChar(value1, value2));
     }
@@ -537,11 +534,11 @@ public interface CharBinaryOperator extends Lambda {
      * @return A composed {@code BiCharToIntFunction} that first applies this operator to its input, and then applies
      * the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * int}.
      */
     @Nonnull
-    default BiCharToIntFunction andThenToInt(@Nonnull final CharToIntFunction after) {
+    default BiCharToIntFunction andThenToInt(@Nonnull CharToIntFunction after) {
         Objects.requireNonNull(after);
         return (value1, value2) -> after.applyAsInt(applyAsChar(value1, value2));
     }
@@ -556,11 +553,11 @@ public interface CharBinaryOperator extends Lambda {
      * @return A composed {@code BiCharToLongFunction} that first applies this operator to its input, and then applies
      * the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * long}.
      */
     @Nonnull
-    default BiCharToLongFunction andThenToLong(@Nonnull final CharToLongFunction after) {
+    default BiCharToLongFunction andThenToLong(@Nonnull CharToLongFunction after) {
         Objects.requireNonNull(after);
         return (value1, value2) -> after.applyAsLong(applyAsChar(value1, value2));
     }
@@ -575,11 +572,11 @@ public interface CharBinaryOperator extends Lambda {
      * @return A composed {@code BiCharToShortFunction} that first applies this operator to its input, and then applies
      * the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * short}.
      */
     @Nonnull
-    default BiCharToShortFunction andThenToShort(@Nonnull final CharToShortFunction after) {
+    default BiCharToShortFunction andThenToShort(@Nonnull CharToShortFunction after) {
         Objects.requireNonNull(after);
         return (value1, value2) -> after.applyAsShort(applyAsChar(value1, value2));
     }
@@ -595,7 +592,7 @@ public interface CharBinaryOperator extends Lambda {
      * @throws NullPointerException If given argument is {@code null}
      */
     @Nonnull
-    default BiCharConsumer consume(@Nonnull final CharConsumer consumer) {
+    default BiCharConsumer consume(@Nonnull CharConsumer consumer) {
         Objects.requireNonNull(consumer);
         return (value1, value2) -> consumer.accept(applyAsChar(value1, value2));
     }
@@ -619,13 +616,13 @@ public interface CharBinaryOperator extends Lambda {
         if (isMemoized()) {
             return this;
         } else {
-            final Map<Pair<Character, Character>, Character> cache = new ConcurrentHashMap<>();
-            final Object lock = new Object();
+            Map<Pair<Character, Character>, Character> cache = new ConcurrentHashMap<>();
+            Object lock = new Object();
             return (CharBinaryOperator & Memoized) (value1, value2) -> {
-                final char returnValue;
+                char returnValue;
                 synchronized (lock) {
                     returnValue = cache.computeIfAbsent(Pair.of(value1, value2),
-                                                        key -> applyAsChar(key.getLeft(), key.getRight()));
+                            key -> applyAsChar(key.getLeft(), key.getRight()));
                 }
                 return returnValue;
             };

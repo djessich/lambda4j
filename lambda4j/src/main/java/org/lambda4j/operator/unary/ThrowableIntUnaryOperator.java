@@ -13,7 +13,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package org.lambda4j.operator.unary;
+
+import java.util.Map;
+import java.util.Objects;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.function.Function;
+import java.util.function.IntUnaryOperator;
+
+import javax.annotation.Nonnegative;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import org.lambda4j.Lambda;
 import org.lambda4j.consumer.ThrowableIntConsumer;
@@ -37,19 +48,9 @@ import org.lambda4j.function.conversion.ThrowableShortToIntFunction;
 import org.lambda4j.function.to.ThrowableToIntFunction;
 import org.lambda4j.predicate.ThrowableIntPredicate;
 
-import javax.annotation.Nonnegative;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import java.util.Map;
-import java.util.Objects;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.function.Function;
-import java.util.function.IntUnaryOperator;
-
 /**
- * Represents an operation that accepts one {@code int}-valued input argument and produces a
- * {@code int}-valued result which is able to throw any {@link Throwable}.
- * This is a primitive specialization of {@link ThrowableUnaryOperator}.
+ * Represents an operation that accepts one {@code int}-valued input argument and produces a {@code int}-valued result
+ * which is able to throw any {@link Throwable}. This is a primitive specialization of {@link ThrowableUnaryOperator}.
  * <p>
  * This is a {@link FunctionalInterface} whose functional method is {@link #applyAsIntThrows(int)}.
  *
@@ -77,7 +78,7 @@ public interface ThrowableIntUnaryOperator<X extends Throwable> extends Lambda, 
      * @see <a href="https://docs.oracle.com/javase/tutorial/java/javaOO/methodreferences.html">Method Reference</a>
      */
     static <X extends Throwable> ThrowableIntUnaryOperator<X> of(
-            @Nullable final ThrowableIntUnaryOperator<X> expression) {
+            @Nullable ThrowableIntUnaryOperator<X> expression) {
         return expression;
     }
 
@@ -91,7 +92,7 @@ public interface ThrowableIntUnaryOperator<X extends Throwable> extends Lambda, 
      * @throws NullPointerException If given argument is {@code null}
      * @throws X Any throwable from this operators action
      */
-    static <X extends Throwable> int call(@Nonnull final ThrowableIntUnaryOperator<? extends X> operator,
+    static <X extends Throwable> int call(@Nonnull ThrowableIntUnaryOperator<? extends X> operator,
             int value) throws X {
         Objects.requireNonNull(operator);
         return operator.applyAsIntThrows(value);
@@ -101,11 +102,11 @@ public interface ThrowableIntUnaryOperator<X extends Throwable> extends Lambda, 
      * Returns a {@link ThrowableIntUnaryOperator} that always returns its input argument.
      *
      * @param <X> The type of the throwable to be thrown by this operator
-     * @return A {@code  ThrowableIntUnaryOperator} that always returns its input argument
+     * @return A {@code ThrowableIntUnaryOperator} that always returns its input argument
      */
     @Nonnull
     static <X extends Throwable> ThrowableIntUnaryOperator<X> identity() {
-        return (value) -> value;
+        return value -> value;
     }
 
     /**
@@ -117,7 +118,7 @@ public interface ThrowableIntUnaryOperator<X extends Throwable> extends Lambda, 
      */
     @Nonnull
     static <X extends Throwable> ThrowableIntUnaryOperator<X> constant(int ret) {
-        return (value) -> ret;
+        return value -> ret;
     }
 
     /**
@@ -144,14 +145,6 @@ public interface ThrowableIntUnaryOperator<X extends Throwable> extends Lambda, 
      */
     @Override
     default int applyAsInt(int value) {
-        // TODO: Remove commented code below
-    /*try {
-         return this.applyAsIntThrows(value);
-    } catch (RuntimeException | Error e) {
-        throw e;
-    } catch (Throwable throwable) {
-        throw new ThrownByFunctionalInterfaceException(throwable.getMessage(), throwable);
-    }*/
         return nest().applyAsInt(value);
     }
 
@@ -179,9 +172,9 @@ public interface ThrowableIntUnaryOperator<X extends Throwable> extends Lambda, 
      */
     @Nonnull
     default <A> ThrowableToIntFunction<A, X> compose(
-            @Nonnull final ThrowableToIntFunction<? super A, ? extends X> before) {
+            @Nonnull ThrowableToIntFunction<? super A, ? extends X> before) {
         Objects.requireNonNull(before);
-        return (a) -> applyAsIntThrows(before.applyAsIntThrows(a));
+        return a -> applyAsIntThrows(before.applyAsIntThrows(a));
     }
 
     /**
@@ -193,54 +186,52 @@ public interface ThrowableIntUnaryOperator<X extends Throwable> extends Lambda, 
      * @return A composed {@code ThrowableBooleanToIntFunction} that first applies the {@code before} function to its
      * input, and then applies this operator to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * boolean}.
      */
     @Nonnull
     default ThrowableBooleanToIntFunction<X> composeFromBoolean(
-            @Nonnull final ThrowableBooleanToIntFunction<? extends X> before) {
+            @Nonnull ThrowableBooleanToIntFunction<? extends X> before) {
         Objects.requireNonNull(before);
-        return (value) -> applyAsIntThrows(before.applyAsIntThrows(value));
+        return value -> applyAsIntThrows(before.applyAsIntThrows(value));
     }
 
     /**
-     * Returns a composed {@link ThrowableByteToIntFunction} that first applies the {@code before} function to
-     * its input, and then applies this operator to the result.
-     * This method is just convenience, to provide the ability to execute an operation which accepts {@code byte} input,
-     * before this primitive operator is executed.
+     * Returns a composed {@link ThrowableByteToIntFunction} that first applies the {@code before} function to its
+     * input, and then applies this operator to the result. This method is just convenience, to provide the ability to
+     * execute an operation which accepts {@code byte} input, before this primitive operator is executed.
      *
      * @param before The function to apply before this operator is applied
      * @return A composed {@code ThrowableByteToIntFunction} that first applies the {@code before} function to its
      * input, and then applies this operator to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * byte}.
      */
     @Nonnull
     default ThrowableByteToIntFunction<X> composeFromByte(
-            @Nonnull final ThrowableByteToIntFunction<? extends X> before) {
+            @Nonnull ThrowableByteToIntFunction<? extends X> before) {
         Objects.requireNonNull(before);
-        return (value) -> applyAsIntThrows(before.applyAsIntThrows(value));
+        return value -> applyAsIntThrows(before.applyAsIntThrows(value));
     }
 
     /**
-     * Returns a composed {@link ThrowableCharToIntFunction} that first applies the {@code before} function to
-     * its input, and then applies this operator to the result.
-     * This method is just convenience, to provide the ability to execute an operation which accepts {@code char} input,
-     * before this primitive operator is executed.
+     * Returns a composed {@link ThrowableCharToIntFunction} that first applies the {@code before} function to its
+     * input, and then applies this operator to the result. This method is just convenience, to provide the ability to
+     * execute an operation which accepts {@code char} input, before this primitive operator is executed.
      *
      * @param before The function to apply before this operator is applied
      * @return A composed {@code ThrowableCharToIntFunction} that first applies the {@code before} function to its
      * input, and then applies this operator to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * char}.
      */
     @Nonnull
     default ThrowableCharToIntFunction<X> composeFromChar(
-            @Nonnull final ThrowableCharToIntFunction<? extends X> before) {
+            @Nonnull ThrowableCharToIntFunction<? extends X> before) {
         Objects.requireNonNull(before);
-        return (value) -> applyAsIntThrows(before.applyAsIntThrows(value));
+        return value -> applyAsIntThrows(before.applyAsIntThrows(value));
     }
 
     /**
@@ -252,14 +243,14 @@ public interface ThrowableIntUnaryOperator<X extends Throwable> extends Lambda, 
      * @return A composed {@code ThrowableDoubleToIntFunction} that first applies the {@code before} function to its
      * input, and then applies this operator to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * double}.
      */
     @Nonnull
     default ThrowableDoubleToIntFunction<X> composeFromDouble(
-            @Nonnull final ThrowableDoubleToIntFunction<? extends X> before) {
+            @Nonnull ThrowableDoubleToIntFunction<? extends X> before) {
         Objects.requireNonNull(before);
-        return (value) -> applyAsIntThrows(before.applyAsIntThrows(value));
+        return value -> applyAsIntThrows(before.applyAsIntThrows(value));
     }
 
     /**
@@ -271,53 +262,51 @@ public interface ThrowableIntUnaryOperator<X extends Throwable> extends Lambda, 
      * @return A composed {@code ThrowableFloatToIntFunction} that first applies the {@code before} function to its
      * input, and then applies this operator to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * float}.
      */
     @Nonnull
     default ThrowableFloatToIntFunction<X> composeFromFloat(
-            @Nonnull final ThrowableFloatToIntFunction<? extends X> before) {
+            @Nonnull ThrowableFloatToIntFunction<? extends X> before) {
         Objects.requireNonNull(before);
-        return (value) -> applyAsIntThrows(before.applyAsIntThrows(value));
+        return value -> applyAsIntThrows(before.applyAsIntThrows(value));
     }
 
     /**
-     * Returns a composed {@link ThrowableIntUnaryOperator} that first applies the {@code before} operator to
-     * its input, and then applies this operator to the result.
-     * This method is just convenience, to provide the ability to execute an operation which accepts {@code int} input,
-     * before this primitive operator is executed.
+     * Returns a composed {@link ThrowableIntUnaryOperator} that first applies the {@code before} operator to its input,
+     * and then applies this operator to the result. This method is just convenience, to provide the ability to execute
+     * an operation which accepts {@code int} input, before this primitive operator is executed.
      *
      * @param before The operator to apply before this operator is applied
      * @return A composed {@code ThrowableIntUnaryOperator} that first applies the {@code before} operator to its input,
      * and then applies this operator to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * int}.
      */
     @Nonnull
-    default ThrowableIntUnaryOperator<X> composeFromInt(@Nonnull final ThrowableIntUnaryOperator<? extends X> before) {
+    default ThrowableIntUnaryOperator<X> composeFromInt(@Nonnull ThrowableIntUnaryOperator<? extends X> before) {
         Objects.requireNonNull(before);
-        return (value) -> applyAsIntThrows(before.applyAsIntThrows(value));
+        return value -> applyAsIntThrows(before.applyAsIntThrows(value));
     }
 
     /**
-     * Returns a composed {@link ThrowableLongToIntFunction} that first applies the {@code before} function to
-     * its input, and then applies this operator to the result.
-     * This method is just convenience, to provide the ability to execute an operation which accepts {@code long} input,
-     * before this primitive operator is executed.
+     * Returns a composed {@link ThrowableLongToIntFunction} that first applies the {@code before} function to its
+     * input, and then applies this operator to the result. This method is just convenience, to provide the ability to
+     * execute an operation which accepts {@code long} input, before this primitive operator is executed.
      *
      * @param before The function to apply before this operator is applied
      * @return A composed {@code ThrowableLongToIntFunction} that first applies the {@code before} function to its
      * input, and then applies this operator to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * long}.
      */
     @Nonnull
     default ThrowableLongToIntFunction<X> composeFromLong(
-            @Nonnull final ThrowableLongToIntFunction<? extends X> before) {
+            @Nonnull ThrowableLongToIntFunction<? extends X> before) {
         Objects.requireNonNull(before);
-        return (value) -> applyAsIntThrows(before.applyAsIntThrows(value));
+        return value -> applyAsIntThrows(before.applyAsIntThrows(value));
     }
 
     /**
@@ -329,14 +318,14 @@ public interface ThrowableIntUnaryOperator<X extends Throwable> extends Lambda, 
      * @return A composed {@code ThrowableShortToIntFunction} that first applies the {@code before} function to its
      * input, and then applies this operator to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * short}.
      */
     @Nonnull
     default ThrowableShortToIntFunction<X> composeFromShort(
-            @Nonnull final ThrowableShortToIntFunction<? extends X> before) {
+            @Nonnull ThrowableShortToIntFunction<? extends X> before) {
         Objects.requireNonNull(before);
-        return (value) -> applyAsIntThrows(before.applyAsIntThrows(value));
+        return value -> applyAsIntThrows(before.applyAsIntThrows(value));
     }
 
     /**
@@ -352,9 +341,9 @@ public interface ThrowableIntUnaryOperator<X extends Throwable> extends Lambda, 
      */
     @Nonnull
     default <S> ThrowableIntFunction<S, X> andThen(
-            @Nonnull final ThrowableIntFunction<? extends S, ? extends X> after) {
+            @Nonnull ThrowableIntFunction<? extends S, ? extends X> after) {
         Objects.requireNonNull(after);
-        return (value) -> after.applyThrows(applyAsIntThrows(value));
+        return value -> after.applyThrows(applyAsIntThrows(value));
     }
 
     /**
@@ -366,13 +355,13 @@ public interface ThrowableIntUnaryOperator<X extends Throwable> extends Lambda, 
      * @return A composed {@code ThrowableIntPredicate} that first applies this operator to its input, and then applies
      * the {@code after} predicate to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * boolean}.
      */
     @Nonnull
-    default ThrowableIntPredicate<X> andThenToBoolean(@Nonnull final ThrowableIntPredicate<? extends X> after) {
+    default ThrowableIntPredicate<X> andThenToBoolean(@Nonnull ThrowableIntPredicate<? extends X> after) {
         Objects.requireNonNull(after);
-        return (value) -> after.testThrows(applyAsIntThrows(value));
+        return value -> after.testThrows(applyAsIntThrows(value));
     }
 
     /**
@@ -384,13 +373,13 @@ public interface ThrowableIntUnaryOperator<X extends Throwable> extends Lambda, 
      * @return A composed {@code ThrowableIntToByteFunction} that first applies this operator to its input, and then
      * applies the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * byte}.
      */
     @Nonnull
-    default ThrowableIntToByteFunction<X> andThenToByte(@Nonnull final ThrowableIntToByteFunction<? extends X> after) {
+    default ThrowableIntToByteFunction<X> andThenToByte(@Nonnull ThrowableIntToByteFunction<? extends X> after) {
         Objects.requireNonNull(after);
-        return (value) -> after.applyAsByteThrows(applyAsIntThrows(value));
+        return value -> after.applyAsByteThrows(applyAsIntThrows(value));
     }
 
     /**
@@ -402,13 +391,13 @@ public interface ThrowableIntUnaryOperator<X extends Throwable> extends Lambda, 
      * @return A composed {@code ThrowableIntToCharFunction} that first applies this operator to its input, and then
      * applies the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * char}.
      */
     @Nonnull
-    default ThrowableIntToCharFunction<X> andThenToChar(@Nonnull final ThrowableIntToCharFunction<? extends X> after) {
+    default ThrowableIntToCharFunction<X> andThenToChar(@Nonnull ThrowableIntToCharFunction<? extends X> after) {
         Objects.requireNonNull(after);
-        return (value) -> after.applyAsCharThrows(applyAsIntThrows(value));
+        return value -> after.applyAsCharThrows(applyAsIntThrows(value));
     }
 
     /**
@@ -420,14 +409,14 @@ public interface ThrowableIntUnaryOperator<X extends Throwable> extends Lambda, 
      * @return A composed {@code ThrowableIntToDoubleFunction} that first applies this operator to its input, and then
      * applies the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * double}.
      */
     @Nonnull
     default ThrowableIntToDoubleFunction<X> andThenToDouble(
-            @Nonnull final ThrowableIntToDoubleFunction<? extends X> after) {
+            @Nonnull ThrowableIntToDoubleFunction<? extends X> after) {
         Objects.requireNonNull(after);
-        return (value) -> after.applyAsDoubleThrows(applyAsIntThrows(value));
+        return value -> after.applyAsDoubleThrows(applyAsIntThrows(value));
     }
 
     /**
@@ -439,14 +428,14 @@ public interface ThrowableIntUnaryOperator<X extends Throwable> extends Lambda, 
      * @return A composed {@code ThrowableIntToFloatFunction} that first applies this operator to its input, and then
      * applies the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * float}.
      */
     @Nonnull
     default ThrowableIntToFloatFunction<X> andThenToFloat(
-            @Nonnull final ThrowableIntToFloatFunction<? extends X> after) {
+            @Nonnull ThrowableIntToFloatFunction<? extends X> after) {
         Objects.requireNonNull(after);
-        return (value) -> after.applyAsFloatThrows(applyAsIntThrows(value));
+        return value -> after.applyAsFloatThrows(applyAsIntThrows(value));
     }
 
     /**
@@ -458,13 +447,13 @@ public interface ThrowableIntUnaryOperator<X extends Throwable> extends Lambda, 
      * @return A composed {@code ThrowableIntUnaryOperator} that first applies this operator to its input, and then
      * applies the {@code after} operator to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * int}.
      */
     @Nonnull
-    default ThrowableIntUnaryOperator<X> andThenToInt(@Nonnull final ThrowableIntUnaryOperator<? extends X> after) {
+    default ThrowableIntUnaryOperator<X> andThenToInt(@Nonnull ThrowableIntUnaryOperator<? extends X> after) {
         Objects.requireNonNull(after);
-        return (value) -> after.applyAsIntThrows(applyAsIntThrows(value));
+        return value -> after.applyAsIntThrows(applyAsIntThrows(value));
     }
 
     /**
@@ -476,13 +465,13 @@ public interface ThrowableIntUnaryOperator<X extends Throwable> extends Lambda, 
      * @return A composed {@code ThrowableIntToLongFunction} that first applies this operator to its input, and then
      * applies the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * long}.
      */
     @Nonnull
-    default ThrowableIntToLongFunction<X> andThenToLong(@Nonnull final ThrowableIntToLongFunction<? extends X> after) {
+    default ThrowableIntToLongFunction<X> andThenToLong(@Nonnull ThrowableIntToLongFunction<? extends X> after) {
         Objects.requireNonNull(after);
-        return (value) -> after.applyAsLongThrows(applyAsIntThrows(value));
+        return value -> after.applyAsLongThrows(applyAsIntThrows(value));
     }
 
     /**
@@ -494,14 +483,14 @@ public interface ThrowableIntUnaryOperator<X extends Throwable> extends Lambda, 
      * @return A composed {@code ThrowableIntToShortFunction} that first applies this operator to its input, and then
      * applies the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * short}.
      */
     @Nonnull
     default ThrowableIntToShortFunction<X> andThenToShort(
-            @Nonnull final ThrowableIntToShortFunction<? extends X> after) {
+            @Nonnull ThrowableIntToShortFunction<? extends X> after) {
         Objects.requireNonNull(after);
-        return (value) -> after.applyAsShortThrows(applyAsIntThrows(value));
+        return value -> after.applyAsShortThrows(applyAsIntThrows(value));
     }
 
     /**
@@ -514,9 +503,9 @@ public interface ThrowableIntUnaryOperator<X extends Throwable> extends Lambda, 
      * @throws NullPointerException If given argument is {@code null}
      */
     @Nonnull
-    default ThrowableIntConsumer<X> consume(@Nonnull final ThrowableIntConsumer<? extends X> consumer) {
+    default ThrowableIntConsumer<X> consume(@Nonnull ThrowableIntConsumer<? extends X> consumer) {
         Objects.requireNonNull(consumer);
-        return (value) -> consumer.acceptThrows(applyAsIntThrows(value));
+        return value -> consumer.acceptThrows(applyAsIntThrows(value));
     }
 
     /**
@@ -538,10 +527,10 @@ public interface ThrowableIntUnaryOperator<X extends Throwable> extends Lambda, 
         if (isMemoized()) {
             return this;
         } else {
-            final Map<Integer, Integer> cache = new ConcurrentHashMap<>();
-            final Object lock = new Object();
-            return (ThrowableIntUnaryOperator<X> & Memoized) (value) -> {
-                final int returnValue;
+            Map<Integer, Integer> cache = new ConcurrentHashMap<>();
+            Object lock = new Object();
+            return (ThrowableIntUnaryOperator<X> & Memoized) value -> {
+                int returnValue;
                 synchronized (lock) {
                     returnValue = cache.computeIfAbsent(value, ThrowableFunction.of(this::applyAsIntThrows));
                 }
@@ -591,7 +580,7 @@ public interface ThrowableIntUnaryOperator<X extends Throwable> extends Lambda, 
      * @see #nest()
      */
     @Nonnull
-    default IntUnaryOperator2 nest(@Nonnull final Function<? super Throwable, ? extends RuntimeException> mapper) {
+    default IntUnaryOperator2 nest(@Nonnull Function<? super Throwable, ? extends RuntimeException> mapper) {
         return recover(throwable -> {
             throw mapper.apply(throwable);
         });
@@ -613,15 +602,15 @@ public interface ThrowableIntUnaryOperator<X extends Throwable> extends Lambda, 
      * recover} operation.
      */
     @Nonnull
-    default IntUnaryOperator2 recover(@Nonnull final Function<? super Throwable, ? extends IntUnaryOperator> recover) {
+    default IntUnaryOperator2 recover(@Nonnull Function<? super Throwable, ? extends IntUnaryOperator> recover) {
         Objects.requireNonNull(recover);
-        return (value) -> {
+        return value -> {
             try {
-                return this.applyAsIntThrows(value);
+                return applyAsIntThrows(value);
             } catch (Error e) {
                 throw e;
             } catch (Throwable throwable) {
-                final IntUnaryOperator operator = recover.apply(throwable);
+                IntUnaryOperator operator = recover.apply(throwable);
                 Objects.requireNonNull(operator, () -> "recover returned null for " + throwable.getClass() + ": "
                         + throwable.getMessage());
                 return operator.applyAsInt(value);
@@ -697,9 +686,9 @@ public interface ThrowableIntUnaryOperator<X extends Throwable> extends Lambda, 
      */
     @Nonnull
     default IntUnaryOperator2 sneakyThrow() {
-        return (value) -> {
+        return value -> {
             try {
-                return this.applyAsIntThrows(value);
+                return applyAsIntThrows(value);
             } catch (RuntimeException | Error e) {
                 throw e;
             } catch (Throwable throwable) {

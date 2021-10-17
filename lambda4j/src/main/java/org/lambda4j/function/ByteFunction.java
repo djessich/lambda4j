@@ -13,7 +13,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package org.lambda4j.function;
+
+import java.util.Map;
+import java.util.Objects;
+import java.util.Optional;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.function.Consumer;
+import java.util.function.Function;
+
+import javax.annotation.Nonnegative;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import org.lambda4j.Lambda;
 import org.lambda4j.consumer.ByteConsumer;
@@ -27,20 +39,9 @@ import org.lambda4j.function.conversion.ShortToByteFunction;
 import org.lambda4j.function.to.ToByteFunction;
 import org.lambda4j.operator.unary.ByteUnaryOperator;
 
-import javax.annotation.Nonnegative;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Optional;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.function.Consumer;
-import java.util.function.Function;
-
 /**
- * Represents an operation that accepts one {@code byte}-valued input argument and produces a
- * result.
- * This is a primitive specialization of {@link Function2}.
+ * Represents an operation that accepts one {@code byte}-valued input argument and produces a result. This is a
+ * primitive specialization of {@link Function2}.
  * <p>
  * This is a {@link FunctionalInterface} whose functional method is {@link #apply(byte)}.
  *
@@ -65,7 +66,7 @@ public interface ByteFunction<R> extends Lambda {
      * Expression</a>
      * @see <a href="https://docs.oracle.com/javase/tutorial/java/javaOO/methodreferences.html">Method Reference</a>
      */
-    static <R> ByteFunction<R> of(@Nullable final ByteFunction<R> expression) {
+    static <R> ByteFunction<R> of(@Nullable ByteFunction<R> expression) {
         return expression;
     }
 
@@ -79,9 +80,9 @@ public interface ByteFunction<R> extends Lambda {
      * @throws NullPointerException If given argument is {@code null}
      */
     @Nonnull
-    static <R> ByteFunction<Optional<R>> lift(@Nonnull final ByteFunction<? extends R> partial) {
+    static <R> ByteFunction<Optional<R>> lift(@Nonnull ByteFunction<? extends R> partial) {
         Objects.requireNonNull(partial);
-        return (value) -> Optional.ofNullable(partial.apply(value));
+        return value -> Optional.ofNullable(partial.apply(value));
     }
 
     /**
@@ -93,7 +94,7 @@ public interface ByteFunction<R> extends Lambda {
      * @return The result from the given {@code ByteFunction}.
      * @throws NullPointerException If given argument is {@code null}
      */
-    static <R> R call(@Nonnull final ByteFunction<? extends R> function, byte value) {
+    static <R> R call(@Nonnull ByteFunction<? extends R> function, byte value) {
         Objects.requireNonNull(function);
         return function.apply(value);
     }
@@ -107,7 +108,7 @@ public interface ByteFunction<R> extends Lambda {
      */
     @Nonnull
     static <R> ByteFunction<R> constant(R ret) {
-        return (value) -> ret;
+        return value -> ret;
     }
 
     /**
@@ -130,9 +131,9 @@ public interface ByteFunction<R> extends Lambda {
     }
 
     /**
-     * Returns a composed {@link Function2} that first applies the {@code before} function to its input, and
-     * then applies this function to the result.
-     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
+     * Returns a composed {@link Function2} that first applies the {@code before} function to its input, and then
+     * applies this function to the result. If evaluation of either operation throws an exception, it is relayed to the
+     * caller of the composed operation.
      *
      * @param <A> The type of the argument to the given function, and of composed function
      * @param before The function to apply before this function is applied
@@ -142,9 +143,9 @@ public interface ByteFunction<R> extends Lambda {
      * @implSpec The input argument of this method is able to handle every type.
      */
     @Nonnull
-    default <A> Function2<A, R> compose(@Nonnull final ToByteFunction<? super A> before) {
+    default <A> Function2<A, R> compose(@Nonnull ToByteFunction<? super A> before) {
         Objects.requireNonNull(before);
-        return (a) -> apply(before.applyAsByte(a));
+        return a -> apply(before.applyAsByte(a));
     }
 
     /**
@@ -157,53 +158,51 @@ public interface ByteFunction<R> extends Lambda {
      * @return A composed {@code BooleanFunction} that first applies the {@code before} function to its input, and then
      * applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * boolean}.
      */
     @Nonnull
-    default BooleanFunction<R> composeFromBoolean(@Nonnull final BooleanToByteFunction before) {
+    default BooleanFunction<R> composeFromBoolean(@Nonnull BooleanToByteFunction before) {
         Objects.requireNonNull(before);
-        return (value) -> apply(before.applyAsByte(value));
+        return value -> apply(before.applyAsByte(value));
     }
 
     /**
-     * Returns a composed {@link ByteFunction} that first applies the {@code before} operator to
-     * its input, and then applies this function to the result.
-     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
-     * This method is just convenience, to provide the ability to execute an operation which accepts {@code byte} input,
-     * before this primitive function is executed.
+     * Returns a composed {@link ByteFunction} that first applies the {@code before} operator to its input, and then
+     * applies this function to the result. If evaluation of either operation throws an exception, it is relayed to the
+     * caller of the composed operation. This method is just convenience, to provide the ability to execute an operation
+     * which accepts {@code byte} input, before this primitive function is executed.
      *
      * @param before The operator to apply before this function is applied
      * @return A composed {@code ByteFunction} that first applies the {@code before} operator to its input, and then
      * applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * byte}.
      */
     @Nonnull
-    default ByteFunction<R> composeFromByte(@Nonnull final ByteUnaryOperator before) {
+    default ByteFunction<R> composeFromByte(@Nonnull ByteUnaryOperator before) {
         Objects.requireNonNull(before);
-        return (value) -> apply(before.applyAsByte(value));
+        return value -> apply(before.applyAsByte(value));
     }
 
     /**
-     * Returns a composed {@link CharFunction} that first applies the {@code before} function to
-     * its input, and then applies this function to the result.
-     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
-     * This method is just convenience, to provide the ability to execute an operation which accepts {@code char} input,
-     * before this primitive function is executed.
+     * Returns a composed {@link CharFunction} that first applies the {@code before} function to its input, and then
+     * applies this function to the result. If evaluation of either operation throws an exception, it is relayed to the
+     * caller of the composed operation. This method is just convenience, to provide the ability to execute an operation
+     * which accepts {@code char} input, before this primitive function is executed.
      *
      * @param before The function to apply before this function is applied
      * @return A composed {@code CharFunction} that first applies the {@code before} function to its input, and then
      * applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * char}.
      */
     @Nonnull
-    default CharFunction<R> composeFromChar(@Nonnull final CharToByteFunction before) {
+    default CharFunction<R> composeFromChar(@Nonnull CharToByteFunction before) {
         Objects.requireNonNull(before);
-        return (value) -> apply(before.applyAsByte(value));
+        return value -> apply(before.applyAsByte(value));
     }
 
     /**
@@ -216,13 +215,13 @@ public interface ByteFunction<R> extends Lambda {
      * @return A composed {@code DoubleFunction2} that first applies the {@code before} function to its input, and then
      * applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * double}.
      */
     @Nonnull
-    default DoubleFunction2<R> composeFromDouble(@Nonnull final DoubleToByteFunction before) {
+    default DoubleFunction2<R> composeFromDouble(@Nonnull DoubleToByteFunction before) {
         Objects.requireNonNull(before);
-        return (value) -> apply(before.applyAsByte(value));
+        return value -> apply(before.applyAsByte(value));
     }
 
     /**
@@ -235,53 +234,51 @@ public interface ByteFunction<R> extends Lambda {
      * @return A composed {@code FloatFunction} that first applies the {@code before} function to its input, and then
      * applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * float}.
      */
     @Nonnull
-    default FloatFunction<R> composeFromFloat(@Nonnull final FloatToByteFunction before) {
+    default FloatFunction<R> composeFromFloat(@Nonnull FloatToByteFunction before) {
         Objects.requireNonNull(before);
-        return (value) -> apply(before.applyAsByte(value));
+        return value -> apply(before.applyAsByte(value));
     }
 
     /**
-     * Returns a composed {@link IntFunction2} that first applies the {@code before} function to
-     * its input, and then applies this function to the result.
-     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
-     * This method is just convenience, to provide the ability to execute an operation which accepts {@code int} input,
-     * before this primitive function is executed.
+     * Returns a composed {@link IntFunction2} that first applies the {@code before} function to its input, and then
+     * applies this function to the result. If evaluation of either operation throws an exception, it is relayed to the
+     * caller of the composed operation. This method is just convenience, to provide the ability to execute an operation
+     * which accepts {@code int} input, before this primitive function is executed.
      *
      * @param before The function to apply before this function is applied
      * @return A composed {@code IntFunction2} that first applies the {@code before} function to its input, and then
      * applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * int}.
      */
     @Nonnull
-    default IntFunction2<R> composeFromInt(@Nonnull final IntToByteFunction before) {
+    default IntFunction2<R> composeFromInt(@Nonnull IntToByteFunction before) {
         Objects.requireNonNull(before);
-        return (value) -> apply(before.applyAsByte(value));
+        return value -> apply(before.applyAsByte(value));
     }
 
     /**
-     * Returns a composed {@link LongFunction2} that first applies the {@code before} function to
-     * its input, and then applies this function to the result.
-     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
-     * This method is just convenience, to provide the ability to execute an operation which accepts {@code long} input,
-     * before this primitive function is executed.
+     * Returns a composed {@link LongFunction2} that first applies the {@code before} function to its input, and then
+     * applies this function to the result. If evaluation of either operation throws an exception, it is relayed to the
+     * caller of the composed operation. This method is just convenience, to provide the ability to execute an operation
+     * which accepts {@code long} input, before this primitive function is executed.
      *
      * @param before The function to apply before this function is applied
      * @return A composed {@code LongFunction2} that first applies the {@code before} function to its input, and then
      * applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * long}.
      */
     @Nonnull
-    default LongFunction2<R> composeFromLong(@Nonnull final LongToByteFunction before) {
+    default LongFunction2<R> composeFromLong(@Nonnull LongToByteFunction before) {
         Objects.requireNonNull(before);
-        return (value) -> apply(before.applyAsByte(value));
+        return value -> apply(before.applyAsByte(value));
     }
 
     /**
@@ -294,19 +291,19 @@ public interface ByteFunction<R> extends Lambda {
      * @return A composed {@code ShortFunction} that first applies the {@code before} function to its input, and then
      * applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * short}.
      */
     @Nonnull
-    default ShortFunction<R> composeFromShort(@Nonnull final ShortToByteFunction before) {
+    default ShortFunction<R> composeFromShort(@Nonnull ShortToByteFunction before) {
         Objects.requireNonNull(before);
-        return (value) -> apply(before.applyAsByte(value));
+        return value -> apply(before.applyAsByte(value));
     }
 
     /**
      * Returns a composed {@link ByteFunction} that first applies this function to its input, and then applies the
-     * {@code after} function to the result.
-     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
+     * {@code after} function to the result. If evaluation of either operation throws an exception, it is relayed to the
+     * caller of the composed operation.
      *
      * @param <S> The type of return value from the {@code after} function, and of the composed function
      * @param after The function to apply after this function is applied
@@ -316,9 +313,9 @@ public interface ByteFunction<R> extends Lambda {
      * @implSpec The input argument of this method is able to return every type.
      */
     @Nonnull
-    default <S> ByteFunction<S> andThen(@Nonnull final Function<? super R, ? extends S> after) {
+    default <S> ByteFunction<S> andThen(@Nonnull Function<? super R, ? extends S> after) {
         Objects.requireNonNull(after);
-        return (value) -> after.apply(apply(value));
+        return value -> after.apply(apply(value));
     }
 
     /**
@@ -332,9 +329,9 @@ public interface ByteFunction<R> extends Lambda {
      * @throws NullPointerException If given argument is {@code null}
      */
     @Nonnull
-    default ByteConsumer consume(@Nonnull final Consumer<? super R> consumer) {
+    default ByteConsumer consume(@Nonnull Consumer<? super R> consumer) {
         Objects.requireNonNull(consumer);
-        return (value) -> consumer.accept(apply(value));
+        return value -> consumer.accept(apply(value));
     }
 
     /**
@@ -356,10 +353,10 @@ public interface ByteFunction<R> extends Lambda {
         if (isMemoized()) {
             return this;
         } else {
-            final Map<Byte, R> cache = new ConcurrentHashMap<>();
-            final Object lock = new Object();
-            return (ByteFunction<R> & Memoized) (value) -> {
-                final R returnValue;
+            Map<Byte, R> cache = new ConcurrentHashMap<>();
+            Object lock = new Object();
+            return (ByteFunction<R> & Memoized) value -> {
+                R returnValue;
                 synchronized (lock) {
                     returnValue = cache.computeIfAbsent(value, this::apply);
                 }
@@ -369,9 +366,9 @@ public interface ByteFunction<R> extends Lambda {
     }
 
     /**
-     * Converts this function to an equal function, which ensures that its result is not
-     * {@code null} using {@link Optional}. This method mainly exists to avoid unnecessary {@code NullPointerException}s
-     * through referencing {@code null} from this function.
+     * Converts this function to an equal function, which ensures that its result is not {@code null} using {@link
+     * Optional}. This method mainly exists to avoid unnecessary {@code NullPointerException}s through referencing
+     * {@code null} from this function.
      *
      * @return An equal function, which ensures that its result is not {@code null}.
      * @deprecated Use {@code lift} method for lifting this function.
@@ -379,13 +376,13 @@ public interface ByteFunction<R> extends Lambda {
     @Deprecated
     @Nonnull
     default ByteFunction<Optional<R>> nonNull() {
-        return (value) -> Optional.ofNullable(apply(value));
+        return value -> Optional.ofNullable(apply(value));
     }
 
     /**
-     * Returns a composed {@link Function2} which represents this {@link ByteFunction}. Thereby the primitive
-     * input argument for this function is autoboxed. This method provides the possibility to use this
-     * {@code ByteFunction} with methods provided by the {@code JDK}.
+     * Returns a composed {@link Function2} which represents this {@link ByteFunction}. Thereby the primitive input
+     * argument for this function is autoboxed. This method provides the possibility to use this {@code ByteFunction}
+     * with methods provided by the {@code JDK}.
      *
      * @return A composed {@code Function2} which represents this {@code ByteFunction}.
      */

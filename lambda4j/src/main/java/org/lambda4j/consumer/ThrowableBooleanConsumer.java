@@ -13,7 +13,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package org.lambda4j.consumer;
+
+import java.util.Objects;
+import java.util.function.Function;
+
+import javax.annotation.Nonnegative;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import org.lambda4j.Lambda;
 import org.lambda4j.core.exception.ThrownByFunctionalInterfaceException;
@@ -27,12 +35,6 @@ import org.lambda4j.predicate.ThrowableIntPredicate;
 import org.lambda4j.predicate.ThrowableLongPredicate;
 import org.lambda4j.predicate.ThrowablePredicate;
 import org.lambda4j.predicate.ThrowableShortPredicate;
-
-import javax.annotation.Nonnegative;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import java.util.Objects;
-import java.util.function.Function;
 
 /**
  * Represents an operation that accepts one {@code boolean}-valued input argument and returns no result which is able to
@@ -64,7 +66,7 @@ public interface ThrowableBooleanConsumer<X extends Throwable> extends Lambda {
      * @see <a href="https://docs.oracle.com/javase/tutorial/java/javaOO/methodreferences.html">Method Reference</a>
      */
     static <X extends Throwable> ThrowableBooleanConsumer<X> of(
-            @Nullable final ThrowableBooleanConsumer<X> expression) {
+            @Nullable ThrowableBooleanConsumer<X> expression) {
         return expression;
     }
 
@@ -77,7 +79,7 @@ public interface ThrowableBooleanConsumer<X extends Throwable> extends Lambda {
      * @throws NullPointerException If given argument is {@code null}
      * @throws X Any throwable from this consumers action
      */
-    static <X extends Throwable> void call(@Nonnull final ThrowableBooleanConsumer<? extends X> consumer,
+    static <X extends Throwable> void call(@Nonnull ThrowableBooleanConsumer<? extends X> consumer,
             boolean value) throws X {
         Objects.requireNonNull(consumer);
         consumer.acceptThrows(value);
@@ -114,9 +116,9 @@ public interface ThrowableBooleanConsumer<X extends Throwable> extends Lambda {
      * @implSpec The input argument of this method is able to handle every type.
      */
     @Nonnull
-    default <A> ThrowableConsumer<A, X> compose(@Nonnull final ThrowablePredicate<? super A, ? extends X> before) {
+    default <A> ThrowableConsumer<A, X> compose(@Nonnull ThrowablePredicate<? super A, ? extends X> before) {
         Objects.requireNonNull(before);
-        return (a) -> acceptThrows(before.testThrows(a));
+        return a -> acceptThrows(before.testThrows(a));
     }
 
     /**
@@ -128,52 +130,50 @@ public interface ThrowableBooleanConsumer<X extends Throwable> extends Lambda {
      * @return A composed {@code ThrowableBooleanConsumer} that first applies the {@code before} operator to its input,
      * and then applies this consumer to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * boolean}.
      */
     @Nonnull
     default ThrowableBooleanConsumer<X> composeFromBoolean(
-            @Nonnull final ThrowableBooleanUnaryOperator<? extends X> before) {
+            @Nonnull ThrowableBooleanUnaryOperator<? extends X> before) {
         Objects.requireNonNull(before);
-        return (value) -> acceptThrows(before.applyAsBooleanThrows(value));
+        return value -> acceptThrows(before.applyAsBooleanThrows(value));
     }
 
     /**
-     * Returns a composed {@link ThrowableByteConsumer} that first applies the {@code before} predicate to
-     * its input, and then applies this consumer to the result.
-     * This method is just convenience, to provide the ability to execute an operation which accepts {@code byte} input,
-     * before this primitive consumer is executed.
+     * Returns a composed {@link ThrowableByteConsumer} that first applies the {@code before} predicate to its input,
+     * and then applies this consumer to the result. This method is just convenience, to provide the ability to execute
+     * an operation which accepts {@code byte} input, before this primitive consumer is executed.
      *
      * @param before The predicate to apply before this consumer is applied
      * @return A composed {@code ThrowableByteConsumer} that first applies the {@code before} predicate to its input,
      * and then applies this consumer to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * byte}.
      */
     @Nonnull
-    default ThrowableByteConsumer<X> composeFromByte(@Nonnull final ThrowableBytePredicate<? extends X> before) {
+    default ThrowableByteConsumer<X> composeFromByte(@Nonnull ThrowableBytePredicate<? extends X> before) {
         Objects.requireNonNull(before);
-        return (value) -> acceptThrows(before.testThrows(value));
+        return value -> acceptThrows(before.testThrows(value));
     }
 
     /**
-     * Returns a composed {@link ThrowableCharConsumer} that first applies the {@code before} predicate to
-     * its input, and then applies this consumer to the result.
-     * This method is just convenience, to provide the ability to execute an operation which accepts {@code char} input,
-     * before this primitive consumer is executed.
+     * Returns a composed {@link ThrowableCharConsumer} that first applies the {@code before} predicate to its input,
+     * and then applies this consumer to the result. This method is just convenience, to provide the ability to execute
+     * an operation which accepts {@code char} input, before this primitive consumer is executed.
      *
      * @param before The predicate to apply before this consumer is applied
      * @return A composed {@code ThrowableCharConsumer} that first applies the {@code before} predicate to its input,
      * and then applies this consumer to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * char}.
      */
     @Nonnull
-    default ThrowableCharConsumer<X> composeFromChar(@Nonnull final ThrowableCharPredicate<? extends X> before) {
+    default ThrowableCharConsumer<X> composeFromChar(@Nonnull ThrowableCharPredicate<? extends X> before) {
         Objects.requireNonNull(before);
-        return (value) -> acceptThrows(before.testThrows(value));
+        return value -> acceptThrows(before.testThrows(value));
     }
 
     /**
@@ -185,13 +185,13 @@ public interface ThrowableBooleanConsumer<X extends Throwable> extends Lambda {
      * @return A composed {@code ThrowableDoubleConsumer} that first applies the {@code before} predicate to its input,
      * and then applies this consumer to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * double}.
      */
     @Nonnull
-    default ThrowableDoubleConsumer<X> composeFromDouble(@Nonnull final ThrowableDoublePredicate<? extends X> before) {
+    default ThrowableDoubleConsumer<X> composeFromDouble(@Nonnull ThrowableDoublePredicate<? extends X> before) {
         Objects.requireNonNull(before);
-        return (value) -> acceptThrows(before.testThrows(value));
+        return value -> acceptThrows(before.testThrows(value));
     }
 
     /**
@@ -203,51 +203,49 @@ public interface ThrowableBooleanConsumer<X extends Throwable> extends Lambda {
      * @return A composed {@code ThrowableFloatConsumer} that first applies the {@code before} predicate to its input,
      * and then applies this consumer to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * float}.
      */
     @Nonnull
-    default ThrowableFloatConsumer<X> composeFromFloat(@Nonnull final ThrowableFloatPredicate<? extends X> before) {
+    default ThrowableFloatConsumer<X> composeFromFloat(@Nonnull ThrowableFloatPredicate<? extends X> before) {
         Objects.requireNonNull(before);
-        return (value) -> acceptThrows(before.testThrows(value));
+        return value -> acceptThrows(before.testThrows(value));
     }
 
     /**
-     * Returns a composed {@link ThrowableIntConsumer} that first applies the {@code before} predicate to
-     * its input, and then applies this consumer to the result.
-     * This method is just convenience, to provide the ability to execute an operation which accepts {@code int} input,
-     * before this primitive consumer is executed.
+     * Returns a composed {@link ThrowableIntConsumer} that first applies the {@code before} predicate to its input, and
+     * then applies this consumer to the result. This method is just convenience, to provide the ability to execute an
+     * operation which accepts {@code int} input, before this primitive consumer is executed.
      *
      * @param before The predicate to apply before this consumer is applied
      * @return A composed {@code ThrowableIntConsumer} that first applies the {@code before} predicate to its input, and
      * then applies this consumer to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * int}.
      */
     @Nonnull
-    default ThrowableIntConsumer<X> composeFromInt(@Nonnull final ThrowableIntPredicate<? extends X> before) {
+    default ThrowableIntConsumer<X> composeFromInt(@Nonnull ThrowableIntPredicate<? extends X> before) {
         Objects.requireNonNull(before);
-        return (value) -> acceptThrows(before.testThrows(value));
+        return value -> acceptThrows(before.testThrows(value));
     }
 
     /**
-     * Returns a composed {@link ThrowableLongConsumer} that first applies the {@code before} predicate to
-     * its input, and then applies this consumer to the result.
-     * This method is just convenience, to provide the ability to execute an operation which accepts {@code long} input,
-     * before this primitive consumer is executed.
+     * Returns a composed {@link ThrowableLongConsumer} that first applies the {@code before} predicate to its input,
+     * and then applies this consumer to the result. This method is just convenience, to provide the ability to execute
+     * an operation which accepts {@code long} input, before this primitive consumer is executed.
      *
      * @param before The predicate to apply before this consumer is applied
      * @return A composed {@code ThrowableLongConsumer} that first applies the {@code before} predicate to its input,
      * and then applies this consumer to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * long}.
      */
     @Nonnull
-    default ThrowableLongConsumer<X> composeFromLong(@Nonnull final ThrowableLongPredicate<? extends X> before) {
+    default ThrowableLongConsumer<X> composeFromLong(@Nonnull ThrowableLongPredicate<? extends X> before) {
         Objects.requireNonNull(before);
-        return (value) -> acceptThrows(before.testThrows(value));
+        return value -> acceptThrows(before.testThrows(value));
     }
 
     /**
@@ -259,13 +257,13 @@ public interface ThrowableBooleanConsumer<X extends Throwable> extends Lambda {
      * @return A composed {@code ThrowableShortConsumer} that first applies the {@code before} predicate to its input,
      * and then applies this consumer to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * short}.
      */
     @Nonnull
-    default ThrowableShortConsumer<X> composeFromShort(@Nonnull final ThrowableShortPredicate<? extends X> before) {
+    default ThrowableShortConsumer<X> composeFromShort(@Nonnull ThrowableShortPredicate<? extends X> before) {
         Objects.requireNonNull(before);
-        return (value) -> acceptThrows(before.testThrows(value));
+        return value -> acceptThrows(before.testThrows(value));
     }
 
     /**
@@ -279,9 +277,9 @@ public interface ThrowableBooleanConsumer<X extends Throwable> extends Lambda {
      * @throws NullPointerException If given argument is {@code null}
      */
     @Nonnull
-    default ThrowableBooleanConsumer<X> andThen(@Nonnull final ThrowableBooleanConsumer<? extends X> after) {
+    default ThrowableBooleanConsumer<X> andThen(@Nonnull ThrowableBooleanConsumer<? extends X> after) {
         Objects.requireNonNull(after);
-        return (value) -> {
+        return value -> {
             acceptThrows(value);
             after.acceptThrows(value);
         };
@@ -328,7 +326,7 @@ public interface ThrowableBooleanConsumer<X extends Throwable> extends Lambda {
      * @see #nest()
      */
     @Nonnull
-    default BooleanConsumer nest(@Nonnull final Function<? super Throwable, ? extends RuntimeException> mapper) {
+    default BooleanConsumer nest(@Nonnull Function<? super Throwable, ? extends RuntimeException> mapper) {
         return recover(throwable -> {
             throw mapper.apply(throwable);
         });
@@ -350,15 +348,15 @@ public interface ThrowableBooleanConsumer<X extends Throwable> extends Lambda {
      * recover} operation.
      */
     @Nonnull
-    default BooleanConsumer recover(@Nonnull final Function<? super Throwable, ? extends BooleanConsumer> recover) {
+    default BooleanConsumer recover(@Nonnull Function<? super Throwable, ? extends BooleanConsumer> recover) {
         Objects.requireNonNull(recover);
-        return (value) -> {
+        return value -> {
             try {
-                this.acceptThrows(value);
+                acceptThrows(value);
             } catch (Error e) {
                 throw e;
             } catch (Throwable throwable) {
-                final BooleanConsumer consumer = recover.apply(throwable);
+                BooleanConsumer consumer = recover.apply(throwable);
                 Objects.requireNonNull(consumer, () -> "recover returned null for " + throwable.getClass() + ": "
                         + throwable.getMessage());
                 consumer.accept(value);
@@ -367,12 +365,12 @@ public interface ThrowableBooleanConsumer<X extends Throwable> extends Lambda {
     }
 
     /**
-     * Returns a composed {@link BooleanConsumer} that applies this consumer to its input and sneakily throws the
-     * thrown {@link Throwable} from it, if it is not of type {@link RuntimeException} or {@link Error}. This means that
-     * each throwable thrown from the returned composed consumer behaves exactly the same as an <em>unchecked</em>
-     * throwable does. As a result, there is no need to handle the throwable of this consumer in the returned composed
-     * consumer by either wrapping it in an <em>unchecked</em> throwable or to declare it in the {@code throws} clause,
-     * as it would be done in a non sneaky throwing consumer.
+     * Returns a composed {@link BooleanConsumer} that applies this consumer to its input and sneakily throws the thrown
+     * {@link Throwable} from it, if it is not of type {@link RuntimeException} or {@link Error}. This means that each
+     * throwable thrown from the returned composed consumer behaves exactly the same as an <em>unchecked</em> throwable
+     * does. As a result, there is no need to handle the throwable of this consumer in the returned composed consumer by
+     * either wrapping it in an <em>unchecked</em> throwable or to declare it in the {@code throws} clause, as it would
+     * be done in a non sneaky throwing consumer.
      * <p>
      * What sneaky throwing simply does, is to fake out the compiler and thus it bypasses the principle of
      * <em>checked</em> throwables. On the JVM (class file) level, all throwables, checked or not, can be thrown
@@ -434,9 +432,9 @@ public interface ThrowableBooleanConsumer<X extends Throwable> extends Lambda {
      */
     @Nonnull
     default BooleanConsumer sneakyThrow() {
-        return (value) -> {
+        return value -> {
             try {
-                this.acceptThrows(value);
+                acceptThrows(value);
             } catch (RuntimeException | Error e) {
                 throw e;
             } catch (Throwable throwable) {

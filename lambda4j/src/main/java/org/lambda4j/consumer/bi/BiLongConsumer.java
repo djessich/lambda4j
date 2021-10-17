@@ -13,7 +13,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package org.lambda4j.consumer.bi;
+
+import java.util.Objects;
+import java.util.function.DoubleToLongFunction;
+import java.util.function.IntToLongFunction;
+import java.util.function.LongConsumer;
+import java.util.function.LongUnaryOperator;
+import java.util.function.ToLongFunction;
+
+import javax.annotation.Nonnegative;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import org.lambda4j.Lambda;
 import org.lambda4j.consumer.LongConsumer2;
@@ -23,20 +35,10 @@ import org.lambda4j.function.conversion.CharToLongFunction;
 import org.lambda4j.function.conversion.FloatToLongFunction;
 import org.lambda4j.function.conversion.ShortToLongFunction;
 
-import javax.annotation.Nonnegative;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import java.util.Objects;
-import java.util.function.DoubleToLongFunction;
-import java.util.function.IntToLongFunction;
-import java.util.function.LongConsumer;
-import java.util.function.LongUnaryOperator;
-import java.util.function.ToLongFunction;
-
 /**
- * Represents an operation that accepts two {@code long}-valued input arguments and returns no result.
- * This is a primitive specialization of {@link BiConsumer2}.
- * Unlike most other functional interfaces, {@code BiLongConsumer} is expected to operate via side-effects.
+ * Represents an operation that accepts two {@code long}-valued input arguments and returns no result. This is a
+ * primitive specialization of {@link BiConsumer2}. Unlike most other functional interfaces, {@code BiLongConsumer} is
+ * expected to operate via side-effects.
  * <p>
  * This is a {@link FunctionalInterface} whose functional method is {@link #accept(long, long)}.
  *
@@ -59,7 +61,7 @@ public interface BiLongConsumer extends Lambda {
      * Expression</a>
      * @see <a href="https://docs.oracle.com/javase/tutorial/java/javaOO/methodreferences.html">Method Reference</a>
      */
-    static BiLongConsumer of(@Nullable final BiLongConsumer expression) {
+    static BiLongConsumer of(@Nullable BiLongConsumer expression) {
         return expression;
     }
 
@@ -71,7 +73,7 @@ public interface BiLongConsumer extends Lambda {
      * @param value2 The second argument to the consumer
      * @throws NullPointerException If given argument is {@code null}
      */
-    static void call(@Nonnull final BiLongConsumer consumer, long value1, long value2) {
+    static void call(@Nonnull BiLongConsumer consumer, long value1, long value2) {
         Objects.requireNonNull(consumer);
         consumer.accept(value1, value2);
     }
@@ -86,7 +88,7 @@ public interface BiLongConsumer extends Lambda {
      * @throws NullPointerException If given argument is {@code null}
      */
     @Nonnull
-    static BiLongConsumer onlyFirst(@Nonnull final LongConsumer consumer) {
+    static BiLongConsumer onlyFirst(@Nonnull LongConsumer consumer) {
         Objects.requireNonNull(consumer);
         return (value1, value2) -> consumer.accept(value1);
     }
@@ -101,7 +103,7 @@ public interface BiLongConsumer extends Lambda {
      * @throws NullPointerException If given argument is {@code null}
      */
     @Nonnull
-    static BiLongConsumer onlySecond(@Nonnull final LongConsumer consumer) {
+    static BiLongConsumer onlySecond(@Nonnull LongConsumer consumer) {
         Objects.requireNonNull(consumer);
         return (value1, value2) -> consumer.accept(value2);
     }
@@ -122,7 +124,7 @@ public interface BiLongConsumer extends Lambda {
      */
     @Nonnull
     default LongConsumer2 paccept(long value1) {
-        return (value2) -> this.accept(value1, value2);
+        return value2 -> accept(value1, value2);
     }
 
     /**
@@ -137,9 +139,9 @@ public interface BiLongConsumer extends Lambda {
     }
 
     /**
-     * Returns a composed {@link BiConsumer2} that first applies the {@code before} functions to its input, and
-     * then applies this consumer to the result.
-     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
+     * Returns a composed {@link BiConsumer2} that first applies the {@code before} functions to its input, and then
+     * applies this consumer to the result. If evaluation of either operation throws an exception, it is relayed to the
+     * caller of the composed operation.
      *
      * @param <A> The type of the argument to the first given function, and of composed consumer
      * @param <B> The type of the argument to the second given function, and of composed consumer
@@ -151,8 +153,8 @@ public interface BiLongConsumer extends Lambda {
      * @implSpec The input argument of this method is able to handle every type.
      */
     @Nonnull
-    default <A, B> BiConsumer2<A, B> compose(@Nonnull final ToLongFunction<? super A> before1,
-            @Nonnull final ToLongFunction<? super B> before2) {
+    default <A, B> BiConsumer2<A, B> compose(@Nonnull ToLongFunction<? super A> before1,
+            @Nonnull ToLongFunction<? super B> before2) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         return (a, b) -> accept(before1.applyAsLong(a), before2.applyAsLong(b));
@@ -169,58 +171,56 @@ public interface BiLongConsumer extends Lambda {
      * @return A composed {@code BiBooleanConsumer} that first applies the {@code before} functions to its input, and
      * then applies this consumer to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * boolean}.
      */
     @Nonnull
-    default BiBooleanConsumer composeFromBoolean(@Nonnull final BooleanToLongFunction before1,
-            @Nonnull final BooleanToLongFunction before2) {
+    default BiBooleanConsumer composeFromBoolean(@Nonnull BooleanToLongFunction before1,
+            @Nonnull BooleanToLongFunction before2) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         return (value1, value2) -> accept(before1.applyAsLong(value1), before2.applyAsLong(value2));
     }
 
     /**
-     * Returns a composed {@link BiByteConsumer} that first applies the {@code before} functions to
-     * its input, and then applies this consumer to the result.
-     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
-     * This method is just convenience, to provide the ability to execute an operation which accepts {@code byte} input,
-     * before this primitive consumer is executed.
+     * Returns a composed {@link BiByteConsumer} that first applies the {@code before} functions to its input, and then
+     * applies this consumer to the result. If evaluation of either operation throws an exception, it is relayed to the
+     * caller of the composed operation. This method is just convenience, to provide the ability to execute an operation
+     * which accepts {@code byte} input, before this primitive consumer is executed.
      *
      * @param before1 The first function to apply before this consumer is applied
      * @param before2 The second function to apply before this consumer is applied
      * @return A composed {@code BiByteConsumer} that first applies the {@code before} functions to its input, and then
      * applies this consumer to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * byte}.
      */
     @Nonnull
-    default BiByteConsumer composeFromByte(@Nonnull final ByteToLongFunction before1,
-            @Nonnull final ByteToLongFunction before2) {
+    default BiByteConsumer composeFromByte(@Nonnull ByteToLongFunction before1,
+            @Nonnull ByteToLongFunction before2) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         return (value1, value2) -> accept(before1.applyAsLong(value1), before2.applyAsLong(value2));
     }
 
     /**
-     * Returns a composed {@link BiCharConsumer} that first applies the {@code before} functions to
-     * its input, and then applies this consumer to the result.
-     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
-     * This method is just convenience, to provide the ability to execute an operation which accepts {@code char} input,
-     * before this primitive consumer is executed.
+     * Returns a composed {@link BiCharConsumer} that first applies the {@code before} functions to its input, and then
+     * applies this consumer to the result. If evaluation of either operation throws an exception, it is relayed to the
+     * caller of the composed operation. This method is just convenience, to provide the ability to execute an operation
+     * which accepts {@code char} input, before this primitive consumer is executed.
      *
      * @param before1 The first function to apply before this consumer is applied
      * @param before2 The second function to apply before this consumer is applied
      * @return A composed {@code BiCharConsumer} that first applies the {@code before} functions to its input, and then
      * applies this consumer to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * char}.
      */
     @Nonnull
-    default BiCharConsumer composeFromChar(@Nonnull final CharToLongFunction before1,
-            @Nonnull final CharToLongFunction before2) {
+    default BiCharConsumer composeFromChar(@Nonnull CharToLongFunction before1,
+            @Nonnull CharToLongFunction before2) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         return (value1, value2) -> accept(before1.applyAsLong(value1), before2.applyAsLong(value2));
@@ -237,12 +237,12 @@ public interface BiLongConsumer extends Lambda {
      * @return A composed {@code BiDoubleConsumer} that first applies the {@code before} functions to its input, and
      * then applies this consumer to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * double}.
      */
     @Nonnull
-    default BiDoubleConsumer composeFromDouble(@Nonnull final DoubleToLongFunction before1,
-            @Nonnull final DoubleToLongFunction before2) {
+    default BiDoubleConsumer composeFromDouble(@Nonnull DoubleToLongFunction before1,
+            @Nonnull DoubleToLongFunction before2) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         return (value1, value2) -> accept(before1.applyAsLong(value1), before2.applyAsLong(value2));
@@ -259,58 +259,56 @@ public interface BiLongConsumer extends Lambda {
      * @return A composed {@code BiFloatConsumer} that first applies the {@code before} functions to its input, and then
      * applies this consumer to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * float}.
      */
     @Nonnull
-    default BiFloatConsumer composeFromFloat(@Nonnull final FloatToLongFunction before1,
-            @Nonnull final FloatToLongFunction before2) {
+    default BiFloatConsumer composeFromFloat(@Nonnull FloatToLongFunction before1,
+            @Nonnull FloatToLongFunction before2) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         return (value1, value2) -> accept(before1.applyAsLong(value1), before2.applyAsLong(value2));
     }
 
     /**
-     * Returns a composed {@link BiIntConsumer} that first applies the {@code before} functions to
-     * its input, and then applies this consumer to the result.
-     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
-     * This method is just convenience, to provide the ability to execute an operation which accepts {@code int} input,
-     * before this primitive consumer is executed.
+     * Returns a composed {@link BiIntConsumer} that first applies the {@code before} functions to its input, and then
+     * applies this consumer to the result. If evaluation of either operation throws an exception, it is relayed to the
+     * caller of the composed operation. This method is just convenience, to provide the ability to execute an operation
+     * which accepts {@code int} input, before this primitive consumer is executed.
      *
      * @param before1 The first function to apply before this consumer is applied
      * @param before2 The second function to apply before this consumer is applied
      * @return A composed {@code BiIntConsumer} that first applies the {@code before} functions to its input, and then
      * applies this consumer to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * int}.
      */
     @Nonnull
-    default BiIntConsumer composeFromInt(@Nonnull final IntToLongFunction before1,
-            @Nonnull final IntToLongFunction before2) {
+    default BiIntConsumer composeFromInt(@Nonnull IntToLongFunction before1,
+            @Nonnull IntToLongFunction before2) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         return (value1, value2) -> accept(before1.applyAsLong(value1), before2.applyAsLong(value2));
     }
 
     /**
-     * Returns a composed {@link BiLongConsumer} that first applies the {@code before} operators to
-     * its input, and then applies this consumer to the result.
-     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
-     * This method is just convenience, to provide the ability to execute an operation which accepts {@code long} input,
-     * before this primitive consumer is executed.
+     * Returns a composed {@link BiLongConsumer} that first applies the {@code before} operators to its input, and then
+     * applies this consumer to the result. If evaluation of either operation throws an exception, it is relayed to the
+     * caller of the composed operation. This method is just convenience, to provide the ability to execute an operation
+     * which accepts {@code long} input, before this primitive consumer is executed.
      *
      * @param before1 The first operator to apply before this consumer is applied
      * @param before2 The second operator to apply before this consumer is applied
      * @return A composed {@code BiLongConsumer} that first applies the {@code before} operators to its input, and then
      * applies this consumer to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * long}.
      */
     @Nonnull
-    default BiLongConsumer composeFromLong(@Nonnull final LongUnaryOperator before1,
-            @Nonnull final LongUnaryOperator before2) {
+    default BiLongConsumer composeFromLong(@Nonnull LongUnaryOperator before1,
+            @Nonnull LongUnaryOperator before2) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         return (value1, value2) -> accept(before1.applyAsLong(value1), before2.applyAsLong(value2));
@@ -327,12 +325,12 @@ public interface BiLongConsumer extends Lambda {
      * @return A composed {@code BiShortConsumer} that first applies the {@code before} functions to its input, and then
      * applies this consumer to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * short}.
      */
     @Nonnull
-    default BiShortConsumer composeFromShort(@Nonnull final ShortToLongFunction before1,
-            @Nonnull final ShortToLongFunction before2) {
+    default BiShortConsumer composeFromShort(@Nonnull ShortToLongFunction before1,
+            @Nonnull ShortToLongFunction before2) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         return (value1, value2) -> accept(before1.applyAsLong(value1), before2.applyAsLong(value2));
@@ -340,9 +338,8 @@ public interface BiLongConsumer extends Lambda {
 
     /**
      * Returns a composed {@link BiLongConsumer} that performs, in sequence, this consumer followed by the {@code after}
-     * consumer.
-     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
-     * If performing this consumer throws an exception, the {@code after} consumer will not be performed.
+     * consumer. If evaluation of either operation throws an exception, it is relayed to the caller of the composed
+     * operation. If performing this consumer throws an exception, the {@code after} consumer will not be performed.
      *
      * @param after The consumer to apply after this consumer is applied
      * @return A composed {@link BiLongConsumer} that performs, in sequence, this consumer followed by the {@code after}
@@ -350,7 +347,7 @@ public interface BiLongConsumer extends Lambda {
      * @throws NullPointerException If given argument is {@code null}
      */
     @Nonnull
-    default BiLongConsumer andThen(@Nonnull final BiLongConsumer after) {
+    default BiLongConsumer andThen(@Nonnull BiLongConsumer after) {
         Objects.requireNonNull(after);
         return (value1, value2) -> {
             accept(value1, value2);
@@ -359,9 +356,9 @@ public interface BiLongConsumer extends Lambda {
     }
 
     /**
-     * Returns a composed {@link BiConsumer2} which represents this {@link BiLongConsumer}. Thereby the primitive
-     * input argument for this consumer is autoboxed. This method provides the possibility to use this
-     * {@code BiLongConsumer} with methods provided by the {@code JDK}.
+     * Returns a composed {@link BiConsumer2} which represents this {@link BiLongConsumer}. Thereby the primitive input
+     * argument for this consumer is autoboxed. This method provides the possibility to use this {@code BiLongConsumer}
+     * with methods provided by the {@code JDK}.
      *
      * @return A composed {@code BiConsumer2} which represents this {@code BiLongConsumer}.
      */

@@ -13,7 +13,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package org.lambda4j.operator.ternary;
+
+import java.util.Map;
+import java.util.Objects;
+import java.util.concurrent.ConcurrentHashMap;
+
+import javax.annotation.Nonnegative;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
+import org.apache.commons.lang3.tuple.Triple;
 
 import org.lambda4j.Lambda;
 import org.lambda4j.consumer.ShortConsumer;
@@ -53,19 +64,9 @@ import org.lambda4j.operator.unary.ShortUnaryOperator;
 import org.lambda4j.predicate.ShortPredicate;
 import org.lambda4j.predicate.tri.TriShortPredicate;
 
-import org.apache.commons.lang3.tuple.Triple;
-
-import javax.annotation.Nonnegative;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import java.util.Map;
-import java.util.Objects;
-import java.util.concurrent.ConcurrentHashMap;
-
 /**
- * Represents an operation that accepts three {@code short}-valued input arguments and produces a
- * {@code short}-valued result.
- * This is a primitive specialization of {@link TernaryOperator}.
+ * Represents an operation that accepts three {@code short}-valued input arguments and produces a {@code short}-valued
+ * result. This is a primitive specialization of {@link TernaryOperator}.
  * <p>
  * This is a {@link FunctionalInterface} whose functional method is {@link #applyAsShort(short, short, short)}.
  *
@@ -89,7 +90,7 @@ public interface ShortTernaryOperator extends Lambda {
      * Expression</a>
      * @see <a href="https://docs.oracle.com/javase/tutorial/java/javaOO/methodreferences.html">Method Reference</a>
      */
-    static ShortTernaryOperator of(@Nullable final ShortTernaryOperator expression) {
+    static ShortTernaryOperator of(@Nullable ShortTernaryOperator expression) {
         return expression;
     }
 
@@ -103,7 +104,7 @@ public interface ShortTernaryOperator extends Lambda {
      * @return The result from the given {@code ShortTernaryOperator}.
      * @throws NullPointerException If given argument is {@code null}
      */
-    static short call(@Nonnull final ShortTernaryOperator operator, short value1, short value2, short value3) {
+    static short call(@Nonnull ShortTernaryOperator operator, short value1, short value2, short value3) {
         Objects.requireNonNull(operator);
         return operator.applyAsShort(value1, value2, value3);
     }
@@ -118,7 +119,7 @@ public interface ShortTernaryOperator extends Lambda {
      * @throws NullPointerException If given argument is {@code null}
      */
     @Nonnull
-    static ShortTernaryOperator onlyFirst(@Nonnull final ShortUnaryOperator operator) {
+    static ShortTernaryOperator onlyFirst(@Nonnull ShortUnaryOperator operator) {
         Objects.requireNonNull(operator);
         return (value1, value2, value3) -> operator.applyAsShort(value1);
     }
@@ -133,7 +134,7 @@ public interface ShortTernaryOperator extends Lambda {
      * @throws NullPointerException If given argument is {@code null}
      */
     @Nonnull
-    static ShortTernaryOperator onlySecond(@Nonnull final ShortUnaryOperator operator) {
+    static ShortTernaryOperator onlySecond(@Nonnull ShortUnaryOperator operator) {
         Objects.requireNonNull(operator);
         return (value1, value2, value3) -> operator.applyAsShort(value2);
     }
@@ -148,7 +149,7 @@ public interface ShortTernaryOperator extends Lambda {
      * @throws NullPointerException If given argument is {@code null}
      */
     @Nonnull
-    static ShortTernaryOperator onlyThird(@Nonnull final ShortUnaryOperator operator) {
+    static ShortTernaryOperator onlyThird(@Nonnull ShortUnaryOperator operator) {
         Objects.requireNonNull(operator);
         return (value1, value2, value3) -> operator.applyAsShort(value3);
     }
@@ -175,14 +176,15 @@ public interface ShortTernaryOperator extends Lambda {
     short applyAsShort(short value1, short value2, short value3);
 
     /**
-     * Applies this operator partially to some arguments of this one, producing a {@link ShortBinaryOperator} as result.
+     * Applies this operator partially to some arguments of this one, producing a {@link ShortBinaryOperator} as
+     * result.
      *
      * @param value1 The first argument to this operator used to partially apply this function
      * @return A {@code ShortBinaryOperator} that represents this operator partially applied the some arguments.
      */
     @Nonnull
     default ShortBinaryOperator papplyAsShort(short value1) {
-        return (value2, value3) -> this.applyAsShort(value1, value2, value3);
+        return (value2, value3) -> applyAsShort(value1, value2, value3);
     }
 
     /**
@@ -194,7 +196,7 @@ public interface ShortTernaryOperator extends Lambda {
      */
     @Nonnull
     default ShortUnaryOperator papplyAsShort(short value1, short value2) {
-        return (value3) -> this.applyAsShort(value1, value2, value3);
+        return value3 -> applyAsShort(value1, value2, value3);
     }
 
     /**
@@ -210,8 +212,8 @@ public interface ShortTernaryOperator extends Lambda {
 
     /**
      * Returns a composed {@link ToShortTriFunction} that first applies the {@code before} functions to its input, and
-     * then applies this operator to the result.
-     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
+     * then applies this operator to the result. If evaluation of either operation throws an exception, it is relayed to
+     * the caller of the composed operation.
      *
      * @param <A> The type of the argument to the first given function, and of composed function
      * @param <B> The type of the argument to the second given function, and of composed function
@@ -225,8 +227,8 @@ public interface ShortTernaryOperator extends Lambda {
      * @implSpec The input argument of this method is able to handle every type.
      */
     @Nonnull
-    default <A, B, C> ToShortTriFunction<A, B, C> compose(@Nonnull final ToShortFunction<? super A> before1,
-            @Nonnull final ToShortFunction<? super B> before2, @Nonnull final ToShortFunction<? super C> before3) {
+    default <A, B, C> ToShortTriFunction<A, B, C> compose(@Nonnull ToShortFunction<? super A> before1,
+            @Nonnull ToShortFunction<? super B> before2, @Nonnull ToShortFunction<? super C> before3) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         Objects.requireNonNull(before3);
@@ -245,25 +247,24 @@ public interface ShortTernaryOperator extends Lambda {
      * @return A composed {@code TriBooleanToShortFunction} that first applies the {@code before} functions to its
      * input, and then applies this operator to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * boolean}.
      */
     @Nonnull
-    default TriBooleanToShortFunction composeFromBoolean(@Nonnull final BooleanToShortFunction before1,
-            @Nonnull final BooleanToShortFunction before2, @Nonnull final BooleanToShortFunction before3) {
+    default TriBooleanToShortFunction composeFromBoolean(@Nonnull BooleanToShortFunction before1,
+            @Nonnull BooleanToShortFunction before2, @Nonnull BooleanToShortFunction before3) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         Objects.requireNonNull(before3);
         return (value1, value2, value3) -> applyAsShort(before1.applyAsShort(value1), before2.applyAsShort(value2),
-                                                        before3.applyAsShort(value3));
+                before3.applyAsShort(value3));
     }
 
     /**
-     * Returns a composed {@link TriByteToShortFunction} that first applies the {@code before} functions to
-     * its input, and then applies this operator to the result.
-     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
-     * This method is just convenience, to provide the ability to execute an operation which accepts {@code byte} input,
-     * before this primitive operator is executed.
+     * Returns a composed {@link TriByteToShortFunction} that first applies the {@code before} functions to its input,
+     * and then applies this operator to the result. If evaluation of either operation throws an exception, it is
+     * relayed to the caller of the composed operation. This method is just convenience, to provide the ability to
+     * execute an operation which accepts {@code byte} input, before this primitive operator is executed.
      *
      * @param before1 The first function to apply before this operator is applied
      * @param before2 The second function to apply before this operator is applied
@@ -271,25 +272,24 @@ public interface ShortTernaryOperator extends Lambda {
      * @return A composed {@code TriByteToShortFunction} that first applies the {@code before} functions to its input,
      * and then applies this operator to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * byte}.
      */
     @Nonnull
-    default TriByteToShortFunction composeFromByte(@Nonnull final ByteToShortFunction before1,
-            @Nonnull final ByteToShortFunction before2, @Nonnull final ByteToShortFunction before3) {
+    default TriByteToShortFunction composeFromByte(@Nonnull ByteToShortFunction before1,
+            @Nonnull ByteToShortFunction before2, @Nonnull ByteToShortFunction before3) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         Objects.requireNonNull(before3);
         return (value1, value2, value3) -> applyAsShort(before1.applyAsShort(value1), before2.applyAsShort(value2),
-                                                        before3.applyAsShort(value3));
+                before3.applyAsShort(value3));
     }
 
     /**
-     * Returns a composed {@link TriCharToShortFunction} that first applies the {@code before} functions to
-     * its input, and then applies this operator to the result.
-     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
-     * This method is just convenience, to provide the ability to execute an operation which accepts {@code char} input,
-     * before this primitive operator is executed.
+     * Returns a composed {@link TriCharToShortFunction} that first applies the {@code before} functions to its input,
+     * and then applies this operator to the result. If evaluation of either operation throws an exception, it is
+     * relayed to the caller of the composed operation. This method is just convenience, to provide the ability to
+     * execute an operation which accepts {@code char} input, before this primitive operator is executed.
      *
      * @param before1 The first function to apply before this operator is applied
      * @param before2 The second function to apply before this operator is applied
@@ -297,17 +297,17 @@ public interface ShortTernaryOperator extends Lambda {
      * @return A composed {@code TriCharToShortFunction} that first applies the {@code before} functions to its input,
      * and then applies this operator to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * char}.
      */
     @Nonnull
-    default TriCharToShortFunction composeFromChar(@Nonnull final CharToShortFunction before1,
-            @Nonnull final CharToShortFunction before2, @Nonnull final CharToShortFunction before3) {
+    default TriCharToShortFunction composeFromChar(@Nonnull CharToShortFunction before1,
+            @Nonnull CharToShortFunction before2, @Nonnull CharToShortFunction before3) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         Objects.requireNonNull(before3);
         return (value1, value2, value3) -> applyAsShort(before1.applyAsShort(value1), before2.applyAsShort(value2),
-                                                        before3.applyAsShort(value3));
+                before3.applyAsShort(value3));
     }
 
     /**
@@ -322,17 +322,17 @@ public interface ShortTernaryOperator extends Lambda {
      * @return A composed {@code TriDoubleToShortFunction} that first applies the {@code before} functions to its input,
      * and then applies this operator to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * double}.
      */
     @Nonnull
-    default TriDoubleToShortFunction composeFromDouble(@Nonnull final DoubleToShortFunction before1,
-            @Nonnull final DoubleToShortFunction before2, @Nonnull final DoubleToShortFunction before3) {
+    default TriDoubleToShortFunction composeFromDouble(@Nonnull DoubleToShortFunction before1,
+            @Nonnull DoubleToShortFunction before2, @Nonnull DoubleToShortFunction before3) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         Objects.requireNonNull(before3);
         return (value1, value2, value3) -> applyAsShort(before1.applyAsShort(value1), before2.applyAsShort(value2),
-                                                        before3.applyAsShort(value3));
+                before3.applyAsShort(value3));
     }
 
     /**
@@ -347,25 +347,24 @@ public interface ShortTernaryOperator extends Lambda {
      * @return A composed {@code TriFloatToShortFunction} that first applies the {@code before} functions to its input,
      * and then applies this operator to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * float}.
      */
     @Nonnull
-    default TriFloatToShortFunction composeFromFloat(@Nonnull final FloatToShortFunction before1,
-            @Nonnull final FloatToShortFunction before2, @Nonnull final FloatToShortFunction before3) {
+    default TriFloatToShortFunction composeFromFloat(@Nonnull FloatToShortFunction before1,
+            @Nonnull FloatToShortFunction before2, @Nonnull FloatToShortFunction before3) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         Objects.requireNonNull(before3);
         return (value1, value2, value3) -> applyAsShort(before1.applyAsShort(value1), before2.applyAsShort(value2),
-                                                        before3.applyAsShort(value3));
+                before3.applyAsShort(value3));
     }
 
     /**
-     * Returns a composed {@link TriIntToShortFunction} that first applies the {@code before} functions to
-     * its input, and then applies this operator to the result.
-     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
-     * This method is just convenience, to provide the ability to execute an operation which accepts {@code int} input,
-     * before this primitive operator is executed.
+     * Returns a composed {@link TriIntToShortFunction} that first applies the {@code before} functions to its input,
+     * and then applies this operator to the result. If evaluation of either operation throws an exception, it is
+     * relayed to the caller of the composed operation. This method is just convenience, to provide the ability to
+     * execute an operation which accepts {@code int} input, before this primitive operator is executed.
      *
      * @param before1 The first function to apply before this operator is applied
      * @param before2 The second function to apply before this operator is applied
@@ -373,25 +372,24 @@ public interface ShortTernaryOperator extends Lambda {
      * @return A composed {@code TriIntToShortFunction} that first applies the {@code before} functions to its input,
      * and then applies this operator to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * int}.
      */
     @Nonnull
-    default TriIntToShortFunction composeFromInt(@Nonnull final IntToShortFunction before1,
-            @Nonnull final IntToShortFunction before2, @Nonnull final IntToShortFunction before3) {
+    default TriIntToShortFunction composeFromInt(@Nonnull IntToShortFunction before1,
+            @Nonnull IntToShortFunction before2, @Nonnull IntToShortFunction before3) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         Objects.requireNonNull(before3);
         return (value1, value2, value3) -> applyAsShort(before1.applyAsShort(value1), before2.applyAsShort(value2),
-                                                        before3.applyAsShort(value3));
+                before3.applyAsShort(value3));
     }
 
     /**
-     * Returns a composed {@link TriLongToShortFunction} that first applies the {@code before} functions to
-     * its input, and then applies this operator to the result.
-     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
-     * This method is just convenience, to provide the ability to execute an operation which accepts {@code long} input,
-     * before this primitive operator is executed.
+     * Returns a composed {@link TriLongToShortFunction} that first applies the {@code before} functions to its input,
+     * and then applies this operator to the result. If evaluation of either operation throws an exception, it is
+     * relayed to the caller of the composed operation. This method is just convenience, to provide the ability to
+     * execute an operation which accepts {@code long} input, before this primitive operator is executed.
      *
      * @param before1 The first function to apply before this operator is applied
      * @param before2 The second function to apply before this operator is applied
@@ -399,17 +397,17 @@ public interface ShortTernaryOperator extends Lambda {
      * @return A composed {@code TriLongToShortFunction} that first applies the {@code before} functions to its input,
      * and then applies this operator to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * long}.
      */
     @Nonnull
-    default TriLongToShortFunction composeFromLong(@Nonnull final LongToShortFunction before1,
-            @Nonnull final LongToShortFunction before2, @Nonnull final LongToShortFunction before3) {
+    default TriLongToShortFunction composeFromLong(@Nonnull LongToShortFunction before1,
+            @Nonnull LongToShortFunction before2, @Nonnull LongToShortFunction before3) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         Objects.requireNonNull(before3);
         return (value1, value2, value3) -> applyAsShort(before1.applyAsShort(value1), before2.applyAsShort(value2),
-                                                        before3.applyAsShort(value3));
+                before3.applyAsShort(value3));
     }
 
     /**
@@ -424,23 +422,23 @@ public interface ShortTernaryOperator extends Lambda {
      * @return A composed {@code ShortTernaryOperator} that first applies the {@code before} operators to its input, and
      * then applies this operator to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * short}.
      */
     @Nonnull
-    default ShortTernaryOperator composeFromShort(@Nonnull final ShortUnaryOperator before1,
-            @Nonnull final ShortUnaryOperator before2, @Nonnull final ShortUnaryOperator before3) {
+    default ShortTernaryOperator composeFromShort(@Nonnull ShortUnaryOperator before1,
+            @Nonnull ShortUnaryOperator before2, @Nonnull ShortUnaryOperator before3) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         Objects.requireNonNull(before3);
         return (value1, value2, value3) -> applyAsShort(before1.applyAsShort(value1), before2.applyAsShort(value2),
-                                                        before3.applyAsShort(value3));
+                before3.applyAsShort(value3));
     }
 
     /**
      * Returns a composed {@link TriShortFunction} that first applies this operator to its input, and then applies the
-     * {@code after} function to the result.
-     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
+     * {@code after} function to the result. If evaluation of either operation throws an exception, it is relayed to the
+     * caller of the composed operation.
      *
      * @param <S> The type of return value from the {@code after} function, and of the composed function
      * @param after The function to apply after this operator is applied
@@ -450,7 +448,7 @@ public interface ShortTernaryOperator extends Lambda {
      * @implSpec The input argument of this method is able to return every type.
      */
     @Nonnull
-    default <S> TriShortFunction<S> andThen(@Nonnull final ShortFunction<? extends S> after) {
+    default <S> TriShortFunction<S> andThen(@Nonnull ShortFunction<? extends S> after) {
         Objects.requireNonNull(after);
         return (value1, value2, value3) -> after.apply(applyAsShort(value1, value2, value3));
     }
@@ -465,11 +463,11 @@ public interface ShortTernaryOperator extends Lambda {
      * @return A composed {@code TriShortPredicate} that first applies this operator to its input, and then applies the
      * {@code after} predicate to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * boolean}.
      */
     @Nonnull
-    default TriShortPredicate andThenToBoolean(@Nonnull final ShortPredicate after) {
+    default TriShortPredicate andThenToBoolean(@Nonnull ShortPredicate after) {
         Objects.requireNonNull(after);
         return (value1, value2, value3) -> after.test(applyAsShort(value1, value2, value3));
     }
@@ -484,11 +482,11 @@ public interface ShortTernaryOperator extends Lambda {
      * @return A composed {@code TriShortToByteFunction} that first applies this operator to its input, and then applies
      * the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * byte}.
      */
     @Nonnull
-    default TriShortToByteFunction andThenToByte(@Nonnull final ShortToByteFunction after) {
+    default TriShortToByteFunction andThenToByte(@Nonnull ShortToByteFunction after) {
         Objects.requireNonNull(after);
         return (value1, value2, value3) -> after.applyAsByte(applyAsShort(value1, value2, value3));
     }
@@ -503,11 +501,11 @@ public interface ShortTernaryOperator extends Lambda {
      * @return A composed {@code TriShortToCharFunction} that first applies this operator to its input, and then applies
      * the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * char}.
      */
     @Nonnull
-    default TriShortToCharFunction andThenToChar(@Nonnull final ShortToCharFunction after) {
+    default TriShortToCharFunction andThenToChar(@Nonnull ShortToCharFunction after) {
         Objects.requireNonNull(after);
         return (value1, value2, value3) -> after.applyAsChar(applyAsShort(value1, value2, value3));
     }
@@ -522,11 +520,11 @@ public interface ShortTernaryOperator extends Lambda {
      * @return A composed {@code TriShortToDoubleFunction} that first applies this operator to its input, and then
      * applies the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * double}.
      */
     @Nonnull
-    default TriShortToDoubleFunction andThenToDouble(@Nonnull final ShortToDoubleFunction after) {
+    default TriShortToDoubleFunction andThenToDouble(@Nonnull ShortToDoubleFunction after) {
         Objects.requireNonNull(after);
         return (value1, value2, value3) -> after.applyAsDouble(applyAsShort(value1, value2, value3));
     }
@@ -541,11 +539,11 @@ public interface ShortTernaryOperator extends Lambda {
      * @return A composed {@code TriShortToFloatFunction} that first applies this operator to its input, and then
      * applies the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * float}.
      */
     @Nonnull
-    default TriShortToFloatFunction andThenToFloat(@Nonnull final ShortToFloatFunction after) {
+    default TriShortToFloatFunction andThenToFloat(@Nonnull ShortToFloatFunction after) {
         Objects.requireNonNull(after);
         return (value1, value2, value3) -> after.applyAsFloat(applyAsShort(value1, value2, value3));
     }
@@ -560,11 +558,11 @@ public interface ShortTernaryOperator extends Lambda {
      * @return A composed {@code TriShortToIntFunction} that first applies this operator to its input, and then applies
      * the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * int}.
      */
     @Nonnull
-    default TriShortToIntFunction andThenToInt(@Nonnull final ShortToIntFunction after) {
+    default TriShortToIntFunction andThenToInt(@Nonnull ShortToIntFunction after) {
         Objects.requireNonNull(after);
         return (value1, value2, value3) -> after.applyAsInt(applyAsShort(value1, value2, value3));
     }
@@ -579,11 +577,11 @@ public interface ShortTernaryOperator extends Lambda {
      * @return A composed {@code TriShortToLongFunction} that first applies this operator to its input, and then applies
      * the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * long}.
      */
     @Nonnull
-    default TriShortToLongFunction andThenToLong(@Nonnull final ShortToLongFunction after) {
+    default TriShortToLongFunction andThenToLong(@Nonnull ShortToLongFunction after) {
         Objects.requireNonNull(after);
         return (value1, value2, value3) -> after.applyAsLong(applyAsShort(value1, value2, value3));
     }
@@ -598,11 +596,11 @@ public interface ShortTernaryOperator extends Lambda {
      * @return A composed {@code ShortTernaryOperator} that first applies this operator to its input, and then applies
      * the {@code after} operator to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * short}.
      */
     @Nonnull
-    default ShortTernaryOperator andThenToShort(@Nonnull final ShortUnaryOperator after) {
+    default ShortTernaryOperator andThenToShort(@Nonnull ShortUnaryOperator after) {
         Objects.requireNonNull(after);
         return (value1, value2, value3) -> after.applyAsShort(applyAsShort(value1, value2, value3));
     }
@@ -618,7 +616,7 @@ public interface ShortTernaryOperator extends Lambda {
      * @throws NullPointerException If given argument is {@code null}
      */
     @Nonnull
-    default TriShortConsumer consume(@Nonnull final ShortConsumer consumer) {
+    default TriShortConsumer consume(@Nonnull ShortConsumer consumer) {
         Objects.requireNonNull(consumer);
         return (value1, value2, value3) -> consumer.accept(applyAsShort(value1, value2, value3));
     }
@@ -642,14 +640,14 @@ public interface ShortTernaryOperator extends Lambda {
         if (isMemoized()) {
             return this;
         } else {
-            final Map<Triple<Short, Short, Short>, Short> cache = new ConcurrentHashMap<>();
-            final Object lock = new Object();
+            Map<Triple<Short, Short, Short>, Short> cache = new ConcurrentHashMap<>();
+            Object lock = new Object();
             return (ShortTernaryOperator & Memoized) (value1, value2, value3) -> {
-                final short returnValue;
+                short returnValue;
                 synchronized (lock) {
                     returnValue = cache.computeIfAbsent(Triple.of(value1, value2, value3),
-                                                        key -> applyAsShort(key.getLeft(), key.getMiddle(),
-                                                                            key.getRight()));
+                            key -> applyAsShort(key.getLeft(), key.getMiddle(),
+                                    key.getRight()));
                 }
                 return returnValue;
             };

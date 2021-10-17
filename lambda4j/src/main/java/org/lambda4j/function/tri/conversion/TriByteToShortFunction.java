@@ -13,7 +13,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package org.lambda4j.function.tri.conversion;
+
+import java.util.Map;
+import java.util.Objects;
+import java.util.concurrent.ConcurrentHashMap;
+
+import javax.annotation.Nonnegative;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
+import org.apache.commons.lang3.tuple.Triple;
 
 import org.lambda4j.Lambda;
 import org.lambda4j.consumer.ShortConsumer;
@@ -44,19 +55,9 @@ import org.lambda4j.operator.unary.ShortUnaryOperator;
 import org.lambda4j.predicate.ShortPredicate;
 import org.lambda4j.predicate.tri.TriBytePredicate;
 
-import org.apache.commons.lang3.tuple.Triple;
-
-import javax.annotation.Nonnegative;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import java.util.Map;
-import java.util.Objects;
-import java.util.concurrent.ConcurrentHashMap;
-
 /**
- * Represents an operation that accepts three {@code byte}-valued input arguments and produces a
- * {@code short}-valued result.
- * This is a primitive specialization of {@link TriFunction}.
+ * Represents an operation that accepts three {@code byte}-valued input arguments and produces a {@code short}-valued
+ * result. This is a primitive specialization of {@link TriFunction}.
  * <p>
  * This is a {@link FunctionalInterface} whose functional method is {@link #applyAsShort(byte, byte, byte)}.
  *
@@ -80,7 +81,7 @@ public interface TriByteToShortFunction extends Lambda {
      * Expression</a>
      * @see <a href="https://docs.oracle.com/javase/tutorial/java/javaOO/methodreferences.html">Method Reference</a>
      */
-    static TriByteToShortFunction of(@Nullable final TriByteToShortFunction expression) {
+    static TriByteToShortFunction of(@Nullable TriByteToShortFunction expression) {
         return expression;
     }
 
@@ -94,7 +95,7 @@ public interface TriByteToShortFunction extends Lambda {
      * @return The result from the given {@code TriByteToShortFunction}.
      * @throws NullPointerException If given argument is {@code null}
      */
-    static short call(@Nonnull final TriByteToShortFunction function, byte value1, byte value2, byte value3) {
+    static short call(@Nonnull TriByteToShortFunction function, byte value1, byte value2, byte value3) {
         Objects.requireNonNull(function);
         return function.applyAsShort(value1, value2, value3);
     }
@@ -109,7 +110,7 @@ public interface TriByteToShortFunction extends Lambda {
      * @throws NullPointerException If given argument is {@code null}
      */
     @Nonnull
-    static TriByteToShortFunction onlyFirst(@Nonnull final ByteToShortFunction function) {
+    static TriByteToShortFunction onlyFirst(@Nonnull ByteToShortFunction function) {
         Objects.requireNonNull(function);
         return (value1, value2, value3) -> function.applyAsShort(value1);
     }
@@ -124,7 +125,7 @@ public interface TriByteToShortFunction extends Lambda {
      * @throws NullPointerException If given argument is {@code null}
      */
     @Nonnull
-    static TriByteToShortFunction onlySecond(@Nonnull final ByteToShortFunction function) {
+    static TriByteToShortFunction onlySecond(@Nonnull ByteToShortFunction function) {
         Objects.requireNonNull(function);
         return (value1, value2, value3) -> function.applyAsShort(value2);
     }
@@ -139,7 +140,7 @@ public interface TriByteToShortFunction extends Lambda {
      * @throws NullPointerException If given argument is {@code null}
      */
     @Nonnull
-    static TriByteToShortFunction onlyThird(@Nonnull final ByteToShortFunction function) {
+    static TriByteToShortFunction onlyThird(@Nonnull ByteToShortFunction function) {
         Objects.requireNonNull(function);
         return (value1, value2, value3) -> function.applyAsShort(value3);
     }
@@ -174,11 +175,12 @@ public interface TriByteToShortFunction extends Lambda {
      */
     @Nonnull
     default BiByteToShortFunction papplyAsShort(byte value1) {
-        return (value2, value3) -> this.applyAsShort(value1, value2, value3);
+        return (value2, value3) -> applyAsShort(value1, value2, value3);
     }
 
     /**
-     * Applies this function partially to some arguments of this one, producing a {@link ByteToShortFunction} as result.
+     * Applies this function partially to some arguments of this one, producing a {@link ByteToShortFunction} as
+     * result.
      *
      * @param value1 The first argument to this function used to partially apply this function
      * @param value2 The second argument to this function used to partially apply this function
@@ -186,7 +188,7 @@ public interface TriByteToShortFunction extends Lambda {
      */
     @Nonnull
     default ByteToShortFunction papplyAsShort(byte value1, byte value2) {
-        return (value3) -> this.applyAsShort(value1, value2, value3);
+        return value3 -> applyAsShort(value1, value2, value3);
     }
 
     /**
@@ -202,8 +204,8 @@ public interface TriByteToShortFunction extends Lambda {
 
     /**
      * Returns a composed {@link ToShortTriFunction} that first applies the {@code before} functions to its input, and
-     * then applies this function to the result.
-     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
+     * then applies this function to the result. If evaluation of either operation throws an exception, it is relayed to
+     * the caller of the composed operation.
      *
      * @param <A> The type of the argument to the first given function, and of composed function
      * @param <B> The type of the argument to the second given function, and of composed function
@@ -217,8 +219,8 @@ public interface TriByteToShortFunction extends Lambda {
      * @implSpec The input argument of this method is able to handle every type.
      */
     @Nonnull
-    default <A, B, C> ToShortTriFunction<A, B, C> compose(@Nonnull final ToByteFunction<? super A> before1,
-            @Nonnull final ToByteFunction<? super B> before2, @Nonnull final ToByteFunction<? super C> before3) {
+    default <A, B, C> ToShortTriFunction<A, B, C> compose(@Nonnull ToByteFunction<? super A> before1,
+            @Nonnull ToByteFunction<? super B> before2, @Nonnull ToByteFunction<? super C> before3) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         Objects.requireNonNull(before3);
@@ -237,25 +239,24 @@ public interface TriByteToShortFunction extends Lambda {
      * @return A composed {@code TriBooleanToShortFunction} that first applies the {@code before} functions to its
      * input, and then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * boolean}.
      */
     @Nonnull
-    default TriBooleanToShortFunction composeFromBoolean(@Nonnull final BooleanToByteFunction before1,
-            @Nonnull final BooleanToByteFunction before2, @Nonnull final BooleanToByteFunction before3) {
+    default TriBooleanToShortFunction composeFromBoolean(@Nonnull BooleanToByteFunction before1,
+            @Nonnull BooleanToByteFunction before2, @Nonnull BooleanToByteFunction before3) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         Objects.requireNonNull(before3);
         return (value1, value2, value3) -> applyAsShort(before1.applyAsByte(value1), before2.applyAsByte(value2),
-                                                        before3.applyAsByte(value3));
+                before3.applyAsByte(value3));
     }
 
     /**
-     * Returns a composed {@link TriByteToShortFunction} that first applies the {@code before} operators to
-     * its input, and then applies this function to the result.
-     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
-     * This method is just convenience, to provide the ability to execute an operation which accepts {@code byte} input,
-     * before this primitive function is executed.
+     * Returns a composed {@link TriByteToShortFunction} that first applies the {@code before} operators to its input,
+     * and then applies this function to the result. If evaluation of either operation throws an exception, it is
+     * relayed to the caller of the composed operation. This method is just convenience, to provide the ability to
+     * execute an operation which accepts {@code byte} input, before this primitive function is executed.
      *
      * @param before1 The first operator to apply before this function is applied
      * @param before2 The second operator to apply before this function is applied
@@ -263,25 +264,24 @@ public interface TriByteToShortFunction extends Lambda {
      * @return A composed {@code TriByteToShortFunction} that first applies the {@code before} operators to its input,
      * and then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * byte}.
      */
     @Nonnull
-    default TriByteToShortFunction composeFromByte(@Nonnull final ByteUnaryOperator before1,
-            @Nonnull final ByteUnaryOperator before2, @Nonnull final ByteUnaryOperator before3) {
+    default TriByteToShortFunction composeFromByte(@Nonnull ByteUnaryOperator before1,
+            @Nonnull ByteUnaryOperator before2, @Nonnull ByteUnaryOperator before3) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         Objects.requireNonNull(before3);
         return (value1, value2, value3) -> applyAsShort(before1.applyAsByte(value1), before2.applyAsByte(value2),
-                                                        before3.applyAsByte(value3));
+                before3.applyAsByte(value3));
     }
 
     /**
-     * Returns a composed {@link TriCharToShortFunction} that first applies the {@code before} functions to
-     * its input, and then applies this function to the result.
-     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
-     * This method is just convenience, to provide the ability to execute an operation which accepts {@code char} input,
-     * before this primitive function is executed.
+     * Returns a composed {@link TriCharToShortFunction} that first applies the {@code before} functions to its input,
+     * and then applies this function to the result. If evaluation of either operation throws an exception, it is
+     * relayed to the caller of the composed operation. This method is just convenience, to provide the ability to
+     * execute an operation which accepts {@code char} input, before this primitive function is executed.
      *
      * @param before1 The first function to apply before this function is applied
      * @param before2 The second function to apply before this function is applied
@@ -289,17 +289,17 @@ public interface TriByteToShortFunction extends Lambda {
      * @return A composed {@code TriCharToShortFunction} that first applies the {@code before} functions to its input,
      * and then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * char}.
      */
     @Nonnull
-    default TriCharToShortFunction composeFromChar(@Nonnull final CharToByteFunction before1,
-            @Nonnull final CharToByteFunction before2, @Nonnull final CharToByteFunction before3) {
+    default TriCharToShortFunction composeFromChar(@Nonnull CharToByteFunction before1,
+            @Nonnull CharToByteFunction before2, @Nonnull CharToByteFunction before3) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         Objects.requireNonNull(before3);
         return (value1, value2, value3) -> applyAsShort(before1.applyAsByte(value1), before2.applyAsByte(value2),
-                                                        before3.applyAsByte(value3));
+                before3.applyAsByte(value3));
     }
 
     /**
@@ -314,17 +314,17 @@ public interface TriByteToShortFunction extends Lambda {
      * @return A composed {@code TriDoubleToShortFunction} that first applies the {@code before} functions to its input,
      * and then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * double}.
      */
     @Nonnull
-    default TriDoubleToShortFunction composeFromDouble(@Nonnull final DoubleToByteFunction before1,
-            @Nonnull final DoubleToByteFunction before2, @Nonnull final DoubleToByteFunction before3) {
+    default TriDoubleToShortFunction composeFromDouble(@Nonnull DoubleToByteFunction before1,
+            @Nonnull DoubleToByteFunction before2, @Nonnull DoubleToByteFunction before3) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         Objects.requireNonNull(before3);
         return (value1, value2, value3) -> applyAsShort(before1.applyAsByte(value1), before2.applyAsByte(value2),
-                                                        before3.applyAsByte(value3));
+                before3.applyAsByte(value3));
     }
 
     /**
@@ -339,25 +339,24 @@ public interface TriByteToShortFunction extends Lambda {
      * @return A composed {@code TriFloatToShortFunction} that first applies the {@code before} functions to its input,
      * and then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * float}.
      */
     @Nonnull
-    default TriFloatToShortFunction composeFromFloat(@Nonnull final FloatToByteFunction before1,
-            @Nonnull final FloatToByteFunction before2, @Nonnull final FloatToByteFunction before3) {
+    default TriFloatToShortFunction composeFromFloat(@Nonnull FloatToByteFunction before1,
+            @Nonnull FloatToByteFunction before2, @Nonnull FloatToByteFunction before3) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         Objects.requireNonNull(before3);
         return (value1, value2, value3) -> applyAsShort(before1.applyAsByte(value1), before2.applyAsByte(value2),
-                                                        before3.applyAsByte(value3));
+                before3.applyAsByte(value3));
     }
 
     /**
-     * Returns a composed {@link TriIntToShortFunction} that first applies the {@code before} functions to
-     * its input, and then applies this function to the result.
-     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
-     * This method is just convenience, to provide the ability to execute an operation which accepts {@code int} input,
-     * before this primitive function is executed.
+     * Returns a composed {@link TriIntToShortFunction} that first applies the {@code before} functions to its input,
+     * and then applies this function to the result. If evaluation of either operation throws an exception, it is
+     * relayed to the caller of the composed operation. This method is just convenience, to provide the ability to
+     * execute an operation which accepts {@code int} input, before this primitive function is executed.
      *
      * @param before1 The first function to apply before this function is applied
      * @param before2 The second function to apply before this function is applied
@@ -365,25 +364,24 @@ public interface TriByteToShortFunction extends Lambda {
      * @return A composed {@code TriIntToShortFunction} that first applies the {@code before} functions to its input,
      * and then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * int}.
      */
     @Nonnull
-    default TriIntToShortFunction composeFromInt(@Nonnull final IntToByteFunction before1,
-            @Nonnull final IntToByteFunction before2, @Nonnull final IntToByteFunction before3) {
+    default TriIntToShortFunction composeFromInt(@Nonnull IntToByteFunction before1,
+            @Nonnull IntToByteFunction before2, @Nonnull IntToByteFunction before3) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         Objects.requireNonNull(before3);
         return (value1, value2, value3) -> applyAsShort(before1.applyAsByte(value1), before2.applyAsByte(value2),
-                                                        before3.applyAsByte(value3));
+                before3.applyAsByte(value3));
     }
 
     /**
-     * Returns a composed {@link TriLongToShortFunction} that first applies the {@code before} functions to
-     * its input, and then applies this function to the result.
-     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
-     * This method is just convenience, to provide the ability to execute an operation which accepts {@code long} input,
-     * before this primitive function is executed.
+     * Returns a composed {@link TriLongToShortFunction} that first applies the {@code before} functions to its input,
+     * and then applies this function to the result. If evaluation of either operation throws an exception, it is
+     * relayed to the caller of the composed operation. This method is just convenience, to provide the ability to
+     * execute an operation which accepts {@code long} input, before this primitive function is executed.
      *
      * @param before1 The first function to apply before this function is applied
      * @param before2 The second function to apply before this function is applied
@@ -391,17 +389,17 @@ public interface TriByteToShortFunction extends Lambda {
      * @return A composed {@code TriLongToShortFunction} that first applies the {@code before} functions to its input,
      * and then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * long}.
      */
     @Nonnull
-    default TriLongToShortFunction composeFromLong(@Nonnull final LongToByteFunction before1,
-            @Nonnull final LongToByteFunction before2, @Nonnull final LongToByteFunction before3) {
+    default TriLongToShortFunction composeFromLong(@Nonnull LongToByteFunction before1,
+            @Nonnull LongToByteFunction before2, @Nonnull LongToByteFunction before3) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         Objects.requireNonNull(before3);
         return (value1, value2, value3) -> applyAsShort(before1.applyAsByte(value1), before2.applyAsByte(value2),
-                                                        before3.applyAsByte(value3));
+                before3.applyAsByte(value3));
     }
 
     /**
@@ -416,23 +414,23 @@ public interface TriByteToShortFunction extends Lambda {
      * @return A composed {@code ShortTernaryOperator} that first applies the {@code before} functions to its input, and
      * then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * short}.
      */
     @Nonnull
-    default ShortTernaryOperator composeFromShort(@Nonnull final ShortToByteFunction before1,
-            @Nonnull final ShortToByteFunction before2, @Nonnull final ShortToByteFunction before3) {
+    default ShortTernaryOperator composeFromShort(@Nonnull ShortToByteFunction before1,
+            @Nonnull ShortToByteFunction before2, @Nonnull ShortToByteFunction before3) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         Objects.requireNonNull(before3);
         return (value1, value2, value3) -> applyAsShort(before1.applyAsByte(value1), before2.applyAsByte(value2),
-                                                        before3.applyAsByte(value3));
+                before3.applyAsByte(value3));
     }
 
     /**
      * Returns a composed {@link TriByteFunction} that first applies this function to its input, and then applies the
-     * {@code after} function to the result.
-     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
+     * {@code after} function to the result. If evaluation of either operation throws an exception, it is relayed to the
+     * caller of the composed operation.
      *
      * @param <S> The type of return value from the {@code after} function, and of the composed function
      * @param after The function to apply after this function is applied
@@ -442,7 +440,7 @@ public interface TriByteToShortFunction extends Lambda {
      * @implSpec The input argument of this method is able to return every type.
      */
     @Nonnull
-    default <S> TriByteFunction<S> andThen(@Nonnull final ShortFunction<? extends S> after) {
+    default <S> TriByteFunction<S> andThen(@Nonnull ShortFunction<? extends S> after) {
         Objects.requireNonNull(after);
         return (value1, value2, value3) -> after.apply(applyAsShort(value1, value2, value3));
     }
@@ -457,11 +455,11 @@ public interface TriByteToShortFunction extends Lambda {
      * @return A composed {@code TriBytePredicate} that first applies this function to its input, and then applies the
      * {@code after} predicate to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * boolean}.
      */
     @Nonnull
-    default TriBytePredicate andThenToBoolean(@Nonnull final ShortPredicate after) {
+    default TriBytePredicate andThenToBoolean(@Nonnull ShortPredicate after) {
         Objects.requireNonNull(after);
         return (value1, value2, value3) -> after.test(applyAsShort(value1, value2, value3));
     }
@@ -476,11 +474,11 @@ public interface TriByteToShortFunction extends Lambda {
      * @return A composed {@code ByteTernaryOperator} that first applies this function to its input, and then applies
      * the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * byte}.
      */
     @Nonnull
-    default ByteTernaryOperator andThenToByte(@Nonnull final ShortToByteFunction after) {
+    default ByteTernaryOperator andThenToByte(@Nonnull ShortToByteFunction after) {
         Objects.requireNonNull(after);
         return (value1, value2, value3) -> after.applyAsByte(applyAsShort(value1, value2, value3));
     }
@@ -495,11 +493,11 @@ public interface TriByteToShortFunction extends Lambda {
      * @return A composed {@code TriByteToCharFunction} that first applies this function to its input, and then applies
      * the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * char}.
      */
     @Nonnull
-    default TriByteToCharFunction andThenToChar(@Nonnull final ShortToCharFunction after) {
+    default TriByteToCharFunction andThenToChar(@Nonnull ShortToCharFunction after) {
         Objects.requireNonNull(after);
         return (value1, value2, value3) -> after.applyAsChar(applyAsShort(value1, value2, value3));
     }
@@ -514,11 +512,11 @@ public interface TriByteToShortFunction extends Lambda {
      * @return A composed {@code TriByteToDoubleFunction} that first applies this function to its input, and then
      * applies the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * double}.
      */
     @Nonnull
-    default TriByteToDoubleFunction andThenToDouble(@Nonnull final ShortToDoubleFunction after) {
+    default TriByteToDoubleFunction andThenToDouble(@Nonnull ShortToDoubleFunction after) {
         Objects.requireNonNull(after);
         return (value1, value2, value3) -> after.applyAsDouble(applyAsShort(value1, value2, value3));
     }
@@ -533,11 +531,11 @@ public interface TriByteToShortFunction extends Lambda {
      * @return A composed {@code TriByteToFloatFunction} that first applies this function to its input, and then applies
      * the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * float}.
      */
     @Nonnull
-    default TriByteToFloatFunction andThenToFloat(@Nonnull final ShortToFloatFunction after) {
+    default TriByteToFloatFunction andThenToFloat(@Nonnull ShortToFloatFunction after) {
         Objects.requireNonNull(after);
         return (value1, value2, value3) -> after.applyAsFloat(applyAsShort(value1, value2, value3));
     }
@@ -552,11 +550,11 @@ public interface TriByteToShortFunction extends Lambda {
      * @return A composed {@code TriByteToIntFunction} that first applies this function to its input, and then applies
      * the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * int}.
      */
     @Nonnull
-    default TriByteToIntFunction andThenToInt(@Nonnull final ShortToIntFunction after) {
+    default TriByteToIntFunction andThenToInt(@Nonnull ShortToIntFunction after) {
         Objects.requireNonNull(after);
         return (value1, value2, value3) -> after.applyAsInt(applyAsShort(value1, value2, value3));
     }
@@ -571,11 +569,11 @@ public interface TriByteToShortFunction extends Lambda {
      * @return A composed {@code TriByteToLongFunction} that first applies this function to its input, and then applies
      * the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * long}.
      */
     @Nonnull
-    default TriByteToLongFunction andThenToLong(@Nonnull final ShortToLongFunction after) {
+    default TriByteToLongFunction andThenToLong(@Nonnull ShortToLongFunction after) {
         Objects.requireNonNull(after);
         return (value1, value2, value3) -> after.applyAsLong(applyAsShort(value1, value2, value3));
     }
@@ -590,11 +588,11 @@ public interface TriByteToShortFunction extends Lambda {
      * @return A composed {@code TriByteToShortFunction} that first applies this function to its input, and then applies
      * the {@code after} operator to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * short}.
      */
     @Nonnull
-    default TriByteToShortFunction andThenToShort(@Nonnull final ShortUnaryOperator after) {
+    default TriByteToShortFunction andThenToShort(@Nonnull ShortUnaryOperator after) {
         Objects.requireNonNull(after);
         return (value1, value2, value3) -> after.applyAsShort(applyAsShort(value1, value2, value3));
     }
@@ -610,7 +608,7 @@ public interface TriByteToShortFunction extends Lambda {
      * @throws NullPointerException If given argument is {@code null}
      */
     @Nonnull
-    default TriByteConsumer consume(@Nonnull final ShortConsumer consumer) {
+    default TriByteConsumer consume(@Nonnull ShortConsumer consumer) {
         Objects.requireNonNull(consumer);
         return (value1, value2, value3) -> consumer.accept(applyAsShort(value1, value2, value3));
     }
@@ -634,14 +632,14 @@ public interface TriByteToShortFunction extends Lambda {
         if (isMemoized()) {
             return this;
         } else {
-            final Map<Triple<Byte, Byte, Byte>, Short> cache = new ConcurrentHashMap<>();
-            final Object lock = new Object();
+            Map<Triple<Byte, Byte, Byte>, Short> cache = new ConcurrentHashMap<>();
+            Object lock = new Object();
             return (TriByteToShortFunction & Memoized) (value1, value2, value3) -> {
-                final short returnValue;
+                short returnValue;
                 synchronized (lock) {
                     returnValue = cache.computeIfAbsent(Triple.of(value1, value2, value3),
-                                                        key -> applyAsShort(key.getLeft(), key.getMiddle(),
-                                                                            key.getRight()));
+                            key -> applyAsShort(key.getLeft(), key.getMiddle(),
+                                    key.getRight()));
                 }
                 return returnValue;
             };

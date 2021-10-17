@@ -13,7 +13,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package org.lambda4j.function.bi.to;
+
+import java.util.Map;
+import java.util.Objects;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.function.Function;
+
+import javax.annotation.Nonnegative;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
+import org.apache.commons.lang3.tuple.Pair;
 
 import org.lambda4j.Lambda;
 import org.lambda4j.consumer.CharConsumer;
@@ -31,20 +43,9 @@ import org.lambda4j.operator.unary.CharUnaryOperator;
 import org.lambda4j.predicate.CharPredicate;
 import org.lambda4j.predicate.bi.BiPredicate2;
 
-import org.apache.commons.lang3.tuple.Pair;
-
-import javax.annotation.Nonnegative;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import java.util.Map;
-import java.util.Objects;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.function.Function;
-
 /**
- * Represents an operation that accepts two input arguments and produces a
- * {@code char}-valued result.
- * This is a primitive specialization of {@link BiFunction2}.
+ * Represents an operation that accepts two input arguments and produces a {@code char}-valued result. This is a
+ * primitive specialization of {@link BiFunction2}.
  * <p>
  * This is a {@link FunctionalInterface} whose functional method is {@link #applyAsChar(Object, Object)}.
  *
@@ -72,7 +73,7 @@ public interface ToCharBiFunction<T, U> extends Lambda {
      * Expression</a>
      * @see <a href="https://docs.oracle.com/javase/tutorial/java/javaOO/methodreferences.html">Method Reference</a>
      */
-    static <T, U> ToCharBiFunction<T, U> of(@Nullable final ToCharBiFunction<T, U> expression) {
+    static <T, U> ToCharBiFunction<T, U> of(@Nullable ToCharBiFunction<T, U> expression) {
         return expression;
     }
 
@@ -87,7 +88,7 @@ public interface ToCharBiFunction<T, U> extends Lambda {
      * @return The result from the given {@code ToCharBiFunction}.
      * @throws NullPointerException If given argument is {@code null}
      */
-    static <T, U> char call(@Nonnull final ToCharBiFunction<? super T, ? super U> function, T t, U u) {
+    static <T, U> char call(@Nonnull ToCharBiFunction<? super T, ? super U> function, T t, U u) {
         Objects.requireNonNull(function);
         return function.applyAsChar(t, u);
     }
@@ -104,7 +105,7 @@ public interface ToCharBiFunction<T, U> extends Lambda {
      * @throws NullPointerException If given argument is {@code null}
      */
     @Nonnull
-    static <T, U> ToCharBiFunction<T, U> onlyFirst(@Nonnull final ToCharFunction<? super T> function) {
+    static <T, U> ToCharBiFunction<T, U> onlyFirst(@Nonnull ToCharFunction<? super T> function) {
         Objects.requireNonNull(function);
         return (t, u) -> function.applyAsChar(t);
     }
@@ -121,7 +122,7 @@ public interface ToCharBiFunction<T, U> extends Lambda {
      * @throws NullPointerException If given argument is {@code null}
      */
     @Nonnull
-    static <T, U> ToCharBiFunction<T, U> onlySecond(@Nonnull final ToCharFunction<? super U> function) {
+    static <T, U> ToCharBiFunction<T, U> onlySecond(@Nonnull ToCharFunction<? super U> function) {
         Objects.requireNonNull(function);
         return (t, u) -> function.applyAsChar(u);
     }
@@ -169,7 +170,7 @@ public interface ToCharBiFunction<T, U> extends Lambda {
      */
     @Nonnull
     default ToCharFunction<U> papplyAsChar(T t) {
-        return (u) -> this.applyAsChar(t, u);
+        return u -> applyAsChar(t, u);
     }
 
     /**
@@ -185,8 +186,8 @@ public interface ToCharBiFunction<T, U> extends Lambda {
 
     /**
      * Returns a composed {@link ToCharBiFunction} that first applies the {@code before} functions to its input, and
-     * then applies this function to the result.
-     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
+     * then applies this function to the result. If evaluation of either operation throws an exception, it is relayed to
+     * the caller of the composed operation.
      *
      * @param <A> The type of the argument to the first given function, and of composed function
      * @param <B> The type of the argument to the second given function, and of composed function
@@ -198,17 +199,17 @@ public interface ToCharBiFunction<T, U> extends Lambda {
      * @implSpec The input argument of this method is able to handle every type.
      */
     @Nonnull
-    default <A, B> ToCharBiFunction<A, B> compose(@Nonnull final Function<? super A, ? extends T> before1,
-            @Nonnull final Function<? super B, ? extends U> before2) {
+    default <A, B> ToCharBiFunction<A, B> compose(@Nonnull Function<? super A, ? extends T> before1,
+            @Nonnull Function<? super B, ? extends U> before2) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         return (a, b) -> applyAsChar(before1.apply(a), before2.apply(b));
     }
 
     /**
-     * Returns a composed {@link BiFunction2} that first applies this function to its input, and then applies the
-     * {@code after} function to the result.
-     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
+     * Returns a composed {@link BiFunction2} that first applies this function to its input, and then applies the {@code
+     * after} function to the result. If evaluation of either operation throws an exception, it is relayed to the caller
+     * of the composed operation.
      *
      * @param <S> The type of return value from the {@code after} function, and of the composed function
      * @param after The function to apply after this function is applied
@@ -218,7 +219,7 @@ public interface ToCharBiFunction<T, U> extends Lambda {
      * @implSpec The input argument of this method is able to return every type.
      */
     @Nonnull
-    default <S> BiFunction2<T, U, S> andThen(@Nonnull final CharFunction<? extends S> after) {
+    default <S> BiFunction2<T, U, S> andThen(@Nonnull CharFunction<? extends S> after) {
         Objects.requireNonNull(after);
         return (t, u) -> after.apply(applyAsChar(t, u));
     }
@@ -233,11 +234,11 @@ public interface ToCharBiFunction<T, U> extends Lambda {
      * @return A composed {@code BiPredicate2} that first applies this function to its input, and then applies the
      * {@code after} predicate to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * boolean}.
      */
     @Nonnull
-    default BiPredicate2<T, U> andThenToBoolean(@Nonnull final CharPredicate after) {
+    default BiPredicate2<T, U> andThenToBoolean(@Nonnull CharPredicate after) {
         Objects.requireNonNull(after);
         return (t, u) -> after.test(applyAsChar(t, u));
     }
@@ -252,11 +253,11 @@ public interface ToCharBiFunction<T, U> extends Lambda {
      * @return A composed {@code ToByteBiFunction} that first applies this function to its input, and then applies the
      * {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * byte}.
      */
     @Nonnull
-    default ToByteBiFunction<T, U> andThenToByte(@Nonnull final CharToByteFunction after) {
+    default ToByteBiFunction<T, U> andThenToByte(@Nonnull CharToByteFunction after) {
         Objects.requireNonNull(after);
         return (t, u) -> after.applyAsByte(applyAsChar(t, u));
     }
@@ -271,11 +272,11 @@ public interface ToCharBiFunction<T, U> extends Lambda {
      * @return A composed {@code ToCharBiFunction} that first applies this function to its input, and then applies the
      * {@code after} operator to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * char}.
      */
     @Nonnull
-    default ToCharBiFunction<T, U> andThenToChar(@Nonnull final CharUnaryOperator after) {
+    default ToCharBiFunction<T, U> andThenToChar(@Nonnull CharUnaryOperator after) {
         Objects.requireNonNull(after);
         return (t, u) -> after.applyAsChar(applyAsChar(t, u));
     }
@@ -290,11 +291,11 @@ public interface ToCharBiFunction<T, U> extends Lambda {
      * @return A composed {@code ToDoubleBiFunction2} that first applies this function to its input, and then applies
      * the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * double}.
      */
     @Nonnull
-    default ToDoubleBiFunction2<T, U> andThenToDouble(@Nonnull final CharToDoubleFunction after) {
+    default ToDoubleBiFunction2<T, U> andThenToDouble(@Nonnull CharToDoubleFunction after) {
         Objects.requireNonNull(after);
         return (t, u) -> after.applyAsDouble(applyAsChar(t, u));
     }
@@ -309,11 +310,11 @@ public interface ToCharBiFunction<T, U> extends Lambda {
      * @return A composed {@code ToFloatBiFunction} that first applies this function to its input, and then applies the
      * {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * float}.
      */
     @Nonnull
-    default ToFloatBiFunction<T, U> andThenToFloat(@Nonnull final CharToFloatFunction after) {
+    default ToFloatBiFunction<T, U> andThenToFloat(@Nonnull CharToFloatFunction after) {
         Objects.requireNonNull(after);
         return (t, u) -> after.applyAsFloat(applyAsChar(t, u));
     }
@@ -328,11 +329,11 @@ public interface ToCharBiFunction<T, U> extends Lambda {
      * @return A composed {@code ToIntBiFunction2} that first applies this function to its input, and then applies the
      * {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * int}.
      */
     @Nonnull
-    default ToIntBiFunction2<T, U> andThenToInt(@Nonnull final CharToIntFunction after) {
+    default ToIntBiFunction2<T, U> andThenToInt(@Nonnull CharToIntFunction after) {
         Objects.requireNonNull(after);
         return (t, u) -> after.applyAsInt(applyAsChar(t, u));
     }
@@ -347,11 +348,11 @@ public interface ToCharBiFunction<T, U> extends Lambda {
      * @return A composed {@code ToLongBiFunction2} that first applies this function to its input, and then applies the
      * {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * long}.
      */
     @Nonnull
-    default ToLongBiFunction2<T, U> andThenToLong(@Nonnull final CharToLongFunction after) {
+    default ToLongBiFunction2<T, U> andThenToLong(@Nonnull CharToLongFunction after) {
         Objects.requireNonNull(after);
         return (t, u) -> after.applyAsLong(applyAsChar(t, u));
     }
@@ -366,19 +367,19 @@ public interface ToCharBiFunction<T, U> extends Lambda {
      * @return A composed {@code ToShortBiFunction} that first applies this function to its input, and then applies the
      * {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * short}.
      */
     @Nonnull
-    default ToShortBiFunction<T, U> andThenToShort(@Nonnull final CharToShortFunction after) {
+    default ToShortBiFunction<T, U> andThenToShort(@Nonnull CharToShortFunction after) {
         Objects.requireNonNull(after);
         return (t, u) -> after.applyAsShort(applyAsChar(t, u));
     }
 
     /**
      * Returns a composed {@link BiConsumer2} that fist applies this function to its input, and then consumes the result
-     * using the given {@link CharConsumer}.
-     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
+     * using the given {@link CharConsumer}. If evaluation of either operation throws an exception, it is relayed to the
+     * caller of the composed operation.
      *
      * @param consumer The operation which consumes the result from this operation
      * @return A composed {@code BiConsumer2} that first applies this function to its input, and then consumes the
@@ -386,7 +387,7 @@ public interface ToCharBiFunction<T, U> extends Lambda {
      * @throws NullPointerException If given argument is {@code null}
      */
     @Nonnull
-    default BiConsumer2<T, U> consume(@Nonnull final CharConsumer consumer) {
+    default BiConsumer2<T, U> consume(@Nonnull CharConsumer consumer) {
         Objects.requireNonNull(consumer);
         return (t, u) -> consumer.accept(applyAsChar(t, u));
     }
@@ -430,13 +431,13 @@ public interface ToCharBiFunction<T, U> extends Lambda {
         if (isMemoized()) {
             return this;
         } else {
-            final Map<Pair<T, U>, Character> cache = new ConcurrentHashMap<>();
-            final Object lock = new Object();
+            Map<Pair<T, U>, Character> cache = new ConcurrentHashMap<>();
+            Object lock = new Object();
             return (ToCharBiFunction<T, U> & Memoized) (t, u) -> {
-                final char returnValue;
+                char returnValue;
                 synchronized (lock) {
                     returnValue = cache.computeIfAbsent(Pair.of(t, u),
-                                                        key -> applyAsChar(key.getLeft(), key.getRight()));
+                            key -> applyAsChar(key.getLeft(), key.getRight()));
                 }
                 return returnValue;
             };
@@ -445,8 +446,8 @@ public interface ToCharBiFunction<T, U> extends Lambda {
 
     /**
      * Returns a composed {@link BiFunction2} which represents this {@link ToCharBiFunction}. Thereby the primitive
-     * input argument for this function is autoboxed. This method provides the possibility to use this
-     * {@code ToCharBiFunction} with methods provided by the {@code JDK}.
+     * input argument for this function is autoboxed. This method provides the possibility to use this {@code
+     * ToCharBiFunction} with methods provided by the {@code JDK}.
      *
      * @return A composed {@code BiFunction2} which represents this {@code ToCharBiFunction}.
      */

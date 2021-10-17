@@ -13,7 +13,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package org.lambda4j.supplier;
+
+import java.util.Objects;
+import java.util.concurrent.atomic.AtomicReference;
+import java.util.function.Function;
+
+import javax.annotation.Nonnegative;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import org.lambda4j.Lambda;
 import org.lambda4j.consumer.ThrowableConsumer;
@@ -30,16 +39,9 @@ import org.lambda4j.function.conversion.ThrowableShortToLongFunction;
 import org.lambda4j.operator.unary.ThrowableShortUnaryOperator;
 import org.lambda4j.predicate.ThrowableShortPredicate;
 
-import javax.annotation.Nonnegative;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import java.util.Objects;
-import java.util.concurrent.atomic.AtomicReference;
-import java.util.function.Function;
-
 /**
- * Represents a supplier of {@code short}-valued results which is able to throw any {@link Throwable}.
- * This is a primitive specialization of {@link ThrowableSupplier}.
+ * Represents a supplier of {@code short}-valued results which is able to throw any {@link Throwable}. This is a
+ * primitive specialization of {@link ThrowableSupplier}.
  * <p>
  * There is no requirement that a distinct result be returned each time the supplier is invoked.
  * <p>
@@ -67,7 +69,7 @@ public interface ThrowableShortSupplier<X extends Throwable> extends Lambda {
      * Expression</a>
      * @see <a href="https://docs.oracle.com/javase/tutorial/java/javaOO/methodreferences.html">Method Reference</a>
      */
-    static <X extends Throwable> ThrowableShortSupplier<X> of(@Nullable final ThrowableShortSupplier<X> expression) {
+    static <X extends Throwable> ThrowableShortSupplier<X> of(@Nullable ThrowableShortSupplier<X> expression) {
         return expression;
     }
 
@@ -80,7 +82,7 @@ public interface ThrowableShortSupplier<X extends Throwable> extends Lambda {
      * @throws NullPointerException If given argument is {@code null}
      * @throws X Any throwable from this suppliers action
      */
-    static <X extends Throwable> short call(@Nonnull final ThrowableShortSupplier<? extends X> supplier) throws X {
+    static <X extends Throwable> short call(@Nonnull ThrowableShortSupplier<? extends X> supplier) throws X {
         Objects.requireNonNull(supplier);
         return supplier.getAsShortThrows();
     }
@@ -128,7 +130,7 @@ public interface ThrowableShortSupplier<X extends Throwable> extends Lambda {
      * @implSpec The input argument of this method is able to return every type.
      */
     @Nonnull
-    default <S> ThrowableSupplier<S, X> andThen(@Nonnull final ThrowableShortFunction<? extends S, ? extends X> after) {
+    default <S> ThrowableSupplier<S, X> andThen(@Nonnull ThrowableShortFunction<? extends S, ? extends X> after) {
         Objects.requireNonNull(after);
         return () -> after.applyThrows(getAsShortThrows());
     }
@@ -142,11 +144,11 @@ public interface ThrowableShortSupplier<X extends Throwable> extends Lambda {
      * @return A composed {@code ThrowableBooleanSupplier} that first applies this supplier to its input, and then
      * applies the {@code after} predicate to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * boolean}.
      */
     @Nonnull
-    default ThrowableBooleanSupplier<X> andThenToBoolean(@Nonnull final ThrowableShortPredicate<? extends X> after) {
+    default ThrowableBooleanSupplier<X> andThenToBoolean(@Nonnull ThrowableShortPredicate<? extends X> after) {
         Objects.requireNonNull(after);
         return () -> after.testThrows(getAsShortThrows());
     }
@@ -160,11 +162,11 @@ public interface ThrowableShortSupplier<X extends Throwable> extends Lambda {
      * @return A composed {@code ThrowableByteSupplier} that first applies this supplier to its input, and then applies
      * the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * byte}.
      */
     @Nonnull
-    default ThrowableByteSupplier<X> andThenToByte(@Nonnull final ThrowableShortToByteFunction<? extends X> after) {
+    default ThrowableByteSupplier<X> andThenToByte(@Nonnull ThrowableShortToByteFunction<? extends X> after) {
         Objects.requireNonNull(after);
         return () -> after.applyAsByteThrows(getAsShortThrows());
     }
@@ -178,11 +180,11 @@ public interface ThrowableShortSupplier<X extends Throwable> extends Lambda {
      * @return A composed {@code ThrowableCharSupplier} that first applies this supplier to its input, and then applies
      * the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * char}.
      */
     @Nonnull
-    default ThrowableCharSupplier<X> andThenToChar(@Nonnull final ThrowableShortToCharFunction<? extends X> after) {
+    default ThrowableCharSupplier<X> andThenToChar(@Nonnull ThrowableShortToCharFunction<? extends X> after) {
         Objects.requireNonNull(after);
         return () -> after.applyAsCharThrows(getAsShortThrows());
     }
@@ -196,12 +198,12 @@ public interface ThrowableShortSupplier<X extends Throwable> extends Lambda {
      * @return A composed {@code ThrowableDoubleSupplier} that first applies this supplier to its input, and then
      * applies the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * double}.
      */
     @Nonnull
     default ThrowableDoubleSupplier<X> andThenToDouble(
-            @Nonnull final ThrowableShortToDoubleFunction<? extends X> after) {
+            @Nonnull ThrowableShortToDoubleFunction<? extends X> after) {
         Objects.requireNonNull(after);
         return () -> after.applyAsDoubleThrows(getAsShortThrows());
     }
@@ -215,11 +217,11 @@ public interface ThrowableShortSupplier<X extends Throwable> extends Lambda {
      * @return A composed {@code ThrowableFloatSupplier} that first applies this supplier to its input, and then applies
      * the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * float}.
      */
     @Nonnull
-    default ThrowableFloatSupplier<X> andThenToFloat(@Nonnull final ThrowableShortToFloatFunction<? extends X> after) {
+    default ThrowableFloatSupplier<X> andThenToFloat(@Nonnull ThrowableShortToFloatFunction<? extends X> after) {
         Objects.requireNonNull(after);
         return () -> after.applyAsFloatThrows(getAsShortThrows());
     }
@@ -233,11 +235,11 @@ public interface ThrowableShortSupplier<X extends Throwable> extends Lambda {
      * @return A composed {@code ThrowableIntSupplier} that first applies this supplier to its input, and then applies
      * the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * int}.
      */
     @Nonnull
-    default ThrowableIntSupplier<X> andThenToInt(@Nonnull final ThrowableShortToIntFunction<? extends X> after) {
+    default ThrowableIntSupplier<X> andThenToInt(@Nonnull ThrowableShortToIntFunction<? extends X> after) {
         Objects.requireNonNull(after);
         return () -> after.applyAsIntThrows(getAsShortThrows());
     }
@@ -251,11 +253,11 @@ public interface ThrowableShortSupplier<X extends Throwable> extends Lambda {
      * @return A composed {@code ThrowableLongSupplier} that first applies this supplier to its input, and then applies
      * the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * long}.
      */
     @Nonnull
-    default ThrowableLongSupplier<X> andThenToLong(@Nonnull final ThrowableShortToLongFunction<? extends X> after) {
+    default ThrowableLongSupplier<X> andThenToLong(@Nonnull ThrowableShortToLongFunction<? extends X> after) {
         Objects.requireNonNull(after);
         return () -> after.applyAsLongThrows(getAsShortThrows());
     }
@@ -269,18 +271,18 @@ public interface ThrowableShortSupplier<X extends Throwable> extends Lambda {
      * @return A composed {@code ThrowableShortSupplier} that first applies this supplier to its input, and then applies
      * the {@code after} operator to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * short}.
      */
     @Nonnull
-    default ThrowableShortSupplier<X> andThenToShort(@Nonnull final ThrowableShortUnaryOperator<? extends X> after) {
+    default ThrowableShortSupplier<X> andThenToShort(@Nonnull ThrowableShortUnaryOperator<? extends X> after) {
         Objects.requireNonNull(after);
         return () -> after.applyAsShortThrows(getAsShortThrows());
     }
 
     /**
-     * Returns a composed {@link ThrowableConsumer} that first gets the result from this supplier, and then consumes
-     * the result using the given {@link ThrowableShortConsumer}.
+     * Returns a composed {@link ThrowableConsumer} that first gets the result from this supplier, and then consumes the
+     * result using the given {@link ThrowableShortConsumer}.
      *
      * @param consumer The operation which consumes the result from this operation
      * @return A composed {@code ThrowableConsumer} that first gets the result from this supplier, and then consumes the
@@ -292,7 +294,7 @@ public interface ThrowableShortSupplier<X extends Throwable> extends Lambda {
      * be {@code null} when the resulting consumer is called with {@code Consumer#accept(Object)}.
      */
     @Nonnull
-    default ThrowableConsumer<Void, X> consume(@Nonnull final ThrowableShortConsumer<? extends X> consumer) {
+    default ThrowableConsumer<Void, X> consume(@Nonnull ThrowableShortConsumer<? extends X> consumer) {
         Objects.requireNonNull(consumer);
         return ignored -> consumer.acceptThrows(getAsShortThrows());
     }
@@ -323,7 +325,7 @@ public interface ThrowableShortSupplier<X extends Throwable> extends Lambda {
                     synchronized (this) {
                         returnValue = cache.get();
                         if (returnValue == null) {
-                            returnValue = this.getAsShortThrows();
+                            returnValue = getAsShortThrows();
                             cache.set(returnValue);
                         }
                     }
@@ -374,7 +376,7 @@ public interface ThrowableShortSupplier<X extends Throwable> extends Lambda {
      * @see #nest()
      */
     @Nonnull
-    default ShortSupplier nest(@Nonnull final Function<? super Throwable, ? extends RuntimeException> mapper) {
+    default ShortSupplier nest(@Nonnull Function<? super Throwable, ? extends RuntimeException> mapper) {
         return recover(throwable -> {
             throw mapper.apply(throwable);
         });
@@ -396,15 +398,15 @@ public interface ThrowableShortSupplier<X extends Throwable> extends Lambda {
      * recover} operation.
      */
     @Nonnull
-    default ShortSupplier recover(@Nonnull final Function<? super Throwable, ? extends ShortSupplier> recover) {
+    default ShortSupplier recover(@Nonnull Function<? super Throwable, ? extends ShortSupplier> recover) {
         Objects.requireNonNull(recover);
         return () -> {
             try {
-                return this.getAsShortThrows();
+                return getAsShortThrows();
             } catch (Error e) {
                 throw e;
             } catch (Throwable throwable) {
-                final ShortSupplier supplier = recover.apply(throwable);
+                ShortSupplier supplier = recover.apply(throwable);
                 Objects.requireNonNull(supplier, () -> "recover returned null for " + throwable.getClass() + ": "
                         + throwable.getMessage());
                 return supplier.getAsShort();
@@ -413,12 +415,12 @@ public interface ThrowableShortSupplier<X extends Throwable> extends Lambda {
     }
 
     /**
-     * Returns a composed {@link ShortSupplier} that applies this supplier to its input and sneakily throws the
-     * thrown {@link Throwable} from it, if it is not of type {@link RuntimeException} or {@link Error}. This means that
-     * each throwable thrown from the returned composed supplier behaves exactly the same as an <em>unchecked</em>
-     * throwable does. As a result, there is no need to handle the throwable of this supplier in the returned composed
-     * supplier by either wrapping it in an <em>unchecked</em> throwable or to declare it in the {@code throws} clause,
-     * as it would be done in a non sneaky throwing supplier.
+     * Returns a composed {@link ShortSupplier} that applies this supplier to its input and sneakily throws the thrown
+     * {@link Throwable} from it, if it is not of type {@link RuntimeException} or {@link Error}. This means that each
+     * throwable thrown from the returned composed supplier behaves exactly the same as an <em>unchecked</em> throwable
+     * does. As a result, there is no need to handle the throwable of this supplier in the returned composed supplier by
+     * either wrapping it in an <em>unchecked</em> throwable or to declare it in the {@code throws} clause, as it would
+     * be done in a non sneaky throwing supplier.
      * <p>
      * What sneaky throwing simply does, is to fake out the compiler and thus it bypasses the principle of
      * <em>checked</em> throwables. On the JVM (class file) level, all throwables, checked or not, can be thrown
@@ -482,7 +484,7 @@ public interface ThrowableShortSupplier<X extends Throwable> extends Lambda {
     default ShortSupplier sneakyThrow() {
         return () -> {
             try {
-                return this.getAsShortThrows();
+                return getAsShortThrows();
             } catch (RuntimeException | Error e) {
                 throw e;
             } catch (Throwable throwable) {

@@ -13,17 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package org.lambda4j.function.bi;
 
-import org.lambda4j.Lambda;
-import org.lambda4j.consumer.bi.BiConsumer2;
-import org.lambda4j.function.Function2;
-
-import org.apache.commons.lang3.tuple.Pair;
-
-import javax.annotation.Nonnegative;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
@@ -32,9 +24,18 @@ import java.util.function.BiFunction;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
+import javax.annotation.Nonnegative;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
+import org.apache.commons.lang3.tuple.Pair;
+
+import org.lambda4j.Lambda;
+import org.lambda4j.consumer.bi.BiConsumer2;
+import org.lambda4j.function.Function2;
+
 /**
- * Represents an operation that accepts two input arguments and produces a
- * result.
+ * Represents an operation that accepts two input arguments and produces a result.
  * <p>
  * This is a {@link FunctionalInterface} whose functional method is {@link #apply(Object, Object)}.
  *
@@ -64,7 +65,7 @@ public interface BiFunction2<T, U, R> extends Lambda, BiFunction<T, U, R> {
      * Expression</a>
      * @see <a href="https://docs.oracle.com/javase/tutorial/java/javaOO/methodreferences.html">Method Reference</a>
      */
-    static <T, U, R> BiFunction2<T, U, R> of(@Nullable final BiFunction2<T, U, R> expression) {
+    static <T, U, R> BiFunction2<T, U, R> of(@Nullable BiFunction2<T, U, R> expression) {
         return expression;
     }
 
@@ -81,7 +82,7 @@ public interface BiFunction2<T, U, R> extends Lambda, BiFunction<T, U, R> {
      */
     @Nonnull
     static <T, U, R> BiFunction2<T, U, Optional<R>> lift(
-            @Nonnull final BiFunction<? super T, ? super U, ? extends R> partial) {
+            @Nonnull BiFunction<? super T, ? super U, ? extends R> partial) {
         Objects.requireNonNull(partial);
         return (t, u) -> Optional.ofNullable(partial.apply(t, u));
     }
@@ -98,7 +99,7 @@ public interface BiFunction2<T, U, R> extends Lambda, BiFunction<T, U, R> {
      * @return The result from the given {@code BiFunction2}.
      * @throws NullPointerException If given argument is {@code null}
      */
-    static <T, U, R> R call(@Nonnull final BiFunction<? super T, ? super U, ? extends R> function, T t, U u) {
+    static <T, U, R> R call(@Nonnull BiFunction<? super T, ? super U, ? extends R> function, T t, U u) {
         Objects.requireNonNull(function);
         return function.apply(t, u);
     }
@@ -116,7 +117,7 @@ public interface BiFunction2<T, U, R> extends Lambda, BiFunction<T, U, R> {
      * @throws NullPointerException If given argument is {@code null}
      */
     @Nonnull
-    static <T, U, R> BiFunction2<T, U, R> onlyFirst(@Nonnull final Function<? super T, ? extends R> function) {
+    static <T, U, R> BiFunction2<T, U, R> onlyFirst(@Nonnull Function<? super T, ? extends R> function) {
         Objects.requireNonNull(function);
         return (t, u) -> function.apply(t);
     }
@@ -134,7 +135,7 @@ public interface BiFunction2<T, U, R> extends Lambda, BiFunction<T, U, R> {
      * @throws NullPointerException If given argument is {@code null}
      */
     @Nonnull
-    static <T, U, R> BiFunction2<T, U, R> onlySecond(@Nonnull final Function<? super U, ? extends R> function) {
+    static <T, U, R> BiFunction2<T, U, R> onlySecond(@Nonnull Function<? super U, ? extends R> function) {
         Objects.requireNonNull(function);
         return (t, u) -> function.apply(u);
     }
@@ -160,6 +161,7 @@ public interface BiFunction2<T, U, R> extends Lambda, BiFunction<T, U, R> {
      * @param u The second argument to the function
      * @return The return value from the function, which is its result.
      */
+    @Override
     R apply(T t, U u);
 
     /**
@@ -183,7 +185,7 @@ public interface BiFunction2<T, U, R> extends Lambda, BiFunction<T, U, R> {
      */
     @Nonnull
     default Function2<U, R> papply(T t) {
-        return (u) -> this.apply(t, u);
+        return u -> apply(t, u);
     }
 
     /**
@@ -198,9 +200,9 @@ public interface BiFunction2<T, U, R> extends Lambda, BiFunction<T, U, R> {
     }
 
     /**
-     * Returns a composed {@link BiFunction2} that first applies the {@code before} functions to its input, and
-     * then applies this function to the result.
-     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
+     * Returns a composed {@link BiFunction2} that first applies the {@code before} functions to its input, and then
+     * applies this function to the result. If evaluation of either operation throws an exception, it is relayed to the
+     * caller of the composed operation.
      *
      * @param <A> The type of the argument to the first given function, and of composed function
      * @param <B> The type of the argument to the second given function, and of composed function
@@ -212,17 +214,17 @@ public interface BiFunction2<T, U, R> extends Lambda, BiFunction<T, U, R> {
      * @implSpec The input argument of this method is able to handle every type.
      */
     @Nonnull
-    default <A, B> BiFunction2<A, B, R> compose(@Nonnull final Function<? super A, ? extends T> before1,
-            @Nonnull final Function<? super B, ? extends U> before2) {
+    default <A, B> BiFunction2<A, B, R> compose(@Nonnull Function<? super A, ? extends T> before1,
+            @Nonnull Function<? super B, ? extends U> before2) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         return (a, b) -> apply(before1.apply(a), before2.apply(b));
     }
 
     /**
-     * Returns a composed {@link BiFunction2} that first applies this function to its input, and then applies the
-     * {@code after} function to the result.
-     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
+     * Returns a composed {@link BiFunction2} that first applies this function to its input, and then applies the {@code
+     * after} function to the result. If evaluation of either operation throws an exception, it is relayed to the caller
+     * of the composed operation.
      *
      * @param <S> The type of return value from the {@code after} function, and of the composed function
      * @param after The function to apply after this function is applied
@@ -231,16 +233,17 @@ public interface BiFunction2<T, U, R> extends Lambda, BiFunction<T, U, R> {
      * @throws NullPointerException If given argument is {@code null}
      * @implSpec The input argument of this method is able to return every type.
      */
+    @Override
     @Nonnull
-    default <S> BiFunction2<T, U, S> andThen(@Nonnull final Function<? super R, ? extends S> after) {
+    default <S> BiFunction2<T, U, S> andThen(@Nonnull Function<? super R, ? extends S> after) {
         Objects.requireNonNull(after);
         return (t, u) -> after.apply(apply(t, u));
     }
 
     /**
      * Returns a composed {@link BiConsumer2} that fist applies this function to its input, and then consumes the result
-     * using the given {@link Consumer}.
-     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
+     * using the given {@link Consumer}. If evaluation of either operation throws an exception, it is relayed to the
+     * caller of the composed operation.
      *
      * @param consumer The operation which consumes the result from this operation
      * @return A composed {@code BiConsumer2} that first applies this function to its input, and then consumes the
@@ -248,7 +251,7 @@ public interface BiFunction2<T, U, R> extends Lambda, BiFunction<T, U, R> {
      * @throws NullPointerException If given argument is {@code null}
      */
     @Nonnull
-    default BiConsumer2<T, U> consume(@Nonnull final Consumer<? super R> consumer) {
+    default BiConsumer2<T, U> consume(@Nonnull Consumer<? super R> consumer) {
         Objects.requireNonNull(consumer);
         return (t, u) -> consumer.accept(apply(t, u));
     }
@@ -302,10 +305,10 @@ public interface BiFunction2<T, U, R> extends Lambda, BiFunction<T, U, R> {
         if (isMemoized()) {
             return this;
         } else {
-            final Map<Pair<T, U>, R> cache = new ConcurrentHashMap<>();
-            final Object lock = new Object();
+            Map<Pair<T, U>, R> cache = new ConcurrentHashMap<>();
+            Object lock = new Object();
             return (BiFunction2<T, U, R> & Memoized) (t, u) -> {
-                final R returnValue;
+                R returnValue;
                 synchronized (lock) {
                     returnValue = cache.computeIfAbsent(Pair.of(t, u), key -> apply(key.getLeft(), key.getRight()));
                 }
@@ -315,9 +318,9 @@ public interface BiFunction2<T, U, R> extends Lambda, BiFunction<T, U, R> {
     }
 
     /**
-     * Converts this function to an equal function, which ensures that its result is not
-     * {@code null} using {@link Optional}. This method mainly exists to avoid unnecessary {@code NullPointerException}s
-     * through referencing {@code null} from this function.
+     * Converts this function to an equal function, which ensures that its result is not {@code null} using {@link
+     * Optional}. This method mainly exists to avoid unnecessary {@code NullPointerException}s through referencing
+     * {@code null} from this function.
      *
      * @return An equal function, which ensures that its result is not {@code null}.
      * @deprecated Use {@code lift} method for lifting this function.

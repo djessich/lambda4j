@@ -13,7 +13,24 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package org.lambda4j.function.bi.conversion;
+
+import java.util.Map;
+import java.util.Objects;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.function.LongConsumer;
+import java.util.function.LongFunction;
+import java.util.function.LongPredicate;
+import java.util.function.LongToDoubleFunction;
+import java.util.function.LongToIntFunction;
+import java.util.function.LongUnaryOperator;
+
+import javax.annotation.Nonnegative;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
+import org.apache.commons.lang3.tuple.Pair;
 
 import org.lambda4j.Lambda;
 import org.lambda4j.consumer.bi.BiCharConsumer;
@@ -37,25 +54,9 @@ import org.lambda4j.operator.binary.LongBinaryOperator2;
 import org.lambda4j.operator.unary.CharUnaryOperator;
 import org.lambda4j.predicate.bi.BiCharPredicate;
 
-import org.apache.commons.lang3.tuple.Pair;
-
-import javax.annotation.Nonnegative;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import java.util.Map;
-import java.util.Objects;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.function.LongConsumer;
-import java.util.function.LongFunction;
-import java.util.function.LongPredicate;
-import java.util.function.LongToDoubleFunction;
-import java.util.function.LongToIntFunction;
-import java.util.function.LongUnaryOperator;
-
 /**
- * Represents an operation that accepts two {@code char}-valued input arguments and produces a
- * {@code long}-valued result.
- * This is a primitive specialization of {@link BiFunction2}.
+ * Represents an operation that accepts two {@code char}-valued input arguments and produces a {@code long}-valued
+ * result. This is a primitive specialization of {@link BiFunction2}.
  * <p>
  * This is a {@link FunctionalInterface} whose functional method is {@link #applyAsLong(char, char)}.
  *
@@ -79,7 +80,7 @@ public interface BiCharToLongFunction extends Lambda {
      * Expression</a>
      * @see <a href="https://docs.oracle.com/javase/tutorial/java/javaOO/methodreferences.html">Method Reference</a>
      */
-    static BiCharToLongFunction of(@Nullable final BiCharToLongFunction expression) {
+    static BiCharToLongFunction of(@Nullable BiCharToLongFunction expression) {
         return expression;
     }
 
@@ -92,7 +93,7 @@ public interface BiCharToLongFunction extends Lambda {
      * @return The result from the given {@code BiCharToLongFunction}.
      * @throws NullPointerException If given argument is {@code null}
      */
-    static long call(@Nonnull final BiCharToLongFunction function, char value1, char value2) {
+    static long call(@Nonnull BiCharToLongFunction function, char value1, char value2) {
         Objects.requireNonNull(function);
         return function.applyAsLong(value1, value2);
     }
@@ -107,7 +108,7 @@ public interface BiCharToLongFunction extends Lambda {
      * @throws NullPointerException If given argument is {@code null}
      */
     @Nonnull
-    static BiCharToLongFunction onlyFirst(@Nonnull final CharToLongFunction function) {
+    static BiCharToLongFunction onlyFirst(@Nonnull CharToLongFunction function) {
         Objects.requireNonNull(function);
         return (value1, value2) -> function.applyAsLong(value1);
     }
@@ -122,7 +123,7 @@ public interface BiCharToLongFunction extends Lambda {
      * @throws NullPointerException If given argument is {@code null}
      */
     @Nonnull
-    static BiCharToLongFunction onlySecond(@Nonnull final CharToLongFunction function) {
+    static BiCharToLongFunction onlySecond(@Nonnull CharToLongFunction function) {
         Objects.requireNonNull(function);
         return (value1, value2) -> function.applyAsLong(value2);
     }
@@ -155,7 +156,7 @@ public interface BiCharToLongFunction extends Lambda {
      */
     @Nonnull
     default CharToLongFunction papplyAsLong(char value1) {
-        return (value2) -> this.applyAsLong(value1, value2);
+        return value2 -> applyAsLong(value1, value2);
     }
 
     /**
@@ -171,8 +172,8 @@ public interface BiCharToLongFunction extends Lambda {
 
     /**
      * Returns a composed {@link ToLongBiFunction2} that first applies the {@code before} functions to its input, and
-     * then applies this function to the result.
-     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
+     * then applies this function to the result. If evaluation of either operation throws an exception, it is relayed to
+     * the caller of the composed operation.
      *
      * @param <A> The type of the argument to the first given function, and of composed function
      * @param <B> The type of the argument to the second given function, and of composed function
@@ -184,8 +185,8 @@ public interface BiCharToLongFunction extends Lambda {
      * @implSpec The input argument of this method is able to handle every type.
      */
     @Nonnull
-    default <A, B> ToLongBiFunction2<A, B> compose(@Nonnull final ToCharFunction<? super A> before1,
-            @Nonnull final ToCharFunction<? super B> before2) {
+    default <A, B> ToLongBiFunction2<A, B> compose(@Nonnull ToCharFunction<? super A> before1,
+            @Nonnull ToCharFunction<? super B> before2) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         return (a, b) -> applyAsLong(before1.applyAsChar(a), before2.applyAsChar(b));
@@ -202,58 +203,56 @@ public interface BiCharToLongFunction extends Lambda {
      * @return A composed {@code BiBooleanToLongFunction} that first applies the {@code before} functions to its input,
      * and then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * boolean}.
      */
     @Nonnull
-    default BiBooleanToLongFunction composeFromBoolean(@Nonnull final BooleanToCharFunction before1,
-            @Nonnull final BooleanToCharFunction before2) {
+    default BiBooleanToLongFunction composeFromBoolean(@Nonnull BooleanToCharFunction before1,
+            @Nonnull BooleanToCharFunction before2) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         return (value1, value2) -> applyAsLong(before1.applyAsChar(value1), before2.applyAsChar(value2));
     }
 
     /**
-     * Returns a composed {@link BiByteToLongFunction} that first applies the {@code before} functions to
-     * its input, and then applies this function to the result.
-     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
-     * This method is just convenience, to provide the ability to execute an operation which accepts {@code byte} input,
-     * before this primitive function is executed.
+     * Returns a composed {@link BiByteToLongFunction} that first applies the {@code before} functions to its input, and
+     * then applies this function to the result. If evaluation of either operation throws an exception, it is relayed to
+     * the caller of the composed operation. This method is just convenience, to provide the ability to execute an
+     * operation which accepts {@code byte} input, before this primitive function is executed.
      *
      * @param before1 The first function to apply before this function is applied
      * @param before2 The second function to apply before this function is applied
      * @return A composed {@code BiByteToLongFunction} that first applies the {@code before} functions to its input, and
      * then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * byte}.
      */
     @Nonnull
-    default BiByteToLongFunction composeFromByte(@Nonnull final ByteToCharFunction before1,
-            @Nonnull final ByteToCharFunction before2) {
+    default BiByteToLongFunction composeFromByte(@Nonnull ByteToCharFunction before1,
+            @Nonnull ByteToCharFunction before2) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         return (value1, value2) -> applyAsLong(before1.applyAsChar(value1), before2.applyAsChar(value2));
     }
 
     /**
-     * Returns a composed {@link BiCharToLongFunction} that first applies the {@code before} operators to
-     * its input, and then applies this function to the result.
-     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
-     * This method is just convenience, to provide the ability to execute an operation which accepts {@code char} input,
-     * before this primitive function is executed.
+     * Returns a composed {@link BiCharToLongFunction} that first applies the {@code before} operators to its input, and
+     * then applies this function to the result. If evaluation of either operation throws an exception, it is relayed to
+     * the caller of the composed operation. This method is just convenience, to provide the ability to execute an
+     * operation which accepts {@code char} input, before this primitive function is executed.
      *
      * @param before1 The first operator to apply before this function is applied
      * @param before2 The second operator to apply before this function is applied
      * @return A composed {@code BiCharToLongFunction} that first applies the {@code before} operators to its input, and
      * then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * char}.
      */
     @Nonnull
-    default BiCharToLongFunction composeFromChar(@Nonnull final CharUnaryOperator before1,
-            @Nonnull final CharUnaryOperator before2) {
+    default BiCharToLongFunction composeFromChar(@Nonnull CharUnaryOperator before1,
+            @Nonnull CharUnaryOperator before2) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         return (value1, value2) -> applyAsLong(before1.applyAsChar(value1), before2.applyAsChar(value2));
@@ -270,12 +269,12 @@ public interface BiCharToLongFunction extends Lambda {
      * @return A composed {@code BiDoubleToLongFunction} that first applies the {@code before} functions to its input,
      * and then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * double}.
      */
     @Nonnull
-    default BiDoubleToLongFunction composeFromDouble(@Nonnull final DoubleToCharFunction before1,
-            @Nonnull final DoubleToCharFunction before2) {
+    default BiDoubleToLongFunction composeFromDouble(@Nonnull DoubleToCharFunction before1,
+            @Nonnull DoubleToCharFunction before2) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         return (value1, value2) -> applyAsLong(before1.applyAsChar(value1), before2.applyAsChar(value2));
@@ -292,58 +291,56 @@ public interface BiCharToLongFunction extends Lambda {
      * @return A composed {@code BiFloatToLongFunction} that first applies the {@code before} functions to its input,
      * and then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * float}.
      */
     @Nonnull
-    default BiFloatToLongFunction composeFromFloat(@Nonnull final FloatToCharFunction before1,
-            @Nonnull final FloatToCharFunction before2) {
+    default BiFloatToLongFunction composeFromFloat(@Nonnull FloatToCharFunction before1,
+            @Nonnull FloatToCharFunction before2) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         return (value1, value2) -> applyAsLong(before1.applyAsChar(value1), before2.applyAsChar(value2));
     }
 
     /**
-     * Returns a composed {@link BiIntToLongFunction} that first applies the {@code before} functions to
-     * its input, and then applies this function to the result.
-     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
-     * This method is just convenience, to provide the ability to execute an operation which accepts {@code int} input,
-     * before this primitive function is executed.
+     * Returns a composed {@link BiIntToLongFunction} that first applies the {@code before} functions to its input, and
+     * then applies this function to the result. If evaluation of either operation throws an exception, it is relayed to
+     * the caller of the composed operation. This method is just convenience, to provide the ability to execute an
+     * operation which accepts {@code int} input, before this primitive function is executed.
      *
      * @param before1 The first function to apply before this function is applied
      * @param before2 The second function to apply before this function is applied
      * @return A composed {@code BiIntToLongFunction} that first applies the {@code before} functions to its input, and
      * then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * int}.
      */
     @Nonnull
-    default BiIntToLongFunction composeFromInt(@Nonnull final IntToCharFunction before1,
-            @Nonnull final IntToCharFunction before2) {
+    default BiIntToLongFunction composeFromInt(@Nonnull IntToCharFunction before1,
+            @Nonnull IntToCharFunction before2) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         return (value1, value2) -> applyAsLong(before1.applyAsChar(value1), before2.applyAsChar(value2));
     }
 
     /**
-     * Returns a composed {@link LongBinaryOperator2} that first applies the {@code before} functions to
-     * its input, and then applies this function to the result.
-     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
-     * This method is just convenience, to provide the ability to execute an operation which accepts {@code long} input,
-     * before this primitive function is executed.
+     * Returns a composed {@link LongBinaryOperator2} that first applies the {@code before} functions to its input, and
+     * then applies this function to the result. If evaluation of either operation throws an exception, it is relayed to
+     * the caller of the composed operation. This method is just convenience, to provide the ability to execute an
+     * operation which accepts {@code long} input, before this primitive function is executed.
      *
      * @param before1 The first function to apply before this function is applied
      * @param before2 The second function to apply before this function is applied
      * @return A composed {@code LongBinaryOperator2} that first applies the {@code before} functions to its input, and
      * then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * long}.
      */
     @Nonnull
-    default LongBinaryOperator2 composeFromLong(@Nonnull final LongToCharFunction before1,
-            @Nonnull final LongToCharFunction before2) {
+    default LongBinaryOperator2 composeFromLong(@Nonnull LongToCharFunction before1,
+            @Nonnull LongToCharFunction before2) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         return (value1, value2) -> applyAsLong(before1.applyAsChar(value1), before2.applyAsChar(value2));
@@ -360,12 +357,12 @@ public interface BiCharToLongFunction extends Lambda {
      * @return A composed {@code BiShortToLongFunction} that first applies the {@code before} functions to its input,
      * and then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * short}.
      */
     @Nonnull
-    default BiShortToLongFunction composeFromShort(@Nonnull final ShortToCharFunction before1,
-            @Nonnull final ShortToCharFunction before2) {
+    default BiShortToLongFunction composeFromShort(@Nonnull ShortToCharFunction before1,
+            @Nonnull ShortToCharFunction before2) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         return (value1, value2) -> applyAsLong(before1.applyAsChar(value1), before2.applyAsChar(value2));
@@ -373,8 +370,8 @@ public interface BiCharToLongFunction extends Lambda {
 
     /**
      * Returns a composed {@link BiCharFunction} that first applies this function to its input, and then applies the
-     * {@code after} function to the result.
-     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
+     * {@code after} function to the result. If evaluation of either operation throws an exception, it is relayed to the
+     * caller of the composed operation.
      *
      * @param <S> The type of return value from the {@code after} function, and of the composed function
      * @param after The function to apply after this function is applied
@@ -384,7 +381,7 @@ public interface BiCharToLongFunction extends Lambda {
      * @implSpec The input argument of this method is able to return every type.
      */
     @Nonnull
-    default <S> BiCharFunction<S> andThen(@Nonnull final LongFunction<? extends S> after) {
+    default <S> BiCharFunction<S> andThen(@Nonnull LongFunction<? extends S> after) {
         Objects.requireNonNull(after);
         return (value1, value2) -> after.apply(applyAsLong(value1, value2));
     }
@@ -399,11 +396,11 @@ public interface BiCharToLongFunction extends Lambda {
      * @return A composed {@code BiCharPredicate} that first applies this function to its input, and then applies the
      * {@code after} predicate to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * boolean}.
      */
     @Nonnull
-    default BiCharPredicate andThenToBoolean(@Nonnull final LongPredicate after) {
+    default BiCharPredicate andThenToBoolean(@Nonnull LongPredicate after) {
         Objects.requireNonNull(after);
         return (value1, value2) -> after.test(applyAsLong(value1, value2));
     }
@@ -418,11 +415,11 @@ public interface BiCharToLongFunction extends Lambda {
      * @return A composed {@code BiCharToByteFunction} that first applies this function to its input, and then applies
      * the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * byte}.
      */
     @Nonnull
-    default BiCharToByteFunction andThenToByte(@Nonnull final LongToByteFunction after) {
+    default BiCharToByteFunction andThenToByte(@Nonnull LongToByteFunction after) {
         Objects.requireNonNull(after);
         return (value1, value2) -> after.applyAsByte(applyAsLong(value1, value2));
     }
@@ -437,11 +434,11 @@ public interface BiCharToLongFunction extends Lambda {
      * @return A composed {@code CharBinaryOperator} that first applies this function to its input, and then applies the
      * {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * char}.
      */
     @Nonnull
-    default CharBinaryOperator andThenToChar(@Nonnull final LongToCharFunction after) {
+    default CharBinaryOperator andThenToChar(@Nonnull LongToCharFunction after) {
         Objects.requireNonNull(after);
         return (value1, value2) -> after.applyAsChar(applyAsLong(value1, value2));
     }
@@ -456,11 +453,11 @@ public interface BiCharToLongFunction extends Lambda {
      * @return A composed {@code BiCharToDoubleFunction} that first applies this function to its input, and then applies
      * the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * double}.
      */
     @Nonnull
-    default BiCharToDoubleFunction andThenToDouble(@Nonnull final LongToDoubleFunction after) {
+    default BiCharToDoubleFunction andThenToDouble(@Nonnull LongToDoubleFunction after) {
         Objects.requireNonNull(after);
         return (value1, value2) -> after.applyAsDouble(applyAsLong(value1, value2));
     }
@@ -475,11 +472,11 @@ public interface BiCharToLongFunction extends Lambda {
      * @return A composed {@code BiCharToFloatFunction} that first applies this function to its input, and then applies
      * the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * float}.
      */
     @Nonnull
-    default BiCharToFloatFunction andThenToFloat(@Nonnull final LongToFloatFunction after) {
+    default BiCharToFloatFunction andThenToFloat(@Nonnull LongToFloatFunction after) {
         Objects.requireNonNull(after);
         return (value1, value2) -> after.applyAsFloat(applyAsLong(value1, value2));
     }
@@ -494,11 +491,11 @@ public interface BiCharToLongFunction extends Lambda {
      * @return A composed {@code BiCharToIntFunction} that first applies this function to its input, and then applies
      * the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * int}.
      */
     @Nonnull
-    default BiCharToIntFunction andThenToInt(@Nonnull final LongToIntFunction after) {
+    default BiCharToIntFunction andThenToInt(@Nonnull LongToIntFunction after) {
         Objects.requireNonNull(after);
         return (value1, value2) -> after.applyAsInt(applyAsLong(value1, value2));
     }
@@ -513,11 +510,11 @@ public interface BiCharToLongFunction extends Lambda {
      * @return A composed {@code BiCharToLongFunction} that first applies this function to its input, and then applies
      * the {@code after} operator to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * long}.
      */
     @Nonnull
-    default BiCharToLongFunction andThenToLong(@Nonnull final LongUnaryOperator after) {
+    default BiCharToLongFunction andThenToLong(@Nonnull LongUnaryOperator after) {
         Objects.requireNonNull(after);
         return (value1, value2) -> after.applyAsLong(applyAsLong(value1, value2));
     }
@@ -532,11 +529,11 @@ public interface BiCharToLongFunction extends Lambda {
      * @return A composed {@code BiCharToShortFunction} that first applies this function to its input, and then applies
      * the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * short}.
      */
     @Nonnull
-    default BiCharToShortFunction andThenToShort(@Nonnull final LongToShortFunction after) {
+    default BiCharToShortFunction andThenToShort(@Nonnull LongToShortFunction after) {
         Objects.requireNonNull(after);
         return (value1, value2) -> after.applyAsShort(applyAsLong(value1, value2));
     }
@@ -552,7 +549,7 @@ public interface BiCharToLongFunction extends Lambda {
      * @throws NullPointerException If given argument is {@code null}
      */
     @Nonnull
-    default BiCharConsumer consume(@Nonnull final LongConsumer consumer) {
+    default BiCharConsumer consume(@Nonnull LongConsumer consumer) {
         Objects.requireNonNull(consumer);
         return (value1, value2) -> consumer.accept(applyAsLong(value1, value2));
     }
@@ -576,13 +573,13 @@ public interface BiCharToLongFunction extends Lambda {
         if (isMemoized()) {
             return this;
         } else {
-            final Map<Pair<Character, Character>, Long> cache = new ConcurrentHashMap<>();
-            final Object lock = new Object();
+            Map<Pair<Character, Character>, Long> cache = new ConcurrentHashMap<>();
+            Object lock = new Object();
             return (BiCharToLongFunction & Memoized) (value1, value2) -> {
-                final long returnValue;
+                long returnValue;
                 synchronized (lock) {
                     returnValue = cache.computeIfAbsent(Pair.of(value1, value2),
-                                                        key -> applyAsLong(key.getLeft(), key.getRight()));
+                            key -> applyAsLong(key.getLeft(), key.getRight()));
                 }
                 return returnValue;
             };
@@ -591,8 +588,8 @@ public interface BiCharToLongFunction extends Lambda {
 
     /**
      * Returns a composed {@link BiFunction2} which represents this {@link BiCharToLongFunction}. Thereby the primitive
-     * input argument for this function is autoboxed. This method provides the possibility to use this
-     * {@code BiCharToLongFunction} with methods provided by the {@code JDK}.
+     * input argument for this function is autoboxed. This method provides the possibility to use this {@code
+     * BiCharToLongFunction} with methods provided by the {@code JDK}.
      *
      * @return A composed {@code BiFunction2} which represents this {@code BiCharToLongFunction}.
      */

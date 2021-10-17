@@ -13,19 +13,20 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package org.lambda4j.operator.ternary;
+
+import java.util.Objects;
+import java.util.function.UnaryOperator;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import org.lambda4j.Lambda;
 import org.lambda4j.function.tri.TriFunction;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import java.util.Objects;
-import java.util.function.UnaryOperator;
-
 /**
- * Represents an operation that accepts three input arguments and produces a
- * result.
+ * Represents an operation that accepts three input arguments and produces a result.
  * <p>
  * This is a {@link FunctionalInterface} whose functional method is {@link #apply(Object, Object, Object)}.
  *
@@ -50,7 +51,7 @@ public interface TernaryOperator<T> extends Lambda, TriFunction<T, T, T, T> {
      * Expression</a>
      * @see <a href="https://docs.oracle.com/javase/tutorial/java/javaOO/methodreferences.html">Method Reference</a>
      */
-    static <T> TernaryOperator<T> of(@Nullable final TernaryOperator<T> expression) {
+    static <T> TernaryOperator<T> of(@Nullable TernaryOperator<T> expression) {
         return expression;
     }
 
@@ -65,7 +66,7 @@ public interface TernaryOperator<T> extends Lambda, TriFunction<T, T, T, T> {
      * @return The result from the given {@code TernaryOperator}.
      * @throws NullPointerException If given argument is {@code null}
      */
-    static <T> T call(@Nonnull final TernaryOperator<T> operator, T t, T u, T v) {
+    static <T> T call(@Nonnull TernaryOperator<T> operator, T t, T u, T v) {
         Objects.requireNonNull(operator);
         return operator.apply(t, u, v);
     }
@@ -81,7 +82,7 @@ public interface TernaryOperator<T> extends Lambda, TriFunction<T, T, T, T> {
      * @throws NullPointerException If given argument is {@code null}
      */
     @Nonnull
-    static <T> TernaryOperator<T> onlyFirst(@Nonnull final UnaryOperator<T> operator) {
+    static <T> TernaryOperator<T> onlyFirst(@Nonnull UnaryOperator<T> operator) {
         Objects.requireNonNull(operator);
         return (t, u, v) -> operator.apply(t);
     }
@@ -97,7 +98,7 @@ public interface TernaryOperator<T> extends Lambda, TriFunction<T, T, T, T> {
      * @throws NullPointerException If given argument is {@code null}
      */
     @Nonnull
-    static <T> TernaryOperator<T> onlySecond(@Nonnull final UnaryOperator<T> operator) {
+    static <T> TernaryOperator<T> onlySecond(@Nonnull UnaryOperator<T> operator) {
         Objects.requireNonNull(operator);
         return (t, u, v) -> operator.apply(u);
     }
@@ -113,7 +114,7 @@ public interface TernaryOperator<T> extends Lambda, TriFunction<T, T, T, T> {
      * @throws NullPointerException If given argument is {@code null}
      */
     @Nonnull
-    static <T> TernaryOperator<T> onlyThird(@Nonnull final UnaryOperator<T> operator) {
+    static <T> TernaryOperator<T> onlyThird(@Nonnull UnaryOperator<T> operator) {
         Objects.requireNonNull(operator);
         return (t, u, v) -> operator.apply(v);
     }

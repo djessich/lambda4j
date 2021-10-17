@@ -13,7 +13,24 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package org.lambda4j.function.bi.conversion;
+
+import java.util.Map;
+import java.util.Objects;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.function.DoubleConsumer;
+import java.util.function.DoubleFunction;
+import java.util.function.DoublePredicate;
+import java.util.function.DoubleToIntFunction;
+import java.util.function.DoubleToLongFunction;
+import java.util.function.DoubleUnaryOperator;
+
+import javax.annotation.Nonnegative;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
+import org.apache.commons.lang3.tuple.Pair;
 
 import org.lambda4j.Lambda;
 import org.lambda4j.consumer.bi.BiFloatConsumer;
@@ -37,25 +54,9 @@ import org.lambda4j.operator.binary.FloatBinaryOperator;
 import org.lambda4j.operator.unary.FloatUnaryOperator;
 import org.lambda4j.predicate.bi.BiFloatPredicate;
 
-import org.apache.commons.lang3.tuple.Pair;
-
-import javax.annotation.Nonnegative;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import java.util.Map;
-import java.util.Objects;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.function.DoubleConsumer;
-import java.util.function.DoubleFunction;
-import java.util.function.DoublePredicate;
-import java.util.function.DoubleToIntFunction;
-import java.util.function.DoubleToLongFunction;
-import java.util.function.DoubleUnaryOperator;
-
 /**
- * Represents an operation that accepts two {@code float}-valued input arguments and produces a
- * {@code double}-valued result.
- * This is a primitive specialization of {@link BiFunction2}.
+ * Represents an operation that accepts two {@code float}-valued input arguments and produces a {@code double}-valued
+ * result. This is a primitive specialization of {@link BiFunction2}.
  * <p>
  * This is a {@link FunctionalInterface} whose functional method is {@link #applyAsDouble(float, float)}.
  *
@@ -79,7 +80,7 @@ public interface BiFloatToDoubleFunction extends Lambda {
      * Expression</a>
      * @see <a href="https://docs.oracle.com/javase/tutorial/java/javaOO/methodreferences.html">Method Reference</a>
      */
-    static BiFloatToDoubleFunction of(@Nullable final BiFloatToDoubleFunction expression) {
+    static BiFloatToDoubleFunction of(@Nullable BiFloatToDoubleFunction expression) {
         return expression;
     }
 
@@ -92,7 +93,7 @@ public interface BiFloatToDoubleFunction extends Lambda {
      * @return The result from the given {@code BiFloatToDoubleFunction}.
      * @throws NullPointerException If given argument is {@code null}
      */
-    static double call(@Nonnull final BiFloatToDoubleFunction function, float value1, float value2) {
+    static double call(@Nonnull BiFloatToDoubleFunction function, float value1, float value2) {
         Objects.requireNonNull(function);
         return function.applyAsDouble(value1, value2);
     }
@@ -107,7 +108,7 @@ public interface BiFloatToDoubleFunction extends Lambda {
      * @throws NullPointerException If given argument is {@code null}
      */
     @Nonnull
-    static BiFloatToDoubleFunction onlyFirst(@Nonnull final FloatToDoubleFunction function) {
+    static BiFloatToDoubleFunction onlyFirst(@Nonnull FloatToDoubleFunction function) {
         Objects.requireNonNull(function);
         return (value1, value2) -> function.applyAsDouble(value1);
     }
@@ -122,7 +123,7 @@ public interface BiFloatToDoubleFunction extends Lambda {
      * @throws NullPointerException If given argument is {@code null}
      */
     @Nonnull
-    static BiFloatToDoubleFunction onlySecond(@Nonnull final FloatToDoubleFunction function) {
+    static BiFloatToDoubleFunction onlySecond(@Nonnull FloatToDoubleFunction function) {
         Objects.requireNonNull(function);
         return (value1, value2) -> function.applyAsDouble(value2);
     }
@@ -156,7 +157,7 @@ public interface BiFloatToDoubleFunction extends Lambda {
      */
     @Nonnull
     default FloatToDoubleFunction papplyAsDouble(float value1) {
-        return (value2) -> this.applyAsDouble(value1, value2);
+        return value2 -> applyAsDouble(value1, value2);
     }
 
     /**
@@ -172,8 +173,8 @@ public interface BiFloatToDoubleFunction extends Lambda {
 
     /**
      * Returns a composed {@link ToDoubleBiFunction2} that first applies the {@code before} functions to its input, and
-     * then applies this function to the result.
-     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
+     * then applies this function to the result. If evaluation of either operation throws an exception, it is relayed to
+     * the caller of the composed operation.
      *
      * @param <A> The type of the argument to the first given function, and of composed function
      * @param <B> The type of the argument to the second given function, and of composed function
@@ -185,8 +186,8 @@ public interface BiFloatToDoubleFunction extends Lambda {
      * @implSpec The input argument of this method is able to handle every type.
      */
     @Nonnull
-    default <A, B> ToDoubleBiFunction2<A, B> compose(@Nonnull final ToFloatFunction<? super A> before1,
-            @Nonnull final ToFloatFunction<? super B> before2) {
+    default <A, B> ToDoubleBiFunction2<A, B> compose(@Nonnull ToFloatFunction<? super A> before1,
+            @Nonnull ToFloatFunction<? super B> before2) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         return (a, b) -> applyAsDouble(before1.applyAsFloat(a), before2.applyAsFloat(b));
@@ -203,58 +204,56 @@ public interface BiFloatToDoubleFunction extends Lambda {
      * @return A composed {@code BiBooleanToDoubleFunction} that first applies the {@code before} functions to its
      * input, and then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * boolean}.
      */
     @Nonnull
-    default BiBooleanToDoubleFunction composeFromBoolean(@Nonnull final BooleanToFloatFunction before1,
-            @Nonnull final BooleanToFloatFunction before2) {
+    default BiBooleanToDoubleFunction composeFromBoolean(@Nonnull BooleanToFloatFunction before1,
+            @Nonnull BooleanToFloatFunction before2) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         return (value1, value2) -> applyAsDouble(before1.applyAsFloat(value1), before2.applyAsFloat(value2));
     }
 
     /**
-     * Returns a composed {@link BiByteToDoubleFunction} that first applies the {@code before} functions to
-     * its input, and then applies this function to the result.
-     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
-     * This method is just convenience, to provide the ability to execute an operation which accepts {@code byte} input,
-     * before this primitive function is executed.
+     * Returns a composed {@link BiByteToDoubleFunction} that first applies the {@code before} functions to its input,
+     * and then applies this function to the result. If evaluation of either operation throws an exception, it is
+     * relayed to the caller of the composed operation. This method is just convenience, to provide the ability to
+     * execute an operation which accepts {@code byte} input, before this primitive function is executed.
      *
      * @param before1 The first function to apply before this function is applied
      * @param before2 The second function to apply before this function is applied
      * @return A composed {@code BiByteToDoubleFunction} that first applies the {@code before} functions to its input,
      * and then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * byte}.
      */
     @Nonnull
-    default BiByteToDoubleFunction composeFromByte(@Nonnull final ByteToFloatFunction before1,
-            @Nonnull final ByteToFloatFunction before2) {
+    default BiByteToDoubleFunction composeFromByte(@Nonnull ByteToFloatFunction before1,
+            @Nonnull ByteToFloatFunction before2) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         return (value1, value2) -> applyAsDouble(before1.applyAsFloat(value1), before2.applyAsFloat(value2));
     }
 
     /**
-     * Returns a composed {@link BiCharToDoubleFunction} that first applies the {@code before} functions to
-     * its input, and then applies this function to the result.
-     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
-     * This method is just convenience, to provide the ability to execute an operation which accepts {@code char} input,
-     * before this primitive function is executed.
+     * Returns a composed {@link BiCharToDoubleFunction} that first applies the {@code before} functions to its input,
+     * and then applies this function to the result. If evaluation of either operation throws an exception, it is
+     * relayed to the caller of the composed operation. This method is just convenience, to provide the ability to
+     * execute an operation which accepts {@code char} input, before this primitive function is executed.
      *
      * @param before1 The first function to apply before this function is applied
      * @param before2 The second function to apply before this function is applied
      * @return A composed {@code BiCharToDoubleFunction} that first applies the {@code before} functions to its input,
      * and then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * char}.
      */
     @Nonnull
-    default BiCharToDoubleFunction composeFromChar(@Nonnull final CharToFloatFunction before1,
-            @Nonnull final CharToFloatFunction before2) {
+    default BiCharToDoubleFunction composeFromChar(@Nonnull CharToFloatFunction before1,
+            @Nonnull CharToFloatFunction before2) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         return (value1, value2) -> applyAsDouble(before1.applyAsFloat(value1), before2.applyAsFloat(value2));
@@ -271,12 +270,12 @@ public interface BiFloatToDoubleFunction extends Lambda {
      * @return A composed {@code DoubleBinaryOperator2} that first applies the {@code before} functions to its input,
      * and then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * double}.
      */
     @Nonnull
-    default DoubleBinaryOperator2 composeFromDouble(@Nonnull final DoubleToFloatFunction before1,
-            @Nonnull final DoubleToFloatFunction before2) {
+    default DoubleBinaryOperator2 composeFromDouble(@Nonnull DoubleToFloatFunction before1,
+            @Nonnull DoubleToFloatFunction before2) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         return (value1, value2) -> applyAsDouble(before1.applyAsFloat(value1), before2.applyAsFloat(value2));
@@ -293,58 +292,56 @@ public interface BiFloatToDoubleFunction extends Lambda {
      * @return A composed {@code BiFloatToDoubleFunction} that first applies the {@code before} operators to its input,
      * and then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * float}.
      */
     @Nonnull
-    default BiFloatToDoubleFunction composeFromFloat(@Nonnull final FloatUnaryOperator before1,
-            @Nonnull final FloatUnaryOperator before2) {
+    default BiFloatToDoubleFunction composeFromFloat(@Nonnull FloatUnaryOperator before1,
+            @Nonnull FloatUnaryOperator before2) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         return (value1, value2) -> applyAsDouble(before1.applyAsFloat(value1), before2.applyAsFloat(value2));
     }
 
     /**
-     * Returns a composed {@link BiIntToDoubleFunction} that first applies the {@code before} functions to
-     * its input, and then applies this function to the result.
-     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
-     * This method is just convenience, to provide the ability to execute an operation which accepts {@code int} input,
-     * before this primitive function is executed.
+     * Returns a composed {@link BiIntToDoubleFunction} that first applies the {@code before} functions to its input,
+     * and then applies this function to the result. If evaluation of either operation throws an exception, it is
+     * relayed to the caller of the composed operation. This method is just convenience, to provide the ability to
+     * execute an operation which accepts {@code int} input, before this primitive function is executed.
      *
      * @param before1 The first function to apply before this function is applied
      * @param before2 The second function to apply before this function is applied
      * @return A composed {@code BiIntToDoubleFunction} that first applies the {@code before} functions to its input,
      * and then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * int}.
      */
     @Nonnull
-    default BiIntToDoubleFunction composeFromInt(@Nonnull final IntToFloatFunction before1,
-            @Nonnull final IntToFloatFunction before2) {
+    default BiIntToDoubleFunction composeFromInt(@Nonnull IntToFloatFunction before1,
+            @Nonnull IntToFloatFunction before2) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         return (value1, value2) -> applyAsDouble(before1.applyAsFloat(value1), before2.applyAsFloat(value2));
     }
 
     /**
-     * Returns a composed {@link BiLongToDoubleFunction} that first applies the {@code before} functions to
-     * its input, and then applies this function to the result.
-     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
-     * This method is just convenience, to provide the ability to execute an operation which accepts {@code long} input,
-     * before this primitive function is executed.
+     * Returns a composed {@link BiLongToDoubleFunction} that first applies the {@code before} functions to its input,
+     * and then applies this function to the result. If evaluation of either operation throws an exception, it is
+     * relayed to the caller of the composed operation. This method is just convenience, to provide the ability to
+     * execute an operation which accepts {@code long} input, before this primitive function is executed.
      *
      * @param before1 The first function to apply before this function is applied
      * @param before2 The second function to apply before this function is applied
      * @return A composed {@code BiLongToDoubleFunction} that first applies the {@code before} functions to its input,
      * and then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * long}.
      */
     @Nonnull
-    default BiLongToDoubleFunction composeFromLong(@Nonnull final LongToFloatFunction before1,
-            @Nonnull final LongToFloatFunction before2) {
+    default BiLongToDoubleFunction composeFromLong(@Nonnull LongToFloatFunction before1,
+            @Nonnull LongToFloatFunction before2) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         return (value1, value2) -> applyAsDouble(before1.applyAsFloat(value1), before2.applyAsFloat(value2));
@@ -361,12 +358,12 @@ public interface BiFloatToDoubleFunction extends Lambda {
      * @return A composed {@code BiShortToDoubleFunction} that first applies the {@code before} functions to its input,
      * and then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * short}.
      */
     @Nonnull
-    default BiShortToDoubleFunction composeFromShort(@Nonnull final ShortToFloatFunction before1,
-            @Nonnull final ShortToFloatFunction before2) {
+    default BiShortToDoubleFunction composeFromShort(@Nonnull ShortToFloatFunction before1,
+            @Nonnull ShortToFloatFunction before2) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         return (value1, value2) -> applyAsDouble(before1.applyAsFloat(value1), before2.applyAsFloat(value2));
@@ -374,8 +371,8 @@ public interface BiFloatToDoubleFunction extends Lambda {
 
     /**
      * Returns a composed {@link BiFloatFunction} that first applies this function to its input, and then applies the
-     * {@code after} function to the result.
-     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
+     * {@code after} function to the result. If evaluation of either operation throws an exception, it is relayed to the
+     * caller of the composed operation.
      *
      * @param <S> The type of return value from the {@code after} function, and of the composed function
      * @param after The function to apply after this function is applied
@@ -385,7 +382,7 @@ public interface BiFloatToDoubleFunction extends Lambda {
      * @implSpec The input argument of this method is able to return every type.
      */
     @Nonnull
-    default <S> BiFloatFunction<S> andThen(@Nonnull final DoubleFunction<? extends S> after) {
+    default <S> BiFloatFunction<S> andThen(@Nonnull DoubleFunction<? extends S> after) {
         Objects.requireNonNull(after);
         return (value1, value2) -> after.apply(applyAsDouble(value1, value2));
     }
@@ -400,11 +397,11 @@ public interface BiFloatToDoubleFunction extends Lambda {
      * @return A composed {@code BiFloatPredicate} that first applies this function to its input, and then applies the
      * {@code after} predicate to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * boolean}.
      */
     @Nonnull
-    default BiFloatPredicate andThenToBoolean(@Nonnull final DoublePredicate after) {
+    default BiFloatPredicate andThenToBoolean(@Nonnull DoublePredicate after) {
         Objects.requireNonNull(after);
         return (value1, value2) -> after.test(applyAsDouble(value1, value2));
     }
@@ -419,11 +416,11 @@ public interface BiFloatToDoubleFunction extends Lambda {
      * @return A composed {@code BiFloatToByteFunction} that first applies this function to its input, and then applies
      * the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * byte}.
      */
     @Nonnull
-    default BiFloatToByteFunction andThenToByte(@Nonnull final DoubleToByteFunction after) {
+    default BiFloatToByteFunction andThenToByte(@Nonnull DoubleToByteFunction after) {
         Objects.requireNonNull(after);
         return (value1, value2) -> after.applyAsByte(applyAsDouble(value1, value2));
     }
@@ -438,11 +435,11 @@ public interface BiFloatToDoubleFunction extends Lambda {
      * @return A composed {@code BiFloatToCharFunction} that first applies this function to its input, and then applies
      * the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * char}.
      */
     @Nonnull
-    default BiFloatToCharFunction andThenToChar(@Nonnull final DoubleToCharFunction after) {
+    default BiFloatToCharFunction andThenToChar(@Nonnull DoubleToCharFunction after) {
         Objects.requireNonNull(after);
         return (value1, value2) -> after.applyAsChar(applyAsDouble(value1, value2));
     }
@@ -457,11 +454,11 @@ public interface BiFloatToDoubleFunction extends Lambda {
      * @return A composed {@code BiFloatToDoubleFunction} that first applies this function to its input, and then
      * applies the {@code after} operator to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * double}.
      */
     @Nonnull
-    default BiFloatToDoubleFunction andThenToDouble(@Nonnull final DoubleUnaryOperator after) {
+    default BiFloatToDoubleFunction andThenToDouble(@Nonnull DoubleUnaryOperator after) {
         Objects.requireNonNull(after);
         return (value1, value2) -> after.applyAsDouble(applyAsDouble(value1, value2));
     }
@@ -476,11 +473,11 @@ public interface BiFloatToDoubleFunction extends Lambda {
      * @return A composed {@code FloatBinaryOperator} that first applies this function to its input, and then applies
      * the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * float}.
      */
     @Nonnull
-    default FloatBinaryOperator andThenToFloat(@Nonnull final DoubleToFloatFunction after) {
+    default FloatBinaryOperator andThenToFloat(@Nonnull DoubleToFloatFunction after) {
         Objects.requireNonNull(after);
         return (value1, value2) -> after.applyAsFloat(applyAsDouble(value1, value2));
     }
@@ -495,11 +492,11 @@ public interface BiFloatToDoubleFunction extends Lambda {
      * @return A composed {@code BiFloatToIntFunction} that first applies this function to its input, and then applies
      * the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * int}.
      */
     @Nonnull
-    default BiFloatToIntFunction andThenToInt(@Nonnull final DoubleToIntFunction after) {
+    default BiFloatToIntFunction andThenToInt(@Nonnull DoubleToIntFunction after) {
         Objects.requireNonNull(after);
         return (value1, value2) -> after.applyAsInt(applyAsDouble(value1, value2));
     }
@@ -514,11 +511,11 @@ public interface BiFloatToDoubleFunction extends Lambda {
      * @return A composed {@code BiFloatToLongFunction} that first applies this function to its input, and then applies
      * the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * long}.
      */
     @Nonnull
-    default BiFloatToLongFunction andThenToLong(@Nonnull final DoubleToLongFunction after) {
+    default BiFloatToLongFunction andThenToLong(@Nonnull DoubleToLongFunction after) {
         Objects.requireNonNull(after);
         return (value1, value2) -> after.applyAsLong(applyAsDouble(value1, value2));
     }
@@ -533,11 +530,11 @@ public interface BiFloatToDoubleFunction extends Lambda {
      * @return A composed {@code BiFloatToShortFunction} that first applies this function to its input, and then applies
      * the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * short}.
      */
     @Nonnull
-    default BiFloatToShortFunction andThenToShort(@Nonnull final DoubleToShortFunction after) {
+    default BiFloatToShortFunction andThenToShort(@Nonnull DoubleToShortFunction after) {
         Objects.requireNonNull(after);
         return (value1, value2) -> after.applyAsShort(applyAsDouble(value1, value2));
     }
@@ -553,7 +550,7 @@ public interface BiFloatToDoubleFunction extends Lambda {
      * @throws NullPointerException If given argument is {@code null}
      */
     @Nonnull
-    default BiFloatConsumer consume(@Nonnull final DoubleConsumer consumer) {
+    default BiFloatConsumer consume(@Nonnull DoubleConsumer consumer) {
         Objects.requireNonNull(consumer);
         return (value1, value2) -> consumer.accept(applyAsDouble(value1, value2));
     }
@@ -577,13 +574,13 @@ public interface BiFloatToDoubleFunction extends Lambda {
         if (isMemoized()) {
             return this;
         } else {
-            final Map<Pair<Float, Float>, Double> cache = new ConcurrentHashMap<>();
-            final Object lock = new Object();
+            Map<Pair<Float, Float>, Double> cache = new ConcurrentHashMap<>();
+            Object lock = new Object();
             return (BiFloatToDoubleFunction & Memoized) (value1, value2) -> {
-                final double returnValue;
+                double returnValue;
                 synchronized (lock) {
                     returnValue = cache.computeIfAbsent(Pair.of(value1, value2),
-                                                        key -> applyAsDouble(key.getLeft(), key.getRight()));
+                            key -> applyAsDouble(key.getLeft(), key.getRight()));
                 }
                 return returnValue;
             };

@@ -13,7 +13,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package org.lambda4j.function.tri.to;
+
+import java.util.Map;
+import java.util.Objects;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.function.Function;
+
+import javax.annotation.Nonnegative;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
+import org.apache.commons.lang3.tuple.Triple;
 
 import org.lambda4j.Lambda;
 import org.lambda4j.consumer.ShortConsumer;
@@ -32,20 +44,9 @@ import org.lambda4j.operator.unary.ShortUnaryOperator;
 import org.lambda4j.predicate.ShortPredicate;
 import org.lambda4j.predicate.tri.TriPredicate;
 
-import org.apache.commons.lang3.tuple.Triple;
-
-import javax.annotation.Nonnegative;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import java.util.Map;
-import java.util.Objects;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.function.Function;
-
 /**
- * Represents an operation that accepts three input arguments and produces a
- * {@code short}-valued result.
- * This is a primitive specialization of {@link TriFunction}.
+ * Represents an operation that accepts three input arguments and produces a {@code short}-valued result. This is a
+ * primitive specialization of {@link TriFunction}.
  * <p>
  * This is a {@link FunctionalInterface} whose functional method is {@link #applyAsShort(Object, Object, Object)}.
  *
@@ -75,7 +76,7 @@ public interface ToShortTriFunction<T, U, V> extends Lambda {
      * Expression</a>
      * @see <a href="https://docs.oracle.com/javase/tutorial/java/javaOO/methodreferences.html">Method Reference</a>
      */
-    static <T, U, V> ToShortTriFunction<T, U, V> of(@Nullable final ToShortTriFunction<T, U, V> expression) {
+    static <T, U, V> ToShortTriFunction<T, U, V> of(@Nullable ToShortTriFunction<T, U, V> expression) {
         return expression;
     }
 
@@ -92,7 +93,7 @@ public interface ToShortTriFunction<T, U, V> extends Lambda {
      * @return The result from the given {@code ToShortTriFunction}.
      * @throws NullPointerException If given argument is {@code null}
      */
-    static <T, U, V> short call(@Nonnull final ToShortTriFunction<? super T, ? super U, ? super V> function, T t, U u,
+    static <T, U, V> short call(@Nonnull ToShortTriFunction<? super T, ? super U, ? super V> function, T t, U u,
             V v) {
         Objects.requireNonNull(function);
         return function.applyAsShort(t, u, v);
@@ -111,7 +112,7 @@ public interface ToShortTriFunction<T, U, V> extends Lambda {
      * @throws NullPointerException If given argument is {@code null}
      */
     @Nonnull
-    static <T, U, V> ToShortTriFunction<T, U, V> onlyFirst(@Nonnull final ToShortFunction<? super T> function) {
+    static <T, U, V> ToShortTriFunction<T, U, V> onlyFirst(@Nonnull ToShortFunction<? super T> function) {
         Objects.requireNonNull(function);
         return (t, u, v) -> function.applyAsShort(t);
     }
@@ -129,7 +130,7 @@ public interface ToShortTriFunction<T, U, V> extends Lambda {
      * @throws NullPointerException If given argument is {@code null}
      */
     @Nonnull
-    static <T, U, V> ToShortTriFunction<T, U, V> onlySecond(@Nonnull final ToShortFunction<? super U> function) {
+    static <T, U, V> ToShortTriFunction<T, U, V> onlySecond(@Nonnull ToShortFunction<? super U> function) {
         Objects.requireNonNull(function);
         return (t, u, v) -> function.applyAsShort(u);
     }
@@ -147,7 +148,7 @@ public interface ToShortTriFunction<T, U, V> extends Lambda {
      * @throws NullPointerException If given argument is {@code null}
      */
     @Nonnull
-    static <T, U, V> ToShortTriFunction<T, U, V> onlyThird(@Nonnull final ToShortFunction<? super V> function) {
+    static <T, U, V> ToShortTriFunction<T, U, V> onlyThird(@Nonnull ToShortFunction<? super V> function) {
         Objects.requireNonNull(function);
         return (t, u, v) -> function.applyAsShort(v);
     }
@@ -197,7 +198,7 @@ public interface ToShortTriFunction<T, U, V> extends Lambda {
      */
     @Nonnull
     default ToShortBiFunction<U, V> papplyAsShort(T t) {
-        return (u, v) -> this.applyAsShort(t, u, v);
+        return (u, v) -> applyAsShort(t, u, v);
     }
 
     /**
@@ -209,7 +210,7 @@ public interface ToShortTriFunction<T, U, V> extends Lambda {
      */
     @Nonnull
     default ToShortFunction<V> papplyAsShort(T t, U u) {
-        return (v) -> this.applyAsShort(t, u, v);
+        return v -> applyAsShort(t, u, v);
     }
 
     /**
@@ -225,8 +226,8 @@ public interface ToShortTriFunction<T, U, V> extends Lambda {
 
     /**
      * Returns a composed {@link ToShortTriFunction} that first applies the {@code before} functions to its input, and
-     * then applies this function to the result.
-     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
+     * then applies this function to the result. If evaluation of either operation throws an exception, it is relayed to
+     * the caller of the composed operation.
      *
      * @param <A> The type of the argument to the first given function, and of composed function
      * @param <B> The type of the argument to the second given function, and of composed function
@@ -240,9 +241,9 @@ public interface ToShortTriFunction<T, U, V> extends Lambda {
      * @implSpec The input argument of this method is able to handle every type.
      */
     @Nonnull
-    default <A, B, C> ToShortTriFunction<A, B, C> compose(@Nonnull final Function<? super A, ? extends T> before1,
-            @Nonnull final Function<? super B, ? extends U> before2,
-            @Nonnull final Function<? super C, ? extends V> before3) {
+    default <A, B, C> ToShortTriFunction<A, B, C> compose(@Nonnull Function<? super A, ? extends T> before1,
+            @Nonnull Function<? super B, ? extends U> before2,
+            @Nonnull Function<? super C, ? extends V> before3) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         Objects.requireNonNull(before3);
@@ -250,9 +251,9 @@ public interface ToShortTriFunction<T, U, V> extends Lambda {
     }
 
     /**
-     * Returns a composed {@link TriFunction} that first applies this function to its input, and then applies the
-     * {@code after} function to the result.
-     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
+     * Returns a composed {@link TriFunction} that first applies this function to its input, and then applies the {@code
+     * after} function to the result. If evaluation of either operation throws an exception, it is relayed to the caller
+     * of the composed operation.
      *
      * @param <S> The type of return value from the {@code after} function, and of the composed function
      * @param after The function to apply after this function is applied
@@ -262,7 +263,7 @@ public interface ToShortTriFunction<T, U, V> extends Lambda {
      * @implSpec The input argument of this method is able to return every type.
      */
     @Nonnull
-    default <S> TriFunction<T, U, V, S> andThen(@Nonnull final ShortFunction<? extends S> after) {
+    default <S> TriFunction<T, U, V, S> andThen(@Nonnull ShortFunction<? extends S> after) {
         Objects.requireNonNull(after);
         return (t, u, v) -> after.apply(applyAsShort(t, u, v));
     }
@@ -277,11 +278,11 @@ public interface ToShortTriFunction<T, U, V> extends Lambda {
      * @return A composed {@code TriPredicate} that first applies this function to its input, and then applies the
      * {@code after} predicate to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * boolean}.
      */
     @Nonnull
-    default TriPredicate<T, U, V> andThenToBoolean(@Nonnull final ShortPredicate after) {
+    default TriPredicate<T, U, V> andThenToBoolean(@Nonnull ShortPredicate after) {
         Objects.requireNonNull(after);
         return (t, u, v) -> after.test(applyAsShort(t, u, v));
     }
@@ -296,11 +297,11 @@ public interface ToShortTriFunction<T, U, V> extends Lambda {
      * @return A composed {@code ToByteTriFunction} that first applies this function to its input, and then applies the
      * {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * byte}.
      */
     @Nonnull
-    default ToByteTriFunction<T, U, V> andThenToByte(@Nonnull final ShortToByteFunction after) {
+    default ToByteTriFunction<T, U, V> andThenToByte(@Nonnull ShortToByteFunction after) {
         Objects.requireNonNull(after);
         return (t, u, v) -> after.applyAsByte(applyAsShort(t, u, v));
     }
@@ -315,11 +316,11 @@ public interface ToShortTriFunction<T, U, V> extends Lambda {
      * @return A composed {@code ToCharTriFunction} that first applies this function to its input, and then applies the
      * {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * char}.
      */
     @Nonnull
-    default ToCharTriFunction<T, U, V> andThenToChar(@Nonnull final ShortToCharFunction after) {
+    default ToCharTriFunction<T, U, V> andThenToChar(@Nonnull ShortToCharFunction after) {
         Objects.requireNonNull(after);
         return (t, u, v) -> after.applyAsChar(applyAsShort(t, u, v));
     }
@@ -334,11 +335,11 @@ public interface ToShortTriFunction<T, U, V> extends Lambda {
      * @return A composed {@code ToDoubleTriFunction} that first applies this function to its input, and then applies
      * the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * double}.
      */
     @Nonnull
-    default ToDoubleTriFunction<T, U, V> andThenToDouble(@Nonnull final ShortToDoubleFunction after) {
+    default ToDoubleTriFunction<T, U, V> andThenToDouble(@Nonnull ShortToDoubleFunction after) {
         Objects.requireNonNull(after);
         return (t, u, v) -> after.applyAsDouble(applyAsShort(t, u, v));
     }
@@ -353,11 +354,11 @@ public interface ToShortTriFunction<T, U, V> extends Lambda {
      * @return A composed {@code ToFloatTriFunction} that first applies this function to its input, and then applies the
      * {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * float}.
      */
     @Nonnull
-    default ToFloatTriFunction<T, U, V> andThenToFloat(@Nonnull final ShortToFloatFunction after) {
+    default ToFloatTriFunction<T, U, V> andThenToFloat(@Nonnull ShortToFloatFunction after) {
         Objects.requireNonNull(after);
         return (t, u, v) -> after.applyAsFloat(applyAsShort(t, u, v));
     }
@@ -372,11 +373,11 @@ public interface ToShortTriFunction<T, U, V> extends Lambda {
      * @return A composed {@code ToIntTriFunction} that first applies this function to its input, and then applies the
      * {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * int}.
      */
     @Nonnull
-    default ToIntTriFunction<T, U, V> andThenToInt(@Nonnull final ShortToIntFunction after) {
+    default ToIntTriFunction<T, U, V> andThenToInt(@Nonnull ShortToIntFunction after) {
         Objects.requireNonNull(after);
         return (t, u, v) -> after.applyAsInt(applyAsShort(t, u, v));
     }
@@ -391,11 +392,11 @@ public interface ToShortTriFunction<T, U, V> extends Lambda {
      * @return A composed {@code ToLongTriFunction} that first applies this function to its input, and then applies the
      * {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * long}.
      */
     @Nonnull
-    default ToLongTriFunction<T, U, V> andThenToLong(@Nonnull final ShortToLongFunction after) {
+    default ToLongTriFunction<T, U, V> andThenToLong(@Nonnull ShortToLongFunction after) {
         Objects.requireNonNull(after);
         return (t, u, v) -> after.applyAsLong(applyAsShort(t, u, v));
     }
@@ -410,19 +411,19 @@ public interface ToShortTriFunction<T, U, V> extends Lambda {
      * @return A composed {@code ToShortTriFunction} that first applies this function to its input, and then applies the
      * {@code after} operator to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * short}.
      */
     @Nonnull
-    default ToShortTriFunction<T, U, V> andThenToShort(@Nonnull final ShortUnaryOperator after) {
+    default ToShortTriFunction<T, U, V> andThenToShort(@Nonnull ShortUnaryOperator after) {
         Objects.requireNonNull(after);
         return (t, u, v) -> after.applyAsShort(applyAsShort(t, u, v));
     }
 
     /**
      * Returns a composed {@link TriConsumer} that fist applies this function to its input, and then consumes the result
-     * using the given {@link ShortConsumer}.
-     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
+     * using the given {@link ShortConsumer}. If evaluation of either operation throws an exception, it is relayed to
+     * the caller of the composed operation.
      *
      * @param consumer The operation which consumes the result from this operation
      * @return A composed {@code TriConsumer} that first applies this function to its input, and then consumes the
@@ -430,7 +431,7 @@ public interface ToShortTriFunction<T, U, V> extends Lambda {
      * @throws NullPointerException If given argument is {@code null}
      */
     @Nonnull
-    default TriConsumer<T, U, V> consume(@Nonnull final ShortConsumer consumer) {
+    default TriConsumer<T, U, V> consume(@Nonnull ShortConsumer consumer) {
         Objects.requireNonNull(consumer);
         return (t, u, v) -> consumer.accept(applyAsShort(t, u, v));
     }
@@ -474,14 +475,14 @@ public interface ToShortTriFunction<T, U, V> extends Lambda {
         if (isMemoized()) {
             return this;
         } else {
-            final Map<Triple<T, U, V>, Short> cache = new ConcurrentHashMap<>();
-            final Object lock = new Object();
+            Map<Triple<T, U, V>, Short> cache = new ConcurrentHashMap<>();
+            Object lock = new Object();
             return (ToShortTriFunction<T, U, V> & Memoized) (t, u, v) -> {
-                final short returnValue;
+                short returnValue;
                 synchronized (lock) {
                     returnValue = cache.computeIfAbsent(Triple.of(t, u, v),
-                                                        key -> applyAsShort(key.getLeft(), key.getMiddle(),
-                                                                            key.getRight()));
+                            key -> applyAsShort(key.getLeft(), key.getMiddle(),
+                                    key.getRight()));
                 }
                 return returnValue;
             };
@@ -490,8 +491,8 @@ public interface ToShortTriFunction<T, U, V> extends Lambda {
 
     /**
      * Returns a composed {@link TriFunction} which represents this {@link ToShortTriFunction}. Thereby the primitive
-     * input argument for this function is autoboxed. This method provides the possibility to use this
-     * {@code ToShortTriFunction} with methods provided by the {@code JDK}.
+     * input argument for this function is autoboxed. This method provides the possibility to use this {@code
+     * ToShortTriFunction} with methods provided by the {@code JDK}.
      *
      * @return A composed {@code TriFunction} which represents this {@code ToShortTriFunction}.
      */

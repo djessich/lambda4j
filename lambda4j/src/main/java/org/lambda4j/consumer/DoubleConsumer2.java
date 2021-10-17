@@ -13,7 +13,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package org.lambda4j.consumer;
+
+import java.util.Objects;
+import java.util.function.DoubleConsumer;
+import java.util.function.DoubleUnaryOperator;
+import java.util.function.IntToDoubleFunction;
+import java.util.function.LongToDoubleFunction;
+import java.util.function.ToDoubleFunction;
+
+import javax.annotation.Nonnegative;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import org.lambda4j.Lambda;
 import org.lambda4j.function.conversion.BooleanToDoubleFunction;
@@ -22,20 +34,10 @@ import org.lambda4j.function.conversion.CharToDoubleFunction;
 import org.lambda4j.function.conversion.FloatToDoubleFunction;
 import org.lambda4j.function.conversion.ShortToDoubleFunction;
 
-import javax.annotation.Nonnegative;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import java.util.Objects;
-import java.util.function.DoubleConsumer;
-import java.util.function.DoubleUnaryOperator;
-import java.util.function.IntToDoubleFunction;
-import java.util.function.LongToDoubleFunction;
-import java.util.function.ToDoubleFunction;
-
 /**
- * Represents an operation that accepts one {@code double}-valued input argument and returns no result.
- * This is a primitive specialization of {@link Consumer2}.
- * Unlike most other functional interfaces, {@code DoubleConsumer2} is expected to operate via side-effects.
+ * Represents an operation that accepts one {@code double}-valued input argument and returns no result. This is a
+ * primitive specialization of {@link Consumer2}. Unlike most other functional interfaces, {@code DoubleConsumer2} is
+ * expected to operate via side-effects.
  * <p>
  * This is a {@link FunctionalInterface} whose functional method is {@link #accept(double)}.
  *
@@ -59,7 +61,7 @@ public interface DoubleConsumer2 extends Lambda, DoubleConsumer {
      * Expression</a>
      * @see <a href="https://docs.oracle.com/javase/tutorial/java/javaOO/methodreferences.html">Method Reference</a>
      */
-    static DoubleConsumer2 of(@Nullable final DoubleConsumer2 expression) {
+    static DoubleConsumer2 of(@Nullable DoubleConsumer2 expression) {
         return expression;
     }
 
@@ -70,7 +72,7 @@ public interface DoubleConsumer2 extends Lambda, DoubleConsumer {
      * @param value The argument to the consumer
      * @throws NullPointerException If given argument is {@code null}
      */
-    static void call(@Nonnull final DoubleConsumer consumer, double value) {
+    static void call(@Nonnull DoubleConsumer consumer, double value) {
         Objects.requireNonNull(consumer);
         consumer.accept(value);
     }
@@ -80,6 +82,7 @@ public interface DoubleConsumer2 extends Lambda, DoubleConsumer {
      *
      * @param value The argument to the consumer
      */
+    @Override
     void accept(double value);
 
     /**
@@ -94,9 +97,9 @@ public interface DoubleConsumer2 extends Lambda, DoubleConsumer {
     }
 
     /**
-     * Returns a composed {@link Consumer2} that first applies the {@code before} function to its input, and
-     * then applies this consumer to the result.
-     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
+     * Returns a composed {@link Consumer2} that first applies the {@code before} function to its input, and then
+     * applies this consumer to the result. If evaluation of either operation throws an exception, it is relayed to the
+     * caller of the composed operation.
      *
      * @param <A> The type of the argument to the given function, and of composed consumer
      * @param before The function to apply before this consumer is applied
@@ -106,9 +109,9 @@ public interface DoubleConsumer2 extends Lambda, DoubleConsumer {
      * @implSpec The input argument of this method is able to handle every type.
      */
     @Nonnull
-    default <A> Consumer2<A> compose(@Nonnull final ToDoubleFunction<? super A> before) {
+    default <A> Consumer2<A> compose(@Nonnull ToDoubleFunction<? super A> before) {
         Objects.requireNonNull(before);
-        return (a) -> accept(before.applyAsDouble(a));
+        return a -> accept(before.applyAsDouble(a));
     }
 
     /**
@@ -121,53 +124,51 @@ public interface DoubleConsumer2 extends Lambda, DoubleConsumer {
      * @return A composed {@code BooleanConsumer} that first applies the {@code before} function to its input, and then
      * applies this consumer to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * boolean}.
      */
     @Nonnull
-    default BooleanConsumer composeFromBoolean(@Nonnull final BooleanToDoubleFunction before) {
+    default BooleanConsumer composeFromBoolean(@Nonnull BooleanToDoubleFunction before) {
         Objects.requireNonNull(before);
-        return (value) -> accept(before.applyAsDouble(value));
+        return value -> accept(before.applyAsDouble(value));
     }
 
     /**
-     * Returns a composed {@link ByteConsumer} that first applies the {@code before} function to
-     * its input, and then applies this consumer to the result.
-     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
-     * This method is just convenience, to provide the ability to execute an operation which accepts {@code byte} input,
-     * before this primitive consumer is executed.
+     * Returns a composed {@link ByteConsumer} that first applies the {@code before} function to its input, and then
+     * applies this consumer to the result. If evaluation of either operation throws an exception, it is relayed to the
+     * caller of the composed operation. This method is just convenience, to provide the ability to execute an operation
+     * which accepts {@code byte} input, before this primitive consumer is executed.
      *
      * @param before The function to apply before this consumer is applied
      * @return A composed {@code ByteConsumer} that first applies the {@code before} function to its input, and then
      * applies this consumer to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * byte}.
      */
     @Nonnull
-    default ByteConsumer composeFromByte(@Nonnull final ByteToDoubleFunction before) {
+    default ByteConsumer composeFromByte(@Nonnull ByteToDoubleFunction before) {
         Objects.requireNonNull(before);
-        return (value) -> accept(before.applyAsDouble(value));
+        return value -> accept(before.applyAsDouble(value));
     }
 
     /**
-     * Returns a composed {@link CharConsumer} that first applies the {@code before} function to
-     * its input, and then applies this consumer to the result.
-     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
-     * This method is just convenience, to provide the ability to execute an operation which accepts {@code char} input,
-     * before this primitive consumer is executed.
+     * Returns a composed {@link CharConsumer} that first applies the {@code before} function to its input, and then
+     * applies this consumer to the result. If evaluation of either operation throws an exception, it is relayed to the
+     * caller of the composed operation. This method is just convenience, to provide the ability to execute an operation
+     * which accepts {@code char} input, before this primitive consumer is executed.
      *
      * @param before The function to apply before this consumer is applied
      * @return A composed {@code CharConsumer} that first applies the {@code before} function to its input, and then
      * applies this consumer to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * char}.
      */
     @Nonnull
-    default CharConsumer composeFromChar(@Nonnull final CharToDoubleFunction before) {
+    default CharConsumer composeFromChar(@Nonnull CharToDoubleFunction before) {
         Objects.requireNonNull(before);
-        return (value) -> accept(before.applyAsDouble(value));
+        return value -> accept(before.applyAsDouble(value));
     }
 
     /**
@@ -180,13 +181,13 @@ public interface DoubleConsumer2 extends Lambda, DoubleConsumer {
      * @return A composed {@code DoubleConsumer2} that first applies the {@code before} operator to its input, and then
      * applies this consumer to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * double}.
      */
     @Nonnull
-    default DoubleConsumer2 composeFromDouble(@Nonnull final DoubleUnaryOperator before) {
+    default DoubleConsumer2 composeFromDouble(@Nonnull DoubleUnaryOperator before) {
         Objects.requireNonNull(before);
-        return (value) -> accept(before.applyAsDouble(value));
+        return value -> accept(before.applyAsDouble(value));
     }
 
     /**
@@ -199,53 +200,51 @@ public interface DoubleConsumer2 extends Lambda, DoubleConsumer {
      * @return A composed {@code FloatConsumer} that first applies the {@code before} function to its input, and then
      * applies this consumer to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * float}.
      */
     @Nonnull
-    default FloatConsumer composeFromFloat(@Nonnull final FloatToDoubleFunction before) {
+    default FloatConsumer composeFromFloat(@Nonnull FloatToDoubleFunction before) {
         Objects.requireNonNull(before);
-        return (value) -> accept(before.applyAsDouble(value));
+        return value -> accept(before.applyAsDouble(value));
     }
 
     /**
-     * Returns a composed {@link IntConsumer2} that first applies the {@code before} function to
-     * its input, and then applies this consumer to the result.
-     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
-     * This method is just convenience, to provide the ability to execute an operation which accepts {@code int} input,
-     * before this primitive consumer is executed.
+     * Returns a composed {@link IntConsumer2} that first applies the {@code before} function to its input, and then
+     * applies this consumer to the result. If evaluation of either operation throws an exception, it is relayed to the
+     * caller of the composed operation. This method is just convenience, to provide the ability to execute an operation
+     * which accepts {@code int} input, before this primitive consumer is executed.
      *
      * @param before The function to apply before this consumer is applied
      * @return A composed {@code IntConsumer2} that first applies the {@code before} function to its input, and then
      * applies this consumer to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * int}.
      */
     @Nonnull
-    default IntConsumer2 composeFromInt(@Nonnull final IntToDoubleFunction before) {
+    default IntConsumer2 composeFromInt(@Nonnull IntToDoubleFunction before) {
         Objects.requireNonNull(before);
-        return (value) -> accept(before.applyAsDouble(value));
+        return value -> accept(before.applyAsDouble(value));
     }
 
     /**
-     * Returns a composed {@link LongConsumer2} that first applies the {@code before} function to
-     * its input, and then applies this consumer to the result.
-     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
-     * This method is just convenience, to provide the ability to execute an operation which accepts {@code long} input,
-     * before this primitive consumer is executed.
+     * Returns a composed {@link LongConsumer2} that first applies the {@code before} function to its input, and then
+     * applies this consumer to the result. If evaluation of either operation throws an exception, it is relayed to the
+     * caller of the composed operation. This method is just convenience, to provide the ability to execute an operation
+     * which accepts {@code long} input, before this primitive consumer is executed.
      *
      * @param before The function to apply before this consumer is applied
      * @return A composed {@code LongConsumer2} that first applies the {@code before} function to its input, and then
      * applies this consumer to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * long}.
      */
     @Nonnull
-    default LongConsumer2 composeFromLong(@Nonnull final LongToDoubleFunction before) {
+    default LongConsumer2 composeFromLong(@Nonnull LongToDoubleFunction before) {
         Objects.requireNonNull(before);
-        return (value) -> accept(before.applyAsDouble(value));
+        return value -> accept(before.applyAsDouble(value));
     }
 
     /**
@@ -258,13 +257,13 @@ public interface DoubleConsumer2 extends Lambda, DoubleConsumer {
      * @return A composed {@code ShortConsumer} that first applies the {@code before} function to its input, and then
      * applies this consumer to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * short}.
      */
     @Nonnull
-    default ShortConsumer composeFromShort(@Nonnull final ShortToDoubleFunction before) {
+    default ShortConsumer composeFromShort(@Nonnull ShortToDoubleFunction before) {
         Objects.requireNonNull(before);
-        return (value) -> accept(before.applyAsDouble(value));
+        return value -> accept(before.applyAsDouble(value));
     }
 
     /**
@@ -278,19 +277,20 @@ public interface DoubleConsumer2 extends Lambda, DoubleConsumer {
      * after} consumer.
      * @throws NullPointerException If given argument is {@code null}
      */
+    @Override
     @Nonnull
-    default DoubleConsumer2 andThen(@Nonnull final DoubleConsumer after) {
+    default DoubleConsumer2 andThen(@Nonnull DoubleConsumer after) {
         Objects.requireNonNull(after);
-        return (value) -> {
+        return value -> {
             accept(value);
             after.accept(value);
         };
     }
 
     /**
-     * Returns a composed {@link Consumer2} which represents this {@link DoubleConsumer2}. Thereby the primitive
-     * input argument for this consumer is autoboxed. This method provides the possibility to use this
-     * {@code DoubleConsumer2} with methods provided by the {@code JDK}.
+     * Returns a composed {@link Consumer2} which represents this {@link DoubleConsumer2}. Thereby the primitive input
+     * argument for this consumer is autoboxed. This method provides the possibility to use this {@code DoubleConsumer2}
+     * with methods provided by the {@code JDK}.
      *
      * @return A composed {@code Consumer2} which represents this {@code DoubleConsumer2}.
      */

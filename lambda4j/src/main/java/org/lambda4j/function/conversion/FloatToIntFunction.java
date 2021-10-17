@@ -13,7 +13,22 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package org.lambda4j.function.conversion;
+
+import java.util.Map;
+import java.util.Objects;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.function.IntConsumer;
+import java.util.function.IntFunction;
+import java.util.function.IntPredicate;
+import java.util.function.IntToDoubleFunction;
+import java.util.function.IntToLongFunction;
+import java.util.function.IntUnaryOperator;
+
+import javax.annotation.Nonnegative;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import org.lambda4j.Lambda;
 import org.lambda4j.consumer.FloatConsumer;
@@ -25,23 +40,9 @@ import org.lambda4j.operator.unary.FloatUnaryOperator;
 import org.lambda4j.operator.unary.IntUnaryOperator2;
 import org.lambda4j.predicate.FloatPredicate;
 
-import javax.annotation.Nonnegative;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import java.util.Map;
-import java.util.Objects;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.function.IntConsumer;
-import java.util.function.IntFunction;
-import java.util.function.IntPredicate;
-import java.util.function.IntToDoubleFunction;
-import java.util.function.IntToLongFunction;
-import java.util.function.IntUnaryOperator;
-
 /**
- * Represents an operation that accepts one {@code float}-valued input argument and produces a
- * {@code int}-valued result.
- * This is a primitive specialization of {@link Function2}.
+ * Represents an operation that accepts one {@code float}-valued input argument and produces a {@code int}-valued
+ * result. This is a primitive specialization of {@link Function2}.
  * <p>
  * This is a {@link FunctionalInterface} whose functional method is {@link #applyAsInt(float)}.
  *
@@ -65,7 +66,7 @@ public interface FloatToIntFunction extends Lambda {
      * Expression</a>
      * @see <a href="https://docs.oracle.com/javase/tutorial/java/javaOO/methodreferences.html">Method Reference</a>
      */
-    static FloatToIntFunction of(@Nullable final FloatToIntFunction expression) {
+    static FloatToIntFunction of(@Nullable FloatToIntFunction expression) {
         return expression;
     }
 
@@ -77,7 +78,7 @@ public interface FloatToIntFunction extends Lambda {
      * @return The result from the given {@code FloatToIntFunction}.
      * @throws NullPointerException If given argument is {@code null}
      */
-    static int call(@Nonnull final FloatToIntFunction function, float value) {
+    static int call(@Nonnull FloatToIntFunction function, float value) {
         Objects.requireNonNull(function);
         return function.applyAsInt(value);
     }
@@ -90,7 +91,7 @@ public interface FloatToIntFunction extends Lambda {
      */
     @Nonnull
     static FloatToIntFunction constant(int ret) {
-        return (value) -> ret;
+        return value -> ret;
     }
 
     /**
@@ -113,9 +114,9 @@ public interface FloatToIntFunction extends Lambda {
     }
 
     /**
-     * Returns a composed {@link ToIntFunction2} that first applies the {@code before} function to its input, and
-     * then applies this function to the result.
-     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
+     * Returns a composed {@link ToIntFunction2} that first applies the {@code before} function to its input, and then
+     * applies this function to the result. If evaluation of either operation throws an exception, it is relayed to the
+     * caller of the composed operation.
      *
      * @param <A> The type of the argument to the given function, and of composed function
      * @param before The function to apply before this function is applied
@@ -125,9 +126,9 @@ public interface FloatToIntFunction extends Lambda {
      * @implSpec The input argument of this method is able to handle every type.
      */
     @Nonnull
-    default <A> ToIntFunction2<A> compose(@Nonnull final ToFloatFunction<? super A> before) {
+    default <A> ToIntFunction2<A> compose(@Nonnull ToFloatFunction<? super A> before) {
         Objects.requireNonNull(before);
-        return (a) -> applyAsInt(before.applyAsFloat(a));
+        return a -> applyAsInt(before.applyAsFloat(a));
     }
 
     /**
@@ -140,53 +141,51 @@ public interface FloatToIntFunction extends Lambda {
      * @return A composed {@code BooleanToIntFunction} that first applies the {@code before} function to its input, and
      * then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * boolean}.
      */
     @Nonnull
-    default BooleanToIntFunction composeFromBoolean(@Nonnull final BooleanToFloatFunction before) {
+    default BooleanToIntFunction composeFromBoolean(@Nonnull BooleanToFloatFunction before) {
         Objects.requireNonNull(before);
-        return (value) -> applyAsInt(before.applyAsFloat(value));
+        return value -> applyAsInt(before.applyAsFloat(value));
     }
 
     /**
-     * Returns a composed {@link ByteToIntFunction} that first applies the {@code before} function to
-     * its input, and then applies this function to the result.
-     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
-     * This method is just convenience, to provide the ability to execute an operation which accepts {@code byte} input,
-     * before this primitive function is executed.
+     * Returns a composed {@link ByteToIntFunction} that first applies the {@code before} function to its input, and
+     * then applies this function to the result. If evaluation of either operation throws an exception, it is relayed to
+     * the caller of the composed operation. This method is just convenience, to provide the ability to execute an
+     * operation which accepts {@code byte} input, before this primitive function is executed.
      *
      * @param before The function to apply before this function is applied
      * @return A composed {@code ByteToIntFunction} that first applies the {@code before} function to its input, and
      * then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * byte}.
      */
     @Nonnull
-    default ByteToIntFunction composeFromByte(@Nonnull final ByteToFloatFunction before) {
+    default ByteToIntFunction composeFromByte(@Nonnull ByteToFloatFunction before) {
         Objects.requireNonNull(before);
-        return (value) -> applyAsInt(before.applyAsFloat(value));
+        return value -> applyAsInt(before.applyAsFloat(value));
     }
 
     /**
-     * Returns a composed {@link CharToIntFunction} that first applies the {@code before} function to
-     * its input, and then applies this function to the result.
-     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
-     * This method is just convenience, to provide the ability to execute an operation which accepts {@code char} input,
-     * before this primitive function is executed.
+     * Returns a composed {@link CharToIntFunction} that first applies the {@code before} function to its input, and
+     * then applies this function to the result. If evaluation of either operation throws an exception, it is relayed to
+     * the caller of the composed operation. This method is just convenience, to provide the ability to execute an
+     * operation which accepts {@code char} input, before this primitive function is executed.
      *
      * @param before The function to apply before this function is applied
      * @return A composed {@code CharToIntFunction} that first applies the {@code before} function to its input, and
      * then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * char}.
      */
     @Nonnull
-    default CharToIntFunction composeFromChar(@Nonnull final CharToFloatFunction before) {
+    default CharToIntFunction composeFromChar(@Nonnull CharToFloatFunction before) {
         Objects.requireNonNull(before);
-        return (value) -> applyAsInt(before.applyAsFloat(value));
+        return value -> applyAsInt(before.applyAsFloat(value));
     }
 
     /**
@@ -199,13 +198,13 @@ public interface FloatToIntFunction extends Lambda {
      * @return A composed {@code DoubleToIntFunction2} that first applies the {@code before} function to its input, and
      * then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * double}.
      */
     @Nonnull
-    default DoubleToIntFunction2 composeFromDouble(@Nonnull final DoubleToFloatFunction before) {
+    default DoubleToIntFunction2 composeFromDouble(@Nonnull DoubleToFloatFunction before) {
         Objects.requireNonNull(before);
-        return (value) -> applyAsInt(before.applyAsFloat(value));
+        return value -> applyAsInt(before.applyAsFloat(value));
     }
 
     /**
@@ -218,53 +217,51 @@ public interface FloatToIntFunction extends Lambda {
      * @return A composed {@code FloatToIntFunction} that first applies the {@code before} operator to its input, and
      * then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * float}.
      */
     @Nonnull
-    default FloatToIntFunction composeFromFloat(@Nonnull final FloatUnaryOperator before) {
+    default FloatToIntFunction composeFromFloat(@Nonnull FloatUnaryOperator before) {
         Objects.requireNonNull(before);
-        return (value) -> applyAsInt(before.applyAsFloat(value));
+        return value -> applyAsInt(before.applyAsFloat(value));
     }
 
     /**
-     * Returns a composed {@link IntUnaryOperator2} that first applies the {@code before} function to
-     * its input, and then applies this function to the result.
-     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
-     * This method is just convenience, to provide the ability to execute an operation which accepts {@code int} input,
-     * before this primitive function is executed.
+     * Returns a composed {@link IntUnaryOperator2} that first applies the {@code before} function to its input, and
+     * then applies this function to the result. If evaluation of either operation throws an exception, it is relayed to
+     * the caller of the composed operation. This method is just convenience, to provide the ability to execute an
+     * operation which accepts {@code int} input, before this primitive function is executed.
      *
      * @param before The function to apply before this function is applied
      * @return A composed {@code IntUnaryOperator2} that first applies the {@code before} function to its input, and
      * then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * int}.
      */
     @Nonnull
-    default IntUnaryOperator2 composeFromInt(@Nonnull final IntToFloatFunction before) {
+    default IntUnaryOperator2 composeFromInt(@Nonnull IntToFloatFunction before) {
         Objects.requireNonNull(before);
-        return (value) -> applyAsInt(before.applyAsFloat(value));
+        return value -> applyAsInt(before.applyAsFloat(value));
     }
 
     /**
-     * Returns a composed {@link LongToIntFunction2} that first applies the {@code before} function to
-     * its input, and then applies this function to the result.
-     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
-     * This method is just convenience, to provide the ability to execute an operation which accepts {@code long} input,
-     * before this primitive function is executed.
+     * Returns a composed {@link LongToIntFunction2} that first applies the {@code before} function to its input, and
+     * then applies this function to the result. If evaluation of either operation throws an exception, it is relayed to
+     * the caller of the composed operation. This method is just convenience, to provide the ability to execute an
+     * operation which accepts {@code long} input, before this primitive function is executed.
      *
      * @param before The function to apply before this function is applied
      * @return A composed {@code LongToIntFunction2} that first applies the {@code before} function to its input, and
      * then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * long}.
      */
     @Nonnull
-    default LongToIntFunction2 composeFromLong(@Nonnull final LongToFloatFunction before) {
+    default LongToIntFunction2 composeFromLong(@Nonnull LongToFloatFunction before) {
         Objects.requireNonNull(before);
-        return (value) -> applyAsInt(before.applyAsFloat(value));
+        return value -> applyAsInt(before.applyAsFloat(value));
     }
 
     /**
@@ -277,19 +274,19 @@ public interface FloatToIntFunction extends Lambda {
      * @return A composed {@code ShortToIntFunction} that first applies the {@code before} function to its input, and
      * then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * short}.
      */
     @Nonnull
-    default ShortToIntFunction composeFromShort(@Nonnull final ShortToFloatFunction before) {
+    default ShortToIntFunction composeFromShort(@Nonnull ShortToFloatFunction before) {
         Objects.requireNonNull(before);
-        return (value) -> applyAsInt(before.applyAsFloat(value));
+        return value -> applyAsInt(before.applyAsFloat(value));
     }
 
     /**
      * Returns a composed {@link FloatFunction} that first applies this function to its input, and then applies the
-     * {@code after} function to the result.
-     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
+     * {@code after} function to the result. If evaluation of either operation throws an exception, it is relayed to the
+     * caller of the composed operation.
      *
      * @param <S> The type of return value from the {@code after} function, and of the composed function
      * @param after The function to apply after this function is applied
@@ -299,9 +296,9 @@ public interface FloatToIntFunction extends Lambda {
      * @implSpec The input argument of this method is able to return every type.
      */
     @Nonnull
-    default <S> FloatFunction<S> andThen(@Nonnull final IntFunction<? extends S> after) {
+    default <S> FloatFunction<S> andThen(@Nonnull IntFunction<? extends S> after) {
         Objects.requireNonNull(after);
-        return (value) -> after.apply(applyAsInt(value));
+        return value -> after.apply(applyAsInt(value));
     }
 
     /**
@@ -314,13 +311,13 @@ public interface FloatToIntFunction extends Lambda {
      * @return A composed {@code FloatPredicate} that first applies this function to its input, and then applies the
      * {@code after} predicate to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * boolean}.
      */
     @Nonnull
-    default FloatPredicate andThenToBoolean(@Nonnull final IntPredicate after) {
+    default FloatPredicate andThenToBoolean(@Nonnull IntPredicate after) {
         Objects.requireNonNull(after);
-        return (value) -> after.test(applyAsInt(value));
+        return value -> after.test(applyAsInt(value));
     }
 
     /**
@@ -333,13 +330,13 @@ public interface FloatToIntFunction extends Lambda {
      * @return A composed {@code FloatToByteFunction} that first applies this function to its input, and then applies
      * the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * byte}.
      */
     @Nonnull
-    default FloatToByteFunction andThenToByte(@Nonnull final IntToByteFunction after) {
+    default FloatToByteFunction andThenToByte(@Nonnull IntToByteFunction after) {
         Objects.requireNonNull(after);
-        return (value) -> after.applyAsByte(applyAsInt(value));
+        return value -> after.applyAsByte(applyAsInt(value));
     }
 
     /**
@@ -352,13 +349,13 @@ public interface FloatToIntFunction extends Lambda {
      * @return A composed {@code FloatToCharFunction} that first applies this function to its input, and then applies
      * the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * char}.
      */
     @Nonnull
-    default FloatToCharFunction andThenToChar(@Nonnull final IntToCharFunction after) {
+    default FloatToCharFunction andThenToChar(@Nonnull IntToCharFunction after) {
         Objects.requireNonNull(after);
-        return (value) -> after.applyAsChar(applyAsInt(value));
+        return value -> after.applyAsChar(applyAsInt(value));
     }
 
     /**
@@ -371,13 +368,13 @@ public interface FloatToIntFunction extends Lambda {
      * @return A composed {@code FloatToDoubleFunction} that first applies this function to its input, and then applies
      * the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * double}.
      */
     @Nonnull
-    default FloatToDoubleFunction andThenToDouble(@Nonnull final IntToDoubleFunction after) {
+    default FloatToDoubleFunction andThenToDouble(@Nonnull IntToDoubleFunction after) {
         Objects.requireNonNull(after);
-        return (value) -> after.applyAsDouble(applyAsInt(value));
+        return value -> after.applyAsDouble(applyAsInt(value));
     }
 
     /**
@@ -390,13 +387,13 @@ public interface FloatToIntFunction extends Lambda {
      * @return A composed {@code FloatUnaryOperator} that first applies this function to its input, and then applies the
      * {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * float}.
      */
     @Nonnull
-    default FloatUnaryOperator andThenToFloat(@Nonnull final IntToFloatFunction after) {
+    default FloatUnaryOperator andThenToFloat(@Nonnull IntToFloatFunction after) {
         Objects.requireNonNull(after);
-        return (value) -> after.applyAsFloat(applyAsInt(value));
+        return value -> after.applyAsFloat(applyAsInt(value));
     }
 
     /**
@@ -409,13 +406,13 @@ public interface FloatToIntFunction extends Lambda {
      * @return A composed {@code FloatToIntFunction} that first applies this function to its input, and then applies the
      * {@code after} operator to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * int}.
      */
     @Nonnull
-    default FloatToIntFunction andThenToInt(@Nonnull final IntUnaryOperator after) {
+    default FloatToIntFunction andThenToInt(@Nonnull IntUnaryOperator after) {
         Objects.requireNonNull(after);
-        return (value) -> after.applyAsInt(applyAsInt(value));
+        return value -> after.applyAsInt(applyAsInt(value));
     }
 
     /**
@@ -428,13 +425,13 @@ public interface FloatToIntFunction extends Lambda {
      * @return A composed {@code FloatToLongFunction} that first applies this function to its input, and then applies
      * the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * long}.
      */
     @Nonnull
-    default FloatToLongFunction andThenToLong(@Nonnull final IntToLongFunction after) {
+    default FloatToLongFunction andThenToLong(@Nonnull IntToLongFunction after) {
         Objects.requireNonNull(after);
-        return (value) -> after.applyAsLong(applyAsInt(value));
+        return value -> after.applyAsLong(applyAsInt(value));
     }
 
     /**
@@ -447,13 +444,13 @@ public interface FloatToIntFunction extends Lambda {
      * @return A composed {@code FloatToShortFunction} that first applies this function to its input, and then applies
      * the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * short}.
      */
     @Nonnull
-    default FloatToShortFunction andThenToShort(@Nonnull final IntToShortFunction after) {
+    default FloatToShortFunction andThenToShort(@Nonnull IntToShortFunction after) {
         Objects.requireNonNull(after);
-        return (value) -> after.applyAsShort(applyAsInt(value));
+        return value -> after.applyAsShort(applyAsInt(value));
     }
 
     /**
@@ -467,9 +464,9 @@ public interface FloatToIntFunction extends Lambda {
      * @throws NullPointerException If given argument is {@code null}
      */
     @Nonnull
-    default FloatConsumer consume(@Nonnull final IntConsumer consumer) {
+    default FloatConsumer consume(@Nonnull IntConsumer consumer) {
         Objects.requireNonNull(consumer);
-        return (value) -> consumer.accept(applyAsInt(value));
+        return value -> consumer.accept(applyAsInt(value));
     }
 
     /**
@@ -491,10 +488,10 @@ public interface FloatToIntFunction extends Lambda {
         if (isMemoized()) {
             return this;
         } else {
-            final Map<Float, Integer> cache = new ConcurrentHashMap<>();
-            final Object lock = new Object();
-            return (FloatToIntFunction & Memoized) (value) -> {
-                final int returnValue;
+            Map<Float, Integer> cache = new ConcurrentHashMap<>();
+            Object lock = new Object();
+            return (FloatToIntFunction & Memoized) value -> {
+                int returnValue;
                 synchronized (lock) {
                     returnValue = cache.computeIfAbsent(value, this::applyAsInt);
                 }
@@ -505,8 +502,8 @@ public interface FloatToIntFunction extends Lambda {
 
     /**
      * Returns a composed {@link Function2} which represents this {@link FloatToIntFunction}. Thereby the primitive
-     * input argument for this function is autoboxed. This method provides the possibility to use this
-     * {@code FloatToIntFunction} with methods provided by the {@code JDK}.
+     * input argument for this function is autoboxed. This method provides the possibility to use this {@code
+     * FloatToIntFunction} with methods provided by the {@code JDK}.
      *
      * @return A composed {@code Function2} which represents this {@code FloatToIntFunction}.
      */

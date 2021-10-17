@@ -13,10 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package org.lambda4j.core.util;
 
-import javax.annotation.Nonnull;
 import java.util.Objects;
+
+import javax.annotation.Nonnull;
 
 /**
  * This class implements utils for {@link Throwable}.
@@ -62,6 +64,13 @@ public final class ThrowableUtils {
         return null;
     }
 
+    /**
+     * Represents a helper function for {@link #sneakyThrow(Throwable)}.
+     *
+     * @param <X> The type of the throwable to be thrown
+     * @param t The throwable to be thrown.
+     * @throws X Always thrown.
+     */
     @SuppressWarnings("unchecked")
     private static <X extends Throwable> void sneakyThrow0(Throwable t) throws X {
         throw (X) t;

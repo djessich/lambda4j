@@ -13,22 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package org.lambda4j.function.bi;
 
-import org.lambda4j.Lambda;
-import org.lambda4j.consumer.bi.BiLongConsumer;
-import org.lambda4j.function.LongFunction2;
-import org.lambda4j.function.conversion.BooleanToLongFunction;
-import org.lambda4j.function.conversion.ByteToLongFunction;
-import org.lambda4j.function.conversion.CharToLongFunction;
-import org.lambda4j.function.conversion.FloatToLongFunction;
-import org.lambda4j.function.conversion.ShortToLongFunction;
-
-import org.apache.commons.lang3.tuple.Pair;
-
-import javax.annotation.Nonnegative;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
@@ -41,10 +28,24 @@ import java.util.function.LongFunction;
 import java.util.function.LongUnaryOperator;
 import java.util.function.ToLongFunction;
 
+import javax.annotation.Nonnegative;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
+import org.apache.commons.lang3.tuple.Pair;
+
+import org.lambda4j.Lambda;
+import org.lambda4j.consumer.bi.BiLongConsumer;
+import org.lambda4j.function.LongFunction2;
+import org.lambda4j.function.conversion.BooleanToLongFunction;
+import org.lambda4j.function.conversion.ByteToLongFunction;
+import org.lambda4j.function.conversion.CharToLongFunction;
+import org.lambda4j.function.conversion.FloatToLongFunction;
+import org.lambda4j.function.conversion.ShortToLongFunction;
+
 /**
- * Represents an operation that accepts two {@code long}-valued input arguments and produces a
- * result.
- * This is a primitive specialization of {@link BiFunction2}.
+ * Represents an operation that accepts two {@code long}-valued input arguments and produces a result. This is a
+ * primitive specialization of {@link BiFunction2}.
  * <p>
  * This is a {@link FunctionalInterface} whose functional method is {@link #apply(long, long)}.
  *
@@ -69,7 +70,7 @@ public interface BiLongFunction<R> extends Lambda {
      * Expression</a>
      * @see <a href="https://docs.oracle.com/javase/tutorial/java/javaOO/methodreferences.html">Method Reference</a>
      */
-    static <R> BiLongFunction<R> of(@Nullable final BiLongFunction<R> expression) {
+    static <R> BiLongFunction<R> of(@Nullable BiLongFunction<R> expression) {
         return expression;
     }
 
@@ -84,7 +85,7 @@ public interface BiLongFunction<R> extends Lambda {
      * @throws NullPointerException If given argument is {@code null}
      */
     @Nonnull
-    static <R> BiLongFunction<Optional<R>> lift(@Nonnull final BiLongFunction<? extends R> partial) {
+    static <R> BiLongFunction<Optional<R>> lift(@Nonnull BiLongFunction<? extends R> partial) {
         Objects.requireNonNull(partial);
         return (value1, value2) -> Optional.ofNullable(partial.apply(value1, value2));
     }
@@ -99,7 +100,7 @@ public interface BiLongFunction<R> extends Lambda {
      * @return The result from the given {@code BiLongFunction}.
      * @throws NullPointerException If given argument is {@code null}
      */
-    static <R> R call(@Nonnull final BiLongFunction<? extends R> function, long value1, long value2) {
+    static <R> R call(@Nonnull BiLongFunction<? extends R> function, long value1, long value2) {
         Objects.requireNonNull(function);
         return function.apply(value1, value2);
     }
@@ -115,7 +116,7 @@ public interface BiLongFunction<R> extends Lambda {
      * @throws NullPointerException If given argument is {@code null}
      */
     @Nonnull
-    static <R> BiLongFunction<R> onlyFirst(@Nonnull final LongFunction<? extends R> function) {
+    static <R> BiLongFunction<R> onlyFirst(@Nonnull LongFunction<? extends R> function) {
         Objects.requireNonNull(function);
         return (value1, value2) -> function.apply(value1);
     }
@@ -131,7 +132,7 @@ public interface BiLongFunction<R> extends Lambda {
      * @throws NullPointerException If given argument is {@code null}
      */
     @Nonnull
-    static <R> BiLongFunction<R> onlySecond(@Nonnull final LongFunction<? extends R> function) {
+    static <R> BiLongFunction<R> onlySecond(@Nonnull LongFunction<? extends R> function) {
         Objects.requireNonNull(function);
         return (value1, value2) -> function.apply(value2);
     }
@@ -165,7 +166,7 @@ public interface BiLongFunction<R> extends Lambda {
      */
     @Nonnull
     default LongFunction2<R> papply(long value1) {
-        return (value2) -> this.apply(value1, value2);
+        return value2 -> apply(value1, value2);
     }
 
     /**
@@ -180,9 +181,9 @@ public interface BiLongFunction<R> extends Lambda {
     }
 
     /**
-     * Returns a composed {@link BiFunction2} that first applies the {@code before} functions to its input, and
-     * then applies this function to the result.
-     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
+     * Returns a composed {@link BiFunction2} that first applies the {@code before} functions to its input, and then
+     * applies this function to the result. If evaluation of either operation throws an exception, it is relayed to the
+     * caller of the composed operation.
      *
      * @param <A> The type of the argument to the first given function, and of composed function
      * @param <B> The type of the argument to the second given function, and of composed function
@@ -194,8 +195,8 @@ public interface BiLongFunction<R> extends Lambda {
      * @implSpec The input argument of this method is able to handle every type.
      */
     @Nonnull
-    default <A, B> BiFunction2<A, B, R> compose(@Nonnull final ToLongFunction<? super A> before1,
-            @Nonnull final ToLongFunction<? super B> before2) {
+    default <A, B> BiFunction2<A, B, R> compose(@Nonnull ToLongFunction<? super A> before1,
+            @Nonnull ToLongFunction<? super B> before2) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         return (a, b) -> apply(before1.applyAsLong(a), before2.applyAsLong(b));
@@ -212,58 +213,56 @@ public interface BiLongFunction<R> extends Lambda {
      * @return A composed {@code BiBooleanFunction} that first applies the {@code before} functions to its input, and
      * then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * boolean}.
      */
     @Nonnull
-    default BiBooleanFunction<R> composeFromBoolean(@Nonnull final BooleanToLongFunction before1,
-            @Nonnull final BooleanToLongFunction before2) {
+    default BiBooleanFunction<R> composeFromBoolean(@Nonnull BooleanToLongFunction before1,
+            @Nonnull BooleanToLongFunction before2) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         return (value1, value2) -> apply(before1.applyAsLong(value1), before2.applyAsLong(value2));
     }
 
     /**
-     * Returns a composed {@link BiByteFunction} that first applies the {@code before} functions to
-     * its input, and then applies this function to the result.
-     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
-     * This method is just convenience, to provide the ability to execute an operation which accepts {@code byte} input,
-     * before this primitive function is executed.
+     * Returns a composed {@link BiByteFunction} that first applies the {@code before} functions to its input, and then
+     * applies this function to the result. If evaluation of either operation throws an exception, it is relayed to the
+     * caller of the composed operation. This method is just convenience, to provide the ability to execute an operation
+     * which accepts {@code byte} input, before this primitive function is executed.
      *
      * @param before1 The first function to apply before this function is applied
      * @param before2 The second function to apply before this function is applied
      * @return A composed {@code BiByteFunction} that first applies the {@code before} functions to its input, and then
      * applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * byte}.
      */
     @Nonnull
-    default BiByteFunction<R> composeFromByte(@Nonnull final ByteToLongFunction before1,
-            @Nonnull final ByteToLongFunction before2) {
+    default BiByteFunction<R> composeFromByte(@Nonnull ByteToLongFunction before1,
+            @Nonnull ByteToLongFunction before2) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         return (value1, value2) -> apply(before1.applyAsLong(value1), before2.applyAsLong(value2));
     }
 
     /**
-     * Returns a composed {@link BiCharFunction} that first applies the {@code before} functions to
-     * its input, and then applies this function to the result.
-     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
-     * This method is just convenience, to provide the ability to execute an operation which accepts {@code char} input,
-     * before this primitive function is executed.
+     * Returns a composed {@link BiCharFunction} that first applies the {@code before} functions to its input, and then
+     * applies this function to the result. If evaluation of either operation throws an exception, it is relayed to the
+     * caller of the composed operation. This method is just convenience, to provide the ability to execute an operation
+     * which accepts {@code char} input, before this primitive function is executed.
      *
      * @param before1 The first function to apply before this function is applied
      * @param before2 The second function to apply before this function is applied
      * @return A composed {@code BiCharFunction} that first applies the {@code before} functions to its input, and then
      * applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * char}.
      */
     @Nonnull
-    default BiCharFunction<R> composeFromChar(@Nonnull final CharToLongFunction before1,
-            @Nonnull final CharToLongFunction before2) {
+    default BiCharFunction<R> composeFromChar(@Nonnull CharToLongFunction before1,
+            @Nonnull CharToLongFunction before2) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         return (value1, value2) -> apply(before1.applyAsLong(value1), before2.applyAsLong(value2));
@@ -280,12 +279,12 @@ public interface BiLongFunction<R> extends Lambda {
      * @return A composed {@code BiDoubleFunction} that first applies the {@code before} functions to its input, and
      * then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * double}.
      */
     @Nonnull
-    default BiDoubleFunction<R> composeFromDouble(@Nonnull final DoubleToLongFunction before1,
-            @Nonnull final DoubleToLongFunction before2) {
+    default BiDoubleFunction<R> composeFromDouble(@Nonnull DoubleToLongFunction before1,
+            @Nonnull DoubleToLongFunction before2) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         return (value1, value2) -> apply(before1.applyAsLong(value1), before2.applyAsLong(value2));
@@ -302,58 +301,56 @@ public interface BiLongFunction<R> extends Lambda {
      * @return A composed {@code BiFloatFunction} that first applies the {@code before} functions to its input, and then
      * applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * float}.
      */
     @Nonnull
-    default BiFloatFunction<R> composeFromFloat(@Nonnull final FloatToLongFunction before1,
-            @Nonnull final FloatToLongFunction before2) {
+    default BiFloatFunction<R> composeFromFloat(@Nonnull FloatToLongFunction before1,
+            @Nonnull FloatToLongFunction before2) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         return (value1, value2) -> apply(before1.applyAsLong(value1), before2.applyAsLong(value2));
     }
 
     /**
-     * Returns a composed {@link BiIntFunction} that first applies the {@code before} functions to
-     * its input, and then applies this function to the result.
-     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
-     * This method is just convenience, to provide the ability to execute an operation which accepts {@code int} input,
-     * before this primitive function is executed.
+     * Returns a composed {@link BiIntFunction} that first applies the {@code before} functions to its input, and then
+     * applies this function to the result. If evaluation of either operation throws an exception, it is relayed to the
+     * caller of the composed operation. This method is just convenience, to provide the ability to execute an operation
+     * which accepts {@code int} input, before this primitive function is executed.
      *
      * @param before1 The first function to apply before this function is applied
      * @param before2 The second function to apply before this function is applied
      * @return A composed {@code BiIntFunction} that first applies the {@code before} functions to its input, and then
      * applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * int}.
      */
     @Nonnull
-    default BiIntFunction<R> composeFromInt(@Nonnull final IntToLongFunction before1,
-            @Nonnull final IntToLongFunction before2) {
+    default BiIntFunction<R> composeFromInt(@Nonnull IntToLongFunction before1,
+            @Nonnull IntToLongFunction before2) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         return (value1, value2) -> apply(before1.applyAsLong(value1), before2.applyAsLong(value2));
     }
 
     /**
-     * Returns a composed {@link BiLongFunction} that first applies the {@code before} operators to
-     * its input, and then applies this function to the result.
-     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
-     * This method is just convenience, to provide the ability to execute an operation which accepts {@code long} input,
-     * before this primitive function is executed.
+     * Returns a composed {@link BiLongFunction} that first applies the {@code before} operators to its input, and then
+     * applies this function to the result. If evaluation of either operation throws an exception, it is relayed to the
+     * caller of the composed operation. This method is just convenience, to provide the ability to execute an operation
+     * which accepts {@code long} input, before this primitive function is executed.
      *
      * @param before1 The first operator to apply before this function is applied
      * @param before2 The second operator to apply before this function is applied
      * @return A composed {@code BiLongFunction} that first applies the {@code before} operators to its input, and then
      * applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * long}.
      */
     @Nonnull
-    default BiLongFunction<R> composeFromLong(@Nonnull final LongUnaryOperator before1,
-            @Nonnull final LongUnaryOperator before2) {
+    default BiLongFunction<R> composeFromLong(@Nonnull LongUnaryOperator before1,
+            @Nonnull LongUnaryOperator before2) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         return (value1, value2) -> apply(before1.applyAsLong(value1), before2.applyAsLong(value2));
@@ -370,12 +367,12 @@ public interface BiLongFunction<R> extends Lambda {
      * @return A composed {@code BiShortFunction} that first applies the {@code before} functions to its input, and then
      * applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * short}.
      */
     @Nonnull
-    default BiShortFunction<R> composeFromShort(@Nonnull final ShortToLongFunction before1,
-            @Nonnull final ShortToLongFunction before2) {
+    default BiShortFunction<R> composeFromShort(@Nonnull ShortToLongFunction before1,
+            @Nonnull ShortToLongFunction before2) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         return (value1, value2) -> apply(before1.applyAsLong(value1), before2.applyAsLong(value2));
@@ -383,8 +380,8 @@ public interface BiLongFunction<R> extends Lambda {
 
     /**
      * Returns a composed {@link BiLongFunction} that first applies this function to its input, and then applies the
-     * {@code after} function to the result.
-     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
+     * {@code after} function to the result. If evaluation of either operation throws an exception, it is relayed to the
+     * caller of the composed operation.
      *
      * @param <S> The type of return value from the {@code after} function, and of the composed function
      * @param after The function to apply after this function is applied
@@ -394,7 +391,7 @@ public interface BiLongFunction<R> extends Lambda {
      * @implSpec The input argument of this method is able to return every type.
      */
     @Nonnull
-    default <S> BiLongFunction<S> andThen(@Nonnull final Function<? super R, ? extends S> after) {
+    default <S> BiLongFunction<S> andThen(@Nonnull Function<? super R, ? extends S> after) {
         Objects.requireNonNull(after);
         return (value1, value2) -> after.apply(apply(value1, value2));
     }
@@ -410,7 +407,7 @@ public interface BiLongFunction<R> extends Lambda {
      * @throws NullPointerException If given argument is {@code null}
      */
     @Nonnull
-    default BiLongConsumer consume(@Nonnull final Consumer<? super R> consumer) {
+    default BiLongConsumer consume(@Nonnull Consumer<? super R> consumer) {
         Objects.requireNonNull(consumer);
         return (value1, value2) -> consumer.accept(apply(value1, value2));
     }
@@ -434,13 +431,13 @@ public interface BiLongFunction<R> extends Lambda {
         if (isMemoized()) {
             return this;
         } else {
-            final Map<Pair<Long, Long>, R> cache = new ConcurrentHashMap<>();
-            final Object lock = new Object();
+            Map<Pair<Long, Long>, R> cache = new ConcurrentHashMap<>();
+            Object lock = new Object();
             return (BiLongFunction<R> & Memoized) (value1, value2) -> {
-                final R returnValue;
+                R returnValue;
                 synchronized (lock) {
                     returnValue = cache.computeIfAbsent(Pair.of(value1, value2),
-                                                        key -> apply(key.getLeft(), key.getRight()));
+                            key -> apply(key.getLeft(), key.getRight()));
                 }
                 return returnValue;
             };
@@ -448,9 +445,9 @@ public interface BiLongFunction<R> extends Lambda {
     }
 
     /**
-     * Converts this function to an equal function, which ensures that its result is not
-     * {@code null} using {@link Optional}. This method mainly exists to avoid unnecessary {@code NullPointerException}s
-     * through referencing {@code null} from this function.
+     * Converts this function to an equal function, which ensures that its result is not {@code null} using {@link
+     * Optional}. This method mainly exists to avoid unnecessary {@code NullPointerException}s through referencing
+     * {@code null} from this function.
      *
      * @return An equal function, which ensures that its result is not {@code null}.
      * @deprecated Use {@code lift} method for lifting this function.
@@ -462,9 +459,9 @@ public interface BiLongFunction<R> extends Lambda {
     }
 
     /**
-     * Returns a composed {@link BiFunction2} which represents this {@link BiLongFunction}. Thereby the primitive
-     * input argument for this function is autoboxed. This method provides the possibility to use this
-     * {@code BiLongFunction} with methods provided by the {@code JDK}.
+     * Returns a composed {@link BiFunction2} which represents this {@link BiLongFunction}. Thereby the primitive input
+     * argument for this function is autoboxed. This method provides the possibility to use this {@code BiLongFunction}
+     * with methods provided by the {@code JDK}.
      *
      * @return A composed {@code BiFunction2} which represents this {@code BiLongFunction}.
      */

@@ -13,7 +13,29 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package org.lambda4j.function.tri.obj;
+
+import java.util.Map;
+import java.util.Objects;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.function.DoubleFunction;
+import java.util.function.Function;
+import java.util.function.IntConsumer;
+import java.util.function.IntFunction;
+import java.util.function.IntPredicate;
+import java.util.function.IntToDoubleFunction;
+import java.util.function.IntToLongFunction;
+import java.util.function.IntUnaryOperator;
+import java.util.function.LongFunction;
+import java.util.function.ToIntFunction;
+
+import javax.annotation.Nonnegative;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
+import org.apache.commons.lang3.tuple.Pair;
+import org.apache.commons.lang3.tuple.Triple;
 
 import org.lambda4j.Lambda;
 import org.lambda4j.consumer.tri.obj.BiObjCharConsumer;
@@ -50,30 +72,9 @@ import org.lambda4j.operator.ternary.IntTernaryOperator;
 import org.lambda4j.operator.unary.CharUnaryOperator;
 import org.lambda4j.predicate.tri.obj.BiObjCharPredicate;
 
-import org.apache.commons.lang3.tuple.Pair;
-import org.apache.commons.lang3.tuple.Triple;
-
-import javax.annotation.Nonnegative;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import java.util.Map;
-import java.util.Objects;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.function.DoubleFunction;
-import java.util.function.Function;
-import java.util.function.IntConsumer;
-import java.util.function.IntFunction;
-import java.util.function.IntPredicate;
-import java.util.function.IntToDoubleFunction;
-import java.util.function.IntToLongFunction;
-import java.util.function.IntUnaryOperator;
-import java.util.function.LongFunction;
-import java.util.function.ToIntFunction;
-
 /**
  * Represents an operation that accepts two object-valued and one {@code char}-valued input argument and produces a
- * {@code int}-valued result.
- * This is a (reference, reference, char) specialization of {@link TriFunction}.
+ * {@code int}-valued result. This is a (reference, reference, char) specialization of {@link TriFunction}.
  * <p>
  * This is a {@link FunctionalInterface} whose functional method is {@link #applyAsInt(Object, Object, char)}.
  *
@@ -101,7 +102,7 @@ public interface BiObjCharToIntFunction<T, U> extends Lambda {
      * Expression</a>
      * @see <a href="https://docs.oracle.com/javase/tutorial/java/javaOO/methodreferences.html">Method Reference</a>
      */
-    static <T, U> BiObjCharToIntFunction<T, U> of(@Nullable final BiObjCharToIntFunction<T, U> expression) {
+    static <T, U> BiObjCharToIntFunction<T, U> of(@Nullable BiObjCharToIntFunction<T, U> expression) {
         return expression;
     }
 
@@ -117,7 +118,7 @@ public interface BiObjCharToIntFunction<T, U> extends Lambda {
      * @return The result from the given {@code BiObjCharToIntFunction}.
      * @throws NullPointerException If given argument is {@code null}
      */
-    static <T, U> int call(@Nonnull final BiObjCharToIntFunction<? super T, ? super U> function, T t, U u, char value) {
+    static <T, U> int call(@Nonnull BiObjCharToIntFunction<? super T, ? super U> function, T t, U u, char value) {
         Objects.requireNonNull(function);
         return function.applyAsInt(t, u, value);
     }
@@ -134,7 +135,7 @@ public interface BiObjCharToIntFunction<T, U> extends Lambda {
      * @throws NullPointerException If given argument is {@code null}
      */
     @Nonnull
-    static <T, U> BiObjCharToIntFunction<T, U> onlyFirst(@Nonnull final ToIntFunction<? super T> function) {
+    static <T, U> BiObjCharToIntFunction<T, U> onlyFirst(@Nonnull ToIntFunction<? super T> function) {
         Objects.requireNonNull(function);
         return (t, u, value) -> function.applyAsInt(t);
     }
@@ -151,7 +152,7 @@ public interface BiObjCharToIntFunction<T, U> extends Lambda {
      * @throws NullPointerException If given argument is {@code null}
      */
     @Nonnull
-    static <T, U> BiObjCharToIntFunction<T, U> onlySecond(@Nonnull final ToIntFunction<? super U> function) {
+    static <T, U> BiObjCharToIntFunction<T, U> onlySecond(@Nonnull ToIntFunction<? super U> function) {
         Objects.requireNonNull(function);
         return (t, u, value) -> function.applyAsInt(u);
     }
@@ -168,7 +169,7 @@ public interface BiObjCharToIntFunction<T, U> extends Lambda {
      * @throws NullPointerException If given argument is {@code null}
      */
     @Nonnull
-    static <T, U> BiObjCharToIntFunction<T, U> onlyThird(@Nonnull final CharToIntFunction function) {
+    static <T, U> BiObjCharToIntFunction<T, U> onlyThird(@Nonnull CharToIntFunction function) {
         Objects.requireNonNull(function);
         return (t, u, value) -> function.applyAsInt(value);
     }
@@ -219,7 +220,7 @@ public interface BiObjCharToIntFunction<T, U> extends Lambda {
      */
     @Nonnull
     default ObjCharToIntFunction<U> papplyAsInt(T t) {
-        return (u, value) -> this.applyAsInt(t, u, value);
+        return (u, value) -> applyAsInt(t, u, value);
     }
 
     /**
@@ -231,7 +232,7 @@ public interface BiObjCharToIntFunction<T, U> extends Lambda {
      */
     @Nonnull
     default CharToIntFunction papplyAsInt(T t, U u) {
-        return (value) -> this.applyAsInt(t, u, value);
+        return value -> applyAsInt(t, u, value);
     }
 
     /**
@@ -242,7 +243,7 @@ public interface BiObjCharToIntFunction<T, U> extends Lambda {
      */
     @Nonnull
     default ToIntBiFunction2<T, U> papplyAsInt(char value) {
-        return (t, u) -> this.applyAsInt(t, u, value);
+        return (t, u) -> applyAsInt(t, u, value);
     }
 
     /**
@@ -254,7 +255,7 @@ public interface BiObjCharToIntFunction<T, U> extends Lambda {
      */
     @Nonnull
     default ToIntFunction2<U> papplyAsInt(T t, char value) {
-        return (u) -> this.applyAsInt(t, u, value);
+        return u -> applyAsInt(t, u, value);
     }
 
     /**
@@ -270,8 +271,8 @@ public interface BiObjCharToIntFunction<T, U> extends Lambda {
 
     /**
      * Returns a composed {@link ToIntTriFunction} that first applies the {@code before} functions to its input, and
-     * then applies this function to the result.
-     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
+     * then applies this function to the result. If evaluation of either operation throws an exception, it is relayed to
+     * the caller of the composed operation.
      *
      * @param <A> The type of the argument to the first given function, and of composed function
      * @param <B> The type of the argument to the second given function, and of composed function
@@ -285,8 +286,8 @@ public interface BiObjCharToIntFunction<T, U> extends Lambda {
      * @implSpec The input argument of this method is able to handle every type.
      */
     @Nonnull
-    default <A, B, C> ToIntTriFunction<A, B, C> compose(@Nonnull final Function<? super A, ? extends T> before1,
-            @Nonnull final Function<? super B, ? extends U> before2, @Nonnull final ToCharFunction<? super C> before3) {
+    default <A, B, C> ToIntTriFunction<A, B, C> compose(@Nonnull Function<? super A, ? extends T> before1,
+            @Nonnull Function<? super B, ? extends U> before2, @Nonnull ToCharFunction<? super C> before3) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         Objects.requireNonNull(before3);
@@ -305,25 +306,24 @@ public interface BiObjCharToIntFunction<T, U> extends Lambda {
      * @return A composed {@code TriBooleanToIntFunction} that first applies the {@code before} functions to its input,
      * and then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * boolean}.
      */
     @Nonnull
-    default TriBooleanToIntFunction composeFromBoolean(@Nonnull final BooleanFunction<? extends T> before1,
-            @Nonnull final BooleanFunction<? extends U> before2, @Nonnull final BooleanToCharFunction before3) {
+    default TriBooleanToIntFunction composeFromBoolean(@Nonnull BooleanFunction<? extends T> before1,
+            @Nonnull BooleanFunction<? extends U> before2, @Nonnull BooleanToCharFunction before3) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         Objects.requireNonNull(before3);
         return (value1, value2, value3) -> applyAsInt(before1.apply(value1), before2.apply(value2),
-                                                      before3.applyAsChar(value3));
+                before3.applyAsChar(value3));
     }
 
     /**
-     * Returns a composed {@link TriByteToIntFunction} that first applies the {@code before} functions to
-     * its input, and then applies this function to the result.
-     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
-     * This method is just convenience, to provide the ability to execute an operation which accepts {@code byte} input,
-     * before this primitive function is executed.
+     * Returns a composed {@link TriByteToIntFunction} that first applies the {@code before} functions to its input, and
+     * then applies this function to the result. If evaluation of either operation throws an exception, it is relayed to
+     * the caller of the composed operation. This method is just convenience, to provide the ability to execute an
+     * operation which accepts {@code byte} input, before this primitive function is executed.
      *
      * @param before1 The first function to apply before this function is applied
      * @param before2 The second function to apply before this function is applied
@@ -331,25 +331,24 @@ public interface BiObjCharToIntFunction<T, U> extends Lambda {
      * @return A composed {@code TriByteToIntFunction} that first applies the {@code before} functions to its input, and
      * then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * byte}.
      */
     @Nonnull
-    default TriByteToIntFunction composeFromByte(@Nonnull final ByteFunction<? extends T> before1,
-            @Nonnull final ByteFunction<? extends U> before2, @Nonnull final ByteToCharFunction before3) {
+    default TriByteToIntFunction composeFromByte(@Nonnull ByteFunction<? extends T> before1,
+            @Nonnull ByteFunction<? extends U> before2, @Nonnull ByteToCharFunction before3) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         Objects.requireNonNull(before3);
         return (value1, value2, value3) -> applyAsInt(before1.apply(value1), before2.apply(value2),
-                                                      before3.applyAsChar(value3));
+                before3.applyAsChar(value3));
     }
 
     /**
-     * Returns a composed {@link TriCharToIntFunction} that first applies the {@code before} functions to
-     * its input, and then applies this function to the result.
-     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
-     * This method is just convenience, to provide the ability to execute an operation which accepts {@code char} input,
-     * before this primitive function is executed.
+     * Returns a composed {@link TriCharToIntFunction} that first applies the {@code before} functions to its input, and
+     * then applies this function to the result. If evaluation of either operation throws an exception, it is relayed to
+     * the caller of the composed operation. This method is just convenience, to provide the ability to execute an
+     * operation which accepts {@code char} input, before this primitive function is executed.
      *
      * @param before1 The first function to apply before this function is applied
      * @param before2 The second function to apply before this function is applied
@@ -357,17 +356,17 @@ public interface BiObjCharToIntFunction<T, U> extends Lambda {
      * @return A composed {@code TriCharToIntFunction} that first applies the {@code before} functions to its input, and
      * then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * char}.
      */
     @Nonnull
-    default TriCharToIntFunction composeFromChar(@Nonnull final CharFunction<? extends T> before1,
-            @Nonnull final CharFunction<? extends U> before2, @Nonnull final CharUnaryOperator before3) {
+    default TriCharToIntFunction composeFromChar(@Nonnull CharFunction<? extends T> before1,
+            @Nonnull CharFunction<? extends U> before2, @Nonnull CharUnaryOperator before3) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         Objects.requireNonNull(before3);
         return (value1, value2, value3) -> applyAsInt(before1.apply(value1), before2.apply(value2),
-                                                      before3.applyAsChar(value3));
+                before3.applyAsChar(value3));
     }
 
     /**
@@ -382,17 +381,17 @@ public interface BiObjCharToIntFunction<T, U> extends Lambda {
      * @return A composed {@code TriDoubleToIntFunction} that first applies the {@code before} functions to its input,
      * and then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * double}.
      */
     @Nonnull
-    default TriDoubleToIntFunction composeFromDouble(@Nonnull final DoubleFunction<? extends T> before1,
-            @Nonnull final DoubleFunction<? extends U> before2, @Nonnull final DoubleToCharFunction before3) {
+    default TriDoubleToIntFunction composeFromDouble(@Nonnull DoubleFunction<? extends T> before1,
+            @Nonnull DoubleFunction<? extends U> before2, @Nonnull DoubleToCharFunction before3) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         Objects.requireNonNull(before3);
         return (value1, value2, value3) -> applyAsInt(before1.apply(value1), before2.apply(value2),
-                                                      before3.applyAsChar(value3));
+                before3.applyAsChar(value3));
     }
 
     /**
@@ -407,25 +406,24 @@ public interface BiObjCharToIntFunction<T, U> extends Lambda {
      * @return A composed {@code TriFloatToIntFunction} that first applies the {@code before} functions to its input,
      * and then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * float}.
      */
     @Nonnull
-    default TriFloatToIntFunction composeFromFloat(@Nonnull final FloatFunction<? extends T> before1,
-            @Nonnull final FloatFunction<? extends U> before2, @Nonnull final FloatToCharFunction before3) {
+    default TriFloatToIntFunction composeFromFloat(@Nonnull FloatFunction<? extends T> before1,
+            @Nonnull FloatFunction<? extends U> before2, @Nonnull FloatToCharFunction before3) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         Objects.requireNonNull(before3);
         return (value1, value2, value3) -> applyAsInt(before1.apply(value1), before2.apply(value2),
-                                                      before3.applyAsChar(value3));
+                before3.applyAsChar(value3));
     }
 
     /**
-     * Returns a composed {@link IntTernaryOperator} that first applies the {@code before} functions to
-     * its input, and then applies this function to the result.
-     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
-     * This method is just convenience, to provide the ability to execute an operation which accepts {@code int} input,
-     * before this primitive function is executed.
+     * Returns a composed {@link IntTernaryOperator} that first applies the {@code before} functions to its input, and
+     * then applies this function to the result. If evaluation of either operation throws an exception, it is relayed to
+     * the caller of the composed operation. This method is just convenience, to provide the ability to execute an
+     * operation which accepts {@code int} input, before this primitive function is executed.
      *
      * @param before1 The first function to apply before this function is applied
      * @param before2 The second function to apply before this function is applied
@@ -433,25 +431,24 @@ public interface BiObjCharToIntFunction<T, U> extends Lambda {
      * @return A composed {@code IntTernaryOperator} that first applies the {@code before} functions to its input, and
      * then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * int}.
      */
     @Nonnull
-    default IntTernaryOperator composeFromInt(@Nonnull final IntFunction<? extends T> before1,
-            @Nonnull final IntFunction<? extends U> before2, @Nonnull final IntToCharFunction before3) {
+    default IntTernaryOperator composeFromInt(@Nonnull IntFunction<? extends T> before1,
+            @Nonnull IntFunction<? extends U> before2, @Nonnull IntToCharFunction before3) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         Objects.requireNonNull(before3);
         return (value1, value2, value3) -> applyAsInt(before1.apply(value1), before2.apply(value2),
-                                                      before3.applyAsChar(value3));
+                before3.applyAsChar(value3));
     }
 
     /**
-     * Returns a composed {@link TriLongToIntFunction} that first applies the {@code before} functions to
-     * its input, and then applies this function to the result.
-     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
-     * This method is just convenience, to provide the ability to execute an operation which accepts {@code long} input,
-     * before this primitive function is executed.
+     * Returns a composed {@link TriLongToIntFunction} that first applies the {@code before} functions to its input, and
+     * then applies this function to the result. If evaluation of either operation throws an exception, it is relayed to
+     * the caller of the composed operation. This method is just convenience, to provide the ability to execute an
+     * operation which accepts {@code long} input, before this primitive function is executed.
      *
      * @param before1 The first function to apply before this function is applied
      * @param before2 The second function to apply before this function is applied
@@ -459,17 +456,17 @@ public interface BiObjCharToIntFunction<T, U> extends Lambda {
      * @return A composed {@code TriLongToIntFunction} that first applies the {@code before} functions to its input, and
      * then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * long}.
      */
     @Nonnull
-    default TriLongToIntFunction composeFromLong(@Nonnull final LongFunction<? extends T> before1,
-            @Nonnull final LongFunction<? extends U> before2, @Nonnull final LongToCharFunction before3) {
+    default TriLongToIntFunction composeFromLong(@Nonnull LongFunction<? extends T> before1,
+            @Nonnull LongFunction<? extends U> before2, @Nonnull LongToCharFunction before3) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         Objects.requireNonNull(before3);
         return (value1, value2, value3) -> applyAsInt(before1.apply(value1), before2.apply(value2),
-                                                      before3.applyAsChar(value3));
+                before3.applyAsChar(value3));
     }
 
     /**
@@ -484,23 +481,23 @@ public interface BiObjCharToIntFunction<T, U> extends Lambda {
      * @return A composed {@code TriShortToIntFunction} that first applies the {@code before} functions to its input,
      * and then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * short}.
      */
     @Nonnull
-    default TriShortToIntFunction composeFromShort(@Nonnull final ShortFunction<? extends T> before1,
-            @Nonnull final ShortFunction<? extends U> before2, @Nonnull final ShortToCharFunction before3) {
+    default TriShortToIntFunction composeFromShort(@Nonnull ShortFunction<? extends T> before1,
+            @Nonnull ShortFunction<? extends U> before2, @Nonnull ShortToCharFunction before3) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         Objects.requireNonNull(before3);
         return (value1, value2, value3) -> applyAsInt(before1.apply(value1), before2.apply(value2),
-                                                      before3.applyAsChar(value3));
+                before3.applyAsChar(value3));
     }
 
     /**
      * Returns a composed {@link BiObjCharFunction} that first applies this function to its input, and then applies the
-     * {@code after} function to the result.
-     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
+     * {@code after} function to the result. If evaluation of either operation throws an exception, it is relayed to the
+     * caller of the composed operation.
      *
      * @param <S> The type of return value from the {@code after} function, and of the composed function
      * @param after The function to apply after this function is applied
@@ -510,7 +507,7 @@ public interface BiObjCharToIntFunction<T, U> extends Lambda {
      * @implSpec The input argument of this method is able to return every type.
      */
     @Nonnull
-    default <S> BiObjCharFunction<T, U, S> andThen(@Nonnull final IntFunction<? extends S> after) {
+    default <S> BiObjCharFunction<T, U, S> andThen(@Nonnull IntFunction<? extends S> after) {
         Objects.requireNonNull(after);
         return (t, u, value) -> after.apply(applyAsInt(t, u, value));
     }
@@ -525,11 +522,11 @@ public interface BiObjCharToIntFunction<T, U> extends Lambda {
      * @return A composed {@code BiObjCharPredicate} that first applies this function to its input, and then applies the
      * {@code after} predicate to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * boolean}.
      */
     @Nonnull
-    default BiObjCharPredicate<T, U> andThenToBoolean(@Nonnull final IntPredicate after) {
+    default BiObjCharPredicate<T, U> andThenToBoolean(@Nonnull IntPredicate after) {
         Objects.requireNonNull(after);
         return (t, u, value) -> after.test(applyAsInt(t, u, value));
     }
@@ -544,11 +541,11 @@ public interface BiObjCharToIntFunction<T, U> extends Lambda {
      * @return A composed {@code BiObjCharToByteFunction} that first applies this function to its input, and then
      * applies the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * byte}.
      */
     @Nonnull
-    default BiObjCharToByteFunction<T, U> andThenToByte(@Nonnull final IntToByteFunction after) {
+    default BiObjCharToByteFunction<T, U> andThenToByte(@Nonnull IntToByteFunction after) {
         Objects.requireNonNull(after);
         return (t, u, value) -> after.applyAsByte(applyAsInt(t, u, value));
     }
@@ -563,11 +560,11 @@ public interface BiObjCharToIntFunction<T, U> extends Lambda {
      * @return A composed {@code BiObjCharToCharFunction} that first applies this function to its input, and then
      * applies the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * char}.
      */
     @Nonnull
-    default BiObjCharToCharFunction<T, U> andThenToChar(@Nonnull final IntToCharFunction after) {
+    default BiObjCharToCharFunction<T, U> andThenToChar(@Nonnull IntToCharFunction after) {
         Objects.requireNonNull(after);
         return (t, u, value) -> after.applyAsChar(applyAsInt(t, u, value));
     }
@@ -582,11 +579,11 @@ public interface BiObjCharToIntFunction<T, U> extends Lambda {
      * @return A composed {@code BiObjCharToDoubleFunction} that first applies this function to its input, and then
      * applies the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * double}.
      */
     @Nonnull
-    default BiObjCharToDoubleFunction<T, U> andThenToDouble(@Nonnull final IntToDoubleFunction after) {
+    default BiObjCharToDoubleFunction<T, U> andThenToDouble(@Nonnull IntToDoubleFunction after) {
         Objects.requireNonNull(after);
         return (t, u, value) -> after.applyAsDouble(applyAsInt(t, u, value));
     }
@@ -601,11 +598,11 @@ public interface BiObjCharToIntFunction<T, U> extends Lambda {
      * @return A composed {@code BiObjCharToFloatFunction} that first applies this function to its input, and then
      * applies the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * float}.
      */
     @Nonnull
-    default BiObjCharToFloatFunction<T, U> andThenToFloat(@Nonnull final IntToFloatFunction after) {
+    default BiObjCharToFloatFunction<T, U> andThenToFloat(@Nonnull IntToFloatFunction after) {
         Objects.requireNonNull(after);
         return (t, u, value) -> after.applyAsFloat(applyAsInt(t, u, value));
     }
@@ -620,11 +617,11 @@ public interface BiObjCharToIntFunction<T, U> extends Lambda {
      * @return A composed {@code BiObjCharToIntFunction} that first applies this function to its input, and then applies
      * the {@code after} operator to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * int}.
      */
     @Nonnull
-    default BiObjCharToIntFunction<T, U> andThenToInt(@Nonnull final IntUnaryOperator after) {
+    default BiObjCharToIntFunction<T, U> andThenToInt(@Nonnull IntUnaryOperator after) {
         Objects.requireNonNull(after);
         return (t, u, value) -> after.applyAsInt(applyAsInt(t, u, value));
     }
@@ -639,11 +636,11 @@ public interface BiObjCharToIntFunction<T, U> extends Lambda {
      * @return A composed {@code BiObjCharToLongFunction} that first applies this function to its input, and then
      * applies the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * long}.
      */
     @Nonnull
-    default BiObjCharToLongFunction<T, U> andThenToLong(@Nonnull final IntToLongFunction after) {
+    default BiObjCharToLongFunction<T, U> andThenToLong(@Nonnull IntToLongFunction after) {
         Objects.requireNonNull(after);
         return (t, u, value) -> after.applyAsLong(applyAsInt(t, u, value));
     }
@@ -658,11 +655,11 @@ public interface BiObjCharToIntFunction<T, U> extends Lambda {
      * @return A composed {@code BiObjCharToShortFunction} that first applies this function to its input, and then
      * applies the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * short}.
      */
     @Nonnull
-    default BiObjCharToShortFunction<T, U> andThenToShort(@Nonnull final IntToShortFunction after) {
+    default BiObjCharToShortFunction<T, U> andThenToShort(@Nonnull IntToShortFunction after) {
         Objects.requireNonNull(after);
         return (t, u, value) -> after.applyAsShort(applyAsInt(t, u, value));
     }
@@ -678,7 +675,7 @@ public interface BiObjCharToIntFunction<T, U> extends Lambda {
      * @throws NullPointerException If given argument is {@code null}
      */
     @Nonnull
-    default BiObjCharConsumer<T, U> consume(@Nonnull final IntConsumer consumer) {
+    default BiObjCharConsumer<T, U> consume(@Nonnull IntConsumer consumer) {
         Objects.requireNonNull(consumer);
         return (t, u, value) -> consumer.accept(applyAsInt(t, u, value));
     }
@@ -712,14 +709,14 @@ public interface BiObjCharToIntFunction<T, U> extends Lambda {
         if (isMemoized()) {
             return this;
         } else {
-            final Map<Triple<T, U, Character>, Integer> cache = new ConcurrentHashMap<>();
-            final Object lock = new Object();
+            Map<Triple<T, U, Character>, Integer> cache = new ConcurrentHashMap<>();
+            Object lock = new Object();
             return (BiObjCharToIntFunction<T, U> & Memoized) (t, u, value) -> {
-                final int returnValue;
+                int returnValue;
                 synchronized (lock) {
                     returnValue = cache.computeIfAbsent(Triple.of(t, u, value),
-                                                        key -> applyAsInt(key.getLeft(), key.getMiddle(),
-                                                                          key.getRight()));
+                            key -> applyAsInt(key.getLeft(), key.getMiddle(),
+                                    key.getRight()));
                 }
                 return returnValue;
             };

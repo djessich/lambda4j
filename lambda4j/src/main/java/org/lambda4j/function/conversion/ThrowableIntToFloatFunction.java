@@ -13,7 +13,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package org.lambda4j.function.conversion;
+
+import java.util.Map;
+import java.util.Objects;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.function.Function;
+
+import javax.annotation.Nonnegative;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import org.lambda4j.Lambda;
 import org.lambda4j.consumer.ThrowableFloatConsumer;
@@ -30,18 +40,9 @@ import org.lambda4j.operator.unary.ThrowableIntUnaryOperator;
 import org.lambda4j.predicate.ThrowableFloatPredicate;
 import org.lambda4j.predicate.ThrowableIntPredicate;
 
-import javax.annotation.Nonnegative;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import java.util.Map;
-import java.util.Objects;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.function.Function;
-
 /**
- * Represents an operation that accepts one {@code int}-valued input argument and produces a
- * {@code float}-valued result which is able to throw any {@link Throwable}.
- * This is a primitive specialization of {@link ThrowableFunction}.
+ * Represents an operation that accepts one {@code int}-valued input argument and produces a {@code float}-valued result
+ * which is able to throw any {@link Throwable}. This is a primitive specialization of {@link ThrowableFunction}.
  * <p>
  * This is a {@link FunctionalInterface} whose functional method is {@link #applyAsFloatThrows(int)}.
  *
@@ -68,7 +69,7 @@ public interface ThrowableIntToFloatFunction<X extends Throwable> extends Lambda
      * @see <a href="https://docs.oracle.com/javase/tutorial/java/javaOO/methodreferences.html">Method Reference</a>
      */
     static <X extends Throwable> ThrowableIntToFloatFunction<X> of(
-            @Nullable final ThrowableIntToFloatFunction<X> expression) {
+            @Nullable ThrowableIntToFloatFunction<X> expression) {
         return expression;
     }
 
@@ -82,7 +83,7 @@ public interface ThrowableIntToFloatFunction<X extends Throwable> extends Lambda
      * @throws NullPointerException If given argument is {@code null}
      * @throws X Any throwable from this functions action
      */
-    static <X extends Throwable> float call(@Nonnull final ThrowableIntToFloatFunction<? extends X> function,
+    static <X extends Throwable> float call(@Nonnull ThrowableIntToFloatFunction<? extends X> function,
             int value) throws X {
         Objects.requireNonNull(function);
         return function.applyAsFloatThrows(value);
@@ -97,7 +98,7 @@ public interface ThrowableIntToFloatFunction<X extends Throwable> extends Lambda
      */
     @Nonnull
     static <X extends Throwable> ThrowableIntToFloatFunction<X> constant(float ret) {
-        return (value) -> ret;
+        return value -> ret;
     }
 
     /**
@@ -133,9 +134,9 @@ public interface ThrowableIntToFloatFunction<X extends Throwable> extends Lambda
      */
     @Nonnull
     default <A> ThrowableToFloatFunction<A, X> compose(
-            @Nonnull final ThrowableToIntFunction<? super A, ? extends X> before) {
+            @Nonnull ThrowableToIntFunction<? super A, ? extends X> before) {
         Objects.requireNonNull(before);
-        return (a) -> applyAsFloatThrows(before.applyAsIntThrows(a));
+        return a -> applyAsFloatThrows(before.applyAsIntThrows(a));
     }
 
     /**
@@ -147,54 +148,52 @@ public interface ThrowableIntToFloatFunction<X extends Throwable> extends Lambda
      * @return A composed {@code ThrowableBooleanToFloatFunction} that first applies the {@code before} function to its
      * input, and then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * boolean}.
      */
     @Nonnull
     default ThrowableBooleanToFloatFunction<X> composeFromBoolean(
-            @Nonnull final ThrowableBooleanToIntFunction<? extends X> before) {
+            @Nonnull ThrowableBooleanToIntFunction<? extends X> before) {
         Objects.requireNonNull(before);
-        return (value) -> applyAsFloatThrows(before.applyAsIntThrows(value));
+        return value -> applyAsFloatThrows(before.applyAsIntThrows(value));
     }
 
     /**
-     * Returns a composed {@link ThrowableByteToFloatFunction} that first applies the {@code before} function to
-     * its input, and then applies this function to the result.
-     * This method is just convenience, to provide the ability to execute an operation which accepts {@code byte} input,
-     * before this primitive function is executed.
+     * Returns a composed {@link ThrowableByteToFloatFunction} that first applies the {@code before} function to its
+     * input, and then applies this function to the result. This method is just convenience, to provide the ability to
+     * execute an operation which accepts {@code byte} input, before this primitive function is executed.
      *
      * @param before The function to apply before this function is applied
      * @return A composed {@code ThrowableByteToFloatFunction} that first applies the {@code before} function to its
      * input, and then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * byte}.
      */
     @Nonnull
     default ThrowableByteToFloatFunction<X> composeFromByte(
-            @Nonnull final ThrowableByteToIntFunction<? extends X> before) {
+            @Nonnull ThrowableByteToIntFunction<? extends X> before) {
         Objects.requireNonNull(before);
-        return (value) -> applyAsFloatThrows(before.applyAsIntThrows(value));
+        return value -> applyAsFloatThrows(before.applyAsIntThrows(value));
     }
 
     /**
-     * Returns a composed {@link ThrowableCharToFloatFunction} that first applies the {@code before} function to
-     * its input, and then applies this function to the result.
-     * This method is just convenience, to provide the ability to execute an operation which accepts {@code char} input,
-     * before this primitive function is executed.
+     * Returns a composed {@link ThrowableCharToFloatFunction} that first applies the {@code before} function to its
+     * input, and then applies this function to the result. This method is just convenience, to provide the ability to
+     * execute an operation which accepts {@code char} input, before this primitive function is executed.
      *
      * @param before The function to apply before this function is applied
      * @return A composed {@code ThrowableCharToFloatFunction} that first applies the {@code before} function to its
      * input, and then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * char}.
      */
     @Nonnull
     default ThrowableCharToFloatFunction<X> composeFromChar(
-            @Nonnull final ThrowableCharToIntFunction<? extends X> before) {
+            @Nonnull ThrowableCharToIntFunction<? extends X> before) {
         Objects.requireNonNull(before);
-        return (value) -> applyAsFloatThrows(before.applyAsIntThrows(value));
+        return value -> applyAsFloatThrows(before.applyAsIntThrows(value));
     }
 
     /**
@@ -206,14 +205,14 @@ public interface ThrowableIntToFloatFunction<X extends Throwable> extends Lambda
      * @return A composed {@code ThrowableDoubleToFloatFunction} that first applies the {@code before} function to its
      * input, and then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * double}.
      */
     @Nonnull
     default ThrowableDoubleToFloatFunction<X> composeFromDouble(
-            @Nonnull final ThrowableDoubleToIntFunction<? extends X> before) {
+            @Nonnull ThrowableDoubleToIntFunction<? extends X> before) {
         Objects.requireNonNull(before);
-        return (value) -> applyAsFloatThrows(before.applyAsIntThrows(value));
+        return value -> applyAsFloatThrows(before.applyAsIntThrows(value));
     }
 
     /**
@@ -225,54 +224,52 @@ public interface ThrowableIntToFloatFunction<X extends Throwable> extends Lambda
      * @return A composed {@code ThrowableFloatUnaryOperator} that first applies the {@code before} function to its
      * input, and then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * float}.
      */
     @Nonnull
     default ThrowableFloatUnaryOperator<X> composeFromFloat(
-            @Nonnull final ThrowableFloatToIntFunction<? extends X> before) {
+            @Nonnull ThrowableFloatToIntFunction<? extends X> before) {
         Objects.requireNonNull(before);
-        return (value) -> applyAsFloatThrows(before.applyAsIntThrows(value));
+        return value -> applyAsFloatThrows(before.applyAsIntThrows(value));
     }
 
     /**
-     * Returns a composed {@link ThrowableIntToFloatFunction} that first applies the {@code before} operator to
-     * its input, and then applies this function to the result.
-     * This method is just convenience, to provide the ability to execute an operation which accepts {@code int} input,
-     * before this primitive function is executed.
+     * Returns a composed {@link ThrowableIntToFloatFunction} that first applies the {@code before} operator to its
+     * input, and then applies this function to the result. This method is just convenience, to provide the ability to
+     * execute an operation which accepts {@code int} input, before this primitive function is executed.
      *
      * @param before The operator to apply before this function is applied
      * @return A composed {@code ThrowableIntToFloatFunction} that first applies the {@code before} operator to its
      * input, and then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * int}.
      */
     @Nonnull
     default ThrowableIntToFloatFunction<X> composeFromInt(
-            @Nonnull final ThrowableIntUnaryOperator<? extends X> before) {
+            @Nonnull ThrowableIntUnaryOperator<? extends X> before) {
         Objects.requireNonNull(before);
-        return (value) -> applyAsFloatThrows(before.applyAsIntThrows(value));
+        return value -> applyAsFloatThrows(before.applyAsIntThrows(value));
     }
 
     /**
-     * Returns a composed {@link ThrowableLongToFloatFunction} that first applies the {@code before} function to
-     * its input, and then applies this function to the result.
-     * This method is just convenience, to provide the ability to execute an operation which accepts {@code long} input,
-     * before this primitive function is executed.
+     * Returns a composed {@link ThrowableLongToFloatFunction} that first applies the {@code before} function to its
+     * input, and then applies this function to the result. This method is just convenience, to provide the ability to
+     * execute an operation which accepts {@code long} input, before this primitive function is executed.
      *
      * @param before The function to apply before this function is applied
      * @return A composed {@code ThrowableLongToFloatFunction} that first applies the {@code before} function to its
      * input, and then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * long}.
      */
     @Nonnull
     default ThrowableLongToFloatFunction<X> composeFromLong(
-            @Nonnull final ThrowableLongToIntFunction<? extends X> before) {
+            @Nonnull ThrowableLongToIntFunction<? extends X> before) {
         Objects.requireNonNull(before);
-        return (value) -> applyAsFloatThrows(before.applyAsIntThrows(value));
+        return value -> applyAsFloatThrows(before.applyAsIntThrows(value));
     }
 
     /**
@@ -284,14 +281,14 @@ public interface ThrowableIntToFloatFunction<X extends Throwable> extends Lambda
      * @return A composed {@code ThrowableShortToFloatFunction} that first applies the {@code before} function to its
      * input, and then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * short}.
      */
     @Nonnull
     default ThrowableShortToFloatFunction<X> composeFromShort(
-            @Nonnull final ThrowableShortToIntFunction<? extends X> before) {
+            @Nonnull ThrowableShortToIntFunction<? extends X> before) {
         Objects.requireNonNull(before);
-        return (value) -> applyAsFloatThrows(before.applyAsIntThrows(value));
+        return value -> applyAsFloatThrows(before.applyAsIntThrows(value));
     }
 
     /**
@@ -307,9 +304,9 @@ public interface ThrowableIntToFloatFunction<X extends Throwable> extends Lambda
      */
     @Nonnull
     default <S> ThrowableIntFunction<S, X> andThen(
-            @Nonnull final ThrowableFloatFunction<? extends S, ? extends X> after) {
+            @Nonnull ThrowableFloatFunction<? extends S, ? extends X> after) {
         Objects.requireNonNull(after);
-        return (value) -> after.applyThrows(applyAsFloatThrows(value));
+        return value -> after.applyThrows(applyAsFloatThrows(value));
     }
 
     /**
@@ -321,13 +318,13 @@ public interface ThrowableIntToFloatFunction<X extends Throwable> extends Lambda
      * @return A composed {@code ThrowableIntPredicate} that first applies this function to its input, and then applies
      * the {@code after} predicate to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * boolean}.
      */
     @Nonnull
-    default ThrowableIntPredicate<X> andThenToBoolean(@Nonnull final ThrowableFloatPredicate<? extends X> after) {
+    default ThrowableIntPredicate<X> andThenToBoolean(@Nonnull ThrowableFloatPredicate<? extends X> after) {
         Objects.requireNonNull(after);
-        return (value) -> after.testThrows(applyAsFloatThrows(value));
+        return value -> after.testThrows(applyAsFloatThrows(value));
     }
 
     /**
@@ -339,14 +336,14 @@ public interface ThrowableIntToFloatFunction<X extends Throwable> extends Lambda
      * @return A composed {@code ThrowableIntToByteFunction} that first applies this function to its input, and then
      * applies the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * byte}.
      */
     @Nonnull
     default ThrowableIntToByteFunction<X> andThenToByte(
-            @Nonnull final ThrowableFloatToByteFunction<? extends X> after) {
+            @Nonnull ThrowableFloatToByteFunction<? extends X> after) {
         Objects.requireNonNull(after);
-        return (value) -> after.applyAsByteThrows(applyAsFloatThrows(value));
+        return value -> after.applyAsByteThrows(applyAsFloatThrows(value));
     }
 
     /**
@@ -358,14 +355,14 @@ public interface ThrowableIntToFloatFunction<X extends Throwable> extends Lambda
      * @return A composed {@code ThrowableIntToCharFunction} that first applies this function to its input, and then
      * applies the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * char}.
      */
     @Nonnull
     default ThrowableIntToCharFunction<X> andThenToChar(
-            @Nonnull final ThrowableFloatToCharFunction<? extends X> after) {
+            @Nonnull ThrowableFloatToCharFunction<? extends X> after) {
         Objects.requireNonNull(after);
-        return (value) -> after.applyAsCharThrows(applyAsFloatThrows(value));
+        return value -> after.applyAsCharThrows(applyAsFloatThrows(value));
     }
 
     /**
@@ -377,14 +374,14 @@ public interface ThrowableIntToFloatFunction<X extends Throwable> extends Lambda
      * @return A composed {@code ThrowableIntToDoubleFunction} that first applies this function to its input, and then
      * applies the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * double}.
      */
     @Nonnull
     default ThrowableIntToDoubleFunction<X> andThenToDouble(
-            @Nonnull final ThrowableFloatToDoubleFunction<? extends X> after) {
+            @Nonnull ThrowableFloatToDoubleFunction<? extends X> after) {
         Objects.requireNonNull(after);
-        return (value) -> after.applyAsDoubleThrows(applyAsFloatThrows(value));
+        return value -> after.applyAsDoubleThrows(applyAsFloatThrows(value));
     }
 
     /**
@@ -396,14 +393,14 @@ public interface ThrowableIntToFloatFunction<X extends Throwable> extends Lambda
      * @return A composed {@code ThrowableIntToFloatFunction} that first applies this function to its input, and then
      * applies the {@code after} operator to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * float}.
      */
     @Nonnull
     default ThrowableIntToFloatFunction<X> andThenToFloat(
-            @Nonnull final ThrowableFloatUnaryOperator<? extends X> after) {
+            @Nonnull ThrowableFloatUnaryOperator<? extends X> after) {
         Objects.requireNonNull(after);
-        return (value) -> after.applyAsFloatThrows(applyAsFloatThrows(value));
+        return value -> after.applyAsFloatThrows(applyAsFloatThrows(value));
     }
 
     /**
@@ -415,13 +412,13 @@ public interface ThrowableIntToFloatFunction<X extends Throwable> extends Lambda
      * @return A composed {@code ThrowableIntUnaryOperator} that first applies this function to its input, and then
      * applies the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * int}.
      */
     @Nonnull
-    default ThrowableIntUnaryOperator<X> andThenToInt(@Nonnull final ThrowableFloatToIntFunction<? extends X> after) {
+    default ThrowableIntUnaryOperator<X> andThenToInt(@Nonnull ThrowableFloatToIntFunction<? extends X> after) {
         Objects.requireNonNull(after);
-        return (value) -> after.applyAsIntThrows(applyAsFloatThrows(value));
+        return value -> after.applyAsIntThrows(applyAsFloatThrows(value));
     }
 
     /**
@@ -433,14 +430,14 @@ public interface ThrowableIntToFloatFunction<X extends Throwable> extends Lambda
      * @return A composed {@code ThrowableIntToLongFunction} that first applies this function to its input, and then
      * applies the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * long}.
      */
     @Nonnull
     default ThrowableIntToLongFunction<X> andThenToLong(
-            @Nonnull final ThrowableFloatToLongFunction<? extends X> after) {
+            @Nonnull ThrowableFloatToLongFunction<? extends X> after) {
         Objects.requireNonNull(after);
-        return (value) -> after.applyAsLongThrows(applyAsFloatThrows(value));
+        return value -> after.applyAsLongThrows(applyAsFloatThrows(value));
     }
 
     /**
@@ -452,14 +449,14 @@ public interface ThrowableIntToFloatFunction<X extends Throwable> extends Lambda
      * @return A composed {@code ThrowableIntToShortFunction} that first applies this function to its input, and then
      * applies the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * short}.
      */
     @Nonnull
     default ThrowableIntToShortFunction<X> andThenToShort(
-            @Nonnull final ThrowableFloatToShortFunction<? extends X> after) {
+            @Nonnull ThrowableFloatToShortFunction<? extends X> after) {
         Objects.requireNonNull(after);
-        return (value) -> after.applyAsShortThrows(applyAsFloatThrows(value));
+        return value -> after.applyAsShortThrows(applyAsFloatThrows(value));
     }
 
     /**
@@ -472,9 +469,9 @@ public interface ThrowableIntToFloatFunction<X extends Throwable> extends Lambda
      * @throws NullPointerException If given argument is {@code null}
      */
     @Nonnull
-    default ThrowableIntConsumer<X> consume(@Nonnull final ThrowableFloatConsumer<? extends X> consumer) {
+    default ThrowableIntConsumer<X> consume(@Nonnull ThrowableFloatConsumer<? extends X> consumer) {
         Objects.requireNonNull(consumer);
-        return (value) -> consumer.acceptThrows(applyAsFloatThrows(value));
+        return value -> consumer.acceptThrows(applyAsFloatThrows(value));
     }
 
     /**
@@ -496,10 +493,10 @@ public interface ThrowableIntToFloatFunction<X extends Throwable> extends Lambda
         if (isMemoized()) {
             return this;
         } else {
-            final Map<Integer, Float> cache = new ConcurrentHashMap<>();
-            final Object lock = new Object();
-            return (ThrowableIntToFloatFunction<X> & Memoized) (value) -> {
-                final float returnValue;
+            Map<Integer, Float> cache = new ConcurrentHashMap<>();
+            Object lock = new Object();
+            return (ThrowableIntToFloatFunction<X> & Memoized) value -> {
+                float returnValue;
                 synchronized (lock) {
                     returnValue = cache.computeIfAbsent(value, ThrowableFunction.of(this::applyAsFloatThrows));
                 }
@@ -549,7 +546,7 @@ public interface ThrowableIntToFloatFunction<X extends Throwable> extends Lambda
      * @see #nest()
      */
     @Nonnull
-    default IntToFloatFunction nest(@Nonnull final Function<? super Throwable, ? extends RuntimeException> mapper) {
+    default IntToFloatFunction nest(@Nonnull Function<? super Throwable, ? extends RuntimeException> mapper) {
         return recover(throwable -> {
             throw mapper.apply(throwable);
         });
@@ -572,15 +569,15 @@ public interface ThrowableIntToFloatFunction<X extends Throwable> extends Lambda
      */
     @Nonnull
     default IntToFloatFunction recover(
-            @Nonnull final Function<? super Throwable, ? extends IntToFloatFunction> recover) {
+            @Nonnull Function<? super Throwable, ? extends IntToFloatFunction> recover) {
         Objects.requireNonNull(recover);
-        return (value) -> {
+        return value -> {
             try {
-                return this.applyAsFloatThrows(value);
+                return applyAsFloatThrows(value);
             } catch (Error e) {
                 throw e;
             } catch (Throwable throwable) {
-                final IntToFloatFunction function = recover.apply(throwable);
+                IntToFloatFunction function = recover.apply(throwable);
                 Objects.requireNonNull(function, () -> "recover returned null for " + throwable.getClass() + ": "
                         + throwable.getMessage());
                 return function.applyAsFloat(value);
@@ -656,9 +653,9 @@ public interface ThrowableIntToFloatFunction<X extends Throwable> extends Lambda
      */
     @Nonnull
     default IntToFloatFunction sneakyThrow() {
-        return (value) -> {
+        return value -> {
             try {
-                return this.applyAsFloatThrows(value);
+                return applyAsFloatThrows(value);
             } catch (RuntimeException | Error e) {
                 throw e;
             } catch (Throwable throwable) {

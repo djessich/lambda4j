@@ -13,7 +13,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package org.lambda4j.predicate;
+
+import java.util.Map;
+import java.util.Objects;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.function.Function;
+import java.util.function.Predicate;
+
+import javax.annotation.Nonnegative;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import org.lambda4j.Lambda;
 import org.lambda4j.consumer.BooleanConsumer;
@@ -35,15 +46,6 @@ import org.lambda4j.function.to.ToIntFunction2;
 import org.lambda4j.function.to.ToLongFunction2;
 import org.lambda4j.function.to.ToShortFunction;
 import org.lambda4j.operator.unary.BooleanUnaryOperator;
-
-import javax.annotation.Nonnegative;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import java.util.Map;
-import java.util.Objects;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.function.Function;
-import java.util.function.Predicate;
 
 /**
  * Represents an predicate (boolean-valued function) of one input argument.
@@ -72,7 +74,7 @@ public interface Predicate2<T> extends Lambda, Predicate<T> {
      * Expression</a>
      * @see <a href="https://docs.oracle.com/javase/tutorial/java/javaOO/methodreferences.html">Method Reference</a>
      */
-    static <T> Predicate2<T> of(@Nullable final Predicate2<T> expression) {
+    static <T> Predicate2<T> of(@Nullable Predicate2<T> expression) {
         return expression;
     }
 
@@ -85,7 +87,7 @@ public interface Predicate2<T> extends Lambda, Predicate<T> {
      * @return The result from the given {@code Predicate2}.
      * @throws NullPointerException If given argument is {@code null}
      */
-    static <T> boolean call(@Nonnull final Predicate<? super T> predicate, T t) {
+    static <T> boolean call(@Nonnull Predicate<? super T> predicate, T t) {
         Objects.requireNonNull(predicate);
         return predicate.test(t);
     }
@@ -99,7 +101,7 @@ public interface Predicate2<T> extends Lambda, Predicate<T> {
      */
     @Nonnull
     static <T> Predicate2<T> constant(boolean ret) {
-        return (t) -> ret;
+        return t -> ret;
     }
 
     /**
@@ -111,7 +113,7 @@ public interface Predicate2<T> extends Lambda, Predicate<T> {
      */
     @Nonnull
     static <T> Predicate2<T> alwaysTrue() {
-        return (t) -> true;
+        return t -> true;
     }
 
     /**
@@ -123,7 +125,7 @@ public interface Predicate2<T> extends Lambda, Predicate<T> {
      */
     @Nonnull
     static <T> Predicate2<T> alwaysFalse() {
-        return (t) -> false;
+        return t -> false;
     }
 
     /**
@@ -137,7 +139,7 @@ public interface Predicate2<T> extends Lambda, Predicate<T> {
      */
     @Nonnull
     static <T> Predicate2<T> isEqual(@Nullable Object target) {
-        return (t) -> (t == null ? target == null : t.equals(target));
+        return t -> t == null ? target == null : t.equals(target);
     }
 
     /**
@@ -146,6 +148,7 @@ public interface Predicate2<T> extends Lambda, Predicate<T> {
      * @param t The argument to the predicate
      * @return The return value from the predicate, which is its result.
      */
+    @Override
     boolean test(T t);
 
     /**
@@ -160,9 +163,9 @@ public interface Predicate2<T> extends Lambda, Predicate<T> {
     }
 
     /**
-     * Returns a composed {@link Predicate2} that first applies the {@code before} function to its input, and
-     * then applies this predicate to the result.
-     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
+     * Returns a composed {@link Predicate2} that first applies the {@code before} function to its input, and then
+     * applies this predicate to the result. If evaluation of either operation throws an exception, it is relayed to the
+     * caller of the composed operation.
      *
      * @param <A> The type of the argument to the given function, and of composed predicate
      * @param before The function to apply before this predicate is applied
@@ -172,15 +175,15 @@ public interface Predicate2<T> extends Lambda, Predicate<T> {
      * @implSpec The input argument of this method is able to handle every type.
      */
     @Nonnull
-    default <A> Predicate2<A> compose(@Nonnull final Function<? super A, ? extends T> before) {
+    default <A> Predicate2<A> compose(@Nonnull Function<? super A, ? extends T> before) {
         Objects.requireNonNull(before);
-        return (a) -> test(before.apply(a));
+        return a -> test(before.apply(a));
     }
 
     /**
-     * Returns a composed {@link Function2} that first applies this predicate to its input, and then applies the
-     * {@code after} function to the result.
-     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
+     * Returns a composed {@link Function2} that first applies this predicate to its input, and then applies the {@code
+     * after} function to the result. If evaluation of either operation throws an exception, it is relayed to the caller
+     * of the composed operation.
      *
      * @param <S> The type of return value from the {@code after} function, and of the composed function
      * @param after The function to apply after this predicate is applied
@@ -190,9 +193,9 @@ public interface Predicate2<T> extends Lambda, Predicate<T> {
      * @implSpec The input argument of this method is able to return every type.
      */
     @Nonnull
-    default <S> Function2<T, S> andThen(@Nonnull final BooleanFunction<? extends S> after) {
+    default <S> Function2<T, S> andThen(@Nonnull BooleanFunction<? extends S> after) {
         Objects.requireNonNull(after);
-        return (t) -> after.apply(test(t));
+        return t -> after.apply(test(t));
     }
 
     /**
@@ -205,13 +208,13 @@ public interface Predicate2<T> extends Lambda, Predicate<T> {
      * @return A composed {@code Predicate2} that first applies this predicate to its input, and then applies the {@code
      * after} operator to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * boolean}.
      */
     @Nonnull
-    default Predicate2<T> andThenToBoolean(@Nonnull final BooleanUnaryOperator after) {
+    default Predicate2<T> andThenToBoolean(@Nonnull BooleanUnaryOperator after) {
         Objects.requireNonNull(after);
-        return (t) -> after.applyAsBoolean(test(t));
+        return t -> after.applyAsBoolean(test(t));
     }
 
     /**
@@ -224,13 +227,13 @@ public interface Predicate2<T> extends Lambda, Predicate<T> {
      * @return A composed {@code ToByteFunction} that first applies this predicate to its input, and then applies the
      * {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * byte}.
      */
     @Nonnull
-    default ToByteFunction<T> andThenToByte(@Nonnull final BooleanToByteFunction after) {
+    default ToByteFunction<T> andThenToByte(@Nonnull BooleanToByteFunction after) {
         Objects.requireNonNull(after);
-        return (t) -> after.applyAsByte(test(t));
+        return t -> after.applyAsByte(test(t));
     }
 
     /**
@@ -243,13 +246,13 @@ public interface Predicate2<T> extends Lambda, Predicate<T> {
      * @return A composed {@code ToCharFunction} that first applies this predicate to its input, and then applies the
      * {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * char}.
      */
     @Nonnull
-    default ToCharFunction<T> andThenToChar(@Nonnull final BooleanToCharFunction after) {
+    default ToCharFunction<T> andThenToChar(@Nonnull BooleanToCharFunction after) {
         Objects.requireNonNull(after);
-        return (t) -> after.applyAsChar(test(t));
+        return t -> after.applyAsChar(test(t));
     }
 
     /**
@@ -262,13 +265,13 @@ public interface Predicate2<T> extends Lambda, Predicate<T> {
      * @return A composed {@code ToDoubleFunction2} that first applies this predicate to its input, and then applies the
      * {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * double}.
      */
     @Nonnull
-    default ToDoubleFunction2<T> andThenToDouble(@Nonnull final BooleanToDoubleFunction after) {
+    default ToDoubleFunction2<T> andThenToDouble(@Nonnull BooleanToDoubleFunction after) {
         Objects.requireNonNull(after);
-        return (t) -> after.applyAsDouble(test(t));
+        return t -> after.applyAsDouble(test(t));
     }
 
     /**
@@ -281,13 +284,13 @@ public interface Predicate2<T> extends Lambda, Predicate<T> {
      * @return A composed {@code ToFloatFunction} that first applies this predicate to its input, and then applies the
      * {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * float}.
      */
     @Nonnull
-    default ToFloatFunction<T> andThenToFloat(@Nonnull final BooleanToFloatFunction after) {
+    default ToFloatFunction<T> andThenToFloat(@Nonnull BooleanToFloatFunction after) {
         Objects.requireNonNull(after);
-        return (t) -> after.applyAsFloat(test(t));
+        return t -> after.applyAsFloat(test(t));
     }
 
     /**
@@ -300,13 +303,13 @@ public interface Predicate2<T> extends Lambda, Predicate<T> {
      * @return A composed {@code ToIntFunction2} that first applies this predicate to its input, and then applies the
      * {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * int}.
      */
     @Nonnull
-    default ToIntFunction2<T> andThenToInt(@Nonnull final BooleanToIntFunction after) {
+    default ToIntFunction2<T> andThenToInt(@Nonnull BooleanToIntFunction after) {
         Objects.requireNonNull(after);
-        return (t) -> after.applyAsInt(test(t));
+        return t -> after.applyAsInt(test(t));
     }
 
     /**
@@ -319,13 +322,13 @@ public interface Predicate2<T> extends Lambda, Predicate<T> {
      * @return A composed {@code ToLongFunction2} that first applies this predicate to its input, and then applies the
      * {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * long}.
      */
     @Nonnull
-    default ToLongFunction2<T> andThenToLong(@Nonnull final BooleanToLongFunction after) {
+    default ToLongFunction2<T> andThenToLong(@Nonnull BooleanToLongFunction after) {
         Objects.requireNonNull(after);
-        return (t) -> after.applyAsLong(test(t));
+        return t -> after.applyAsLong(test(t));
     }
 
     /**
@@ -338,19 +341,19 @@ public interface Predicate2<T> extends Lambda, Predicate<T> {
      * @return A composed {@code ToShortFunction} that first applies this predicate to its input, and then applies the
      * {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * short}.
      */
     @Nonnull
-    default ToShortFunction<T> andThenToShort(@Nonnull final BooleanToShortFunction after) {
+    default ToShortFunction<T> andThenToShort(@Nonnull BooleanToShortFunction after) {
         Objects.requireNonNull(after);
-        return (t) -> after.applyAsShort(test(t));
+        return t -> after.applyAsShort(test(t));
     }
 
     /**
      * Returns a composed {@link Consumer2} that fist applies this predicate to its input, and then consumes the result
-     * using the given {@link BooleanConsumer}.
-     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
+     * using the given {@link BooleanConsumer}. If evaluation of either operation throws an exception, it is relayed to
+     * the caller of the composed operation.
      *
      * @param consumer The operation which consumes the result from this operation
      * @return A composed {@code Consumer2} that first applies this predicate to its input, and then consumes the result
@@ -358,9 +361,9 @@ public interface Predicate2<T> extends Lambda, Predicate<T> {
      * @throws NullPointerException If given argument is {@code null}
      */
     @Nonnull
-    default Consumer2<T> consume(@Nonnull final BooleanConsumer consumer) {
+    default Consumer2<T> consume(@Nonnull BooleanConsumer consumer) {
         Objects.requireNonNull(consumer);
-        return (t) -> consumer.accept(test(t));
+        return t -> consumer.accept(test(t));
     }
 
     /**
@@ -368,9 +371,10 @@ public interface Predicate2<T> extends Lambda, Predicate<T> {
      *
      * @return A {@code Predicate2} that represents the logical negation of this one.
      */
+    @Override
     @Nonnull
     default Predicate2<T> negate() {
-        return (t) -> !test(t);
+        return t -> !test(t);
     }
 
     /**
@@ -388,10 +392,11 @@ public interface Predicate2<T> extends Lambda, Predicate<T> {
      * @see #or(Predicate)
      * @see #xor(Predicate)
      */
+    @Override
     @Nonnull
-    default Predicate2<T> and(@Nonnull final Predicate<? super T> other) {
+    default Predicate2<T> and(@Nonnull Predicate<? super T> other) {
         Objects.requireNonNull(other);
-        return (t) -> test(t) && other.test(t);
+        return t -> test(t) && other.test(t);
     }
 
     /**
@@ -409,10 +414,11 @@ public interface Predicate2<T> extends Lambda, Predicate<T> {
      * @see #and(Predicate)
      * @see #xor(Predicate)
      */
+    @Override
     @Nonnull
-    default Predicate2<T> or(@Nonnull final Predicate<? super T> other) {
+    default Predicate2<T> or(@Nonnull Predicate<? super T> other) {
         Objects.requireNonNull(other);
-        return (t) -> test(t) || other.test(t);
+        return t -> test(t) || other.test(t);
     }
 
     /**
@@ -428,9 +434,9 @@ public interface Predicate2<T> extends Lambda, Predicate<T> {
      * @see #or(Predicate)
      */
     @Nonnull
-    default Predicate2<T> xor(@Nonnull final Predicate<? super T> other) {
+    default Predicate2<T> xor(@Nonnull Predicate<? super T> other) {
         Objects.requireNonNull(other);
-        return (t) -> test(t) ^ other.test(t);
+        return t -> test(t) ^ other.test(t);
     }
 
     /**
@@ -462,10 +468,10 @@ public interface Predicate2<T> extends Lambda, Predicate<T> {
         if (isMemoized()) {
             return this;
         } else {
-            final Map<T, Boolean> cache = new ConcurrentHashMap<>();
-            final Object lock = new Object();
-            return (Predicate2<T> & Memoized) (t) -> {
-                final boolean returnValue;
+            Map<T, Boolean> cache = new ConcurrentHashMap<>();
+            Object lock = new Object();
+            return (Predicate2<T> & Memoized) t -> {
+                boolean returnValue;
                 synchronized (lock) {
                     returnValue = cache.computeIfAbsent(t, this::test);
                 }

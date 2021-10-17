@@ -13,7 +13,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package org.lambda4j.function;
+
+import java.util.Map;
+import java.util.Objects;
+import java.util.Optional;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.function.Consumer;
+import java.util.function.Function;
+
+import javax.annotation.Nonnegative;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import org.lambda4j.Lambda;
 import org.lambda4j.consumer.CharConsumer;
@@ -27,20 +39,9 @@ import org.lambda4j.function.conversion.ShortToCharFunction;
 import org.lambda4j.function.to.ToCharFunction;
 import org.lambda4j.operator.unary.CharUnaryOperator;
 
-import javax.annotation.Nonnegative;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Optional;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.function.Consumer;
-import java.util.function.Function;
-
 /**
- * Represents an operation that accepts one {@code char}-valued input argument and produces a
- * result.
- * This is a primitive specialization of {@link Function2}.
+ * Represents an operation that accepts one {@code char}-valued input argument and produces a result. This is a
+ * primitive specialization of {@link Function2}.
  * <p>
  * This is a {@link FunctionalInterface} whose functional method is {@link #apply(char)}.
  *
@@ -65,7 +66,7 @@ public interface CharFunction<R> extends Lambda {
      * Expression</a>
      * @see <a href="https://docs.oracle.com/javase/tutorial/java/javaOO/methodreferences.html">Method Reference</a>
      */
-    static <R> CharFunction<R> of(@Nullable final CharFunction<R> expression) {
+    static <R> CharFunction<R> of(@Nullable CharFunction<R> expression) {
         return expression;
     }
 
@@ -79,9 +80,9 @@ public interface CharFunction<R> extends Lambda {
      * @throws NullPointerException If given argument is {@code null}
      */
     @Nonnull
-    static <R> CharFunction<Optional<R>> lift(@Nonnull final CharFunction<? extends R> partial) {
+    static <R> CharFunction<Optional<R>> lift(@Nonnull CharFunction<? extends R> partial) {
         Objects.requireNonNull(partial);
-        return (value) -> Optional.ofNullable(partial.apply(value));
+        return value -> Optional.ofNullable(partial.apply(value));
     }
 
     /**
@@ -93,7 +94,7 @@ public interface CharFunction<R> extends Lambda {
      * @return The result from the given {@code CharFunction}.
      * @throws NullPointerException If given argument is {@code null}
      */
-    static <R> R call(@Nonnull final CharFunction<? extends R> function, char value) {
+    static <R> R call(@Nonnull CharFunction<? extends R> function, char value) {
         Objects.requireNonNull(function);
         return function.apply(value);
     }
@@ -107,7 +108,7 @@ public interface CharFunction<R> extends Lambda {
      */
     @Nonnull
     static <R> CharFunction<R> constant(R ret) {
-        return (value) -> ret;
+        return value -> ret;
     }
 
     /**
@@ -130,9 +131,9 @@ public interface CharFunction<R> extends Lambda {
     }
 
     /**
-     * Returns a composed {@link Function2} that first applies the {@code before} function to its input, and
-     * then applies this function to the result.
-     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
+     * Returns a composed {@link Function2} that first applies the {@code before} function to its input, and then
+     * applies this function to the result. If evaluation of either operation throws an exception, it is relayed to the
+     * caller of the composed operation.
      *
      * @param <A> The type of the argument to the given function, and of composed function
      * @param before The function to apply before this function is applied
@@ -142,9 +143,9 @@ public interface CharFunction<R> extends Lambda {
      * @implSpec The input argument of this method is able to handle every type.
      */
     @Nonnull
-    default <A> Function2<A, R> compose(@Nonnull final ToCharFunction<? super A> before) {
+    default <A> Function2<A, R> compose(@Nonnull ToCharFunction<? super A> before) {
         Objects.requireNonNull(before);
-        return (a) -> apply(before.applyAsChar(a));
+        return a -> apply(before.applyAsChar(a));
     }
 
     /**
@@ -157,53 +158,51 @@ public interface CharFunction<R> extends Lambda {
      * @return A composed {@code BooleanFunction} that first applies the {@code before} function to its input, and then
      * applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * boolean}.
      */
     @Nonnull
-    default BooleanFunction<R> composeFromBoolean(@Nonnull final BooleanToCharFunction before) {
+    default BooleanFunction<R> composeFromBoolean(@Nonnull BooleanToCharFunction before) {
         Objects.requireNonNull(before);
-        return (value) -> apply(before.applyAsChar(value));
+        return value -> apply(before.applyAsChar(value));
     }
 
     /**
-     * Returns a composed {@link ByteFunction} that first applies the {@code before} function to
-     * its input, and then applies this function to the result.
-     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
-     * This method is just convenience, to provide the ability to execute an operation which accepts {@code byte} input,
-     * before this primitive function is executed.
+     * Returns a composed {@link ByteFunction} that first applies the {@code before} function to its input, and then
+     * applies this function to the result. If evaluation of either operation throws an exception, it is relayed to the
+     * caller of the composed operation. This method is just convenience, to provide the ability to execute an operation
+     * which accepts {@code byte} input, before this primitive function is executed.
      *
      * @param before The function to apply before this function is applied
      * @return A composed {@code ByteFunction} that first applies the {@code before} function to its input, and then
      * applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * byte}.
      */
     @Nonnull
-    default ByteFunction<R> composeFromByte(@Nonnull final ByteToCharFunction before) {
+    default ByteFunction<R> composeFromByte(@Nonnull ByteToCharFunction before) {
         Objects.requireNonNull(before);
-        return (value) -> apply(before.applyAsChar(value));
+        return value -> apply(before.applyAsChar(value));
     }
 
     /**
-     * Returns a composed {@link CharFunction} that first applies the {@code before} operator to
-     * its input, and then applies this function to the result.
-     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
-     * This method is just convenience, to provide the ability to execute an operation which accepts {@code char} input,
-     * before this primitive function is executed.
+     * Returns a composed {@link CharFunction} that first applies the {@code before} operator to its input, and then
+     * applies this function to the result. If evaluation of either operation throws an exception, it is relayed to the
+     * caller of the composed operation. This method is just convenience, to provide the ability to execute an operation
+     * which accepts {@code char} input, before this primitive function is executed.
      *
      * @param before The operator to apply before this function is applied
      * @return A composed {@code CharFunction} that first applies the {@code before} operator to its input, and then
      * applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * char}.
      */
     @Nonnull
-    default CharFunction<R> composeFromChar(@Nonnull final CharUnaryOperator before) {
+    default CharFunction<R> composeFromChar(@Nonnull CharUnaryOperator before) {
         Objects.requireNonNull(before);
-        return (value) -> apply(before.applyAsChar(value));
+        return value -> apply(before.applyAsChar(value));
     }
 
     /**
@@ -216,13 +215,13 @@ public interface CharFunction<R> extends Lambda {
      * @return A composed {@code DoubleFunction2} that first applies the {@code before} function to its input, and then
      * applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * double}.
      */
     @Nonnull
-    default DoubleFunction2<R> composeFromDouble(@Nonnull final DoubleToCharFunction before) {
+    default DoubleFunction2<R> composeFromDouble(@Nonnull DoubleToCharFunction before) {
         Objects.requireNonNull(before);
-        return (value) -> apply(before.applyAsChar(value));
+        return value -> apply(before.applyAsChar(value));
     }
 
     /**
@@ -235,53 +234,51 @@ public interface CharFunction<R> extends Lambda {
      * @return A composed {@code FloatFunction} that first applies the {@code before} function to its input, and then
      * applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * float}.
      */
     @Nonnull
-    default FloatFunction<R> composeFromFloat(@Nonnull final FloatToCharFunction before) {
+    default FloatFunction<R> composeFromFloat(@Nonnull FloatToCharFunction before) {
         Objects.requireNonNull(before);
-        return (value) -> apply(before.applyAsChar(value));
+        return value -> apply(before.applyAsChar(value));
     }
 
     /**
-     * Returns a composed {@link IntFunction2} that first applies the {@code before} function to
-     * its input, and then applies this function to the result.
-     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
-     * This method is just convenience, to provide the ability to execute an operation which accepts {@code int} input,
-     * before this primitive function is executed.
+     * Returns a composed {@link IntFunction2} that first applies the {@code before} function to its input, and then
+     * applies this function to the result. If evaluation of either operation throws an exception, it is relayed to the
+     * caller of the composed operation. This method is just convenience, to provide the ability to execute an operation
+     * which accepts {@code int} input, before this primitive function is executed.
      *
      * @param before The function to apply before this function is applied
      * @return A composed {@code IntFunction2} that first applies the {@code before} function to its input, and then
      * applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * int}.
      */
     @Nonnull
-    default IntFunction2<R> composeFromInt(@Nonnull final IntToCharFunction before) {
+    default IntFunction2<R> composeFromInt(@Nonnull IntToCharFunction before) {
         Objects.requireNonNull(before);
-        return (value) -> apply(before.applyAsChar(value));
+        return value -> apply(before.applyAsChar(value));
     }
 
     /**
-     * Returns a composed {@link LongFunction2} that first applies the {@code before} function to
-     * its input, and then applies this function to the result.
-     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
-     * This method is just convenience, to provide the ability to execute an operation which accepts {@code long} input,
-     * before this primitive function is executed.
+     * Returns a composed {@link LongFunction2} that first applies the {@code before} function to its input, and then
+     * applies this function to the result. If evaluation of either operation throws an exception, it is relayed to the
+     * caller of the composed operation. This method is just convenience, to provide the ability to execute an operation
+     * which accepts {@code long} input, before this primitive function is executed.
      *
      * @param before The function to apply before this function is applied
      * @return A composed {@code LongFunction2} that first applies the {@code before} function to its input, and then
      * applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * long}.
      */
     @Nonnull
-    default LongFunction2<R> composeFromLong(@Nonnull final LongToCharFunction before) {
+    default LongFunction2<R> composeFromLong(@Nonnull LongToCharFunction before) {
         Objects.requireNonNull(before);
-        return (value) -> apply(before.applyAsChar(value));
+        return value -> apply(before.applyAsChar(value));
     }
 
     /**
@@ -294,19 +291,19 @@ public interface CharFunction<R> extends Lambda {
      * @return A composed {@code ShortFunction} that first applies the {@code before} function to its input, and then
      * applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * short}.
      */
     @Nonnull
-    default ShortFunction<R> composeFromShort(@Nonnull final ShortToCharFunction before) {
+    default ShortFunction<R> composeFromShort(@Nonnull ShortToCharFunction before) {
         Objects.requireNonNull(before);
-        return (value) -> apply(before.applyAsChar(value));
+        return value -> apply(before.applyAsChar(value));
     }
 
     /**
      * Returns a composed {@link CharFunction} that first applies this function to its input, and then applies the
-     * {@code after} function to the result.
-     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
+     * {@code after} function to the result. If evaluation of either operation throws an exception, it is relayed to the
+     * caller of the composed operation.
      *
      * @param <S> The type of return value from the {@code after} function, and of the composed function
      * @param after The function to apply after this function is applied
@@ -316,9 +313,9 @@ public interface CharFunction<R> extends Lambda {
      * @implSpec The input argument of this method is able to return every type.
      */
     @Nonnull
-    default <S> CharFunction<S> andThen(@Nonnull final Function<? super R, ? extends S> after) {
+    default <S> CharFunction<S> andThen(@Nonnull Function<? super R, ? extends S> after) {
         Objects.requireNonNull(after);
-        return (value) -> after.apply(apply(value));
+        return value -> after.apply(apply(value));
     }
 
     /**
@@ -332,9 +329,9 @@ public interface CharFunction<R> extends Lambda {
      * @throws NullPointerException If given argument is {@code null}
      */
     @Nonnull
-    default CharConsumer consume(@Nonnull final Consumer<? super R> consumer) {
+    default CharConsumer consume(@Nonnull Consumer<? super R> consumer) {
         Objects.requireNonNull(consumer);
-        return (value) -> consumer.accept(apply(value));
+        return value -> consumer.accept(apply(value));
     }
 
     /**
@@ -356,10 +353,10 @@ public interface CharFunction<R> extends Lambda {
         if (isMemoized()) {
             return this;
         } else {
-            final Map<Character, R> cache = new ConcurrentHashMap<>();
-            final Object lock = new Object();
-            return (CharFunction<R> & Memoized) (value) -> {
-                final R returnValue;
+            Map<Character, R> cache = new ConcurrentHashMap<>();
+            Object lock = new Object();
+            return (CharFunction<R> & Memoized) value -> {
+                R returnValue;
                 synchronized (lock) {
                     returnValue = cache.computeIfAbsent(value, this::apply);
                 }
@@ -369,9 +366,9 @@ public interface CharFunction<R> extends Lambda {
     }
 
     /**
-     * Converts this function to an equal function, which ensures that its result is not
-     * {@code null} using {@link Optional}. This method mainly exists to avoid unnecessary {@code NullPointerException}s
-     * through referencing {@code null} from this function.
+     * Converts this function to an equal function, which ensures that its result is not {@code null} using {@link
+     * Optional}. This method mainly exists to avoid unnecessary {@code NullPointerException}s through referencing
+     * {@code null} from this function.
      *
      * @return An equal function, which ensures that its result is not {@code null}.
      * @deprecated Use {@code lift} method for lifting this function.
@@ -379,13 +376,13 @@ public interface CharFunction<R> extends Lambda {
     @Deprecated
     @Nonnull
     default CharFunction<Optional<R>> nonNull() {
-        return (value) -> Optional.ofNullable(apply(value));
+        return value -> Optional.ofNullable(apply(value));
     }
 
     /**
-     * Returns a composed {@link Function2} which represents this {@link CharFunction}. Thereby the primitive
-     * input argument for this function is autoboxed. This method provides the possibility to use this
-     * {@code CharFunction} with methods provided by the {@code JDK}.
+     * Returns a composed {@link Function2} which represents this {@link CharFunction}. Thereby the primitive input
+     * argument for this function is autoboxed. This method provides the possibility to use this {@code CharFunction}
+     * with methods provided by the {@code JDK}.
      *
      * @return A composed {@code Function2} which represents this {@code CharFunction}.
      */

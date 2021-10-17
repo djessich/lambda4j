@@ -13,7 +13,20 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package org.lambda4j.function.tri.obj;
+
+import java.util.Map;
+import java.util.Objects;
+import java.util.Optional;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.function.Function;
+
+import javax.annotation.Nonnegative;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
+import org.apache.commons.lang3.tuple.Triple;
 
 import org.lambda4j.Lambda;
 import org.lambda4j.consumer.ThrowableConsumer;
@@ -50,21 +63,10 @@ import org.lambda4j.function.tri.ThrowableTriLongFunction;
 import org.lambda4j.function.tri.ThrowableTriShortFunction;
 import org.lambda4j.operator.unary.ThrowableIntUnaryOperator;
 
-import org.apache.commons.lang3.tuple.Triple;
-
-import javax.annotation.Nonnegative;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Optional;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.function.Function;
-
 /**
  * Represents an operation that accepts one object-valued and two {@code int}-valued input arguments and produces a
- * result which is able to throw any {@link Throwable}.
- * This is a (reference, int, int) specialization of {@link ThrowableTriFunction}.
+ * result which is able to throw any {@link Throwable}. This is a (reference, int, int) specialization of {@link
+ * ThrowableTriFunction}.
  * <p>
  * This is a {@link FunctionalInterface} whose functional method is {@link #applyThrows(Object, int, int)}.
  *
@@ -95,7 +97,7 @@ public interface ThrowableObjBiIntFunction<T, R, X extends Throwable> extends La
      * @see <a href="https://docs.oracle.com/javase/tutorial/java/javaOO/methodreferences.html">Method Reference</a>
      */
     static <T, R, X extends Throwable> ThrowableObjBiIntFunction<T, R, X> of(
-            @Nullable final ThrowableObjBiIntFunction<T, R, X> expression) {
+            @Nullable ThrowableObjBiIntFunction<T, R, X> expression) {
         return expression;
     }
 
@@ -113,7 +115,7 @@ public interface ThrowableObjBiIntFunction<T, R, X extends Throwable> extends La
      */
     @Nonnull
     static <T, R, X extends Throwable> ThrowableObjBiIntFunction<T, Optional<R>, X> lift(
-            @Nonnull final ThrowableObjBiIntFunction<? super T, ? extends R, ? extends X> partial) {
+            @Nonnull ThrowableObjBiIntFunction<? super T, ? extends R, ? extends X> partial) {
         Objects.requireNonNull(partial);
         return (t, value1, value2) -> Optional.ofNullable(partial.applyThrows(t, value1, value2));
     }
@@ -133,7 +135,7 @@ public interface ThrowableObjBiIntFunction<T, R, X extends Throwable> extends La
      * @throws X Any throwable from this functions action
      */
     static <T, R, X extends Throwable> R call(
-            @Nonnull final ThrowableObjBiIntFunction<? super T, ? extends R, ? extends X> function, T t, int value1,
+            @Nonnull ThrowableObjBiIntFunction<? super T, ? extends R, ? extends X> function, T t, int value1,
             int value2) throws X {
         Objects.requireNonNull(function);
         return function.applyThrows(t, value1, value2);
@@ -153,7 +155,7 @@ public interface ThrowableObjBiIntFunction<T, R, X extends Throwable> extends La
      */
     @Nonnull
     static <T, R, X extends Throwable> ThrowableObjBiIntFunction<T, R, X> onlyFirst(
-            @Nonnull final ThrowableFunction<? super T, ? extends R, ? extends X> function) {
+            @Nonnull ThrowableFunction<? super T, ? extends R, ? extends X> function) {
         Objects.requireNonNull(function);
         return (t, value1, value2) -> function.applyThrows(t);
     }
@@ -172,7 +174,7 @@ public interface ThrowableObjBiIntFunction<T, R, X extends Throwable> extends La
      */
     @Nonnull
     static <T, R, X extends Throwable> ThrowableObjBiIntFunction<T, R, X> onlySecond(
-            @Nonnull final ThrowableIntFunction<? extends R, ? extends X> function) {
+            @Nonnull ThrowableIntFunction<? extends R, ? extends X> function) {
         Objects.requireNonNull(function);
         return (t, value1, value2) -> function.applyThrows(value1);
     }
@@ -191,7 +193,7 @@ public interface ThrowableObjBiIntFunction<T, R, X extends Throwable> extends La
      */
     @Nonnull
     static <T, R, X extends Throwable> ThrowableObjBiIntFunction<T, R, X> onlyThird(
-            @Nonnull final ThrowableIntFunction<? extends R, ? extends X> function) {
+            @Nonnull ThrowableIntFunction<? extends R, ? extends X> function) {
         Objects.requireNonNull(function);
         return (t, value1, value2) -> function.applyThrows(value2);
     }
@@ -230,7 +232,7 @@ public interface ThrowableObjBiIntFunction<T, R, X extends Throwable> extends La
      */
     @Nonnull
     default ThrowableBiIntFunction<R, X> papplyThrows(T t) {
-        return (value1, value2) -> this.applyThrows(t, value1, value2);
+        return (value1, value2) -> applyThrows(t, value1, value2);
     }
 
     /**
@@ -243,7 +245,7 @@ public interface ThrowableObjBiIntFunction<T, R, X extends Throwable> extends La
      */
     @Nonnull
     default ThrowableIntFunction<R, X> papplyThrows(T t, int value1) {
-        return (value2) -> this.applyThrows(t, value1, value2);
+        return value2 -> applyThrows(t, value1, value2);
     }
 
     /**
@@ -255,7 +257,7 @@ public interface ThrowableObjBiIntFunction<T, R, X extends Throwable> extends La
      */
     @Nonnull
     default ThrowableObjIntFunction<T, R, X> papplyThrows(int value1) {
-        return (t, value2) -> this.applyThrows(t, value1, value2);
+        return (t, value2) -> applyThrows(t, value1, value2);
     }
 
     /**
@@ -267,7 +269,7 @@ public interface ThrowableObjBiIntFunction<T, R, X extends Throwable> extends La
      */
     @Nonnull
     default ThrowableFunction<T, R, X> papplyThrows(int value1, int value2) {
-        return (t) -> this.applyThrows(t, value1, value2);
+        return t -> applyThrows(t, value1, value2);
     }
 
     /**
@@ -298,14 +300,14 @@ public interface ThrowableObjBiIntFunction<T, R, X extends Throwable> extends La
      */
     @Nonnull
     default <A, B, C> ThrowableTriFunction<A, B, C, R, X> compose(
-            @Nonnull final ThrowableFunction<? super A, ? extends T, ? extends X> before1,
-            @Nonnull final ThrowableToIntFunction<? super B, ? extends X> before2,
-            @Nonnull final ThrowableToIntFunction<? super C, ? extends X> before3) {
+            @Nonnull ThrowableFunction<? super A, ? extends T, ? extends X> before1,
+            @Nonnull ThrowableToIntFunction<? super B, ? extends X> before2,
+            @Nonnull ThrowableToIntFunction<? super C, ? extends X> before3) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         Objects.requireNonNull(before3);
         return (a, b, c) -> applyThrows(before1.applyThrows(a), before2.applyAsIntThrows(b),
-                                        before3.applyAsIntThrows(c));
+                before3.applyAsIntThrows(c));
     }
 
     /**
@@ -319,26 +321,25 @@ public interface ThrowableObjBiIntFunction<T, R, X extends Throwable> extends La
      * @return A composed {@code ThrowableTriBooleanFunction} that first applies the {@code before} functions to its
      * input, and then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * boolean}.
      */
     @Nonnull
     default ThrowableTriBooleanFunction<R, X> composeFromBoolean(
-            @Nonnull final ThrowableBooleanFunction<? extends T, ? extends X> before1,
-            @Nonnull final ThrowableBooleanToIntFunction<? extends X> before2,
-            @Nonnull final ThrowableBooleanToIntFunction<? extends X> before3) {
+            @Nonnull ThrowableBooleanFunction<? extends T, ? extends X> before1,
+            @Nonnull ThrowableBooleanToIntFunction<? extends X> before2,
+            @Nonnull ThrowableBooleanToIntFunction<? extends X> before3) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         Objects.requireNonNull(before3);
         return (value1, value2, value3) -> applyThrows(before1.applyThrows(value1), before2.applyAsIntThrows(value2),
-                                                       before3.applyAsIntThrows(value3));
+                before3.applyAsIntThrows(value3));
     }
 
     /**
-     * Returns a composed {@link ThrowableTriByteFunction} that first applies the {@code before} functions to
-     * its input, and then applies this function to the result.
-     * This method is just convenience, to provide the ability to execute an operation which accepts {@code byte} input,
-     * before this primitive function is executed.
+     * Returns a composed {@link ThrowableTriByteFunction} that first applies the {@code before} functions to its input,
+     * and then applies this function to the result. This method is just convenience, to provide the ability to execute
+     * an operation which accepts {@code byte} input, before this primitive function is executed.
      *
      * @param before1 The first function to apply before this function is applied
      * @param before2 The second function to apply before this function is applied
@@ -346,26 +347,25 @@ public interface ThrowableObjBiIntFunction<T, R, X extends Throwable> extends La
      * @return A composed {@code ThrowableTriByteFunction} that first applies the {@code before} functions to its input,
      * and then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * byte}.
      */
     @Nonnull
     default ThrowableTriByteFunction<R, X> composeFromByte(
-            @Nonnull final ThrowableByteFunction<? extends T, ? extends X> before1,
-            @Nonnull final ThrowableByteToIntFunction<? extends X> before2,
-            @Nonnull final ThrowableByteToIntFunction<? extends X> before3) {
+            @Nonnull ThrowableByteFunction<? extends T, ? extends X> before1,
+            @Nonnull ThrowableByteToIntFunction<? extends X> before2,
+            @Nonnull ThrowableByteToIntFunction<? extends X> before3) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         Objects.requireNonNull(before3);
         return (value1, value2, value3) -> applyThrows(before1.applyThrows(value1), before2.applyAsIntThrows(value2),
-                                                       before3.applyAsIntThrows(value3));
+                before3.applyAsIntThrows(value3));
     }
 
     /**
-     * Returns a composed {@link ThrowableTriCharFunction} that first applies the {@code before} functions to
-     * its input, and then applies this function to the result.
-     * This method is just convenience, to provide the ability to execute an operation which accepts {@code char} input,
-     * before this primitive function is executed.
+     * Returns a composed {@link ThrowableTriCharFunction} that first applies the {@code before} functions to its input,
+     * and then applies this function to the result. This method is just convenience, to provide the ability to execute
+     * an operation which accepts {@code char} input, before this primitive function is executed.
      *
      * @param before1 The first function to apply before this function is applied
      * @param before2 The second function to apply before this function is applied
@@ -373,19 +373,19 @@ public interface ThrowableObjBiIntFunction<T, R, X extends Throwable> extends La
      * @return A composed {@code ThrowableTriCharFunction} that first applies the {@code before} functions to its input,
      * and then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * char}.
      */
     @Nonnull
     default ThrowableTriCharFunction<R, X> composeFromChar(
-            @Nonnull final ThrowableCharFunction<? extends T, ? extends X> before1,
-            @Nonnull final ThrowableCharToIntFunction<? extends X> before2,
-            @Nonnull final ThrowableCharToIntFunction<? extends X> before3) {
+            @Nonnull ThrowableCharFunction<? extends T, ? extends X> before1,
+            @Nonnull ThrowableCharToIntFunction<? extends X> before2,
+            @Nonnull ThrowableCharToIntFunction<? extends X> before3) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         Objects.requireNonNull(before3);
         return (value1, value2, value3) -> applyThrows(before1.applyThrows(value1), before2.applyAsIntThrows(value2),
-                                                       before3.applyAsIntThrows(value3));
+                before3.applyAsIntThrows(value3));
     }
 
     /**
@@ -399,19 +399,19 @@ public interface ThrowableObjBiIntFunction<T, R, X extends Throwable> extends La
      * @return A composed {@code ThrowableTriDoubleFunction} that first applies the {@code before} functions to its
      * input, and then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * double}.
      */
     @Nonnull
     default ThrowableTriDoubleFunction<R, X> composeFromDouble(
-            @Nonnull final ThrowableDoubleFunction<? extends T, ? extends X> before1,
-            @Nonnull final ThrowableDoubleToIntFunction<? extends X> before2,
-            @Nonnull final ThrowableDoubleToIntFunction<? extends X> before3) {
+            @Nonnull ThrowableDoubleFunction<? extends T, ? extends X> before1,
+            @Nonnull ThrowableDoubleToIntFunction<? extends X> before2,
+            @Nonnull ThrowableDoubleToIntFunction<? extends X> before3) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         Objects.requireNonNull(before3);
         return (value1, value2, value3) -> applyThrows(before1.applyThrows(value1), before2.applyAsIntThrows(value2),
-                                                       before3.applyAsIntThrows(value3));
+                before3.applyAsIntThrows(value3));
     }
 
     /**
@@ -425,26 +425,25 @@ public interface ThrowableObjBiIntFunction<T, R, X extends Throwable> extends La
      * @return A composed {@code ThrowableTriFloatFunction} that first applies the {@code before} functions to its
      * input, and then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * float}.
      */
     @Nonnull
     default ThrowableTriFloatFunction<R, X> composeFromFloat(
-            @Nonnull final ThrowableFloatFunction<? extends T, ? extends X> before1,
-            @Nonnull final ThrowableFloatToIntFunction<? extends X> before2,
-            @Nonnull final ThrowableFloatToIntFunction<? extends X> before3) {
+            @Nonnull ThrowableFloatFunction<? extends T, ? extends X> before1,
+            @Nonnull ThrowableFloatToIntFunction<? extends X> before2,
+            @Nonnull ThrowableFloatToIntFunction<? extends X> before3) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         Objects.requireNonNull(before3);
         return (value1, value2, value3) -> applyThrows(before1.applyThrows(value1), before2.applyAsIntThrows(value2),
-                                                       before3.applyAsIntThrows(value3));
+                before3.applyAsIntThrows(value3));
     }
 
     /**
-     * Returns a composed {@link ThrowableTriIntFunction} that first applies the {@code before} functions to
-     * its input, and then applies this function to the result.
-     * This method is just convenience, to provide the ability to execute an operation which accepts {@code int} input,
-     * before this primitive function is executed.
+     * Returns a composed {@link ThrowableTriIntFunction} that first applies the {@code before} functions to its input,
+     * and then applies this function to the result. This method is just convenience, to provide the ability to execute
+     * an operation which accepts {@code int} input, before this primitive function is executed.
      *
      * @param before1 The first function to apply before this function is applied
      * @param before2 The second operator to apply before this function is applied
@@ -452,26 +451,25 @@ public interface ThrowableObjBiIntFunction<T, R, X extends Throwable> extends La
      * @return A composed {@code ThrowableTriIntFunction} that first applies the {@code before} functions to its input,
      * and then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * int}.
      */
     @Nonnull
     default ThrowableTriIntFunction<R, X> composeFromInt(
-            @Nonnull final ThrowableIntFunction<? extends T, ? extends X> before1,
-            @Nonnull final ThrowableIntUnaryOperator<? extends X> before2,
-            @Nonnull final ThrowableIntUnaryOperator<? extends X> before3) {
+            @Nonnull ThrowableIntFunction<? extends T, ? extends X> before1,
+            @Nonnull ThrowableIntUnaryOperator<? extends X> before2,
+            @Nonnull ThrowableIntUnaryOperator<? extends X> before3) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         Objects.requireNonNull(before3);
         return (value1, value2, value3) -> applyThrows(before1.applyThrows(value1), before2.applyAsIntThrows(value2),
-                                                       before3.applyAsIntThrows(value3));
+                before3.applyAsIntThrows(value3));
     }
 
     /**
-     * Returns a composed {@link ThrowableTriLongFunction} that first applies the {@code before} functions to
-     * its input, and then applies this function to the result.
-     * This method is just convenience, to provide the ability to execute an operation which accepts {@code long} input,
-     * before this primitive function is executed.
+     * Returns a composed {@link ThrowableTriLongFunction} that first applies the {@code before} functions to its input,
+     * and then applies this function to the result. This method is just convenience, to provide the ability to execute
+     * an operation which accepts {@code long} input, before this primitive function is executed.
      *
      * @param before1 The first function to apply before this function is applied
      * @param before2 The second function to apply before this function is applied
@@ -479,19 +477,19 @@ public interface ThrowableObjBiIntFunction<T, R, X extends Throwable> extends La
      * @return A composed {@code ThrowableTriLongFunction} that first applies the {@code before} functions to its input,
      * and then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * long}.
      */
     @Nonnull
     default ThrowableTriLongFunction<R, X> composeFromLong(
-            @Nonnull final ThrowableLongFunction<? extends T, ? extends X> before1,
-            @Nonnull final ThrowableLongToIntFunction<? extends X> before2,
-            @Nonnull final ThrowableLongToIntFunction<? extends X> before3) {
+            @Nonnull ThrowableLongFunction<? extends T, ? extends X> before1,
+            @Nonnull ThrowableLongToIntFunction<? extends X> before2,
+            @Nonnull ThrowableLongToIntFunction<? extends X> before3) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         Objects.requireNonNull(before3);
         return (value1, value2, value3) -> applyThrows(before1.applyThrows(value1), before2.applyAsIntThrows(value2),
-                                                       before3.applyAsIntThrows(value3));
+                before3.applyAsIntThrows(value3));
     }
 
     /**
@@ -505,19 +503,19 @@ public interface ThrowableObjBiIntFunction<T, R, X extends Throwable> extends La
      * @return A composed {@code ThrowableTriShortFunction} that first applies the {@code before} functions to its
      * input, and then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * short}.
      */
     @Nonnull
     default ThrowableTriShortFunction<R, X> composeFromShort(
-            @Nonnull final ThrowableShortFunction<? extends T, ? extends X> before1,
-            @Nonnull final ThrowableShortToIntFunction<? extends X> before2,
-            @Nonnull final ThrowableShortToIntFunction<? extends X> before3) {
+            @Nonnull ThrowableShortFunction<? extends T, ? extends X> before1,
+            @Nonnull ThrowableShortToIntFunction<? extends X> before2,
+            @Nonnull ThrowableShortToIntFunction<? extends X> before3) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         Objects.requireNonNull(before3);
         return (value1, value2, value3) -> applyThrows(before1.applyThrows(value1), before2.applyAsIntThrows(value2),
-                                                       before3.applyAsIntThrows(value3));
+                before3.applyAsIntThrows(value3));
     }
 
     /**
@@ -533,7 +531,7 @@ public interface ThrowableObjBiIntFunction<T, R, X extends Throwable> extends La
      */
     @Nonnull
     default <S> ThrowableObjBiIntFunction<T, S, X> andThen(
-            @Nonnull final ThrowableFunction<? super R, ? extends S, ? extends X> after) {
+            @Nonnull ThrowableFunction<? super R, ? extends S, ? extends X> after) {
         Objects.requireNonNull(after);
         return (t, value1, value2) -> after.applyThrows(applyThrows(t, value1, value2));
     }
@@ -548,7 +546,7 @@ public interface ThrowableObjBiIntFunction<T, R, X extends Throwable> extends La
      * @throws NullPointerException If given argument is {@code null}
      */
     @Nonnull
-    default ThrowableObjBiIntConsumer<T, X> consume(@Nonnull final ThrowableConsumer<? super R, ? extends X> consumer) {
+    default ThrowableObjBiIntConsumer<T, X> consume(@Nonnull ThrowableConsumer<? super R, ? extends X> consumer) {
         Objects.requireNonNull(consumer);
         return (t, value1, value2) -> consumer.acceptThrows(applyThrows(t, value1, value2));
     }
@@ -572,10 +570,10 @@ public interface ThrowableObjBiIntFunction<T, R, X extends Throwable> extends La
         if (isMemoized()) {
             return this;
         } else {
-            final Map<Triple<T, Integer, Integer>, R> cache = new ConcurrentHashMap<>();
-            final Object lock = new Object();
+            Map<Triple<T, Integer, Integer>, R> cache = new ConcurrentHashMap<>();
+            Object lock = new Object();
             return (ThrowableObjBiIntFunction<T, R, X> & Memoized) (t, value1, value2) -> {
-                final R returnValue;
+                R returnValue;
                 synchronized (lock) {
                     returnValue = cache.computeIfAbsent(Triple.of(t, value1, value2), ThrowableFunction.of(
                             key -> applyThrows(key.getLeft(), key.getMiddle(), key.getRight())));
@@ -586,9 +584,9 @@ public interface ThrowableObjBiIntFunction<T, R, X extends Throwable> extends La
     }
 
     /**
-     * Converts this function to an equal function, which ensures that its result is not
-     * {@code null} using {@link Optional}. This method mainly exists to avoid unnecessary {@code NullPointerException}s
-     * through referencing {@code null} from this function.
+     * Converts this function to an equal function, which ensures that its result is not {@code null} using {@link
+     * Optional}. This method mainly exists to avoid unnecessary {@code NullPointerException}s through referencing
+     * {@code null} from this function.
      *
      * @return An equal function, which ensures that its result is not {@code null}.
      * @deprecated Use {@code lift} method for lifting this function.
@@ -640,7 +638,7 @@ public interface ThrowableObjBiIntFunction<T, R, X extends Throwable> extends La
      * @see #nest()
      */
     @Nonnull
-    default ObjBiIntFunction<T, R> nest(@Nonnull final Function<? super Throwable, ? extends RuntimeException> mapper) {
+    default ObjBiIntFunction<T, R> nest(@Nonnull Function<? super Throwable, ? extends RuntimeException> mapper) {
         return recover(throwable -> {
             throw mapper.apply(throwable);
         });
@@ -663,15 +661,15 @@ public interface ThrowableObjBiIntFunction<T, R, X extends Throwable> extends La
      */
     @Nonnull
     default ObjBiIntFunction<T, R> recover(
-            @Nonnull final Function<? super Throwable, ? extends ObjBiIntFunction<? super T, ? extends R>> recover) {
+            @Nonnull Function<? super Throwable, ? extends ObjBiIntFunction<? super T, ? extends R>> recover) {
         Objects.requireNonNull(recover);
         return (t, value1, value2) -> {
             try {
-                return this.applyThrows(t, value1, value2);
+                return applyThrows(t, value1, value2);
             } catch (Error e) {
                 throw e;
             } catch (Throwable throwable) {
-                final ObjBiIntFunction<? super T, ? extends R> function = recover.apply(throwable);
+                ObjBiIntFunction<? super T, ? extends R> function = recover.apply(throwable);
                 Objects.requireNonNull(function, () -> "recover returned null for " + throwable.getClass() + ": "
                         + throwable.getMessage());
                 return function.apply(t, value1, value2);
@@ -749,7 +747,7 @@ public interface ThrowableObjBiIntFunction<T, R, X extends Throwable> extends La
     default ObjBiIntFunction<T, R> sneakyThrow() {
         return (t, value1, value2) -> {
             try {
-                return this.applyThrows(t, value1, value2);
+                return applyThrows(t, value1, value2);
             } catch (RuntimeException | Error e) {
                 throw e;
             } catch (Throwable throwable) {

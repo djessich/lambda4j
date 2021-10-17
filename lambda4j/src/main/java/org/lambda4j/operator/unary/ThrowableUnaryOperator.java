@@ -13,19 +13,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package org.lambda4j.operator.unary;
+
+import java.util.Objects;
+import java.util.function.UnaryOperator;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import org.lambda4j.Lambda;
 import org.lambda4j.function.ThrowableFunction;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import java.util.Objects;
-import java.util.function.UnaryOperator;
-
 /**
- * Represents an operation that accepts one input argument and produces a
- * result which is able to throw any {@link Throwable}.
+ * Represents an operation that accepts one input argument and produces a result which is able to throw any {@link
+ * Throwable}.
  * <p>
  * This is a {@link FunctionalInterface} whose functional method is {@link #applyThrows(Object)}.
  *
@@ -56,7 +58,7 @@ public interface ThrowableUnaryOperator<T, X extends Throwable>
      * @see <a href="https://docs.oracle.com/javase/tutorial/java/javaOO/methodreferences.html">Method Reference</a>
      */
     static <T, X extends Throwable> ThrowableUnaryOperator<T, X> of(
-            @Nullable final ThrowableUnaryOperator<T, X> expression) {
+            @Nullable ThrowableUnaryOperator<T, X> expression) {
         return expression;
     }
 
@@ -71,7 +73,7 @@ public interface ThrowableUnaryOperator<T, X extends Throwable>
      * @throws NullPointerException If given argument is {@code null}
      * @throws X Any throwable from this operators action
      */
-    static <T, X extends Throwable> T call(@Nonnull final ThrowableUnaryOperator<T, ? extends X> operator, T t) throws
+    static <T, X extends Throwable> T call(@Nonnull ThrowableUnaryOperator<T, ? extends X> operator, T t) throws
             X {
         Objects.requireNonNull(operator);
         return operator.applyThrows(t);
@@ -82,11 +84,11 @@ public interface ThrowableUnaryOperator<T, X extends Throwable>
      *
      * @param <T> The type of the argument to the operator and of return from the operator
      * @param <X> The type of the throwable to be thrown by this operator
-     * @return A {@code  ThrowableUnaryOperator} that always returns its input argument
+     * @return A {@code ThrowableUnaryOperator} that always returns its input argument
      */
     @Nonnull
     static <T, X extends Throwable> ThrowableUnaryOperator<T, X> identity() {
-        return (t) -> t;
+        return t -> t;
     }
 
     /**
@@ -99,7 +101,7 @@ public interface ThrowableUnaryOperator<T, X extends Throwable>
      */
     @Nonnull
     static <T, X extends Throwable> ThrowableUnaryOperator<T, X> constant(T ret) {
-        return (t) -> ret;
+        return t -> ret;
     }
 
 }

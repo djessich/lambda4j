@@ -13,19 +13,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package org.lambda4j.operator.ternary;
+
+import java.util.Objects;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import org.lambda4j.Lambda;
 import org.lambda4j.function.tri.ThrowableTriFunction;
 import org.lambda4j.operator.unary.ThrowableUnaryOperator;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import java.util.Objects;
-
 /**
- * Represents an operation that accepts three input arguments and produces a
- * result which is able to throw any {@link Throwable}.
+ * Represents an operation that accepts three input arguments and produces a result which is able to throw any {@link
+ * Throwable}.
  * <p>
  * This is a {@link FunctionalInterface} whose functional method is {@link #applyThrows(Object, Object, Object)}.
  *
@@ -54,7 +56,7 @@ public interface ThrowableTernaryOperator<T, X extends Throwable> extends Lambda
      * @see <a href="https://docs.oracle.com/javase/tutorial/java/javaOO/methodreferences.html">Method Reference</a>
      */
     static <T, X extends Throwable> ThrowableTernaryOperator<T, X> of(
-            @Nullable final ThrowableTernaryOperator<T, X> expression) {
+            @Nullable ThrowableTernaryOperator<T, X> expression) {
         return expression;
     }
 
@@ -71,7 +73,7 @@ public interface ThrowableTernaryOperator<T, X extends Throwable> extends Lambda
      * @throws NullPointerException If given argument is {@code null}
      * @throws X Any throwable from this operators action
      */
-    static <T, X extends Throwable> T call(@Nonnull final ThrowableTernaryOperator<T, ? extends X> operator, T t, T u,
+    static <T, X extends Throwable> T call(@Nonnull ThrowableTernaryOperator<T, ? extends X> operator, T t, T u,
             T v) throws X {
         Objects.requireNonNull(operator);
         return operator.applyThrows(t, u, v);
@@ -90,7 +92,7 @@ public interface ThrowableTernaryOperator<T, X extends Throwable> extends Lambda
      */
     @Nonnull
     static <T, X extends Throwable> ThrowableTernaryOperator<T, X> onlyFirst(
-            @Nonnull final ThrowableUnaryOperator<T, ? extends X> operator) {
+            @Nonnull ThrowableUnaryOperator<T, ? extends X> operator) {
         Objects.requireNonNull(operator);
         return (t, u, v) -> operator.applyThrows(t);
     }
@@ -108,7 +110,7 @@ public interface ThrowableTernaryOperator<T, X extends Throwable> extends Lambda
      */
     @Nonnull
     static <T, X extends Throwable> ThrowableTernaryOperator<T, X> onlySecond(
-            @Nonnull final ThrowableUnaryOperator<T, ? extends X> operator) {
+            @Nonnull ThrowableUnaryOperator<T, ? extends X> operator) {
         Objects.requireNonNull(operator);
         return (t, u, v) -> operator.applyThrows(u);
     }
@@ -126,7 +128,7 @@ public interface ThrowableTernaryOperator<T, X extends Throwable> extends Lambda
      */
     @Nonnull
     static <T, X extends Throwable> ThrowableTernaryOperator<T, X> onlyThird(
-            @Nonnull final ThrowableUnaryOperator<T, ? extends X> operator) {
+            @Nonnull ThrowableUnaryOperator<T, ? extends X> operator) {
         Objects.requireNonNull(operator);
         return (t, u, v) -> operator.applyThrows(v);
     }

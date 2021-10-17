@@ -13,20 +13,22 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package org.lambda4j.supplier;
 
-import org.lambda4j.Lambda;
-import org.lambda4j.consumer.Consumer2;
-
-import javax.annotation.Nonnegative;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Supplier;
+
+import javax.annotation.Nonnegative;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
+import org.lambda4j.Lambda;
+import org.lambda4j.consumer.Consumer2;
 
 /**
  * Represents a supplier of results.
@@ -57,7 +59,7 @@ public interface Supplier2<R> extends Lambda, Supplier<R> {
      * Expression</a>
      * @see <a href="https://docs.oracle.com/javase/tutorial/java/javaOO/methodreferences.html">Method Reference</a>
      */
-    static <R> Supplier2<R> of(@Nullable final Supplier2<R> expression) {
+    static <R> Supplier2<R> of(@Nullable Supplier2<R> expression) {
         return expression;
     }
 
@@ -70,7 +72,7 @@ public interface Supplier2<R> extends Lambda, Supplier<R> {
      * @throws NullPointerException If given argument is {@code null}
      */
     @Nonnull
-    static <R> Supplier2<Optional<R>> lift(@Nonnull final Supplier<? extends R> partial) {
+    static <R> Supplier2<Optional<R>> lift(@Nonnull Supplier<? extends R> partial) {
         Objects.requireNonNull(partial);
         return () -> Optional.ofNullable(partial.get());
     }
@@ -83,7 +85,7 @@ public interface Supplier2<R> extends Lambda, Supplier<R> {
      * @return The result from the given {@code Supplier2}.
      * @throws NullPointerException If given argument is {@code null}
      */
-    static <R> R call(@Nonnull final Supplier<? extends R> supplier) {
+    static <R> R call(@Nonnull Supplier<? extends R> supplier) {
         Objects.requireNonNull(supplier);
         return supplier.get();
     }
@@ -105,6 +107,7 @@ public interface Supplier2<R> extends Lambda, Supplier<R> {
      *
      * @return The return value from the supplier, which is its result.
      */
+    @Override
     R get();
 
     /**
@@ -119,9 +122,9 @@ public interface Supplier2<R> extends Lambda, Supplier<R> {
     }
 
     /**
-     * Returns a composed {@link Supplier2} that first applies this supplier to its input, and then applies the
-     * {@code after} function to the result.
-     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
+     * Returns a composed {@link Supplier2} that first applies this supplier to its input, and then applies the {@code
+     * after} function to the result. If evaluation of either operation throws an exception, it is relayed to the caller
+     * of the composed operation.
      *
      * @param <S> The type of return value from the {@code after} function, and of the composed supplier
      * @param after The function to apply after this supplier is applied
@@ -131,15 +134,15 @@ public interface Supplier2<R> extends Lambda, Supplier<R> {
      * @implSpec The input argument of this method is able to return every type.
      */
     @Nonnull
-    default <S> Supplier2<S> andThen(@Nonnull final Function<? super R, ? extends S> after) {
+    default <S> Supplier2<S> andThen(@Nonnull Function<? super R, ? extends S> after) {
         Objects.requireNonNull(after);
         return () -> after.apply(get());
     }
 
     /**
-     * Returns a composed {@link Consumer2} that first gets the result from this supplier, and then consumes
-     * the result using the given {@link Consumer}.
-     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
+     * Returns a composed {@link Consumer2} that first gets the result from this supplier, and then consumes the result
+     * using the given {@link Consumer}. If evaluation of either operation throws an exception, it is relayed to the
+     * caller of the composed operation.
      *
      * @param consumer The operation which consumes the result from this operation
      * @return A composed {@code Consumer2} that first gets the result from this supplier, and then consumes the result
@@ -151,7 +154,7 @@ public interface Supplier2<R> extends Lambda, Supplier<R> {
      * resulting consumer is called with {@code Consumer#accept(Object)}.
      */
     @Nonnull
-    default Consumer2<Void> consume(@Nonnull final Consumer<? super R> consumer) {
+    default Consumer2<Void> consume(@Nonnull Consumer<? super R> consumer) {
         Objects.requireNonNull(consumer);
         return ignored -> consumer.accept(get());
     }
@@ -182,7 +185,7 @@ public interface Supplier2<R> extends Lambda, Supplier<R> {
                     synchronized (this) {
                         returnValue = cache.get();
                         if (returnValue == null) {
-                            returnValue = Objects.requireNonNull(this.get());
+                            returnValue = Objects.requireNonNull(get());
                             cache.set(returnValue);
                         }
                     }
@@ -193,9 +196,9 @@ public interface Supplier2<R> extends Lambda, Supplier<R> {
     }
 
     /**
-     * Converts this supplier to an equal supplier, which ensures that its result is not
-     * {@code null} using {@link Optional}. This method mainly exists to avoid unnecessary {@code NullPointerException}s
-     * through referencing {@code null} from this supplier.
+     * Converts this supplier to an equal supplier, which ensures that its result is not {@code null} using {@link
+     * Optional}. This method mainly exists to avoid unnecessary {@code NullPointerException}s through referencing
+     * {@code null} from this supplier.
      *
      * @return An equal supplier, which ensures that its result is not {@code null}.
      * @deprecated Use {@code lift} method for lifting this function.

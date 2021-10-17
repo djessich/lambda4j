@@ -13,7 +13,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package org.lambda4j.function.bi.obj;
+
+import java.util.Map;
+import java.util.Objects;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.function.Function;
+
+import javax.annotation.Nonnegative;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
+import org.apache.commons.lang3.tuple.Pair;
 
 import org.lambda4j.Lambda;
 import org.lambda4j.consumer.ThrowableCharConsumer;
@@ -59,20 +71,10 @@ import org.lambda4j.operator.unary.ThrowableIntUnaryOperator;
 import org.lambda4j.predicate.ThrowableCharPredicate;
 import org.lambda4j.predicate.bi.obj.ThrowableObjIntPredicate;
 
-import org.apache.commons.lang3.tuple.Pair;
-
-import javax.annotation.Nonnegative;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import java.util.Map;
-import java.util.Objects;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.function.Function;
-
 /**
  * Represents an operation that accepts one object-valued and one {@code int}-valued input argument and produces a
- * {@code char}-valued result which is able to throw any {@link Throwable}.
- * This is a (reference, int) specialization of {@link ThrowableBiFunction}.
+ * {@code char}-valued result which is able to throw any {@link Throwable}. This is a (reference, int) specialization of
+ * {@link ThrowableBiFunction}.
  * <p>
  * This is a {@link FunctionalInterface} whose functional method is {@link #applyAsCharThrows(Object, int)}.
  *
@@ -101,7 +103,7 @@ public interface ThrowableObjIntToCharFunction<T, X extends Throwable> extends L
      * @see <a href="https://docs.oracle.com/javase/tutorial/java/javaOO/methodreferences.html">Method Reference</a>
      */
     static <T, X extends Throwable> ThrowableObjIntToCharFunction<T, X> of(
-            @Nullable final ThrowableObjIntToCharFunction<T, X> expression) {
+            @Nullable ThrowableObjIntToCharFunction<T, X> expression) {
         return expression;
     }
 
@@ -118,7 +120,7 @@ public interface ThrowableObjIntToCharFunction<T, X extends Throwable> extends L
      * @throws X Any throwable from this functions action
      */
     static <T, X extends Throwable> char call(
-            @Nonnull final ThrowableObjIntToCharFunction<? super T, ? extends X> function, T t, int value) throws X {
+            @Nonnull ThrowableObjIntToCharFunction<? super T, ? extends X> function, T t, int value) throws X {
         Objects.requireNonNull(function);
         return function.applyAsCharThrows(t, value);
     }
@@ -136,7 +138,7 @@ public interface ThrowableObjIntToCharFunction<T, X extends Throwable> extends L
      */
     @Nonnull
     static <T, X extends Throwable> ThrowableObjIntToCharFunction<T, X> onlyFirst(
-            @Nonnull final ThrowableToCharFunction<? super T, ? extends X> function) {
+            @Nonnull ThrowableToCharFunction<? super T, ? extends X> function) {
         Objects.requireNonNull(function);
         return (t, value) -> function.applyAsCharThrows(t);
     }
@@ -154,7 +156,7 @@ public interface ThrowableObjIntToCharFunction<T, X extends Throwable> extends L
      */
     @Nonnull
     static <T, X extends Throwable> ThrowableObjIntToCharFunction<T, X> onlySecond(
-            @Nonnull final ThrowableIntToCharFunction<? extends X> function) {
+            @Nonnull ThrowableIntToCharFunction<? extends X> function) {
         Objects.requireNonNull(function);
         return (t, value) -> function.applyAsCharThrows(value);
     }
@@ -191,7 +193,7 @@ public interface ThrowableObjIntToCharFunction<T, X extends Throwable> extends L
      */
     @Nonnull
     default ThrowableIntToCharFunction<X> papplyAsCharThrows(T t) {
-        return (value) -> this.applyAsCharThrows(t, value);
+        return value -> applyAsCharThrows(t, value);
     }
 
     /**
@@ -203,7 +205,7 @@ public interface ThrowableObjIntToCharFunction<T, X extends Throwable> extends L
      */
     @Nonnull
     default ThrowableToCharFunction<T, X> papplyAsCharThrows(int value) {
-        return (t) -> this.applyAsCharThrows(t, value);
+        return t -> applyAsCharThrows(t, value);
     }
 
     /**
@@ -232,8 +234,8 @@ public interface ThrowableObjIntToCharFunction<T, X extends Throwable> extends L
      */
     @Nonnull
     default <A, B> ThrowableToCharBiFunction<A, B, X> compose(
-            @Nonnull final ThrowableFunction<? super A, ? extends T, ? extends X> before1,
-            @Nonnull final ThrowableToIntFunction<? super B, ? extends X> before2) {
+            @Nonnull ThrowableFunction<? super A, ? extends T, ? extends X> before1,
+            @Nonnull ThrowableToIntFunction<? super B, ? extends X> before2) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         return (a, b) -> applyAsCharThrows(before1.applyThrows(a), before2.applyAsIntThrows(b));
@@ -249,59 +251,57 @@ public interface ThrowableObjIntToCharFunction<T, X extends Throwable> extends L
      * @return A composed {@code ThrowableBiBooleanToCharFunction} that first applies the {@code before} functions to
      * its input, and then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * boolean}.
      */
     @Nonnull
     default ThrowableBiBooleanToCharFunction<X> composeFromBoolean(
-            @Nonnull final ThrowableBooleanFunction<? extends T, ? extends X> before1,
-            @Nonnull final ThrowableBooleanToIntFunction<? extends X> before2) {
+            @Nonnull ThrowableBooleanFunction<? extends T, ? extends X> before1,
+            @Nonnull ThrowableBooleanToIntFunction<? extends X> before2) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         return (value1, value2) -> applyAsCharThrows(before1.applyThrows(value1), before2.applyAsIntThrows(value2));
     }
 
     /**
-     * Returns a composed {@link ThrowableBiByteToCharFunction} that first applies the {@code before} functions to
-     * its input, and then applies this function to the result.
-     * This method is just convenience, to provide the ability to execute an operation which accepts {@code byte} input,
-     * before this primitive function is executed.
+     * Returns a composed {@link ThrowableBiByteToCharFunction} that first applies the {@code before} functions to its
+     * input, and then applies this function to the result. This method is just convenience, to provide the ability to
+     * execute an operation which accepts {@code byte} input, before this primitive function is executed.
      *
      * @param before1 The first function to apply before this function is applied
      * @param before2 The second function to apply before this function is applied
      * @return A composed {@code ThrowableBiByteToCharFunction} that first applies the {@code before} functions to its
      * input, and then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * byte}.
      */
     @Nonnull
     default ThrowableBiByteToCharFunction<X> composeFromByte(
-            @Nonnull final ThrowableByteFunction<? extends T, ? extends X> before1,
-            @Nonnull final ThrowableByteToIntFunction<? extends X> before2) {
+            @Nonnull ThrowableByteFunction<? extends T, ? extends X> before1,
+            @Nonnull ThrowableByteToIntFunction<? extends X> before2) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         return (value1, value2) -> applyAsCharThrows(before1.applyThrows(value1), before2.applyAsIntThrows(value2));
     }
 
     /**
-     * Returns a composed {@link ThrowableCharBinaryOperator} that first applies the {@code before} functions to
-     * its input, and then applies this function to the result.
-     * This method is just convenience, to provide the ability to execute an operation which accepts {@code char} input,
-     * before this primitive function is executed.
+     * Returns a composed {@link ThrowableCharBinaryOperator} that first applies the {@code before} functions to its
+     * input, and then applies this function to the result. This method is just convenience, to provide the ability to
+     * execute an operation which accepts {@code char} input, before this primitive function is executed.
      *
      * @param before1 The first function to apply before this function is applied
      * @param before2 The second function to apply before this function is applied
      * @return A composed {@code ThrowableCharBinaryOperator} that first applies the {@code before} functions to its
      * input, and then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * char}.
      */
     @Nonnull
     default ThrowableCharBinaryOperator<X> composeFromChar(
-            @Nonnull final ThrowableCharFunction<? extends T, ? extends X> before1,
-            @Nonnull final ThrowableCharToIntFunction<? extends X> before2) {
+            @Nonnull ThrowableCharFunction<? extends T, ? extends X> before1,
+            @Nonnull ThrowableCharToIntFunction<? extends X> before2) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         return (value1, value2) -> applyAsCharThrows(before1.applyThrows(value1), before2.applyAsIntThrows(value2));
@@ -317,13 +317,13 @@ public interface ThrowableObjIntToCharFunction<T, X extends Throwable> extends L
      * @return A composed {@code ThrowableBiDoubleToCharFunction} that first applies the {@code before} functions to its
      * input, and then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * double}.
      */
     @Nonnull
     default ThrowableBiDoubleToCharFunction<X> composeFromDouble(
-            @Nonnull final ThrowableDoubleFunction<? extends T, ? extends X> before1,
-            @Nonnull final ThrowableDoubleToIntFunction<? extends X> before2) {
+            @Nonnull ThrowableDoubleFunction<? extends T, ? extends X> before1,
+            @Nonnull ThrowableDoubleToIntFunction<? extends X> before2) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         return (value1, value2) -> applyAsCharThrows(before1.applyThrows(value1), before2.applyAsIntThrows(value2));
@@ -339,59 +339,57 @@ public interface ThrowableObjIntToCharFunction<T, X extends Throwable> extends L
      * @return A composed {@code ThrowableBiFloatToCharFunction} that first applies the {@code before} functions to its
      * input, and then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * float}.
      */
     @Nonnull
     default ThrowableBiFloatToCharFunction<X> composeFromFloat(
-            @Nonnull final ThrowableFloatFunction<? extends T, ? extends X> before1,
-            @Nonnull final ThrowableFloatToIntFunction<? extends X> before2) {
+            @Nonnull ThrowableFloatFunction<? extends T, ? extends X> before1,
+            @Nonnull ThrowableFloatToIntFunction<? extends X> before2) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         return (value1, value2) -> applyAsCharThrows(before1.applyThrows(value1), before2.applyAsIntThrows(value2));
     }
 
     /**
-     * Returns a composed {@link ThrowableBiIntToCharFunction} that first applies the {@code before} functions to
-     * its input, and then applies this function to the result.
-     * This method is just convenience, to provide the ability to execute an operation which accepts {@code int} input,
-     * before this primitive function is executed.
+     * Returns a composed {@link ThrowableBiIntToCharFunction} that first applies the {@code before} functions to its
+     * input, and then applies this function to the result. This method is just convenience, to provide the ability to
+     * execute an operation which accepts {@code int} input, before this primitive function is executed.
      *
      * @param before1 The first function to apply before this function is applied
      * @param before2 The second operator to apply before this function is applied
      * @return A composed {@code ThrowableBiIntToCharFunction} that first applies the {@code before} functions to its
      * input, and then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * int}.
      */
     @Nonnull
     default ThrowableBiIntToCharFunction<X> composeFromInt(
-            @Nonnull final ThrowableIntFunction<? extends T, ? extends X> before1,
-            @Nonnull final ThrowableIntUnaryOperator<? extends X> before2) {
+            @Nonnull ThrowableIntFunction<? extends T, ? extends X> before1,
+            @Nonnull ThrowableIntUnaryOperator<? extends X> before2) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         return (value1, value2) -> applyAsCharThrows(before1.applyThrows(value1), before2.applyAsIntThrows(value2));
     }
 
     /**
-     * Returns a composed {@link ThrowableBiLongToCharFunction} that first applies the {@code before} functions to
-     * its input, and then applies this function to the result.
-     * This method is just convenience, to provide the ability to execute an operation which accepts {@code long} input,
-     * before this primitive function is executed.
+     * Returns a composed {@link ThrowableBiLongToCharFunction} that first applies the {@code before} functions to its
+     * input, and then applies this function to the result. This method is just convenience, to provide the ability to
+     * execute an operation which accepts {@code long} input, before this primitive function is executed.
      *
      * @param before1 The first function to apply before this function is applied
      * @param before2 The second function to apply before this function is applied
      * @return A composed {@code ThrowableBiLongToCharFunction} that first applies the {@code before} functions to its
      * input, and then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * long}.
      */
     @Nonnull
     default ThrowableBiLongToCharFunction<X> composeFromLong(
-            @Nonnull final ThrowableLongFunction<? extends T, ? extends X> before1,
-            @Nonnull final ThrowableLongToIntFunction<? extends X> before2) {
+            @Nonnull ThrowableLongFunction<? extends T, ? extends X> before1,
+            @Nonnull ThrowableLongToIntFunction<? extends X> before2) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         return (value1, value2) -> applyAsCharThrows(before1.applyThrows(value1), before2.applyAsIntThrows(value2));
@@ -407,13 +405,13 @@ public interface ThrowableObjIntToCharFunction<T, X extends Throwable> extends L
      * @return A composed {@code ThrowableBiShortToCharFunction} that first applies the {@code before} functions to its
      * input, and then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * short}.
      */
     @Nonnull
     default ThrowableBiShortToCharFunction<X> composeFromShort(
-            @Nonnull final ThrowableShortFunction<? extends T, ? extends X> before1,
-            @Nonnull final ThrowableShortToIntFunction<? extends X> before2) {
+            @Nonnull ThrowableShortFunction<? extends T, ? extends X> before1,
+            @Nonnull ThrowableShortToIntFunction<? extends X> before2) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         return (value1, value2) -> applyAsCharThrows(before1.applyThrows(value1), before2.applyAsIntThrows(value2));
@@ -432,7 +430,7 @@ public interface ThrowableObjIntToCharFunction<T, X extends Throwable> extends L
      */
     @Nonnull
     default <S> ThrowableObjIntFunction<T, S, X> andThen(
-            @Nonnull final ThrowableCharFunction<? extends S, ? extends X> after) {
+            @Nonnull ThrowableCharFunction<? extends S, ? extends X> after) {
         Objects.requireNonNull(after);
         return (t, value) -> after.applyThrows(applyAsCharThrows(t, value));
     }
@@ -446,11 +444,11 @@ public interface ThrowableObjIntToCharFunction<T, X extends Throwable> extends L
      * @return A composed {@code ThrowableObjIntPredicate} that first applies this function to its input, and then
      * applies the {@code after} predicate to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * boolean}.
      */
     @Nonnull
-    default ThrowableObjIntPredicate<T, X> andThenToBoolean(@Nonnull final ThrowableCharPredicate<? extends X> after) {
+    default ThrowableObjIntPredicate<T, X> andThenToBoolean(@Nonnull ThrowableCharPredicate<? extends X> after) {
         Objects.requireNonNull(after);
         return (t, value) -> after.testThrows(applyAsCharThrows(t, value));
     }
@@ -464,12 +462,12 @@ public interface ThrowableObjIntToCharFunction<T, X extends Throwable> extends L
      * @return A composed {@code ThrowableObjIntToByteFunction} that first applies this function to its input, and then
      * applies the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * byte}.
      */
     @Nonnull
     default ThrowableObjIntToByteFunction<T, X> andThenToByte(
-            @Nonnull final ThrowableCharToByteFunction<? extends X> after) {
+            @Nonnull ThrowableCharToByteFunction<? extends X> after) {
         Objects.requireNonNull(after);
         return (t, value) -> after.applyAsByteThrows(applyAsCharThrows(t, value));
     }
@@ -483,12 +481,12 @@ public interface ThrowableObjIntToCharFunction<T, X extends Throwable> extends L
      * @return A composed {@code ThrowableObjIntToCharFunction} that first applies this function to its input, and then
      * applies the {@code after} operator to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * char}.
      */
     @Nonnull
     default ThrowableObjIntToCharFunction<T, X> andThenToChar(
-            @Nonnull final ThrowableCharUnaryOperator<? extends X> after) {
+            @Nonnull ThrowableCharUnaryOperator<? extends X> after) {
         Objects.requireNonNull(after);
         return (t, value) -> after.applyAsCharThrows(applyAsCharThrows(t, value));
     }
@@ -502,12 +500,12 @@ public interface ThrowableObjIntToCharFunction<T, X extends Throwable> extends L
      * @return A composed {@code ThrowableObjIntToDoubleFunction} that first applies this function to its input, and
      * then applies the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * double}.
      */
     @Nonnull
     default ThrowableObjIntToDoubleFunction<T, X> andThenToDouble(
-            @Nonnull final ThrowableCharToDoubleFunction<? extends X> after) {
+            @Nonnull ThrowableCharToDoubleFunction<? extends X> after) {
         Objects.requireNonNull(after);
         return (t, value) -> after.applyAsDoubleThrows(applyAsCharThrows(t, value));
     }
@@ -521,12 +519,12 @@ public interface ThrowableObjIntToCharFunction<T, X extends Throwable> extends L
      * @return A composed {@code ThrowableObjIntToFloatFunction} that first applies this function to its input, and then
      * applies the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * float}.
      */
     @Nonnull
     default ThrowableObjIntToFloatFunction<T, X> andThenToFloat(
-            @Nonnull final ThrowableCharToFloatFunction<? extends X> after) {
+            @Nonnull ThrowableCharToFloatFunction<? extends X> after) {
         Objects.requireNonNull(after);
         return (t, value) -> after.applyAsFloatThrows(applyAsCharThrows(t, value));
     }
@@ -540,12 +538,12 @@ public interface ThrowableObjIntToCharFunction<T, X extends Throwable> extends L
      * @return A composed {@code ThrowableObjIntToIntFunction} that first applies this function to its input, and then
      * applies the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * int}.
      */
     @Nonnull
     default ThrowableObjIntToIntFunction<T, X> andThenToInt(
-            @Nonnull final ThrowableCharToIntFunction<? extends X> after) {
+            @Nonnull ThrowableCharToIntFunction<? extends X> after) {
         Objects.requireNonNull(after);
         return (t, value) -> after.applyAsIntThrows(applyAsCharThrows(t, value));
     }
@@ -559,12 +557,12 @@ public interface ThrowableObjIntToCharFunction<T, X extends Throwable> extends L
      * @return A composed {@code ThrowableObjIntToLongFunction} that first applies this function to its input, and then
      * applies the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * long}.
      */
     @Nonnull
     default ThrowableObjIntToLongFunction<T, X> andThenToLong(
-            @Nonnull final ThrowableCharToLongFunction<? extends X> after) {
+            @Nonnull ThrowableCharToLongFunction<? extends X> after) {
         Objects.requireNonNull(after);
         return (t, value) -> after.applyAsLongThrows(applyAsCharThrows(t, value));
     }
@@ -578,12 +576,12 @@ public interface ThrowableObjIntToCharFunction<T, X extends Throwable> extends L
      * @return A composed {@code ThrowableObjIntToShortFunction} that first applies this function to its input, and then
      * applies the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * short}.
      */
     @Nonnull
     default ThrowableObjIntToShortFunction<T, X> andThenToShort(
-            @Nonnull final ThrowableCharToShortFunction<? extends X> after) {
+            @Nonnull ThrowableCharToShortFunction<? extends X> after) {
         Objects.requireNonNull(after);
         return (t, value) -> after.applyAsShortThrows(applyAsCharThrows(t, value));
     }
@@ -598,7 +596,7 @@ public interface ThrowableObjIntToCharFunction<T, X extends Throwable> extends L
      * @throws NullPointerException If given argument is {@code null}
      */
     @Nonnull
-    default ThrowableObjIntConsumer<T, X> consume(@Nonnull final ThrowableCharConsumer<? extends X> consumer) {
+    default ThrowableObjIntConsumer<T, X> consume(@Nonnull ThrowableCharConsumer<? extends X> consumer) {
         Objects.requireNonNull(consumer);
         return (t, value) -> consumer.acceptThrows(applyAsCharThrows(t, value));
     }
@@ -622,10 +620,10 @@ public interface ThrowableObjIntToCharFunction<T, X extends Throwable> extends L
         if (isMemoized()) {
             return this;
         } else {
-            final Map<Pair<T, Integer>, Character> cache = new ConcurrentHashMap<>();
-            final Object lock = new Object();
+            Map<Pair<T, Integer>, Character> cache = new ConcurrentHashMap<>();
+            Object lock = new Object();
             return (ThrowableObjIntToCharFunction<T, X> & Memoized) (t, value) -> {
-                final char returnValue;
+                char returnValue;
                 synchronized (lock) {
                     returnValue = cache.computeIfAbsent(Pair.of(t, value), ThrowableFunction.of(
                             key -> applyAsCharThrows(key.getLeft(), key.getRight())));
@@ -678,7 +676,7 @@ public interface ThrowableObjIntToCharFunction<T, X extends Throwable> extends L
      */
     @Nonnull
     default ObjIntToCharFunction<T> nest(
-            @Nonnull final Function<? super Throwable, ? extends RuntimeException> mapper) {
+            @Nonnull Function<? super Throwable, ? extends RuntimeException> mapper) {
         return recover(throwable -> {
             throw mapper.apply(throwable);
         });
@@ -701,15 +699,15 @@ public interface ThrowableObjIntToCharFunction<T, X extends Throwable> extends L
      */
     @Nonnull
     default ObjIntToCharFunction<T> recover(
-            @Nonnull final Function<? super Throwable, ? extends ObjIntToCharFunction<? super T>> recover) {
+            @Nonnull Function<? super Throwable, ? extends ObjIntToCharFunction<? super T>> recover) {
         Objects.requireNonNull(recover);
         return (t, value) -> {
             try {
-                return this.applyAsCharThrows(t, value);
+                return applyAsCharThrows(t, value);
             } catch (Error e) {
                 throw e;
             } catch (Throwable throwable) {
-                final ObjIntToCharFunction<? super T> function = recover.apply(throwable);
+                ObjIntToCharFunction<? super T> function = recover.apply(throwable);
                 Objects.requireNonNull(function, () -> "recover returned null for " + throwable.getClass() + ": "
                         + throwable.getMessage());
                 return function.applyAsChar(t, value);
@@ -787,7 +785,7 @@ public interface ThrowableObjIntToCharFunction<T, X extends Throwable> extends L
     default ObjIntToCharFunction<T> sneakyThrow() {
         return (t, value) -> {
             try {
-                return this.applyAsCharThrows(t, value);
+                return applyAsCharThrows(t, value);
             } catch (RuntimeException | Error e) {
                 throw e;
             } catch (Throwable throwable) {

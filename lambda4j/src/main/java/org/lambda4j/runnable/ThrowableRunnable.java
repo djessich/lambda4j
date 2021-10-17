@@ -13,18 +13,41 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package org.lambda4j.runnable;
+
+import java.util.Objects;
+import java.util.function.Function;
+
+import javax.annotation.Nonnegative;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import org.lambda4j.Lambda;
 import org.lambda4j.core.exception.ThrownByFunctionalInterfaceException;
 import org.lambda4j.core.util.ThrowableUtils;
 
-import javax.annotation.Nonnegative;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import java.util.Objects;
-import java.util.function.Function;
-
+/**
+ * The {@link Runnable} interface should be implemented by any class whose instances are intended to be executed by a
+ * thread. The class must define a method of no arguments called {@link #run()}.
+ * <p>
+ * This interface is designed to provide a common protocol for objects that wish to execute code while they are active.
+ * For example, {@code Runnable} is implemented by class {@link Thread}. Being active simply means that a thread has
+ * been started and has not yet been stopped.
+ * <p>
+ * In addition, {@code Runnable} provides the means for a class to be active while not subclassing {@code Thread}. A
+ * class that implements {@code Runnable} can run without subclassing {@code Thread} by instantiating a {@code Thread}
+ * instance and passing itself in as the target. In most cases, the {@code Runnable} interface should be used if you are
+ * only planning to override the {@link #run()} method and no other {@code Thread} methods. This is important because
+ * classes should not be subclassed unless the programmer intends on modifying or enhancing the fundamental behavior of
+ * the class.
+ * <p>
+ * This is a {@link FunctionalInterface} whose functional method is {@link #run()}.
+ *
+ * @param <X> The type of the throwable to be thrown by this runnable
+ * @apiNote This is a throwable JDK lambda.
+ * @see Runnable
+ */
 @SuppressWarnings("unused")
 @FunctionalInterface
 public interface ThrowableRunnable<X extends Throwable> extends Lambda, Runnable {
@@ -44,7 +67,7 @@ public interface ThrowableRunnable<X extends Throwable> extends Lambda, Runnable
      * Expression</a>
      * @see <a href="https://docs.oracle.com/javase/tutorial/java/javaOO/methodreferences.html">Method Reference</a>
      */
-    static <X extends Throwable> ThrowableRunnable<X> of(@Nullable final ThrowableRunnable<X> expression) {
+    static <X extends Throwable> ThrowableRunnable<X> of(@Nullable ThrowableRunnable<X> expression) {
         return expression;
     }
 
@@ -56,7 +79,7 @@ public interface ThrowableRunnable<X extends Throwable> extends Lambda, Runnable
      * @throws NullPointerException If given argument is {@code null}
      * @throws X Any throwable from this runnables action
      */
-    static <X extends Throwable> void call(@Nonnull final ThrowableRunnable<? extends X> runnable) throws X {
+    static <X extends Throwable> void call(@Nonnull ThrowableRunnable<? extends X> runnable) throws X {
         Objects.requireNonNull(runnable);
         runnable.runThrows();
     }
@@ -80,14 +103,6 @@ public interface ThrowableRunnable<X extends Throwable> extends Lambda, Runnable
      */
     @Override
     default void run() {
-        // TODO: Remove commented code below
-    /*try {
-          this.runThrows();
-    } catch (RuntimeException | Error e) {
-        throw e;
-    } catch (Throwable throwable) {
-        throw new ThrownByFunctionalInterfaceException(throwable.getMessage(), throwable);
-    }*/
         nest().run();
     }
 
@@ -113,7 +128,7 @@ public interface ThrowableRunnable<X extends Throwable> extends Lambda, Runnable
      * @throws NullPointerException If given argument is {@code null}
      */
     @Nonnull
-    default ThrowableRunnable<X> andThen(@Nonnull final ThrowableRunnable<? extends X> after) {
+    default ThrowableRunnable<X> andThen(@Nonnull ThrowableRunnable<? extends X> after) {
         Objects.requireNonNull(after);
         return () -> {
             runThrows();
@@ -150,7 +165,7 @@ public interface ThrowableRunnable<X extends Throwable> extends Lambda, Runnable
      * @see #nest()
      */
     @Nonnull
-    default Runnable2 nest(@Nonnull final Function<? super Throwable, ? extends RuntimeException> mapper) {
+    default Runnable2 nest(@Nonnull Function<? super Throwable, ? extends RuntimeException> mapper) {
         return recover(throwable -> {
             throw mapper.apply(throwable);
         });
@@ -171,15 +186,15 @@ public interface ThrowableRunnable<X extends Throwable> extends Lambda, Runnable
      * recover} operation.
      */
     @Nonnull
-    default Runnable2 recover(@Nonnull final Function<? super Throwable, ? extends Runnable> recover) {
+    default Runnable2 recover(@Nonnull Function<? super Throwable, ? extends Runnable> recover) {
         Objects.requireNonNull(recover);
         return () -> {
             try {
-                this.runThrows();
+                runThrows();
             } catch (Error e) {
                 throw e;
             } catch (Throwable throwable) {
-                final Runnable runnable = recover.apply(throwable);
+                Runnable runnable = recover.apply(throwable);
                 Objects.requireNonNull(runnable, () -> "recover returned null for " + throwable.getClass() + ": "
                         + throwable.getMessage());
                 runnable.run();
@@ -188,12 +203,12 @@ public interface ThrowableRunnable<X extends Throwable> extends Lambda, Runnable
     }
 
     /**
-     * Returns a composed {@link Runnable2} that applies this runnable to its input and sneakily throws the
-     * thrown {@link Throwable} from it, if it is not of type {@link RuntimeException} or {@link Error}. This means that
-     * each throwable thrown from the returned composed runnable behaves exactly the same as an <em>unchecked</em>
-     * throwable does. As a result, there is no need to handle the throwable of this runnable in the returned composed
-     * runnable by either wrapping it in an <em>unchecked</em> throwable or to declare it in the {@code throws} clause,
-     * as it would be done in a non sneaky throwing runnable.
+     * Returns a composed {@link Runnable2} that applies this runnable to its input and sneakily throws the thrown
+     * {@link Throwable} from it, if it is not of type {@link RuntimeException} or {@link Error}. This means that each
+     * throwable thrown from the returned composed runnable behaves exactly the same as an <em>unchecked</em> throwable
+     * does. As a result, there is no need to handle the throwable of this runnable in the returned composed runnable by
+     * either wrapping it in an <em>unchecked</em> throwable or to declare it in the {@code throws} clause, as it would
+     * be done in a non sneaky throwing runnable.
      * <p>
      * What sneaky throwing simply does, is to fake out the compiler and thus it bypasses the principle of
      * <em>checked</em> throwables. On the JVM (class file) level, all throwables, checked or not, can be thrown
@@ -257,7 +272,7 @@ public interface ThrowableRunnable<X extends Throwable> extends Lambda, Runnable
     default Runnable2 sneakyThrow() {
         return () -> {
             try {
-                this.runThrows();
+                runThrows();
             } catch (RuntimeException | Error e) {
                 throw e;
             } catch (Throwable throwable) {

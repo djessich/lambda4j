@@ -13,7 +13,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package org.lambda4j.consumer.tri;
+
+import java.util.Objects;
+import java.util.function.DoublePredicate;
+import java.util.function.IntPredicate;
+import java.util.function.LongPredicate;
+import java.util.function.Predicate;
+
+import javax.annotation.Nonnegative;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import org.lambda4j.Lambda;
 import org.lambda4j.consumer.BooleanConsumer;
@@ -24,19 +35,10 @@ import org.lambda4j.predicate.CharPredicate;
 import org.lambda4j.predicate.FloatPredicate;
 import org.lambda4j.predicate.ShortPredicate;
 
-import javax.annotation.Nonnegative;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import java.util.Objects;
-import java.util.function.DoublePredicate;
-import java.util.function.IntPredicate;
-import java.util.function.LongPredicate;
-import java.util.function.Predicate;
-
 /**
- * Represents an operation that accepts three {@code boolean}-valued input arguments and returns no result.
- * This is a primitive specialization of {@link TriConsumer}.
- * Unlike most other functional interfaces, {@code TriBooleanConsumer} is expected to operate via side-effects.
+ * Represents an operation that accepts three {@code boolean}-valued input arguments and returns no result. This is a
+ * primitive specialization of {@link TriConsumer}. Unlike most other functional interfaces, {@code TriBooleanConsumer}
+ * is expected to operate via side-effects.
  * <p>
  * This is a {@link FunctionalInterface} whose functional method is {@link #accept(boolean, boolean, boolean)}.
  *
@@ -60,7 +62,7 @@ public interface TriBooleanConsumer extends Lambda {
      * Expression</a>
      * @see <a href="https://docs.oracle.com/javase/tutorial/java/javaOO/methodreferences.html">Method Reference</a>
      */
-    static TriBooleanConsumer of(@Nullable final TriBooleanConsumer expression) {
+    static TriBooleanConsumer of(@Nullable TriBooleanConsumer expression) {
         return expression;
     }
 
@@ -73,7 +75,7 @@ public interface TriBooleanConsumer extends Lambda {
      * @param value3 The third argument to the consumer
      * @throws NullPointerException If given argument is {@code null}
      */
-    static void call(@Nonnull final TriBooleanConsumer consumer, boolean value1, boolean value2, boolean value3) {
+    static void call(@Nonnull TriBooleanConsumer consumer, boolean value1, boolean value2, boolean value3) {
         Objects.requireNonNull(consumer);
         consumer.accept(value1, value2, value3);
     }
@@ -88,7 +90,7 @@ public interface TriBooleanConsumer extends Lambda {
      * @throws NullPointerException If given argument is {@code null}
      */
     @Nonnull
-    static TriBooleanConsumer onlyFirst(@Nonnull final BooleanConsumer consumer) {
+    static TriBooleanConsumer onlyFirst(@Nonnull BooleanConsumer consumer) {
         Objects.requireNonNull(consumer);
         return (value1, value2, value3) -> consumer.accept(value1);
     }
@@ -103,7 +105,7 @@ public interface TriBooleanConsumer extends Lambda {
      * @throws NullPointerException If given argument is {@code null}
      */
     @Nonnull
-    static TriBooleanConsumer onlySecond(@Nonnull final BooleanConsumer consumer) {
+    static TriBooleanConsumer onlySecond(@Nonnull BooleanConsumer consumer) {
         Objects.requireNonNull(consumer);
         return (value1, value2, value3) -> consumer.accept(value2);
     }
@@ -118,7 +120,7 @@ public interface TriBooleanConsumer extends Lambda {
      * @throws NullPointerException If given argument is {@code null}
      */
     @Nonnull
-    static TriBooleanConsumer onlyThird(@Nonnull final BooleanConsumer consumer) {
+    static TriBooleanConsumer onlyThird(@Nonnull BooleanConsumer consumer) {
         Objects.requireNonNull(consumer);
         return (value1, value2, value3) -> consumer.accept(value3);
     }
@@ -140,7 +142,7 @@ public interface TriBooleanConsumer extends Lambda {
      */
     @Nonnull
     default BiBooleanConsumer paccept(boolean value1) {
-        return (value2, value3) -> this.accept(value1, value2, value3);
+        return (value2, value3) -> accept(value1, value2, value3);
     }
 
     /**
@@ -152,7 +154,7 @@ public interface TriBooleanConsumer extends Lambda {
      */
     @Nonnull
     default BooleanConsumer paccept(boolean value1, boolean value2) {
-        return (value3) -> this.accept(value1, value2, value3);
+        return value3 -> accept(value1, value2, value3);
     }
 
     /**
@@ -167,9 +169,9 @@ public interface TriBooleanConsumer extends Lambda {
     }
 
     /**
-     * Returns a composed {@link TriConsumer} that first applies the {@code before} predicates to its input, and
-     * then applies this consumer to the result.
-     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
+     * Returns a composed {@link TriConsumer} that first applies the {@code before} predicates to its input, and then
+     * applies this consumer to the result. If evaluation of either operation throws an exception, it is relayed to the
+     * caller of the composed operation.
      *
      * @param <A> The type of the argument to the first given predicate, and of composed consumer
      * @param <B> The type of the argument to the second given predicate, and of composed consumer
@@ -183,8 +185,8 @@ public interface TriBooleanConsumer extends Lambda {
      * @implSpec The input argument of this method is able to handle every type.
      */
     @Nonnull
-    default <A, B, C> TriConsumer<A, B, C> compose(@Nonnull final Predicate<? super A> before1,
-            @Nonnull final Predicate<? super B> before2, @Nonnull final Predicate<? super C> before3) {
+    default <A, B, C> TriConsumer<A, B, C> compose(@Nonnull Predicate<? super A> before1,
+            @Nonnull Predicate<? super B> before2, @Nonnull Predicate<? super C> before3) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         Objects.requireNonNull(before3);
@@ -203,25 +205,24 @@ public interface TriBooleanConsumer extends Lambda {
      * @return A composed {@code TriBooleanConsumer} that first applies the {@code before} operators to its input, and
      * then applies this consumer to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * boolean}.
      */
     @Nonnull
-    default TriBooleanConsumer composeFromBoolean(@Nonnull final BooleanUnaryOperator before1,
-            @Nonnull final BooleanUnaryOperator before2, @Nonnull final BooleanUnaryOperator before3) {
+    default TriBooleanConsumer composeFromBoolean(@Nonnull BooleanUnaryOperator before1,
+            @Nonnull BooleanUnaryOperator before2, @Nonnull BooleanUnaryOperator before3) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         Objects.requireNonNull(before3);
         return (value1, value2, value3) -> accept(before1.applyAsBoolean(value1), before2.applyAsBoolean(value2),
-                                                  before3.applyAsBoolean(value3));
+                before3.applyAsBoolean(value3));
     }
 
     /**
-     * Returns a composed {@link TriByteConsumer} that first applies the {@code before} predicates to
-     * its input, and then applies this consumer to the result.
-     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
-     * This method is just convenience, to provide the ability to execute an operation which accepts {@code byte} input,
-     * before this primitive consumer is executed.
+     * Returns a composed {@link TriByteConsumer} that first applies the {@code before} predicates to its input, and
+     * then applies this consumer to the result. If evaluation of either operation throws an exception, it is relayed to
+     * the caller of the composed operation. This method is just convenience, to provide the ability to execute an
+     * operation which accepts {@code byte} input, before this primitive consumer is executed.
      *
      * @param before1 The first predicate to apply before this consumer is applied
      * @param before2 The second predicate to apply before this consumer is applied
@@ -229,12 +230,12 @@ public interface TriBooleanConsumer extends Lambda {
      * @return A composed {@code TriByteConsumer} that first applies the {@code before} predicates to its input, and
      * then applies this consumer to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * byte}.
      */
     @Nonnull
-    default TriByteConsumer composeFromByte(@Nonnull final BytePredicate before1, @Nonnull final BytePredicate before2,
-            @Nonnull final BytePredicate before3) {
+    default TriByteConsumer composeFromByte(@Nonnull BytePredicate before1, @Nonnull BytePredicate before2,
+            @Nonnull BytePredicate before3) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         Objects.requireNonNull(before3);
@@ -242,11 +243,10 @@ public interface TriBooleanConsumer extends Lambda {
     }
 
     /**
-     * Returns a composed {@link TriCharConsumer} that first applies the {@code before} predicates to
-     * its input, and then applies this consumer to the result.
-     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
-     * This method is just convenience, to provide the ability to execute an operation which accepts {@code char} input,
-     * before this primitive consumer is executed.
+     * Returns a composed {@link TriCharConsumer} that first applies the {@code before} predicates to its input, and
+     * then applies this consumer to the result. If evaluation of either operation throws an exception, it is relayed to
+     * the caller of the composed operation. This method is just convenience, to provide the ability to execute an
+     * operation which accepts {@code char} input, before this primitive consumer is executed.
      *
      * @param before1 The first predicate to apply before this consumer is applied
      * @param before2 The second predicate to apply before this consumer is applied
@@ -254,12 +254,12 @@ public interface TriBooleanConsumer extends Lambda {
      * @return A composed {@code TriCharConsumer} that first applies the {@code before} predicates to its input, and
      * then applies this consumer to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * char}.
      */
     @Nonnull
-    default TriCharConsumer composeFromChar(@Nonnull final CharPredicate before1, @Nonnull final CharPredicate before2,
-            @Nonnull final CharPredicate before3) {
+    default TriCharConsumer composeFromChar(@Nonnull CharPredicate before1, @Nonnull CharPredicate before2,
+            @Nonnull CharPredicate before3) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         Objects.requireNonNull(before3);
@@ -278,12 +278,12 @@ public interface TriBooleanConsumer extends Lambda {
      * @return A composed {@code TriDoubleConsumer} that first applies the {@code before} predicates to its input, and
      * then applies this consumer to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * double}.
      */
     @Nonnull
-    default TriDoubleConsumer composeFromDouble(@Nonnull final DoublePredicate before1,
-            @Nonnull final DoublePredicate before2, @Nonnull final DoublePredicate before3) {
+    default TriDoubleConsumer composeFromDouble(@Nonnull DoublePredicate before1,
+            @Nonnull DoublePredicate before2, @Nonnull DoublePredicate before3) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         Objects.requireNonNull(before3);
@@ -302,12 +302,12 @@ public interface TriBooleanConsumer extends Lambda {
      * @return A composed {@code TriFloatConsumer} that first applies the {@code before} predicates to its input, and
      * then applies this consumer to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * float}.
      */
     @Nonnull
-    default TriFloatConsumer composeFromFloat(@Nonnull final FloatPredicate before1,
-            @Nonnull final FloatPredicate before2, @Nonnull final FloatPredicate before3) {
+    default TriFloatConsumer composeFromFloat(@Nonnull FloatPredicate before1,
+            @Nonnull FloatPredicate before2, @Nonnull FloatPredicate before3) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         Objects.requireNonNull(before3);
@@ -315,11 +315,10 @@ public interface TriBooleanConsumer extends Lambda {
     }
 
     /**
-     * Returns a composed {@link TriIntConsumer} that first applies the {@code before} predicates to
-     * its input, and then applies this consumer to the result.
-     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
-     * This method is just convenience, to provide the ability to execute an operation which accepts {@code int} input,
-     * before this primitive consumer is executed.
+     * Returns a composed {@link TriIntConsumer} that first applies the {@code before} predicates to its input, and then
+     * applies this consumer to the result. If evaluation of either operation throws an exception, it is relayed to the
+     * caller of the composed operation. This method is just convenience, to provide the ability to execute an operation
+     * which accepts {@code int} input, before this primitive consumer is executed.
      *
      * @param before1 The first predicate to apply before this consumer is applied
      * @param before2 The second predicate to apply before this consumer is applied
@@ -327,12 +326,12 @@ public interface TriBooleanConsumer extends Lambda {
      * @return A composed {@code TriIntConsumer} that first applies the {@code before} predicates to its input, and then
      * applies this consumer to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * int}.
      */
     @Nonnull
-    default TriIntConsumer composeFromInt(@Nonnull final IntPredicate before1, @Nonnull final IntPredicate before2,
-            @Nonnull final IntPredicate before3) {
+    default TriIntConsumer composeFromInt(@Nonnull IntPredicate before1, @Nonnull IntPredicate before2,
+            @Nonnull IntPredicate before3) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         Objects.requireNonNull(before3);
@@ -340,11 +339,10 @@ public interface TriBooleanConsumer extends Lambda {
     }
 
     /**
-     * Returns a composed {@link TriLongConsumer} that first applies the {@code before} predicates to
-     * its input, and then applies this consumer to the result.
-     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
-     * This method is just convenience, to provide the ability to execute an operation which accepts {@code long} input,
-     * before this primitive consumer is executed.
+     * Returns a composed {@link TriLongConsumer} that first applies the {@code before} predicates to its input, and
+     * then applies this consumer to the result. If evaluation of either operation throws an exception, it is relayed to
+     * the caller of the composed operation. This method is just convenience, to provide the ability to execute an
+     * operation which accepts {@code long} input, before this primitive consumer is executed.
      *
      * @param before1 The first predicate to apply before this consumer is applied
      * @param before2 The second predicate to apply before this consumer is applied
@@ -352,12 +350,12 @@ public interface TriBooleanConsumer extends Lambda {
      * @return A composed {@code TriLongConsumer} that first applies the {@code before} predicates to its input, and
      * then applies this consumer to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * long}.
      */
     @Nonnull
-    default TriLongConsumer composeFromLong(@Nonnull final LongPredicate before1, @Nonnull final LongPredicate before2,
-            @Nonnull final LongPredicate before3) {
+    default TriLongConsumer composeFromLong(@Nonnull LongPredicate before1, @Nonnull LongPredicate before2,
+            @Nonnull LongPredicate before3) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         Objects.requireNonNull(before3);
@@ -376,12 +374,12 @@ public interface TriBooleanConsumer extends Lambda {
      * @return A composed {@code TriShortConsumer} that first applies the {@code before} predicates to its input, and
      * then applies this consumer to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * short}.
      */
     @Nonnull
-    default TriShortConsumer composeFromShort(@Nonnull final ShortPredicate before1,
-            @Nonnull final ShortPredicate before2, @Nonnull final ShortPredicate before3) {
+    default TriShortConsumer composeFromShort(@Nonnull ShortPredicate before1,
+            @Nonnull ShortPredicate before2, @Nonnull ShortPredicate before3) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         Objects.requireNonNull(before3);
@@ -400,7 +398,7 @@ public interface TriBooleanConsumer extends Lambda {
      * @throws NullPointerException If given argument is {@code null}
      */
     @Nonnull
-    default TriBooleanConsumer andThen(@Nonnull final TriBooleanConsumer after) {
+    default TriBooleanConsumer andThen(@Nonnull TriBooleanConsumer after) {
         Objects.requireNonNull(after);
         return (value1, value2, value3) -> {
             accept(value1, value2, value3);
@@ -410,8 +408,8 @@ public interface TriBooleanConsumer extends Lambda {
 
     /**
      * Returns a composed {@link TriConsumer} which represents this {@link TriBooleanConsumer}. Thereby the primitive
-     * input argument for this consumer is autoboxed. This method provides the possibility to use this
-     * {@code TriBooleanConsumer} with methods provided by the {@code JDK}.
+     * input argument for this consumer is autoboxed. This method provides the possibility to use this {@code
+     * TriBooleanConsumer} with methods provided by the {@code JDK}.
      *
      * @return A composed {@code TriConsumer} which represents this {@code TriBooleanConsumer}.
      */

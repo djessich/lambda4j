@@ -13,7 +13,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package org.lambda4j.predicate.bi;
+
+import java.util.Map;
+import java.util.Objects;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.function.BiPredicate;
+import java.util.function.Function;
+import java.util.function.Predicate;
+
+import javax.annotation.Nonnegative;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
+import org.apache.commons.lang3.tuple.Pair;
 
 import org.lambda4j.Lambda;
 import org.lambda4j.consumer.BooleanConsumer;
@@ -36,18 +50,6 @@ import org.lambda4j.function.conversion.BooleanToLongFunction;
 import org.lambda4j.function.conversion.BooleanToShortFunction;
 import org.lambda4j.operator.unary.BooleanUnaryOperator;
 import org.lambda4j.predicate.Predicate2;
-
-import org.apache.commons.lang3.tuple.Pair;
-
-import javax.annotation.Nonnegative;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import java.util.Map;
-import java.util.Objects;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.function.BiPredicate;
-import java.util.function.Function;
-import java.util.function.Predicate;
 
 /**
  * Represents an predicate (boolean-valued function) of two input arguments.
@@ -78,7 +80,7 @@ public interface BiPredicate2<T, U> extends Lambda, BiPredicate<T, U> {
      * Expression</a>
      * @see <a href="https://docs.oracle.com/javase/tutorial/java/javaOO/methodreferences.html">Method Reference</a>
      */
-    static <T, U> BiPredicate2<T, U> of(@Nullable final BiPredicate2<T, U> expression) {
+    static <T, U> BiPredicate2<T, U> of(@Nullable BiPredicate2<T, U> expression) {
         return expression;
     }
 
@@ -93,7 +95,7 @@ public interface BiPredicate2<T, U> extends Lambda, BiPredicate<T, U> {
      * @return The result from the given {@code BiPredicate2}.
      * @throws NullPointerException If given argument is {@code null}
      */
-    static <T, U> boolean call(@Nonnull final BiPredicate<? super T, ? super U> predicate, T t, U u) {
+    static <T, U> boolean call(@Nonnull BiPredicate<? super T, ? super U> predicate, T t, U u) {
         Objects.requireNonNull(predicate);
         return predicate.test(t, u);
     }
@@ -110,7 +112,7 @@ public interface BiPredicate2<T, U> extends Lambda, BiPredicate<T, U> {
      * @throws NullPointerException If given argument is {@code null}
      */
     @Nonnull
-    static <T, U> BiPredicate2<T, U> onlyFirst(@Nonnull final Predicate<? super T> predicate) {
+    static <T, U> BiPredicate2<T, U> onlyFirst(@Nonnull Predicate<? super T> predicate) {
         Objects.requireNonNull(predicate);
         return (t, u) -> predicate.test(t);
     }
@@ -127,7 +129,7 @@ public interface BiPredicate2<T, U> extends Lambda, BiPredicate<T, U> {
      * @throws NullPointerException If given argument is {@code null}
      */
     @Nonnull
-    static <T, U> BiPredicate2<T, U> onlySecond(@Nonnull final Predicate<? super U> predicate) {
+    static <T, U> BiPredicate2<T, U> onlySecond(@Nonnull Predicate<? super U> predicate) {
         Objects.requireNonNull(predicate);
         return (t, u) -> predicate.test(u);
     }
@@ -184,7 +186,7 @@ public interface BiPredicate2<T, U> extends Lambda, BiPredicate<T, U> {
      */
     @Nonnull
     static <T, U> BiPredicate2<T, U> isEqual(@Nullable Object target1, @Nullable Object target2) {
-        return (t, u) -> (t == null ? target1 == null : t.equals(target1)) && (u == null
+        return (t, u) -> t == null ? target1 == null : t.equals(target1) && (u == null
                 ? target2 == null
                 : u.equals(target2));
     }
@@ -196,6 +198,7 @@ public interface BiPredicate2<T, U> extends Lambda, BiPredicate<T, U> {
      * @param u The second argument to the predicate
      * @return The return value from the predicate, which is its result.
      */
+    @Override
     boolean test(T t, U u);
 
     /**
@@ -219,7 +222,7 @@ public interface BiPredicate2<T, U> extends Lambda, BiPredicate<T, U> {
      */
     @Nonnull
     default Predicate2<U> ptest(T t) {
-        return (u) -> this.test(t, u);
+        return u -> test(t, u);
     }
 
     /**
@@ -234,9 +237,9 @@ public interface BiPredicate2<T, U> extends Lambda, BiPredicate<T, U> {
     }
 
     /**
-     * Returns a composed {@link BiPredicate2} that first applies the {@code before} functions to its input, and
-     * then applies this predicate to the result.
-     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
+     * Returns a composed {@link BiPredicate2} that first applies the {@code before} functions to its input, and then
+     * applies this predicate to the result. If evaluation of either operation throws an exception, it is relayed to the
+     * caller of the composed operation.
      *
      * @param <A> The type of the argument to the first given function, and of composed predicate
      * @param <B> The type of the argument to the second given function, and of composed predicate
@@ -248,8 +251,8 @@ public interface BiPredicate2<T, U> extends Lambda, BiPredicate<T, U> {
      * @implSpec The input argument of this method is able to handle every type.
      */
     @Nonnull
-    default <A, B> BiPredicate2<A, B> compose(@Nonnull final Function<? super A, ? extends T> before1,
-            @Nonnull final Function<? super B, ? extends U> before2) {
+    default <A, B> BiPredicate2<A, B> compose(@Nonnull Function<? super A, ? extends T> before1,
+            @Nonnull Function<? super B, ? extends U> before2) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         return (a, b) -> test(before1.apply(a), before2.apply(b));
@@ -257,8 +260,8 @@ public interface BiPredicate2<T, U> extends Lambda, BiPredicate<T, U> {
 
     /**
      * Returns a composed {@link BiFunction2} that first applies this predicate to its input, and then applies the
-     * {@code after} function to the result.
-     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
+     * {@code after} function to the result. If evaluation of either operation throws an exception, it is relayed to the
+     * caller of the composed operation.
      *
      * @param <S> The type of return value from the {@code after} function, and of the composed function
      * @param after The function to apply after this predicate is applied
@@ -268,7 +271,7 @@ public interface BiPredicate2<T, U> extends Lambda, BiPredicate<T, U> {
      * @implSpec The input argument of this method is able to return every type.
      */
     @Nonnull
-    default <S> BiFunction2<T, U, S> andThen(@Nonnull final BooleanFunction<? extends S> after) {
+    default <S> BiFunction2<T, U, S> andThen(@Nonnull BooleanFunction<? extends S> after) {
         Objects.requireNonNull(after);
         return (t, u) -> after.apply(test(t, u));
     }
@@ -283,11 +286,11 @@ public interface BiPredicate2<T, U> extends Lambda, BiPredicate<T, U> {
      * @return A composed {@code BiPredicate2} that first applies this predicate to its input, and then applies the
      * {@code after} operator to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * boolean}.
      */
     @Nonnull
-    default BiPredicate2<T, U> andThenToBoolean(@Nonnull final BooleanUnaryOperator after) {
+    default BiPredicate2<T, U> andThenToBoolean(@Nonnull BooleanUnaryOperator after) {
         Objects.requireNonNull(after);
         return (t, u) -> after.applyAsBoolean(test(t, u));
     }
@@ -302,11 +305,11 @@ public interface BiPredicate2<T, U> extends Lambda, BiPredicate<T, U> {
      * @return A composed {@code ToByteBiFunction} that first applies this predicate to its input, and then applies the
      * {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * byte}.
      */
     @Nonnull
-    default ToByteBiFunction<T, U> andThenToByte(@Nonnull final BooleanToByteFunction after) {
+    default ToByteBiFunction<T, U> andThenToByte(@Nonnull BooleanToByteFunction after) {
         Objects.requireNonNull(after);
         return (t, u) -> after.applyAsByte(test(t, u));
     }
@@ -321,11 +324,11 @@ public interface BiPredicate2<T, U> extends Lambda, BiPredicate<T, U> {
      * @return A composed {@code ToCharBiFunction} that first applies this predicate to its input, and then applies the
      * {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * char}.
      */
     @Nonnull
-    default ToCharBiFunction<T, U> andThenToChar(@Nonnull final BooleanToCharFunction after) {
+    default ToCharBiFunction<T, U> andThenToChar(@Nonnull BooleanToCharFunction after) {
         Objects.requireNonNull(after);
         return (t, u) -> after.applyAsChar(test(t, u));
     }
@@ -340,11 +343,11 @@ public interface BiPredicate2<T, U> extends Lambda, BiPredicate<T, U> {
      * @return A composed {@code ToDoubleBiFunction2} that first applies this predicate to its input, and then applies
      * the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * double}.
      */
     @Nonnull
-    default ToDoubleBiFunction2<T, U> andThenToDouble(@Nonnull final BooleanToDoubleFunction after) {
+    default ToDoubleBiFunction2<T, U> andThenToDouble(@Nonnull BooleanToDoubleFunction after) {
         Objects.requireNonNull(after);
         return (t, u) -> after.applyAsDouble(test(t, u));
     }
@@ -359,11 +362,11 @@ public interface BiPredicate2<T, U> extends Lambda, BiPredicate<T, U> {
      * @return A composed {@code ToFloatBiFunction} that first applies this predicate to its input, and then applies the
      * {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * float}.
      */
     @Nonnull
-    default ToFloatBiFunction<T, U> andThenToFloat(@Nonnull final BooleanToFloatFunction after) {
+    default ToFloatBiFunction<T, U> andThenToFloat(@Nonnull BooleanToFloatFunction after) {
         Objects.requireNonNull(after);
         return (t, u) -> after.applyAsFloat(test(t, u));
     }
@@ -378,11 +381,11 @@ public interface BiPredicate2<T, U> extends Lambda, BiPredicate<T, U> {
      * @return A composed {@code ToIntBiFunction2} that first applies this predicate to its input, and then applies the
      * {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * int}.
      */
     @Nonnull
-    default ToIntBiFunction2<T, U> andThenToInt(@Nonnull final BooleanToIntFunction after) {
+    default ToIntBiFunction2<T, U> andThenToInt(@Nonnull BooleanToIntFunction after) {
         Objects.requireNonNull(after);
         return (t, u) -> after.applyAsInt(test(t, u));
     }
@@ -397,11 +400,11 @@ public interface BiPredicate2<T, U> extends Lambda, BiPredicate<T, U> {
      * @return A composed {@code ToLongBiFunction2} that first applies this predicate to its input, and then applies the
      * {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * long}.
      */
     @Nonnull
-    default ToLongBiFunction2<T, U> andThenToLong(@Nonnull final BooleanToLongFunction after) {
+    default ToLongBiFunction2<T, U> andThenToLong(@Nonnull BooleanToLongFunction after) {
         Objects.requireNonNull(after);
         return (t, u) -> after.applyAsLong(test(t, u));
     }
@@ -416,11 +419,11 @@ public interface BiPredicate2<T, U> extends Lambda, BiPredicate<T, U> {
      * @return A composed {@code ToShortBiFunction} that first applies this predicate to its input, and then applies the
      * {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * short}.
      */
     @Nonnull
-    default ToShortBiFunction<T, U> andThenToShort(@Nonnull final BooleanToShortFunction after) {
+    default ToShortBiFunction<T, U> andThenToShort(@Nonnull BooleanToShortFunction after) {
         Objects.requireNonNull(after);
         return (t, u) -> after.applyAsShort(test(t, u));
     }
@@ -436,7 +439,7 @@ public interface BiPredicate2<T, U> extends Lambda, BiPredicate<T, U> {
      * @throws NullPointerException If given argument is {@code null}
      */
     @Nonnull
-    default BiConsumer2<T, U> consume(@Nonnull final BooleanConsumer consumer) {
+    default BiConsumer2<T, U> consume(@Nonnull BooleanConsumer consumer) {
         Objects.requireNonNull(consumer);
         return (t, u) -> consumer.accept(test(t, u));
     }
@@ -446,6 +449,7 @@ public interface BiPredicate2<T, U> extends Lambda, BiPredicate<T, U> {
      *
      * @return A {@code BiPredicate2} that represents the logical negation of this one.
      */
+    @Override
     @Nonnull
     default BiPredicate2<T, U> negate() {
         return (t, u) -> !test(t, u);
@@ -466,8 +470,9 @@ public interface BiPredicate2<T, U> extends Lambda, BiPredicate<T, U> {
      * @see #or(BiPredicate)
      * @see #xor(BiPredicate)
      */
+    @Override
     @Nonnull
-    default BiPredicate2<T, U> and(@Nonnull final BiPredicate<? super T, ? super U> other) {
+    default BiPredicate2<T, U> and(@Nonnull BiPredicate<? super T, ? super U> other) {
         Objects.requireNonNull(other);
         return (t, u) -> test(t, u) && other.test(t, u);
     }
@@ -487,8 +492,9 @@ public interface BiPredicate2<T, U> extends Lambda, BiPredicate<T, U> {
      * @see #and(BiPredicate)
      * @see #xor(BiPredicate)
      */
+    @Override
     @Nonnull
-    default BiPredicate2<T, U> or(@Nonnull final BiPredicate<? super T, ? super U> other) {
+    default BiPredicate2<T, U> or(@Nonnull BiPredicate<? super T, ? super U> other) {
         Objects.requireNonNull(other);
         return (t, u) -> test(t, u) || other.test(t, u);
     }
@@ -506,7 +512,7 @@ public interface BiPredicate2<T, U> extends Lambda, BiPredicate<T, U> {
      * @see #or(BiPredicate)
      */
     @Nonnull
-    default BiPredicate2<T, U> xor(@Nonnull final BiPredicate<? super T, ? super U> other) {
+    default BiPredicate2<T, U> xor(@Nonnull BiPredicate<? super T, ? super U> other) {
         Objects.requireNonNull(other);
         return (t, u) -> test(t, u) ^ other.test(t, u);
     }
@@ -550,10 +556,10 @@ public interface BiPredicate2<T, U> extends Lambda, BiPredicate<T, U> {
         if (isMemoized()) {
             return this;
         } else {
-            final Map<Pair<T, U>, Boolean> cache = new ConcurrentHashMap<>();
-            final Object lock = new Object();
+            Map<Pair<T, U>, Boolean> cache = new ConcurrentHashMap<>();
+            Object lock = new Object();
             return (BiPredicate2<T, U> & Memoized) (t, u) -> {
-                final boolean returnValue;
+                boolean returnValue;
                 synchronized (lock) {
                     returnValue = cache.computeIfAbsent(Pair.of(t, u), key -> test(key.getLeft(), key.getRight()));
                 }

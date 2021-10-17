@@ -13,24 +13,26 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package org.lambda4j.consumer.bi;
 
-import org.lambda4j.Lambda;
-import org.lambda4j.consumer.Consumer2;
-
-import org.apache.commons.lang3.tuple.Pair;
-
-import javax.annotation.Nonnegative;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import java.util.Objects;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
+import javax.annotation.Nonnegative;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
+import org.apache.commons.lang3.tuple.Pair;
+
+import org.lambda4j.Lambda;
+import org.lambda4j.consumer.Consumer2;
+
 /**
- * Represents an operation that accepts two input arguments and returns no result.
- * Unlike most other functional interfaces, {@code BiConsumer2} is expected to operate via side-effects.
+ * Represents an operation that accepts two input arguments and returns no result. Unlike most other functional
+ * interfaces, {@code BiConsumer2} is expected to operate via side-effects.
  * <p>
  * This is a {@link FunctionalInterface} whose functional method is {@link #accept(Object, Object)}.
  *
@@ -58,7 +60,7 @@ public interface BiConsumer2<T, U> extends Lambda, BiConsumer<T, U> {
      * Expression</a>
      * @see <a href="https://docs.oracle.com/javase/tutorial/java/javaOO/methodreferences.html">Method Reference</a>
      */
-    static <T, U> BiConsumer2<T, U> of(@Nullable final BiConsumer2<T, U> expression) {
+    static <T, U> BiConsumer2<T, U> of(@Nullable BiConsumer2<T, U> expression) {
         return expression;
     }
 
@@ -72,7 +74,7 @@ public interface BiConsumer2<T, U> extends Lambda, BiConsumer<T, U> {
      * @param u The second argument to the consumer
      * @throws NullPointerException If given argument is {@code null}
      */
-    static <T, U> void call(@Nonnull final BiConsumer<? super T, ? super U> consumer, T t, U u) {
+    static <T, U> void call(@Nonnull BiConsumer<? super T, ? super U> consumer, T t, U u) {
         Objects.requireNonNull(consumer);
         consumer.accept(t, u);
     }
@@ -89,7 +91,7 @@ public interface BiConsumer2<T, U> extends Lambda, BiConsumer<T, U> {
      * @throws NullPointerException If given argument is {@code null}
      */
     @Nonnull
-    static <T, U> BiConsumer2<T, U> onlyFirst(@Nonnull final Consumer<? super T> consumer) {
+    static <T, U> BiConsumer2<T, U> onlyFirst(@Nonnull Consumer<? super T> consumer) {
         Objects.requireNonNull(consumer);
         return (t, u) -> consumer.accept(t);
     }
@@ -106,7 +108,7 @@ public interface BiConsumer2<T, U> extends Lambda, BiConsumer<T, U> {
      * @throws NullPointerException If given argument is {@code null}
      */
     @Nonnull
-    static <T, U> BiConsumer2<T, U> onlySecond(@Nonnull final Consumer<? super U> consumer) {
+    static <T, U> BiConsumer2<T, U> onlySecond(@Nonnull Consumer<? super U> consumer) {
         Objects.requireNonNull(consumer);
         return (t, u) -> consumer.accept(u);
     }
@@ -117,6 +119,7 @@ public interface BiConsumer2<T, U> extends Lambda, BiConsumer<T, U> {
      * @param t The first argument to the consumer
      * @param u The second argument to the consumer
      */
+    @Override
     void accept(T t, U u);
 
     /**
@@ -139,7 +142,7 @@ public interface BiConsumer2<T, U> extends Lambda, BiConsumer<T, U> {
      */
     @Nonnull
     default Consumer2<U> paccept(T t) {
-        return (u) -> this.accept(t, u);
+        return u -> accept(t, u);
     }
 
     /**
@@ -154,9 +157,9 @@ public interface BiConsumer2<T, U> extends Lambda, BiConsumer<T, U> {
     }
 
     /**
-     * Returns a composed {@link BiConsumer2} that first applies the {@code before} functions to its input, and
-     * then applies this consumer to the result.
-     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
+     * Returns a composed {@link BiConsumer2} that first applies the {@code before} functions to its input, and then
+     * applies this consumer to the result. If evaluation of either operation throws an exception, it is relayed to the
+     * caller of the composed operation.
      *
      * @param <A> The type of the argument to the first given function, and of composed consumer
      * @param <B> The type of the argument to the second given function, and of composed consumer
@@ -168,8 +171,8 @@ public interface BiConsumer2<T, U> extends Lambda, BiConsumer<T, U> {
      * @implSpec The input argument of this method is able to handle every type.
      */
     @Nonnull
-    default <A, B> BiConsumer2<A, B> compose(@Nonnull final Function<? super A, ? extends T> before1,
-            @Nonnull final Function<? super B, ? extends U> before2) {
+    default <A, B> BiConsumer2<A, B> compose(@Nonnull Function<? super A, ? extends T> before1,
+            @Nonnull Function<? super B, ? extends U> before2) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         return (a, b) -> accept(before1.apply(a), before2.apply(b));
@@ -177,17 +180,17 @@ public interface BiConsumer2<T, U> extends Lambda, BiConsumer<T, U> {
 
     /**
      * Returns a composed {@link BiConsumer2} that performs, in sequence, this consumer followed by the {@code after}
-     * consumer.
-     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
-     * If performing this consumer throws an exception, the {@code after} consumer will not be performed.
+     * consumer. If evaluation of either operation throws an exception, it is relayed to the caller of the composed
+     * operation. If performing this consumer throws an exception, the {@code after} consumer will not be performed.
      *
      * @param after The consumer to apply after this consumer is applied
      * @return A composed {@link BiConsumer2} that performs, in sequence, this consumer followed by the {@code after}
      * consumer.
      * @throws NullPointerException If given argument is {@code null}
      */
+    @Override
     @Nonnull
-    default BiConsumer2<T, U> andThen(@Nonnull final BiConsumer<? super T, ? super U> after) {
+    default BiConsumer2<T, U> andThen(@Nonnull BiConsumer<? super T, ? super U> after) {
         Objects.requireNonNull(after);
         return (t, u) -> {
             accept(t, u);

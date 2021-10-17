@@ -13,7 +13,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package org.lambda4j.operator.ternary;
+
+import java.util.Map;
+import java.util.Objects;
+import java.util.concurrent.ConcurrentHashMap;
+
+import javax.annotation.Nonnegative;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
+import org.apache.commons.lang3.tuple.Triple;
 
 import org.lambda4j.Lambda;
 import org.lambda4j.consumer.ByteConsumer;
@@ -53,19 +64,9 @@ import org.lambda4j.operator.unary.ByteUnaryOperator;
 import org.lambda4j.predicate.BytePredicate;
 import org.lambda4j.predicate.tri.TriBytePredicate;
 
-import org.apache.commons.lang3.tuple.Triple;
-
-import javax.annotation.Nonnegative;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import java.util.Map;
-import java.util.Objects;
-import java.util.concurrent.ConcurrentHashMap;
-
 /**
- * Represents an operation that accepts three {@code byte}-valued input arguments and produces a
- * {@code byte}-valued result.
- * This is a primitive specialization of {@link TernaryOperator}.
+ * Represents an operation that accepts three {@code byte}-valued input arguments and produces a {@code byte}-valued
+ * result. This is a primitive specialization of {@link TernaryOperator}.
  * <p>
  * This is a {@link FunctionalInterface} whose functional method is {@link #applyAsByte(byte, byte, byte)}.
  *
@@ -89,7 +90,7 @@ public interface ByteTernaryOperator extends Lambda {
      * Expression</a>
      * @see <a href="https://docs.oracle.com/javase/tutorial/java/javaOO/methodreferences.html">Method Reference</a>
      */
-    static ByteTernaryOperator of(@Nullable final ByteTernaryOperator expression) {
+    static ByteTernaryOperator of(@Nullable ByteTernaryOperator expression) {
         return expression;
     }
 
@@ -103,7 +104,7 @@ public interface ByteTernaryOperator extends Lambda {
      * @return The result from the given {@code ByteTernaryOperator}.
      * @throws NullPointerException If given argument is {@code null}
      */
-    static byte call(@Nonnull final ByteTernaryOperator operator, byte value1, byte value2, byte value3) {
+    static byte call(@Nonnull ByteTernaryOperator operator, byte value1, byte value2, byte value3) {
         Objects.requireNonNull(operator);
         return operator.applyAsByte(value1, value2, value3);
     }
@@ -118,7 +119,7 @@ public interface ByteTernaryOperator extends Lambda {
      * @throws NullPointerException If given argument is {@code null}
      */
     @Nonnull
-    static ByteTernaryOperator onlyFirst(@Nonnull final ByteUnaryOperator operator) {
+    static ByteTernaryOperator onlyFirst(@Nonnull ByteUnaryOperator operator) {
         Objects.requireNonNull(operator);
         return (value1, value2, value3) -> operator.applyAsByte(value1);
     }
@@ -133,7 +134,7 @@ public interface ByteTernaryOperator extends Lambda {
      * @throws NullPointerException If given argument is {@code null}
      */
     @Nonnull
-    static ByteTernaryOperator onlySecond(@Nonnull final ByteUnaryOperator operator) {
+    static ByteTernaryOperator onlySecond(@Nonnull ByteUnaryOperator operator) {
         Objects.requireNonNull(operator);
         return (value1, value2, value3) -> operator.applyAsByte(value2);
     }
@@ -148,7 +149,7 @@ public interface ByteTernaryOperator extends Lambda {
      * @throws NullPointerException If given argument is {@code null}
      */
     @Nonnull
-    static ByteTernaryOperator onlyThird(@Nonnull final ByteUnaryOperator operator) {
+    static ByteTernaryOperator onlyThird(@Nonnull ByteUnaryOperator operator) {
         Objects.requireNonNull(operator);
         return (value1, value2, value3) -> operator.applyAsByte(value3);
     }
@@ -182,7 +183,7 @@ public interface ByteTernaryOperator extends Lambda {
      */
     @Nonnull
     default ByteBinaryOperator papplyAsByte(byte value1) {
-        return (value2, value3) -> this.applyAsByte(value1, value2, value3);
+        return (value2, value3) -> applyAsByte(value1, value2, value3);
     }
 
     /**
@@ -194,7 +195,7 @@ public interface ByteTernaryOperator extends Lambda {
      */
     @Nonnull
     default ByteUnaryOperator papplyAsByte(byte value1, byte value2) {
-        return (value3) -> this.applyAsByte(value1, value2, value3);
+        return value3 -> applyAsByte(value1, value2, value3);
     }
 
     /**
@@ -210,8 +211,8 @@ public interface ByteTernaryOperator extends Lambda {
 
     /**
      * Returns a composed {@link ToByteTriFunction} that first applies the {@code before} functions to its input, and
-     * then applies this operator to the result.
-     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
+     * then applies this operator to the result. If evaluation of either operation throws an exception, it is relayed to
+     * the caller of the composed operation.
      *
      * @param <A> The type of the argument to the first given function, and of composed function
      * @param <B> The type of the argument to the second given function, and of composed function
@@ -225,8 +226,8 @@ public interface ByteTernaryOperator extends Lambda {
      * @implSpec The input argument of this method is able to handle every type.
      */
     @Nonnull
-    default <A, B, C> ToByteTriFunction<A, B, C> compose(@Nonnull final ToByteFunction<? super A> before1,
-            @Nonnull final ToByteFunction<? super B> before2, @Nonnull final ToByteFunction<? super C> before3) {
+    default <A, B, C> ToByteTriFunction<A, B, C> compose(@Nonnull ToByteFunction<? super A> before1,
+            @Nonnull ToByteFunction<? super B> before2, @Nonnull ToByteFunction<? super C> before3) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         Objects.requireNonNull(before3);
@@ -245,25 +246,24 @@ public interface ByteTernaryOperator extends Lambda {
      * @return A composed {@code TriBooleanToByteFunction} that first applies the {@code before} functions to its input,
      * and then applies this operator to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * boolean}.
      */
     @Nonnull
-    default TriBooleanToByteFunction composeFromBoolean(@Nonnull final BooleanToByteFunction before1,
-            @Nonnull final BooleanToByteFunction before2, @Nonnull final BooleanToByteFunction before3) {
+    default TriBooleanToByteFunction composeFromBoolean(@Nonnull BooleanToByteFunction before1,
+            @Nonnull BooleanToByteFunction before2, @Nonnull BooleanToByteFunction before3) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         Objects.requireNonNull(before3);
         return (value1, value2, value3) -> applyAsByte(before1.applyAsByte(value1), before2.applyAsByte(value2),
-                                                       before3.applyAsByte(value3));
+                before3.applyAsByte(value3));
     }
 
     /**
-     * Returns a composed {@link ByteTernaryOperator} that first applies the {@code before} operators to
-     * its input, and then applies this operator to the result.
-     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
-     * This method is just convenience, to provide the ability to execute an operation which accepts {@code byte} input,
-     * before this primitive operator is executed.
+     * Returns a composed {@link ByteTernaryOperator} that first applies the {@code before} operators to its input, and
+     * then applies this operator to the result. If evaluation of either operation throws an exception, it is relayed to
+     * the caller of the composed operation. This method is just convenience, to provide the ability to execute an
+     * operation which accepts {@code byte} input, before this primitive operator is executed.
      *
      * @param before1 The first operator to apply before this operator is applied
      * @param before2 The second operator to apply before this operator is applied
@@ -271,25 +271,24 @@ public interface ByteTernaryOperator extends Lambda {
      * @return A composed {@code ByteTernaryOperator} that first applies the {@code before} operators to its input, and
      * then applies this operator to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * byte}.
      */
     @Nonnull
-    default ByteTernaryOperator composeFromByte(@Nonnull final ByteUnaryOperator before1,
-            @Nonnull final ByteUnaryOperator before2, @Nonnull final ByteUnaryOperator before3) {
+    default ByteTernaryOperator composeFromByte(@Nonnull ByteUnaryOperator before1,
+            @Nonnull ByteUnaryOperator before2, @Nonnull ByteUnaryOperator before3) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         Objects.requireNonNull(before3);
         return (value1, value2, value3) -> applyAsByte(before1.applyAsByte(value1), before2.applyAsByte(value2),
-                                                       before3.applyAsByte(value3));
+                before3.applyAsByte(value3));
     }
 
     /**
-     * Returns a composed {@link TriCharToByteFunction} that first applies the {@code before} functions to
-     * its input, and then applies this operator to the result.
-     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
-     * This method is just convenience, to provide the ability to execute an operation which accepts {@code char} input,
-     * before this primitive operator is executed.
+     * Returns a composed {@link TriCharToByteFunction} that first applies the {@code before} functions to its input,
+     * and then applies this operator to the result. If evaluation of either operation throws an exception, it is
+     * relayed to the caller of the composed operation. This method is just convenience, to provide the ability to
+     * execute an operation which accepts {@code char} input, before this primitive operator is executed.
      *
      * @param before1 The first function to apply before this operator is applied
      * @param before2 The second function to apply before this operator is applied
@@ -297,17 +296,17 @@ public interface ByteTernaryOperator extends Lambda {
      * @return A composed {@code TriCharToByteFunction} that first applies the {@code before} functions to its input,
      * and then applies this operator to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * char}.
      */
     @Nonnull
-    default TriCharToByteFunction composeFromChar(@Nonnull final CharToByteFunction before1,
-            @Nonnull final CharToByteFunction before2, @Nonnull final CharToByteFunction before3) {
+    default TriCharToByteFunction composeFromChar(@Nonnull CharToByteFunction before1,
+            @Nonnull CharToByteFunction before2, @Nonnull CharToByteFunction before3) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         Objects.requireNonNull(before3);
         return (value1, value2, value3) -> applyAsByte(before1.applyAsByte(value1), before2.applyAsByte(value2),
-                                                       before3.applyAsByte(value3));
+                before3.applyAsByte(value3));
     }
 
     /**
@@ -322,17 +321,17 @@ public interface ByteTernaryOperator extends Lambda {
      * @return A composed {@code TriDoubleToByteFunction} that first applies the {@code before} functions to its input,
      * and then applies this operator to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * double}.
      */
     @Nonnull
-    default TriDoubleToByteFunction composeFromDouble(@Nonnull final DoubleToByteFunction before1,
-            @Nonnull final DoubleToByteFunction before2, @Nonnull final DoubleToByteFunction before3) {
+    default TriDoubleToByteFunction composeFromDouble(@Nonnull DoubleToByteFunction before1,
+            @Nonnull DoubleToByteFunction before2, @Nonnull DoubleToByteFunction before3) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         Objects.requireNonNull(before3);
         return (value1, value2, value3) -> applyAsByte(before1.applyAsByte(value1), before2.applyAsByte(value2),
-                                                       before3.applyAsByte(value3));
+                before3.applyAsByte(value3));
     }
 
     /**
@@ -347,25 +346,24 @@ public interface ByteTernaryOperator extends Lambda {
      * @return A composed {@code TriFloatToByteFunction} that first applies the {@code before} functions to its input,
      * and then applies this operator to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * float}.
      */
     @Nonnull
-    default TriFloatToByteFunction composeFromFloat(@Nonnull final FloatToByteFunction before1,
-            @Nonnull final FloatToByteFunction before2, @Nonnull final FloatToByteFunction before3) {
+    default TriFloatToByteFunction composeFromFloat(@Nonnull FloatToByteFunction before1,
+            @Nonnull FloatToByteFunction before2, @Nonnull FloatToByteFunction before3) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         Objects.requireNonNull(before3);
         return (value1, value2, value3) -> applyAsByte(before1.applyAsByte(value1), before2.applyAsByte(value2),
-                                                       before3.applyAsByte(value3));
+                before3.applyAsByte(value3));
     }
 
     /**
-     * Returns a composed {@link TriIntToByteFunction} that first applies the {@code before} functions to
-     * its input, and then applies this operator to the result.
-     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
-     * This method is just convenience, to provide the ability to execute an operation which accepts {@code int} input,
-     * before this primitive operator is executed.
+     * Returns a composed {@link TriIntToByteFunction} that first applies the {@code before} functions to its input, and
+     * then applies this operator to the result. If evaluation of either operation throws an exception, it is relayed to
+     * the caller of the composed operation. This method is just convenience, to provide the ability to execute an
+     * operation which accepts {@code int} input, before this primitive operator is executed.
      *
      * @param before1 The first function to apply before this operator is applied
      * @param before2 The second function to apply before this operator is applied
@@ -373,25 +371,24 @@ public interface ByteTernaryOperator extends Lambda {
      * @return A composed {@code TriIntToByteFunction} that first applies the {@code before} functions to its input, and
      * then applies this operator to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * int}.
      */
     @Nonnull
-    default TriIntToByteFunction composeFromInt(@Nonnull final IntToByteFunction before1,
-            @Nonnull final IntToByteFunction before2, @Nonnull final IntToByteFunction before3) {
+    default TriIntToByteFunction composeFromInt(@Nonnull IntToByteFunction before1,
+            @Nonnull IntToByteFunction before2, @Nonnull IntToByteFunction before3) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         Objects.requireNonNull(before3);
         return (value1, value2, value3) -> applyAsByte(before1.applyAsByte(value1), before2.applyAsByte(value2),
-                                                       before3.applyAsByte(value3));
+                before3.applyAsByte(value3));
     }
 
     /**
-     * Returns a composed {@link TriLongToByteFunction} that first applies the {@code before} functions to
-     * its input, and then applies this operator to the result.
-     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
-     * This method is just convenience, to provide the ability to execute an operation which accepts {@code long} input,
-     * before this primitive operator is executed.
+     * Returns a composed {@link TriLongToByteFunction} that first applies the {@code before} functions to its input,
+     * and then applies this operator to the result. If evaluation of either operation throws an exception, it is
+     * relayed to the caller of the composed operation. This method is just convenience, to provide the ability to
+     * execute an operation which accepts {@code long} input, before this primitive operator is executed.
      *
      * @param before1 The first function to apply before this operator is applied
      * @param before2 The second function to apply before this operator is applied
@@ -399,17 +396,17 @@ public interface ByteTernaryOperator extends Lambda {
      * @return A composed {@code TriLongToByteFunction} that first applies the {@code before} functions to its input,
      * and then applies this operator to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * long}.
      */
     @Nonnull
-    default TriLongToByteFunction composeFromLong(@Nonnull final LongToByteFunction before1,
-            @Nonnull final LongToByteFunction before2, @Nonnull final LongToByteFunction before3) {
+    default TriLongToByteFunction composeFromLong(@Nonnull LongToByteFunction before1,
+            @Nonnull LongToByteFunction before2, @Nonnull LongToByteFunction before3) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         Objects.requireNonNull(before3);
         return (value1, value2, value3) -> applyAsByte(before1.applyAsByte(value1), before2.applyAsByte(value2),
-                                                       before3.applyAsByte(value3));
+                before3.applyAsByte(value3));
     }
 
     /**
@@ -424,23 +421,23 @@ public interface ByteTernaryOperator extends Lambda {
      * @return A composed {@code TriShortToByteFunction} that first applies the {@code before} functions to its input,
      * and then applies this operator to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * short}.
      */
     @Nonnull
-    default TriShortToByteFunction composeFromShort(@Nonnull final ShortToByteFunction before1,
-            @Nonnull final ShortToByteFunction before2, @Nonnull final ShortToByteFunction before3) {
+    default TriShortToByteFunction composeFromShort(@Nonnull ShortToByteFunction before1,
+            @Nonnull ShortToByteFunction before2, @Nonnull ShortToByteFunction before3) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         Objects.requireNonNull(before3);
         return (value1, value2, value3) -> applyAsByte(before1.applyAsByte(value1), before2.applyAsByte(value2),
-                                                       before3.applyAsByte(value3));
+                before3.applyAsByte(value3));
     }
 
     /**
      * Returns a composed {@link TriByteFunction} that first applies this operator to its input, and then applies the
-     * {@code after} function to the result.
-     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
+     * {@code after} function to the result. If evaluation of either operation throws an exception, it is relayed to the
+     * caller of the composed operation.
      *
      * @param <S> The type of return value from the {@code after} function, and of the composed function
      * @param after The function to apply after this operator is applied
@@ -450,7 +447,7 @@ public interface ByteTernaryOperator extends Lambda {
      * @implSpec The input argument of this method is able to return every type.
      */
     @Nonnull
-    default <S> TriByteFunction<S> andThen(@Nonnull final ByteFunction<? extends S> after) {
+    default <S> TriByteFunction<S> andThen(@Nonnull ByteFunction<? extends S> after) {
         Objects.requireNonNull(after);
         return (value1, value2, value3) -> after.apply(applyAsByte(value1, value2, value3));
     }
@@ -465,11 +462,11 @@ public interface ByteTernaryOperator extends Lambda {
      * @return A composed {@code TriBytePredicate} that first applies this operator to its input, and then applies the
      * {@code after} predicate to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * boolean}.
      */
     @Nonnull
-    default TriBytePredicate andThenToBoolean(@Nonnull final BytePredicate after) {
+    default TriBytePredicate andThenToBoolean(@Nonnull BytePredicate after) {
         Objects.requireNonNull(after);
         return (value1, value2, value3) -> after.test(applyAsByte(value1, value2, value3));
     }
@@ -484,11 +481,11 @@ public interface ByteTernaryOperator extends Lambda {
      * @return A composed {@code ByteTernaryOperator} that first applies this operator to its input, and then applies
      * the {@code after} operator to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * byte}.
      */
     @Nonnull
-    default ByteTernaryOperator andThenToByte(@Nonnull final ByteUnaryOperator after) {
+    default ByteTernaryOperator andThenToByte(@Nonnull ByteUnaryOperator after) {
         Objects.requireNonNull(after);
         return (value1, value2, value3) -> after.applyAsByte(applyAsByte(value1, value2, value3));
     }
@@ -503,11 +500,11 @@ public interface ByteTernaryOperator extends Lambda {
      * @return A composed {@code TriByteToCharFunction} that first applies this operator to its input, and then applies
      * the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * char}.
      */
     @Nonnull
-    default TriByteToCharFunction andThenToChar(@Nonnull final ByteToCharFunction after) {
+    default TriByteToCharFunction andThenToChar(@Nonnull ByteToCharFunction after) {
         Objects.requireNonNull(after);
         return (value1, value2, value3) -> after.applyAsChar(applyAsByte(value1, value2, value3));
     }
@@ -522,11 +519,11 @@ public interface ByteTernaryOperator extends Lambda {
      * @return A composed {@code TriByteToDoubleFunction} that first applies this operator to its input, and then
      * applies the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * double}.
      */
     @Nonnull
-    default TriByteToDoubleFunction andThenToDouble(@Nonnull final ByteToDoubleFunction after) {
+    default TriByteToDoubleFunction andThenToDouble(@Nonnull ByteToDoubleFunction after) {
         Objects.requireNonNull(after);
         return (value1, value2, value3) -> after.applyAsDouble(applyAsByte(value1, value2, value3));
     }
@@ -541,11 +538,11 @@ public interface ByteTernaryOperator extends Lambda {
      * @return A composed {@code TriByteToFloatFunction} that first applies this operator to its input, and then applies
      * the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * float}.
      */
     @Nonnull
-    default TriByteToFloatFunction andThenToFloat(@Nonnull final ByteToFloatFunction after) {
+    default TriByteToFloatFunction andThenToFloat(@Nonnull ByteToFloatFunction after) {
         Objects.requireNonNull(after);
         return (value1, value2, value3) -> after.applyAsFloat(applyAsByte(value1, value2, value3));
     }
@@ -560,11 +557,11 @@ public interface ByteTernaryOperator extends Lambda {
      * @return A composed {@code TriByteToIntFunction} that first applies this operator to its input, and then applies
      * the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * int}.
      */
     @Nonnull
-    default TriByteToIntFunction andThenToInt(@Nonnull final ByteToIntFunction after) {
+    default TriByteToIntFunction andThenToInt(@Nonnull ByteToIntFunction after) {
         Objects.requireNonNull(after);
         return (value1, value2, value3) -> after.applyAsInt(applyAsByte(value1, value2, value3));
     }
@@ -579,11 +576,11 @@ public interface ByteTernaryOperator extends Lambda {
      * @return A composed {@code TriByteToLongFunction} that first applies this operator to its input, and then applies
      * the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * long}.
      */
     @Nonnull
-    default TriByteToLongFunction andThenToLong(@Nonnull final ByteToLongFunction after) {
+    default TriByteToLongFunction andThenToLong(@Nonnull ByteToLongFunction after) {
         Objects.requireNonNull(after);
         return (value1, value2, value3) -> after.applyAsLong(applyAsByte(value1, value2, value3));
     }
@@ -598,11 +595,11 @@ public interface ByteTernaryOperator extends Lambda {
      * @return A composed {@code TriByteToShortFunction} that first applies this operator to its input, and then applies
      * the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * short}.
      */
     @Nonnull
-    default TriByteToShortFunction andThenToShort(@Nonnull final ByteToShortFunction after) {
+    default TriByteToShortFunction andThenToShort(@Nonnull ByteToShortFunction after) {
         Objects.requireNonNull(after);
         return (value1, value2, value3) -> after.applyAsShort(applyAsByte(value1, value2, value3));
     }
@@ -618,7 +615,7 @@ public interface ByteTernaryOperator extends Lambda {
      * @throws NullPointerException If given argument is {@code null}
      */
     @Nonnull
-    default TriByteConsumer consume(@Nonnull final ByteConsumer consumer) {
+    default TriByteConsumer consume(@Nonnull ByteConsumer consumer) {
         Objects.requireNonNull(consumer);
         return (value1, value2, value3) -> consumer.accept(applyAsByte(value1, value2, value3));
     }
@@ -642,14 +639,14 @@ public interface ByteTernaryOperator extends Lambda {
         if (isMemoized()) {
             return this;
         } else {
-            final Map<Triple<Byte, Byte, Byte>, Byte> cache = new ConcurrentHashMap<>();
-            final Object lock = new Object();
+            Map<Triple<Byte, Byte, Byte>, Byte> cache = new ConcurrentHashMap<>();
+            Object lock = new Object();
             return (ByteTernaryOperator & Memoized) (value1, value2, value3) -> {
-                final byte returnValue;
+                byte returnValue;
                 synchronized (lock) {
                     returnValue = cache.computeIfAbsent(Triple.of(value1, value2, value3),
-                                                        key -> applyAsByte(key.getLeft(), key.getMiddle(),
-                                                                           key.getRight()));
+                            key -> applyAsByte(key.getLeft(), key.getMiddle(),
+                                    key.getRight()));
                 }
                 return returnValue;
             };

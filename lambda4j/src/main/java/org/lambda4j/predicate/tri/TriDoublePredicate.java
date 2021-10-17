@@ -13,7 +13,23 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package org.lambda4j.predicate.tri;
+
+import java.util.Map;
+import java.util.Objects;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.function.DoublePredicate;
+import java.util.function.DoubleUnaryOperator;
+import java.util.function.IntToDoubleFunction;
+import java.util.function.LongToDoubleFunction;
+import java.util.function.ToDoubleFunction;
+
+import javax.annotation.Nonnegative;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
+import org.apache.commons.lang3.tuple.Triple;
 
 import org.lambda4j.Lambda;
 import org.lambda4j.consumer.BooleanConsumer;
@@ -43,23 +59,9 @@ import org.lambda4j.operator.unary.BooleanUnaryOperator;
 import org.lambda4j.predicate.DoublePredicate2;
 import org.lambda4j.predicate.bi.BiDoublePredicate;
 
-import org.apache.commons.lang3.tuple.Triple;
-
-import javax.annotation.Nonnegative;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import java.util.Map;
-import java.util.Objects;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.function.DoublePredicate;
-import java.util.function.DoubleUnaryOperator;
-import java.util.function.IntToDoubleFunction;
-import java.util.function.LongToDoubleFunction;
-import java.util.function.ToDoubleFunction;
-
 /**
- * Represents an predicate (boolean-valued function) of three {@code double}-valued input arguments.
- * This is a primitive specialization of {@link TriPredicate}.
+ * Represents an predicate (boolean-valued function) of three {@code double}-valued input arguments. This is a primitive
+ * specialization of {@link TriPredicate}.
  * <p>
  * This is a {@link FunctionalInterface} whose functional method is {@link #test(double, double, double)}.
  *
@@ -83,7 +85,7 @@ public interface TriDoublePredicate extends Lambda {
      * Expression</a>
      * @see <a href="https://docs.oracle.com/javase/tutorial/java/javaOO/methodreferences.html">Method Reference</a>
      */
-    static TriDoublePredicate of(@Nullable final TriDoublePredicate expression) {
+    static TriDoublePredicate of(@Nullable TriDoublePredicate expression) {
         return expression;
     }
 
@@ -97,7 +99,7 @@ public interface TriDoublePredicate extends Lambda {
      * @return The result from the given {@code TriDoublePredicate}.
      * @throws NullPointerException If given argument is {@code null}
      */
-    static boolean call(@Nonnull final TriDoublePredicate predicate, double value1, double value2, double value3) {
+    static boolean call(@Nonnull TriDoublePredicate predicate, double value1, double value2, double value3) {
         Objects.requireNonNull(predicate);
         return predicate.test(value1, value2, value3);
     }
@@ -112,7 +114,7 @@ public interface TriDoublePredicate extends Lambda {
      * @throws NullPointerException If given argument is {@code null}
      */
     @Nonnull
-    static TriDoublePredicate onlyFirst(@Nonnull final DoublePredicate predicate) {
+    static TriDoublePredicate onlyFirst(@Nonnull DoublePredicate predicate) {
         Objects.requireNonNull(predicate);
         return (value1, value2, value3) -> predicate.test(value1);
     }
@@ -127,7 +129,7 @@ public interface TriDoublePredicate extends Lambda {
      * @throws NullPointerException If given argument is {@code null}
      */
     @Nonnull
-    static TriDoublePredicate onlySecond(@Nonnull final DoublePredicate predicate) {
+    static TriDoublePredicate onlySecond(@Nonnull DoublePredicate predicate) {
         Objects.requireNonNull(predicate);
         return (value1, value2, value3) -> predicate.test(value2);
     }
@@ -142,7 +144,7 @@ public interface TriDoublePredicate extends Lambda {
      * @throws NullPointerException If given argument is {@code null}
      */
     @Nonnull
-    static TriDoublePredicate onlyThird(@Nonnull final DoublePredicate predicate) {
+    static TriDoublePredicate onlyThird(@Nonnull DoublePredicate predicate) {
         Objects.requireNonNull(predicate);
         return (value1, value2, value3) -> predicate.test(value3);
     }
@@ -194,7 +196,7 @@ public interface TriDoublePredicate extends Lambda {
      */
     @Nonnull
     static TriDoublePredicate isEqual(double target1, double target2, double target3) {
-        return (value1, value2, value3) -> (value1 == target1) && (value2 == target2) && (value3 == target3);
+        return (value1, value2, value3) -> value1 == target1 && value2 == target2 && value3 == target3;
     }
 
     /**
@@ -215,7 +217,7 @@ public interface TriDoublePredicate extends Lambda {
      */
     @Nonnull
     default BiDoublePredicate ptest(double value1) {
-        return (value2, value3) -> this.test(value1, value2, value3);
+        return (value2, value3) -> test(value1, value2, value3);
     }
 
     /**
@@ -227,7 +229,7 @@ public interface TriDoublePredicate extends Lambda {
      */
     @Nonnull
     default DoublePredicate2 ptest(double value1, double value2) {
-        return (value3) -> this.test(value1, value2, value3);
+        return value3 -> test(value1, value2, value3);
     }
 
     /**
@@ -242,9 +244,9 @@ public interface TriDoublePredicate extends Lambda {
     }
 
     /**
-     * Returns a composed {@link TriPredicate} that first applies the {@code before} functions to its input, and
-     * then applies this predicate to the result.
-     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
+     * Returns a composed {@link TriPredicate} that first applies the {@code before} functions to its input, and then
+     * applies this predicate to the result. If evaluation of either operation throws an exception, it is relayed to the
+     * caller of the composed operation.
      *
      * @param <A> The type of the argument to the first given function, and of composed predicate
      * @param <B> The type of the argument to the second given function, and of composed predicate
@@ -258,8 +260,8 @@ public interface TriDoublePredicate extends Lambda {
      * @implSpec The input argument of this method is able to handle every type.
      */
     @Nonnull
-    default <A, B, C> TriPredicate<A, B, C> compose(@Nonnull final ToDoubleFunction<? super A> before1,
-            @Nonnull final ToDoubleFunction<? super B> before2, @Nonnull final ToDoubleFunction<? super C> before3) {
+    default <A, B, C> TriPredicate<A, B, C> compose(@Nonnull ToDoubleFunction<? super A> before1,
+            @Nonnull ToDoubleFunction<? super B> before2, @Nonnull ToDoubleFunction<? super C> before3) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         Objects.requireNonNull(before3);
@@ -278,25 +280,24 @@ public interface TriDoublePredicate extends Lambda {
      * @return A composed {@code BooleanTernaryOperator} that first applies the {@code before} functions to its input,
      * and then applies this predicate to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * boolean}.
      */
     @Nonnull
-    default BooleanTernaryOperator composeFromBoolean(@Nonnull final BooleanToDoubleFunction before1,
-            @Nonnull final BooleanToDoubleFunction before2, @Nonnull final BooleanToDoubleFunction before3) {
+    default BooleanTernaryOperator composeFromBoolean(@Nonnull BooleanToDoubleFunction before1,
+            @Nonnull BooleanToDoubleFunction before2, @Nonnull BooleanToDoubleFunction before3) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         Objects.requireNonNull(before3);
         return (value1, value2, value3) -> test(before1.applyAsDouble(value1), before2.applyAsDouble(value2),
-                                                before3.applyAsDouble(value3));
+                before3.applyAsDouble(value3));
     }
 
     /**
-     * Returns a composed {@link TriBytePredicate} that first applies the {@code before} functions to
-     * its input, and then applies this predicate to the result.
-     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
-     * This method is just convenience, to provide the ability to execute an operation which accepts {@code byte} input,
-     * before this primitive predicate is executed.
+     * Returns a composed {@link TriBytePredicate} that first applies the {@code before} functions to its input, and
+     * then applies this predicate to the result. If evaluation of either operation throws an exception, it is relayed
+     * to the caller of the composed operation. This method is just convenience, to provide the ability to execute an
+     * operation which accepts {@code byte} input, before this primitive predicate is executed.
      *
      * @param before1 The first function to apply before this predicate is applied
      * @param before2 The second function to apply before this predicate is applied
@@ -304,25 +305,24 @@ public interface TriDoublePredicate extends Lambda {
      * @return A composed {@code TriBytePredicate} that first applies the {@code before} functions to its input, and
      * then applies this predicate to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * byte}.
      */
     @Nonnull
-    default TriBytePredicate composeFromByte(@Nonnull final ByteToDoubleFunction before1,
-            @Nonnull final ByteToDoubleFunction before2, @Nonnull final ByteToDoubleFunction before3) {
+    default TriBytePredicate composeFromByte(@Nonnull ByteToDoubleFunction before1,
+            @Nonnull ByteToDoubleFunction before2, @Nonnull ByteToDoubleFunction before3) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         Objects.requireNonNull(before3);
         return (value1, value2, value3) -> test(before1.applyAsDouble(value1), before2.applyAsDouble(value2),
-                                                before3.applyAsDouble(value3));
+                before3.applyAsDouble(value3));
     }
 
     /**
-     * Returns a composed {@link TriCharPredicate} that first applies the {@code before} functions to
-     * its input, and then applies this predicate to the result.
-     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
-     * This method is just convenience, to provide the ability to execute an operation which accepts {@code char} input,
-     * before this primitive predicate is executed.
+     * Returns a composed {@link TriCharPredicate} that first applies the {@code before} functions to its input, and
+     * then applies this predicate to the result. If evaluation of either operation throws an exception, it is relayed
+     * to the caller of the composed operation. This method is just convenience, to provide the ability to execute an
+     * operation which accepts {@code char} input, before this primitive predicate is executed.
      *
      * @param before1 The first function to apply before this predicate is applied
      * @param before2 The second function to apply before this predicate is applied
@@ -330,17 +330,17 @@ public interface TriDoublePredicate extends Lambda {
      * @return A composed {@code TriCharPredicate} that first applies the {@code before} functions to its input, and
      * then applies this predicate to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * char}.
      */
     @Nonnull
-    default TriCharPredicate composeFromChar(@Nonnull final CharToDoubleFunction before1,
-            @Nonnull final CharToDoubleFunction before2, @Nonnull final CharToDoubleFunction before3) {
+    default TriCharPredicate composeFromChar(@Nonnull CharToDoubleFunction before1,
+            @Nonnull CharToDoubleFunction before2, @Nonnull CharToDoubleFunction before3) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         Objects.requireNonNull(before3);
         return (value1, value2, value3) -> test(before1.applyAsDouble(value1), before2.applyAsDouble(value2),
-                                                before3.applyAsDouble(value3));
+                before3.applyAsDouble(value3));
     }
 
     /**
@@ -355,17 +355,17 @@ public interface TriDoublePredicate extends Lambda {
      * @return A composed {@code TriDoublePredicate} that first applies the {@code before} operators to its input, and
      * then applies this predicate to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * double}.
      */
     @Nonnull
-    default TriDoublePredicate composeFromDouble(@Nonnull final DoubleUnaryOperator before1,
-            @Nonnull final DoubleUnaryOperator before2, @Nonnull final DoubleUnaryOperator before3) {
+    default TriDoublePredicate composeFromDouble(@Nonnull DoubleUnaryOperator before1,
+            @Nonnull DoubleUnaryOperator before2, @Nonnull DoubleUnaryOperator before3) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         Objects.requireNonNull(before3);
         return (value1, value2, value3) -> test(before1.applyAsDouble(value1), before2.applyAsDouble(value2),
-                                                before3.applyAsDouble(value3));
+                before3.applyAsDouble(value3));
     }
 
     /**
@@ -380,25 +380,24 @@ public interface TriDoublePredicate extends Lambda {
      * @return A composed {@code TriFloatPredicate} that first applies the {@code before} functions to its input, and
      * then applies this predicate to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * float}.
      */
     @Nonnull
-    default TriFloatPredicate composeFromFloat(@Nonnull final FloatToDoubleFunction before1,
-            @Nonnull final FloatToDoubleFunction before2, @Nonnull final FloatToDoubleFunction before3) {
+    default TriFloatPredicate composeFromFloat(@Nonnull FloatToDoubleFunction before1,
+            @Nonnull FloatToDoubleFunction before2, @Nonnull FloatToDoubleFunction before3) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         Objects.requireNonNull(before3);
         return (value1, value2, value3) -> test(before1.applyAsDouble(value1), before2.applyAsDouble(value2),
-                                                before3.applyAsDouble(value3));
+                before3.applyAsDouble(value3));
     }
 
     /**
-     * Returns a composed {@link TriIntPredicate} that first applies the {@code before} functions to
-     * its input, and then applies this predicate to the result.
-     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
-     * This method is just convenience, to provide the ability to execute an operation which accepts {@code int} input,
-     * before this primitive predicate is executed.
+     * Returns a composed {@link TriIntPredicate} that first applies the {@code before} functions to its input, and then
+     * applies this predicate to the result. If evaluation of either operation throws an exception, it is relayed to the
+     * caller of the composed operation. This method is just convenience, to provide the ability to execute an operation
+     * which accepts {@code int} input, before this primitive predicate is executed.
      *
      * @param before1 The first function to apply before this predicate is applied
      * @param before2 The second function to apply before this predicate is applied
@@ -406,25 +405,24 @@ public interface TriDoublePredicate extends Lambda {
      * @return A composed {@code TriIntPredicate} that first applies the {@code before} functions to its input, and then
      * applies this predicate to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * int}.
      */
     @Nonnull
-    default TriIntPredicate composeFromInt(@Nonnull final IntToDoubleFunction before1,
-            @Nonnull final IntToDoubleFunction before2, @Nonnull final IntToDoubleFunction before3) {
+    default TriIntPredicate composeFromInt(@Nonnull IntToDoubleFunction before1,
+            @Nonnull IntToDoubleFunction before2, @Nonnull IntToDoubleFunction before3) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         Objects.requireNonNull(before3);
         return (value1, value2, value3) -> test(before1.applyAsDouble(value1), before2.applyAsDouble(value2),
-                                                before3.applyAsDouble(value3));
+                before3.applyAsDouble(value3));
     }
 
     /**
-     * Returns a composed {@link TriLongPredicate} that first applies the {@code before} functions to
-     * its input, and then applies this predicate to the result.
-     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
-     * This method is just convenience, to provide the ability to execute an operation which accepts {@code long} input,
-     * before this primitive predicate is executed.
+     * Returns a composed {@link TriLongPredicate} that first applies the {@code before} functions to its input, and
+     * then applies this predicate to the result. If evaluation of either operation throws an exception, it is relayed
+     * to the caller of the composed operation. This method is just convenience, to provide the ability to execute an
+     * operation which accepts {@code long} input, before this primitive predicate is executed.
      *
      * @param before1 The first function to apply before this predicate is applied
      * @param before2 The second function to apply before this predicate is applied
@@ -432,17 +430,17 @@ public interface TriDoublePredicate extends Lambda {
      * @return A composed {@code TriLongPredicate} that first applies the {@code before} functions to its input, and
      * then applies this predicate to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * long}.
      */
     @Nonnull
-    default TriLongPredicate composeFromLong(@Nonnull final LongToDoubleFunction before1,
-            @Nonnull final LongToDoubleFunction before2, @Nonnull final LongToDoubleFunction before3) {
+    default TriLongPredicate composeFromLong(@Nonnull LongToDoubleFunction before1,
+            @Nonnull LongToDoubleFunction before2, @Nonnull LongToDoubleFunction before3) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         Objects.requireNonNull(before3);
         return (value1, value2, value3) -> test(before1.applyAsDouble(value1), before2.applyAsDouble(value2),
-                                                before3.applyAsDouble(value3));
+                before3.applyAsDouble(value3));
     }
 
     /**
@@ -457,23 +455,23 @@ public interface TriDoublePredicate extends Lambda {
      * @return A composed {@code TriShortPredicate} that first applies the {@code before} functions to its input, and
      * then applies this predicate to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * short}.
      */
     @Nonnull
-    default TriShortPredicate composeFromShort(@Nonnull final ShortToDoubleFunction before1,
-            @Nonnull final ShortToDoubleFunction before2, @Nonnull final ShortToDoubleFunction before3) {
+    default TriShortPredicate composeFromShort(@Nonnull ShortToDoubleFunction before1,
+            @Nonnull ShortToDoubleFunction before2, @Nonnull ShortToDoubleFunction before3) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         Objects.requireNonNull(before3);
         return (value1, value2, value3) -> test(before1.applyAsDouble(value1), before2.applyAsDouble(value2),
-                                                before3.applyAsDouble(value3));
+                before3.applyAsDouble(value3));
     }
 
     /**
      * Returns a composed {@link TriDoubleFunction} that first applies this predicate to its input, and then applies the
-     * {@code after} function to the result.
-     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
+     * {@code after} function to the result. If evaluation of either operation throws an exception, it is relayed to the
+     * caller of the composed operation.
      *
      * @param <S> The type of return value from the {@code after} function, and of the composed function
      * @param after The function to apply after this predicate is applied
@@ -483,7 +481,7 @@ public interface TriDoublePredicate extends Lambda {
      * @implSpec The input argument of this method is able to return every type.
      */
     @Nonnull
-    default <S> TriDoubleFunction<S> andThen(@Nonnull final BooleanFunction<? extends S> after) {
+    default <S> TriDoubleFunction<S> andThen(@Nonnull BooleanFunction<? extends S> after) {
         Objects.requireNonNull(after);
         return (value1, value2, value3) -> after.apply(test(value1, value2, value3));
     }
@@ -498,11 +496,11 @@ public interface TriDoublePredicate extends Lambda {
      * @return A composed {@code TriDoublePredicate} that first applies this predicate to its input, and then applies
      * the {@code after} operator to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * boolean}.
      */
     @Nonnull
-    default TriDoublePredicate andThenToBoolean(@Nonnull final BooleanUnaryOperator after) {
+    default TriDoublePredicate andThenToBoolean(@Nonnull BooleanUnaryOperator after) {
         Objects.requireNonNull(after);
         return (value1, value2, value3) -> after.applyAsBoolean(test(value1, value2, value3));
     }
@@ -517,11 +515,11 @@ public interface TriDoublePredicate extends Lambda {
      * @return A composed {@code TriDoubleToByteFunction} that first applies this predicate to its input, and then
      * applies the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * byte}.
      */
     @Nonnull
-    default TriDoubleToByteFunction andThenToByte(@Nonnull final BooleanToByteFunction after) {
+    default TriDoubleToByteFunction andThenToByte(@Nonnull BooleanToByteFunction after) {
         Objects.requireNonNull(after);
         return (value1, value2, value3) -> after.applyAsByte(test(value1, value2, value3));
     }
@@ -536,11 +534,11 @@ public interface TriDoublePredicate extends Lambda {
      * @return A composed {@code TriDoubleToCharFunction} that first applies this predicate to its input, and then
      * applies the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * char}.
      */
     @Nonnull
-    default TriDoubleToCharFunction andThenToChar(@Nonnull final BooleanToCharFunction after) {
+    default TriDoubleToCharFunction andThenToChar(@Nonnull BooleanToCharFunction after) {
         Objects.requireNonNull(after);
         return (value1, value2, value3) -> after.applyAsChar(test(value1, value2, value3));
     }
@@ -555,11 +553,11 @@ public interface TriDoublePredicate extends Lambda {
      * @return A composed {@code DoubleTernaryOperator} that first applies this predicate to its input, and then applies
      * the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * double}.
      */
     @Nonnull
-    default DoubleTernaryOperator andThenToDouble(@Nonnull final BooleanToDoubleFunction after) {
+    default DoubleTernaryOperator andThenToDouble(@Nonnull BooleanToDoubleFunction after) {
         Objects.requireNonNull(after);
         return (value1, value2, value3) -> after.applyAsDouble(test(value1, value2, value3));
     }
@@ -574,11 +572,11 @@ public interface TriDoublePredicate extends Lambda {
      * @return A composed {@code TriDoubleToFloatFunction} that first applies this predicate to its input, and then
      * applies the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * float}.
      */
     @Nonnull
-    default TriDoubleToFloatFunction andThenToFloat(@Nonnull final BooleanToFloatFunction after) {
+    default TriDoubleToFloatFunction andThenToFloat(@Nonnull BooleanToFloatFunction after) {
         Objects.requireNonNull(after);
         return (value1, value2, value3) -> after.applyAsFloat(test(value1, value2, value3));
     }
@@ -593,11 +591,11 @@ public interface TriDoublePredicate extends Lambda {
      * @return A composed {@code TriDoubleToIntFunction} that first applies this predicate to its input, and then
      * applies the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * int}.
      */
     @Nonnull
-    default TriDoubleToIntFunction andThenToInt(@Nonnull final BooleanToIntFunction after) {
+    default TriDoubleToIntFunction andThenToInt(@Nonnull BooleanToIntFunction after) {
         Objects.requireNonNull(after);
         return (value1, value2, value3) -> after.applyAsInt(test(value1, value2, value3));
     }
@@ -612,11 +610,11 @@ public interface TriDoublePredicate extends Lambda {
      * @return A composed {@code TriDoubleToLongFunction} that first applies this predicate to its input, and then
      * applies the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * long}.
      */
     @Nonnull
-    default TriDoubleToLongFunction andThenToLong(@Nonnull final BooleanToLongFunction after) {
+    default TriDoubleToLongFunction andThenToLong(@Nonnull BooleanToLongFunction after) {
         Objects.requireNonNull(after);
         return (value1, value2, value3) -> after.applyAsLong(test(value1, value2, value3));
     }
@@ -631,11 +629,11 @@ public interface TriDoublePredicate extends Lambda {
      * @return A composed {@code TriDoubleToShortFunction} that first applies this predicate to its input, and then
      * applies the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * short}.
      */
     @Nonnull
-    default TriDoubleToShortFunction andThenToShort(@Nonnull final BooleanToShortFunction after) {
+    default TriDoubleToShortFunction andThenToShort(@Nonnull BooleanToShortFunction after) {
         Objects.requireNonNull(after);
         return (value1, value2, value3) -> after.applyAsShort(test(value1, value2, value3));
     }
@@ -651,7 +649,7 @@ public interface TriDoublePredicate extends Lambda {
      * @throws NullPointerException If given argument is {@code null}
      */
     @Nonnull
-    default TriDoubleConsumer consume(@Nonnull final BooleanConsumer consumer) {
+    default TriDoubleConsumer consume(@Nonnull BooleanConsumer consumer) {
         Objects.requireNonNull(consumer);
         return (value1, value2, value3) -> consumer.accept(test(value1, value2, value3));
     }
@@ -682,7 +680,7 @@ public interface TriDoublePredicate extends Lambda {
      * @see #xor(TriDoublePredicate)
      */
     @Nonnull
-    default TriDoublePredicate and(@Nonnull final TriDoublePredicate other) {
+    default TriDoublePredicate and(@Nonnull TriDoublePredicate other) {
         Objects.requireNonNull(other);
         return (value1, value2, value3) -> test(value1, value2, value3) && other.test(value1, value2, value3);
     }
@@ -703,7 +701,7 @@ public interface TriDoublePredicate extends Lambda {
      * @see #xor(TriDoublePredicate)
      */
     @Nonnull
-    default TriDoublePredicate or(@Nonnull final TriDoublePredicate other) {
+    default TriDoublePredicate or(@Nonnull TriDoublePredicate other) {
         Objects.requireNonNull(other);
         return (value1, value2, value3) -> test(value1, value2, value3) || other.test(value1, value2, value3);
     }
@@ -721,7 +719,7 @@ public interface TriDoublePredicate extends Lambda {
      * @see #or(TriDoublePredicate)
      */
     @Nonnull
-    default TriDoublePredicate xor(@Nonnull final TriDoublePredicate other) {
+    default TriDoublePredicate xor(@Nonnull TriDoublePredicate other) {
         Objects.requireNonNull(other);
         return (value1, value2, value3) -> test(value1, value2, value3) ^ other.test(value1, value2, value3);
     }
@@ -745,13 +743,13 @@ public interface TriDoublePredicate extends Lambda {
         if (isMemoized()) {
             return this;
         } else {
-            final Map<Triple<Double, Double, Double>, Boolean> cache = new ConcurrentHashMap<>();
-            final Object lock = new Object();
+            Map<Triple<Double, Double, Double>, Boolean> cache = new ConcurrentHashMap<>();
+            Object lock = new Object();
             return (TriDoublePredicate & Memoized) (value1, value2, value3) -> {
-                final boolean returnValue;
+                boolean returnValue;
                 synchronized (lock) {
                     returnValue = cache.computeIfAbsent(Triple.of(value1, value2, value3),
-                                                        key -> test(key.getLeft(), key.getMiddle(), key.getRight()));
+                            key -> test(key.getLeft(), key.getMiddle(), key.getRight()));
                 }
                 return returnValue;
             };
@@ -760,8 +758,8 @@ public interface TriDoublePredicate extends Lambda {
 
     /**
      * Returns a composed {@link TriPredicate} which represents this {@link TriDoublePredicate}. Thereby the primitive
-     * input argument for this predicate is autoboxed. This method provides the possibility to use this
-     * {@code TriDoublePredicate} with methods provided by the {@code JDK}.
+     * input argument for this predicate is autoboxed. This method provides the possibility to use this {@code
+     * TriDoublePredicate} with methods provided by the {@code JDK}.
      *
      * @return A composed {@code TriPredicate} which represents this {@code TriDoublePredicate}.
      */

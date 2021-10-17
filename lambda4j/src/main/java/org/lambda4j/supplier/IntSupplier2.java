@@ -13,18 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package org.lambda4j.supplier;
 
-import org.lambda4j.Lambda;
-import org.lambda4j.consumer.Consumer2;
-import org.lambda4j.function.conversion.IntToByteFunction;
-import org.lambda4j.function.conversion.IntToCharFunction;
-import org.lambda4j.function.conversion.IntToFloatFunction;
-import org.lambda4j.function.conversion.IntToShortFunction;
-
-import javax.annotation.Nonnegative;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import java.util.Objects;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.IntConsumer;
@@ -35,9 +26,19 @@ import java.util.function.IntToDoubleFunction;
 import java.util.function.IntToLongFunction;
 import java.util.function.IntUnaryOperator;
 
+import javax.annotation.Nonnegative;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
+import org.lambda4j.Lambda;
+import org.lambda4j.consumer.Consumer2;
+import org.lambda4j.function.conversion.IntToByteFunction;
+import org.lambda4j.function.conversion.IntToCharFunction;
+import org.lambda4j.function.conversion.IntToFloatFunction;
+import org.lambda4j.function.conversion.IntToShortFunction;
+
 /**
- * Represents a supplier of {@code int}-valued results.
- * This is a primitive specialization of {@link Supplier2}.
+ * Represents a supplier of {@code int}-valued results. This is a primitive specialization of {@link Supplier2}.
  * <p>
  * There is no requirement that a distinct result be returned each time the supplier is invoked.
  * <p>
@@ -63,7 +64,7 @@ public interface IntSupplier2 extends Lambda, IntSupplier {
      * Expression</a>
      * @see <a href="https://docs.oracle.com/javase/tutorial/java/javaOO/methodreferences.html">Method Reference</a>
      */
-    static IntSupplier2 of(@Nullable final IntSupplier2 expression) {
+    static IntSupplier2 of(@Nullable IntSupplier2 expression) {
         return expression;
     }
 
@@ -74,7 +75,7 @@ public interface IntSupplier2 extends Lambda, IntSupplier {
      * @return The result from the given {@code IntSupplier2}.
      * @throws NullPointerException If given argument is {@code null}
      */
-    static int call(@Nonnull final IntSupplier supplier) {
+    static int call(@Nonnull IntSupplier supplier) {
         Objects.requireNonNull(supplier);
         return supplier.getAsInt();
     }
@@ -95,6 +96,7 @@ public interface IntSupplier2 extends Lambda, IntSupplier {
      *
      * @return The return value from the supplier, which is its result.
      */
+    @Override
     int getAsInt();
 
     /**
@@ -109,9 +111,9 @@ public interface IntSupplier2 extends Lambda, IntSupplier {
     }
 
     /**
-     * Returns a composed {@link Supplier2} that first applies this supplier to its input, and then applies the
-     * {@code after} function to the result.
-     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
+     * Returns a composed {@link Supplier2} that first applies this supplier to its input, and then applies the {@code
+     * after} function to the result. If evaluation of either operation throws an exception, it is relayed to the caller
+     * of the composed operation.
      *
      * @param <S> The type of return value from the {@code after} function, and of the composed supplier
      * @param after The function to apply after this supplier is applied
@@ -121,7 +123,7 @@ public interface IntSupplier2 extends Lambda, IntSupplier {
      * @implSpec The input argument of this method is able to return every type.
      */
     @Nonnull
-    default <S> Supplier2<S> andThen(@Nonnull final IntFunction<? extends S> after) {
+    default <S> Supplier2<S> andThen(@Nonnull IntFunction<? extends S> after) {
         Objects.requireNonNull(after);
         return () -> after.apply(getAsInt());
     }
@@ -136,11 +138,11 @@ public interface IntSupplier2 extends Lambda, IntSupplier {
      * @return A composed {@code BooleanSupplier2} that first applies this supplier to its input, and then applies the
      * {@code after} predicate to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * boolean}.
      */
     @Nonnull
-    default BooleanSupplier2 andThenToBoolean(@Nonnull final IntPredicate after) {
+    default BooleanSupplier2 andThenToBoolean(@Nonnull IntPredicate after) {
         Objects.requireNonNull(after);
         return () -> after.test(getAsInt());
     }
@@ -155,11 +157,11 @@ public interface IntSupplier2 extends Lambda, IntSupplier {
      * @return A composed {@code ByteSupplier} that first applies this supplier to its input, and then applies the
      * {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * byte}.
      */
     @Nonnull
-    default ByteSupplier andThenToByte(@Nonnull final IntToByteFunction after) {
+    default ByteSupplier andThenToByte(@Nonnull IntToByteFunction after) {
         Objects.requireNonNull(after);
         return () -> after.applyAsByte(getAsInt());
     }
@@ -174,11 +176,11 @@ public interface IntSupplier2 extends Lambda, IntSupplier {
      * @return A composed {@code CharSupplier} that first applies this supplier to its input, and then applies the
      * {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * char}.
      */
     @Nonnull
-    default CharSupplier andThenToChar(@Nonnull final IntToCharFunction after) {
+    default CharSupplier andThenToChar(@Nonnull IntToCharFunction after) {
         Objects.requireNonNull(after);
         return () -> after.applyAsChar(getAsInt());
     }
@@ -193,11 +195,11 @@ public interface IntSupplier2 extends Lambda, IntSupplier {
      * @return A composed {@code DoubleSupplier2} that first applies this supplier to its input, and then applies the
      * {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * double}.
      */
     @Nonnull
-    default DoubleSupplier2 andThenToDouble(@Nonnull final IntToDoubleFunction after) {
+    default DoubleSupplier2 andThenToDouble(@Nonnull IntToDoubleFunction after) {
         Objects.requireNonNull(after);
         return () -> after.applyAsDouble(getAsInt());
     }
@@ -212,11 +214,11 @@ public interface IntSupplier2 extends Lambda, IntSupplier {
      * @return A composed {@code FloatSupplier} that first applies this supplier to its input, and then applies the
      * {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * float}.
      */
     @Nonnull
-    default FloatSupplier andThenToFloat(@Nonnull final IntToFloatFunction after) {
+    default FloatSupplier andThenToFloat(@Nonnull IntToFloatFunction after) {
         Objects.requireNonNull(after);
         return () -> after.applyAsFloat(getAsInt());
     }
@@ -231,11 +233,11 @@ public interface IntSupplier2 extends Lambda, IntSupplier {
      * @return A composed {@code IntSupplier2} that first applies this supplier to its input, and then applies the
      * {@code after} operator to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * int}.
      */
     @Nonnull
-    default IntSupplier2 andThenToInt(@Nonnull final IntUnaryOperator after) {
+    default IntSupplier2 andThenToInt(@Nonnull IntUnaryOperator after) {
         Objects.requireNonNull(after);
         return () -> after.applyAsInt(getAsInt());
     }
@@ -250,11 +252,11 @@ public interface IntSupplier2 extends Lambda, IntSupplier {
      * @return A composed {@code LongSupplier2} that first applies this supplier to its input, and then applies the
      * {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * long}.
      */
     @Nonnull
-    default LongSupplier2 andThenToLong(@Nonnull final IntToLongFunction after) {
+    default LongSupplier2 andThenToLong(@Nonnull IntToLongFunction after) {
         Objects.requireNonNull(after);
         return () -> after.applyAsLong(getAsInt());
     }
@@ -269,19 +271,19 @@ public interface IntSupplier2 extends Lambda, IntSupplier {
      * @return A composed {@code ShortSupplier} that first applies this supplier to its input, and then applies the
      * {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * short}.
      */
     @Nonnull
-    default ShortSupplier andThenToShort(@Nonnull final IntToShortFunction after) {
+    default ShortSupplier andThenToShort(@Nonnull IntToShortFunction after) {
         Objects.requireNonNull(after);
         return () -> after.applyAsShort(getAsInt());
     }
 
     /**
-     * Returns a composed {@link Consumer2} that first gets the result from this supplier, and then consumes
-     * the result using the given {@link IntConsumer}.
-     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
+     * Returns a composed {@link Consumer2} that first gets the result from this supplier, and then consumes the result
+     * using the given {@link IntConsumer}. If evaluation of either operation throws an exception, it is relayed to the
+     * caller of the composed operation.
      *
      * @param consumer The operation which consumes the result from this operation
      * @return A composed {@code Consumer2} that first gets the result from this supplier, and then consumes the result
@@ -293,7 +295,7 @@ public interface IntSupplier2 extends Lambda, IntSupplier {
      * resulting consumer is called with {@code Consumer#accept(Object)}.
      */
     @Nonnull
-    default Consumer2<Void> consume(@Nonnull final IntConsumer consumer) {
+    default Consumer2<Void> consume(@Nonnull IntConsumer consumer) {
         Objects.requireNonNull(consumer);
         return ignored -> consumer.accept(getAsInt());
     }
@@ -324,7 +326,7 @@ public interface IntSupplier2 extends Lambda, IntSupplier {
                     synchronized (this) {
                         returnValue = cache.get();
                         if (returnValue == null) {
-                            returnValue = this.getAsInt();
+                            returnValue = getAsInt();
                             cache.set(returnValue);
                         }
                     }
@@ -335,9 +337,9 @@ public interface IntSupplier2 extends Lambda, IntSupplier {
     }
 
     /**
-     * Returns a composed {@link Supplier2} which represents this {@link IntSupplier2}. Thereby the primitive
-     * input argument for this supplier is autoboxed. This method provides the possibility to use this
-     * {@code IntSupplier2} with methods provided by the {@code JDK}.
+     * Returns a composed {@link Supplier2} which represents this {@link IntSupplier2}. Thereby the primitive input
+     * argument for this supplier is autoboxed. This method provides the possibility to use this {@code IntSupplier2}
+     * with methods provided by the {@code JDK}.
      *
      * @return A composed {@code Supplier2} which represents this {@code IntSupplier2}.
      */

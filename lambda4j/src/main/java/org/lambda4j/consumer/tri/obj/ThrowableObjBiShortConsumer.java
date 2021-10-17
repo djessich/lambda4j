@@ -13,7 +13,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package org.lambda4j.consumer.tri.obj;
+
+import java.util.Objects;
+import java.util.function.Function;
+
+import javax.annotation.Nonnegative;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import org.lambda4j.Lambda;
 import org.lambda4j.consumer.ThrowableConsumer;
@@ -50,12 +58,6 @@ import org.lambda4j.function.conversion.ThrowableLongToShortFunction;
 import org.lambda4j.function.to.ThrowableToShortFunction;
 import org.lambda4j.operator.unary.ThrowableShortUnaryOperator;
 
-import javax.annotation.Nonnegative;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import java.util.Objects;
-import java.util.function.Function;
-
 /**
  * Represents an operation that accepts one object-valued and two {@code short}-valued input arguments and returns no
  * result which is able to throw any {@link Throwable}. This is a (reference, short, short) specialization of {@link
@@ -89,7 +91,7 @@ public interface ThrowableObjBiShortConsumer<T, X extends Throwable> extends Lam
      * @see <a href="https://docs.oracle.com/javase/tutorial/java/javaOO/methodreferences.html">Method Reference</a>
      */
     static <T, X extends Throwable> ThrowableObjBiShortConsumer<T, X> of(
-            @Nullable final ThrowableObjBiShortConsumer<T, X> expression) {
+            @Nullable ThrowableObjBiShortConsumer<T, X> expression) {
         return expression;
     }
 
@@ -106,7 +108,7 @@ public interface ThrowableObjBiShortConsumer<T, X extends Throwable> extends Lam
      * @throws X Any throwable from this consumers action
      */
     static <T, X extends Throwable> void call(
-            @Nonnull final ThrowableObjBiShortConsumer<? super T, ? extends X> consumer, T t, short value1,
+            @Nonnull ThrowableObjBiShortConsumer<? super T, ? extends X> consumer, T t, short value1,
             short value2) throws X {
         Objects.requireNonNull(consumer);
         consumer.acceptThrows(t, value1, value2);
@@ -125,7 +127,7 @@ public interface ThrowableObjBiShortConsumer<T, X extends Throwable> extends Lam
      */
     @Nonnull
     static <T, X extends Throwable> ThrowableObjBiShortConsumer<T, X> onlyFirst(
-            @Nonnull final ThrowableConsumer<? super T, ? extends X> consumer) {
+            @Nonnull ThrowableConsumer<? super T, ? extends X> consumer) {
         Objects.requireNonNull(consumer);
         return (t, value1, value2) -> consumer.acceptThrows(t);
     }
@@ -143,7 +145,7 @@ public interface ThrowableObjBiShortConsumer<T, X extends Throwable> extends Lam
      */
     @Nonnull
     static <T, X extends Throwable> ThrowableObjBiShortConsumer<T, X> onlySecond(
-            @Nonnull final ThrowableShortConsumer<? extends X> consumer) {
+            @Nonnull ThrowableShortConsumer<? extends X> consumer) {
         Objects.requireNonNull(consumer);
         return (t, value1, value2) -> consumer.acceptThrows(value1);
     }
@@ -161,7 +163,7 @@ public interface ThrowableObjBiShortConsumer<T, X extends Throwable> extends Lam
      */
     @Nonnull
     static <T, X extends Throwable> ThrowableObjBiShortConsumer<T, X> onlyThird(
-            @Nonnull final ThrowableShortConsumer<? extends X> consumer) {
+            @Nonnull ThrowableShortConsumer<? extends X> consumer) {
         Objects.requireNonNull(consumer);
         return (t, value1, value2) -> consumer.acceptThrows(value2);
     }
@@ -185,7 +187,7 @@ public interface ThrowableObjBiShortConsumer<T, X extends Throwable> extends Lam
      */
     @Nonnull
     default ThrowableBiShortConsumer<X> pacceptThrows(T t) {
-        return (value1, value2) -> this.acceptThrows(t, value1, value2);
+        return (value1, value2) -> acceptThrows(t, value1, value2);
     }
 
     /**
@@ -198,7 +200,7 @@ public interface ThrowableObjBiShortConsumer<T, X extends Throwable> extends Lam
      */
     @Nonnull
     default ThrowableShortConsumer<X> pacceptThrows(T t, short value1) {
-        return (value2) -> this.acceptThrows(t, value1, value2);
+        return value2 -> acceptThrows(t, value1, value2);
     }
 
     /**
@@ -210,7 +212,7 @@ public interface ThrowableObjBiShortConsumer<T, X extends Throwable> extends Lam
      */
     @Nonnull
     default ThrowableObjShortConsumer<T, X> pacceptThrows(short value1) {
-        return (t, value2) -> this.acceptThrows(t, value1, value2);
+        return (t, value2) -> acceptThrows(t, value1, value2);
     }
 
     /**
@@ -222,7 +224,7 @@ public interface ThrowableObjBiShortConsumer<T, X extends Throwable> extends Lam
      */
     @Nonnull
     default ThrowableConsumer<T, X> pacceptThrows(short value1, short value2) {
-        return (t) -> this.acceptThrows(t, value1, value2);
+        return t -> acceptThrows(t, value1, value2);
     }
 
     /**
@@ -253,14 +255,14 @@ public interface ThrowableObjBiShortConsumer<T, X extends Throwable> extends Lam
      */
     @Nonnull
     default <A, B, C> ThrowableTriConsumer<A, B, C, X> compose(
-            @Nonnull final ThrowableFunction<? super A, ? extends T, ? extends X> before1,
-            @Nonnull final ThrowableToShortFunction<? super B, ? extends X> before2,
-            @Nonnull final ThrowableToShortFunction<? super C, ? extends X> before3) {
+            @Nonnull ThrowableFunction<? super A, ? extends T, ? extends X> before1,
+            @Nonnull ThrowableToShortFunction<? super B, ? extends X> before2,
+            @Nonnull ThrowableToShortFunction<? super C, ? extends X> before3) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         Objects.requireNonNull(before3);
         return (a, b, c) -> acceptThrows(before1.applyThrows(a), before2.applyAsShortThrows(b),
-                                         before3.applyAsShortThrows(c));
+                before3.applyAsShortThrows(c));
     }
 
     /**
@@ -274,26 +276,25 @@ public interface ThrowableObjBiShortConsumer<T, X extends Throwable> extends Lam
      * @return A composed {@code ThrowableTriBooleanConsumer} that first applies the {@code before} functions to its
      * input, and then applies this consumer to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * boolean}.
      */
     @Nonnull
     default ThrowableTriBooleanConsumer<X> composeFromBoolean(
-            @Nonnull final ThrowableBooleanFunction<? extends T, ? extends X> before1,
-            @Nonnull final ThrowableBooleanToShortFunction<? extends X> before2,
-            @Nonnull final ThrowableBooleanToShortFunction<? extends X> before3) {
+            @Nonnull ThrowableBooleanFunction<? extends T, ? extends X> before1,
+            @Nonnull ThrowableBooleanToShortFunction<? extends X> before2,
+            @Nonnull ThrowableBooleanToShortFunction<? extends X> before3) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         Objects.requireNonNull(before3);
         return (value1, value2, value3) -> acceptThrows(before1.applyThrows(value1), before2.applyAsShortThrows(value2),
-                                                        before3.applyAsShortThrows(value3));
+                before3.applyAsShortThrows(value3));
     }
 
     /**
-     * Returns a composed {@link ThrowableTriByteConsumer} that first applies the {@code before} functions to
-     * its input, and then applies this consumer to the result.
-     * This method is just convenience, to provide the ability to execute an operation which accepts {@code byte} input,
-     * before this primitive consumer is executed.
+     * Returns a composed {@link ThrowableTriByteConsumer} that first applies the {@code before} functions to its input,
+     * and then applies this consumer to the result. This method is just convenience, to provide the ability to execute
+     * an operation which accepts {@code byte} input, before this primitive consumer is executed.
      *
      * @param before1 The first function to apply before this consumer is applied
      * @param before2 The second function to apply before this consumer is applied
@@ -301,26 +302,25 @@ public interface ThrowableObjBiShortConsumer<T, X extends Throwable> extends Lam
      * @return A composed {@code ThrowableTriByteConsumer} that first applies the {@code before} functions to its input,
      * and then applies this consumer to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * byte}.
      */
     @Nonnull
     default ThrowableTriByteConsumer<X> composeFromByte(
-            @Nonnull final ThrowableByteFunction<? extends T, ? extends X> before1,
-            @Nonnull final ThrowableByteToShortFunction<? extends X> before2,
-            @Nonnull final ThrowableByteToShortFunction<? extends X> before3) {
+            @Nonnull ThrowableByteFunction<? extends T, ? extends X> before1,
+            @Nonnull ThrowableByteToShortFunction<? extends X> before2,
+            @Nonnull ThrowableByteToShortFunction<? extends X> before3) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         Objects.requireNonNull(before3);
         return (value1, value2, value3) -> acceptThrows(before1.applyThrows(value1), before2.applyAsShortThrows(value2),
-                                                        before3.applyAsShortThrows(value3));
+                before3.applyAsShortThrows(value3));
     }
 
     /**
-     * Returns a composed {@link ThrowableTriCharConsumer} that first applies the {@code before} functions to
-     * its input, and then applies this consumer to the result.
-     * This method is just convenience, to provide the ability to execute an operation which accepts {@code char} input,
-     * before this primitive consumer is executed.
+     * Returns a composed {@link ThrowableTriCharConsumer} that first applies the {@code before} functions to its input,
+     * and then applies this consumer to the result. This method is just convenience, to provide the ability to execute
+     * an operation which accepts {@code char} input, before this primitive consumer is executed.
      *
      * @param before1 The first function to apply before this consumer is applied
      * @param before2 The second function to apply before this consumer is applied
@@ -328,19 +328,19 @@ public interface ThrowableObjBiShortConsumer<T, X extends Throwable> extends Lam
      * @return A composed {@code ThrowableTriCharConsumer} that first applies the {@code before} functions to its input,
      * and then applies this consumer to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * char}.
      */
     @Nonnull
     default ThrowableTriCharConsumer<X> composeFromChar(
-            @Nonnull final ThrowableCharFunction<? extends T, ? extends X> before1,
-            @Nonnull final ThrowableCharToShortFunction<? extends X> before2,
-            @Nonnull final ThrowableCharToShortFunction<? extends X> before3) {
+            @Nonnull ThrowableCharFunction<? extends T, ? extends X> before1,
+            @Nonnull ThrowableCharToShortFunction<? extends X> before2,
+            @Nonnull ThrowableCharToShortFunction<? extends X> before3) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         Objects.requireNonNull(before3);
         return (value1, value2, value3) -> acceptThrows(before1.applyThrows(value1), before2.applyAsShortThrows(value2),
-                                                        before3.applyAsShortThrows(value3));
+                before3.applyAsShortThrows(value3));
     }
 
     /**
@@ -354,19 +354,19 @@ public interface ThrowableObjBiShortConsumer<T, X extends Throwable> extends Lam
      * @return A composed {@code ThrowableTriDoubleConsumer} that first applies the {@code before} functions to its
      * input, and then applies this consumer to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * double}.
      */
     @Nonnull
     default ThrowableTriDoubleConsumer<X> composeFromDouble(
-            @Nonnull final ThrowableDoubleFunction<? extends T, ? extends X> before1,
-            @Nonnull final ThrowableDoubleToShortFunction<? extends X> before2,
-            @Nonnull final ThrowableDoubleToShortFunction<? extends X> before3) {
+            @Nonnull ThrowableDoubleFunction<? extends T, ? extends X> before1,
+            @Nonnull ThrowableDoubleToShortFunction<? extends X> before2,
+            @Nonnull ThrowableDoubleToShortFunction<? extends X> before3) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         Objects.requireNonNull(before3);
         return (value1, value2, value3) -> acceptThrows(before1.applyThrows(value1), before2.applyAsShortThrows(value2),
-                                                        before3.applyAsShortThrows(value3));
+                before3.applyAsShortThrows(value3));
     }
 
     /**
@@ -380,26 +380,25 @@ public interface ThrowableObjBiShortConsumer<T, X extends Throwable> extends Lam
      * @return A composed {@code ThrowableTriFloatConsumer} that first applies the {@code before} functions to its
      * input, and then applies this consumer to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * float}.
      */
     @Nonnull
     default ThrowableTriFloatConsumer<X> composeFromFloat(
-            @Nonnull final ThrowableFloatFunction<? extends T, ? extends X> before1,
-            @Nonnull final ThrowableFloatToShortFunction<? extends X> before2,
-            @Nonnull final ThrowableFloatToShortFunction<? extends X> before3) {
+            @Nonnull ThrowableFloatFunction<? extends T, ? extends X> before1,
+            @Nonnull ThrowableFloatToShortFunction<? extends X> before2,
+            @Nonnull ThrowableFloatToShortFunction<? extends X> before3) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         Objects.requireNonNull(before3);
         return (value1, value2, value3) -> acceptThrows(before1.applyThrows(value1), before2.applyAsShortThrows(value2),
-                                                        before3.applyAsShortThrows(value3));
+                before3.applyAsShortThrows(value3));
     }
 
     /**
-     * Returns a composed {@link ThrowableTriIntConsumer} that first applies the {@code before} functions to
-     * its input, and then applies this consumer to the result.
-     * This method is just convenience, to provide the ability to execute an operation which accepts {@code int} input,
-     * before this primitive consumer is executed.
+     * Returns a composed {@link ThrowableTriIntConsumer} that first applies the {@code before} functions to its input,
+     * and then applies this consumer to the result. This method is just convenience, to provide the ability to execute
+     * an operation which accepts {@code int} input, before this primitive consumer is executed.
      *
      * @param before1 The first function to apply before this consumer is applied
      * @param before2 The second function to apply before this consumer is applied
@@ -407,26 +406,25 @@ public interface ThrowableObjBiShortConsumer<T, X extends Throwable> extends Lam
      * @return A composed {@code ThrowableTriIntConsumer} that first applies the {@code before} functions to its input,
      * and then applies this consumer to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * int}.
      */
     @Nonnull
     default ThrowableTriIntConsumer<X> composeFromInt(
-            @Nonnull final ThrowableIntFunction<? extends T, ? extends X> before1,
-            @Nonnull final ThrowableIntToShortFunction<? extends X> before2,
-            @Nonnull final ThrowableIntToShortFunction<? extends X> before3) {
+            @Nonnull ThrowableIntFunction<? extends T, ? extends X> before1,
+            @Nonnull ThrowableIntToShortFunction<? extends X> before2,
+            @Nonnull ThrowableIntToShortFunction<? extends X> before3) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         Objects.requireNonNull(before3);
         return (value1, value2, value3) -> acceptThrows(before1.applyThrows(value1), before2.applyAsShortThrows(value2),
-                                                        before3.applyAsShortThrows(value3));
+                before3.applyAsShortThrows(value3));
     }
 
     /**
-     * Returns a composed {@link ThrowableTriLongConsumer} that first applies the {@code before} functions to
-     * its input, and then applies this consumer to the result.
-     * This method is just convenience, to provide the ability to execute an operation which accepts {@code long} input,
-     * before this primitive consumer is executed.
+     * Returns a composed {@link ThrowableTriLongConsumer} that first applies the {@code before} functions to its input,
+     * and then applies this consumer to the result. This method is just convenience, to provide the ability to execute
+     * an operation which accepts {@code long} input, before this primitive consumer is executed.
      *
      * @param before1 The first function to apply before this consumer is applied
      * @param before2 The second function to apply before this consumer is applied
@@ -434,19 +432,19 @@ public interface ThrowableObjBiShortConsumer<T, X extends Throwable> extends Lam
      * @return A composed {@code ThrowableTriLongConsumer} that first applies the {@code before} functions to its input,
      * and then applies this consumer to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * long}.
      */
     @Nonnull
     default ThrowableTriLongConsumer<X> composeFromLong(
-            @Nonnull final ThrowableLongFunction<? extends T, ? extends X> before1,
-            @Nonnull final ThrowableLongToShortFunction<? extends X> before2,
-            @Nonnull final ThrowableLongToShortFunction<? extends X> before3) {
+            @Nonnull ThrowableLongFunction<? extends T, ? extends X> before1,
+            @Nonnull ThrowableLongToShortFunction<? extends X> before2,
+            @Nonnull ThrowableLongToShortFunction<? extends X> before3) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         Objects.requireNonNull(before3);
         return (value1, value2, value3) -> acceptThrows(before1.applyThrows(value1), before2.applyAsShortThrows(value2),
-                                                        before3.applyAsShortThrows(value3));
+                before3.applyAsShortThrows(value3));
     }
 
     /**
@@ -460,19 +458,19 @@ public interface ThrowableObjBiShortConsumer<T, X extends Throwable> extends Lam
      * @return A composed {@code ThrowableTriShortConsumer} that first applies the {@code before} functions to its
      * input, and then applies this consumer to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * short}.
      */
     @Nonnull
     default ThrowableTriShortConsumer<X> composeFromShort(
-            @Nonnull final ThrowableShortFunction<? extends T, ? extends X> before1,
-            @Nonnull final ThrowableShortUnaryOperator<? extends X> before2,
-            @Nonnull final ThrowableShortUnaryOperator<? extends X> before3) {
+            @Nonnull ThrowableShortFunction<? extends T, ? extends X> before1,
+            @Nonnull ThrowableShortUnaryOperator<? extends X> before2,
+            @Nonnull ThrowableShortUnaryOperator<? extends X> before3) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         Objects.requireNonNull(before3);
         return (value1, value2, value3) -> acceptThrows(before1.applyThrows(value1), before2.applyAsShortThrows(value2),
-                                                        before3.applyAsShortThrows(value3));
+                before3.applyAsShortThrows(value3));
     }
 
     /**
@@ -487,7 +485,7 @@ public interface ThrowableObjBiShortConsumer<T, X extends Throwable> extends Lam
      */
     @Nonnull
     default ThrowableObjBiShortConsumer<T, X> andThen(
-            @Nonnull final ThrowableObjBiShortConsumer<? super T, ? extends X> after) {
+            @Nonnull ThrowableObjBiShortConsumer<? super T, ? extends X> after) {
         Objects.requireNonNull(after);
         return (t, value1, value2) -> {
             acceptThrows(t, value1, value2);
@@ -536,7 +534,7 @@ public interface ThrowableObjBiShortConsumer<T, X extends Throwable> extends Lam
      * @see #nest()
      */
     @Nonnull
-    default ObjBiShortConsumer<T> nest(@Nonnull final Function<? super Throwable, ? extends RuntimeException> mapper) {
+    default ObjBiShortConsumer<T> nest(@Nonnull Function<? super Throwable, ? extends RuntimeException> mapper) {
         return recover(throwable -> {
             throw mapper.apply(throwable);
         });
@@ -559,15 +557,15 @@ public interface ThrowableObjBiShortConsumer<T, X extends Throwable> extends Lam
      */
     @Nonnull
     default ObjBiShortConsumer<T> recover(
-            @Nonnull final Function<? super Throwable, ? extends ObjBiShortConsumer<? super T>> recover) {
+            @Nonnull Function<? super Throwable, ? extends ObjBiShortConsumer<? super T>> recover) {
         Objects.requireNonNull(recover);
         return (t, value1, value2) -> {
             try {
-                this.acceptThrows(t, value1, value2);
+                acceptThrows(t, value1, value2);
             } catch (Error e) {
                 throw e;
             } catch (Throwable throwable) {
-                final ObjBiShortConsumer<? super T> consumer = recover.apply(throwable);
+                ObjBiShortConsumer<? super T> consumer = recover.apply(throwable);
                 Objects.requireNonNull(consumer, () -> "recover returned null for " + throwable.getClass() + ": "
                         + throwable.getMessage());
                 consumer.accept(t, value1, value2);
@@ -645,7 +643,7 @@ public interface ThrowableObjBiShortConsumer<T, X extends Throwable> extends Lam
     default ObjBiShortConsumer<T> sneakyThrow() {
         return (t, value1, value2) -> {
             try {
-                this.acceptThrows(t, value1, value2);
+                acceptThrows(t, value1, value2);
             } catch (RuntimeException | Error e) {
                 throw e;
             } catch (Throwable throwable) {

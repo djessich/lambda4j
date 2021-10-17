@@ -13,7 +13,30 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package org.lambda4j.function.tri.obj;
+
+import java.util.Map;
+import java.util.Objects;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.function.DoubleFunction;
+import java.util.function.DoubleToIntFunction;
+import java.util.function.Function;
+import java.util.function.IntConsumer;
+import java.util.function.IntFunction;
+import java.util.function.IntPredicate;
+import java.util.function.IntToDoubleFunction;
+import java.util.function.IntToLongFunction;
+import java.util.function.IntUnaryOperator;
+import java.util.function.LongFunction;
+import java.util.function.LongToIntFunction;
+import java.util.function.ToIntFunction;
+
+import javax.annotation.Nonnegative;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
+import org.apache.commons.lang3.tuple.Triple;
 
 import org.lambda4j.Lambda;
 import org.lambda4j.consumer.tri.obj.ObjBiIntConsumer;
@@ -47,31 +70,9 @@ import org.lambda4j.operator.ternary.IntTernaryOperator;
 import org.lambda4j.operator.unary.IntUnaryOperator2;
 import org.lambda4j.predicate.tri.obj.ObjBiIntPredicate;
 
-import org.apache.commons.lang3.tuple.Triple;
-
-import javax.annotation.Nonnegative;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import java.util.Map;
-import java.util.Objects;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.function.DoubleFunction;
-import java.util.function.DoubleToIntFunction;
-import java.util.function.Function;
-import java.util.function.IntConsumer;
-import java.util.function.IntFunction;
-import java.util.function.IntPredicate;
-import java.util.function.IntToDoubleFunction;
-import java.util.function.IntToLongFunction;
-import java.util.function.IntUnaryOperator;
-import java.util.function.LongFunction;
-import java.util.function.LongToIntFunction;
-import java.util.function.ToIntFunction;
-
 /**
  * Represents an operation that accepts one object-valued and two {@code int}-valued input arguments and produces a
- * {@code int}-valued result.
- * This is a (reference, int, int) specialization of {@link TriFunction}.
+ * {@code int}-valued result. This is a (reference, int, int) specialization of {@link TriFunction}.
  * <p>
  * This is a {@link FunctionalInterface} whose functional method is {@link #applyAsInt(Object, int, int)}.
  *
@@ -97,7 +98,7 @@ public interface ObjBiIntToIntFunction<T> extends Lambda {
      * Expression</a>
      * @see <a href="https://docs.oracle.com/javase/tutorial/java/javaOO/methodreferences.html">Method Reference</a>
      */
-    static <T> ObjBiIntToIntFunction<T> of(@Nullable final ObjBiIntToIntFunction<T> expression) {
+    static <T> ObjBiIntToIntFunction<T> of(@Nullable ObjBiIntToIntFunction<T> expression) {
         return expression;
     }
 
@@ -112,7 +113,7 @@ public interface ObjBiIntToIntFunction<T> extends Lambda {
      * @return The result from the given {@code ObjBiIntToIntFunction}.
      * @throws NullPointerException If given argument is {@code null}
      */
-    static <T> int call(@Nonnull final ObjBiIntToIntFunction<? super T> function, T t, int value1, int value2) {
+    static <T> int call(@Nonnull ObjBiIntToIntFunction<? super T> function, T t, int value1, int value2) {
         Objects.requireNonNull(function);
         return function.applyAsInt(t, value1, value2);
     }
@@ -128,7 +129,7 @@ public interface ObjBiIntToIntFunction<T> extends Lambda {
      * @throws NullPointerException If given argument is {@code null}
      */
     @Nonnull
-    static <T> ObjBiIntToIntFunction<T> onlyFirst(@Nonnull final ToIntFunction<? super T> function) {
+    static <T> ObjBiIntToIntFunction<T> onlyFirst(@Nonnull ToIntFunction<? super T> function) {
         Objects.requireNonNull(function);
         return (t, value1, value2) -> function.applyAsInt(t);
     }
@@ -144,7 +145,7 @@ public interface ObjBiIntToIntFunction<T> extends Lambda {
      * @throws NullPointerException If given argument is {@code null}
      */
     @Nonnull
-    static <T> ObjBiIntToIntFunction<T> onlySecond(@Nonnull final IntUnaryOperator operator) {
+    static <T> ObjBiIntToIntFunction<T> onlySecond(@Nonnull IntUnaryOperator operator) {
         Objects.requireNonNull(operator);
         return (t, value1, value2) -> operator.applyAsInt(value1);
     }
@@ -160,7 +161,7 @@ public interface ObjBiIntToIntFunction<T> extends Lambda {
      * @throws NullPointerException If given argument is {@code null}
      */
     @Nonnull
-    static <T> ObjBiIntToIntFunction<T> onlyThird(@Nonnull final IntUnaryOperator operator) {
+    static <T> ObjBiIntToIntFunction<T> onlyThird(@Nonnull IntUnaryOperator operator) {
         Objects.requireNonNull(operator);
         return (t, value1, value2) -> operator.applyAsInt(value2);
     }
@@ -195,7 +196,7 @@ public interface ObjBiIntToIntFunction<T> extends Lambda {
      */
     @Nonnull
     default IntBinaryOperator2 papplyAsInt(T t) {
-        return (value1, value2) -> this.applyAsInt(t, value1, value2);
+        return (value1, value2) -> applyAsInt(t, value1, value2);
     }
 
     /**
@@ -207,18 +208,19 @@ public interface ObjBiIntToIntFunction<T> extends Lambda {
      */
     @Nonnull
     default IntUnaryOperator2 papplyAsInt(T t, int value1) {
-        return (value2) -> this.applyAsInt(t, value1, value2);
+        return value2 -> applyAsInt(t, value1, value2);
     }
 
     /**
-     * Applies this operator partially to some arguments of this one, producing a {@link ObjIntToIntFunction} as result.
+     * Applies this operator partially to some arguments of this one, producing a {@link ObjIntToIntFunction} as
+     * result.
      *
      * @param value1 The second argument to this function used to partially apply this function
      * @return A {@code ObjIntToIntFunction} that represents this operator partially applied the some arguments.
      */
     @Nonnull
     default ObjIntToIntFunction<T> papplyAsInt(int value1) {
-        return (t, value2) -> this.applyAsInt(t, value1, value2);
+        return (t, value2) -> applyAsInt(t, value1, value2);
     }
 
     /**
@@ -230,7 +232,7 @@ public interface ObjBiIntToIntFunction<T> extends Lambda {
      */
     @Nonnull
     default ToIntFunction2<T> papplyAsInt(int value1, int value2) {
-        return (t) -> this.applyAsInt(t, value1, value2);
+        return t -> applyAsInt(t, value1, value2);
     }
 
     /**
@@ -246,8 +248,8 @@ public interface ObjBiIntToIntFunction<T> extends Lambda {
 
     /**
      * Returns a composed {@link ToIntTriFunction} that first applies the {@code before} functions to its input, and
-     * then applies this function to the result.
-     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
+     * then applies this function to the result. If evaluation of either operation throws an exception, it is relayed to
+     * the caller of the composed operation.
      *
      * @param <A> The type of the argument to the first given function, and of composed function
      * @param <B> The type of the argument to the second given function, and of composed function
@@ -261,8 +263,8 @@ public interface ObjBiIntToIntFunction<T> extends Lambda {
      * @implSpec The input argument of this method is able to handle every type.
      */
     @Nonnull
-    default <A, B, C> ToIntTriFunction<A, B, C> compose(@Nonnull final Function<? super A, ? extends T> before1,
-            @Nonnull final ToIntFunction<? super B> before2, @Nonnull final ToIntFunction<? super C> before3) {
+    default <A, B, C> ToIntTriFunction<A, B, C> compose(@Nonnull Function<? super A, ? extends T> before1,
+            @Nonnull ToIntFunction<? super B> before2, @Nonnull ToIntFunction<? super C> before3) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         Objects.requireNonNull(before3);
@@ -281,25 +283,24 @@ public interface ObjBiIntToIntFunction<T> extends Lambda {
      * @return A composed {@code TriBooleanToIntFunction} that first applies the {@code before} functions to its input,
      * and then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * boolean}.
      */
     @Nonnull
-    default TriBooleanToIntFunction composeFromBoolean(@Nonnull final BooleanFunction<? extends T> before1,
-            @Nonnull final BooleanToIntFunction before2, @Nonnull final BooleanToIntFunction before3) {
+    default TriBooleanToIntFunction composeFromBoolean(@Nonnull BooleanFunction<? extends T> before1,
+            @Nonnull BooleanToIntFunction before2, @Nonnull BooleanToIntFunction before3) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         Objects.requireNonNull(before3);
         return (value1, value2, value3) -> applyAsInt(before1.apply(value1), before2.applyAsInt(value2),
-                                                      before3.applyAsInt(value3));
+                before3.applyAsInt(value3));
     }
 
     /**
-     * Returns a composed {@link TriByteToIntFunction} that first applies the {@code before} functions to
-     * its input, and then applies this function to the result.
-     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
-     * This method is just convenience, to provide the ability to execute an operation which accepts {@code byte} input,
-     * before this primitive function is executed.
+     * Returns a composed {@link TriByteToIntFunction} that first applies the {@code before} functions to its input, and
+     * then applies this function to the result. If evaluation of either operation throws an exception, it is relayed to
+     * the caller of the composed operation. This method is just convenience, to provide the ability to execute an
+     * operation which accepts {@code byte} input, before this primitive function is executed.
      *
      * @param before1 The first function to apply before this function is applied
      * @param before2 The second function to apply before this function is applied
@@ -307,25 +308,24 @@ public interface ObjBiIntToIntFunction<T> extends Lambda {
      * @return A composed {@code TriByteToIntFunction} that first applies the {@code before} functions to its input, and
      * then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * byte}.
      */
     @Nonnull
-    default TriByteToIntFunction composeFromByte(@Nonnull final ByteFunction<? extends T> before1,
-            @Nonnull final ByteToIntFunction before2, @Nonnull final ByteToIntFunction before3) {
+    default TriByteToIntFunction composeFromByte(@Nonnull ByteFunction<? extends T> before1,
+            @Nonnull ByteToIntFunction before2, @Nonnull ByteToIntFunction before3) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         Objects.requireNonNull(before3);
         return (value1, value2, value3) -> applyAsInt(before1.apply(value1), before2.applyAsInt(value2),
-                                                      before3.applyAsInt(value3));
+                before3.applyAsInt(value3));
     }
 
     /**
-     * Returns a composed {@link TriCharToIntFunction} that first applies the {@code before} functions to
-     * its input, and then applies this function to the result.
-     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
-     * This method is just convenience, to provide the ability to execute an operation which accepts {@code char} input,
-     * before this primitive function is executed.
+     * Returns a composed {@link TriCharToIntFunction} that first applies the {@code before} functions to its input, and
+     * then applies this function to the result. If evaluation of either operation throws an exception, it is relayed to
+     * the caller of the composed operation. This method is just convenience, to provide the ability to execute an
+     * operation which accepts {@code char} input, before this primitive function is executed.
      *
      * @param before1 The first function to apply before this function is applied
      * @param before2 The second function to apply before this function is applied
@@ -333,17 +333,17 @@ public interface ObjBiIntToIntFunction<T> extends Lambda {
      * @return A composed {@code TriCharToIntFunction} that first applies the {@code before} functions to its input, and
      * then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * char}.
      */
     @Nonnull
-    default TriCharToIntFunction composeFromChar(@Nonnull final CharFunction<? extends T> before1,
-            @Nonnull final CharToIntFunction before2, @Nonnull final CharToIntFunction before3) {
+    default TriCharToIntFunction composeFromChar(@Nonnull CharFunction<? extends T> before1,
+            @Nonnull CharToIntFunction before2, @Nonnull CharToIntFunction before3) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         Objects.requireNonNull(before3);
         return (value1, value2, value3) -> applyAsInt(before1.apply(value1), before2.applyAsInt(value2),
-                                                      before3.applyAsInt(value3));
+                before3.applyAsInt(value3));
     }
 
     /**
@@ -358,17 +358,17 @@ public interface ObjBiIntToIntFunction<T> extends Lambda {
      * @return A composed {@code TriDoubleToIntFunction} that first applies the {@code before} functions to its input,
      * and then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * double}.
      */
     @Nonnull
-    default TriDoubleToIntFunction composeFromDouble(@Nonnull final DoubleFunction<? extends T> before1,
-            @Nonnull final DoubleToIntFunction before2, @Nonnull final DoubleToIntFunction before3) {
+    default TriDoubleToIntFunction composeFromDouble(@Nonnull DoubleFunction<? extends T> before1,
+            @Nonnull DoubleToIntFunction before2, @Nonnull DoubleToIntFunction before3) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         Objects.requireNonNull(before3);
         return (value1, value2, value3) -> applyAsInt(before1.apply(value1), before2.applyAsInt(value2),
-                                                      before3.applyAsInt(value3));
+                before3.applyAsInt(value3));
     }
 
     /**
@@ -383,25 +383,24 @@ public interface ObjBiIntToIntFunction<T> extends Lambda {
      * @return A composed {@code TriFloatToIntFunction} that first applies the {@code before} functions to its input,
      * and then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * float}.
      */
     @Nonnull
-    default TriFloatToIntFunction composeFromFloat(@Nonnull final FloatFunction<? extends T> before1,
-            @Nonnull final FloatToIntFunction before2, @Nonnull final FloatToIntFunction before3) {
+    default TriFloatToIntFunction composeFromFloat(@Nonnull FloatFunction<? extends T> before1,
+            @Nonnull FloatToIntFunction before2, @Nonnull FloatToIntFunction before3) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         Objects.requireNonNull(before3);
         return (value1, value2, value3) -> applyAsInt(before1.apply(value1), before2.applyAsInt(value2),
-                                                      before3.applyAsInt(value3));
+                before3.applyAsInt(value3));
     }
 
     /**
-     * Returns a composed {@link IntTernaryOperator} that first applies the {@code before} functions to
-     * its input, and then applies this function to the result.
-     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
-     * This method is just convenience, to provide the ability to execute an operation which accepts {@code int} input,
-     * before this primitive function is executed.
+     * Returns a composed {@link IntTernaryOperator} that first applies the {@code before} functions to its input, and
+     * then applies this function to the result. If evaluation of either operation throws an exception, it is relayed to
+     * the caller of the composed operation. This method is just convenience, to provide the ability to execute an
+     * operation which accepts {@code int} input, before this primitive function is executed.
      *
      * @param before1 The first function to apply before this function is applied
      * @param before2 The second operator to apply before this function is applied
@@ -409,25 +408,24 @@ public interface ObjBiIntToIntFunction<T> extends Lambda {
      * @return A composed {@code IntTernaryOperator} that first applies the {@code before} functions to its input, and
      * then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * int}.
      */
     @Nonnull
-    default IntTernaryOperator composeFromInt(@Nonnull final IntFunction<? extends T> before1,
-            @Nonnull final IntUnaryOperator before2, @Nonnull final IntUnaryOperator before3) {
+    default IntTernaryOperator composeFromInt(@Nonnull IntFunction<? extends T> before1,
+            @Nonnull IntUnaryOperator before2, @Nonnull IntUnaryOperator before3) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         Objects.requireNonNull(before3);
         return (value1, value2, value3) -> applyAsInt(before1.apply(value1), before2.applyAsInt(value2),
-                                                      before3.applyAsInt(value3));
+                before3.applyAsInt(value3));
     }
 
     /**
-     * Returns a composed {@link TriLongToIntFunction} that first applies the {@code before} functions to
-     * its input, and then applies this function to the result.
-     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
-     * This method is just convenience, to provide the ability to execute an operation which accepts {@code long} input,
-     * before this primitive function is executed.
+     * Returns a composed {@link TriLongToIntFunction} that first applies the {@code before} functions to its input, and
+     * then applies this function to the result. If evaluation of either operation throws an exception, it is relayed to
+     * the caller of the composed operation. This method is just convenience, to provide the ability to execute an
+     * operation which accepts {@code long} input, before this primitive function is executed.
      *
      * @param before1 The first function to apply before this function is applied
      * @param before2 The second function to apply before this function is applied
@@ -435,17 +433,17 @@ public interface ObjBiIntToIntFunction<T> extends Lambda {
      * @return A composed {@code TriLongToIntFunction} that first applies the {@code before} functions to its input, and
      * then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * long}.
      */
     @Nonnull
-    default TriLongToIntFunction composeFromLong(@Nonnull final LongFunction<? extends T> before1,
-            @Nonnull final LongToIntFunction before2, @Nonnull final LongToIntFunction before3) {
+    default TriLongToIntFunction composeFromLong(@Nonnull LongFunction<? extends T> before1,
+            @Nonnull LongToIntFunction before2, @Nonnull LongToIntFunction before3) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         Objects.requireNonNull(before3);
         return (value1, value2, value3) -> applyAsInt(before1.apply(value1), before2.applyAsInt(value2),
-                                                      before3.applyAsInt(value3));
+                before3.applyAsInt(value3));
     }
 
     /**
@@ -460,23 +458,23 @@ public interface ObjBiIntToIntFunction<T> extends Lambda {
      * @return A composed {@code TriShortToIntFunction} that first applies the {@code before} functions to its input,
      * and then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * short}.
      */
     @Nonnull
-    default TriShortToIntFunction composeFromShort(@Nonnull final ShortFunction<? extends T> before1,
-            @Nonnull final ShortToIntFunction before2, @Nonnull final ShortToIntFunction before3) {
+    default TriShortToIntFunction composeFromShort(@Nonnull ShortFunction<? extends T> before1,
+            @Nonnull ShortToIntFunction before2, @Nonnull ShortToIntFunction before3) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         Objects.requireNonNull(before3);
         return (value1, value2, value3) -> applyAsInt(before1.apply(value1), before2.applyAsInt(value2),
-                                                      before3.applyAsInt(value3));
+                before3.applyAsInt(value3));
     }
 
     /**
      * Returns a composed {@link ObjBiIntFunction} that first applies this function to its input, and then applies the
-     * {@code after} function to the result.
-     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
+     * {@code after} function to the result. If evaluation of either operation throws an exception, it is relayed to the
+     * caller of the composed operation.
      *
      * @param <S> The type of return value from the {@code after} function, and of the composed function
      * @param after The function to apply after this function is applied
@@ -486,7 +484,7 @@ public interface ObjBiIntToIntFunction<T> extends Lambda {
      * @implSpec The input argument of this method is able to return every type.
      */
     @Nonnull
-    default <S> ObjBiIntFunction<T, S> andThen(@Nonnull final IntFunction<? extends S> after) {
+    default <S> ObjBiIntFunction<T, S> andThen(@Nonnull IntFunction<? extends S> after) {
         Objects.requireNonNull(after);
         return (t, value1, value2) -> after.apply(applyAsInt(t, value1, value2));
     }
@@ -501,11 +499,11 @@ public interface ObjBiIntToIntFunction<T> extends Lambda {
      * @return A composed {@code ObjBiIntPredicate} that first applies this function to its input, and then applies the
      * {@code after} predicate to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * boolean}.
      */
     @Nonnull
-    default ObjBiIntPredicate<T> andThenToBoolean(@Nonnull final IntPredicate after) {
+    default ObjBiIntPredicate<T> andThenToBoolean(@Nonnull IntPredicate after) {
         Objects.requireNonNull(after);
         return (t, value1, value2) -> after.test(applyAsInt(t, value1, value2));
     }
@@ -520,11 +518,11 @@ public interface ObjBiIntToIntFunction<T> extends Lambda {
      * @return A composed {@code ObjBiIntToByteFunction} that first applies this function to its input, and then applies
      * the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * byte}.
      */
     @Nonnull
-    default ObjBiIntToByteFunction<T> andThenToByte(@Nonnull final IntToByteFunction after) {
+    default ObjBiIntToByteFunction<T> andThenToByte(@Nonnull IntToByteFunction after) {
         Objects.requireNonNull(after);
         return (t, value1, value2) -> after.applyAsByte(applyAsInt(t, value1, value2));
     }
@@ -539,11 +537,11 @@ public interface ObjBiIntToIntFunction<T> extends Lambda {
      * @return A composed {@code ObjBiIntToCharFunction} that first applies this function to its input, and then applies
      * the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * char}.
      */
     @Nonnull
-    default ObjBiIntToCharFunction<T> andThenToChar(@Nonnull final IntToCharFunction after) {
+    default ObjBiIntToCharFunction<T> andThenToChar(@Nonnull IntToCharFunction after) {
         Objects.requireNonNull(after);
         return (t, value1, value2) -> after.applyAsChar(applyAsInt(t, value1, value2));
     }
@@ -558,11 +556,11 @@ public interface ObjBiIntToIntFunction<T> extends Lambda {
      * @return A composed {@code ObjBiIntToDoubleFunction} that first applies this function to its input, and then
      * applies the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * double}.
      */
     @Nonnull
-    default ObjBiIntToDoubleFunction<T> andThenToDouble(@Nonnull final IntToDoubleFunction after) {
+    default ObjBiIntToDoubleFunction<T> andThenToDouble(@Nonnull IntToDoubleFunction after) {
         Objects.requireNonNull(after);
         return (t, value1, value2) -> after.applyAsDouble(applyAsInt(t, value1, value2));
     }
@@ -577,11 +575,11 @@ public interface ObjBiIntToIntFunction<T> extends Lambda {
      * @return A composed {@code ObjBiIntToFloatFunction} that first applies this function to its input, and then
      * applies the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * float}.
      */
     @Nonnull
-    default ObjBiIntToFloatFunction<T> andThenToFloat(@Nonnull final IntToFloatFunction after) {
+    default ObjBiIntToFloatFunction<T> andThenToFloat(@Nonnull IntToFloatFunction after) {
         Objects.requireNonNull(after);
         return (t, value1, value2) -> after.applyAsFloat(applyAsInt(t, value1, value2));
     }
@@ -596,11 +594,11 @@ public interface ObjBiIntToIntFunction<T> extends Lambda {
      * @return A composed {@code ObjBiIntToIntFunction} that first applies this function to its input, and then applies
      * the {@code after} operator to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * int}.
      */
     @Nonnull
-    default ObjBiIntToIntFunction<T> andThenToInt(@Nonnull final IntUnaryOperator after) {
+    default ObjBiIntToIntFunction<T> andThenToInt(@Nonnull IntUnaryOperator after) {
         Objects.requireNonNull(after);
         return (t, value1, value2) -> after.applyAsInt(applyAsInt(t, value1, value2));
     }
@@ -615,11 +613,11 @@ public interface ObjBiIntToIntFunction<T> extends Lambda {
      * @return A composed {@code ObjBiIntToLongFunction} that first applies this function to its input, and then applies
      * the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * long}.
      */
     @Nonnull
-    default ObjBiIntToLongFunction<T> andThenToLong(@Nonnull final IntToLongFunction after) {
+    default ObjBiIntToLongFunction<T> andThenToLong(@Nonnull IntToLongFunction after) {
         Objects.requireNonNull(after);
         return (t, value1, value2) -> after.applyAsLong(applyAsInt(t, value1, value2));
     }
@@ -634,11 +632,11 @@ public interface ObjBiIntToIntFunction<T> extends Lambda {
      * @return A composed {@code ObjBiIntToShortFunction} that first applies this function to its input, and then
      * applies the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * short}.
      */
     @Nonnull
-    default ObjBiIntToShortFunction<T> andThenToShort(@Nonnull final IntToShortFunction after) {
+    default ObjBiIntToShortFunction<T> andThenToShort(@Nonnull IntToShortFunction after) {
         Objects.requireNonNull(after);
         return (t, value1, value2) -> after.applyAsShort(applyAsInt(t, value1, value2));
     }
@@ -654,7 +652,7 @@ public interface ObjBiIntToIntFunction<T> extends Lambda {
      * @throws NullPointerException If given argument is {@code null}
      */
     @Nonnull
-    default ObjBiIntConsumer<T> consume(@Nonnull final IntConsumer consumer) {
+    default ObjBiIntConsumer<T> consume(@Nonnull IntConsumer consumer) {
         Objects.requireNonNull(consumer);
         return (t, value1, value2) -> consumer.accept(applyAsInt(t, value1, value2));
     }
@@ -678,14 +676,14 @@ public interface ObjBiIntToIntFunction<T> extends Lambda {
         if (isMemoized()) {
             return this;
         } else {
-            final Map<Triple<T, Integer, Integer>, Integer> cache = new ConcurrentHashMap<>();
-            final Object lock = new Object();
+            Map<Triple<T, Integer, Integer>, Integer> cache = new ConcurrentHashMap<>();
+            Object lock = new Object();
             return (ObjBiIntToIntFunction<T> & Memoized) (t, value1, value2) -> {
-                final int returnValue;
+                int returnValue;
                 synchronized (lock) {
                     returnValue = cache.computeIfAbsent(Triple.of(t, value1, value2),
-                                                        key -> applyAsInt(key.getLeft(), key.getMiddle(),
-                                                                          key.getRight()));
+                            key -> applyAsInt(key.getLeft(), key.getMiddle(),
+                                    key.getRight()));
                 }
                 return returnValue;
             };
@@ -694,8 +692,8 @@ public interface ObjBiIntToIntFunction<T> extends Lambda {
 
     /**
      * Returns a composed {@link TriFunction} which represents this {@link ObjBiIntToIntFunction}. Thereby the primitive
-     * input argument for this function is autoboxed. This method provides the possibility to use this
-     * {@code ObjBiIntToIntFunction} with methods provided by the {@code JDK}.
+     * input argument for this function is autoboxed. This method provides the possibility to use this {@code
+     * ObjBiIntToIntFunction} with methods provided by the {@code JDK}.
      *
      * @return A composed {@code TriFunction} which represents this {@code ObjBiIntToIntFunction}.
      */

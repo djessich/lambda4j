@@ -13,7 +13,22 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package org.lambda4j.function.tri.obj;
+
+import java.util.Map;
+import java.util.Objects;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.function.DoubleFunction;
+import java.util.function.Function;
+import java.util.function.IntFunction;
+import java.util.function.LongFunction;
+
+import javax.annotation.Nonnegative;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
+import org.apache.commons.lang3.tuple.Triple;
 
 import org.lambda4j.Lambda;
 import org.lambda4j.consumer.CharConsumer;
@@ -55,23 +70,9 @@ import org.lambda4j.operator.unary.CharUnaryOperator;
 import org.lambda4j.predicate.CharPredicate;
 import org.lambda4j.predicate.tri.obj.ObjBiBytePredicate;
 
-import org.apache.commons.lang3.tuple.Triple;
-
-import javax.annotation.Nonnegative;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import java.util.Map;
-import java.util.Objects;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.function.DoubleFunction;
-import java.util.function.Function;
-import java.util.function.IntFunction;
-import java.util.function.LongFunction;
-
 /**
  * Represents an operation that accepts one object-valued and two {@code byte}-valued input arguments and produces a
- * {@code char}-valued result.
- * This is a (reference, byte, byte) specialization of {@link TriFunction}.
+ * {@code char}-valued result. This is a (reference, byte, byte) specialization of {@link TriFunction}.
  * <p>
  * This is a {@link FunctionalInterface} whose functional method is {@link #applyAsChar(Object, byte, byte)}.
  *
@@ -97,7 +98,7 @@ public interface ObjBiByteToCharFunction<T> extends Lambda {
      * Expression</a>
      * @see <a href="https://docs.oracle.com/javase/tutorial/java/javaOO/methodreferences.html">Method Reference</a>
      */
-    static <T> ObjBiByteToCharFunction<T> of(@Nullable final ObjBiByteToCharFunction<T> expression) {
+    static <T> ObjBiByteToCharFunction<T> of(@Nullable ObjBiByteToCharFunction<T> expression) {
         return expression;
     }
 
@@ -112,7 +113,7 @@ public interface ObjBiByteToCharFunction<T> extends Lambda {
      * @return The result from the given {@code ObjBiByteToCharFunction}.
      * @throws NullPointerException If given argument is {@code null}
      */
-    static <T> char call(@Nonnull final ObjBiByteToCharFunction<? super T> function, T t, byte value1, byte value2) {
+    static <T> char call(@Nonnull ObjBiByteToCharFunction<? super T> function, T t, byte value1, byte value2) {
         Objects.requireNonNull(function);
         return function.applyAsChar(t, value1, value2);
     }
@@ -128,7 +129,7 @@ public interface ObjBiByteToCharFunction<T> extends Lambda {
      * @throws NullPointerException If given argument is {@code null}
      */
     @Nonnull
-    static <T> ObjBiByteToCharFunction<T> onlyFirst(@Nonnull final ToCharFunction<? super T> function) {
+    static <T> ObjBiByteToCharFunction<T> onlyFirst(@Nonnull ToCharFunction<? super T> function) {
         Objects.requireNonNull(function);
         return (t, value1, value2) -> function.applyAsChar(t);
     }
@@ -144,7 +145,7 @@ public interface ObjBiByteToCharFunction<T> extends Lambda {
      * @throws NullPointerException If given argument is {@code null}
      */
     @Nonnull
-    static <T> ObjBiByteToCharFunction<T> onlySecond(@Nonnull final ByteToCharFunction function) {
+    static <T> ObjBiByteToCharFunction<T> onlySecond(@Nonnull ByteToCharFunction function) {
         Objects.requireNonNull(function);
         return (t, value1, value2) -> function.applyAsChar(value1);
     }
@@ -160,7 +161,7 @@ public interface ObjBiByteToCharFunction<T> extends Lambda {
      * @throws NullPointerException If given argument is {@code null}
      */
     @Nonnull
-    static <T> ObjBiByteToCharFunction<T> onlyThird(@Nonnull final ByteToCharFunction function) {
+    static <T> ObjBiByteToCharFunction<T> onlyThird(@Nonnull ByteToCharFunction function) {
         Objects.requireNonNull(function);
         return (t, value1, value2) -> function.applyAsChar(value2);
     }
@@ -196,7 +197,7 @@ public interface ObjBiByteToCharFunction<T> extends Lambda {
      */
     @Nonnull
     default BiByteToCharFunction papplyAsChar(T t) {
-        return (value1, value2) -> this.applyAsChar(t, value1, value2);
+        return (value1, value2) -> applyAsChar(t, value1, value2);
     }
 
     /**
@@ -208,7 +209,7 @@ public interface ObjBiByteToCharFunction<T> extends Lambda {
      */
     @Nonnull
     default ByteToCharFunction papplyAsChar(T t, byte value1) {
-        return (value2) -> this.applyAsChar(t, value1, value2);
+        return value2 -> applyAsChar(t, value1, value2);
     }
 
     /**
@@ -220,7 +221,7 @@ public interface ObjBiByteToCharFunction<T> extends Lambda {
      */
     @Nonnull
     default ObjByteToCharFunction<T> papplyAsChar(byte value1) {
-        return (t, value2) -> this.applyAsChar(t, value1, value2);
+        return (t, value2) -> applyAsChar(t, value1, value2);
     }
 
     /**
@@ -232,7 +233,7 @@ public interface ObjBiByteToCharFunction<T> extends Lambda {
      */
     @Nonnull
     default ToCharFunction<T> papplyAsChar(byte value1, byte value2) {
-        return (t) -> this.applyAsChar(t, value1, value2);
+        return t -> applyAsChar(t, value1, value2);
     }
 
     /**
@@ -248,8 +249,8 @@ public interface ObjBiByteToCharFunction<T> extends Lambda {
 
     /**
      * Returns a composed {@link ToCharTriFunction} that first applies the {@code before} functions to its input, and
-     * then applies this function to the result.
-     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
+     * then applies this function to the result. If evaluation of either operation throws an exception, it is relayed to
+     * the caller of the composed operation.
      *
      * @param <A> The type of the argument to the first given function, and of composed function
      * @param <B> The type of the argument to the second given function, and of composed function
@@ -263,8 +264,8 @@ public interface ObjBiByteToCharFunction<T> extends Lambda {
      * @implSpec The input argument of this method is able to handle every type.
      */
     @Nonnull
-    default <A, B, C> ToCharTriFunction<A, B, C> compose(@Nonnull final Function<? super A, ? extends T> before1,
-            @Nonnull final ToByteFunction<? super B> before2, @Nonnull final ToByteFunction<? super C> before3) {
+    default <A, B, C> ToCharTriFunction<A, B, C> compose(@Nonnull Function<? super A, ? extends T> before1,
+            @Nonnull ToByteFunction<? super B> before2, @Nonnull ToByteFunction<? super C> before3) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         Objects.requireNonNull(before3);
@@ -283,25 +284,24 @@ public interface ObjBiByteToCharFunction<T> extends Lambda {
      * @return A composed {@code TriBooleanToCharFunction} that first applies the {@code before} functions to its input,
      * and then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * boolean}.
      */
     @Nonnull
-    default TriBooleanToCharFunction composeFromBoolean(@Nonnull final BooleanFunction<? extends T> before1,
-            @Nonnull final BooleanToByteFunction before2, @Nonnull final BooleanToByteFunction before3) {
+    default TriBooleanToCharFunction composeFromBoolean(@Nonnull BooleanFunction<? extends T> before1,
+            @Nonnull BooleanToByteFunction before2, @Nonnull BooleanToByteFunction before3) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         Objects.requireNonNull(before3);
         return (value1, value2, value3) -> applyAsChar(before1.apply(value1), before2.applyAsByte(value2),
-                                                       before3.applyAsByte(value3));
+                before3.applyAsByte(value3));
     }
 
     /**
-     * Returns a composed {@link TriByteToCharFunction} that first applies the {@code before} functions to
-     * its input, and then applies this function to the result.
-     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
-     * This method is just convenience, to provide the ability to execute an operation which accepts {@code byte} input,
-     * before this primitive function is executed.
+     * Returns a composed {@link TriByteToCharFunction} that first applies the {@code before} functions to its input,
+     * and then applies this function to the result. If evaluation of either operation throws an exception, it is
+     * relayed to the caller of the composed operation. This method is just convenience, to provide the ability to
+     * execute an operation which accepts {@code byte} input, before this primitive function is executed.
      *
      * @param before1 The first function to apply before this function is applied
      * @param before2 The second operator to apply before this function is applied
@@ -309,25 +309,24 @@ public interface ObjBiByteToCharFunction<T> extends Lambda {
      * @return A composed {@code TriByteToCharFunction} that first applies the {@code before} functions to its input,
      * and then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * byte}.
      */
     @Nonnull
-    default TriByteToCharFunction composeFromByte(@Nonnull final ByteFunction<? extends T> before1,
-            @Nonnull final ByteUnaryOperator before2, @Nonnull final ByteUnaryOperator before3) {
+    default TriByteToCharFunction composeFromByte(@Nonnull ByteFunction<? extends T> before1,
+            @Nonnull ByteUnaryOperator before2, @Nonnull ByteUnaryOperator before3) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         Objects.requireNonNull(before3);
         return (value1, value2, value3) -> applyAsChar(before1.apply(value1), before2.applyAsByte(value2),
-                                                       before3.applyAsByte(value3));
+                before3.applyAsByte(value3));
     }
 
     /**
-     * Returns a composed {@link CharTernaryOperator} that first applies the {@code before} functions to
-     * its input, and then applies this function to the result.
-     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
-     * This method is just convenience, to provide the ability to execute an operation which accepts {@code char} input,
-     * before this primitive function is executed.
+     * Returns a composed {@link CharTernaryOperator} that first applies the {@code before} functions to its input, and
+     * then applies this function to the result. If evaluation of either operation throws an exception, it is relayed to
+     * the caller of the composed operation. This method is just convenience, to provide the ability to execute an
+     * operation which accepts {@code char} input, before this primitive function is executed.
      *
      * @param before1 The first function to apply before this function is applied
      * @param before2 The second function to apply before this function is applied
@@ -335,17 +334,17 @@ public interface ObjBiByteToCharFunction<T> extends Lambda {
      * @return A composed {@code CharTernaryOperator} that first applies the {@code before} functions to its input, and
      * then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * char}.
      */
     @Nonnull
-    default CharTernaryOperator composeFromChar(@Nonnull final CharFunction<? extends T> before1,
-            @Nonnull final CharToByteFunction before2, @Nonnull final CharToByteFunction before3) {
+    default CharTernaryOperator composeFromChar(@Nonnull CharFunction<? extends T> before1,
+            @Nonnull CharToByteFunction before2, @Nonnull CharToByteFunction before3) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         Objects.requireNonNull(before3);
         return (value1, value2, value3) -> applyAsChar(before1.apply(value1), before2.applyAsByte(value2),
-                                                       before3.applyAsByte(value3));
+                before3.applyAsByte(value3));
     }
 
     /**
@@ -360,17 +359,17 @@ public interface ObjBiByteToCharFunction<T> extends Lambda {
      * @return A composed {@code TriDoubleToCharFunction} that first applies the {@code before} functions to its input,
      * and then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * double}.
      */
     @Nonnull
-    default TriDoubleToCharFunction composeFromDouble(@Nonnull final DoubleFunction<? extends T> before1,
-            @Nonnull final DoubleToByteFunction before2, @Nonnull final DoubleToByteFunction before3) {
+    default TriDoubleToCharFunction composeFromDouble(@Nonnull DoubleFunction<? extends T> before1,
+            @Nonnull DoubleToByteFunction before2, @Nonnull DoubleToByteFunction before3) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         Objects.requireNonNull(before3);
         return (value1, value2, value3) -> applyAsChar(before1.apply(value1), before2.applyAsByte(value2),
-                                                       before3.applyAsByte(value3));
+                before3.applyAsByte(value3));
     }
 
     /**
@@ -385,25 +384,24 @@ public interface ObjBiByteToCharFunction<T> extends Lambda {
      * @return A composed {@code TriFloatToCharFunction} that first applies the {@code before} functions to its input,
      * and then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * float}.
      */
     @Nonnull
-    default TriFloatToCharFunction composeFromFloat(@Nonnull final FloatFunction<? extends T> before1,
-            @Nonnull final FloatToByteFunction before2, @Nonnull final FloatToByteFunction before3) {
+    default TriFloatToCharFunction composeFromFloat(@Nonnull FloatFunction<? extends T> before1,
+            @Nonnull FloatToByteFunction before2, @Nonnull FloatToByteFunction before3) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         Objects.requireNonNull(before3);
         return (value1, value2, value3) -> applyAsChar(before1.apply(value1), before2.applyAsByte(value2),
-                                                       before3.applyAsByte(value3));
+                before3.applyAsByte(value3));
     }
 
     /**
-     * Returns a composed {@link TriIntToCharFunction} that first applies the {@code before} functions to
-     * its input, and then applies this function to the result.
-     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
-     * This method is just convenience, to provide the ability to execute an operation which accepts {@code int} input,
-     * before this primitive function is executed.
+     * Returns a composed {@link TriIntToCharFunction} that first applies the {@code before} functions to its input, and
+     * then applies this function to the result. If evaluation of either operation throws an exception, it is relayed to
+     * the caller of the composed operation. This method is just convenience, to provide the ability to execute an
+     * operation which accepts {@code int} input, before this primitive function is executed.
      *
      * @param before1 The first function to apply before this function is applied
      * @param before2 The second function to apply before this function is applied
@@ -411,25 +409,24 @@ public interface ObjBiByteToCharFunction<T> extends Lambda {
      * @return A composed {@code TriIntToCharFunction} that first applies the {@code before} functions to its input, and
      * then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * int}.
      */
     @Nonnull
-    default TriIntToCharFunction composeFromInt(@Nonnull final IntFunction<? extends T> before1,
-            @Nonnull final IntToByteFunction before2, @Nonnull final IntToByteFunction before3) {
+    default TriIntToCharFunction composeFromInt(@Nonnull IntFunction<? extends T> before1,
+            @Nonnull IntToByteFunction before2, @Nonnull IntToByteFunction before3) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         Objects.requireNonNull(before3);
         return (value1, value2, value3) -> applyAsChar(before1.apply(value1), before2.applyAsByte(value2),
-                                                       before3.applyAsByte(value3));
+                before3.applyAsByte(value3));
     }
 
     /**
-     * Returns a composed {@link TriLongToCharFunction} that first applies the {@code before} functions to
-     * its input, and then applies this function to the result.
-     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
-     * This method is just convenience, to provide the ability to execute an operation which accepts {@code long} input,
-     * before this primitive function is executed.
+     * Returns a composed {@link TriLongToCharFunction} that first applies the {@code before} functions to its input,
+     * and then applies this function to the result. If evaluation of either operation throws an exception, it is
+     * relayed to the caller of the composed operation. This method is just convenience, to provide the ability to
+     * execute an operation which accepts {@code long} input, before this primitive function is executed.
      *
      * @param before1 The first function to apply before this function is applied
      * @param before2 The second function to apply before this function is applied
@@ -437,17 +434,17 @@ public interface ObjBiByteToCharFunction<T> extends Lambda {
      * @return A composed {@code TriLongToCharFunction} that first applies the {@code before} functions to its input,
      * and then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * long}.
      */
     @Nonnull
-    default TriLongToCharFunction composeFromLong(@Nonnull final LongFunction<? extends T> before1,
-            @Nonnull final LongToByteFunction before2, @Nonnull final LongToByteFunction before3) {
+    default TriLongToCharFunction composeFromLong(@Nonnull LongFunction<? extends T> before1,
+            @Nonnull LongToByteFunction before2, @Nonnull LongToByteFunction before3) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         Objects.requireNonNull(before3);
         return (value1, value2, value3) -> applyAsChar(before1.apply(value1), before2.applyAsByte(value2),
-                                                       before3.applyAsByte(value3));
+                before3.applyAsByte(value3));
     }
 
     /**
@@ -462,23 +459,23 @@ public interface ObjBiByteToCharFunction<T> extends Lambda {
      * @return A composed {@code TriShortToCharFunction} that first applies the {@code before} functions to its input,
      * and then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * short}.
      */
     @Nonnull
-    default TriShortToCharFunction composeFromShort(@Nonnull final ShortFunction<? extends T> before1,
-            @Nonnull final ShortToByteFunction before2, @Nonnull final ShortToByteFunction before3) {
+    default TriShortToCharFunction composeFromShort(@Nonnull ShortFunction<? extends T> before1,
+            @Nonnull ShortToByteFunction before2, @Nonnull ShortToByteFunction before3) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         Objects.requireNonNull(before3);
         return (value1, value2, value3) -> applyAsChar(before1.apply(value1), before2.applyAsByte(value2),
-                                                       before3.applyAsByte(value3));
+                before3.applyAsByte(value3));
     }
 
     /**
      * Returns a composed {@link ObjBiByteFunction} that first applies this function to its input, and then applies the
-     * {@code after} function to the result.
-     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
+     * {@code after} function to the result. If evaluation of either operation throws an exception, it is relayed to the
+     * caller of the composed operation.
      *
      * @param <S> The type of return value from the {@code after} function, and of the composed function
      * @param after The function to apply after this function is applied
@@ -488,7 +485,7 @@ public interface ObjBiByteToCharFunction<T> extends Lambda {
      * @implSpec The input argument of this method is able to return every type.
      */
     @Nonnull
-    default <S> ObjBiByteFunction<T, S> andThen(@Nonnull final CharFunction<? extends S> after) {
+    default <S> ObjBiByteFunction<T, S> andThen(@Nonnull CharFunction<? extends S> after) {
         Objects.requireNonNull(after);
         return (t, value1, value2) -> after.apply(applyAsChar(t, value1, value2));
     }
@@ -503,11 +500,11 @@ public interface ObjBiByteToCharFunction<T> extends Lambda {
      * @return A composed {@code ObjBiBytePredicate} that first applies this function to its input, and then applies the
      * {@code after} predicate to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * boolean}.
      */
     @Nonnull
-    default ObjBiBytePredicate<T> andThenToBoolean(@Nonnull final CharPredicate after) {
+    default ObjBiBytePredicate<T> andThenToBoolean(@Nonnull CharPredicate after) {
         Objects.requireNonNull(after);
         return (t, value1, value2) -> after.test(applyAsChar(t, value1, value2));
     }
@@ -522,11 +519,11 @@ public interface ObjBiByteToCharFunction<T> extends Lambda {
      * @return A composed {@code ObjBiByteToByteFunction} that first applies this function to its input, and then
      * applies the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * byte}.
      */
     @Nonnull
-    default ObjBiByteToByteFunction<T> andThenToByte(@Nonnull final CharToByteFunction after) {
+    default ObjBiByteToByteFunction<T> andThenToByte(@Nonnull CharToByteFunction after) {
         Objects.requireNonNull(after);
         return (t, value1, value2) -> after.applyAsByte(applyAsChar(t, value1, value2));
     }
@@ -541,11 +538,11 @@ public interface ObjBiByteToCharFunction<T> extends Lambda {
      * @return A composed {@code ObjBiByteToCharFunction} that first applies this function to its input, and then
      * applies the {@code after} operator to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * char}.
      */
     @Nonnull
-    default ObjBiByteToCharFunction<T> andThenToChar(@Nonnull final CharUnaryOperator after) {
+    default ObjBiByteToCharFunction<T> andThenToChar(@Nonnull CharUnaryOperator after) {
         Objects.requireNonNull(after);
         return (t, value1, value2) -> after.applyAsChar(applyAsChar(t, value1, value2));
     }
@@ -560,11 +557,11 @@ public interface ObjBiByteToCharFunction<T> extends Lambda {
      * @return A composed {@code ObjBiByteToDoubleFunction} that first applies this function to its input, and then
      * applies the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * double}.
      */
     @Nonnull
-    default ObjBiByteToDoubleFunction<T> andThenToDouble(@Nonnull final CharToDoubleFunction after) {
+    default ObjBiByteToDoubleFunction<T> andThenToDouble(@Nonnull CharToDoubleFunction after) {
         Objects.requireNonNull(after);
         return (t, value1, value2) -> after.applyAsDouble(applyAsChar(t, value1, value2));
     }
@@ -579,11 +576,11 @@ public interface ObjBiByteToCharFunction<T> extends Lambda {
      * @return A composed {@code ObjBiByteToFloatFunction} that first applies this function to its input, and then
      * applies the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * float}.
      */
     @Nonnull
-    default ObjBiByteToFloatFunction<T> andThenToFloat(@Nonnull final CharToFloatFunction after) {
+    default ObjBiByteToFloatFunction<T> andThenToFloat(@Nonnull CharToFloatFunction after) {
         Objects.requireNonNull(after);
         return (t, value1, value2) -> after.applyAsFloat(applyAsChar(t, value1, value2));
     }
@@ -598,11 +595,11 @@ public interface ObjBiByteToCharFunction<T> extends Lambda {
      * @return A composed {@code ObjBiByteToIntFunction} that first applies this function to its input, and then applies
      * the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * int}.
      */
     @Nonnull
-    default ObjBiByteToIntFunction<T> andThenToInt(@Nonnull final CharToIntFunction after) {
+    default ObjBiByteToIntFunction<T> andThenToInt(@Nonnull CharToIntFunction after) {
         Objects.requireNonNull(after);
         return (t, value1, value2) -> after.applyAsInt(applyAsChar(t, value1, value2));
     }
@@ -617,11 +614,11 @@ public interface ObjBiByteToCharFunction<T> extends Lambda {
      * @return A composed {@code ObjBiByteToLongFunction} that first applies this function to its input, and then
      * applies the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * long}.
      */
     @Nonnull
-    default ObjBiByteToLongFunction<T> andThenToLong(@Nonnull final CharToLongFunction after) {
+    default ObjBiByteToLongFunction<T> andThenToLong(@Nonnull CharToLongFunction after) {
         Objects.requireNonNull(after);
         return (t, value1, value2) -> after.applyAsLong(applyAsChar(t, value1, value2));
     }
@@ -636,11 +633,11 @@ public interface ObjBiByteToCharFunction<T> extends Lambda {
      * @return A composed {@code ObjBiByteToShortFunction} that first applies this function to its input, and then
      * applies the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * short}.
      */
     @Nonnull
-    default ObjBiByteToShortFunction<T> andThenToShort(@Nonnull final CharToShortFunction after) {
+    default ObjBiByteToShortFunction<T> andThenToShort(@Nonnull CharToShortFunction after) {
         Objects.requireNonNull(after);
         return (t, value1, value2) -> after.applyAsShort(applyAsChar(t, value1, value2));
     }
@@ -656,7 +653,7 @@ public interface ObjBiByteToCharFunction<T> extends Lambda {
      * @throws NullPointerException If given argument is {@code null}
      */
     @Nonnull
-    default ObjBiByteConsumer<T> consume(@Nonnull final CharConsumer consumer) {
+    default ObjBiByteConsumer<T> consume(@Nonnull CharConsumer consumer) {
         Objects.requireNonNull(consumer);
         return (t, value1, value2) -> consumer.accept(applyAsChar(t, value1, value2));
     }
@@ -680,14 +677,14 @@ public interface ObjBiByteToCharFunction<T> extends Lambda {
         if (isMemoized()) {
             return this;
         } else {
-            final Map<Triple<T, Byte, Byte>, Character> cache = new ConcurrentHashMap<>();
-            final Object lock = new Object();
+            Map<Triple<T, Byte, Byte>, Character> cache = new ConcurrentHashMap<>();
+            Object lock = new Object();
             return (ObjBiByteToCharFunction<T> & Memoized) (t, value1, value2) -> {
-                final char returnValue;
+                char returnValue;
                 synchronized (lock) {
                     returnValue = cache.computeIfAbsent(Triple.of(t, value1, value2),
-                                                        key -> applyAsChar(key.getLeft(), key.getMiddle(),
-                                                                           key.getRight()));
+                            key -> applyAsChar(key.getLeft(), key.getMiddle(),
+                                    key.getRight()));
                 }
                 return returnValue;
             };

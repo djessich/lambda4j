@@ -13,7 +13,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package org.lambda4j.consumer.bi;
+
+import java.util.Objects;
+import java.util.function.Function;
+
+import javax.annotation.Nonnegative;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import org.lambda4j.Lambda;
 import org.lambda4j.consumer.ThrowableDoubleConsumer;
@@ -28,12 +36,6 @@ import org.lambda4j.function.conversion.ThrowableLongToDoubleFunction;
 import org.lambda4j.function.conversion.ThrowableShortToDoubleFunction;
 import org.lambda4j.function.to.ThrowableToDoubleFunction;
 import org.lambda4j.operator.unary.ThrowableDoubleUnaryOperator;
-
-import javax.annotation.Nonnegative;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import java.util.Objects;
-import java.util.function.Function;
 
 /**
  * Represents an operation that accepts two {@code double}-valued input arguments and returns no result which is able to
@@ -65,7 +67,7 @@ public interface ThrowableBiDoubleConsumer<X extends Throwable> extends Lambda {
      * @see <a href="https://docs.oracle.com/javase/tutorial/java/javaOO/methodreferences.html">Method Reference</a>
      */
     static <X extends Throwable> ThrowableBiDoubleConsumer<X> of(
-            @Nullable final ThrowableBiDoubleConsumer<X> expression) {
+            @Nullable ThrowableBiDoubleConsumer<X> expression) {
         return expression;
     }
 
@@ -79,7 +81,7 @@ public interface ThrowableBiDoubleConsumer<X extends Throwable> extends Lambda {
      * @throws NullPointerException If given argument is {@code null}
      * @throws X Any throwable from this consumers action
      */
-    static <X extends Throwable> void call(@Nonnull final ThrowableBiDoubleConsumer<? extends X> consumer,
+    static <X extends Throwable> void call(@Nonnull ThrowableBiDoubleConsumer<? extends X> consumer,
             double value1, double value2) throws X {
         Objects.requireNonNull(consumer);
         consumer.acceptThrows(value1, value2);
@@ -97,7 +99,7 @@ public interface ThrowableBiDoubleConsumer<X extends Throwable> extends Lambda {
      */
     @Nonnull
     static <X extends Throwable> ThrowableBiDoubleConsumer<X> onlyFirst(
-            @Nonnull final ThrowableDoubleConsumer<? extends X> consumer) {
+            @Nonnull ThrowableDoubleConsumer<? extends X> consumer) {
         Objects.requireNonNull(consumer);
         return (value1, value2) -> consumer.acceptThrows(value1);
     }
@@ -114,7 +116,7 @@ public interface ThrowableBiDoubleConsumer<X extends Throwable> extends Lambda {
      */
     @Nonnull
     static <X extends Throwable> ThrowableBiDoubleConsumer<X> onlySecond(
-            @Nonnull final ThrowableDoubleConsumer<? extends X> consumer) {
+            @Nonnull ThrowableDoubleConsumer<? extends X> consumer) {
         Objects.requireNonNull(consumer);
         return (value1, value2) -> consumer.acceptThrows(value2);
     }
@@ -137,7 +139,7 @@ public interface ThrowableBiDoubleConsumer<X extends Throwable> extends Lambda {
      */
     @Nonnull
     default ThrowableDoubleConsumer<X> pacceptThrows(double value1) {
-        return (value2) -> this.acceptThrows(value1, value2);
+        return value2 -> acceptThrows(value1, value2);
     }
 
     /**
@@ -166,8 +168,8 @@ public interface ThrowableBiDoubleConsumer<X extends Throwable> extends Lambda {
      */
     @Nonnull
     default <A, B> ThrowableBiConsumer<A, B, X> compose(
-            @Nonnull final ThrowableToDoubleFunction<? super A, ? extends X> before1,
-            @Nonnull final ThrowableToDoubleFunction<? super B, ? extends X> before2) {
+            @Nonnull ThrowableToDoubleFunction<? super A, ? extends X> before1,
+            @Nonnull ThrowableToDoubleFunction<? super B, ? extends X> before2) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         return (a, b) -> acceptThrows(before1.applyAsDoubleThrows(a), before2.applyAsDoubleThrows(b));
@@ -183,65 +185,63 @@ public interface ThrowableBiDoubleConsumer<X extends Throwable> extends Lambda {
      * @return A composed {@code ThrowableBiBooleanConsumer} that first applies the {@code before} functions to its
      * input, and then applies this consumer to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * boolean}.
      */
     @Nonnull
     default ThrowableBiBooleanConsumer<X> composeFromBoolean(
-            @Nonnull final ThrowableBooleanToDoubleFunction<? extends X> before1,
-            @Nonnull final ThrowableBooleanToDoubleFunction<? extends X> before2) {
+            @Nonnull ThrowableBooleanToDoubleFunction<? extends X> before1,
+            @Nonnull ThrowableBooleanToDoubleFunction<? extends X> before2) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         return (value1, value2) -> acceptThrows(before1.applyAsDoubleThrows(value1),
-                                                before2.applyAsDoubleThrows(value2));
+                before2.applyAsDoubleThrows(value2));
     }
 
     /**
-     * Returns a composed {@link ThrowableBiByteConsumer} that first applies the {@code before} functions to
-     * its input, and then applies this consumer to the result.
-     * This method is just convenience, to provide the ability to execute an operation which accepts {@code byte} input,
-     * before this primitive consumer is executed.
+     * Returns a composed {@link ThrowableBiByteConsumer} that first applies the {@code before} functions to its input,
+     * and then applies this consumer to the result. This method is just convenience, to provide the ability to execute
+     * an operation which accepts {@code byte} input, before this primitive consumer is executed.
      *
      * @param before1 The first function to apply before this consumer is applied
      * @param before2 The second function to apply before this consumer is applied
      * @return A composed {@code ThrowableBiByteConsumer} that first applies the {@code before} functions to its input,
      * and then applies this consumer to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * byte}.
      */
     @Nonnull
     default ThrowableBiByteConsumer<X> composeFromByte(
-            @Nonnull final ThrowableByteToDoubleFunction<? extends X> before1,
-            @Nonnull final ThrowableByteToDoubleFunction<? extends X> before2) {
+            @Nonnull ThrowableByteToDoubleFunction<? extends X> before1,
+            @Nonnull ThrowableByteToDoubleFunction<? extends X> before2) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         return (value1, value2) -> acceptThrows(before1.applyAsDoubleThrows(value1),
-                                                before2.applyAsDoubleThrows(value2));
+                before2.applyAsDoubleThrows(value2));
     }
 
     /**
-     * Returns a composed {@link ThrowableBiCharConsumer} that first applies the {@code before} functions to
-     * its input, and then applies this consumer to the result.
-     * This method is just convenience, to provide the ability to execute an operation which accepts {@code char} input,
-     * before this primitive consumer is executed.
+     * Returns a composed {@link ThrowableBiCharConsumer} that first applies the {@code before} functions to its input,
+     * and then applies this consumer to the result. This method is just convenience, to provide the ability to execute
+     * an operation which accepts {@code char} input, before this primitive consumer is executed.
      *
      * @param before1 The first function to apply before this consumer is applied
      * @param before2 The second function to apply before this consumer is applied
      * @return A composed {@code ThrowableBiCharConsumer} that first applies the {@code before} functions to its input,
      * and then applies this consumer to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * char}.
      */
     @Nonnull
     default ThrowableBiCharConsumer<X> composeFromChar(
-            @Nonnull final ThrowableCharToDoubleFunction<? extends X> before1,
-            @Nonnull final ThrowableCharToDoubleFunction<? extends X> before2) {
+            @Nonnull ThrowableCharToDoubleFunction<? extends X> before1,
+            @Nonnull ThrowableCharToDoubleFunction<? extends X> before2) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         return (value1, value2) -> acceptThrows(before1.applyAsDoubleThrows(value1),
-                                                before2.applyAsDoubleThrows(value2));
+                before2.applyAsDoubleThrows(value2));
     }
 
     /**
@@ -254,17 +254,17 @@ public interface ThrowableBiDoubleConsumer<X extends Throwable> extends Lambda {
      * @return A composed {@code ThrowableBiDoubleConsumer} that first applies the {@code before} operators to its
      * input, and then applies this consumer to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * double}.
      */
     @Nonnull
     default ThrowableBiDoubleConsumer<X> composeFromDouble(
-            @Nonnull final ThrowableDoubleUnaryOperator<? extends X> before1,
-            @Nonnull final ThrowableDoubleUnaryOperator<? extends X> before2) {
+            @Nonnull ThrowableDoubleUnaryOperator<? extends X> before1,
+            @Nonnull ThrowableDoubleUnaryOperator<? extends X> before2) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         return (value1, value2) -> acceptThrows(before1.applyAsDoubleThrows(value1),
-                                                before2.applyAsDoubleThrows(value2));
+                before2.applyAsDoubleThrows(value2));
     }
 
     /**
@@ -277,64 +277,62 @@ public interface ThrowableBiDoubleConsumer<X extends Throwable> extends Lambda {
      * @return A composed {@code ThrowableBiFloatConsumer} that first applies the {@code before} functions to its input,
      * and then applies this consumer to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * float}.
      */
     @Nonnull
     default ThrowableBiFloatConsumer<X> composeFromFloat(
-            @Nonnull final ThrowableFloatToDoubleFunction<? extends X> before1,
-            @Nonnull final ThrowableFloatToDoubleFunction<? extends X> before2) {
+            @Nonnull ThrowableFloatToDoubleFunction<? extends X> before1,
+            @Nonnull ThrowableFloatToDoubleFunction<? extends X> before2) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         return (value1, value2) -> acceptThrows(before1.applyAsDoubleThrows(value1),
-                                                before2.applyAsDoubleThrows(value2));
+                before2.applyAsDoubleThrows(value2));
     }
 
     /**
-     * Returns a composed {@link ThrowableBiIntConsumer} that first applies the {@code before} functions to
-     * its input, and then applies this consumer to the result.
-     * This method is just convenience, to provide the ability to execute an operation which accepts {@code int} input,
-     * before this primitive consumer is executed.
+     * Returns a composed {@link ThrowableBiIntConsumer} that first applies the {@code before} functions to its input,
+     * and then applies this consumer to the result. This method is just convenience, to provide the ability to execute
+     * an operation which accepts {@code int} input, before this primitive consumer is executed.
      *
      * @param before1 The first function to apply before this consumer is applied
      * @param before2 The second function to apply before this consumer is applied
      * @return A composed {@code ThrowableBiIntConsumer} that first applies the {@code before} functions to its input,
      * and then applies this consumer to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * int}.
      */
     @Nonnull
-    default ThrowableBiIntConsumer<X> composeFromInt(@Nonnull final ThrowableIntToDoubleFunction<? extends X> before1,
-            @Nonnull final ThrowableIntToDoubleFunction<? extends X> before2) {
+    default ThrowableBiIntConsumer<X> composeFromInt(@Nonnull ThrowableIntToDoubleFunction<? extends X> before1,
+            @Nonnull ThrowableIntToDoubleFunction<? extends X> before2) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         return (value1, value2) -> acceptThrows(before1.applyAsDoubleThrows(value1),
-                                                before2.applyAsDoubleThrows(value2));
+                before2.applyAsDoubleThrows(value2));
     }
 
     /**
-     * Returns a composed {@link ThrowableBiLongConsumer} that first applies the {@code before} functions to
-     * its input, and then applies this consumer to the result.
-     * This method is just convenience, to provide the ability to execute an operation which accepts {@code long} input,
-     * before this primitive consumer is executed.
+     * Returns a composed {@link ThrowableBiLongConsumer} that first applies the {@code before} functions to its input,
+     * and then applies this consumer to the result. This method is just convenience, to provide the ability to execute
+     * an operation which accepts {@code long} input, before this primitive consumer is executed.
      *
      * @param before1 The first function to apply before this consumer is applied
      * @param before2 The second function to apply before this consumer is applied
      * @return A composed {@code ThrowableBiLongConsumer} that first applies the {@code before} functions to its input,
      * and then applies this consumer to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * long}.
      */
     @Nonnull
     default ThrowableBiLongConsumer<X> composeFromLong(
-            @Nonnull final ThrowableLongToDoubleFunction<? extends X> before1,
-            @Nonnull final ThrowableLongToDoubleFunction<? extends X> before2) {
+            @Nonnull ThrowableLongToDoubleFunction<? extends X> before1,
+            @Nonnull ThrowableLongToDoubleFunction<? extends X> before2) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         return (value1, value2) -> acceptThrows(before1.applyAsDoubleThrows(value1),
-                                                before2.applyAsDoubleThrows(value2));
+                before2.applyAsDoubleThrows(value2));
     }
 
     /**
@@ -347,17 +345,17 @@ public interface ThrowableBiDoubleConsumer<X extends Throwable> extends Lambda {
      * @return A composed {@code ThrowableBiShortConsumer} that first applies the {@code before} functions to its input,
      * and then applies this consumer to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * short}.
      */
     @Nonnull
     default ThrowableBiShortConsumer<X> composeFromShort(
-            @Nonnull final ThrowableShortToDoubleFunction<? extends X> before1,
-            @Nonnull final ThrowableShortToDoubleFunction<? extends X> before2) {
+            @Nonnull ThrowableShortToDoubleFunction<? extends X> before1,
+            @Nonnull ThrowableShortToDoubleFunction<? extends X> before2) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         return (value1, value2) -> acceptThrows(before1.applyAsDoubleThrows(value1),
-                                                before2.applyAsDoubleThrows(value2));
+                before2.applyAsDoubleThrows(value2));
     }
 
     /**
@@ -371,7 +369,7 @@ public interface ThrowableBiDoubleConsumer<X extends Throwable> extends Lambda {
      * @throws NullPointerException If given argument is {@code null}
      */
     @Nonnull
-    default ThrowableBiDoubleConsumer<X> andThen(@Nonnull final ThrowableBiDoubleConsumer<? extends X> after) {
+    default ThrowableBiDoubleConsumer<X> andThen(@Nonnull ThrowableBiDoubleConsumer<? extends X> after) {
         Objects.requireNonNull(after);
         return (value1, value2) -> {
             acceptThrows(value1, value2);
@@ -420,7 +418,7 @@ public interface ThrowableBiDoubleConsumer<X extends Throwable> extends Lambda {
      * @see #nest()
      */
     @Nonnull
-    default BiDoubleConsumer nest(@Nonnull final Function<? super Throwable, ? extends RuntimeException> mapper) {
+    default BiDoubleConsumer nest(@Nonnull Function<? super Throwable, ? extends RuntimeException> mapper) {
         return recover(throwable -> {
             throw mapper.apply(throwable);
         });
@@ -442,15 +440,15 @@ public interface ThrowableBiDoubleConsumer<X extends Throwable> extends Lambda {
      * recover} operation.
      */
     @Nonnull
-    default BiDoubleConsumer recover(@Nonnull final Function<? super Throwable, ? extends BiDoubleConsumer> recover) {
+    default BiDoubleConsumer recover(@Nonnull Function<? super Throwable, ? extends BiDoubleConsumer> recover) {
         Objects.requireNonNull(recover);
         return (value1, value2) -> {
             try {
-                this.acceptThrows(value1, value2);
+                acceptThrows(value1, value2);
             } catch (Error e) {
                 throw e;
             } catch (Throwable throwable) {
-                final BiDoubleConsumer consumer = recover.apply(throwable);
+                BiDoubleConsumer consumer = recover.apply(throwable);
                 Objects.requireNonNull(consumer, () -> "recover returned null for " + throwable.getClass() + ": "
                         + throwable.getMessage());
                 consumer.accept(value1, value2);
@@ -528,7 +526,7 @@ public interface ThrowableBiDoubleConsumer<X extends Throwable> extends Lambda {
     default BiDoubleConsumer sneakyThrow() {
         return (value1, value2) -> {
             try {
-                this.acceptThrows(value1, value2);
+                acceptThrows(value1, value2);
             } catch (RuntimeException | Error e) {
                 throw e;
             } catch (Throwable throwable) {

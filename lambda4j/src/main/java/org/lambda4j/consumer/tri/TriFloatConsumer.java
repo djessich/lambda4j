@@ -13,7 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package org.lambda4j.consumer.tri;
+
+import java.util.Objects;
+
+import javax.annotation.Nonnegative;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import org.lambda4j.Lambda;
 import org.lambda4j.consumer.FloatConsumer;
@@ -28,15 +35,10 @@ import org.lambda4j.function.conversion.ShortToFloatFunction;
 import org.lambda4j.function.to.ToFloatFunction;
 import org.lambda4j.operator.unary.FloatUnaryOperator;
 
-import javax.annotation.Nonnegative;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import java.util.Objects;
-
 /**
- * Represents an operation that accepts three {@code float}-valued input arguments and returns no result.
- * This is a primitive specialization of {@link TriConsumer}.
- * Unlike most other functional interfaces, {@code TriFloatConsumer} is expected to operate via side-effects.
+ * Represents an operation that accepts three {@code float}-valued input arguments and returns no result. This is a
+ * primitive specialization of {@link TriConsumer}. Unlike most other functional interfaces, {@code TriFloatConsumer} is
+ * expected to operate via side-effects.
  * <p>
  * This is a {@link FunctionalInterface} whose functional method is {@link #accept(float, float, float)}.
  *
@@ -60,7 +62,7 @@ public interface TriFloatConsumer extends Lambda {
      * Expression</a>
      * @see <a href="https://docs.oracle.com/javase/tutorial/java/javaOO/methodreferences.html">Method Reference</a>
      */
-    static TriFloatConsumer of(@Nullable final TriFloatConsumer expression) {
+    static TriFloatConsumer of(@Nullable TriFloatConsumer expression) {
         return expression;
     }
 
@@ -73,7 +75,7 @@ public interface TriFloatConsumer extends Lambda {
      * @param value3 The third argument to the consumer
      * @throws NullPointerException If given argument is {@code null}
      */
-    static void call(@Nonnull final TriFloatConsumer consumer, float value1, float value2, float value3) {
+    static void call(@Nonnull TriFloatConsumer consumer, float value1, float value2, float value3) {
         Objects.requireNonNull(consumer);
         consumer.accept(value1, value2, value3);
     }
@@ -88,7 +90,7 @@ public interface TriFloatConsumer extends Lambda {
      * @throws NullPointerException If given argument is {@code null}
      */
     @Nonnull
-    static TriFloatConsumer onlyFirst(@Nonnull final FloatConsumer consumer) {
+    static TriFloatConsumer onlyFirst(@Nonnull FloatConsumer consumer) {
         Objects.requireNonNull(consumer);
         return (value1, value2, value3) -> consumer.accept(value1);
     }
@@ -103,7 +105,7 @@ public interface TriFloatConsumer extends Lambda {
      * @throws NullPointerException If given argument is {@code null}
      */
     @Nonnull
-    static TriFloatConsumer onlySecond(@Nonnull final FloatConsumer consumer) {
+    static TriFloatConsumer onlySecond(@Nonnull FloatConsumer consumer) {
         Objects.requireNonNull(consumer);
         return (value1, value2, value3) -> consumer.accept(value2);
     }
@@ -118,7 +120,7 @@ public interface TriFloatConsumer extends Lambda {
      * @throws NullPointerException If given argument is {@code null}
      */
     @Nonnull
-    static TriFloatConsumer onlyThird(@Nonnull final FloatConsumer consumer) {
+    static TriFloatConsumer onlyThird(@Nonnull FloatConsumer consumer) {
         Objects.requireNonNull(consumer);
         return (value1, value2, value3) -> consumer.accept(value3);
     }
@@ -140,7 +142,7 @@ public interface TriFloatConsumer extends Lambda {
      */
     @Nonnull
     default BiFloatConsumer paccept(float value1) {
-        return (value2, value3) -> this.accept(value1, value2, value3);
+        return (value2, value3) -> accept(value1, value2, value3);
     }
 
     /**
@@ -152,7 +154,7 @@ public interface TriFloatConsumer extends Lambda {
      */
     @Nonnull
     default FloatConsumer paccept(float value1, float value2) {
-        return (value3) -> this.accept(value1, value2, value3);
+        return value3 -> accept(value1, value2, value3);
     }
 
     /**
@@ -167,9 +169,9 @@ public interface TriFloatConsumer extends Lambda {
     }
 
     /**
-     * Returns a composed {@link TriConsumer} that first applies the {@code before} functions to its input, and
-     * then applies this consumer to the result.
-     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
+     * Returns a composed {@link TriConsumer} that first applies the {@code before} functions to its input, and then
+     * applies this consumer to the result. If evaluation of either operation throws an exception, it is relayed to the
+     * caller of the composed operation.
      *
      * @param <A> The type of the argument to the first given function, and of composed consumer
      * @param <B> The type of the argument to the second given function, and of composed consumer
@@ -183,8 +185,8 @@ public interface TriFloatConsumer extends Lambda {
      * @implSpec The input argument of this method is able to handle every type.
      */
     @Nonnull
-    default <A, B, C> TriConsumer<A, B, C> compose(@Nonnull final ToFloatFunction<? super A> before1,
-            @Nonnull final ToFloatFunction<? super B> before2, @Nonnull final ToFloatFunction<? super C> before3) {
+    default <A, B, C> TriConsumer<A, B, C> compose(@Nonnull ToFloatFunction<? super A> before1,
+            @Nonnull ToFloatFunction<? super B> before2, @Nonnull ToFloatFunction<? super C> before3) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         Objects.requireNonNull(before3);
@@ -203,25 +205,24 @@ public interface TriFloatConsumer extends Lambda {
      * @return A composed {@code TriBooleanConsumer} that first applies the {@code before} functions to its input, and
      * then applies this consumer to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * boolean}.
      */
     @Nonnull
-    default TriBooleanConsumer composeFromBoolean(@Nonnull final BooleanToFloatFunction before1,
-            @Nonnull final BooleanToFloatFunction before2, @Nonnull final BooleanToFloatFunction before3) {
+    default TriBooleanConsumer composeFromBoolean(@Nonnull BooleanToFloatFunction before1,
+            @Nonnull BooleanToFloatFunction before2, @Nonnull BooleanToFloatFunction before3) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         Objects.requireNonNull(before3);
         return (value1, value2, value3) -> accept(before1.applyAsFloat(value1), before2.applyAsFloat(value2),
-                                                  before3.applyAsFloat(value3));
+                before3.applyAsFloat(value3));
     }
 
     /**
-     * Returns a composed {@link TriByteConsumer} that first applies the {@code before} functions to
-     * its input, and then applies this consumer to the result.
-     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
-     * This method is just convenience, to provide the ability to execute an operation which accepts {@code byte} input,
-     * before this primitive consumer is executed.
+     * Returns a composed {@link TriByteConsumer} that first applies the {@code before} functions to its input, and then
+     * applies this consumer to the result. If evaluation of either operation throws an exception, it is relayed to the
+     * caller of the composed operation. This method is just convenience, to provide the ability to execute an operation
+     * which accepts {@code byte} input, before this primitive consumer is executed.
      *
      * @param before1 The first function to apply before this consumer is applied
      * @param before2 The second function to apply before this consumer is applied
@@ -229,25 +230,24 @@ public interface TriFloatConsumer extends Lambda {
      * @return A composed {@code TriByteConsumer} that first applies the {@code before} functions to its input, and then
      * applies this consumer to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * byte}.
      */
     @Nonnull
-    default TriByteConsumer composeFromByte(@Nonnull final ByteToFloatFunction before1,
-            @Nonnull final ByteToFloatFunction before2, @Nonnull final ByteToFloatFunction before3) {
+    default TriByteConsumer composeFromByte(@Nonnull ByteToFloatFunction before1,
+            @Nonnull ByteToFloatFunction before2, @Nonnull ByteToFloatFunction before3) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         Objects.requireNonNull(before3);
         return (value1, value2, value3) -> accept(before1.applyAsFloat(value1), before2.applyAsFloat(value2),
-                                                  before3.applyAsFloat(value3));
+                before3.applyAsFloat(value3));
     }
 
     /**
-     * Returns a composed {@link TriCharConsumer} that first applies the {@code before} functions to
-     * its input, and then applies this consumer to the result.
-     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
-     * This method is just convenience, to provide the ability to execute an operation which accepts {@code char} input,
-     * before this primitive consumer is executed.
+     * Returns a composed {@link TriCharConsumer} that first applies the {@code before} functions to its input, and then
+     * applies this consumer to the result. If evaluation of either operation throws an exception, it is relayed to the
+     * caller of the composed operation. This method is just convenience, to provide the ability to execute an operation
+     * which accepts {@code char} input, before this primitive consumer is executed.
      *
      * @param before1 The first function to apply before this consumer is applied
      * @param before2 The second function to apply before this consumer is applied
@@ -255,17 +255,17 @@ public interface TriFloatConsumer extends Lambda {
      * @return A composed {@code TriCharConsumer} that first applies the {@code before} functions to its input, and then
      * applies this consumer to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * char}.
      */
     @Nonnull
-    default TriCharConsumer composeFromChar(@Nonnull final CharToFloatFunction before1,
-            @Nonnull final CharToFloatFunction before2, @Nonnull final CharToFloatFunction before3) {
+    default TriCharConsumer composeFromChar(@Nonnull CharToFloatFunction before1,
+            @Nonnull CharToFloatFunction before2, @Nonnull CharToFloatFunction before3) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         Objects.requireNonNull(before3);
         return (value1, value2, value3) -> accept(before1.applyAsFloat(value1), before2.applyAsFloat(value2),
-                                                  before3.applyAsFloat(value3));
+                before3.applyAsFloat(value3));
     }
 
     /**
@@ -280,17 +280,17 @@ public interface TriFloatConsumer extends Lambda {
      * @return A composed {@code TriDoubleConsumer} that first applies the {@code before} functions to its input, and
      * then applies this consumer to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * double}.
      */
     @Nonnull
-    default TriDoubleConsumer composeFromDouble(@Nonnull final DoubleToFloatFunction before1,
-            @Nonnull final DoubleToFloatFunction before2, @Nonnull final DoubleToFloatFunction before3) {
+    default TriDoubleConsumer composeFromDouble(@Nonnull DoubleToFloatFunction before1,
+            @Nonnull DoubleToFloatFunction before2, @Nonnull DoubleToFloatFunction before3) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         Objects.requireNonNull(before3);
         return (value1, value2, value3) -> accept(before1.applyAsFloat(value1), before2.applyAsFloat(value2),
-                                                  before3.applyAsFloat(value3));
+                before3.applyAsFloat(value3));
     }
 
     /**
@@ -305,25 +305,24 @@ public interface TriFloatConsumer extends Lambda {
      * @return A composed {@code TriFloatConsumer} that first applies the {@code before} operators to its input, and
      * then applies this consumer to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * float}.
      */
     @Nonnull
-    default TriFloatConsumer composeFromFloat(@Nonnull final FloatUnaryOperator before1,
-            @Nonnull final FloatUnaryOperator before2, @Nonnull final FloatUnaryOperator before3) {
+    default TriFloatConsumer composeFromFloat(@Nonnull FloatUnaryOperator before1,
+            @Nonnull FloatUnaryOperator before2, @Nonnull FloatUnaryOperator before3) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         Objects.requireNonNull(before3);
         return (value1, value2, value3) -> accept(before1.applyAsFloat(value1), before2.applyAsFloat(value2),
-                                                  before3.applyAsFloat(value3));
+                before3.applyAsFloat(value3));
     }
 
     /**
-     * Returns a composed {@link TriIntConsumer} that first applies the {@code before} functions to
-     * its input, and then applies this consumer to the result.
-     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
-     * This method is just convenience, to provide the ability to execute an operation which accepts {@code int} input,
-     * before this primitive consumer is executed.
+     * Returns a composed {@link TriIntConsumer} that first applies the {@code before} functions to its input, and then
+     * applies this consumer to the result. If evaluation of either operation throws an exception, it is relayed to the
+     * caller of the composed operation. This method is just convenience, to provide the ability to execute an operation
+     * which accepts {@code int} input, before this primitive consumer is executed.
      *
      * @param before1 The first function to apply before this consumer is applied
      * @param before2 The second function to apply before this consumer is applied
@@ -331,25 +330,24 @@ public interface TriFloatConsumer extends Lambda {
      * @return A composed {@code TriIntConsumer} that first applies the {@code before} functions to its input, and then
      * applies this consumer to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * int}.
      */
     @Nonnull
-    default TriIntConsumer composeFromInt(@Nonnull final IntToFloatFunction before1,
-            @Nonnull final IntToFloatFunction before2, @Nonnull final IntToFloatFunction before3) {
+    default TriIntConsumer composeFromInt(@Nonnull IntToFloatFunction before1,
+            @Nonnull IntToFloatFunction before2, @Nonnull IntToFloatFunction before3) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         Objects.requireNonNull(before3);
         return (value1, value2, value3) -> accept(before1.applyAsFloat(value1), before2.applyAsFloat(value2),
-                                                  before3.applyAsFloat(value3));
+                before3.applyAsFloat(value3));
     }
 
     /**
-     * Returns a composed {@link TriLongConsumer} that first applies the {@code before} functions to
-     * its input, and then applies this consumer to the result.
-     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
-     * This method is just convenience, to provide the ability to execute an operation which accepts {@code long} input,
-     * before this primitive consumer is executed.
+     * Returns a composed {@link TriLongConsumer} that first applies the {@code before} functions to its input, and then
+     * applies this consumer to the result. If evaluation of either operation throws an exception, it is relayed to the
+     * caller of the composed operation. This method is just convenience, to provide the ability to execute an operation
+     * which accepts {@code long} input, before this primitive consumer is executed.
      *
      * @param before1 The first function to apply before this consumer is applied
      * @param before2 The second function to apply before this consumer is applied
@@ -357,17 +355,17 @@ public interface TriFloatConsumer extends Lambda {
      * @return A composed {@code TriLongConsumer} that first applies the {@code before} functions to its input, and then
      * applies this consumer to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * long}.
      */
     @Nonnull
-    default TriLongConsumer composeFromLong(@Nonnull final LongToFloatFunction before1,
-            @Nonnull final LongToFloatFunction before2, @Nonnull final LongToFloatFunction before3) {
+    default TriLongConsumer composeFromLong(@Nonnull LongToFloatFunction before1,
+            @Nonnull LongToFloatFunction before2, @Nonnull LongToFloatFunction before3) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         Objects.requireNonNull(before3);
         return (value1, value2, value3) -> accept(before1.applyAsFloat(value1), before2.applyAsFloat(value2),
-                                                  before3.applyAsFloat(value3));
+                before3.applyAsFloat(value3));
     }
 
     /**
@@ -382,17 +380,17 @@ public interface TriFloatConsumer extends Lambda {
      * @return A composed {@code TriShortConsumer} that first applies the {@code before} functions to its input, and
      * then applies this consumer to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * short}.
      */
     @Nonnull
-    default TriShortConsumer composeFromShort(@Nonnull final ShortToFloatFunction before1,
-            @Nonnull final ShortToFloatFunction before2, @Nonnull final ShortToFloatFunction before3) {
+    default TriShortConsumer composeFromShort(@Nonnull ShortToFloatFunction before1,
+            @Nonnull ShortToFloatFunction before2, @Nonnull ShortToFloatFunction before3) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         Objects.requireNonNull(before3);
         return (value1, value2, value3) -> accept(before1.applyAsFloat(value1), before2.applyAsFloat(value2),
-                                                  before3.applyAsFloat(value3));
+                before3.applyAsFloat(value3));
     }
 
     /**
@@ -407,7 +405,7 @@ public interface TriFloatConsumer extends Lambda {
      * @throws NullPointerException If given argument is {@code null}
      */
     @Nonnull
-    default TriFloatConsumer andThen(@Nonnull final TriFloatConsumer after) {
+    default TriFloatConsumer andThen(@Nonnull TriFloatConsumer after) {
         Objects.requireNonNull(after);
         return (value1, value2, value3) -> {
             accept(value1, value2, value3);
@@ -417,8 +415,8 @@ public interface TriFloatConsumer extends Lambda {
 
     /**
      * Returns a composed {@link TriConsumer} which represents this {@link TriFloatConsumer}. Thereby the primitive
-     * input argument for this consumer is autoboxed. This method provides the possibility to use this
-     * {@code TriFloatConsumer} with methods provided by the {@code JDK}.
+     * input argument for this consumer is autoboxed. This method provides the possibility to use this {@code
+     * TriFloatConsumer} with methods provided by the {@code JDK}.
      *
      * @return A composed {@code TriConsumer} which represents this {@code TriFloatConsumer}.
      */

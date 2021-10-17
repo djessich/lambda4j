@@ -13,7 +13,28 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package org.lambda4j.predicate.bi.obj;
+
+import java.util.Map;
+import java.util.Objects;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.function.DoubleFunction;
+import java.util.function.DoublePredicate;
+import java.util.function.DoubleUnaryOperator;
+import java.util.function.Function;
+import java.util.function.IntFunction;
+import java.util.function.IntToDoubleFunction;
+import java.util.function.LongFunction;
+import java.util.function.LongToDoubleFunction;
+import java.util.function.Predicate;
+import java.util.function.ToDoubleFunction;
+
+import javax.annotation.Nonnegative;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
+import org.apache.commons.lang3.tuple.Pair;
 
 import org.lambda4j.Lambda;
 import org.lambda4j.consumer.BooleanConsumer;
@@ -55,25 +76,6 @@ import org.lambda4j.predicate.bi.BiLongPredicate;
 import org.lambda4j.predicate.bi.BiPredicate2;
 import org.lambda4j.predicate.bi.BiShortPredicate;
 
-import org.apache.commons.lang3.tuple.Pair;
-
-import javax.annotation.Nonnegative;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import java.util.Map;
-import java.util.Objects;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.function.DoubleFunction;
-import java.util.function.DoublePredicate;
-import java.util.function.DoubleUnaryOperator;
-import java.util.function.Function;
-import java.util.function.IntFunction;
-import java.util.function.IntToDoubleFunction;
-import java.util.function.LongFunction;
-import java.util.function.LongToDoubleFunction;
-import java.util.function.Predicate;
-import java.util.function.ToDoubleFunction;
-
 /**
  * Represents an predicate (boolean-valued function) of one object-valued and one {@code double}-valued input argument.
  * This is a (reference, double) specialization of {@link BiPredicate2}.
@@ -102,7 +104,7 @@ public interface ObjDoublePredicate<T> extends Lambda {
      * Expression</a>
      * @see <a href="https://docs.oracle.com/javase/tutorial/java/javaOO/methodreferences.html">Method Reference</a>
      */
-    static <T> ObjDoublePredicate<T> of(@Nullable final ObjDoublePredicate<T> expression) {
+    static <T> ObjDoublePredicate<T> of(@Nullable ObjDoublePredicate<T> expression) {
         return expression;
     }
 
@@ -116,7 +118,7 @@ public interface ObjDoublePredicate<T> extends Lambda {
      * @return The result from the given {@code ObjDoublePredicate}.
      * @throws NullPointerException If given argument is {@code null}
      */
-    static <T> boolean call(@Nonnull final ObjDoublePredicate<? super T> predicate, T t, double value) {
+    static <T> boolean call(@Nonnull ObjDoublePredicate<? super T> predicate, T t, double value) {
         Objects.requireNonNull(predicate);
         return predicate.test(t, value);
     }
@@ -132,7 +134,7 @@ public interface ObjDoublePredicate<T> extends Lambda {
      * @throws NullPointerException If given argument is {@code null}
      */
     @Nonnull
-    static <T> ObjDoublePredicate<T> onlyFirst(@Nonnull final Predicate<? super T> predicate) {
+    static <T> ObjDoublePredicate<T> onlyFirst(@Nonnull Predicate<? super T> predicate) {
         Objects.requireNonNull(predicate);
         return (t, value) -> predicate.test(t);
     }
@@ -148,7 +150,7 @@ public interface ObjDoublePredicate<T> extends Lambda {
      * @throws NullPointerException If given argument is {@code null}
      */
     @Nonnull
-    static <T> ObjDoublePredicate<T> onlySecond(@Nonnull final DoublePredicate predicate) {
+    static <T> ObjDoublePredicate<T> onlySecond(@Nonnull DoublePredicate predicate) {
         Objects.requireNonNull(predicate);
         return (t, value) -> predicate.test(value);
     }
@@ -203,7 +205,7 @@ public interface ObjDoublePredicate<T> extends Lambda {
      */
     @Nonnull
     static <T> ObjDoublePredicate<T> isEqual(@Nullable Object target1, double target2) {
-        return (t, value) -> (t == null ? target1 == null : t.equals(target1)) && (value == target2);
+        return (t, value) -> t == null ? target1 == null : t.equals(target1) && value == target2;
     }
 
     /**
@@ -223,7 +225,7 @@ public interface ObjDoublePredicate<T> extends Lambda {
      */
     @Nonnull
     default DoublePredicate2 ptest(T t) {
-        return (value) -> this.test(t, value);
+        return value -> test(t, value);
     }
 
     /**
@@ -234,7 +236,7 @@ public interface ObjDoublePredicate<T> extends Lambda {
      */
     @Nonnull
     default Predicate2<T> ptest(double value) {
-        return (t) -> this.test(t, value);
+        return t -> test(t, value);
     }
 
     /**
@@ -249,9 +251,9 @@ public interface ObjDoublePredicate<T> extends Lambda {
     }
 
     /**
-     * Returns a composed {@link BiPredicate2} that first applies the {@code before} functions to its input, and
-     * then applies this predicate to the result.
-     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
+     * Returns a composed {@link BiPredicate2} that first applies the {@code before} functions to its input, and then
+     * applies this predicate to the result. If evaluation of either operation throws an exception, it is relayed to the
+     * caller of the composed operation.
      *
      * @param <A> The type of the argument to the first given function, and of composed predicate
      * @param <B> The type of the argument to the second given function, and of composed predicate
@@ -263,8 +265,8 @@ public interface ObjDoublePredicate<T> extends Lambda {
      * @implSpec The input argument of this method is able to handle every type.
      */
     @Nonnull
-    default <A, B> BiPredicate2<A, B> compose(@Nonnull final Function<? super A, ? extends T> before1,
-            @Nonnull final ToDoubleFunction<? super B> before2) {
+    default <A, B> BiPredicate2<A, B> compose(@Nonnull Function<? super A, ? extends T> before1,
+            @Nonnull ToDoubleFunction<? super B> before2) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         return (a, b) -> test(before1.apply(a), before2.applyAsDouble(b));
@@ -281,58 +283,56 @@ public interface ObjDoublePredicate<T> extends Lambda {
      * @return A composed {@code BooleanBinaryOperator} that first applies the {@code before} functions to its input,
      * and then applies this predicate to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * boolean}.
      */
     @Nonnull
-    default BooleanBinaryOperator composeFromBoolean(@Nonnull final BooleanFunction<? extends T> before1,
-            @Nonnull final BooleanToDoubleFunction before2) {
+    default BooleanBinaryOperator composeFromBoolean(@Nonnull BooleanFunction<? extends T> before1,
+            @Nonnull BooleanToDoubleFunction before2) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         return (value1, value2) -> test(before1.apply(value1), before2.applyAsDouble(value2));
     }
 
     /**
-     * Returns a composed {@link BiBytePredicate} that first applies the {@code before} functions to
-     * its input, and then applies this predicate to the result.
-     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
-     * This method is just convenience, to provide the ability to execute an operation which accepts {@code byte} input,
-     * before this primitive predicate is executed.
+     * Returns a composed {@link BiBytePredicate} that first applies the {@code before} functions to its input, and then
+     * applies this predicate to the result. If evaluation of either operation throws an exception, it is relayed to the
+     * caller of the composed operation. This method is just convenience, to provide the ability to execute an operation
+     * which accepts {@code byte} input, before this primitive predicate is executed.
      *
      * @param before1 The first function to apply before this predicate is applied
      * @param before2 The second function to apply before this predicate is applied
      * @return A composed {@code BiBytePredicate} that first applies the {@code before} functions to its input, and then
      * applies this predicate to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * byte}.
      */
     @Nonnull
-    default BiBytePredicate composeFromByte(@Nonnull final ByteFunction<? extends T> before1,
-            @Nonnull final ByteToDoubleFunction before2) {
+    default BiBytePredicate composeFromByte(@Nonnull ByteFunction<? extends T> before1,
+            @Nonnull ByteToDoubleFunction before2) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         return (value1, value2) -> test(before1.apply(value1), before2.applyAsDouble(value2));
     }
 
     /**
-     * Returns a composed {@link BiCharPredicate} that first applies the {@code before} functions to
-     * its input, and then applies this predicate to the result.
-     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
-     * This method is just convenience, to provide the ability to execute an operation which accepts {@code char} input,
-     * before this primitive predicate is executed.
+     * Returns a composed {@link BiCharPredicate} that first applies the {@code before} functions to its input, and then
+     * applies this predicate to the result. If evaluation of either operation throws an exception, it is relayed to the
+     * caller of the composed operation. This method is just convenience, to provide the ability to execute an operation
+     * which accepts {@code char} input, before this primitive predicate is executed.
      *
      * @param before1 The first function to apply before this predicate is applied
      * @param before2 The second function to apply before this predicate is applied
      * @return A composed {@code BiCharPredicate} that first applies the {@code before} functions to its input, and then
      * applies this predicate to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * char}.
      */
     @Nonnull
-    default BiCharPredicate composeFromChar(@Nonnull final CharFunction<? extends T> before1,
-            @Nonnull final CharToDoubleFunction before2) {
+    default BiCharPredicate composeFromChar(@Nonnull CharFunction<? extends T> before1,
+            @Nonnull CharToDoubleFunction before2) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         return (value1, value2) -> test(before1.apply(value1), before2.applyAsDouble(value2));
@@ -349,12 +349,12 @@ public interface ObjDoublePredicate<T> extends Lambda {
      * @return A composed {@code BiDoublePredicate} that first applies the {@code before} functions to its input, and
      * then applies this predicate to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * double}.
      */
     @Nonnull
-    default BiDoublePredicate composeFromDouble(@Nonnull final DoubleFunction<? extends T> before1,
-            @Nonnull final DoubleUnaryOperator before2) {
+    default BiDoublePredicate composeFromDouble(@Nonnull DoubleFunction<? extends T> before1,
+            @Nonnull DoubleUnaryOperator before2) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         return (value1, value2) -> test(before1.apply(value1), before2.applyAsDouble(value2));
@@ -371,58 +371,56 @@ public interface ObjDoublePredicate<T> extends Lambda {
      * @return A composed {@code BiFloatPredicate} that first applies the {@code before} functions to its input, and
      * then applies this predicate to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * float}.
      */
     @Nonnull
-    default BiFloatPredicate composeFromFloat(@Nonnull final FloatFunction<? extends T> before1,
-            @Nonnull final FloatToDoubleFunction before2) {
+    default BiFloatPredicate composeFromFloat(@Nonnull FloatFunction<? extends T> before1,
+            @Nonnull FloatToDoubleFunction before2) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         return (value1, value2) -> test(before1.apply(value1), before2.applyAsDouble(value2));
     }
 
     /**
-     * Returns a composed {@link BiIntPredicate} that first applies the {@code before} functions to
-     * its input, and then applies this predicate to the result.
-     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
-     * This method is just convenience, to provide the ability to execute an operation which accepts {@code int} input,
-     * before this primitive predicate is executed.
+     * Returns a composed {@link BiIntPredicate} that first applies the {@code before} functions to its input, and then
+     * applies this predicate to the result. If evaluation of either operation throws an exception, it is relayed to the
+     * caller of the composed operation. This method is just convenience, to provide the ability to execute an operation
+     * which accepts {@code int} input, before this primitive predicate is executed.
      *
      * @param before1 The first function to apply before this predicate is applied
      * @param before2 The second function to apply before this predicate is applied
      * @return A composed {@code BiIntPredicate} that first applies the {@code before} functions to its input, and then
      * applies this predicate to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * int}.
      */
     @Nonnull
-    default BiIntPredicate composeFromInt(@Nonnull final IntFunction<? extends T> before1,
-            @Nonnull final IntToDoubleFunction before2) {
+    default BiIntPredicate composeFromInt(@Nonnull IntFunction<? extends T> before1,
+            @Nonnull IntToDoubleFunction before2) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         return (value1, value2) -> test(before1.apply(value1), before2.applyAsDouble(value2));
     }
 
     /**
-     * Returns a composed {@link BiLongPredicate} that first applies the {@code before} functions to
-     * its input, and then applies this predicate to the result.
-     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
-     * This method is just convenience, to provide the ability to execute an operation which accepts {@code long} input,
-     * before this primitive predicate is executed.
+     * Returns a composed {@link BiLongPredicate} that first applies the {@code before} functions to its input, and then
+     * applies this predicate to the result. If evaluation of either operation throws an exception, it is relayed to the
+     * caller of the composed operation. This method is just convenience, to provide the ability to execute an operation
+     * which accepts {@code long} input, before this primitive predicate is executed.
      *
      * @param before1 The first function to apply before this predicate is applied
      * @param before2 The second function to apply before this predicate is applied
      * @return A composed {@code BiLongPredicate} that first applies the {@code before} functions to its input, and then
      * applies this predicate to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * long}.
      */
     @Nonnull
-    default BiLongPredicate composeFromLong(@Nonnull final LongFunction<? extends T> before1,
-            @Nonnull final LongToDoubleFunction before2) {
+    default BiLongPredicate composeFromLong(@Nonnull LongFunction<? extends T> before1,
+            @Nonnull LongToDoubleFunction before2) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         return (value1, value2) -> test(before1.apply(value1), before2.applyAsDouble(value2));
@@ -439,12 +437,12 @@ public interface ObjDoublePredicate<T> extends Lambda {
      * @return A composed {@code BiShortPredicate} that first applies the {@code before} functions to its input, and
      * then applies this predicate to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * short}.
      */
     @Nonnull
-    default BiShortPredicate composeFromShort(@Nonnull final ShortFunction<? extends T> before1,
-            @Nonnull final ShortToDoubleFunction before2) {
+    default BiShortPredicate composeFromShort(@Nonnull ShortFunction<? extends T> before1,
+            @Nonnull ShortToDoubleFunction before2) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         return (value1, value2) -> test(before1.apply(value1), before2.applyAsDouble(value2));
@@ -452,8 +450,8 @@ public interface ObjDoublePredicate<T> extends Lambda {
 
     /**
      * Returns a composed {@link ObjDoubleFunction} that first applies this predicate to its input, and then applies the
-     * {@code after} function to the result.
-     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
+     * {@code after} function to the result. If evaluation of either operation throws an exception, it is relayed to the
+     * caller of the composed operation.
      *
      * @param <S> The type of return value from the {@code after} function, and of the composed function
      * @param after The function to apply after this predicate is applied
@@ -463,7 +461,7 @@ public interface ObjDoublePredicate<T> extends Lambda {
      * @implSpec The input argument of this method is able to return every type.
      */
     @Nonnull
-    default <S> ObjDoubleFunction<T, S> andThen(@Nonnull final BooleanFunction<? extends S> after) {
+    default <S> ObjDoubleFunction<T, S> andThen(@Nonnull BooleanFunction<? extends S> after) {
         Objects.requireNonNull(after);
         return (t, value) -> after.apply(test(t, value));
     }
@@ -478,11 +476,11 @@ public interface ObjDoublePredicate<T> extends Lambda {
      * @return A composed {@code ObjDoublePredicate} that first applies this predicate to its input, and then applies
      * the {@code after} operator to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * boolean}.
      */
     @Nonnull
-    default ObjDoublePredicate<T> andThenToBoolean(@Nonnull final BooleanUnaryOperator after) {
+    default ObjDoublePredicate<T> andThenToBoolean(@Nonnull BooleanUnaryOperator after) {
         Objects.requireNonNull(after);
         return (t, value) -> after.applyAsBoolean(test(t, value));
     }
@@ -497,11 +495,11 @@ public interface ObjDoublePredicate<T> extends Lambda {
      * @return A composed {@code ObjDoubleToByteFunction} that first applies this predicate to its input, and then
      * applies the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * byte}.
      */
     @Nonnull
-    default ObjDoubleToByteFunction<T> andThenToByte(@Nonnull final BooleanToByteFunction after) {
+    default ObjDoubleToByteFunction<T> andThenToByte(@Nonnull BooleanToByteFunction after) {
         Objects.requireNonNull(after);
         return (t, value) -> after.applyAsByte(test(t, value));
     }
@@ -516,11 +514,11 @@ public interface ObjDoublePredicate<T> extends Lambda {
      * @return A composed {@code ObjDoubleToCharFunction} that first applies this predicate to its input, and then
      * applies the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * char}.
      */
     @Nonnull
-    default ObjDoubleToCharFunction<T> andThenToChar(@Nonnull final BooleanToCharFunction after) {
+    default ObjDoubleToCharFunction<T> andThenToChar(@Nonnull BooleanToCharFunction after) {
         Objects.requireNonNull(after);
         return (t, value) -> after.applyAsChar(test(t, value));
     }
@@ -535,11 +533,11 @@ public interface ObjDoublePredicate<T> extends Lambda {
      * @return A composed {@code ObjDoubleToDoubleFunction} that first applies this predicate to its input, and then
      * applies the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * double}.
      */
     @Nonnull
-    default ObjDoubleToDoubleFunction<T> andThenToDouble(@Nonnull final BooleanToDoubleFunction after) {
+    default ObjDoubleToDoubleFunction<T> andThenToDouble(@Nonnull BooleanToDoubleFunction after) {
         Objects.requireNonNull(after);
         return (t, value) -> after.applyAsDouble(test(t, value));
     }
@@ -554,11 +552,11 @@ public interface ObjDoublePredicate<T> extends Lambda {
      * @return A composed {@code ObjDoubleToFloatFunction} that first applies this predicate to its input, and then
      * applies the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * float}.
      */
     @Nonnull
-    default ObjDoubleToFloatFunction<T> andThenToFloat(@Nonnull final BooleanToFloatFunction after) {
+    default ObjDoubleToFloatFunction<T> andThenToFloat(@Nonnull BooleanToFloatFunction after) {
         Objects.requireNonNull(after);
         return (t, value) -> after.applyAsFloat(test(t, value));
     }
@@ -573,11 +571,11 @@ public interface ObjDoublePredicate<T> extends Lambda {
      * @return A composed {@code ObjDoubleToIntFunction} that first applies this predicate to its input, and then
      * applies the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * int}.
      */
     @Nonnull
-    default ObjDoubleToIntFunction<T> andThenToInt(@Nonnull final BooleanToIntFunction after) {
+    default ObjDoubleToIntFunction<T> andThenToInt(@Nonnull BooleanToIntFunction after) {
         Objects.requireNonNull(after);
         return (t, value) -> after.applyAsInt(test(t, value));
     }
@@ -592,11 +590,11 @@ public interface ObjDoublePredicate<T> extends Lambda {
      * @return A composed {@code ObjDoubleToLongFunction} that first applies this predicate to its input, and then
      * applies the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * long}.
      */
     @Nonnull
-    default ObjDoubleToLongFunction<T> andThenToLong(@Nonnull final BooleanToLongFunction after) {
+    default ObjDoubleToLongFunction<T> andThenToLong(@Nonnull BooleanToLongFunction after) {
         Objects.requireNonNull(after);
         return (t, value) -> after.applyAsLong(test(t, value));
     }
@@ -611,11 +609,11 @@ public interface ObjDoublePredicate<T> extends Lambda {
      * @return A composed {@code ObjDoubleToShortFunction} that first applies this predicate to its input, and then
      * applies the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * short}.
      */
     @Nonnull
-    default ObjDoubleToShortFunction<T> andThenToShort(@Nonnull final BooleanToShortFunction after) {
+    default ObjDoubleToShortFunction<T> andThenToShort(@Nonnull BooleanToShortFunction after) {
         Objects.requireNonNull(after);
         return (t, value) -> after.applyAsShort(test(t, value));
     }
@@ -631,7 +629,7 @@ public interface ObjDoublePredicate<T> extends Lambda {
      * @throws NullPointerException If given argument is {@code null}
      */
     @Nonnull
-    default ObjDoubleConsumer2<T> consume(@Nonnull final BooleanConsumer consumer) {
+    default ObjDoubleConsumer2<T> consume(@Nonnull BooleanConsumer consumer) {
         Objects.requireNonNull(consumer);
         return (t, value) -> consumer.accept(test(t, value));
     }
@@ -662,7 +660,7 @@ public interface ObjDoublePredicate<T> extends Lambda {
      * @see #xor(ObjDoublePredicate)
      */
     @Nonnull
-    default ObjDoublePredicate<T> and(@Nonnull final ObjDoublePredicate<? super T> other) {
+    default ObjDoublePredicate<T> and(@Nonnull ObjDoublePredicate<? super T> other) {
         Objects.requireNonNull(other);
         return (t, value) -> test(t, value) && other.test(t, value);
     }
@@ -683,7 +681,7 @@ public interface ObjDoublePredicate<T> extends Lambda {
      * @see #xor(ObjDoublePredicate)
      */
     @Nonnull
-    default ObjDoublePredicate<T> or(@Nonnull final ObjDoublePredicate<? super T> other) {
+    default ObjDoublePredicate<T> or(@Nonnull ObjDoublePredicate<? super T> other) {
         Objects.requireNonNull(other);
         return (t, value) -> test(t, value) || other.test(t, value);
     }
@@ -701,7 +699,7 @@ public interface ObjDoublePredicate<T> extends Lambda {
      * @see #or(ObjDoublePredicate)
      */
     @Nonnull
-    default ObjDoublePredicate<T> xor(@Nonnull final ObjDoublePredicate<? super T> other) {
+    default ObjDoublePredicate<T> xor(@Nonnull ObjDoublePredicate<? super T> other) {
         Objects.requireNonNull(other);
         return (t, value) -> test(t, value) ^ other.test(t, value);
     }
@@ -725,10 +723,10 @@ public interface ObjDoublePredicate<T> extends Lambda {
         if (isMemoized()) {
             return this;
         } else {
-            final Map<Pair<T, Double>, Boolean> cache = new ConcurrentHashMap<>();
-            final Object lock = new Object();
+            Map<Pair<T, Double>, Boolean> cache = new ConcurrentHashMap<>();
+            Object lock = new Object();
             return (ObjDoublePredicate<T> & Memoized) (t, value) -> {
-                final boolean returnValue;
+                boolean returnValue;
                 synchronized (lock) {
                     returnValue = cache.computeIfAbsent(Pair.of(t, value), key -> test(key.getLeft(), key.getRight()));
                 }
@@ -739,8 +737,8 @@ public interface ObjDoublePredicate<T> extends Lambda {
 
     /**
      * Returns a composed {@link BiPredicate2} which represents this {@link ObjDoublePredicate}. Thereby the primitive
-     * input argument for this predicate is autoboxed. This method provides the possibility to use this
-     * {@code ObjDoublePredicate} with methods provided by the {@code JDK}.
+     * input argument for this predicate is autoboxed. This method provides the possibility to use this {@code
+     * ObjDoublePredicate} with methods provided by the {@code JDK}.
      *
      * @return A composed {@code BiPredicate2} which represents this {@code ObjDoublePredicate}.
      */

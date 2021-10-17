@@ -13,7 +13,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package org.lambda4j.function.bi;
+
+import java.util.Map;
+import java.util.Objects;
+import java.util.Optional;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.function.BiFunction;
+import java.util.function.Function;
+
+import javax.annotation.Nonnegative;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
+import org.apache.commons.lang3.tuple.Pair;
 
 import org.lambda4j.Lambda;
 import org.lambda4j.consumer.ThrowableConsumer;
@@ -22,21 +36,9 @@ import org.lambda4j.core.exception.ThrownByFunctionalInterfaceException;
 import org.lambda4j.core.util.ThrowableUtils;
 import org.lambda4j.function.ThrowableFunction;
 
-import org.apache.commons.lang3.tuple.Pair;
-
-import javax.annotation.Nonnegative;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Optional;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.function.BiFunction;
-import java.util.function.Function;
-
 /**
- * Represents an operation that accepts two input arguments and produces a
- * result which is able to throw any {@link Throwable}.
+ * Represents an operation that accepts two input arguments and produces a result which is able to throw any {@link
+ * Throwable}.
  * <p>
  * This is a {@link FunctionalInterface} whose functional method is {@link #applyThrows(Object, Object)}.
  *
@@ -70,7 +72,7 @@ public interface ThrowableBiFunction<T, U, R, X extends Throwable> extends Lambd
      * @see <a href="https://docs.oracle.com/javase/tutorial/java/javaOO/methodreferences.html">Method Reference</a>
      */
     static <T, U, R, X extends Throwable> ThrowableBiFunction<T, U, R, X> of(
-            @Nullable final ThrowableBiFunction<T, U, R, X> expression) {
+            @Nullable ThrowableBiFunction<T, U, R, X> expression) {
         return expression;
     }
 
@@ -89,7 +91,7 @@ public interface ThrowableBiFunction<T, U, R, X extends Throwable> extends Lambd
      */
     @Nonnull
     static <T, U, R, X extends Throwable> ThrowableBiFunction<T, U, Optional<R>, X> lift(
-            @Nonnull final ThrowableBiFunction<? super T, ? super U, ? extends R, ? extends X> partial) {
+            @Nonnull ThrowableBiFunction<? super T, ? super U, ? extends R, ? extends X> partial) {
         Objects.requireNonNull(partial);
         return (t, u) -> Optional.ofNullable(partial.applyThrows(t, u));
     }
@@ -109,7 +111,7 @@ public interface ThrowableBiFunction<T, U, R, X extends Throwable> extends Lambd
      * @throws X Any throwable from this functions action
      */
     static <T, U, R, X extends Throwable> R call(
-            @Nonnull final ThrowableBiFunction<? super T, ? super U, ? extends R, ? extends X> function, T t,
+            @Nonnull ThrowableBiFunction<? super T, ? super U, ? extends R, ? extends X> function, T t,
             U u) throws X {
         Objects.requireNonNull(function);
         return function.applyThrows(t, u);
@@ -130,7 +132,7 @@ public interface ThrowableBiFunction<T, U, R, X extends Throwable> extends Lambd
      */
     @Nonnull
     static <T, U, R, X extends Throwable> ThrowableBiFunction<T, U, R, X> onlyFirst(
-            @Nonnull final ThrowableFunction<? super T, ? extends R, ? extends X> function) {
+            @Nonnull ThrowableFunction<? super T, ? extends R, ? extends X> function) {
         Objects.requireNonNull(function);
         return (t, u) -> function.applyThrows(t);
     }
@@ -150,7 +152,7 @@ public interface ThrowableBiFunction<T, U, R, X extends Throwable> extends Lambd
      */
     @Nonnull
     static <T, U, R, X extends Throwable> ThrowableBiFunction<T, U, R, X> onlySecond(
-            @Nonnull final ThrowableFunction<? super U, ? extends R, ? extends X> function) {
+            @Nonnull ThrowableFunction<? super U, ? extends R, ? extends X> function) {
         Objects.requireNonNull(function);
         return (t, u) -> function.applyThrows(u);
     }
@@ -196,14 +198,6 @@ public interface ThrowableBiFunction<T, U, R, X extends Throwable> extends Lambd
      */
     @Override
     default R apply(T t, U u) {
-        // TODO: Remove commented code below
-    /*try {
-         return this.applyThrows(t, u);
-    } catch (RuntimeException | Error e) {
-        throw e;
-    } catch (Throwable throwable) {
-        throw new ThrownByFunctionalInterfaceException(throwable.getMessage(), throwable);
-    }*/
         return nest().apply(t, u);
     }
 
@@ -229,7 +223,7 @@ public interface ThrowableBiFunction<T, U, R, X extends Throwable> extends Lambd
      */
     @Nonnull
     default ThrowableFunction<U, R, X> papplyThrows(T t) {
-        return (u) -> this.applyThrows(t, u);
+        return u -> applyThrows(t, u);
     }
 
     /**
@@ -258,8 +252,8 @@ public interface ThrowableBiFunction<T, U, R, X extends Throwable> extends Lambd
      */
     @Nonnull
     default <A, B> ThrowableBiFunction<A, B, R, X> compose(
-            @Nonnull final ThrowableFunction<? super A, ? extends T, ? extends X> before1,
-            @Nonnull final ThrowableFunction<? super B, ? extends U, ? extends X> before2) {
+            @Nonnull ThrowableFunction<? super A, ? extends T, ? extends X> before1,
+            @Nonnull ThrowableFunction<? super B, ? extends U, ? extends X> before2) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         return (a, b) -> applyThrows(before1.applyThrows(a), before2.applyThrows(b));
@@ -278,7 +272,7 @@ public interface ThrowableBiFunction<T, U, R, X extends Throwable> extends Lambd
      */
     @Nonnull
     default <S> ThrowableBiFunction<T, U, S, X> andThen(
-            @Nonnull final ThrowableFunction<? super R, ? extends S, ? extends X> after) {
+            @Nonnull ThrowableFunction<? super R, ? extends S, ? extends X> after) {
         Objects.requireNonNull(after);
         return (t, u) -> after.applyThrows(applyThrows(t, u));
     }
@@ -293,7 +287,7 @@ public interface ThrowableBiFunction<T, U, R, X extends Throwable> extends Lambd
      * @throws NullPointerException If given argument is {@code null}
      */
     @Nonnull
-    default ThrowableBiConsumer<T, U, X> consume(@Nonnull final ThrowableConsumer<? super R, ? extends X> consumer) {
+    default ThrowableBiConsumer<T, U, X> consume(@Nonnull ThrowableConsumer<? super R, ? extends X> consumer) {
         Objects.requireNonNull(consumer);
         return (t, u) -> consumer.acceptThrows(applyThrows(t, u));
     }
@@ -347,10 +341,10 @@ public interface ThrowableBiFunction<T, U, R, X extends Throwable> extends Lambd
         if (isMemoized()) {
             return this;
         } else {
-            final Map<Pair<T, U>, R> cache = new ConcurrentHashMap<>();
-            final Object lock = new Object();
+            Map<Pair<T, U>, R> cache = new ConcurrentHashMap<>();
+            Object lock = new Object();
             return (ThrowableBiFunction<T, U, R, X> & Memoized) (t, u) -> {
-                final R returnValue;
+                R returnValue;
                 synchronized (lock) {
                     returnValue = cache.computeIfAbsent(Pair.of(t, u), ThrowableFunction.of(
                             key -> applyThrows(key.getLeft(), key.getRight())));
@@ -361,9 +355,9 @@ public interface ThrowableBiFunction<T, U, R, X extends Throwable> extends Lambd
     }
 
     /**
-     * Converts this function to an equal function, which ensures that its result is not
-     * {@code null} using {@link Optional}. This method mainly exists to avoid unnecessary {@code NullPointerException}s
-     * through referencing {@code null} from this function.
+     * Converts this function to an equal function, which ensures that its result is not {@code null} using {@link
+     * Optional}. This method mainly exists to avoid unnecessary {@code NullPointerException}s through referencing
+     * {@code null} from this function.
      *
      * @return An equal function, which ensures that its result is not {@code null}.
      * @deprecated Use {@code lift} method for lifting this function.
@@ -403,7 +397,7 @@ public interface ThrowableBiFunction<T, U, R, X extends Throwable> extends Lambd
      * @see #nest()
      */
     @Nonnull
-    default BiFunction2<T, U, R> nest(@Nonnull final Function<? super Throwable, ? extends RuntimeException> mapper) {
+    default BiFunction2<T, U, R> nest(@Nonnull Function<? super Throwable, ? extends RuntimeException> mapper) {
         return recover(throwable -> {
             throw mapper.apply(throwable);
         });
@@ -425,15 +419,15 @@ public interface ThrowableBiFunction<T, U, R, X extends Throwable> extends Lambd
      */
     @Nonnull
     default BiFunction2<T, U, R> recover(
-            @Nonnull final Function<? super Throwable, ? extends BiFunction<? super T, ? super U, ? extends R>> recover) {
+            @Nonnull Function<? super Throwable, ? extends BiFunction<? super T, ? super U, ? extends R>> recover) {
         Objects.requireNonNull(recover);
         return (t, u) -> {
             try {
-                return this.applyThrows(t, u);
+                return applyThrows(t, u);
             } catch (Error e) {
                 throw e;
             } catch (Throwable throwable) {
-                final BiFunction<? super T, ? super U, ? extends R> function = recover.apply(throwable);
+                BiFunction<? super T, ? super U, ? extends R> function = recover.apply(throwable);
                 Objects.requireNonNull(function, () -> "recover returned null for " + throwable.getClass() + ": "
                         + throwable.getMessage());
                 return function.apply(t, u);
@@ -442,12 +436,12 @@ public interface ThrowableBiFunction<T, U, R, X extends Throwable> extends Lambd
     }
 
     /**
-     * Returns a composed {@link BiFunction2} that applies this function to its input and sneakily throws the
-     * thrown {@link Throwable} from it, if it is not of type {@link RuntimeException} or {@link Error}. This means that
-     * each throwable thrown from the returned composed function behaves exactly the same as an <em>unchecked</em>
-     * throwable does. As a result, there is no need to handle the throwable of this function in the returned composed
-     * function by either wrapping it in an <em>unchecked</em> throwable or to declare it in the {@code throws} clause,
-     * as it would be done in a non sneaky throwing function.
+     * Returns a composed {@link BiFunction2} that applies this function to its input and sneakily throws the thrown
+     * {@link Throwable} from it, if it is not of type {@link RuntimeException} or {@link Error}. This means that each
+     * throwable thrown from the returned composed function behaves exactly the same as an <em>unchecked</em> throwable
+     * does. As a result, there is no need to handle the throwable of this function in the returned composed function by
+     * either wrapping it in an <em>unchecked</em> throwable or to declare it in the {@code throws} clause, as it would
+     * be done in a non sneaky throwing function.
      * <p>
      * What sneaky throwing simply does, is to fake out the compiler and thus it bypasses the principle of
      * <em>checked</em> throwables. On the JVM (class file) level, all throwables, checked or not, can be thrown
@@ -511,7 +505,7 @@ public interface ThrowableBiFunction<T, U, R, X extends Throwable> extends Lambd
     default BiFunction2<T, U, R> sneakyThrow() {
         return (t, u) -> {
             try {
-                return this.applyThrows(t, u);
+                return applyThrows(t, u);
             } catch (RuntimeException | Error e) {
                 throw e;
             } catch (Throwable throwable) {

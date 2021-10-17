@@ -13,7 +13,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package org.lambda4j.function.conversion;
+
+import java.util.Map;
+import java.util.Objects;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.function.Function;
+
+import javax.annotation.Nonnegative;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import org.lambda4j.Lambda;
 import org.lambda4j.consumer.ThrowableLongConsumer;
@@ -30,18 +40,10 @@ import org.lambda4j.operator.unary.ThrowableShortUnaryOperator;
 import org.lambda4j.predicate.ThrowableLongPredicate;
 import org.lambda4j.predicate.ThrowableShortPredicate;
 
-import javax.annotation.Nonnegative;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import java.util.Map;
-import java.util.Objects;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.function.Function;
-
 /**
- * Represents an operation that accepts one {@code short}-valued input argument and produces a
- * {@code long}-valued result which is able to throw any {@link Throwable}.
- * This is a primitive specialization of {@link ThrowableFunction}.
+ * Represents an operation that accepts one {@code short}-valued input argument and produces a {@code long}-valued
+ * result which is able to throw any {@link Throwable}. This is a primitive specialization of {@link
+ * ThrowableFunction}.
  * <p>
  * This is a {@link FunctionalInterface} whose functional method is {@link #applyAsLongThrows(short)}.
  *
@@ -68,7 +70,7 @@ public interface ThrowableShortToLongFunction<X extends Throwable> extends Lambd
      * @see <a href="https://docs.oracle.com/javase/tutorial/java/javaOO/methodreferences.html">Method Reference</a>
      */
     static <X extends Throwable> ThrowableShortToLongFunction<X> of(
-            @Nullable final ThrowableShortToLongFunction<X> expression) {
+            @Nullable ThrowableShortToLongFunction<X> expression) {
         return expression;
     }
 
@@ -82,7 +84,7 @@ public interface ThrowableShortToLongFunction<X extends Throwable> extends Lambd
      * @throws NullPointerException If given argument is {@code null}
      * @throws X Any throwable from this functions action
      */
-    static <X extends Throwable> long call(@Nonnull final ThrowableShortToLongFunction<? extends X> function,
+    static <X extends Throwable> long call(@Nonnull ThrowableShortToLongFunction<? extends X> function,
             short value) throws X {
         Objects.requireNonNull(function);
         return function.applyAsLongThrows(value);
@@ -97,7 +99,7 @@ public interface ThrowableShortToLongFunction<X extends Throwable> extends Lambd
      */
     @Nonnull
     static <X extends Throwable> ThrowableShortToLongFunction<X> constant(long ret) {
-        return (value) -> ret;
+        return value -> ret;
     }
 
     /**
@@ -133,9 +135,9 @@ public interface ThrowableShortToLongFunction<X extends Throwable> extends Lambd
      */
     @Nonnull
     default <A> ThrowableToLongFunction<A, X> compose(
-            @Nonnull final ThrowableToShortFunction<? super A, ? extends X> before) {
+            @Nonnull ThrowableToShortFunction<? super A, ? extends X> before) {
         Objects.requireNonNull(before);
-        return (a) -> applyAsLongThrows(before.applyAsShortThrows(a));
+        return a -> applyAsLongThrows(before.applyAsShortThrows(a));
     }
 
     /**
@@ -147,54 +149,52 @@ public interface ThrowableShortToLongFunction<X extends Throwable> extends Lambd
      * @return A composed {@code ThrowableBooleanToLongFunction} that first applies the {@code before} function to its
      * input, and then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * boolean}.
      */
     @Nonnull
     default ThrowableBooleanToLongFunction<X> composeFromBoolean(
-            @Nonnull final ThrowableBooleanToShortFunction<? extends X> before) {
+            @Nonnull ThrowableBooleanToShortFunction<? extends X> before) {
         Objects.requireNonNull(before);
-        return (value) -> applyAsLongThrows(before.applyAsShortThrows(value));
+        return value -> applyAsLongThrows(before.applyAsShortThrows(value));
     }
 
     /**
-     * Returns a composed {@link ThrowableByteToLongFunction} that first applies the {@code before} function to
-     * its input, and then applies this function to the result.
-     * This method is just convenience, to provide the ability to execute an operation which accepts {@code byte} input,
-     * before this primitive function is executed.
+     * Returns a composed {@link ThrowableByteToLongFunction} that first applies the {@code before} function to its
+     * input, and then applies this function to the result. This method is just convenience, to provide the ability to
+     * execute an operation which accepts {@code byte} input, before this primitive function is executed.
      *
      * @param before The function to apply before this function is applied
      * @return A composed {@code ThrowableByteToLongFunction} that first applies the {@code before} function to its
      * input, and then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * byte}.
      */
     @Nonnull
     default ThrowableByteToLongFunction<X> composeFromByte(
-            @Nonnull final ThrowableByteToShortFunction<? extends X> before) {
+            @Nonnull ThrowableByteToShortFunction<? extends X> before) {
         Objects.requireNonNull(before);
-        return (value) -> applyAsLongThrows(before.applyAsShortThrows(value));
+        return value -> applyAsLongThrows(before.applyAsShortThrows(value));
     }
 
     /**
-     * Returns a composed {@link ThrowableCharToLongFunction} that first applies the {@code before} function to
-     * its input, and then applies this function to the result.
-     * This method is just convenience, to provide the ability to execute an operation which accepts {@code char} input,
-     * before this primitive function is executed.
+     * Returns a composed {@link ThrowableCharToLongFunction} that first applies the {@code before} function to its
+     * input, and then applies this function to the result. This method is just convenience, to provide the ability to
+     * execute an operation which accepts {@code char} input, before this primitive function is executed.
      *
      * @param before The function to apply before this function is applied
      * @return A composed {@code ThrowableCharToLongFunction} that first applies the {@code before} function to its
      * input, and then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * char}.
      */
     @Nonnull
     default ThrowableCharToLongFunction<X> composeFromChar(
-            @Nonnull final ThrowableCharToShortFunction<? extends X> before) {
+            @Nonnull ThrowableCharToShortFunction<? extends X> before) {
         Objects.requireNonNull(before);
-        return (value) -> applyAsLongThrows(before.applyAsShortThrows(value));
+        return value -> applyAsLongThrows(before.applyAsShortThrows(value));
     }
 
     /**
@@ -206,14 +206,14 @@ public interface ThrowableShortToLongFunction<X extends Throwable> extends Lambd
      * @return A composed {@code ThrowableDoubleToLongFunction} that first applies the {@code before} function to its
      * input, and then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * double}.
      */
     @Nonnull
     default ThrowableDoubleToLongFunction<X> composeFromDouble(
-            @Nonnull final ThrowableDoubleToShortFunction<? extends X> before) {
+            @Nonnull ThrowableDoubleToShortFunction<? extends X> before) {
         Objects.requireNonNull(before);
-        return (value) -> applyAsLongThrows(before.applyAsShortThrows(value));
+        return value -> applyAsLongThrows(before.applyAsShortThrows(value));
     }
 
     /**
@@ -225,54 +225,52 @@ public interface ThrowableShortToLongFunction<X extends Throwable> extends Lambd
      * @return A composed {@code ThrowableFloatToLongFunction} that first applies the {@code before} function to its
      * input, and then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * float}.
      */
     @Nonnull
     default ThrowableFloatToLongFunction<X> composeFromFloat(
-            @Nonnull final ThrowableFloatToShortFunction<? extends X> before) {
+            @Nonnull ThrowableFloatToShortFunction<? extends X> before) {
         Objects.requireNonNull(before);
-        return (value) -> applyAsLongThrows(before.applyAsShortThrows(value));
+        return value -> applyAsLongThrows(before.applyAsShortThrows(value));
     }
 
     /**
-     * Returns a composed {@link ThrowableIntToLongFunction} that first applies the {@code before} function to
-     * its input, and then applies this function to the result.
-     * This method is just convenience, to provide the ability to execute an operation which accepts {@code int} input,
-     * before this primitive function is executed.
+     * Returns a composed {@link ThrowableIntToLongFunction} that first applies the {@code before} function to its
+     * input, and then applies this function to the result. This method is just convenience, to provide the ability to
+     * execute an operation which accepts {@code int} input, before this primitive function is executed.
      *
      * @param before The function to apply before this function is applied
      * @return A composed {@code ThrowableIntToLongFunction} that first applies the {@code before} function to its
      * input, and then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * int}.
      */
     @Nonnull
     default ThrowableIntToLongFunction<X> composeFromInt(
-            @Nonnull final ThrowableIntToShortFunction<? extends X> before) {
+            @Nonnull ThrowableIntToShortFunction<? extends X> before) {
         Objects.requireNonNull(before);
-        return (value) -> applyAsLongThrows(before.applyAsShortThrows(value));
+        return value -> applyAsLongThrows(before.applyAsShortThrows(value));
     }
 
     /**
-     * Returns a composed {@link ThrowableLongUnaryOperator} that first applies the {@code before} function to
-     * its input, and then applies this function to the result.
-     * This method is just convenience, to provide the ability to execute an operation which accepts {@code long} input,
-     * before this primitive function is executed.
+     * Returns a composed {@link ThrowableLongUnaryOperator} that first applies the {@code before} function to its
+     * input, and then applies this function to the result. This method is just convenience, to provide the ability to
+     * execute an operation which accepts {@code long} input, before this primitive function is executed.
      *
      * @param before The function to apply before this function is applied
      * @return A composed {@code ThrowableLongUnaryOperator} that first applies the {@code before} function to its
      * input, and then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * long}.
      */
     @Nonnull
     default ThrowableLongUnaryOperator<X> composeFromLong(
-            @Nonnull final ThrowableLongToShortFunction<? extends X> before) {
+            @Nonnull ThrowableLongToShortFunction<? extends X> before) {
         Objects.requireNonNull(before);
-        return (value) -> applyAsLongThrows(before.applyAsShortThrows(value));
+        return value -> applyAsLongThrows(before.applyAsShortThrows(value));
     }
 
     /**
@@ -284,14 +282,14 @@ public interface ThrowableShortToLongFunction<X extends Throwable> extends Lambd
      * @return A composed {@code ThrowableShortToLongFunction} that first applies the {@code before} operator to its
      * input, and then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * short}.
      */
     @Nonnull
     default ThrowableShortToLongFunction<X> composeFromShort(
-            @Nonnull final ThrowableShortUnaryOperator<? extends X> before) {
+            @Nonnull ThrowableShortUnaryOperator<? extends X> before) {
         Objects.requireNonNull(before);
-        return (value) -> applyAsLongThrows(before.applyAsShortThrows(value));
+        return value -> applyAsLongThrows(before.applyAsShortThrows(value));
     }
 
     /**
@@ -307,9 +305,9 @@ public interface ThrowableShortToLongFunction<X extends Throwable> extends Lambd
      */
     @Nonnull
     default <S> ThrowableShortFunction<S, X> andThen(
-            @Nonnull final ThrowableLongFunction<? extends S, ? extends X> after) {
+            @Nonnull ThrowableLongFunction<? extends S, ? extends X> after) {
         Objects.requireNonNull(after);
-        return (value) -> after.applyThrows(applyAsLongThrows(value));
+        return value -> after.applyThrows(applyAsLongThrows(value));
     }
 
     /**
@@ -321,13 +319,13 @@ public interface ThrowableShortToLongFunction<X extends Throwable> extends Lambd
      * @return A composed {@code ThrowableShortPredicate} that first applies this function to its input, and then
      * applies the {@code after} predicate to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * boolean}.
      */
     @Nonnull
-    default ThrowableShortPredicate<X> andThenToBoolean(@Nonnull final ThrowableLongPredicate<? extends X> after) {
+    default ThrowableShortPredicate<X> andThenToBoolean(@Nonnull ThrowableLongPredicate<? extends X> after) {
         Objects.requireNonNull(after);
-        return (value) -> after.testThrows(applyAsLongThrows(value));
+        return value -> after.testThrows(applyAsLongThrows(value));
     }
 
     /**
@@ -339,14 +337,14 @@ public interface ThrowableShortToLongFunction<X extends Throwable> extends Lambd
      * @return A composed {@code ThrowableShortToByteFunction} that first applies this function to its input, and then
      * applies the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * byte}.
      */
     @Nonnull
     default ThrowableShortToByteFunction<X> andThenToByte(
-            @Nonnull final ThrowableLongToByteFunction<? extends X> after) {
+            @Nonnull ThrowableLongToByteFunction<? extends X> after) {
         Objects.requireNonNull(after);
-        return (value) -> after.applyAsByteThrows(applyAsLongThrows(value));
+        return value -> after.applyAsByteThrows(applyAsLongThrows(value));
     }
 
     /**
@@ -358,14 +356,14 @@ public interface ThrowableShortToLongFunction<X extends Throwable> extends Lambd
      * @return A composed {@code ThrowableShortToCharFunction} that first applies this function to its input, and then
      * applies the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * char}.
      */
     @Nonnull
     default ThrowableShortToCharFunction<X> andThenToChar(
-            @Nonnull final ThrowableLongToCharFunction<? extends X> after) {
+            @Nonnull ThrowableLongToCharFunction<? extends X> after) {
         Objects.requireNonNull(after);
-        return (value) -> after.applyAsCharThrows(applyAsLongThrows(value));
+        return value -> after.applyAsCharThrows(applyAsLongThrows(value));
     }
 
     /**
@@ -377,14 +375,14 @@ public interface ThrowableShortToLongFunction<X extends Throwable> extends Lambd
      * @return A composed {@code ThrowableShortToDoubleFunction} that first applies this function to its input, and then
      * applies the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * double}.
      */
     @Nonnull
     default ThrowableShortToDoubleFunction<X> andThenToDouble(
-            @Nonnull final ThrowableLongToDoubleFunction<? extends X> after) {
+            @Nonnull ThrowableLongToDoubleFunction<? extends X> after) {
         Objects.requireNonNull(after);
-        return (value) -> after.applyAsDoubleThrows(applyAsLongThrows(value));
+        return value -> after.applyAsDoubleThrows(applyAsLongThrows(value));
     }
 
     /**
@@ -396,14 +394,14 @@ public interface ThrowableShortToLongFunction<X extends Throwable> extends Lambd
      * @return A composed {@code ThrowableShortToFloatFunction} that first applies this function to its input, and then
      * applies the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * float}.
      */
     @Nonnull
     default ThrowableShortToFloatFunction<X> andThenToFloat(
-            @Nonnull final ThrowableLongToFloatFunction<? extends X> after) {
+            @Nonnull ThrowableLongToFloatFunction<? extends X> after) {
         Objects.requireNonNull(after);
-        return (value) -> after.applyAsFloatThrows(applyAsLongThrows(value));
+        return value -> after.applyAsFloatThrows(applyAsLongThrows(value));
     }
 
     /**
@@ -415,13 +413,13 @@ public interface ThrowableShortToLongFunction<X extends Throwable> extends Lambd
      * @return A composed {@code ThrowableShortToIntFunction} that first applies this function to its input, and then
      * applies the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * int}.
      */
     @Nonnull
-    default ThrowableShortToIntFunction<X> andThenToInt(@Nonnull final ThrowableLongToIntFunction<? extends X> after) {
+    default ThrowableShortToIntFunction<X> andThenToInt(@Nonnull ThrowableLongToIntFunction<? extends X> after) {
         Objects.requireNonNull(after);
-        return (value) -> after.applyAsIntThrows(applyAsLongThrows(value));
+        return value -> after.applyAsIntThrows(applyAsLongThrows(value));
     }
 
     /**
@@ -433,14 +431,14 @@ public interface ThrowableShortToLongFunction<X extends Throwable> extends Lambd
      * @return A composed {@code ThrowableShortToLongFunction} that first applies this function to its input, and then
      * applies the {@code after} operator to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * long}.
      */
     @Nonnull
     default ThrowableShortToLongFunction<X> andThenToLong(
-            @Nonnull final ThrowableLongUnaryOperator<? extends X> after) {
+            @Nonnull ThrowableLongUnaryOperator<? extends X> after) {
         Objects.requireNonNull(after);
-        return (value) -> after.applyAsLongThrows(applyAsLongThrows(value));
+        return value -> after.applyAsLongThrows(applyAsLongThrows(value));
     }
 
     /**
@@ -452,14 +450,14 @@ public interface ThrowableShortToLongFunction<X extends Throwable> extends Lambd
      * @return A composed {@code ThrowableShortUnaryOperator} that first applies this function to its input, and then
      * applies the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * short}.
      */
     @Nonnull
     default ThrowableShortUnaryOperator<X> andThenToShort(
-            @Nonnull final ThrowableLongToShortFunction<? extends X> after) {
+            @Nonnull ThrowableLongToShortFunction<? extends X> after) {
         Objects.requireNonNull(after);
-        return (value) -> after.applyAsShortThrows(applyAsLongThrows(value));
+        return value -> after.applyAsShortThrows(applyAsLongThrows(value));
     }
 
     /**
@@ -472,9 +470,9 @@ public interface ThrowableShortToLongFunction<X extends Throwable> extends Lambd
      * @throws NullPointerException If given argument is {@code null}
      */
     @Nonnull
-    default ThrowableShortConsumer<X> consume(@Nonnull final ThrowableLongConsumer<? extends X> consumer) {
+    default ThrowableShortConsumer<X> consume(@Nonnull ThrowableLongConsumer<? extends X> consumer) {
         Objects.requireNonNull(consumer);
-        return (value) -> consumer.acceptThrows(applyAsLongThrows(value));
+        return value -> consumer.acceptThrows(applyAsLongThrows(value));
     }
 
     /**
@@ -496,10 +494,10 @@ public interface ThrowableShortToLongFunction<X extends Throwable> extends Lambd
         if (isMemoized()) {
             return this;
         } else {
-            final Map<Short, Long> cache = new ConcurrentHashMap<>();
-            final Object lock = new Object();
-            return (ThrowableShortToLongFunction<X> & Memoized) (value) -> {
-                final long returnValue;
+            Map<Short, Long> cache = new ConcurrentHashMap<>();
+            Object lock = new Object();
+            return (ThrowableShortToLongFunction<X> & Memoized) value -> {
+                long returnValue;
                 synchronized (lock) {
                     returnValue = cache.computeIfAbsent(value, ThrowableFunction.of(this::applyAsLongThrows));
                 }
@@ -550,7 +548,7 @@ public interface ThrowableShortToLongFunction<X extends Throwable> extends Lambd
      * @see #nest()
      */
     @Nonnull
-    default ShortToLongFunction nest(@Nonnull final Function<? super Throwable, ? extends RuntimeException> mapper) {
+    default ShortToLongFunction nest(@Nonnull Function<? super Throwable, ? extends RuntimeException> mapper) {
         return recover(throwable -> {
             throw mapper.apply(throwable);
         });
@@ -573,15 +571,15 @@ public interface ThrowableShortToLongFunction<X extends Throwable> extends Lambd
      */
     @Nonnull
     default ShortToLongFunction recover(
-            @Nonnull final Function<? super Throwable, ? extends ShortToLongFunction> recover) {
+            @Nonnull Function<? super Throwable, ? extends ShortToLongFunction> recover) {
         Objects.requireNonNull(recover);
-        return (value) -> {
+        return value -> {
             try {
-                return this.applyAsLongThrows(value);
+                return applyAsLongThrows(value);
             } catch (Error e) {
                 throw e;
             } catch (Throwable throwable) {
-                final ShortToLongFunction function = recover.apply(throwable);
+                ShortToLongFunction function = recover.apply(throwable);
                 Objects.requireNonNull(function, () -> "recover returned null for " + throwable.getClass() + ": "
                         + throwable.getMessage());
                 return function.applyAsLong(value);
@@ -657,9 +655,9 @@ public interface ThrowableShortToLongFunction<X extends Throwable> extends Lambd
      */
     @Nonnull
     default ShortToLongFunction sneakyThrow() {
-        return (value) -> {
+        return value -> {
             try {
-                return this.applyAsLongThrows(value);
+                return applyAsLongThrows(value);
             } catch (RuntimeException | Error e) {
                 throw e;
             } catch (Throwable throwable) {

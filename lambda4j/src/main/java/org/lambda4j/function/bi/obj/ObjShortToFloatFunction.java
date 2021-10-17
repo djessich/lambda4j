@@ -13,7 +13,22 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package org.lambda4j.function.bi.obj;
+
+import java.util.Map;
+import java.util.Objects;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.function.DoubleFunction;
+import java.util.function.Function;
+import java.util.function.IntFunction;
+import java.util.function.LongFunction;
+
+import javax.annotation.Nonnegative;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
+import org.apache.commons.lang3.tuple.Pair;
 
 import org.lambda4j.Lambda;
 import org.lambda4j.consumer.FloatConsumer;
@@ -53,23 +68,9 @@ import org.lambda4j.operator.unary.ShortUnaryOperator;
 import org.lambda4j.predicate.FloatPredicate;
 import org.lambda4j.predicate.bi.obj.ObjShortPredicate;
 
-import org.apache.commons.lang3.tuple.Pair;
-
-import javax.annotation.Nonnegative;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import java.util.Map;
-import java.util.Objects;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.function.DoubleFunction;
-import java.util.function.Function;
-import java.util.function.IntFunction;
-import java.util.function.LongFunction;
-
 /**
  * Represents an operation that accepts one object-valued and one {@code short}-valued input argument and produces a
- * {@code float}-valued result.
- * This is a (reference, short) specialization of {@link BiFunction2}.
+ * {@code float}-valued result. This is a (reference, short) specialization of {@link BiFunction2}.
  * <p>
  * This is a {@link FunctionalInterface} whose functional method is {@link #applyAsFloat(Object, short)}.
  *
@@ -95,7 +96,7 @@ public interface ObjShortToFloatFunction<T> extends Lambda {
      * Expression</a>
      * @see <a href="https://docs.oracle.com/javase/tutorial/java/javaOO/methodreferences.html">Method Reference</a>
      */
-    static <T> ObjShortToFloatFunction<T> of(@Nullable final ObjShortToFloatFunction<T> expression) {
+    static <T> ObjShortToFloatFunction<T> of(@Nullable ObjShortToFloatFunction<T> expression) {
         return expression;
     }
 
@@ -109,7 +110,7 @@ public interface ObjShortToFloatFunction<T> extends Lambda {
      * @return The result from the given {@code ObjShortToFloatFunction}.
      * @throws NullPointerException If given argument is {@code null}
      */
-    static <T> float call(@Nonnull final ObjShortToFloatFunction<? super T> function, T t, short value) {
+    static <T> float call(@Nonnull ObjShortToFloatFunction<? super T> function, T t, short value) {
         Objects.requireNonNull(function);
         return function.applyAsFloat(t, value);
     }
@@ -125,7 +126,7 @@ public interface ObjShortToFloatFunction<T> extends Lambda {
      * @throws NullPointerException If given argument is {@code null}
      */
     @Nonnull
-    static <T> ObjShortToFloatFunction<T> onlyFirst(@Nonnull final ToFloatFunction<? super T> function) {
+    static <T> ObjShortToFloatFunction<T> onlyFirst(@Nonnull ToFloatFunction<? super T> function) {
         Objects.requireNonNull(function);
         return (t, value) -> function.applyAsFloat(t);
     }
@@ -141,7 +142,7 @@ public interface ObjShortToFloatFunction<T> extends Lambda {
      * @throws NullPointerException If given argument is {@code null}
      */
     @Nonnull
-    static <T> ObjShortToFloatFunction<T> onlySecond(@Nonnull final ShortToFloatFunction function) {
+    static <T> ObjShortToFloatFunction<T> onlySecond(@Nonnull ShortToFloatFunction function) {
         Objects.requireNonNull(function);
         return (t, value) -> function.applyAsFloat(value);
     }
@@ -176,7 +177,7 @@ public interface ObjShortToFloatFunction<T> extends Lambda {
      */
     @Nonnull
     default ShortToFloatFunction papplyAsFloat(T t) {
-        return (value) -> this.applyAsFloat(t, value);
+        return value -> applyAsFloat(t, value);
     }
 
     /**
@@ -187,7 +188,7 @@ public interface ObjShortToFloatFunction<T> extends Lambda {
      */
     @Nonnull
     default ToFloatFunction<T> papplyAsFloat(short value) {
-        return (t) -> this.applyAsFloat(t, value);
+        return t -> applyAsFloat(t, value);
     }
 
     /**
@@ -203,8 +204,8 @@ public interface ObjShortToFloatFunction<T> extends Lambda {
 
     /**
      * Returns a composed {@link ToFloatBiFunction} that first applies the {@code before} functions to its input, and
-     * then applies this function to the result.
-     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
+     * then applies this function to the result. If evaluation of either operation throws an exception, it is relayed to
+     * the caller of the composed operation.
      *
      * @param <A> The type of the argument to the first given function, and of composed function
      * @param <B> The type of the argument to the second given function, and of composed function
@@ -216,8 +217,8 @@ public interface ObjShortToFloatFunction<T> extends Lambda {
      * @implSpec The input argument of this method is able to handle every type.
      */
     @Nonnull
-    default <A, B> ToFloatBiFunction<A, B> compose(@Nonnull final Function<? super A, ? extends T> before1,
-            @Nonnull final ToShortFunction<? super B> before2) {
+    default <A, B> ToFloatBiFunction<A, B> compose(@Nonnull Function<? super A, ? extends T> before1,
+            @Nonnull ToShortFunction<? super B> before2) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         return (a, b) -> applyAsFloat(before1.apply(a), before2.applyAsShort(b));
@@ -234,58 +235,56 @@ public interface ObjShortToFloatFunction<T> extends Lambda {
      * @return A composed {@code BiBooleanToFloatFunction} that first applies the {@code before} functions to its input,
      * and then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * boolean}.
      */
     @Nonnull
-    default BiBooleanToFloatFunction composeFromBoolean(@Nonnull final BooleanFunction<? extends T> before1,
-            @Nonnull final BooleanToShortFunction before2) {
+    default BiBooleanToFloatFunction composeFromBoolean(@Nonnull BooleanFunction<? extends T> before1,
+            @Nonnull BooleanToShortFunction before2) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         return (value1, value2) -> applyAsFloat(before1.apply(value1), before2.applyAsShort(value2));
     }
 
     /**
-     * Returns a composed {@link BiByteToFloatFunction} that first applies the {@code before} functions to
-     * its input, and then applies this function to the result.
-     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
-     * This method is just convenience, to provide the ability to execute an operation which accepts {@code byte} input,
-     * before this primitive function is executed.
+     * Returns a composed {@link BiByteToFloatFunction} that first applies the {@code before} functions to its input,
+     * and then applies this function to the result. If evaluation of either operation throws an exception, it is
+     * relayed to the caller of the composed operation. This method is just convenience, to provide the ability to
+     * execute an operation which accepts {@code byte} input, before this primitive function is executed.
      *
      * @param before1 The first function to apply before this function is applied
      * @param before2 The second function to apply before this function is applied
      * @return A composed {@code BiByteToFloatFunction} that first applies the {@code before} functions to its input,
      * and then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * byte}.
      */
     @Nonnull
-    default BiByteToFloatFunction composeFromByte(@Nonnull final ByteFunction<? extends T> before1,
-            @Nonnull final ByteToShortFunction before2) {
+    default BiByteToFloatFunction composeFromByte(@Nonnull ByteFunction<? extends T> before1,
+            @Nonnull ByteToShortFunction before2) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         return (value1, value2) -> applyAsFloat(before1.apply(value1), before2.applyAsShort(value2));
     }
 
     /**
-     * Returns a composed {@link BiCharToFloatFunction} that first applies the {@code before} functions to
-     * its input, and then applies this function to the result.
-     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
-     * This method is just convenience, to provide the ability to execute an operation which accepts {@code char} input,
-     * before this primitive function is executed.
+     * Returns a composed {@link BiCharToFloatFunction} that first applies the {@code before} functions to its input,
+     * and then applies this function to the result. If evaluation of either operation throws an exception, it is
+     * relayed to the caller of the composed operation. This method is just convenience, to provide the ability to
+     * execute an operation which accepts {@code char} input, before this primitive function is executed.
      *
      * @param before1 The first function to apply before this function is applied
      * @param before2 The second function to apply before this function is applied
      * @return A composed {@code BiCharToFloatFunction} that first applies the {@code before} functions to its input,
      * and then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * char}.
      */
     @Nonnull
-    default BiCharToFloatFunction composeFromChar(@Nonnull final CharFunction<? extends T> before1,
-            @Nonnull final CharToShortFunction before2) {
+    default BiCharToFloatFunction composeFromChar(@Nonnull CharFunction<? extends T> before1,
+            @Nonnull CharToShortFunction before2) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         return (value1, value2) -> applyAsFloat(before1.apply(value1), before2.applyAsShort(value2));
@@ -302,12 +301,12 @@ public interface ObjShortToFloatFunction<T> extends Lambda {
      * @return A composed {@code BiDoubleToFloatFunction} that first applies the {@code before} functions to its input,
      * and then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * double}.
      */
     @Nonnull
-    default BiDoubleToFloatFunction composeFromDouble(@Nonnull final DoubleFunction<? extends T> before1,
-            @Nonnull final DoubleToShortFunction before2) {
+    default BiDoubleToFloatFunction composeFromDouble(@Nonnull DoubleFunction<? extends T> before1,
+            @Nonnull DoubleToShortFunction before2) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         return (value1, value2) -> applyAsFloat(before1.apply(value1), before2.applyAsShort(value2));
@@ -324,58 +323,56 @@ public interface ObjShortToFloatFunction<T> extends Lambda {
      * @return A composed {@code FloatBinaryOperator} that first applies the {@code before} functions to its input, and
      * then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * float}.
      */
     @Nonnull
-    default FloatBinaryOperator composeFromFloat(@Nonnull final FloatFunction<? extends T> before1,
-            @Nonnull final FloatToShortFunction before2) {
+    default FloatBinaryOperator composeFromFloat(@Nonnull FloatFunction<? extends T> before1,
+            @Nonnull FloatToShortFunction before2) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         return (value1, value2) -> applyAsFloat(before1.apply(value1), before2.applyAsShort(value2));
     }
 
     /**
-     * Returns a composed {@link BiIntToFloatFunction} that first applies the {@code before} functions to
-     * its input, and then applies this function to the result.
-     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
-     * This method is just convenience, to provide the ability to execute an operation which accepts {@code int} input,
-     * before this primitive function is executed.
+     * Returns a composed {@link BiIntToFloatFunction} that first applies the {@code before} functions to its input, and
+     * then applies this function to the result. If evaluation of either operation throws an exception, it is relayed to
+     * the caller of the composed operation. This method is just convenience, to provide the ability to execute an
+     * operation which accepts {@code int} input, before this primitive function is executed.
      *
      * @param before1 The first function to apply before this function is applied
      * @param before2 The second function to apply before this function is applied
      * @return A composed {@code BiIntToFloatFunction} that first applies the {@code before} functions to its input, and
      * then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * int}.
      */
     @Nonnull
-    default BiIntToFloatFunction composeFromInt(@Nonnull final IntFunction<? extends T> before1,
-            @Nonnull final IntToShortFunction before2) {
+    default BiIntToFloatFunction composeFromInt(@Nonnull IntFunction<? extends T> before1,
+            @Nonnull IntToShortFunction before2) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         return (value1, value2) -> applyAsFloat(before1.apply(value1), before2.applyAsShort(value2));
     }
 
     /**
-     * Returns a composed {@link BiLongToFloatFunction} that first applies the {@code before} functions to
-     * its input, and then applies this function to the result.
-     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
-     * This method is just convenience, to provide the ability to execute an operation which accepts {@code long} input,
-     * before this primitive function is executed.
+     * Returns a composed {@link BiLongToFloatFunction} that first applies the {@code before} functions to its input,
+     * and then applies this function to the result. If evaluation of either operation throws an exception, it is
+     * relayed to the caller of the composed operation. This method is just convenience, to provide the ability to
+     * execute an operation which accepts {@code long} input, before this primitive function is executed.
      *
      * @param before1 The first function to apply before this function is applied
      * @param before2 The second function to apply before this function is applied
      * @return A composed {@code BiLongToFloatFunction} that first applies the {@code before} functions to its input,
      * and then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * long}.
      */
     @Nonnull
-    default BiLongToFloatFunction composeFromLong(@Nonnull final LongFunction<? extends T> before1,
-            @Nonnull final LongToShortFunction before2) {
+    default BiLongToFloatFunction composeFromLong(@Nonnull LongFunction<? extends T> before1,
+            @Nonnull LongToShortFunction before2) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         return (value1, value2) -> applyAsFloat(before1.apply(value1), before2.applyAsShort(value2));
@@ -392,12 +389,12 @@ public interface ObjShortToFloatFunction<T> extends Lambda {
      * @return A composed {@code BiShortToFloatFunction} that first applies the {@code before} functions to its input,
      * and then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * short}.
      */
     @Nonnull
-    default BiShortToFloatFunction composeFromShort(@Nonnull final ShortFunction<? extends T> before1,
-            @Nonnull final ShortUnaryOperator before2) {
+    default BiShortToFloatFunction composeFromShort(@Nonnull ShortFunction<? extends T> before1,
+            @Nonnull ShortUnaryOperator before2) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         return (value1, value2) -> applyAsFloat(before1.apply(value1), before2.applyAsShort(value2));
@@ -405,8 +402,8 @@ public interface ObjShortToFloatFunction<T> extends Lambda {
 
     /**
      * Returns a composed {@link ObjShortFunction} that first applies this function to its input, and then applies the
-     * {@code after} function to the result.
-     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
+     * {@code after} function to the result. If evaluation of either operation throws an exception, it is relayed to the
+     * caller of the composed operation.
      *
      * @param <S> The type of return value from the {@code after} function, and of the composed function
      * @param after The function to apply after this function is applied
@@ -416,7 +413,7 @@ public interface ObjShortToFloatFunction<T> extends Lambda {
      * @implSpec The input argument of this method is able to return every type.
      */
     @Nonnull
-    default <S> ObjShortFunction<T, S> andThen(@Nonnull final FloatFunction<? extends S> after) {
+    default <S> ObjShortFunction<T, S> andThen(@Nonnull FloatFunction<? extends S> after) {
         Objects.requireNonNull(after);
         return (t, value) -> after.apply(applyAsFloat(t, value));
     }
@@ -431,11 +428,11 @@ public interface ObjShortToFloatFunction<T> extends Lambda {
      * @return A composed {@code ObjShortPredicate} that first applies this function to its input, and then applies the
      * {@code after} predicate to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * boolean}.
      */
     @Nonnull
-    default ObjShortPredicate<T> andThenToBoolean(@Nonnull final FloatPredicate after) {
+    default ObjShortPredicate<T> andThenToBoolean(@Nonnull FloatPredicate after) {
         Objects.requireNonNull(after);
         return (t, value) -> after.test(applyAsFloat(t, value));
     }
@@ -450,11 +447,11 @@ public interface ObjShortToFloatFunction<T> extends Lambda {
      * @return A composed {@code ObjShortToByteFunction} that first applies this function to its input, and then applies
      * the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * byte}.
      */
     @Nonnull
-    default ObjShortToByteFunction<T> andThenToByte(@Nonnull final FloatToByteFunction after) {
+    default ObjShortToByteFunction<T> andThenToByte(@Nonnull FloatToByteFunction after) {
         Objects.requireNonNull(after);
         return (t, value) -> after.applyAsByte(applyAsFloat(t, value));
     }
@@ -469,11 +466,11 @@ public interface ObjShortToFloatFunction<T> extends Lambda {
      * @return A composed {@code ObjShortToCharFunction} that first applies this function to its input, and then applies
      * the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * char}.
      */
     @Nonnull
-    default ObjShortToCharFunction<T> andThenToChar(@Nonnull final FloatToCharFunction after) {
+    default ObjShortToCharFunction<T> andThenToChar(@Nonnull FloatToCharFunction after) {
         Objects.requireNonNull(after);
         return (t, value) -> after.applyAsChar(applyAsFloat(t, value));
     }
@@ -488,11 +485,11 @@ public interface ObjShortToFloatFunction<T> extends Lambda {
      * @return A composed {@code ObjShortToDoubleFunction} that first applies this function to its input, and then
      * applies the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * double}.
      */
     @Nonnull
-    default ObjShortToDoubleFunction<T> andThenToDouble(@Nonnull final FloatToDoubleFunction after) {
+    default ObjShortToDoubleFunction<T> andThenToDouble(@Nonnull FloatToDoubleFunction after) {
         Objects.requireNonNull(after);
         return (t, value) -> after.applyAsDouble(applyAsFloat(t, value));
     }
@@ -507,11 +504,11 @@ public interface ObjShortToFloatFunction<T> extends Lambda {
      * @return A composed {@code ObjShortToFloatFunction} that first applies this function to its input, and then
      * applies the {@code after} operator to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * float}.
      */
     @Nonnull
-    default ObjShortToFloatFunction<T> andThenToFloat(@Nonnull final FloatUnaryOperator after) {
+    default ObjShortToFloatFunction<T> andThenToFloat(@Nonnull FloatUnaryOperator after) {
         Objects.requireNonNull(after);
         return (t, value) -> after.applyAsFloat(applyAsFloat(t, value));
     }
@@ -526,11 +523,11 @@ public interface ObjShortToFloatFunction<T> extends Lambda {
      * @return A composed {@code ObjShortToIntFunction} that first applies this function to its input, and then applies
      * the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * int}.
      */
     @Nonnull
-    default ObjShortToIntFunction<T> andThenToInt(@Nonnull final FloatToIntFunction after) {
+    default ObjShortToIntFunction<T> andThenToInt(@Nonnull FloatToIntFunction after) {
         Objects.requireNonNull(after);
         return (t, value) -> after.applyAsInt(applyAsFloat(t, value));
     }
@@ -545,11 +542,11 @@ public interface ObjShortToFloatFunction<T> extends Lambda {
      * @return A composed {@code ObjShortToLongFunction} that first applies this function to its input, and then applies
      * the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * long}.
      */
     @Nonnull
-    default ObjShortToLongFunction<T> andThenToLong(@Nonnull final FloatToLongFunction after) {
+    default ObjShortToLongFunction<T> andThenToLong(@Nonnull FloatToLongFunction after) {
         Objects.requireNonNull(after);
         return (t, value) -> after.applyAsLong(applyAsFloat(t, value));
     }
@@ -564,11 +561,11 @@ public interface ObjShortToFloatFunction<T> extends Lambda {
      * @return A composed {@code ObjShortToShortFunction} that first applies this function to its input, and then
      * applies the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * short}.
      */
     @Nonnull
-    default ObjShortToShortFunction<T> andThenToShort(@Nonnull final FloatToShortFunction after) {
+    default ObjShortToShortFunction<T> andThenToShort(@Nonnull FloatToShortFunction after) {
         Objects.requireNonNull(after);
         return (t, value) -> after.applyAsShort(applyAsFloat(t, value));
     }
@@ -584,7 +581,7 @@ public interface ObjShortToFloatFunction<T> extends Lambda {
      * @throws NullPointerException If given argument is {@code null}
      */
     @Nonnull
-    default ObjShortConsumer<T> consume(@Nonnull final FloatConsumer consumer) {
+    default ObjShortConsumer<T> consume(@Nonnull FloatConsumer consumer) {
         Objects.requireNonNull(consumer);
         return (t, value) -> consumer.accept(applyAsFloat(t, value));
     }
@@ -608,13 +605,13 @@ public interface ObjShortToFloatFunction<T> extends Lambda {
         if (isMemoized()) {
             return this;
         } else {
-            final Map<Pair<T, Short>, Float> cache = new ConcurrentHashMap<>();
-            final Object lock = new Object();
+            Map<Pair<T, Short>, Float> cache = new ConcurrentHashMap<>();
+            Object lock = new Object();
             return (ObjShortToFloatFunction<T> & Memoized) (t, value) -> {
-                final float returnValue;
+                float returnValue;
                 synchronized (lock) {
                     returnValue = cache.computeIfAbsent(Pair.of(t, value),
-                                                        key -> applyAsFloat(key.getLeft(), key.getRight()));
+                            key -> applyAsFloat(key.getLeft(), key.getRight()));
                 }
                 return returnValue;
             };

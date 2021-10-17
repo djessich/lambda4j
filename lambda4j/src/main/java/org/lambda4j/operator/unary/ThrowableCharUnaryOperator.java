@@ -13,7 +13,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package org.lambda4j.operator.unary;
+
+import java.util.Map;
+import java.util.Objects;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.function.Function;
+
+import javax.annotation.Nonnegative;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import org.lambda4j.Lambda;
 import org.lambda4j.consumer.ThrowableCharConsumer;
@@ -37,18 +47,9 @@ import org.lambda4j.function.conversion.ThrowableShortToCharFunction;
 import org.lambda4j.function.to.ThrowableToCharFunction;
 import org.lambda4j.predicate.ThrowableCharPredicate;
 
-import javax.annotation.Nonnegative;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import java.util.Map;
-import java.util.Objects;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.function.Function;
-
 /**
- * Represents an operation that accepts one {@code char}-valued input argument and produces a
- * {@code char}-valued result which is able to throw any {@link Throwable}.
- * This is a primitive specialization of {@link ThrowableUnaryOperator}.
+ * Represents an operation that accepts one {@code char}-valued input argument and produces a {@code char}-valued result
+ * which is able to throw any {@link Throwable}. This is a primitive specialization of {@link ThrowableUnaryOperator}.
  * <p>
  * This is a {@link FunctionalInterface} whose functional method is {@link #applyAsCharThrows(char)}.
  *
@@ -75,7 +76,7 @@ public interface ThrowableCharUnaryOperator<X extends Throwable> extends Lambda 
      * @see <a href="https://docs.oracle.com/javase/tutorial/java/javaOO/methodreferences.html">Method Reference</a>
      */
     static <X extends Throwable> ThrowableCharUnaryOperator<X> of(
-            @Nullable final ThrowableCharUnaryOperator<X> expression) {
+            @Nullable ThrowableCharUnaryOperator<X> expression) {
         return expression;
     }
 
@@ -89,7 +90,7 @@ public interface ThrowableCharUnaryOperator<X extends Throwable> extends Lambda 
      * @throws NullPointerException If given argument is {@code null}
      * @throws X Any throwable from this operators action
      */
-    static <X extends Throwable> char call(@Nonnull final ThrowableCharUnaryOperator<? extends X> operator,
+    static <X extends Throwable> char call(@Nonnull ThrowableCharUnaryOperator<? extends X> operator,
             char value) throws X {
         Objects.requireNonNull(operator);
         return operator.applyAsCharThrows(value);
@@ -99,11 +100,11 @@ public interface ThrowableCharUnaryOperator<X extends Throwable> extends Lambda 
      * Returns a {@link ThrowableCharUnaryOperator} that always returns its input argument.
      *
      * @param <X> The type of the throwable to be thrown by this operator
-     * @return A {@code  ThrowableCharUnaryOperator} that always returns its input argument
+     * @return A {@code ThrowableCharUnaryOperator} that always returns its input argument
      */
     @Nonnull
     static <X extends Throwable> ThrowableCharUnaryOperator<X> identity() {
-        return (value) -> value;
+        return value -> value;
     }
 
     /**
@@ -115,7 +116,7 @@ public interface ThrowableCharUnaryOperator<X extends Throwable> extends Lambda 
      */
     @Nonnull
     static <X extends Throwable> ThrowableCharUnaryOperator<X> constant(char ret) {
-        return (value) -> ret;
+        return value -> ret;
     }
 
     /**
@@ -151,9 +152,9 @@ public interface ThrowableCharUnaryOperator<X extends Throwable> extends Lambda 
      */
     @Nonnull
     default <A> ThrowableToCharFunction<A, X> compose(
-            @Nonnull final ThrowableToCharFunction<? super A, ? extends X> before) {
+            @Nonnull ThrowableToCharFunction<? super A, ? extends X> before) {
         Objects.requireNonNull(before);
-        return (a) -> applyAsCharThrows(before.applyAsCharThrows(a));
+        return a -> applyAsCharThrows(before.applyAsCharThrows(a));
     }
 
     /**
@@ -165,54 +166,52 @@ public interface ThrowableCharUnaryOperator<X extends Throwable> extends Lambda 
      * @return A composed {@code ThrowableBooleanToCharFunction} that first applies the {@code before} function to its
      * input, and then applies this operator to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * boolean}.
      */
     @Nonnull
     default ThrowableBooleanToCharFunction<X> composeFromBoolean(
-            @Nonnull final ThrowableBooleanToCharFunction<? extends X> before) {
+            @Nonnull ThrowableBooleanToCharFunction<? extends X> before) {
         Objects.requireNonNull(before);
-        return (value) -> applyAsCharThrows(before.applyAsCharThrows(value));
+        return value -> applyAsCharThrows(before.applyAsCharThrows(value));
     }
 
     /**
-     * Returns a composed {@link ThrowableByteToCharFunction} that first applies the {@code before} function to
-     * its input, and then applies this operator to the result.
-     * This method is just convenience, to provide the ability to execute an operation which accepts {@code byte} input,
-     * before this primitive operator is executed.
+     * Returns a composed {@link ThrowableByteToCharFunction} that first applies the {@code before} function to its
+     * input, and then applies this operator to the result. This method is just convenience, to provide the ability to
+     * execute an operation which accepts {@code byte} input, before this primitive operator is executed.
      *
      * @param before The function to apply before this operator is applied
      * @return A composed {@code ThrowableByteToCharFunction} that first applies the {@code before} function to its
      * input, and then applies this operator to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * byte}.
      */
     @Nonnull
     default ThrowableByteToCharFunction<X> composeFromByte(
-            @Nonnull final ThrowableByteToCharFunction<? extends X> before) {
+            @Nonnull ThrowableByteToCharFunction<? extends X> before) {
         Objects.requireNonNull(before);
-        return (value) -> applyAsCharThrows(before.applyAsCharThrows(value));
+        return value -> applyAsCharThrows(before.applyAsCharThrows(value));
     }
 
     /**
-     * Returns a composed {@link ThrowableCharUnaryOperator} that first applies the {@code before} operator to
-     * its input, and then applies this operator to the result.
-     * This method is just convenience, to provide the ability to execute an operation which accepts {@code char} input,
-     * before this primitive operator is executed.
+     * Returns a composed {@link ThrowableCharUnaryOperator} that first applies the {@code before} operator to its
+     * input, and then applies this operator to the result. This method is just convenience, to provide the ability to
+     * execute an operation which accepts {@code char} input, before this primitive operator is executed.
      *
      * @param before The operator to apply before this operator is applied
      * @return A composed {@code ThrowableCharUnaryOperator} that first applies the {@code before} operator to its
      * input, and then applies this operator to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * char}.
      */
     @Nonnull
     default ThrowableCharUnaryOperator<X> composeFromChar(
-            @Nonnull final ThrowableCharUnaryOperator<? extends X> before) {
+            @Nonnull ThrowableCharUnaryOperator<? extends X> before) {
         Objects.requireNonNull(before);
-        return (value) -> applyAsCharThrows(before.applyAsCharThrows(value));
+        return value -> applyAsCharThrows(before.applyAsCharThrows(value));
     }
 
     /**
@@ -224,14 +223,14 @@ public interface ThrowableCharUnaryOperator<X extends Throwable> extends Lambda 
      * @return A composed {@code ThrowableDoubleToCharFunction} that first applies the {@code before} function to its
      * input, and then applies this operator to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * double}.
      */
     @Nonnull
     default ThrowableDoubleToCharFunction<X> composeFromDouble(
-            @Nonnull final ThrowableDoubleToCharFunction<? extends X> before) {
+            @Nonnull ThrowableDoubleToCharFunction<? extends X> before) {
         Objects.requireNonNull(before);
-        return (value) -> applyAsCharThrows(before.applyAsCharThrows(value));
+        return value -> applyAsCharThrows(before.applyAsCharThrows(value));
     }
 
     /**
@@ -243,54 +242,52 @@ public interface ThrowableCharUnaryOperator<X extends Throwable> extends Lambda 
      * @return A composed {@code ThrowableFloatToCharFunction} that first applies the {@code before} function to its
      * input, and then applies this operator to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * float}.
      */
     @Nonnull
     default ThrowableFloatToCharFunction<X> composeFromFloat(
-            @Nonnull final ThrowableFloatToCharFunction<? extends X> before) {
+            @Nonnull ThrowableFloatToCharFunction<? extends X> before) {
         Objects.requireNonNull(before);
-        return (value) -> applyAsCharThrows(before.applyAsCharThrows(value));
+        return value -> applyAsCharThrows(before.applyAsCharThrows(value));
     }
 
     /**
-     * Returns a composed {@link ThrowableIntToCharFunction} that first applies the {@code before} function to
-     * its input, and then applies this operator to the result.
-     * This method is just convenience, to provide the ability to execute an operation which accepts {@code int} input,
-     * before this primitive operator is executed.
+     * Returns a composed {@link ThrowableIntToCharFunction} that first applies the {@code before} function to its
+     * input, and then applies this operator to the result. This method is just convenience, to provide the ability to
+     * execute an operation which accepts {@code int} input, before this primitive operator is executed.
      *
      * @param before The function to apply before this operator is applied
      * @return A composed {@code ThrowableIntToCharFunction} that first applies the {@code before} function to its
      * input, and then applies this operator to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * int}.
      */
     @Nonnull
     default ThrowableIntToCharFunction<X> composeFromInt(
-            @Nonnull final ThrowableIntToCharFunction<? extends X> before) {
+            @Nonnull ThrowableIntToCharFunction<? extends X> before) {
         Objects.requireNonNull(before);
-        return (value) -> applyAsCharThrows(before.applyAsCharThrows(value));
+        return value -> applyAsCharThrows(before.applyAsCharThrows(value));
     }
 
     /**
-     * Returns a composed {@link ThrowableLongToCharFunction} that first applies the {@code before} function to
-     * its input, and then applies this operator to the result.
-     * This method is just convenience, to provide the ability to execute an operation which accepts {@code long} input,
-     * before this primitive operator is executed.
+     * Returns a composed {@link ThrowableLongToCharFunction} that first applies the {@code before} function to its
+     * input, and then applies this operator to the result. This method is just convenience, to provide the ability to
+     * execute an operation which accepts {@code long} input, before this primitive operator is executed.
      *
      * @param before The function to apply before this operator is applied
      * @return A composed {@code ThrowableLongToCharFunction} that first applies the {@code before} function to its
      * input, and then applies this operator to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * long}.
      */
     @Nonnull
     default ThrowableLongToCharFunction<X> composeFromLong(
-            @Nonnull final ThrowableLongToCharFunction<? extends X> before) {
+            @Nonnull ThrowableLongToCharFunction<? extends X> before) {
         Objects.requireNonNull(before);
-        return (value) -> applyAsCharThrows(before.applyAsCharThrows(value));
+        return value -> applyAsCharThrows(before.applyAsCharThrows(value));
     }
 
     /**
@@ -302,14 +299,14 @@ public interface ThrowableCharUnaryOperator<X extends Throwable> extends Lambda 
      * @return A composed {@code ThrowableShortToCharFunction} that first applies the {@code before} function to its
      * input, and then applies this operator to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * short}.
      */
     @Nonnull
     default ThrowableShortToCharFunction<X> composeFromShort(
-            @Nonnull final ThrowableShortToCharFunction<? extends X> before) {
+            @Nonnull ThrowableShortToCharFunction<? extends X> before) {
         Objects.requireNonNull(before);
-        return (value) -> applyAsCharThrows(before.applyAsCharThrows(value));
+        return value -> applyAsCharThrows(before.applyAsCharThrows(value));
     }
 
     /**
@@ -325,9 +322,9 @@ public interface ThrowableCharUnaryOperator<X extends Throwable> extends Lambda 
      */
     @Nonnull
     default <S> ThrowableCharFunction<S, X> andThen(
-            @Nonnull final ThrowableCharFunction<? extends S, ? extends X> after) {
+            @Nonnull ThrowableCharFunction<? extends S, ? extends X> after) {
         Objects.requireNonNull(after);
-        return (value) -> after.applyThrows(applyAsCharThrows(value));
+        return value -> after.applyThrows(applyAsCharThrows(value));
     }
 
     /**
@@ -339,13 +336,13 @@ public interface ThrowableCharUnaryOperator<X extends Throwable> extends Lambda 
      * @return A composed {@code ThrowableCharPredicate} that first applies this operator to its input, and then applies
      * the {@code after} predicate to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * boolean}.
      */
     @Nonnull
-    default ThrowableCharPredicate<X> andThenToBoolean(@Nonnull final ThrowableCharPredicate<? extends X> after) {
+    default ThrowableCharPredicate<X> andThenToBoolean(@Nonnull ThrowableCharPredicate<? extends X> after) {
         Objects.requireNonNull(after);
-        return (value) -> after.testThrows(applyAsCharThrows(value));
+        return value -> after.testThrows(applyAsCharThrows(value));
     }
 
     /**
@@ -357,14 +354,14 @@ public interface ThrowableCharUnaryOperator<X extends Throwable> extends Lambda 
      * @return A composed {@code ThrowableCharToByteFunction} that first applies this operator to its input, and then
      * applies the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * byte}.
      */
     @Nonnull
     default ThrowableCharToByteFunction<X> andThenToByte(
-            @Nonnull final ThrowableCharToByteFunction<? extends X> after) {
+            @Nonnull ThrowableCharToByteFunction<? extends X> after) {
         Objects.requireNonNull(after);
-        return (value) -> after.applyAsByteThrows(applyAsCharThrows(value));
+        return value -> after.applyAsByteThrows(applyAsCharThrows(value));
     }
 
     /**
@@ -376,13 +373,13 @@ public interface ThrowableCharUnaryOperator<X extends Throwable> extends Lambda 
      * @return A composed {@code ThrowableCharUnaryOperator} that first applies this operator to its input, and then
      * applies the {@code after} operator to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * char}.
      */
     @Nonnull
-    default ThrowableCharUnaryOperator<X> andThenToChar(@Nonnull final ThrowableCharUnaryOperator<? extends X> after) {
+    default ThrowableCharUnaryOperator<X> andThenToChar(@Nonnull ThrowableCharUnaryOperator<? extends X> after) {
         Objects.requireNonNull(after);
-        return (value) -> after.applyAsCharThrows(applyAsCharThrows(value));
+        return value -> after.applyAsCharThrows(applyAsCharThrows(value));
     }
 
     /**
@@ -394,14 +391,14 @@ public interface ThrowableCharUnaryOperator<X extends Throwable> extends Lambda 
      * @return A composed {@code ThrowableCharToDoubleFunction} that first applies this operator to its input, and then
      * applies the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * double}.
      */
     @Nonnull
     default ThrowableCharToDoubleFunction<X> andThenToDouble(
-            @Nonnull final ThrowableCharToDoubleFunction<? extends X> after) {
+            @Nonnull ThrowableCharToDoubleFunction<? extends X> after) {
         Objects.requireNonNull(after);
-        return (value) -> after.applyAsDoubleThrows(applyAsCharThrows(value));
+        return value -> after.applyAsDoubleThrows(applyAsCharThrows(value));
     }
 
     /**
@@ -413,14 +410,14 @@ public interface ThrowableCharUnaryOperator<X extends Throwable> extends Lambda 
      * @return A composed {@code ThrowableCharToFloatFunction} that first applies this operator to its input, and then
      * applies the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * float}.
      */
     @Nonnull
     default ThrowableCharToFloatFunction<X> andThenToFloat(
-            @Nonnull final ThrowableCharToFloatFunction<? extends X> after) {
+            @Nonnull ThrowableCharToFloatFunction<? extends X> after) {
         Objects.requireNonNull(after);
-        return (value) -> after.applyAsFloatThrows(applyAsCharThrows(value));
+        return value -> after.applyAsFloatThrows(applyAsCharThrows(value));
     }
 
     /**
@@ -432,13 +429,13 @@ public interface ThrowableCharUnaryOperator<X extends Throwable> extends Lambda 
      * @return A composed {@code ThrowableCharToIntFunction} that first applies this operator to its input, and then
      * applies the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * int}.
      */
     @Nonnull
-    default ThrowableCharToIntFunction<X> andThenToInt(@Nonnull final ThrowableCharToIntFunction<? extends X> after) {
+    default ThrowableCharToIntFunction<X> andThenToInt(@Nonnull ThrowableCharToIntFunction<? extends X> after) {
         Objects.requireNonNull(after);
-        return (value) -> after.applyAsIntThrows(applyAsCharThrows(value));
+        return value -> after.applyAsIntThrows(applyAsCharThrows(value));
     }
 
     /**
@@ -450,14 +447,14 @@ public interface ThrowableCharUnaryOperator<X extends Throwable> extends Lambda 
      * @return A composed {@code ThrowableCharToLongFunction} that first applies this operator to its input, and then
      * applies the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * long}.
      */
     @Nonnull
     default ThrowableCharToLongFunction<X> andThenToLong(
-            @Nonnull final ThrowableCharToLongFunction<? extends X> after) {
+            @Nonnull ThrowableCharToLongFunction<? extends X> after) {
         Objects.requireNonNull(after);
-        return (value) -> after.applyAsLongThrows(applyAsCharThrows(value));
+        return value -> after.applyAsLongThrows(applyAsCharThrows(value));
     }
 
     /**
@@ -469,14 +466,14 @@ public interface ThrowableCharUnaryOperator<X extends Throwable> extends Lambda 
      * @return A composed {@code ThrowableCharToShortFunction} that first applies this operator to its input, and then
      * applies the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * short}.
      */
     @Nonnull
     default ThrowableCharToShortFunction<X> andThenToShort(
-            @Nonnull final ThrowableCharToShortFunction<? extends X> after) {
+            @Nonnull ThrowableCharToShortFunction<? extends X> after) {
         Objects.requireNonNull(after);
-        return (value) -> after.applyAsShortThrows(applyAsCharThrows(value));
+        return value -> after.applyAsShortThrows(applyAsCharThrows(value));
     }
 
     /**
@@ -489,9 +486,9 @@ public interface ThrowableCharUnaryOperator<X extends Throwable> extends Lambda 
      * @throws NullPointerException If given argument is {@code null}
      */
     @Nonnull
-    default ThrowableCharConsumer<X> consume(@Nonnull final ThrowableCharConsumer<? extends X> consumer) {
+    default ThrowableCharConsumer<X> consume(@Nonnull ThrowableCharConsumer<? extends X> consumer) {
         Objects.requireNonNull(consumer);
-        return (value) -> consumer.acceptThrows(applyAsCharThrows(value));
+        return value -> consumer.acceptThrows(applyAsCharThrows(value));
     }
 
     /**
@@ -513,10 +510,10 @@ public interface ThrowableCharUnaryOperator<X extends Throwable> extends Lambda 
         if (isMemoized()) {
             return this;
         } else {
-            final Map<Character, Character> cache = new ConcurrentHashMap<>();
-            final Object lock = new Object();
-            return (ThrowableCharUnaryOperator<X> & Memoized) (value) -> {
-                final char returnValue;
+            Map<Character, Character> cache = new ConcurrentHashMap<>();
+            Object lock = new Object();
+            return (ThrowableCharUnaryOperator<X> & Memoized) value -> {
+                char returnValue;
                 synchronized (lock) {
                     returnValue = cache.computeIfAbsent(value, ThrowableFunction.of(this::applyAsCharThrows));
                 }
@@ -566,7 +563,7 @@ public interface ThrowableCharUnaryOperator<X extends Throwable> extends Lambda 
      * @see #nest()
      */
     @Nonnull
-    default CharUnaryOperator nest(@Nonnull final Function<? super Throwable, ? extends RuntimeException> mapper) {
+    default CharUnaryOperator nest(@Nonnull Function<? super Throwable, ? extends RuntimeException> mapper) {
         return recover(throwable -> {
             throw mapper.apply(throwable);
         });
@@ -588,15 +585,15 @@ public interface ThrowableCharUnaryOperator<X extends Throwable> extends Lambda 
      * recover} operation.
      */
     @Nonnull
-    default CharUnaryOperator recover(@Nonnull final Function<? super Throwable, ? extends CharUnaryOperator> recover) {
+    default CharUnaryOperator recover(@Nonnull Function<? super Throwable, ? extends CharUnaryOperator> recover) {
         Objects.requireNonNull(recover);
-        return (value) -> {
+        return value -> {
             try {
-                return this.applyAsCharThrows(value);
+                return applyAsCharThrows(value);
             } catch (Error e) {
                 throw e;
             } catch (Throwable throwable) {
-                final CharUnaryOperator operator = recover.apply(throwable);
+                CharUnaryOperator operator = recover.apply(throwable);
                 Objects.requireNonNull(operator, () -> "recover returned null for " + throwable.getClass() + ": "
                         + throwable.getMessage());
                 return operator.applyAsChar(value);
@@ -672,9 +669,9 @@ public interface ThrowableCharUnaryOperator<X extends Throwable> extends Lambda 
      */
     @Nonnull
     default CharUnaryOperator sneakyThrow() {
-        return (value) -> {
+        return value -> {
             try {
-                return this.applyAsCharThrows(value);
+                return applyAsCharThrows(value);
             } catch (RuntimeException | Error e) {
                 throw e;
             } catch (Throwable throwable) {

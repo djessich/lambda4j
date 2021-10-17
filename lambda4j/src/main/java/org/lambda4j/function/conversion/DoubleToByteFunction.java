@@ -13,7 +13,20 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package org.lambda4j.function.conversion;
+
+import java.util.Map;
+import java.util.Objects;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.function.DoubleUnaryOperator;
+import java.util.function.IntToDoubleFunction;
+import java.util.function.LongToDoubleFunction;
+import java.util.function.ToDoubleFunction;
+
+import javax.annotation.Nonnegative;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import org.lambda4j.Lambda;
 import org.lambda4j.consumer.ByteConsumer;
@@ -27,21 +40,9 @@ import org.lambda4j.operator.unary.DoubleUnaryOperator2;
 import org.lambda4j.predicate.BytePredicate;
 import org.lambda4j.predicate.DoublePredicate2;
 
-import javax.annotation.Nonnegative;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import java.util.Map;
-import java.util.Objects;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.function.DoubleUnaryOperator;
-import java.util.function.IntToDoubleFunction;
-import java.util.function.LongToDoubleFunction;
-import java.util.function.ToDoubleFunction;
-
 /**
- * Represents an operation that accepts one {@code double}-valued input argument and produces a
- * {@code byte}-valued result.
- * This is a primitive specialization of {@link Function2}.
+ * Represents an operation that accepts one {@code double}-valued input argument and produces a {@code byte}-valued
+ * result. This is a primitive specialization of {@link Function2}.
  * <p>
  * This is a {@link FunctionalInterface} whose functional method is {@link #applyAsByte(double)}.
  *
@@ -65,7 +66,7 @@ public interface DoubleToByteFunction extends Lambda {
      * Expression</a>
      * @see <a href="https://docs.oracle.com/javase/tutorial/java/javaOO/methodreferences.html">Method Reference</a>
      */
-    static DoubleToByteFunction of(@Nullable final DoubleToByteFunction expression) {
+    static DoubleToByteFunction of(@Nullable DoubleToByteFunction expression) {
         return expression;
     }
 
@@ -77,7 +78,7 @@ public interface DoubleToByteFunction extends Lambda {
      * @return The result from the given {@code DoubleToByteFunction}.
      * @throws NullPointerException If given argument is {@code null}
      */
-    static byte call(@Nonnull final DoubleToByteFunction function, double value) {
+    static byte call(@Nonnull DoubleToByteFunction function, double value) {
         Objects.requireNonNull(function);
         return function.applyAsByte(value);
     }
@@ -90,7 +91,7 @@ public interface DoubleToByteFunction extends Lambda {
      */
     @Nonnull
     static DoubleToByteFunction constant(byte ret) {
-        return (value) -> ret;
+        return value -> ret;
     }
 
     /**
@@ -113,9 +114,9 @@ public interface DoubleToByteFunction extends Lambda {
     }
 
     /**
-     * Returns a composed {@link ToByteFunction} that first applies the {@code before} function to its input, and
-     * then applies this function to the result.
-     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
+     * Returns a composed {@link ToByteFunction} that first applies the {@code before} function to its input, and then
+     * applies this function to the result. If evaluation of either operation throws an exception, it is relayed to the
+     * caller of the composed operation.
      *
      * @param <A> The type of the argument to the given function, and of composed function
      * @param before The function to apply before this function is applied
@@ -125,9 +126,9 @@ public interface DoubleToByteFunction extends Lambda {
      * @implSpec The input argument of this method is able to handle every type.
      */
     @Nonnull
-    default <A> ToByteFunction<A> compose(@Nonnull final ToDoubleFunction<? super A> before) {
+    default <A> ToByteFunction<A> compose(@Nonnull ToDoubleFunction<? super A> before) {
         Objects.requireNonNull(before);
-        return (a) -> applyAsByte(before.applyAsDouble(a));
+        return a -> applyAsByte(before.applyAsDouble(a));
     }
 
     /**
@@ -140,53 +141,51 @@ public interface DoubleToByteFunction extends Lambda {
      * @return A composed {@code BooleanToByteFunction} that first applies the {@code before} function to its input, and
      * then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * boolean}.
      */
     @Nonnull
-    default BooleanToByteFunction composeFromBoolean(@Nonnull final BooleanToDoubleFunction before) {
+    default BooleanToByteFunction composeFromBoolean(@Nonnull BooleanToDoubleFunction before) {
         Objects.requireNonNull(before);
-        return (value) -> applyAsByte(before.applyAsDouble(value));
+        return value -> applyAsByte(before.applyAsDouble(value));
     }
 
     /**
-     * Returns a composed {@link ByteUnaryOperator} that first applies the {@code before} function to
-     * its input, and then applies this function to the result.
-     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
-     * This method is just convenience, to provide the ability to execute an operation which accepts {@code byte} input,
-     * before this primitive function is executed.
+     * Returns a composed {@link ByteUnaryOperator} that first applies the {@code before} function to its input, and
+     * then applies this function to the result. If evaluation of either operation throws an exception, it is relayed to
+     * the caller of the composed operation. This method is just convenience, to provide the ability to execute an
+     * operation which accepts {@code byte} input, before this primitive function is executed.
      *
      * @param before The function to apply before this function is applied
      * @return A composed {@code ByteUnaryOperator} that first applies the {@code before} function to its input, and
      * then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * byte}.
      */
     @Nonnull
-    default ByteUnaryOperator composeFromByte(@Nonnull final ByteToDoubleFunction before) {
+    default ByteUnaryOperator composeFromByte(@Nonnull ByteToDoubleFunction before) {
         Objects.requireNonNull(before);
-        return (value) -> applyAsByte(before.applyAsDouble(value));
+        return value -> applyAsByte(before.applyAsDouble(value));
     }
 
     /**
-     * Returns a composed {@link CharToByteFunction} that first applies the {@code before} function to
-     * its input, and then applies this function to the result.
-     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
-     * This method is just convenience, to provide the ability to execute an operation which accepts {@code char} input,
-     * before this primitive function is executed.
+     * Returns a composed {@link CharToByteFunction} that first applies the {@code before} function to its input, and
+     * then applies this function to the result. If evaluation of either operation throws an exception, it is relayed to
+     * the caller of the composed operation. This method is just convenience, to provide the ability to execute an
+     * operation which accepts {@code char} input, before this primitive function is executed.
      *
      * @param before The function to apply before this function is applied
      * @return A composed {@code CharToByteFunction} that first applies the {@code before} function to its input, and
      * then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * char}.
      */
     @Nonnull
-    default CharToByteFunction composeFromChar(@Nonnull final CharToDoubleFunction before) {
+    default CharToByteFunction composeFromChar(@Nonnull CharToDoubleFunction before) {
         Objects.requireNonNull(before);
-        return (value) -> applyAsByte(before.applyAsDouble(value));
+        return value -> applyAsByte(before.applyAsDouble(value));
     }
 
     /**
@@ -199,13 +198,13 @@ public interface DoubleToByteFunction extends Lambda {
      * @return A composed {@code DoubleToByteFunction} that first applies the {@code before} operator to its input, and
      * then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * double}.
      */
     @Nonnull
-    default DoubleToByteFunction composeFromDouble(@Nonnull final DoubleUnaryOperator before) {
+    default DoubleToByteFunction composeFromDouble(@Nonnull DoubleUnaryOperator before) {
         Objects.requireNonNull(before);
-        return (value) -> applyAsByte(before.applyAsDouble(value));
+        return value -> applyAsByte(before.applyAsDouble(value));
     }
 
     /**
@@ -218,53 +217,51 @@ public interface DoubleToByteFunction extends Lambda {
      * @return A composed {@code FloatToByteFunction} that first applies the {@code before} function to its input, and
      * then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * float}.
      */
     @Nonnull
-    default FloatToByteFunction composeFromFloat(@Nonnull final FloatToDoubleFunction before) {
+    default FloatToByteFunction composeFromFloat(@Nonnull FloatToDoubleFunction before) {
         Objects.requireNonNull(before);
-        return (value) -> applyAsByte(before.applyAsDouble(value));
+        return value -> applyAsByte(before.applyAsDouble(value));
     }
 
     /**
-     * Returns a composed {@link IntToByteFunction} that first applies the {@code before} function to
-     * its input, and then applies this function to the result.
-     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
-     * This method is just convenience, to provide the ability to execute an operation which accepts {@code int} input,
-     * before this primitive function is executed.
+     * Returns a composed {@link IntToByteFunction} that first applies the {@code before} function to its input, and
+     * then applies this function to the result. If evaluation of either operation throws an exception, it is relayed to
+     * the caller of the composed operation. This method is just convenience, to provide the ability to execute an
+     * operation which accepts {@code int} input, before this primitive function is executed.
      *
      * @param before The function to apply before this function is applied
      * @return A composed {@code IntToByteFunction} that first applies the {@code before} function to its input, and
      * then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * int}.
      */
     @Nonnull
-    default IntToByteFunction composeFromInt(@Nonnull final IntToDoubleFunction before) {
+    default IntToByteFunction composeFromInt(@Nonnull IntToDoubleFunction before) {
         Objects.requireNonNull(before);
-        return (value) -> applyAsByte(before.applyAsDouble(value));
+        return value -> applyAsByte(before.applyAsDouble(value));
     }
 
     /**
-     * Returns a composed {@link LongToByteFunction} that first applies the {@code before} function to
-     * its input, and then applies this function to the result.
-     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
-     * This method is just convenience, to provide the ability to execute an operation which accepts {@code long} input,
-     * before this primitive function is executed.
+     * Returns a composed {@link LongToByteFunction} that first applies the {@code before} function to its input, and
+     * then applies this function to the result. If evaluation of either operation throws an exception, it is relayed to
+     * the caller of the composed operation. This method is just convenience, to provide the ability to execute an
+     * operation which accepts {@code long} input, before this primitive function is executed.
      *
      * @param before The function to apply before this function is applied
      * @return A composed {@code LongToByteFunction} that first applies the {@code before} function to its input, and
      * then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * long}.
      */
     @Nonnull
-    default LongToByteFunction composeFromLong(@Nonnull final LongToDoubleFunction before) {
+    default LongToByteFunction composeFromLong(@Nonnull LongToDoubleFunction before) {
         Objects.requireNonNull(before);
-        return (value) -> applyAsByte(before.applyAsDouble(value));
+        return value -> applyAsByte(before.applyAsDouble(value));
     }
 
     /**
@@ -277,19 +274,19 @@ public interface DoubleToByteFunction extends Lambda {
      * @return A composed {@code ShortToByteFunction} that first applies the {@code before} function to its input, and
      * then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * short}.
      */
     @Nonnull
-    default ShortToByteFunction composeFromShort(@Nonnull final ShortToDoubleFunction before) {
+    default ShortToByteFunction composeFromShort(@Nonnull ShortToDoubleFunction before) {
         Objects.requireNonNull(before);
-        return (value) -> applyAsByte(before.applyAsDouble(value));
+        return value -> applyAsByte(before.applyAsDouble(value));
     }
 
     /**
      * Returns a composed {@link DoubleFunction2} that first applies this function to its input, and then applies the
-     * {@code after} function to the result.
-     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
+     * {@code after} function to the result. If evaluation of either operation throws an exception, it is relayed to the
+     * caller of the composed operation.
      *
      * @param <S> The type of return value from the {@code after} function, and of the composed function
      * @param after The function to apply after this function is applied
@@ -299,9 +296,9 @@ public interface DoubleToByteFunction extends Lambda {
      * @implSpec The input argument of this method is able to return every type.
      */
     @Nonnull
-    default <S> DoubleFunction2<S> andThen(@Nonnull final ByteFunction<? extends S> after) {
+    default <S> DoubleFunction2<S> andThen(@Nonnull ByteFunction<? extends S> after) {
         Objects.requireNonNull(after);
-        return (value) -> after.apply(applyAsByte(value));
+        return value -> after.apply(applyAsByte(value));
     }
 
     /**
@@ -314,13 +311,13 @@ public interface DoubleToByteFunction extends Lambda {
      * @return A composed {@code DoublePredicate2} that first applies this function to its input, and then applies the
      * {@code after} predicate to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * boolean}.
      */
     @Nonnull
-    default DoublePredicate2 andThenToBoolean(@Nonnull final BytePredicate after) {
+    default DoublePredicate2 andThenToBoolean(@Nonnull BytePredicate after) {
         Objects.requireNonNull(after);
-        return (value) -> after.test(applyAsByte(value));
+        return value -> after.test(applyAsByte(value));
     }
 
     /**
@@ -333,13 +330,13 @@ public interface DoubleToByteFunction extends Lambda {
      * @return A composed {@code DoubleToByteFunction} that first applies this function to its input, and then applies
      * the {@code after} operator to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * byte}.
      */
     @Nonnull
-    default DoubleToByteFunction andThenToByte(@Nonnull final ByteUnaryOperator after) {
+    default DoubleToByteFunction andThenToByte(@Nonnull ByteUnaryOperator after) {
         Objects.requireNonNull(after);
-        return (value) -> after.applyAsByte(applyAsByte(value));
+        return value -> after.applyAsByte(applyAsByte(value));
     }
 
     /**
@@ -352,13 +349,13 @@ public interface DoubleToByteFunction extends Lambda {
      * @return A composed {@code DoubleToCharFunction} that first applies this function to its input, and then applies
      * the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * char}.
      */
     @Nonnull
-    default DoubleToCharFunction andThenToChar(@Nonnull final ByteToCharFunction after) {
+    default DoubleToCharFunction andThenToChar(@Nonnull ByteToCharFunction after) {
         Objects.requireNonNull(after);
-        return (value) -> after.applyAsChar(applyAsByte(value));
+        return value -> after.applyAsChar(applyAsByte(value));
     }
 
     /**
@@ -371,13 +368,13 @@ public interface DoubleToByteFunction extends Lambda {
      * @return A composed {@code DoubleUnaryOperator2} that first applies this function to its input, and then applies
      * the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * double}.
      */
     @Nonnull
-    default DoubleUnaryOperator2 andThenToDouble(@Nonnull final ByteToDoubleFunction after) {
+    default DoubleUnaryOperator2 andThenToDouble(@Nonnull ByteToDoubleFunction after) {
         Objects.requireNonNull(after);
-        return (value) -> after.applyAsDouble(applyAsByte(value));
+        return value -> after.applyAsDouble(applyAsByte(value));
     }
 
     /**
@@ -390,13 +387,13 @@ public interface DoubleToByteFunction extends Lambda {
      * @return A composed {@code DoubleToFloatFunction} that first applies this function to its input, and then applies
      * the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * float}.
      */
     @Nonnull
-    default DoubleToFloatFunction andThenToFloat(@Nonnull final ByteToFloatFunction after) {
+    default DoubleToFloatFunction andThenToFloat(@Nonnull ByteToFloatFunction after) {
         Objects.requireNonNull(after);
-        return (value) -> after.applyAsFloat(applyAsByte(value));
+        return value -> after.applyAsFloat(applyAsByte(value));
     }
 
     /**
@@ -409,13 +406,13 @@ public interface DoubleToByteFunction extends Lambda {
      * @return A composed {@code DoubleToIntFunction2} that first applies this function to its input, and then applies
      * the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * int}.
      */
     @Nonnull
-    default DoubleToIntFunction2 andThenToInt(@Nonnull final ByteToIntFunction after) {
+    default DoubleToIntFunction2 andThenToInt(@Nonnull ByteToIntFunction after) {
         Objects.requireNonNull(after);
-        return (value) -> after.applyAsInt(applyAsByte(value));
+        return value -> after.applyAsInt(applyAsByte(value));
     }
 
     /**
@@ -428,13 +425,13 @@ public interface DoubleToByteFunction extends Lambda {
      * @return A composed {@code DoubleToLongFunction2} that first applies this function to its input, and then applies
      * the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * long}.
      */
     @Nonnull
-    default DoubleToLongFunction2 andThenToLong(@Nonnull final ByteToLongFunction after) {
+    default DoubleToLongFunction2 andThenToLong(@Nonnull ByteToLongFunction after) {
         Objects.requireNonNull(after);
-        return (value) -> after.applyAsLong(applyAsByte(value));
+        return value -> after.applyAsLong(applyAsByte(value));
     }
 
     /**
@@ -447,13 +444,13 @@ public interface DoubleToByteFunction extends Lambda {
      * @return A composed {@code DoubleToShortFunction} that first applies this function to its input, and then applies
      * the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * short}.
      */
     @Nonnull
-    default DoubleToShortFunction andThenToShort(@Nonnull final ByteToShortFunction after) {
+    default DoubleToShortFunction andThenToShort(@Nonnull ByteToShortFunction after) {
         Objects.requireNonNull(after);
-        return (value) -> after.applyAsShort(applyAsByte(value));
+        return value -> after.applyAsShort(applyAsByte(value));
     }
 
     /**
@@ -467,9 +464,9 @@ public interface DoubleToByteFunction extends Lambda {
      * @throws NullPointerException If given argument is {@code null}
      */
     @Nonnull
-    default DoubleConsumer2 consume(@Nonnull final ByteConsumer consumer) {
+    default DoubleConsumer2 consume(@Nonnull ByteConsumer consumer) {
         Objects.requireNonNull(consumer);
-        return (value) -> consumer.accept(applyAsByte(value));
+        return value -> consumer.accept(applyAsByte(value));
     }
 
     /**
@@ -491,10 +488,10 @@ public interface DoubleToByteFunction extends Lambda {
         if (isMemoized()) {
             return this;
         } else {
-            final Map<Double, Byte> cache = new ConcurrentHashMap<>();
-            final Object lock = new Object();
-            return (DoubleToByteFunction & Memoized) (value) -> {
-                final byte returnValue;
+            Map<Double, Byte> cache = new ConcurrentHashMap<>();
+            Object lock = new Object();
+            return (DoubleToByteFunction & Memoized) value -> {
+                byte returnValue;
                 synchronized (lock) {
                     returnValue = cache.computeIfAbsent(value, this::applyAsByte);
                 }
@@ -505,8 +502,8 @@ public interface DoubleToByteFunction extends Lambda {
 
     /**
      * Returns a composed {@link Function2} which represents this {@link DoubleToByteFunction}. Thereby the primitive
-     * input argument for this function is autoboxed. This method provides the possibility to use this
-     * {@code DoubleToByteFunction} with methods provided by the {@code JDK}.
+     * input argument for this function is autoboxed. This method provides the possibility to use this {@code
+     * DoubleToByteFunction} with methods provided by the {@code JDK}.
      *
      * @return A composed {@code Function2} which represents this {@code DoubleToByteFunction}.
      */

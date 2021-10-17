@@ -13,24 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package org.lambda4j.function.tri.to;
 
-import org.lambda4j.Lambda;
-import org.lambda4j.consumer.tri.TriConsumer;
-import org.lambda4j.function.bi.to.ToDoubleBiFunction2;
-import org.lambda4j.function.conversion.DoubleToByteFunction;
-import org.lambda4j.function.conversion.DoubleToCharFunction;
-import org.lambda4j.function.conversion.DoubleToFloatFunction;
-import org.lambda4j.function.conversion.DoubleToShortFunction;
-import org.lambda4j.function.to.ToDoubleFunction2;
-import org.lambda4j.function.tri.TriFunction;
-import org.lambda4j.predicate.tri.TriPredicate;
-
-import org.apache.commons.lang3.tuple.Triple;
-
-import javax.annotation.Nonnegative;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
@@ -43,10 +28,26 @@ import java.util.function.DoubleUnaryOperator;
 import java.util.function.Function;
 import java.util.function.ToDoubleFunction;
 
+import javax.annotation.Nonnegative;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
+import org.apache.commons.lang3.tuple.Triple;
+
+import org.lambda4j.Lambda;
+import org.lambda4j.consumer.tri.TriConsumer;
+import org.lambda4j.function.bi.to.ToDoubleBiFunction2;
+import org.lambda4j.function.conversion.DoubleToByteFunction;
+import org.lambda4j.function.conversion.DoubleToCharFunction;
+import org.lambda4j.function.conversion.DoubleToFloatFunction;
+import org.lambda4j.function.conversion.DoubleToShortFunction;
+import org.lambda4j.function.to.ToDoubleFunction2;
+import org.lambda4j.function.tri.TriFunction;
+import org.lambda4j.predicate.tri.TriPredicate;
+
 /**
- * Represents an operation that accepts three input arguments and produces a
- * {@code double}-valued result.
- * This is a primitive specialization of {@link TriFunction}.
+ * Represents an operation that accepts three input arguments and produces a {@code double}-valued result. This is a
+ * primitive specialization of {@link TriFunction}.
  * <p>
  * This is a {@link FunctionalInterface} whose functional method is {@link #applyAsDouble(Object, Object, Object)}.
  *
@@ -76,7 +77,7 @@ public interface ToDoubleTriFunction<T, U, V> extends Lambda {
      * Expression</a>
      * @see <a href="https://docs.oracle.com/javase/tutorial/java/javaOO/methodreferences.html">Method Reference</a>
      */
-    static <T, U, V> ToDoubleTriFunction<T, U, V> of(@Nullable final ToDoubleTriFunction<T, U, V> expression) {
+    static <T, U, V> ToDoubleTriFunction<T, U, V> of(@Nullable ToDoubleTriFunction<T, U, V> expression) {
         return expression;
     }
 
@@ -93,7 +94,7 @@ public interface ToDoubleTriFunction<T, U, V> extends Lambda {
      * @return The result from the given {@code ToDoubleTriFunction}.
      * @throws NullPointerException If given argument is {@code null}
      */
-    static <T, U, V> double call(@Nonnull final ToDoubleTriFunction<? super T, ? super U, ? super V> function, T t, U u,
+    static <T, U, V> double call(@Nonnull ToDoubleTriFunction<? super T, ? super U, ? super V> function, T t, U u,
             V v) {
         Objects.requireNonNull(function);
         return function.applyAsDouble(t, u, v);
@@ -112,7 +113,7 @@ public interface ToDoubleTriFunction<T, U, V> extends Lambda {
      * @throws NullPointerException If given argument is {@code null}
      */
     @Nonnull
-    static <T, U, V> ToDoubleTriFunction<T, U, V> onlyFirst(@Nonnull final ToDoubleFunction<? super T> function) {
+    static <T, U, V> ToDoubleTriFunction<T, U, V> onlyFirst(@Nonnull ToDoubleFunction<? super T> function) {
         Objects.requireNonNull(function);
         return (t, u, v) -> function.applyAsDouble(t);
     }
@@ -130,7 +131,7 @@ public interface ToDoubleTriFunction<T, U, V> extends Lambda {
      * @throws NullPointerException If given argument is {@code null}
      */
     @Nonnull
-    static <T, U, V> ToDoubleTriFunction<T, U, V> onlySecond(@Nonnull final ToDoubleFunction<? super U> function) {
+    static <T, U, V> ToDoubleTriFunction<T, U, V> onlySecond(@Nonnull ToDoubleFunction<? super U> function) {
         Objects.requireNonNull(function);
         return (t, u, v) -> function.applyAsDouble(u);
     }
@@ -148,7 +149,7 @@ public interface ToDoubleTriFunction<T, U, V> extends Lambda {
      * @throws NullPointerException If given argument is {@code null}
      */
     @Nonnull
-    static <T, U, V> ToDoubleTriFunction<T, U, V> onlyThird(@Nonnull final ToDoubleFunction<? super V> function) {
+    static <T, U, V> ToDoubleTriFunction<T, U, V> onlyThird(@Nonnull ToDoubleFunction<? super V> function) {
         Objects.requireNonNull(function);
         return (t, u, v) -> function.applyAsDouble(v);
     }
@@ -191,14 +192,15 @@ public interface ToDoubleTriFunction<T, U, V> extends Lambda {
     }
 
     /**
-     * Applies this function partially to some arguments of this one, producing a {@link ToDoubleBiFunction2} as result.
+     * Applies this function partially to some arguments of this one, producing a {@link ToDoubleBiFunction2} as
+     * result.
      *
      * @param t The first argument to this function used to partially apply this function
      * @return A {@code ToDoubleBiFunction2} that represents this function partially applied the some arguments.
      */
     @Nonnull
     default ToDoubleBiFunction2<U, V> papplyAsDouble(T t) {
-        return (u, v) -> this.applyAsDouble(t, u, v);
+        return (u, v) -> applyAsDouble(t, u, v);
     }
 
     /**
@@ -210,7 +212,7 @@ public interface ToDoubleTriFunction<T, U, V> extends Lambda {
      */
     @Nonnull
     default ToDoubleFunction2<V> papplyAsDouble(T t, U u) {
-        return (v) -> this.applyAsDouble(t, u, v);
+        return v -> applyAsDouble(t, u, v);
     }
 
     /**
@@ -226,8 +228,8 @@ public interface ToDoubleTriFunction<T, U, V> extends Lambda {
 
     /**
      * Returns a composed {@link ToDoubleTriFunction} that first applies the {@code before} functions to its input, and
-     * then applies this function to the result.
-     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
+     * then applies this function to the result. If evaluation of either operation throws an exception, it is relayed to
+     * the caller of the composed operation.
      *
      * @param <A> The type of the argument to the first given function, and of composed function
      * @param <B> The type of the argument to the second given function, and of composed function
@@ -241,9 +243,9 @@ public interface ToDoubleTriFunction<T, U, V> extends Lambda {
      * @implSpec The input argument of this method is able to handle every type.
      */
     @Nonnull
-    default <A, B, C> ToDoubleTriFunction<A, B, C> compose(@Nonnull final Function<? super A, ? extends T> before1,
-            @Nonnull final Function<? super B, ? extends U> before2,
-            @Nonnull final Function<? super C, ? extends V> before3) {
+    default <A, B, C> ToDoubleTriFunction<A, B, C> compose(@Nonnull Function<? super A, ? extends T> before1,
+            @Nonnull Function<? super B, ? extends U> before2,
+            @Nonnull Function<? super C, ? extends V> before3) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         Objects.requireNonNull(before3);
@@ -251,9 +253,9 @@ public interface ToDoubleTriFunction<T, U, V> extends Lambda {
     }
 
     /**
-     * Returns a composed {@link TriFunction} that first applies this function to its input, and then applies the
-     * {@code after} function to the result.
-     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
+     * Returns a composed {@link TriFunction} that first applies this function to its input, and then applies the {@code
+     * after} function to the result. If evaluation of either operation throws an exception, it is relayed to the caller
+     * of the composed operation.
      *
      * @param <S> The type of return value from the {@code after} function, and of the composed function
      * @param after The function to apply after this function is applied
@@ -263,7 +265,7 @@ public interface ToDoubleTriFunction<T, U, V> extends Lambda {
      * @implSpec The input argument of this method is able to return every type.
      */
     @Nonnull
-    default <S> TriFunction<T, U, V, S> andThen(@Nonnull final DoubleFunction<? extends S> after) {
+    default <S> TriFunction<T, U, V, S> andThen(@Nonnull DoubleFunction<? extends S> after) {
         Objects.requireNonNull(after);
         return (t, u, v) -> after.apply(applyAsDouble(t, u, v));
     }
@@ -278,11 +280,11 @@ public interface ToDoubleTriFunction<T, U, V> extends Lambda {
      * @return A composed {@code TriPredicate} that first applies this function to its input, and then applies the
      * {@code after} predicate to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * boolean}.
      */
     @Nonnull
-    default TriPredicate<T, U, V> andThenToBoolean(@Nonnull final DoublePredicate after) {
+    default TriPredicate<T, U, V> andThenToBoolean(@Nonnull DoublePredicate after) {
         Objects.requireNonNull(after);
         return (t, u, v) -> after.test(applyAsDouble(t, u, v));
     }
@@ -297,11 +299,11 @@ public interface ToDoubleTriFunction<T, U, V> extends Lambda {
      * @return A composed {@code ToByteTriFunction} that first applies this function to its input, and then applies the
      * {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * byte}.
      */
     @Nonnull
-    default ToByteTriFunction<T, U, V> andThenToByte(@Nonnull final DoubleToByteFunction after) {
+    default ToByteTriFunction<T, U, V> andThenToByte(@Nonnull DoubleToByteFunction after) {
         Objects.requireNonNull(after);
         return (t, u, v) -> after.applyAsByte(applyAsDouble(t, u, v));
     }
@@ -316,11 +318,11 @@ public interface ToDoubleTriFunction<T, U, V> extends Lambda {
      * @return A composed {@code ToCharTriFunction} that first applies this function to its input, and then applies the
      * {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * char}.
      */
     @Nonnull
-    default ToCharTriFunction<T, U, V> andThenToChar(@Nonnull final DoubleToCharFunction after) {
+    default ToCharTriFunction<T, U, V> andThenToChar(@Nonnull DoubleToCharFunction after) {
         Objects.requireNonNull(after);
         return (t, u, v) -> after.applyAsChar(applyAsDouble(t, u, v));
     }
@@ -335,11 +337,11 @@ public interface ToDoubleTriFunction<T, U, V> extends Lambda {
      * @return A composed {@code ToDoubleTriFunction} that first applies this function to its input, and then applies
      * the {@code after} operator to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * double}.
      */
     @Nonnull
-    default ToDoubleTriFunction<T, U, V> andThenToDouble(@Nonnull final DoubleUnaryOperator after) {
+    default ToDoubleTriFunction<T, U, V> andThenToDouble(@Nonnull DoubleUnaryOperator after) {
         Objects.requireNonNull(after);
         return (t, u, v) -> after.applyAsDouble(applyAsDouble(t, u, v));
     }
@@ -354,11 +356,11 @@ public interface ToDoubleTriFunction<T, U, V> extends Lambda {
      * @return A composed {@code ToFloatTriFunction} that first applies this function to its input, and then applies the
      * {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * float}.
      */
     @Nonnull
-    default ToFloatTriFunction<T, U, V> andThenToFloat(@Nonnull final DoubleToFloatFunction after) {
+    default ToFloatTriFunction<T, U, V> andThenToFloat(@Nonnull DoubleToFloatFunction after) {
         Objects.requireNonNull(after);
         return (t, u, v) -> after.applyAsFloat(applyAsDouble(t, u, v));
     }
@@ -373,11 +375,11 @@ public interface ToDoubleTriFunction<T, U, V> extends Lambda {
      * @return A composed {@code ToIntTriFunction} that first applies this function to its input, and then applies the
      * {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * int}.
      */
     @Nonnull
-    default ToIntTriFunction<T, U, V> andThenToInt(@Nonnull final DoubleToIntFunction after) {
+    default ToIntTriFunction<T, U, V> andThenToInt(@Nonnull DoubleToIntFunction after) {
         Objects.requireNonNull(after);
         return (t, u, v) -> after.applyAsInt(applyAsDouble(t, u, v));
     }
@@ -392,11 +394,11 @@ public interface ToDoubleTriFunction<T, U, V> extends Lambda {
      * @return A composed {@code ToLongTriFunction} that first applies this function to its input, and then applies the
      * {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * long}.
      */
     @Nonnull
-    default ToLongTriFunction<T, U, V> andThenToLong(@Nonnull final DoubleToLongFunction after) {
+    default ToLongTriFunction<T, U, V> andThenToLong(@Nonnull DoubleToLongFunction after) {
         Objects.requireNonNull(after);
         return (t, u, v) -> after.applyAsLong(applyAsDouble(t, u, v));
     }
@@ -411,19 +413,19 @@ public interface ToDoubleTriFunction<T, U, V> extends Lambda {
      * @return A composed {@code ToShortTriFunction} that first applies this function to its input, and then applies the
      * {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * short}.
      */
     @Nonnull
-    default ToShortTriFunction<T, U, V> andThenToShort(@Nonnull final DoubleToShortFunction after) {
+    default ToShortTriFunction<T, U, V> andThenToShort(@Nonnull DoubleToShortFunction after) {
         Objects.requireNonNull(after);
         return (t, u, v) -> after.applyAsShort(applyAsDouble(t, u, v));
     }
 
     /**
      * Returns a composed {@link TriConsumer} that fist applies this function to its input, and then consumes the result
-     * using the given {@link DoubleConsumer}.
-     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
+     * using the given {@link DoubleConsumer}. If evaluation of either operation throws an exception, it is relayed to
+     * the caller of the composed operation.
      *
      * @param consumer The operation which consumes the result from this operation
      * @return A composed {@code TriConsumer} that first applies this function to its input, and then consumes the
@@ -431,7 +433,7 @@ public interface ToDoubleTriFunction<T, U, V> extends Lambda {
      * @throws NullPointerException If given argument is {@code null}
      */
     @Nonnull
-    default TriConsumer<T, U, V> consume(@Nonnull final DoubleConsumer consumer) {
+    default TriConsumer<T, U, V> consume(@Nonnull DoubleConsumer consumer) {
         Objects.requireNonNull(consumer);
         return (t, u, v) -> consumer.accept(applyAsDouble(t, u, v));
     }
@@ -475,14 +477,14 @@ public interface ToDoubleTriFunction<T, U, V> extends Lambda {
         if (isMemoized()) {
             return this;
         } else {
-            final Map<Triple<T, U, V>, Double> cache = new ConcurrentHashMap<>();
-            final Object lock = new Object();
+            Map<Triple<T, U, V>, Double> cache = new ConcurrentHashMap<>();
+            Object lock = new Object();
             return (ToDoubleTriFunction<T, U, V> & Memoized) (t, u, v) -> {
-                final double returnValue;
+                double returnValue;
                 synchronized (lock) {
                     returnValue = cache.computeIfAbsent(Triple.of(t, u, v),
-                                                        key -> applyAsDouble(key.getLeft(), key.getMiddle(),
-                                                                             key.getRight()));
+                            key -> applyAsDouble(key.getLeft(), key.getMiddle(),
+                                    key.getRight()));
                 }
                 return returnValue;
             };
@@ -491,8 +493,8 @@ public interface ToDoubleTriFunction<T, U, V> extends Lambda {
 
     /**
      * Returns a composed {@link TriFunction} which represents this {@link ToDoubleTriFunction}. Thereby the primitive
-     * input argument for this function is autoboxed. This method provides the possibility to use this
-     * {@code ToDoubleTriFunction} with methods provided by the {@code JDK}.
+     * input argument for this function is autoboxed. This method provides the possibility to use this {@code
+     * ToDoubleTriFunction} with methods provided by the {@code JDK}.
      *
      * @return A composed {@code TriFunction} which represents this {@code ToDoubleTriFunction}.
      */

@@ -13,7 +13,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package org.lambda4j.operator.unary;
+
+import java.util.Map;
+import java.util.Objects;
+import java.util.concurrent.ConcurrentHashMap;
+
+import javax.annotation.Nonnegative;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import org.lambda4j.Lambda;
 import org.lambda4j.consumer.ShortConsumer;
@@ -34,17 +43,9 @@ import org.lambda4j.function.conversion.ShortToLongFunction;
 import org.lambda4j.function.to.ToShortFunction;
 import org.lambda4j.predicate.ShortPredicate;
 
-import javax.annotation.Nonnegative;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import java.util.Map;
-import java.util.Objects;
-import java.util.concurrent.ConcurrentHashMap;
-
 /**
- * Represents an operation that accepts one {@code short}-valued input argument and produces a
- * {@code short}-valued result.
- * This is a primitive specialization of {@link UnaryOperator2}.
+ * Represents an operation that accepts one {@code short}-valued input argument and produces a {@code short}-valued
+ * result. This is a primitive specialization of {@link UnaryOperator2}.
  * <p>
  * This is a {@link FunctionalInterface} whose functional method is {@link #applyAsShort(short)}.
  *
@@ -68,7 +69,7 @@ public interface ShortUnaryOperator extends Lambda {
      * Expression</a>
      * @see <a href="https://docs.oracle.com/javase/tutorial/java/javaOO/methodreferences.html">Method Reference</a>
      */
-    static ShortUnaryOperator of(@Nullable final ShortUnaryOperator expression) {
+    static ShortUnaryOperator of(@Nullable ShortUnaryOperator expression) {
         return expression;
     }
 
@@ -80,7 +81,7 @@ public interface ShortUnaryOperator extends Lambda {
      * @return The result from the given {@code ShortUnaryOperator}.
      * @throws NullPointerException If given argument is {@code null}
      */
-    static short call(@Nonnull final ShortUnaryOperator operator, short value) {
+    static short call(@Nonnull ShortUnaryOperator operator, short value) {
         Objects.requireNonNull(operator);
         return operator.applyAsShort(value);
     }
@@ -88,11 +89,11 @@ public interface ShortUnaryOperator extends Lambda {
     /**
      * Returns a {@link ShortUnaryOperator} that always returns its input argument.
      *
-     * @return A {@code  ShortUnaryOperator} that always returns its input argument
+     * @return A {@code ShortUnaryOperator} that always returns its input argument
      */
     @Nonnull
     static ShortUnaryOperator identity() {
-        return (value) -> value;
+        return value -> value;
     }
 
     /**
@@ -103,7 +104,7 @@ public interface ShortUnaryOperator extends Lambda {
      */
     @Nonnull
     static ShortUnaryOperator constant(short ret) {
-        return (value) -> ret;
+        return value -> ret;
     }
 
     /**
@@ -126,9 +127,9 @@ public interface ShortUnaryOperator extends Lambda {
     }
 
     /**
-     * Returns a composed {@link ToShortFunction} that first applies the {@code before} function to its input, and
-     * then applies this operator to the result.
-     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
+     * Returns a composed {@link ToShortFunction} that first applies the {@code before} function to its input, and then
+     * applies this operator to the result. If evaluation of either operation throws an exception, it is relayed to the
+     * caller of the composed operation.
      *
      * @param <A> The type of the argument to the given function, and of composed function
      * @param before The function to apply before this operator is applied
@@ -138,9 +139,9 @@ public interface ShortUnaryOperator extends Lambda {
      * @implSpec The input argument of this method is able to handle every type.
      */
     @Nonnull
-    default <A> ToShortFunction<A> compose(@Nonnull final ToShortFunction<? super A> before) {
+    default <A> ToShortFunction<A> compose(@Nonnull ToShortFunction<? super A> before) {
         Objects.requireNonNull(before);
-        return (a) -> applyAsShort(before.applyAsShort(a));
+        return a -> applyAsShort(before.applyAsShort(a));
     }
 
     /**
@@ -153,53 +154,51 @@ public interface ShortUnaryOperator extends Lambda {
      * @return A composed {@code BooleanToShortFunction} that first applies the {@code before} function to its input,
      * and then applies this operator to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * boolean}.
      */
     @Nonnull
-    default BooleanToShortFunction composeFromBoolean(@Nonnull final BooleanToShortFunction before) {
+    default BooleanToShortFunction composeFromBoolean(@Nonnull BooleanToShortFunction before) {
         Objects.requireNonNull(before);
-        return (value) -> applyAsShort(before.applyAsShort(value));
+        return value -> applyAsShort(before.applyAsShort(value));
     }
 
     /**
-     * Returns a composed {@link ByteToShortFunction} that first applies the {@code before} function to
-     * its input, and then applies this operator to the result.
-     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
-     * This method is just convenience, to provide the ability to execute an operation which accepts {@code byte} input,
-     * before this primitive operator is executed.
+     * Returns a composed {@link ByteToShortFunction} that first applies the {@code before} function to its input, and
+     * then applies this operator to the result. If evaluation of either operation throws an exception, it is relayed to
+     * the caller of the composed operation. This method is just convenience, to provide the ability to execute an
+     * operation which accepts {@code byte} input, before this primitive operator is executed.
      *
      * @param before The function to apply before this operator is applied
      * @return A composed {@code ByteToShortFunction} that first applies the {@code before} function to its input, and
      * then applies this operator to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * byte}.
      */
     @Nonnull
-    default ByteToShortFunction composeFromByte(@Nonnull final ByteToShortFunction before) {
+    default ByteToShortFunction composeFromByte(@Nonnull ByteToShortFunction before) {
         Objects.requireNonNull(before);
-        return (value) -> applyAsShort(before.applyAsShort(value));
+        return value -> applyAsShort(before.applyAsShort(value));
     }
 
     /**
-     * Returns a composed {@link CharToShortFunction} that first applies the {@code before} function to
-     * its input, and then applies this operator to the result.
-     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
-     * This method is just convenience, to provide the ability to execute an operation which accepts {@code char} input,
-     * before this primitive operator is executed.
+     * Returns a composed {@link CharToShortFunction} that first applies the {@code before} function to its input, and
+     * then applies this operator to the result. If evaluation of either operation throws an exception, it is relayed to
+     * the caller of the composed operation. This method is just convenience, to provide the ability to execute an
+     * operation which accepts {@code char} input, before this primitive operator is executed.
      *
      * @param before The function to apply before this operator is applied
      * @return A composed {@code CharToShortFunction} that first applies the {@code before} function to its input, and
      * then applies this operator to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * char}.
      */
     @Nonnull
-    default CharToShortFunction composeFromChar(@Nonnull final CharToShortFunction before) {
+    default CharToShortFunction composeFromChar(@Nonnull CharToShortFunction before) {
         Objects.requireNonNull(before);
-        return (value) -> applyAsShort(before.applyAsShort(value));
+        return value -> applyAsShort(before.applyAsShort(value));
     }
 
     /**
@@ -212,13 +211,13 @@ public interface ShortUnaryOperator extends Lambda {
      * @return A composed {@code DoubleToShortFunction} that first applies the {@code before} function to its input, and
      * then applies this operator to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * double}.
      */
     @Nonnull
-    default DoubleToShortFunction composeFromDouble(@Nonnull final DoubleToShortFunction before) {
+    default DoubleToShortFunction composeFromDouble(@Nonnull DoubleToShortFunction before) {
         Objects.requireNonNull(before);
-        return (value) -> applyAsShort(before.applyAsShort(value));
+        return value -> applyAsShort(before.applyAsShort(value));
     }
 
     /**
@@ -231,53 +230,51 @@ public interface ShortUnaryOperator extends Lambda {
      * @return A composed {@code FloatToShortFunction} that first applies the {@code before} function to its input, and
      * then applies this operator to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * float}.
      */
     @Nonnull
-    default FloatToShortFunction composeFromFloat(@Nonnull final FloatToShortFunction before) {
+    default FloatToShortFunction composeFromFloat(@Nonnull FloatToShortFunction before) {
         Objects.requireNonNull(before);
-        return (value) -> applyAsShort(before.applyAsShort(value));
+        return value -> applyAsShort(before.applyAsShort(value));
     }
 
     /**
-     * Returns a composed {@link IntToShortFunction} that first applies the {@code before} function to
-     * its input, and then applies this operator to the result.
-     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
-     * This method is just convenience, to provide the ability to execute an operation which accepts {@code int} input,
-     * before this primitive operator is executed.
+     * Returns a composed {@link IntToShortFunction} that first applies the {@code before} function to its input, and
+     * then applies this operator to the result. If evaluation of either operation throws an exception, it is relayed to
+     * the caller of the composed operation. This method is just convenience, to provide the ability to execute an
+     * operation which accepts {@code int} input, before this primitive operator is executed.
      *
      * @param before The function to apply before this operator is applied
      * @return A composed {@code IntToShortFunction} that first applies the {@code before} function to its input, and
      * then applies this operator to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * int}.
      */
     @Nonnull
-    default IntToShortFunction composeFromInt(@Nonnull final IntToShortFunction before) {
+    default IntToShortFunction composeFromInt(@Nonnull IntToShortFunction before) {
         Objects.requireNonNull(before);
-        return (value) -> applyAsShort(before.applyAsShort(value));
+        return value -> applyAsShort(before.applyAsShort(value));
     }
 
     /**
-     * Returns a composed {@link LongToShortFunction} that first applies the {@code before} function to
-     * its input, and then applies this operator to the result.
-     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
-     * This method is just convenience, to provide the ability to execute an operation which accepts {@code long} input,
-     * before this primitive operator is executed.
+     * Returns a composed {@link LongToShortFunction} that first applies the {@code before} function to its input, and
+     * then applies this operator to the result. If evaluation of either operation throws an exception, it is relayed to
+     * the caller of the composed operation. This method is just convenience, to provide the ability to execute an
+     * operation which accepts {@code long} input, before this primitive operator is executed.
      *
      * @param before The function to apply before this operator is applied
      * @return A composed {@code LongToShortFunction} that first applies the {@code before} function to its input, and
      * then applies this operator to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * long}.
      */
     @Nonnull
-    default LongToShortFunction composeFromLong(@Nonnull final LongToShortFunction before) {
+    default LongToShortFunction composeFromLong(@Nonnull LongToShortFunction before) {
         Objects.requireNonNull(before);
-        return (value) -> applyAsShort(before.applyAsShort(value));
+        return value -> applyAsShort(before.applyAsShort(value));
     }
 
     /**
@@ -290,19 +287,19 @@ public interface ShortUnaryOperator extends Lambda {
      * @return A composed {@code ShortUnaryOperator} that first applies the {@code before} operator to its input, and
      * then applies this operator to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * short}.
      */
     @Nonnull
-    default ShortUnaryOperator composeFromShort(@Nonnull final ShortUnaryOperator before) {
+    default ShortUnaryOperator composeFromShort(@Nonnull ShortUnaryOperator before) {
         Objects.requireNonNull(before);
-        return (value) -> applyAsShort(before.applyAsShort(value));
+        return value -> applyAsShort(before.applyAsShort(value));
     }
 
     /**
      * Returns a composed {@link ShortFunction} that first applies this operator to its input, and then applies the
-     * {@code after} function to the result.
-     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
+     * {@code after} function to the result. If evaluation of either operation throws an exception, it is relayed to the
+     * caller of the composed operation.
      *
      * @param <S> The type of return value from the {@code after} function, and of the composed function
      * @param after The function to apply after this operator is applied
@@ -312,9 +309,9 @@ public interface ShortUnaryOperator extends Lambda {
      * @implSpec The input argument of this method is able to return every type.
      */
     @Nonnull
-    default <S> ShortFunction<S> andThen(@Nonnull final ShortFunction<? extends S> after) {
+    default <S> ShortFunction<S> andThen(@Nonnull ShortFunction<? extends S> after) {
         Objects.requireNonNull(after);
-        return (value) -> after.apply(applyAsShort(value));
+        return value -> after.apply(applyAsShort(value));
     }
 
     /**
@@ -327,13 +324,13 @@ public interface ShortUnaryOperator extends Lambda {
      * @return A composed {@code ShortPredicate} that first applies this operator to its input, and then applies the
      * {@code after} predicate to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * boolean}.
      */
     @Nonnull
-    default ShortPredicate andThenToBoolean(@Nonnull final ShortPredicate after) {
+    default ShortPredicate andThenToBoolean(@Nonnull ShortPredicate after) {
         Objects.requireNonNull(after);
-        return (value) -> after.test(applyAsShort(value));
+        return value -> after.test(applyAsShort(value));
     }
 
     /**
@@ -346,13 +343,13 @@ public interface ShortUnaryOperator extends Lambda {
      * @return A composed {@code ShortToByteFunction} that first applies this operator to its input, and then applies
      * the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * byte}.
      */
     @Nonnull
-    default ShortToByteFunction andThenToByte(@Nonnull final ShortToByteFunction after) {
+    default ShortToByteFunction andThenToByte(@Nonnull ShortToByteFunction after) {
         Objects.requireNonNull(after);
-        return (value) -> after.applyAsByte(applyAsShort(value));
+        return value -> after.applyAsByte(applyAsShort(value));
     }
 
     /**
@@ -365,13 +362,13 @@ public interface ShortUnaryOperator extends Lambda {
      * @return A composed {@code ShortToCharFunction} that first applies this operator to its input, and then applies
      * the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * char}.
      */
     @Nonnull
-    default ShortToCharFunction andThenToChar(@Nonnull final ShortToCharFunction after) {
+    default ShortToCharFunction andThenToChar(@Nonnull ShortToCharFunction after) {
         Objects.requireNonNull(after);
-        return (value) -> after.applyAsChar(applyAsShort(value));
+        return value -> after.applyAsChar(applyAsShort(value));
     }
 
     /**
@@ -384,13 +381,13 @@ public interface ShortUnaryOperator extends Lambda {
      * @return A composed {@code ShortToDoubleFunction} that first applies this operator to its input, and then applies
      * the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * double}.
      */
     @Nonnull
-    default ShortToDoubleFunction andThenToDouble(@Nonnull final ShortToDoubleFunction after) {
+    default ShortToDoubleFunction andThenToDouble(@Nonnull ShortToDoubleFunction after) {
         Objects.requireNonNull(after);
-        return (value) -> after.applyAsDouble(applyAsShort(value));
+        return value -> after.applyAsDouble(applyAsShort(value));
     }
 
     /**
@@ -403,13 +400,13 @@ public interface ShortUnaryOperator extends Lambda {
      * @return A composed {@code ShortToFloatFunction} that first applies this operator to its input, and then applies
      * the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * float}.
      */
     @Nonnull
-    default ShortToFloatFunction andThenToFloat(@Nonnull final ShortToFloatFunction after) {
+    default ShortToFloatFunction andThenToFloat(@Nonnull ShortToFloatFunction after) {
         Objects.requireNonNull(after);
-        return (value) -> after.applyAsFloat(applyAsShort(value));
+        return value -> after.applyAsFloat(applyAsShort(value));
     }
 
     /**
@@ -422,13 +419,13 @@ public interface ShortUnaryOperator extends Lambda {
      * @return A composed {@code ShortToIntFunction} that first applies this operator to its input, and then applies the
      * {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * int}.
      */
     @Nonnull
-    default ShortToIntFunction andThenToInt(@Nonnull final ShortToIntFunction after) {
+    default ShortToIntFunction andThenToInt(@Nonnull ShortToIntFunction after) {
         Objects.requireNonNull(after);
-        return (value) -> after.applyAsInt(applyAsShort(value));
+        return value -> after.applyAsInt(applyAsShort(value));
     }
 
     /**
@@ -441,13 +438,13 @@ public interface ShortUnaryOperator extends Lambda {
      * @return A composed {@code ShortToLongFunction} that first applies this operator to its input, and then applies
      * the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * long}.
      */
     @Nonnull
-    default ShortToLongFunction andThenToLong(@Nonnull final ShortToLongFunction after) {
+    default ShortToLongFunction andThenToLong(@Nonnull ShortToLongFunction after) {
         Objects.requireNonNull(after);
-        return (value) -> after.applyAsLong(applyAsShort(value));
+        return value -> after.applyAsLong(applyAsShort(value));
     }
 
     /**
@@ -460,13 +457,13 @@ public interface ShortUnaryOperator extends Lambda {
      * @return A composed {@code ShortUnaryOperator} that first applies this operator to its input, and then applies the
      * {@code after} operator to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * short}.
      */
     @Nonnull
-    default ShortUnaryOperator andThenToShort(@Nonnull final ShortUnaryOperator after) {
+    default ShortUnaryOperator andThenToShort(@Nonnull ShortUnaryOperator after) {
         Objects.requireNonNull(after);
-        return (value) -> after.applyAsShort(applyAsShort(value));
+        return value -> after.applyAsShort(applyAsShort(value));
     }
 
     /**
@@ -480,9 +477,9 @@ public interface ShortUnaryOperator extends Lambda {
      * @throws NullPointerException If given argument is {@code null}
      */
     @Nonnull
-    default ShortConsumer consume(@Nonnull final ShortConsumer consumer) {
+    default ShortConsumer consume(@Nonnull ShortConsumer consumer) {
         Objects.requireNonNull(consumer);
-        return (value) -> consumer.accept(applyAsShort(value));
+        return value -> consumer.accept(applyAsShort(value));
     }
 
     /**
@@ -504,10 +501,10 @@ public interface ShortUnaryOperator extends Lambda {
         if (isMemoized()) {
             return this;
         } else {
-            final Map<Short, Short> cache = new ConcurrentHashMap<>();
-            final Object lock = new Object();
-            return (ShortUnaryOperator & Memoized) (value) -> {
-                final short returnValue;
+            Map<Short, Short> cache = new ConcurrentHashMap<>();
+            Object lock = new Object();
+            return (ShortUnaryOperator & Memoized) value -> {
+                short returnValue;
                 synchronized (lock) {
                     returnValue = cache.computeIfAbsent(value, this::applyAsShort);
                 }
@@ -518,8 +515,8 @@ public interface ShortUnaryOperator extends Lambda {
 
     /**
      * Returns a composed {@link UnaryOperator2} which represents this {@link ShortUnaryOperator}. Thereby the primitive
-     * input argument for this operator is autoboxed. This method provides the possibility to use this
-     * {@code ShortUnaryOperator} with methods provided by the {@code JDK}.
+     * input argument for this operator is autoboxed. This method provides the possibility to use this {@code
+     * ShortUnaryOperator} with methods provided by the {@code JDK}.
      *
      * @return A composed {@code UnaryOperator2} which represents this {@code ShortUnaryOperator}.
      */

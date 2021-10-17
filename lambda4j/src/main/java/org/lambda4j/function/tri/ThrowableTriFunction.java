@@ -13,7 +13,20 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package org.lambda4j.function.tri;
+
+import java.util.Map;
+import java.util.Objects;
+import java.util.Optional;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.function.Function;
+
+import javax.annotation.Nonnegative;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
+import org.apache.commons.lang3.tuple.Triple;
 
 import org.lambda4j.Lambda;
 import org.lambda4j.consumer.ThrowableConsumer;
@@ -23,20 +36,9 @@ import org.lambda4j.core.util.ThrowableUtils;
 import org.lambda4j.function.ThrowableFunction;
 import org.lambda4j.function.bi.ThrowableBiFunction;
 
-import org.apache.commons.lang3.tuple.Triple;
-
-import javax.annotation.Nonnegative;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Optional;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.function.Function;
-
 /**
- * Represents an operation that accepts three input arguments and produces a
- * result which is able to throw any {@link Throwable}.
+ * Represents an operation that accepts three input arguments and produces a result which is able to throw any {@link
+ * Throwable}.
  * <p>
  * This is a {@link FunctionalInterface} whose functional method is {@link #applyThrows(Object, Object, Object)}.
  *
@@ -71,7 +73,7 @@ public interface ThrowableTriFunction<T, U, V, R, X extends Throwable> extends L
      * @see <a href="https://docs.oracle.com/javase/tutorial/java/javaOO/methodreferences.html">Method Reference</a>
      */
     static <T, U, V, R, X extends Throwable> ThrowableTriFunction<T, U, V, R, X> of(
-            @Nullable final ThrowableTriFunction<T, U, V, R, X> expression) {
+            @Nullable ThrowableTriFunction<T, U, V, R, X> expression) {
         return expression;
     }
 
@@ -91,7 +93,7 @@ public interface ThrowableTriFunction<T, U, V, R, X extends Throwable> extends L
      */
     @Nonnull
     static <T, U, V, R, X extends Throwable> ThrowableTriFunction<T, U, V, Optional<R>, X> lift(
-            @Nonnull final ThrowableTriFunction<? super T, ? super U, ? super V, ? extends R, ? extends X> partial) {
+            @Nonnull ThrowableTriFunction<? super T, ? super U, ? super V, ? extends R, ? extends X> partial) {
         Objects.requireNonNull(partial);
         return (t, u, v) -> Optional.ofNullable(partial.applyThrows(t, u, v));
     }
@@ -113,7 +115,7 @@ public interface ThrowableTriFunction<T, U, V, R, X extends Throwable> extends L
      * @throws X Any throwable from this functions action
      */
     static <T, U, V, R, X extends Throwable> R call(
-            @Nonnull final ThrowableTriFunction<? super T, ? super U, ? super V, ? extends R, ? extends X> function,
+            @Nonnull ThrowableTriFunction<? super T, ? super U, ? super V, ? extends R, ? extends X> function,
             T t, U u, V v) throws X {
         Objects.requireNonNull(function);
         return function.applyThrows(t, u, v);
@@ -135,7 +137,7 @@ public interface ThrowableTriFunction<T, U, V, R, X extends Throwable> extends L
      */
     @Nonnull
     static <T, U, V, R, X extends Throwable> ThrowableTriFunction<T, U, V, R, X> onlyFirst(
-            @Nonnull final ThrowableFunction<? super T, ? extends R, ? extends X> function) {
+            @Nonnull ThrowableFunction<? super T, ? extends R, ? extends X> function) {
         Objects.requireNonNull(function);
         return (t, u, v) -> function.applyThrows(t);
     }
@@ -156,7 +158,7 @@ public interface ThrowableTriFunction<T, U, V, R, X extends Throwable> extends L
      */
     @Nonnull
     static <T, U, V, R, X extends Throwable> ThrowableTriFunction<T, U, V, R, X> onlySecond(
-            @Nonnull final ThrowableFunction<? super U, ? extends R, ? extends X> function) {
+            @Nonnull ThrowableFunction<? super U, ? extends R, ? extends X> function) {
         Objects.requireNonNull(function);
         return (t, u, v) -> function.applyThrows(u);
     }
@@ -177,7 +179,7 @@ public interface ThrowableTriFunction<T, U, V, R, X extends Throwable> extends L
      */
     @Nonnull
     static <T, U, V, R, X extends Throwable> ThrowableTriFunction<T, U, V, R, X> onlyThird(
-            @Nonnull final ThrowableFunction<? super V, ? extends R, ? extends X> function) {
+            @Nonnull ThrowableFunction<? super V, ? extends R, ? extends X> function) {
         Objects.requireNonNull(function);
         return (t, u, v) -> function.applyThrows(v);
     }
@@ -224,14 +226,15 @@ public interface ThrowableTriFunction<T, U, V, R, X extends Throwable> extends L
     }
 
     /**
-     * Applies this function partially to some arguments of this one, producing a {@link ThrowableBiFunction} as result.
+     * Applies this function partially to some arguments of this one, producing a {@link ThrowableBiFunction} as
+     * result.
      *
      * @param t The first argument to this function used to partially apply this function
      * @return A {@code ThrowableBiFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
     default ThrowableBiFunction<U, V, R, X> papplyThrows(T t) {
-        return (u, v) -> this.applyThrows(t, u, v);
+        return (u, v) -> applyThrows(t, u, v);
     }
 
     /**
@@ -243,7 +246,7 @@ public interface ThrowableTriFunction<T, U, V, R, X extends Throwable> extends L
      */
     @Nonnull
     default ThrowableFunction<V, R, X> papplyThrows(T t, U u) {
-        return (v) -> this.applyThrows(t, u, v);
+        return v -> applyThrows(t, u, v);
     }
 
     /**
@@ -274,9 +277,9 @@ public interface ThrowableTriFunction<T, U, V, R, X extends Throwable> extends L
      */
     @Nonnull
     default <A, B, C> ThrowableTriFunction<A, B, C, R, X> compose(
-            @Nonnull final ThrowableFunction<? super A, ? extends T, ? extends X> before1,
-            @Nonnull final ThrowableFunction<? super B, ? extends U, ? extends X> before2,
-            @Nonnull final ThrowableFunction<? super C, ? extends V, ? extends X> before3) {
+            @Nonnull ThrowableFunction<? super A, ? extends T, ? extends X> before1,
+            @Nonnull ThrowableFunction<? super B, ? extends U, ? extends X> before2,
+            @Nonnull ThrowableFunction<? super C, ? extends V, ? extends X> before3) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         Objects.requireNonNull(before3);
@@ -296,7 +299,7 @@ public interface ThrowableTriFunction<T, U, V, R, X extends Throwable> extends L
      */
     @Nonnull
     default <S> ThrowableTriFunction<T, U, V, S, X> andThen(
-            @Nonnull final ThrowableFunction<? super R, ? extends S, ? extends X> after) {
+            @Nonnull ThrowableFunction<? super R, ? extends S, ? extends X> after) {
         Objects.requireNonNull(after);
         return (t, u, v) -> after.applyThrows(applyThrows(t, u, v));
     }
@@ -312,7 +315,7 @@ public interface ThrowableTriFunction<T, U, V, R, X extends Throwable> extends L
      */
     @Nonnull
     default ThrowableTriConsumer<T, U, V, X> consume(
-            @Nonnull final ThrowableConsumer<? super R, ? extends X> consumer) {
+            @Nonnull ThrowableConsumer<? super R, ? extends X> consumer) {
         Objects.requireNonNull(consumer);
         return (t, u, v) -> consumer.acceptThrows(applyThrows(t, u, v));
     }
@@ -366,10 +369,10 @@ public interface ThrowableTriFunction<T, U, V, R, X extends Throwable> extends L
         if (isMemoized()) {
             return this;
         } else {
-            final Map<Triple<T, U, V>, R> cache = new ConcurrentHashMap<>();
-            final Object lock = new Object();
+            Map<Triple<T, U, V>, R> cache = new ConcurrentHashMap<>();
+            Object lock = new Object();
             return (ThrowableTriFunction<T, U, V, R, X> & Memoized) (t, u, v) -> {
-                final R returnValue;
+                R returnValue;
                 synchronized (lock) {
                     returnValue = cache.computeIfAbsent(Triple.of(t, u, v), ThrowableFunction.of(
                             key -> applyThrows(key.getLeft(), key.getMiddle(), key.getRight())));
@@ -380,9 +383,9 @@ public interface ThrowableTriFunction<T, U, V, R, X extends Throwable> extends L
     }
 
     /**
-     * Converts this function to an equal function, which ensures that its result is not
-     * {@code null} using {@link Optional}. This method mainly exists to avoid unnecessary {@code NullPointerException}s
-     * through referencing {@code null} from this function.
+     * Converts this function to an equal function, which ensures that its result is not {@code null} using {@link
+     * Optional}. This method mainly exists to avoid unnecessary {@code NullPointerException}s through referencing
+     * {@code null} from this function.
      *
      * @return An equal function, which ensures that its result is not {@code null}.
      * @deprecated Use {@code lift} method for lifting this function.
@@ -423,7 +426,7 @@ public interface ThrowableTriFunction<T, U, V, R, X extends Throwable> extends L
      */
     @Nonnull
     default TriFunction<T, U, V, R> nest(
-            @Nonnull final Function<? super Throwable, ? extends RuntimeException> mapper) {
+            @Nonnull Function<? super Throwable, ? extends RuntimeException> mapper) {
         return recover(throwable -> {
             throw mapper.apply(throwable);
         });
@@ -445,15 +448,15 @@ public interface ThrowableTriFunction<T, U, V, R, X extends Throwable> extends L
      */
     @Nonnull
     default TriFunction<T, U, V, R> recover(
-            @Nonnull final Function<? super Throwable, ? extends TriFunction<? super T, ? super U, ? super V, ? extends R>> recover) {
+            @Nonnull Function<? super Throwable, ? extends TriFunction<? super T, ? super U, ? super V, ? extends R>> recover) {
         Objects.requireNonNull(recover);
         return (t, u, v) -> {
             try {
-                return this.applyThrows(t, u, v);
+                return applyThrows(t, u, v);
             } catch (Error e) {
                 throw e;
             } catch (Throwable throwable) {
-                final TriFunction<? super T, ? super U, ? super V, ? extends R> function = recover.apply(throwable);
+                TriFunction<? super T, ? super U, ? super V, ? extends R> function = recover.apply(throwable);
                 Objects.requireNonNull(function, () -> "recover returned null for " + throwable.getClass() + ": "
                         + throwable.getMessage());
                 return function.apply(t, u, v);
@@ -462,12 +465,12 @@ public interface ThrowableTriFunction<T, U, V, R, X extends Throwable> extends L
     }
 
     /**
-     * Returns a composed {@link TriFunction} that applies this function to its input and sneakily throws the
-     * thrown {@link Throwable} from it, if it is not of type {@link RuntimeException} or {@link Error}. This means that
-     * each throwable thrown from the returned composed function behaves exactly the same as an <em>unchecked</em>
-     * throwable does. As a result, there is no need to handle the throwable of this function in the returned composed
-     * function by either wrapping it in an <em>unchecked</em> throwable or to declare it in the {@code throws} clause,
-     * as it would be done in a non sneaky throwing function.
+     * Returns a composed {@link TriFunction} that applies this function to its input and sneakily throws the thrown
+     * {@link Throwable} from it, if it is not of type {@link RuntimeException} or {@link Error}. This means that each
+     * throwable thrown from the returned composed function behaves exactly the same as an <em>unchecked</em> throwable
+     * does. As a result, there is no need to handle the throwable of this function in the returned composed function by
+     * either wrapping it in an <em>unchecked</em> throwable or to declare it in the {@code throws} clause, as it would
+     * be done in a non sneaky throwing function.
      * <p>
      * What sneaky throwing simply does, is to fake out the compiler and thus it bypasses the principle of
      * <em>checked</em> throwables. On the JVM (class file) level, all throwables, checked or not, can be thrown
@@ -531,7 +534,7 @@ public interface ThrowableTriFunction<T, U, V, R, X extends Throwable> extends L
     default TriFunction<T, U, V, R> sneakyThrow() {
         return (t, u, v) -> {
             try {
-                return this.applyThrows(t, u, v);
+                return applyThrows(t, u, v);
             } catch (RuntimeException | Error e) {
                 throw e;
             } catch (Throwable throwable) {

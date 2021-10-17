@@ -13,7 +13,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package org.lambda4j.predicate.bi;
+
+import java.util.Map;
+import java.util.Objects;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.function.Function;
+
+import javax.annotation.Nonnegative;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
+import org.apache.commons.lang3.tuple.Pair;
 
 import org.lambda4j.Lambda;
 import org.lambda4j.consumer.ThrowableBooleanConsumer;
@@ -49,16 +61,6 @@ import org.lambda4j.operator.unary.ThrowableBooleanUnaryOperator;
 import org.lambda4j.operator.unary.ThrowableFloatUnaryOperator;
 import org.lambda4j.predicate.ThrowableFloatPredicate;
 
-import org.apache.commons.lang3.tuple.Pair;
-
-import javax.annotation.Nonnegative;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import java.util.Map;
-import java.util.Objects;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.function.Function;
-
 /**
  * Represents an predicate (boolean-valued function) of two {@code float}-valued input arguments which is able to throw
  * any {@link Throwable}. This is a primitive specialization of {@link ThrowableBiPredicate}.
@@ -88,7 +90,7 @@ public interface ThrowableBiFloatPredicate<X extends Throwable> extends Lambda {
      * @see <a href="https://docs.oracle.com/javase/tutorial/java/javaOO/methodreferences.html">Method Reference</a>
      */
     static <X extends Throwable> ThrowableBiFloatPredicate<X> of(
-            @Nullable final ThrowableBiFloatPredicate<X> expression) {
+            @Nullable ThrowableBiFloatPredicate<X> expression) {
         return expression;
     }
 
@@ -103,7 +105,7 @@ public interface ThrowableBiFloatPredicate<X extends Throwable> extends Lambda {
      * @throws NullPointerException If given argument is {@code null}
      * @throws X Any throwable from this predicates action
      */
-    static <X extends Throwable> boolean call(@Nonnull final ThrowableBiFloatPredicate<? extends X> predicate,
+    static <X extends Throwable> boolean call(@Nonnull ThrowableBiFloatPredicate<? extends X> predicate,
             float value1, float value2) throws X {
         Objects.requireNonNull(predicate);
         return predicate.testThrows(value1, value2);
@@ -121,7 +123,7 @@ public interface ThrowableBiFloatPredicate<X extends Throwable> extends Lambda {
      */
     @Nonnull
     static <X extends Throwable> ThrowableBiFloatPredicate<X> onlyFirst(
-            @Nonnull final ThrowableFloatPredicate<? extends X> predicate) {
+            @Nonnull ThrowableFloatPredicate<? extends X> predicate) {
         Objects.requireNonNull(predicate);
         return (value1, value2) -> predicate.testThrows(value1);
     }
@@ -138,7 +140,7 @@ public interface ThrowableBiFloatPredicate<X extends Throwable> extends Lambda {
      */
     @Nonnull
     static <X extends Throwable> ThrowableBiFloatPredicate<X> onlySecond(
-            @Nonnull final ThrowableFloatPredicate<? extends X> predicate) {
+            @Nonnull ThrowableFloatPredicate<? extends X> predicate) {
         Objects.requireNonNull(predicate);
         return (value1, value2) -> predicate.testThrows(value2);
     }
@@ -193,7 +195,7 @@ public interface ThrowableBiFloatPredicate<X extends Throwable> extends Lambda {
      */
     @Nonnull
     static <X extends Throwable> ThrowableBiFloatPredicate<X> isEqual(float target1, float target2) {
-        return (value1, value2) -> (value1 == target1) && (value2 == target2);
+        return (value1, value2) -> value1 == target1 && value2 == target2;
     }
 
     /**
@@ -215,7 +217,7 @@ public interface ThrowableBiFloatPredicate<X extends Throwable> extends Lambda {
      */
     @Nonnull
     default ThrowableFloatPredicate<X> ptestThrows(float value1) {
-        return (value2) -> this.testThrows(value1, value2);
+        return value2 -> testThrows(value1, value2);
     }
 
     /**
@@ -244,8 +246,8 @@ public interface ThrowableBiFloatPredicate<X extends Throwable> extends Lambda {
      */
     @Nonnull
     default <A, B> ThrowableBiPredicate<A, B, X> compose(
-            @Nonnull final ThrowableToFloatFunction<? super A, ? extends X> before1,
-            @Nonnull final ThrowableToFloatFunction<? super B, ? extends X> before2) {
+            @Nonnull ThrowableToFloatFunction<? super A, ? extends X> before1,
+            @Nonnull ThrowableToFloatFunction<? super B, ? extends X> before2) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         return (a, b) -> testThrows(before1.applyAsFloatThrows(a), before2.applyAsFloatThrows(b));
@@ -261,59 +263,57 @@ public interface ThrowableBiFloatPredicate<X extends Throwable> extends Lambda {
      * @return A composed {@code ThrowableBooleanBinaryOperator} that first applies the {@code before} functions to its
      * input, and then applies this predicate to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * boolean}.
      */
     @Nonnull
     default ThrowableBooleanBinaryOperator<X> composeFromBoolean(
-            @Nonnull final ThrowableBooleanToFloatFunction<? extends X> before1,
-            @Nonnull final ThrowableBooleanToFloatFunction<? extends X> before2) {
+            @Nonnull ThrowableBooleanToFloatFunction<? extends X> before1,
+            @Nonnull ThrowableBooleanToFloatFunction<? extends X> before2) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         return (value1, value2) -> testThrows(before1.applyAsFloatThrows(value1), before2.applyAsFloatThrows(value2));
     }
 
     /**
-     * Returns a composed {@link ThrowableBiBytePredicate} that first applies the {@code before} functions to
-     * its input, and then applies this predicate to the result.
-     * This method is just convenience, to provide the ability to execute an operation which accepts {@code byte} input,
-     * before this primitive predicate is executed.
+     * Returns a composed {@link ThrowableBiBytePredicate} that first applies the {@code before} functions to its input,
+     * and then applies this predicate to the result. This method is just convenience, to provide the ability to execute
+     * an operation which accepts {@code byte} input, before this primitive predicate is executed.
      *
      * @param before1 The first function to apply before this predicate is applied
      * @param before2 The second function to apply before this predicate is applied
      * @return A composed {@code ThrowableBiBytePredicate} that first applies the {@code before} functions to its input,
      * and then applies this predicate to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * byte}.
      */
     @Nonnull
     default ThrowableBiBytePredicate<X> composeFromByte(
-            @Nonnull final ThrowableByteToFloatFunction<? extends X> before1,
-            @Nonnull final ThrowableByteToFloatFunction<? extends X> before2) {
+            @Nonnull ThrowableByteToFloatFunction<? extends X> before1,
+            @Nonnull ThrowableByteToFloatFunction<? extends X> before2) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         return (value1, value2) -> testThrows(before1.applyAsFloatThrows(value1), before2.applyAsFloatThrows(value2));
     }
 
     /**
-     * Returns a composed {@link ThrowableBiCharPredicate} that first applies the {@code before} functions to
-     * its input, and then applies this predicate to the result.
-     * This method is just convenience, to provide the ability to execute an operation which accepts {@code char} input,
-     * before this primitive predicate is executed.
+     * Returns a composed {@link ThrowableBiCharPredicate} that first applies the {@code before} functions to its input,
+     * and then applies this predicate to the result. This method is just convenience, to provide the ability to execute
+     * an operation which accepts {@code char} input, before this primitive predicate is executed.
      *
      * @param before1 The first function to apply before this predicate is applied
      * @param before2 The second function to apply before this predicate is applied
      * @return A composed {@code ThrowableBiCharPredicate} that first applies the {@code before} functions to its input,
      * and then applies this predicate to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * char}.
      */
     @Nonnull
     default ThrowableBiCharPredicate<X> composeFromChar(
-            @Nonnull final ThrowableCharToFloatFunction<? extends X> before1,
-            @Nonnull final ThrowableCharToFloatFunction<? extends X> before2) {
+            @Nonnull ThrowableCharToFloatFunction<? extends X> before1,
+            @Nonnull ThrowableCharToFloatFunction<? extends X> before2) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         return (value1, value2) -> testThrows(before1.applyAsFloatThrows(value1), before2.applyAsFloatThrows(value2));
@@ -329,13 +329,13 @@ public interface ThrowableBiFloatPredicate<X extends Throwable> extends Lambda {
      * @return A composed {@code ThrowableBiDoublePredicate} that first applies the {@code before} functions to its
      * input, and then applies this predicate to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * double}.
      */
     @Nonnull
     default ThrowableBiDoublePredicate<X> composeFromDouble(
-            @Nonnull final ThrowableDoubleToFloatFunction<? extends X> before1,
-            @Nonnull final ThrowableDoubleToFloatFunction<? extends X> before2) {
+            @Nonnull ThrowableDoubleToFloatFunction<? extends X> before1,
+            @Nonnull ThrowableDoubleToFloatFunction<? extends X> before2) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         return (value1, value2) -> testThrows(before1.applyAsFloatThrows(value1), before2.applyAsFloatThrows(value2));
@@ -351,58 +351,56 @@ public interface ThrowableBiFloatPredicate<X extends Throwable> extends Lambda {
      * @return A composed {@code ThrowableBiFloatPredicate} that first applies the {@code before} operators to its
      * input, and then applies this predicate to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * float}.
      */
     @Nonnull
     default ThrowableBiFloatPredicate<X> composeFromFloat(
-            @Nonnull final ThrowableFloatUnaryOperator<? extends X> before1,
-            @Nonnull final ThrowableFloatUnaryOperator<? extends X> before2) {
+            @Nonnull ThrowableFloatUnaryOperator<? extends X> before1,
+            @Nonnull ThrowableFloatUnaryOperator<? extends X> before2) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         return (value1, value2) -> testThrows(before1.applyAsFloatThrows(value1), before2.applyAsFloatThrows(value2));
     }
 
     /**
-     * Returns a composed {@link ThrowableBiIntPredicate} that first applies the {@code before} functions to
-     * its input, and then applies this predicate to the result.
-     * This method is just convenience, to provide the ability to execute an operation which accepts {@code int} input,
-     * before this primitive predicate is executed.
+     * Returns a composed {@link ThrowableBiIntPredicate} that first applies the {@code before} functions to its input,
+     * and then applies this predicate to the result. This method is just convenience, to provide the ability to execute
+     * an operation which accepts {@code int} input, before this primitive predicate is executed.
      *
      * @param before1 The first function to apply before this predicate is applied
      * @param before2 The second function to apply before this predicate is applied
      * @return A composed {@code ThrowableBiIntPredicate} that first applies the {@code before} functions to its input,
      * and then applies this predicate to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * int}.
      */
     @Nonnull
-    default ThrowableBiIntPredicate<X> composeFromInt(@Nonnull final ThrowableIntToFloatFunction<? extends X> before1,
-            @Nonnull final ThrowableIntToFloatFunction<? extends X> before2) {
+    default ThrowableBiIntPredicate<X> composeFromInt(@Nonnull ThrowableIntToFloatFunction<? extends X> before1,
+            @Nonnull ThrowableIntToFloatFunction<? extends X> before2) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         return (value1, value2) -> testThrows(before1.applyAsFloatThrows(value1), before2.applyAsFloatThrows(value2));
     }
 
     /**
-     * Returns a composed {@link ThrowableBiLongPredicate} that first applies the {@code before} functions to
-     * its input, and then applies this predicate to the result.
-     * This method is just convenience, to provide the ability to execute an operation which accepts {@code long} input,
-     * before this primitive predicate is executed.
+     * Returns a composed {@link ThrowableBiLongPredicate} that first applies the {@code before} functions to its input,
+     * and then applies this predicate to the result. This method is just convenience, to provide the ability to execute
+     * an operation which accepts {@code long} input, before this primitive predicate is executed.
      *
      * @param before1 The first function to apply before this predicate is applied
      * @param before2 The second function to apply before this predicate is applied
      * @return A composed {@code ThrowableBiLongPredicate} that first applies the {@code before} functions to its input,
      * and then applies this predicate to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * long}.
      */
     @Nonnull
     default ThrowableBiLongPredicate<X> composeFromLong(
-            @Nonnull final ThrowableLongToFloatFunction<? extends X> before1,
-            @Nonnull final ThrowableLongToFloatFunction<? extends X> before2) {
+            @Nonnull ThrowableLongToFloatFunction<? extends X> before1,
+            @Nonnull ThrowableLongToFloatFunction<? extends X> before2) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         return (value1, value2) -> testThrows(before1.applyAsFloatThrows(value1), before2.applyAsFloatThrows(value2));
@@ -418,13 +416,13 @@ public interface ThrowableBiFloatPredicate<X extends Throwable> extends Lambda {
      * @return A composed {@code ThrowableBiShortPredicate} that first applies the {@code before} functions to its
      * input, and then applies this predicate to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * short}.
      */
     @Nonnull
     default ThrowableBiShortPredicate<X> composeFromShort(
-            @Nonnull final ThrowableShortToFloatFunction<? extends X> before1,
-            @Nonnull final ThrowableShortToFloatFunction<? extends X> before2) {
+            @Nonnull ThrowableShortToFloatFunction<? extends X> before1,
+            @Nonnull ThrowableShortToFloatFunction<? extends X> before2) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         return (value1, value2) -> testThrows(before1.applyAsFloatThrows(value1), before2.applyAsFloatThrows(value2));
@@ -443,7 +441,7 @@ public interface ThrowableBiFloatPredicate<X extends Throwable> extends Lambda {
      */
     @Nonnull
     default <S> ThrowableBiFloatFunction<S, X> andThen(
-            @Nonnull final ThrowableBooleanFunction<? extends S, ? extends X> after) {
+            @Nonnull ThrowableBooleanFunction<? extends S, ? extends X> after) {
         Objects.requireNonNull(after);
         return (value1, value2) -> after.applyThrows(testThrows(value1, value2));
     }
@@ -457,12 +455,12 @@ public interface ThrowableBiFloatPredicate<X extends Throwable> extends Lambda {
      * @return A composed {@code ThrowableBiFloatPredicate} that first applies this predicate to its input, and then
      * applies the {@code after} operator to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * boolean}.
      */
     @Nonnull
     default ThrowableBiFloatPredicate<X> andThenToBoolean(
-            @Nonnull final ThrowableBooleanUnaryOperator<? extends X> after) {
+            @Nonnull ThrowableBooleanUnaryOperator<? extends X> after) {
         Objects.requireNonNull(after);
         return (value1, value2) -> after.applyAsBooleanThrows(testThrows(value1, value2));
     }
@@ -476,12 +474,12 @@ public interface ThrowableBiFloatPredicate<X extends Throwable> extends Lambda {
      * @return A composed {@code ThrowableBiFloatToByteFunction} that first applies this predicate to its input, and
      * then applies the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * byte}.
      */
     @Nonnull
     default ThrowableBiFloatToByteFunction<X> andThenToByte(
-            @Nonnull final ThrowableBooleanToByteFunction<? extends X> after) {
+            @Nonnull ThrowableBooleanToByteFunction<? extends X> after) {
         Objects.requireNonNull(after);
         return (value1, value2) -> after.applyAsByteThrows(testThrows(value1, value2));
     }
@@ -495,12 +493,12 @@ public interface ThrowableBiFloatPredicate<X extends Throwable> extends Lambda {
      * @return A composed {@code ThrowableBiFloatToCharFunction} that first applies this predicate to its input, and
      * then applies the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * char}.
      */
     @Nonnull
     default ThrowableBiFloatToCharFunction<X> andThenToChar(
-            @Nonnull final ThrowableBooleanToCharFunction<? extends X> after) {
+            @Nonnull ThrowableBooleanToCharFunction<? extends X> after) {
         Objects.requireNonNull(after);
         return (value1, value2) -> after.applyAsCharThrows(testThrows(value1, value2));
     }
@@ -514,12 +512,12 @@ public interface ThrowableBiFloatPredicate<X extends Throwable> extends Lambda {
      * @return A composed {@code ThrowableBiFloatToDoubleFunction} that first applies this predicate to its input, and
      * then applies the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * double}.
      */
     @Nonnull
     default ThrowableBiFloatToDoubleFunction<X> andThenToDouble(
-            @Nonnull final ThrowableBooleanToDoubleFunction<? extends X> after) {
+            @Nonnull ThrowableBooleanToDoubleFunction<? extends X> after) {
         Objects.requireNonNull(after);
         return (value1, value2) -> after.applyAsDoubleThrows(testThrows(value1, value2));
     }
@@ -533,12 +531,12 @@ public interface ThrowableBiFloatPredicate<X extends Throwable> extends Lambda {
      * @return A composed {@code ThrowableFloatBinaryOperator} that first applies this predicate to its input, and then
      * applies the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * float}.
      */
     @Nonnull
     default ThrowableFloatBinaryOperator<X> andThenToFloat(
-            @Nonnull final ThrowableBooleanToFloatFunction<? extends X> after) {
+            @Nonnull ThrowableBooleanToFloatFunction<? extends X> after) {
         Objects.requireNonNull(after);
         return (value1, value2) -> after.applyAsFloatThrows(testThrows(value1, value2));
     }
@@ -552,12 +550,12 @@ public interface ThrowableBiFloatPredicate<X extends Throwable> extends Lambda {
      * @return A composed {@code ThrowableBiFloatToIntFunction} that first applies this predicate to its input, and then
      * applies the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * int}.
      */
     @Nonnull
     default ThrowableBiFloatToIntFunction<X> andThenToInt(
-            @Nonnull final ThrowableBooleanToIntFunction<? extends X> after) {
+            @Nonnull ThrowableBooleanToIntFunction<? extends X> after) {
         Objects.requireNonNull(after);
         return (value1, value2) -> after.applyAsIntThrows(testThrows(value1, value2));
     }
@@ -571,12 +569,12 @@ public interface ThrowableBiFloatPredicate<X extends Throwable> extends Lambda {
      * @return A composed {@code ThrowableBiFloatToLongFunction} that first applies this predicate to its input, and
      * then applies the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * long}.
      */
     @Nonnull
     default ThrowableBiFloatToLongFunction<X> andThenToLong(
-            @Nonnull final ThrowableBooleanToLongFunction<? extends X> after) {
+            @Nonnull ThrowableBooleanToLongFunction<? extends X> after) {
         Objects.requireNonNull(after);
         return (value1, value2) -> after.applyAsLongThrows(testThrows(value1, value2));
     }
@@ -590,12 +588,12 @@ public interface ThrowableBiFloatPredicate<X extends Throwable> extends Lambda {
      * @return A composed {@code ThrowableBiFloatToShortFunction} that first applies this predicate to its input, and
      * then applies the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * short}.
      */
     @Nonnull
     default ThrowableBiFloatToShortFunction<X> andThenToShort(
-            @Nonnull final ThrowableBooleanToShortFunction<? extends X> after) {
+            @Nonnull ThrowableBooleanToShortFunction<? extends X> after) {
         Objects.requireNonNull(after);
         return (value1, value2) -> after.applyAsShortThrows(testThrows(value1, value2));
     }
@@ -610,7 +608,7 @@ public interface ThrowableBiFloatPredicate<X extends Throwable> extends Lambda {
      * @throws NullPointerException If given argument is {@code null}
      */
     @Nonnull
-    default ThrowableBiFloatConsumer<X> consume(@Nonnull final ThrowableBooleanConsumer<? extends X> consumer) {
+    default ThrowableBiFloatConsumer<X> consume(@Nonnull ThrowableBooleanConsumer<? extends X> consumer) {
         Objects.requireNonNull(consumer);
         return (value1, value2) -> consumer.acceptThrows(testThrows(value1, value2));
     }
@@ -641,7 +639,7 @@ public interface ThrowableBiFloatPredicate<X extends Throwable> extends Lambda {
      * @see #xor(ThrowableBiFloatPredicate)
      */
     @Nonnull
-    default ThrowableBiFloatPredicate<X> and(@Nonnull final ThrowableBiFloatPredicate<? extends X> other) {
+    default ThrowableBiFloatPredicate<X> and(@Nonnull ThrowableBiFloatPredicate<? extends X> other) {
         Objects.requireNonNull(other);
         return (value1, value2) -> testThrows(value1, value2) && other.testThrows(value1, value2);
     }
@@ -662,7 +660,7 @@ public interface ThrowableBiFloatPredicate<X extends Throwable> extends Lambda {
      * @see #xor(ThrowableBiFloatPredicate)
      */
     @Nonnull
-    default ThrowableBiFloatPredicate<X> or(@Nonnull final ThrowableBiFloatPredicate<? extends X> other) {
+    default ThrowableBiFloatPredicate<X> or(@Nonnull ThrowableBiFloatPredicate<? extends X> other) {
         Objects.requireNonNull(other);
         return (value1, value2) -> testThrows(value1, value2) || other.testThrows(value1, value2);
     }
@@ -681,7 +679,7 @@ public interface ThrowableBiFloatPredicate<X extends Throwable> extends Lambda {
      * @see #or(ThrowableBiFloatPredicate)
      */
     @Nonnull
-    default ThrowableBiFloatPredicate<X> xor(@Nonnull final ThrowableBiFloatPredicate<? extends X> other) {
+    default ThrowableBiFloatPredicate<X> xor(@Nonnull ThrowableBiFloatPredicate<? extends X> other) {
         Objects.requireNonNull(other);
         return (value1, value2) -> testThrows(value1, value2) ^ other.testThrows(value1, value2);
     }
@@ -705,10 +703,10 @@ public interface ThrowableBiFloatPredicate<X extends Throwable> extends Lambda {
         if (isMemoized()) {
             return this;
         } else {
-            final Map<Pair<Float, Float>, Boolean> cache = new ConcurrentHashMap<>();
-            final Object lock = new Object();
+            Map<Pair<Float, Float>, Boolean> cache = new ConcurrentHashMap<>();
+            Object lock = new Object();
             return (ThrowableBiFloatPredicate<X> & Memoized) (value1, value2) -> {
-                final boolean returnValue;
+                boolean returnValue;
                 synchronized (lock) {
                     returnValue = cache.computeIfAbsent(Pair.of(value1, value2), ThrowableFunction.of(
                             key -> testThrows(key.getLeft(), key.getRight())));
@@ -759,7 +757,7 @@ public interface ThrowableBiFloatPredicate<X extends Throwable> extends Lambda {
      * @see #nest()
      */
     @Nonnull
-    default BiFloatPredicate nest(@Nonnull final Function<? super Throwable, ? extends RuntimeException> mapper) {
+    default BiFloatPredicate nest(@Nonnull Function<? super Throwable, ? extends RuntimeException> mapper) {
         return recover(throwable -> {
             throw mapper.apply(throwable);
         });
@@ -781,15 +779,15 @@ public interface ThrowableBiFloatPredicate<X extends Throwable> extends Lambda {
      * recover} operation.
      */
     @Nonnull
-    default BiFloatPredicate recover(@Nonnull final Function<? super Throwable, ? extends BiFloatPredicate> recover) {
+    default BiFloatPredicate recover(@Nonnull Function<? super Throwable, ? extends BiFloatPredicate> recover) {
         Objects.requireNonNull(recover);
         return (value1, value2) -> {
             try {
-                return this.testThrows(value1, value2);
+                return testThrows(value1, value2);
             } catch (Error e) {
                 throw e;
             } catch (Throwable throwable) {
-                final BiFloatPredicate predicate = recover.apply(throwable);
+                BiFloatPredicate predicate = recover.apply(throwable);
                 Objects.requireNonNull(predicate, () -> "recover returned null for " + throwable.getClass() + ": "
                         + throwable.getMessage());
                 return predicate.test(value1, value2);
@@ -867,7 +865,7 @@ public interface ThrowableBiFloatPredicate<X extends Throwable> extends Lambda {
     default BiFloatPredicate sneakyThrow() {
         return (value1, value2) -> {
             try {
-                return this.testThrows(value1, value2);
+                return testThrows(value1, value2);
             } catch (RuntimeException | Error e) {
                 throw e;
             } catch (Throwable throwable) {

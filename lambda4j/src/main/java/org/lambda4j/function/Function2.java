@@ -13,14 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package org.lambda4j.function;
 
-import org.lambda4j.Lambda;
-import org.lambda4j.consumer.Consumer2;
-
-import javax.annotation.Nonnegative;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
@@ -28,9 +23,15 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
+import javax.annotation.Nonnegative;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
+import org.lambda4j.Lambda;
+import org.lambda4j.consumer.Consumer2;
+
 /**
- * Represents an operation that accepts one input argument and produces a
- * result.
+ * Represents an operation that accepts one input argument and produces a result.
  * <p>
  * This is a {@link FunctionalInterface} whose functional method is {@link #apply(Object)}.
  *
@@ -58,7 +59,7 @@ public interface Function2<T, R> extends Lambda, Function<T, R> {
      * Expression</a>
      * @see <a href="https://docs.oracle.com/javase/tutorial/java/javaOO/methodreferences.html">Method Reference</a>
      */
-    static <T, R> Function2<T, R> of(@Nullable final Function2<T, R> expression) {
+    static <T, R> Function2<T, R> of(@Nullable Function2<T, R> expression) {
         return expression;
     }
 
@@ -72,9 +73,9 @@ public interface Function2<T, R> extends Lambda, Function<T, R> {
      * @throws NullPointerException If given argument is {@code null}
      */
     @Nonnull
-    static <T, R> Function2<T, Optional<R>> lift(@Nonnull final Function<? super T, ? extends R> partial) {
+    static <T, R> Function2<T, Optional<R>> lift(@Nonnull Function<? super T, ? extends R> partial) {
         Objects.requireNonNull(partial);
-        return (t) -> Optional.ofNullable(partial.apply(t));
+        return t -> Optional.ofNullable(partial.apply(t));
     }
 
     /**
@@ -87,7 +88,7 @@ public interface Function2<T, R> extends Lambda, Function<T, R> {
      * @return The result from the given {@code Function2}.
      * @throws NullPointerException If given argument is {@code null}
      */
-    static <T, R> R call(@Nonnull final Function<? super T, ? extends R> function, T t) {
+    static <T, R> R call(@Nonnull Function<? super T, ? extends R> function, T t) {
         Objects.requireNonNull(function);
         return function.apply(t);
     }
@@ -96,11 +97,11 @@ public interface Function2<T, R> extends Lambda, Function<T, R> {
      * Returns a {@link Function2} that always returns its input argument.
      *
      * @param <T> The type of the argument to the function and of return from the function
-     * @return A {@code  Function2} that always returns its input argument
+     * @return A {@code Function2} that always returns its input argument
      */
     @Nonnull
     static <T> Function2<T, T> identity() {
-        return (t) -> t;
+        return t -> t;
     }
 
     /**
@@ -113,7 +114,7 @@ public interface Function2<T, R> extends Lambda, Function<T, R> {
      */
     @Nonnull
     static <T, R> Function2<T, R> constant(R ret) {
-        return (t) -> ret;
+        return t -> ret;
     }
 
     /**
@@ -122,6 +123,7 @@ public interface Function2<T, R> extends Lambda, Function<T, R> {
      * @param t The argument to the function
      * @return The return value from the function, which is its result.
      */
+    @Override
     R apply(T t);
 
     /**
@@ -136,9 +138,9 @@ public interface Function2<T, R> extends Lambda, Function<T, R> {
     }
 
     /**
-     * Returns a composed {@link Function2} that first applies the {@code before} function to its input, and
-     * then applies this function to the result.
-     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
+     * Returns a composed {@link Function2} that first applies the {@code before} function to its input, and then
+     * applies this function to the result. If evaluation of either operation throws an exception, it is relayed to the
+     * caller of the composed operation.
      *
      * @param <A> The type of the argument to the given function, and of composed function
      * @param before The function to apply before this function is applied
@@ -147,16 +149,17 @@ public interface Function2<T, R> extends Lambda, Function<T, R> {
      * @throws NullPointerException If given argument is {@code null}
      * @implSpec The input argument of this method is able to handle every type.
      */
+    @Override
     @Nonnull
-    default <A> Function2<A, R> compose(@Nonnull final Function<? super A, ? extends T> before) {
+    default <A> Function2<A, R> compose(@Nonnull Function<? super A, ? extends T> before) {
         Objects.requireNonNull(before);
-        return (a) -> apply(before.apply(a));
+        return a -> apply(before.apply(a));
     }
 
     /**
-     * Returns a composed {@link Function2} that first applies this function to its input, and then applies the
-     * {@code after} function to the result.
-     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
+     * Returns a composed {@link Function2} that first applies this function to its input, and then applies the {@code
+     * after} function to the result. If evaluation of either operation throws an exception, it is relayed to the caller
+     * of the composed operation.
      *
      * @param <S> The type of return value from the {@code after} function, and of the composed function
      * @param after The function to apply after this function is applied
@@ -165,16 +168,17 @@ public interface Function2<T, R> extends Lambda, Function<T, R> {
      * @throws NullPointerException If given argument is {@code null}
      * @implSpec The input argument of this method is able to return every type.
      */
+    @Override
     @Nonnull
-    default <S> Function2<T, S> andThen(@Nonnull final Function<? super R, ? extends S> after) {
+    default <S> Function2<T, S> andThen(@Nonnull Function<? super R, ? extends S> after) {
         Objects.requireNonNull(after);
-        return (t) -> after.apply(apply(t));
+        return t -> after.apply(apply(t));
     }
 
     /**
      * Returns a composed {@link Consumer2} that fist applies this function to its input, and then consumes the result
-     * using the given {@link Consumer}.
-     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
+     * using the given {@link Consumer}. If evaluation of either operation throws an exception, it is relayed to the
+     * caller of the composed operation.
      *
      * @param consumer The operation which consumes the result from this operation
      * @return A composed {@code Consumer2} that first applies this function to its input, and then consumes the result
@@ -182,9 +186,9 @@ public interface Function2<T, R> extends Lambda, Function<T, R> {
      * @throws NullPointerException If given argument is {@code null}
      */
     @Nonnull
-    default Consumer2<T> consume(@Nonnull final Consumer<? super R> consumer) {
+    default Consumer2<T> consume(@Nonnull Consumer<? super R> consumer) {
         Objects.requireNonNull(consumer);
-        return (t) -> consumer.accept(apply(t));
+        return t -> consumer.accept(apply(t));
     }
 
     /**
@@ -226,10 +230,10 @@ public interface Function2<T, R> extends Lambda, Function<T, R> {
         if (isMemoized()) {
             return this;
         } else {
-            final Map<T, R> cache = new ConcurrentHashMap<>();
-            final Object lock = new Object();
-            return (Function2<T, R> & Memoized) (t) -> {
-                final R returnValue;
+            Map<T, R> cache = new ConcurrentHashMap<>();
+            Object lock = new Object();
+            return (Function2<T, R> & Memoized) t -> {
+                R returnValue;
                 synchronized (lock) {
                     returnValue = cache.computeIfAbsent(t, this::apply);
                 }
@@ -239,9 +243,9 @@ public interface Function2<T, R> extends Lambda, Function<T, R> {
     }
 
     /**
-     * Converts this function to an equal function, which ensures that its result is not
-     * {@code null} using {@link Optional}. This method mainly exists to avoid unnecessary {@code NullPointerException}s
-     * through referencing {@code null} from this function.
+     * Converts this function to an equal function, which ensures that its result is not {@code null} using {@link
+     * Optional}. This method mainly exists to avoid unnecessary {@code NullPointerException}s through referencing
+     * {@code null} from this function.
      *
      * @return An equal function, which ensures that its result is not {@code null}.
      * @deprecated Use {@code lift} method for lifting this function.
@@ -249,7 +253,7 @@ public interface Function2<T, R> extends Lambda, Function<T, R> {
     @Deprecated
     @Nonnull
     default Function2<T, Optional<R>> nonNull() {
-        return (t) -> Optional.ofNullable(apply(t));
+        return t -> Optional.ofNullable(apply(t));
     }
 
 }

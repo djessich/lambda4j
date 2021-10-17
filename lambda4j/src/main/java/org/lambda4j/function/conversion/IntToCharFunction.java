@@ -13,7 +13,20 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package org.lambda4j.function.conversion;
+
+import java.util.Map;
+import java.util.Objects;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.function.DoubleToIntFunction;
+import java.util.function.IntUnaryOperator;
+import java.util.function.LongToIntFunction;
+import java.util.function.ToIntFunction;
+
+import javax.annotation.Nonnegative;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import org.lambda4j.Lambda;
 import org.lambda4j.consumer.CharConsumer;
@@ -27,20 +40,8 @@ import org.lambda4j.operator.unary.IntUnaryOperator2;
 import org.lambda4j.predicate.CharPredicate;
 import org.lambda4j.predicate.IntPredicate2;
 
-import javax.annotation.Nonnegative;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import java.util.Map;
-import java.util.Objects;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.function.DoubleToIntFunction;
-import java.util.function.IntUnaryOperator;
-import java.util.function.LongToIntFunction;
-import java.util.function.ToIntFunction;
-
 /**
- * Represents an operation that accepts one {@code int}-valued input argument and produces a
- * {@code char}-valued result.
+ * Represents an operation that accepts one {@code int}-valued input argument and produces a {@code char}-valued result.
  * This is a primitive specialization of {@link Function2}.
  * <p>
  * This is a {@link FunctionalInterface} whose functional method is {@link #applyAsChar(int)}.
@@ -65,7 +66,7 @@ public interface IntToCharFunction extends Lambda {
      * Expression</a>
      * @see <a href="https://docs.oracle.com/javase/tutorial/java/javaOO/methodreferences.html">Method Reference</a>
      */
-    static IntToCharFunction of(@Nullable final IntToCharFunction expression) {
+    static IntToCharFunction of(@Nullable IntToCharFunction expression) {
         return expression;
     }
 
@@ -77,7 +78,7 @@ public interface IntToCharFunction extends Lambda {
      * @return The result from the given {@code IntToCharFunction}.
      * @throws NullPointerException If given argument is {@code null}
      */
-    static char call(@Nonnull final IntToCharFunction function, int value) {
+    static char call(@Nonnull IntToCharFunction function, int value) {
         Objects.requireNonNull(function);
         return function.applyAsChar(value);
     }
@@ -90,7 +91,7 @@ public interface IntToCharFunction extends Lambda {
      */
     @Nonnull
     static IntToCharFunction constant(char ret) {
-        return (value) -> ret;
+        return value -> ret;
     }
 
     /**
@@ -113,9 +114,9 @@ public interface IntToCharFunction extends Lambda {
     }
 
     /**
-     * Returns a composed {@link ToCharFunction} that first applies the {@code before} function to its input, and
-     * then applies this function to the result.
-     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
+     * Returns a composed {@link ToCharFunction} that first applies the {@code before} function to its input, and then
+     * applies this function to the result. If evaluation of either operation throws an exception, it is relayed to the
+     * caller of the composed operation.
      *
      * @param <A> The type of the argument to the given function, and of composed function
      * @param before The function to apply before this function is applied
@@ -125,9 +126,9 @@ public interface IntToCharFunction extends Lambda {
      * @implSpec The input argument of this method is able to handle every type.
      */
     @Nonnull
-    default <A> ToCharFunction<A> compose(@Nonnull final ToIntFunction<? super A> before) {
+    default <A> ToCharFunction<A> compose(@Nonnull ToIntFunction<? super A> before) {
         Objects.requireNonNull(before);
-        return (a) -> applyAsChar(before.applyAsInt(a));
+        return a -> applyAsChar(before.applyAsInt(a));
     }
 
     /**
@@ -140,53 +141,51 @@ public interface IntToCharFunction extends Lambda {
      * @return A composed {@code BooleanToCharFunction} that first applies the {@code before} function to its input, and
      * then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * boolean}.
      */
     @Nonnull
-    default BooleanToCharFunction composeFromBoolean(@Nonnull final BooleanToIntFunction before) {
+    default BooleanToCharFunction composeFromBoolean(@Nonnull BooleanToIntFunction before) {
         Objects.requireNonNull(before);
-        return (value) -> applyAsChar(before.applyAsInt(value));
+        return value -> applyAsChar(before.applyAsInt(value));
     }
 
     /**
-     * Returns a composed {@link ByteToCharFunction} that first applies the {@code before} function to
-     * its input, and then applies this function to the result.
-     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
-     * This method is just convenience, to provide the ability to execute an operation which accepts {@code byte} input,
-     * before this primitive function is executed.
+     * Returns a composed {@link ByteToCharFunction} that first applies the {@code before} function to its input, and
+     * then applies this function to the result. If evaluation of either operation throws an exception, it is relayed to
+     * the caller of the composed operation. This method is just convenience, to provide the ability to execute an
+     * operation which accepts {@code byte} input, before this primitive function is executed.
      *
      * @param before The function to apply before this function is applied
      * @return A composed {@code ByteToCharFunction} that first applies the {@code before} function to its input, and
      * then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * byte}.
      */
     @Nonnull
-    default ByteToCharFunction composeFromByte(@Nonnull final ByteToIntFunction before) {
+    default ByteToCharFunction composeFromByte(@Nonnull ByteToIntFunction before) {
         Objects.requireNonNull(before);
-        return (value) -> applyAsChar(before.applyAsInt(value));
+        return value -> applyAsChar(before.applyAsInt(value));
     }
 
     /**
-     * Returns a composed {@link CharUnaryOperator} that first applies the {@code before} function to
-     * its input, and then applies this function to the result.
-     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
-     * This method is just convenience, to provide the ability to execute an operation which accepts {@code char} input,
-     * before this primitive function is executed.
+     * Returns a composed {@link CharUnaryOperator} that first applies the {@code before} function to its input, and
+     * then applies this function to the result. If evaluation of either operation throws an exception, it is relayed to
+     * the caller of the composed operation. This method is just convenience, to provide the ability to execute an
+     * operation which accepts {@code char} input, before this primitive function is executed.
      *
      * @param before The function to apply before this function is applied
      * @return A composed {@code CharUnaryOperator} that first applies the {@code before} function to its input, and
      * then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * char}.
      */
     @Nonnull
-    default CharUnaryOperator composeFromChar(@Nonnull final CharToIntFunction before) {
+    default CharUnaryOperator composeFromChar(@Nonnull CharToIntFunction before) {
         Objects.requireNonNull(before);
-        return (value) -> applyAsChar(before.applyAsInt(value));
+        return value -> applyAsChar(before.applyAsInt(value));
     }
 
     /**
@@ -199,13 +198,13 @@ public interface IntToCharFunction extends Lambda {
      * @return A composed {@code DoubleToCharFunction} that first applies the {@code before} function to its input, and
      * then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * double}.
      */
     @Nonnull
-    default DoubleToCharFunction composeFromDouble(@Nonnull final DoubleToIntFunction before) {
+    default DoubleToCharFunction composeFromDouble(@Nonnull DoubleToIntFunction before) {
         Objects.requireNonNull(before);
-        return (value) -> applyAsChar(before.applyAsInt(value));
+        return value -> applyAsChar(before.applyAsInt(value));
     }
 
     /**
@@ -218,53 +217,51 @@ public interface IntToCharFunction extends Lambda {
      * @return A composed {@code FloatToCharFunction} that first applies the {@code before} function to its input, and
      * then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * float}.
      */
     @Nonnull
-    default FloatToCharFunction composeFromFloat(@Nonnull final FloatToIntFunction before) {
+    default FloatToCharFunction composeFromFloat(@Nonnull FloatToIntFunction before) {
         Objects.requireNonNull(before);
-        return (value) -> applyAsChar(before.applyAsInt(value));
+        return value -> applyAsChar(before.applyAsInt(value));
     }
 
     /**
-     * Returns a composed {@link IntToCharFunction} that first applies the {@code before} operator to
-     * its input, and then applies this function to the result.
-     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
-     * This method is just convenience, to provide the ability to execute an operation which accepts {@code int} input,
-     * before this primitive function is executed.
+     * Returns a composed {@link IntToCharFunction} that first applies the {@code before} operator to its input, and
+     * then applies this function to the result. If evaluation of either operation throws an exception, it is relayed to
+     * the caller of the composed operation. This method is just convenience, to provide the ability to execute an
+     * operation which accepts {@code int} input, before this primitive function is executed.
      *
      * @param before The operator to apply before this function is applied
      * @return A composed {@code IntToCharFunction} that first applies the {@code before} operator to its input, and
      * then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * int}.
      */
     @Nonnull
-    default IntToCharFunction composeFromInt(@Nonnull final IntUnaryOperator before) {
+    default IntToCharFunction composeFromInt(@Nonnull IntUnaryOperator before) {
         Objects.requireNonNull(before);
-        return (value) -> applyAsChar(before.applyAsInt(value));
+        return value -> applyAsChar(before.applyAsInt(value));
     }
 
     /**
-     * Returns a composed {@link LongToCharFunction} that first applies the {@code before} function to
-     * its input, and then applies this function to the result.
-     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
-     * This method is just convenience, to provide the ability to execute an operation which accepts {@code long} input,
-     * before this primitive function is executed.
+     * Returns a composed {@link LongToCharFunction} that first applies the {@code before} function to its input, and
+     * then applies this function to the result. If evaluation of either operation throws an exception, it is relayed to
+     * the caller of the composed operation. This method is just convenience, to provide the ability to execute an
+     * operation which accepts {@code long} input, before this primitive function is executed.
      *
      * @param before The function to apply before this function is applied
      * @return A composed {@code LongToCharFunction} that first applies the {@code before} function to its input, and
      * then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * long}.
      */
     @Nonnull
-    default LongToCharFunction composeFromLong(@Nonnull final LongToIntFunction before) {
+    default LongToCharFunction composeFromLong(@Nonnull LongToIntFunction before) {
         Objects.requireNonNull(before);
-        return (value) -> applyAsChar(before.applyAsInt(value));
+        return value -> applyAsChar(before.applyAsInt(value));
     }
 
     /**
@@ -277,19 +274,19 @@ public interface IntToCharFunction extends Lambda {
      * @return A composed {@code ShortToCharFunction} that first applies the {@code before} function to its input, and
      * then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * short}.
      */
     @Nonnull
-    default ShortToCharFunction composeFromShort(@Nonnull final ShortToIntFunction before) {
+    default ShortToCharFunction composeFromShort(@Nonnull ShortToIntFunction before) {
         Objects.requireNonNull(before);
-        return (value) -> applyAsChar(before.applyAsInt(value));
+        return value -> applyAsChar(before.applyAsInt(value));
     }
 
     /**
      * Returns a composed {@link IntFunction2} that first applies this function to its input, and then applies the
-     * {@code after} function to the result.
-     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
+     * {@code after} function to the result. If evaluation of either operation throws an exception, it is relayed to the
+     * caller of the composed operation.
      *
      * @param <S> The type of return value from the {@code after} function, and of the composed function
      * @param after The function to apply after this function is applied
@@ -299,9 +296,9 @@ public interface IntToCharFunction extends Lambda {
      * @implSpec The input argument of this method is able to return every type.
      */
     @Nonnull
-    default <S> IntFunction2<S> andThen(@Nonnull final CharFunction<? extends S> after) {
+    default <S> IntFunction2<S> andThen(@Nonnull CharFunction<? extends S> after) {
         Objects.requireNonNull(after);
-        return (value) -> after.apply(applyAsChar(value));
+        return value -> after.apply(applyAsChar(value));
     }
 
     /**
@@ -314,13 +311,13 @@ public interface IntToCharFunction extends Lambda {
      * @return A composed {@code IntPredicate2} that first applies this function to its input, and then applies the
      * {@code after} predicate to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * boolean}.
      */
     @Nonnull
-    default IntPredicate2 andThenToBoolean(@Nonnull final CharPredicate after) {
+    default IntPredicate2 andThenToBoolean(@Nonnull CharPredicate after) {
         Objects.requireNonNull(after);
-        return (value) -> after.test(applyAsChar(value));
+        return value -> after.test(applyAsChar(value));
     }
 
     /**
@@ -333,13 +330,13 @@ public interface IntToCharFunction extends Lambda {
      * @return A composed {@code IntToByteFunction} that first applies this function to its input, and then applies the
      * {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * byte}.
      */
     @Nonnull
-    default IntToByteFunction andThenToByte(@Nonnull final CharToByteFunction after) {
+    default IntToByteFunction andThenToByte(@Nonnull CharToByteFunction after) {
         Objects.requireNonNull(after);
-        return (value) -> after.applyAsByte(applyAsChar(value));
+        return value -> after.applyAsByte(applyAsChar(value));
     }
 
     /**
@@ -352,13 +349,13 @@ public interface IntToCharFunction extends Lambda {
      * @return A composed {@code IntToCharFunction} that first applies this function to its input, and then applies the
      * {@code after} operator to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * char}.
      */
     @Nonnull
-    default IntToCharFunction andThenToChar(@Nonnull final CharUnaryOperator after) {
+    default IntToCharFunction andThenToChar(@Nonnull CharUnaryOperator after) {
         Objects.requireNonNull(after);
-        return (value) -> after.applyAsChar(applyAsChar(value));
+        return value -> after.applyAsChar(applyAsChar(value));
     }
 
     /**
@@ -371,13 +368,13 @@ public interface IntToCharFunction extends Lambda {
      * @return A composed {@code IntToDoubleFunction2} that first applies this function to its input, and then applies
      * the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * double}.
      */
     @Nonnull
-    default IntToDoubleFunction2 andThenToDouble(@Nonnull final CharToDoubleFunction after) {
+    default IntToDoubleFunction2 andThenToDouble(@Nonnull CharToDoubleFunction after) {
         Objects.requireNonNull(after);
-        return (value) -> after.applyAsDouble(applyAsChar(value));
+        return value -> after.applyAsDouble(applyAsChar(value));
     }
 
     /**
@@ -390,13 +387,13 @@ public interface IntToCharFunction extends Lambda {
      * @return A composed {@code IntToFloatFunction} that first applies this function to its input, and then applies the
      * {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * float}.
      */
     @Nonnull
-    default IntToFloatFunction andThenToFloat(@Nonnull final CharToFloatFunction after) {
+    default IntToFloatFunction andThenToFloat(@Nonnull CharToFloatFunction after) {
         Objects.requireNonNull(after);
-        return (value) -> after.applyAsFloat(applyAsChar(value));
+        return value -> after.applyAsFloat(applyAsChar(value));
     }
 
     /**
@@ -409,13 +406,13 @@ public interface IntToCharFunction extends Lambda {
      * @return A composed {@code IntUnaryOperator2} that first applies this function to its input, and then applies the
      * {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * int}.
      */
     @Nonnull
-    default IntUnaryOperator2 andThenToInt(@Nonnull final CharToIntFunction after) {
+    default IntUnaryOperator2 andThenToInt(@Nonnull CharToIntFunction after) {
         Objects.requireNonNull(after);
-        return (value) -> after.applyAsInt(applyAsChar(value));
+        return value -> after.applyAsInt(applyAsChar(value));
     }
 
     /**
@@ -428,13 +425,13 @@ public interface IntToCharFunction extends Lambda {
      * @return A composed {@code IntToLongFunction2} that first applies this function to its input, and then applies the
      * {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * long}.
      */
     @Nonnull
-    default IntToLongFunction2 andThenToLong(@Nonnull final CharToLongFunction after) {
+    default IntToLongFunction2 andThenToLong(@Nonnull CharToLongFunction after) {
         Objects.requireNonNull(after);
-        return (value) -> after.applyAsLong(applyAsChar(value));
+        return value -> after.applyAsLong(applyAsChar(value));
     }
 
     /**
@@ -447,13 +444,13 @@ public interface IntToCharFunction extends Lambda {
      * @return A composed {@code IntToShortFunction} that first applies this function to its input, and then applies the
      * {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * short}.
      */
     @Nonnull
-    default IntToShortFunction andThenToShort(@Nonnull final CharToShortFunction after) {
+    default IntToShortFunction andThenToShort(@Nonnull CharToShortFunction after) {
         Objects.requireNonNull(after);
-        return (value) -> after.applyAsShort(applyAsChar(value));
+        return value -> after.applyAsShort(applyAsChar(value));
     }
 
     /**
@@ -467,9 +464,9 @@ public interface IntToCharFunction extends Lambda {
      * @throws NullPointerException If given argument is {@code null}
      */
     @Nonnull
-    default IntConsumer2 consume(@Nonnull final CharConsumer consumer) {
+    default IntConsumer2 consume(@Nonnull CharConsumer consumer) {
         Objects.requireNonNull(consumer);
-        return (value) -> consumer.accept(applyAsChar(value));
+        return value -> consumer.accept(applyAsChar(value));
     }
 
     /**
@@ -491,10 +488,10 @@ public interface IntToCharFunction extends Lambda {
         if (isMemoized()) {
             return this;
         } else {
-            final Map<Integer, Character> cache = new ConcurrentHashMap<>();
-            final Object lock = new Object();
-            return (IntToCharFunction & Memoized) (value) -> {
-                final char returnValue;
+            Map<Integer, Character> cache = new ConcurrentHashMap<>();
+            Object lock = new Object();
+            return (IntToCharFunction & Memoized) value -> {
+                char returnValue;
                 synchronized (lock) {
                     returnValue = cache.computeIfAbsent(value, this::applyAsChar);
                 }
@@ -504,9 +501,9 @@ public interface IntToCharFunction extends Lambda {
     }
 
     /**
-     * Returns a composed {@link Function2} which represents this {@link IntToCharFunction}. Thereby the primitive
-     * input argument for this function is autoboxed. This method provides the possibility to use this
-     * {@code IntToCharFunction} with methods provided by the {@code JDK}.
+     * Returns a composed {@link Function2} which represents this {@link IntToCharFunction}. Thereby the primitive input
+     * argument for this function is autoboxed. This method provides the possibility to use this {@code
+     * IntToCharFunction} with methods provided by the {@code JDK}.
      *
      * @return A composed {@code Function2} which represents this {@code IntToCharFunction}.
      */

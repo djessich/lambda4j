@@ -13,7 +13,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package org.lambda4j.function.conversion;
+
+import java.util.Map;
+import java.util.Objects;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.function.Function;
+
+import javax.annotation.Nonnegative;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import org.lambda4j.Lambda;
 import org.lambda4j.consumer.ThrowableCharConsumer;
@@ -30,18 +40,10 @@ import org.lambda4j.operator.unary.ThrowableDoubleUnaryOperator;
 import org.lambda4j.predicate.ThrowableCharPredicate;
 import org.lambda4j.predicate.ThrowableDoublePredicate;
 
-import javax.annotation.Nonnegative;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import java.util.Map;
-import java.util.Objects;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.function.Function;
-
 /**
- * Represents an operation that accepts one {@code char}-valued input argument and produces a
- * {@code double}-valued result which is able to throw any {@link Throwable}.
- * This is a primitive specialization of {@link ThrowableFunction}.
+ * Represents an operation that accepts one {@code char}-valued input argument and produces a {@code double}-valued
+ * result which is able to throw any {@link Throwable}. This is a primitive specialization of {@link
+ * ThrowableFunction}.
  * <p>
  * This is a {@link FunctionalInterface} whose functional method is {@link #applyAsDoubleThrows(char)}.
  *
@@ -68,7 +70,7 @@ public interface ThrowableCharToDoubleFunction<X extends Throwable> extends Lamb
      * @see <a href="https://docs.oracle.com/javase/tutorial/java/javaOO/methodreferences.html">Method Reference</a>
      */
     static <X extends Throwable> ThrowableCharToDoubleFunction<X> of(
-            @Nullable final ThrowableCharToDoubleFunction<X> expression) {
+            @Nullable ThrowableCharToDoubleFunction<X> expression) {
         return expression;
     }
 
@@ -82,7 +84,7 @@ public interface ThrowableCharToDoubleFunction<X extends Throwable> extends Lamb
      * @throws NullPointerException If given argument is {@code null}
      * @throws X Any throwable from this functions action
      */
-    static <X extends Throwable> double call(@Nonnull final ThrowableCharToDoubleFunction<? extends X> function,
+    static <X extends Throwable> double call(@Nonnull ThrowableCharToDoubleFunction<? extends X> function,
             char value) throws X {
         Objects.requireNonNull(function);
         return function.applyAsDoubleThrows(value);
@@ -97,7 +99,7 @@ public interface ThrowableCharToDoubleFunction<X extends Throwable> extends Lamb
      */
     @Nonnull
     static <X extends Throwable> ThrowableCharToDoubleFunction<X> constant(double ret) {
-        return (value) -> ret;
+        return value -> ret;
     }
 
     /**
@@ -133,9 +135,9 @@ public interface ThrowableCharToDoubleFunction<X extends Throwable> extends Lamb
      */
     @Nonnull
     default <A> ThrowableToDoubleFunction<A, X> compose(
-            @Nonnull final ThrowableToCharFunction<? super A, ? extends X> before) {
+            @Nonnull ThrowableToCharFunction<? super A, ? extends X> before) {
         Objects.requireNonNull(before);
-        return (a) -> applyAsDoubleThrows(before.applyAsCharThrows(a));
+        return a -> applyAsDoubleThrows(before.applyAsCharThrows(a));
     }
 
     /**
@@ -147,54 +149,52 @@ public interface ThrowableCharToDoubleFunction<X extends Throwable> extends Lamb
      * @return A composed {@code ThrowableBooleanToDoubleFunction} that first applies the {@code before} function to its
      * input, and then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * boolean}.
      */
     @Nonnull
     default ThrowableBooleanToDoubleFunction<X> composeFromBoolean(
-            @Nonnull final ThrowableBooleanToCharFunction<? extends X> before) {
+            @Nonnull ThrowableBooleanToCharFunction<? extends X> before) {
         Objects.requireNonNull(before);
-        return (value) -> applyAsDoubleThrows(before.applyAsCharThrows(value));
+        return value -> applyAsDoubleThrows(before.applyAsCharThrows(value));
     }
 
     /**
-     * Returns a composed {@link ThrowableByteToDoubleFunction} that first applies the {@code before} function to
-     * its input, and then applies this function to the result.
-     * This method is just convenience, to provide the ability to execute an operation which accepts {@code byte} input,
-     * before this primitive function is executed.
+     * Returns a composed {@link ThrowableByteToDoubleFunction} that first applies the {@code before} function to its
+     * input, and then applies this function to the result. This method is just convenience, to provide the ability to
+     * execute an operation which accepts {@code byte} input, before this primitive function is executed.
      *
      * @param before The function to apply before this function is applied
      * @return A composed {@code ThrowableByteToDoubleFunction} that first applies the {@code before} function to its
      * input, and then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * byte}.
      */
     @Nonnull
     default ThrowableByteToDoubleFunction<X> composeFromByte(
-            @Nonnull final ThrowableByteToCharFunction<? extends X> before) {
+            @Nonnull ThrowableByteToCharFunction<? extends X> before) {
         Objects.requireNonNull(before);
-        return (value) -> applyAsDoubleThrows(before.applyAsCharThrows(value));
+        return value -> applyAsDoubleThrows(before.applyAsCharThrows(value));
     }
 
     /**
-     * Returns a composed {@link ThrowableCharToDoubleFunction} that first applies the {@code before} operator to
-     * its input, and then applies this function to the result.
-     * This method is just convenience, to provide the ability to execute an operation which accepts {@code char} input,
-     * before this primitive function is executed.
+     * Returns a composed {@link ThrowableCharToDoubleFunction} that first applies the {@code before} operator to its
+     * input, and then applies this function to the result. This method is just convenience, to provide the ability to
+     * execute an operation which accepts {@code char} input, before this primitive function is executed.
      *
      * @param before The operator to apply before this function is applied
      * @return A composed {@code ThrowableCharToDoubleFunction} that first applies the {@code before} operator to its
      * input, and then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * char}.
      */
     @Nonnull
     default ThrowableCharToDoubleFunction<X> composeFromChar(
-            @Nonnull final ThrowableCharUnaryOperator<? extends X> before) {
+            @Nonnull ThrowableCharUnaryOperator<? extends X> before) {
         Objects.requireNonNull(before);
-        return (value) -> applyAsDoubleThrows(before.applyAsCharThrows(value));
+        return value -> applyAsDoubleThrows(before.applyAsCharThrows(value));
     }
 
     /**
@@ -206,14 +206,14 @@ public interface ThrowableCharToDoubleFunction<X extends Throwable> extends Lamb
      * @return A composed {@code ThrowableDoubleUnaryOperator} that first applies the {@code before} function to its
      * input, and then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * double}.
      */
     @Nonnull
     default ThrowableDoubleUnaryOperator<X> composeFromDouble(
-            @Nonnull final ThrowableDoubleToCharFunction<? extends X> before) {
+            @Nonnull ThrowableDoubleToCharFunction<? extends X> before) {
         Objects.requireNonNull(before);
-        return (value) -> applyAsDoubleThrows(before.applyAsCharThrows(value));
+        return value -> applyAsDoubleThrows(before.applyAsCharThrows(value));
     }
 
     /**
@@ -225,54 +225,52 @@ public interface ThrowableCharToDoubleFunction<X extends Throwable> extends Lamb
      * @return A composed {@code ThrowableFloatToDoubleFunction} that first applies the {@code before} function to its
      * input, and then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * float}.
      */
     @Nonnull
     default ThrowableFloatToDoubleFunction<X> composeFromFloat(
-            @Nonnull final ThrowableFloatToCharFunction<? extends X> before) {
+            @Nonnull ThrowableFloatToCharFunction<? extends X> before) {
         Objects.requireNonNull(before);
-        return (value) -> applyAsDoubleThrows(before.applyAsCharThrows(value));
+        return value -> applyAsDoubleThrows(before.applyAsCharThrows(value));
     }
 
     /**
-     * Returns a composed {@link ThrowableIntToDoubleFunction} that first applies the {@code before} function to
-     * its input, and then applies this function to the result.
-     * This method is just convenience, to provide the ability to execute an operation which accepts {@code int} input,
-     * before this primitive function is executed.
+     * Returns a composed {@link ThrowableIntToDoubleFunction} that first applies the {@code before} function to its
+     * input, and then applies this function to the result. This method is just convenience, to provide the ability to
+     * execute an operation which accepts {@code int} input, before this primitive function is executed.
      *
      * @param before The function to apply before this function is applied
      * @return A composed {@code ThrowableIntToDoubleFunction} that first applies the {@code before} function to its
      * input, and then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * int}.
      */
     @Nonnull
     default ThrowableIntToDoubleFunction<X> composeFromInt(
-            @Nonnull final ThrowableIntToCharFunction<? extends X> before) {
+            @Nonnull ThrowableIntToCharFunction<? extends X> before) {
         Objects.requireNonNull(before);
-        return (value) -> applyAsDoubleThrows(before.applyAsCharThrows(value));
+        return value -> applyAsDoubleThrows(before.applyAsCharThrows(value));
     }
 
     /**
-     * Returns a composed {@link ThrowableLongToDoubleFunction} that first applies the {@code before} function to
-     * its input, and then applies this function to the result.
-     * This method is just convenience, to provide the ability to execute an operation which accepts {@code long} input,
-     * before this primitive function is executed.
+     * Returns a composed {@link ThrowableLongToDoubleFunction} that first applies the {@code before} function to its
+     * input, and then applies this function to the result. This method is just convenience, to provide the ability to
+     * execute an operation which accepts {@code long} input, before this primitive function is executed.
      *
      * @param before The function to apply before this function is applied
      * @return A composed {@code ThrowableLongToDoubleFunction} that first applies the {@code before} function to its
      * input, and then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * long}.
      */
     @Nonnull
     default ThrowableLongToDoubleFunction<X> composeFromLong(
-            @Nonnull final ThrowableLongToCharFunction<? extends X> before) {
+            @Nonnull ThrowableLongToCharFunction<? extends X> before) {
         Objects.requireNonNull(before);
-        return (value) -> applyAsDoubleThrows(before.applyAsCharThrows(value));
+        return value -> applyAsDoubleThrows(before.applyAsCharThrows(value));
     }
 
     /**
@@ -284,14 +282,14 @@ public interface ThrowableCharToDoubleFunction<X extends Throwable> extends Lamb
      * @return A composed {@code ThrowableShortToDoubleFunction} that first applies the {@code before} function to its
      * input, and then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * short}.
      */
     @Nonnull
     default ThrowableShortToDoubleFunction<X> composeFromShort(
-            @Nonnull final ThrowableShortToCharFunction<? extends X> before) {
+            @Nonnull ThrowableShortToCharFunction<? extends X> before) {
         Objects.requireNonNull(before);
-        return (value) -> applyAsDoubleThrows(before.applyAsCharThrows(value));
+        return value -> applyAsDoubleThrows(before.applyAsCharThrows(value));
     }
 
     /**
@@ -307,9 +305,9 @@ public interface ThrowableCharToDoubleFunction<X extends Throwable> extends Lamb
      */
     @Nonnull
     default <S> ThrowableCharFunction<S, X> andThen(
-            @Nonnull final ThrowableDoubleFunction<? extends S, ? extends X> after) {
+            @Nonnull ThrowableDoubleFunction<? extends S, ? extends X> after) {
         Objects.requireNonNull(after);
-        return (value) -> after.applyThrows(applyAsDoubleThrows(value));
+        return value -> after.applyThrows(applyAsDoubleThrows(value));
     }
 
     /**
@@ -321,13 +319,13 @@ public interface ThrowableCharToDoubleFunction<X extends Throwable> extends Lamb
      * @return A composed {@code ThrowableCharPredicate} that first applies this function to its input, and then applies
      * the {@code after} predicate to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * boolean}.
      */
     @Nonnull
-    default ThrowableCharPredicate<X> andThenToBoolean(@Nonnull final ThrowableDoublePredicate<? extends X> after) {
+    default ThrowableCharPredicate<X> andThenToBoolean(@Nonnull ThrowableDoublePredicate<? extends X> after) {
         Objects.requireNonNull(after);
-        return (value) -> after.testThrows(applyAsDoubleThrows(value));
+        return value -> after.testThrows(applyAsDoubleThrows(value));
     }
 
     /**
@@ -339,14 +337,14 @@ public interface ThrowableCharToDoubleFunction<X extends Throwable> extends Lamb
      * @return A composed {@code ThrowableCharToByteFunction} that first applies this function to its input, and then
      * applies the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * byte}.
      */
     @Nonnull
     default ThrowableCharToByteFunction<X> andThenToByte(
-            @Nonnull final ThrowableDoubleToByteFunction<? extends X> after) {
+            @Nonnull ThrowableDoubleToByteFunction<? extends X> after) {
         Objects.requireNonNull(after);
-        return (value) -> after.applyAsByteThrows(applyAsDoubleThrows(value));
+        return value -> after.applyAsByteThrows(applyAsDoubleThrows(value));
     }
 
     /**
@@ -358,14 +356,14 @@ public interface ThrowableCharToDoubleFunction<X extends Throwable> extends Lamb
      * @return A composed {@code ThrowableCharUnaryOperator} that first applies this function to its input, and then
      * applies the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * char}.
      */
     @Nonnull
     default ThrowableCharUnaryOperator<X> andThenToChar(
-            @Nonnull final ThrowableDoubleToCharFunction<? extends X> after) {
+            @Nonnull ThrowableDoubleToCharFunction<? extends X> after) {
         Objects.requireNonNull(after);
-        return (value) -> after.applyAsCharThrows(applyAsDoubleThrows(value));
+        return value -> after.applyAsCharThrows(applyAsDoubleThrows(value));
     }
 
     /**
@@ -377,14 +375,14 @@ public interface ThrowableCharToDoubleFunction<X extends Throwable> extends Lamb
      * @return A composed {@code ThrowableCharToDoubleFunction} that first applies this function to its input, and then
      * applies the {@code after} operator to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * double}.
      */
     @Nonnull
     default ThrowableCharToDoubleFunction<X> andThenToDouble(
-            @Nonnull final ThrowableDoubleUnaryOperator<? extends X> after) {
+            @Nonnull ThrowableDoubleUnaryOperator<? extends X> after) {
         Objects.requireNonNull(after);
-        return (value) -> after.applyAsDoubleThrows(applyAsDoubleThrows(value));
+        return value -> after.applyAsDoubleThrows(applyAsDoubleThrows(value));
     }
 
     /**
@@ -396,14 +394,14 @@ public interface ThrowableCharToDoubleFunction<X extends Throwable> extends Lamb
      * @return A composed {@code ThrowableCharToFloatFunction} that first applies this function to its input, and then
      * applies the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * float}.
      */
     @Nonnull
     default ThrowableCharToFloatFunction<X> andThenToFloat(
-            @Nonnull final ThrowableDoubleToFloatFunction<? extends X> after) {
+            @Nonnull ThrowableDoubleToFloatFunction<? extends X> after) {
         Objects.requireNonNull(after);
-        return (value) -> after.applyAsFloatThrows(applyAsDoubleThrows(value));
+        return value -> after.applyAsFloatThrows(applyAsDoubleThrows(value));
     }
 
     /**
@@ -415,13 +413,13 @@ public interface ThrowableCharToDoubleFunction<X extends Throwable> extends Lamb
      * @return A composed {@code ThrowableCharToIntFunction} that first applies this function to its input, and then
      * applies the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * int}.
      */
     @Nonnull
-    default ThrowableCharToIntFunction<X> andThenToInt(@Nonnull final ThrowableDoubleToIntFunction<? extends X> after) {
+    default ThrowableCharToIntFunction<X> andThenToInt(@Nonnull ThrowableDoubleToIntFunction<? extends X> after) {
         Objects.requireNonNull(after);
-        return (value) -> after.applyAsIntThrows(applyAsDoubleThrows(value));
+        return value -> after.applyAsIntThrows(applyAsDoubleThrows(value));
     }
 
     /**
@@ -433,14 +431,14 @@ public interface ThrowableCharToDoubleFunction<X extends Throwable> extends Lamb
      * @return A composed {@code ThrowableCharToLongFunction} that first applies this function to its input, and then
      * applies the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * long}.
      */
     @Nonnull
     default ThrowableCharToLongFunction<X> andThenToLong(
-            @Nonnull final ThrowableDoubleToLongFunction<? extends X> after) {
+            @Nonnull ThrowableDoubleToLongFunction<? extends X> after) {
         Objects.requireNonNull(after);
-        return (value) -> after.applyAsLongThrows(applyAsDoubleThrows(value));
+        return value -> after.applyAsLongThrows(applyAsDoubleThrows(value));
     }
 
     /**
@@ -452,14 +450,14 @@ public interface ThrowableCharToDoubleFunction<X extends Throwable> extends Lamb
      * @return A composed {@code ThrowableCharToShortFunction} that first applies this function to its input, and then
      * applies the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * short}.
      */
     @Nonnull
     default ThrowableCharToShortFunction<X> andThenToShort(
-            @Nonnull final ThrowableDoubleToShortFunction<? extends X> after) {
+            @Nonnull ThrowableDoubleToShortFunction<? extends X> after) {
         Objects.requireNonNull(after);
-        return (value) -> after.applyAsShortThrows(applyAsDoubleThrows(value));
+        return value -> after.applyAsShortThrows(applyAsDoubleThrows(value));
     }
 
     /**
@@ -472,9 +470,9 @@ public interface ThrowableCharToDoubleFunction<X extends Throwable> extends Lamb
      * @throws NullPointerException If given argument is {@code null}
      */
     @Nonnull
-    default ThrowableCharConsumer<X> consume(@Nonnull final ThrowableDoubleConsumer<? extends X> consumer) {
+    default ThrowableCharConsumer<X> consume(@Nonnull ThrowableDoubleConsumer<? extends X> consumer) {
         Objects.requireNonNull(consumer);
-        return (value) -> consumer.acceptThrows(applyAsDoubleThrows(value));
+        return value -> consumer.acceptThrows(applyAsDoubleThrows(value));
     }
 
     /**
@@ -496,10 +494,10 @@ public interface ThrowableCharToDoubleFunction<X extends Throwable> extends Lamb
         if (isMemoized()) {
             return this;
         } else {
-            final Map<Character, Double> cache = new ConcurrentHashMap<>();
-            final Object lock = new Object();
-            return (ThrowableCharToDoubleFunction<X> & Memoized) (value) -> {
-                final double returnValue;
+            Map<Character, Double> cache = new ConcurrentHashMap<>();
+            Object lock = new Object();
+            return (ThrowableCharToDoubleFunction<X> & Memoized) value -> {
+                double returnValue;
                 synchronized (lock) {
                     returnValue = cache.computeIfAbsent(value, ThrowableFunction.of(this::applyAsDoubleThrows));
                 }
@@ -550,7 +548,7 @@ public interface ThrowableCharToDoubleFunction<X extends Throwable> extends Lamb
      * @see #nest()
      */
     @Nonnull
-    default CharToDoubleFunction nest(@Nonnull final Function<? super Throwable, ? extends RuntimeException> mapper) {
+    default CharToDoubleFunction nest(@Nonnull Function<? super Throwable, ? extends RuntimeException> mapper) {
         return recover(throwable -> {
             throw mapper.apply(throwable);
         });
@@ -573,15 +571,15 @@ public interface ThrowableCharToDoubleFunction<X extends Throwable> extends Lamb
      */
     @Nonnull
     default CharToDoubleFunction recover(
-            @Nonnull final Function<? super Throwable, ? extends CharToDoubleFunction> recover) {
+            @Nonnull Function<? super Throwable, ? extends CharToDoubleFunction> recover) {
         Objects.requireNonNull(recover);
-        return (value) -> {
+        return value -> {
             try {
-                return this.applyAsDoubleThrows(value);
+                return applyAsDoubleThrows(value);
             } catch (Error e) {
                 throw e;
             } catch (Throwable throwable) {
-                final CharToDoubleFunction function = recover.apply(throwable);
+                CharToDoubleFunction function = recover.apply(throwable);
                 Objects.requireNonNull(function, () -> "recover returned null for " + throwable.getClass() + ": "
                         + throwable.getMessage());
                 return function.applyAsDouble(value);
@@ -657,9 +655,9 @@ public interface ThrowableCharToDoubleFunction<X extends Throwable> extends Lamb
      */
     @Nonnull
     default CharToDoubleFunction sneakyThrow() {
-        return (value) -> {
+        return value -> {
             try {
-                return this.applyAsDoubleThrows(value);
+                return applyAsDoubleThrows(value);
             } catch (RuntimeException | Error e) {
                 throw e;
             } catch (Throwable throwable) {

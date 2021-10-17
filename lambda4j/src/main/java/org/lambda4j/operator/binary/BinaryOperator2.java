@@ -13,21 +13,22 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package org.lambda4j.operator.binary;
 
-import org.lambda4j.Lambda;
-import org.lambda4j.function.bi.BiFunction2;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import java.util.Comparator;
 import java.util.Objects;
 import java.util.function.BinaryOperator;
 import java.util.function.UnaryOperator;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
+import org.lambda4j.Lambda;
+import org.lambda4j.function.bi.BiFunction2;
+
 /**
- * Represents an operation that accepts two input arguments and produces a
- * result.
+ * Represents an operation that accepts two input arguments and produces a result.
  * <p>
  * This is a {@link FunctionalInterface} whose functional method is {@link #apply(Object, Object)}.
  *
@@ -53,7 +54,7 @@ public interface BinaryOperator2<T> extends Lambda, BiFunction2<T, T, T>, Binary
      * Expression</a>
      * @see <a href="https://docs.oracle.com/javase/tutorial/java/javaOO/methodreferences.html">Method Reference</a>
      */
-    static <T> BinaryOperator2<T> of(@Nullable final BinaryOperator2<T> expression) {
+    static <T> BinaryOperator2<T> of(@Nullable BinaryOperator2<T> expression) {
         return expression;
     }
 
@@ -67,7 +68,7 @@ public interface BinaryOperator2<T> extends Lambda, BiFunction2<T, T, T>, Binary
      * @return The result from the given {@code BinaryOperator2}.
      * @throws NullPointerException If given argument is {@code null}
      */
-    static <T> T call(@Nonnull final BinaryOperator<T> operator, T t, T u) {
+    static <T> T call(@Nonnull BinaryOperator<T> operator, T t, T u) {
         Objects.requireNonNull(operator);
         return operator.apply(t, u);
     }
@@ -83,7 +84,7 @@ public interface BinaryOperator2<T> extends Lambda, BiFunction2<T, T, T>, Binary
      * @throws NullPointerException If given argument is {@code null}
      */
     @Nonnull
-    static <T> BinaryOperator2<T> onlyFirst(@Nonnull final UnaryOperator<T> operator) {
+    static <T> BinaryOperator2<T> onlyFirst(@Nonnull UnaryOperator<T> operator) {
         Objects.requireNonNull(operator);
         return (t, u) -> operator.apply(t);
     }
@@ -99,7 +100,7 @@ public interface BinaryOperator2<T> extends Lambda, BiFunction2<T, T, T>, Binary
      * @throws NullPointerException If given argument is {@code null}
      */
     @Nonnull
-    static <T> BinaryOperator2<T> onlySecond(@Nonnull final UnaryOperator<T> operator) {
+    static <T> BinaryOperator2<T> onlySecond(@Nonnull UnaryOperator<T> operator) {
         Objects.requireNonNull(operator);
         return (t, u) -> operator.apply(u);
     }
@@ -128,7 +129,7 @@ public interface BinaryOperator2<T> extends Lambda, BiFunction2<T, T, T>, Binary
      * @see BinaryOperator#minBy(Comparator)
      */
     @Nonnull
-    static <T> BinaryOperator2<T> minBy(@Nonnull final Comparator<T> comparator) {
+    static <T> BinaryOperator2<T> minBy(@Nonnull Comparator<T> comparator) {
         Objects.requireNonNull(comparator);
         return (t, u) -> comparator.compare(t, u) <= 0 ? t : u;
     }
@@ -145,7 +146,7 @@ public interface BinaryOperator2<T> extends Lambda, BiFunction2<T, T, T>, Binary
      * @see BinaryOperator#maxBy(Comparator)
      */
     @Nonnull
-    static <T> BinaryOperator2<T> maxBy(@Nonnull final Comparator<T> comparator) {
+    static <T> BinaryOperator2<T> maxBy(@Nonnull Comparator<T> comparator) {
         Objects.requireNonNull(comparator);
         return (t, u) -> comparator.compare(t, u) >= 0 ? t : u;
     }

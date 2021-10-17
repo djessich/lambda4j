@@ -13,7 +13,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package org.lambda4j.predicate.tri;
+
+import java.util.Map;
+import java.util.Objects;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.function.Function;
+
+import javax.annotation.Nonnegative;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
+import org.apache.commons.lang3.tuple.Triple;
 
 import org.lambda4j.Lambda;
 import org.lambda4j.consumer.ThrowableBooleanConsumer;
@@ -50,16 +62,6 @@ import org.lambda4j.operator.unary.ThrowableLongUnaryOperator;
 import org.lambda4j.predicate.ThrowableLongPredicate;
 import org.lambda4j.predicate.bi.ThrowableBiLongPredicate;
 
-import org.apache.commons.lang3.tuple.Triple;
-
-import javax.annotation.Nonnegative;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import java.util.Map;
-import java.util.Objects;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.function.Function;
-
 /**
  * Represents an predicate (boolean-valued function) of three {@code long}-valued input arguments which is able to throw
  * any {@link Throwable}. This is a primitive specialization of {@link ThrowableTriPredicate}.
@@ -89,7 +91,7 @@ public interface ThrowableTriLongPredicate<X extends Throwable> extends Lambda {
      * @see <a href="https://docs.oracle.com/javase/tutorial/java/javaOO/methodreferences.html">Method Reference</a>
      */
     static <X extends Throwable> ThrowableTriLongPredicate<X> of(
-            @Nullable final ThrowableTriLongPredicate<X> expression) {
+            @Nullable ThrowableTriLongPredicate<X> expression) {
         return expression;
     }
 
@@ -105,7 +107,7 @@ public interface ThrowableTriLongPredicate<X extends Throwable> extends Lambda {
      * @throws NullPointerException If given argument is {@code null}
      * @throws X Any throwable from this predicates action
      */
-    static <X extends Throwable> boolean call(@Nonnull final ThrowableTriLongPredicate<? extends X> predicate,
+    static <X extends Throwable> boolean call(@Nonnull ThrowableTriLongPredicate<? extends X> predicate,
             long value1, long value2, long value3) throws X {
         Objects.requireNonNull(predicate);
         return predicate.testThrows(value1, value2, value3);
@@ -123,7 +125,7 @@ public interface ThrowableTriLongPredicate<X extends Throwable> extends Lambda {
      */
     @Nonnull
     static <X extends Throwable> ThrowableTriLongPredicate<X> onlyFirst(
-            @Nonnull final ThrowableLongPredicate<? extends X> predicate) {
+            @Nonnull ThrowableLongPredicate<? extends X> predicate) {
         Objects.requireNonNull(predicate);
         return (value1, value2, value3) -> predicate.testThrows(value1);
     }
@@ -140,7 +142,7 @@ public interface ThrowableTriLongPredicate<X extends Throwable> extends Lambda {
      */
     @Nonnull
     static <X extends Throwable> ThrowableTriLongPredicate<X> onlySecond(
-            @Nonnull final ThrowableLongPredicate<? extends X> predicate) {
+            @Nonnull ThrowableLongPredicate<? extends X> predicate) {
         Objects.requireNonNull(predicate);
         return (value1, value2, value3) -> predicate.testThrows(value2);
     }
@@ -157,7 +159,7 @@ public interface ThrowableTriLongPredicate<X extends Throwable> extends Lambda {
      */
     @Nonnull
     static <X extends Throwable> ThrowableTriLongPredicate<X> onlyThird(
-            @Nonnull final ThrowableLongPredicate<? extends X> predicate) {
+            @Nonnull ThrowableLongPredicate<? extends X> predicate) {
         Objects.requireNonNull(predicate);
         return (value1, value2, value3) -> predicate.testThrows(value3);
     }
@@ -213,7 +215,7 @@ public interface ThrowableTriLongPredicate<X extends Throwable> extends Lambda {
      */
     @Nonnull
     static <X extends Throwable> ThrowableTriLongPredicate<X> isEqual(long target1, long target2, long target3) {
-        return (value1, value2, value3) -> (value1 == target1) && (value2 == target2) && (value3 == target3);
+        return (value1, value2, value3) -> value1 == target1 && value2 == target2 && value3 == target3;
     }
 
     /**
@@ -236,7 +238,7 @@ public interface ThrowableTriLongPredicate<X extends Throwable> extends Lambda {
      */
     @Nonnull
     default ThrowableBiLongPredicate<X> ptestThrows(long value1) {
-        return (value2, value3) -> this.testThrows(value1, value2, value3);
+        return (value2, value3) -> testThrows(value1, value2, value3);
     }
 
     /**
@@ -249,7 +251,7 @@ public interface ThrowableTriLongPredicate<X extends Throwable> extends Lambda {
      */
     @Nonnull
     default ThrowableLongPredicate<X> ptestThrows(long value1, long value2) {
-        return (value3) -> this.testThrows(value1, value2, value3);
+        return value3 -> testThrows(value1, value2, value3);
     }
 
     /**
@@ -280,14 +282,14 @@ public interface ThrowableTriLongPredicate<X extends Throwable> extends Lambda {
      */
     @Nonnull
     default <A, B, C> ThrowableTriPredicate<A, B, C, X> compose(
-            @Nonnull final ThrowableToLongFunction<? super A, ? extends X> before1,
-            @Nonnull final ThrowableToLongFunction<? super B, ? extends X> before2,
-            @Nonnull final ThrowableToLongFunction<? super C, ? extends X> before3) {
+            @Nonnull ThrowableToLongFunction<? super A, ? extends X> before1,
+            @Nonnull ThrowableToLongFunction<? super B, ? extends X> before2,
+            @Nonnull ThrowableToLongFunction<? super C, ? extends X> before3) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         Objects.requireNonNull(before3);
         return (a, b, c) -> testThrows(before1.applyAsLongThrows(a), before2.applyAsLongThrows(b),
-                                       before3.applyAsLongThrows(c));
+                before3.applyAsLongThrows(c));
     }
 
     /**
@@ -301,27 +303,26 @@ public interface ThrowableTriLongPredicate<X extends Throwable> extends Lambda {
      * @return A composed {@code ThrowableBooleanTernaryOperator} that first applies the {@code before} functions to its
      * input, and then applies this predicate to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * boolean}.
      */
     @Nonnull
     default ThrowableBooleanTernaryOperator<X> composeFromBoolean(
-            @Nonnull final ThrowableBooleanToLongFunction<? extends X> before1,
-            @Nonnull final ThrowableBooleanToLongFunction<? extends X> before2,
-            @Nonnull final ThrowableBooleanToLongFunction<? extends X> before3) {
+            @Nonnull ThrowableBooleanToLongFunction<? extends X> before1,
+            @Nonnull ThrowableBooleanToLongFunction<? extends X> before2,
+            @Nonnull ThrowableBooleanToLongFunction<? extends X> before3) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         Objects.requireNonNull(before3);
         return (value1, value2, value3) -> testThrows(before1.applyAsLongThrows(value1),
-                                                      before2.applyAsLongThrows(value2),
-                                                      before3.applyAsLongThrows(value3));
+                before2.applyAsLongThrows(value2),
+                before3.applyAsLongThrows(value3));
     }
 
     /**
-     * Returns a composed {@link ThrowableTriBytePredicate} that first applies the {@code before} functions to
-     * its input, and then applies this predicate to the result.
-     * This method is just convenience, to provide the ability to execute an operation which accepts {@code byte} input,
-     * before this primitive predicate is executed.
+     * Returns a composed {@link ThrowableTriBytePredicate} that first applies the {@code before} functions to its
+     * input, and then applies this predicate to the result. This method is just convenience, to provide the ability to
+     * execute an operation which accepts {@code byte} input, before this primitive predicate is executed.
      *
      * @param before1 The first function to apply before this predicate is applied
      * @param before2 The second function to apply before this predicate is applied
@@ -329,27 +330,26 @@ public interface ThrowableTriLongPredicate<X extends Throwable> extends Lambda {
      * @return A composed {@code ThrowableTriBytePredicate} that first applies the {@code before} functions to its
      * input, and then applies this predicate to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * byte}.
      */
     @Nonnull
     default ThrowableTriBytePredicate<X> composeFromByte(
-            @Nonnull final ThrowableByteToLongFunction<? extends X> before1,
-            @Nonnull final ThrowableByteToLongFunction<? extends X> before2,
-            @Nonnull final ThrowableByteToLongFunction<? extends X> before3) {
+            @Nonnull ThrowableByteToLongFunction<? extends X> before1,
+            @Nonnull ThrowableByteToLongFunction<? extends X> before2,
+            @Nonnull ThrowableByteToLongFunction<? extends X> before3) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         Objects.requireNonNull(before3);
         return (value1, value2, value3) -> testThrows(before1.applyAsLongThrows(value1),
-                                                      before2.applyAsLongThrows(value2),
-                                                      before3.applyAsLongThrows(value3));
+                before2.applyAsLongThrows(value2),
+                before3.applyAsLongThrows(value3));
     }
 
     /**
-     * Returns a composed {@link ThrowableTriCharPredicate} that first applies the {@code before} functions to
-     * its input, and then applies this predicate to the result.
-     * This method is just convenience, to provide the ability to execute an operation which accepts {@code char} input,
-     * before this primitive predicate is executed.
+     * Returns a composed {@link ThrowableTriCharPredicate} that first applies the {@code before} functions to its
+     * input, and then applies this predicate to the result. This method is just convenience, to provide the ability to
+     * execute an operation which accepts {@code char} input, before this primitive predicate is executed.
      *
      * @param before1 The first function to apply before this predicate is applied
      * @param before2 The second function to apply before this predicate is applied
@@ -357,20 +357,20 @@ public interface ThrowableTriLongPredicate<X extends Throwable> extends Lambda {
      * @return A composed {@code ThrowableTriCharPredicate} that first applies the {@code before} functions to its
      * input, and then applies this predicate to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * char}.
      */
     @Nonnull
     default ThrowableTriCharPredicate<X> composeFromChar(
-            @Nonnull final ThrowableCharToLongFunction<? extends X> before1,
-            @Nonnull final ThrowableCharToLongFunction<? extends X> before2,
-            @Nonnull final ThrowableCharToLongFunction<? extends X> before3) {
+            @Nonnull ThrowableCharToLongFunction<? extends X> before1,
+            @Nonnull ThrowableCharToLongFunction<? extends X> before2,
+            @Nonnull ThrowableCharToLongFunction<? extends X> before3) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         Objects.requireNonNull(before3);
         return (value1, value2, value3) -> testThrows(before1.applyAsLongThrows(value1),
-                                                      before2.applyAsLongThrows(value2),
-                                                      before3.applyAsLongThrows(value3));
+                before2.applyAsLongThrows(value2),
+                before3.applyAsLongThrows(value3));
     }
 
     /**
@@ -384,20 +384,20 @@ public interface ThrowableTriLongPredicate<X extends Throwable> extends Lambda {
      * @return A composed {@code ThrowableTriDoublePredicate} that first applies the {@code before} functions to its
      * input, and then applies this predicate to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * double}.
      */
     @Nonnull
     default ThrowableTriDoublePredicate<X> composeFromDouble(
-            @Nonnull final ThrowableDoubleToLongFunction<? extends X> before1,
-            @Nonnull final ThrowableDoubleToLongFunction<? extends X> before2,
-            @Nonnull final ThrowableDoubleToLongFunction<? extends X> before3) {
+            @Nonnull ThrowableDoubleToLongFunction<? extends X> before1,
+            @Nonnull ThrowableDoubleToLongFunction<? extends X> before2,
+            @Nonnull ThrowableDoubleToLongFunction<? extends X> before3) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         Objects.requireNonNull(before3);
         return (value1, value2, value3) -> testThrows(before1.applyAsLongThrows(value1),
-                                                      before2.applyAsLongThrows(value2),
-                                                      before3.applyAsLongThrows(value3));
+                before2.applyAsLongThrows(value2),
+                before3.applyAsLongThrows(value3));
     }
 
     /**
@@ -411,27 +411,26 @@ public interface ThrowableTriLongPredicate<X extends Throwable> extends Lambda {
      * @return A composed {@code ThrowableTriFloatPredicate} that first applies the {@code before} functions to its
      * input, and then applies this predicate to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * float}.
      */
     @Nonnull
     default ThrowableTriFloatPredicate<X> composeFromFloat(
-            @Nonnull final ThrowableFloatToLongFunction<? extends X> before1,
-            @Nonnull final ThrowableFloatToLongFunction<? extends X> before2,
-            @Nonnull final ThrowableFloatToLongFunction<? extends X> before3) {
+            @Nonnull ThrowableFloatToLongFunction<? extends X> before1,
+            @Nonnull ThrowableFloatToLongFunction<? extends X> before2,
+            @Nonnull ThrowableFloatToLongFunction<? extends X> before3) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         Objects.requireNonNull(before3);
         return (value1, value2, value3) -> testThrows(before1.applyAsLongThrows(value1),
-                                                      before2.applyAsLongThrows(value2),
-                                                      before3.applyAsLongThrows(value3));
+                before2.applyAsLongThrows(value2),
+                before3.applyAsLongThrows(value3));
     }
 
     /**
-     * Returns a composed {@link ThrowableTriIntPredicate} that first applies the {@code before} functions to
-     * its input, and then applies this predicate to the result.
-     * This method is just convenience, to provide the ability to execute an operation which accepts {@code int} input,
-     * before this primitive predicate is executed.
+     * Returns a composed {@link ThrowableTriIntPredicate} that first applies the {@code before} functions to its input,
+     * and then applies this predicate to the result. This method is just convenience, to provide the ability to execute
+     * an operation which accepts {@code int} input, before this primitive predicate is executed.
      *
      * @param before1 The first function to apply before this predicate is applied
      * @param before2 The second function to apply before this predicate is applied
@@ -439,26 +438,25 @@ public interface ThrowableTriLongPredicate<X extends Throwable> extends Lambda {
      * @return A composed {@code ThrowableTriIntPredicate} that first applies the {@code before} functions to its input,
      * and then applies this predicate to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * int}.
      */
     @Nonnull
-    default ThrowableTriIntPredicate<X> composeFromInt(@Nonnull final ThrowableIntToLongFunction<? extends X> before1,
-            @Nonnull final ThrowableIntToLongFunction<? extends X> before2,
-            @Nonnull final ThrowableIntToLongFunction<? extends X> before3) {
+    default ThrowableTriIntPredicate<X> composeFromInt(@Nonnull ThrowableIntToLongFunction<? extends X> before1,
+            @Nonnull ThrowableIntToLongFunction<? extends X> before2,
+            @Nonnull ThrowableIntToLongFunction<? extends X> before3) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         Objects.requireNonNull(before3);
         return (value1, value2, value3) -> testThrows(before1.applyAsLongThrows(value1),
-                                                      before2.applyAsLongThrows(value2),
-                                                      before3.applyAsLongThrows(value3));
+                before2.applyAsLongThrows(value2),
+                before3.applyAsLongThrows(value3));
     }
 
     /**
-     * Returns a composed {@link ThrowableTriLongPredicate} that first applies the {@code before} operators to
-     * its input, and then applies this predicate to the result.
-     * This method is just convenience, to provide the ability to execute an operation which accepts {@code long} input,
-     * before this primitive predicate is executed.
+     * Returns a composed {@link ThrowableTriLongPredicate} that first applies the {@code before} operators to its
+     * input, and then applies this predicate to the result. This method is just convenience, to provide the ability to
+     * execute an operation which accepts {@code long} input, before this primitive predicate is executed.
      *
      * @param before1 The first operator to apply before this predicate is applied
      * @param before2 The second operator to apply before this predicate is applied
@@ -466,19 +464,19 @@ public interface ThrowableTriLongPredicate<X extends Throwable> extends Lambda {
      * @return A composed {@code ThrowableTriLongPredicate} that first applies the {@code before} operators to its
      * input, and then applies this predicate to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * long}.
      */
     @Nonnull
-    default ThrowableTriLongPredicate<X> composeFromLong(@Nonnull final ThrowableLongUnaryOperator<? extends X> before1,
-            @Nonnull final ThrowableLongUnaryOperator<? extends X> before2,
-            @Nonnull final ThrowableLongUnaryOperator<? extends X> before3) {
+    default ThrowableTriLongPredicate<X> composeFromLong(@Nonnull ThrowableLongUnaryOperator<? extends X> before1,
+            @Nonnull ThrowableLongUnaryOperator<? extends X> before2,
+            @Nonnull ThrowableLongUnaryOperator<? extends X> before3) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         Objects.requireNonNull(before3);
         return (value1, value2, value3) -> testThrows(before1.applyAsLongThrows(value1),
-                                                      before2.applyAsLongThrows(value2),
-                                                      before3.applyAsLongThrows(value3));
+                before2.applyAsLongThrows(value2),
+                before3.applyAsLongThrows(value3));
     }
 
     /**
@@ -492,20 +490,20 @@ public interface ThrowableTriLongPredicate<X extends Throwable> extends Lambda {
      * @return A composed {@code ThrowableTriShortPredicate} that first applies the {@code before} functions to its
      * input, and then applies this predicate to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * short}.
      */
     @Nonnull
     default ThrowableTriShortPredicate<X> composeFromShort(
-            @Nonnull final ThrowableShortToLongFunction<? extends X> before1,
-            @Nonnull final ThrowableShortToLongFunction<? extends X> before2,
-            @Nonnull final ThrowableShortToLongFunction<? extends X> before3) {
+            @Nonnull ThrowableShortToLongFunction<? extends X> before1,
+            @Nonnull ThrowableShortToLongFunction<? extends X> before2,
+            @Nonnull ThrowableShortToLongFunction<? extends X> before3) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         Objects.requireNonNull(before3);
         return (value1, value2, value3) -> testThrows(before1.applyAsLongThrows(value1),
-                                                      before2.applyAsLongThrows(value2),
-                                                      before3.applyAsLongThrows(value3));
+                before2.applyAsLongThrows(value2),
+                before3.applyAsLongThrows(value3));
     }
 
     /**
@@ -521,7 +519,7 @@ public interface ThrowableTriLongPredicate<X extends Throwable> extends Lambda {
      */
     @Nonnull
     default <S> ThrowableTriLongFunction<S, X> andThen(
-            @Nonnull final ThrowableBooleanFunction<? extends S, ? extends X> after) {
+            @Nonnull ThrowableBooleanFunction<? extends S, ? extends X> after) {
         Objects.requireNonNull(after);
         return (value1, value2, value3) -> after.applyThrows(testThrows(value1, value2, value3));
     }
@@ -535,12 +533,12 @@ public interface ThrowableTriLongPredicate<X extends Throwable> extends Lambda {
      * @return A composed {@code ThrowableTriLongPredicate} that first applies this predicate to its input, and then
      * applies the {@code after} operator to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * boolean}.
      */
     @Nonnull
     default ThrowableTriLongPredicate<X> andThenToBoolean(
-            @Nonnull final ThrowableBooleanUnaryOperator<? extends X> after) {
+            @Nonnull ThrowableBooleanUnaryOperator<? extends X> after) {
         Objects.requireNonNull(after);
         return (value1, value2, value3) -> after.applyAsBooleanThrows(testThrows(value1, value2, value3));
     }
@@ -554,12 +552,12 @@ public interface ThrowableTriLongPredicate<X extends Throwable> extends Lambda {
      * @return A composed {@code ThrowableTriLongToByteFunction} that first applies this predicate to its input, and
      * then applies the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * byte}.
      */
     @Nonnull
     default ThrowableTriLongToByteFunction<X> andThenToByte(
-            @Nonnull final ThrowableBooleanToByteFunction<? extends X> after) {
+            @Nonnull ThrowableBooleanToByteFunction<? extends X> after) {
         Objects.requireNonNull(after);
         return (value1, value2, value3) -> after.applyAsByteThrows(testThrows(value1, value2, value3));
     }
@@ -573,12 +571,12 @@ public interface ThrowableTriLongPredicate<X extends Throwable> extends Lambda {
      * @return A composed {@code ThrowableTriLongToCharFunction} that first applies this predicate to its input, and
      * then applies the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * char}.
      */
     @Nonnull
     default ThrowableTriLongToCharFunction<X> andThenToChar(
-            @Nonnull final ThrowableBooleanToCharFunction<? extends X> after) {
+            @Nonnull ThrowableBooleanToCharFunction<? extends X> after) {
         Objects.requireNonNull(after);
         return (value1, value2, value3) -> after.applyAsCharThrows(testThrows(value1, value2, value3));
     }
@@ -592,12 +590,12 @@ public interface ThrowableTriLongPredicate<X extends Throwable> extends Lambda {
      * @return A composed {@code ThrowableTriLongToDoubleFunction} that first applies this predicate to its input, and
      * then applies the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * double}.
      */
     @Nonnull
     default ThrowableTriLongToDoubleFunction<X> andThenToDouble(
-            @Nonnull final ThrowableBooleanToDoubleFunction<? extends X> after) {
+            @Nonnull ThrowableBooleanToDoubleFunction<? extends X> after) {
         Objects.requireNonNull(after);
         return (value1, value2, value3) -> after.applyAsDoubleThrows(testThrows(value1, value2, value3));
     }
@@ -611,12 +609,12 @@ public interface ThrowableTriLongPredicate<X extends Throwable> extends Lambda {
      * @return A composed {@code ThrowableTriLongToFloatFunction} that first applies this predicate to its input, and
      * then applies the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * float}.
      */
     @Nonnull
     default ThrowableTriLongToFloatFunction<X> andThenToFloat(
-            @Nonnull final ThrowableBooleanToFloatFunction<? extends X> after) {
+            @Nonnull ThrowableBooleanToFloatFunction<? extends X> after) {
         Objects.requireNonNull(after);
         return (value1, value2, value3) -> after.applyAsFloatThrows(testThrows(value1, value2, value3));
     }
@@ -630,12 +628,12 @@ public interface ThrowableTriLongPredicate<X extends Throwable> extends Lambda {
      * @return A composed {@code ThrowableTriLongToIntFunction} that first applies this predicate to its input, and then
      * applies the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * int}.
      */
     @Nonnull
     default ThrowableTriLongToIntFunction<X> andThenToInt(
-            @Nonnull final ThrowableBooleanToIntFunction<? extends X> after) {
+            @Nonnull ThrowableBooleanToIntFunction<? extends X> after) {
         Objects.requireNonNull(after);
         return (value1, value2, value3) -> after.applyAsIntThrows(testThrows(value1, value2, value3));
     }
@@ -649,12 +647,12 @@ public interface ThrowableTriLongPredicate<X extends Throwable> extends Lambda {
      * @return A composed {@code ThrowableLongTernaryOperator} that first applies this predicate to its input, and then
      * applies the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * long}.
      */
     @Nonnull
     default ThrowableLongTernaryOperator<X> andThenToLong(
-            @Nonnull final ThrowableBooleanToLongFunction<? extends X> after) {
+            @Nonnull ThrowableBooleanToLongFunction<? extends X> after) {
         Objects.requireNonNull(after);
         return (value1, value2, value3) -> after.applyAsLongThrows(testThrows(value1, value2, value3));
     }
@@ -668,12 +666,12 @@ public interface ThrowableTriLongPredicate<X extends Throwable> extends Lambda {
      * @return A composed {@code ThrowableTriLongToShortFunction} that first applies this predicate to its input, and
      * then applies the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * short}.
      */
     @Nonnull
     default ThrowableTriLongToShortFunction<X> andThenToShort(
-            @Nonnull final ThrowableBooleanToShortFunction<? extends X> after) {
+            @Nonnull ThrowableBooleanToShortFunction<? extends X> after) {
         Objects.requireNonNull(after);
         return (value1, value2, value3) -> after.applyAsShortThrows(testThrows(value1, value2, value3));
     }
@@ -688,7 +686,7 @@ public interface ThrowableTriLongPredicate<X extends Throwable> extends Lambda {
      * @throws NullPointerException If given argument is {@code null}
      */
     @Nonnull
-    default ThrowableTriLongConsumer<X> consume(@Nonnull final ThrowableBooleanConsumer<? extends X> consumer) {
+    default ThrowableTriLongConsumer<X> consume(@Nonnull ThrowableBooleanConsumer<? extends X> consumer) {
         Objects.requireNonNull(consumer);
         return (value1, value2, value3) -> consumer.acceptThrows(testThrows(value1, value2, value3));
     }
@@ -719,10 +717,10 @@ public interface ThrowableTriLongPredicate<X extends Throwable> extends Lambda {
      * @see #xor(ThrowableTriLongPredicate)
      */
     @Nonnull
-    default ThrowableTriLongPredicate<X> and(@Nonnull final ThrowableTriLongPredicate<? extends X> other) {
+    default ThrowableTriLongPredicate<X> and(@Nonnull ThrowableTriLongPredicate<? extends X> other) {
         Objects.requireNonNull(other);
         return (value1, value2, value3) -> testThrows(value1, value2, value3) && other.testThrows(value1, value2,
-                                                                                                  value3);
+                value3);
     }
 
     /**
@@ -741,10 +739,10 @@ public interface ThrowableTriLongPredicate<X extends Throwable> extends Lambda {
      * @see #xor(ThrowableTriLongPredicate)
      */
     @Nonnull
-    default ThrowableTriLongPredicate<X> or(@Nonnull final ThrowableTriLongPredicate<? extends X> other) {
+    default ThrowableTriLongPredicate<X> or(@Nonnull ThrowableTriLongPredicate<? extends X> other) {
         Objects.requireNonNull(other);
         return (value1, value2, value3) -> testThrows(value1, value2, value3) || other.testThrows(value1, value2,
-                                                                                                  value3);
+                value3);
     }
 
     /**
@@ -761,10 +759,10 @@ public interface ThrowableTriLongPredicate<X extends Throwable> extends Lambda {
      * @see #or(ThrowableTriLongPredicate)
      */
     @Nonnull
-    default ThrowableTriLongPredicate<X> xor(@Nonnull final ThrowableTriLongPredicate<? extends X> other) {
+    default ThrowableTriLongPredicate<X> xor(@Nonnull ThrowableTriLongPredicate<? extends X> other) {
         Objects.requireNonNull(other);
         return (value1, value2, value3) -> testThrows(value1, value2, value3) ^ other.testThrows(value1, value2,
-                                                                                                 value3);
+                value3);
     }
 
     /**
@@ -786,10 +784,10 @@ public interface ThrowableTriLongPredicate<X extends Throwable> extends Lambda {
         if (isMemoized()) {
             return this;
         } else {
-            final Map<Triple<Long, Long, Long>, Boolean> cache = new ConcurrentHashMap<>();
-            final Object lock = new Object();
+            Map<Triple<Long, Long, Long>, Boolean> cache = new ConcurrentHashMap<>();
+            Object lock = new Object();
             return (ThrowableTriLongPredicate<X> & Memoized) (value1, value2, value3) -> {
-                final boolean returnValue;
+                boolean returnValue;
                 synchronized (lock) {
                     returnValue = cache.computeIfAbsent(Triple.of(value1, value2, value3), ThrowableFunction.of(
                             key -> testThrows(key.getLeft(), key.getMiddle(), key.getRight())));
@@ -840,7 +838,7 @@ public interface ThrowableTriLongPredicate<X extends Throwable> extends Lambda {
      * @see #nest()
      */
     @Nonnull
-    default TriLongPredicate nest(@Nonnull final Function<? super Throwable, ? extends RuntimeException> mapper) {
+    default TriLongPredicate nest(@Nonnull Function<? super Throwable, ? extends RuntimeException> mapper) {
         return recover(throwable -> {
             throw mapper.apply(throwable);
         });
@@ -862,15 +860,15 @@ public interface ThrowableTriLongPredicate<X extends Throwable> extends Lambda {
      * recover} operation.
      */
     @Nonnull
-    default TriLongPredicate recover(@Nonnull final Function<? super Throwable, ? extends TriLongPredicate> recover) {
+    default TriLongPredicate recover(@Nonnull Function<? super Throwable, ? extends TriLongPredicate> recover) {
         Objects.requireNonNull(recover);
         return (value1, value2, value3) -> {
             try {
-                return this.testThrows(value1, value2, value3);
+                return testThrows(value1, value2, value3);
             } catch (Error e) {
                 throw e;
             } catch (Throwable throwable) {
-                final TriLongPredicate predicate = recover.apply(throwable);
+                TriLongPredicate predicate = recover.apply(throwable);
                 Objects.requireNonNull(predicate, () -> "recover returned null for " + throwable.getClass() + ": "
                         + throwable.getMessage());
                 return predicate.test(value1, value2, value3);
@@ -948,7 +946,7 @@ public interface ThrowableTriLongPredicate<X extends Throwable> extends Lambda {
     default TriLongPredicate sneakyThrow() {
         return (value1, value2, value3) -> {
             try {
-                return this.testThrows(value1, value2, value3);
+                return testThrows(value1, value2, value3);
             } catch (RuntimeException | Error e) {
                 throw e;
             } catch (Throwable throwable) {

@@ -13,7 +13,27 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package org.lambda4j.operator.ternary;
+
+import java.util.Map;
+import java.util.Objects;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.function.DoubleToIntFunction;
+import java.util.function.IntConsumer;
+import java.util.function.IntFunction;
+import java.util.function.IntPredicate;
+import java.util.function.IntToDoubleFunction;
+import java.util.function.IntToLongFunction;
+import java.util.function.IntUnaryOperator;
+import java.util.function.LongToIntFunction;
+import java.util.function.ToIntFunction;
+
+import javax.annotation.Nonnegative;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
+import org.apache.commons.lang3.tuple.Triple;
 
 import org.lambda4j.Lambda;
 import org.lambda4j.consumer.tri.TriIntConsumer;
@@ -45,28 +65,9 @@ import org.lambda4j.operator.binary.IntBinaryOperator2;
 import org.lambda4j.operator.unary.IntUnaryOperator2;
 import org.lambda4j.predicate.tri.TriIntPredicate;
 
-import org.apache.commons.lang3.tuple.Triple;
-
-import javax.annotation.Nonnegative;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import java.util.Map;
-import java.util.Objects;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.function.DoubleToIntFunction;
-import java.util.function.IntConsumer;
-import java.util.function.IntFunction;
-import java.util.function.IntPredicate;
-import java.util.function.IntToDoubleFunction;
-import java.util.function.IntToLongFunction;
-import java.util.function.IntUnaryOperator;
-import java.util.function.LongToIntFunction;
-import java.util.function.ToIntFunction;
-
 /**
- * Represents an operation that accepts three {@code int}-valued input arguments and produces a
- * {@code int}-valued result.
- * This is a primitive specialization of {@link TernaryOperator}.
+ * Represents an operation that accepts three {@code int}-valued input arguments and produces a {@code int}-valued
+ * result. This is a primitive specialization of {@link TernaryOperator}.
  * <p>
  * This is a {@link FunctionalInterface} whose functional method is {@link #applyAsInt(int, int, int)}.
  *
@@ -90,7 +91,7 @@ public interface IntTernaryOperator extends Lambda {
      * Expression</a>
      * @see <a href="https://docs.oracle.com/javase/tutorial/java/javaOO/methodreferences.html">Method Reference</a>
      */
-    static IntTernaryOperator of(@Nullable final IntTernaryOperator expression) {
+    static IntTernaryOperator of(@Nullable IntTernaryOperator expression) {
         return expression;
     }
 
@@ -104,7 +105,7 @@ public interface IntTernaryOperator extends Lambda {
      * @return The result from the given {@code IntTernaryOperator}.
      * @throws NullPointerException If given argument is {@code null}
      */
-    static int call(@Nonnull final IntTernaryOperator operator, int value1, int value2, int value3) {
+    static int call(@Nonnull IntTernaryOperator operator, int value1, int value2, int value3) {
         Objects.requireNonNull(operator);
         return operator.applyAsInt(value1, value2, value3);
     }
@@ -119,7 +120,7 @@ public interface IntTernaryOperator extends Lambda {
      * @throws NullPointerException If given argument is {@code null}
      */
     @Nonnull
-    static IntTernaryOperator onlyFirst(@Nonnull final IntUnaryOperator operator) {
+    static IntTernaryOperator onlyFirst(@Nonnull IntUnaryOperator operator) {
         Objects.requireNonNull(operator);
         return (value1, value2, value3) -> operator.applyAsInt(value1);
     }
@@ -134,7 +135,7 @@ public interface IntTernaryOperator extends Lambda {
      * @throws NullPointerException If given argument is {@code null}
      */
     @Nonnull
-    static IntTernaryOperator onlySecond(@Nonnull final IntUnaryOperator operator) {
+    static IntTernaryOperator onlySecond(@Nonnull IntUnaryOperator operator) {
         Objects.requireNonNull(operator);
         return (value1, value2, value3) -> operator.applyAsInt(value2);
     }
@@ -149,7 +150,7 @@ public interface IntTernaryOperator extends Lambda {
      * @throws NullPointerException If given argument is {@code null}
      */
     @Nonnull
-    static IntTernaryOperator onlyThird(@Nonnull final IntUnaryOperator operator) {
+    static IntTernaryOperator onlyThird(@Nonnull IntUnaryOperator operator) {
         Objects.requireNonNull(operator);
         return (value1, value2, value3) -> operator.applyAsInt(value3);
     }
@@ -183,7 +184,7 @@ public interface IntTernaryOperator extends Lambda {
      */
     @Nonnull
     default IntBinaryOperator2 papplyAsInt(int value1) {
-        return (value2, value3) -> this.applyAsInt(value1, value2, value3);
+        return (value2, value3) -> applyAsInt(value1, value2, value3);
     }
 
     /**
@@ -195,7 +196,7 @@ public interface IntTernaryOperator extends Lambda {
      */
     @Nonnull
     default IntUnaryOperator2 papplyAsInt(int value1, int value2) {
-        return (value3) -> this.applyAsInt(value1, value2, value3);
+        return value3 -> applyAsInt(value1, value2, value3);
     }
 
     /**
@@ -211,8 +212,8 @@ public interface IntTernaryOperator extends Lambda {
 
     /**
      * Returns a composed {@link ToIntTriFunction} that first applies the {@code before} functions to its input, and
-     * then applies this operator to the result.
-     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
+     * then applies this operator to the result. If evaluation of either operation throws an exception, it is relayed to
+     * the caller of the composed operation.
      *
      * @param <A> The type of the argument to the first given function, and of composed function
      * @param <B> The type of the argument to the second given function, and of composed function
@@ -226,8 +227,8 @@ public interface IntTernaryOperator extends Lambda {
      * @implSpec The input argument of this method is able to handle every type.
      */
     @Nonnull
-    default <A, B, C> ToIntTriFunction<A, B, C> compose(@Nonnull final ToIntFunction<? super A> before1,
-            @Nonnull final ToIntFunction<? super B> before2, @Nonnull final ToIntFunction<? super C> before3) {
+    default <A, B, C> ToIntTriFunction<A, B, C> compose(@Nonnull ToIntFunction<? super A> before1,
+            @Nonnull ToIntFunction<? super B> before2, @Nonnull ToIntFunction<? super C> before3) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         Objects.requireNonNull(before3);
@@ -246,25 +247,24 @@ public interface IntTernaryOperator extends Lambda {
      * @return A composed {@code TriBooleanToIntFunction} that first applies the {@code before} functions to its input,
      * and then applies this operator to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * boolean}.
      */
     @Nonnull
-    default TriBooleanToIntFunction composeFromBoolean(@Nonnull final BooleanToIntFunction before1,
-            @Nonnull final BooleanToIntFunction before2, @Nonnull final BooleanToIntFunction before3) {
+    default TriBooleanToIntFunction composeFromBoolean(@Nonnull BooleanToIntFunction before1,
+            @Nonnull BooleanToIntFunction before2, @Nonnull BooleanToIntFunction before3) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         Objects.requireNonNull(before3);
         return (value1, value2, value3) -> applyAsInt(before1.applyAsInt(value1), before2.applyAsInt(value2),
-                                                      before3.applyAsInt(value3));
+                before3.applyAsInt(value3));
     }
 
     /**
-     * Returns a composed {@link TriByteToIntFunction} that first applies the {@code before} functions to
-     * its input, and then applies this operator to the result.
-     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
-     * This method is just convenience, to provide the ability to execute an operation which accepts {@code byte} input,
-     * before this primitive operator is executed.
+     * Returns a composed {@link TriByteToIntFunction} that first applies the {@code before} functions to its input, and
+     * then applies this operator to the result. If evaluation of either operation throws an exception, it is relayed to
+     * the caller of the composed operation. This method is just convenience, to provide the ability to execute an
+     * operation which accepts {@code byte} input, before this primitive operator is executed.
      *
      * @param before1 The first function to apply before this operator is applied
      * @param before2 The second function to apply before this operator is applied
@@ -272,25 +272,24 @@ public interface IntTernaryOperator extends Lambda {
      * @return A composed {@code TriByteToIntFunction} that first applies the {@code before} functions to its input, and
      * then applies this operator to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * byte}.
      */
     @Nonnull
-    default TriByteToIntFunction composeFromByte(@Nonnull final ByteToIntFunction before1,
-            @Nonnull final ByteToIntFunction before2, @Nonnull final ByteToIntFunction before3) {
+    default TriByteToIntFunction composeFromByte(@Nonnull ByteToIntFunction before1,
+            @Nonnull ByteToIntFunction before2, @Nonnull ByteToIntFunction before3) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         Objects.requireNonNull(before3);
         return (value1, value2, value3) -> applyAsInt(before1.applyAsInt(value1), before2.applyAsInt(value2),
-                                                      before3.applyAsInt(value3));
+                before3.applyAsInt(value3));
     }
 
     /**
-     * Returns a composed {@link TriCharToIntFunction} that first applies the {@code before} functions to
-     * its input, and then applies this operator to the result.
-     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
-     * This method is just convenience, to provide the ability to execute an operation which accepts {@code char} input,
-     * before this primitive operator is executed.
+     * Returns a composed {@link TriCharToIntFunction} that first applies the {@code before} functions to its input, and
+     * then applies this operator to the result. If evaluation of either operation throws an exception, it is relayed to
+     * the caller of the composed operation. This method is just convenience, to provide the ability to execute an
+     * operation which accepts {@code char} input, before this primitive operator is executed.
      *
      * @param before1 The first function to apply before this operator is applied
      * @param before2 The second function to apply before this operator is applied
@@ -298,17 +297,17 @@ public interface IntTernaryOperator extends Lambda {
      * @return A composed {@code TriCharToIntFunction} that first applies the {@code before} functions to its input, and
      * then applies this operator to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * char}.
      */
     @Nonnull
-    default TriCharToIntFunction composeFromChar(@Nonnull final CharToIntFunction before1,
-            @Nonnull final CharToIntFunction before2, @Nonnull final CharToIntFunction before3) {
+    default TriCharToIntFunction composeFromChar(@Nonnull CharToIntFunction before1,
+            @Nonnull CharToIntFunction before2, @Nonnull CharToIntFunction before3) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         Objects.requireNonNull(before3);
         return (value1, value2, value3) -> applyAsInt(before1.applyAsInt(value1), before2.applyAsInt(value2),
-                                                      before3.applyAsInt(value3));
+                before3.applyAsInt(value3));
     }
 
     /**
@@ -323,17 +322,17 @@ public interface IntTernaryOperator extends Lambda {
      * @return A composed {@code TriDoubleToIntFunction} that first applies the {@code before} functions to its input,
      * and then applies this operator to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * double}.
      */
     @Nonnull
-    default TriDoubleToIntFunction composeFromDouble(@Nonnull final DoubleToIntFunction before1,
-            @Nonnull final DoubleToIntFunction before2, @Nonnull final DoubleToIntFunction before3) {
+    default TriDoubleToIntFunction composeFromDouble(@Nonnull DoubleToIntFunction before1,
+            @Nonnull DoubleToIntFunction before2, @Nonnull DoubleToIntFunction before3) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         Objects.requireNonNull(before3);
         return (value1, value2, value3) -> applyAsInt(before1.applyAsInt(value1), before2.applyAsInt(value2),
-                                                      before3.applyAsInt(value3));
+                before3.applyAsInt(value3));
     }
 
     /**
@@ -348,25 +347,24 @@ public interface IntTernaryOperator extends Lambda {
      * @return A composed {@code TriFloatToIntFunction} that first applies the {@code before} functions to its input,
      * and then applies this operator to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * float}.
      */
     @Nonnull
-    default TriFloatToIntFunction composeFromFloat(@Nonnull final FloatToIntFunction before1,
-            @Nonnull final FloatToIntFunction before2, @Nonnull final FloatToIntFunction before3) {
+    default TriFloatToIntFunction composeFromFloat(@Nonnull FloatToIntFunction before1,
+            @Nonnull FloatToIntFunction before2, @Nonnull FloatToIntFunction before3) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         Objects.requireNonNull(before3);
         return (value1, value2, value3) -> applyAsInt(before1.applyAsInt(value1), before2.applyAsInt(value2),
-                                                      before3.applyAsInt(value3));
+                before3.applyAsInt(value3));
     }
 
     /**
-     * Returns a composed {@link IntTernaryOperator} that first applies the {@code before} operators to
-     * its input, and then applies this operator to the result.
-     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
-     * This method is just convenience, to provide the ability to execute an operation which accepts {@code int} input,
-     * before this primitive operator is executed.
+     * Returns a composed {@link IntTernaryOperator} that first applies the {@code before} operators to its input, and
+     * then applies this operator to the result. If evaluation of either operation throws an exception, it is relayed to
+     * the caller of the composed operation. This method is just convenience, to provide the ability to execute an
+     * operation which accepts {@code int} input, before this primitive operator is executed.
      *
      * @param before1 The first operator to apply before this operator is applied
      * @param before2 The second operator to apply before this operator is applied
@@ -374,25 +372,24 @@ public interface IntTernaryOperator extends Lambda {
      * @return A composed {@code IntTernaryOperator} that first applies the {@code before} operators to its input, and
      * then applies this operator to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * int}.
      */
     @Nonnull
-    default IntTernaryOperator composeFromInt(@Nonnull final IntUnaryOperator before1,
-            @Nonnull final IntUnaryOperator before2, @Nonnull final IntUnaryOperator before3) {
+    default IntTernaryOperator composeFromInt(@Nonnull IntUnaryOperator before1,
+            @Nonnull IntUnaryOperator before2, @Nonnull IntUnaryOperator before3) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         Objects.requireNonNull(before3);
         return (value1, value2, value3) -> applyAsInt(before1.applyAsInt(value1), before2.applyAsInt(value2),
-                                                      before3.applyAsInt(value3));
+                before3.applyAsInt(value3));
     }
 
     /**
-     * Returns a composed {@link TriLongToIntFunction} that first applies the {@code before} functions to
-     * its input, and then applies this operator to the result.
-     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
-     * This method is just convenience, to provide the ability to execute an operation which accepts {@code long} input,
-     * before this primitive operator is executed.
+     * Returns a composed {@link TriLongToIntFunction} that first applies the {@code before} functions to its input, and
+     * then applies this operator to the result. If evaluation of either operation throws an exception, it is relayed to
+     * the caller of the composed operation. This method is just convenience, to provide the ability to execute an
+     * operation which accepts {@code long} input, before this primitive operator is executed.
      *
      * @param before1 The first function to apply before this operator is applied
      * @param before2 The second function to apply before this operator is applied
@@ -400,17 +397,17 @@ public interface IntTernaryOperator extends Lambda {
      * @return A composed {@code TriLongToIntFunction} that first applies the {@code before} functions to its input, and
      * then applies this operator to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * long}.
      */
     @Nonnull
-    default TriLongToIntFunction composeFromLong(@Nonnull final LongToIntFunction before1,
-            @Nonnull final LongToIntFunction before2, @Nonnull final LongToIntFunction before3) {
+    default TriLongToIntFunction composeFromLong(@Nonnull LongToIntFunction before1,
+            @Nonnull LongToIntFunction before2, @Nonnull LongToIntFunction before3) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         Objects.requireNonNull(before3);
         return (value1, value2, value3) -> applyAsInt(before1.applyAsInt(value1), before2.applyAsInt(value2),
-                                                      before3.applyAsInt(value3));
+                before3.applyAsInt(value3));
     }
 
     /**
@@ -425,23 +422,23 @@ public interface IntTernaryOperator extends Lambda {
      * @return A composed {@code TriShortToIntFunction} that first applies the {@code before} functions to its input,
      * and then applies this operator to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * short}.
      */
     @Nonnull
-    default TriShortToIntFunction composeFromShort(@Nonnull final ShortToIntFunction before1,
-            @Nonnull final ShortToIntFunction before2, @Nonnull final ShortToIntFunction before3) {
+    default TriShortToIntFunction composeFromShort(@Nonnull ShortToIntFunction before1,
+            @Nonnull ShortToIntFunction before2, @Nonnull ShortToIntFunction before3) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         Objects.requireNonNull(before3);
         return (value1, value2, value3) -> applyAsInt(before1.applyAsInt(value1), before2.applyAsInt(value2),
-                                                      before3.applyAsInt(value3));
+                before3.applyAsInt(value3));
     }
 
     /**
      * Returns a composed {@link TriIntFunction} that first applies this operator to its input, and then applies the
-     * {@code after} function to the result.
-     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
+     * {@code after} function to the result. If evaluation of either operation throws an exception, it is relayed to the
+     * caller of the composed operation.
      *
      * @param <S> The type of return value from the {@code after} function, and of the composed function
      * @param after The function to apply after this operator is applied
@@ -451,7 +448,7 @@ public interface IntTernaryOperator extends Lambda {
      * @implSpec The input argument of this method is able to return every type.
      */
     @Nonnull
-    default <S> TriIntFunction<S> andThen(@Nonnull final IntFunction<? extends S> after) {
+    default <S> TriIntFunction<S> andThen(@Nonnull IntFunction<? extends S> after) {
         Objects.requireNonNull(after);
         return (value1, value2, value3) -> after.apply(applyAsInt(value1, value2, value3));
     }
@@ -466,11 +463,11 @@ public interface IntTernaryOperator extends Lambda {
      * @return A composed {@code TriIntPredicate} that first applies this operator to its input, and then applies the
      * {@code after} predicate to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * boolean}.
      */
     @Nonnull
-    default TriIntPredicate andThenToBoolean(@Nonnull final IntPredicate after) {
+    default TriIntPredicate andThenToBoolean(@Nonnull IntPredicate after) {
         Objects.requireNonNull(after);
         return (value1, value2, value3) -> after.test(applyAsInt(value1, value2, value3));
     }
@@ -485,11 +482,11 @@ public interface IntTernaryOperator extends Lambda {
      * @return A composed {@code TriIntToByteFunction} that first applies this operator to its input, and then applies
      * the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * byte}.
      */
     @Nonnull
-    default TriIntToByteFunction andThenToByte(@Nonnull final IntToByteFunction after) {
+    default TriIntToByteFunction andThenToByte(@Nonnull IntToByteFunction after) {
         Objects.requireNonNull(after);
         return (value1, value2, value3) -> after.applyAsByte(applyAsInt(value1, value2, value3));
     }
@@ -504,11 +501,11 @@ public interface IntTernaryOperator extends Lambda {
      * @return A composed {@code TriIntToCharFunction} that first applies this operator to its input, and then applies
      * the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * char}.
      */
     @Nonnull
-    default TriIntToCharFunction andThenToChar(@Nonnull final IntToCharFunction after) {
+    default TriIntToCharFunction andThenToChar(@Nonnull IntToCharFunction after) {
         Objects.requireNonNull(after);
         return (value1, value2, value3) -> after.applyAsChar(applyAsInt(value1, value2, value3));
     }
@@ -523,11 +520,11 @@ public interface IntTernaryOperator extends Lambda {
      * @return A composed {@code TriIntToDoubleFunction} that first applies this operator to its input, and then applies
      * the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * double}.
      */
     @Nonnull
-    default TriIntToDoubleFunction andThenToDouble(@Nonnull final IntToDoubleFunction after) {
+    default TriIntToDoubleFunction andThenToDouble(@Nonnull IntToDoubleFunction after) {
         Objects.requireNonNull(after);
         return (value1, value2, value3) -> after.applyAsDouble(applyAsInt(value1, value2, value3));
     }
@@ -542,11 +539,11 @@ public interface IntTernaryOperator extends Lambda {
      * @return A composed {@code TriIntToFloatFunction} that first applies this operator to its input, and then applies
      * the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * float}.
      */
     @Nonnull
-    default TriIntToFloatFunction andThenToFloat(@Nonnull final IntToFloatFunction after) {
+    default TriIntToFloatFunction andThenToFloat(@Nonnull IntToFloatFunction after) {
         Objects.requireNonNull(after);
         return (value1, value2, value3) -> after.applyAsFloat(applyAsInt(value1, value2, value3));
     }
@@ -561,11 +558,11 @@ public interface IntTernaryOperator extends Lambda {
      * @return A composed {@code IntTernaryOperator} that first applies this operator to its input, and then applies the
      * {@code after} operator to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * int}.
      */
     @Nonnull
-    default IntTernaryOperator andThenToInt(@Nonnull final IntUnaryOperator after) {
+    default IntTernaryOperator andThenToInt(@Nonnull IntUnaryOperator after) {
         Objects.requireNonNull(after);
         return (value1, value2, value3) -> after.applyAsInt(applyAsInt(value1, value2, value3));
     }
@@ -580,11 +577,11 @@ public interface IntTernaryOperator extends Lambda {
      * @return A composed {@code TriIntToLongFunction} that first applies this operator to its input, and then applies
      * the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * long}.
      */
     @Nonnull
-    default TriIntToLongFunction andThenToLong(@Nonnull final IntToLongFunction after) {
+    default TriIntToLongFunction andThenToLong(@Nonnull IntToLongFunction after) {
         Objects.requireNonNull(after);
         return (value1, value2, value3) -> after.applyAsLong(applyAsInt(value1, value2, value3));
     }
@@ -599,11 +596,11 @@ public interface IntTernaryOperator extends Lambda {
      * @return A composed {@code TriIntToShortFunction} that first applies this operator to its input, and then applies
      * the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * short}.
      */
     @Nonnull
-    default TriIntToShortFunction andThenToShort(@Nonnull final IntToShortFunction after) {
+    default TriIntToShortFunction andThenToShort(@Nonnull IntToShortFunction after) {
         Objects.requireNonNull(after);
         return (value1, value2, value3) -> after.applyAsShort(applyAsInt(value1, value2, value3));
     }
@@ -619,7 +616,7 @@ public interface IntTernaryOperator extends Lambda {
      * @throws NullPointerException If given argument is {@code null}
      */
     @Nonnull
-    default TriIntConsumer consume(@Nonnull final IntConsumer consumer) {
+    default TriIntConsumer consume(@Nonnull IntConsumer consumer) {
         Objects.requireNonNull(consumer);
         return (value1, value2, value3) -> consumer.accept(applyAsInt(value1, value2, value3));
     }
@@ -643,14 +640,14 @@ public interface IntTernaryOperator extends Lambda {
         if (isMemoized()) {
             return this;
         } else {
-            final Map<Triple<Integer, Integer, Integer>, Integer> cache = new ConcurrentHashMap<>();
-            final Object lock = new Object();
+            Map<Triple<Integer, Integer, Integer>, Integer> cache = new ConcurrentHashMap<>();
+            Object lock = new Object();
             return (IntTernaryOperator & Memoized) (value1, value2, value3) -> {
-                final int returnValue;
+                int returnValue;
                 synchronized (lock) {
                     returnValue = cache.computeIfAbsent(Triple.of(value1, value2, value3),
-                                                        key -> applyAsInt(key.getLeft(), key.getMiddle(),
-                                                                          key.getRight()));
+                            key -> applyAsInt(key.getLeft(), key.getMiddle(),
+                                    key.getRight()));
                 }
                 return returnValue;
             };

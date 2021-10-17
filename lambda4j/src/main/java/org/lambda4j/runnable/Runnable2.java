@@ -13,15 +13,38 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package org.lambda4j.runnable;
 
-import org.lambda4j.Lambda;
+import java.util.Objects;
 
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import java.util.Objects;
 
+import org.lambda4j.Lambda;
+
+/**
+ * The {@link Runnable} interface should be implemented by any class whose instances are intended to be executed by a
+ * thread. The class must define a method of no arguments called {@link #run()}. This extension is able to throw any
+ * {@link Throwable}.
+ * <p>
+ * This interface is designed to provide a common protocol for objects that wish to execute code while they are active.
+ * For example, {@code Runnable} is implemented by class {@link Thread}. Being active simply means that a thread has
+ * been started and has not yet been stopped.
+ * <p>
+ * In addition, {@code Runnable} provides the means for a class to be active while not subclassing {@code Thread}. A
+ * class that implements {@code Runnable} can run without subclassing {@code Thread} by instantiating a {@code Thread}
+ * instance and passing itself in as the target. In most cases, the {@code Runnable} interface should be used if you are
+ * only planning to override the {@link #run()} method and no other {@code Thread} methods. This is important because
+ * classes should not be subclassed unless the programmer intends on modifying or enhancing the fundamental behavior of
+ * the class.
+ * <p>
+ * This is a {@link FunctionalInterface} whose functional method is {@link #run()}.
+ *
+ * @apiNote This is a JDK lambda.
+ * @see Runnable
+ */
 @SuppressWarnings("unused")
 @FunctionalInterface
 public interface Runnable2 extends Lambda, Runnable {
@@ -39,7 +62,7 @@ public interface Runnable2 extends Lambda, Runnable {
      * Expression</a>
      * @see <a href="https://docs.oracle.com/javase/tutorial/java/javaOO/methodreferences.html">Method Reference</a>
      */
-    static Runnable2 of(@Nullable final Runnable2 expression) {
+    static Runnable2 of(@Nullable Runnable2 expression) {
         return expression;
     }
 
@@ -49,7 +72,7 @@ public interface Runnable2 extends Lambda, Runnable {
      * @param runnable The runnable to be called
      * @throws NullPointerException If given argument is {@code null}
      */
-    static void call(@Nonnull final Runnable runnable) {
+    static void call(@Nonnull Runnable runnable) {
         Objects.requireNonNull(runnable);
         runnable.run();
     }
@@ -57,6 +80,7 @@ public interface Runnable2 extends Lambda, Runnable {
     /**
      * Applies this runnable to the given argument.
      */
+    @Override
     void run();
 
     /**
@@ -72,9 +96,8 @@ public interface Runnable2 extends Lambda, Runnable {
 
     /**
      * Returns a composed {@link Runnable2} that performs, in sequence, this runnable followed by the {@code after}
-     * runnable.
-     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
-     * If performing this runnable throws an exception, the {@code after} runnable will not be performed.
+     * runnable. If evaluation of either operation throws an exception, it is relayed to the caller of the composed
+     * operation. If performing this runnable throws an exception, the {@code after} runnable will not be performed.
      *
      * @param after The runnable to apply after this runnable is applied
      * @return A composed {@link Runnable2} that performs, in sequence, this runnable followed by the {@code after}
@@ -82,7 +105,7 @@ public interface Runnable2 extends Lambda, Runnable {
      * @throws NullPointerException If given argument is {@code null}
      */
     @Nonnull
-    default Runnable2 andThen(@Nonnull final Runnable after) {
+    default Runnable2 andThen(@Nonnull Runnable after) {
         Objects.requireNonNull(after);
         return () -> {
             run();

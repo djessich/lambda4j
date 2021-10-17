@@ -13,19 +13,20 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package org.lambda4j.operator.unary;
+
+import java.util.Objects;
+import java.util.function.UnaryOperator;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import org.lambda4j.Lambda;
 import org.lambda4j.function.Function2;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import java.util.Objects;
-import java.util.function.UnaryOperator;
-
 /**
- * Represents an operation that accepts one input argument and produces a
- * result.
+ * Represents an operation that accepts one input argument and produces a result.
  * <p>
  * This is a {@link FunctionalInterface} whose functional method is {@link #apply(Object)}.
  *
@@ -51,7 +52,7 @@ public interface UnaryOperator2<T> extends Lambda, Function2<T, T>, UnaryOperato
      * Expression</a>
      * @see <a href="https://docs.oracle.com/javase/tutorial/java/javaOO/methodreferences.html">Method Reference</a>
      */
-    static <T> UnaryOperator2<T> of(@Nullable final UnaryOperator2<T> expression) {
+    static <T> UnaryOperator2<T> of(@Nullable UnaryOperator2<T> expression) {
         return expression;
     }
 
@@ -64,7 +65,7 @@ public interface UnaryOperator2<T> extends Lambda, Function2<T, T>, UnaryOperato
      * @return The result from the given {@code UnaryOperator2}.
      * @throws NullPointerException If given argument is {@code null}
      */
-    static <T> T call(@Nonnull final UnaryOperator<T> operator, T t) {
+    static <T> T call(@Nonnull UnaryOperator<T> operator, T t) {
         Objects.requireNonNull(operator);
         return operator.apply(t);
     }
@@ -73,11 +74,11 @@ public interface UnaryOperator2<T> extends Lambda, Function2<T, T>, UnaryOperato
      * Returns a {@link UnaryOperator2} that always returns its input argument.
      *
      * @param <T> The type of the argument to the operator and of return from the operator
-     * @return A {@code  UnaryOperator2} that always returns its input argument
+     * @return A {@code UnaryOperator2} that always returns its input argument
      */
     @Nonnull
     static <T> UnaryOperator2<T> identity() {
-        return (t) -> t;
+        return t -> t;
     }
 
     /**
@@ -89,7 +90,7 @@ public interface UnaryOperator2<T> extends Lambda, Function2<T, T>, UnaryOperato
      */
     @Nonnull
     static <T> UnaryOperator2<T> constant(T ret) {
-        return (t) -> ret;
+        return t -> ret;
     }
 
 }

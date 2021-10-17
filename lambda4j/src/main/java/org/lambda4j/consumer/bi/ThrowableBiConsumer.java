@@ -13,22 +13,24 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package org.lambda4j.consumer.bi;
+
+import java.util.Objects;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
+
+import javax.annotation.Nonnegative;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
+import org.apache.commons.lang3.tuple.Pair;
 
 import org.lambda4j.Lambda;
 import org.lambda4j.consumer.ThrowableConsumer;
 import org.lambda4j.core.exception.ThrownByFunctionalInterfaceException;
 import org.lambda4j.core.util.ThrowableUtils;
 import org.lambda4j.function.ThrowableFunction;
-
-import org.apache.commons.lang3.tuple.Pair;
-
-import javax.annotation.Nonnegative;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import java.util.Objects;
-import java.util.function.BiConsumer;
-import java.util.function.Function;
 
 /**
  * Represents an operation that accepts two input arguments and returns no result which is able to throw any {@link
@@ -65,7 +67,7 @@ public interface ThrowableBiConsumer<T, U, X extends Throwable> extends Lambda, 
      * @see <a href="https://docs.oracle.com/javase/tutorial/java/javaOO/methodreferences.html">Method Reference</a>
      */
     static <T, U, X extends Throwable> ThrowableBiConsumer<T, U, X> of(
-            @Nullable final ThrowableBiConsumer<T, U, X> expression) {
+            @Nullable ThrowableBiConsumer<T, U, X> expression) {
         return expression;
     }
 
@@ -82,7 +84,7 @@ public interface ThrowableBiConsumer<T, U, X extends Throwable> extends Lambda, 
      * @throws X Any throwable from this consumers action
      */
     static <T, U, X extends Throwable> void call(
-            @Nonnull final ThrowableBiConsumer<? super T, ? super U, ? extends X> consumer, T t, U u) throws X {
+            @Nonnull ThrowableBiConsumer<? super T, ? super U, ? extends X> consumer, T t, U u) throws X {
         Objects.requireNonNull(consumer);
         consumer.acceptThrows(t, u);
     }
@@ -101,7 +103,7 @@ public interface ThrowableBiConsumer<T, U, X extends Throwable> extends Lambda, 
      */
     @Nonnull
     static <T, U, X extends Throwable> ThrowableBiConsumer<T, U, X> onlyFirst(
-            @Nonnull final ThrowableConsumer<? super T, ? extends X> consumer) {
+            @Nonnull ThrowableConsumer<? super T, ? extends X> consumer) {
         Objects.requireNonNull(consumer);
         return (t, u) -> consumer.acceptThrows(t);
     }
@@ -120,7 +122,7 @@ public interface ThrowableBiConsumer<T, U, X extends Throwable> extends Lambda, 
      */
     @Nonnull
     static <T, U, X extends Throwable> ThrowableBiConsumer<T, U, X> onlySecond(
-            @Nonnull final ThrowableConsumer<? super U, ? extends X> consumer) {
+            @Nonnull ThrowableConsumer<? super U, ? extends X> consumer) {
         Objects.requireNonNull(consumer);
         return (t, u) -> consumer.acceptThrows(u);
     }
@@ -149,14 +151,6 @@ public interface ThrowableBiConsumer<T, U, X extends Throwable> extends Lambda, 
      */
     @Override
     default void accept(T t, U u) {
-        // TODO: Remove commented code below
-    /*try {
-          this.acceptThrows(t, u);
-    } catch (RuntimeException | Error e) {
-        throw e;
-    } catch (Throwable throwable) {
-        throw new ThrownByFunctionalInterfaceException(throwable.getMessage(), throwable);
-    }*/
         nest().accept(t, u);
     }
 
@@ -181,7 +175,7 @@ public interface ThrowableBiConsumer<T, U, X extends Throwable> extends Lambda, 
      */
     @Nonnull
     default ThrowableConsumer<U, X> pacceptThrows(T t) {
-        return (u) -> this.acceptThrows(t, u);
+        return u -> acceptThrows(t, u);
     }
 
     /**
@@ -210,8 +204,8 @@ public interface ThrowableBiConsumer<T, U, X extends Throwable> extends Lambda, 
      */
     @Nonnull
     default <A, B> ThrowableBiConsumer<A, B, X> compose(
-            @Nonnull final ThrowableFunction<? super A, ? extends T, ? extends X> before1,
-            @Nonnull final ThrowableFunction<? super B, ? extends U, ? extends X> before2) {
+            @Nonnull ThrowableFunction<? super A, ? extends T, ? extends X> before1,
+            @Nonnull ThrowableFunction<? super B, ? extends U, ? extends X> before2) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         return (a, b) -> acceptThrows(before1.applyThrows(a), before2.applyThrows(b));
@@ -229,7 +223,7 @@ public interface ThrowableBiConsumer<T, U, X extends Throwable> extends Lambda, 
      */
     @Nonnull
     default ThrowableBiConsumer<T, U, X> andThen(
-            @Nonnull final ThrowableBiConsumer<? super T, ? super U, ? extends X> after) {
+            @Nonnull ThrowableBiConsumer<? super T, ? super U, ? extends X> after) {
         Objects.requireNonNull(after);
         return (t, u) -> {
             acceptThrows(t, u);
@@ -286,7 +280,7 @@ public interface ThrowableBiConsumer<T, U, X extends Throwable> extends Lambda, 
      * @see #nest()
      */
     @Nonnull
-    default BiConsumer2<T, U> nest(@Nonnull final Function<? super Throwable, ? extends RuntimeException> mapper) {
+    default BiConsumer2<T, U> nest(@Nonnull Function<? super Throwable, ? extends RuntimeException> mapper) {
         return recover(throwable -> {
             throw mapper.apply(throwable);
         });
@@ -308,15 +302,15 @@ public interface ThrowableBiConsumer<T, U, X extends Throwable> extends Lambda, 
      */
     @Nonnull
     default BiConsumer2<T, U> recover(
-            @Nonnull final Function<? super Throwable, ? extends BiConsumer<? super T, ? super U>> recover) {
+            @Nonnull Function<? super Throwable, ? extends BiConsumer<? super T, ? super U>> recover) {
         Objects.requireNonNull(recover);
         return (t, u) -> {
             try {
-                this.acceptThrows(t, u);
+                acceptThrows(t, u);
             } catch (Error e) {
                 throw e;
             } catch (Throwable throwable) {
-                final BiConsumer<? super T, ? super U> consumer = recover.apply(throwable);
+                BiConsumer<? super T, ? super U> consumer = recover.apply(throwable);
                 Objects.requireNonNull(consumer, () -> "recover returned null for " + throwable.getClass() + ": "
                         + throwable.getMessage());
                 consumer.accept(t, u);
@@ -325,12 +319,12 @@ public interface ThrowableBiConsumer<T, U, X extends Throwable> extends Lambda, 
     }
 
     /**
-     * Returns a composed {@link BiConsumer2} that applies this consumer to its input and sneakily throws the
-     * thrown {@link Throwable} from it, if it is not of type {@link RuntimeException} or {@link Error}. This means that
-     * each throwable thrown from the returned composed consumer behaves exactly the same as an <em>unchecked</em>
-     * throwable does. As a result, there is no need to handle the throwable of this consumer in the returned composed
-     * consumer by either wrapping it in an <em>unchecked</em> throwable or to declare it in the {@code throws} clause,
-     * as it would be done in a non sneaky throwing consumer.
+     * Returns a composed {@link BiConsumer2} that applies this consumer to its input and sneakily throws the thrown
+     * {@link Throwable} from it, if it is not of type {@link RuntimeException} or {@link Error}. This means that each
+     * throwable thrown from the returned composed consumer behaves exactly the same as an <em>unchecked</em> throwable
+     * does. As a result, there is no need to handle the throwable of this consumer in the returned composed consumer by
+     * either wrapping it in an <em>unchecked</em> throwable or to declare it in the {@code throws} clause, as it would
+     * be done in a non sneaky throwing consumer.
      * <p>
      * What sneaky throwing simply does, is to fake out the compiler and thus it bypasses the principle of
      * <em>checked</em> throwables. On the JVM (class file) level, all throwables, checked or not, can be thrown
@@ -394,7 +388,7 @@ public interface ThrowableBiConsumer<T, U, X extends Throwable> extends Lambda, 
     default BiConsumer2<T, U> sneakyThrow() {
         return (t, u) -> {
             try {
-                this.acceptThrows(t, u);
+                acceptThrows(t, u);
             } catch (RuntimeException | Error e) {
                 throw e;
             } catch (Throwable throwable) {

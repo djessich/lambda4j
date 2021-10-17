@@ -13,22 +13,24 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package org.lambda4j.supplier;
+
+import java.util.Objects;
+import java.util.Optional;
+import java.util.concurrent.atomic.AtomicReference;
+import java.util.function.Function;
+import java.util.function.Supplier;
+
+import javax.annotation.Nonnegative;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import org.lambda4j.Lambda;
 import org.lambda4j.consumer.ThrowableConsumer;
 import org.lambda4j.core.exception.ThrownByFunctionalInterfaceException;
 import org.lambda4j.core.util.ThrowableUtils;
 import org.lambda4j.function.ThrowableFunction;
-
-import javax.annotation.Nonnegative;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import java.util.Objects;
-import java.util.Optional;
-import java.util.concurrent.atomic.AtomicReference;
-import java.util.function.Function;
-import java.util.function.Supplier;
 
 /**
  * Represents a supplier of results which is able to throw any {@link Throwable}.
@@ -62,7 +64,7 @@ public interface ThrowableSupplier<R, X extends Throwable> extends Lambda, Suppl
      * Expression</a>
      * @see <a href="https://docs.oracle.com/javase/tutorial/java/javaOO/methodreferences.html">Method Reference</a>
      */
-    static <R, X extends Throwable> ThrowableSupplier<R, X> of(@Nullable final ThrowableSupplier<R, X> expression) {
+    static <R, X extends Throwable> ThrowableSupplier<R, X> of(@Nullable ThrowableSupplier<R, X> expression) {
         return expression;
     }
 
@@ -79,7 +81,7 @@ public interface ThrowableSupplier<R, X extends Throwable> extends Lambda, Suppl
      */
     @Nonnull
     static <R, X extends Throwable> ThrowableSupplier<Optional<R>, X> lift(
-            @Nonnull final ThrowableSupplier<? extends R, ? extends X> partial) {
+            @Nonnull ThrowableSupplier<? extends R, ? extends X> partial) {
         Objects.requireNonNull(partial);
         return () -> Optional.ofNullable(partial.getThrows());
     }
@@ -94,7 +96,7 @@ public interface ThrowableSupplier<R, X extends Throwable> extends Lambda, Suppl
      * @throws NullPointerException If given argument is {@code null}
      * @throws X Any throwable from this suppliers action
      */
-    static <R, X extends Throwable> R call(@Nonnull final ThrowableSupplier<? extends R, ? extends X> supplier) throws
+    static <R, X extends Throwable> R call(@Nonnull ThrowableSupplier<? extends R, ? extends X> supplier) throws
             X {
         Objects.requireNonNull(supplier);
         return supplier.getThrows();
@@ -134,14 +136,6 @@ public interface ThrowableSupplier<R, X extends Throwable> extends Lambda, Suppl
      */
     @Override
     default R get() {
-        // TODO: Remove commented code below
-    /*try {
-         return this.getThrows();
-    } catch (RuntimeException | Error e) {
-        throw e;
-    } catch (Throwable throwable) {
-        throw new ThrownByFunctionalInterfaceException(throwable.getMessage(), throwable);
-    }*/
         return nest().get();
     }
 
@@ -169,14 +163,14 @@ public interface ThrowableSupplier<R, X extends Throwable> extends Lambda, Suppl
      */
     @Nonnull
     default <S> ThrowableSupplier<S, X> andThen(
-            @Nonnull final ThrowableFunction<? super R, ? extends S, ? extends X> after) {
+            @Nonnull ThrowableFunction<? super R, ? extends S, ? extends X> after) {
         Objects.requireNonNull(after);
         return () -> after.applyThrows(getThrows());
     }
 
     /**
-     * Returns a composed {@link ThrowableConsumer} that first gets the result from this supplier, and then consumes
-     * the result using the given {@link ThrowableConsumer}.
+     * Returns a composed {@link ThrowableConsumer} that first gets the result from this supplier, and then consumes the
+     * result using the given {@link ThrowableConsumer}.
      *
      * @param consumer The operation which consumes the result from this operation
      * @return A composed {@code ThrowableConsumer} that first gets the result from this supplier, and then consumes the
@@ -188,7 +182,7 @@ public interface ThrowableSupplier<R, X extends Throwable> extends Lambda, Suppl
      * {@code null} when the resulting consumer is called with {@code Consumer#accept(Object)}.
      */
     @Nonnull
-    default ThrowableConsumer<Void, X> consume(@Nonnull final ThrowableConsumer<? super R, ? extends X> consumer) {
+    default ThrowableConsumer<Void, X> consume(@Nonnull ThrowableConsumer<? super R, ? extends X> consumer) {
         Objects.requireNonNull(consumer);
         return ignored -> consumer.acceptThrows(getThrows());
     }
@@ -207,6 +201,7 @@ public interface ThrowableSupplier<R, X extends Throwable> extends Lambda, Suppl
      * @implNote The returned memoized supplier can be safely used concurrently from multiple threads which makes it
      * thread-safe.
      */
+    @SuppressWarnings("checkstyle:NestedIfDepth")
     @Nonnull
     default ThrowableSupplier<R, X> memoized() {
         if (isMemoized()) {
@@ -219,7 +214,7 @@ public interface ThrowableSupplier<R, X extends Throwable> extends Lambda, Suppl
                     synchronized (this) {
                         returnValue = cache.get();
                         if (returnValue == null) {
-                            returnValue = this.getThrows();
+                            returnValue = getThrows();
                             cache.set(returnValue);
                         }
                     }
@@ -230,9 +225,9 @@ public interface ThrowableSupplier<R, X extends Throwable> extends Lambda, Suppl
     }
 
     /**
-     * Converts this supplier to an equal supplier, which ensures that its result is not
-     * {@code null} using {@link Optional}. This method mainly exists to avoid unnecessary {@code NullPointerException}s
-     * through referencing {@code null} from this supplier.
+     * Converts this supplier to an equal supplier, which ensures that its result is not {@code null} using {@link
+     * Optional}. This method mainly exists to avoid unnecessary {@code NullPointerException}s through referencing
+     * {@code null} from this supplier.
      *
      * @return An equal supplier, which ensures that its result is not {@code null}.
      * @deprecated Use {@code lift} method for lifting this function.
@@ -272,7 +267,7 @@ public interface ThrowableSupplier<R, X extends Throwable> extends Lambda, Suppl
      * @see #nest()
      */
     @Nonnull
-    default Supplier2<R> nest(@Nonnull final Function<? super Throwable, ? extends RuntimeException> mapper) {
+    default Supplier2<R> nest(@Nonnull Function<? super Throwable, ? extends RuntimeException> mapper) {
         return recover(throwable -> {
             throw mapper.apply(throwable);
         });
@@ -293,15 +288,15 @@ public interface ThrowableSupplier<R, X extends Throwable> extends Lambda, Suppl
      * recover} operation.
      */
     @Nonnull
-    default Supplier2<R> recover(@Nonnull final Function<? super Throwable, ? extends Supplier<? extends R>> recover) {
+    default Supplier2<R> recover(@Nonnull Function<? super Throwable, ? extends Supplier<? extends R>> recover) {
         Objects.requireNonNull(recover);
         return () -> {
             try {
-                return this.getThrows();
+                return getThrows();
             } catch (Error e) {
                 throw e;
             } catch (Throwable throwable) {
-                final Supplier<? extends R> supplier = recover.apply(throwable);
+                Supplier<? extends R> supplier = recover.apply(throwable);
                 Objects.requireNonNull(supplier, () -> "recover returned null for " + throwable.getClass() + ": "
                         + throwable.getMessage());
                 return supplier.get();
@@ -310,12 +305,12 @@ public interface ThrowableSupplier<R, X extends Throwable> extends Lambda, Suppl
     }
 
     /**
-     * Returns a composed {@link Supplier2} that applies this supplier to its input and sneakily throws the
-     * thrown {@link Throwable} from it, if it is not of type {@link RuntimeException} or {@link Error}. This means that
-     * each throwable thrown from the returned composed supplier behaves exactly the same as an <em>unchecked</em>
-     * throwable does. As a result, there is no need to handle the throwable of this supplier in the returned composed
-     * supplier by either wrapping it in an <em>unchecked</em> throwable or to declare it in the {@code throws} clause,
-     * as it would be done in a non sneaky throwing supplier.
+     * Returns a composed {@link Supplier2} that applies this supplier to its input and sneakily throws the thrown
+     * {@link Throwable} from it, if it is not of type {@link RuntimeException} or {@link Error}. This means that each
+     * throwable thrown from the returned composed supplier behaves exactly the same as an <em>unchecked</em> throwable
+     * does. As a result, there is no need to handle the throwable of this supplier in the returned composed supplier by
+     * either wrapping it in an <em>unchecked</em> throwable or to declare it in the {@code throws} clause, as it would
+     * be done in a non sneaky throwing supplier.
      * <p>
      * What sneaky throwing simply does, is to fake out the compiler and thus it bypasses the principle of
      * <em>checked</em> throwables. On the JVM (class file) level, all throwables, checked or not, can be thrown
@@ -379,7 +374,7 @@ public interface ThrowableSupplier<R, X extends Throwable> extends Lambda, Suppl
     default Supplier2<R> sneakyThrow() {
         return () -> {
             try {
-                return this.getThrows();
+                return getThrows();
             } catch (RuntimeException | Error e) {
                 throw e;
             } catch (Throwable throwable) {

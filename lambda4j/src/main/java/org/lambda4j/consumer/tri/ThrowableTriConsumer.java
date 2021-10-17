@@ -13,7 +13,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package org.lambda4j.consumer.tri;
+
+import java.util.Objects;
+import java.util.function.Function;
+
+import javax.annotation.Nonnegative;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
+import org.apache.commons.lang3.tuple.Triple;
 
 import org.lambda4j.Lambda;
 import org.lambda4j.consumer.ThrowableConsumer;
@@ -21,14 +31,6 @@ import org.lambda4j.consumer.bi.ThrowableBiConsumer;
 import org.lambda4j.core.exception.ThrownByFunctionalInterfaceException;
 import org.lambda4j.core.util.ThrowableUtils;
 import org.lambda4j.function.ThrowableFunction;
-
-import org.apache.commons.lang3.tuple.Triple;
-
-import javax.annotation.Nonnegative;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import java.util.Objects;
-import java.util.function.Function;
 
 /**
  * Represents an operation that accepts three input arguments and returns no result which is able to throw any {@link
@@ -66,7 +68,7 @@ public interface ThrowableTriConsumer<T, U, V, X extends Throwable> extends Lamb
      * @see <a href="https://docs.oracle.com/javase/tutorial/java/javaOO/methodreferences.html">Method Reference</a>
      */
     static <T, U, V, X extends Throwable> ThrowableTriConsumer<T, U, V, X> of(
-            @Nullable final ThrowableTriConsumer<T, U, V, X> expression) {
+            @Nullable ThrowableTriConsumer<T, U, V, X> expression) {
         return expression;
     }
 
@@ -85,7 +87,7 @@ public interface ThrowableTriConsumer<T, U, V, X extends Throwable> extends Lamb
      * @throws X Any throwable from this consumers action
      */
     static <T, U, V, X extends Throwable> void call(
-            @Nonnull final ThrowableTriConsumer<? super T, ? super U, ? super V, ? extends X> consumer, T t, U u,
+            @Nonnull ThrowableTriConsumer<? super T, ? super U, ? super V, ? extends X> consumer, T t, U u,
             V v) throws X {
         Objects.requireNonNull(consumer);
         consumer.acceptThrows(t, u, v);
@@ -106,7 +108,7 @@ public interface ThrowableTriConsumer<T, U, V, X extends Throwable> extends Lamb
      */
     @Nonnull
     static <T, U, V, X extends Throwable> ThrowableTriConsumer<T, U, V, X> onlyFirst(
-            @Nonnull final ThrowableConsumer<? super T, ? extends X> consumer) {
+            @Nonnull ThrowableConsumer<? super T, ? extends X> consumer) {
         Objects.requireNonNull(consumer);
         return (t, u, v) -> consumer.acceptThrows(t);
     }
@@ -126,7 +128,7 @@ public interface ThrowableTriConsumer<T, U, V, X extends Throwable> extends Lamb
      */
     @Nonnull
     static <T, U, V, X extends Throwable> ThrowableTriConsumer<T, U, V, X> onlySecond(
-            @Nonnull final ThrowableConsumer<? super U, ? extends X> consumer) {
+            @Nonnull ThrowableConsumer<? super U, ? extends X> consumer) {
         Objects.requireNonNull(consumer);
         return (t, u, v) -> consumer.acceptThrows(u);
     }
@@ -146,7 +148,7 @@ public interface ThrowableTriConsumer<T, U, V, X extends Throwable> extends Lamb
      */
     @Nonnull
     static <T, U, V, X extends Throwable> ThrowableTriConsumer<T, U, V, X> onlyThird(
-            @Nonnull final ThrowableConsumer<? super V, ? extends X> consumer) {
+            @Nonnull ThrowableConsumer<? super V, ? extends X> consumer) {
         Objects.requireNonNull(consumer);
         return (t, u, v) -> consumer.acceptThrows(v);
     }
@@ -175,14 +177,15 @@ public interface ThrowableTriConsumer<T, U, V, X extends Throwable> extends Lamb
     }
 
     /**
-     * Applies this consumer partially to some arguments of this one, producing a {@link ThrowableBiConsumer} as result.
+     * Applies this consumer partially to some arguments of this one, producing a {@link ThrowableBiConsumer} as
+     * result.
      *
      * @param t The first argument to this consumer used to partially apply this function
      * @return A {@code ThrowableBiConsumer} that represents this consumer partially applied the some arguments.
      */
     @Nonnull
     default ThrowableBiConsumer<U, V, X> pacceptThrows(T t) {
-        return (u, v) -> this.acceptThrows(t, u, v);
+        return (u, v) -> acceptThrows(t, u, v);
     }
 
     /**
@@ -194,7 +197,7 @@ public interface ThrowableTriConsumer<T, U, V, X extends Throwable> extends Lamb
      */
     @Nonnull
     default ThrowableConsumer<V, X> pacceptThrows(T t, U u) {
-        return (v) -> this.acceptThrows(t, u, v);
+        return v -> acceptThrows(t, u, v);
     }
 
     /**
@@ -225,9 +228,9 @@ public interface ThrowableTriConsumer<T, U, V, X extends Throwable> extends Lamb
      */
     @Nonnull
     default <A, B, C> ThrowableTriConsumer<A, B, C, X> compose(
-            @Nonnull final ThrowableFunction<? super A, ? extends T, ? extends X> before1,
-            @Nonnull final ThrowableFunction<? super B, ? extends U, ? extends X> before2,
-            @Nonnull final ThrowableFunction<? super C, ? extends V, ? extends X> before3) {
+            @Nonnull ThrowableFunction<? super A, ? extends T, ? extends X> before1,
+            @Nonnull ThrowableFunction<? super B, ? extends U, ? extends X> before2,
+            @Nonnull ThrowableFunction<? super C, ? extends V, ? extends X> before3) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         Objects.requireNonNull(before3);
@@ -246,7 +249,7 @@ public interface ThrowableTriConsumer<T, U, V, X extends Throwable> extends Lamb
      */
     @Nonnull
     default ThrowableTriConsumer<T, U, V, X> andThen(
-            @Nonnull final ThrowableTriConsumer<? super T, ? super U, ? super V, ? extends X> after) {
+            @Nonnull ThrowableTriConsumer<? super T, ? super U, ? super V, ? extends X> after) {
         Objects.requireNonNull(after);
         return (t, u, v) -> {
             acceptThrows(t, u, v);
@@ -303,7 +306,7 @@ public interface ThrowableTriConsumer<T, U, V, X extends Throwable> extends Lamb
      * @see #nest()
      */
     @Nonnull
-    default TriConsumer<T, U, V> nest(@Nonnull final Function<? super Throwable, ? extends RuntimeException> mapper) {
+    default TriConsumer<T, U, V> nest(@Nonnull Function<? super Throwable, ? extends RuntimeException> mapper) {
         return recover(throwable -> {
             throw mapper.apply(throwable);
         });
@@ -325,15 +328,15 @@ public interface ThrowableTriConsumer<T, U, V, X extends Throwable> extends Lamb
      */
     @Nonnull
     default TriConsumer<T, U, V> recover(
-            @Nonnull final Function<? super Throwable, ? extends TriConsumer<? super T, ? super U, ? super V>> recover) {
+            @Nonnull Function<? super Throwable, ? extends TriConsumer<? super T, ? super U, ? super V>> recover) {
         Objects.requireNonNull(recover);
         return (t, u, v) -> {
             try {
-                this.acceptThrows(t, u, v);
+                acceptThrows(t, u, v);
             } catch (Error e) {
                 throw e;
             } catch (Throwable throwable) {
-                final TriConsumer<? super T, ? super U, ? super V> consumer = recover.apply(throwable);
+                TriConsumer<? super T, ? super U, ? super V> consumer = recover.apply(throwable);
                 Objects.requireNonNull(consumer, () -> "recover returned null for " + throwable.getClass() + ": "
                         + throwable.getMessage());
                 consumer.accept(t, u, v);
@@ -342,12 +345,12 @@ public interface ThrowableTriConsumer<T, U, V, X extends Throwable> extends Lamb
     }
 
     /**
-     * Returns a composed {@link TriConsumer} that applies this consumer to its input and sneakily throws the
-     * thrown {@link Throwable} from it, if it is not of type {@link RuntimeException} or {@link Error}. This means that
-     * each throwable thrown from the returned composed consumer behaves exactly the same as an <em>unchecked</em>
-     * throwable does. As a result, there is no need to handle the throwable of this consumer in the returned composed
-     * consumer by either wrapping it in an <em>unchecked</em> throwable or to declare it in the {@code throws} clause,
-     * as it would be done in a non sneaky throwing consumer.
+     * Returns a composed {@link TriConsumer} that applies this consumer to its input and sneakily throws the thrown
+     * {@link Throwable} from it, if it is not of type {@link RuntimeException} or {@link Error}. This means that each
+     * throwable thrown from the returned composed consumer behaves exactly the same as an <em>unchecked</em> throwable
+     * does. As a result, there is no need to handle the throwable of this consumer in the returned composed consumer by
+     * either wrapping it in an <em>unchecked</em> throwable or to declare it in the {@code throws} clause, as it would
+     * be done in a non sneaky throwing consumer.
      * <p>
      * What sneaky throwing simply does, is to fake out the compiler and thus it bypasses the principle of
      * <em>checked</em> throwables. On the JVM (class file) level, all throwables, checked or not, can be thrown
@@ -411,7 +414,7 @@ public interface ThrowableTriConsumer<T, U, V, X extends Throwable> extends Lamb
     default TriConsumer<T, U, V> sneakyThrow() {
         return (t, u, v) -> {
             try {
-                this.acceptThrows(t, u, v);
+                acceptThrows(t, u, v);
             } catch (RuntimeException | Error e) {
                 throw e;
             } catch (Throwable throwable) {

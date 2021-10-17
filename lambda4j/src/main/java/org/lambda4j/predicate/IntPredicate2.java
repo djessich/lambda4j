@@ -13,7 +13,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package org.lambda4j.predicate;
+
+import java.util.Map;
+import java.util.Objects;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.function.DoubleToIntFunction;
+import java.util.function.IntPredicate;
+import java.util.function.IntUnaryOperator;
+import java.util.function.LongToIntFunction;
+import java.util.function.ToIntFunction;
+
+import javax.annotation.Nonnegative;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import org.lambda4j.Lambda;
 import org.lambda4j.consumer.BooleanConsumer;
@@ -40,21 +54,9 @@ import org.lambda4j.function.conversion.ShortToIntFunction;
 import org.lambda4j.operator.unary.BooleanUnaryOperator;
 import org.lambda4j.operator.unary.IntUnaryOperator2;
 
-import javax.annotation.Nonnegative;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import java.util.Map;
-import java.util.Objects;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.function.DoubleToIntFunction;
-import java.util.function.IntPredicate;
-import java.util.function.IntUnaryOperator;
-import java.util.function.LongToIntFunction;
-import java.util.function.ToIntFunction;
-
 /**
- * Represents an predicate (boolean-valued function) of one {@code int}-valued input argument.
- * This is a primitive specialization of {@link Predicate2}.
+ * Represents an predicate (boolean-valued function) of one {@code int}-valued input argument. This is a primitive
+ * specialization of {@link Predicate2}.
  * <p>
  * This is a {@link FunctionalInterface} whose functional method is {@link #test(int)}.
  *
@@ -78,7 +80,7 @@ public interface IntPredicate2 extends Lambda, IntPredicate {
      * Expression</a>
      * @see <a href="https://docs.oracle.com/javase/tutorial/java/javaOO/methodreferences.html">Method Reference</a>
      */
-    static IntPredicate2 of(@Nullable final IntPredicate2 expression) {
+    static IntPredicate2 of(@Nullable IntPredicate2 expression) {
         return expression;
     }
 
@@ -90,7 +92,7 @@ public interface IntPredicate2 extends Lambda, IntPredicate {
      * @return The result from the given {@code IntPredicate2}.
      * @throws NullPointerException If given argument is {@code null}
      */
-    static boolean call(@Nonnull final IntPredicate predicate, int value) {
+    static boolean call(@Nonnull IntPredicate predicate, int value) {
         Objects.requireNonNull(predicate);
         return predicate.test(value);
     }
@@ -103,7 +105,7 @@ public interface IntPredicate2 extends Lambda, IntPredicate {
      */
     @Nonnull
     static IntPredicate2 constant(boolean ret) {
-        return (value) -> ret;
+        return value -> ret;
     }
 
     /**
@@ -114,7 +116,7 @@ public interface IntPredicate2 extends Lambda, IntPredicate {
      */
     @Nonnull
     static IntPredicate2 alwaysTrue() {
-        return (value) -> true;
+        return value -> true;
     }
 
     /**
@@ -125,7 +127,7 @@ public interface IntPredicate2 extends Lambda, IntPredicate {
      */
     @Nonnull
     static IntPredicate2 alwaysFalse() {
-        return (value) -> false;
+        return value -> false;
     }
 
     /**
@@ -138,7 +140,7 @@ public interface IntPredicate2 extends Lambda, IntPredicate {
      */
     @Nonnull
     static IntPredicate2 isEqual(int target) {
-        return (value) -> (value == target);
+        return value -> value == target;
     }
 
     /**
@@ -147,6 +149,7 @@ public interface IntPredicate2 extends Lambda, IntPredicate {
      * @param value The argument to the predicate
      * @return The return value from the predicate, which is its result.
      */
+    @Override
     boolean test(int value);
 
     /**
@@ -161,9 +164,9 @@ public interface IntPredicate2 extends Lambda, IntPredicate {
     }
 
     /**
-     * Returns a composed {@link Predicate2} that first applies the {@code before} function to its input, and
-     * then applies this predicate to the result.
-     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
+     * Returns a composed {@link Predicate2} that first applies the {@code before} function to its input, and then
+     * applies this predicate to the result. If evaluation of either operation throws an exception, it is relayed to the
+     * caller of the composed operation.
      *
      * @param <A> The type of the argument to the given function, and of composed predicate
      * @param before The function to apply before this predicate is applied
@@ -173,9 +176,9 @@ public interface IntPredicate2 extends Lambda, IntPredicate {
      * @implSpec The input argument of this method is able to handle every type.
      */
     @Nonnull
-    default <A> Predicate2<A> compose(@Nonnull final ToIntFunction<? super A> before) {
+    default <A> Predicate2<A> compose(@Nonnull ToIntFunction<? super A> before) {
         Objects.requireNonNull(before);
-        return (a) -> test(before.applyAsInt(a));
+        return a -> test(before.applyAsInt(a));
     }
 
     /**
@@ -188,53 +191,51 @@ public interface IntPredicate2 extends Lambda, IntPredicate {
      * @return A composed {@code BooleanUnaryOperator} that first applies the {@code before} function to its input, and
      * then applies this predicate to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * boolean}.
      */
     @Nonnull
-    default BooleanUnaryOperator composeFromBoolean(@Nonnull final BooleanToIntFunction before) {
+    default BooleanUnaryOperator composeFromBoolean(@Nonnull BooleanToIntFunction before) {
         Objects.requireNonNull(before);
-        return (value) -> test(before.applyAsInt(value));
+        return value -> test(before.applyAsInt(value));
     }
 
     /**
-     * Returns a composed {@link BytePredicate} that first applies the {@code before} function to
-     * its input, and then applies this predicate to the result.
-     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
-     * This method is just convenience, to provide the ability to execute an operation which accepts {@code byte} input,
-     * before this primitive predicate is executed.
+     * Returns a composed {@link BytePredicate} that first applies the {@code before} function to its input, and then
+     * applies this predicate to the result. If evaluation of either operation throws an exception, it is relayed to the
+     * caller of the composed operation. This method is just convenience, to provide the ability to execute an operation
+     * which accepts {@code byte} input, before this primitive predicate is executed.
      *
      * @param before The function to apply before this predicate is applied
      * @return A composed {@code BytePredicate} that first applies the {@code before} function to its input, and then
      * applies this predicate to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * byte}.
      */
     @Nonnull
-    default BytePredicate composeFromByte(@Nonnull final ByteToIntFunction before) {
+    default BytePredicate composeFromByte(@Nonnull ByteToIntFunction before) {
         Objects.requireNonNull(before);
-        return (value) -> test(before.applyAsInt(value));
+        return value -> test(before.applyAsInt(value));
     }
 
     /**
-     * Returns a composed {@link CharPredicate} that first applies the {@code before} function to
-     * its input, and then applies this predicate to the result.
-     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
-     * This method is just convenience, to provide the ability to execute an operation which accepts {@code char} input,
-     * before this primitive predicate is executed.
+     * Returns a composed {@link CharPredicate} that first applies the {@code before} function to its input, and then
+     * applies this predicate to the result. If evaluation of either operation throws an exception, it is relayed to the
+     * caller of the composed operation. This method is just convenience, to provide the ability to execute an operation
+     * which accepts {@code char} input, before this primitive predicate is executed.
      *
      * @param before The function to apply before this predicate is applied
      * @return A composed {@code CharPredicate} that first applies the {@code before} function to its input, and then
      * applies this predicate to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * char}.
      */
     @Nonnull
-    default CharPredicate composeFromChar(@Nonnull final CharToIntFunction before) {
+    default CharPredicate composeFromChar(@Nonnull CharToIntFunction before) {
         Objects.requireNonNull(before);
-        return (value) -> test(before.applyAsInt(value));
+        return value -> test(before.applyAsInt(value));
     }
 
     /**
@@ -247,13 +248,13 @@ public interface IntPredicate2 extends Lambda, IntPredicate {
      * @return A composed {@code DoublePredicate2} that first applies the {@code before} function to its input, and then
      * applies this predicate to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * double}.
      */
     @Nonnull
-    default DoublePredicate2 composeFromDouble(@Nonnull final DoubleToIntFunction before) {
+    default DoublePredicate2 composeFromDouble(@Nonnull DoubleToIntFunction before) {
         Objects.requireNonNull(before);
-        return (value) -> test(before.applyAsInt(value));
+        return value -> test(before.applyAsInt(value));
     }
 
     /**
@@ -266,53 +267,51 @@ public interface IntPredicate2 extends Lambda, IntPredicate {
      * @return A composed {@code FloatPredicate} that first applies the {@code before} function to its input, and then
      * applies this predicate to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * float}.
      */
     @Nonnull
-    default FloatPredicate composeFromFloat(@Nonnull final FloatToIntFunction before) {
+    default FloatPredicate composeFromFloat(@Nonnull FloatToIntFunction before) {
         Objects.requireNonNull(before);
-        return (value) -> test(before.applyAsInt(value));
+        return value -> test(before.applyAsInt(value));
     }
 
     /**
-     * Returns a composed {@link IntPredicate2} that first applies the {@code before} operator to
-     * its input, and then applies this predicate to the result.
-     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
-     * This method is just convenience, to provide the ability to execute an operation which accepts {@code int} input,
-     * before this primitive predicate is executed.
+     * Returns a composed {@link IntPredicate2} that first applies the {@code before} operator to its input, and then
+     * applies this predicate to the result. If evaluation of either operation throws an exception, it is relayed to the
+     * caller of the composed operation. This method is just convenience, to provide the ability to execute an operation
+     * which accepts {@code int} input, before this primitive predicate is executed.
      *
      * @param before The operator to apply before this predicate is applied
      * @return A composed {@code IntPredicate2} that first applies the {@code before} operator to its input, and then
      * applies this predicate to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * int}.
      */
     @Nonnull
-    default IntPredicate2 composeFromInt(@Nonnull final IntUnaryOperator before) {
+    default IntPredicate2 composeFromInt(@Nonnull IntUnaryOperator before) {
         Objects.requireNonNull(before);
-        return (value) -> test(before.applyAsInt(value));
+        return value -> test(before.applyAsInt(value));
     }
 
     /**
-     * Returns a composed {@link LongPredicate2} that first applies the {@code before} function to
-     * its input, and then applies this predicate to the result.
-     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
-     * This method is just convenience, to provide the ability to execute an operation which accepts {@code long} input,
-     * before this primitive predicate is executed.
+     * Returns a composed {@link LongPredicate2} that first applies the {@code before} function to its input, and then
+     * applies this predicate to the result. If evaluation of either operation throws an exception, it is relayed to the
+     * caller of the composed operation. This method is just convenience, to provide the ability to execute an operation
+     * which accepts {@code long} input, before this primitive predicate is executed.
      *
      * @param before The function to apply before this predicate is applied
      * @return A composed {@code LongPredicate2} that first applies the {@code before} function to its input, and then
      * applies this predicate to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * long}.
      */
     @Nonnull
-    default LongPredicate2 composeFromLong(@Nonnull final LongToIntFunction before) {
+    default LongPredicate2 composeFromLong(@Nonnull LongToIntFunction before) {
         Objects.requireNonNull(before);
-        return (value) -> test(before.applyAsInt(value));
+        return value -> test(before.applyAsInt(value));
     }
 
     /**
@@ -325,19 +324,19 @@ public interface IntPredicate2 extends Lambda, IntPredicate {
      * @return A composed {@code ShortPredicate} that first applies the {@code before} function to its input, and then
      * applies this predicate to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * short}.
      */
     @Nonnull
-    default ShortPredicate composeFromShort(@Nonnull final ShortToIntFunction before) {
+    default ShortPredicate composeFromShort(@Nonnull ShortToIntFunction before) {
         Objects.requireNonNull(before);
-        return (value) -> test(before.applyAsInt(value));
+        return value -> test(before.applyAsInt(value));
     }
 
     /**
      * Returns a composed {@link IntFunction2} that first applies this predicate to its input, and then applies the
-     * {@code after} function to the result.
-     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
+     * {@code after} function to the result. If evaluation of either operation throws an exception, it is relayed to the
+     * caller of the composed operation.
      *
      * @param <S> The type of return value from the {@code after} function, and of the composed function
      * @param after The function to apply after this predicate is applied
@@ -347,9 +346,9 @@ public interface IntPredicate2 extends Lambda, IntPredicate {
      * @implSpec The input argument of this method is able to return every type.
      */
     @Nonnull
-    default <S> IntFunction2<S> andThen(@Nonnull final BooleanFunction<? extends S> after) {
+    default <S> IntFunction2<S> andThen(@Nonnull BooleanFunction<? extends S> after) {
         Objects.requireNonNull(after);
-        return (value) -> after.apply(test(value));
+        return value -> after.apply(test(value));
     }
 
     /**
@@ -362,13 +361,13 @@ public interface IntPredicate2 extends Lambda, IntPredicate {
      * @return A composed {@code IntPredicate2} that first applies this predicate to its input, and then applies the
      * {@code after} operator to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * boolean}.
      */
     @Nonnull
-    default IntPredicate2 andThenToBoolean(@Nonnull final BooleanUnaryOperator after) {
+    default IntPredicate2 andThenToBoolean(@Nonnull BooleanUnaryOperator after) {
         Objects.requireNonNull(after);
-        return (value) -> after.applyAsBoolean(test(value));
+        return value -> after.applyAsBoolean(test(value));
     }
 
     /**
@@ -381,13 +380,13 @@ public interface IntPredicate2 extends Lambda, IntPredicate {
      * @return A composed {@code IntToByteFunction} that first applies this predicate to its input, and then applies the
      * {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * byte}.
      */
     @Nonnull
-    default IntToByteFunction andThenToByte(@Nonnull final BooleanToByteFunction after) {
+    default IntToByteFunction andThenToByte(@Nonnull BooleanToByteFunction after) {
         Objects.requireNonNull(after);
-        return (value) -> after.applyAsByte(test(value));
+        return value -> after.applyAsByte(test(value));
     }
 
     /**
@@ -400,13 +399,13 @@ public interface IntPredicate2 extends Lambda, IntPredicate {
      * @return A composed {@code IntToCharFunction} that first applies this predicate to its input, and then applies the
      * {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * char}.
      */
     @Nonnull
-    default IntToCharFunction andThenToChar(@Nonnull final BooleanToCharFunction after) {
+    default IntToCharFunction andThenToChar(@Nonnull BooleanToCharFunction after) {
         Objects.requireNonNull(after);
-        return (value) -> after.applyAsChar(test(value));
+        return value -> after.applyAsChar(test(value));
     }
 
     /**
@@ -419,13 +418,13 @@ public interface IntPredicate2 extends Lambda, IntPredicate {
      * @return A composed {@code IntToDoubleFunction2} that first applies this predicate to its input, and then applies
      * the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * double}.
      */
     @Nonnull
-    default IntToDoubleFunction2 andThenToDouble(@Nonnull final BooleanToDoubleFunction after) {
+    default IntToDoubleFunction2 andThenToDouble(@Nonnull BooleanToDoubleFunction after) {
         Objects.requireNonNull(after);
-        return (value) -> after.applyAsDouble(test(value));
+        return value -> after.applyAsDouble(test(value));
     }
 
     /**
@@ -438,13 +437,13 @@ public interface IntPredicate2 extends Lambda, IntPredicate {
      * @return A composed {@code IntToFloatFunction} that first applies this predicate to its input, and then applies
      * the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * float}.
      */
     @Nonnull
-    default IntToFloatFunction andThenToFloat(@Nonnull final BooleanToFloatFunction after) {
+    default IntToFloatFunction andThenToFloat(@Nonnull BooleanToFloatFunction after) {
         Objects.requireNonNull(after);
-        return (value) -> after.applyAsFloat(test(value));
+        return value -> after.applyAsFloat(test(value));
     }
 
     /**
@@ -457,13 +456,13 @@ public interface IntPredicate2 extends Lambda, IntPredicate {
      * @return A composed {@code IntUnaryOperator2} that first applies this predicate to its input, and then applies the
      * {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * int}.
      */
     @Nonnull
-    default IntUnaryOperator2 andThenToInt(@Nonnull final BooleanToIntFunction after) {
+    default IntUnaryOperator2 andThenToInt(@Nonnull BooleanToIntFunction after) {
         Objects.requireNonNull(after);
-        return (value) -> after.applyAsInt(test(value));
+        return value -> after.applyAsInt(test(value));
     }
 
     /**
@@ -476,13 +475,13 @@ public interface IntPredicate2 extends Lambda, IntPredicate {
      * @return A composed {@code IntToLongFunction2} that first applies this predicate to its input, and then applies
      * the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * long}.
      */
     @Nonnull
-    default IntToLongFunction2 andThenToLong(@Nonnull final BooleanToLongFunction after) {
+    default IntToLongFunction2 andThenToLong(@Nonnull BooleanToLongFunction after) {
         Objects.requireNonNull(after);
-        return (value) -> after.applyAsLong(test(value));
+        return value -> after.applyAsLong(test(value));
     }
 
     /**
@@ -495,13 +494,13 @@ public interface IntPredicate2 extends Lambda, IntPredicate {
      * @return A composed {@code IntToShortFunction} that first applies this predicate to its input, and then applies
      * the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * short}.
      */
     @Nonnull
-    default IntToShortFunction andThenToShort(@Nonnull final BooleanToShortFunction after) {
+    default IntToShortFunction andThenToShort(@Nonnull BooleanToShortFunction after) {
         Objects.requireNonNull(after);
-        return (value) -> after.applyAsShort(test(value));
+        return value -> after.applyAsShort(test(value));
     }
 
     /**
@@ -515,9 +514,9 @@ public interface IntPredicate2 extends Lambda, IntPredicate {
      * @throws NullPointerException If given argument is {@code null}
      */
     @Nonnull
-    default IntConsumer2 consume(@Nonnull final BooleanConsumer consumer) {
+    default IntConsumer2 consume(@Nonnull BooleanConsumer consumer) {
         Objects.requireNonNull(consumer);
-        return (value) -> consumer.accept(test(value));
+        return value -> consumer.accept(test(value));
     }
 
     /**
@@ -525,9 +524,10 @@ public interface IntPredicate2 extends Lambda, IntPredicate {
      *
      * @return A {@code IntPredicate2} that represents the logical negation of this one.
      */
+    @Override
     @Nonnull
     default IntPredicate2 negate() {
-        return (value) -> !test(value);
+        return value -> !test(value);
     }
 
     /**
@@ -545,10 +545,11 @@ public interface IntPredicate2 extends Lambda, IntPredicate {
      * @see #or(IntPredicate)
      * @see #xor(IntPredicate)
      */
+    @Override
     @Nonnull
-    default IntPredicate2 and(@Nonnull final IntPredicate other) {
+    default IntPredicate2 and(@Nonnull IntPredicate other) {
         Objects.requireNonNull(other);
-        return (value) -> test(value) && other.test(value);
+        return value -> test(value) && other.test(value);
     }
 
     /**
@@ -566,10 +567,11 @@ public interface IntPredicate2 extends Lambda, IntPredicate {
      * @see #and(IntPredicate)
      * @see #xor(IntPredicate)
      */
+    @Override
     @Nonnull
-    default IntPredicate2 or(@Nonnull final IntPredicate other) {
+    default IntPredicate2 or(@Nonnull IntPredicate other) {
         Objects.requireNonNull(other);
-        return (value) -> test(value) || other.test(value);
+        return value -> test(value) || other.test(value);
     }
 
     /**
@@ -585,9 +587,9 @@ public interface IntPredicate2 extends Lambda, IntPredicate {
      * @see #or(IntPredicate)
      */
     @Nonnull
-    default IntPredicate2 xor(@Nonnull final IntPredicate other) {
+    default IntPredicate2 xor(@Nonnull IntPredicate other) {
         Objects.requireNonNull(other);
-        return (value) -> test(value) ^ other.test(value);
+        return value -> test(value) ^ other.test(value);
     }
 
     /**
@@ -609,10 +611,10 @@ public interface IntPredicate2 extends Lambda, IntPredicate {
         if (isMemoized()) {
             return this;
         } else {
-            final Map<Integer, Boolean> cache = new ConcurrentHashMap<>();
-            final Object lock = new Object();
-            return (IntPredicate2 & Memoized) (value) -> {
-                final boolean returnValue;
+            Map<Integer, Boolean> cache = new ConcurrentHashMap<>();
+            Object lock = new Object();
+            return (IntPredicate2 & Memoized) value -> {
+                boolean returnValue;
                 synchronized (lock) {
                     returnValue = cache.computeIfAbsent(value, this::test);
                 }
@@ -622,9 +624,9 @@ public interface IntPredicate2 extends Lambda, IntPredicate {
     }
 
     /**
-     * Returns a composed {@link Predicate2} which represents this {@link IntPredicate2}. Thereby the primitive
-     * input argument for this predicate is autoboxed. This method provides the possibility to use this
-     * {@code IntPredicate2} with methods provided by the {@code JDK}.
+     * Returns a composed {@link Predicate2} which represents this {@link IntPredicate2}. Thereby the primitive input
+     * argument for this predicate is autoboxed. This method provides the possibility to use this {@code IntPredicate2}
+     * with methods provided by the {@code JDK}.
      *
      * @return A composed {@code Predicate2} which represents this {@code IntPredicate2}.
      */

@@ -13,19 +13,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package org.lambda4j.consumer;
+
+import java.util.Objects;
+import java.util.function.Consumer;
+import java.util.function.Function;
+
+import javax.annotation.Nonnegative;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import org.lambda4j.Lambda;
 import org.lambda4j.core.exception.ThrownByFunctionalInterfaceException;
 import org.lambda4j.core.util.ThrowableUtils;
 import org.lambda4j.function.ThrowableFunction;
-
-import javax.annotation.Nonnegative;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import java.util.Objects;
-import java.util.function.Consumer;
-import java.util.function.Function;
 
 /**
  * Represents an operation that accepts one input argument and returns no result which is able to throw any {@link
@@ -59,7 +61,7 @@ public interface ThrowableConsumer<T, X extends Throwable> extends Lambda, Consu
      * Expression</a>
      * @see <a href="https://docs.oracle.com/javase/tutorial/java/javaOO/methodreferences.html">Method Reference</a>
      */
-    static <T, X extends Throwable> ThrowableConsumer<T, X> of(@Nullable final ThrowableConsumer<T, X> expression) {
+    static <T, X extends Throwable> ThrowableConsumer<T, X> of(@Nullable ThrowableConsumer<T, X> expression) {
         return expression;
     }
 
@@ -73,7 +75,7 @@ public interface ThrowableConsumer<T, X extends Throwable> extends Lambda, Consu
      * @throws NullPointerException If given argument is {@code null}
      * @throws X Any throwable from this consumers action
      */
-    static <T, X extends Throwable> void call(@Nonnull final ThrowableConsumer<? super T, ? extends X> consumer,
+    static <T, X extends Throwable> void call(@Nonnull ThrowableConsumer<? super T, ? extends X> consumer,
             T t) throws X {
         Objects.requireNonNull(consumer);
         consumer.acceptThrows(t);
@@ -101,14 +103,6 @@ public interface ThrowableConsumer<T, X extends Throwable> extends Lambda, Consu
      */
     @Override
     default void accept(T t) {
-        // TODO: Remove commented code below
-    /*try {
-          this.acceptThrows(t);
-    } catch (RuntimeException | Error e) {
-        throw e;
-    } catch (Throwable throwable) {
-        throw new ThrownByFunctionalInterfaceException(throwable.getMessage(), throwable);
-    }*/
         nest().accept(t);
     }
 
@@ -136,9 +130,9 @@ public interface ThrowableConsumer<T, X extends Throwable> extends Lambda, Consu
      */
     @Nonnull
     default <A> ThrowableConsumer<A, X> compose(
-            @Nonnull final ThrowableFunction<? super A, ? extends T, ? extends X> before) {
+            @Nonnull ThrowableFunction<? super A, ? extends T, ? extends X> before) {
         Objects.requireNonNull(before);
-        return (a) -> acceptThrows(before.applyThrows(a));
+        return a -> acceptThrows(before.applyThrows(a));
     }
 
     /**
@@ -152,9 +146,9 @@ public interface ThrowableConsumer<T, X extends Throwable> extends Lambda, Consu
      * @throws NullPointerException If given argument is {@code null}
      */
     @Nonnull
-    default ThrowableConsumer<T, X> andThen(@Nonnull final ThrowableConsumer<? super T, ? extends X> after) {
+    default ThrowableConsumer<T, X> andThen(@Nonnull ThrowableConsumer<? super T, ? extends X> after) {
         Objects.requireNonNull(after);
-        return (t) -> {
+        return t -> {
             acceptThrows(t);
             after.acceptThrows(t);
         };
@@ -199,7 +193,7 @@ public interface ThrowableConsumer<T, X extends Throwable> extends Lambda, Consu
      * @see #nest()
      */
     @Nonnull
-    default Consumer2<T> nest(@Nonnull final Function<? super Throwable, ? extends RuntimeException> mapper) {
+    default Consumer2<T> nest(@Nonnull Function<? super Throwable, ? extends RuntimeException> mapper) {
         return recover(throwable -> {
             throw mapper.apply(throwable);
         });
@@ -220,15 +214,15 @@ public interface ThrowableConsumer<T, X extends Throwable> extends Lambda, Consu
      * recover} operation.
      */
     @Nonnull
-    default Consumer2<T> recover(@Nonnull final Function<? super Throwable, ? extends Consumer<? super T>> recover) {
+    default Consumer2<T> recover(@Nonnull Function<? super Throwable, ? extends Consumer<? super T>> recover) {
         Objects.requireNonNull(recover);
-        return (t) -> {
+        return t -> {
             try {
-                this.acceptThrows(t);
+                acceptThrows(t);
             } catch (Error e) {
                 throw e;
             } catch (Throwable throwable) {
-                final Consumer<? super T> consumer = recover.apply(throwable);
+                Consumer<? super T> consumer = recover.apply(throwable);
                 Objects.requireNonNull(consumer, () -> "recover returned null for " + throwable.getClass() + ": "
                         + throwable.getMessage());
                 consumer.accept(t);
@@ -237,12 +231,12 @@ public interface ThrowableConsumer<T, X extends Throwable> extends Lambda, Consu
     }
 
     /**
-     * Returns a composed {@link Consumer2} that applies this consumer to its input and sneakily throws the
-     * thrown {@link Throwable} from it, if it is not of type {@link RuntimeException} or {@link Error}. This means that
-     * each throwable thrown from the returned composed consumer behaves exactly the same as an <em>unchecked</em>
-     * throwable does. As a result, there is no need to handle the throwable of this consumer in the returned composed
-     * consumer by either wrapping it in an <em>unchecked</em> throwable or to declare it in the {@code throws} clause,
-     * as it would be done in a non sneaky throwing consumer.
+     * Returns a composed {@link Consumer2} that applies this consumer to its input and sneakily throws the thrown
+     * {@link Throwable} from it, if it is not of type {@link RuntimeException} or {@link Error}. This means that each
+     * throwable thrown from the returned composed consumer behaves exactly the same as an <em>unchecked</em> throwable
+     * does. As a result, there is no need to handle the throwable of this consumer in the returned composed consumer by
+     * either wrapping it in an <em>unchecked</em> throwable or to declare it in the {@code throws} clause, as it would
+     * be done in a non sneaky throwing consumer.
      * <p>
      * What sneaky throwing simply does, is to fake out the compiler and thus it bypasses the principle of
      * <em>checked</em> throwables. On the JVM (class file) level, all throwables, checked or not, can be thrown
@@ -304,9 +298,9 @@ public interface ThrowableConsumer<T, X extends Throwable> extends Lambda, Consu
      */
     @Nonnull
     default Consumer2<T> sneakyThrow() {
-        return (t) -> {
+        return t -> {
             try {
-                this.acceptThrows(t);
+                acceptThrows(t);
             } catch (RuntimeException | Error e) {
                 throw e;
             } catch (Throwable throwable) {

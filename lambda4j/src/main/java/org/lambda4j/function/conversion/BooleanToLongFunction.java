@@ -13,23 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package org.lambda4j.function.conversion;
 
-import org.lambda4j.Lambda;
-import org.lambda4j.consumer.BooleanConsumer;
-import org.lambda4j.function.BooleanFunction;
-import org.lambda4j.function.Function2;
-import org.lambda4j.function.to.ToLongFunction2;
-import org.lambda4j.operator.unary.BooleanUnaryOperator;
-import org.lambda4j.operator.unary.LongUnaryOperator2;
-import org.lambda4j.predicate.BytePredicate;
-import org.lambda4j.predicate.CharPredicate;
-import org.lambda4j.predicate.FloatPredicate;
-import org.lambda4j.predicate.ShortPredicate;
-
-import javax.annotation.Nonnegative;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
@@ -43,10 +29,25 @@ import java.util.function.LongToIntFunction;
 import java.util.function.LongUnaryOperator;
 import java.util.function.Predicate;
 
+import javax.annotation.Nonnegative;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
+import org.lambda4j.Lambda;
+import org.lambda4j.consumer.BooleanConsumer;
+import org.lambda4j.function.BooleanFunction;
+import org.lambda4j.function.Function2;
+import org.lambda4j.function.to.ToLongFunction2;
+import org.lambda4j.operator.unary.BooleanUnaryOperator;
+import org.lambda4j.operator.unary.LongUnaryOperator2;
+import org.lambda4j.predicate.BytePredicate;
+import org.lambda4j.predicate.CharPredicate;
+import org.lambda4j.predicate.FloatPredicate;
+import org.lambda4j.predicate.ShortPredicate;
+
 /**
- * Represents an operation that accepts one {@code boolean}-valued input argument and produces a
- * {@code long}-valued result.
- * This is a primitive specialization of {@link Function2}.
+ * Represents an operation that accepts one {@code boolean}-valued input argument and produces a {@code long}-valued
+ * result. This is a primitive specialization of {@link Function2}.
  * <p>
  * This is a {@link FunctionalInterface} whose functional method is {@link #applyAsLong(boolean)}.
  *
@@ -70,7 +71,7 @@ public interface BooleanToLongFunction extends Lambda {
      * Expression</a>
      * @see <a href="https://docs.oracle.com/javase/tutorial/java/javaOO/methodreferences.html">Method Reference</a>
      */
-    static BooleanToLongFunction of(@Nullable final BooleanToLongFunction expression) {
+    static BooleanToLongFunction of(@Nullable BooleanToLongFunction expression) {
         return expression;
     }
 
@@ -82,7 +83,7 @@ public interface BooleanToLongFunction extends Lambda {
      * @return The result from the given {@code BooleanToLongFunction}.
      * @throws NullPointerException If given argument is {@code null}
      */
-    static long call(@Nonnull final BooleanToLongFunction function, boolean value) {
+    static long call(@Nonnull BooleanToLongFunction function, boolean value) {
         Objects.requireNonNull(function);
         return function.applyAsLong(value);
     }
@@ -95,7 +96,7 @@ public interface BooleanToLongFunction extends Lambda {
      */
     @Nonnull
     static BooleanToLongFunction constant(long ret) {
-        return (value) -> ret;
+        return value -> ret;
     }
 
     /**
@@ -118,9 +119,9 @@ public interface BooleanToLongFunction extends Lambda {
     }
 
     /**
-     * Returns a composed {@link ToLongFunction2} that first applies the {@code before} predicate to its input, and
-     * then applies this function to the result.
-     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
+     * Returns a composed {@link ToLongFunction2} that first applies the {@code before} predicate to its input, and then
+     * applies this function to the result. If evaluation of either operation throws an exception, it is relayed to the
+     * caller of the composed operation.
      *
      * @param <A> The type of the argument to the given predicate, and of composed function
      * @param before The predicate to apply before this function is applied
@@ -130,9 +131,9 @@ public interface BooleanToLongFunction extends Lambda {
      * @implSpec The input argument of this method is able to handle every type.
      */
     @Nonnull
-    default <A> ToLongFunction2<A> compose(@Nonnull final Predicate<? super A> before) {
+    default <A> ToLongFunction2<A> compose(@Nonnull Predicate<? super A> before) {
         Objects.requireNonNull(before);
-        return (a) -> applyAsLong(before.test(a));
+        return a -> applyAsLong(before.test(a));
     }
 
     /**
@@ -145,53 +146,51 @@ public interface BooleanToLongFunction extends Lambda {
      * @return A composed {@code BooleanToLongFunction} that first applies the {@code before} operator to its input, and
      * then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * boolean}.
      */
     @Nonnull
-    default BooleanToLongFunction composeFromBoolean(@Nonnull final BooleanUnaryOperator before) {
+    default BooleanToLongFunction composeFromBoolean(@Nonnull BooleanUnaryOperator before) {
         Objects.requireNonNull(before);
-        return (value) -> applyAsLong(before.applyAsBoolean(value));
+        return value -> applyAsLong(before.applyAsBoolean(value));
     }
 
     /**
-     * Returns a composed {@link ByteToLongFunction} that first applies the {@code before} predicate to
-     * its input, and then applies this function to the result.
-     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
-     * This method is just convenience, to provide the ability to execute an operation which accepts {@code byte} input,
-     * before this primitive function is executed.
+     * Returns a composed {@link ByteToLongFunction} that first applies the {@code before} predicate to its input, and
+     * then applies this function to the result. If evaluation of either operation throws an exception, it is relayed to
+     * the caller of the composed operation. This method is just convenience, to provide the ability to execute an
+     * operation which accepts {@code byte} input, before this primitive function is executed.
      *
      * @param before The predicate to apply before this function is applied
      * @return A composed {@code ByteToLongFunction} that first applies the {@code before} predicate to its input, and
      * then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * byte}.
      */
     @Nonnull
-    default ByteToLongFunction composeFromByte(@Nonnull final BytePredicate before) {
+    default ByteToLongFunction composeFromByte(@Nonnull BytePredicate before) {
         Objects.requireNonNull(before);
-        return (value) -> applyAsLong(before.test(value));
+        return value -> applyAsLong(before.test(value));
     }
 
     /**
-     * Returns a composed {@link CharToLongFunction} that first applies the {@code before} predicate to
-     * its input, and then applies this function to the result.
-     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
-     * This method is just convenience, to provide the ability to execute an operation which accepts {@code char} input,
-     * before this primitive function is executed.
+     * Returns a composed {@link CharToLongFunction} that first applies the {@code before} predicate to its input, and
+     * then applies this function to the result. If evaluation of either operation throws an exception, it is relayed to
+     * the caller of the composed operation. This method is just convenience, to provide the ability to execute an
+     * operation which accepts {@code char} input, before this primitive function is executed.
      *
      * @param before The predicate to apply before this function is applied
      * @return A composed {@code CharToLongFunction} that first applies the {@code before} predicate to its input, and
      * then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * char}.
      */
     @Nonnull
-    default CharToLongFunction composeFromChar(@Nonnull final CharPredicate before) {
+    default CharToLongFunction composeFromChar(@Nonnull CharPredicate before) {
         Objects.requireNonNull(before);
-        return (value) -> applyAsLong(before.test(value));
+        return value -> applyAsLong(before.test(value));
     }
 
     /**
@@ -204,13 +203,13 @@ public interface BooleanToLongFunction extends Lambda {
      * @return A composed {@code DoubleToLongFunction2} that first applies the {@code before} predicate to its input,
      * and then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * double}.
      */
     @Nonnull
-    default DoubleToLongFunction2 composeFromDouble(@Nonnull final DoublePredicate before) {
+    default DoubleToLongFunction2 composeFromDouble(@Nonnull DoublePredicate before) {
         Objects.requireNonNull(before);
-        return (value) -> applyAsLong(before.test(value));
+        return value -> applyAsLong(before.test(value));
     }
 
     /**
@@ -223,53 +222,51 @@ public interface BooleanToLongFunction extends Lambda {
      * @return A composed {@code FloatToLongFunction} that first applies the {@code before} predicate to its input, and
      * then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * float}.
      */
     @Nonnull
-    default FloatToLongFunction composeFromFloat(@Nonnull final FloatPredicate before) {
+    default FloatToLongFunction composeFromFloat(@Nonnull FloatPredicate before) {
         Objects.requireNonNull(before);
-        return (value) -> applyAsLong(before.test(value));
+        return value -> applyAsLong(before.test(value));
     }
 
     /**
-     * Returns a composed {@link IntToLongFunction2} that first applies the {@code before} predicate to
-     * its input, and then applies this function to the result.
-     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
-     * This method is just convenience, to provide the ability to execute an operation which accepts {@code int} input,
-     * before this primitive function is executed.
+     * Returns a composed {@link IntToLongFunction2} that first applies the {@code before} predicate to its input, and
+     * then applies this function to the result. If evaluation of either operation throws an exception, it is relayed to
+     * the caller of the composed operation. This method is just convenience, to provide the ability to execute an
+     * operation which accepts {@code int} input, before this primitive function is executed.
      *
      * @param before The predicate to apply before this function is applied
      * @return A composed {@code IntToLongFunction2} that first applies the {@code before} predicate to its input, and
      * then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * int}.
      */
     @Nonnull
-    default IntToLongFunction2 composeFromInt(@Nonnull final IntPredicate before) {
+    default IntToLongFunction2 composeFromInt(@Nonnull IntPredicate before) {
         Objects.requireNonNull(before);
-        return (value) -> applyAsLong(before.test(value));
+        return value -> applyAsLong(before.test(value));
     }
 
     /**
-     * Returns a composed {@link LongUnaryOperator2} that first applies the {@code before} predicate to
-     * its input, and then applies this function to the result.
-     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
-     * This method is just convenience, to provide the ability to execute an operation which accepts {@code long} input,
-     * before this primitive function is executed.
+     * Returns a composed {@link LongUnaryOperator2} that first applies the {@code before} predicate to its input, and
+     * then applies this function to the result. If evaluation of either operation throws an exception, it is relayed to
+     * the caller of the composed operation. This method is just convenience, to provide the ability to execute an
+     * operation which accepts {@code long} input, before this primitive function is executed.
      *
      * @param before The predicate to apply before this function is applied
      * @return A composed {@code LongUnaryOperator2} that first applies the {@code before} predicate to its input, and
      * then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * long}.
      */
     @Nonnull
-    default LongUnaryOperator2 composeFromLong(@Nonnull final LongPredicate before) {
+    default LongUnaryOperator2 composeFromLong(@Nonnull LongPredicate before) {
         Objects.requireNonNull(before);
-        return (value) -> applyAsLong(before.test(value));
+        return value -> applyAsLong(before.test(value));
     }
 
     /**
@@ -282,19 +279,19 @@ public interface BooleanToLongFunction extends Lambda {
      * @return A composed {@code ShortToLongFunction} that first applies the {@code before} predicate to its input, and
      * then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * short}.
      */
     @Nonnull
-    default ShortToLongFunction composeFromShort(@Nonnull final ShortPredicate before) {
+    default ShortToLongFunction composeFromShort(@Nonnull ShortPredicate before) {
         Objects.requireNonNull(before);
-        return (value) -> applyAsLong(before.test(value));
+        return value -> applyAsLong(before.test(value));
     }
 
     /**
      * Returns a composed {@link BooleanFunction} that first applies this function to its input, and then applies the
-     * {@code after} function to the result.
-     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
+     * {@code after} function to the result. If evaluation of either operation throws an exception, it is relayed to the
+     * caller of the composed operation.
      *
      * @param <S> The type of return value from the {@code after} function, and of the composed function
      * @param after The function to apply after this function is applied
@@ -304,9 +301,9 @@ public interface BooleanToLongFunction extends Lambda {
      * @implSpec The input argument of this method is able to return every type.
      */
     @Nonnull
-    default <S> BooleanFunction<S> andThen(@Nonnull final LongFunction<? extends S> after) {
+    default <S> BooleanFunction<S> andThen(@Nonnull LongFunction<? extends S> after) {
         Objects.requireNonNull(after);
-        return (value) -> after.apply(applyAsLong(value));
+        return value -> after.apply(applyAsLong(value));
     }
 
     /**
@@ -319,13 +316,13 @@ public interface BooleanToLongFunction extends Lambda {
      * @return A composed {@code BooleanUnaryOperator} that first applies this function to its input, and then applies
      * the {@code after} predicate to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * boolean}.
      */
     @Nonnull
-    default BooleanUnaryOperator andThenToBoolean(@Nonnull final LongPredicate after) {
+    default BooleanUnaryOperator andThenToBoolean(@Nonnull LongPredicate after) {
         Objects.requireNonNull(after);
-        return (value) -> after.test(applyAsLong(value));
+        return value -> after.test(applyAsLong(value));
     }
 
     /**
@@ -338,13 +335,13 @@ public interface BooleanToLongFunction extends Lambda {
      * @return A composed {@code BooleanToByteFunction} that first applies this function to its input, and then applies
      * the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * byte}.
      */
     @Nonnull
-    default BooleanToByteFunction andThenToByte(@Nonnull final LongToByteFunction after) {
+    default BooleanToByteFunction andThenToByte(@Nonnull LongToByteFunction after) {
         Objects.requireNonNull(after);
-        return (value) -> after.applyAsByte(applyAsLong(value));
+        return value -> after.applyAsByte(applyAsLong(value));
     }
 
     /**
@@ -357,13 +354,13 @@ public interface BooleanToLongFunction extends Lambda {
      * @return A composed {@code BooleanToCharFunction} that first applies this function to its input, and then applies
      * the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * char}.
      */
     @Nonnull
-    default BooleanToCharFunction andThenToChar(@Nonnull final LongToCharFunction after) {
+    default BooleanToCharFunction andThenToChar(@Nonnull LongToCharFunction after) {
         Objects.requireNonNull(after);
-        return (value) -> after.applyAsChar(applyAsLong(value));
+        return value -> after.applyAsChar(applyAsLong(value));
     }
 
     /**
@@ -376,13 +373,13 @@ public interface BooleanToLongFunction extends Lambda {
      * @return A composed {@code BooleanToDoubleFunction} that first applies this function to its input, and then
      * applies the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * double}.
      */
     @Nonnull
-    default BooleanToDoubleFunction andThenToDouble(@Nonnull final LongToDoubleFunction after) {
+    default BooleanToDoubleFunction andThenToDouble(@Nonnull LongToDoubleFunction after) {
         Objects.requireNonNull(after);
-        return (value) -> after.applyAsDouble(applyAsLong(value));
+        return value -> after.applyAsDouble(applyAsLong(value));
     }
 
     /**
@@ -395,13 +392,13 @@ public interface BooleanToLongFunction extends Lambda {
      * @return A composed {@code BooleanToFloatFunction} that first applies this function to its input, and then applies
      * the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * float}.
      */
     @Nonnull
-    default BooleanToFloatFunction andThenToFloat(@Nonnull final LongToFloatFunction after) {
+    default BooleanToFloatFunction andThenToFloat(@Nonnull LongToFloatFunction after) {
         Objects.requireNonNull(after);
-        return (value) -> after.applyAsFloat(applyAsLong(value));
+        return value -> after.applyAsFloat(applyAsLong(value));
     }
 
     /**
@@ -414,13 +411,13 @@ public interface BooleanToLongFunction extends Lambda {
      * @return A composed {@code BooleanToIntFunction} that first applies this function to its input, and then applies
      * the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * int}.
      */
     @Nonnull
-    default BooleanToIntFunction andThenToInt(@Nonnull final LongToIntFunction after) {
+    default BooleanToIntFunction andThenToInt(@Nonnull LongToIntFunction after) {
         Objects.requireNonNull(after);
-        return (value) -> after.applyAsInt(applyAsLong(value));
+        return value -> after.applyAsInt(applyAsLong(value));
     }
 
     /**
@@ -433,13 +430,13 @@ public interface BooleanToLongFunction extends Lambda {
      * @return A composed {@code BooleanToLongFunction} that first applies this function to its input, and then applies
      * the {@code after} operator to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * long}.
      */
     @Nonnull
-    default BooleanToLongFunction andThenToLong(@Nonnull final LongUnaryOperator after) {
+    default BooleanToLongFunction andThenToLong(@Nonnull LongUnaryOperator after) {
         Objects.requireNonNull(after);
-        return (value) -> after.applyAsLong(applyAsLong(value));
+        return value -> after.applyAsLong(applyAsLong(value));
     }
 
     /**
@@ -452,13 +449,13 @@ public interface BooleanToLongFunction extends Lambda {
      * @return A composed {@code BooleanToShortFunction} that first applies this function to its input, and then applies
      * the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * short}.
      */
     @Nonnull
-    default BooleanToShortFunction andThenToShort(@Nonnull final LongToShortFunction after) {
+    default BooleanToShortFunction andThenToShort(@Nonnull LongToShortFunction after) {
         Objects.requireNonNull(after);
-        return (value) -> after.applyAsShort(applyAsLong(value));
+        return value -> after.applyAsShort(applyAsLong(value));
     }
 
     /**
@@ -472,9 +469,9 @@ public interface BooleanToLongFunction extends Lambda {
      * @throws NullPointerException If given argument is {@code null}
      */
     @Nonnull
-    default BooleanConsumer consume(@Nonnull final LongConsumer consumer) {
+    default BooleanConsumer consume(@Nonnull LongConsumer consumer) {
         Objects.requireNonNull(consumer);
-        return (value) -> consumer.accept(applyAsLong(value));
+        return value -> consumer.accept(applyAsLong(value));
     }
 
     /**
@@ -496,10 +493,10 @@ public interface BooleanToLongFunction extends Lambda {
         if (isMemoized()) {
             return this;
         } else {
-            final Map<Boolean, Long> cache = new ConcurrentHashMap<>();
-            final Object lock = new Object();
-            return (BooleanToLongFunction & Memoized) (value) -> {
-                final long returnValue;
+            Map<Boolean, Long> cache = new ConcurrentHashMap<>();
+            Object lock = new Object();
+            return (BooleanToLongFunction & Memoized) value -> {
+                long returnValue;
                 synchronized (lock) {
                     returnValue = cache.computeIfAbsent(value, this::applyAsLong);
                 }
@@ -510,8 +507,8 @@ public interface BooleanToLongFunction extends Lambda {
 
     /**
      * Returns a composed {@link Function2} which represents this {@link BooleanToLongFunction}. Thereby the primitive
-     * input argument for this function is autoboxed. This method provides the possibility to use this
-     * {@code BooleanToLongFunction} with methods provided by the {@code JDK}.
+     * input argument for this function is autoboxed. This method provides the possibility to use this {@code
+     * BooleanToLongFunction} with methods provided by the {@code JDK}.
      *
      * @return A composed {@code Function2} which represents this {@code BooleanToLongFunction}.
      */

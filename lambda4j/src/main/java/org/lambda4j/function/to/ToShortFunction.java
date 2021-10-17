@@ -13,7 +13,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package org.lambda4j.function.to;
+
+import java.util.Map;
+import java.util.Objects;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.function.Function;
+
+import javax.annotation.Nonnegative;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import org.lambda4j.Lambda;
 import org.lambda4j.consumer.Consumer2;
@@ -30,18 +40,9 @@ import org.lambda4j.operator.unary.ShortUnaryOperator;
 import org.lambda4j.predicate.Predicate2;
 import org.lambda4j.predicate.ShortPredicate;
 
-import javax.annotation.Nonnegative;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import java.util.Map;
-import java.util.Objects;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.function.Function;
-
 /**
- * Represents an operation that accepts one input argument and produces a
- * {@code short}-valued result.
- * This is a primitive specialization of {@link Function2}.
+ * Represents an operation that accepts one input argument and produces a {@code short}-valued result. This is a
+ * primitive specialization of {@link Function2}.
  * <p>
  * This is a {@link FunctionalInterface} whose functional method is {@link #applyAsShort(Object)}.
  *
@@ -66,7 +67,7 @@ public interface ToShortFunction<T> extends Lambda {
      * Expression</a>
      * @see <a href="https://docs.oracle.com/javase/tutorial/java/javaOO/methodreferences.html">Method Reference</a>
      */
-    static <T> ToShortFunction<T> of(@Nullable final ToShortFunction<T> expression) {
+    static <T> ToShortFunction<T> of(@Nullable ToShortFunction<T> expression) {
         return expression;
     }
 
@@ -79,7 +80,7 @@ public interface ToShortFunction<T> extends Lambda {
      * @return The result from the given {@code ToShortFunction}.
      * @throws NullPointerException If given argument is {@code null}
      */
-    static <T> short call(@Nonnull final ToShortFunction<? super T> function, T t) {
+    static <T> short call(@Nonnull ToShortFunction<? super T> function, T t) {
         Objects.requireNonNull(function);
         return function.applyAsShort(t);
     }
@@ -93,7 +94,7 @@ public interface ToShortFunction<T> extends Lambda {
      */
     @Nonnull
     static <T> ToShortFunction<T> constant(short ret) {
-        return (t) -> ret;
+        return t -> ret;
     }
 
     /**
@@ -116,9 +117,9 @@ public interface ToShortFunction<T> extends Lambda {
     }
 
     /**
-     * Returns a composed {@link ToShortFunction} that first applies the {@code before} function to its input, and
-     * then applies this function to the result.
-     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
+     * Returns a composed {@link ToShortFunction} that first applies the {@code before} function to its input, and then
+     * applies this function to the result. If evaluation of either operation throws an exception, it is relayed to the
+     * caller of the composed operation.
      *
      * @param <A> The type of the argument to the given function, and of composed function
      * @param before The function to apply before this function is applied
@@ -128,15 +129,15 @@ public interface ToShortFunction<T> extends Lambda {
      * @implSpec The input argument of this method is able to handle every type.
      */
     @Nonnull
-    default <A> ToShortFunction<A> compose(@Nonnull final Function<? super A, ? extends T> before) {
+    default <A> ToShortFunction<A> compose(@Nonnull Function<? super A, ? extends T> before) {
         Objects.requireNonNull(before);
-        return (a) -> applyAsShort(before.apply(a));
+        return a -> applyAsShort(before.apply(a));
     }
 
     /**
-     * Returns a composed {@link Function2} that first applies this function to its input, and then applies the
-     * {@code after} function to the result.
-     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
+     * Returns a composed {@link Function2} that first applies this function to its input, and then applies the {@code
+     * after} function to the result. If evaluation of either operation throws an exception, it is relayed to the caller
+     * of the composed operation.
      *
      * @param <S> The type of return value from the {@code after} function, and of the composed function
      * @param after The function to apply after this function is applied
@@ -146,9 +147,9 @@ public interface ToShortFunction<T> extends Lambda {
      * @implSpec The input argument of this method is able to return every type.
      */
     @Nonnull
-    default <S> Function2<T, S> andThen(@Nonnull final ShortFunction<? extends S> after) {
+    default <S> Function2<T, S> andThen(@Nonnull ShortFunction<? extends S> after) {
         Objects.requireNonNull(after);
-        return (t) -> after.apply(applyAsShort(t));
+        return t -> after.apply(applyAsShort(t));
     }
 
     /**
@@ -161,13 +162,13 @@ public interface ToShortFunction<T> extends Lambda {
      * @return A composed {@code Predicate2} that first applies this function to its input, and then applies the {@code
      * after} predicate to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * boolean}.
      */
     @Nonnull
-    default Predicate2<T> andThenToBoolean(@Nonnull final ShortPredicate after) {
+    default Predicate2<T> andThenToBoolean(@Nonnull ShortPredicate after) {
         Objects.requireNonNull(after);
-        return (t) -> after.test(applyAsShort(t));
+        return t -> after.test(applyAsShort(t));
     }
 
     /**
@@ -180,13 +181,13 @@ public interface ToShortFunction<T> extends Lambda {
      * @return A composed {@code ToByteFunction} that first applies this function to its input, and then applies the
      * {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * byte}.
      */
     @Nonnull
-    default ToByteFunction<T> andThenToByte(@Nonnull final ShortToByteFunction after) {
+    default ToByteFunction<T> andThenToByte(@Nonnull ShortToByteFunction after) {
         Objects.requireNonNull(after);
-        return (t) -> after.applyAsByte(applyAsShort(t));
+        return t -> after.applyAsByte(applyAsShort(t));
     }
 
     /**
@@ -199,13 +200,13 @@ public interface ToShortFunction<T> extends Lambda {
      * @return A composed {@code ToCharFunction} that first applies this function to its input, and then applies the
      * {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * char}.
      */
     @Nonnull
-    default ToCharFunction<T> andThenToChar(@Nonnull final ShortToCharFunction after) {
+    default ToCharFunction<T> andThenToChar(@Nonnull ShortToCharFunction after) {
         Objects.requireNonNull(after);
-        return (t) -> after.applyAsChar(applyAsShort(t));
+        return t -> after.applyAsChar(applyAsShort(t));
     }
 
     /**
@@ -218,13 +219,13 @@ public interface ToShortFunction<T> extends Lambda {
      * @return A composed {@code ToDoubleFunction2} that first applies this function to its input, and then applies the
      * {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * double}.
      */
     @Nonnull
-    default ToDoubleFunction2<T> andThenToDouble(@Nonnull final ShortToDoubleFunction after) {
+    default ToDoubleFunction2<T> andThenToDouble(@Nonnull ShortToDoubleFunction after) {
         Objects.requireNonNull(after);
-        return (t) -> after.applyAsDouble(applyAsShort(t));
+        return t -> after.applyAsDouble(applyAsShort(t));
     }
 
     /**
@@ -237,13 +238,13 @@ public interface ToShortFunction<T> extends Lambda {
      * @return A composed {@code ToFloatFunction} that first applies this function to its input, and then applies the
      * {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * float}.
      */
     @Nonnull
-    default ToFloatFunction<T> andThenToFloat(@Nonnull final ShortToFloatFunction after) {
+    default ToFloatFunction<T> andThenToFloat(@Nonnull ShortToFloatFunction after) {
         Objects.requireNonNull(after);
-        return (t) -> after.applyAsFloat(applyAsShort(t));
+        return t -> after.applyAsFloat(applyAsShort(t));
     }
 
     /**
@@ -256,13 +257,13 @@ public interface ToShortFunction<T> extends Lambda {
      * @return A composed {@code ToIntFunction2} that first applies this function to its input, and then applies the
      * {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * int}.
      */
     @Nonnull
-    default ToIntFunction2<T> andThenToInt(@Nonnull final ShortToIntFunction after) {
+    default ToIntFunction2<T> andThenToInt(@Nonnull ShortToIntFunction after) {
         Objects.requireNonNull(after);
-        return (t) -> after.applyAsInt(applyAsShort(t));
+        return t -> after.applyAsInt(applyAsShort(t));
     }
 
     /**
@@ -275,13 +276,13 @@ public interface ToShortFunction<T> extends Lambda {
      * @return A composed {@code ToLongFunction2} that first applies this function to its input, and then applies the
      * {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * long}.
      */
     @Nonnull
-    default ToLongFunction2<T> andThenToLong(@Nonnull final ShortToLongFunction after) {
+    default ToLongFunction2<T> andThenToLong(@Nonnull ShortToLongFunction after) {
         Objects.requireNonNull(after);
-        return (t) -> after.applyAsLong(applyAsShort(t));
+        return t -> after.applyAsLong(applyAsShort(t));
     }
 
     /**
@@ -294,19 +295,19 @@ public interface ToShortFunction<T> extends Lambda {
      * @return A composed {@code ToShortFunction} that first applies this function to its input, and then applies the
      * {@code after} operator to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * short}.
      */
     @Nonnull
-    default ToShortFunction<T> andThenToShort(@Nonnull final ShortUnaryOperator after) {
+    default ToShortFunction<T> andThenToShort(@Nonnull ShortUnaryOperator after) {
         Objects.requireNonNull(after);
-        return (t) -> after.applyAsShort(applyAsShort(t));
+        return t -> after.applyAsShort(applyAsShort(t));
     }
 
     /**
      * Returns a composed {@link Consumer2} that fist applies this function to its input, and then consumes the result
-     * using the given {@link ShortConsumer}.
-     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
+     * using the given {@link ShortConsumer}. If evaluation of either operation throws an exception, it is relayed to
+     * the caller of the composed operation.
      *
      * @param consumer The operation which consumes the result from this operation
      * @return A composed {@code Consumer2} that first applies this function to its input, and then consumes the result
@@ -314,9 +315,9 @@ public interface ToShortFunction<T> extends Lambda {
      * @throws NullPointerException If given argument is {@code null}
      */
     @Nonnull
-    default Consumer2<T> consume(@Nonnull final ShortConsumer consumer) {
+    default Consumer2<T> consume(@Nonnull ShortConsumer consumer) {
         Objects.requireNonNull(consumer);
-        return (t) -> consumer.accept(applyAsShort(t));
+        return t -> consumer.accept(applyAsShort(t));
     }
 
     /**
@@ -348,10 +349,10 @@ public interface ToShortFunction<T> extends Lambda {
         if (isMemoized()) {
             return this;
         } else {
-            final Map<T, Short> cache = new ConcurrentHashMap<>();
-            final Object lock = new Object();
-            return (ToShortFunction<T> & Memoized) (t) -> {
-                final short returnValue;
+            Map<T, Short> cache = new ConcurrentHashMap<>();
+            Object lock = new Object();
+            return (ToShortFunction<T> & Memoized) t -> {
+                short returnValue;
                 synchronized (lock) {
                     returnValue = cache.computeIfAbsent(t, this::applyAsShort);
                 }
@@ -361,9 +362,9 @@ public interface ToShortFunction<T> extends Lambda {
     }
 
     /**
-     * Returns a composed {@link Function2} which represents this {@link ToShortFunction}. Thereby the primitive
-     * input argument for this function is autoboxed. This method provides the possibility to use this
-     * {@code ToShortFunction} with methods provided by the {@code JDK}.
+     * Returns a composed {@link Function2} which represents this {@link ToShortFunction}. Thereby the primitive input
+     * argument for this function is autoboxed. This method provides the possibility to use this {@code ToShortFunction}
+     * with methods provided by the {@code JDK}.
      *
      * @return A composed {@code Function2} which represents this {@code ToShortFunction}.
      */

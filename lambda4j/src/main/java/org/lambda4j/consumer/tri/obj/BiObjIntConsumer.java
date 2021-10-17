@@ -13,7 +13,26 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package org.lambda4j.consumer.tri.obj;
+
+import java.util.Objects;
+import java.util.function.Consumer;
+import java.util.function.DoubleFunction;
+import java.util.function.DoubleToIntFunction;
+import java.util.function.Function;
+import java.util.function.IntConsumer;
+import java.util.function.IntFunction;
+import java.util.function.IntUnaryOperator;
+import java.util.function.LongFunction;
+import java.util.function.LongToIntFunction;
+import java.util.function.ToIntFunction;
+
+import javax.annotation.Nonnegative;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
+import org.apache.commons.lang3.tuple.Pair;
 
 import org.lambda4j.Lambda;
 import org.lambda4j.consumer.Consumer2;
@@ -39,23 +58,6 @@ import org.lambda4j.function.conversion.ByteToIntFunction;
 import org.lambda4j.function.conversion.CharToIntFunction;
 import org.lambda4j.function.conversion.FloatToIntFunction;
 import org.lambda4j.function.conversion.ShortToIntFunction;
-
-import org.apache.commons.lang3.tuple.Pair;
-
-import javax.annotation.Nonnegative;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import java.util.Objects;
-import java.util.function.Consumer;
-import java.util.function.DoubleFunction;
-import java.util.function.DoubleToIntFunction;
-import java.util.function.Function;
-import java.util.function.IntConsumer;
-import java.util.function.IntFunction;
-import java.util.function.IntUnaryOperator;
-import java.util.function.LongFunction;
-import java.util.function.LongToIntFunction;
-import java.util.function.ToIntFunction;
 
 /**
  * Represents an operation that accepts two object-valued and one {@code int}-valued input argument and returns no
@@ -88,7 +90,7 @@ public interface BiObjIntConsumer<T, U> extends Lambda {
      * Expression</a>
      * @see <a href="https://docs.oracle.com/javase/tutorial/java/javaOO/methodreferences.html">Method Reference</a>
      */
-    static <T, U> BiObjIntConsumer<T, U> of(@Nullable final BiObjIntConsumer<T, U> expression) {
+    static <T, U> BiObjIntConsumer<T, U> of(@Nullable BiObjIntConsumer<T, U> expression) {
         return expression;
     }
 
@@ -103,7 +105,7 @@ public interface BiObjIntConsumer<T, U> extends Lambda {
      * @param value The third argument to the consumer
      * @throws NullPointerException If given argument is {@code null}
      */
-    static <T, U> void call(@Nonnull final BiObjIntConsumer<? super T, ? super U> consumer, T t, U u, int value) {
+    static <T, U> void call(@Nonnull BiObjIntConsumer<? super T, ? super U> consumer, T t, U u, int value) {
         Objects.requireNonNull(consumer);
         consumer.accept(t, u, value);
     }
@@ -120,7 +122,7 @@ public interface BiObjIntConsumer<T, U> extends Lambda {
      * @throws NullPointerException If given argument is {@code null}
      */
     @Nonnull
-    static <T, U> BiObjIntConsumer<T, U> onlyFirst(@Nonnull final Consumer<? super T> consumer) {
+    static <T, U> BiObjIntConsumer<T, U> onlyFirst(@Nonnull Consumer<? super T> consumer) {
         Objects.requireNonNull(consumer);
         return (t, u, value) -> consumer.accept(t);
     }
@@ -137,7 +139,7 @@ public interface BiObjIntConsumer<T, U> extends Lambda {
      * @throws NullPointerException If given argument is {@code null}
      */
     @Nonnull
-    static <T, U> BiObjIntConsumer<T, U> onlySecond(@Nonnull final Consumer<? super U> consumer) {
+    static <T, U> BiObjIntConsumer<T, U> onlySecond(@Nonnull Consumer<? super U> consumer) {
         Objects.requireNonNull(consumer);
         return (t, u, value) -> consumer.accept(u);
     }
@@ -154,7 +156,7 @@ public interface BiObjIntConsumer<T, U> extends Lambda {
      * @throws NullPointerException If given argument is {@code null}
      */
     @Nonnull
-    static <T, U> BiObjIntConsumer<T, U> onlyThird(@Nonnull final IntConsumer consumer) {
+    static <T, U> BiObjIntConsumer<T, U> onlyThird(@Nonnull IntConsumer consumer) {
         Objects.requireNonNull(consumer);
         return (t, u, value) -> consumer.accept(value);
     }
@@ -189,7 +191,7 @@ public interface BiObjIntConsumer<T, U> extends Lambda {
      */
     @Nonnull
     default ObjIntConsumer2<U> paccept(T t) {
-        return (u, value) -> this.accept(t, u, value);
+        return (u, value) -> accept(t, u, value);
     }
 
     /**
@@ -201,7 +203,7 @@ public interface BiObjIntConsumer<T, U> extends Lambda {
      */
     @Nonnull
     default IntConsumer2 paccept(T t, U u) {
-        return (value) -> this.accept(t, u, value);
+        return value -> accept(t, u, value);
     }
 
     /**
@@ -212,7 +214,7 @@ public interface BiObjIntConsumer<T, U> extends Lambda {
      */
     @Nonnull
     default BiConsumer2<T, U> paccept(int value) {
-        return (t, u) -> this.accept(t, u, value);
+        return (t, u) -> accept(t, u, value);
     }
 
     /**
@@ -224,7 +226,7 @@ public interface BiObjIntConsumer<T, U> extends Lambda {
      */
     @Nonnull
     default Consumer2<U> paccept(T t, int value) {
-        return (u) -> this.accept(t, u, value);
+        return u -> accept(t, u, value);
     }
 
     /**
@@ -239,9 +241,9 @@ public interface BiObjIntConsumer<T, U> extends Lambda {
     }
 
     /**
-     * Returns a composed {@link TriConsumer} that first applies the {@code before} functions to its input, and
-     * then applies this consumer to the result.
-     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
+     * Returns a composed {@link TriConsumer} that first applies the {@code before} functions to its input, and then
+     * applies this consumer to the result. If evaluation of either operation throws an exception, it is relayed to the
+     * caller of the composed operation.
      *
      * @param <A> The type of the argument to the first given function, and of composed consumer
      * @param <B> The type of the argument to the second given function, and of composed consumer
@@ -255,8 +257,8 @@ public interface BiObjIntConsumer<T, U> extends Lambda {
      * @implSpec The input argument of this method is able to handle every type.
      */
     @Nonnull
-    default <A, B, C> TriConsumer<A, B, C> compose(@Nonnull final Function<? super A, ? extends T> before1,
-            @Nonnull final Function<? super B, ? extends U> before2, @Nonnull final ToIntFunction<? super C> before3) {
+    default <A, B, C> TriConsumer<A, B, C> compose(@Nonnull Function<? super A, ? extends T> before1,
+            @Nonnull Function<? super B, ? extends U> before2, @Nonnull ToIntFunction<? super C> before3) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         Objects.requireNonNull(before3);
@@ -275,25 +277,24 @@ public interface BiObjIntConsumer<T, U> extends Lambda {
      * @return A composed {@code TriBooleanConsumer} that first applies the {@code before} functions to its input, and
      * then applies this consumer to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * boolean}.
      */
     @Nonnull
-    default TriBooleanConsumer composeFromBoolean(@Nonnull final BooleanFunction<? extends T> before1,
-            @Nonnull final BooleanFunction<? extends U> before2, @Nonnull final BooleanToIntFunction before3) {
+    default TriBooleanConsumer composeFromBoolean(@Nonnull BooleanFunction<? extends T> before1,
+            @Nonnull BooleanFunction<? extends U> before2, @Nonnull BooleanToIntFunction before3) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         Objects.requireNonNull(before3);
         return (value1, value2, value3) -> accept(before1.apply(value1), before2.apply(value2),
-                                                  before3.applyAsInt(value3));
+                before3.applyAsInt(value3));
     }
 
     /**
-     * Returns a composed {@link TriByteConsumer} that first applies the {@code before} functions to
-     * its input, and then applies this consumer to the result.
-     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
-     * This method is just convenience, to provide the ability to execute an operation which accepts {@code byte} input,
-     * before this primitive consumer is executed.
+     * Returns a composed {@link TriByteConsumer} that first applies the {@code before} functions to its input, and then
+     * applies this consumer to the result. If evaluation of either operation throws an exception, it is relayed to the
+     * caller of the composed operation. This method is just convenience, to provide the ability to execute an operation
+     * which accepts {@code byte} input, before this primitive consumer is executed.
      *
      * @param before1 The first function to apply before this consumer is applied
      * @param before2 The second function to apply before this consumer is applied
@@ -301,25 +302,24 @@ public interface BiObjIntConsumer<T, U> extends Lambda {
      * @return A composed {@code TriByteConsumer} that first applies the {@code before} functions to its input, and then
      * applies this consumer to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * byte}.
      */
     @Nonnull
-    default TriByteConsumer composeFromByte(@Nonnull final ByteFunction<? extends T> before1,
-            @Nonnull final ByteFunction<? extends U> before2, @Nonnull final ByteToIntFunction before3) {
+    default TriByteConsumer composeFromByte(@Nonnull ByteFunction<? extends T> before1,
+            @Nonnull ByteFunction<? extends U> before2, @Nonnull ByteToIntFunction before3) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         Objects.requireNonNull(before3);
         return (value1, value2, value3) -> accept(before1.apply(value1), before2.apply(value2),
-                                                  before3.applyAsInt(value3));
+                before3.applyAsInt(value3));
     }
 
     /**
-     * Returns a composed {@link TriCharConsumer} that first applies the {@code before} functions to
-     * its input, and then applies this consumer to the result.
-     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
-     * This method is just convenience, to provide the ability to execute an operation which accepts {@code char} input,
-     * before this primitive consumer is executed.
+     * Returns a composed {@link TriCharConsumer} that first applies the {@code before} functions to its input, and then
+     * applies this consumer to the result. If evaluation of either operation throws an exception, it is relayed to the
+     * caller of the composed operation. This method is just convenience, to provide the ability to execute an operation
+     * which accepts {@code char} input, before this primitive consumer is executed.
      *
      * @param before1 The first function to apply before this consumer is applied
      * @param before2 The second function to apply before this consumer is applied
@@ -327,17 +327,17 @@ public interface BiObjIntConsumer<T, U> extends Lambda {
      * @return A composed {@code TriCharConsumer} that first applies the {@code before} functions to its input, and then
      * applies this consumer to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * char}.
      */
     @Nonnull
-    default TriCharConsumer composeFromChar(@Nonnull final CharFunction<? extends T> before1,
-            @Nonnull final CharFunction<? extends U> before2, @Nonnull final CharToIntFunction before3) {
+    default TriCharConsumer composeFromChar(@Nonnull CharFunction<? extends T> before1,
+            @Nonnull CharFunction<? extends U> before2, @Nonnull CharToIntFunction before3) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         Objects.requireNonNull(before3);
         return (value1, value2, value3) -> accept(before1.apply(value1), before2.apply(value2),
-                                                  before3.applyAsInt(value3));
+                before3.applyAsInt(value3));
     }
 
     /**
@@ -352,17 +352,17 @@ public interface BiObjIntConsumer<T, U> extends Lambda {
      * @return A composed {@code TriDoubleConsumer} that first applies the {@code before} functions to its input, and
      * then applies this consumer to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * double}.
      */
     @Nonnull
-    default TriDoubleConsumer composeFromDouble(@Nonnull final DoubleFunction<? extends T> before1,
-            @Nonnull final DoubleFunction<? extends U> before2, @Nonnull final DoubleToIntFunction before3) {
+    default TriDoubleConsumer composeFromDouble(@Nonnull DoubleFunction<? extends T> before1,
+            @Nonnull DoubleFunction<? extends U> before2, @Nonnull DoubleToIntFunction before3) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         Objects.requireNonNull(before3);
         return (value1, value2, value3) -> accept(before1.apply(value1), before2.apply(value2),
-                                                  before3.applyAsInt(value3));
+                before3.applyAsInt(value3));
     }
 
     /**
@@ -377,25 +377,24 @@ public interface BiObjIntConsumer<T, U> extends Lambda {
      * @return A composed {@code TriFloatConsumer} that first applies the {@code before} functions to its input, and
      * then applies this consumer to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * float}.
      */
     @Nonnull
-    default TriFloatConsumer composeFromFloat(@Nonnull final FloatFunction<? extends T> before1,
-            @Nonnull final FloatFunction<? extends U> before2, @Nonnull final FloatToIntFunction before3) {
+    default TriFloatConsumer composeFromFloat(@Nonnull FloatFunction<? extends T> before1,
+            @Nonnull FloatFunction<? extends U> before2, @Nonnull FloatToIntFunction before3) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         Objects.requireNonNull(before3);
         return (value1, value2, value3) -> accept(before1.apply(value1), before2.apply(value2),
-                                                  before3.applyAsInt(value3));
+                before3.applyAsInt(value3));
     }
 
     /**
-     * Returns a composed {@link TriIntConsumer} that first applies the {@code before} functions to
-     * its input, and then applies this consumer to the result.
-     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
-     * This method is just convenience, to provide the ability to execute an operation which accepts {@code int} input,
-     * before this primitive consumer is executed.
+     * Returns a composed {@link TriIntConsumer} that first applies the {@code before} functions to its input, and then
+     * applies this consumer to the result. If evaluation of either operation throws an exception, it is relayed to the
+     * caller of the composed operation. This method is just convenience, to provide the ability to execute an operation
+     * which accepts {@code int} input, before this primitive consumer is executed.
      *
      * @param before1 The first function to apply before this consumer is applied
      * @param before2 The second function to apply before this consumer is applied
@@ -403,25 +402,24 @@ public interface BiObjIntConsumer<T, U> extends Lambda {
      * @return A composed {@code TriIntConsumer} that first applies the {@code before} functions to its input, and then
      * applies this consumer to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * int}.
      */
     @Nonnull
-    default TriIntConsumer composeFromInt(@Nonnull final IntFunction<? extends T> before1,
-            @Nonnull final IntFunction<? extends U> before2, @Nonnull final IntUnaryOperator before3) {
+    default TriIntConsumer composeFromInt(@Nonnull IntFunction<? extends T> before1,
+            @Nonnull IntFunction<? extends U> before2, @Nonnull IntUnaryOperator before3) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         Objects.requireNonNull(before3);
         return (value1, value2, value3) -> accept(before1.apply(value1), before2.apply(value2),
-                                                  before3.applyAsInt(value3));
+                before3.applyAsInt(value3));
     }
 
     /**
-     * Returns a composed {@link TriLongConsumer} that first applies the {@code before} functions to
-     * its input, and then applies this consumer to the result.
-     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
-     * This method is just convenience, to provide the ability to execute an operation which accepts {@code long} input,
-     * before this primitive consumer is executed.
+     * Returns a composed {@link TriLongConsumer} that first applies the {@code before} functions to its input, and then
+     * applies this consumer to the result. If evaluation of either operation throws an exception, it is relayed to the
+     * caller of the composed operation. This method is just convenience, to provide the ability to execute an operation
+     * which accepts {@code long} input, before this primitive consumer is executed.
      *
      * @param before1 The first function to apply before this consumer is applied
      * @param before2 The second function to apply before this consumer is applied
@@ -429,17 +427,17 @@ public interface BiObjIntConsumer<T, U> extends Lambda {
      * @return A composed {@code TriLongConsumer} that first applies the {@code before} functions to its input, and then
      * applies this consumer to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * long}.
      */
     @Nonnull
-    default TriLongConsumer composeFromLong(@Nonnull final LongFunction<? extends T> before1,
-            @Nonnull final LongFunction<? extends U> before2, @Nonnull final LongToIntFunction before3) {
+    default TriLongConsumer composeFromLong(@Nonnull LongFunction<? extends T> before1,
+            @Nonnull LongFunction<? extends U> before2, @Nonnull LongToIntFunction before3) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         Objects.requireNonNull(before3);
         return (value1, value2, value3) -> accept(before1.apply(value1), before2.apply(value2),
-                                                  before3.applyAsInt(value3));
+                before3.applyAsInt(value3));
     }
 
     /**
@@ -454,17 +452,17 @@ public interface BiObjIntConsumer<T, U> extends Lambda {
      * @return A composed {@code TriShortConsumer} that first applies the {@code before} functions to its input, and
      * then applies this consumer to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * short}.
      */
     @Nonnull
-    default TriShortConsumer composeFromShort(@Nonnull final ShortFunction<? extends T> before1,
-            @Nonnull final ShortFunction<? extends U> before2, @Nonnull final ShortToIntFunction before3) {
+    default TriShortConsumer composeFromShort(@Nonnull ShortFunction<? extends T> before1,
+            @Nonnull ShortFunction<? extends U> before2, @Nonnull ShortToIntFunction before3) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         Objects.requireNonNull(before3);
         return (value1, value2, value3) -> accept(before1.apply(value1), before2.apply(value2),
-                                                  before3.applyAsInt(value3));
+                before3.applyAsInt(value3));
     }
 
     /**
@@ -479,7 +477,7 @@ public interface BiObjIntConsumer<T, U> extends Lambda {
      * @throws NullPointerException If given argument is {@code null}
      */
     @Nonnull
-    default BiObjIntConsumer<T, U> andThen(@Nonnull final BiObjIntConsumer<? super T, ? super U> after) {
+    default BiObjIntConsumer<T, U> andThen(@Nonnull BiObjIntConsumer<? super T, ? super U> after) {
         Objects.requireNonNull(after);
         return (t, u, value) -> {
             accept(t, u, value);
@@ -499,8 +497,8 @@ public interface BiObjIntConsumer<T, U> extends Lambda {
 
     /**
      * Returns a composed {@link TriConsumer} which represents this {@link BiObjIntConsumer}. Thereby the primitive
-     * input argument for this consumer is autoboxed. This method provides the possibility to use this
-     * {@code BiObjIntConsumer} with methods provided by the {@code JDK}.
+     * input argument for this consumer is autoboxed. This method provides the possibility to use this {@code
+     * BiObjIntConsumer} with methods provided by the {@code JDK}.
      *
      * @return A composed {@code TriConsumer} which represents this {@code BiObjIntConsumer}.
      */

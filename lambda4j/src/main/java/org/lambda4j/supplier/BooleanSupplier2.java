@@ -13,7 +13,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package org.lambda4j.supplier;
+
+import java.util.Objects;
+import java.util.concurrent.atomic.AtomicReference;
+import java.util.function.BooleanSupplier;
+
+import javax.annotation.Nonnegative;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import org.lambda4j.Lambda;
 import org.lambda4j.consumer.BooleanConsumer;
@@ -28,16 +37,8 @@ import org.lambda4j.function.conversion.BooleanToLongFunction;
 import org.lambda4j.function.conversion.BooleanToShortFunction;
 import org.lambda4j.operator.unary.BooleanUnaryOperator;
 
-import javax.annotation.Nonnegative;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import java.util.Objects;
-import java.util.concurrent.atomic.AtomicReference;
-import java.util.function.BooleanSupplier;
-
 /**
- * Represents a supplier of {@code boolean}-valued results.
- * This is a primitive specialization of {@link Supplier2}.
+ * Represents a supplier of {@code boolean}-valued results. This is a primitive specialization of {@link Supplier2}.
  * <p>
  * There is no requirement that a distinct result be returned each time the supplier is invoked.
  * <p>
@@ -64,7 +65,7 @@ public interface BooleanSupplier2 extends Lambda, BooleanSupplier {
      * Expression</a>
      * @see <a href="https://docs.oracle.com/javase/tutorial/java/javaOO/methodreferences.html">Method Reference</a>
      */
-    static BooleanSupplier2 of(@Nullable final BooleanSupplier2 expression) {
+    static BooleanSupplier2 of(@Nullable BooleanSupplier2 expression) {
         return expression;
     }
 
@@ -75,7 +76,7 @@ public interface BooleanSupplier2 extends Lambda, BooleanSupplier {
      * @return The result from the given {@code BooleanSupplier2}.
      * @throws NullPointerException If given argument is {@code null}
      */
-    static boolean call(@Nonnull final BooleanSupplier supplier) {
+    static boolean call(@Nonnull BooleanSupplier supplier) {
         Objects.requireNonNull(supplier);
         return supplier.getAsBoolean();
     }
@@ -118,6 +119,7 @@ public interface BooleanSupplier2 extends Lambda, BooleanSupplier {
      *
      * @return The return value from the supplier, which is its result.
      */
+    @Override
     boolean getAsBoolean();
 
     /**
@@ -132,9 +134,9 @@ public interface BooleanSupplier2 extends Lambda, BooleanSupplier {
     }
 
     /**
-     * Returns a composed {@link Supplier2} that first applies this supplier to its input, and then applies the
-     * {@code after} function to the result.
-     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
+     * Returns a composed {@link Supplier2} that first applies this supplier to its input, and then applies the {@code
+     * after} function to the result. If evaluation of either operation throws an exception, it is relayed to the caller
+     * of the composed operation.
      *
      * @param <S> The type of return value from the {@code after} function, and of the composed supplier
      * @param after The function to apply after this supplier is applied
@@ -144,7 +146,7 @@ public interface BooleanSupplier2 extends Lambda, BooleanSupplier {
      * @implSpec The input argument of this method is able to return every type.
      */
     @Nonnull
-    default <S> Supplier2<S> andThen(@Nonnull final BooleanFunction<? extends S> after) {
+    default <S> Supplier2<S> andThen(@Nonnull BooleanFunction<? extends S> after) {
         Objects.requireNonNull(after);
         return () -> after.apply(getAsBoolean());
     }
@@ -159,11 +161,11 @@ public interface BooleanSupplier2 extends Lambda, BooleanSupplier {
      * @return A composed {@code BooleanSupplier2} that first applies this supplier to its input, and then applies the
      * {@code after} operator to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * boolean}.
      */
     @Nonnull
-    default BooleanSupplier2 andThenToBoolean(@Nonnull final BooleanUnaryOperator after) {
+    default BooleanSupplier2 andThenToBoolean(@Nonnull BooleanUnaryOperator after) {
         Objects.requireNonNull(after);
         return () -> after.applyAsBoolean(getAsBoolean());
     }
@@ -178,11 +180,11 @@ public interface BooleanSupplier2 extends Lambda, BooleanSupplier {
      * @return A composed {@code ByteSupplier} that first applies this supplier to its input, and then applies the
      * {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * byte}.
      */
     @Nonnull
-    default ByteSupplier andThenToByte(@Nonnull final BooleanToByteFunction after) {
+    default ByteSupplier andThenToByte(@Nonnull BooleanToByteFunction after) {
         Objects.requireNonNull(after);
         return () -> after.applyAsByte(getAsBoolean());
     }
@@ -197,11 +199,11 @@ public interface BooleanSupplier2 extends Lambda, BooleanSupplier {
      * @return A composed {@code CharSupplier} that first applies this supplier to its input, and then applies the
      * {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * char}.
      */
     @Nonnull
-    default CharSupplier andThenToChar(@Nonnull final BooleanToCharFunction after) {
+    default CharSupplier andThenToChar(@Nonnull BooleanToCharFunction after) {
         Objects.requireNonNull(after);
         return () -> after.applyAsChar(getAsBoolean());
     }
@@ -216,11 +218,11 @@ public interface BooleanSupplier2 extends Lambda, BooleanSupplier {
      * @return A composed {@code DoubleSupplier2} that first applies this supplier to its input, and then applies the
      * {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * double}.
      */
     @Nonnull
-    default DoubleSupplier2 andThenToDouble(@Nonnull final BooleanToDoubleFunction after) {
+    default DoubleSupplier2 andThenToDouble(@Nonnull BooleanToDoubleFunction after) {
         Objects.requireNonNull(after);
         return () -> after.applyAsDouble(getAsBoolean());
     }
@@ -235,11 +237,11 @@ public interface BooleanSupplier2 extends Lambda, BooleanSupplier {
      * @return A composed {@code FloatSupplier} that first applies this supplier to its input, and then applies the
      * {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * float}.
      */
     @Nonnull
-    default FloatSupplier andThenToFloat(@Nonnull final BooleanToFloatFunction after) {
+    default FloatSupplier andThenToFloat(@Nonnull BooleanToFloatFunction after) {
         Objects.requireNonNull(after);
         return () -> after.applyAsFloat(getAsBoolean());
     }
@@ -254,11 +256,11 @@ public interface BooleanSupplier2 extends Lambda, BooleanSupplier {
      * @return A composed {@code IntSupplier2} that first applies this supplier to its input, and then applies the
      * {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * int}.
      */
     @Nonnull
-    default IntSupplier2 andThenToInt(@Nonnull final BooleanToIntFunction after) {
+    default IntSupplier2 andThenToInt(@Nonnull BooleanToIntFunction after) {
         Objects.requireNonNull(after);
         return () -> after.applyAsInt(getAsBoolean());
     }
@@ -273,11 +275,11 @@ public interface BooleanSupplier2 extends Lambda, BooleanSupplier {
      * @return A composed {@code LongSupplier2} that first applies this supplier to its input, and then applies the
      * {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * long}.
      */
     @Nonnull
-    default LongSupplier2 andThenToLong(@Nonnull final BooleanToLongFunction after) {
+    default LongSupplier2 andThenToLong(@Nonnull BooleanToLongFunction after) {
         Objects.requireNonNull(after);
         return () -> after.applyAsLong(getAsBoolean());
     }
@@ -292,19 +294,19 @@ public interface BooleanSupplier2 extends Lambda, BooleanSupplier {
      * @return A composed {@code ShortSupplier} that first applies this supplier to its input, and then applies the
      * {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * short}.
      */
     @Nonnull
-    default ShortSupplier andThenToShort(@Nonnull final BooleanToShortFunction after) {
+    default ShortSupplier andThenToShort(@Nonnull BooleanToShortFunction after) {
         Objects.requireNonNull(after);
         return () -> after.applyAsShort(getAsBoolean());
     }
 
     /**
-     * Returns a composed {@link Consumer2} that first gets the result from this supplier, and then consumes
-     * the result using the given {@link BooleanConsumer}.
-     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
+     * Returns a composed {@link Consumer2} that first gets the result from this supplier, and then consumes the result
+     * using the given {@link BooleanConsumer}. If evaluation of either operation throws an exception, it is relayed to
+     * the caller of the composed operation.
      *
      * @param consumer The operation which consumes the result from this operation
      * @return A composed {@code Consumer2} that first gets the result from this supplier, and then consumes the result
@@ -316,7 +318,7 @@ public interface BooleanSupplier2 extends Lambda, BooleanSupplier {
      * resulting consumer is called with {@code Consumer#accept(Object)}.
      */
     @Nonnull
-    default Consumer2<Void> consume(@Nonnull final BooleanConsumer consumer) {
+    default Consumer2<Void> consume(@Nonnull BooleanConsumer consumer) {
         Objects.requireNonNull(consumer);
         return ignored -> consumer.accept(getAsBoolean());
     }
@@ -347,7 +349,7 @@ public interface BooleanSupplier2 extends Lambda, BooleanSupplier {
                     synchronized (this) {
                         returnValue = cache.get();
                         if (returnValue == null) {
-                            returnValue = this.getAsBoolean();
+                            returnValue = getAsBoolean();
                             cache.set(returnValue);
                         }
                     }
@@ -358,9 +360,9 @@ public interface BooleanSupplier2 extends Lambda, BooleanSupplier {
     }
 
     /**
-     * Returns a composed {@link Supplier2} which represents this {@link BooleanSupplier2}. Thereby the primitive
-     * input argument for this supplier is autoboxed. This method provides the possibility to use this
-     * {@code BooleanSupplier2} with methods provided by the {@code JDK}.
+     * Returns a composed {@link Supplier2} which represents this {@link BooleanSupplier2}. Thereby the primitive input
+     * argument for this supplier is autoboxed. This method provides the possibility to use this {@code
+     * BooleanSupplier2} with methods provided by the {@code JDK}.
      *
      * @return A composed {@code Supplier2} which represents this {@code BooleanSupplier2}.
      */

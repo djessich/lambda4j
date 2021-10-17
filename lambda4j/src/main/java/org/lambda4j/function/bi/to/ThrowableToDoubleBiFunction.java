@@ -13,7 +13,20 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package org.lambda4j.function.bi.to;
+
+import java.util.Map;
+import java.util.Objects;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.function.Function;
+import java.util.function.ToDoubleBiFunction;
+
+import javax.annotation.Nonnegative;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
+import org.apache.commons.lang3.tuple.Pair;
 
 import org.lambda4j.Lambda;
 import org.lambda4j.consumer.ThrowableDoubleConsumer;
@@ -34,21 +47,9 @@ import org.lambda4j.operator.unary.ThrowableDoubleUnaryOperator;
 import org.lambda4j.predicate.ThrowableDoublePredicate;
 import org.lambda4j.predicate.bi.ThrowableBiPredicate;
 
-import org.apache.commons.lang3.tuple.Pair;
-
-import javax.annotation.Nonnegative;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import java.util.Map;
-import java.util.Objects;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.function.Function;
-import java.util.function.ToDoubleBiFunction;
-
 /**
- * Represents an operation that accepts two input arguments and produces a
- * {@code double}-valued result which is able to throw any {@link Throwable}.
- * This is a primitive specialization of {@link ThrowableBiFunction}.
+ * Represents an operation that accepts two input arguments and produces a {@code double}-valued result which is able to
+ * throw any {@link Throwable}. This is a primitive specialization of {@link ThrowableBiFunction}.
  * <p>
  * This is a {@link FunctionalInterface} whose functional method is {@link #applyAsDoubleThrows(Object, Object)}.
  *
@@ -80,7 +81,7 @@ public interface ThrowableToDoubleBiFunction<T, U, X extends Throwable> extends 
      * @see <a href="https://docs.oracle.com/javase/tutorial/java/javaOO/methodreferences.html">Method Reference</a>
      */
     static <T, U, X extends Throwable> ThrowableToDoubleBiFunction<T, U, X> of(
-            @Nullable final ThrowableToDoubleBiFunction<T, U, X> expression) {
+            @Nullable ThrowableToDoubleBiFunction<T, U, X> expression) {
         return expression;
     }
 
@@ -98,7 +99,7 @@ public interface ThrowableToDoubleBiFunction<T, U, X extends Throwable> extends 
      * @throws X Any throwable from this functions action
      */
     static <T, U, X extends Throwable> double call(
-            @Nonnull final ThrowableToDoubleBiFunction<? super T, ? super U, ? extends X> function, T t, U u) throws X {
+            @Nonnull ThrowableToDoubleBiFunction<? super T, ? super U, ? extends X> function, T t, U u) throws X {
         Objects.requireNonNull(function);
         return function.applyAsDoubleThrows(t, u);
     }
@@ -117,7 +118,7 @@ public interface ThrowableToDoubleBiFunction<T, U, X extends Throwable> extends 
      */
     @Nonnull
     static <T, U, X extends Throwable> ThrowableToDoubleBiFunction<T, U, X> onlyFirst(
-            @Nonnull final ThrowableToDoubleFunction<? super T, ? extends X> function) {
+            @Nonnull ThrowableToDoubleFunction<? super T, ? extends X> function) {
         Objects.requireNonNull(function);
         return (t, u) -> function.applyAsDoubleThrows(t);
     }
@@ -136,7 +137,7 @@ public interface ThrowableToDoubleBiFunction<T, U, X extends Throwable> extends 
      */
     @Nonnull
     static <T, U, X extends Throwable> ThrowableToDoubleBiFunction<T, U, X> onlySecond(
-            @Nonnull final ThrowableToDoubleFunction<? super U, ? extends X> function) {
+            @Nonnull ThrowableToDoubleFunction<? super U, ? extends X> function) {
         Objects.requireNonNull(function);
         return (t, u) -> function.applyAsDoubleThrows(u);
     }
@@ -182,14 +183,6 @@ public interface ThrowableToDoubleBiFunction<T, U, X extends Throwable> extends 
      */
     @Override
     default double applyAsDouble(T t, U u) {
-        // TODO: Remove commented code below
-    /*try {
-         return this.applyAsDoubleThrows(t, u);
-    } catch (RuntimeException | Error e) {
-        throw e;
-    } catch (Throwable throwable) {
-        throw new ThrownByFunctionalInterfaceException(throwable.getMessage(), throwable);
-    }*/
         return nest().applyAsDouble(t, u);
     }
 
@@ -216,7 +209,7 @@ public interface ThrowableToDoubleBiFunction<T, U, X extends Throwable> extends 
      */
     @Nonnull
     default ThrowableToDoubleFunction<U, X> papplyAsDoubleThrows(T t) {
-        return (u) -> this.applyAsDoubleThrows(t, u);
+        return u -> applyAsDoubleThrows(t, u);
     }
 
     /**
@@ -245,8 +238,8 @@ public interface ThrowableToDoubleBiFunction<T, U, X extends Throwable> extends 
      */
     @Nonnull
     default <A, B> ThrowableToDoubleBiFunction<A, B, X> compose(
-            @Nonnull final ThrowableFunction<? super A, ? extends T, ? extends X> before1,
-            @Nonnull final ThrowableFunction<? super B, ? extends U, ? extends X> before2) {
+            @Nonnull ThrowableFunction<? super A, ? extends T, ? extends X> before1,
+            @Nonnull ThrowableFunction<? super B, ? extends U, ? extends X> before2) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         return (a, b) -> applyAsDoubleThrows(before1.applyThrows(a), before2.applyThrows(b));
@@ -265,7 +258,7 @@ public interface ThrowableToDoubleBiFunction<T, U, X extends Throwable> extends 
      */
     @Nonnull
     default <S> ThrowableBiFunction<T, U, S, X> andThen(
-            @Nonnull final ThrowableDoubleFunction<? extends S, ? extends X> after) {
+            @Nonnull ThrowableDoubleFunction<? extends S, ? extends X> after) {
         Objects.requireNonNull(after);
         return (t, u) -> after.applyThrows(applyAsDoubleThrows(t, u));
     }
@@ -279,11 +272,11 @@ public interface ThrowableToDoubleBiFunction<T, U, X extends Throwable> extends 
      * @return A composed {@code ThrowableBiPredicate} that first applies this function to its input, and then applies
      * the {@code after} predicate to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * boolean}.
      */
     @Nonnull
-    default ThrowableBiPredicate<T, U, X> andThenToBoolean(@Nonnull final ThrowableDoublePredicate<? extends X> after) {
+    default ThrowableBiPredicate<T, U, X> andThenToBoolean(@Nonnull ThrowableDoublePredicate<? extends X> after) {
         Objects.requireNonNull(after);
         return (t, u) -> after.testThrows(applyAsDoubleThrows(t, u));
     }
@@ -297,12 +290,12 @@ public interface ThrowableToDoubleBiFunction<T, U, X extends Throwable> extends 
      * @return A composed {@code ThrowableToByteBiFunction} that first applies this function to its input, and then
      * applies the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * byte}.
      */
     @Nonnull
     default ThrowableToByteBiFunction<T, U, X> andThenToByte(
-            @Nonnull final ThrowableDoubleToByteFunction<? extends X> after) {
+            @Nonnull ThrowableDoubleToByteFunction<? extends X> after) {
         Objects.requireNonNull(after);
         return (t, u) -> after.applyAsByteThrows(applyAsDoubleThrows(t, u));
     }
@@ -316,12 +309,12 @@ public interface ThrowableToDoubleBiFunction<T, U, X extends Throwable> extends 
      * @return A composed {@code ThrowableToCharBiFunction} that first applies this function to its input, and then
      * applies the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * char}.
      */
     @Nonnull
     default ThrowableToCharBiFunction<T, U, X> andThenToChar(
-            @Nonnull final ThrowableDoubleToCharFunction<? extends X> after) {
+            @Nonnull ThrowableDoubleToCharFunction<? extends X> after) {
         Objects.requireNonNull(after);
         return (t, u) -> after.applyAsCharThrows(applyAsDoubleThrows(t, u));
     }
@@ -335,12 +328,12 @@ public interface ThrowableToDoubleBiFunction<T, U, X extends Throwable> extends 
      * @return A composed {@code ThrowableToDoubleBiFunction} that first applies this function to its input, and then
      * applies the {@code after} operator to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * double}.
      */
     @Nonnull
     default ThrowableToDoubleBiFunction<T, U, X> andThenToDouble(
-            @Nonnull final ThrowableDoubleUnaryOperator<? extends X> after) {
+            @Nonnull ThrowableDoubleUnaryOperator<? extends X> after) {
         Objects.requireNonNull(after);
         return (t, u) -> after.applyAsDoubleThrows(applyAsDoubleThrows(t, u));
     }
@@ -354,12 +347,12 @@ public interface ThrowableToDoubleBiFunction<T, U, X extends Throwable> extends 
      * @return A composed {@code ThrowableToFloatBiFunction} that first applies this function to its input, and then
      * applies the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * float}.
      */
     @Nonnull
     default ThrowableToFloatBiFunction<T, U, X> andThenToFloat(
-            @Nonnull final ThrowableDoubleToFloatFunction<? extends X> after) {
+            @Nonnull ThrowableDoubleToFloatFunction<? extends X> after) {
         Objects.requireNonNull(after);
         return (t, u) -> after.applyAsFloatThrows(applyAsDoubleThrows(t, u));
     }
@@ -373,12 +366,12 @@ public interface ThrowableToDoubleBiFunction<T, U, X extends Throwable> extends 
      * @return A composed {@code ThrowableToIntBiFunction} that first applies this function to its input, and then
      * applies the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * int}.
      */
     @Nonnull
     default ThrowableToIntBiFunction<T, U, X> andThenToInt(
-            @Nonnull final ThrowableDoubleToIntFunction<? extends X> after) {
+            @Nonnull ThrowableDoubleToIntFunction<? extends X> after) {
         Objects.requireNonNull(after);
         return (t, u) -> after.applyAsIntThrows(applyAsDoubleThrows(t, u));
     }
@@ -392,12 +385,12 @@ public interface ThrowableToDoubleBiFunction<T, U, X extends Throwable> extends 
      * @return A composed {@code ThrowableToLongBiFunction} that first applies this function to its input, and then
      * applies the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * long}.
      */
     @Nonnull
     default ThrowableToLongBiFunction<T, U, X> andThenToLong(
-            @Nonnull final ThrowableDoubleToLongFunction<? extends X> after) {
+            @Nonnull ThrowableDoubleToLongFunction<? extends X> after) {
         Objects.requireNonNull(after);
         return (t, u) -> after.applyAsLongThrows(applyAsDoubleThrows(t, u));
     }
@@ -411,12 +404,12 @@ public interface ThrowableToDoubleBiFunction<T, U, X extends Throwable> extends 
      * @return A composed {@code ThrowableToShortBiFunction} that first applies this function to its input, and then
      * applies the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * short}.
      */
     @Nonnull
     default ThrowableToShortBiFunction<T, U, X> andThenToShort(
-            @Nonnull final ThrowableDoubleToShortFunction<? extends X> after) {
+            @Nonnull ThrowableDoubleToShortFunction<? extends X> after) {
         Objects.requireNonNull(after);
         return (t, u) -> after.applyAsShortThrows(applyAsDoubleThrows(t, u));
     }
@@ -431,7 +424,7 @@ public interface ThrowableToDoubleBiFunction<T, U, X extends Throwable> extends 
      * @throws NullPointerException If given argument is {@code null}
      */
     @Nonnull
-    default ThrowableBiConsumer<T, U, X> consume(@Nonnull final ThrowableDoubleConsumer<? extends X> consumer) {
+    default ThrowableBiConsumer<T, U, X> consume(@Nonnull ThrowableDoubleConsumer<? extends X> consumer) {
         Objects.requireNonNull(consumer);
         return (t, u) -> consumer.acceptThrows(applyAsDoubleThrows(t, u));
     }
@@ -475,10 +468,10 @@ public interface ThrowableToDoubleBiFunction<T, U, X extends Throwable> extends 
         if (isMemoized()) {
             return this;
         } else {
-            final Map<Pair<T, U>, Double> cache = new ConcurrentHashMap<>();
-            final Object lock = new Object();
+            Map<Pair<T, U>, Double> cache = new ConcurrentHashMap<>();
+            Object lock = new Object();
             return (ThrowableToDoubleBiFunction<T, U, X> & Memoized) (t, u) -> {
-                final double returnValue;
+                double returnValue;
                 synchronized (lock) {
                     returnValue = cache.computeIfAbsent(Pair.of(t, u), ThrowableFunction.of(
                             key -> applyAsDoubleThrows(key.getLeft(), key.getRight())));
@@ -531,7 +524,7 @@ public interface ThrowableToDoubleBiFunction<T, U, X extends Throwable> extends 
      */
     @Nonnull
     default ToDoubleBiFunction2<T, U> nest(
-            @Nonnull final Function<? super Throwable, ? extends RuntimeException> mapper) {
+            @Nonnull Function<? super Throwable, ? extends RuntimeException> mapper) {
         return recover(throwable -> {
             throw mapper.apply(throwable);
         });
@@ -554,15 +547,15 @@ public interface ThrowableToDoubleBiFunction<T, U, X extends Throwable> extends 
      */
     @Nonnull
     default ToDoubleBiFunction2<T, U> recover(
-            @Nonnull final Function<? super Throwable, ? extends ToDoubleBiFunction<? super T, ? super U>> recover) {
+            @Nonnull Function<? super Throwable, ? extends ToDoubleBiFunction<? super T, ? super U>> recover) {
         Objects.requireNonNull(recover);
         return (t, u) -> {
             try {
-                return this.applyAsDoubleThrows(t, u);
+                return applyAsDoubleThrows(t, u);
             } catch (Error e) {
                 throw e;
             } catch (Throwable throwable) {
-                final ToDoubleBiFunction<? super T, ? super U> function = recover.apply(throwable);
+                ToDoubleBiFunction<? super T, ? super U> function = recover.apply(throwable);
                 Objects.requireNonNull(function, () -> "recover returned null for " + throwable.getClass() + ": "
                         + throwable.getMessage());
                 return function.applyAsDouble(t, u);
@@ -640,7 +633,7 @@ public interface ThrowableToDoubleBiFunction<T, U, X extends Throwable> extends 
     default ToDoubleBiFunction2<T, U> sneakyThrow() {
         return (t, u) -> {
             try {
-                return this.applyAsDoubleThrows(t, u);
+                return applyAsDoubleThrows(t, u);
             } catch (RuntimeException | Error e) {
                 throw e;
             } catch (Throwable throwable) {

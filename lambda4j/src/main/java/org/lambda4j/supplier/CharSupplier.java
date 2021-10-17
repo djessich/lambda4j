@@ -13,7 +13,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package org.lambda4j.supplier;
+
+import java.util.Objects;
+import java.util.concurrent.atomic.AtomicReference;
+
+import javax.annotation.Nonnegative;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import org.lambda4j.Lambda;
 import org.lambda4j.consumer.CharConsumer;
@@ -28,15 +36,8 @@ import org.lambda4j.function.conversion.CharToShortFunction;
 import org.lambda4j.operator.unary.CharUnaryOperator;
 import org.lambda4j.predicate.CharPredicate;
 
-import javax.annotation.Nonnegative;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import java.util.Objects;
-import java.util.concurrent.atomic.AtomicReference;
-
 /**
- * Represents a supplier of {@code char}-valued results.
- * This is a primitive specialization of {@link Supplier2}.
+ * Represents a supplier of {@code char}-valued results. This is a primitive specialization of {@link Supplier2}.
  * <p>
  * There is no requirement that a distinct result be returned each time the supplier is invoked.
  * <p>
@@ -61,7 +62,7 @@ public interface CharSupplier extends Lambda {
      * Expression</a>
      * @see <a href="https://docs.oracle.com/javase/tutorial/java/javaOO/methodreferences.html">Method Reference</a>
      */
-    static CharSupplier of(@Nullable final CharSupplier expression) {
+    static CharSupplier of(@Nullable CharSupplier expression) {
         return expression;
     }
 
@@ -72,7 +73,7 @@ public interface CharSupplier extends Lambda {
      * @return The result from the given {@code CharSupplier}.
      * @throws NullPointerException If given argument is {@code null}
      */
-    static char call(@Nonnull final CharSupplier supplier) {
+    static char call(@Nonnull CharSupplier supplier) {
         Objects.requireNonNull(supplier);
         return supplier.getAsChar();
     }
@@ -107,9 +108,9 @@ public interface CharSupplier extends Lambda {
     }
 
     /**
-     * Returns a composed {@link Supplier2} that first applies this supplier to its input, and then applies the
-     * {@code after} function to the result.
-     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
+     * Returns a composed {@link Supplier2} that first applies this supplier to its input, and then applies the {@code
+     * after} function to the result. If evaluation of either operation throws an exception, it is relayed to the caller
+     * of the composed operation.
      *
      * @param <S> The type of return value from the {@code after} function, and of the composed supplier
      * @param after The function to apply after this supplier is applied
@@ -119,7 +120,7 @@ public interface CharSupplier extends Lambda {
      * @implSpec The input argument of this method is able to return every type.
      */
     @Nonnull
-    default <S> Supplier2<S> andThen(@Nonnull final CharFunction<? extends S> after) {
+    default <S> Supplier2<S> andThen(@Nonnull CharFunction<? extends S> after) {
         Objects.requireNonNull(after);
         return () -> after.apply(getAsChar());
     }
@@ -134,11 +135,11 @@ public interface CharSupplier extends Lambda {
      * @return A composed {@code BooleanSupplier2} that first applies this supplier to its input, and then applies the
      * {@code after} predicate to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * boolean}.
      */
     @Nonnull
-    default BooleanSupplier2 andThenToBoolean(@Nonnull final CharPredicate after) {
+    default BooleanSupplier2 andThenToBoolean(@Nonnull CharPredicate after) {
         Objects.requireNonNull(after);
         return () -> after.test(getAsChar());
     }
@@ -153,11 +154,11 @@ public interface CharSupplier extends Lambda {
      * @return A composed {@code ByteSupplier} that first applies this supplier to its input, and then applies the
      * {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * byte}.
      */
     @Nonnull
-    default ByteSupplier andThenToByte(@Nonnull final CharToByteFunction after) {
+    default ByteSupplier andThenToByte(@Nonnull CharToByteFunction after) {
         Objects.requireNonNull(after);
         return () -> after.applyAsByte(getAsChar());
     }
@@ -172,11 +173,11 @@ public interface CharSupplier extends Lambda {
      * @return A composed {@code CharSupplier} that first applies this supplier to its input, and then applies the
      * {@code after} operator to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * char}.
      */
     @Nonnull
-    default CharSupplier andThenToChar(@Nonnull final CharUnaryOperator after) {
+    default CharSupplier andThenToChar(@Nonnull CharUnaryOperator after) {
         Objects.requireNonNull(after);
         return () -> after.applyAsChar(getAsChar());
     }
@@ -191,11 +192,11 @@ public interface CharSupplier extends Lambda {
      * @return A composed {@code DoubleSupplier2} that first applies this supplier to its input, and then applies the
      * {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * double}.
      */
     @Nonnull
-    default DoubleSupplier2 andThenToDouble(@Nonnull final CharToDoubleFunction after) {
+    default DoubleSupplier2 andThenToDouble(@Nonnull CharToDoubleFunction after) {
         Objects.requireNonNull(after);
         return () -> after.applyAsDouble(getAsChar());
     }
@@ -210,11 +211,11 @@ public interface CharSupplier extends Lambda {
      * @return A composed {@code FloatSupplier} that first applies this supplier to its input, and then applies the
      * {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * float}.
      */
     @Nonnull
-    default FloatSupplier andThenToFloat(@Nonnull final CharToFloatFunction after) {
+    default FloatSupplier andThenToFloat(@Nonnull CharToFloatFunction after) {
         Objects.requireNonNull(after);
         return () -> after.applyAsFloat(getAsChar());
     }
@@ -229,11 +230,11 @@ public interface CharSupplier extends Lambda {
      * @return A composed {@code IntSupplier2} that first applies this supplier to its input, and then applies the
      * {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * int}.
      */
     @Nonnull
-    default IntSupplier2 andThenToInt(@Nonnull final CharToIntFunction after) {
+    default IntSupplier2 andThenToInt(@Nonnull CharToIntFunction after) {
         Objects.requireNonNull(after);
         return () -> after.applyAsInt(getAsChar());
     }
@@ -248,11 +249,11 @@ public interface CharSupplier extends Lambda {
      * @return A composed {@code LongSupplier2} that first applies this supplier to its input, and then applies the
      * {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * long}.
      */
     @Nonnull
-    default LongSupplier2 andThenToLong(@Nonnull final CharToLongFunction after) {
+    default LongSupplier2 andThenToLong(@Nonnull CharToLongFunction after) {
         Objects.requireNonNull(after);
         return () -> after.applyAsLong(getAsChar());
     }
@@ -267,19 +268,19 @@ public interface CharSupplier extends Lambda {
      * @return A composed {@code ShortSupplier} that first applies this supplier to its input, and then applies the
      * {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * short}.
      */
     @Nonnull
-    default ShortSupplier andThenToShort(@Nonnull final CharToShortFunction after) {
+    default ShortSupplier andThenToShort(@Nonnull CharToShortFunction after) {
         Objects.requireNonNull(after);
         return () -> after.applyAsShort(getAsChar());
     }
 
     /**
-     * Returns a composed {@link Consumer2} that first gets the result from this supplier, and then consumes
-     * the result using the given {@link CharConsumer}.
-     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
+     * Returns a composed {@link Consumer2} that first gets the result from this supplier, and then consumes the result
+     * using the given {@link CharConsumer}. If evaluation of either operation throws an exception, it is relayed to the
+     * caller of the composed operation.
      *
      * @param consumer The operation which consumes the result from this operation
      * @return A composed {@code Consumer2} that first gets the result from this supplier, and then consumes the result
@@ -291,7 +292,7 @@ public interface CharSupplier extends Lambda {
      * resulting consumer is called with {@code Consumer#accept(Object)}.
      */
     @Nonnull
-    default Consumer2<Void> consume(@Nonnull final CharConsumer consumer) {
+    default Consumer2<Void> consume(@Nonnull CharConsumer consumer) {
         Objects.requireNonNull(consumer);
         return ignored -> consumer.accept(getAsChar());
     }
@@ -322,7 +323,7 @@ public interface CharSupplier extends Lambda {
                     synchronized (this) {
                         returnValue = cache.get();
                         if (returnValue == null) {
-                            returnValue = this.getAsChar();
+                            returnValue = getAsChar();
                             cache.set(returnValue);
                         }
                     }
@@ -333,9 +334,9 @@ public interface CharSupplier extends Lambda {
     }
 
     /**
-     * Returns a composed {@link Supplier2} which represents this {@link CharSupplier}. Thereby the primitive
-     * input argument for this supplier is autoboxed. This method provides the possibility to use this
-     * {@code CharSupplier} with methods provided by the {@code JDK}.
+     * Returns a composed {@link Supplier2} which represents this {@link CharSupplier}. Thereby the primitive input
+     * argument for this supplier is autoboxed. This method provides the possibility to use this {@code CharSupplier}
+     * with methods provided by the {@code JDK}.
      *
      * @return A composed {@code Supplier2} which represents this {@code CharSupplier}.
      */

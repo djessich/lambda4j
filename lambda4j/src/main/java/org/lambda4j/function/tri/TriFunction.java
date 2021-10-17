@@ -13,18 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package org.lambda4j.function.tri;
 
-import org.lambda4j.Lambda;
-import org.lambda4j.consumer.tri.TriConsumer;
-import org.lambda4j.function.Function2;
-import org.lambda4j.function.bi.BiFunction2;
-
-import org.apache.commons.lang3.tuple.Triple;
-
-import javax.annotation.Nonnegative;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
@@ -32,9 +23,19 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
+import javax.annotation.Nonnegative;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
+import org.apache.commons.lang3.tuple.Triple;
+
+import org.lambda4j.Lambda;
+import org.lambda4j.consumer.tri.TriConsumer;
+import org.lambda4j.function.Function2;
+import org.lambda4j.function.bi.BiFunction2;
+
 /**
- * Represents an operation that accepts three input arguments and produces a
- * result.
+ * Represents an operation that accepts three input arguments and produces a result.
  * <p>
  * This is a {@link FunctionalInterface} whose functional method is {@link #apply(Object, Object, Object)}.
  *
@@ -65,7 +66,7 @@ public interface TriFunction<T, U, V, R> extends Lambda {
      * Expression</a>
      * @see <a href="https://docs.oracle.com/javase/tutorial/java/javaOO/methodreferences.html">Method Reference</a>
      */
-    static <T, U, V, R> TriFunction<T, U, V, R> of(@Nullable final TriFunction<T, U, V, R> expression) {
+    static <T, U, V, R> TriFunction<T, U, V, R> of(@Nullable TriFunction<T, U, V, R> expression) {
         return expression;
     }
 
@@ -83,7 +84,7 @@ public interface TriFunction<T, U, V, R> extends Lambda {
      */
     @Nonnull
     static <T, U, V, R> TriFunction<T, U, V, Optional<R>> lift(
-            @Nonnull final TriFunction<? super T, ? super U, ? super V, ? extends R> partial) {
+            @Nonnull TriFunction<? super T, ? super U, ? super V, ? extends R> partial) {
         Objects.requireNonNull(partial);
         return (t, u, v) -> Optional.ofNullable(partial.apply(t, u, v));
     }
@@ -102,7 +103,7 @@ public interface TriFunction<T, U, V, R> extends Lambda {
      * @return The result from the given {@code TriFunction}.
      * @throws NullPointerException If given argument is {@code null}
      */
-    static <T, U, V, R> R call(@Nonnull final TriFunction<? super T, ? super U, ? super V, ? extends R> function, T t,
+    static <T, U, V, R> R call(@Nonnull TriFunction<? super T, ? super U, ? super V, ? extends R> function, T t,
             U u, V v) {
         Objects.requireNonNull(function);
         return function.apply(t, u, v);
@@ -122,7 +123,7 @@ public interface TriFunction<T, U, V, R> extends Lambda {
      * @throws NullPointerException If given argument is {@code null}
      */
     @Nonnull
-    static <T, U, V, R> TriFunction<T, U, V, R> onlyFirst(@Nonnull final Function<? super T, ? extends R> function) {
+    static <T, U, V, R> TriFunction<T, U, V, R> onlyFirst(@Nonnull Function<? super T, ? extends R> function) {
         Objects.requireNonNull(function);
         return (t, u, v) -> function.apply(t);
     }
@@ -141,7 +142,7 @@ public interface TriFunction<T, U, V, R> extends Lambda {
      * @throws NullPointerException If given argument is {@code null}
      */
     @Nonnull
-    static <T, U, V, R> TriFunction<T, U, V, R> onlySecond(@Nonnull final Function<? super U, ? extends R> function) {
+    static <T, U, V, R> TriFunction<T, U, V, R> onlySecond(@Nonnull Function<? super U, ? extends R> function) {
         Objects.requireNonNull(function);
         return (t, u, v) -> function.apply(u);
     }
@@ -160,7 +161,7 @@ public interface TriFunction<T, U, V, R> extends Lambda {
      * @throws NullPointerException If given argument is {@code null}
      */
     @Nonnull
-    static <T, U, V, R> TriFunction<T, U, V, R> onlyThird(@Nonnull final Function<? super V, ? extends R> function) {
+    static <T, U, V, R> TriFunction<T, U, V, R> onlyThird(@Nonnull Function<? super V, ? extends R> function) {
         Objects.requireNonNull(function);
         return (t, u, v) -> function.apply(v);
     }
@@ -211,7 +212,7 @@ public interface TriFunction<T, U, V, R> extends Lambda {
      */
     @Nonnull
     default BiFunction2<U, V, R> papply(T t) {
-        return (u, v) -> this.apply(t, u, v);
+        return (u, v) -> apply(t, u, v);
     }
 
     /**
@@ -223,7 +224,7 @@ public interface TriFunction<T, U, V, R> extends Lambda {
      */
     @Nonnull
     default Function2<V, R> papply(T t, U u) {
-        return (v) -> this.apply(t, u, v);
+        return v -> apply(t, u, v);
     }
 
     /**
@@ -238,9 +239,9 @@ public interface TriFunction<T, U, V, R> extends Lambda {
     }
 
     /**
-     * Returns a composed {@link TriFunction} that first applies the {@code before} functions to its input, and
-     * then applies this function to the result.
-     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
+     * Returns a composed {@link TriFunction} that first applies the {@code before} functions to its input, and then
+     * applies this function to the result. If evaluation of either operation throws an exception, it is relayed to the
+     * caller of the composed operation.
      *
      * @param <A> The type of the argument to the first given function, and of composed function
      * @param <B> The type of the argument to the second given function, and of composed function
@@ -254,9 +255,9 @@ public interface TriFunction<T, U, V, R> extends Lambda {
      * @implSpec The input argument of this method is able to handle every type.
      */
     @Nonnull
-    default <A, B, C> TriFunction<A, B, C, R> compose(@Nonnull final Function<? super A, ? extends T> before1,
-            @Nonnull final Function<? super B, ? extends U> before2,
-            @Nonnull final Function<? super C, ? extends V> before3) {
+    default <A, B, C> TriFunction<A, B, C, R> compose(@Nonnull Function<? super A, ? extends T> before1,
+            @Nonnull Function<? super B, ? extends U> before2,
+            @Nonnull Function<? super C, ? extends V> before3) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         Objects.requireNonNull(before3);
@@ -264,9 +265,9 @@ public interface TriFunction<T, U, V, R> extends Lambda {
     }
 
     /**
-     * Returns a composed {@link TriFunction} that first applies this function to its input, and then applies the
-     * {@code after} function to the result.
-     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
+     * Returns a composed {@link TriFunction} that first applies this function to its input, and then applies the {@code
+     * after} function to the result. If evaluation of either operation throws an exception, it is relayed to the caller
+     * of the composed operation.
      *
      * @param <S> The type of return value from the {@code after} function, and of the composed function
      * @param after The function to apply after this function is applied
@@ -276,15 +277,15 @@ public interface TriFunction<T, U, V, R> extends Lambda {
      * @implSpec The input argument of this method is able to return every type.
      */
     @Nonnull
-    default <S> TriFunction<T, U, V, S> andThen(@Nonnull final Function<? super R, ? extends S> after) {
+    default <S> TriFunction<T, U, V, S> andThen(@Nonnull Function<? super R, ? extends S> after) {
         Objects.requireNonNull(after);
         return (t, u, v) -> after.apply(apply(t, u, v));
     }
 
     /**
      * Returns a composed {@link TriConsumer} that fist applies this function to its input, and then consumes the result
-     * using the given {@link Consumer}.
-     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
+     * using the given {@link Consumer}. If evaluation of either operation throws an exception, it is relayed to the
+     * caller of the composed operation.
      *
      * @param consumer The operation which consumes the result from this operation
      * @return A composed {@code TriConsumer} that first applies this function to its input, and then consumes the
@@ -292,7 +293,7 @@ public interface TriFunction<T, U, V, R> extends Lambda {
      * @throws NullPointerException If given argument is {@code null}
      */
     @Nonnull
-    default TriConsumer<T, U, V> consume(@Nonnull final Consumer<? super R> consumer) {
+    default TriConsumer<T, U, V> consume(@Nonnull Consumer<? super R> consumer) {
         Objects.requireNonNull(consumer);
         return (t, u, v) -> consumer.accept(apply(t, u, v));
     }
@@ -346,13 +347,13 @@ public interface TriFunction<T, U, V, R> extends Lambda {
         if (isMemoized()) {
             return this;
         } else {
-            final Map<Triple<T, U, V>, R> cache = new ConcurrentHashMap<>();
-            final Object lock = new Object();
+            Map<Triple<T, U, V>, R> cache = new ConcurrentHashMap<>();
+            Object lock = new Object();
             return (TriFunction<T, U, V, R> & Memoized) (t, u, v) -> {
-                final R returnValue;
+                R returnValue;
                 synchronized (lock) {
                     returnValue = cache.computeIfAbsent(Triple.of(t, u, v),
-                                                        key -> apply(key.getLeft(), key.getMiddle(), key.getRight()));
+                            key -> apply(key.getLeft(), key.getMiddle(), key.getRight()));
                 }
                 return returnValue;
             };
@@ -360,9 +361,9 @@ public interface TriFunction<T, U, V, R> extends Lambda {
     }
 
     /**
-     * Converts this function to an equal function, which ensures that its result is not
-     * {@code null} using {@link Optional}. This method mainly exists to avoid unnecessary {@code NullPointerException}s
-     * through referencing {@code null} from this function.
+     * Converts this function to an equal function, which ensures that its result is not {@code null} using {@link
+     * Optional}. This method mainly exists to avoid unnecessary {@code NullPointerException}s through referencing
+     * {@code null} from this function.
      *
      * @return An equal function, which ensures that its result is not {@code null}.
      * @deprecated Use {@code lift} method for lifting this function.

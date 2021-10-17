@@ -13,7 +13,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package org.lambda4j.consumer.bi.obj;
+
+import java.util.Objects;
+import java.util.function.Function;
+import java.util.function.ObjLongConsumer;
+
+import javax.annotation.Nonnegative;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import org.lambda4j.Lambda;
 import org.lambda4j.consumer.ThrowableConsumer;
@@ -47,13 +56,6 @@ import org.lambda4j.function.conversion.ThrowableIntToLongFunction;
 import org.lambda4j.function.conversion.ThrowableShortToLongFunction;
 import org.lambda4j.function.to.ThrowableToLongFunction;
 import org.lambda4j.operator.unary.ThrowableLongUnaryOperator;
-
-import javax.annotation.Nonnegative;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import java.util.Objects;
-import java.util.function.Function;
-import java.util.function.ObjLongConsumer;
 
 /**
  * Represents an operation that accepts one object-valued and one {@code long}-valued input argument and returns no
@@ -89,7 +91,7 @@ public interface ThrowableObjLongConsumer<T, X extends Throwable> extends Lambda
      * @see <a href="https://docs.oracle.com/javase/tutorial/java/javaOO/methodreferences.html">Method Reference</a>
      */
     static <T, X extends Throwable> ThrowableObjLongConsumer<T, X> of(
-            @Nullable final ThrowableObjLongConsumer<T, X> expression) {
+            @Nullable ThrowableObjLongConsumer<T, X> expression) {
         return expression;
     }
 
@@ -104,7 +106,7 @@ public interface ThrowableObjLongConsumer<T, X extends Throwable> extends Lambda
      * @throws NullPointerException If given argument is {@code null}
      * @throws X Any throwable from this consumers action
      */
-    static <T, X extends Throwable> void call(@Nonnull final ThrowableObjLongConsumer<? super T, ? extends X> consumer,
+    static <T, X extends Throwable> void call(@Nonnull ThrowableObjLongConsumer<? super T, ? extends X> consumer,
             T t, long value) throws X {
         Objects.requireNonNull(consumer);
         consumer.acceptThrows(t, value);
@@ -123,7 +125,7 @@ public interface ThrowableObjLongConsumer<T, X extends Throwable> extends Lambda
      */
     @Nonnull
     static <T, X extends Throwable> ThrowableObjLongConsumer<T, X> onlyFirst(
-            @Nonnull final ThrowableConsumer<? super T, ? extends X> consumer) {
+            @Nonnull ThrowableConsumer<? super T, ? extends X> consumer) {
         Objects.requireNonNull(consumer);
         return (t, value) -> consumer.acceptThrows(t);
     }
@@ -141,7 +143,7 @@ public interface ThrowableObjLongConsumer<T, X extends Throwable> extends Lambda
      */
     @Nonnull
     static <T, X extends Throwable> ThrowableObjLongConsumer<T, X> onlySecond(
-            @Nonnull final ThrowableLongConsumer<? extends X> consumer) {
+            @Nonnull ThrowableLongConsumer<? extends X> consumer) {
         Objects.requireNonNull(consumer);
         return (t, value) -> consumer.acceptThrows(value);
     }
@@ -170,14 +172,6 @@ public interface ThrowableObjLongConsumer<T, X extends Throwable> extends Lambda
      */
     @Override
     default void accept(T t, long value) {
-        // TODO: Remove commented code below
-    /*try {
-          this.acceptThrows(t, value);
-    } catch (RuntimeException | Error e) {
-        throw e;
-    } catch (Throwable throwable) {
-        throw new ThrownByFunctionalInterfaceException(throwable.getMessage(), throwable);
-    }*/
         nest().accept(t, value);
     }
 
@@ -190,7 +184,7 @@ public interface ThrowableObjLongConsumer<T, X extends Throwable> extends Lambda
      */
     @Nonnull
     default ThrowableLongConsumer<X> pacceptThrows(T t) {
-        return (value) -> this.acceptThrows(t, value);
+        return value -> acceptThrows(t, value);
     }
 
     /**
@@ -201,7 +195,7 @@ public interface ThrowableObjLongConsumer<T, X extends Throwable> extends Lambda
      */
     @Nonnull
     default ThrowableConsumer<T, X> pacceptThrows(long value) {
-        return (t) -> this.acceptThrows(t, value);
+        return t -> acceptThrows(t, value);
     }
 
     /**
@@ -230,8 +224,8 @@ public interface ThrowableObjLongConsumer<T, X extends Throwable> extends Lambda
      */
     @Nonnull
     default <A, B> ThrowableBiConsumer<A, B, X> compose(
-            @Nonnull final ThrowableFunction<? super A, ? extends T, ? extends X> before1,
-            @Nonnull final ThrowableToLongFunction<? super B, ? extends X> before2) {
+            @Nonnull ThrowableFunction<? super A, ? extends T, ? extends X> before1,
+            @Nonnull ThrowableToLongFunction<? super B, ? extends X> before2) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         return (a, b) -> acceptThrows(before1.applyThrows(a), before2.applyAsLongThrows(b));
@@ -247,59 +241,57 @@ public interface ThrowableObjLongConsumer<T, X extends Throwable> extends Lambda
      * @return A composed {@code ThrowableBiBooleanConsumer} that first applies the {@code before} functions to its
      * input, and then applies this consumer to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * boolean}.
      */
     @Nonnull
     default ThrowableBiBooleanConsumer<X> composeFromBoolean(
-            @Nonnull final ThrowableBooleanFunction<? extends T, ? extends X> before1,
-            @Nonnull final ThrowableBooleanToLongFunction<? extends X> before2) {
+            @Nonnull ThrowableBooleanFunction<? extends T, ? extends X> before1,
+            @Nonnull ThrowableBooleanToLongFunction<? extends X> before2) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         return (value1, value2) -> acceptThrows(before1.applyThrows(value1), before2.applyAsLongThrows(value2));
     }
 
     /**
-     * Returns a composed {@link ThrowableBiByteConsumer} that first applies the {@code before} functions to
-     * its input, and then applies this consumer to the result.
-     * This method is just convenience, to provide the ability to execute an operation which accepts {@code byte} input,
-     * before this primitive consumer is executed.
+     * Returns a composed {@link ThrowableBiByteConsumer} that first applies the {@code before} functions to its input,
+     * and then applies this consumer to the result. This method is just convenience, to provide the ability to execute
+     * an operation which accepts {@code byte} input, before this primitive consumer is executed.
      *
      * @param before1 The first function to apply before this consumer is applied
      * @param before2 The second function to apply before this consumer is applied
      * @return A composed {@code ThrowableBiByteConsumer} that first applies the {@code before} functions to its input,
      * and then applies this consumer to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * byte}.
      */
     @Nonnull
     default ThrowableBiByteConsumer<X> composeFromByte(
-            @Nonnull final ThrowableByteFunction<? extends T, ? extends X> before1,
-            @Nonnull final ThrowableByteToLongFunction<? extends X> before2) {
+            @Nonnull ThrowableByteFunction<? extends T, ? extends X> before1,
+            @Nonnull ThrowableByteToLongFunction<? extends X> before2) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         return (value1, value2) -> acceptThrows(before1.applyThrows(value1), before2.applyAsLongThrows(value2));
     }
 
     /**
-     * Returns a composed {@link ThrowableBiCharConsumer} that first applies the {@code before} functions to
-     * its input, and then applies this consumer to the result.
-     * This method is just convenience, to provide the ability to execute an operation which accepts {@code char} input,
-     * before this primitive consumer is executed.
+     * Returns a composed {@link ThrowableBiCharConsumer} that first applies the {@code before} functions to its input,
+     * and then applies this consumer to the result. This method is just convenience, to provide the ability to execute
+     * an operation which accepts {@code char} input, before this primitive consumer is executed.
      *
      * @param before1 The first function to apply before this consumer is applied
      * @param before2 The second function to apply before this consumer is applied
      * @return A composed {@code ThrowableBiCharConsumer} that first applies the {@code before} functions to its input,
      * and then applies this consumer to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * char}.
      */
     @Nonnull
     default ThrowableBiCharConsumer<X> composeFromChar(
-            @Nonnull final ThrowableCharFunction<? extends T, ? extends X> before1,
-            @Nonnull final ThrowableCharToLongFunction<? extends X> before2) {
+            @Nonnull ThrowableCharFunction<? extends T, ? extends X> before1,
+            @Nonnull ThrowableCharToLongFunction<? extends X> before2) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         return (value1, value2) -> acceptThrows(before1.applyThrows(value1), before2.applyAsLongThrows(value2));
@@ -315,13 +307,13 @@ public interface ThrowableObjLongConsumer<T, X extends Throwable> extends Lambda
      * @return A composed {@code ThrowableBiDoubleConsumer} that first applies the {@code before} functions to its
      * input, and then applies this consumer to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * double}.
      */
     @Nonnull
     default ThrowableBiDoubleConsumer<X> composeFromDouble(
-            @Nonnull final ThrowableDoubleFunction<? extends T, ? extends X> before1,
-            @Nonnull final ThrowableDoubleToLongFunction<? extends X> before2) {
+            @Nonnull ThrowableDoubleFunction<? extends T, ? extends X> before1,
+            @Nonnull ThrowableDoubleToLongFunction<? extends X> before2) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         return (value1, value2) -> acceptThrows(before1.applyThrows(value1), before2.applyAsLongThrows(value2));
@@ -337,59 +329,57 @@ public interface ThrowableObjLongConsumer<T, X extends Throwable> extends Lambda
      * @return A composed {@code ThrowableBiFloatConsumer} that first applies the {@code before} functions to its input,
      * and then applies this consumer to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * float}.
      */
     @Nonnull
     default ThrowableBiFloatConsumer<X> composeFromFloat(
-            @Nonnull final ThrowableFloatFunction<? extends T, ? extends X> before1,
-            @Nonnull final ThrowableFloatToLongFunction<? extends X> before2) {
+            @Nonnull ThrowableFloatFunction<? extends T, ? extends X> before1,
+            @Nonnull ThrowableFloatToLongFunction<? extends X> before2) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         return (value1, value2) -> acceptThrows(before1.applyThrows(value1), before2.applyAsLongThrows(value2));
     }
 
     /**
-     * Returns a composed {@link ThrowableBiIntConsumer} that first applies the {@code before} functions to
-     * its input, and then applies this consumer to the result.
-     * This method is just convenience, to provide the ability to execute an operation which accepts {@code int} input,
-     * before this primitive consumer is executed.
+     * Returns a composed {@link ThrowableBiIntConsumer} that first applies the {@code before} functions to its input,
+     * and then applies this consumer to the result. This method is just convenience, to provide the ability to execute
+     * an operation which accepts {@code int} input, before this primitive consumer is executed.
      *
      * @param before1 The first function to apply before this consumer is applied
      * @param before2 The second function to apply before this consumer is applied
      * @return A composed {@code ThrowableBiIntConsumer} that first applies the {@code before} functions to its input,
      * and then applies this consumer to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * int}.
      */
     @Nonnull
     default ThrowableBiIntConsumer<X> composeFromInt(
-            @Nonnull final ThrowableIntFunction<? extends T, ? extends X> before1,
-            @Nonnull final ThrowableIntToLongFunction<? extends X> before2) {
+            @Nonnull ThrowableIntFunction<? extends T, ? extends X> before1,
+            @Nonnull ThrowableIntToLongFunction<? extends X> before2) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         return (value1, value2) -> acceptThrows(before1.applyThrows(value1), before2.applyAsLongThrows(value2));
     }
 
     /**
-     * Returns a composed {@link ThrowableBiLongConsumer} that first applies the {@code before} functions to
-     * its input, and then applies this consumer to the result.
-     * This method is just convenience, to provide the ability to execute an operation which accepts {@code long} input,
-     * before this primitive consumer is executed.
+     * Returns a composed {@link ThrowableBiLongConsumer} that first applies the {@code before} functions to its input,
+     * and then applies this consumer to the result. This method is just convenience, to provide the ability to execute
+     * an operation which accepts {@code long} input, before this primitive consumer is executed.
      *
      * @param before1 The first function to apply before this consumer is applied
      * @param before2 The second operator to apply before this consumer is applied
      * @return A composed {@code ThrowableBiLongConsumer} that first applies the {@code before} functions to its input,
      * and then applies this consumer to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * long}.
      */
     @Nonnull
     default ThrowableBiLongConsumer<X> composeFromLong(
-            @Nonnull final ThrowableLongFunction<? extends T, ? extends X> before1,
-            @Nonnull final ThrowableLongUnaryOperator<? extends X> before2) {
+            @Nonnull ThrowableLongFunction<? extends T, ? extends X> before1,
+            @Nonnull ThrowableLongUnaryOperator<? extends X> before2) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         return (value1, value2) -> acceptThrows(before1.applyThrows(value1), before2.applyAsLongThrows(value2));
@@ -405,13 +395,13 @@ public interface ThrowableObjLongConsumer<T, X extends Throwable> extends Lambda
      * @return A composed {@code ThrowableBiShortConsumer} that first applies the {@code before} functions to its input,
      * and then applies this consumer to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * short}.
      */
     @Nonnull
     default ThrowableBiShortConsumer<X> composeFromShort(
-            @Nonnull final ThrowableShortFunction<? extends T, ? extends X> before1,
-            @Nonnull final ThrowableShortToLongFunction<? extends X> before2) {
+            @Nonnull ThrowableShortFunction<? extends T, ? extends X> before1,
+            @Nonnull ThrowableShortToLongFunction<? extends X> before2) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         return (value1, value2) -> acceptThrows(before1.applyThrows(value1), before2.applyAsLongThrows(value2));
@@ -429,7 +419,7 @@ public interface ThrowableObjLongConsumer<T, X extends Throwable> extends Lambda
      */
     @Nonnull
     default ThrowableObjLongConsumer<T, X> andThen(
-            @Nonnull final ThrowableObjLongConsumer<? super T, ? extends X> after) {
+            @Nonnull ThrowableObjLongConsumer<? super T, ? extends X> after) {
         Objects.requireNonNull(after);
         return (t, value) -> {
             acceptThrows(t, value);
@@ -478,7 +468,7 @@ public interface ThrowableObjLongConsumer<T, X extends Throwable> extends Lambda
      * @see #nest()
      */
     @Nonnull
-    default ObjLongConsumer2<T> nest(@Nonnull final Function<? super Throwable, ? extends RuntimeException> mapper) {
+    default ObjLongConsumer2<T> nest(@Nonnull Function<? super Throwable, ? extends RuntimeException> mapper) {
         return recover(throwable -> {
             throw mapper.apply(throwable);
         });
@@ -501,15 +491,15 @@ public interface ThrowableObjLongConsumer<T, X extends Throwable> extends Lambda
      */
     @Nonnull
     default ObjLongConsumer2<T> recover(
-            @Nonnull final Function<? super Throwable, ? extends ObjLongConsumer<? super T>> recover) {
+            @Nonnull Function<? super Throwable, ? extends ObjLongConsumer<? super T>> recover) {
         Objects.requireNonNull(recover);
         return (t, value) -> {
             try {
-                this.acceptThrows(t, value);
+                acceptThrows(t, value);
             } catch (Error e) {
                 throw e;
             } catch (Throwable throwable) {
-                final ObjLongConsumer<? super T> consumer = recover.apply(throwable);
+                ObjLongConsumer<? super T> consumer = recover.apply(throwable);
                 Objects.requireNonNull(consumer, () -> "recover returned null for " + throwable.getClass() + ": "
                         + throwable.getMessage());
                 consumer.accept(t, value);
@@ -587,7 +577,7 @@ public interface ThrowableObjLongConsumer<T, X extends Throwable> extends Lambda
     default ObjLongConsumer2<T> sneakyThrow() {
         return (t, value) -> {
             try {
-                this.acceptThrows(t, value);
+                acceptThrows(t, value);
             } catch (RuntimeException | Error e) {
                 throw e;
             } catch (Throwable throwable) {

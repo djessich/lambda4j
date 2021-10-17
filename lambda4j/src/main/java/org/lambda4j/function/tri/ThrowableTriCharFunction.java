@@ -13,7 +13,20 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package org.lambda4j.function.tri;
+
+import java.util.Map;
+import java.util.Objects;
+import java.util.Optional;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.function.Function;
+
+import javax.annotation.Nonnegative;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
+import org.apache.commons.lang3.tuple.Triple;
 
 import org.lambda4j.Lambda;
 import org.lambda4j.consumer.ThrowableConsumer;
@@ -33,21 +46,9 @@ import org.lambda4j.function.conversion.ThrowableShortToCharFunction;
 import org.lambda4j.function.to.ThrowableToCharFunction;
 import org.lambda4j.operator.unary.ThrowableCharUnaryOperator;
 
-import org.apache.commons.lang3.tuple.Triple;
-
-import javax.annotation.Nonnegative;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Optional;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.function.Function;
-
 /**
- * Represents an operation that accepts three {@code char}-valued input arguments and produces a
- * result which is able to throw any {@link Throwable}.
- * This is a primitive specialization of {@link ThrowableTriFunction}.
+ * Represents an operation that accepts three {@code char}-valued input arguments and produces a result which is able to
+ * throw any {@link Throwable}. This is a primitive specialization of {@link ThrowableTriFunction}.
  * <p>
  * This is a {@link FunctionalInterface} whose functional method is {@link #applyThrows(char, char, char)}.
  *
@@ -76,7 +77,7 @@ public interface ThrowableTriCharFunction<R, X extends Throwable> extends Lambda
      * @see <a href="https://docs.oracle.com/javase/tutorial/java/javaOO/methodreferences.html">Method Reference</a>
      */
     static <R, X extends Throwable> ThrowableTriCharFunction<R, X> of(
-            @Nullable final ThrowableTriCharFunction<R, X> expression) {
+            @Nullable ThrowableTriCharFunction<R, X> expression) {
         return expression;
     }
 
@@ -93,7 +94,7 @@ public interface ThrowableTriCharFunction<R, X extends Throwable> extends Lambda
      */
     @Nonnull
     static <R, X extends Throwable> ThrowableTriCharFunction<Optional<R>, X> lift(
-            @Nonnull final ThrowableTriCharFunction<? extends R, ? extends X> partial) {
+            @Nonnull ThrowableTriCharFunction<? extends R, ? extends X> partial) {
         Objects.requireNonNull(partial);
         return (value1, value2, value3) -> Optional.ofNullable(partial.applyThrows(value1, value2, value3));
     }
@@ -111,7 +112,7 @@ public interface ThrowableTriCharFunction<R, X extends Throwable> extends Lambda
      * @throws NullPointerException If given argument is {@code null}
      * @throws X Any throwable from this functions action
      */
-    static <R, X extends Throwable> R call(@Nonnull final ThrowableTriCharFunction<? extends R, ? extends X> function,
+    static <R, X extends Throwable> R call(@Nonnull ThrowableTriCharFunction<? extends R, ? extends X> function,
             char value1, char value2, char value3) throws X {
         Objects.requireNonNull(function);
         return function.applyThrows(value1, value2, value3);
@@ -130,7 +131,7 @@ public interface ThrowableTriCharFunction<R, X extends Throwable> extends Lambda
      */
     @Nonnull
     static <R, X extends Throwable> ThrowableTriCharFunction<R, X> onlyFirst(
-            @Nonnull final ThrowableCharFunction<? extends R, ? extends X> function) {
+            @Nonnull ThrowableCharFunction<? extends R, ? extends X> function) {
         Objects.requireNonNull(function);
         return (value1, value2, value3) -> function.applyThrows(value1);
     }
@@ -148,7 +149,7 @@ public interface ThrowableTriCharFunction<R, X extends Throwable> extends Lambda
      */
     @Nonnull
     static <R, X extends Throwable> ThrowableTriCharFunction<R, X> onlySecond(
-            @Nonnull final ThrowableCharFunction<? extends R, ? extends X> function) {
+            @Nonnull ThrowableCharFunction<? extends R, ? extends X> function) {
         Objects.requireNonNull(function);
         return (value1, value2, value3) -> function.applyThrows(value2);
     }
@@ -166,7 +167,7 @@ public interface ThrowableTriCharFunction<R, X extends Throwable> extends Lambda
      */
     @Nonnull
     static <R, X extends Throwable> ThrowableTriCharFunction<R, X> onlyThird(
-            @Nonnull final ThrowableCharFunction<? extends R, ? extends X> function) {
+            @Nonnull ThrowableCharFunction<? extends R, ? extends X> function) {
         Objects.requireNonNull(function);
         return (value1, value2, value3) -> function.applyThrows(value3);
     }
@@ -204,7 +205,7 @@ public interface ThrowableTriCharFunction<R, X extends Throwable> extends Lambda
      */
     @Nonnull
     default ThrowableBiCharFunction<R, X> papplyThrows(char value1) {
-        return (value2, value3) -> this.applyThrows(value1, value2, value3);
+        return (value2, value3) -> applyThrows(value1, value2, value3);
     }
 
     /**
@@ -217,7 +218,7 @@ public interface ThrowableTriCharFunction<R, X extends Throwable> extends Lambda
      */
     @Nonnull
     default ThrowableCharFunction<R, X> papplyThrows(char value1, char value2) {
-        return (value3) -> this.applyThrows(value1, value2, value3);
+        return value3 -> applyThrows(value1, value2, value3);
     }
 
     /**
@@ -248,14 +249,14 @@ public interface ThrowableTriCharFunction<R, X extends Throwable> extends Lambda
      */
     @Nonnull
     default <A, B, C> ThrowableTriFunction<A, B, C, R, X> compose(
-            @Nonnull final ThrowableToCharFunction<? super A, ? extends X> before1,
-            @Nonnull final ThrowableToCharFunction<? super B, ? extends X> before2,
-            @Nonnull final ThrowableToCharFunction<? super C, ? extends X> before3) {
+            @Nonnull ThrowableToCharFunction<? super A, ? extends X> before1,
+            @Nonnull ThrowableToCharFunction<? super B, ? extends X> before2,
+            @Nonnull ThrowableToCharFunction<? super C, ? extends X> before3) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         Objects.requireNonNull(before3);
         return (a, b, c) -> applyThrows(before1.applyAsCharThrows(a), before2.applyAsCharThrows(b),
-                                        before3.applyAsCharThrows(c));
+                before3.applyAsCharThrows(c));
     }
 
     /**
@@ -269,27 +270,26 @@ public interface ThrowableTriCharFunction<R, X extends Throwable> extends Lambda
      * @return A composed {@code ThrowableTriBooleanFunction} that first applies the {@code before} functions to its
      * input, and then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * boolean}.
      */
     @Nonnull
     default ThrowableTriBooleanFunction<R, X> composeFromBoolean(
-            @Nonnull final ThrowableBooleanToCharFunction<? extends X> before1,
-            @Nonnull final ThrowableBooleanToCharFunction<? extends X> before2,
-            @Nonnull final ThrowableBooleanToCharFunction<? extends X> before3) {
+            @Nonnull ThrowableBooleanToCharFunction<? extends X> before1,
+            @Nonnull ThrowableBooleanToCharFunction<? extends X> before2,
+            @Nonnull ThrowableBooleanToCharFunction<? extends X> before3) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         Objects.requireNonNull(before3);
         return (value1, value2, value3) -> applyThrows(before1.applyAsCharThrows(value1),
-                                                       before2.applyAsCharThrows(value2),
-                                                       before3.applyAsCharThrows(value3));
+                before2.applyAsCharThrows(value2),
+                before3.applyAsCharThrows(value3));
     }
 
     /**
-     * Returns a composed {@link ThrowableTriByteFunction} that first applies the {@code before} functions to
-     * its input, and then applies this function to the result.
-     * This method is just convenience, to provide the ability to execute an operation which accepts {@code byte} input,
-     * before this primitive function is executed.
+     * Returns a composed {@link ThrowableTriByteFunction} that first applies the {@code before} functions to its input,
+     * and then applies this function to the result. This method is just convenience, to provide the ability to execute
+     * an operation which accepts {@code byte} input, before this primitive function is executed.
      *
      * @param before1 The first function to apply before this function is applied
      * @param before2 The second function to apply before this function is applied
@@ -297,27 +297,26 @@ public interface ThrowableTriCharFunction<R, X extends Throwable> extends Lambda
      * @return A composed {@code ThrowableTriByteFunction} that first applies the {@code before} functions to its input,
      * and then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * byte}.
      */
     @Nonnull
     default ThrowableTriByteFunction<R, X> composeFromByte(
-            @Nonnull final ThrowableByteToCharFunction<? extends X> before1,
-            @Nonnull final ThrowableByteToCharFunction<? extends X> before2,
-            @Nonnull final ThrowableByteToCharFunction<? extends X> before3) {
+            @Nonnull ThrowableByteToCharFunction<? extends X> before1,
+            @Nonnull ThrowableByteToCharFunction<? extends X> before2,
+            @Nonnull ThrowableByteToCharFunction<? extends X> before3) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         Objects.requireNonNull(before3);
         return (value1, value2, value3) -> applyThrows(before1.applyAsCharThrows(value1),
-                                                       before2.applyAsCharThrows(value2),
-                                                       before3.applyAsCharThrows(value3));
+                before2.applyAsCharThrows(value2),
+                before3.applyAsCharThrows(value3));
     }
 
     /**
-     * Returns a composed {@link ThrowableTriCharFunction} that first applies the {@code before} operators to
-     * its input, and then applies this function to the result.
-     * This method is just convenience, to provide the ability to execute an operation which accepts {@code char} input,
-     * before this primitive function is executed.
+     * Returns a composed {@link ThrowableTriCharFunction} that first applies the {@code before} operators to its input,
+     * and then applies this function to the result. This method is just convenience, to provide the ability to execute
+     * an operation which accepts {@code char} input, before this primitive function is executed.
      *
      * @param before1 The first operator to apply before this function is applied
      * @param before2 The second operator to apply before this function is applied
@@ -325,20 +324,20 @@ public interface ThrowableTriCharFunction<R, X extends Throwable> extends Lambda
      * @return A composed {@code ThrowableTriCharFunction} that first applies the {@code before} operators to its input,
      * and then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * char}.
      */
     @Nonnull
     default ThrowableTriCharFunction<R, X> composeFromChar(
-            @Nonnull final ThrowableCharUnaryOperator<? extends X> before1,
-            @Nonnull final ThrowableCharUnaryOperator<? extends X> before2,
-            @Nonnull final ThrowableCharUnaryOperator<? extends X> before3) {
+            @Nonnull ThrowableCharUnaryOperator<? extends X> before1,
+            @Nonnull ThrowableCharUnaryOperator<? extends X> before2,
+            @Nonnull ThrowableCharUnaryOperator<? extends X> before3) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         Objects.requireNonNull(before3);
         return (value1, value2, value3) -> applyThrows(before1.applyAsCharThrows(value1),
-                                                       before2.applyAsCharThrows(value2),
-                                                       before3.applyAsCharThrows(value3));
+                before2.applyAsCharThrows(value2),
+                before3.applyAsCharThrows(value3));
     }
 
     /**
@@ -352,20 +351,20 @@ public interface ThrowableTriCharFunction<R, X extends Throwable> extends Lambda
      * @return A composed {@code ThrowableTriDoubleFunction} that first applies the {@code before} functions to its
      * input, and then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * double}.
      */
     @Nonnull
     default ThrowableTriDoubleFunction<R, X> composeFromDouble(
-            @Nonnull final ThrowableDoubleToCharFunction<? extends X> before1,
-            @Nonnull final ThrowableDoubleToCharFunction<? extends X> before2,
-            @Nonnull final ThrowableDoubleToCharFunction<? extends X> before3) {
+            @Nonnull ThrowableDoubleToCharFunction<? extends X> before1,
+            @Nonnull ThrowableDoubleToCharFunction<? extends X> before2,
+            @Nonnull ThrowableDoubleToCharFunction<? extends X> before3) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         Objects.requireNonNull(before3);
         return (value1, value2, value3) -> applyThrows(before1.applyAsCharThrows(value1),
-                                                       before2.applyAsCharThrows(value2),
-                                                       before3.applyAsCharThrows(value3));
+                before2.applyAsCharThrows(value2),
+                before3.applyAsCharThrows(value3));
     }
 
     /**
@@ -379,27 +378,26 @@ public interface ThrowableTriCharFunction<R, X extends Throwable> extends Lambda
      * @return A composed {@code ThrowableTriFloatFunction} that first applies the {@code before} functions to its
      * input, and then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * float}.
      */
     @Nonnull
     default ThrowableTriFloatFunction<R, X> composeFromFloat(
-            @Nonnull final ThrowableFloatToCharFunction<? extends X> before1,
-            @Nonnull final ThrowableFloatToCharFunction<? extends X> before2,
-            @Nonnull final ThrowableFloatToCharFunction<? extends X> before3) {
+            @Nonnull ThrowableFloatToCharFunction<? extends X> before1,
+            @Nonnull ThrowableFloatToCharFunction<? extends X> before2,
+            @Nonnull ThrowableFloatToCharFunction<? extends X> before3) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         Objects.requireNonNull(before3);
         return (value1, value2, value3) -> applyThrows(before1.applyAsCharThrows(value1),
-                                                       before2.applyAsCharThrows(value2),
-                                                       before3.applyAsCharThrows(value3));
+                before2.applyAsCharThrows(value2),
+                before3.applyAsCharThrows(value3));
     }
 
     /**
-     * Returns a composed {@link ThrowableTriIntFunction} that first applies the {@code before} functions to
-     * its input, and then applies this function to the result.
-     * This method is just convenience, to provide the ability to execute an operation which accepts {@code int} input,
-     * before this primitive function is executed.
+     * Returns a composed {@link ThrowableTriIntFunction} that first applies the {@code before} functions to its input,
+     * and then applies this function to the result. This method is just convenience, to provide the ability to execute
+     * an operation which accepts {@code int} input, before this primitive function is executed.
      *
      * @param before1 The first function to apply before this function is applied
      * @param before2 The second function to apply before this function is applied
@@ -407,26 +405,25 @@ public interface ThrowableTriCharFunction<R, X extends Throwable> extends Lambda
      * @return A composed {@code ThrowableTriIntFunction} that first applies the {@code before} functions to its input,
      * and then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * int}.
      */
     @Nonnull
-    default ThrowableTriIntFunction<R, X> composeFromInt(@Nonnull final ThrowableIntToCharFunction<? extends X> before1,
-            @Nonnull final ThrowableIntToCharFunction<? extends X> before2,
-            @Nonnull final ThrowableIntToCharFunction<? extends X> before3) {
+    default ThrowableTriIntFunction<R, X> composeFromInt(@Nonnull ThrowableIntToCharFunction<? extends X> before1,
+            @Nonnull ThrowableIntToCharFunction<? extends X> before2,
+            @Nonnull ThrowableIntToCharFunction<? extends X> before3) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         Objects.requireNonNull(before3);
         return (value1, value2, value3) -> applyThrows(before1.applyAsCharThrows(value1),
-                                                       before2.applyAsCharThrows(value2),
-                                                       before3.applyAsCharThrows(value3));
+                before2.applyAsCharThrows(value2),
+                before3.applyAsCharThrows(value3));
     }
 
     /**
-     * Returns a composed {@link ThrowableTriLongFunction} that first applies the {@code before} functions to
-     * its input, and then applies this function to the result.
-     * This method is just convenience, to provide the ability to execute an operation which accepts {@code long} input,
-     * before this primitive function is executed.
+     * Returns a composed {@link ThrowableTriLongFunction} that first applies the {@code before} functions to its input,
+     * and then applies this function to the result. This method is just convenience, to provide the ability to execute
+     * an operation which accepts {@code long} input, before this primitive function is executed.
      *
      * @param before1 The first function to apply before this function is applied
      * @param before2 The second function to apply before this function is applied
@@ -434,20 +431,20 @@ public interface ThrowableTriCharFunction<R, X extends Throwable> extends Lambda
      * @return A composed {@code ThrowableTriLongFunction} that first applies the {@code before} functions to its input,
      * and then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * long}.
      */
     @Nonnull
     default ThrowableTriLongFunction<R, X> composeFromLong(
-            @Nonnull final ThrowableLongToCharFunction<? extends X> before1,
-            @Nonnull final ThrowableLongToCharFunction<? extends X> before2,
-            @Nonnull final ThrowableLongToCharFunction<? extends X> before3) {
+            @Nonnull ThrowableLongToCharFunction<? extends X> before1,
+            @Nonnull ThrowableLongToCharFunction<? extends X> before2,
+            @Nonnull ThrowableLongToCharFunction<? extends X> before3) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         Objects.requireNonNull(before3);
         return (value1, value2, value3) -> applyThrows(before1.applyAsCharThrows(value1),
-                                                       before2.applyAsCharThrows(value2),
-                                                       before3.applyAsCharThrows(value3));
+                before2.applyAsCharThrows(value2),
+                before3.applyAsCharThrows(value3));
     }
 
     /**
@@ -461,20 +458,20 @@ public interface ThrowableTriCharFunction<R, X extends Throwable> extends Lambda
      * @return A composed {@code ThrowableTriShortFunction} that first applies the {@code before} functions to its
      * input, and then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * short}.
      */
     @Nonnull
     default ThrowableTriShortFunction<R, X> composeFromShort(
-            @Nonnull final ThrowableShortToCharFunction<? extends X> before1,
-            @Nonnull final ThrowableShortToCharFunction<? extends X> before2,
-            @Nonnull final ThrowableShortToCharFunction<? extends X> before3) {
+            @Nonnull ThrowableShortToCharFunction<? extends X> before1,
+            @Nonnull ThrowableShortToCharFunction<? extends X> before2,
+            @Nonnull ThrowableShortToCharFunction<? extends X> before3) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         Objects.requireNonNull(before3);
         return (value1, value2, value3) -> applyThrows(before1.applyAsCharThrows(value1),
-                                                       before2.applyAsCharThrows(value2),
-                                                       before3.applyAsCharThrows(value3));
+                before2.applyAsCharThrows(value2),
+                before3.applyAsCharThrows(value3));
     }
 
     /**
@@ -490,7 +487,7 @@ public interface ThrowableTriCharFunction<R, X extends Throwable> extends Lambda
      */
     @Nonnull
     default <S> ThrowableTriCharFunction<S, X> andThen(
-            @Nonnull final ThrowableFunction<? super R, ? extends S, ? extends X> after) {
+            @Nonnull ThrowableFunction<? super R, ? extends S, ? extends X> after) {
         Objects.requireNonNull(after);
         return (value1, value2, value3) -> after.applyThrows(applyThrows(value1, value2, value3));
     }
@@ -505,7 +502,7 @@ public interface ThrowableTriCharFunction<R, X extends Throwable> extends Lambda
      * @throws NullPointerException If given argument is {@code null}
      */
     @Nonnull
-    default ThrowableTriCharConsumer<X> consume(@Nonnull final ThrowableConsumer<? super R, ? extends X> consumer) {
+    default ThrowableTriCharConsumer<X> consume(@Nonnull ThrowableConsumer<? super R, ? extends X> consumer) {
         Objects.requireNonNull(consumer);
         return (value1, value2, value3) -> consumer.acceptThrows(applyThrows(value1, value2, value3));
     }
@@ -529,10 +526,10 @@ public interface ThrowableTriCharFunction<R, X extends Throwable> extends Lambda
         if (isMemoized()) {
             return this;
         } else {
-            final Map<Triple<Character, Character, Character>, R> cache = new ConcurrentHashMap<>();
-            final Object lock = new Object();
+            Map<Triple<Character, Character, Character>, R> cache = new ConcurrentHashMap<>();
+            Object lock = new Object();
             return (ThrowableTriCharFunction<R, X> & Memoized) (value1, value2, value3) -> {
-                final R returnValue;
+                R returnValue;
                 synchronized (lock) {
                     returnValue = cache.computeIfAbsent(Triple.of(value1, value2, value3), ThrowableFunction.of(
                             key -> applyThrows(key.getLeft(), key.getMiddle(), key.getRight())));
@@ -543,9 +540,9 @@ public interface ThrowableTriCharFunction<R, X extends Throwable> extends Lambda
     }
 
     /**
-     * Converts this function to an equal function, which ensures that its result is not
-     * {@code null} using {@link Optional}. This method mainly exists to avoid unnecessary {@code NullPointerException}s
-     * through referencing {@code null} from this function.
+     * Converts this function to an equal function, which ensures that its result is not {@code null} using {@link
+     * Optional}. This method mainly exists to avoid unnecessary {@code NullPointerException}s through referencing
+     * {@code null} from this function.
      *
      * @return An equal function, which ensures that its result is not {@code null}.
      * @deprecated Use {@code lift} method for lifting this function.
@@ -597,7 +594,7 @@ public interface ThrowableTriCharFunction<R, X extends Throwable> extends Lambda
      * @see #nest()
      */
     @Nonnull
-    default TriCharFunction<R> nest(@Nonnull final Function<? super Throwable, ? extends RuntimeException> mapper) {
+    default TriCharFunction<R> nest(@Nonnull Function<? super Throwable, ? extends RuntimeException> mapper) {
         return recover(throwable -> {
             throw mapper.apply(throwable);
         });
@@ -620,15 +617,15 @@ public interface ThrowableTriCharFunction<R, X extends Throwable> extends Lambda
      */
     @Nonnull
     default TriCharFunction<R> recover(
-            @Nonnull final Function<? super Throwable, ? extends TriCharFunction<? extends R>> recover) {
+            @Nonnull Function<? super Throwable, ? extends TriCharFunction<? extends R>> recover) {
         Objects.requireNonNull(recover);
         return (value1, value2, value3) -> {
             try {
-                return this.applyThrows(value1, value2, value3);
+                return applyThrows(value1, value2, value3);
             } catch (Error e) {
                 throw e;
             } catch (Throwable throwable) {
-                final TriCharFunction<? extends R> function = recover.apply(throwable);
+                TriCharFunction<? extends R> function = recover.apply(throwable);
                 Objects.requireNonNull(function, () -> "recover returned null for " + throwable.getClass() + ": "
                         + throwable.getMessage());
                 return function.apply(value1, value2, value3);
@@ -637,12 +634,12 @@ public interface ThrowableTriCharFunction<R, X extends Throwable> extends Lambda
     }
 
     /**
-     * Returns a composed {@link TriCharFunction} that applies this function to its input and sneakily throws the
-     * thrown {@link Throwable} from it, if it is not of type {@link RuntimeException} or {@link Error}. This means that
-     * each throwable thrown from the returned composed function behaves exactly the same as an <em>unchecked</em>
-     * throwable does. As a result, there is no need to handle the throwable of this function in the returned composed
-     * function by either wrapping it in an <em>unchecked</em> throwable or to declare it in the {@code throws} clause,
-     * as it would be done in a non sneaky throwing function.
+     * Returns a composed {@link TriCharFunction} that applies this function to its input and sneakily throws the thrown
+     * {@link Throwable} from it, if it is not of type {@link RuntimeException} or {@link Error}. This means that each
+     * throwable thrown from the returned composed function behaves exactly the same as an <em>unchecked</em> throwable
+     * does. As a result, there is no need to handle the throwable of this function in the returned composed function by
+     * either wrapping it in an <em>unchecked</em> throwable or to declare it in the {@code throws} clause, as it would
+     * be done in a non sneaky throwing function.
      * <p>
      * What sneaky throwing simply does, is to fake out the compiler and thus it bypasses the principle of
      * <em>checked</em> throwables. On the JVM (class file) level, all throwables, checked or not, can be thrown
@@ -706,7 +703,7 @@ public interface ThrowableTriCharFunction<R, X extends Throwable> extends Lambda
     default TriCharFunction<R> sneakyThrow() {
         return (value1, value2, value3) -> {
             try {
-                return this.applyThrows(value1, value2, value3);
+                return applyThrows(value1, value2, value3);
             } catch (RuntimeException | Error e) {
                 throw e;
             } catch (Throwable throwable) {

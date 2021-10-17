@@ -13,7 +13,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package org.lambda4j.function.tri.to;
+
+import java.util.Map;
+import java.util.Objects;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.function.Function;
+
+import javax.annotation.Nonnegative;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
+import org.apache.commons.lang3.tuple.Triple;
 
 import org.lambda4j.Lambda;
 import org.lambda4j.consumer.ThrowableFloatConsumer;
@@ -35,22 +47,12 @@ import org.lambda4j.operator.unary.ThrowableFloatUnaryOperator;
 import org.lambda4j.predicate.ThrowableFloatPredicate;
 import org.lambda4j.predicate.tri.ThrowableTriPredicate;
 
-import org.apache.commons.lang3.tuple.Triple;
-
-import javax.annotation.Nonnegative;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import java.util.Map;
-import java.util.Objects;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.function.Function;
-
 /**
- * Represents an operation that accepts three input arguments and produces a
- * {@code float}-valued result which is able to throw any {@link Throwable}.
- * This is a primitive specialization of {@link ThrowableTriFunction}.
+ * Represents an operation that accepts three input arguments and produces a {@code float}-valued result which is able
+ * to throw any {@link Throwable}. This is a primitive specialization of {@link ThrowableTriFunction}.
  * <p>
- * This is a {@link FunctionalInterface} whose functional method is {@link #applyAsFloatThrows(Object, Object, Object)}.
+ * This is a {@link FunctionalInterface} whose functional method is {@link #applyAsFloatThrows(Object, Object,
+ * Object)}.
  *
  * @param <T> The type of the first argument to the function
  * @param <U> The type of the second argument to the function
@@ -81,7 +83,7 @@ public interface ThrowableToFloatTriFunction<T, U, V, X extends Throwable> exten
      * @see <a href="https://docs.oracle.com/javase/tutorial/java/javaOO/methodreferences.html">Method Reference</a>
      */
     static <T, U, V, X extends Throwable> ThrowableToFloatTriFunction<T, U, V, X> of(
-            @Nullable final ThrowableToFloatTriFunction<T, U, V, X> expression) {
+            @Nullable ThrowableToFloatTriFunction<T, U, V, X> expression) {
         return expression;
     }
 
@@ -101,7 +103,7 @@ public interface ThrowableToFloatTriFunction<T, U, V, X extends Throwable> exten
      * @throws X Any throwable from this functions action
      */
     static <T, U, V, X extends Throwable> float call(
-            @Nonnull final ThrowableToFloatTriFunction<? super T, ? super U, ? super V, ? extends X> function, T t, U u,
+            @Nonnull ThrowableToFloatTriFunction<? super T, ? super U, ? super V, ? extends X> function, T t, U u,
             V v) throws X {
         Objects.requireNonNull(function);
         return function.applyAsFloatThrows(t, u, v);
@@ -122,7 +124,7 @@ public interface ThrowableToFloatTriFunction<T, U, V, X extends Throwable> exten
      */
     @Nonnull
     static <T, U, V, X extends Throwable> ThrowableToFloatTriFunction<T, U, V, X> onlyFirst(
-            @Nonnull final ThrowableToFloatFunction<? super T, ? extends X> function) {
+            @Nonnull ThrowableToFloatFunction<? super T, ? extends X> function) {
         Objects.requireNonNull(function);
         return (t, u, v) -> function.applyAsFloatThrows(t);
     }
@@ -142,7 +144,7 @@ public interface ThrowableToFloatTriFunction<T, U, V, X extends Throwable> exten
      */
     @Nonnull
     static <T, U, V, X extends Throwable> ThrowableToFloatTriFunction<T, U, V, X> onlySecond(
-            @Nonnull final ThrowableToFloatFunction<? super U, ? extends X> function) {
+            @Nonnull ThrowableToFloatFunction<? super U, ? extends X> function) {
         Objects.requireNonNull(function);
         return (t, u, v) -> function.applyAsFloatThrows(u);
     }
@@ -162,7 +164,7 @@ public interface ThrowableToFloatTriFunction<T, U, V, X extends Throwable> exten
      */
     @Nonnull
     static <T, U, V, X extends Throwable> ThrowableToFloatTriFunction<T, U, V, X> onlyThird(
-            @Nonnull final ThrowableToFloatFunction<? super V, ? extends X> function) {
+            @Nonnull ThrowableToFloatFunction<? super V, ? extends X> function) {
         Objects.requireNonNull(function);
         return (t, u, v) -> function.applyAsFloatThrows(v);
     }
@@ -216,7 +218,7 @@ public interface ThrowableToFloatTriFunction<T, U, V, X extends Throwable> exten
      */
     @Nonnull
     default ThrowableToFloatBiFunction<U, V, X> papplyAsFloatThrows(T t) {
-        return (u, v) -> this.applyAsFloatThrows(t, u, v);
+        return (u, v) -> applyAsFloatThrows(t, u, v);
     }
 
     /**
@@ -229,7 +231,7 @@ public interface ThrowableToFloatTriFunction<T, U, V, X extends Throwable> exten
      */
     @Nonnull
     default ThrowableToFloatFunction<V, X> papplyAsFloatThrows(T t, U u) {
-        return (v) -> this.applyAsFloatThrows(t, u, v);
+        return v -> applyAsFloatThrows(t, u, v);
     }
 
     /**
@@ -260,9 +262,9 @@ public interface ThrowableToFloatTriFunction<T, U, V, X extends Throwable> exten
      */
     @Nonnull
     default <A, B, C> ThrowableToFloatTriFunction<A, B, C, X> compose(
-            @Nonnull final ThrowableFunction<? super A, ? extends T, ? extends X> before1,
-            @Nonnull final ThrowableFunction<? super B, ? extends U, ? extends X> before2,
-            @Nonnull final ThrowableFunction<? super C, ? extends V, ? extends X> before3) {
+            @Nonnull ThrowableFunction<? super A, ? extends T, ? extends X> before1,
+            @Nonnull ThrowableFunction<? super B, ? extends U, ? extends X> before2,
+            @Nonnull ThrowableFunction<? super C, ? extends V, ? extends X> before3) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         Objects.requireNonNull(before3);
@@ -282,7 +284,7 @@ public interface ThrowableToFloatTriFunction<T, U, V, X extends Throwable> exten
      */
     @Nonnull
     default <S> ThrowableTriFunction<T, U, V, S, X> andThen(
-            @Nonnull final ThrowableFloatFunction<? extends S, ? extends X> after) {
+            @Nonnull ThrowableFloatFunction<? extends S, ? extends X> after) {
         Objects.requireNonNull(after);
         return (t, u, v) -> after.applyThrows(applyAsFloatThrows(t, u, v));
     }
@@ -296,12 +298,12 @@ public interface ThrowableToFloatTriFunction<T, U, V, X extends Throwable> exten
      * @return A composed {@code ThrowableTriPredicate} that first applies this function to its input, and then applies
      * the {@code after} predicate to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * boolean}.
      */
     @Nonnull
     default ThrowableTriPredicate<T, U, V, X> andThenToBoolean(
-            @Nonnull final ThrowableFloatPredicate<? extends X> after) {
+            @Nonnull ThrowableFloatPredicate<? extends X> after) {
         Objects.requireNonNull(after);
         return (t, u, v) -> after.testThrows(applyAsFloatThrows(t, u, v));
     }
@@ -315,12 +317,12 @@ public interface ThrowableToFloatTriFunction<T, U, V, X extends Throwable> exten
      * @return A composed {@code ThrowableToByteTriFunction} that first applies this function to its input, and then
      * applies the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * byte}.
      */
     @Nonnull
     default ThrowableToByteTriFunction<T, U, V, X> andThenToByte(
-            @Nonnull final ThrowableFloatToByteFunction<? extends X> after) {
+            @Nonnull ThrowableFloatToByteFunction<? extends X> after) {
         Objects.requireNonNull(after);
         return (t, u, v) -> after.applyAsByteThrows(applyAsFloatThrows(t, u, v));
     }
@@ -334,12 +336,12 @@ public interface ThrowableToFloatTriFunction<T, U, V, X extends Throwable> exten
      * @return A composed {@code ThrowableToCharTriFunction} that first applies this function to its input, and then
      * applies the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * char}.
      */
     @Nonnull
     default ThrowableToCharTriFunction<T, U, V, X> andThenToChar(
-            @Nonnull final ThrowableFloatToCharFunction<? extends X> after) {
+            @Nonnull ThrowableFloatToCharFunction<? extends X> after) {
         Objects.requireNonNull(after);
         return (t, u, v) -> after.applyAsCharThrows(applyAsFloatThrows(t, u, v));
     }
@@ -353,12 +355,12 @@ public interface ThrowableToFloatTriFunction<T, U, V, X extends Throwable> exten
      * @return A composed {@code ThrowableToDoubleTriFunction} that first applies this function to its input, and then
      * applies the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * double}.
      */
     @Nonnull
     default ThrowableToDoubleTriFunction<T, U, V, X> andThenToDouble(
-            @Nonnull final ThrowableFloatToDoubleFunction<? extends X> after) {
+            @Nonnull ThrowableFloatToDoubleFunction<? extends X> after) {
         Objects.requireNonNull(after);
         return (t, u, v) -> after.applyAsDoubleThrows(applyAsFloatThrows(t, u, v));
     }
@@ -372,12 +374,12 @@ public interface ThrowableToFloatTriFunction<T, U, V, X extends Throwable> exten
      * @return A composed {@code ThrowableToFloatTriFunction} that first applies this function to its input, and then
      * applies the {@code after} operator to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * float}.
      */
     @Nonnull
     default ThrowableToFloatTriFunction<T, U, V, X> andThenToFloat(
-            @Nonnull final ThrowableFloatUnaryOperator<? extends X> after) {
+            @Nonnull ThrowableFloatUnaryOperator<? extends X> after) {
         Objects.requireNonNull(after);
         return (t, u, v) -> after.applyAsFloatThrows(applyAsFloatThrows(t, u, v));
     }
@@ -391,12 +393,12 @@ public interface ThrowableToFloatTriFunction<T, U, V, X extends Throwable> exten
      * @return A composed {@code ThrowableToIntTriFunction} that first applies this function to its input, and then
      * applies the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * int}.
      */
     @Nonnull
     default ThrowableToIntTriFunction<T, U, V, X> andThenToInt(
-            @Nonnull final ThrowableFloatToIntFunction<? extends X> after) {
+            @Nonnull ThrowableFloatToIntFunction<? extends X> after) {
         Objects.requireNonNull(after);
         return (t, u, v) -> after.applyAsIntThrows(applyAsFloatThrows(t, u, v));
     }
@@ -410,12 +412,12 @@ public interface ThrowableToFloatTriFunction<T, U, V, X extends Throwable> exten
      * @return A composed {@code ThrowableToLongTriFunction} that first applies this function to its input, and then
      * applies the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * long}.
      */
     @Nonnull
     default ThrowableToLongTriFunction<T, U, V, X> andThenToLong(
-            @Nonnull final ThrowableFloatToLongFunction<? extends X> after) {
+            @Nonnull ThrowableFloatToLongFunction<? extends X> after) {
         Objects.requireNonNull(after);
         return (t, u, v) -> after.applyAsLongThrows(applyAsFloatThrows(t, u, v));
     }
@@ -429,12 +431,12 @@ public interface ThrowableToFloatTriFunction<T, U, V, X extends Throwable> exten
      * @return A composed {@code ThrowableToShortTriFunction} that first applies this function to its input, and then
      * applies the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * short}.
      */
     @Nonnull
     default ThrowableToShortTriFunction<T, U, V, X> andThenToShort(
-            @Nonnull final ThrowableFloatToShortFunction<? extends X> after) {
+            @Nonnull ThrowableFloatToShortFunction<? extends X> after) {
         Objects.requireNonNull(after);
         return (t, u, v) -> after.applyAsShortThrows(applyAsFloatThrows(t, u, v));
     }
@@ -449,7 +451,7 @@ public interface ThrowableToFloatTriFunction<T, U, V, X extends Throwable> exten
      * @throws NullPointerException If given argument is {@code null}
      */
     @Nonnull
-    default ThrowableTriConsumer<T, U, V, X> consume(@Nonnull final ThrowableFloatConsumer<? extends X> consumer) {
+    default ThrowableTriConsumer<T, U, V, X> consume(@Nonnull ThrowableFloatConsumer<? extends X> consumer) {
         Objects.requireNonNull(consumer);
         return (t, u, v) -> consumer.acceptThrows(applyAsFloatThrows(t, u, v));
     }
@@ -493,10 +495,10 @@ public interface ThrowableToFloatTriFunction<T, U, V, X extends Throwable> exten
         if (isMemoized()) {
             return this;
         } else {
-            final Map<Triple<T, U, V>, Float> cache = new ConcurrentHashMap<>();
-            final Object lock = new Object();
+            Map<Triple<T, U, V>, Float> cache = new ConcurrentHashMap<>();
+            Object lock = new Object();
             return (ThrowableToFloatTriFunction<T, U, V, X> & Memoized) (t, u, v) -> {
-                final float returnValue;
+                float returnValue;
                 synchronized (lock) {
                     returnValue = cache.computeIfAbsent(Triple.of(t, u, v), ThrowableFunction.of(
                             key -> applyAsFloatThrows(key.getLeft(), key.getMiddle(), key.getRight())));
@@ -548,7 +550,7 @@ public interface ThrowableToFloatTriFunction<T, U, V, X extends Throwable> exten
      */
     @Nonnull
     default ToFloatTriFunction<T, U, V> nest(
-            @Nonnull final Function<? super Throwable, ? extends RuntimeException> mapper) {
+            @Nonnull Function<? super Throwable, ? extends RuntimeException> mapper) {
         return recover(throwable -> {
             throw mapper.apply(throwable);
         });
@@ -571,15 +573,15 @@ public interface ThrowableToFloatTriFunction<T, U, V, X extends Throwable> exten
      */
     @Nonnull
     default ToFloatTriFunction<T, U, V> recover(
-            @Nonnull final Function<? super Throwable, ? extends ToFloatTriFunction<? super T, ? super U, ? super V>> recover) {
+            @Nonnull Function<? super Throwable, ? extends ToFloatTriFunction<? super T, ? super U, ? super V>> recover) {
         Objects.requireNonNull(recover);
         return (t, u, v) -> {
             try {
-                return this.applyAsFloatThrows(t, u, v);
+                return applyAsFloatThrows(t, u, v);
             } catch (Error e) {
                 throw e;
             } catch (Throwable throwable) {
-                final ToFloatTriFunction<? super T, ? super U, ? super V> function = recover.apply(throwable);
+                ToFloatTriFunction<? super T, ? super U, ? super V> function = recover.apply(throwable);
                 Objects.requireNonNull(function, () -> "recover returned null for " + throwable.getClass() + ": "
                         + throwable.getMessage());
                 return function.applyAsFloat(t, u, v);
@@ -657,7 +659,7 @@ public interface ThrowableToFloatTriFunction<T, U, V, X extends Throwable> exten
     default ToFloatTriFunction<T, U, V> sneakyThrow() {
         return (t, u, v) -> {
             try {
-                return this.applyAsFloatThrows(t, u, v);
+                return applyAsFloatThrows(t, u, v);
             } catch (RuntimeException | Error e) {
                 throw e;
             } catch (Throwable throwable) {

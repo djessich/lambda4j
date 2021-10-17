@@ -13,7 +13,24 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package org.lambda4j.function.bi.conversion;
+
+import java.util.Map;
+import java.util.Objects;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.function.IntConsumer;
+import java.util.function.IntFunction;
+import java.util.function.IntPredicate;
+import java.util.function.IntToDoubleFunction;
+import java.util.function.IntToLongFunction;
+import java.util.function.IntUnaryOperator;
+
+import javax.annotation.Nonnegative;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
+import org.apache.commons.lang3.tuple.Pair;
 
 import org.lambda4j.Lambda;
 import org.lambda4j.consumer.bi.BiByteConsumer;
@@ -37,25 +54,9 @@ import org.lambda4j.operator.binary.IntBinaryOperator2;
 import org.lambda4j.operator.unary.ByteUnaryOperator;
 import org.lambda4j.predicate.bi.BiBytePredicate;
 
-import org.apache.commons.lang3.tuple.Pair;
-
-import javax.annotation.Nonnegative;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import java.util.Map;
-import java.util.Objects;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.function.IntConsumer;
-import java.util.function.IntFunction;
-import java.util.function.IntPredicate;
-import java.util.function.IntToDoubleFunction;
-import java.util.function.IntToLongFunction;
-import java.util.function.IntUnaryOperator;
-
 /**
- * Represents an operation that accepts two {@code byte}-valued input arguments and produces a
- * {@code int}-valued result.
- * This is a primitive specialization of {@link BiFunction2}.
+ * Represents an operation that accepts two {@code byte}-valued input arguments and produces a {@code int}-valued
+ * result. This is a primitive specialization of {@link BiFunction2}.
  * <p>
  * This is a {@link FunctionalInterface} whose functional method is {@link #applyAsInt(byte, byte)}.
  *
@@ -79,7 +80,7 @@ public interface BiByteToIntFunction extends Lambda {
      * Expression</a>
      * @see <a href="https://docs.oracle.com/javase/tutorial/java/javaOO/methodreferences.html">Method Reference</a>
      */
-    static BiByteToIntFunction of(@Nullable final BiByteToIntFunction expression) {
+    static BiByteToIntFunction of(@Nullable BiByteToIntFunction expression) {
         return expression;
     }
 
@@ -92,7 +93,7 @@ public interface BiByteToIntFunction extends Lambda {
      * @return The result from the given {@code BiByteToIntFunction}.
      * @throws NullPointerException If given argument is {@code null}
      */
-    static int call(@Nonnull final BiByteToIntFunction function, byte value1, byte value2) {
+    static int call(@Nonnull BiByteToIntFunction function, byte value1, byte value2) {
         Objects.requireNonNull(function);
         return function.applyAsInt(value1, value2);
     }
@@ -107,7 +108,7 @@ public interface BiByteToIntFunction extends Lambda {
      * @throws NullPointerException If given argument is {@code null}
      */
     @Nonnull
-    static BiByteToIntFunction onlyFirst(@Nonnull final ByteToIntFunction function) {
+    static BiByteToIntFunction onlyFirst(@Nonnull ByteToIntFunction function) {
         Objects.requireNonNull(function);
         return (value1, value2) -> function.applyAsInt(value1);
     }
@@ -122,7 +123,7 @@ public interface BiByteToIntFunction extends Lambda {
      * @throws NullPointerException If given argument is {@code null}
      */
     @Nonnull
-    static BiByteToIntFunction onlySecond(@Nonnull final ByteToIntFunction function) {
+    static BiByteToIntFunction onlySecond(@Nonnull ByteToIntFunction function) {
         Objects.requireNonNull(function);
         return (value1, value2) -> function.applyAsInt(value2);
     }
@@ -155,7 +156,7 @@ public interface BiByteToIntFunction extends Lambda {
      */
     @Nonnull
     default ByteToIntFunction papplyAsInt(byte value1) {
-        return (value2) -> this.applyAsInt(value1, value2);
+        return value2 -> applyAsInt(value1, value2);
     }
 
     /**
@@ -171,8 +172,8 @@ public interface BiByteToIntFunction extends Lambda {
 
     /**
      * Returns a composed {@link ToIntBiFunction2} that first applies the {@code before} functions to its input, and
-     * then applies this function to the result.
-     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
+     * then applies this function to the result. If evaluation of either operation throws an exception, it is relayed to
+     * the caller of the composed operation.
      *
      * @param <A> The type of the argument to the first given function, and of composed function
      * @param <B> The type of the argument to the second given function, and of composed function
@@ -184,8 +185,8 @@ public interface BiByteToIntFunction extends Lambda {
      * @implSpec The input argument of this method is able to handle every type.
      */
     @Nonnull
-    default <A, B> ToIntBiFunction2<A, B> compose(@Nonnull final ToByteFunction<? super A> before1,
-            @Nonnull final ToByteFunction<? super B> before2) {
+    default <A, B> ToIntBiFunction2<A, B> compose(@Nonnull ToByteFunction<? super A> before1,
+            @Nonnull ToByteFunction<? super B> before2) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         return (a, b) -> applyAsInt(before1.applyAsByte(a), before2.applyAsByte(b));
@@ -202,58 +203,56 @@ public interface BiByteToIntFunction extends Lambda {
      * @return A composed {@code BiBooleanToIntFunction} that first applies the {@code before} functions to its input,
      * and then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * boolean}.
      */
     @Nonnull
-    default BiBooleanToIntFunction composeFromBoolean(@Nonnull final BooleanToByteFunction before1,
-            @Nonnull final BooleanToByteFunction before2) {
+    default BiBooleanToIntFunction composeFromBoolean(@Nonnull BooleanToByteFunction before1,
+            @Nonnull BooleanToByteFunction before2) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         return (value1, value2) -> applyAsInt(before1.applyAsByte(value1), before2.applyAsByte(value2));
     }
 
     /**
-     * Returns a composed {@link BiByteToIntFunction} that first applies the {@code before} operators to
-     * its input, and then applies this function to the result.
-     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
-     * This method is just convenience, to provide the ability to execute an operation which accepts {@code byte} input,
-     * before this primitive function is executed.
+     * Returns a composed {@link BiByteToIntFunction} that first applies the {@code before} operators to its input, and
+     * then applies this function to the result. If evaluation of either operation throws an exception, it is relayed to
+     * the caller of the composed operation. This method is just convenience, to provide the ability to execute an
+     * operation which accepts {@code byte} input, before this primitive function is executed.
      *
      * @param before1 The first operator to apply before this function is applied
      * @param before2 The second operator to apply before this function is applied
      * @return A composed {@code BiByteToIntFunction} that first applies the {@code before} operators to its input, and
      * then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * byte}.
      */
     @Nonnull
-    default BiByteToIntFunction composeFromByte(@Nonnull final ByteUnaryOperator before1,
-            @Nonnull final ByteUnaryOperator before2) {
+    default BiByteToIntFunction composeFromByte(@Nonnull ByteUnaryOperator before1,
+            @Nonnull ByteUnaryOperator before2) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         return (value1, value2) -> applyAsInt(before1.applyAsByte(value1), before2.applyAsByte(value2));
     }
 
     /**
-     * Returns a composed {@link BiCharToIntFunction} that first applies the {@code before} functions to
-     * its input, and then applies this function to the result.
-     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
-     * This method is just convenience, to provide the ability to execute an operation which accepts {@code char} input,
-     * before this primitive function is executed.
+     * Returns a composed {@link BiCharToIntFunction} that first applies the {@code before} functions to its input, and
+     * then applies this function to the result. If evaluation of either operation throws an exception, it is relayed to
+     * the caller of the composed operation. This method is just convenience, to provide the ability to execute an
+     * operation which accepts {@code char} input, before this primitive function is executed.
      *
      * @param before1 The first function to apply before this function is applied
      * @param before2 The second function to apply before this function is applied
      * @return A composed {@code BiCharToIntFunction} that first applies the {@code before} functions to its input, and
      * then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * char}.
      */
     @Nonnull
-    default BiCharToIntFunction composeFromChar(@Nonnull final CharToByteFunction before1,
-            @Nonnull final CharToByteFunction before2) {
+    default BiCharToIntFunction composeFromChar(@Nonnull CharToByteFunction before1,
+            @Nonnull CharToByteFunction before2) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         return (value1, value2) -> applyAsInt(before1.applyAsByte(value1), before2.applyAsByte(value2));
@@ -270,12 +269,12 @@ public interface BiByteToIntFunction extends Lambda {
      * @return A composed {@code BiDoubleToIntFunction} that first applies the {@code before} functions to its input,
      * and then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * double}.
      */
     @Nonnull
-    default BiDoubleToIntFunction composeFromDouble(@Nonnull final DoubleToByteFunction before1,
-            @Nonnull final DoubleToByteFunction before2) {
+    default BiDoubleToIntFunction composeFromDouble(@Nonnull DoubleToByteFunction before1,
+            @Nonnull DoubleToByteFunction before2) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         return (value1, value2) -> applyAsInt(before1.applyAsByte(value1), before2.applyAsByte(value2));
@@ -292,58 +291,56 @@ public interface BiByteToIntFunction extends Lambda {
      * @return A composed {@code BiFloatToIntFunction} that first applies the {@code before} functions to its input, and
      * then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * float}.
      */
     @Nonnull
-    default BiFloatToIntFunction composeFromFloat(@Nonnull final FloatToByteFunction before1,
-            @Nonnull final FloatToByteFunction before2) {
+    default BiFloatToIntFunction composeFromFloat(@Nonnull FloatToByteFunction before1,
+            @Nonnull FloatToByteFunction before2) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         return (value1, value2) -> applyAsInt(before1.applyAsByte(value1), before2.applyAsByte(value2));
     }
 
     /**
-     * Returns a composed {@link IntBinaryOperator2} that first applies the {@code before} functions to
-     * its input, and then applies this function to the result.
-     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
-     * This method is just convenience, to provide the ability to execute an operation which accepts {@code int} input,
-     * before this primitive function is executed.
+     * Returns a composed {@link IntBinaryOperator2} that first applies the {@code before} functions to its input, and
+     * then applies this function to the result. If evaluation of either operation throws an exception, it is relayed to
+     * the caller of the composed operation. This method is just convenience, to provide the ability to execute an
+     * operation which accepts {@code int} input, before this primitive function is executed.
      *
      * @param before1 The first function to apply before this function is applied
      * @param before2 The second function to apply before this function is applied
      * @return A composed {@code IntBinaryOperator2} that first applies the {@code before} functions to its input, and
      * then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * int}.
      */
     @Nonnull
-    default IntBinaryOperator2 composeFromInt(@Nonnull final IntToByteFunction before1,
-            @Nonnull final IntToByteFunction before2) {
+    default IntBinaryOperator2 composeFromInt(@Nonnull IntToByteFunction before1,
+            @Nonnull IntToByteFunction before2) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         return (value1, value2) -> applyAsInt(before1.applyAsByte(value1), before2.applyAsByte(value2));
     }
 
     /**
-     * Returns a composed {@link BiLongToIntFunction} that first applies the {@code before} functions to
-     * its input, and then applies this function to the result.
-     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
-     * This method is just convenience, to provide the ability to execute an operation which accepts {@code long} input,
-     * before this primitive function is executed.
+     * Returns a composed {@link BiLongToIntFunction} that first applies the {@code before} functions to its input, and
+     * then applies this function to the result. If evaluation of either operation throws an exception, it is relayed to
+     * the caller of the composed operation. This method is just convenience, to provide the ability to execute an
+     * operation which accepts {@code long} input, before this primitive function is executed.
      *
      * @param before1 The first function to apply before this function is applied
      * @param before2 The second function to apply before this function is applied
      * @return A composed {@code BiLongToIntFunction} that first applies the {@code before} functions to its input, and
      * then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * long}.
      */
     @Nonnull
-    default BiLongToIntFunction composeFromLong(@Nonnull final LongToByteFunction before1,
-            @Nonnull final LongToByteFunction before2) {
+    default BiLongToIntFunction composeFromLong(@Nonnull LongToByteFunction before1,
+            @Nonnull LongToByteFunction before2) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         return (value1, value2) -> applyAsInt(before1.applyAsByte(value1), before2.applyAsByte(value2));
@@ -360,12 +357,12 @@ public interface BiByteToIntFunction extends Lambda {
      * @return A composed {@code BiShortToIntFunction} that first applies the {@code before} functions to its input, and
      * then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * short}.
      */
     @Nonnull
-    default BiShortToIntFunction composeFromShort(@Nonnull final ShortToByteFunction before1,
-            @Nonnull final ShortToByteFunction before2) {
+    default BiShortToIntFunction composeFromShort(@Nonnull ShortToByteFunction before1,
+            @Nonnull ShortToByteFunction before2) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         return (value1, value2) -> applyAsInt(before1.applyAsByte(value1), before2.applyAsByte(value2));
@@ -373,8 +370,8 @@ public interface BiByteToIntFunction extends Lambda {
 
     /**
      * Returns a composed {@link BiByteFunction} that first applies this function to its input, and then applies the
-     * {@code after} function to the result.
-     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
+     * {@code after} function to the result. If evaluation of either operation throws an exception, it is relayed to the
+     * caller of the composed operation.
      *
      * @param <S> The type of return value from the {@code after} function, and of the composed function
      * @param after The function to apply after this function is applied
@@ -384,7 +381,7 @@ public interface BiByteToIntFunction extends Lambda {
      * @implSpec The input argument of this method is able to return every type.
      */
     @Nonnull
-    default <S> BiByteFunction<S> andThen(@Nonnull final IntFunction<? extends S> after) {
+    default <S> BiByteFunction<S> andThen(@Nonnull IntFunction<? extends S> after) {
         Objects.requireNonNull(after);
         return (value1, value2) -> after.apply(applyAsInt(value1, value2));
     }
@@ -399,11 +396,11 @@ public interface BiByteToIntFunction extends Lambda {
      * @return A composed {@code BiBytePredicate} that first applies this function to its input, and then applies the
      * {@code after} predicate to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * boolean}.
      */
     @Nonnull
-    default BiBytePredicate andThenToBoolean(@Nonnull final IntPredicate after) {
+    default BiBytePredicate andThenToBoolean(@Nonnull IntPredicate after) {
         Objects.requireNonNull(after);
         return (value1, value2) -> after.test(applyAsInt(value1, value2));
     }
@@ -418,11 +415,11 @@ public interface BiByteToIntFunction extends Lambda {
      * @return A composed {@code ByteBinaryOperator} that first applies this function to its input, and then applies the
      * {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * byte}.
      */
     @Nonnull
-    default ByteBinaryOperator andThenToByte(@Nonnull final IntToByteFunction after) {
+    default ByteBinaryOperator andThenToByte(@Nonnull IntToByteFunction after) {
         Objects.requireNonNull(after);
         return (value1, value2) -> after.applyAsByte(applyAsInt(value1, value2));
     }
@@ -437,11 +434,11 @@ public interface BiByteToIntFunction extends Lambda {
      * @return A composed {@code BiByteToCharFunction} that first applies this function to its input, and then applies
      * the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * char}.
      */
     @Nonnull
-    default BiByteToCharFunction andThenToChar(@Nonnull final IntToCharFunction after) {
+    default BiByteToCharFunction andThenToChar(@Nonnull IntToCharFunction after) {
         Objects.requireNonNull(after);
         return (value1, value2) -> after.applyAsChar(applyAsInt(value1, value2));
     }
@@ -456,11 +453,11 @@ public interface BiByteToIntFunction extends Lambda {
      * @return A composed {@code BiByteToDoubleFunction} that first applies this function to its input, and then applies
      * the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * double}.
      */
     @Nonnull
-    default BiByteToDoubleFunction andThenToDouble(@Nonnull final IntToDoubleFunction after) {
+    default BiByteToDoubleFunction andThenToDouble(@Nonnull IntToDoubleFunction after) {
         Objects.requireNonNull(after);
         return (value1, value2) -> after.applyAsDouble(applyAsInt(value1, value2));
     }
@@ -475,11 +472,11 @@ public interface BiByteToIntFunction extends Lambda {
      * @return A composed {@code BiByteToFloatFunction} that first applies this function to its input, and then applies
      * the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * float}.
      */
     @Nonnull
-    default BiByteToFloatFunction andThenToFloat(@Nonnull final IntToFloatFunction after) {
+    default BiByteToFloatFunction andThenToFloat(@Nonnull IntToFloatFunction after) {
         Objects.requireNonNull(after);
         return (value1, value2) -> after.applyAsFloat(applyAsInt(value1, value2));
     }
@@ -494,11 +491,11 @@ public interface BiByteToIntFunction extends Lambda {
      * @return A composed {@code BiByteToIntFunction} that first applies this function to its input, and then applies
      * the {@code after} operator to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * int}.
      */
     @Nonnull
-    default BiByteToIntFunction andThenToInt(@Nonnull final IntUnaryOperator after) {
+    default BiByteToIntFunction andThenToInt(@Nonnull IntUnaryOperator after) {
         Objects.requireNonNull(after);
         return (value1, value2) -> after.applyAsInt(applyAsInt(value1, value2));
     }
@@ -513,11 +510,11 @@ public interface BiByteToIntFunction extends Lambda {
      * @return A composed {@code BiByteToLongFunction} that first applies this function to its input, and then applies
      * the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * long}.
      */
     @Nonnull
-    default BiByteToLongFunction andThenToLong(@Nonnull final IntToLongFunction after) {
+    default BiByteToLongFunction andThenToLong(@Nonnull IntToLongFunction after) {
         Objects.requireNonNull(after);
         return (value1, value2) -> after.applyAsLong(applyAsInt(value1, value2));
     }
@@ -532,11 +529,11 @@ public interface BiByteToIntFunction extends Lambda {
      * @return A composed {@code BiByteToShortFunction} that first applies this function to its input, and then applies
      * the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * short}.
      */
     @Nonnull
-    default BiByteToShortFunction andThenToShort(@Nonnull final IntToShortFunction after) {
+    default BiByteToShortFunction andThenToShort(@Nonnull IntToShortFunction after) {
         Objects.requireNonNull(after);
         return (value1, value2) -> after.applyAsShort(applyAsInt(value1, value2));
     }
@@ -552,7 +549,7 @@ public interface BiByteToIntFunction extends Lambda {
      * @throws NullPointerException If given argument is {@code null}
      */
     @Nonnull
-    default BiByteConsumer consume(@Nonnull final IntConsumer consumer) {
+    default BiByteConsumer consume(@Nonnull IntConsumer consumer) {
         Objects.requireNonNull(consumer);
         return (value1, value2) -> consumer.accept(applyAsInt(value1, value2));
     }
@@ -576,13 +573,13 @@ public interface BiByteToIntFunction extends Lambda {
         if (isMemoized()) {
             return this;
         } else {
-            final Map<Pair<Byte, Byte>, Integer> cache = new ConcurrentHashMap<>();
-            final Object lock = new Object();
+            Map<Pair<Byte, Byte>, Integer> cache = new ConcurrentHashMap<>();
+            Object lock = new Object();
             return (BiByteToIntFunction & Memoized) (value1, value2) -> {
-                final int returnValue;
+                int returnValue;
                 synchronized (lock) {
                     returnValue = cache.computeIfAbsent(Pair.of(value1, value2),
-                                                        key -> applyAsInt(key.getLeft(), key.getRight()));
+                            key -> applyAsInt(key.getLeft(), key.getRight()));
                 }
                 return returnValue;
             };
@@ -591,8 +588,8 @@ public interface BiByteToIntFunction extends Lambda {
 
     /**
      * Returns a composed {@link BiFunction2} which represents this {@link BiByteToIntFunction}. Thereby the primitive
-     * input argument for this function is autoboxed. This method provides the possibility to use this
-     * {@code BiByteToIntFunction} with methods provided by the {@code JDK}.
+     * input argument for this function is autoboxed. This method provides the possibility to use this {@code
+     * BiByteToIntFunction} with methods provided by the {@code JDK}.
      *
      * @return A composed {@code BiFunction2} which represents this {@code BiByteToIntFunction}.
      */

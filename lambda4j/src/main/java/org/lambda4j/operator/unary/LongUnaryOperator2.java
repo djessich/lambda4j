@@ -13,7 +13,25 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package org.lambda4j.operator.unary;
+
+import java.util.Map;
+import java.util.Objects;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.function.DoubleToLongFunction;
+import java.util.function.IntToLongFunction;
+import java.util.function.LongConsumer;
+import java.util.function.LongFunction;
+import java.util.function.LongPredicate;
+import java.util.function.LongToDoubleFunction;
+import java.util.function.LongToIntFunction;
+import java.util.function.LongUnaryOperator;
+import java.util.function.ToLongFunction;
+
+import javax.annotation.Nonnegative;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import org.lambda4j.Lambda;
 import org.lambda4j.consumer.LongConsumer2;
@@ -34,26 +52,9 @@ import org.lambda4j.function.conversion.ShortToLongFunction;
 import org.lambda4j.function.to.ToLongFunction2;
 import org.lambda4j.predicate.LongPredicate2;
 
-import javax.annotation.Nonnegative;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import java.util.Map;
-import java.util.Objects;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.function.DoubleToLongFunction;
-import java.util.function.IntToLongFunction;
-import java.util.function.LongConsumer;
-import java.util.function.LongFunction;
-import java.util.function.LongPredicate;
-import java.util.function.LongToDoubleFunction;
-import java.util.function.LongToIntFunction;
-import java.util.function.LongUnaryOperator;
-import java.util.function.ToLongFunction;
-
 /**
- * Represents an operation that accepts one {@code long}-valued input argument and produces a
- * {@code long}-valued result.
- * This is a primitive specialization of {@link UnaryOperator2}.
+ * Represents an operation that accepts one {@code long}-valued input argument and produces a {@code long}-valued
+ * result. This is a primitive specialization of {@link UnaryOperator2}.
  * <p>
  * This is a {@link FunctionalInterface} whose functional method is {@link #applyAsLong(long)}.
  *
@@ -78,7 +79,7 @@ public interface LongUnaryOperator2 extends Lambda, LongUnaryOperator {
      * Expression</a>
      * @see <a href="https://docs.oracle.com/javase/tutorial/java/javaOO/methodreferences.html">Method Reference</a>
      */
-    static LongUnaryOperator2 of(@Nullable final LongUnaryOperator2 expression) {
+    static LongUnaryOperator2 of(@Nullable LongUnaryOperator2 expression) {
         return expression;
     }
 
@@ -90,7 +91,7 @@ public interface LongUnaryOperator2 extends Lambda, LongUnaryOperator {
      * @return The result from the given {@code LongUnaryOperator2}.
      * @throws NullPointerException If given argument is {@code null}
      */
-    static long call(@Nonnull final LongUnaryOperator operator, long value) {
+    static long call(@Nonnull LongUnaryOperator operator, long value) {
         Objects.requireNonNull(operator);
         return operator.applyAsLong(value);
     }
@@ -98,11 +99,11 @@ public interface LongUnaryOperator2 extends Lambda, LongUnaryOperator {
     /**
      * Returns a {@link LongUnaryOperator2} that always returns its input argument.
      *
-     * @return A {@code  LongUnaryOperator2} that always returns its input argument
+     * @return A {@code LongUnaryOperator2} that always returns its input argument
      */
     @Nonnull
     static LongUnaryOperator2 identity() {
-        return (value) -> value;
+        return value -> value;
     }
 
     /**
@@ -113,7 +114,7 @@ public interface LongUnaryOperator2 extends Lambda, LongUnaryOperator {
      */
     @Nonnull
     static LongUnaryOperator2 constant(long ret) {
-        return (value) -> ret;
+        return value -> ret;
     }
 
     /**
@@ -122,6 +123,7 @@ public interface LongUnaryOperator2 extends Lambda, LongUnaryOperator {
      * @param value The argument to the operator
      * @return The return value from the operator, which is its result.
      */
+    @Override
     long applyAsLong(long value);
 
     /**
@@ -136,9 +138,9 @@ public interface LongUnaryOperator2 extends Lambda, LongUnaryOperator {
     }
 
     /**
-     * Returns a composed {@link ToLongFunction2} that first applies the {@code before} function to its input, and
-     * then applies this operator to the result.
-     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
+     * Returns a composed {@link ToLongFunction2} that first applies the {@code before} function to its input, and then
+     * applies this operator to the result. If evaluation of either operation throws an exception, it is relayed to the
+     * caller of the composed operation.
      *
      * @param <A> The type of the argument to the given function, and of composed function
      * @param before The function to apply before this operator is applied
@@ -148,9 +150,9 @@ public interface LongUnaryOperator2 extends Lambda, LongUnaryOperator {
      * @implSpec The input argument of this method is able to handle every type.
      */
     @Nonnull
-    default <A> ToLongFunction2<A> compose(@Nonnull final ToLongFunction<? super A> before) {
+    default <A> ToLongFunction2<A> compose(@Nonnull ToLongFunction<? super A> before) {
         Objects.requireNonNull(before);
-        return (a) -> applyAsLong(before.applyAsLong(a));
+        return a -> applyAsLong(before.applyAsLong(a));
     }
 
     /**
@@ -163,53 +165,51 @@ public interface LongUnaryOperator2 extends Lambda, LongUnaryOperator {
      * @return A composed {@code BooleanToLongFunction} that first applies the {@code before} function to its input, and
      * then applies this operator to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * boolean}.
      */
     @Nonnull
-    default BooleanToLongFunction composeFromBoolean(@Nonnull final BooleanToLongFunction before) {
+    default BooleanToLongFunction composeFromBoolean(@Nonnull BooleanToLongFunction before) {
         Objects.requireNonNull(before);
-        return (value) -> applyAsLong(before.applyAsLong(value));
+        return value -> applyAsLong(before.applyAsLong(value));
     }
 
     /**
-     * Returns a composed {@link ByteToLongFunction} that first applies the {@code before} function to
-     * its input, and then applies this operator to the result.
-     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
-     * This method is just convenience, to provide the ability to execute an operation which accepts {@code byte} input,
-     * before this primitive operator is executed.
+     * Returns a composed {@link ByteToLongFunction} that first applies the {@code before} function to its input, and
+     * then applies this operator to the result. If evaluation of either operation throws an exception, it is relayed to
+     * the caller of the composed operation. This method is just convenience, to provide the ability to execute an
+     * operation which accepts {@code byte} input, before this primitive operator is executed.
      *
      * @param before The function to apply before this operator is applied
      * @return A composed {@code ByteToLongFunction} that first applies the {@code before} function to its input, and
      * then applies this operator to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * byte}.
      */
     @Nonnull
-    default ByteToLongFunction composeFromByte(@Nonnull final ByteToLongFunction before) {
+    default ByteToLongFunction composeFromByte(@Nonnull ByteToLongFunction before) {
         Objects.requireNonNull(before);
-        return (value) -> applyAsLong(before.applyAsLong(value));
+        return value -> applyAsLong(before.applyAsLong(value));
     }
 
     /**
-     * Returns a composed {@link CharToLongFunction} that first applies the {@code before} function to
-     * its input, and then applies this operator to the result.
-     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
-     * This method is just convenience, to provide the ability to execute an operation which accepts {@code char} input,
-     * before this primitive operator is executed.
+     * Returns a composed {@link CharToLongFunction} that first applies the {@code before} function to its input, and
+     * then applies this operator to the result. If evaluation of either operation throws an exception, it is relayed to
+     * the caller of the composed operation. This method is just convenience, to provide the ability to execute an
+     * operation which accepts {@code char} input, before this primitive operator is executed.
      *
      * @param before The function to apply before this operator is applied
      * @return A composed {@code CharToLongFunction} that first applies the {@code before} function to its input, and
      * then applies this operator to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * char}.
      */
     @Nonnull
-    default CharToLongFunction composeFromChar(@Nonnull final CharToLongFunction before) {
+    default CharToLongFunction composeFromChar(@Nonnull CharToLongFunction before) {
         Objects.requireNonNull(before);
-        return (value) -> applyAsLong(before.applyAsLong(value));
+        return value -> applyAsLong(before.applyAsLong(value));
     }
 
     /**
@@ -222,13 +222,13 @@ public interface LongUnaryOperator2 extends Lambda, LongUnaryOperator {
      * @return A composed {@code DoubleToLongFunction2} that first applies the {@code before} function to its input, and
      * then applies this operator to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * double}.
      */
     @Nonnull
-    default DoubleToLongFunction2 composeFromDouble(@Nonnull final DoubleToLongFunction before) {
+    default DoubleToLongFunction2 composeFromDouble(@Nonnull DoubleToLongFunction before) {
         Objects.requireNonNull(before);
-        return (value) -> applyAsLong(before.applyAsLong(value));
+        return value -> applyAsLong(before.applyAsLong(value));
     }
 
     /**
@@ -241,53 +241,51 @@ public interface LongUnaryOperator2 extends Lambda, LongUnaryOperator {
      * @return A composed {@code FloatToLongFunction} that first applies the {@code before} function to its input, and
      * then applies this operator to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * float}.
      */
     @Nonnull
-    default FloatToLongFunction composeFromFloat(@Nonnull final FloatToLongFunction before) {
+    default FloatToLongFunction composeFromFloat(@Nonnull FloatToLongFunction before) {
         Objects.requireNonNull(before);
-        return (value) -> applyAsLong(before.applyAsLong(value));
+        return value -> applyAsLong(before.applyAsLong(value));
     }
 
     /**
-     * Returns a composed {@link IntToLongFunction2} that first applies the {@code before} function to
-     * its input, and then applies this operator to the result.
-     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
-     * This method is just convenience, to provide the ability to execute an operation which accepts {@code int} input,
-     * before this primitive operator is executed.
+     * Returns a composed {@link IntToLongFunction2} that first applies the {@code before} function to its input, and
+     * then applies this operator to the result. If evaluation of either operation throws an exception, it is relayed to
+     * the caller of the composed operation. This method is just convenience, to provide the ability to execute an
+     * operation which accepts {@code int} input, before this primitive operator is executed.
      *
      * @param before The function to apply before this operator is applied
      * @return A composed {@code IntToLongFunction2} that first applies the {@code before} function to its input, and
      * then applies this operator to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * int}.
      */
     @Nonnull
-    default IntToLongFunction2 composeFromInt(@Nonnull final IntToLongFunction before) {
+    default IntToLongFunction2 composeFromInt(@Nonnull IntToLongFunction before) {
         Objects.requireNonNull(before);
-        return (value) -> applyAsLong(before.applyAsLong(value));
+        return value -> applyAsLong(before.applyAsLong(value));
     }
 
     /**
-     * Returns a composed {@link LongUnaryOperator2} that first applies the {@code before} operator to
-     * its input, and then applies this operator to the result.
-     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
-     * This method is just convenience, to provide the ability to execute an operation which accepts {@code long} input,
-     * before this primitive operator is executed.
+     * Returns a composed {@link LongUnaryOperator2} that first applies the {@code before} operator to its input, and
+     * then applies this operator to the result. If evaluation of either operation throws an exception, it is relayed to
+     * the caller of the composed operation. This method is just convenience, to provide the ability to execute an
+     * operation which accepts {@code long} input, before this primitive operator is executed.
      *
      * @param before The operator to apply before this operator is applied
      * @return A composed {@code LongUnaryOperator2} that first applies the {@code before} operator to its input, and
      * then applies this operator to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * long}.
      */
     @Nonnull
-    default LongUnaryOperator2 composeFromLong(@Nonnull final LongUnaryOperator before) {
+    default LongUnaryOperator2 composeFromLong(@Nonnull LongUnaryOperator before) {
         Objects.requireNonNull(before);
-        return (value) -> applyAsLong(before.applyAsLong(value));
+        return value -> applyAsLong(before.applyAsLong(value));
     }
 
     /**
@@ -300,19 +298,19 @@ public interface LongUnaryOperator2 extends Lambda, LongUnaryOperator {
      * @return A composed {@code ShortToLongFunction} that first applies the {@code before} function to its input, and
      * then applies this operator to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * short}.
      */
     @Nonnull
-    default ShortToLongFunction composeFromShort(@Nonnull final ShortToLongFunction before) {
+    default ShortToLongFunction composeFromShort(@Nonnull ShortToLongFunction before) {
         Objects.requireNonNull(before);
-        return (value) -> applyAsLong(before.applyAsLong(value));
+        return value -> applyAsLong(before.applyAsLong(value));
     }
 
     /**
      * Returns a composed {@link LongFunction2} that first applies this operator to its input, and then applies the
-     * {@code after} function to the result.
-     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
+     * {@code after} function to the result. If evaluation of either operation throws an exception, it is relayed to the
+     * caller of the composed operation.
      *
      * @param <S> The type of return value from the {@code after} function, and of the composed function
      * @param after The function to apply after this operator is applied
@@ -322,9 +320,9 @@ public interface LongUnaryOperator2 extends Lambda, LongUnaryOperator {
      * @implSpec The input argument of this method is able to return every type.
      */
     @Nonnull
-    default <S> LongFunction2<S> andThen(@Nonnull final LongFunction<? extends S> after) {
+    default <S> LongFunction2<S> andThen(@Nonnull LongFunction<? extends S> after) {
         Objects.requireNonNull(after);
-        return (value) -> after.apply(applyAsLong(value));
+        return value -> after.apply(applyAsLong(value));
     }
 
     /**
@@ -337,13 +335,13 @@ public interface LongUnaryOperator2 extends Lambda, LongUnaryOperator {
      * @return A composed {@code LongPredicate2} that first applies this operator to its input, and then applies the
      * {@code after} predicate to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * boolean}.
      */
     @Nonnull
-    default LongPredicate2 andThenToBoolean(@Nonnull final LongPredicate after) {
+    default LongPredicate2 andThenToBoolean(@Nonnull LongPredicate after) {
         Objects.requireNonNull(after);
-        return (value) -> after.test(applyAsLong(value));
+        return value -> after.test(applyAsLong(value));
     }
 
     /**
@@ -356,13 +354,13 @@ public interface LongUnaryOperator2 extends Lambda, LongUnaryOperator {
      * @return A composed {@code LongToByteFunction} that first applies this operator to its input, and then applies the
      * {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * byte}.
      */
     @Nonnull
-    default LongToByteFunction andThenToByte(@Nonnull final LongToByteFunction after) {
+    default LongToByteFunction andThenToByte(@Nonnull LongToByteFunction after) {
         Objects.requireNonNull(after);
-        return (value) -> after.applyAsByte(applyAsLong(value));
+        return value -> after.applyAsByte(applyAsLong(value));
     }
 
     /**
@@ -375,13 +373,13 @@ public interface LongUnaryOperator2 extends Lambda, LongUnaryOperator {
      * @return A composed {@code LongToCharFunction} that first applies this operator to its input, and then applies the
      * {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * char}.
      */
     @Nonnull
-    default LongToCharFunction andThenToChar(@Nonnull final LongToCharFunction after) {
+    default LongToCharFunction andThenToChar(@Nonnull LongToCharFunction after) {
         Objects.requireNonNull(after);
-        return (value) -> after.applyAsChar(applyAsLong(value));
+        return value -> after.applyAsChar(applyAsLong(value));
     }
 
     /**
@@ -394,13 +392,13 @@ public interface LongUnaryOperator2 extends Lambda, LongUnaryOperator {
      * @return A composed {@code LongToDoubleFunction2} that first applies this operator to its input, and then applies
      * the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * double}.
      */
     @Nonnull
-    default LongToDoubleFunction2 andThenToDouble(@Nonnull final LongToDoubleFunction after) {
+    default LongToDoubleFunction2 andThenToDouble(@Nonnull LongToDoubleFunction after) {
         Objects.requireNonNull(after);
-        return (value) -> after.applyAsDouble(applyAsLong(value));
+        return value -> after.applyAsDouble(applyAsLong(value));
     }
 
     /**
@@ -413,13 +411,13 @@ public interface LongUnaryOperator2 extends Lambda, LongUnaryOperator {
      * @return A composed {@code LongToFloatFunction} that first applies this operator to its input, and then applies
      * the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * float}.
      */
     @Nonnull
-    default LongToFloatFunction andThenToFloat(@Nonnull final LongToFloatFunction after) {
+    default LongToFloatFunction andThenToFloat(@Nonnull LongToFloatFunction after) {
         Objects.requireNonNull(after);
-        return (value) -> after.applyAsFloat(applyAsLong(value));
+        return value -> after.applyAsFloat(applyAsLong(value));
     }
 
     /**
@@ -432,13 +430,13 @@ public interface LongUnaryOperator2 extends Lambda, LongUnaryOperator {
      * @return A composed {@code LongToIntFunction2} that first applies this operator to its input, and then applies the
      * {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * int}.
      */
     @Nonnull
-    default LongToIntFunction2 andThenToInt(@Nonnull final LongToIntFunction after) {
+    default LongToIntFunction2 andThenToInt(@Nonnull LongToIntFunction after) {
         Objects.requireNonNull(after);
-        return (value) -> after.applyAsInt(applyAsLong(value));
+        return value -> after.applyAsInt(applyAsLong(value));
     }
 
     /**
@@ -451,13 +449,13 @@ public interface LongUnaryOperator2 extends Lambda, LongUnaryOperator {
      * @return A composed {@code LongUnaryOperator2} that first applies this operator to its input, and then applies the
      * {@code after} operator to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * long}.
      */
     @Nonnull
-    default LongUnaryOperator2 andThenToLong(@Nonnull final LongUnaryOperator after) {
+    default LongUnaryOperator2 andThenToLong(@Nonnull LongUnaryOperator after) {
         Objects.requireNonNull(after);
-        return (value) -> after.applyAsLong(applyAsLong(value));
+        return value -> after.applyAsLong(applyAsLong(value));
     }
 
     /**
@@ -470,13 +468,13 @@ public interface LongUnaryOperator2 extends Lambda, LongUnaryOperator {
      * @return A composed {@code LongToShortFunction} that first applies this operator to its input, and then applies
      * the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * short}.
      */
     @Nonnull
-    default LongToShortFunction andThenToShort(@Nonnull final LongToShortFunction after) {
+    default LongToShortFunction andThenToShort(@Nonnull LongToShortFunction after) {
         Objects.requireNonNull(after);
-        return (value) -> after.applyAsShort(applyAsLong(value));
+        return value -> after.applyAsShort(applyAsLong(value));
     }
 
     /**
@@ -490,9 +488,9 @@ public interface LongUnaryOperator2 extends Lambda, LongUnaryOperator {
      * @throws NullPointerException If given argument is {@code null}
      */
     @Nonnull
-    default LongConsumer2 consume(@Nonnull final LongConsumer consumer) {
+    default LongConsumer2 consume(@Nonnull LongConsumer consumer) {
         Objects.requireNonNull(consumer);
-        return (value) -> consumer.accept(applyAsLong(value));
+        return value -> consumer.accept(applyAsLong(value));
     }
 
     /**
@@ -514,10 +512,10 @@ public interface LongUnaryOperator2 extends Lambda, LongUnaryOperator {
         if (isMemoized()) {
             return this;
         } else {
-            final Map<Long, Long> cache = new ConcurrentHashMap<>();
-            final Object lock = new Object();
-            return (LongUnaryOperator2 & Memoized) (value) -> {
-                final long returnValue;
+            Map<Long, Long> cache = new ConcurrentHashMap<>();
+            Object lock = new Object();
+            return (LongUnaryOperator2 & Memoized) value -> {
+                long returnValue;
                 synchronized (lock) {
                     returnValue = cache.computeIfAbsent(value, this::applyAsLong);
                 }
@@ -528,8 +526,8 @@ public interface LongUnaryOperator2 extends Lambda, LongUnaryOperator {
 
     /**
      * Returns a composed {@link UnaryOperator2} which represents this {@link LongUnaryOperator2}. Thereby the primitive
-     * input argument for this operator is autoboxed. This method provides the possibility to use this
-     * {@code LongUnaryOperator2} with methods provided by the {@code JDK}.
+     * input argument for this operator is autoboxed. This method provides the possibility to use this {@code
+     * LongUnaryOperator2} with methods provided by the {@code JDK}.
      *
      * @return A composed {@code UnaryOperator2} which represents this {@code LongUnaryOperator2}.
      */

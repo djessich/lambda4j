@@ -13,18 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package org.lambda4j.supplier;
 
-import org.lambda4j.Lambda;
-import org.lambda4j.consumer.Consumer2;
-import org.lambda4j.function.conversion.DoubleToByteFunction;
-import org.lambda4j.function.conversion.DoubleToCharFunction;
-import org.lambda4j.function.conversion.DoubleToFloatFunction;
-import org.lambda4j.function.conversion.DoubleToShortFunction;
-
-import javax.annotation.Nonnegative;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import java.util.Objects;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.DoubleConsumer;
@@ -35,9 +26,19 @@ import java.util.function.DoubleToIntFunction;
 import java.util.function.DoubleToLongFunction;
 import java.util.function.DoubleUnaryOperator;
 
+import javax.annotation.Nonnegative;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
+import org.lambda4j.Lambda;
+import org.lambda4j.consumer.Consumer2;
+import org.lambda4j.function.conversion.DoubleToByteFunction;
+import org.lambda4j.function.conversion.DoubleToCharFunction;
+import org.lambda4j.function.conversion.DoubleToFloatFunction;
+import org.lambda4j.function.conversion.DoubleToShortFunction;
+
 /**
- * Represents a supplier of {@code double}-valued results.
- * This is a primitive specialization of {@link Supplier2}.
+ * Represents a supplier of {@code double}-valued results. This is a primitive specialization of {@link Supplier2}.
  * <p>
  * There is no requirement that a distinct result be returned each time the supplier is invoked.
  * <p>
@@ -63,7 +64,7 @@ public interface DoubleSupplier2 extends Lambda, DoubleSupplier {
      * Expression</a>
      * @see <a href="https://docs.oracle.com/javase/tutorial/java/javaOO/methodreferences.html">Method Reference</a>
      */
-    static DoubleSupplier2 of(@Nullable final DoubleSupplier2 expression) {
+    static DoubleSupplier2 of(@Nullable DoubleSupplier2 expression) {
         return expression;
     }
 
@@ -74,7 +75,7 @@ public interface DoubleSupplier2 extends Lambda, DoubleSupplier {
      * @return The result from the given {@code DoubleSupplier2}.
      * @throws NullPointerException If given argument is {@code null}
      */
-    static double call(@Nonnull final DoubleSupplier supplier) {
+    static double call(@Nonnull DoubleSupplier supplier) {
         Objects.requireNonNull(supplier);
         return supplier.getAsDouble();
     }
@@ -95,6 +96,7 @@ public interface DoubleSupplier2 extends Lambda, DoubleSupplier {
      *
      * @return The return value from the supplier, which is its result.
      */
+    @Override
     double getAsDouble();
 
     /**
@@ -109,9 +111,9 @@ public interface DoubleSupplier2 extends Lambda, DoubleSupplier {
     }
 
     /**
-     * Returns a composed {@link Supplier2} that first applies this supplier to its input, and then applies the
-     * {@code after} function to the result.
-     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
+     * Returns a composed {@link Supplier2} that first applies this supplier to its input, and then applies the {@code
+     * after} function to the result. If evaluation of either operation throws an exception, it is relayed to the caller
+     * of the composed operation.
      *
      * @param <S> The type of return value from the {@code after} function, and of the composed supplier
      * @param after The function to apply after this supplier is applied
@@ -121,7 +123,7 @@ public interface DoubleSupplier2 extends Lambda, DoubleSupplier {
      * @implSpec The input argument of this method is able to return every type.
      */
     @Nonnull
-    default <S> Supplier2<S> andThen(@Nonnull final DoubleFunction<? extends S> after) {
+    default <S> Supplier2<S> andThen(@Nonnull DoubleFunction<? extends S> after) {
         Objects.requireNonNull(after);
         return () -> after.apply(getAsDouble());
     }
@@ -136,11 +138,11 @@ public interface DoubleSupplier2 extends Lambda, DoubleSupplier {
      * @return A composed {@code BooleanSupplier2} that first applies this supplier to its input, and then applies the
      * {@code after} predicate to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * boolean}.
      */
     @Nonnull
-    default BooleanSupplier2 andThenToBoolean(@Nonnull final DoublePredicate after) {
+    default BooleanSupplier2 andThenToBoolean(@Nonnull DoublePredicate after) {
         Objects.requireNonNull(after);
         return () -> after.test(getAsDouble());
     }
@@ -155,11 +157,11 @@ public interface DoubleSupplier2 extends Lambda, DoubleSupplier {
      * @return A composed {@code ByteSupplier} that first applies this supplier to its input, and then applies the
      * {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * byte}.
      */
     @Nonnull
-    default ByteSupplier andThenToByte(@Nonnull final DoubleToByteFunction after) {
+    default ByteSupplier andThenToByte(@Nonnull DoubleToByteFunction after) {
         Objects.requireNonNull(after);
         return () -> after.applyAsByte(getAsDouble());
     }
@@ -174,11 +176,11 @@ public interface DoubleSupplier2 extends Lambda, DoubleSupplier {
      * @return A composed {@code CharSupplier} that first applies this supplier to its input, and then applies the
      * {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * char}.
      */
     @Nonnull
-    default CharSupplier andThenToChar(@Nonnull final DoubleToCharFunction after) {
+    default CharSupplier andThenToChar(@Nonnull DoubleToCharFunction after) {
         Objects.requireNonNull(after);
         return () -> after.applyAsChar(getAsDouble());
     }
@@ -193,11 +195,11 @@ public interface DoubleSupplier2 extends Lambda, DoubleSupplier {
      * @return A composed {@code DoubleSupplier2} that first applies this supplier to its input, and then applies the
      * {@code after} operator to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * double}.
      */
     @Nonnull
-    default DoubleSupplier2 andThenToDouble(@Nonnull final DoubleUnaryOperator after) {
+    default DoubleSupplier2 andThenToDouble(@Nonnull DoubleUnaryOperator after) {
         Objects.requireNonNull(after);
         return () -> after.applyAsDouble(getAsDouble());
     }
@@ -212,11 +214,11 @@ public interface DoubleSupplier2 extends Lambda, DoubleSupplier {
      * @return A composed {@code FloatSupplier} that first applies this supplier to its input, and then applies the
      * {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * float}.
      */
     @Nonnull
-    default FloatSupplier andThenToFloat(@Nonnull final DoubleToFloatFunction after) {
+    default FloatSupplier andThenToFloat(@Nonnull DoubleToFloatFunction after) {
         Objects.requireNonNull(after);
         return () -> after.applyAsFloat(getAsDouble());
     }
@@ -231,11 +233,11 @@ public interface DoubleSupplier2 extends Lambda, DoubleSupplier {
      * @return A composed {@code IntSupplier2} that first applies this supplier to its input, and then applies the
      * {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * int}.
      */
     @Nonnull
-    default IntSupplier2 andThenToInt(@Nonnull final DoubleToIntFunction after) {
+    default IntSupplier2 andThenToInt(@Nonnull DoubleToIntFunction after) {
         Objects.requireNonNull(after);
         return () -> after.applyAsInt(getAsDouble());
     }
@@ -250,11 +252,11 @@ public interface DoubleSupplier2 extends Lambda, DoubleSupplier {
      * @return A composed {@code LongSupplier2} that first applies this supplier to its input, and then applies the
      * {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * long}.
      */
     @Nonnull
-    default LongSupplier2 andThenToLong(@Nonnull final DoubleToLongFunction after) {
+    default LongSupplier2 andThenToLong(@Nonnull DoubleToLongFunction after) {
         Objects.requireNonNull(after);
         return () -> after.applyAsLong(getAsDouble());
     }
@@ -269,19 +271,19 @@ public interface DoubleSupplier2 extends Lambda, DoubleSupplier {
      * @return A composed {@code ShortSupplier} that first applies this supplier to its input, and then applies the
      * {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * short}.
      */
     @Nonnull
-    default ShortSupplier andThenToShort(@Nonnull final DoubleToShortFunction after) {
+    default ShortSupplier andThenToShort(@Nonnull DoubleToShortFunction after) {
         Objects.requireNonNull(after);
         return () -> after.applyAsShort(getAsDouble());
     }
 
     /**
-     * Returns a composed {@link Consumer2} that first gets the result from this supplier, and then consumes
-     * the result using the given {@link DoubleConsumer}.
-     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
+     * Returns a composed {@link Consumer2} that first gets the result from this supplier, and then consumes the result
+     * using the given {@link DoubleConsumer}. If evaluation of either operation throws an exception, it is relayed to
+     * the caller of the composed operation.
      *
      * @param consumer The operation which consumes the result from this operation
      * @return A composed {@code Consumer2} that first gets the result from this supplier, and then consumes the result
@@ -293,7 +295,7 @@ public interface DoubleSupplier2 extends Lambda, DoubleSupplier {
      * resulting consumer is called with {@code Consumer#accept(Object)}.
      */
     @Nonnull
-    default Consumer2<Void> consume(@Nonnull final DoubleConsumer consumer) {
+    default Consumer2<Void> consume(@Nonnull DoubleConsumer consumer) {
         Objects.requireNonNull(consumer);
         return ignored -> consumer.accept(getAsDouble());
     }
@@ -324,7 +326,7 @@ public interface DoubleSupplier2 extends Lambda, DoubleSupplier {
                     synchronized (this) {
                         returnValue = cache.get();
                         if (returnValue == null) {
-                            returnValue = this.getAsDouble();
+                            returnValue = getAsDouble();
                             cache.set(returnValue);
                         }
                     }
@@ -335,9 +337,9 @@ public interface DoubleSupplier2 extends Lambda, DoubleSupplier {
     }
 
     /**
-     * Returns a composed {@link Supplier2} which represents this {@link DoubleSupplier2}. Thereby the primitive
-     * input argument for this supplier is autoboxed. This method provides the possibility to use this
-     * {@code DoubleSupplier2} with methods provided by the {@code JDK}.
+     * Returns a composed {@link Supplier2} which represents this {@link DoubleSupplier2}. Thereby the primitive input
+     * argument for this supplier is autoboxed. This method provides the possibility to use this {@code DoubleSupplier2}
+     * with methods provided by the {@code JDK}.
      *
      * @return A composed {@code Supplier2} which represents this {@code DoubleSupplier2}.
      */

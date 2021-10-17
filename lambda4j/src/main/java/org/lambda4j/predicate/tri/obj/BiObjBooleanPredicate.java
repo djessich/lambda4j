@@ -13,7 +13,27 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package org.lambda4j.predicate.tri.obj;
+
+import java.util.Map;
+import java.util.Objects;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.function.DoubleFunction;
+import java.util.function.DoublePredicate;
+import java.util.function.Function;
+import java.util.function.IntFunction;
+import java.util.function.IntPredicate;
+import java.util.function.LongFunction;
+import java.util.function.LongPredicate;
+import java.util.function.Predicate;
+
+import javax.annotation.Nonnegative;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
+import org.apache.commons.lang3.tuple.Pair;
+import org.apache.commons.lang3.tuple.Triple;
 
 import org.lambda4j.Lambda;
 import org.lambda4j.consumer.BooleanConsumer;
@@ -56,24 +76,6 @@ import org.lambda4j.predicate.tri.TriLongPredicate;
 import org.lambda4j.predicate.tri.TriPredicate;
 import org.lambda4j.predicate.tri.TriShortPredicate;
 
-import org.apache.commons.lang3.tuple.Pair;
-import org.apache.commons.lang3.tuple.Triple;
-
-import javax.annotation.Nonnegative;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import java.util.Map;
-import java.util.Objects;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.function.DoubleFunction;
-import java.util.function.DoublePredicate;
-import java.util.function.Function;
-import java.util.function.IntFunction;
-import java.util.function.IntPredicate;
-import java.util.function.LongFunction;
-import java.util.function.LongPredicate;
-import java.util.function.Predicate;
-
 /**
  * Represents an predicate (boolean-valued function) of two object-valued and one {@code boolean}-valued input argument.
  * This is a (reference, reference, boolean) specialization of {@link TriPredicate}.
@@ -104,7 +106,7 @@ public interface BiObjBooleanPredicate<T, U> extends Lambda {
      * Expression</a>
      * @see <a href="https://docs.oracle.com/javase/tutorial/java/javaOO/methodreferences.html">Method Reference</a>
      */
-    static <T, U> BiObjBooleanPredicate<T, U> of(@Nullable final BiObjBooleanPredicate<T, U> expression) {
+    static <T, U> BiObjBooleanPredicate<T, U> of(@Nullable BiObjBooleanPredicate<T, U> expression) {
         return expression;
     }
 
@@ -120,7 +122,7 @@ public interface BiObjBooleanPredicate<T, U> extends Lambda {
      * @return The result from the given {@code BiObjBooleanPredicate}.
      * @throws NullPointerException If given argument is {@code null}
      */
-    static <T, U> boolean call(@Nonnull final BiObjBooleanPredicate<? super T, ? super U> predicate, T t, U u,
+    static <T, U> boolean call(@Nonnull BiObjBooleanPredicate<? super T, ? super U> predicate, T t, U u,
             boolean value) {
         Objects.requireNonNull(predicate);
         return predicate.test(t, u, value);
@@ -138,7 +140,7 @@ public interface BiObjBooleanPredicate<T, U> extends Lambda {
      * @throws NullPointerException If given argument is {@code null}
      */
     @Nonnull
-    static <T, U> BiObjBooleanPredicate<T, U> onlyFirst(@Nonnull final Predicate<? super T> predicate) {
+    static <T, U> BiObjBooleanPredicate<T, U> onlyFirst(@Nonnull Predicate<? super T> predicate) {
         Objects.requireNonNull(predicate);
         return (t, u, value) -> predicate.test(t);
     }
@@ -155,7 +157,7 @@ public interface BiObjBooleanPredicate<T, U> extends Lambda {
      * @throws NullPointerException If given argument is {@code null}
      */
     @Nonnull
-    static <T, U> BiObjBooleanPredicate<T, U> onlySecond(@Nonnull final Predicate<? super U> predicate) {
+    static <T, U> BiObjBooleanPredicate<T, U> onlySecond(@Nonnull Predicate<? super U> predicate) {
         Objects.requireNonNull(predicate);
         return (t, u, value) -> predicate.test(u);
     }
@@ -172,7 +174,7 @@ public interface BiObjBooleanPredicate<T, U> extends Lambda {
      * @throws NullPointerException If given argument is {@code null}
      */
     @Nonnull
-    static <T, U> BiObjBooleanPredicate<T, U> onlyThird(@Nonnull final BooleanUnaryOperator operator) {
+    static <T, U> BiObjBooleanPredicate<T, U> onlyThird(@Nonnull BooleanUnaryOperator operator) {
         Objects.requireNonNull(operator);
         return (t, u, value) -> operator.applyAsBoolean(value);
     }
@@ -233,9 +235,9 @@ public interface BiObjBooleanPredicate<T, U> extends Lambda {
     @Nonnull
     static <T, U> BiObjBooleanPredicate<T, U> isEqual(@Nullable Object target1, @Nullable Object target2,
             boolean target3) {
-        return (t, u, value) -> (t == null ? target1 == null : t.equals(target1)) && (u == null
+        return (t, u, value) -> t == null ? target1 == null : t.equals(target1) && (u == null
                 ? target2 == null
-                : u.equals(target2)) && (value == target3);
+                : u.equals(target2)) && value == target3;
     }
 
     /**
@@ -263,14 +265,15 @@ public interface BiObjBooleanPredicate<T, U> extends Lambda {
     }
 
     /**
-     * Applies this operator partially to some arguments of this one, producing a {@link ObjBooleanPredicate} as result.
+     * Applies this operator partially to some arguments of this one, producing a {@link ObjBooleanPredicate} as
+     * result.
      *
      * @param t The first argument to this predicate used to partially apply this function
      * @return A {@code ObjBooleanPredicate} that represents this operator partially applied the some arguments.
      */
     @Nonnull
     default ObjBooleanPredicate<U> ptest(T t) {
-        return (u, value) -> this.test(t, u, value);
+        return (u, value) -> test(t, u, value);
     }
 
     /**
@@ -283,7 +286,7 @@ public interface BiObjBooleanPredicate<T, U> extends Lambda {
      */
     @Nonnull
     default BooleanUnaryOperator ptest(T t, U u) {
-        return (value) -> this.test(t, u, value);
+        return value -> test(t, u, value);
     }
 
     /**
@@ -294,7 +297,7 @@ public interface BiObjBooleanPredicate<T, U> extends Lambda {
      */
     @Nonnull
     default BiPredicate2<T, U> ptest(boolean value) {
-        return (t, u) -> this.test(t, u, value);
+        return (t, u) -> test(t, u, value);
     }
 
     /**
@@ -306,7 +309,7 @@ public interface BiObjBooleanPredicate<T, U> extends Lambda {
      */
     @Nonnull
     default Predicate2<U> ptest(T t, boolean value) {
-        return (u) -> this.test(t, u, value);
+        return u -> test(t, u, value);
     }
 
     /**
@@ -321,9 +324,9 @@ public interface BiObjBooleanPredicate<T, U> extends Lambda {
     }
 
     /**
-     * Returns a composed {@link TriPredicate} that first applies the {@code before} functions to its input, and
-     * then applies this predicate to the result.
-     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
+     * Returns a composed {@link TriPredicate} that first applies the {@code before} functions to its input, and then
+     * applies this predicate to the result. If evaluation of either operation throws an exception, it is relayed to the
+     * caller of the composed operation.
      *
      * @param <A> The type of the argument to the first given function, and of composed predicate
      * @param <B> The type of the argument to the second given function, and of composed predicate
@@ -337,8 +340,8 @@ public interface BiObjBooleanPredicate<T, U> extends Lambda {
      * @implSpec The input argument of this method is able to handle every type.
      */
     @Nonnull
-    default <A, B, C> TriPredicate<A, B, C> compose(@Nonnull final Function<? super A, ? extends T> before1,
-            @Nonnull final Function<? super B, ? extends U> before2, @Nonnull final Predicate<? super C> before3) {
+    default <A, B, C> TriPredicate<A, B, C> compose(@Nonnull Function<? super A, ? extends T> before1,
+            @Nonnull Function<? super B, ? extends U> before2, @Nonnull Predicate<? super C> before3) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         Objects.requireNonNull(before3);
@@ -357,25 +360,24 @@ public interface BiObjBooleanPredicate<T, U> extends Lambda {
      * @return A composed {@code BooleanTernaryOperator} that first applies the {@code before} functions to its input,
      * and then applies this predicate to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * boolean}.
      */
     @Nonnull
-    default BooleanTernaryOperator composeFromBoolean(@Nonnull final BooleanFunction<? extends T> before1,
-            @Nonnull final BooleanFunction<? extends U> before2, @Nonnull final BooleanUnaryOperator before3) {
+    default BooleanTernaryOperator composeFromBoolean(@Nonnull BooleanFunction<? extends T> before1,
+            @Nonnull BooleanFunction<? extends U> before2, @Nonnull BooleanUnaryOperator before3) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         Objects.requireNonNull(before3);
         return (value1, value2, value3) -> test(before1.apply(value1), before2.apply(value2),
-                                                before3.applyAsBoolean(value3));
+                before3.applyAsBoolean(value3));
     }
 
     /**
-     * Returns a composed {@link TriBytePredicate} that first applies the {@code before} functions to
-     * its input, and then applies this predicate to the result.
-     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
-     * This method is just convenience, to provide the ability to execute an operation which accepts {@code byte} input,
-     * before this primitive predicate is executed.
+     * Returns a composed {@link TriBytePredicate} that first applies the {@code before} functions to its input, and
+     * then applies this predicate to the result. If evaluation of either operation throws an exception, it is relayed
+     * to the caller of the composed operation. This method is just convenience, to provide the ability to execute an
+     * operation which accepts {@code byte} input, before this primitive predicate is executed.
      *
      * @param before1 The first function to apply before this predicate is applied
      * @param before2 The second function to apply before this predicate is applied
@@ -383,12 +385,12 @@ public interface BiObjBooleanPredicate<T, U> extends Lambda {
      * @return A composed {@code TriBytePredicate} that first applies the {@code before} functions to its input, and
      * then applies this predicate to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * byte}.
      */
     @Nonnull
-    default TriBytePredicate composeFromByte(@Nonnull final ByteFunction<? extends T> before1,
-            @Nonnull final ByteFunction<? extends U> before2, @Nonnull final BytePredicate before3) {
+    default TriBytePredicate composeFromByte(@Nonnull ByteFunction<? extends T> before1,
+            @Nonnull ByteFunction<? extends U> before2, @Nonnull BytePredicate before3) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         Objects.requireNonNull(before3);
@@ -396,11 +398,10 @@ public interface BiObjBooleanPredicate<T, U> extends Lambda {
     }
 
     /**
-     * Returns a composed {@link TriCharPredicate} that first applies the {@code before} functions to
-     * its input, and then applies this predicate to the result.
-     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
-     * This method is just convenience, to provide the ability to execute an operation which accepts {@code char} input,
-     * before this primitive predicate is executed.
+     * Returns a composed {@link TriCharPredicate} that first applies the {@code before} functions to its input, and
+     * then applies this predicate to the result. If evaluation of either operation throws an exception, it is relayed
+     * to the caller of the composed operation. This method is just convenience, to provide the ability to execute an
+     * operation which accepts {@code char} input, before this primitive predicate is executed.
      *
      * @param before1 The first function to apply before this predicate is applied
      * @param before2 The second function to apply before this predicate is applied
@@ -408,12 +409,12 @@ public interface BiObjBooleanPredicate<T, U> extends Lambda {
      * @return A composed {@code TriCharPredicate} that first applies the {@code before} functions to its input, and
      * then applies this predicate to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * char}.
      */
     @Nonnull
-    default TriCharPredicate composeFromChar(@Nonnull final CharFunction<? extends T> before1,
-            @Nonnull final CharFunction<? extends U> before2, @Nonnull final CharPredicate before3) {
+    default TriCharPredicate composeFromChar(@Nonnull CharFunction<? extends T> before1,
+            @Nonnull CharFunction<? extends U> before2, @Nonnull CharPredicate before3) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         Objects.requireNonNull(before3);
@@ -432,12 +433,12 @@ public interface BiObjBooleanPredicate<T, U> extends Lambda {
      * @return A composed {@code TriDoublePredicate} that first applies the {@code before} functions to its input, and
      * then applies this predicate to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * double}.
      */
     @Nonnull
-    default TriDoublePredicate composeFromDouble(@Nonnull final DoubleFunction<? extends T> before1,
-            @Nonnull final DoubleFunction<? extends U> before2, @Nonnull final DoublePredicate before3) {
+    default TriDoublePredicate composeFromDouble(@Nonnull DoubleFunction<? extends T> before1,
+            @Nonnull DoubleFunction<? extends U> before2, @Nonnull DoublePredicate before3) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         Objects.requireNonNull(before3);
@@ -456,12 +457,12 @@ public interface BiObjBooleanPredicate<T, U> extends Lambda {
      * @return A composed {@code TriFloatPredicate} that first applies the {@code before} functions to its input, and
      * then applies this predicate to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * float}.
      */
     @Nonnull
-    default TriFloatPredicate composeFromFloat(@Nonnull final FloatFunction<? extends T> before1,
-            @Nonnull final FloatFunction<? extends U> before2, @Nonnull final FloatPredicate before3) {
+    default TriFloatPredicate composeFromFloat(@Nonnull FloatFunction<? extends T> before1,
+            @Nonnull FloatFunction<? extends U> before2, @Nonnull FloatPredicate before3) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         Objects.requireNonNull(before3);
@@ -469,11 +470,10 @@ public interface BiObjBooleanPredicate<T, U> extends Lambda {
     }
 
     /**
-     * Returns a composed {@link TriIntPredicate} that first applies the {@code before} functions to
-     * its input, and then applies this predicate to the result.
-     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
-     * This method is just convenience, to provide the ability to execute an operation which accepts {@code int} input,
-     * before this primitive predicate is executed.
+     * Returns a composed {@link TriIntPredicate} that first applies the {@code before} functions to its input, and then
+     * applies this predicate to the result. If evaluation of either operation throws an exception, it is relayed to the
+     * caller of the composed operation. This method is just convenience, to provide the ability to execute an operation
+     * which accepts {@code int} input, before this primitive predicate is executed.
      *
      * @param before1 The first function to apply before this predicate is applied
      * @param before2 The second function to apply before this predicate is applied
@@ -481,12 +481,12 @@ public interface BiObjBooleanPredicate<T, U> extends Lambda {
      * @return A composed {@code TriIntPredicate} that first applies the {@code before} functions to its input, and then
      * applies this predicate to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * int}.
      */
     @Nonnull
-    default TriIntPredicate composeFromInt(@Nonnull final IntFunction<? extends T> before1,
-            @Nonnull final IntFunction<? extends U> before2, @Nonnull final IntPredicate before3) {
+    default TriIntPredicate composeFromInt(@Nonnull IntFunction<? extends T> before1,
+            @Nonnull IntFunction<? extends U> before2, @Nonnull IntPredicate before3) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         Objects.requireNonNull(before3);
@@ -494,11 +494,10 @@ public interface BiObjBooleanPredicate<T, U> extends Lambda {
     }
 
     /**
-     * Returns a composed {@link TriLongPredicate} that first applies the {@code before} functions to
-     * its input, and then applies this predicate to the result.
-     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
-     * This method is just convenience, to provide the ability to execute an operation which accepts {@code long} input,
-     * before this primitive predicate is executed.
+     * Returns a composed {@link TriLongPredicate} that first applies the {@code before} functions to its input, and
+     * then applies this predicate to the result. If evaluation of either operation throws an exception, it is relayed
+     * to the caller of the composed operation. This method is just convenience, to provide the ability to execute an
+     * operation which accepts {@code long} input, before this primitive predicate is executed.
      *
      * @param before1 The first function to apply before this predicate is applied
      * @param before2 The second function to apply before this predicate is applied
@@ -506,12 +505,12 @@ public interface BiObjBooleanPredicate<T, U> extends Lambda {
      * @return A composed {@code TriLongPredicate} that first applies the {@code before} functions to its input, and
      * then applies this predicate to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * long}.
      */
     @Nonnull
-    default TriLongPredicate composeFromLong(@Nonnull final LongFunction<? extends T> before1,
-            @Nonnull final LongFunction<? extends U> before2, @Nonnull final LongPredicate before3) {
+    default TriLongPredicate composeFromLong(@Nonnull LongFunction<? extends T> before1,
+            @Nonnull LongFunction<? extends U> before2, @Nonnull LongPredicate before3) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         Objects.requireNonNull(before3);
@@ -530,12 +529,12 @@ public interface BiObjBooleanPredicate<T, U> extends Lambda {
      * @return A composed {@code TriShortPredicate} that first applies the {@code before} functions to its input, and
      * then applies this predicate to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * short}.
      */
     @Nonnull
-    default TriShortPredicate composeFromShort(@Nonnull final ShortFunction<? extends T> before1,
-            @Nonnull final ShortFunction<? extends U> before2, @Nonnull final ShortPredicate before3) {
+    default TriShortPredicate composeFromShort(@Nonnull ShortFunction<? extends T> before1,
+            @Nonnull ShortFunction<? extends U> before2, @Nonnull ShortPredicate before3) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         Objects.requireNonNull(before3);
@@ -555,7 +554,7 @@ public interface BiObjBooleanPredicate<T, U> extends Lambda {
      * @implSpec The input argument of this method is able to return every type.
      */
     @Nonnull
-    default <S> BiObjBooleanFunction<T, U, S> andThen(@Nonnull final BooleanFunction<? extends S> after) {
+    default <S> BiObjBooleanFunction<T, U, S> andThen(@Nonnull BooleanFunction<? extends S> after) {
         Objects.requireNonNull(after);
         return (t, u, value) -> after.apply(test(t, u, value));
     }
@@ -570,11 +569,11 @@ public interface BiObjBooleanPredicate<T, U> extends Lambda {
      * @return A composed {@code BiObjBooleanPredicate} that first applies this predicate to its input, and then applies
      * the {@code after} operator to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * boolean}.
      */
     @Nonnull
-    default BiObjBooleanPredicate<T, U> andThenToBoolean(@Nonnull final BooleanUnaryOperator after) {
+    default BiObjBooleanPredicate<T, U> andThenToBoolean(@Nonnull BooleanUnaryOperator after) {
         Objects.requireNonNull(after);
         return (t, u, value) -> after.applyAsBoolean(test(t, u, value));
     }
@@ -589,11 +588,11 @@ public interface BiObjBooleanPredicate<T, U> extends Lambda {
      * @return A composed {@code BiObjBooleanToByteFunction} that first applies this predicate to its input, and then
      * applies the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * byte}.
      */
     @Nonnull
-    default BiObjBooleanToByteFunction<T, U> andThenToByte(@Nonnull final BooleanToByteFunction after) {
+    default BiObjBooleanToByteFunction<T, U> andThenToByte(@Nonnull BooleanToByteFunction after) {
         Objects.requireNonNull(after);
         return (t, u, value) -> after.applyAsByte(test(t, u, value));
     }
@@ -608,11 +607,11 @@ public interface BiObjBooleanPredicate<T, U> extends Lambda {
      * @return A composed {@code BiObjBooleanToCharFunction} that first applies this predicate to its input, and then
      * applies the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * char}.
      */
     @Nonnull
-    default BiObjBooleanToCharFunction<T, U> andThenToChar(@Nonnull final BooleanToCharFunction after) {
+    default BiObjBooleanToCharFunction<T, U> andThenToChar(@Nonnull BooleanToCharFunction after) {
         Objects.requireNonNull(after);
         return (t, u, value) -> after.applyAsChar(test(t, u, value));
     }
@@ -627,11 +626,11 @@ public interface BiObjBooleanPredicate<T, U> extends Lambda {
      * @return A composed {@code BiObjBooleanToDoubleFunction} that first applies this predicate to its input, and then
      * applies the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * double}.
      */
     @Nonnull
-    default BiObjBooleanToDoubleFunction<T, U> andThenToDouble(@Nonnull final BooleanToDoubleFunction after) {
+    default BiObjBooleanToDoubleFunction<T, U> andThenToDouble(@Nonnull BooleanToDoubleFunction after) {
         Objects.requireNonNull(after);
         return (t, u, value) -> after.applyAsDouble(test(t, u, value));
     }
@@ -646,11 +645,11 @@ public interface BiObjBooleanPredicate<T, U> extends Lambda {
      * @return A composed {@code BiObjBooleanToFloatFunction} that first applies this predicate to its input, and then
      * applies the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * float}.
      */
     @Nonnull
-    default BiObjBooleanToFloatFunction<T, U> andThenToFloat(@Nonnull final BooleanToFloatFunction after) {
+    default BiObjBooleanToFloatFunction<T, U> andThenToFloat(@Nonnull BooleanToFloatFunction after) {
         Objects.requireNonNull(after);
         return (t, u, value) -> after.applyAsFloat(test(t, u, value));
     }
@@ -665,11 +664,11 @@ public interface BiObjBooleanPredicate<T, U> extends Lambda {
      * @return A composed {@code BiObjBooleanToIntFunction} that first applies this predicate to its input, and then
      * applies the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * int}.
      */
     @Nonnull
-    default BiObjBooleanToIntFunction<T, U> andThenToInt(@Nonnull final BooleanToIntFunction after) {
+    default BiObjBooleanToIntFunction<T, U> andThenToInt(@Nonnull BooleanToIntFunction after) {
         Objects.requireNonNull(after);
         return (t, u, value) -> after.applyAsInt(test(t, u, value));
     }
@@ -684,11 +683,11 @@ public interface BiObjBooleanPredicate<T, U> extends Lambda {
      * @return A composed {@code BiObjBooleanToLongFunction} that first applies this predicate to its input, and then
      * applies the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * long}.
      */
     @Nonnull
-    default BiObjBooleanToLongFunction<T, U> andThenToLong(@Nonnull final BooleanToLongFunction after) {
+    default BiObjBooleanToLongFunction<T, U> andThenToLong(@Nonnull BooleanToLongFunction after) {
         Objects.requireNonNull(after);
         return (t, u, value) -> after.applyAsLong(test(t, u, value));
     }
@@ -703,11 +702,11 @@ public interface BiObjBooleanPredicate<T, U> extends Lambda {
      * @return A composed {@code BiObjBooleanToShortFunction} that first applies this predicate to its input, and then
      * applies the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * short}.
      */
     @Nonnull
-    default BiObjBooleanToShortFunction<T, U> andThenToShort(@Nonnull final BooleanToShortFunction after) {
+    default BiObjBooleanToShortFunction<T, U> andThenToShort(@Nonnull BooleanToShortFunction after) {
         Objects.requireNonNull(after);
         return (t, u, value) -> after.applyAsShort(test(t, u, value));
     }
@@ -723,7 +722,7 @@ public interface BiObjBooleanPredicate<T, U> extends Lambda {
      * @throws NullPointerException If given argument is {@code null}
      */
     @Nonnull
-    default BiObjBooleanConsumer<T, U> consume(@Nonnull final BooleanConsumer consumer) {
+    default BiObjBooleanConsumer<T, U> consume(@Nonnull BooleanConsumer consumer) {
         Objects.requireNonNull(consumer);
         return (t, u, value) -> consumer.accept(test(t, u, value));
     }
@@ -754,7 +753,7 @@ public interface BiObjBooleanPredicate<T, U> extends Lambda {
      * @see #xor(BiObjBooleanPredicate)
      */
     @Nonnull
-    default BiObjBooleanPredicate<T, U> and(@Nonnull final BiObjBooleanPredicate<? super T, ? super U> other) {
+    default BiObjBooleanPredicate<T, U> and(@Nonnull BiObjBooleanPredicate<? super T, ? super U> other) {
         Objects.requireNonNull(other);
         return (t, u, value) -> test(t, u, value) && other.test(t, u, value);
     }
@@ -775,7 +774,7 @@ public interface BiObjBooleanPredicate<T, U> extends Lambda {
      * @see #xor(BiObjBooleanPredicate)
      */
     @Nonnull
-    default BiObjBooleanPredicate<T, U> or(@Nonnull final BiObjBooleanPredicate<? super T, ? super U> other) {
+    default BiObjBooleanPredicate<T, U> or(@Nonnull BiObjBooleanPredicate<? super T, ? super U> other) {
         Objects.requireNonNull(other);
         return (t, u, value) -> test(t, u, value) || other.test(t, u, value);
     }
@@ -793,7 +792,7 @@ public interface BiObjBooleanPredicate<T, U> extends Lambda {
      * @see #or(BiObjBooleanPredicate)
      */
     @Nonnull
-    default BiObjBooleanPredicate<T, U> xor(@Nonnull final BiObjBooleanPredicate<? super T, ? super U> other) {
+    default BiObjBooleanPredicate<T, U> xor(@Nonnull BiObjBooleanPredicate<? super T, ? super U> other) {
         Objects.requireNonNull(other);
         return (t, u, value) -> test(t, u, value) ^ other.test(t, u, value);
     }
@@ -827,13 +826,13 @@ public interface BiObjBooleanPredicate<T, U> extends Lambda {
         if (isMemoized()) {
             return this;
         } else {
-            final Map<Triple<T, U, Boolean>, Boolean> cache = new ConcurrentHashMap<>();
-            final Object lock = new Object();
+            Map<Triple<T, U, Boolean>, Boolean> cache = new ConcurrentHashMap<>();
+            Object lock = new Object();
             return (BiObjBooleanPredicate<T, U> & Memoized) (t, u, value) -> {
-                final boolean returnValue;
+                boolean returnValue;
                 synchronized (lock) {
                     returnValue = cache.computeIfAbsent(Triple.of(t, u, value),
-                                                        key -> test(key.getLeft(), key.getMiddle(), key.getRight()));
+                            key -> test(key.getLeft(), key.getMiddle(), key.getRight()));
                 }
                 return returnValue;
             };

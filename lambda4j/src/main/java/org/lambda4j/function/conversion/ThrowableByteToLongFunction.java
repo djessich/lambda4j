@@ -13,7 +13,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package org.lambda4j.function.conversion;
+
+import java.util.Map;
+import java.util.Objects;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.function.Function;
+
+import javax.annotation.Nonnegative;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import org.lambda4j.Lambda;
 import org.lambda4j.consumer.ThrowableByteConsumer;
@@ -30,18 +40,9 @@ import org.lambda4j.operator.unary.ThrowableLongUnaryOperator;
 import org.lambda4j.predicate.ThrowableBytePredicate;
 import org.lambda4j.predicate.ThrowableLongPredicate;
 
-import javax.annotation.Nonnegative;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import java.util.Map;
-import java.util.Objects;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.function.Function;
-
 /**
- * Represents an operation that accepts one {@code byte}-valued input argument and produces a
- * {@code long}-valued result which is able to throw any {@link Throwable}.
- * This is a primitive specialization of {@link ThrowableFunction}.
+ * Represents an operation that accepts one {@code byte}-valued input argument and produces a {@code long}-valued result
+ * which is able to throw any {@link Throwable}. This is a primitive specialization of {@link ThrowableFunction}.
  * <p>
  * This is a {@link FunctionalInterface} whose functional method is {@link #applyAsLongThrows(byte)}.
  *
@@ -68,7 +69,7 @@ public interface ThrowableByteToLongFunction<X extends Throwable> extends Lambda
      * @see <a href="https://docs.oracle.com/javase/tutorial/java/javaOO/methodreferences.html">Method Reference</a>
      */
     static <X extends Throwable> ThrowableByteToLongFunction<X> of(
-            @Nullable final ThrowableByteToLongFunction<X> expression) {
+            @Nullable ThrowableByteToLongFunction<X> expression) {
         return expression;
     }
 
@@ -82,7 +83,7 @@ public interface ThrowableByteToLongFunction<X extends Throwable> extends Lambda
      * @throws NullPointerException If given argument is {@code null}
      * @throws X Any throwable from this functions action
      */
-    static <X extends Throwable> long call(@Nonnull final ThrowableByteToLongFunction<? extends X> function,
+    static <X extends Throwable> long call(@Nonnull ThrowableByteToLongFunction<? extends X> function,
             byte value) throws X {
         Objects.requireNonNull(function);
         return function.applyAsLongThrows(value);
@@ -97,7 +98,7 @@ public interface ThrowableByteToLongFunction<X extends Throwable> extends Lambda
      */
     @Nonnull
     static <X extends Throwable> ThrowableByteToLongFunction<X> constant(long ret) {
-        return (value) -> ret;
+        return value -> ret;
     }
 
     /**
@@ -133,9 +134,9 @@ public interface ThrowableByteToLongFunction<X extends Throwable> extends Lambda
      */
     @Nonnull
     default <A> ThrowableToLongFunction<A, X> compose(
-            @Nonnull final ThrowableToByteFunction<? super A, ? extends X> before) {
+            @Nonnull ThrowableToByteFunction<? super A, ? extends X> before) {
         Objects.requireNonNull(before);
-        return (a) -> applyAsLongThrows(before.applyAsByteThrows(a));
+        return a -> applyAsLongThrows(before.applyAsByteThrows(a));
     }
 
     /**
@@ -147,54 +148,52 @@ public interface ThrowableByteToLongFunction<X extends Throwable> extends Lambda
      * @return A composed {@code ThrowableBooleanToLongFunction} that first applies the {@code before} function to its
      * input, and then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * boolean}.
      */
     @Nonnull
     default ThrowableBooleanToLongFunction<X> composeFromBoolean(
-            @Nonnull final ThrowableBooleanToByteFunction<? extends X> before) {
+            @Nonnull ThrowableBooleanToByteFunction<? extends X> before) {
         Objects.requireNonNull(before);
-        return (value) -> applyAsLongThrows(before.applyAsByteThrows(value));
+        return value -> applyAsLongThrows(before.applyAsByteThrows(value));
     }
 
     /**
-     * Returns a composed {@link ThrowableByteToLongFunction} that first applies the {@code before} operator to
-     * its input, and then applies this function to the result.
-     * This method is just convenience, to provide the ability to execute an operation which accepts {@code byte} input,
-     * before this primitive function is executed.
+     * Returns a composed {@link ThrowableByteToLongFunction} that first applies the {@code before} operator to its
+     * input, and then applies this function to the result. This method is just convenience, to provide the ability to
+     * execute an operation which accepts {@code byte} input, before this primitive function is executed.
      *
      * @param before The operator to apply before this function is applied
      * @return A composed {@code ThrowableByteToLongFunction} that first applies the {@code before} operator to its
      * input, and then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * byte}.
      */
     @Nonnull
     default ThrowableByteToLongFunction<X> composeFromByte(
-            @Nonnull final ThrowableByteUnaryOperator<? extends X> before) {
+            @Nonnull ThrowableByteUnaryOperator<? extends X> before) {
         Objects.requireNonNull(before);
-        return (value) -> applyAsLongThrows(before.applyAsByteThrows(value));
+        return value -> applyAsLongThrows(before.applyAsByteThrows(value));
     }
 
     /**
-     * Returns a composed {@link ThrowableCharToLongFunction} that first applies the {@code before} function to
-     * its input, and then applies this function to the result.
-     * This method is just convenience, to provide the ability to execute an operation which accepts {@code char} input,
-     * before this primitive function is executed.
+     * Returns a composed {@link ThrowableCharToLongFunction} that first applies the {@code before} function to its
+     * input, and then applies this function to the result. This method is just convenience, to provide the ability to
+     * execute an operation which accepts {@code char} input, before this primitive function is executed.
      *
      * @param before The function to apply before this function is applied
      * @return A composed {@code ThrowableCharToLongFunction} that first applies the {@code before} function to its
      * input, and then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * char}.
      */
     @Nonnull
     default ThrowableCharToLongFunction<X> composeFromChar(
-            @Nonnull final ThrowableCharToByteFunction<? extends X> before) {
+            @Nonnull ThrowableCharToByteFunction<? extends X> before) {
         Objects.requireNonNull(before);
-        return (value) -> applyAsLongThrows(before.applyAsByteThrows(value));
+        return value -> applyAsLongThrows(before.applyAsByteThrows(value));
     }
 
     /**
@@ -206,14 +205,14 @@ public interface ThrowableByteToLongFunction<X extends Throwable> extends Lambda
      * @return A composed {@code ThrowableDoubleToLongFunction} that first applies the {@code before} function to its
      * input, and then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * double}.
      */
     @Nonnull
     default ThrowableDoubleToLongFunction<X> composeFromDouble(
-            @Nonnull final ThrowableDoubleToByteFunction<? extends X> before) {
+            @Nonnull ThrowableDoubleToByteFunction<? extends X> before) {
         Objects.requireNonNull(before);
-        return (value) -> applyAsLongThrows(before.applyAsByteThrows(value));
+        return value -> applyAsLongThrows(before.applyAsByteThrows(value));
     }
 
     /**
@@ -225,54 +224,52 @@ public interface ThrowableByteToLongFunction<X extends Throwable> extends Lambda
      * @return A composed {@code ThrowableFloatToLongFunction} that first applies the {@code before} function to its
      * input, and then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * float}.
      */
     @Nonnull
     default ThrowableFloatToLongFunction<X> composeFromFloat(
-            @Nonnull final ThrowableFloatToByteFunction<? extends X> before) {
+            @Nonnull ThrowableFloatToByteFunction<? extends X> before) {
         Objects.requireNonNull(before);
-        return (value) -> applyAsLongThrows(before.applyAsByteThrows(value));
+        return value -> applyAsLongThrows(before.applyAsByteThrows(value));
     }
 
     /**
-     * Returns a composed {@link ThrowableIntToLongFunction} that first applies the {@code before} function to
-     * its input, and then applies this function to the result.
-     * This method is just convenience, to provide the ability to execute an operation which accepts {@code int} input,
-     * before this primitive function is executed.
+     * Returns a composed {@link ThrowableIntToLongFunction} that first applies the {@code before} function to its
+     * input, and then applies this function to the result. This method is just convenience, to provide the ability to
+     * execute an operation which accepts {@code int} input, before this primitive function is executed.
      *
      * @param before The function to apply before this function is applied
      * @return A composed {@code ThrowableIntToLongFunction} that first applies the {@code before} function to its
      * input, and then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * int}.
      */
     @Nonnull
     default ThrowableIntToLongFunction<X> composeFromInt(
-            @Nonnull final ThrowableIntToByteFunction<? extends X> before) {
+            @Nonnull ThrowableIntToByteFunction<? extends X> before) {
         Objects.requireNonNull(before);
-        return (value) -> applyAsLongThrows(before.applyAsByteThrows(value));
+        return value -> applyAsLongThrows(before.applyAsByteThrows(value));
     }
 
     /**
-     * Returns a composed {@link ThrowableLongUnaryOperator} that first applies the {@code before} function to
-     * its input, and then applies this function to the result.
-     * This method is just convenience, to provide the ability to execute an operation which accepts {@code long} input,
-     * before this primitive function is executed.
+     * Returns a composed {@link ThrowableLongUnaryOperator} that first applies the {@code before} function to its
+     * input, and then applies this function to the result. This method is just convenience, to provide the ability to
+     * execute an operation which accepts {@code long} input, before this primitive function is executed.
      *
      * @param before The function to apply before this function is applied
      * @return A composed {@code ThrowableLongUnaryOperator} that first applies the {@code before} function to its
      * input, and then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * long}.
      */
     @Nonnull
     default ThrowableLongUnaryOperator<X> composeFromLong(
-            @Nonnull final ThrowableLongToByteFunction<? extends X> before) {
+            @Nonnull ThrowableLongToByteFunction<? extends X> before) {
         Objects.requireNonNull(before);
-        return (value) -> applyAsLongThrows(before.applyAsByteThrows(value));
+        return value -> applyAsLongThrows(before.applyAsByteThrows(value));
     }
 
     /**
@@ -284,14 +281,14 @@ public interface ThrowableByteToLongFunction<X extends Throwable> extends Lambda
      * @return A composed {@code ThrowableShortToLongFunction} that first applies the {@code before} function to its
      * input, and then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * short}.
      */
     @Nonnull
     default ThrowableShortToLongFunction<X> composeFromShort(
-            @Nonnull final ThrowableShortToByteFunction<? extends X> before) {
+            @Nonnull ThrowableShortToByteFunction<? extends X> before) {
         Objects.requireNonNull(before);
-        return (value) -> applyAsLongThrows(before.applyAsByteThrows(value));
+        return value -> applyAsLongThrows(before.applyAsByteThrows(value));
     }
 
     /**
@@ -307,9 +304,9 @@ public interface ThrowableByteToLongFunction<X extends Throwable> extends Lambda
      */
     @Nonnull
     default <S> ThrowableByteFunction<S, X> andThen(
-            @Nonnull final ThrowableLongFunction<? extends S, ? extends X> after) {
+            @Nonnull ThrowableLongFunction<? extends S, ? extends X> after) {
         Objects.requireNonNull(after);
-        return (value) -> after.applyThrows(applyAsLongThrows(value));
+        return value -> after.applyThrows(applyAsLongThrows(value));
     }
 
     /**
@@ -321,13 +318,13 @@ public interface ThrowableByteToLongFunction<X extends Throwable> extends Lambda
      * @return A composed {@code ThrowableBytePredicate} that first applies this function to its input, and then applies
      * the {@code after} predicate to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * boolean}.
      */
     @Nonnull
-    default ThrowableBytePredicate<X> andThenToBoolean(@Nonnull final ThrowableLongPredicate<? extends X> after) {
+    default ThrowableBytePredicate<X> andThenToBoolean(@Nonnull ThrowableLongPredicate<? extends X> after) {
         Objects.requireNonNull(after);
-        return (value) -> after.testThrows(applyAsLongThrows(value));
+        return value -> after.testThrows(applyAsLongThrows(value));
     }
 
     /**
@@ -339,13 +336,13 @@ public interface ThrowableByteToLongFunction<X extends Throwable> extends Lambda
      * @return A composed {@code ThrowableByteUnaryOperator} that first applies this function to its input, and then
      * applies the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * byte}.
      */
     @Nonnull
-    default ThrowableByteUnaryOperator<X> andThenToByte(@Nonnull final ThrowableLongToByteFunction<? extends X> after) {
+    default ThrowableByteUnaryOperator<X> andThenToByte(@Nonnull ThrowableLongToByteFunction<? extends X> after) {
         Objects.requireNonNull(after);
-        return (value) -> after.applyAsByteThrows(applyAsLongThrows(value));
+        return value -> after.applyAsByteThrows(applyAsLongThrows(value));
     }
 
     /**
@@ -357,14 +354,14 @@ public interface ThrowableByteToLongFunction<X extends Throwable> extends Lambda
      * @return A composed {@code ThrowableByteToCharFunction} that first applies this function to its input, and then
      * applies the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * char}.
      */
     @Nonnull
     default ThrowableByteToCharFunction<X> andThenToChar(
-            @Nonnull final ThrowableLongToCharFunction<? extends X> after) {
+            @Nonnull ThrowableLongToCharFunction<? extends X> after) {
         Objects.requireNonNull(after);
-        return (value) -> after.applyAsCharThrows(applyAsLongThrows(value));
+        return value -> after.applyAsCharThrows(applyAsLongThrows(value));
     }
 
     /**
@@ -376,14 +373,14 @@ public interface ThrowableByteToLongFunction<X extends Throwable> extends Lambda
      * @return A composed {@code ThrowableByteToDoubleFunction} that first applies this function to its input, and then
      * applies the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * double}.
      */
     @Nonnull
     default ThrowableByteToDoubleFunction<X> andThenToDouble(
-            @Nonnull final ThrowableLongToDoubleFunction<? extends X> after) {
+            @Nonnull ThrowableLongToDoubleFunction<? extends X> after) {
         Objects.requireNonNull(after);
-        return (value) -> after.applyAsDoubleThrows(applyAsLongThrows(value));
+        return value -> after.applyAsDoubleThrows(applyAsLongThrows(value));
     }
 
     /**
@@ -395,14 +392,14 @@ public interface ThrowableByteToLongFunction<X extends Throwable> extends Lambda
      * @return A composed {@code ThrowableByteToFloatFunction} that first applies this function to its input, and then
      * applies the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * float}.
      */
     @Nonnull
     default ThrowableByteToFloatFunction<X> andThenToFloat(
-            @Nonnull final ThrowableLongToFloatFunction<? extends X> after) {
+            @Nonnull ThrowableLongToFloatFunction<? extends X> after) {
         Objects.requireNonNull(after);
-        return (value) -> after.applyAsFloatThrows(applyAsLongThrows(value));
+        return value -> after.applyAsFloatThrows(applyAsLongThrows(value));
     }
 
     /**
@@ -414,13 +411,13 @@ public interface ThrowableByteToLongFunction<X extends Throwable> extends Lambda
      * @return A composed {@code ThrowableByteToIntFunction} that first applies this function to its input, and then
      * applies the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * int}.
      */
     @Nonnull
-    default ThrowableByteToIntFunction<X> andThenToInt(@Nonnull final ThrowableLongToIntFunction<? extends X> after) {
+    default ThrowableByteToIntFunction<X> andThenToInt(@Nonnull ThrowableLongToIntFunction<? extends X> after) {
         Objects.requireNonNull(after);
-        return (value) -> after.applyAsIntThrows(applyAsLongThrows(value));
+        return value -> after.applyAsIntThrows(applyAsLongThrows(value));
     }
 
     /**
@@ -432,13 +429,13 @@ public interface ThrowableByteToLongFunction<X extends Throwable> extends Lambda
      * @return A composed {@code ThrowableByteToLongFunction} that first applies this function to its input, and then
      * applies the {@code after} operator to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * long}.
      */
     @Nonnull
-    default ThrowableByteToLongFunction<X> andThenToLong(@Nonnull final ThrowableLongUnaryOperator<? extends X> after) {
+    default ThrowableByteToLongFunction<X> andThenToLong(@Nonnull ThrowableLongUnaryOperator<? extends X> after) {
         Objects.requireNonNull(after);
-        return (value) -> after.applyAsLongThrows(applyAsLongThrows(value));
+        return value -> after.applyAsLongThrows(applyAsLongThrows(value));
     }
 
     /**
@@ -450,14 +447,14 @@ public interface ThrowableByteToLongFunction<X extends Throwable> extends Lambda
      * @return A composed {@code ThrowableByteToShortFunction} that first applies this function to its input, and then
      * applies the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * short}.
      */
     @Nonnull
     default ThrowableByteToShortFunction<X> andThenToShort(
-            @Nonnull final ThrowableLongToShortFunction<? extends X> after) {
+            @Nonnull ThrowableLongToShortFunction<? extends X> after) {
         Objects.requireNonNull(after);
-        return (value) -> after.applyAsShortThrows(applyAsLongThrows(value));
+        return value -> after.applyAsShortThrows(applyAsLongThrows(value));
     }
 
     /**
@@ -470,9 +467,9 @@ public interface ThrowableByteToLongFunction<X extends Throwable> extends Lambda
      * @throws NullPointerException If given argument is {@code null}
      */
     @Nonnull
-    default ThrowableByteConsumer<X> consume(@Nonnull final ThrowableLongConsumer<? extends X> consumer) {
+    default ThrowableByteConsumer<X> consume(@Nonnull ThrowableLongConsumer<? extends X> consumer) {
         Objects.requireNonNull(consumer);
-        return (value) -> consumer.acceptThrows(applyAsLongThrows(value));
+        return value -> consumer.acceptThrows(applyAsLongThrows(value));
     }
 
     /**
@@ -494,10 +491,10 @@ public interface ThrowableByteToLongFunction<X extends Throwable> extends Lambda
         if (isMemoized()) {
             return this;
         } else {
-            final Map<Byte, Long> cache = new ConcurrentHashMap<>();
-            final Object lock = new Object();
-            return (ThrowableByteToLongFunction<X> & Memoized) (value) -> {
-                final long returnValue;
+            Map<Byte, Long> cache = new ConcurrentHashMap<>();
+            Object lock = new Object();
+            return (ThrowableByteToLongFunction<X> & Memoized) value -> {
+                long returnValue;
                 synchronized (lock) {
                     returnValue = cache.computeIfAbsent(value, ThrowableFunction.of(this::applyAsLongThrows));
                 }
@@ -547,7 +544,7 @@ public interface ThrowableByteToLongFunction<X extends Throwable> extends Lambda
      * @see #nest()
      */
     @Nonnull
-    default ByteToLongFunction nest(@Nonnull final Function<? super Throwable, ? extends RuntimeException> mapper) {
+    default ByteToLongFunction nest(@Nonnull Function<? super Throwable, ? extends RuntimeException> mapper) {
         return recover(throwable -> {
             throw mapper.apply(throwable);
         });
@@ -570,15 +567,15 @@ public interface ThrowableByteToLongFunction<X extends Throwable> extends Lambda
      */
     @Nonnull
     default ByteToLongFunction recover(
-            @Nonnull final Function<? super Throwable, ? extends ByteToLongFunction> recover) {
+            @Nonnull Function<? super Throwable, ? extends ByteToLongFunction> recover) {
         Objects.requireNonNull(recover);
-        return (value) -> {
+        return value -> {
             try {
-                return this.applyAsLongThrows(value);
+                return applyAsLongThrows(value);
             } catch (Error e) {
                 throw e;
             } catch (Throwable throwable) {
-                final ByteToLongFunction function = recover.apply(throwable);
+                ByteToLongFunction function = recover.apply(throwable);
                 Objects.requireNonNull(function, () -> "recover returned null for " + throwable.getClass() + ": "
                         + throwable.getMessage());
                 return function.applyAsLong(value);
@@ -654,9 +651,9 @@ public interface ThrowableByteToLongFunction<X extends Throwable> extends Lambda
      */
     @Nonnull
     default ByteToLongFunction sneakyThrow() {
-        return (value) -> {
+        return value -> {
             try {
-                return this.applyAsLongThrows(value);
+                return applyAsLongThrows(value);
             } catch (RuntimeException | Error e) {
                 throw e;
             } catch (Throwable throwable) {

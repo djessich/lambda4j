@@ -13,21 +13,23 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package org.lambda4j.operator.binary;
+
+import java.util.Comparator;
+import java.util.Objects;
+import java.util.function.BinaryOperator;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import org.lambda4j.Lambda;
 import org.lambda4j.function.bi.ThrowableBiFunction;
 import org.lambda4j.operator.unary.ThrowableUnaryOperator;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import java.util.Comparator;
-import java.util.Objects;
-import java.util.function.BinaryOperator;
-
 /**
- * Represents an operation that accepts two input arguments and produces a
- * result which is able to throw any {@link Throwable}.
+ * Represents an operation that accepts two input arguments and produces a result which is able to throw any {@link
+ * Throwable}.
  * <p>
  * This is a {@link FunctionalInterface} whose functional method is {@link #applyThrows(Object, Object)}.
  *
@@ -58,7 +60,7 @@ public interface ThrowableBinaryOperator<T, X extends Throwable>
      * @see <a href="https://docs.oracle.com/javase/tutorial/java/javaOO/methodreferences.html">Method Reference</a>
      */
     static <T, X extends Throwable> ThrowableBinaryOperator<T, X> of(
-            @Nullable final ThrowableBinaryOperator<T, X> expression) {
+            @Nullable ThrowableBinaryOperator<T, X> expression) {
         return expression;
     }
 
@@ -74,7 +76,7 @@ public interface ThrowableBinaryOperator<T, X extends Throwable>
      * @throws NullPointerException If given argument is {@code null}
      * @throws X Any throwable from this operators action
      */
-    static <T, X extends Throwable> T call(@Nonnull final ThrowableBinaryOperator<T, ? extends X> operator, T t,
+    static <T, X extends Throwable> T call(@Nonnull ThrowableBinaryOperator<T, ? extends X> operator, T t,
             T u) throws X {
         Objects.requireNonNull(operator);
         return operator.applyThrows(t, u);
@@ -93,7 +95,7 @@ public interface ThrowableBinaryOperator<T, X extends Throwable>
      */
     @Nonnull
     static <T, X extends Throwable> ThrowableBinaryOperator<T, X> onlyFirst(
-            @Nonnull final ThrowableUnaryOperator<T, ? extends X> operator) {
+            @Nonnull ThrowableUnaryOperator<T, ? extends X> operator) {
         Objects.requireNonNull(operator);
         return (t, u) -> operator.applyThrows(t);
     }
@@ -111,7 +113,7 @@ public interface ThrowableBinaryOperator<T, X extends Throwable>
      */
     @Nonnull
     static <T, X extends Throwable> ThrowableBinaryOperator<T, X> onlySecond(
-            @Nonnull final ThrowableUnaryOperator<T, ? extends X> operator) {
+            @Nonnull ThrowableUnaryOperator<T, ? extends X> operator) {
         Objects.requireNonNull(operator);
         return (t, u) -> operator.applyThrows(u);
     }
@@ -142,7 +144,7 @@ public interface ThrowableBinaryOperator<T, X extends Throwable>
      * @see BinaryOperator#minBy(Comparator)
      */
     @Nonnull
-    static <T, X extends Throwable> ThrowableBinaryOperator<T, X> minBy(@Nonnull final Comparator<T> comparator) {
+    static <T, X extends Throwable> ThrowableBinaryOperator<T, X> minBy(@Nonnull Comparator<T> comparator) {
         Objects.requireNonNull(comparator);
         return (t, u) -> comparator.compare(t, u) <= 0 ? t : u;
     }
@@ -160,7 +162,7 @@ public interface ThrowableBinaryOperator<T, X extends Throwable>
      * @see BinaryOperator#maxBy(Comparator)
      */
     @Nonnull
-    static <T, X extends Throwable> ThrowableBinaryOperator<T, X> maxBy(@Nonnull final Comparator<T> comparator) {
+    static <T, X extends Throwable> ThrowableBinaryOperator<T, X> maxBy(@Nonnull Comparator<T> comparator) {
         Objects.requireNonNull(comparator);
         return (t, u) -> comparator.compare(t, u) >= 0 ? t : u;
     }

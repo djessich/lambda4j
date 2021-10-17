@@ -13,7 +13,23 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package org.lambda4j.predicate.tri.obj;
+
+import java.util.Map;
+import java.util.Objects;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.function.DoubleFunction;
+import java.util.function.Function;
+import java.util.function.IntFunction;
+import java.util.function.LongFunction;
+import java.util.function.Predicate;
+
+import javax.annotation.Nonnegative;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
+import org.apache.commons.lang3.tuple.Triple;
 
 import org.lambda4j.Lambda;
 import org.lambda4j.consumer.BooleanConsumer;
@@ -61,20 +77,6 @@ import org.lambda4j.predicate.tri.TriLongPredicate;
 import org.lambda4j.predicate.tri.TriPredicate;
 import org.lambda4j.predicate.tri.TriShortPredicate;
 
-import org.apache.commons.lang3.tuple.Triple;
-
-import javax.annotation.Nonnegative;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import java.util.Map;
-import java.util.Objects;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.function.DoubleFunction;
-import java.util.function.Function;
-import java.util.function.IntFunction;
-import java.util.function.LongFunction;
-import java.util.function.Predicate;
-
 /**
  * Represents an predicate (boolean-valued function) of one object-valued and two {@code short}-valued input arguments.
  * This is a (reference, short, short) specialization of {@link TriPredicate}.
@@ -103,7 +105,7 @@ public interface ObjBiShortPredicate<T> extends Lambda {
      * Expression</a>
      * @see <a href="https://docs.oracle.com/javase/tutorial/java/javaOO/methodreferences.html">Method Reference</a>
      */
-    static <T> ObjBiShortPredicate<T> of(@Nullable final ObjBiShortPredicate<T> expression) {
+    static <T> ObjBiShortPredicate<T> of(@Nullable ObjBiShortPredicate<T> expression) {
         return expression;
     }
 
@@ -118,7 +120,7 @@ public interface ObjBiShortPredicate<T> extends Lambda {
      * @return The result from the given {@code ObjBiShortPredicate}.
      * @throws NullPointerException If given argument is {@code null}
      */
-    static <T> boolean call(@Nonnull final ObjBiShortPredicate<? super T> predicate, T t, short value1, short value2) {
+    static <T> boolean call(@Nonnull ObjBiShortPredicate<? super T> predicate, T t, short value1, short value2) {
         Objects.requireNonNull(predicate);
         return predicate.test(t, value1, value2);
     }
@@ -134,7 +136,7 @@ public interface ObjBiShortPredicate<T> extends Lambda {
      * @throws NullPointerException If given argument is {@code null}
      */
     @Nonnull
-    static <T> ObjBiShortPredicate<T> onlyFirst(@Nonnull final Predicate<? super T> predicate) {
+    static <T> ObjBiShortPredicate<T> onlyFirst(@Nonnull Predicate<? super T> predicate) {
         Objects.requireNonNull(predicate);
         return (t, value1, value2) -> predicate.test(t);
     }
@@ -150,7 +152,7 @@ public interface ObjBiShortPredicate<T> extends Lambda {
      * @throws NullPointerException If given argument is {@code null}
      */
     @Nonnull
-    static <T> ObjBiShortPredicate<T> onlySecond(@Nonnull final ShortPredicate predicate) {
+    static <T> ObjBiShortPredicate<T> onlySecond(@Nonnull ShortPredicate predicate) {
         Objects.requireNonNull(predicate);
         return (t, value1, value2) -> predicate.test(value1);
     }
@@ -166,7 +168,7 @@ public interface ObjBiShortPredicate<T> extends Lambda {
      * @throws NullPointerException If given argument is {@code null}
      */
     @Nonnull
-    static <T> ObjBiShortPredicate<T> onlyThird(@Nonnull final ShortPredicate predicate) {
+    static <T> ObjBiShortPredicate<T> onlyThird(@Nonnull ShortPredicate predicate) {
         Objects.requireNonNull(predicate);
         return (t, value1, value2) -> predicate.test(value2);
     }
@@ -222,8 +224,8 @@ public interface ObjBiShortPredicate<T> extends Lambda {
      */
     @Nonnull
     static <T> ObjBiShortPredicate<T> isEqual(@Nullable Object target1, short target2, short target3) {
-        return (t, value1, value2) -> (t == null ? target1 == null : t.equals(target1)) && (value1 == target2) && (
-                value2 == target3);
+        return (t, value1, value2) -> t == null ? target1 == null : t.equals(target1) && value1 == target2
+                && value2 == target3;
     }
 
     /**
@@ -244,7 +246,7 @@ public interface ObjBiShortPredicate<T> extends Lambda {
      */
     @Nonnull
     default BiShortPredicate ptest(T t) {
-        return (value1, value2) -> this.test(t, value1, value2);
+        return (value1, value2) -> test(t, value1, value2);
     }
 
     /**
@@ -256,7 +258,7 @@ public interface ObjBiShortPredicate<T> extends Lambda {
      */
     @Nonnull
     default ShortPredicate ptest(T t, short value1) {
-        return (value2) -> this.test(t, value1, value2);
+        return value2 -> test(t, value1, value2);
     }
 
     /**
@@ -267,7 +269,7 @@ public interface ObjBiShortPredicate<T> extends Lambda {
      */
     @Nonnull
     default ObjShortPredicate<T> ptest(short value1) {
-        return (t, value2) -> this.test(t, value1, value2);
+        return (t, value2) -> test(t, value1, value2);
     }
 
     /**
@@ -279,7 +281,7 @@ public interface ObjBiShortPredicate<T> extends Lambda {
      */
     @Nonnull
     default Predicate2<T> ptest(short value1, short value2) {
-        return (t) -> this.test(t, value1, value2);
+        return t -> test(t, value1, value2);
     }
 
     /**
@@ -294,9 +296,9 @@ public interface ObjBiShortPredicate<T> extends Lambda {
     }
 
     /**
-     * Returns a composed {@link TriPredicate} that first applies the {@code before} functions to its input, and
-     * then applies this predicate to the result.
-     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
+     * Returns a composed {@link TriPredicate} that first applies the {@code before} functions to its input, and then
+     * applies this predicate to the result. If evaluation of either operation throws an exception, it is relayed to the
+     * caller of the composed operation.
      *
      * @param <A> The type of the argument to the first given function, and of composed predicate
      * @param <B> The type of the argument to the second given function, and of composed predicate
@@ -310,8 +312,8 @@ public interface ObjBiShortPredicate<T> extends Lambda {
      * @implSpec The input argument of this method is able to handle every type.
      */
     @Nonnull
-    default <A, B, C> TriPredicate<A, B, C> compose(@Nonnull final Function<? super A, ? extends T> before1,
-            @Nonnull final ToShortFunction<? super B> before2, @Nonnull final ToShortFunction<? super C> before3) {
+    default <A, B, C> TriPredicate<A, B, C> compose(@Nonnull Function<? super A, ? extends T> before1,
+            @Nonnull ToShortFunction<? super B> before2, @Nonnull ToShortFunction<? super C> before3) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         Objects.requireNonNull(before3);
@@ -330,25 +332,24 @@ public interface ObjBiShortPredicate<T> extends Lambda {
      * @return A composed {@code BooleanTernaryOperator} that first applies the {@code before} functions to its input,
      * and then applies this predicate to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * boolean}.
      */
     @Nonnull
-    default BooleanTernaryOperator composeFromBoolean(@Nonnull final BooleanFunction<? extends T> before1,
-            @Nonnull final BooleanToShortFunction before2, @Nonnull final BooleanToShortFunction before3) {
+    default BooleanTernaryOperator composeFromBoolean(@Nonnull BooleanFunction<? extends T> before1,
+            @Nonnull BooleanToShortFunction before2, @Nonnull BooleanToShortFunction before3) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         Objects.requireNonNull(before3);
         return (value1, value2, value3) -> test(before1.apply(value1), before2.applyAsShort(value2),
-                                                before3.applyAsShort(value3));
+                before3.applyAsShort(value3));
     }
 
     /**
-     * Returns a composed {@link TriBytePredicate} that first applies the {@code before} functions to
-     * its input, and then applies this predicate to the result.
-     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
-     * This method is just convenience, to provide the ability to execute an operation which accepts {@code byte} input,
-     * before this primitive predicate is executed.
+     * Returns a composed {@link TriBytePredicate} that first applies the {@code before} functions to its input, and
+     * then applies this predicate to the result. If evaluation of either operation throws an exception, it is relayed
+     * to the caller of the composed operation. This method is just convenience, to provide the ability to execute an
+     * operation which accepts {@code byte} input, before this primitive predicate is executed.
      *
      * @param before1 The first function to apply before this predicate is applied
      * @param before2 The second function to apply before this predicate is applied
@@ -356,25 +357,24 @@ public interface ObjBiShortPredicate<T> extends Lambda {
      * @return A composed {@code TriBytePredicate} that first applies the {@code before} functions to its input, and
      * then applies this predicate to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * byte}.
      */
     @Nonnull
-    default TriBytePredicate composeFromByte(@Nonnull final ByteFunction<? extends T> before1,
-            @Nonnull final ByteToShortFunction before2, @Nonnull final ByteToShortFunction before3) {
+    default TriBytePredicate composeFromByte(@Nonnull ByteFunction<? extends T> before1,
+            @Nonnull ByteToShortFunction before2, @Nonnull ByteToShortFunction before3) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         Objects.requireNonNull(before3);
         return (value1, value2, value3) -> test(before1.apply(value1), before2.applyAsShort(value2),
-                                                before3.applyAsShort(value3));
+                before3.applyAsShort(value3));
     }
 
     /**
-     * Returns a composed {@link TriCharPredicate} that first applies the {@code before} functions to
-     * its input, and then applies this predicate to the result.
-     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
-     * This method is just convenience, to provide the ability to execute an operation which accepts {@code char} input,
-     * before this primitive predicate is executed.
+     * Returns a composed {@link TriCharPredicate} that first applies the {@code before} functions to its input, and
+     * then applies this predicate to the result. If evaluation of either operation throws an exception, it is relayed
+     * to the caller of the composed operation. This method is just convenience, to provide the ability to execute an
+     * operation which accepts {@code char} input, before this primitive predicate is executed.
      *
      * @param before1 The first function to apply before this predicate is applied
      * @param before2 The second function to apply before this predicate is applied
@@ -382,17 +382,17 @@ public interface ObjBiShortPredicate<T> extends Lambda {
      * @return A composed {@code TriCharPredicate} that first applies the {@code before} functions to its input, and
      * then applies this predicate to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * char}.
      */
     @Nonnull
-    default TriCharPredicate composeFromChar(@Nonnull final CharFunction<? extends T> before1,
-            @Nonnull final CharToShortFunction before2, @Nonnull final CharToShortFunction before3) {
+    default TriCharPredicate composeFromChar(@Nonnull CharFunction<? extends T> before1,
+            @Nonnull CharToShortFunction before2, @Nonnull CharToShortFunction before3) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         Objects.requireNonNull(before3);
         return (value1, value2, value3) -> test(before1.apply(value1), before2.applyAsShort(value2),
-                                                before3.applyAsShort(value3));
+                before3.applyAsShort(value3));
     }
 
     /**
@@ -407,17 +407,17 @@ public interface ObjBiShortPredicate<T> extends Lambda {
      * @return A composed {@code TriDoublePredicate} that first applies the {@code before} functions to its input, and
      * then applies this predicate to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * double}.
      */
     @Nonnull
-    default TriDoublePredicate composeFromDouble(@Nonnull final DoubleFunction<? extends T> before1,
-            @Nonnull final DoubleToShortFunction before2, @Nonnull final DoubleToShortFunction before3) {
+    default TriDoublePredicate composeFromDouble(@Nonnull DoubleFunction<? extends T> before1,
+            @Nonnull DoubleToShortFunction before2, @Nonnull DoubleToShortFunction before3) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         Objects.requireNonNull(before3);
         return (value1, value2, value3) -> test(before1.apply(value1), before2.applyAsShort(value2),
-                                                before3.applyAsShort(value3));
+                before3.applyAsShort(value3));
     }
 
     /**
@@ -432,25 +432,24 @@ public interface ObjBiShortPredicate<T> extends Lambda {
      * @return A composed {@code TriFloatPredicate} that first applies the {@code before} functions to its input, and
      * then applies this predicate to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * float}.
      */
     @Nonnull
-    default TriFloatPredicate composeFromFloat(@Nonnull final FloatFunction<? extends T> before1,
-            @Nonnull final FloatToShortFunction before2, @Nonnull final FloatToShortFunction before3) {
+    default TriFloatPredicate composeFromFloat(@Nonnull FloatFunction<? extends T> before1,
+            @Nonnull FloatToShortFunction before2, @Nonnull FloatToShortFunction before3) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         Objects.requireNonNull(before3);
         return (value1, value2, value3) -> test(before1.apply(value1), before2.applyAsShort(value2),
-                                                before3.applyAsShort(value3));
+                before3.applyAsShort(value3));
     }
 
     /**
-     * Returns a composed {@link TriIntPredicate} that first applies the {@code before} functions to
-     * its input, and then applies this predicate to the result.
-     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
-     * This method is just convenience, to provide the ability to execute an operation which accepts {@code int} input,
-     * before this primitive predicate is executed.
+     * Returns a composed {@link TriIntPredicate} that first applies the {@code before} functions to its input, and then
+     * applies this predicate to the result. If evaluation of either operation throws an exception, it is relayed to the
+     * caller of the composed operation. This method is just convenience, to provide the ability to execute an operation
+     * which accepts {@code int} input, before this primitive predicate is executed.
      *
      * @param before1 The first function to apply before this predicate is applied
      * @param before2 The second function to apply before this predicate is applied
@@ -458,25 +457,24 @@ public interface ObjBiShortPredicate<T> extends Lambda {
      * @return A composed {@code TriIntPredicate} that first applies the {@code before} functions to its input, and then
      * applies this predicate to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * int}.
      */
     @Nonnull
-    default TriIntPredicate composeFromInt(@Nonnull final IntFunction<? extends T> before1,
-            @Nonnull final IntToShortFunction before2, @Nonnull final IntToShortFunction before3) {
+    default TriIntPredicate composeFromInt(@Nonnull IntFunction<? extends T> before1,
+            @Nonnull IntToShortFunction before2, @Nonnull IntToShortFunction before3) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         Objects.requireNonNull(before3);
         return (value1, value2, value3) -> test(before1.apply(value1), before2.applyAsShort(value2),
-                                                before3.applyAsShort(value3));
+                before3.applyAsShort(value3));
     }
 
     /**
-     * Returns a composed {@link TriLongPredicate} that first applies the {@code before} functions to
-     * its input, and then applies this predicate to the result.
-     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
-     * This method is just convenience, to provide the ability to execute an operation which accepts {@code long} input,
-     * before this primitive predicate is executed.
+     * Returns a composed {@link TriLongPredicate} that first applies the {@code before} functions to its input, and
+     * then applies this predicate to the result. If evaluation of either operation throws an exception, it is relayed
+     * to the caller of the composed operation. This method is just convenience, to provide the ability to execute an
+     * operation which accepts {@code long} input, before this primitive predicate is executed.
      *
      * @param before1 The first function to apply before this predicate is applied
      * @param before2 The second function to apply before this predicate is applied
@@ -484,17 +482,17 @@ public interface ObjBiShortPredicate<T> extends Lambda {
      * @return A composed {@code TriLongPredicate} that first applies the {@code before} functions to its input, and
      * then applies this predicate to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * long}.
      */
     @Nonnull
-    default TriLongPredicate composeFromLong(@Nonnull final LongFunction<? extends T> before1,
-            @Nonnull final LongToShortFunction before2, @Nonnull final LongToShortFunction before3) {
+    default TriLongPredicate composeFromLong(@Nonnull LongFunction<? extends T> before1,
+            @Nonnull LongToShortFunction before2, @Nonnull LongToShortFunction before3) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         Objects.requireNonNull(before3);
         return (value1, value2, value3) -> test(before1.apply(value1), before2.applyAsShort(value2),
-                                                before3.applyAsShort(value3));
+                before3.applyAsShort(value3));
     }
 
     /**
@@ -509,17 +507,17 @@ public interface ObjBiShortPredicate<T> extends Lambda {
      * @return A composed {@code TriShortPredicate} that first applies the {@code before} functions to its input, and
      * then applies this predicate to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * short}.
      */
     @Nonnull
-    default TriShortPredicate composeFromShort(@Nonnull final ShortFunction<? extends T> before1,
-            @Nonnull final ShortUnaryOperator before2, @Nonnull final ShortUnaryOperator before3) {
+    default TriShortPredicate composeFromShort(@Nonnull ShortFunction<? extends T> before1,
+            @Nonnull ShortUnaryOperator before2, @Nonnull ShortUnaryOperator before3) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         Objects.requireNonNull(before3);
         return (value1, value2, value3) -> test(before1.apply(value1), before2.applyAsShort(value2),
-                                                before3.applyAsShort(value3));
+                before3.applyAsShort(value3));
     }
 
     /**
@@ -535,7 +533,7 @@ public interface ObjBiShortPredicate<T> extends Lambda {
      * @implSpec The input argument of this method is able to return every type.
      */
     @Nonnull
-    default <S> ObjBiShortFunction<T, S> andThen(@Nonnull final BooleanFunction<? extends S> after) {
+    default <S> ObjBiShortFunction<T, S> andThen(@Nonnull BooleanFunction<? extends S> after) {
         Objects.requireNonNull(after);
         return (t, value1, value2) -> after.apply(test(t, value1, value2));
     }
@@ -550,11 +548,11 @@ public interface ObjBiShortPredicate<T> extends Lambda {
      * @return A composed {@code ObjBiShortPredicate} that first applies this predicate to its input, and then applies
      * the {@code after} operator to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * boolean}.
      */
     @Nonnull
-    default ObjBiShortPredicate<T> andThenToBoolean(@Nonnull final BooleanUnaryOperator after) {
+    default ObjBiShortPredicate<T> andThenToBoolean(@Nonnull BooleanUnaryOperator after) {
         Objects.requireNonNull(after);
         return (t, value1, value2) -> after.applyAsBoolean(test(t, value1, value2));
     }
@@ -569,11 +567,11 @@ public interface ObjBiShortPredicate<T> extends Lambda {
      * @return A composed {@code ObjBiShortToByteFunction} that first applies this predicate to its input, and then
      * applies the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * byte}.
      */
     @Nonnull
-    default ObjBiShortToByteFunction<T> andThenToByte(@Nonnull final BooleanToByteFunction after) {
+    default ObjBiShortToByteFunction<T> andThenToByte(@Nonnull BooleanToByteFunction after) {
         Objects.requireNonNull(after);
         return (t, value1, value2) -> after.applyAsByte(test(t, value1, value2));
     }
@@ -588,11 +586,11 @@ public interface ObjBiShortPredicate<T> extends Lambda {
      * @return A composed {@code ObjBiShortToCharFunction} that first applies this predicate to its input, and then
      * applies the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * char}.
      */
     @Nonnull
-    default ObjBiShortToCharFunction<T> andThenToChar(@Nonnull final BooleanToCharFunction after) {
+    default ObjBiShortToCharFunction<T> andThenToChar(@Nonnull BooleanToCharFunction after) {
         Objects.requireNonNull(after);
         return (t, value1, value2) -> after.applyAsChar(test(t, value1, value2));
     }
@@ -607,11 +605,11 @@ public interface ObjBiShortPredicate<T> extends Lambda {
      * @return A composed {@code ObjBiShortToDoubleFunction} that first applies this predicate to its input, and then
      * applies the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * double}.
      */
     @Nonnull
-    default ObjBiShortToDoubleFunction<T> andThenToDouble(@Nonnull final BooleanToDoubleFunction after) {
+    default ObjBiShortToDoubleFunction<T> andThenToDouble(@Nonnull BooleanToDoubleFunction after) {
         Objects.requireNonNull(after);
         return (t, value1, value2) -> after.applyAsDouble(test(t, value1, value2));
     }
@@ -626,11 +624,11 @@ public interface ObjBiShortPredicate<T> extends Lambda {
      * @return A composed {@code ObjBiShortToFloatFunction} that first applies this predicate to its input, and then
      * applies the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * float}.
      */
     @Nonnull
-    default ObjBiShortToFloatFunction<T> andThenToFloat(@Nonnull final BooleanToFloatFunction after) {
+    default ObjBiShortToFloatFunction<T> andThenToFloat(@Nonnull BooleanToFloatFunction after) {
         Objects.requireNonNull(after);
         return (t, value1, value2) -> after.applyAsFloat(test(t, value1, value2));
     }
@@ -645,11 +643,11 @@ public interface ObjBiShortPredicate<T> extends Lambda {
      * @return A composed {@code ObjBiShortToIntFunction} that first applies this predicate to its input, and then
      * applies the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * int}.
      */
     @Nonnull
-    default ObjBiShortToIntFunction<T> andThenToInt(@Nonnull final BooleanToIntFunction after) {
+    default ObjBiShortToIntFunction<T> andThenToInt(@Nonnull BooleanToIntFunction after) {
         Objects.requireNonNull(after);
         return (t, value1, value2) -> after.applyAsInt(test(t, value1, value2));
     }
@@ -664,11 +662,11 @@ public interface ObjBiShortPredicate<T> extends Lambda {
      * @return A composed {@code ObjBiShortToLongFunction} that first applies this predicate to its input, and then
      * applies the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * long}.
      */
     @Nonnull
-    default ObjBiShortToLongFunction<T> andThenToLong(@Nonnull final BooleanToLongFunction after) {
+    default ObjBiShortToLongFunction<T> andThenToLong(@Nonnull BooleanToLongFunction after) {
         Objects.requireNonNull(after);
         return (t, value1, value2) -> after.applyAsLong(test(t, value1, value2));
     }
@@ -683,11 +681,11 @@ public interface ObjBiShortPredicate<T> extends Lambda {
      * @return A composed {@code ObjBiShortToShortFunction} that first applies this predicate to its input, and then
      * applies the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * short}.
      */
     @Nonnull
-    default ObjBiShortToShortFunction<T> andThenToShort(@Nonnull final BooleanToShortFunction after) {
+    default ObjBiShortToShortFunction<T> andThenToShort(@Nonnull BooleanToShortFunction after) {
         Objects.requireNonNull(after);
         return (t, value1, value2) -> after.applyAsShort(test(t, value1, value2));
     }
@@ -703,7 +701,7 @@ public interface ObjBiShortPredicate<T> extends Lambda {
      * @throws NullPointerException If given argument is {@code null}
      */
     @Nonnull
-    default ObjBiShortConsumer<T> consume(@Nonnull final BooleanConsumer consumer) {
+    default ObjBiShortConsumer<T> consume(@Nonnull BooleanConsumer consumer) {
         Objects.requireNonNull(consumer);
         return (t, value1, value2) -> consumer.accept(test(t, value1, value2));
     }
@@ -734,7 +732,7 @@ public interface ObjBiShortPredicate<T> extends Lambda {
      * @see #xor(ObjBiShortPredicate)
      */
     @Nonnull
-    default ObjBiShortPredicate<T> and(@Nonnull final ObjBiShortPredicate<? super T> other) {
+    default ObjBiShortPredicate<T> and(@Nonnull ObjBiShortPredicate<? super T> other) {
         Objects.requireNonNull(other);
         return (t, value1, value2) -> test(t, value1, value2) && other.test(t, value1, value2);
     }
@@ -755,7 +753,7 @@ public interface ObjBiShortPredicate<T> extends Lambda {
      * @see #xor(ObjBiShortPredicate)
      */
     @Nonnull
-    default ObjBiShortPredicate<T> or(@Nonnull final ObjBiShortPredicate<? super T> other) {
+    default ObjBiShortPredicate<T> or(@Nonnull ObjBiShortPredicate<? super T> other) {
         Objects.requireNonNull(other);
         return (t, value1, value2) -> test(t, value1, value2) || other.test(t, value1, value2);
     }
@@ -773,7 +771,7 @@ public interface ObjBiShortPredicate<T> extends Lambda {
      * @see #or(ObjBiShortPredicate)
      */
     @Nonnull
-    default ObjBiShortPredicate<T> xor(@Nonnull final ObjBiShortPredicate<? super T> other) {
+    default ObjBiShortPredicate<T> xor(@Nonnull ObjBiShortPredicate<? super T> other) {
         Objects.requireNonNull(other);
         return (t, value1, value2) -> test(t, value1, value2) ^ other.test(t, value1, value2);
     }
@@ -797,13 +795,13 @@ public interface ObjBiShortPredicate<T> extends Lambda {
         if (isMemoized()) {
             return this;
         } else {
-            final Map<Triple<T, Short, Short>, Boolean> cache = new ConcurrentHashMap<>();
-            final Object lock = new Object();
+            Map<Triple<T, Short, Short>, Boolean> cache = new ConcurrentHashMap<>();
+            Object lock = new Object();
             return (ObjBiShortPredicate<T> & Memoized) (t, value1, value2) -> {
-                final boolean returnValue;
+                boolean returnValue;
                 synchronized (lock) {
                     returnValue = cache.computeIfAbsent(Triple.of(t, value1, value2),
-                                                        key -> test(key.getLeft(), key.getMiddle(), key.getRight()));
+                            key -> test(key.getLeft(), key.getMiddle(), key.getRight()));
                 }
                 return returnValue;
             };
@@ -812,8 +810,8 @@ public interface ObjBiShortPredicate<T> extends Lambda {
 
     /**
      * Returns a composed {@link TriPredicate} which represents this {@link ObjBiShortPredicate}. Thereby the primitive
-     * input argument for this predicate is autoboxed. This method provides the possibility to use this
-     * {@code ObjBiShortPredicate} with methods provided by the {@code JDK}.
+     * input argument for this predicate is autoboxed. This method provides the possibility to use this {@code
+     * ObjBiShortPredicate} with methods provided by the {@code JDK}.
      *
      * @return A composed {@code TriPredicate} which represents this {@code ObjBiShortPredicate}.
      */

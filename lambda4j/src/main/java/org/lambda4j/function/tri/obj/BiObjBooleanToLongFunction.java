@@ -13,7 +13,32 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package org.lambda4j.function.tri.obj;
+
+import java.util.Map;
+import java.util.Objects;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.function.DoubleFunction;
+import java.util.function.DoublePredicate;
+import java.util.function.Function;
+import java.util.function.IntFunction;
+import java.util.function.IntPredicate;
+import java.util.function.LongConsumer;
+import java.util.function.LongFunction;
+import java.util.function.LongPredicate;
+import java.util.function.LongToDoubleFunction;
+import java.util.function.LongToIntFunction;
+import java.util.function.LongUnaryOperator;
+import java.util.function.Predicate;
+import java.util.function.ToLongFunction;
+
+import javax.annotation.Nonnegative;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
+import org.apache.commons.lang3.tuple.Pair;
+import org.apache.commons.lang3.tuple.Triple;
 
 import org.lambda4j.Lambda;
 import org.lambda4j.consumer.tri.obj.BiObjBooleanConsumer;
@@ -47,33 +72,9 @@ import org.lambda4j.predicate.FloatPredicate;
 import org.lambda4j.predicate.ShortPredicate;
 import org.lambda4j.predicate.tri.obj.BiObjBooleanPredicate;
 
-import org.apache.commons.lang3.tuple.Pair;
-import org.apache.commons.lang3.tuple.Triple;
-
-import javax.annotation.Nonnegative;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import java.util.Map;
-import java.util.Objects;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.function.DoubleFunction;
-import java.util.function.DoublePredicate;
-import java.util.function.Function;
-import java.util.function.IntFunction;
-import java.util.function.IntPredicate;
-import java.util.function.LongConsumer;
-import java.util.function.LongFunction;
-import java.util.function.LongPredicate;
-import java.util.function.LongToDoubleFunction;
-import java.util.function.LongToIntFunction;
-import java.util.function.LongUnaryOperator;
-import java.util.function.Predicate;
-import java.util.function.ToLongFunction;
-
 /**
  * Represents an operation that accepts two object-valued and one {@code boolean}-valued input argument and produces a
- * {@code long}-valued result.
- * This is a (reference, reference, boolean) specialization of {@link TriFunction}.
+ * {@code long}-valued result. This is a (reference, reference, boolean) specialization of {@link TriFunction}.
  * <p>
  * This is a {@link FunctionalInterface} whose functional method is {@link #applyAsLong(Object, Object, boolean)}.
  *
@@ -101,7 +102,7 @@ public interface BiObjBooleanToLongFunction<T, U> extends Lambda {
      * Expression</a>
      * @see <a href="https://docs.oracle.com/javase/tutorial/java/javaOO/methodreferences.html">Method Reference</a>
      */
-    static <T, U> BiObjBooleanToLongFunction<T, U> of(@Nullable final BiObjBooleanToLongFunction<T, U> expression) {
+    static <T, U> BiObjBooleanToLongFunction<T, U> of(@Nullable BiObjBooleanToLongFunction<T, U> expression) {
         return expression;
     }
 
@@ -117,7 +118,7 @@ public interface BiObjBooleanToLongFunction<T, U> extends Lambda {
      * @return The result from the given {@code BiObjBooleanToLongFunction}.
      * @throws NullPointerException If given argument is {@code null}
      */
-    static <T, U> long call(@Nonnull final BiObjBooleanToLongFunction<? super T, ? super U> function, T t, U u,
+    static <T, U> long call(@Nonnull BiObjBooleanToLongFunction<? super T, ? super U> function, T t, U u,
             boolean value) {
         Objects.requireNonNull(function);
         return function.applyAsLong(t, u, value);
@@ -135,7 +136,7 @@ public interface BiObjBooleanToLongFunction<T, U> extends Lambda {
      * @throws NullPointerException If given argument is {@code null}
      */
     @Nonnull
-    static <T, U> BiObjBooleanToLongFunction<T, U> onlyFirst(@Nonnull final ToLongFunction<? super T> function) {
+    static <T, U> BiObjBooleanToLongFunction<T, U> onlyFirst(@Nonnull ToLongFunction<? super T> function) {
         Objects.requireNonNull(function);
         return (t, u, value) -> function.applyAsLong(t);
     }
@@ -152,7 +153,7 @@ public interface BiObjBooleanToLongFunction<T, U> extends Lambda {
      * @throws NullPointerException If given argument is {@code null}
      */
     @Nonnull
-    static <T, U> BiObjBooleanToLongFunction<T, U> onlySecond(@Nonnull final ToLongFunction<? super U> function) {
+    static <T, U> BiObjBooleanToLongFunction<T, U> onlySecond(@Nonnull ToLongFunction<? super U> function) {
         Objects.requireNonNull(function);
         return (t, u, value) -> function.applyAsLong(u);
     }
@@ -169,7 +170,7 @@ public interface BiObjBooleanToLongFunction<T, U> extends Lambda {
      * @throws NullPointerException If given argument is {@code null}
      */
     @Nonnull
-    static <T, U> BiObjBooleanToLongFunction<T, U> onlyThird(@Nonnull final BooleanToLongFunction function) {
+    static <T, U> BiObjBooleanToLongFunction<T, U> onlyThird(@Nonnull BooleanToLongFunction function) {
         Objects.requireNonNull(function);
         return (t, u, value) -> function.applyAsLong(value);
     }
@@ -220,7 +221,7 @@ public interface BiObjBooleanToLongFunction<T, U> extends Lambda {
      */
     @Nonnull
     default ObjBooleanToLongFunction<U> papplyAsLong(T t) {
-        return (u, value) -> this.applyAsLong(t, u, value);
+        return (u, value) -> applyAsLong(t, u, value);
     }
 
     /**
@@ -233,7 +234,7 @@ public interface BiObjBooleanToLongFunction<T, U> extends Lambda {
      */
     @Nonnull
     default BooleanToLongFunction papplyAsLong(T t, U u) {
-        return (value) -> this.applyAsLong(t, u, value);
+        return value -> applyAsLong(t, u, value);
     }
 
     /**
@@ -244,7 +245,7 @@ public interface BiObjBooleanToLongFunction<T, U> extends Lambda {
      */
     @Nonnull
     default ToLongBiFunction2<T, U> papplyAsLong(boolean value) {
-        return (t, u) -> this.applyAsLong(t, u, value);
+        return (t, u) -> applyAsLong(t, u, value);
     }
 
     /**
@@ -256,7 +257,7 @@ public interface BiObjBooleanToLongFunction<T, U> extends Lambda {
      */
     @Nonnull
     default ToLongFunction2<U> papplyAsLong(T t, boolean value) {
-        return (u) -> this.applyAsLong(t, u, value);
+        return u -> applyAsLong(t, u, value);
     }
 
     /**
@@ -272,8 +273,8 @@ public interface BiObjBooleanToLongFunction<T, U> extends Lambda {
 
     /**
      * Returns a composed {@link ToLongTriFunction} that first applies the {@code before} functions to its input, and
-     * then applies this function to the result.
-     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
+     * then applies this function to the result. If evaluation of either operation throws an exception, it is relayed to
+     * the caller of the composed operation.
      *
      * @param <A> The type of the argument to the first given function, and of composed function
      * @param <B> The type of the argument to the second given function, and of composed function
@@ -287,8 +288,8 @@ public interface BiObjBooleanToLongFunction<T, U> extends Lambda {
      * @implSpec The input argument of this method is able to handle every type.
      */
     @Nonnull
-    default <A, B, C> ToLongTriFunction<A, B, C> compose(@Nonnull final Function<? super A, ? extends T> before1,
-            @Nonnull final Function<? super B, ? extends U> before2, @Nonnull final Predicate<? super C> before3) {
+    default <A, B, C> ToLongTriFunction<A, B, C> compose(@Nonnull Function<? super A, ? extends T> before1,
+            @Nonnull Function<? super B, ? extends U> before2, @Nonnull Predicate<? super C> before3) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         Objects.requireNonNull(before3);
@@ -307,25 +308,24 @@ public interface BiObjBooleanToLongFunction<T, U> extends Lambda {
      * @return A composed {@code TriBooleanToLongFunction} that first applies the {@code before} functions to its input,
      * and then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * boolean}.
      */
     @Nonnull
-    default TriBooleanToLongFunction composeFromBoolean(@Nonnull final BooleanFunction<? extends T> before1,
-            @Nonnull final BooleanFunction<? extends U> before2, @Nonnull final BooleanUnaryOperator before3) {
+    default TriBooleanToLongFunction composeFromBoolean(@Nonnull BooleanFunction<? extends T> before1,
+            @Nonnull BooleanFunction<? extends U> before2, @Nonnull BooleanUnaryOperator before3) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         Objects.requireNonNull(before3);
         return (value1, value2, value3) -> applyAsLong(before1.apply(value1), before2.apply(value2),
-                                                       before3.applyAsBoolean(value3));
+                before3.applyAsBoolean(value3));
     }
 
     /**
-     * Returns a composed {@link TriByteToLongFunction} that first applies the {@code before} functions to
-     * its input, and then applies this function to the result.
-     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
-     * This method is just convenience, to provide the ability to execute an operation which accepts {@code byte} input,
-     * before this primitive function is executed.
+     * Returns a composed {@link TriByteToLongFunction} that first applies the {@code before} functions to its input,
+     * and then applies this function to the result. If evaluation of either operation throws an exception, it is
+     * relayed to the caller of the composed operation. This method is just convenience, to provide the ability to
+     * execute an operation which accepts {@code byte} input, before this primitive function is executed.
      *
      * @param before1 The first function to apply before this function is applied
      * @param before2 The second function to apply before this function is applied
@@ -333,25 +333,24 @@ public interface BiObjBooleanToLongFunction<T, U> extends Lambda {
      * @return A composed {@code TriByteToLongFunction} that first applies the {@code before} functions to its input,
      * and then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * byte}.
      */
     @Nonnull
-    default TriByteToLongFunction composeFromByte(@Nonnull final ByteFunction<? extends T> before1,
-            @Nonnull final ByteFunction<? extends U> before2, @Nonnull final BytePredicate before3) {
+    default TriByteToLongFunction composeFromByte(@Nonnull ByteFunction<? extends T> before1,
+            @Nonnull ByteFunction<? extends U> before2, @Nonnull BytePredicate before3) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         Objects.requireNonNull(before3);
         return (value1, value2, value3) -> applyAsLong(before1.apply(value1), before2.apply(value2),
-                                                       before3.test(value3));
+                before3.test(value3));
     }
 
     /**
-     * Returns a composed {@link TriCharToLongFunction} that first applies the {@code before} functions to
-     * its input, and then applies this function to the result.
-     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
-     * This method is just convenience, to provide the ability to execute an operation which accepts {@code char} input,
-     * before this primitive function is executed.
+     * Returns a composed {@link TriCharToLongFunction} that first applies the {@code before} functions to its input,
+     * and then applies this function to the result. If evaluation of either operation throws an exception, it is
+     * relayed to the caller of the composed operation. This method is just convenience, to provide the ability to
+     * execute an operation which accepts {@code char} input, before this primitive function is executed.
      *
      * @param before1 The first function to apply before this function is applied
      * @param before2 The second function to apply before this function is applied
@@ -359,17 +358,17 @@ public interface BiObjBooleanToLongFunction<T, U> extends Lambda {
      * @return A composed {@code TriCharToLongFunction} that first applies the {@code before} functions to its input,
      * and then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * char}.
      */
     @Nonnull
-    default TriCharToLongFunction composeFromChar(@Nonnull final CharFunction<? extends T> before1,
-            @Nonnull final CharFunction<? extends U> before2, @Nonnull final CharPredicate before3) {
+    default TriCharToLongFunction composeFromChar(@Nonnull CharFunction<? extends T> before1,
+            @Nonnull CharFunction<? extends U> before2, @Nonnull CharPredicate before3) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         Objects.requireNonNull(before3);
         return (value1, value2, value3) -> applyAsLong(before1.apply(value1), before2.apply(value2),
-                                                       before3.test(value3));
+                before3.test(value3));
     }
 
     /**
@@ -384,17 +383,17 @@ public interface BiObjBooleanToLongFunction<T, U> extends Lambda {
      * @return A composed {@code TriDoubleToLongFunction} that first applies the {@code before} functions to its input,
      * and then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * double}.
      */
     @Nonnull
-    default TriDoubleToLongFunction composeFromDouble(@Nonnull final DoubleFunction<? extends T> before1,
-            @Nonnull final DoubleFunction<? extends U> before2, @Nonnull final DoublePredicate before3) {
+    default TriDoubleToLongFunction composeFromDouble(@Nonnull DoubleFunction<? extends T> before1,
+            @Nonnull DoubleFunction<? extends U> before2, @Nonnull DoublePredicate before3) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         Objects.requireNonNull(before3);
         return (value1, value2, value3) -> applyAsLong(before1.apply(value1), before2.apply(value2),
-                                                       before3.test(value3));
+                before3.test(value3));
     }
 
     /**
@@ -409,25 +408,24 @@ public interface BiObjBooleanToLongFunction<T, U> extends Lambda {
      * @return A composed {@code TriFloatToLongFunction} that first applies the {@code before} functions to its input,
      * and then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * float}.
      */
     @Nonnull
-    default TriFloatToLongFunction composeFromFloat(@Nonnull final FloatFunction<? extends T> before1,
-            @Nonnull final FloatFunction<? extends U> before2, @Nonnull final FloatPredicate before3) {
+    default TriFloatToLongFunction composeFromFloat(@Nonnull FloatFunction<? extends T> before1,
+            @Nonnull FloatFunction<? extends U> before2, @Nonnull FloatPredicate before3) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         Objects.requireNonNull(before3);
         return (value1, value2, value3) -> applyAsLong(before1.apply(value1), before2.apply(value2),
-                                                       before3.test(value3));
+                before3.test(value3));
     }
 
     /**
-     * Returns a composed {@link TriIntToLongFunction} that first applies the {@code before} functions to
-     * its input, and then applies this function to the result.
-     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
-     * This method is just convenience, to provide the ability to execute an operation which accepts {@code int} input,
-     * before this primitive function is executed.
+     * Returns a composed {@link TriIntToLongFunction} that first applies the {@code before} functions to its input, and
+     * then applies this function to the result. If evaluation of either operation throws an exception, it is relayed to
+     * the caller of the composed operation. This method is just convenience, to provide the ability to execute an
+     * operation which accepts {@code int} input, before this primitive function is executed.
      *
      * @param before1 The first function to apply before this function is applied
      * @param before2 The second function to apply before this function is applied
@@ -435,25 +433,24 @@ public interface BiObjBooleanToLongFunction<T, U> extends Lambda {
      * @return A composed {@code TriIntToLongFunction} that first applies the {@code before} functions to its input, and
      * then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * int}.
      */
     @Nonnull
-    default TriIntToLongFunction composeFromInt(@Nonnull final IntFunction<? extends T> before1,
-            @Nonnull final IntFunction<? extends U> before2, @Nonnull final IntPredicate before3) {
+    default TriIntToLongFunction composeFromInt(@Nonnull IntFunction<? extends T> before1,
+            @Nonnull IntFunction<? extends U> before2, @Nonnull IntPredicate before3) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         Objects.requireNonNull(before3);
         return (value1, value2, value3) -> applyAsLong(before1.apply(value1), before2.apply(value2),
-                                                       before3.test(value3));
+                before3.test(value3));
     }
 
     /**
-     * Returns a composed {@link LongTernaryOperator} that first applies the {@code before} functions to
-     * its input, and then applies this function to the result.
-     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
-     * This method is just convenience, to provide the ability to execute an operation which accepts {@code long} input,
-     * before this primitive function is executed.
+     * Returns a composed {@link LongTernaryOperator} that first applies the {@code before} functions to its input, and
+     * then applies this function to the result. If evaluation of either operation throws an exception, it is relayed to
+     * the caller of the composed operation. This method is just convenience, to provide the ability to execute an
+     * operation which accepts {@code long} input, before this primitive function is executed.
      *
      * @param before1 The first function to apply before this function is applied
      * @param before2 The second function to apply before this function is applied
@@ -461,17 +458,17 @@ public interface BiObjBooleanToLongFunction<T, U> extends Lambda {
      * @return A composed {@code LongTernaryOperator} that first applies the {@code before} functions to its input, and
      * then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * long}.
      */
     @Nonnull
-    default LongTernaryOperator composeFromLong(@Nonnull final LongFunction<? extends T> before1,
-            @Nonnull final LongFunction<? extends U> before2, @Nonnull final LongPredicate before3) {
+    default LongTernaryOperator composeFromLong(@Nonnull LongFunction<? extends T> before1,
+            @Nonnull LongFunction<? extends U> before2, @Nonnull LongPredicate before3) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         Objects.requireNonNull(before3);
         return (value1, value2, value3) -> applyAsLong(before1.apply(value1), before2.apply(value2),
-                                                       before3.test(value3));
+                before3.test(value3));
     }
 
     /**
@@ -486,17 +483,17 @@ public interface BiObjBooleanToLongFunction<T, U> extends Lambda {
      * @return A composed {@code TriShortToLongFunction} that first applies the {@code before} functions to its input,
      * and then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * short}.
      */
     @Nonnull
-    default TriShortToLongFunction composeFromShort(@Nonnull final ShortFunction<? extends T> before1,
-            @Nonnull final ShortFunction<? extends U> before2, @Nonnull final ShortPredicate before3) {
+    default TriShortToLongFunction composeFromShort(@Nonnull ShortFunction<? extends T> before1,
+            @Nonnull ShortFunction<? extends U> before2, @Nonnull ShortPredicate before3) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         Objects.requireNonNull(before3);
         return (value1, value2, value3) -> applyAsLong(before1.apply(value1), before2.apply(value2),
-                                                       before3.test(value3));
+                before3.test(value3));
     }
 
     /**
@@ -512,7 +509,7 @@ public interface BiObjBooleanToLongFunction<T, U> extends Lambda {
      * @implSpec The input argument of this method is able to return every type.
      */
     @Nonnull
-    default <S> BiObjBooleanFunction<T, U, S> andThen(@Nonnull final LongFunction<? extends S> after) {
+    default <S> BiObjBooleanFunction<T, U, S> andThen(@Nonnull LongFunction<? extends S> after) {
         Objects.requireNonNull(after);
         return (t, u, value) -> after.apply(applyAsLong(t, u, value));
     }
@@ -527,11 +524,11 @@ public interface BiObjBooleanToLongFunction<T, U> extends Lambda {
      * @return A composed {@code BiObjBooleanPredicate} that first applies this function to its input, and then applies
      * the {@code after} predicate to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * boolean}.
      */
     @Nonnull
-    default BiObjBooleanPredicate<T, U> andThenToBoolean(@Nonnull final LongPredicate after) {
+    default BiObjBooleanPredicate<T, U> andThenToBoolean(@Nonnull LongPredicate after) {
         Objects.requireNonNull(after);
         return (t, u, value) -> after.test(applyAsLong(t, u, value));
     }
@@ -546,11 +543,11 @@ public interface BiObjBooleanToLongFunction<T, U> extends Lambda {
      * @return A composed {@code BiObjBooleanToByteFunction} that first applies this function to its input, and then
      * applies the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * byte}.
      */
     @Nonnull
-    default BiObjBooleanToByteFunction<T, U> andThenToByte(@Nonnull final LongToByteFunction after) {
+    default BiObjBooleanToByteFunction<T, U> andThenToByte(@Nonnull LongToByteFunction after) {
         Objects.requireNonNull(after);
         return (t, u, value) -> after.applyAsByte(applyAsLong(t, u, value));
     }
@@ -565,11 +562,11 @@ public interface BiObjBooleanToLongFunction<T, U> extends Lambda {
      * @return A composed {@code BiObjBooleanToCharFunction} that first applies this function to its input, and then
      * applies the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * char}.
      */
     @Nonnull
-    default BiObjBooleanToCharFunction<T, U> andThenToChar(@Nonnull final LongToCharFunction after) {
+    default BiObjBooleanToCharFunction<T, U> andThenToChar(@Nonnull LongToCharFunction after) {
         Objects.requireNonNull(after);
         return (t, u, value) -> after.applyAsChar(applyAsLong(t, u, value));
     }
@@ -584,11 +581,11 @@ public interface BiObjBooleanToLongFunction<T, U> extends Lambda {
      * @return A composed {@code BiObjBooleanToDoubleFunction} that first applies this function to its input, and then
      * applies the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * double}.
      */
     @Nonnull
-    default BiObjBooleanToDoubleFunction<T, U> andThenToDouble(@Nonnull final LongToDoubleFunction after) {
+    default BiObjBooleanToDoubleFunction<T, U> andThenToDouble(@Nonnull LongToDoubleFunction after) {
         Objects.requireNonNull(after);
         return (t, u, value) -> after.applyAsDouble(applyAsLong(t, u, value));
     }
@@ -603,11 +600,11 @@ public interface BiObjBooleanToLongFunction<T, U> extends Lambda {
      * @return A composed {@code BiObjBooleanToFloatFunction} that first applies this function to its input, and then
      * applies the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * float}.
      */
     @Nonnull
-    default BiObjBooleanToFloatFunction<T, U> andThenToFloat(@Nonnull final LongToFloatFunction after) {
+    default BiObjBooleanToFloatFunction<T, U> andThenToFloat(@Nonnull LongToFloatFunction after) {
         Objects.requireNonNull(after);
         return (t, u, value) -> after.applyAsFloat(applyAsLong(t, u, value));
     }
@@ -622,11 +619,11 @@ public interface BiObjBooleanToLongFunction<T, U> extends Lambda {
      * @return A composed {@code BiObjBooleanToIntFunction} that first applies this function to its input, and then
      * applies the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * int}.
      */
     @Nonnull
-    default BiObjBooleanToIntFunction<T, U> andThenToInt(@Nonnull final LongToIntFunction after) {
+    default BiObjBooleanToIntFunction<T, U> andThenToInt(@Nonnull LongToIntFunction after) {
         Objects.requireNonNull(after);
         return (t, u, value) -> after.applyAsInt(applyAsLong(t, u, value));
     }
@@ -641,11 +638,11 @@ public interface BiObjBooleanToLongFunction<T, U> extends Lambda {
      * @return A composed {@code BiObjBooleanToLongFunction} that first applies this function to its input, and then
      * applies the {@code after} operator to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * long}.
      */
     @Nonnull
-    default BiObjBooleanToLongFunction<T, U> andThenToLong(@Nonnull final LongUnaryOperator after) {
+    default BiObjBooleanToLongFunction<T, U> andThenToLong(@Nonnull LongUnaryOperator after) {
         Objects.requireNonNull(after);
         return (t, u, value) -> after.applyAsLong(applyAsLong(t, u, value));
     }
@@ -660,11 +657,11 @@ public interface BiObjBooleanToLongFunction<T, U> extends Lambda {
      * @return A composed {@code BiObjBooleanToShortFunction} that first applies this function to its input, and then
      * applies the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * short}.
      */
     @Nonnull
-    default BiObjBooleanToShortFunction<T, U> andThenToShort(@Nonnull final LongToShortFunction after) {
+    default BiObjBooleanToShortFunction<T, U> andThenToShort(@Nonnull LongToShortFunction after) {
         Objects.requireNonNull(after);
         return (t, u, value) -> after.applyAsShort(applyAsLong(t, u, value));
     }
@@ -680,7 +677,7 @@ public interface BiObjBooleanToLongFunction<T, U> extends Lambda {
      * @throws NullPointerException If given argument is {@code null}
      */
     @Nonnull
-    default BiObjBooleanConsumer<T, U> consume(@Nonnull final LongConsumer consumer) {
+    default BiObjBooleanConsumer<T, U> consume(@Nonnull LongConsumer consumer) {
         Objects.requireNonNull(consumer);
         return (t, u, value) -> consumer.accept(applyAsLong(t, u, value));
     }
@@ -714,14 +711,14 @@ public interface BiObjBooleanToLongFunction<T, U> extends Lambda {
         if (isMemoized()) {
             return this;
         } else {
-            final Map<Triple<T, U, Boolean>, Long> cache = new ConcurrentHashMap<>();
-            final Object lock = new Object();
+            Map<Triple<T, U, Boolean>, Long> cache = new ConcurrentHashMap<>();
+            Object lock = new Object();
             return (BiObjBooleanToLongFunction<T, U> & Memoized) (t, u, value) -> {
-                final long returnValue;
+                long returnValue;
                 synchronized (lock) {
                     returnValue = cache.computeIfAbsent(Triple.of(t, u, value),
-                                                        key -> applyAsLong(key.getLeft(), key.getMiddle(),
-                                                                           key.getRight()));
+                            key -> applyAsLong(key.getLeft(), key.getMiddle(),
+                                    key.getRight()));
                 }
                 return returnValue;
             };

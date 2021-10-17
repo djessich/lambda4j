@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<!DOCTYPE suppressions PUBLIC "-//Checkstyle//DTD SuppressionFilter Configuration 1.2//EN"
+        "https://checkstyle.org/dtds/suppressions_1_2.dtd">
+<suppressions>
+    <!-- Suppress line length check for recover method -->
+    <suppress checks="LineLength" files="ThrowableBiObjBooleanToDoubleFunction" lines="827"/>
+    <suppress checks="LineLength" files="ThrowableBiObjBooleanFunction" lines="700"/>
+    <suppress checks="LineLength" files="ThrowableBiObjCharFunction" lines="699"/>
+    <suppress checks="LineLength" files="ThrowableBiObjIntFunction" lines="699"/>
+    <suppress checks="LineLength" files="ThrowableToByteTriFunction" lines="575"/>
+    <suppress checks="LineLength" files="ThrowableToCharTriFunction" lines="575"/>
+    <suppress checks="LineLength" files="ThrowableToDoubleTriFunction" lines="577"/>
+    <suppress checks="LineLength" files="ThrowableToFloatTriFunction" lines="576"/>
+    <suppress checks="LineLength" files="ThrowableToLongTriFunction" lines="575"/>
+    <suppress checks="LineLength" files="ThrowableToShortTriFunction" lines="576"/>
+    <suppress checks="LineLength" files="ThrowableTriFunction" lines="451"/>
+
+    <!-- Suppress nested if statements check for memoized method -->
+    <suppress checks="NestedIfDepth" files="BooleanSupplier2" lines="351"/>
+    <suppress checks="NestedIfDepth" files="ByteSupplier" lines="325"/>
+    <suppress checks="NestedIfDepth" files="CharSupplier" lines="325"/>
+    <suppress checks="NestedIfDepth" files="DoubleSupplier2" lines="328"/>
+    <suppress checks="NestedIfDepth" files="FloatSupplier" lines="325"/>
+    <suppress checks="NestedIfDepth" files="IntSupplier2" lines="328"/>
+    <suppress checks="NestedIfDepth" files="LongSupplier2" lines="328"/>
+    <suppress checks="NestedIfDepth" files="ShortSupplier" lines="325"/>
+    <suppress checks="NestedIfDepth" files="Supplier2" lines="187"/>
+    <suppress checks="NestedIfDepth" files="ThrowableBooleanSupplier" lines="375"/>
+    <suppress checks="NestedIfDepth" files="ThrowableByteSupplier" lines="327"/>
+    <suppress checks="NestedIfDepth" files="ThrowableCharSupplier" lines="327"/>
+    <suppress checks="NestedIfDepth" files="ThrowableDoubleSupplier" lines="346"/>
+    <suppress checks="NestedIfDepth" files="ThrowableFloatSupplier" lines="327"/>
+    <suppress checks="NestedIfDepth" files="ThrowableIntSupplier" lines="345"/>
+    <suppress checks="NestedIfDepth" files="ThrowableLongSupplier" lines="346"/>
+    <suppress checks="NestedIfDepth" files="ThrowableShortSupplier" lines="327"/>
+    <suppress checks="NestedIfDepth" files="ThrowableSupplier" lines="216"/>
+</suppressions>

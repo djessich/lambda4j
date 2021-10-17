@@ -13,7 +13,25 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package org.lambda4j.operator.unary;
+
+import java.util.Map;
+import java.util.Objects;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.function.DoubleToIntFunction;
+import java.util.function.IntConsumer;
+import java.util.function.IntFunction;
+import java.util.function.IntPredicate;
+import java.util.function.IntToDoubleFunction;
+import java.util.function.IntToLongFunction;
+import java.util.function.IntUnaryOperator;
+import java.util.function.LongToIntFunction;
+import java.util.function.ToIntFunction;
+
+import javax.annotation.Nonnegative;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import org.lambda4j.Lambda;
 import org.lambda4j.consumer.IntConsumer2;
@@ -34,25 +52,8 @@ import org.lambda4j.function.conversion.ShortToIntFunction;
 import org.lambda4j.function.to.ToIntFunction2;
 import org.lambda4j.predicate.IntPredicate2;
 
-import javax.annotation.Nonnegative;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import java.util.Map;
-import java.util.Objects;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.function.DoubleToIntFunction;
-import java.util.function.IntConsumer;
-import java.util.function.IntFunction;
-import java.util.function.IntPredicate;
-import java.util.function.IntToDoubleFunction;
-import java.util.function.IntToLongFunction;
-import java.util.function.IntUnaryOperator;
-import java.util.function.LongToIntFunction;
-import java.util.function.ToIntFunction;
-
 /**
- * Represents an operation that accepts one {@code int}-valued input argument and produces a
- * {@code int}-valued result.
+ * Represents an operation that accepts one {@code int}-valued input argument and produces a {@code int}-valued result.
  * This is a primitive specialization of {@link UnaryOperator2}.
  * <p>
  * This is a {@link FunctionalInterface} whose functional method is {@link #applyAsInt(int)}.
@@ -78,7 +79,7 @@ public interface IntUnaryOperator2 extends Lambda, IntUnaryOperator {
      * Expression</a>
      * @see <a href="https://docs.oracle.com/javase/tutorial/java/javaOO/methodreferences.html">Method Reference</a>
      */
-    static IntUnaryOperator2 of(@Nullable final IntUnaryOperator2 expression) {
+    static IntUnaryOperator2 of(@Nullable IntUnaryOperator2 expression) {
         return expression;
     }
 
@@ -90,7 +91,7 @@ public interface IntUnaryOperator2 extends Lambda, IntUnaryOperator {
      * @return The result from the given {@code IntUnaryOperator2}.
      * @throws NullPointerException If given argument is {@code null}
      */
-    static int call(@Nonnull final IntUnaryOperator operator, int value) {
+    static int call(@Nonnull IntUnaryOperator operator, int value) {
         Objects.requireNonNull(operator);
         return operator.applyAsInt(value);
     }
@@ -98,11 +99,11 @@ public interface IntUnaryOperator2 extends Lambda, IntUnaryOperator {
     /**
      * Returns a {@link IntUnaryOperator2} that always returns its input argument.
      *
-     * @return A {@code  IntUnaryOperator2} that always returns its input argument
+     * @return A {@code IntUnaryOperator2} that always returns its input argument
      */
     @Nonnull
     static IntUnaryOperator2 identity() {
-        return (value) -> value;
+        return value -> value;
     }
 
     /**
@@ -113,7 +114,7 @@ public interface IntUnaryOperator2 extends Lambda, IntUnaryOperator {
      */
     @Nonnull
     static IntUnaryOperator2 constant(int ret) {
-        return (value) -> ret;
+        return value -> ret;
     }
 
     /**
@@ -122,6 +123,7 @@ public interface IntUnaryOperator2 extends Lambda, IntUnaryOperator {
      * @param value The argument to the operator
      * @return The return value from the operator, which is its result.
      */
+    @Override
     int applyAsInt(int value);
 
     /**
@@ -136,9 +138,9 @@ public interface IntUnaryOperator2 extends Lambda, IntUnaryOperator {
     }
 
     /**
-     * Returns a composed {@link ToIntFunction2} that first applies the {@code before} function to its input, and
-     * then applies this operator to the result.
-     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
+     * Returns a composed {@link ToIntFunction2} that first applies the {@code before} function to its input, and then
+     * applies this operator to the result. If evaluation of either operation throws an exception, it is relayed to the
+     * caller of the composed operation.
      *
      * @param <A> The type of the argument to the given function, and of composed function
      * @param before The function to apply before this operator is applied
@@ -148,9 +150,9 @@ public interface IntUnaryOperator2 extends Lambda, IntUnaryOperator {
      * @implSpec The input argument of this method is able to handle every type.
      */
     @Nonnull
-    default <A> ToIntFunction2<A> compose(@Nonnull final ToIntFunction<? super A> before) {
+    default <A> ToIntFunction2<A> compose(@Nonnull ToIntFunction<? super A> before) {
         Objects.requireNonNull(before);
-        return (a) -> applyAsInt(before.applyAsInt(a));
+        return a -> applyAsInt(before.applyAsInt(a));
     }
 
     /**
@@ -163,53 +165,51 @@ public interface IntUnaryOperator2 extends Lambda, IntUnaryOperator {
      * @return A composed {@code BooleanToIntFunction} that first applies the {@code before} function to its input, and
      * then applies this operator to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * boolean}.
      */
     @Nonnull
-    default BooleanToIntFunction composeFromBoolean(@Nonnull final BooleanToIntFunction before) {
+    default BooleanToIntFunction composeFromBoolean(@Nonnull BooleanToIntFunction before) {
         Objects.requireNonNull(before);
-        return (value) -> applyAsInt(before.applyAsInt(value));
+        return value -> applyAsInt(before.applyAsInt(value));
     }
 
     /**
-     * Returns a composed {@link ByteToIntFunction} that first applies the {@code before} function to
-     * its input, and then applies this operator to the result.
-     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
-     * This method is just convenience, to provide the ability to execute an operation which accepts {@code byte} input,
-     * before this primitive operator is executed.
+     * Returns a composed {@link ByteToIntFunction} that first applies the {@code before} function to its input, and
+     * then applies this operator to the result. If evaluation of either operation throws an exception, it is relayed to
+     * the caller of the composed operation. This method is just convenience, to provide the ability to execute an
+     * operation which accepts {@code byte} input, before this primitive operator is executed.
      *
      * @param before The function to apply before this operator is applied
      * @return A composed {@code ByteToIntFunction} that first applies the {@code before} function to its input, and
      * then applies this operator to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * byte}.
      */
     @Nonnull
-    default ByteToIntFunction composeFromByte(@Nonnull final ByteToIntFunction before) {
+    default ByteToIntFunction composeFromByte(@Nonnull ByteToIntFunction before) {
         Objects.requireNonNull(before);
-        return (value) -> applyAsInt(before.applyAsInt(value));
+        return value -> applyAsInt(before.applyAsInt(value));
     }
 
     /**
-     * Returns a composed {@link CharToIntFunction} that first applies the {@code before} function to
-     * its input, and then applies this operator to the result.
-     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
-     * This method is just convenience, to provide the ability to execute an operation which accepts {@code char} input,
-     * before this primitive operator is executed.
+     * Returns a composed {@link CharToIntFunction} that first applies the {@code before} function to its input, and
+     * then applies this operator to the result. If evaluation of either operation throws an exception, it is relayed to
+     * the caller of the composed operation. This method is just convenience, to provide the ability to execute an
+     * operation which accepts {@code char} input, before this primitive operator is executed.
      *
      * @param before The function to apply before this operator is applied
      * @return A composed {@code CharToIntFunction} that first applies the {@code before} function to its input, and
      * then applies this operator to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * char}.
      */
     @Nonnull
-    default CharToIntFunction composeFromChar(@Nonnull final CharToIntFunction before) {
+    default CharToIntFunction composeFromChar(@Nonnull CharToIntFunction before) {
         Objects.requireNonNull(before);
-        return (value) -> applyAsInt(before.applyAsInt(value));
+        return value -> applyAsInt(before.applyAsInt(value));
     }
 
     /**
@@ -222,13 +222,13 @@ public interface IntUnaryOperator2 extends Lambda, IntUnaryOperator {
      * @return A composed {@code DoubleToIntFunction2} that first applies the {@code before} function to its input, and
      * then applies this operator to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * double}.
      */
     @Nonnull
-    default DoubleToIntFunction2 composeFromDouble(@Nonnull final DoubleToIntFunction before) {
+    default DoubleToIntFunction2 composeFromDouble(@Nonnull DoubleToIntFunction before) {
         Objects.requireNonNull(before);
-        return (value) -> applyAsInt(before.applyAsInt(value));
+        return value -> applyAsInt(before.applyAsInt(value));
     }
 
     /**
@@ -241,53 +241,51 @@ public interface IntUnaryOperator2 extends Lambda, IntUnaryOperator {
      * @return A composed {@code FloatToIntFunction} that first applies the {@code before} function to its input, and
      * then applies this operator to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * float}.
      */
     @Nonnull
-    default FloatToIntFunction composeFromFloat(@Nonnull final FloatToIntFunction before) {
+    default FloatToIntFunction composeFromFloat(@Nonnull FloatToIntFunction before) {
         Objects.requireNonNull(before);
-        return (value) -> applyAsInt(before.applyAsInt(value));
+        return value -> applyAsInt(before.applyAsInt(value));
     }
 
     /**
-     * Returns a composed {@link IntUnaryOperator2} that first applies the {@code before} operator to
-     * its input, and then applies this operator to the result.
-     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
-     * This method is just convenience, to provide the ability to execute an operation which accepts {@code int} input,
-     * before this primitive operator is executed.
+     * Returns a composed {@link IntUnaryOperator2} that first applies the {@code before} operator to its input, and
+     * then applies this operator to the result. If evaluation of either operation throws an exception, it is relayed to
+     * the caller of the composed operation. This method is just convenience, to provide the ability to execute an
+     * operation which accepts {@code int} input, before this primitive operator is executed.
      *
      * @param before The operator to apply before this operator is applied
      * @return A composed {@code IntUnaryOperator2} that first applies the {@code before} operator to its input, and
      * then applies this operator to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * int}.
      */
     @Nonnull
-    default IntUnaryOperator2 composeFromInt(@Nonnull final IntUnaryOperator before) {
+    default IntUnaryOperator2 composeFromInt(@Nonnull IntUnaryOperator before) {
         Objects.requireNonNull(before);
-        return (value) -> applyAsInt(before.applyAsInt(value));
+        return value -> applyAsInt(before.applyAsInt(value));
     }
 
     /**
-     * Returns a composed {@link LongToIntFunction2} that first applies the {@code before} function to
-     * its input, and then applies this operator to the result.
-     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
-     * This method is just convenience, to provide the ability to execute an operation which accepts {@code long} input,
-     * before this primitive operator is executed.
+     * Returns a composed {@link LongToIntFunction2} that first applies the {@code before} function to its input, and
+     * then applies this operator to the result. If evaluation of either operation throws an exception, it is relayed to
+     * the caller of the composed operation. This method is just convenience, to provide the ability to execute an
+     * operation which accepts {@code long} input, before this primitive operator is executed.
      *
      * @param before The function to apply before this operator is applied
      * @return A composed {@code LongToIntFunction2} that first applies the {@code before} function to its input, and
      * then applies this operator to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * long}.
      */
     @Nonnull
-    default LongToIntFunction2 composeFromLong(@Nonnull final LongToIntFunction before) {
+    default LongToIntFunction2 composeFromLong(@Nonnull LongToIntFunction before) {
         Objects.requireNonNull(before);
-        return (value) -> applyAsInt(before.applyAsInt(value));
+        return value -> applyAsInt(before.applyAsInt(value));
     }
 
     /**
@@ -300,19 +298,19 @@ public interface IntUnaryOperator2 extends Lambda, IntUnaryOperator {
      * @return A composed {@code ShortToIntFunction} that first applies the {@code before} function to its input, and
      * then applies this operator to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * short}.
      */
     @Nonnull
-    default ShortToIntFunction composeFromShort(@Nonnull final ShortToIntFunction before) {
+    default ShortToIntFunction composeFromShort(@Nonnull ShortToIntFunction before) {
         Objects.requireNonNull(before);
-        return (value) -> applyAsInt(before.applyAsInt(value));
+        return value -> applyAsInt(before.applyAsInt(value));
     }
 
     /**
      * Returns a composed {@link IntFunction2} that first applies this operator to its input, and then applies the
-     * {@code after} function to the result.
-     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
+     * {@code after} function to the result. If evaluation of either operation throws an exception, it is relayed to the
+     * caller of the composed operation.
      *
      * @param <S> The type of return value from the {@code after} function, and of the composed function
      * @param after The function to apply after this operator is applied
@@ -322,9 +320,9 @@ public interface IntUnaryOperator2 extends Lambda, IntUnaryOperator {
      * @implSpec The input argument of this method is able to return every type.
      */
     @Nonnull
-    default <S> IntFunction2<S> andThen(@Nonnull final IntFunction<? extends S> after) {
+    default <S> IntFunction2<S> andThen(@Nonnull IntFunction<? extends S> after) {
         Objects.requireNonNull(after);
-        return (value) -> after.apply(applyAsInt(value));
+        return value -> after.apply(applyAsInt(value));
     }
 
     /**
@@ -337,13 +335,13 @@ public interface IntUnaryOperator2 extends Lambda, IntUnaryOperator {
      * @return A composed {@code IntPredicate2} that first applies this operator to its input, and then applies the
      * {@code after} predicate to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * boolean}.
      */
     @Nonnull
-    default IntPredicate2 andThenToBoolean(@Nonnull final IntPredicate after) {
+    default IntPredicate2 andThenToBoolean(@Nonnull IntPredicate after) {
         Objects.requireNonNull(after);
-        return (value) -> after.test(applyAsInt(value));
+        return value -> after.test(applyAsInt(value));
     }
 
     /**
@@ -356,13 +354,13 @@ public interface IntUnaryOperator2 extends Lambda, IntUnaryOperator {
      * @return A composed {@code IntToByteFunction} that first applies this operator to its input, and then applies the
      * {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * byte}.
      */
     @Nonnull
-    default IntToByteFunction andThenToByte(@Nonnull final IntToByteFunction after) {
+    default IntToByteFunction andThenToByte(@Nonnull IntToByteFunction after) {
         Objects.requireNonNull(after);
-        return (value) -> after.applyAsByte(applyAsInt(value));
+        return value -> after.applyAsByte(applyAsInt(value));
     }
 
     /**
@@ -375,13 +373,13 @@ public interface IntUnaryOperator2 extends Lambda, IntUnaryOperator {
      * @return A composed {@code IntToCharFunction} that first applies this operator to its input, and then applies the
      * {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * char}.
      */
     @Nonnull
-    default IntToCharFunction andThenToChar(@Nonnull final IntToCharFunction after) {
+    default IntToCharFunction andThenToChar(@Nonnull IntToCharFunction after) {
         Objects.requireNonNull(after);
-        return (value) -> after.applyAsChar(applyAsInt(value));
+        return value -> after.applyAsChar(applyAsInt(value));
     }
 
     /**
@@ -394,13 +392,13 @@ public interface IntUnaryOperator2 extends Lambda, IntUnaryOperator {
      * @return A composed {@code IntToDoubleFunction2} that first applies this operator to its input, and then applies
      * the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * double}.
      */
     @Nonnull
-    default IntToDoubleFunction2 andThenToDouble(@Nonnull final IntToDoubleFunction after) {
+    default IntToDoubleFunction2 andThenToDouble(@Nonnull IntToDoubleFunction after) {
         Objects.requireNonNull(after);
-        return (value) -> after.applyAsDouble(applyAsInt(value));
+        return value -> after.applyAsDouble(applyAsInt(value));
     }
 
     /**
@@ -413,13 +411,13 @@ public interface IntUnaryOperator2 extends Lambda, IntUnaryOperator {
      * @return A composed {@code IntToFloatFunction} that first applies this operator to its input, and then applies the
      * {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * float}.
      */
     @Nonnull
-    default IntToFloatFunction andThenToFloat(@Nonnull final IntToFloatFunction after) {
+    default IntToFloatFunction andThenToFloat(@Nonnull IntToFloatFunction after) {
         Objects.requireNonNull(after);
-        return (value) -> after.applyAsFloat(applyAsInt(value));
+        return value -> after.applyAsFloat(applyAsInt(value));
     }
 
     /**
@@ -432,13 +430,13 @@ public interface IntUnaryOperator2 extends Lambda, IntUnaryOperator {
      * @return A composed {@code IntUnaryOperator2} that first applies this operator to its input, and then applies the
      * {@code after} operator to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * int}.
      */
     @Nonnull
-    default IntUnaryOperator2 andThenToInt(@Nonnull final IntUnaryOperator after) {
+    default IntUnaryOperator2 andThenToInt(@Nonnull IntUnaryOperator after) {
         Objects.requireNonNull(after);
-        return (value) -> after.applyAsInt(applyAsInt(value));
+        return value -> after.applyAsInt(applyAsInt(value));
     }
 
     /**
@@ -451,13 +449,13 @@ public interface IntUnaryOperator2 extends Lambda, IntUnaryOperator {
      * @return A composed {@code IntToLongFunction2} that first applies this operator to its input, and then applies the
      * {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * long}.
      */
     @Nonnull
-    default IntToLongFunction2 andThenToLong(@Nonnull final IntToLongFunction after) {
+    default IntToLongFunction2 andThenToLong(@Nonnull IntToLongFunction after) {
         Objects.requireNonNull(after);
-        return (value) -> after.applyAsLong(applyAsInt(value));
+        return value -> after.applyAsLong(applyAsInt(value));
     }
 
     /**
@@ -470,13 +468,13 @@ public interface IntUnaryOperator2 extends Lambda, IntUnaryOperator {
      * @return A composed {@code IntToShortFunction} that first applies this operator to its input, and then applies the
      * {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * short}.
      */
     @Nonnull
-    default IntToShortFunction andThenToShort(@Nonnull final IntToShortFunction after) {
+    default IntToShortFunction andThenToShort(@Nonnull IntToShortFunction after) {
         Objects.requireNonNull(after);
-        return (value) -> after.applyAsShort(applyAsInt(value));
+        return value -> after.applyAsShort(applyAsInt(value));
     }
 
     /**
@@ -490,9 +488,9 @@ public interface IntUnaryOperator2 extends Lambda, IntUnaryOperator {
      * @throws NullPointerException If given argument is {@code null}
      */
     @Nonnull
-    default IntConsumer2 consume(@Nonnull final IntConsumer consumer) {
+    default IntConsumer2 consume(@Nonnull IntConsumer consumer) {
         Objects.requireNonNull(consumer);
-        return (value) -> consumer.accept(applyAsInt(value));
+        return value -> consumer.accept(applyAsInt(value));
     }
 
     /**
@@ -514,10 +512,10 @@ public interface IntUnaryOperator2 extends Lambda, IntUnaryOperator {
         if (isMemoized()) {
             return this;
         } else {
-            final Map<Integer, Integer> cache = new ConcurrentHashMap<>();
-            final Object lock = new Object();
-            return (IntUnaryOperator2 & Memoized) (value) -> {
-                final int returnValue;
+            Map<Integer, Integer> cache = new ConcurrentHashMap<>();
+            Object lock = new Object();
+            return (IntUnaryOperator2 & Memoized) value -> {
+                int returnValue;
                 synchronized (lock) {
                     returnValue = cache.computeIfAbsent(value, this::applyAsInt);
                 }
@@ -528,8 +526,8 @@ public interface IntUnaryOperator2 extends Lambda, IntUnaryOperator {
 
     /**
      * Returns a composed {@link UnaryOperator2} which represents this {@link IntUnaryOperator2}. Thereby the primitive
-     * input argument for this operator is autoboxed. This method provides the possibility to use this
-     * {@code IntUnaryOperator2} with methods provided by the {@code JDK}.
+     * input argument for this operator is autoboxed. This method provides the possibility to use this {@code
+     * IntUnaryOperator2} with methods provided by the {@code JDK}.
      *
      * @return A composed {@code UnaryOperator2} which represents this {@code IntUnaryOperator2}.
      */

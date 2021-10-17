@@ -13,7 +13,20 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package org.lambda4j.predicate.tri;
+
+import java.util.Map;
+import java.util.Objects;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.function.Function;
+import java.util.function.Predicate;
+
+import javax.annotation.Nonnegative;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
+import org.apache.commons.lang3.tuple.Triple;
 
 import org.lambda4j.Lambda;
 import org.lambda4j.consumer.BooleanConsumer;
@@ -37,17 +50,6 @@ import org.lambda4j.function.tri.to.ToShortTriFunction;
 import org.lambda4j.operator.unary.BooleanUnaryOperator;
 import org.lambda4j.predicate.Predicate2;
 import org.lambda4j.predicate.bi.BiPredicate2;
-
-import org.apache.commons.lang3.tuple.Triple;
-
-import javax.annotation.Nonnegative;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import java.util.Map;
-import java.util.Objects;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.function.Function;
-import java.util.function.Predicate;
 
 /**
  * Represents an predicate (boolean-valued function) of three input arguments.
@@ -79,7 +81,7 @@ public interface TriPredicate<T, U, V> extends Lambda {
      * Expression</a>
      * @see <a href="https://docs.oracle.com/javase/tutorial/java/javaOO/methodreferences.html">Method Reference</a>
      */
-    static <T, U, V> TriPredicate<T, U, V> of(@Nullable final TriPredicate<T, U, V> expression) {
+    static <T, U, V> TriPredicate<T, U, V> of(@Nullable TriPredicate<T, U, V> expression) {
         return expression;
     }
 
@@ -96,7 +98,7 @@ public interface TriPredicate<T, U, V> extends Lambda {
      * @return The result from the given {@code TriPredicate}.
      * @throws NullPointerException If given argument is {@code null}
      */
-    static <T, U, V> boolean call(@Nonnull final TriPredicate<? super T, ? super U, ? super V> predicate, T t, U u,
+    static <T, U, V> boolean call(@Nonnull TriPredicate<? super T, ? super U, ? super V> predicate, T t, U u,
             V v) {
         Objects.requireNonNull(predicate);
         return predicate.test(t, u, v);
@@ -115,7 +117,7 @@ public interface TriPredicate<T, U, V> extends Lambda {
      * @throws NullPointerException If given argument is {@code null}
      */
     @Nonnull
-    static <T, U, V> TriPredicate<T, U, V> onlyFirst(@Nonnull final Predicate<? super T> predicate) {
+    static <T, U, V> TriPredicate<T, U, V> onlyFirst(@Nonnull Predicate<? super T> predicate) {
         Objects.requireNonNull(predicate);
         return (t, u, v) -> predicate.test(t);
     }
@@ -133,7 +135,7 @@ public interface TriPredicate<T, U, V> extends Lambda {
      * @throws NullPointerException If given argument is {@code null}
      */
     @Nonnull
-    static <T, U, V> TriPredicate<T, U, V> onlySecond(@Nonnull final Predicate<? super U> predicate) {
+    static <T, U, V> TriPredicate<T, U, V> onlySecond(@Nonnull Predicate<? super U> predicate) {
         Objects.requireNonNull(predicate);
         return (t, u, v) -> predicate.test(u);
     }
@@ -151,7 +153,7 @@ public interface TriPredicate<T, U, V> extends Lambda {
      * @throws NullPointerException If given argument is {@code null}
      */
     @Nonnull
-    static <T, U, V> TriPredicate<T, U, V> onlyThird(@Nonnull final Predicate<? super V> predicate) {
+    static <T, U, V> TriPredicate<T, U, V> onlyThird(@Nonnull Predicate<? super V> predicate) {
         Objects.requireNonNull(predicate);
         return (t, u, v) -> predicate.test(v);
     }
@@ -214,7 +216,7 @@ public interface TriPredicate<T, U, V> extends Lambda {
     @Nonnull
     static <T, U, V> TriPredicate<T, U, V> isEqual(@Nullable Object target1, @Nullable Object target2,
             @Nullable Object target3) {
-        return (t, u, v) -> (t == null ? target1 == null : t.equals(target1)) && (u == null
+        return (t, u, v) -> t == null ? target1 == null : t.equals(target1) && (u == null
                 ? target2 == null
                 : u.equals(target2)) && (v == null ? target3 == null : v.equals(target3));
     }
@@ -250,7 +252,7 @@ public interface TriPredicate<T, U, V> extends Lambda {
      */
     @Nonnull
     default BiPredicate2<U, V> ptest(T t) {
-        return (u, v) -> this.test(t, u, v);
+        return (u, v) -> test(t, u, v);
     }
 
     /**
@@ -262,7 +264,7 @@ public interface TriPredicate<T, U, V> extends Lambda {
      */
     @Nonnull
     default Predicate2<V> ptest(T t, U u) {
-        return (v) -> this.test(t, u, v);
+        return v -> test(t, u, v);
     }
 
     /**
@@ -277,9 +279,9 @@ public interface TriPredicate<T, U, V> extends Lambda {
     }
 
     /**
-     * Returns a composed {@link TriPredicate} that first applies the {@code before} functions to its input, and
-     * then applies this predicate to the result.
-     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
+     * Returns a composed {@link TriPredicate} that first applies the {@code before} functions to its input, and then
+     * applies this predicate to the result. If evaluation of either operation throws an exception, it is relayed to the
+     * caller of the composed operation.
      *
      * @param <A> The type of the argument to the first given function, and of composed predicate
      * @param <B> The type of the argument to the second given function, and of composed predicate
@@ -293,9 +295,9 @@ public interface TriPredicate<T, U, V> extends Lambda {
      * @implSpec The input argument of this method is able to handle every type.
      */
     @Nonnull
-    default <A, B, C> TriPredicate<A, B, C> compose(@Nonnull final Function<? super A, ? extends T> before1,
-            @Nonnull final Function<? super B, ? extends U> before2,
-            @Nonnull final Function<? super C, ? extends V> before3) {
+    default <A, B, C> TriPredicate<A, B, C> compose(@Nonnull Function<? super A, ? extends T> before1,
+            @Nonnull Function<? super B, ? extends U> before2,
+            @Nonnull Function<? super C, ? extends V> before3) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         Objects.requireNonNull(before3);
@@ -304,8 +306,8 @@ public interface TriPredicate<T, U, V> extends Lambda {
 
     /**
      * Returns a composed {@link TriFunction} that first applies this predicate to its input, and then applies the
-     * {@code after} function to the result.
-     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
+     * {@code after} function to the result. If evaluation of either operation throws an exception, it is relayed to the
+     * caller of the composed operation.
      *
      * @param <S> The type of return value from the {@code after} function, and of the composed function
      * @param after The function to apply after this predicate is applied
@@ -315,7 +317,7 @@ public interface TriPredicate<T, U, V> extends Lambda {
      * @implSpec The input argument of this method is able to return every type.
      */
     @Nonnull
-    default <S> TriFunction<T, U, V, S> andThen(@Nonnull final BooleanFunction<? extends S> after) {
+    default <S> TriFunction<T, U, V, S> andThen(@Nonnull BooleanFunction<? extends S> after) {
         Objects.requireNonNull(after);
         return (t, u, v) -> after.apply(test(t, u, v));
     }
@@ -330,11 +332,11 @@ public interface TriPredicate<T, U, V> extends Lambda {
      * @return A composed {@code TriPredicate} that first applies this predicate to its input, and then applies the
      * {@code after} operator to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * boolean}.
      */
     @Nonnull
-    default TriPredicate<T, U, V> andThenToBoolean(@Nonnull final BooleanUnaryOperator after) {
+    default TriPredicate<T, U, V> andThenToBoolean(@Nonnull BooleanUnaryOperator after) {
         Objects.requireNonNull(after);
         return (t, u, v) -> after.applyAsBoolean(test(t, u, v));
     }
@@ -349,11 +351,11 @@ public interface TriPredicate<T, U, V> extends Lambda {
      * @return A composed {@code ToByteTriFunction} that first applies this predicate to its input, and then applies the
      * {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * byte}.
      */
     @Nonnull
-    default ToByteTriFunction<T, U, V> andThenToByte(@Nonnull final BooleanToByteFunction after) {
+    default ToByteTriFunction<T, U, V> andThenToByte(@Nonnull BooleanToByteFunction after) {
         Objects.requireNonNull(after);
         return (t, u, v) -> after.applyAsByte(test(t, u, v));
     }
@@ -368,11 +370,11 @@ public interface TriPredicate<T, U, V> extends Lambda {
      * @return A composed {@code ToCharTriFunction} that first applies this predicate to its input, and then applies the
      * {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * char}.
      */
     @Nonnull
-    default ToCharTriFunction<T, U, V> andThenToChar(@Nonnull final BooleanToCharFunction after) {
+    default ToCharTriFunction<T, U, V> andThenToChar(@Nonnull BooleanToCharFunction after) {
         Objects.requireNonNull(after);
         return (t, u, v) -> after.applyAsChar(test(t, u, v));
     }
@@ -387,11 +389,11 @@ public interface TriPredicate<T, U, V> extends Lambda {
      * @return A composed {@code ToDoubleTriFunction} that first applies this predicate to its input, and then applies
      * the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * double}.
      */
     @Nonnull
-    default ToDoubleTriFunction<T, U, V> andThenToDouble(@Nonnull final BooleanToDoubleFunction after) {
+    default ToDoubleTriFunction<T, U, V> andThenToDouble(@Nonnull BooleanToDoubleFunction after) {
         Objects.requireNonNull(after);
         return (t, u, v) -> after.applyAsDouble(test(t, u, v));
     }
@@ -406,11 +408,11 @@ public interface TriPredicate<T, U, V> extends Lambda {
      * @return A composed {@code ToFloatTriFunction} that first applies this predicate to its input, and then applies
      * the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * float}.
      */
     @Nonnull
-    default ToFloatTriFunction<T, U, V> andThenToFloat(@Nonnull final BooleanToFloatFunction after) {
+    default ToFloatTriFunction<T, U, V> andThenToFloat(@Nonnull BooleanToFloatFunction after) {
         Objects.requireNonNull(after);
         return (t, u, v) -> after.applyAsFloat(test(t, u, v));
     }
@@ -425,11 +427,11 @@ public interface TriPredicate<T, U, V> extends Lambda {
      * @return A composed {@code ToIntTriFunction} that first applies this predicate to its input, and then applies the
      * {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * int}.
      */
     @Nonnull
-    default ToIntTriFunction<T, U, V> andThenToInt(@Nonnull final BooleanToIntFunction after) {
+    default ToIntTriFunction<T, U, V> andThenToInt(@Nonnull BooleanToIntFunction after) {
         Objects.requireNonNull(after);
         return (t, u, v) -> after.applyAsInt(test(t, u, v));
     }
@@ -444,11 +446,11 @@ public interface TriPredicate<T, U, V> extends Lambda {
      * @return A composed {@code ToLongTriFunction} that first applies this predicate to its input, and then applies the
      * {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * long}.
      */
     @Nonnull
-    default ToLongTriFunction<T, U, V> andThenToLong(@Nonnull final BooleanToLongFunction after) {
+    default ToLongTriFunction<T, U, V> andThenToLong(@Nonnull BooleanToLongFunction after) {
         Objects.requireNonNull(after);
         return (t, u, v) -> after.applyAsLong(test(t, u, v));
     }
@@ -463,11 +465,11 @@ public interface TriPredicate<T, U, V> extends Lambda {
      * @return A composed {@code ToShortTriFunction} that first applies this predicate to its input, and then applies
      * the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * short}.
      */
     @Nonnull
-    default ToShortTriFunction<T, U, V> andThenToShort(@Nonnull final BooleanToShortFunction after) {
+    default ToShortTriFunction<T, U, V> andThenToShort(@Nonnull BooleanToShortFunction after) {
         Objects.requireNonNull(after);
         return (t, u, v) -> after.applyAsShort(test(t, u, v));
     }
@@ -483,7 +485,7 @@ public interface TriPredicate<T, U, V> extends Lambda {
      * @throws NullPointerException If given argument is {@code null}
      */
     @Nonnull
-    default TriConsumer<T, U, V> consume(@Nonnull final BooleanConsumer consumer) {
+    default TriConsumer<T, U, V> consume(@Nonnull BooleanConsumer consumer) {
         Objects.requireNonNull(consumer);
         return (t, u, v) -> consumer.accept(test(t, u, v));
     }
@@ -514,7 +516,7 @@ public interface TriPredicate<T, U, V> extends Lambda {
      * @see #xor(TriPredicate)
      */
     @Nonnull
-    default TriPredicate<T, U, V> and(@Nonnull final TriPredicate<? super T, ? super U, ? super V> other) {
+    default TriPredicate<T, U, V> and(@Nonnull TriPredicate<? super T, ? super U, ? super V> other) {
         Objects.requireNonNull(other);
         return (t, u, v) -> test(t, u, v) && other.test(t, u, v);
     }
@@ -535,7 +537,7 @@ public interface TriPredicate<T, U, V> extends Lambda {
      * @see #xor(TriPredicate)
      */
     @Nonnull
-    default TriPredicate<T, U, V> or(@Nonnull final TriPredicate<? super T, ? super U, ? super V> other) {
+    default TriPredicate<T, U, V> or(@Nonnull TriPredicate<? super T, ? super U, ? super V> other) {
         Objects.requireNonNull(other);
         return (t, u, v) -> test(t, u, v) || other.test(t, u, v);
     }
@@ -553,7 +555,7 @@ public interface TriPredicate<T, U, V> extends Lambda {
      * @see #or(TriPredicate)
      */
     @Nonnull
-    default TriPredicate<T, U, V> xor(@Nonnull final TriPredicate<? super T, ? super U, ? super V> other) {
+    default TriPredicate<T, U, V> xor(@Nonnull TriPredicate<? super T, ? super U, ? super V> other) {
         Objects.requireNonNull(other);
         return (t, u, v) -> test(t, u, v) ^ other.test(t, u, v);
     }
@@ -597,13 +599,13 @@ public interface TriPredicate<T, U, V> extends Lambda {
         if (isMemoized()) {
             return this;
         } else {
-            final Map<Triple<T, U, V>, Boolean> cache = new ConcurrentHashMap<>();
-            final Object lock = new Object();
+            Map<Triple<T, U, V>, Boolean> cache = new ConcurrentHashMap<>();
+            Object lock = new Object();
             return (TriPredicate<T, U, V> & Memoized) (t, u, v) -> {
-                final boolean returnValue;
+                boolean returnValue;
                 synchronized (lock) {
                     returnValue = cache.computeIfAbsent(Triple.of(t, u, v),
-                                                        key -> test(key.getLeft(), key.getMiddle(), key.getRight()));
+                            key -> test(key.getLeft(), key.getMiddle(), key.getRight()));
                 }
                 return returnValue;
             };

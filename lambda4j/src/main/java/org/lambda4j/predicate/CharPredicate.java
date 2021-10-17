@@ -13,7 +13,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package org.lambda4j.predicate;
+
+import java.util.Map;
+import java.util.Objects;
+import java.util.concurrent.ConcurrentHashMap;
+
+import javax.annotation.Nonnegative;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import org.lambda4j.Lambda;
 import org.lambda4j.consumer.BooleanConsumer;
@@ -43,16 +52,9 @@ import org.lambda4j.function.to.ToCharFunction;
 import org.lambda4j.operator.unary.BooleanUnaryOperator;
 import org.lambda4j.operator.unary.CharUnaryOperator;
 
-import javax.annotation.Nonnegative;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import java.util.Map;
-import java.util.Objects;
-import java.util.concurrent.ConcurrentHashMap;
-
 /**
- * Represents an predicate (boolean-valued function) of one {@code char}-valued input argument.
- * This is a primitive specialization of {@link Predicate2}.
+ * Represents an predicate (boolean-valued function) of one {@code char}-valued input argument. This is a primitive
+ * specialization of {@link Predicate2}.
  * <p>
  * This is a {@link FunctionalInterface} whose functional method is {@link #test(char)}.
  *
@@ -75,7 +77,7 @@ public interface CharPredicate extends Lambda {
      * Expression</a>
      * @see <a href="https://docs.oracle.com/javase/tutorial/java/javaOO/methodreferences.html">Method Reference</a>
      */
-    static CharPredicate of(@Nullable final CharPredicate expression) {
+    static CharPredicate of(@Nullable CharPredicate expression) {
         return expression;
     }
 
@@ -87,7 +89,7 @@ public interface CharPredicate extends Lambda {
      * @return The result from the given {@code CharPredicate}.
      * @throws NullPointerException If given argument is {@code null}
      */
-    static boolean call(@Nonnull final CharPredicate predicate, char value) {
+    static boolean call(@Nonnull CharPredicate predicate, char value) {
         Objects.requireNonNull(predicate);
         return predicate.test(value);
     }
@@ -100,7 +102,7 @@ public interface CharPredicate extends Lambda {
      */
     @Nonnull
     static CharPredicate constant(boolean ret) {
-        return (value) -> ret;
+        return value -> ret;
     }
 
     /**
@@ -111,7 +113,7 @@ public interface CharPredicate extends Lambda {
      */
     @Nonnull
     static CharPredicate alwaysTrue() {
-        return (value) -> true;
+        return value -> true;
     }
 
     /**
@@ -122,7 +124,7 @@ public interface CharPredicate extends Lambda {
      */
     @Nonnull
     static CharPredicate alwaysFalse() {
-        return (value) -> false;
+        return value -> false;
     }
 
     /**
@@ -135,7 +137,7 @@ public interface CharPredicate extends Lambda {
      */
     @Nonnull
     static CharPredicate isEqual(char target) {
-        return (value) -> (value == target);
+        return value -> value == target;
     }
 
     /**
@@ -158,9 +160,9 @@ public interface CharPredicate extends Lambda {
     }
 
     /**
-     * Returns a composed {@link Predicate2} that first applies the {@code before} function to its input, and
-     * then applies this predicate to the result.
-     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
+     * Returns a composed {@link Predicate2} that first applies the {@code before} function to its input, and then
+     * applies this predicate to the result. If evaluation of either operation throws an exception, it is relayed to the
+     * caller of the composed operation.
      *
      * @param <A> The type of the argument to the given function, and of composed predicate
      * @param before The function to apply before this predicate is applied
@@ -170,9 +172,9 @@ public interface CharPredicate extends Lambda {
      * @implSpec The input argument of this method is able to handle every type.
      */
     @Nonnull
-    default <A> Predicate2<A> compose(@Nonnull final ToCharFunction<? super A> before) {
+    default <A> Predicate2<A> compose(@Nonnull ToCharFunction<? super A> before) {
         Objects.requireNonNull(before);
-        return (a) -> test(before.applyAsChar(a));
+        return a -> test(before.applyAsChar(a));
     }
 
     /**
@@ -185,53 +187,51 @@ public interface CharPredicate extends Lambda {
      * @return A composed {@code BooleanUnaryOperator} that first applies the {@code before} function to its input, and
      * then applies this predicate to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * boolean}.
      */
     @Nonnull
-    default BooleanUnaryOperator composeFromBoolean(@Nonnull final BooleanToCharFunction before) {
+    default BooleanUnaryOperator composeFromBoolean(@Nonnull BooleanToCharFunction before) {
         Objects.requireNonNull(before);
-        return (value) -> test(before.applyAsChar(value));
+        return value -> test(before.applyAsChar(value));
     }
 
     /**
-     * Returns a composed {@link BytePredicate} that first applies the {@code before} function to
-     * its input, and then applies this predicate to the result.
-     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
-     * This method is just convenience, to provide the ability to execute an operation which accepts {@code byte} input,
-     * before this primitive predicate is executed.
+     * Returns a composed {@link BytePredicate} that first applies the {@code before} function to its input, and then
+     * applies this predicate to the result. If evaluation of either operation throws an exception, it is relayed to the
+     * caller of the composed operation. This method is just convenience, to provide the ability to execute an operation
+     * which accepts {@code byte} input, before this primitive predicate is executed.
      *
      * @param before The function to apply before this predicate is applied
      * @return A composed {@code BytePredicate} that first applies the {@code before} function to its input, and then
      * applies this predicate to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * byte}.
      */
     @Nonnull
-    default BytePredicate composeFromByte(@Nonnull final ByteToCharFunction before) {
+    default BytePredicate composeFromByte(@Nonnull ByteToCharFunction before) {
         Objects.requireNonNull(before);
-        return (value) -> test(before.applyAsChar(value));
+        return value -> test(before.applyAsChar(value));
     }
 
     /**
-     * Returns a composed {@link CharPredicate} that first applies the {@code before} operator to
-     * its input, and then applies this predicate to the result.
-     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
-     * This method is just convenience, to provide the ability to execute an operation which accepts {@code char} input,
-     * before this primitive predicate is executed.
+     * Returns a composed {@link CharPredicate} that first applies the {@code before} operator to its input, and then
+     * applies this predicate to the result. If evaluation of either operation throws an exception, it is relayed to the
+     * caller of the composed operation. This method is just convenience, to provide the ability to execute an operation
+     * which accepts {@code char} input, before this primitive predicate is executed.
      *
      * @param before The operator to apply before this predicate is applied
      * @return A composed {@code CharPredicate} that first applies the {@code before} operator to its input, and then
      * applies this predicate to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * char}.
      */
     @Nonnull
-    default CharPredicate composeFromChar(@Nonnull final CharUnaryOperator before) {
+    default CharPredicate composeFromChar(@Nonnull CharUnaryOperator before) {
         Objects.requireNonNull(before);
-        return (value) -> test(before.applyAsChar(value));
+        return value -> test(before.applyAsChar(value));
     }
 
     /**
@@ -244,13 +244,13 @@ public interface CharPredicate extends Lambda {
      * @return A composed {@code DoublePredicate2} that first applies the {@code before} function to its input, and then
      * applies this predicate to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * double}.
      */
     @Nonnull
-    default DoublePredicate2 composeFromDouble(@Nonnull final DoubleToCharFunction before) {
+    default DoublePredicate2 composeFromDouble(@Nonnull DoubleToCharFunction before) {
         Objects.requireNonNull(before);
-        return (value) -> test(before.applyAsChar(value));
+        return value -> test(before.applyAsChar(value));
     }
 
     /**
@@ -263,53 +263,51 @@ public interface CharPredicate extends Lambda {
      * @return A composed {@code FloatPredicate} that first applies the {@code before} function to its input, and then
      * applies this predicate to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * float}.
      */
     @Nonnull
-    default FloatPredicate composeFromFloat(@Nonnull final FloatToCharFunction before) {
+    default FloatPredicate composeFromFloat(@Nonnull FloatToCharFunction before) {
         Objects.requireNonNull(before);
-        return (value) -> test(before.applyAsChar(value));
+        return value -> test(before.applyAsChar(value));
     }
 
     /**
-     * Returns a composed {@link IntPredicate2} that first applies the {@code before} function to
-     * its input, and then applies this predicate to the result.
-     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
-     * This method is just convenience, to provide the ability to execute an operation which accepts {@code int} input,
-     * before this primitive predicate is executed.
+     * Returns a composed {@link IntPredicate2} that first applies the {@code before} function to its input, and then
+     * applies this predicate to the result. If evaluation of either operation throws an exception, it is relayed to the
+     * caller of the composed operation. This method is just convenience, to provide the ability to execute an operation
+     * which accepts {@code int} input, before this primitive predicate is executed.
      *
      * @param before The function to apply before this predicate is applied
      * @return A composed {@code IntPredicate2} that first applies the {@code before} function to its input, and then
      * applies this predicate to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * int}.
      */
     @Nonnull
-    default IntPredicate2 composeFromInt(@Nonnull final IntToCharFunction before) {
+    default IntPredicate2 composeFromInt(@Nonnull IntToCharFunction before) {
         Objects.requireNonNull(before);
-        return (value) -> test(before.applyAsChar(value));
+        return value -> test(before.applyAsChar(value));
     }
 
     /**
-     * Returns a composed {@link LongPredicate2} that first applies the {@code before} function to
-     * its input, and then applies this predicate to the result.
-     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
-     * This method is just convenience, to provide the ability to execute an operation which accepts {@code long} input,
-     * before this primitive predicate is executed.
+     * Returns a composed {@link LongPredicate2} that first applies the {@code before} function to its input, and then
+     * applies this predicate to the result. If evaluation of either operation throws an exception, it is relayed to the
+     * caller of the composed operation. This method is just convenience, to provide the ability to execute an operation
+     * which accepts {@code long} input, before this primitive predicate is executed.
      *
      * @param before The function to apply before this predicate is applied
      * @return A composed {@code LongPredicate2} that first applies the {@code before} function to its input, and then
      * applies this predicate to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * long}.
      */
     @Nonnull
-    default LongPredicate2 composeFromLong(@Nonnull final LongToCharFunction before) {
+    default LongPredicate2 composeFromLong(@Nonnull LongToCharFunction before) {
         Objects.requireNonNull(before);
-        return (value) -> test(before.applyAsChar(value));
+        return value -> test(before.applyAsChar(value));
     }
 
     /**
@@ -322,19 +320,19 @@ public interface CharPredicate extends Lambda {
      * @return A composed {@code ShortPredicate} that first applies the {@code before} function to its input, and then
      * applies this predicate to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * short}.
      */
     @Nonnull
-    default ShortPredicate composeFromShort(@Nonnull final ShortToCharFunction before) {
+    default ShortPredicate composeFromShort(@Nonnull ShortToCharFunction before) {
         Objects.requireNonNull(before);
-        return (value) -> test(before.applyAsChar(value));
+        return value -> test(before.applyAsChar(value));
     }
 
     /**
      * Returns a composed {@link CharFunction} that first applies this predicate to its input, and then applies the
-     * {@code after} function to the result.
-     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
+     * {@code after} function to the result. If evaluation of either operation throws an exception, it is relayed to the
+     * caller of the composed operation.
      *
      * @param <S> The type of return value from the {@code after} function, and of the composed function
      * @param after The function to apply after this predicate is applied
@@ -344,9 +342,9 @@ public interface CharPredicate extends Lambda {
      * @implSpec The input argument of this method is able to return every type.
      */
     @Nonnull
-    default <S> CharFunction<S> andThen(@Nonnull final BooleanFunction<? extends S> after) {
+    default <S> CharFunction<S> andThen(@Nonnull BooleanFunction<? extends S> after) {
         Objects.requireNonNull(after);
-        return (value) -> after.apply(test(value));
+        return value -> after.apply(test(value));
     }
 
     /**
@@ -359,13 +357,13 @@ public interface CharPredicate extends Lambda {
      * @return A composed {@code CharPredicate} that first applies this predicate to its input, and then applies the
      * {@code after} operator to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * boolean}.
      */
     @Nonnull
-    default CharPredicate andThenToBoolean(@Nonnull final BooleanUnaryOperator after) {
+    default CharPredicate andThenToBoolean(@Nonnull BooleanUnaryOperator after) {
         Objects.requireNonNull(after);
-        return (value) -> after.applyAsBoolean(test(value));
+        return value -> after.applyAsBoolean(test(value));
     }
 
     /**
@@ -378,13 +376,13 @@ public interface CharPredicate extends Lambda {
      * @return A composed {@code CharToByteFunction} that first applies this predicate to its input, and then applies
      * the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * byte}.
      */
     @Nonnull
-    default CharToByteFunction andThenToByte(@Nonnull final BooleanToByteFunction after) {
+    default CharToByteFunction andThenToByte(@Nonnull BooleanToByteFunction after) {
         Objects.requireNonNull(after);
-        return (value) -> after.applyAsByte(test(value));
+        return value -> after.applyAsByte(test(value));
     }
 
     /**
@@ -397,13 +395,13 @@ public interface CharPredicate extends Lambda {
      * @return A composed {@code CharUnaryOperator} that first applies this predicate to its input, and then applies the
      * {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * char}.
      */
     @Nonnull
-    default CharUnaryOperator andThenToChar(@Nonnull final BooleanToCharFunction after) {
+    default CharUnaryOperator andThenToChar(@Nonnull BooleanToCharFunction after) {
         Objects.requireNonNull(after);
-        return (value) -> after.applyAsChar(test(value));
+        return value -> after.applyAsChar(test(value));
     }
 
     /**
@@ -416,13 +414,13 @@ public interface CharPredicate extends Lambda {
      * @return A composed {@code CharToDoubleFunction} that first applies this predicate to its input, and then applies
      * the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * double}.
      */
     @Nonnull
-    default CharToDoubleFunction andThenToDouble(@Nonnull final BooleanToDoubleFunction after) {
+    default CharToDoubleFunction andThenToDouble(@Nonnull BooleanToDoubleFunction after) {
         Objects.requireNonNull(after);
-        return (value) -> after.applyAsDouble(test(value));
+        return value -> after.applyAsDouble(test(value));
     }
 
     /**
@@ -435,13 +433,13 @@ public interface CharPredicate extends Lambda {
      * @return A composed {@code CharToFloatFunction} that first applies this predicate to its input, and then applies
      * the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * float}.
      */
     @Nonnull
-    default CharToFloatFunction andThenToFloat(@Nonnull final BooleanToFloatFunction after) {
+    default CharToFloatFunction andThenToFloat(@Nonnull BooleanToFloatFunction after) {
         Objects.requireNonNull(after);
-        return (value) -> after.applyAsFloat(test(value));
+        return value -> after.applyAsFloat(test(value));
     }
 
     /**
@@ -454,13 +452,13 @@ public interface CharPredicate extends Lambda {
      * @return A composed {@code CharToIntFunction} that first applies this predicate to its input, and then applies the
      * {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * int}.
      */
     @Nonnull
-    default CharToIntFunction andThenToInt(@Nonnull final BooleanToIntFunction after) {
+    default CharToIntFunction andThenToInt(@Nonnull BooleanToIntFunction after) {
         Objects.requireNonNull(after);
-        return (value) -> after.applyAsInt(test(value));
+        return value -> after.applyAsInt(test(value));
     }
 
     /**
@@ -473,13 +471,13 @@ public interface CharPredicate extends Lambda {
      * @return A composed {@code CharToLongFunction} that first applies this predicate to its input, and then applies
      * the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * long}.
      */
     @Nonnull
-    default CharToLongFunction andThenToLong(@Nonnull final BooleanToLongFunction after) {
+    default CharToLongFunction andThenToLong(@Nonnull BooleanToLongFunction after) {
         Objects.requireNonNull(after);
-        return (value) -> after.applyAsLong(test(value));
+        return value -> after.applyAsLong(test(value));
     }
 
     /**
@@ -492,13 +490,13 @@ public interface CharPredicate extends Lambda {
      * @return A composed {@code CharToShortFunction} that first applies this predicate to its input, and then applies
      * the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * short}.
      */
     @Nonnull
-    default CharToShortFunction andThenToShort(@Nonnull final BooleanToShortFunction after) {
+    default CharToShortFunction andThenToShort(@Nonnull BooleanToShortFunction after) {
         Objects.requireNonNull(after);
-        return (value) -> after.applyAsShort(test(value));
+        return value -> after.applyAsShort(test(value));
     }
 
     /**
@@ -512,9 +510,9 @@ public interface CharPredicate extends Lambda {
      * @throws NullPointerException If given argument is {@code null}
      */
     @Nonnull
-    default CharConsumer consume(@Nonnull final BooleanConsumer consumer) {
+    default CharConsumer consume(@Nonnull BooleanConsumer consumer) {
         Objects.requireNonNull(consumer);
-        return (value) -> consumer.accept(test(value));
+        return value -> consumer.accept(test(value));
     }
 
     /**
@@ -524,7 +522,7 @@ public interface CharPredicate extends Lambda {
      */
     @Nonnull
     default CharPredicate negate() {
-        return (value) -> !test(value);
+        return value -> !test(value);
     }
 
     /**
@@ -543,9 +541,9 @@ public interface CharPredicate extends Lambda {
      * @see #xor(CharPredicate)
      */
     @Nonnull
-    default CharPredicate and(@Nonnull final CharPredicate other) {
+    default CharPredicate and(@Nonnull CharPredicate other) {
         Objects.requireNonNull(other);
-        return (value) -> test(value) && other.test(value);
+        return value -> test(value) && other.test(value);
     }
 
     /**
@@ -564,9 +562,9 @@ public interface CharPredicate extends Lambda {
      * @see #xor(CharPredicate)
      */
     @Nonnull
-    default CharPredicate or(@Nonnull final CharPredicate other) {
+    default CharPredicate or(@Nonnull CharPredicate other) {
         Objects.requireNonNull(other);
-        return (value) -> test(value) || other.test(value);
+        return value -> test(value) || other.test(value);
     }
 
     /**
@@ -582,9 +580,9 @@ public interface CharPredicate extends Lambda {
      * @see #or(CharPredicate)
      */
     @Nonnull
-    default CharPredicate xor(@Nonnull final CharPredicate other) {
+    default CharPredicate xor(@Nonnull CharPredicate other) {
         Objects.requireNonNull(other);
-        return (value) -> test(value) ^ other.test(value);
+        return value -> test(value) ^ other.test(value);
     }
 
     /**
@@ -606,10 +604,10 @@ public interface CharPredicate extends Lambda {
         if (isMemoized()) {
             return this;
         } else {
-            final Map<Character, Boolean> cache = new ConcurrentHashMap<>();
-            final Object lock = new Object();
-            return (CharPredicate & Memoized) (value) -> {
-                final boolean returnValue;
+            Map<Character, Boolean> cache = new ConcurrentHashMap<>();
+            Object lock = new Object();
+            return (CharPredicate & Memoized) value -> {
+                boolean returnValue;
                 synchronized (lock) {
                     returnValue = cache.computeIfAbsent(value, this::test);
                 }
@@ -619,9 +617,9 @@ public interface CharPredicate extends Lambda {
     }
 
     /**
-     * Returns a composed {@link Predicate2} which represents this {@link CharPredicate}. Thereby the primitive
-     * input argument for this predicate is autoboxed. This method provides the possibility to use this
-     * {@code CharPredicate} with methods provided by the {@code JDK}.
+     * Returns a composed {@link Predicate2} which represents this {@link CharPredicate}. Thereby the primitive input
+     * argument for this predicate is autoboxed. This method provides the possibility to use this {@code CharPredicate}
+     * with methods provided by the {@code JDK}.
      *
      * @return A composed {@code Predicate2} which represents this {@code CharPredicate}.
      */

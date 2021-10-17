@@ -13,7 +13,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package org.lambda4j.function;
+
+import java.util.Map;
+import java.util.Objects;
+import java.util.Optional;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.function.Function;
+
+import javax.annotation.Nonnegative;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import org.lambda4j.Lambda;
 import org.lambda4j.consumer.ThrowableByteConsumer;
@@ -30,19 +41,9 @@ import org.lambda4j.function.conversion.ThrowableShortToByteFunction;
 import org.lambda4j.function.to.ThrowableToByteFunction;
 import org.lambda4j.operator.unary.ThrowableByteUnaryOperator;
 
-import javax.annotation.Nonnegative;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Optional;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.function.Function;
-
 /**
- * Represents an operation that accepts one {@code byte}-valued input argument and produces a
- * result which is able to throw any {@link Throwable}.
- * This is a primitive specialization of {@link ThrowableFunction}.
+ * Represents an operation that accepts one {@code byte}-valued input argument and produces a result which is able to
+ * throw any {@link Throwable}. This is a primitive specialization of {@link ThrowableFunction}.
  * <p>
  * This is a {@link FunctionalInterface} whose functional method is {@link #applyThrows(byte)}.
  *
@@ -71,7 +72,7 @@ public interface ThrowableByteFunction<R, X extends Throwable> extends Lambda {
      * @see <a href="https://docs.oracle.com/javase/tutorial/java/javaOO/methodreferences.html">Method Reference</a>
      */
     static <R, X extends Throwable> ThrowableByteFunction<R, X> of(
-            @Nullable final ThrowableByteFunction<R, X> expression) {
+            @Nullable ThrowableByteFunction<R, X> expression) {
         return expression;
     }
 
@@ -88,9 +89,9 @@ public interface ThrowableByteFunction<R, X extends Throwable> extends Lambda {
      */
     @Nonnull
     static <R, X extends Throwable> ThrowableByteFunction<Optional<R>, X> lift(
-            @Nonnull final ThrowableByteFunction<? extends R, ? extends X> partial) {
+            @Nonnull ThrowableByteFunction<? extends R, ? extends X> partial) {
         Objects.requireNonNull(partial);
-        return (value) -> Optional.ofNullable(partial.applyThrows(value));
+        return value -> Optional.ofNullable(partial.applyThrows(value));
     }
 
     /**
@@ -104,7 +105,7 @@ public interface ThrowableByteFunction<R, X extends Throwable> extends Lambda {
      * @throws NullPointerException If given argument is {@code null}
      * @throws X Any throwable from this functions action
      */
-    static <R, X extends Throwable> R call(@Nonnull final ThrowableByteFunction<? extends R, ? extends X> function,
+    static <R, X extends Throwable> R call(@Nonnull ThrowableByteFunction<? extends R, ? extends X> function,
             byte value) throws X {
         Objects.requireNonNull(function);
         return function.applyThrows(value);
@@ -120,7 +121,7 @@ public interface ThrowableByteFunction<R, X extends Throwable> extends Lambda {
      */
     @Nonnull
     static <R, X extends Throwable> ThrowableByteFunction<R, X> constant(R ret) {
-        return (value) -> ret;
+        return value -> ret;
     }
 
     /**
@@ -156,9 +157,9 @@ public interface ThrowableByteFunction<R, X extends Throwable> extends Lambda {
      */
     @Nonnull
     default <A> ThrowableFunction<A, R, X> compose(
-            @Nonnull final ThrowableToByteFunction<? super A, ? extends X> before) {
+            @Nonnull ThrowableToByteFunction<? super A, ? extends X> before) {
         Objects.requireNonNull(before);
-        return (a) -> applyThrows(before.applyAsByteThrows(a));
+        return a -> applyThrows(before.applyAsByteThrows(a));
     }
 
     /**
@@ -170,53 +171,51 @@ public interface ThrowableByteFunction<R, X extends Throwable> extends Lambda {
      * @return A composed {@code ThrowableBooleanFunction} that first applies the {@code before} function to its input,
      * and then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * boolean}.
      */
     @Nonnull
     default ThrowableBooleanFunction<R, X> composeFromBoolean(
-            @Nonnull final ThrowableBooleanToByteFunction<? extends X> before) {
+            @Nonnull ThrowableBooleanToByteFunction<? extends X> before) {
         Objects.requireNonNull(before);
-        return (value) -> applyThrows(before.applyAsByteThrows(value));
+        return value -> applyThrows(before.applyAsByteThrows(value));
     }
 
     /**
-     * Returns a composed {@link ThrowableByteFunction} that first applies the {@code before} operator to
-     * its input, and then applies this function to the result.
-     * This method is just convenience, to provide the ability to execute an operation which accepts {@code byte} input,
-     * before this primitive function is executed.
+     * Returns a composed {@link ThrowableByteFunction} that first applies the {@code before} operator to its input, and
+     * then applies this function to the result. This method is just convenience, to provide the ability to execute an
+     * operation which accepts {@code byte} input, before this primitive function is executed.
      *
      * @param before The operator to apply before this function is applied
      * @return A composed {@code ThrowableByteFunction} that first applies the {@code before} operator to its input, and
      * then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * byte}.
      */
     @Nonnull
-    default ThrowableByteFunction<R, X> composeFromByte(@Nonnull final ThrowableByteUnaryOperator<? extends X> before) {
+    default ThrowableByteFunction<R, X> composeFromByte(@Nonnull ThrowableByteUnaryOperator<? extends X> before) {
         Objects.requireNonNull(before);
-        return (value) -> applyThrows(before.applyAsByteThrows(value));
+        return value -> applyThrows(before.applyAsByteThrows(value));
     }
 
     /**
-     * Returns a composed {@link ThrowableCharFunction} that first applies the {@code before} function to
-     * its input, and then applies this function to the result.
-     * This method is just convenience, to provide the ability to execute an operation which accepts {@code char} input,
-     * before this primitive function is executed.
+     * Returns a composed {@link ThrowableCharFunction} that first applies the {@code before} function to its input, and
+     * then applies this function to the result. This method is just convenience, to provide the ability to execute an
+     * operation which accepts {@code char} input, before this primitive function is executed.
      *
      * @param before The function to apply before this function is applied
      * @return A composed {@code ThrowableCharFunction} that first applies the {@code before} function to its input, and
      * then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * char}.
      */
     @Nonnull
     default ThrowableCharFunction<R, X> composeFromChar(
-            @Nonnull final ThrowableCharToByteFunction<? extends X> before) {
+            @Nonnull ThrowableCharToByteFunction<? extends X> before) {
         Objects.requireNonNull(before);
-        return (value) -> applyThrows(before.applyAsByteThrows(value));
+        return value -> applyThrows(before.applyAsByteThrows(value));
     }
 
     /**
@@ -228,14 +227,14 @@ public interface ThrowableByteFunction<R, X extends Throwable> extends Lambda {
      * @return A composed {@code ThrowableDoubleFunction} that first applies the {@code before} function to its input,
      * and then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * double}.
      */
     @Nonnull
     default ThrowableDoubleFunction<R, X> composeFromDouble(
-            @Nonnull final ThrowableDoubleToByteFunction<? extends X> before) {
+            @Nonnull ThrowableDoubleToByteFunction<? extends X> before) {
         Objects.requireNonNull(before);
-        return (value) -> applyThrows(before.applyAsByteThrows(value));
+        return value -> applyThrows(before.applyAsByteThrows(value));
     }
 
     /**
@@ -247,53 +246,51 @@ public interface ThrowableByteFunction<R, X extends Throwable> extends Lambda {
      * @return A composed {@code ThrowableFloatFunction} that first applies the {@code before} function to its input,
      * and then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * float}.
      */
     @Nonnull
     default ThrowableFloatFunction<R, X> composeFromFloat(
-            @Nonnull final ThrowableFloatToByteFunction<? extends X> before) {
+            @Nonnull ThrowableFloatToByteFunction<? extends X> before) {
         Objects.requireNonNull(before);
-        return (value) -> applyThrows(before.applyAsByteThrows(value));
+        return value -> applyThrows(before.applyAsByteThrows(value));
     }
 
     /**
-     * Returns a composed {@link ThrowableIntFunction} that first applies the {@code before} function to
-     * its input, and then applies this function to the result.
-     * This method is just convenience, to provide the ability to execute an operation which accepts {@code int} input,
-     * before this primitive function is executed.
+     * Returns a composed {@link ThrowableIntFunction} that first applies the {@code before} function to its input, and
+     * then applies this function to the result. This method is just convenience, to provide the ability to execute an
+     * operation which accepts {@code int} input, before this primitive function is executed.
      *
      * @param before The function to apply before this function is applied
      * @return A composed {@code ThrowableIntFunction} that first applies the {@code before} function to its input, and
      * then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * int}.
      */
     @Nonnull
-    default ThrowableIntFunction<R, X> composeFromInt(@Nonnull final ThrowableIntToByteFunction<? extends X> before) {
+    default ThrowableIntFunction<R, X> composeFromInt(@Nonnull ThrowableIntToByteFunction<? extends X> before) {
         Objects.requireNonNull(before);
-        return (value) -> applyThrows(before.applyAsByteThrows(value));
+        return value -> applyThrows(before.applyAsByteThrows(value));
     }
 
     /**
-     * Returns a composed {@link ThrowableLongFunction} that first applies the {@code before} function to
-     * its input, and then applies this function to the result.
-     * This method is just convenience, to provide the ability to execute an operation which accepts {@code long} input,
-     * before this primitive function is executed.
+     * Returns a composed {@link ThrowableLongFunction} that first applies the {@code before} function to its input, and
+     * then applies this function to the result. This method is just convenience, to provide the ability to execute an
+     * operation which accepts {@code long} input, before this primitive function is executed.
      *
      * @param before The function to apply before this function is applied
      * @return A composed {@code ThrowableLongFunction} that first applies the {@code before} function to its input, and
      * then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * long}.
      */
     @Nonnull
     default ThrowableLongFunction<R, X> composeFromLong(
-            @Nonnull final ThrowableLongToByteFunction<? extends X> before) {
+            @Nonnull ThrowableLongToByteFunction<? extends X> before) {
         Objects.requireNonNull(before);
-        return (value) -> applyThrows(before.applyAsByteThrows(value));
+        return value -> applyThrows(before.applyAsByteThrows(value));
     }
 
     /**
@@ -305,14 +302,14 @@ public interface ThrowableByteFunction<R, X extends Throwable> extends Lambda {
      * @return A composed {@code ThrowableShortFunction} that first applies the {@code before} function to its input,
      * and then applies this function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * short}.
      */
     @Nonnull
     default ThrowableShortFunction<R, X> composeFromShort(
-            @Nonnull final ThrowableShortToByteFunction<? extends X> before) {
+            @Nonnull ThrowableShortToByteFunction<? extends X> before) {
         Objects.requireNonNull(before);
-        return (value) -> applyThrows(before.applyAsByteThrows(value));
+        return value -> applyThrows(before.applyAsByteThrows(value));
     }
 
     /**
@@ -328,9 +325,9 @@ public interface ThrowableByteFunction<R, X extends Throwable> extends Lambda {
      */
     @Nonnull
     default <S> ThrowableByteFunction<S, X> andThen(
-            @Nonnull final ThrowableFunction<? super R, ? extends S, ? extends X> after) {
+            @Nonnull ThrowableFunction<? super R, ? extends S, ? extends X> after) {
         Objects.requireNonNull(after);
-        return (value) -> after.applyThrows(applyThrows(value));
+        return value -> after.applyThrows(applyThrows(value));
     }
 
     /**
@@ -343,9 +340,9 @@ public interface ThrowableByteFunction<R, X extends Throwable> extends Lambda {
      * @throws NullPointerException If given argument is {@code null}
      */
     @Nonnull
-    default ThrowableByteConsumer<X> consume(@Nonnull final ThrowableConsumer<? super R, ? extends X> consumer) {
+    default ThrowableByteConsumer<X> consume(@Nonnull ThrowableConsumer<? super R, ? extends X> consumer) {
         Objects.requireNonNull(consumer);
-        return (value) -> consumer.acceptThrows(applyThrows(value));
+        return value -> consumer.acceptThrows(applyThrows(value));
     }
 
     /**
@@ -367,10 +364,10 @@ public interface ThrowableByteFunction<R, X extends Throwable> extends Lambda {
         if (isMemoized()) {
             return this;
         } else {
-            final Map<Byte, R> cache = new ConcurrentHashMap<>();
-            final Object lock = new Object();
-            return (ThrowableByteFunction<R, X> & Memoized) (value) -> {
-                final R returnValue;
+            Map<Byte, R> cache = new ConcurrentHashMap<>();
+            Object lock = new Object();
+            return (ThrowableByteFunction<R, X> & Memoized) value -> {
+                R returnValue;
                 synchronized (lock) {
                     returnValue = cache.computeIfAbsent(value, ThrowableFunction.of(this::applyThrows));
                 }
@@ -380,9 +377,9 @@ public interface ThrowableByteFunction<R, X extends Throwable> extends Lambda {
     }
 
     /**
-     * Converts this function to an equal function, which ensures that its result is not
-     * {@code null} using {@link Optional}. This method mainly exists to avoid unnecessary {@code NullPointerException}s
-     * through referencing {@code null} from this function.
+     * Converts this function to an equal function, which ensures that its result is not {@code null} using {@link
+     * Optional}. This method mainly exists to avoid unnecessary {@code NullPointerException}s through referencing
+     * {@code null} from this function.
      *
      * @return An equal function, which ensures that its result is not {@code null}.
      * @deprecated Use {@code lift} method for lifting this function.
@@ -390,7 +387,7 @@ public interface ThrowableByteFunction<R, X extends Throwable> extends Lambda {
     @Deprecated
     @Nonnull
     default ThrowableByteFunction<Optional<R>, X> nonNull() {
-        return (value) -> Optional.ofNullable(applyThrows(value));
+        return value -> Optional.ofNullable(applyThrows(value));
     }
 
     /**
@@ -434,7 +431,7 @@ public interface ThrowableByteFunction<R, X extends Throwable> extends Lambda {
      * @see #nest()
      */
     @Nonnull
-    default ByteFunction<R> nest(@Nonnull final Function<? super Throwable, ? extends RuntimeException> mapper) {
+    default ByteFunction<R> nest(@Nonnull Function<? super Throwable, ? extends RuntimeException> mapper) {
         return recover(throwable -> {
             throw mapper.apply(throwable);
         });
@@ -457,15 +454,15 @@ public interface ThrowableByteFunction<R, X extends Throwable> extends Lambda {
      */
     @Nonnull
     default ByteFunction<R> recover(
-            @Nonnull final Function<? super Throwable, ? extends ByteFunction<? extends R>> recover) {
+            @Nonnull Function<? super Throwable, ? extends ByteFunction<? extends R>> recover) {
         Objects.requireNonNull(recover);
-        return (value) -> {
+        return value -> {
             try {
-                return this.applyThrows(value);
+                return applyThrows(value);
             } catch (Error e) {
                 throw e;
             } catch (Throwable throwable) {
-                final ByteFunction<? extends R> function = recover.apply(throwable);
+                ByteFunction<? extends R> function = recover.apply(throwable);
                 Objects.requireNonNull(function, () -> "recover returned null for " + throwable.getClass() + ": "
                         + throwable.getMessage());
                 return function.apply(value);
@@ -474,12 +471,12 @@ public interface ThrowableByteFunction<R, X extends Throwable> extends Lambda {
     }
 
     /**
-     * Returns a composed {@link ByteFunction} that applies this function to its input and sneakily throws the
-     * thrown {@link Throwable} from it, if it is not of type {@link RuntimeException} or {@link Error}. This means that
-     * each throwable thrown from the returned composed function behaves exactly the same as an <em>unchecked</em>
-     * throwable does. As a result, there is no need to handle the throwable of this function in the returned composed
-     * function by either wrapping it in an <em>unchecked</em> throwable or to declare it in the {@code throws} clause,
-     * as it would be done in a non sneaky throwing function.
+     * Returns a composed {@link ByteFunction} that applies this function to its input and sneakily throws the thrown
+     * {@link Throwable} from it, if it is not of type {@link RuntimeException} or {@link Error}. This means that each
+     * throwable thrown from the returned composed function behaves exactly the same as an <em>unchecked</em> throwable
+     * does. As a result, there is no need to handle the throwable of this function in the returned composed function by
+     * either wrapping it in an <em>unchecked</em> throwable or to declare it in the {@code throws} clause, as it would
+     * be done in a non sneaky throwing function.
      * <p>
      * What sneaky throwing simply does, is to fake out the compiler and thus it bypasses the principle of
      * <em>checked</em> throwables. On the JVM (class file) level, all throwables, checked or not, can be thrown
@@ -541,9 +538,9 @@ public interface ThrowableByteFunction<R, X extends Throwable> extends Lambda {
      */
     @Nonnull
     default ByteFunction<R> sneakyThrow() {
-        return (value) -> {
+        return value -> {
             try {
-                return this.applyThrows(value);
+                return applyThrows(value);
             } catch (RuntimeException | Error e) {
                 throw e;
             } catch (Throwable throwable) {

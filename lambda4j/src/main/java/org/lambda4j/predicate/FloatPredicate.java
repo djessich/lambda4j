@@ -13,7 +13,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package org.lambda4j.predicate;
+
+import java.util.Map;
+import java.util.Objects;
+import java.util.concurrent.ConcurrentHashMap;
+
+import javax.annotation.Nonnegative;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import org.lambda4j.Lambda;
 import org.lambda4j.consumer.BooleanConsumer;
@@ -43,16 +52,9 @@ import org.lambda4j.function.to.ToFloatFunction;
 import org.lambda4j.operator.unary.BooleanUnaryOperator;
 import org.lambda4j.operator.unary.FloatUnaryOperator;
 
-import javax.annotation.Nonnegative;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import java.util.Map;
-import java.util.Objects;
-import java.util.concurrent.ConcurrentHashMap;
-
 /**
- * Represents an predicate (boolean-valued function) of one {@code float}-valued input argument.
- * This is a primitive specialization of {@link Predicate2}.
+ * Represents an predicate (boolean-valued function) of one {@code float}-valued input argument. This is a primitive
+ * specialization of {@link Predicate2}.
  * <p>
  * This is a {@link FunctionalInterface} whose functional method is {@link #test(float)}.
  *
@@ -75,7 +77,7 @@ public interface FloatPredicate extends Lambda {
      * Expression</a>
      * @see <a href="https://docs.oracle.com/javase/tutorial/java/javaOO/methodreferences.html">Method Reference</a>
      */
-    static FloatPredicate of(@Nullable final FloatPredicate expression) {
+    static FloatPredicate of(@Nullable FloatPredicate expression) {
         return expression;
     }
 
@@ -87,7 +89,7 @@ public interface FloatPredicate extends Lambda {
      * @return The result from the given {@code FloatPredicate}.
      * @throws NullPointerException If given argument is {@code null}
      */
-    static boolean call(@Nonnull final FloatPredicate predicate, float value) {
+    static boolean call(@Nonnull FloatPredicate predicate, float value) {
         Objects.requireNonNull(predicate);
         return predicate.test(value);
     }
@@ -100,7 +102,7 @@ public interface FloatPredicate extends Lambda {
      */
     @Nonnull
     static FloatPredicate constant(boolean ret) {
-        return (value) -> ret;
+        return value -> ret;
     }
 
     /**
@@ -111,7 +113,7 @@ public interface FloatPredicate extends Lambda {
      */
     @Nonnull
     static FloatPredicate alwaysTrue() {
-        return (value) -> true;
+        return value -> true;
     }
 
     /**
@@ -122,7 +124,7 @@ public interface FloatPredicate extends Lambda {
      */
     @Nonnull
     static FloatPredicate alwaysFalse() {
-        return (value) -> false;
+        return value -> false;
     }
 
     /**
@@ -135,7 +137,7 @@ public interface FloatPredicate extends Lambda {
      */
     @Nonnull
     static FloatPredicate isEqual(float target) {
-        return (value) -> (value == target);
+        return value -> value == target;
     }
 
     /**
@@ -158,9 +160,9 @@ public interface FloatPredicate extends Lambda {
     }
 
     /**
-     * Returns a composed {@link Predicate2} that first applies the {@code before} function to its input, and
-     * then applies this predicate to the result.
-     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
+     * Returns a composed {@link Predicate2} that first applies the {@code before} function to its input, and then
+     * applies this predicate to the result. If evaluation of either operation throws an exception, it is relayed to the
+     * caller of the composed operation.
      *
      * @param <A> The type of the argument to the given function, and of composed predicate
      * @param before The function to apply before this predicate is applied
@@ -170,9 +172,9 @@ public interface FloatPredicate extends Lambda {
      * @implSpec The input argument of this method is able to handle every type.
      */
     @Nonnull
-    default <A> Predicate2<A> compose(@Nonnull final ToFloatFunction<? super A> before) {
+    default <A> Predicate2<A> compose(@Nonnull ToFloatFunction<? super A> before) {
         Objects.requireNonNull(before);
-        return (a) -> test(before.applyAsFloat(a));
+        return a -> test(before.applyAsFloat(a));
     }
 
     /**
@@ -185,53 +187,51 @@ public interface FloatPredicate extends Lambda {
      * @return A composed {@code BooleanUnaryOperator} that first applies the {@code before} function to its input, and
      * then applies this predicate to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * boolean}.
      */
     @Nonnull
-    default BooleanUnaryOperator composeFromBoolean(@Nonnull final BooleanToFloatFunction before) {
+    default BooleanUnaryOperator composeFromBoolean(@Nonnull BooleanToFloatFunction before) {
         Objects.requireNonNull(before);
-        return (value) -> test(before.applyAsFloat(value));
+        return value -> test(before.applyAsFloat(value));
     }
 
     /**
-     * Returns a composed {@link BytePredicate} that first applies the {@code before} function to
-     * its input, and then applies this predicate to the result.
-     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
-     * This method is just convenience, to provide the ability to execute an operation which accepts {@code byte} input,
-     * before this primitive predicate is executed.
+     * Returns a composed {@link BytePredicate} that first applies the {@code before} function to its input, and then
+     * applies this predicate to the result. If evaluation of either operation throws an exception, it is relayed to the
+     * caller of the composed operation. This method is just convenience, to provide the ability to execute an operation
+     * which accepts {@code byte} input, before this primitive predicate is executed.
      *
      * @param before The function to apply before this predicate is applied
      * @return A composed {@code BytePredicate} that first applies the {@code before} function to its input, and then
      * applies this predicate to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * byte}.
      */
     @Nonnull
-    default BytePredicate composeFromByte(@Nonnull final ByteToFloatFunction before) {
+    default BytePredicate composeFromByte(@Nonnull ByteToFloatFunction before) {
         Objects.requireNonNull(before);
-        return (value) -> test(before.applyAsFloat(value));
+        return value -> test(before.applyAsFloat(value));
     }
 
     /**
-     * Returns a composed {@link CharPredicate} that first applies the {@code before} function to
-     * its input, and then applies this predicate to the result.
-     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
-     * This method is just convenience, to provide the ability to execute an operation which accepts {@code char} input,
-     * before this primitive predicate is executed.
+     * Returns a composed {@link CharPredicate} that first applies the {@code before} function to its input, and then
+     * applies this predicate to the result. If evaluation of either operation throws an exception, it is relayed to the
+     * caller of the composed operation. This method is just convenience, to provide the ability to execute an operation
+     * which accepts {@code char} input, before this primitive predicate is executed.
      *
      * @param before The function to apply before this predicate is applied
      * @return A composed {@code CharPredicate} that first applies the {@code before} function to its input, and then
      * applies this predicate to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * char}.
      */
     @Nonnull
-    default CharPredicate composeFromChar(@Nonnull final CharToFloatFunction before) {
+    default CharPredicate composeFromChar(@Nonnull CharToFloatFunction before) {
         Objects.requireNonNull(before);
-        return (value) -> test(before.applyAsFloat(value));
+        return value -> test(before.applyAsFloat(value));
     }
 
     /**
@@ -244,13 +244,13 @@ public interface FloatPredicate extends Lambda {
      * @return A composed {@code DoublePredicate2} that first applies the {@code before} function to its input, and then
      * applies this predicate to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * double}.
      */
     @Nonnull
-    default DoublePredicate2 composeFromDouble(@Nonnull final DoubleToFloatFunction before) {
+    default DoublePredicate2 composeFromDouble(@Nonnull DoubleToFloatFunction before) {
         Objects.requireNonNull(before);
-        return (value) -> test(before.applyAsFloat(value));
+        return value -> test(before.applyAsFloat(value));
     }
 
     /**
@@ -263,53 +263,51 @@ public interface FloatPredicate extends Lambda {
      * @return A composed {@code FloatPredicate} that first applies the {@code before} operator to its input, and then
      * applies this predicate to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * float}.
      */
     @Nonnull
-    default FloatPredicate composeFromFloat(@Nonnull final FloatUnaryOperator before) {
+    default FloatPredicate composeFromFloat(@Nonnull FloatUnaryOperator before) {
         Objects.requireNonNull(before);
-        return (value) -> test(before.applyAsFloat(value));
+        return value -> test(before.applyAsFloat(value));
     }
 
     /**
-     * Returns a composed {@link IntPredicate2} that first applies the {@code before} function to
-     * its input, and then applies this predicate to the result.
-     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
-     * This method is just convenience, to provide the ability to execute an operation which accepts {@code int} input,
-     * before this primitive predicate is executed.
+     * Returns a composed {@link IntPredicate2} that first applies the {@code before} function to its input, and then
+     * applies this predicate to the result. If evaluation of either operation throws an exception, it is relayed to the
+     * caller of the composed operation. This method is just convenience, to provide the ability to execute an operation
+     * which accepts {@code int} input, before this primitive predicate is executed.
      *
      * @param before The function to apply before this predicate is applied
      * @return A composed {@code IntPredicate2} that first applies the {@code before} function to its input, and then
      * applies this predicate to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * int}.
      */
     @Nonnull
-    default IntPredicate2 composeFromInt(@Nonnull final IntToFloatFunction before) {
+    default IntPredicate2 composeFromInt(@Nonnull IntToFloatFunction before) {
         Objects.requireNonNull(before);
-        return (value) -> test(before.applyAsFloat(value));
+        return value -> test(before.applyAsFloat(value));
     }
 
     /**
-     * Returns a composed {@link LongPredicate2} that first applies the {@code before} function to
-     * its input, and then applies this predicate to the result.
-     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
-     * This method is just convenience, to provide the ability to execute an operation which accepts {@code long} input,
-     * before this primitive predicate is executed.
+     * Returns a composed {@link LongPredicate2} that first applies the {@code before} function to its input, and then
+     * applies this predicate to the result. If evaluation of either operation throws an exception, it is relayed to the
+     * caller of the composed operation. This method is just convenience, to provide the ability to execute an operation
+     * which accepts {@code long} input, before this primitive predicate is executed.
      *
      * @param before The function to apply before this predicate is applied
      * @return A composed {@code LongPredicate2} that first applies the {@code before} function to its input, and then
      * applies this predicate to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * long}.
      */
     @Nonnull
-    default LongPredicate2 composeFromLong(@Nonnull final LongToFloatFunction before) {
+    default LongPredicate2 composeFromLong(@Nonnull LongToFloatFunction before) {
         Objects.requireNonNull(before);
-        return (value) -> test(before.applyAsFloat(value));
+        return value -> test(before.applyAsFloat(value));
     }
 
     /**
@@ -322,19 +320,19 @@ public interface FloatPredicate extends Lambda {
      * @return A composed {@code ShortPredicate} that first applies the {@code before} function to its input, and then
      * applies this predicate to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * short}.
      */
     @Nonnull
-    default ShortPredicate composeFromShort(@Nonnull final ShortToFloatFunction before) {
+    default ShortPredicate composeFromShort(@Nonnull ShortToFloatFunction before) {
         Objects.requireNonNull(before);
-        return (value) -> test(before.applyAsFloat(value));
+        return value -> test(before.applyAsFloat(value));
     }
 
     /**
      * Returns a composed {@link FloatFunction} that first applies this predicate to its input, and then applies the
-     * {@code after} function to the result.
-     * If evaluation of either operation throws an exception, it is relayed to the caller of the composed operation.
+     * {@code after} function to the result. If evaluation of either operation throws an exception, it is relayed to the
+     * caller of the composed operation.
      *
      * @param <S> The type of return value from the {@code after} function, and of the composed function
      * @param after The function to apply after this predicate is applied
@@ -344,9 +342,9 @@ public interface FloatPredicate extends Lambda {
      * @implSpec The input argument of this method is able to return every type.
      */
     @Nonnull
-    default <S> FloatFunction<S> andThen(@Nonnull final BooleanFunction<? extends S> after) {
+    default <S> FloatFunction<S> andThen(@Nonnull BooleanFunction<? extends S> after) {
         Objects.requireNonNull(after);
-        return (value) -> after.apply(test(value));
+        return value -> after.apply(test(value));
     }
 
     /**
@@ -359,13 +357,13 @@ public interface FloatPredicate extends Lambda {
      * @return A composed {@code FloatPredicate} that first applies this predicate to its input, and then applies the
      * {@code after} operator to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * boolean}.
      */
     @Nonnull
-    default FloatPredicate andThenToBoolean(@Nonnull final BooleanUnaryOperator after) {
+    default FloatPredicate andThenToBoolean(@Nonnull BooleanUnaryOperator after) {
         Objects.requireNonNull(after);
-        return (value) -> after.applyAsBoolean(test(value));
+        return value -> after.applyAsBoolean(test(value));
     }
 
     /**
@@ -378,13 +376,13 @@ public interface FloatPredicate extends Lambda {
      * @return A composed {@code FloatToByteFunction} that first applies this predicate to its input, and then applies
      * the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * byte}.
      */
     @Nonnull
-    default FloatToByteFunction andThenToByte(@Nonnull final BooleanToByteFunction after) {
+    default FloatToByteFunction andThenToByte(@Nonnull BooleanToByteFunction after) {
         Objects.requireNonNull(after);
-        return (value) -> after.applyAsByte(test(value));
+        return value -> after.applyAsByte(test(value));
     }
 
     /**
@@ -397,13 +395,13 @@ public interface FloatPredicate extends Lambda {
      * @return A composed {@code FloatToCharFunction} that first applies this predicate to its input, and then applies
      * the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * char}.
      */
     @Nonnull
-    default FloatToCharFunction andThenToChar(@Nonnull final BooleanToCharFunction after) {
+    default FloatToCharFunction andThenToChar(@Nonnull BooleanToCharFunction after) {
         Objects.requireNonNull(after);
-        return (value) -> after.applyAsChar(test(value));
+        return value -> after.applyAsChar(test(value));
     }
 
     /**
@@ -416,13 +414,13 @@ public interface FloatPredicate extends Lambda {
      * @return A composed {@code FloatToDoubleFunction} that first applies this predicate to its input, and then applies
      * the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * double}.
      */
     @Nonnull
-    default FloatToDoubleFunction andThenToDouble(@Nonnull final BooleanToDoubleFunction after) {
+    default FloatToDoubleFunction andThenToDouble(@Nonnull BooleanToDoubleFunction after) {
         Objects.requireNonNull(after);
-        return (value) -> after.applyAsDouble(test(value));
+        return value -> after.applyAsDouble(test(value));
     }
 
     /**
@@ -435,13 +433,13 @@ public interface FloatPredicate extends Lambda {
      * @return A composed {@code FloatUnaryOperator} that first applies this predicate to its input, and then applies
      * the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * float}.
      */
     @Nonnull
-    default FloatUnaryOperator andThenToFloat(@Nonnull final BooleanToFloatFunction after) {
+    default FloatUnaryOperator andThenToFloat(@Nonnull BooleanToFloatFunction after) {
         Objects.requireNonNull(after);
-        return (value) -> after.applyAsFloat(test(value));
+        return value -> after.applyAsFloat(test(value));
     }
 
     /**
@@ -454,13 +452,13 @@ public interface FloatPredicate extends Lambda {
      * @return A composed {@code FloatToIntFunction} that first applies this predicate to its input, and then applies
      * the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * int}.
      */
     @Nonnull
-    default FloatToIntFunction andThenToInt(@Nonnull final BooleanToIntFunction after) {
+    default FloatToIntFunction andThenToInt(@Nonnull BooleanToIntFunction after) {
         Objects.requireNonNull(after);
-        return (value) -> after.applyAsInt(test(value));
+        return value -> after.applyAsInt(test(value));
     }
 
     /**
@@ -473,13 +471,13 @@ public interface FloatPredicate extends Lambda {
      * @return A composed {@code FloatToLongFunction} that first applies this predicate to its input, and then applies
      * the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * long}.
      */
     @Nonnull
-    default FloatToLongFunction andThenToLong(@Nonnull final BooleanToLongFunction after) {
+    default FloatToLongFunction andThenToLong(@Nonnull BooleanToLongFunction after) {
         Objects.requireNonNull(after);
-        return (value) -> after.applyAsLong(test(value));
+        return value -> after.applyAsLong(test(value));
     }
 
     /**
@@ -492,13 +490,13 @@ public interface FloatPredicate extends Lambda {
      * @return A composed {@code FloatToShortFunction} that first applies this predicate to its input, and then applies
      * the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * short}.
      */
     @Nonnull
-    default FloatToShortFunction andThenToShort(@Nonnull final BooleanToShortFunction after) {
+    default FloatToShortFunction andThenToShort(@Nonnull BooleanToShortFunction after) {
         Objects.requireNonNull(after);
-        return (value) -> after.applyAsShort(test(value));
+        return value -> after.applyAsShort(test(value));
     }
 
     /**
@@ -512,9 +510,9 @@ public interface FloatPredicate extends Lambda {
      * @throws NullPointerException If given argument is {@code null}
      */
     @Nonnull
-    default FloatConsumer consume(@Nonnull final BooleanConsumer consumer) {
+    default FloatConsumer consume(@Nonnull BooleanConsumer consumer) {
         Objects.requireNonNull(consumer);
-        return (value) -> consumer.accept(test(value));
+        return value -> consumer.accept(test(value));
     }
 
     /**
@@ -524,7 +522,7 @@ public interface FloatPredicate extends Lambda {
      */
     @Nonnull
     default FloatPredicate negate() {
-        return (value) -> !test(value);
+        return value -> !test(value);
     }
 
     /**
@@ -543,9 +541,9 @@ public interface FloatPredicate extends Lambda {
      * @see #xor(FloatPredicate)
      */
     @Nonnull
-    default FloatPredicate and(@Nonnull final FloatPredicate other) {
+    default FloatPredicate and(@Nonnull FloatPredicate other) {
         Objects.requireNonNull(other);
-        return (value) -> test(value) && other.test(value);
+        return value -> test(value) && other.test(value);
     }
 
     /**
@@ -564,9 +562,9 @@ public interface FloatPredicate extends Lambda {
      * @see #xor(FloatPredicate)
      */
     @Nonnull
-    default FloatPredicate or(@Nonnull final FloatPredicate other) {
+    default FloatPredicate or(@Nonnull FloatPredicate other) {
         Objects.requireNonNull(other);
-        return (value) -> test(value) || other.test(value);
+        return value -> test(value) || other.test(value);
     }
 
     /**
@@ -582,9 +580,9 @@ public interface FloatPredicate extends Lambda {
      * @see #or(FloatPredicate)
      */
     @Nonnull
-    default FloatPredicate xor(@Nonnull final FloatPredicate other) {
+    default FloatPredicate xor(@Nonnull FloatPredicate other) {
         Objects.requireNonNull(other);
-        return (value) -> test(value) ^ other.test(value);
+        return value -> test(value) ^ other.test(value);
     }
 
     /**
@@ -606,10 +604,10 @@ public interface FloatPredicate extends Lambda {
         if (isMemoized()) {
             return this;
         } else {
-            final Map<Float, Boolean> cache = new ConcurrentHashMap<>();
-            final Object lock = new Object();
-            return (FloatPredicate & Memoized) (value) -> {
-                final boolean returnValue;
+            Map<Float, Boolean> cache = new ConcurrentHashMap<>();
+            Object lock = new Object();
+            return (FloatPredicate & Memoized) value -> {
+                boolean returnValue;
                 synchronized (lock) {
                     returnValue = cache.computeIfAbsent(value, this::test);
                 }
@@ -619,9 +617,9 @@ public interface FloatPredicate extends Lambda {
     }
 
     /**
-     * Returns a composed {@link Predicate2} which represents this {@link FloatPredicate}. Thereby the primitive
-     * input argument for this predicate is autoboxed. This method provides the possibility to use this
-     * {@code FloatPredicate} with methods provided by the {@code JDK}.
+     * Returns a composed {@link Predicate2} which represents this {@link FloatPredicate}. Thereby the primitive input
+     * argument for this predicate is autoboxed. This method provides the possibility to use this {@code FloatPredicate}
+     * with methods provided by the {@code JDK}.
      *
      * @return A composed {@code Predicate2} which represents this {@code FloatPredicate}.
      */

@@ -13,7 +13,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package org.lambda4j.operator.binary;
+
+import java.util.Comparator;
+import java.util.Map;
+import java.util.Objects;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.function.BinaryOperator;
+import java.util.function.Function;
+
+import javax.annotation.Nonnegative;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
+import org.apache.commons.lang3.tuple.Pair;
 
 import org.lambda4j.Lambda;
 import org.lambda4j.consumer.ThrowableByteConsumer;
@@ -55,22 +69,10 @@ import org.lambda4j.operator.unary.ThrowableByteUnaryOperator;
 import org.lambda4j.predicate.ThrowableBytePredicate;
 import org.lambda4j.predicate.bi.ThrowableBiBytePredicate;
 
-import org.apache.commons.lang3.tuple.Pair;
-
-import javax.annotation.Nonnegative;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import java.util.Comparator;
-import java.util.Map;
-import java.util.Objects;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.function.BinaryOperator;
-import java.util.function.Function;
-
 /**
- * Represents an operation that accepts two {@code byte}-valued input arguments and produces a
- * {@code byte}-valued result which is able to throw any {@link Throwable}.
- * This is a primitive specialization of {@link ThrowableBinaryOperator}.
+ * Represents an operation that accepts two {@code byte}-valued input arguments and produces a {@code byte}-valued
+ * result which is able to throw any {@link Throwable}. This is a primitive specialization of {@link
+ * ThrowableBinaryOperator}.
  * <p>
  * This is a {@link FunctionalInterface} whose functional method is {@link #applyAsByteThrows(byte, byte)}.
  *
@@ -97,7 +99,7 @@ public interface ThrowableByteBinaryOperator<X extends Throwable> extends Lambda
      * @see <a href="https://docs.oracle.com/javase/tutorial/java/javaOO/methodreferences.html">Method Reference</a>
      */
     static <X extends Throwable> ThrowableByteBinaryOperator<X> of(
-            @Nullable final ThrowableByteBinaryOperator<X> expression) {
+            @Nullable ThrowableByteBinaryOperator<X> expression) {
         return expression;
     }
 
@@ -112,7 +114,7 @@ public interface ThrowableByteBinaryOperator<X extends Throwable> extends Lambda
      * @throws NullPointerException If given argument is {@code null}
      * @throws X Any throwable from this operators action
      */
-    static <X extends Throwable> byte call(@Nonnull final ThrowableByteBinaryOperator<? extends X> operator,
+    static <X extends Throwable> byte call(@Nonnull ThrowableByteBinaryOperator<? extends X> operator,
             byte value1, byte value2) throws X {
         Objects.requireNonNull(operator);
         return operator.applyAsByteThrows(value1, value2);
@@ -130,7 +132,7 @@ public interface ThrowableByteBinaryOperator<X extends Throwable> extends Lambda
      */
     @Nonnull
     static <X extends Throwable> ThrowableByteBinaryOperator<X> onlyFirst(
-            @Nonnull final ThrowableByteUnaryOperator<? extends X> operator) {
+            @Nonnull ThrowableByteUnaryOperator<? extends X> operator) {
         Objects.requireNonNull(operator);
         return (value1, value2) -> operator.applyAsByteThrows(value1);
     }
@@ -147,7 +149,7 @@ public interface ThrowableByteBinaryOperator<X extends Throwable> extends Lambda
      */
     @Nonnull
     static <X extends Throwable> ThrowableByteBinaryOperator<X> onlySecond(
-            @Nonnull final ThrowableByteUnaryOperator<? extends X> operator) {
+            @Nonnull ThrowableByteUnaryOperator<? extends X> operator) {
         Objects.requireNonNull(operator);
         return (value1, value2) -> operator.applyAsByteThrows(value2);
     }
@@ -176,7 +178,7 @@ public interface ThrowableByteBinaryOperator<X extends Throwable> extends Lambda
      * @see BinaryOperator#minBy(Comparator)
      */
     @Nonnull
-    static <X extends Throwable> ThrowableByteBinaryOperator<X> minBy(@Nonnull final Comparator<Byte> comparator) {
+    static <X extends Throwable> ThrowableByteBinaryOperator<X> minBy(@Nonnull Comparator<Byte> comparator) {
         Objects.requireNonNull(comparator);
         return (value1, value2) -> comparator.compare(value1, value2) <= 0 ? value1 : value2;
     }
@@ -193,7 +195,7 @@ public interface ThrowableByteBinaryOperator<X extends Throwable> extends Lambda
      * @see BinaryOperator#maxBy(Comparator)
      */
     @Nonnull
-    static <X extends Throwable> ThrowableByteBinaryOperator<X> maxBy(@Nonnull final Comparator<Byte> comparator) {
+    static <X extends Throwable> ThrowableByteBinaryOperator<X> maxBy(@Nonnull Comparator<Byte> comparator) {
         Objects.requireNonNull(comparator);
         return (value1, value2) -> comparator.compare(value1, value2) >= 0 ? value1 : value2;
     }
@@ -217,7 +219,7 @@ public interface ThrowableByteBinaryOperator<X extends Throwable> extends Lambda
      */
     @Nonnull
     default ThrowableByteUnaryOperator<X> papplyAsByteThrows(byte value1) {
-        return (value2) -> this.applyAsByteThrows(value1, value2);
+        return value2 -> applyAsByteThrows(value1, value2);
     }
 
     /**
@@ -246,8 +248,8 @@ public interface ThrowableByteBinaryOperator<X extends Throwable> extends Lambda
      */
     @Nonnull
     default <A, B> ThrowableToByteBiFunction<A, B, X> compose(
-            @Nonnull final ThrowableToByteFunction<? super A, ? extends X> before1,
-            @Nonnull final ThrowableToByteFunction<? super B, ? extends X> before2) {
+            @Nonnull ThrowableToByteFunction<? super A, ? extends X> before1,
+            @Nonnull ThrowableToByteFunction<? super B, ? extends X> before2) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         return (a, b) -> applyAsByteThrows(before1.applyAsByteThrows(a), before2.applyAsByteThrows(b));
@@ -263,65 +265,63 @@ public interface ThrowableByteBinaryOperator<X extends Throwable> extends Lambda
      * @return A composed {@code ThrowableBiBooleanToByteFunction} that first applies the {@code before} functions to
      * its input, and then applies this operator to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * boolean}.
      */
     @Nonnull
     default ThrowableBiBooleanToByteFunction<X> composeFromBoolean(
-            @Nonnull final ThrowableBooleanToByteFunction<? extends X> before1,
-            @Nonnull final ThrowableBooleanToByteFunction<? extends X> before2) {
+            @Nonnull ThrowableBooleanToByteFunction<? extends X> before1,
+            @Nonnull ThrowableBooleanToByteFunction<? extends X> before2) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         return (value1, value2) -> applyAsByteThrows(before1.applyAsByteThrows(value1),
-                                                     before2.applyAsByteThrows(value2));
+                before2.applyAsByteThrows(value2));
     }
 
     /**
-     * Returns a composed {@link ThrowableByteBinaryOperator} that first applies the {@code before} operators to
-     * its input, and then applies this operator to the result.
-     * This method is just convenience, to provide the ability to execute an operation which accepts {@code byte} input,
-     * before this primitive operator is executed.
+     * Returns a composed {@link ThrowableByteBinaryOperator} that first applies the {@code before} operators to its
+     * input, and then applies this operator to the result. This method is just convenience, to provide the ability to
+     * execute an operation which accepts {@code byte} input, before this primitive operator is executed.
      *
      * @param before1 The first operator to apply before this operator is applied
      * @param before2 The second operator to apply before this operator is applied
      * @return A composed {@code ThrowableByteBinaryOperator} that first applies the {@code before} operators to its
      * input, and then applies this operator to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * byte}.
      */
     @Nonnull
     default ThrowableByteBinaryOperator<X> composeFromByte(
-            @Nonnull final ThrowableByteUnaryOperator<? extends X> before1,
-            @Nonnull final ThrowableByteUnaryOperator<? extends X> before2) {
+            @Nonnull ThrowableByteUnaryOperator<? extends X> before1,
+            @Nonnull ThrowableByteUnaryOperator<? extends X> before2) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         return (value1, value2) -> applyAsByteThrows(before1.applyAsByteThrows(value1),
-                                                     before2.applyAsByteThrows(value2));
+                before2.applyAsByteThrows(value2));
     }
 
     /**
-     * Returns a composed {@link ThrowableBiCharToByteFunction} that first applies the {@code before} functions to
-     * its input, and then applies this operator to the result.
-     * This method is just convenience, to provide the ability to execute an operation which accepts {@code char} input,
-     * before this primitive operator is executed.
+     * Returns a composed {@link ThrowableBiCharToByteFunction} that first applies the {@code before} functions to its
+     * input, and then applies this operator to the result. This method is just convenience, to provide the ability to
+     * execute an operation which accepts {@code char} input, before this primitive operator is executed.
      *
      * @param before1 The first function to apply before this operator is applied
      * @param before2 The second function to apply before this operator is applied
      * @return A composed {@code ThrowableBiCharToByteFunction} that first applies the {@code before} functions to its
      * input, and then applies this operator to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * char}.
      */
     @Nonnull
     default ThrowableBiCharToByteFunction<X> composeFromChar(
-            @Nonnull final ThrowableCharToByteFunction<? extends X> before1,
-            @Nonnull final ThrowableCharToByteFunction<? extends X> before2) {
+            @Nonnull ThrowableCharToByteFunction<? extends X> before1,
+            @Nonnull ThrowableCharToByteFunction<? extends X> before2) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         return (value1, value2) -> applyAsByteThrows(before1.applyAsByteThrows(value1),
-                                                     before2.applyAsByteThrows(value2));
+                before2.applyAsByteThrows(value2));
     }
 
     /**
@@ -334,17 +334,17 @@ public interface ThrowableByteBinaryOperator<X extends Throwable> extends Lambda
      * @return A composed {@code ThrowableBiDoubleToByteFunction} that first applies the {@code before} functions to its
      * input, and then applies this operator to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * double}.
      */
     @Nonnull
     default ThrowableBiDoubleToByteFunction<X> composeFromDouble(
-            @Nonnull final ThrowableDoubleToByteFunction<? extends X> before1,
-            @Nonnull final ThrowableDoubleToByteFunction<? extends X> before2) {
+            @Nonnull ThrowableDoubleToByteFunction<? extends X> before1,
+            @Nonnull ThrowableDoubleToByteFunction<? extends X> before2) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         return (value1, value2) -> applyAsByteThrows(before1.applyAsByteThrows(value1),
-                                                     before2.applyAsByteThrows(value2));
+                before2.applyAsByteThrows(value2));
     }
 
     /**
@@ -357,65 +357,63 @@ public interface ThrowableByteBinaryOperator<X extends Throwable> extends Lambda
      * @return A composed {@code ThrowableBiFloatToByteFunction} that first applies the {@code before} functions to its
      * input, and then applies this operator to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * float}.
      */
     @Nonnull
     default ThrowableBiFloatToByteFunction<X> composeFromFloat(
-            @Nonnull final ThrowableFloatToByteFunction<? extends X> before1,
-            @Nonnull final ThrowableFloatToByteFunction<? extends X> before2) {
+            @Nonnull ThrowableFloatToByteFunction<? extends X> before1,
+            @Nonnull ThrowableFloatToByteFunction<? extends X> before2) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         return (value1, value2) -> applyAsByteThrows(before1.applyAsByteThrows(value1),
-                                                     before2.applyAsByteThrows(value2));
+                before2.applyAsByteThrows(value2));
     }
 
     /**
-     * Returns a composed {@link ThrowableBiIntToByteFunction} that first applies the {@code before} functions to
-     * its input, and then applies this operator to the result.
-     * This method is just convenience, to provide the ability to execute an operation which accepts {@code int} input,
-     * before this primitive operator is executed.
+     * Returns a composed {@link ThrowableBiIntToByteFunction} that first applies the {@code before} functions to its
+     * input, and then applies this operator to the result. This method is just convenience, to provide the ability to
+     * execute an operation which accepts {@code int} input, before this primitive operator is executed.
      *
      * @param before1 The first function to apply before this operator is applied
      * @param before2 The second function to apply before this operator is applied
      * @return A composed {@code ThrowableBiIntToByteFunction} that first applies the {@code before} functions to its
      * input, and then applies this operator to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * int}.
      */
     @Nonnull
     default ThrowableBiIntToByteFunction<X> composeFromInt(
-            @Nonnull final ThrowableIntToByteFunction<? extends X> before1,
-            @Nonnull final ThrowableIntToByteFunction<? extends X> before2) {
+            @Nonnull ThrowableIntToByteFunction<? extends X> before1,
+            @Nonnull ThrowableIntToByteFunction<? extends X> before2) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         return (value1, value2) -> applyAsByteThrows(before1.applyAsByteThrows(value1),
-                                                     before2.applyAsByteThrows(value2));
+                before2.applyAsByteThrows(value2));
     }
 
     /**
-     * Returns a composed {@link ThrowableBiLongToByteFunction} that first applies the {@code before} functions to
-     * its input, and then applies this operator to the result.
-     * This method is just convenience, to provide the ability to execute an operation which accepts {@code long} input,
-     * before this primitive operator is executed.
+     * Returns a composed {@link ThrowableBiLongToByteFunction} that first applies the {@code before} functions to its
+     * input, and then applies this operator to the result. This method is just convenience, to provide the ability to
+     * execute an operation which accepts {@code long} input, before this primitive operator is executed.
      *
      * @param before1 The first function to apply before this operator is applied
      * @param before2 The second function to apply before this operator is applied
      * @return A composed {@code ThrowableBiLongToByteFunction} that first applies the {@code before} functions to its
      * input, and then applies this operator to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * long}.
      */
     @Nonnull
     default ThrowableBiLongToByteFunction<X> composeFromLong(
-            @Nonnull final ThrowableLongToByteFunction<? extends X> before1,
-            @Nonnull final ThrowableLongToByteFunction<? extends X> before2) {
+            @Nonnull ThrowableLongToByteFunction<? extends X> before1,
+            @Nonnull ThrowableLongToByteFunction<? extends X> before2) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         return (value1, value2) -> applyAsByteThrows(before1.applyAsByteThrows(value1),
-                                                     before2.applyAsByteThrows(value2));
+                before2.applyAsByteThrows(value2));
     }
 
     /**
@@ -428,17 +426,17 @@ public interface ThrowableByteBinaryOperator<X extends Throwable> extends Lambda
      * @return A composed {@code ThrowableBiShortToByteFunction} that first applies the {@code before} functions to its
      * input, and then applies this operator to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to handle primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
      * short}.
      */
     @Nonnull
     default ThrowableBiShortToByteFunction<X> composeFromShort(
-            @Nonnull final ThrowableShortToByteFunction<? extends X> before1,
-            @Nonnull final ThrowableShortToByteFunction<? extends X> before2) {
+            @Nonnull ThrowableShortToByteFunction<? extends X> before1,
+            @Nonnull ThrowableShortToByteFunction<? extends X> before2) {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         return (value1, value2) -> applyAsByteThrows(before1.applyAsByteThrows(value1),
-                                                     before2.applyAsByteThrows(value2));
+                before2.applyAsByteThrows(value2));
     }
 
     /**
@@ -454,7 +452,7 @@ public interface ThrowableByteBinaryOperator<X extends Throwable> extends Lambda
      */
     @Nonnull
     default <S> ThrowableBiByteFunction<S, X> andThen(
-            @Nonnull final ThrowableByteFunction<? extends S, ? extends X> after) {
+            @Nonnull ThrowableByteFunction<? extends S, ? extends X> after) {
         Objects.requireNonNull(after);
         return (value1, value2) -> after.applyThrows(applyAsByteThrows(value1, value2));
     }
@@ -468,11 +466,11 @@ public interface ThrowableByteBinaryOperator<X extends Throwable> extends Lambda
      * @return A composed {@code ThrowableBiBytePredicate} that first applies this operator to its input, and then
      * applies the {@code after} predicate to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * boolean}.
      */
     @Nonnull
-    default ThrowableBiBytePredicate<X> andThenToBoolean(@Nonnull final ThrowableBytePredicate<? extends X> after) {
+    default ThrowableBiBytePredicate<X> andThenToBoolean(@Nonnull ThrowableBytePredicate<? extends X> after) {
         Objects.requireNonNull(after);
         return (value1, value2) -> after.testThrows(applyAsByteThrows(value1, value2));
     }
@@ -486,11 +484,11 @@ public interface ThrowableByteBinaryOperator<X extends Throwable> extends Lambda
      * @return A composed {@code ThrowableByteBinaryOperator} that first applies this operator to its input, and then
      * applies the {@code after} operator to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * byte}.
      */
     @Nonnull
-    default ThrowableByteBinaryOperator<X> andThenToByte(@Nonnull final ThrowableByteUnaryOperator<? extends X> after) {
+    default ThrowableByteBinaryOperator<X> andThenToByte(@Nonnull ThrowableByteUnaryOperator<? extends X> after) {
         Objects.requireNonNull(after);
         return (value1, value2) -> after.applyAsByteThrows(applyAsByteThrows(value1, value2));
     }
@@ -504,12 +502,12 @@ public interface ThrowableByteBinaryOperator<X extends Throwable> extends Lambda
      * @return A composed {@code ThrowableBiByteToCharFunction} that first applies this operator to its input, and then
      * applies the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * char}.
      */
     @Nonnull
     default ThrowableBiByteToCharFunction<X> andThenToChar(
-            @Nonnull final ThrowableByteToCharFunction<? extends X> after) {
+            @Nonnull ThrowableByteToCharFunction<? extends X> after) {
         Objects.requireNonNull(after);
         return (value1, value2) -> after.applyAsCharThrows(applyAsByteThrows(value1, value2));
     }
@@ -523,12 +521,12 @@ public interface ThrowableByteBinaryOperator<X extends Throwable> extends Lambda
      * @return A composed {@code ThrowableBiByteToDoubleFunction} that first applies this operator to its input, and
      * then applies the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * double}.
      */
     @Nonnull
     default ThrowableBiByteToDoubleFunction<X> andThenToDouble(
-            @Nonnull final ThrowableByteToDoubleFunction<? extends X> after) {
+            @Nonnull ThrowableByteToDoubleFunction<? extends X> after) {
         Objects.requireNonNull(after);
         return (value1, value2) -> after.applyAsDoubleThrows(applyAsByteThrows(value1, value2));
     }
@@ -542,12 +540,12 @@ public interface ThrowableByteBinaryOperator<X extends Throwable> extends Lambda
      * @return A composed {@code ThrowableBiByteToFloatFunction} that first applies this operator to its input, and then
      * applies the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * float}.
      */
     @Nonnull
     default ThrowableBiByteToFloatFunction<X> andThenToFloat(
-            @Nonnull final ThrowableByteToFloatFunction<? extends X> after) {
+            @Nonnull ThrowableByteToFloatFunction<? extends X> after) {
         Objects.requireNonNull(after);
         return (value1, value2) -> after.applyAsFloatThrows(applyAsByteThrows(value1, value2));
     }
@@ -561,11 +559,11 @@ public interface ThrowableByteBinaryOperator<X extends Throwable> extends Lambda
      * @return A composed {@code ThrowableBiByteToIntFunction} that first applies this operator to its input, and then
      * applies the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * int}.
      */
     @Nonnull
-    default ThrowableBiByteToIntFunction<X> andThenToInt(@Nonnull final ThrowableByteToIntFunction<? extends X> after) {
+    default ThrowableBiByteToIntFunction<X> andThenToInt(@Nonnull ThrowableByteToIntFunction<? extends X> after) {
         Objects.requireNonNull(after);
         return (value1, value2) -> after.applyAsIntThrows(applyAsByteThrows(value1, value2));
     }
@@ -579,12 +577,12 @@ public interface ThrowableByteBinaryOperator<X extends Throwable> extends Lambda
      * @return A composed {@code ThrowableBiByteToLongFunction} that first applies this operator to its input, and then
      * applies the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * long}.
      */
     @Nonnull
     default ThrowableBiByteToLongFunction<X> andThenToLong(
-            @Nonnull final ThrowableByteToLongFunction<? extends X> after) {
+            @Nonnull ThrowableByteToLongFunction<? extends X> after) {
         Objects.requireNonNull(after);
         return (value1, value2) -> after.applyAsLongThrows(applyAsByteThrows(value1, value2));
     }
@@ -598,12 +596,12 @@ public interface ThrowableByteBinaryOperator<X extends Throwable> extends Lambda
      * @return A composed {@code ThrowableBiByteToShortFunction} that first applies this operator to its input, and then
      * applies the {@code after} function to the result.
      * @throws NullPointerException If given argument is {@code null}
-     * @implSpec The input argument of this method is a able to return primitive values. In this case this is {@code
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
      * short}.
      */
     @Nonnull
     default ThrowableBiByteToShortFunction<X> andThenToShort(
-            @Nonnull final ThrowableByteToShortFunction<? extends X> after) {
+            @Nonnull ThrowableByteToShortFunction<? extends X> after) {
         Objects.requireNonNull(after);
         return (value1, value2) -> after.applyAsShortThrows(applyAsByteThrows(value1, value2));
     }
@@ -618,7 +616,7 @@ public interface ThrowableByteBinaryOperator<X extends Throwable> extends Lambda
      * @throws NullPointerException If given argument is {@code null}
      */
     @Nonnull
-    default ThrowableBiByteConsumer<X> consume(@Nonnull final ThrowableByteConsumer<? extends X> consumer) {
+    default ThrowableBiByteConsumer<X> consume(@Nonnull ThrowableByteConsumer<? extends X> consumer) {
         Objects.requireNonNull(consumer);
         return (value1, value2) -> consumer.acceptThrows(applyAsByteThrows(value1, value2));
     }
@@ -642,10 +640,10 @@ public interface ThrowableByteBinaryOperator<X extends Throwable> extends Lambda
         if (isMemoized()) {
             return this;
         } else {
-            final Map<Pair<Byte, Byte>, Byte> cache = new ConcurrentHashMap<>();
-            final Object lock = new Object();
+            Map<Pair<Byte, Byte>, Byte> cache = new ConcurrentHashMap<>();
+            Object lock = new Object();
             return (ThrowableByteBinaryOperator<X> & Memoized) (value1, value2) -> {
-                final byte returnValue;
+                byte returnValue;
                 synchronized (lock) {
                     returnValue = cache.computeIfAbsent(Pair.of(value1, value2), ThrowableFunction.of(
                             key -> applyAsByteThrows(key.getLeft(), key.getRight())));
@@ -696,7 +694,7 @@ public interface ThrowableByteBinaryOperator<X extends Throwable> extends Lambda
      * @see #nest()
      */
     @Nonnull
-    default ByteBinaryOperator nest(@Nonnull final Function<? super Throwable, ? extends RuntimeException> mapper) {
+    default ByteBinaryOperator nest(@Nonnull Function<? super Throwable, ? extends RuntimeException> mapper) {
         return recover(throwable -> {
             throw mapper.apply(throwable);
         });
@@ -719,15 +717,15 @@ public interface ThrowableByteBinaryOperator<X extends Throwable> extends Lambda
      */
     @Nonnull
     default ByteBinaryOperator recover(
-            @Nonnull final Function<? super Throwable, ? extends ByteBinaryOperator> recover) {
+            @Nonnull Function<? super Throwable, ? extends ByteBinaryOperator> recover) {
         Objects.requireNonNull(recover);
         return (value1, value2) -> {
             try {
-                return this.applyAsByteThrows(value1, value2);
+                return applyAsByteThrows(value1, value2);
             } catch (Error e) {
                 throw e;
             } catch (Throwable throwable) {
-                final ByteBinaryOperator operator = recover.apply(throwable);
+                ByteBinaryOperator operator = recover.apply(throwable);
                 Objects.requireNonNull(operator, () -> "recover returned null for " + throwable.getClass() + ": "
                         + throwable.getMessage());
                 return operator.applyAsByte(value1, value2);
@@ -805,7 +803,7 @@ public interface ThrowableByteBinaryOperator<X extends Throwable> extends Lambda
     default ByteBinaryOperator sneakyThrow() {
         return (value1, value2) -> {
             try {
-                return this.applyAsByteThrows(value1, value2);
+                return applyAsByteThrows(value1, value2);
             } catch (RuntimeException | Error e) {
                 throw e;
             } catch (Throwable throwable) {
