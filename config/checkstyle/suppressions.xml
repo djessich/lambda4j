@@ -25,7 +25,7 @@
     <suppress checks="NestedIfDepth" files="LongSupplier2" lines="328"/>
     <suppress checks="NestedIfDepth" files="ShortSupplier" lines="325"/>
     <suppress checks="NestedIfDepth" files="Supplier2" lines="187"/>
-    <suppress checks="NestedIfDepth" files="ThrowableBooleanSupplier" lines="375"/>
+    <suppress checks="NestedIfDepth" files="ThrowableBooleanSupplier" lines="376"/>
     <suppress checks="NestedIfDepth" files="ThrowableByteSupplier" lines="327"/>
     <suppress checks="NestedIfDepth" files="ThrowableCharSupplier" lines="327"/>
     <suppress checks="NestedIfDepth" files="ThrowableDoubleSupplier" lines="346"/>
