@@ -86,14 +86,7 @@ subprojects {
         excludeFilter = file("${rootProject.projectDir}/config/spotbugs/exclude.xml")
     }
 
-    spotbugsMain {
-        reports {
-            html.enabled = true
-            xml.enabled = true
-        }
-    }
-
-    spotbugsTest {
+    tasks.withType(com.github.spotbugs.snom.SpotBugsTask) {
         reports {
             html.enabled = true
             xml.enabled = true
