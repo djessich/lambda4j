@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016 Gridtec. All rights reserved.
+ * Copyright (c) 2021 The lambda4j authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,12 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package at.gridtec.lambda4j.generator.util;
+package org.lambda4j.generator.util;
 
-import at.gridtec.lambda4j.generator.LambdaTypeEnum;
-import at.gridtec.lambda4j.generator.cache.LambdaCache;
-import at.gridtec.lambda4j.generator.entities.LambdaEntity;
-import at.gridtec.lambda4j.generator.entities.TypeEntity;
+import org.lambda4j.generator.LambdaTypeEnum;
+import org.lambda4j.generator.cache.LambdaCache;
+import org.lambda4j.generator.entities.LambdaEntity;
+import org.lambda4j.generator.entities.TypeEntity;
 
 import org.apache.commons.lang3.ClassUtils;
 import org.apache.commons.lang3.SerializationUtils;

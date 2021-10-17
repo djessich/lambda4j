@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016 Gridtec. All rights reserved.
+ * Copyright (c) 2021 The lambda4j authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,12 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package at.gridtec.lambda4j.generator.processors.impl;
+package org.lambda4j.generator.processors.impl;
 
-import at.gridtec.lambda4j.generator.LambdaTypeEnum;
-import at.gridtec.lambda4j.generator.entities.LambdaEntity;
-import at.gridtec.lambda4j.generator.processors.Processor;
-import at.gridtec.lambda4j.generator.util.LambdaUtils;
+import org.lambda4j.generator.LambdaTypeEnum;
+import org.lambda4j.generator.entities.LambdaEntity;
+import org.lambda4j.generator.processors.Processor;
+import org.lambda4j.generator.util.LambdaUtils;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -38,7 +38,7 @@ public class PackageProcessor extends Processor {
     /**
      * Defines the default package prefix, representing the projects group id.
      */
-    private static final String PACKAGE_DEFAULT_PREFIX = "at.gridtec.lambda4j";
+    private static final String PACKAGE_DEFAULT_PREFIX = "org.lambda4j";
 
     /**
      * Defines the identifier for lambdas with arity 2.

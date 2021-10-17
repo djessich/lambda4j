@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016 Gridtec. All rights reserved.
+ * Copyright (c) 2021 The lambda4j authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,26 +13,26 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package at.gridtec.lambda4j.generator;
+package org.lambda4j.generator;
 
-import at.gridtec.lambda4j.generator.cache.LambdaCache;
-import at.gridtec.lambda4j.generator.entities.AnnotationEntity;
-import at.gridtec.lambda4j.generator.entities.LambdaEntity;
-import at.gridtec.lambda4j.generator.processors.Processor;
-import at.gridtec.lambda4j.generator.processors.ProcessorChain;
-import at.gridtec.lambda4j.generator.processors.impl.ArityProcessor;
-import at.gridtec.lambda4j.generator.processors.impl.ChangeOperatorProcessor;
-import at.gridtec.lambda4j.generator.processors.impl.InputTypeOneProcessor;
-import at.gridtec.lambda4j.generator.processors.impl.InputTypeThreeProcessor;
-import at.gridtec.lambda4j.generator.processors.impl.InputTypeTwoProcessor;
-import at.gridtec.lambda4j.generator.processors.impl.JdkProcessor;
-import at.gridtec.lambda4j.generator.processors.impl.MethodProcessor;
-import at.gridtec.lambda4j.generator.processors.impl.NameProcessor;
-import at.gridtec.lambda4j.generator.processors.impl.PackageProcessor;
-import at.gridtec.lambda4j.generator.processors.impl.ReturnTypeProcessor;
-import at.gridtec.lambda4j.generator.processors.impl.ThrowableProcessor;
-import at.gridtec.lambda4j.generator.processors.impl.TypeProcessor;
-import at.gridtec.lambda4j.generator.util.LambdaUtils;
+import org.lambda4j.generator.cache.LambdaCache;
+import org.lambda4j.generator.entities.AnnotationEntity;
+import org.lambda4j.generator.entities.LambdaEntity;
+import org.lambda4j.generator.processors.Processor;
+import org.lambda4j.generator.processors.ProcessorChain;
+import org.lambda4j.generator.processors.impl.ArityProcessor;
+import org.lambda4j.generator.processors.impl.ChangeOperatorProcessor;
+import org.lambda4j.generator.processors.impl.InputTypeOneProcessor;
+import org.lambda4j.generator.processors.impl.InputTypeThreeProcessor;
+import org.lambda4j.generator.processors.impl.InputTypeTwoProcessor;
+import org.lambda4j.generator.processors.impl.JdkProcessor;
+import org.lambda4j.generator.processors.impl.MethodProcessor;
+import org.lambda4j.generator.processors.impl.NameProcessor;
+import org.lambda4j.generator.processors.impl.PackageProcessor;
+import org.lambda4j.generator.processors.impl.ReturnTypeProcessor;
+import org.lambda4j.generator.processors.impl.ThrowableProcessor;
+import org.lambda4j.generator.processors.impl.TypeProcessor;
+import org.lambda4j.generator.util.LambdaUtils;
 import freemarker.ext.beans.BeansWrapper;
 import freemarker.ext.beans.BeansWrapperBuilder;
 import freemarker.template.Configuration;

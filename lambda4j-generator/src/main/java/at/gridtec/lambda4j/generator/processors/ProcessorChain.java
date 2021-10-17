@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016 Gridtec. All rights reserved.
+ * Copyright (c) 2021 The lambda4j authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,10 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package at.gridtec.lambda4j.generator.processors;
+package org.lambda4j.generator.processors;
 
-import at.gridtec.lambda4j.generator.entities.LambdaEntity;
-import at.gridtec.lambda4j.generator.exception.NotProcessableException;
+import org.lambda4j.generator.entities.LambdaEntity;
+import org.lambda4j.generator.exception.NotProcessableException;
 
 import javax.annotation.Nonnull;
 import java.util.Arrays;

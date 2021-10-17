@@ -1,8 +1,10 @@
 # Lambda4j: Improved Java 8 functional interfaces
 
-[![Build Status](https://travis-ci.org/gridtec/lambda4j.svg?branch=master)](https://travis-ci.org/gridtec/lambda4j)
+[![Build Status](https://travis-ci.org/djessich/lambda4j.svg?branch=master)](https://travis-ci.org/djessich/lambda4j)
 [![License](https://img.shields.io/badge/license-Apache_2-blue.svg)](https://www.apache.org/licenses/LICENSE-2.0)
-[![Maven Central](https://img.shields.io/maven-central/v/at.gridtec.lambda4j/lambda4j.svg)](https://maven-badges.herokuapp.com/maven-central/at.gridtec.lambda4j/lambda4j)
+[![Maven Central](https://img.shields.io/maven-central/v/org.lambda4j/lambda4j.svg)](https://maven-badges.herokuapp.com/maven-central/org.lambda4j/lambda4j)
+
+**This project was moved from Gridtec organization and is currently under heavy development. Please use old release unless a new one with all changes applied is present.**
 
 The Lambda4j project focuses on the implementation of non-throwable and throwable Java&trade; 8 functional interfaces (lambdas). It supports the following features:
 
@@ -27,7 +29,7 @@ To add Lambda4j as dependency using Maven, use the following:
 
 ```xml
 <dependency>
-  <groupId>at.gridtec.lambda4j</groupId>
+  <groupId>org.lambda4j</groupId>
   <artifactId>lambda4j</artifactId>
   <version>1.0.0</version>
 </dependency>
@@ -37,7 +39,7 @@ Using Gradle, use the following:
 
 ```
 dependencies {
-  compile 'at.gridtec.lambda4j:lambda4j:1.0.0'
+  compile 'org.lambda4j:lambda4j:1.0.0'
 }
 ```
 
@@ -114,26 +116,21 @@ The Lambda4j project has the following dependencies:
 
 If you like to use Lambda4j in your project without Dependency Management suach as Maven, then the dependencies from above must be on your classpath.
 
-## Documentation
-
-Documentation can be found in the [API Doc](http://doc.gridtec.at/lambda4j/latest) or refer to *lambda4j-doc*.
-
 ## Contribute
 
 Please see [CONTRIBUTING.md](#CONTRIBUTING.md).
 
 ## License & Authors
 
-* Author:: [Gridtec](http://www.gridtec.at/) (projects@gridtec.at)
+* Author: Dominik Jessich ([dominik.jessich@gmail.com](mailto:dominik.jessich@gmail.com))
+* Copyright: 2015-2021, The lambda4j authors
 
 ```
-Copyright 2016, Gridtec
-
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
 You may obtain a copy of the License at
 
-   http://www.apache.org/licenses/LICENSE-2.0
+    http://www.apache.org/licenses/LICENSE-2.0
 
 Unless required by applicable law or agreed to in writing, software
 distributed under the License is distributed on an "AS IS" BASIS,

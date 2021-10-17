@@ -5,7 +5,7 @@ We're glad that you want to contribute to the Lambda4j! Lambda4j is licensed und
 ## Quick Contributing Steps
 
 1. Create an account on [GitHub](https://github.com).
-2. Create an issue using the [Issue Tracker](https://github.com/gridtec/lambda4j/issues)
+2. Create an issue using the [Issue Tracker](https://github.com/djessich/lambda4j/issues)
 3. Create a pull request for your change on [GitHub](https://github.com).
 4. Link to your patch as a rebased git branch (against the current master) and create a pull request from the ticket
 
@@ -41,7 +41,7 @@ Just a few notes here. In general it is good to look at existing code to get a c
 
 ```java
 /*
- * Copyright (c) 2016 Gridtec. All rights reserved.
+ * Copyright (c) 2021 The lambda4j authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -59,7 +59,7 @@ Just a few notes here. In general it is good to look at existing code to get a c
 
 ### Packages
 
-* There is only one first-level package: `at.gridtec.lambda4j`.
+* There is only one first-level package: `org.lambda4j`.
 * Package names are denoted in singular.
 * Packages are sliced by domain (e.g. consumer, function, predicate).
 * Package private classes are used in order to hide non-public API.
@@ -73,7 +73,7 @@ We organize our classes and interfaces in the following way:
 2. Package declaration
 3. Full import list, which means no use of imports with wildcards. Imports need to have the following order:
    * Static imports
-   * Lambda4j imports (at.gridtec.lambda4j)
+   * Lambda4j imports (org.lambda4j)
    * Every other domain, except Java (org, net, etc.)
    * Java imports (java/javax)
 4. The Javadoc of the type contains an overview of the API declared in the actual type.
