@@ -17,6 +17,7 @@ subprojects {
     apply plugin: 'java-library'
     apply plugin: 'idea'
     apply plugin: 'checkstyle'
+    apply plugin: 'pmd'
 
     apply plugin: 'com.github.spotbugs'
 
@@ -60,6 +61,20 @@ subprojects {
     }
 
     tasks.withType(Checkstyle) {
+        reports {
+            html.enabled = true
+            xml.enabled = true
+        }
+    }
+
+    pmd {
+        toolVersion = '6.39.0'
+        ruleSetFiles = files("${rootProject.projectDir}/config/pmd/pmd.xml")
+        ruleSets = []
+        consoleOutput = true
+    }
+
+    tasks.withType(Pmd) {
         reports {
             html.enabled = true
             xml.enabled = true
