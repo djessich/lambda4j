@@ -175,7 +175,7 @@ public interface ObjLongToLongFunction<T> extends Lambda {
      * @return A {@code LongUnaryOperator2} that represents this operator partially applied the some arguments.
      */
     @Nonnull
-    default LongUnaryOperator2 papplyAsLong(T t) {
+    default LongUnaryOperator2 applyAsLongPartially(T t) {
         return value -> applyAsLong(t, value);
     }
 
@@ -186,7 +186,7 @@ public interface ObjLongToLongFunction<T> extends Lambda {
      * @return A {@code ToLongFunction2} that represents this operator partially applied the some arguments.
      */
     @Nonnull
-    default ToLongFunction2<T> papplyAsLong(long value) {
+    default ToLongFunction2<T> applyAsLongPartially(long value) {
         return t -> applyAsLong(t, value);
     }
 

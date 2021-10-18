@@ -177,7 +177,7 @@ public interface ObjFloatToDoubleFunction<T> extends Lambda {
      * @return A {@code FloatToDoubleFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default FloatToDoubleFunction papplyAsDouble(T t) {
+    default FloatToDoubleFunction applyAsDoublePartially(T t) {
         return value -> applyAsDouble(t, value);
     }
 
@@ -188,7 +188,7 @@ public interface ObjFloatToDoubleFunction<T> extends Lambda {
      * @return A {@code ToDoubleFunction2} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ToDoubleFunction2<T> papplyAsDouble(float value) {
+    default ToDoubleFunction2<T> applyAsDoublePartially(float value) {
         return t -> applyAsDouble(t, value);
     }
 

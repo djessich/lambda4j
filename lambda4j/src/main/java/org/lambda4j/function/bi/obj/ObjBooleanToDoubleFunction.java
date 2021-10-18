@@ -177,7 +177,7 @@ public interface ObjBooleanToDoubleFunction<T> extends Lambda {
      * @return A {@code BooleanToDoubleFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default BooleanToDoubleFunction papplyAsDouble(T t) {
+    default BooleanToDoubleFunction applyAsDoublePartially(T t) {
         return value -> applyAsDouble(t, value);
     }
 
@@ -188,7 +188,7 @@ public interface ObjBooleanToDoubleFunction<T> extends Lambda {
      * @return A {@code ToDoubleFunction2} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ToDoubleFunction2<T> papplyAsDouble(boolean value) {
+    default ToDoubleFunction2<T> applyAsDoublePartially(boolean value) {
         return t -> applyAsDouble(t, value);
     }
 

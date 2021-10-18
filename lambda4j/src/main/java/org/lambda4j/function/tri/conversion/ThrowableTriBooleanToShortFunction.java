@@ -194,7 +194,7 @@ public interface ThrowableTriBooleanToShortFunction<X extends Throwable> extends
      * arguments.
      */
     @Nonnull
-    default ThrowableBiBooleanToShortFunction<X> papplyAsShortThrows(boolean value1) {
+    default ThrowableBiBooleanToShortFunction<X> applyAsShortThrowsPartially(boolean value1) {
         return (value2, value3) -> applyAsShortThrows(value1, value2, value3);
     }
 
@@ -208,7 +208,7 @@ public interface ThrowableTriBooleanToShortFunction<X extends Throwable> extends
      * arguments.
      */
     @Nonnull
-    default ThrowableBooleanToShortFunction<X> papplyAsShortThrows(boolean value1, boolean value2) {
+    default ThrowableBooleanToShortFunction<X> applyAsShortThrowsPartially(boolean value1, boolean value2) {
         return value3 -> applyAsShortThrows(value1, value2, value3);
     }
 

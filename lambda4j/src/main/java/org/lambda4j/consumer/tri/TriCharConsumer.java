@@ -140,7 +140,7 @@ public interface TriCharConsumer extends Lambda {
      * @return A {@code BiCharConsumer} that represents this consumer partially applied the some arguments.
      */
     @Nonnull
-    default BiCharConsumer paccept(char value1) {
+    default BiCharConsumer acceptPartially(char value1) {
         return (value2, value3) -> accept(value1, value2, value3);
     }
 
@@ -152,7 +152,7 @@ public interface TriCharConsumer extends Lambda {
      * @return A {@code CharConsumer} that represents this consumer partially applied the some arguments.
      */
     @Nonnull
-    default CharConsumer paccept(char value1, char value2) {
+    default CharConsumer acceptPartially(char value1, char value2) {
         return value3 -> accept(value1, value2, value3);
     }
 

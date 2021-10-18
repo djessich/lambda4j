@@ -193,7 +193,7 @@ public interface ThrowableObjByteToFloatFunction<T, X extends Throwable> extends
      * arguments.
      */
     @Nonnull
-    default ThrowableByteToFloatFunction<X> papplyAsFloatThrows(T t) {
+    default ThrowableByteToFloatFunction<X> applyAsFloatThrowsPartially(T t) {
         return value -> applyAsFloatThrows(t, value);
     }
 
@@ -205,7 +205,7 @@ public interface ThrowableObjByteToFloatFunction<T, X extends Throwable> extends
      * @return A {@code ThrowableToFloatFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ThrowableToFloatFunction<T, X> papplyAsFloatThrows(byte value) {
+    default ThrowableToFloatFunction<T, X> applyAsFloatThrowsPartially(byte value) {
         return t -> applyAsFloatThrows(t, value);
     }
 

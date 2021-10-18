@@ -169,7 +169,7 @@ public interface ObjBiDoubleConsumer<T> extends Lambda {
      * @return A {@code BiDoubleConsumer} that represents this consumer partially applied the some arguments.
      */
     @Nonnull
-    default BiDoubleConsumer paccept(T t) {
+    default BiDoubleConsumer acceptPartially(T t) {
         return (value1, value2) -> accept(t, value1, value2);
     }
 
@@ -181,7 +181,7 @@ public interface ObjBiDoubleConsumer<T> extends Lambda {
      * @return A {@code DoubleConsumer2} that represents this consumer partially applied the some arguments.
      */
     @Nonnull
-    default DoubleConsumer2 paccept(T t, double value1) {
+    default DoubleConsumer2 acceptPartially(T t, double value1) {
         return value2 -> accept(t, value1, value2);
     }
 
@@ -192,7 +192,7 @@ public interface ObjBiDoubleConsumer<T> extends Lambda {
      * @return A {@code ObjDoubleConsumer2} that represents this consumer partially applied the some arguments.
      */
     @Nonnull
-    default ObjDoubleConsumer2<T> paccept(double value1) {
+    default ObjDoubleConsumer2<T> acceptPartially(double value1) {
         return (t, value2) -> accept(t, value1, value2);
     }
 
@@ -204,7 +204,7 @@ public interface ObjBiDoubleConsumer<T> extends Lambda {
      * @return A {@code Consumer2} that represents this consumer partially applied the some arguments.
      */
     @Nonnull
-    default Consumer2<T> paccept(double value1, double value2) {
+    default Consumer2<T> acceptPartially(double value1, double value2) {
         return t -> accept(t, value1, value2);
     }
 

@@ -294,7 +294,7 @@ public interface ThrowableBiObjBooleanPredicate<T, U, X extends Throwable> exten
      * arguments.
      */
     @Nonnull
-    default ThrowableObjBooleanPredicate<U, X> ptestThrows(T t) {
+    default ThrowableObjBooleanPredicate<U, X> testThrowsPartially(T t) {
         return (u, value) -> testThrows(t, u, value);
     }
 
@@ -308,7 +308,7 @@ public interface ThrowableBiObjBooleanPredicate<T, U, X extends Throwable> exten
      * arguments.
      */
     @Nonnull
-    default ThrowableBooleanUnaryOperator<X> ptestThrows(T t, U u) {
+    default ThrowableBooleanUnaryOperator<X> testThrowsPartially(T t, U u) {
         return value -> testThrows(t, u, value);
     }
 
@@ -320,7 +320,7 @@ public interface ThrowableBiObjBooleanPredicate<T, U, X extends Throwable> exten
      * @return A {@code ThrowableBiPredicate} that represents this operator partially applied the some arguments.
      */
     @Nonnull
-    default ThrowableBiPredicate<T, U, X> ptestThrows(boolean value) {
+    default ThrowableBiPredicate<T, U, X> testThrowsPartially(boolean value) {
         return (t, u) -> testThrows(t, u, value);
     }
 
@@ -332,7 +332,7 @@ public interface ThrowableBiObjBooleanPredicate<T, U, X extends Throwable> exten
      * @return A {@code ThrowablePredicate} that represents this operator partially applied the some arguments.
      */
     @Nonnull
-    default ThrowablePredicate<U, X> ptestThrows(T t, boolean value) {
+    default ThrowablePredicate<U, X> testThrowsPartially(T t, boolean value) {
         return u -> testThrows(t, u, value);
     }
 

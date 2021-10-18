@@ -176,7 +176,7 @@ public interface ObjDoubleToCharFunction<T> extends Lambda {
      * @return A {@code DoubleToCharFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default DoubleToCharFunction papplyAsChar(T t) {
+    default DoubleToCharFunction applyAsCharPartially(T t) {
         return value -> applyAsChar(t, value);
     }
 
@@ -187,7 +187,7 @@ public interface ObjDoubleToCharFunction<T> extends Lambda {
      * @return A {@code ToCharFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ToCharFunction<T> papplyAsChar(double value) {
+    default ToCharFunction<T> applyAsCharPartially(double value) {
         return t -> applyAsChar(t, value);
     }
 

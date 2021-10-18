@@ -165,7 +165,7 @@ public interface BiBooleanFunction<R> extends Lambda {
      * @return A {@code BooleanFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default BooleanFunction<R> papply(boolean value1) {
+    default BooleanFunction<R> applyPartially(boolean value1) {
         return value2 -> apply(value1, value2);
     }
 

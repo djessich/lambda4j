@@ -202,7 +202,7 @@ public interface ThrowableByteTernaryOperator<X extends Throwable> extends Lambd
      * @return A {@code ThrowableByteBinaryOperator} that represents this operator partially applied the some arguments.
      */
     @Nonnull
-    default ThrowableByteBinaryOperator<X> papplyAsByteThrows(byte value1) {
+    default ThrowableByteBinaryOperator<X> applyAsByteThrowsPartially(byte value1) {
         return (value2, value3) -> applyAsByteThrows(value1, value2, value3);
     }
 
@@ -215,7 +215,7 @@ public interface ThrowableByteTernaryOperator<X extends Throwable> extends Lambd
      * @return A {@code ThrowableByteUnaryOperator} that represents this operator partially applied the some arguments.
      */
     @Nonnull
-    default ThrowableByteUnaryOperator<X> papplyAsByteThrows(byte value1, byte value2) {
+    default ThrowableByteUnaryOperator<X> applyAsByteThrowsPartially(byte value1, byte value2) {
         return value3 -> applyAsByteThrows(value1, value2, value3);
     }
 

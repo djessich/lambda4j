@@ -174,7 +174,7 @@ public interface ThrowableBiDoubleToFloatFunction<X extends Throwable> extends L
      * arguments.
      */
     @Nonnull
-    default ThrowableDoubleToFloatFunction<X> papplyAsFloatThrows(double value1) {
+    default ThrowableDoubleToFloatFunction<X> applyAsFloatThrowsPartially(double value1) {
         return value2 -> applyAsFloatThrows(value1, value2);
     }
 

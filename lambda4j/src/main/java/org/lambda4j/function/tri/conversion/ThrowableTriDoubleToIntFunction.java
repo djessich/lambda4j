@@ -194,7 +194,7 @@ public interface ThrowableTriDoubleToIntFunction<X extends Throwable> extends La
      * arguments.
      */
     @Nonnull
-    default ThrowableBiDoubleToIntFunction<X> papplyAsIntThrows(double value1) {
+    default ThrowableBiDoubleToIntFunction<X> applyAsIntThrowsPartially(double value1) {
         return (value2, value3) -> applyAsIntThrows(value1, value2, value3);
     }
 
@@ -208,7 +208,7 @@ public interface ThrowableTriDoubleToIntFunction<X extends Throwable> extends La
      * arguments.
      */
     @Nonnull
-    default ThrowableDoubleToIntFunction<X> papplyAsIntThrows(double value1, double value2) {
+    default ThrowableDoubleToIntFunction<X> applyAsIntThrowsPartially(double value1, double value2) {
         return value3 -> applyAsIntThrows(value1, value2, value3);
     }
 

@@ -208,7 +208,7 @@ public interface ThrowableObjShortFunction<T, R, X extends Throwable> extends La
      * @return A {@code ThrowableShortFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ThrowableShortFunction<R, X> papplyThrows(T t) {
+    default ThrowableShortFunction<R, X> applyThrowsPartially(T t) {
         return value -> applyThrows(t, value);
     }
 
@@ -219,7 +219,7 @@ public interface ThrowableObjShortFunction<T, R, X extends Throwable> extends La
      * @return A {@code ThrowableFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ThrowableFunction<T, R, X> papplyThrows(short value) {
+    default ThrowableFunction<T, R, X> applyThrowsPartially(short value) {
         return t -> applyThrows(t, value);
     }
 

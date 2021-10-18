@@ -183,7 +183,7 @@ public interface ThrowableBiFloatFunction<R, X extends Throwable> extends Lambda
      * @return A {@code ThrowableFloatFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ThrowableFloatFunction<R, X> papplyThrows(float value1) {
+    default ThrowableFloatFunction<R, X> applyThrowsPartially(float value1) {
         return value2 -> applyThrows(value1, value2);
     }
 

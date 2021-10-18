@@ -174,7 +174,7 @@ public interface TriCharToIntFunction extends Lambda {
      * @return A {@code BiCharToIntFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default BiCharToIntFunction papplyAsInt(char value1) {
+    default BiCharToIntFunction applyAsIntPartially(char value1) {
         return (value2, value3) -> applyAsInt(value1, value2, value3);
     }
 
@@ -186,7 +186,7 @@ public interface TriCharToIntFunction extends Lambda {
      * @return A {@code CharToIntFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default CharToIntFunction papplyAsInt(char value1, char value2) {
+    default CharToIntFunction applyAsIntPartially(char value1, char value2) {
         return value3 -> applyAsInt(value1, value2, value3);
     }
 

@@ -156,7 +156,7 @@ public interface BiByteToFloatFunction extends Lambda {
      * @return A {@code ByteToFloatFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ByteToFloatFunction papplyAsFloat(byte value1) {
+    default ByteToFloatFunction applyAsFloatPartially(byte value1) {
         return value2 -> applyAsFloat(value1, value2);
     }
 

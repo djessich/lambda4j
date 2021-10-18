@@ -192,7 +192,7 @@ public interface ThrowableObjLongToIntFunction<T, X extends Throwable> extends L
      * @return A {@code ThrowableLongToIntFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ThrowableLongToIntFunction<X> papplyAsIntThrows(T t) {
+    default ThrowableLongToIntFunction<X> applyAsIntThrowsPartially(T t) {
         return value -> applyAsIntThrows(t, value);
     }
 
@@ -204,7 +204,7 @@ public interface ThrowableObjLongToIntFunction<T, X extends Throwable> extends L
      * @return A {@code ThrowableToIntFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ThrowableToIntFunction<T, X> papplyAsIntThrows(long value) {
+    default ThrowableToIntFunction<T, X> applyAsIntThrowsPartially(long value) {
         return t -> applyAsIntThrows(t, value);
     }
 

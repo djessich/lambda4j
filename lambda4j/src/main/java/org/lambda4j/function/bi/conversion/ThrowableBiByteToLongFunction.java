@@ -173,7 +173,7 @@ public interface ThrowableBiByteToLongFunction<X extends Throwable> extends Lamb
      * @return A {@code ThrowableByteToLongFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ThrowableByteToLongFunction<X> papplyAsLongThrows(byte value1) {
+    default ThrowableByteToLongFunction<X> applyAsLongThrowsPartially(byte value1) {
         return value2 -> applyAsLongThrows(value1, value2);
     }
 

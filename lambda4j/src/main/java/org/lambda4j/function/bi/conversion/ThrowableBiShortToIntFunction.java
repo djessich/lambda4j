@@ -173,7 +173,7 @@ public interface ThrowableBiShortToIntFunction<X extends Throwable> extends Lamb
      * @return A {@code ThrowableShortToIntFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ThrowableShortToIntFunction<X> papplyAsIntThrows(short value1) {
+    default ThrowableShortToIntFunction<X> applyAsIntThrowsPartially(short value1) {
         return value2 -> applyAsIntThrows(value1, value2);
     }
 

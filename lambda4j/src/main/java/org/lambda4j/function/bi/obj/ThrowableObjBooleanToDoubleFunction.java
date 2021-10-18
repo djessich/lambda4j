@@ -194,7 +194,7 @@ public interface ThrowableObjBooleanToDoubleFunction<T, X extends Throwable> ext
      * arguments.
      */
     @Nonnull
-    default ThrowableBooleanToDoubleFunction<X> papplyAsDoubleThrows(T t) {
+    default ThrowableBooleanToDoubleFunction<X> applyAsDoubleThrowsPartially(T t) {
         return value -> applyAsDoubleThrows(t, value);
     }
 
@@ -206,7 +206,7 @@ public interface ThrowableObjBooleanToDoubleFunction<T, X extends Throwable> ext
      * @return A {@code ThrowableToDoubleFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ThrowableToDoubleFunction<T, X> papplyAsDoubleThrows(boolean value) {
+    default ThrowableToDoubleFunction<T, X> applyAsDoubleThrowsPartially(boolean value) {
         return t -> applyAsDoubleThrows(t, value);
     }
 

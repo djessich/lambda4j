@@ -194,7 +194,7 @@ public interface ThrowableObjBooleanToFloatFunction<T, X extends Throwable> exte
      * arguments.
      */
     @Nonnull
-    default ThrowableBooleanToFloatFunction<X> papplyAsFloatThrows(T t) {
+    default ThrowableBooleanToFloatFunction<X> applyAsFloatThrowsPartially(T t) {
         return value -> applyAsFloatThrows(t, value);
     }
 
@@ -206,7 +206,7 @@ public interface ThrowableObjBooleanToFloatFunction<T, X extends Throwable> exte
      * @return A {@code ThrowableToFloatFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ThrowableToFloatFunction<T, X> papplyAsFloatThrows(boolean value) {
+    default ThrowableToFloatFunction<T, X> applyAsFloatThrowsPartially(boolean value) {
         return t -> applyAsFloatThrows(t, value);
     }
 

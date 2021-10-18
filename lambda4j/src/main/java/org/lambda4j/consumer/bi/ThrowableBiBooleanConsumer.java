@@ -138,7 +138,7 @@ public interface ThrowableBiBooleanConsumer<X extends Throwable> extends Lambda 
      * @return A {@code ThrowableBooleanConsumer} that represents this consumer partially applied the some arguments.
      */
     @Nonnull
-    default ThrowableBooleanConsumer<X> pacceptThrows(boolean value1) {
+    default ThrowableBooleanConsumer<X> acceptThrowsPartially(boolean value1) {
         return value2 -> acceptThrows(value1, value2);
     }
 

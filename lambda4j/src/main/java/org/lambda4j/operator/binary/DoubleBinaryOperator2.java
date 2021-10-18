@@ -203,7 +203,7 @@ public interface DoubleBinaryOperator2 extends Lambda, DoubleBinaryOperator {
      * @return A {@code DoubleUnaryOperator2} that represents this operator partially applied the some arguments.
      */
     @Nonnull
-    default DoubleUnaryOperator2 papplyAsDouble(double value1) {
+    default DoubleUnaryOperator2 applyAsDoublePartially(double value1) {
         return value2 -> applyAsDouble(value1, value2);
     }
 

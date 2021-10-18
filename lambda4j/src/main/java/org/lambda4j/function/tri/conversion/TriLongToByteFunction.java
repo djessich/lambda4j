@@ -174,7 +174,7 @@ public interface TriLongToByteFunction extends Lambda {
      * @return A {@code BiLongToByteFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default BiLongToByteFunction papplyAsByte(long value1) {
+    default BiLongToByteFunction applyAsBytePartially(long value1) {
         return (value2, value3) -> applyAsByte(value1, value2, value3);
     }
 
@@ -186,7 +186,7 @@ public interface TriLongToByteFunction extends Lambda {
      * @return A {@code LongToByteFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default LongToByteFunction papplyAsByte(long value1, long value2) {
+    default LongToByteFunction applyAsBytePartially(long value1, long value2) {
         return value3 -> applyAsByte(value1, value2, value3);
     }
 

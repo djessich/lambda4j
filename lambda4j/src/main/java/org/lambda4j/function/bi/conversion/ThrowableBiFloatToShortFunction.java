@@ -174,7 +174,7 @@ public interface ThrowableBiFloatToShortFunction<X extends Throwable> extends La
      * arguments.
      */
     @Nonnull
-    default ThrowableFloatToShortFunction<X> papplyAsShortThrows(float value1) {
+    default ThrowableFloatToShortFunction<X> applyAsShortThrowsPartially(float value1) {
         return value2 -> applyAsShortThrows(value1, value2);
     }
 

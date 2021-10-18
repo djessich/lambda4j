@@ -138,7 +138,7 @@ public interface ThrowableBiFloatConsumer<X extends Throwable> extends Lambda {
      * @return A {@code ThrowableFloatConsumer} that represents this consumer partially applied the some arguments.
      */
     @Nonnull
-    default ThrowableFloatConsumer<X> pacceptThrows(float value1) {
+    default ThrowableFloatConsumer<X> acceptThrowsPartially(float value1) {
         return value2 -> acceptThrows(value1, value2);
     }
 

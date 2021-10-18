@@ -173,7 +173,7 @@ public interface ThrowableBiBooleanToShortFunction<X extends Throwable> extends 
      * arguments.
      */
     @Nonnull
-    default ThrowableBooleanToShortFunction<X> papplyAsShortThrows(boolean value1) {
+    default ThrowableBooleanToShortFunction<X> applyAsShortThrowsPartially(boolean value1) {
         return value2 -> applyAsShortThrows(value1, value2);
     }
 

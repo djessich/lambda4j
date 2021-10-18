@@ -251,7 +251,7 @@ public interface TriPredicate<T, U, V> extends Lambda {
      * @return A {@code BiPredicate2} that represents this predicate partially applied the some arguments.
      */
     @Nonnull
-    default BiPredicate2<U, V> ptest(T t) {
+    default BiPredicate2<U, V> testPartially(T t) {
         return (u, v) -> test(t, u, v);
     }
 
@@ -263,7 +263,7 @@ public interface TriPredicate<T, U, V> extends Lambda {
      * @return A {@code Predicate2} that represents this predicate partially applied the some arguments.
      */
     @Nonnull
-    default Predicate2<V> ptest(T t, U u) {
+    default Predicate2<V> testPartially(T t, U u) {
         return v -> test(t, u, v);
     }
 

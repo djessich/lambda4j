@@ -194,7 +194,7 @@ public interface ThrowableObjFloatToCharFunction<T, X extends Throwable> extends
      * arguments.
      */
     @Nonnull
-    default ThrowableFloatToCharFunction<X> papplyAsCharThrows(T t) {
+    default ThrowableFloatToCharFunction<X> applyAsCharThrowsPartially(T t) {
         return value -> applyAsCharThrows(t, value);
     }
 
@@ -206,7 +206,7 @@ public interface ThrowableObjFloatToCharFunction<T, X extends Throwable> extends
      * @return A {@code ThrowableToCharFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ThrowableToCharFunction<T, X> papplyAsCharThrows(float value) {
+    default ThrowableToCharFunction<T, X> applyAsCharThrowsPartially(float value) {
         return t -> applyAsCharThrows(t, value);
     }
 

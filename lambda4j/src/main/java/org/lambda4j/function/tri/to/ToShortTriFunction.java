@@ -197,7 +197,7 @@ public interface ToShortTriFunction<T, U, V> extends Lambda {
      * @return A {@code ToShortBiFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ToShortBiFunction<U, V> papplyAsShort(T t) {
+    default ToShortBiFunction<U, V> applyAsShortPartially(T t) {
         return (u, v) -> applyAsShort(t, u, v);
     }
 
@@ -209,7 +209,7 @@ public interface ToShortTriFunction<T, U, V> extends Lambda {
      * @return A {@code ToShortFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ToShortFunction<V> papplyAsShort(T t, U u) {
+    default ToShortFunction<V> applyAsShortPartially(T t, U u) {
         return v -> applyAsShort(t, u, v);
     }
 

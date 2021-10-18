@@ -194,7 +194,7 @@ public interface ThrowableTriFloatToLongFunction<X extends Throwable> extends La
      * arguments.
      */
     @Nonnull
-    default ThrowableBiFloatToLongFunction<X> papplyAsLongThrows(float value1) {
+    default ThrowableBiFloatToLongFunction<X> applyAsLongThrowsPartially(float value1) {
         return (value2, value3) -> applyAsLongThrows(value1, value2, value3);
     }
 
@@ -208,7 +208,7 @@ public interface ThrowableTriFloatToLongFunction<X extends Throwable> extends La
      * arguments.
      */
     @Nonnull
-    default ThrowableFloatToLongFunction<X> papplyAsLongThrows(float value1, float value2) {
+    default ThrowableFloatToLongFunction<X> applyAsLongThrowsPartially(float value1, float value2) {
         return value3 -> applyAsLongThrows(value1, value2, value3);
     }
 

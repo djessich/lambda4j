@@ -176,7 +176,7 @@ public interface ObjDoubleToDoubleFunction<T> extends Lambda {
      * @return A {@code DoubleUnaryOperator2} that represents this operator partially applied the some arguments.
      */
     @Nonnull
-    default DoubleUnaryOperator2 papplyAsDouble(T t) {
+    default DoubleUnaryOperator2 applyAsDoublePartially(T t) {
         return value -> applyAsDouble(t, value);
     }
 
@@ -187,7 +187,7 @@ public interface ObjDoubleToDoubleFunction<T> extends Lambda {
      * @return A {@code ToDoubleFunction2} that represents this operator partially applied the some arguments.
      */
     @Nonnull
-    default ToDoubleFunction2<T> papplyAsDouble(double value) {
+    default ToDoubleFunction2<T> applyAsDoublePartially(double value) {
         return t -> applyAsDouble(t, value);
     }
 

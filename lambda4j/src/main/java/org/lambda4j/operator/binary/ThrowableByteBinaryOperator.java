@@ -218,7 +218,7 @@ public interface ThrowableByteBinaryOperator<X extends Throwable> extends Lambda
      * @return A {@code ThrowableByteUnaryOperator} that represents this operator partially applied the some arguments.
      */
     @Nonnull
-    default ThrowableByteUnaryOperator<X> papplyAsByteThrows(byte value1) {
+    default ThrowableByteUnaryOperator<X> applyAsByteThrowsPartially(byte value1) {
         return value2 -> applyAsByteThrows(value1, value2);
     }
 

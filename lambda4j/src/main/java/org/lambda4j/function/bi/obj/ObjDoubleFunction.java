@@ -191,7 +191,7 @@ public interface ObjDoubleFunction<T, R> extends Lambda {
      * @return A {@code DoubleFunction2} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default DoubleFunction2<R> papply(T t) {
+    default DoubleFunction2<R> applyPartially(T t) {
         return value -> apply(t, value);
     }
 
@@ -202,7 +202,7 @@ public interface ObjDoubleFunction<T, R> extends Lambda {
      * @return A {@code Function2} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default Function2<T, R> papply(double value) {
+    default Function2<T, R> applyPartially(double value) {
         return t -> apply(t, value);
     }
 

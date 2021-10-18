@@ -156,7 +156,7 @@ public interface BiShortToDoubleFunction extends Lambda {
      * @return A {@code ShortToDoubleFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ShortToDoubleFunction papplyAsDouble(short value1) {
+    default ShortToDoubleFunction applyAsDoublePartially(short value1) {
         return value2 -> applyAsDouble(value1, value2);
     }
 

@@ -155,7 +155,7 @@ public interface BiFloatToIntFunction extends Lambda {
      * @return A {@code FloatToIntFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default FloatToIntFunction papplyAsInt(float value1) {
+    default FloatToIntFunction applyAsIntPartially(float value1) {
         return value2 -> applyAsInt(value1, value2);
     }
 

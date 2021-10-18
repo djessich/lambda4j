@@ -194,7 +194,7 @@ public interface ThrowableObjDoubleToIntFunction<T, X extends Throwable> extends
      * arguments.
      */
     @Nonnull
-    default ThrowableDoubleToIntFunction<X> papplyAsIntThrows(T t) {
+    default ThrowableDoubleToIntFunction<X> applyAsIntThrowsPartially(T t) {
         return value -> applyAsIntThrows(t, value);
     }
 
@@ -206,7 +206,7 @@ public interface ThrowableObjDoubleToIntFunction<T, X extends Throwable> extends
      * @return A {@code ThrowableToIntFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ThrowableToIntFunction<T, X> papplyAsIntThrows(double value) {
+    default ThrowableToIntFunction<T, X> applyAsIntThrowsPartially(double value) {
         return t -> applyAsIntThrows(t, value);
     }
 

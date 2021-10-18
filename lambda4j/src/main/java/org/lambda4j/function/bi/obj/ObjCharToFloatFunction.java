@@ -176,7 +176,7 @@ public interface ObjCharToFloatFunction<T> extends Lambda {
      * @return A {@code CharToFloatFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default CharToFloatFunction papplyAsFloat(T t) {
+    default CharToFloatFunction applyAsFloatPartially(T t) {
         return value -> applyAsFloat(t, value);
     }
 
@@ -187,7 +187,7 @@ public interface ObjCharToFloatFunction<T> extends Lambda {
      * @return A {@code ToFloatFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ToFloatFunction<T> papplyAsFloat(char value) {
+    default ToFloatFunction<T> applyAsFloatPartially(char value) {
         return t -> applyAsFloat(t, value);
     }
 

@@ -208,7 +208,7 @@ public interface ThrowableObjIntFunction<T, R, X extends Throwable> extends Lamb
      * @return A {@code ThrowableIntFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ThrowableIntFunction<R, X> papplyThrows(T t) {
+    default ThrowableIntFunction<R, X> applyThrowsPartially(T t) {
         return value -> applyThrows(t, value);
     }
 
@@ -219,7 +219,7 @@ public interface ThrowableObjIntFunction<T, R, X extends Throwable> extends Lamb
      * @return A {@code ThrowableFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ThrowableFunction<T, R, X> papplyThrows(int value) {
+    default ThrowableFunction<T, R, X> applyThrowsPartially(int value) {
         return t -> applyThrows(t, value);
     }
 

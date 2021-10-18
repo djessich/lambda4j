@@ -193,7 +193,7 @@ public interface ThrowableObjLongToShortFunction<T, X extends Throwable> extends
      * arguments.
      */
     @Nonnull
-    default ThrowableLongToShortFunction<X> papplyAsShortThrows(T t) {
+    default ThrowableLongToShortFunction<X> applyAsShortThrowsPartially(T t) {
         return value -> applyAsShortThrows(t, value);
     }
 
@@ -205,7 +205,7 @@ public interface ThrowableObjLongToShortFunction<T, X extends Throwable> extends
      * @return A {@code ThrowableToShortFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ThrowableToShortFunction<T, X> papplyAsShortThrows(long value) {
+    default ThrowableToShortFunction<T, X> applyAsShortThrowsPartially(long value) {
         return t -> applyAsShortThrows(t, value);
     }
 

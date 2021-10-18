@@ -158,7 +158,7 @@ public interface ThrowableTriBooleanConsumer<X extends Throwable> extends Lambda
      * @return A {@code ThrowableBiBooleanConsumer} that represents this consumer partially applied the some arguments.
      */
     @Nonnull
-    default ThrowableBiBooleanConsumer<X> pacceptThrows(boolean value1) {
+    default ThrowableBiBooleanConsumer<X> acceptThrowsPartially(boolean value1) {
         return (value2, value3) -> acceptThrows(value1, value2, value3);
     }
 
@@ -171,7 +171,7 @@ public interface ThrowableTriBooleanConsumer<X extends Throwable> extends Lambda
      * @return A {@code ThrowableBooleanConsumer} that represents this consumer partially applied the some arguments.
      */
     @Nonnull
-    default ThrowableBooleanConsumer<X> pacceptThrows(boolean value1, boolean value2) {
+    default ThrowableBooleanConsumer<X> acceptThrowsPartially(boolean value1, boolean value2) {
         return value3 -> acceptThrows(value1, value2, value3);
     }
 

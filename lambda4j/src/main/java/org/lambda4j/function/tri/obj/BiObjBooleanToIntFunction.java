@@ -220,7 +220,7 @@ public interface BiObjBooleanToIntFunction<T, U> extends Lambda {
      * @return A {@code ObjBooleanToIntFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ObjBooleanToIntFunction<U> papplyAsInt(T t) {
+    default ObjBooleanToIntFunction<U> applyAsIntPartially(T t) {
         return (u, value) -> applyAsInt(t, u, value);
     }
 
@@ -233,7 +233,7 @@ public interface BiObjBooleanToIntFunction<T, U> extends Lambda {
      * @return A {@code BooleanToIntFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default BooleanToIntFunction papplyAsInt(T t, U u) {
+    default BooleanToIntFunction applyAsIntPartially(T t, U u) {
         return value -> applyAsInt(t, u, value);
     }
 
@@ -244,7 +244,7 @@ public interface BiObjBooleanToIntFunction<T, U> extends Lambda {
      * @return A {@code ToIntBiFunction2} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ToIntBiFunction2<T, U> papplyAsInt(boolean value) {
+    default ToIntBiFunction2<T, U> applyAsIntPartially(boolean value) {
         return (t, u) -> applyAsInt(t, u, value);
     }
 
@@ -256,7 +256,7 @@ public interface BiObjBooleanToIntFunction<T, U> extends Lambda {
      * @return A {@code ToIntFunction2} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ToIntFunction2<U> papplyAsInt(T t, boolean value) {
+    default ToIntFunction2<U> applyAsIntPartially(T t, boolean value) {
         return u -> applyAsInt(t, u, value);
     }
 

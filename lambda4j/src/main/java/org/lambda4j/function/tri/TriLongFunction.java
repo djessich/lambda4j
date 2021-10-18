@@ -184,7 +184,7 @@ public interface TriLongFunction<R> extends Lambda {
      * @return A {@code BiLongFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default BiLongFunction<R> papply(long value1) {
+    default BiLongFunction<R> applyPartially(long value1) {
         return (value2, value3) -> apply(value1, value2, value3);
     }
 
@@ -196,7 +196,7 @@ public interface TriLongFunction<R> extends Lambda {
      * @return A {@code LongFunction2} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default LongFunction2<R> papply(long value1, long value2) {
+    default LongFunction2<R> applyPartially(long value1, long value2) {
         return value3 -> apply(value1, value2, value3);
     }
 

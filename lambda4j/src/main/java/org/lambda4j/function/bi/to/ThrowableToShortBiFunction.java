@@ -186,7 +186,7 @@ public interface ThrowableToShortBiFunction<T, U, X extends Throwable> extends L
      * @return A {@code ThrowableToShortFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ThrowableToShortFunction<U, X> papplyAsShortThrows(T t) {
+    default ThrowableToShortFunction<U, X> applyAsShortThrowsPartially(T t) {
         return u -> applyAsShortThrows(t, u);
     }
 

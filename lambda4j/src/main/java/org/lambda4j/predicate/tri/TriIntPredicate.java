@@ -215,7 +215,7 @@ public interface TriIntPredicate extends Lambda {
      * @return A {@code BiIntPredicate} that represents this predicate partially applied the some arguments.
      */
     @Nonnull
-    default BiIntPredicate ptest(int value1) {
+    default BiIntPredicate testPartially(int value1) {
         return (value2, value3) -> test(value1, value2, value3);
     }
 
@@ -227,7 +227,7 @@ public interface TriIntPredicate extends Lambda {
      * @return A {@code IntPredicate2} that represents this predicate partially applied the some arguments.
      */
     @Nonnull
-    default IntPredicate2 ptest(int value1, int value2) {
+    default IntPredicate2 testPartially(int value1, int value2) {
         return value3 -> test(value1, value2, value3);
     }
 

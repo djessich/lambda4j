@@ -202,7 +202,7 @@ public interface IntBinaryOperator2 extends Lambda, IntBinaryOperator {
      * @return A {@code IntUnaryOperator2} that represents this operator partially applied the some arguments.
      */
     @Nonnull
-    default IntUnaryOperator2 papplyAsInt(int value1) {
+    default IntUnaryOperator2 applyAsIntPartially(int value1) {
         return value2 -> applyAsInt(value1, value2);
     }
 

@@ -164,7 +164,7 @@ public interface TriConsumer<T, U, V> extends Lambda {
      * @return A {@code BiConsumer2} that represents this consumer partially applied the some arguments.
      */
     @Nonnull
-    default BiConsumer2<U, V> paccept(T t) {
+    default BiConsumer2<U, V> acceptPartially(T t) {
         return (u, v) -> accept(t, u, v);
     }
 
@@ -176,7 +176,7 @@ public interface TriConsumer<T, U, V> extends Lambda {
      * @return A {@code Consumer2} that represents this consumer partially applied the some arguments.
      */
     @Nonnull
-    default Consumer2<V> paccept(T t, U u) {
+    default Consumer2<V> acceptPartially(T t, U u) {
         return v -> accept(t, u, v);
     }
 

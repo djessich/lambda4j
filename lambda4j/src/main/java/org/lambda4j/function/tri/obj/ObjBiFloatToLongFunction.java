@@ -197,7 +197,7 @@ public interface ObjBiFloatToLongFunction<T> extends Lambda {
      * @return A {@code BiFloatToLongFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default BiFloatToLongFunction papplyAsLong(T t) {
+    default BiFloatToLongFunction applyAsLongPartially(T t) {
         return (value1, value2) -> applyAsLong(t, value1, value2);
     }
 
@@ -210,7 +210,7 @@ public interface ObjBiFloatToLongFunction<T> extends Lambda {
      * @return A {@code FloatToLongFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default FloatToLongFunction papplyAsLong(T t, float value1) {
+    default FloatToLongFunction applyAsLongPartially(T t, float value1) {
         return value2 -> applyAsLong(t, value1, value2);
     }
 
@@ -222,7 +222,7 @@ public interface ObjBiFloatToLongFunction<T> extends Lambda {
      * @return A {@code ObjFloatToLongFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ObjFloatToLongFunction<T> papplyAsLong(float value1) {
+    default ObjFloatToLongFunction<T> applyAsLongPartially(float value1) {
         return (t, value2) -> applyAsLong(t, value1, value2);
     }
 
@@ -234,7 +234,7 @@ public interface ObjBiFloatToLongFunction<T> extends Lambda {
      * @return A {@code ToLongFunction2} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ToLongFunction2<T> papplyAsLong(float value1, float value2) {
+    default ToLongFunction2<T> applyAsLongPartially(float value1, float value2) {
         return t -> applyAsLong(t, value1, value2);
     }
 

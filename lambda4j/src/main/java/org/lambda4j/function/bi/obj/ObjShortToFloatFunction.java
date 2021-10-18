@@ -176,7 +176,7 @@ public interface ObjShortToFloatFunction<T> extends Lambda {
      * @return A {@code ShortToFloatFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ShortToFloatFunction papplyAsFloat(T t) {
+    default ShortToFloatFunction applyAsFloatPartially(T t) {
         return value -> applyAsFloat(t, value);
     }
 
@@ -187,7 +187,7 @@ public interface ObjShortToFloatFunction<T> extends Lambda {
      * @return A {@code ToFloatFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ToFloatFunction<T> papplyAsFloat(short value) {
+    default ToFloatFunction<T> applyAsFloatPartially(short value) {
         return t -> applyAsFloat(t, value);
     }
 

@@ -216,7 +216,7 @@ public interface ThrowableObjBiIntToFloatFunction<T, X extends Throwable> extend
      * arguments.
      */
     @Nonnull
-    default ThrowableBiIntToFloatFunction<X> papplyAsFloatThrows(T t) {
+    default ThrowableBiIntToFloatFunction<X> applyAsFloatThrowsPartially(T t) {
         return (value1, value2) -> applyAsFloatThrows(t, value1, value2);
     }
 
@@ -229,7 +229,7 @@ public interface ThrowableObjBiIntToFloatFunction<T, X extends Throwable> extend
      * @return A {@code ThrowableIntToFloatFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ThrowableIntToFloatFunction<X> papplyAsFloatThrows(T t, int value1) {
+    default ThrowableIntToFloatFunction<X> applyAsFloatThrowsPartially(T t, int value1) {
         return value2 -> applyAsFloatThrows(t, value1, value2);
     }
 
@@ -242,7 +242,7 @@ public interface ThrowableObjBiIntToFloatFunction<T, X extends Throwable> extend
      * arguments.
      */
     @Nonnull
-    default ThrowableObjIntToFloatFunction<T, X> papplyAsFloatThrows(int value1) {
+    default ThrowableObjIntToFloatFunction<T, X> applyAsFloatThrowsPartially(int value1) {
         return (t, value2) -> applyAsFloatThrows(t, value1, value2);
     }
 
@@ -255,7 +255,7 @@ public interface ThrowableObjBiIntToFloatFunction<T, X extends Throwable> extend
      * @return A {@code ThrowableToFloatFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ThrowableToFloatFunction<T, X> papplyAsFloatThrows(int value1, int value2) {
+    default ThrowableToFloatFunction<T, X> applyAsFloatThrowsPartially(int value1, int value2) {
         return t -> applyAsFloatThrows(t, value1, value2);
     }
 

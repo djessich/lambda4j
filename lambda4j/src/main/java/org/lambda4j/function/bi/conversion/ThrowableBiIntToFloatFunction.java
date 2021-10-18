@@ -173,7 +173,7 @@ public interface ThrowableBiIntToFloatFunction<X extends Throwable> extends Lamb
      * @return A {@code ThrowableIntToFloatFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ThrowableIntToFloatFunction<X> papplyAsFloatThrows(int value1) {
+    default ThrowableIntToFloatFunction<X> applyAsFloatThrowsPartially(int value1) {
         return value2 -> applyAsFloatThrows(value1, value2);
     }
 

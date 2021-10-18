@@ -194,7 +194,7 @@ public interface ThrowableObjBooleanToByteFunction<T, X extends Throwable> exten
      * arguments.
      */
     @Nonnull
-    default ThrowableBooleanToByteFunction<X> papplyAsByteThrows(T t) {
+    default ThrowableBooleanToByteFunction<X> applyAsByteThrowsPartially(T t) {
         return value -> applyAsByteThrows(t, value);
     }
 
@@ -206,7 +206,7 @@ public interface ThrowableObjBooleanToByteFunction<T, X extends Throwable> exten
      * @return A {@code ThrowableToByteFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ThrowableToByteFunction<T, X> papplyAsByteThrows(boolean value) {
+    default ThrowableToByteFunction<T, X> applyAsByteThrowsPartially(boolean value) {
         return t -> applyAsByteThrows(t, value);
     }
 

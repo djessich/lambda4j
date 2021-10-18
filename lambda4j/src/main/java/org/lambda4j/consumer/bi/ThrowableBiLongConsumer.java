@@ -137,7 +137,7 @@ public interface ThrowableBiLongConsumer<X extends Throwable> extends Lambda {
      * @return A {@code ThrowableLongConsumer} that represents this consumer partially applied the some arguments.
      */
     @Nonnull
-    default ThrowableLongConsumer<X> pacceptThrows(long value1) {
+    default ThrowableLongConsumer<X> acceptThrowsPartially(long value1) {
         return value2 -> acceptThrows(value1, value2);
     }
 

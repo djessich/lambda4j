@@ -173,7 +173,7 @@ public interface ThrowableBiBooleanToIntFunction<X extends Throwable> extends La
      * arguments.
      */
     @Nonnull
-    default ThrowableBooleanToIntFunction<X> papplyAsIntThrows(boolean value1) {
+    default ThrowableBooleanToIntFunction<X> applyAsIntThrowsPartially(boolean value1) {
         return value2 -> applyAsIntThrows(value1, value2);
     }
 

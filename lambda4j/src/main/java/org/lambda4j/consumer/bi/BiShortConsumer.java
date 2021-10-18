@@ -122,7 +122,7 @@ public interface BiShortConsumer extends Lambda {
      * @return A {@code ShortConsumer} that represents this consumer partially applied the some arguments.
      */
     @Nonnull
-    default ShortConsumer paccept(short value1) {
+    default ShortConsumer acceptPartially(short value1) {
         return value2 -> accept(value1, value2);
     }
 

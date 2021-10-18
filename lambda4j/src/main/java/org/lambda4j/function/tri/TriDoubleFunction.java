@@ -186,7 +186,7 @@ public interface TriDoubleFunction<R> extends Lambda {
      * @return A {@code BiDoubleFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default BiDoubleFunction<R> papply(double value1) {
+    default BiDoubleFunction<R> applyPartially(double value1) {
         return (value2, value3) -> apply(value1, value2, value3);
     }
 
@@ -198,7 +198,7 @@ public interface TriDoubleFunction<R> extends Lambda {
      * @return A {@code DoubleFunction2} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default DoubleFunction2<R> papply(double value1, double value2) {
+    default DoubleFunction2<R> applyPartially(double value1, double value2) {
         return value3 -> apply(value1, value2, value3);
     }
 

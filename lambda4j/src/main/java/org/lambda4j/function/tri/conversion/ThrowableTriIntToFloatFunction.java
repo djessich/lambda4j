@@ -194,7 +194,7 @@ public interface ThrowableTriIntToFloatFunction<X extends Throwable> extends Lam
      * arguments.
      */
     @Nonnull
-    default ThrowableBiIntToFloatFunction<X> papplyAsFloatThrows(int value1) {
+    default ThrowableBiIntToFloatFunction<X> applyAsFloatThrowsPartially(int value1) {
         return (value2, value3) -> applyAsFloatThrows(value1, value2, value3);
     }
 
@@ -207,7 +207,7 @@ public interface ThrowableTriIntToFloatFunction<X extends Throwable> extends Lam
      * @return A {@code ThrowableIntToFloatFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ThrowableIntToFloatFunction<X> papplyAsFloatThrows(int value1, int value2) {
+    default ThrowableIntToFloatFunction<X> applyAsFloatThrowsPartially(int value1, int value2) {
         return value3 -> applyAsFloatThrows(value1, value2, value3);
     }
 

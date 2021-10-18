@@ -222,7 +222,7 @@ public interface ObjBooleanPredicate<T> extends Lambda {
      * @return A {@code BooleanUnaryOperator} that represents this operator partially applied the some arguments.
      */
     @Nonnull
-    default BooleanUnaryOperator ptest(T t) {
+    default BooleanUnaryOperator testPartially(T t) {
         return value -> test(t, value);
     }
 
@@ -233,7 +233,7 @@ public interface ObjBooleanPredicate<T> extends Lambda {
      * @return A {@code Predicate2} that represents this operator partially applied the some arguments.
      */
     @Nonnull
-    default Predicate2<T> ptest(boolean value) {
+    default Predicate2<T> testPartially(boolean value) {
         return t -> test(t, value);
     }
 

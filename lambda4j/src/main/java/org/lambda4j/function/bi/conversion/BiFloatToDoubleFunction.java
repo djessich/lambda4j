@@ -156,7 +156,7 @@ public interface BiFloatToDoubleFunction extends Lambda {
      * @return A {@code FloatToDoubleFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default FloatToDoubleFunction papplyAsDouble(float value1) {
+    default FloatToDoubleFunction applyAsDoublePartially(float value1) {
         return value2 -> applyAsDouble(value1, value2);
     }
 

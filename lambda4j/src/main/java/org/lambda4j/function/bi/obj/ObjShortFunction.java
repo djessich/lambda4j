@@ -190,7 +190,7 @@ public interface ObjShortFunction<T, R> extends Lambda {
      * @return A {@code ShortFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ShortFunction<R> papply(T t) {
+    default ShortFunction<R> applyPartially(T t) {
         return value -> apply(t, value);
     }
 
@@ -201,7 +201,7 @@ public interface ObjShortFunction<T, R> extends Lambda {
      * @return A {@code Function2} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default Function2<T, R> papply(short value) {
+    default Function2<T, R> applyPartially(short value) {
         return t -> apply(t, value);
     }
 

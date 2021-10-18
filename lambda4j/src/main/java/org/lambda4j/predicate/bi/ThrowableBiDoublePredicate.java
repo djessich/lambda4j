@@ -216,7 +216,7 @@ public interface ThrowableBiDoublePredicate<X extends Throwable> extends Lambda 
      * @return A {@code ThrowableDoublePredicate} that represents this predicate partially applied the some arguments.
      */
     @Nonnull
-    default ThrowableDoublePredicate<X> ptestThrows(double value1) {
+    default ThrowableDoublePredicate<X> testThrowsPartially(double value1) {
         return value2 -> testThrows(value1, value2);
     }
 

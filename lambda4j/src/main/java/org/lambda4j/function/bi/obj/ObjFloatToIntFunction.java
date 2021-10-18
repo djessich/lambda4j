@@ -176,7 +176,7 @@ public interface ObjFloatToIntFunction<T> extends Lambda {
      * @return A {@code FloatToIntFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default FloatToIntFunction papplyAsInt(T t) {
+    default FloatToIntFunction applyAsIntPartially(T t) {
         return value -> applyAsInt(t, value);
     }
 
@@ -187,7 +187,7 @@ public interface ObjFloatToIntFunction<T> extends Lambda {
      * @return A {@code ToIntFunction2} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ToIntFunction2<T> papplyAsInt(float value) {
+    default ToIntFunction2<T> applyAsIntPartially(float value) {
         return t -> applyAsInt(t, value);
     }
 

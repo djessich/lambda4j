@@ -193,7 +193,7 @@ public interface ThrowableObjByteToShortFunction<T, X extends Throwable> extends
      * arguments.
      */
     @Nonnull
-    default ThrowableByteToShortFunction<X> papplyAsShortThrows(T t) {
+    default ThrowableByteToShortFunction<X> applyAsShortThrowsPartially(T t) {
         return value -> applyAsShortThrows(t, value);
     }
 
@@ -205,7 +205,7 @@ public interface ThrowableObjByteToShortFunction<T, X extends Throwable> extends
      * @return A {@code ThrowableToShortFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ThrowableToShortFunction<T, X> papplyAsShortThrows(byte value) {
+    default ThrowableToShortFunction<T, X> applyAsShortThrowsPartially(byte value) {
         return t -> applyAsShortThrows(t, value);
     }
 

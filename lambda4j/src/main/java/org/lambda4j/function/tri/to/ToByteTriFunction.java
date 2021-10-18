@@ -197,7 +197,7 @@ public interface ToByteTriFunction<T, U, V> extends Lambda {
      * @return A {@code ToByteBiFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ToByteBiFunction<U, V> papplyAsByte(T t) {
+    default ToByteBiFunction<U, V> applyAsBytePartially(T t) {
         return (u, v) -> applyAsByte(t, u, v);
     }
 
@@ -209,7 +209,7 @@ public interface ToByteTriFunction<T, U, V> extends Lambda {
      * @return A {@code ToByteFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ToByteFunction<V> papplyAsByte(T t, U u) {
+    default ToByteFunction<V> applyAsBytePartially(T t, U u) {
         return v -> applyAsByte(t, u, v);
     }
 

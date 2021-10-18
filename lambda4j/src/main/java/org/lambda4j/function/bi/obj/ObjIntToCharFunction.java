@@ -175,7 +175,7 @@ public interface ObjIntToCharFunction<T> extends Lambda {
      * @return A {@code IntToCharFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default IntToCharFunction papplyAsChar(T t) {
+    default IntToCharFunction applyAsCharPartially(T t) {
         return value -> applyAsChar(t, value);
     }
 
@@ -186,7 +186,7 @@ public interface ObjIntToCharFunction<T> extends Lambda {
      * @return A {@code ToCharFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ToCharFunction<T> papplyAsChar(int value) {
+    default ToCharFunction<T> applyAsCharPartially(int value) {
         return t -> applyAsChar(t, value);
     }
 

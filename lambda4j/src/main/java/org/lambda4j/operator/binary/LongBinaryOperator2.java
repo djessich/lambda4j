@@ -202,7 +202,7 @@ public interface LongBinaryOperator2 extends Lambda, LongBinaryOperator {
      * @return A {@code LongUnaryOperator2} that represents this operator partially applied the some arguments.
      */
     @Nonnull
-    default LongUnaryOperator2 papplyAsLong(long value1) {
+    default LongUnaryOperator2 applyAsLongPartially(long value1) {
         return value2 -> applyAsLong(value1, value2);
     }
 

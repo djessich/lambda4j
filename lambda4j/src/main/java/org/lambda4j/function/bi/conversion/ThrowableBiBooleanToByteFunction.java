@@ -173,7 +173,7 @@ public interface ThrowableBiBooleanToByteFunction<X extends Throwable> extends L
      * arguments.
      */
     @Nonnull
-    default ThrowableBooleanToByteFunction<X> papplyAsByteThrows(boolean value1) {
+    default ThrowableBooleanToByteFunction<X> applyAsByteThrowsPartially(boolean value1) {
         return value2 -> applyAsByteThrows(value1, value2);
     }
 

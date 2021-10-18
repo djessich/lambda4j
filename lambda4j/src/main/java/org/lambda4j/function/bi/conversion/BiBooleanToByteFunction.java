@@ -155,7 +155,7 @@ public interface BiBooleanToByteFunction extends Lambda {
      * @return A {@code BooleanToByteFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default BooleanToByteFunction papplyAsByte(boolean value1) {
+    default BooleanToByteFunction applyAsBytePartially(boolean value1) {
         return value2 -> applyAsByte(value1, value2);
     }
 

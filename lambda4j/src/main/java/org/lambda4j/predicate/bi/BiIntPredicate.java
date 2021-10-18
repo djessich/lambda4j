@@ -196,7 +196,7 @@ public interface BiIntPredicate extends Lambda {
      * @return A {@code IntPredicate2} that represents this predicate partially applied the some arguments.
      */
     @Nonnull
-    default IntPredicate2 ptest(int value1) {
+    default IntPredicate2 testPartially(int value1) {
         return value2 -> test(value1, value2);
     }
 

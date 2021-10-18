@@ -268,7 +268,7 @@ public interface ThrowableObjBiCharPredicate<T, X extends Throwable> extends Lam
      * @return A {@code ThrowableBiCharPredicate} that represents this predicate partially applied the some arguments.
      */
     @Nonnull
-    default ThrowableBiCharPredicate<X> ptestThrows(T t) {
+    default ThrowableBiCharPredicate<X> testThrowsPartially(T t) {
         return (value1, value2) -> testThrows(t, value1, value2);
     }
 
@@ -281,7 +281,7 @@ public interface ThrowableObjBiCharPredicate<T, X extends Throwable> extends Lam
      * @return A {@code ThrowableCharPredicate} that represents this predicate partially applied the some arguments.
      */
     @Nonnull
-    default ThrowableCharPredicate<X> ptestThrows(T t, char value1) {
+    default ThrowableCharPredicate<X> testThrowsPartially(T t, char value1) {
         return value2 -> testThrows(t, value1, value2);
     }
 
@@ -293,7 +293,7 @@ public interface ThrowableObjBiCharPredicate<T, X extends Throwable> extends Lam
      * @return A {@code ThrowableObjCharPredicate} that represents this predicate partially applied the some arguments.
      */
     @Nonnull
-    default ThrowableObjCharPredicate<T, X> ptestThrows(char value1) {
+    default ThrowableObjCharPredicate<T, X> testThrowsPartially(char value1) {
         return (t, value2) -> testThrows(t, value1, value2);
     }
 
@@ -306,7 +306,7 @@ public interface ThrowableObjBiCharPredicate<T, X extends Throwable> extends Lam
      * @return A {@code ThrowablePredicate} that represents this predicate partially applied the some arguments.
      */
     @Nonnull
-    default ThrowablePredicate<T, X> ptestThrows(char value1, char value2) {
+    default ThrowablePredicate<T, X> testThrowsPartially(char value1, char value2) {
         return t -> testThrows(t, value1, value2);
     }
 

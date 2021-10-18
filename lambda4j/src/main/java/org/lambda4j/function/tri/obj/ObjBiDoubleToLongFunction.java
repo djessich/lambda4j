@@ -199,7 +199,7 @@ public interface ObjBiDoubleToLongFunction<T> extends Lambda {
      * @return A {@code BiDoubleToLongFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default BiDoubleToLongFunction papplyAsLong(T t) {
+    default BiDoubleToLongFunction applyAsLongPartially(T t) {
         return (value1, value2) -> applyAsLong(t, value1, value2);
     }
 
@@ -212,7 +212,7 @@ public interface ObjBiDoubleToLongFunction<T> extends Lambda {
      * @return A {@code DoubleToLongFunction2} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default DoubleToLongFunction2 papplyAsLong(T t, double value1) {
+    default DoubleToLongFunction2 applyAsLongPartially(T t, double value1) {
         return value2 -> applyAsLong(t, value1, value2);
     }
 
@@ -224,7 +224,7 @@ public interface ObjBiDoubleToLongFunction<T> extends Lambda {
      * @return A {@code ObjDoubleToLongFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ObjDoubleToLongFunction<T> papplyAsLong(double value1) {
+    default ObjDoubleToLongFunction<T> applyAsLongPartially(double value1) {
         return (t, value2) -> applyAsLong(t, value1, value2);
     }
 
@@ -236,7 +236,7 @@ public interface ObjBiDoubleToLongFunction<T> extends Lambda {
      * @return A {@code ToLongFunction2} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ToLongFunction2<T> papplyAsLong(double value1, double value2) {
+    default ToLongFunction2<T> applyAsLongPartially(double value1, double value2) {
         return t -> applyAsLong(t, value1, value2);
     }
 

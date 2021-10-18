@@ -198,7 +198,7 @@ public interface ShortBinaryOperator extends Lambda {
      * @return A {@code ShortUnaryOperator} that represents this operator partially applied the some arguments.
      */
     @Nonnull
-    default ShortUnaryOperator papplyAsShort(short value1) {
+    default ShortUnaryOperator applyAsShortPartially(short value1) {
         return value2 -> applyAsShort(value1, value2);
     }
 

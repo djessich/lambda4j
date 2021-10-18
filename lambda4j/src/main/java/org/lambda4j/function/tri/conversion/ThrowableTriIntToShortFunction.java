@@ -194,7 +194,7 @@ public interface ThrowableTriIntToShortFunction<X extends Throwable> extends Lam
      * arguments.
      */
     @Nonnull
-    default ThrowableBiIntToShortFunction<X> papplyAsShortThrows(int value1) {
+    default ThrowableBiIntToShortFunction<X> applyAsShortThrowsPartially(int value1) {
         return (value2, value3) -> applyAsShortThrows(value1, value2, value3);
     }
 
@@ -207,7 +207,7 @@ public interface ThrowableTriIntToShortFunction<X extends Throwable> extends Lam
      * @return A {@code ThrowableIntToShortFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ThrowableIntToShortFunction<X> papplyAsShortThrows(int value1, int value2) {
+    default ThrowableIntToShortFunction<X> applyAsShortThrowsPartially(int value1, int value2) {
         return value3 -> applyAsShortThrows(value1, value2, value3);
     }
 

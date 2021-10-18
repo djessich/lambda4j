@@ -236,7 +236,7 @@ public interface BiObjBooleanFunction<T, U, R> extends Lambda {
      * @return A {@code ObjBooleanFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ObjBooleanFunction<U, R> papply(T t) {
+    default ObjBooleanFunction<U, R> applyPartially(T t) {
         return (u, value) -> apply(t, u, value);
     }
 
@@ -248,7 +248,7 @@ public interface BiObjBooleanFunction<T, U, R> extends Lambda {
      * @return A {@code BooleanFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default BooleanFunction<R> papply(T t, U u) {
+    default BooleanFunction<R> applyPartially(T t, U u) {
         return value -> apply(t, u, value);
     }
 
@@ -259,7 +259,7 @@ public interface BiObjBooleanFunction<T, U, R> extends Lambda {
      * @return A {@code BiFunction2} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default BiFunction2<T, U, R> papply(boolean value) {
+    default BiFunction2<T, U, R> applyPartially(boolean value) {
         return (t, u) -> apply(t, u, value);
     }
 
@@ -271,7 +271,7 @@ public interface BiObjBooleanFunction<T, U, R> extends Lambda {
      * @return A {@code Function2} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default Function2<U, R> papply(T t, boolean value) {
+    default Function2<U, R> applyPartially(T t, boolean value) {
         return u -> apply(t, u, value);
     }
 

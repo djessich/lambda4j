@@ -219,7 +219,7 @@ public interface BiObjByteToFloatFunction<T, U> extends Lambda {
      * @return A {@code ObjByteToFloatFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ObjByteToFloatFunction<U> papplyAsFloat(T t) {
+    default ObjByteToFloatFunction<U> applyAsFloatPartially(T t) {
         return (u, value) -> applyAsFloat(t, u, value);
     }
 
@@ -232,7 +232,7 @@ public interface BiObjByteToFloatFunction<T, U> extends Lambda {
      * @return A {@code ByteToFloatFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ByteToFloatFunction papplyAsFloat(T t, U u) {
+    default ByteToFloatFunction applyAsFloatPartially(T t, U u) {
         return value -> applyAsFloat(t, u, value);
     }
 
@@ -243,7 +243,7 @@ public interface BiObjByteToFloatFunction<T, U> extends Lambda {
      * @return A {@code ToFloatBiFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ToFloatBiFunction<T, U> papplyAsFloat(byte value) {
+    default ToFloatBiFunction<T, U> applyAsFloatPartially(byte value) {
         return (t, u) -> applyAsFloat(t, u, value);
     }
 
@@ -255,7 +255,7 @@ public interface BiObjByteToFloatFunction<T, U> extends Lambda {
      * @return A {@code ToFloatFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ToFloatFunction<U> papplyAsFloat(T t, byte value) {
+    default ToFloatFunction<U> applyAsFloatPartially(T t, byte value) {
         return u -> applyAsFloat(t, u, value);
     }
 

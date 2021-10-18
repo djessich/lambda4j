@@ -222,7 +222,7 @@ public interface ThrowableBiFunction<T, U, R, X extends Throwable> extends Lambd
      * @return A {@code ThrowableFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ThrowableFunction<U, R, X> papplyThrows(T t) {
+    default ThrowableFunction<U, R, X> applyThrowsPartially(T t) {
         return u -> applyThrows(t, u);
     }
 

@@ -176,7 +176,7 @@ public interface ObjCharToIntFunction<T> extends Lambda {
      * @return A {@code CharToIntFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default CharToIntFunction papplyAsInt(T t) {
+    default CharToIntFunction applyAsIntPartially(T t) {
         return value -> applyAsInt(t, value);
     }
 
@@ -187,7 +187,7 @@ public interface ObjCharToIntFunction<T> extends Lambda {
      * @return A {@code ToIntFunction2} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ToIntFunction2<T> papplyAsInt(char value) {
+    default ToIntFunction2<T> applyAsIntPartially(char value) {
         return t -> applyAsInt(t, value);
     }
 

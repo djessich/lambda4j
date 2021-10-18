@@ -197,7 +197,7 @@ public interface ObjBiFloatToShortFunction<T> extends Lambda {
      * @return A {@code BiFloatToShortFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default BiFloatToShortFunction papplyAsShort(T t) {
+    default BiFloatToShortFunction applyAsShortPartially(T t) {
         return (value1, value2) -> applyAsShort(t, value1, value2);
     }
 
@@ -210,7 +210,7 @@ public interface ObjBiFloatToShortFunction<T> extends Lambda {
      * @return A {@code FloatToShortFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default FloatToShortFunction papplyAsShort(T t, float value1) {
+    default FloatToShortFunction applyAsShortPartially(T t, float value1) {
         return value2 -> applyAsShort(t, value1, value2);
     }
 
@@ -222,7 +222,7 @@ public interface ObjBiFloatToShortFunction<T> extends Lambda {
      * @return A {@code ObjFloatToShortFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ObjFloatToShortFunction<T> papplyAsShort(float value1) {
+    default ObjFloatToShortFunction<T> applyAsShortPartially(float value1) {
         return (t, value2) -> applyAsShort(t, value1, value2);
     }
 
@@ -234,7 +234,7 @@ public interface ObjBiFloatToShortFunction<T> extends Lambda {
      * @return A {@code ToShortFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ToShortFunction<T> papplyAsShort(float value1, float value2) {
+    default ToShortFunction<T> applyAsShortPartially(float value1, float value2) {
         return t -> applyAsShort(t, value1, value2);
     }
 

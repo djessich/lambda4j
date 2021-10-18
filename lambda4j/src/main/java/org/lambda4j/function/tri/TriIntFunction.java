@@ -184,7 +184,7 @@ public interface TriIntFunction<R> extends Lambda {
      * @return A {@code BiIntFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default BiIntFunction<R> papply(int value1) {
+    default BiIntFunction<R> applyPartially(int value1) {
         return (value2, value3) -> apply(value1, value2, value3);
     }
 
@@ -196,7 +196,7 @@ public interface TriIntFunction<R> extends Lambda {
      * @return A {@code IntFunction2} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default IntFunction2<R> papply(int value1, int value2) {
+    default IntFunction2<R> applyPartially(int value1, int value2) {
         return value3 -> apply(value1, value2, value3);
     }
 

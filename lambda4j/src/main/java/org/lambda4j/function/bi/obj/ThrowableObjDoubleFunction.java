@@ -208,7 +208,7 @@ public interface ThrowableObjDoubleFunction<T, R, X extends Throwable> extends L
      * @return A {@code ThrowableDoubleFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ThrowableDoubleFunction<R, X> papplyThrows(T t) {
+    default ThrowableDoubleFunction<R, X> applyThrowsPartially(T t) {
         return value -> applyThrows(t, value);
     }
 
@@ -219,7 +219,7 @@ public interface ThrowableObjDoubleFunction<T, R, X extends Throwable> extends L
      * @return A {@code ThrowableFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ThrowableFunction<T, R, X> papplyThrows(double value) {
+    default ThrowableFunction<T, R, X> applyThrowsPartially(double value) {
         return t -> applyThrows(t, value);
     }
 

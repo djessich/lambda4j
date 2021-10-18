@@ -156,7 +156,7 @@ public interface BiCharToFloatFunction extends Lambda {
      * @return A {@code CharToFloatFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default CharToFloatFunction papplyAsFloat(char value1) {
+    default CharToFloatFunction applyAsFloatPartially(char value1) {
         return value2 -> applyAsFloat(value1, value2);
     }
 

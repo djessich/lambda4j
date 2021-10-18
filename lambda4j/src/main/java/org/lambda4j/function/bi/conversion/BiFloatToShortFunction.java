@@ -156,7 +156,7 @@ public interface BiFloatToShortFunction extends Lambda {
      * @return A {@code FloatToShortFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default FloatToShortFunction papplyAsShort(float value1) {
+    default FloatToShortFunction applyAsShortPartially(float value1) {
         return value2 -> applyAsShort(value1, value2);
     }
 

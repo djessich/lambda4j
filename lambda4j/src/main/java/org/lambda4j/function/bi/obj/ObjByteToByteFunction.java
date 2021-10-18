@@ -173,7 +173,7 @@ public interface ObjByteToByteFunction<T> extends Lambda {
      * @return A {@code ByteUnaryOperator} that represents this operator partially applied the some arguments.
      */
     @Nonnull
-    default ByteUnaryOperator papplyAsByte(T t) {
+    default ByteUnaryOperator applyAsBytePartially(T t) {
         return value -> applyAsByte(t, value);
     }
 
@@ -184,7 +184,7 @@ public interface ObjByteToByteFunction<T> extends Lambda {
      * @return A {@code ToByteFunction} that represents this operator partially applied the some arguments.
      */
     @Nonnull
-    default ToByteFunction<T> papplyAsByte(byte value) {
+    default ToByteFunction<T> applyAsBytePartially(byte value) {
         return t -> applyAsByte(t, value);
     }
 

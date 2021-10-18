@@ -216,7 +216,7 @@ public interface ThrowableObjBiByteToLongFunction<T, X extends Throwable> extend
      * arguments.
      */
     @Nonnull
-    default ThrowableBiByteToLongFunction<X> papplyAsLongThrows(T t) {
+    default ThrowableBiByteToLongFunction<X> applyAsLongThrowsPartially(T t) {
         return (value1, value2) -> applyAsLongThrows(t, value1, value2);
     }
 
@@ -229,7 +229,7 @@ public interface ThrowableObjBiByteToLongFunction<T, X extends Throwable> extend
      * @return A {@code ThrowableByteToLongFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ThrowableByteToLongFunction<X> papplyAsLongThrows(T t, byte value1) {
+    default ThrowableByteToLongFunction<X> applyAsLongThrowsPartially(T t, byte value1) {
         return value2 -> applyAsLongThrows(t, value1, value2);
     }
 
@@ -242,7 +242,7 @@ public interface ThrowableObjBiByteToLongFunction<T, X extends Throwable> extend
      * arguments.
      */
     @Nonnull
-    default ThrowableObjByteToLongFunction<T, X> papplyAsLongThrows(byte value1) {
+    default ThrowableObjByteToLongFunction<T, X> applyAsLongThrowsPartially(byte value1) {
         return (t, value2) -> applyAsLongThrows(t, value1, value2);
     }
 
@@ -255,7 +255,7 @@ public interface ThrowableObjBiByteToLongFunction<T, X extends Throwable> extend
      * @return A {@code ThrowableToLongFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ThrowableToLongFunction<T, X> papplyAsLongThrows(byte value1, byte value2) {
+    default ThrowableToLongFunction<T, X> applyAsLongThrowsPartially(byte value1, byte value2) {
         return t -> applyAsLongThrows(t, value1, value2);
     }
 

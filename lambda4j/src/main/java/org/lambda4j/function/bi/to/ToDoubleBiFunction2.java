@@ -173,7 +173,7 @@ public interface ToDoubleBiFunction2<T, U> extends Lambda, ToDoubleBiFunction<T,
      * @return A {@code ToDoubleFunction2} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ToDoubleFunction2<U> papplyAsDouble(T t) {
+    default ToDoubleFunction2<U> applyAsDoublePartially(T t) {
         return u -> applyAsDouble(t, u);
     }
 

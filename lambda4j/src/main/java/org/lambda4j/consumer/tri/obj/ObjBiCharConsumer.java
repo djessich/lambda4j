@@ -168,7 +168,7 @@ public interface ObjBiCharConsumer<T> extends Lambda {
      * @return A {@code BiCharConsumer} that represents this consumer partially applied the some arguments.
      */
     @Nonnull
-    default BiCharConsumer paccept(T t) {
+    default BiCharConsumer acceptPartially(T t) {
         return (value1, value2) -> accept(t, value1, value2);
     }
 
@@ -180,7 +180,7 @@ public interface ObjBiCharConsumer<T> extends Lambda {
      * @return A {@code CharConsumer} that represents this consumer partially applied the some arguments.
      */
     @Nonnull
-    default CharConsumer paccept(T t, char value1) {
+    default CharConsumer acceptPartially(T t, char value1) {
         return value2 -> accept(t, value1, value2);
     }
 
@@ -191,7 +191,7 @@ public interface ObjBiCharConsumer<T> extends Lambda {
      * @return A {@code ObjCharConsumer} that represents this consumer partially applied the some arguments.
      */
     @Nonnull
-    default ObjCharConsumer<T> paccept(char value1) {
+    default ObjCharConsumer<T> acceptPartially(char value1) {
         return (t, value2) -> accept(t, value1, value2);
     }
 
@@ -203,7 +203,7 @@ public interface ObjBiCharConsumer<T> extends Lambda {
      * @return A {@code Consumer2} that represents this consumer partially applied the some arguments.
      */
     @Nonnull
-    default Consumer2<T> paccept(char value1, char value2) {
+    default Consumer2<T> acceptPartially(char value1, char value2) {
         return t -> accept(t, value1, value2);
     }
 

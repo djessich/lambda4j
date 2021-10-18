@@ -142,7 +142,7 @@ public interface TriDoubleConsumer extends Lambda {
      * @return A {@code BiDoubleConsumer} that represents this consumer partially applied the some arguments.
      */
     @Nonnull
-    default BiDoubleConsumer paccept(double value1) {
+    default BiDoubleConsumer acceptPartially(double value1) {
         return (value2, value3) -> accept(value1, value2, value3);
     }
 
@@ -154,7 +154,7 @@ public interface TriDoubleConsumer extends Lambda {
      * @return A {@code DoubleConsumer2} that represents this consumer partially applied the some arguments.
      */
     @Nonnull
-    default DoubleConsumer2 paccept(double value1, double value2) {
+    default DoubleConsumer2 acceptPartially(double value1, double value2) {
         return value3 -> accept(value1, value2, value3);
     }
 

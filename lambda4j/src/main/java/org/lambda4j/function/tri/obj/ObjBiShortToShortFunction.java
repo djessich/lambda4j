@@ -195,7 +195,7 @@ public interface ObjBiShortToShortFunction<T> extends Lambda {
      * @return A {@code ShortBinaryOperator} that represents this operator partially applied the some arguments.
      */
     @Nonnull
-    default ShortBinaryOperator papplyAsShort(T t) {
+    default ShortBinaryOperator applyAsShortPartially(T t) {
         return (value1, value2) -> applyAsShort(t, value1, value2);
     }
 
@@ -207,7 +207,7 @@ public interface ObjBiShortToShortFunction<T> extends Lambda {
      * @return A {@code ShortUnaryOperator} that represents this operator partially applied the some arguments.
      */
     @Nonnull
-    default ShortUnaryOperator papplyAsShort(T t, short value1) {
+    default ShortUnaryOperator applyAsShortPartially(T t, short value1) {
         return value2 -> applyAsShort(t, value1, value2);
     }
 
@@ -219,7 +219,7 @@ public interface ObjBiShortToShortFunction<T> extends Lambda {
      * @return A {@code ObjShortToShortFunction} that represents this operator partially applied the some arguments.
      */
     @Nonnull
-    default ObjShortToShortFunction<T> papplyAsShort(short value1) {
+    default ObjShortToShortFunction<T> applyAsShortPartially(short value1) {
         return (t, value2) -> applyAsShort(t, value1, value2);
     }
 
@@ -231,7 +231,7 @@ public interface ObjBiShortToShortFunction<T> extends Lambda {
      * @return A {@code ToShortFunction} that represents this operator partially applied the some arguments.
      */
     @Nonnull
-    default ToShortFunction<T> papplyAsShort(short value1, short value2) {
+    default ToShortFunction<T> applyAsShortPartially(short value1, short value2) {
         return t -> applyAsShort(t, value1, value2);
     }
 

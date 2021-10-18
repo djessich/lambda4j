@@ -178,7 +178,7 @@ public interface ObjLongToDoubleFunction<T> extends Lambda {
      * @return A {@code LongToDoubleFunction2} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default LongToDoubleFunction2 papplyAsDouble(T t) {
+    default LongToDoubleFunction2 applyAsDoublePartially(T t) {
         return value -> applyAsDouble(t, value);
     }
 
@@ -189,7 +189,7 @@ public interface ObjLongToDoubleFunction<T> extends Lambda {
      * @return A {@code ToDoubleFunction2} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ToDoubleFunction2<T> papplyAsDouble(long value) {
+    default ToDoubleFunction2<T> applyAsDoublePartially(long value) {
         return t -> applyAsDouble(t, value);
     }
 

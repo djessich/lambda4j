@@ -243,7 +243,7 @@ public interface ThrowableObjDoublePredicate<T, X extends Throwable> extends Lam
      * @return A {@code ThrowableDoublePredicate} that represents this predicate partially applied the some arguments.
      */
     @Nonnull
-    default ThrowableDoublePredicate<X> ptestThrows(T t) {
+    default ThrowableDoublePredicate<X> testThrowsPartially(T t) {
         return value -> testThrows(t, value);
     }
 
@@ -255,7 +255,7 @@ public interface ThrowableObjDoublePredicate<T, X extends Throwable> extends Lam
      * @return A {@code ThrowablePredicate} that represents this predicate partially applied the some arguments.
      */
     @Nonnull
-    default ThrowablePredicate<T, X> ptestThrows(double value) {
+    default ThrowablePredicate<T, X> testThrowsPartially(double value) {
         return t -> testThrows(t, value);
     }
 

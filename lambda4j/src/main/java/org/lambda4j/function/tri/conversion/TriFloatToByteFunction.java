@@ -174,7 +174,7 @@ public interface TriFloatToByteFunction extends Lambda {
      * @return A {@code BiFloatToByteFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default BiFloatToByteFunction papplyAsByte(float value1) {
+    default BiFloatToByteFunction applyAsBytePartially(float value1) {
         return (value2, value3) -> applyAsByte(value1, value2, value3);
     }
 
@@ -187,7 +187,7 @@ public interface TriFloatToByteFunction extends Lambda {
      * @return A {@code FloatToByteFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default FloatToByteFunction papplyAsByte(float value1, float value2) {
+    default FloatToByteFunction applyAsBytePartially(float value1, float value2) {
         return value3 -> applyAsByte(value1, value2, value3);
     }
 

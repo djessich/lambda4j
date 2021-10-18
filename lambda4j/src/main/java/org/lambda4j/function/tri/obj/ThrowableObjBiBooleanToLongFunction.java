@@ -217,7 +217,7 @@ public interface ThrowableObjBiBooleanToLongFunction<T, X extends Throwable> ext
      * arguments.
      */
     @Nonnull
-    default ThrowableBiBooleanToLongFunction<X> papplyAsLongThrows(T t) {
+    default ThrowableBiBooleanToLongFunction<X> applyAsLongThrowsPartially(T t) {
         return (value1, value2) -> applyAsLongThrows(t, value1, value2);
     }
 
@@ -231,7 +231,7 @@ public interface ThrowableObjBiBooleanToLongFunction<T, X extends Throwable> ext
      * arguments.
      */
     @Nonnull
-    default ThrowableBooleanToLongFunction<X> papplyAsLongThrows(T t, boolean value1) {
+    default ThrowableBooleanToLongFunction<X> applyAsLongThrowsPartially(T t, boolean value1) {
         return value2 -> applyAsLongThrows(t, value1, value2);
     }
 
@@ -244,7 +244,7 @@ public interface ThrowableObjBiBooleanToLongFunction<T, X extends Throwable> ext
      * arguments.
      */
     @Nonnull
-    default ThrowableObjBooleanToLongFunction<T, X> papplyAsLongThrows(boolean value1) {
+    default ThrowableObjBooleanToLongFunction<T, X> applyAsLongThrowsPartially(boolean value1) {
         return (t, value2) -> applyAsLongThrows(t, value1, value2);
     }
 
@@ -257,7 +257,7 @@ public interface ThrowableObjBiBooleanToLongFunction<T, X extends Throwable> ext
      * @return A {@code ThrowableToLongFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ThrowableToLongFunction<T, X> papplyAsLongThrows(boolean value1, boolean value2) {
+    default ThrowableToLongFunction<T, X> applyAsLongThrowsPartially(boolean value1, boolean value2) {
         return t -> applyAsLongThrows(t, value1, value2);
     }
 

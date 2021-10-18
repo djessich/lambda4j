@@ -194,7 +194,7 @@ public interface ThrowableObjBooleanToLongFunction<T, X extends Throwable> exten
      * arguments.
      */
     @Nonnull
-    default ThrowableBooleanToLongFunction<X> papplyAsLongThrows(T t) {
+    default ThrowableBooleanToLongFunction<X> applyAsLongThrowsPartially(T t) {
         return value -> applyAsLongThrows(t, value);
     }
 
@@ -206,7 +206,7 @@ public interface ThrowableObjBooleanToLongFunction<T, X extends Throwable> exten
      * @return A {@code ThrowableToLongFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ThrowableToLongFunction<T, X> papplyAsLongThrows(boolean value) {
+    default ThrowableToLongFunction<T, X> applyAsLongThrowsPartially(boolean value) {
         return t -> applyAsLongThrows(t, value);
     }
 

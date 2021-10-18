@@ -157,7 +157,7 @@ public interface BiLongToDoubleFunction extends Lambda {
      * @return A {@code LongToDoubleFunction2} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default LongToDoubleFunction2 papplyAsDouble(long value1) {
+    default LongToDoubleFunction2 applyAsDoublePartially(long value1) {
         return value2 -> applyAsDouble(value1, value2);
     }
 

@@ -173,7 +173,7 @@ public interface ObjFloatToFloatFunction<T> extends Lambda {
      * @return A {@code FloatUnaryOperator} that represents this operator partially applied the some arguments.
      */
     @Nonnull
-    default FloatUnaryOperator papplyAsFloat(T t) {
+    default FloatUnaryOperator applyAsFloatPartially(T t) {
         return value -> applyAsFloat(t, value);
     }
 
@@ -184,7 +184,7 @@ public interface ObjFloatToFloatFunction<T> extends Lambda {
      * @return A {@code ToFloatFunction} that represents this operator partially applied the some arguments.
      */
     @Nonnull
-    default ToFloatFunction<T> papplyAsFloat(float value) {
+    default ToFloatFunction<T> applyAsFloatPartially(float value) {
         return t -> applyAsFloat(t, value);
     }
 

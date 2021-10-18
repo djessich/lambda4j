@@ -173,7 +173,7 @@ public interface ThrowableBiBooleanToCharFunction<X extends Throwable> extends L
      * arguments.
      */
     @Nonnull
-    default ThrowableBooleanToCharFunction<X> papplyAsCharThrows(boolean value1) {
+    default ThrowableBooleanToCharFunction<X> applyAsCharThrowsPartially(boolean value1) {
         return value2 -> applyAsCharThrows(value1, value2);
     }
 

@@ -237,7 +237,7 @@ public interface ThrowableTriCharPredicate<X extends Throwable> extends Lambda {
      * @return A {@code ThrowableBiCharPredicate} that represents this predicate partially applied the some arguments.
      */
     @Nonnull
-    default ThrowableBiCharPredicate<X> ptestThrows(char value1) {
+    default ThrowableBiCharPredicate<X> testThrowsPartially(char value1) {
         return (value2, value3) -> testThrows(value1, value2, value3);
     }
 
@@ -250,7 +250,7 @@ public interface ThrowableTriCharPredicate<X extends Throwable> extends Lambda {
      * @return A {@code ThrowableCharPredicate} that represents this predicate partially applied the some arguments.
      */
     @Nonnull
-    default ThrowableCharPredicate<X> ptestThrows(char value1, char value2) {
+    default ThrowableCharPredicate<X> testThrowsPartially(char value1, char value2) {
         return value3 -> testThrows(value1, value2, value3);
     }
 

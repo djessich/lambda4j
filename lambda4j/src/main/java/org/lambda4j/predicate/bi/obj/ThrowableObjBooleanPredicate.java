@@ -243,7 +243,7 @@ public interface ThrowableObjBooleanPredicate<T, X extends Throwable> extends La
      * arguments.
      */
     @Nonnull
-    default ThrowableBooleanUnaryOperator<X> ptestThrows(T t) {
+    default ThrowableBooleanUnaryOperator<X> testThrowsPartially(T t) {
         return value -> testThrows(t, value);
     }
 
@@ -254,7 +254,7 @@ public interface ThrowableObjBooleanPredicate<T, X extends Throwable> extends La
      * @return A {@code ThrowablePredicate} that represents this operator partially applied the some arguments.
      */
     @Nonnull
-    default ThrowablePredicate<T, X> ptestThrows(boolean value) {
+    default ThrowablePredicate<T, X> testThrowsPartially(boolean value) {
         return t -> testThrows(t, value);
     }
 

@@ -190,7 +190,7 @@ public interface ObjFloatFunction<T, R> extends Lambda {
      * @return A {@code FloatFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default FloatFunction<R> papply(T t) {
+    default FloatFunction<R> applyPartially(T t) {
         return value -> apply(t, value);
     }
 
@@ -201,7 +201,7 @@ public interface ObjFloatFunction<T, R> extends Lambda {
      * @return A {@code Function2} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default Function2<T, R> papply(float value) {
+    default Function2<T, R> applyPartially(float value) {
         return t -> apply(t, value);
     }
 

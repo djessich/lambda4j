@@ -202,7 +202,7 @@ public interface ThrowableIntTernaryOperator<X extends Throwable> extends Lambda
      * @return A {@code ThrowableIntBinaryOperator} that represents this operator partially applied the some arguments.
      */
     @Nonnull
-    default ThrowableIntBinaryOperator<X> papplyAsIntThrows(int value1) {
+    default ThrowableIntBinaryOperator<X> applyAsIntThrowsPartially(int value1) {
         return (value2, value3) -> applyAsIntThrows(value1, value2, value3);
     }
 
@@ -215,7 +215,7 @@ public interface ThrowableIntTernaryOperator<X extends Throwable> extends Lambda
      * @return A {@code ThrowableIntUnaryOperator} that represents this operator partially applied the some arguments.
      */
     @Nonnull
-    default ThrowableIntUnaryOperator<X> papplyAsIntThrows(int value1, int value2) {
+    default ThrowableIntUnaryOperator<X> applyAsIntThrowsPartially(int value1, int value2) {
         return value3 -> applyAsIntThrows(value1, value2, value3);
     }
 

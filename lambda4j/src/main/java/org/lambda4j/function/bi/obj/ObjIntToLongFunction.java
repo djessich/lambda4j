@@ -177,7 +177,7 @@ public interface ObjIntToLongFunction<T> extends Lambda {
      * @return A {@code IntToLongFunction2} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default IntToLongFunction2 papplyAsLong(T t) {
+    default IntToLongFunction2 applyAsLongPartially(T t) {
         return value -> applyAsLong(t, value);
     }
 
@@ -188,7 +188,7 @@ public interface ObjIntToLongFunction<T> extends Lambda {
      * @return A {@code ToLongFunction2} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ToLongFunction2<T> papplyAsLong(int value) {
+    default ToLongFunction2<T> applyAsLongPartially(int value) {
         return t -> applyAsLong(t, value);
     }
 

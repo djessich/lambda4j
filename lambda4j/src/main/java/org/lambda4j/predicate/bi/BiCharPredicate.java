@@ -195,7 +195,7 @@ public interface BiCharPredicate extends Lambda {
      * @return A {@code CharPredicate} that represents this predicate partially applied the some arguments.
      */
     @Nonnull
-    default CharPredicate ptest(char value1) {
+    default CharPredicate testPartially(char value1) {
         return value2 -> test(value1, value2);
     }
 

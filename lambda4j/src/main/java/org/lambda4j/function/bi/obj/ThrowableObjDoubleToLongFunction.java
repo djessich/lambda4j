@@ -194,7 +194,7 @@ public interface ThrowableObjDoubleToLongFunction<T, X extends Throwable> extend
      * arguments.
      */
     @Nonnull
-    default ThrowableDoubleToLongFunction<X> papplyAsLongThrows(T t) {
+    default ThrowableDoubleToLongFunction<X> applyAsLongThrowsPartially(T t) {
         return value -> applyAsLongThrows(t, value);
     }
 
@@ -206,7 +206,7 @@ public interface ThrowableObjDoubleToLongFunction<T, X extends Throwable> extend
      * @return A {@code ThrowableToLongFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ThrowableToLongFunction<T, X> papplyAsLongThrows(double value) {
+    default ThrowableToLongFunction<T, X> applyAsLongThrowsPartially(double value) {
         return t -> applyAsLongThrows(t, value);
     }
 

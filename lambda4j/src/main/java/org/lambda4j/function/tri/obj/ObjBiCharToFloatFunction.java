@@ -196,7 +196,7 @@ public interface ObjBiCharToFloatFunction<T> extends Lambda {
      * @return A {@code BiCharToFloatFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default BiCharToFloatFunction papplyAsFloat(T t) {
+    default BiCharToFloatFunction applyAsFloatPartially(T t) {
         return (value1, value2) -> applyAsFloat(t, value1, value2);
     }
 
@@ -209,7 +209,7 @@ public interface ObjBiCharToFloatFunction<T> extends Lambda {
      * @return A {@code CharToFloatFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default CharToFloatFunction papplyAsFloat(T t, char value1) {
+    default CharToFloatFunction applyAsFloatPartially(T t, char value1) {
         return value2 -> applyAsFloat(t, value1, value2);
     }
 
@@ -221,7 +221,7 @@ public interface ObjBiCharToFloatFunction<T> extends Lambda {
      * @return A {@code ObjCharToFloatFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ObjCharToFloatFunction<T> papplyAsFloat(char value1) {
+    default ObjCharToFloatFunction<T> applyAsFloatPartially(char value1) {
         return (t, value2) -> applyAsFloat(t, value1, value2);
     }
 
@@ -233,7 +233,7 @@ public interface ObjBiCharToFloatFunction<T> extends Lambda {
      * @return A {@code ToFloatFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ToFloatFunction<T> papplyAsFloat(char value1, char value2) {
+    default ToFloatFunction<T> applyAsFloatPartially(char value1, char value2) {
         return t -> applyAsFloat(t, value1, value2);
     }
 

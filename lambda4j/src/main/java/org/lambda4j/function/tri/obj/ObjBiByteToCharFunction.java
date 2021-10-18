@@ -196,7 +196,7 @@ public interface ObjBiByteToCharFunction<T> extends Lambda {
      * @return A {@code BiByteToCharFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default BiByteToCharFunction papplyAsChar(T t) {
+    default BiByteToCharFunction applyAsCharPartially(T t) {
         return (value1, value2) -> applyAsChar(t, value1, value2);
     }
 
@@ -208,7 +208,7 @@ public interface ObjBiByteToCharFunction<T> extends Lambda {
      * @return A {@code ByteToCharFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ByteToCharFunction papplyAsChar(T t, byte value1) {
+    default ByteToCharFunction applyAsCharPartially(T t, byte value1) {
         return value2 -> applyAsChar(t, value1, value2);
     }
 
@@ -220,7 +220,7 @@ public interface ObjBiByteToCharFunction<T> extends Lambda {
      * @return A {@code ObjByteToCharFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ObjByteToCharFunction<T> papplyAsChar(byte value1) {
+    default ObjByteToCharFunction<T> applyAsCharPartially(byte value1) {
         return (t, value2) -> applyAsChar(t, value1, value2);
     }
 
@@ -232,7 +232,7 @@ public interface ObjBiByteToCharFunction<T> extends Lambda {
      * @return A {@code ToCharFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ToCharFunction<T> papplyAsChar(byte value1, byte value2) {
+    default ToCharFunction<T> applyAsCharPartially(byte value1, byte value2) {
         return t -> applyAsChar(t, value1, value2);
     }
 

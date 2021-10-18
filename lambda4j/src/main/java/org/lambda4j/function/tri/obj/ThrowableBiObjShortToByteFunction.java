@@ -239,7 +239,7 @@ public interface ThrowableBiObjShortToByteFunction<T, U, X extends Throwable> ex
      * arguments.
      */
     @Nonnull
-    default ThrowableObjShortToByteFunction<U, X> papplyAsByteThrows(T t) {
+    default ThrowableObjShortToByteFunction<U, X> applyAsByteThrowsPartially(T t) {
         return (u, value) -> applyAsByteThrows(t, u, value);
     }
 
@@ -253,7 +253,7 @@ public interface ThrowableBiObjShortToByteFunction<T, U, X extends Throwable> ex
      * arguments.
      */
     @Nonnull
-    default ThrowableShortToByteFunction<X> papplyAsByteThrows(T t, U u) {
+    default ThrowableShortToByteFunction<X> applyAsByteThrowsPartially(T t, U u) {
         return value -> applyAsByteThrows(t, u, value);
     }
 
@@ -265,7 +265,7 @@ public interface ThrowableBiObjShortToByteFunction<T, U, X extends Throwable> ex
      * @return A {@code ThrowableToByteBiFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ThrowableToByteBiFunction<T, U, X> papplyAsByteThrows(short value) {
+    default ThrowableToByteBiFunction<T, U, X> applyAsByteThrowsPartially(short value) {
         return (t, u) -> applyAsByteThrows(t, u, value);
     }
 
@@ -278,7 +278,7 @@ public interface ThrowableBiObjShortToByteFunction<T, U, X extends Throwable> ex
      * @return A {@code ThrowableToByteFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ThrowableToByteFunction<U, X> papplyAsByteThrows(T t, short value) {
+    default ThrowableToByteFunction<U, X> applyAsByteThrowsPartially(T t, short value) {
         return u -> applyAsByteThrows(t, u, value);
     }
 

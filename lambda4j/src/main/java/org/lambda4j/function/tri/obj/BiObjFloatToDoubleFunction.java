@@ -220,7 +220,7 @@ public interface BiObjFloatToDoubleFunction<T, U> extends Lambda {
      * @return A {@code ObjFloatToDoubleFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ObjFloatToDoubleFunction<U> papplyAsDouble(T t) {
+    default ObjFloatToDoubleFunction<U> applyAsDoublePartially(T t) {
         return (u, value) -> applyAsDouble(t, u, value);
     }
 
@@ -233,7 +233,7 @@ public interface BiObjFloatToDoubleFunction<T, U> extends Lambda {
      * @return A {@code FloatToDoubleFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default FloatToDoubleFunction papplyAsDouble(T t, U u) {
+    default FloatToDoubleFunction applyAsDoublePartially(T t, U u) {
         return value -> applyAsDouble(t, u, value);
     }
 
@@ -245,7 +245,7 @@ public interface BiObjFloatToDoubleFunction<T, U> extends Lambda {
      * @return A {@code ToDoubleBiFunction2} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ToDoubleBiFunction2<T, U> papplyAsDouble(float value) {
+    default ToDoubleBiFunction2<T, U> applyAsDoublePartially(float value) {
         return (t, u) -> applyAsDouble(t, u, value);
     }
 
@@ -257,7 +257,7 @@ public interface BiObjFloatToDoubleFunction<T, U> extends Lambda {
      * @return A {@code ToDoubleFunction2} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ToDoubleFunction2<U> papplyAsDouble(T t, float value) {
+    default ToDoubleFunction2<U> applyAsDoublePartially(T t, float value) {
         return u -> applyAsDouble(t, u, value);
     }
 

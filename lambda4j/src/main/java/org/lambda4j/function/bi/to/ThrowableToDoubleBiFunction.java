@@ -208,7 +208,7 @@ public interface ThrowableToDoubleBiFunction<T, U, X extends Throwable> extends 
      * @return A {@code ThrowableToDoubleFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ThrowableToDoubleFunction<U, X> papplyAsDoubleThrows(T t) {
+    default ThrowableToDoubleFunction<U, X> applyAsDoubleThrowsPartially(T t) {
         return u -> applyAsDoubleThrows(t, u);
     }
 

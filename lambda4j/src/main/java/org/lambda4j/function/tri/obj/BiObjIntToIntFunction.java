@@ -218,7 +218,7 @@ public interface BiObjIntToIntFunction<T, U> extends Lambda {
      * @return A {@code ObjIntToIntFunction} that represents this operator partially applied the some arguments.
      */
     @Nonnull
-    default ObjIntToIntFunction<U> papplyAsInt(T t) {
+    default ObjIntToIntFunction<U> applyAsIntPartially(T t) {
         return (u, value) -> applyAsInt(t, u, value);
     }
 
@@ -230,7 +230,7 @@ public interface BiObjIntToIntFunction<T, U> extends Lambda {
      * @return A {@code IntUnaryOperator2} that represents this operator partially applied the some arguments.
      */
     @Nonnull
-    default IntUnaryOperator2 papplyAsInt(T t, U u) {
+    default IntUnaryOperator2 applyAsIntPartially(T t, U u) {
         return value -> applyAsInt(t, u, value);
     }
 
@@ -241,7 +241,7 @@ public interface BiObjIntToIntFunction<T, U> extends Lambda {
      * @return A {@code ToIntBiFunction2} that represents this operator partially applied the some arguments.
      */
     @Nonnull
-    default ToIntBiFunction2<T, U> papplyAsInt(int value) {
+    default ToIntBiFunction2<T, U> applyAsIntPartially(int value) {
         return (t, u) -> applyAsInt(t, u, value);
     }
 
@@ -253,7 +253,7 @@ public interface BiObjIntToIntFunction<T, U> extends Lambda {
      * @return A {@code ToIntFunction2} that represents this operator partially applied the some arguments.
      */
     @Nonnull
-    default ToIntFunction2<U> papplyAsInt(T t, int value) {
+    default ToIntFunction2<U> applyAsIntPartially(T t, int value) {
         return u -> applyAsInt(t, u, value);
     }
 

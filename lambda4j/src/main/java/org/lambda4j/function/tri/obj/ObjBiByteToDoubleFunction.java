@@ -198,7 +198,7 @@ public interface ObjBiByteToDoubleFunction<T> extends Lambda {
      * @return A {@code BiByteToDoubleFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default BiByteToDoubleFunction papplyAsDouble(T t) {
+    default BiByteToDoubleFunction applyAsDoublePartially(T t) {
         return (value1, value2) -> applyAsDouble(t, value1, value2);
     }
 
@@ -211,7 +211,7 @@ public interface ObjBiByteToDoubleFunction<T> extends Lambda {
      * @return A {@code ByteToDoubleFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ByteToDoubleFunction papplyAsDouble(T t, byte value1) {
+    default ByteToDoubleFunction applyAsDoublePartially(T t, byte value1) {
         return value2 -> applyAsDouble(t, value1, value2);
     }
 
@@ -223,7 +223,7 @@ public interface ObjBiByteToDoubleFunction<T> extends Lambda {
      * @return A {@code ObjByteToDoubleFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ObjByteToDoubleFunction<T> papplyAsDouble(byte value1) {
+    default ObjByteToDoubleFunction<T> applyAsDoublePartially(byte value1) {
         return (t, value2) -> applyAsDouble(t, value1, value2);
     }
 
@@ -235,7 +235,7 @@ public interface ObjBiByteToDoubleFunction<T> extends Lambda {
      * @return A {@code ToDoubleFunction2} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ToDoubleFunction2<T> papplyAsDouble(byte value1, byte value2) {
+    default ToDoubleFunction2<T> applyAsDoublePartially(byte value1, byte value2) {
         return t -> applyAsDouble(t, value1, value2);
     }
 

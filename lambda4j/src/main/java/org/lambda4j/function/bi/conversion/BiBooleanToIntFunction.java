@@ -155,7 +155,7 @@ public interface BiBooleanToIntFunction extends Lambda {
      * @return A {@code BooleanToIntFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default BooleanToIntFunction papplyAsInt(boolean value1) {
+    default BooleanToIntFunction applyAsIntPartially(boolean value1) {
         return value2 -> applyAsInt(value1, value2);
     }
 

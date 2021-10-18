@@ -255,7 +255,7 @@ public interface ThrowableBiObjDoubleFunction<T, U, R, X extends Throwable> exte
      * @return A {@code ThrowableObjDoubleFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ThrowableObjDoubleFunction<U, R, X> papplyThrows(T t) {
+    default ThrowableObjDoubleFunction<U, R, X> applyThrowsPartially(T t) {
         return (u, value) -> applyThrows(t, u, value);
     }
 
@@ -268,7 +268,7 @@ public interface ThrowableBiObjDoubleFunction<T, U, R, X extends Throwable> exte
      * @return A {@code ThrowableDoubleFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ThrowableDoubleFunction<R, X> papplyThrows(T t, U u) {
+    default ThrowableDoubleFunction<R, X> applyThrowsPartially(T t, U u) {
         return value -> applyThrows(t, u, value);
     }
 
@@ -280,7 +280,7 @@ public interface ThrowableBiObjDoubleFunction<T, U, R, X extends Throwable> exte
      * @return A {@code ThrowableBiFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ThrowableBiFunction<T, U, R, X> papplyThrows(double value) {
+    default ThrowableBiFunction<T, U, R, X> applyThrowsPartially(double value) {
         return (t, u) -> applyThrows(t, u, value);
     }
 
@@ -292,7 +292,7 @@ public interface ThrowableBiObjDoubleFunction<T, U, R, X extends Throwable> exte
      * @return A {@code ThrowableFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ThrowableFunction<U, R, X> papplyThrows(T t, double value) {
+    default ThrowableFunction<U, R, X> applyThrowsPartially(T t, double value) {
         return u -> applyThrows(t, u, value);
     }
 

@@ -240,7 +240,7 @@ public interface ThrowableLongBinaryOperator<X extends Throwable> extends Lambda
      * @return A {@code ThrowableLongUnaryOperator} that represents this operator partially applied the some arguments.
      */
     @Nonnull
-    default ThrowableLongUnaryOperator<X> papplyAsLongThrows(long value1) {
+    default ThrowableLongUnaryOperator<X> applyAsLongThrowsPartially(long value1) {
         return value2 -> applyAsLongThrows(value1, value2);
     }
 

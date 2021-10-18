@@ -177,7 +177,7 @@ public interface ObjBooleanToLongFunction<T> extends Lambda {
      * @return A {@code BooleanToLongFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default BooleanToLongFunction papplyAsLong(T t) {
+    default BooleanToLongFunction applyAsLongPartially(T t) {
         return value -> applyAsLong(t, value);
     }
 
@@ -188,7 +188,7 @@ public interface ObjBooleanToLongFunction<T> extends Lambda {
      * @return A {@code ToLongFunction2} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ToLongFunction2<T> papplyAsLong(boolean value) {
+    default ToLongFunction2<T> applyAsLongPartially(boolean value) {
         return t -> applyAsLong(t, value);
     }
 

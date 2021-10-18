@@ -168,7 +168,7 @@ public interface ObjBiFloatConsumer<T> extends Lambda {
      * @return A {@code BiFloatConsumer} that represents this consumer partially applied the some arguments.
      */
     @Nonnull
-    default BiFloatConsumer paccept(T t) {
+    default BiFloatConsumer acceptPartially(T t) {
         return (value1, value2) -> accept(t, value1, value2);
     }
 
@@ -180,7 +180,7 @@ public interface ObjBiFloatConsumer<T> extends Lambda {
      * @return A {@code FloatConsumer} that represents this consumer partially applied the some arguments.
      */
     @Nonnull
-    default FloatConsumer paccept(T t, float value1) {
+    default FloatConsumer acceptPartially(T t, float value1) {
         return value2 -> accept(t, value1, value2);
     }
 
@@ -191,7 +191,7 @@ public interface ObjBiFloatConsumer<T> extends Lambda {
      * @return A {@code ObjFloatConsumer} that represents this consumer partially applied the some arguments.
      */
     @Nonnull
-    default ObjFloatConsumer<T> paccept(float value1) {
+    default ObjFloatConsumer<T> acceptPartially(float value1) {
         return (t, value2) -> accept(t, value1, value2);
     }
 
@@ -203,7 +203,7 @@ public interface ObjBiFloatConsumer<T> extends Lambda {
      * @return A {@code Consumer2} that represents this consumer partially applied the some arguments.
      */
     @Nonnull
-    default Consumer2<T> paccept(float value1, float value2) {
+    default Consumer2<T> acceptPartially(float value1, float value2) {
         return t -> accept(t, value1, value2);
     }
 

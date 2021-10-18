@@ -174,7 +174,7 @@ public interface ThrowableBiDoubleToShortFunction<X extends Throwable> extends L
      * arguments.
      */
     @Nonnull
-    default ThrowableDoubleToShortFunction<X> papplyAsShortThrows(double value1) {
+    default ThrowableDoubleToShortFunction<X> applyAsShortThrowsPartially(double value1) {
         return value2 -> applyAsShortThrows(value1, value2);
     }
 

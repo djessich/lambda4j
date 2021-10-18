@@ -156,7 +156,7 @@ public interface BiLongToFloatFunction extends Lambda {
      * @return A {@code LongToFloatFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default LongToFloatFunction papplyAsFloat(long value1) {
+    default LongToFloatFunction applyAsFloatPartially(long value1) {
         return value2 -> applyAsFloat(value1, value2);
     }
 

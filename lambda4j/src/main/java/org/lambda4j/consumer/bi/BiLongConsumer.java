@@ -123,7 +123,7 @@ public interface BiLongConsumer extends Lambda {
      * @return A {@code LongConsumer2} that represents this consumer partially applied the some arguments.
      */
     @Nonnull
-    default LongConsumer2 paccept(long value1) {
+    default LongConsumer2 acceptPartially(long value1) {
         return value2 -> accept(value1, value2);
     }
 

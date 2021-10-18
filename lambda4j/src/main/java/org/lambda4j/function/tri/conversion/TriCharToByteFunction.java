@@ -174,7 +174,7 @@ public interface TriCharToByteFunction extends Lambda {
      * @return A {@code BiCharToByteFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default BiCharToByteFunction papplyAsByte(char value1) {
+    default BiCharToByteFunction applyAsBytePartially(char value1) {
         return (value2, value3) -> applyAsByte(value1, value2, value3);
     }
 
@@ -186,7 +186,7 @@ public interface TriCharToByteFunction extends Lambda {
      * @return A {@code CharToByteFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default CharToByteFunction papplyAsByte(char value1, char value2) {
+    default CharToByteFunction applyAsBytePartially(char value1, char value2) {
         return value3 -> applyAsByte(value1, value2, value3);
     }
 

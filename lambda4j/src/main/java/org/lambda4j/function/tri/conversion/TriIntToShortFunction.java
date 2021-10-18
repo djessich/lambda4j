@@ -174,7 +174,7 @@ public interface TriIntToShortFunction extends Lambda {
      * @return A {@code BiIntToShortFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default BiIntToShortFunction papplyAsShort(int value1) {
+    default BiIntToShortFunction applyAsShortPartially(int value1) {
         return (value2, value3) -> applyAsShort(value1, value2, value3);
     }
 
@@ -186,7 +186,7 @@ public interface TriIntToShortFunction extends Lambda {
      * @return A {@code IntToShortFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default IntToShortFunction papplyAsShort(int value1, int value2) {
+    default IntToShortFunction applyAsShortPartially(int value1, int value2) {
         return value3 -> applyAsShort(value1, value2, value3);
     }
 

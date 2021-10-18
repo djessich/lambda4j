@@ -194,7 +194,7 @@ public interface ThrowableTriCharToIntFunction<X extends Throwable> extends Lamb
      * arguments.
      */
     @Nonnull
-    default ThrowableBiCharToIntFunction<X> papplyAsIntThrows(char value1) {
+    default ThrowableBiCharToIntFunction<X> applyAsIntThrowsPartially(char value1) {
         return (value2, value3) -> applyAsIntThrows(value1, value2, value3);
     }
 
@@ -207,7 +207,7 @@ public interface ThrowableTriCharToIntFunction<X extends Throwable> extends Lamb
      * @return A {@code ThrowableCharToIntFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ThrowableCharToIntFunction<X> papplyAsIntThrows(char value1, char value2) {
+    default ThrowableCharToIntFunction<X> applyAsIntThrowsPartially(char value1, char value2) {
         return value3 -> applyAsIntThrows(value1, value2, value3);
     }
 

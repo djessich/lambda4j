@@ -137,7 +137,7 @@ public interface ThrowableBiByteConsumer<X extends Throwable> extends Lambda {
      * @return A {@code ThrowableByteConsumer} that represents this consumer partially applied the some arguments.
      */
     @Nonnull
-    default ThrowableByteConsumer<X> pacceptThrows(byte value1) {
+    default ThrowableByteConsumer<X> acceptThrowsPartially(byte value1) {
         return value2 -> acceptThrows(value1, value2);
     }
 

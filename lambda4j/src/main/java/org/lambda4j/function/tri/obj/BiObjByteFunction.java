@@ -235,7 +235,7 @@ public interface BiObjByteFunction<T, U, R> extends Lambda {
      * @return A {@code ObjByteFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ObjByteFunction<U, R> papply(T t) {
+    default ObjByteFunction<U, R> applyPartially(T t) {
         return (u, value) -> apply(t, u, value);
     }
 
@@ -247,7 +247,7 @@ public interface BiObjByteFunction<T, U, R> extends Lambda {
      * @return A {@code ByteFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ByteFunction<R> papply(T t, U u) {
+    default ByteFunction<R> applyPartially(T t, U u) {
         return value -> apply(t, u, value);
     }
 
@@ -258,7 +258,7 @@ public interface BiObjByteFunction<T, U, R> extends Lambda {
      * @return A {@code BiFunction2} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default BiFunction2<T, U, R> papply(byte value) {
+    default BiFunction2<T, U, R> applyPartially(byte value) {
         return (t, u) -> apply(t, u, value);
     }
 
@@ -270,7 +270,7 @@ public interface BiObjByteFunction<T, U, R> extends Lambda {
      * @return A {@code Function2} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default Function2<U, R> papply(T t, byte value) {
+    default Function2<U, R> applyPartially(T t, byte value) {
         return u -> apply(t, u, value);
     }
 

@@ -194,7 +194,7 @@ public interface ThrowableTriBooleanToIntFunction<X extends Throwable> extends L
      * arguments.
      */
     @Nonnull
-    default ThrowableBiBooleanToIntFunction<X> papplyAsIntThrows(boolean value1) {
+    default ThrowableBiBooleanToIntFunction<X> applyAsIntThrowsPartially(boolean value1) {
         return (value2, value3) -> applyAsIntThrows(value1, value2, value3);
     }
 
@@ -208,7 +208,7 @@ public interface ThrowableTriBooleanToIntFunction<X extends Throwable> extends L
      * arguments.
      */
     @Nonnull
-    default ThrowableBooleanToIntFunction<X> papplyAsIntThrows(boolean value1, boolean value2) {
+    default ThrowableBooleanToIntFunction<X> applyAsIntThrowsPartially(boolean value1, boolean value2) {
         return value3 -> applyAsIntThrows(value1, value2, value3);
     }
 

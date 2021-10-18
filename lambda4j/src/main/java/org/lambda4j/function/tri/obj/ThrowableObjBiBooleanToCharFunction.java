@@ -217,7 +217,7 @@ public interface ThrowableObjBiBooleanToCharFunction<T, X extends Throwable> ext
      * arguments.
      */
     @Nonnull
-    default ThrowableBiBooleanToCharFunction<X> papplyAsCharThrows(T t) {
+    default ThrowableBiBooleanToCharFunction<X> applyAsCharThrowsPartially(T t) {
         return (value1, value2) -> applyAsCharThrows(t, value1, value2);
     }
 
@@ -231,7 +231,7 @@ public interface ThrowableObjBiBooleanToCharFunction<T, X extends Throwable> ext
      * arguments.
      */
     @Nonnull
-    default ThrowableBooleanToCharFunction<X> papplyAsCharThrows(T t, boolean value1) {
+    default ThrowableBooleanToCharFunction<X> applyAsCharThrowsPartially(T t, boolean value1) {
         return value2 -> applyAsCharThrows(t, value1, value2);
     }
 
@@ -244,7 +244,7 @@ public interface ThrowableObjBiBooleanToCharFunction<T, X extends Throwable> ext
      * arguments.
      */
     @Nonnull
-    default ThrowableObjBooleanToCharFunction<T, X> papplyAsCharThrows(boolean value1) {
+    default ThrowableObjBooleanToCharFunction<T, X> applyAsCharThrowsPartially(boolean value1) {
         return (t, value2) -> applyAsCharThrows(t, value1, value2);
     }
 
@@ -257,7 +257,7 @@ public interface ThrowableObjBiBooleanToCharFunction<T, X extends Throwable> ext
      * @return A {@code ThrowableToCharFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ThrowableToCharFunction<T, X> papplyAsCharThrows(boolean value1, boolean value2) {
+    default ThrowableToCharFunction<T, X> applyAsCharThrowsPartially(boolean value1, boolean value2) {
         return t -> applyAsCharThrows(t, value1, value2);
     }
 

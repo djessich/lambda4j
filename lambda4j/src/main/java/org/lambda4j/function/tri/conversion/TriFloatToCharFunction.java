@@ -174,7 +174,7 @@ public interface TriFloatToCharFunction extends Lambda {
      * @return A {@code BiFloatToCharFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default BiFloatToCharFunction papplyAsChar(float value1) {
+    default BiFloatToCharFunction applyAsCharPartially(float value1) {
         return (value2, value3) -> applyAsChar(value1, value2, value3);
     }
 
@@ -187,7 +187,7 @@ public interface TriFloatToCharFunction extends Lambda {
      * @return A {@code FloatToCharFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default FloatToCharFunction papplyAsChar(float value1, float value2) {
+    default FloatToCharFunction applyAsCharPartially(float value1, float value2) {
         return value3 -> applyAsChar(value1, value2, value3);
     }
 

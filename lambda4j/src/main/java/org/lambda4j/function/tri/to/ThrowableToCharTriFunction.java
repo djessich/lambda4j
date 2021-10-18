@@ -216,7 +216,7 @@ public interface ThrowableToCharTriFunction<T, U, V, X extends Throwable> extend
      * @return A {@code ThrowableToCharBiFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ThrowableToCharBiFunction<U, V, X> papplyAsCharThrows(T t) {
+    default ThrowableToCharBiFunction<U, V, X> applyAsCharThrowsPartially(T t) {
         return (u, v) -> applyAsCharThrows(t, u, v);
     }
 
@@ -229,7 +229,7 @@ public interface ThrowableToCharTriFunction<T, U, V, X extends Throwable> extend
      * @return A {@code ThrowableToCharFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ThrowableToCharFunction<V, X> papplyAsCharThrows(T t, U u) {
+    default ThrowableToCharFunction<V, X> applyAsCharThrowsPartially(T t, U u) {
         return v -> applyAsCharThrows(t, u, v);
     }
 

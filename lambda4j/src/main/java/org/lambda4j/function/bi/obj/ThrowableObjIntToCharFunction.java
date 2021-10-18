@@ -192,7 +192,7 @@ public interface ThrowableObjIntToCharFunction<T, X extends Throwable> extends L
      * @return A {@code ThrowableIntToCharFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ThrowableIntToCharFunction<X> papplyAsCharThrows(T t) {
+    default ThrowableIntToCharFunction<X> applyAsCharThrowsPartially(T t) {
         return value -> applyAsCharThrows(t, value);
     }
 
@@ -204,7 +204,7 @@ public interface ThrowableObjIntToCharFunction<T, X extends Throwable> extends L
      * @return A {@code ThrowableToCharFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ThrowableToCharFunction<T, X> papplyAsCharThrows(int value) {
+    default ThrowableToCharFunction<T, X> applyAsCharThrowsPartially(int value) {
         return t -> applyAsCharThrows(t, value);
     }
 

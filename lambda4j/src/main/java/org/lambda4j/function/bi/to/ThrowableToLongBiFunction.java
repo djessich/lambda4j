@@ -208,7 +208,7 @@ public interface ThrowableToLongBiFunction<T, U, X extends Throwable> extends La
      * @return A {@code ThrowableToLongFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ThrowableToLongFunction<U, X> papplyAsLongThrows(T t) {
+    default ThrowableToLongFunction<U, X> applyAsLongThrowsPartially(T t) {
         return u -> applyAsLongThrows(t, u);
     }
 

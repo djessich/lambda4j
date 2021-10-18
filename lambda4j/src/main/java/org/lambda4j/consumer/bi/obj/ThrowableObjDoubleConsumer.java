@@ -183,7 +183,7 @@ public interface ThrowableObjDoubleConsumer<T, X extends Throwable> extends Lamb
      * @return A {@code ThrowableDoubleConsumer} that represents this consumer partially applied the some arguments.
      */
     @Nonnull
-    default ThrowableDoubleConsumer<X> pacceptThrows(T t) {
+    default ThrowableDoubleConsumer<X> acceptThrowsPartially(T t) {
         return value -> acceptThrows(t, value);
     }
 
@@ -194,7 +194,7 @@ public interface ThrowableObjDoubleConsumer<T, X extends Throwable> extends Lamb
      * @return A {@code ThrowableConsumer} that represents this consumer partially applied the some arguments.
      */
     @Nonnull
-    default ThrowableConsumer<T, X> pacceptThrows(double value) {
+    default ThrowableConsumer<T, X> acceptThrowsPartially(double value) {
         return t -> acceptThrows(t, value);
     }
 

@@ -172,7 +172,7 @@ public interface ThrowableBiIntToByteFunction<X extends Throwable> extends Lambd
      * @return A {@code ThrowableIntToByteFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ThrowableIntToByteFunction<X> papplyAsByteThrows(int value1) {
+    default ThrowableIntToByteFunction<X> applyAsByteThrowsPartially(int value1) {
         return value2 -> applyAsByteThrows(value1, value2);
     }
 

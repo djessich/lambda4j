@@ -296,7 +296,7 @@ public interface ThrowableBiObjDoublePredicate<T, U, X extends Throwable> extend
      * arguments.
      */
     @Nonnull
-    default ThrowableObjDoublePredicate<U, X> ptestThrows(T t) {
+    default ThrowableObjDoublePredicate<U, X> testThrowsPartially(T t) {
         return (u, value) -> testThrows(t, u, value);
     }
 
@@ -309,7 +309,7 @@ public interface ThrowableBiObjDoublePredicate<T, U, X extends Throwable> extend
      * @return A {@code ThrowableDoublePredicate} that represents this predicate partially applied the some arguments.
      */
     @Nonnull
-    default ThrowableDoublePredicate<X> ptestThrows(T t, U u) {
+    default ThrowableDoublePredicate<X> testThrowsPartially(T t, U u) {
         return value -> testThrows(t, u, value);
     }
 
@@ -321,7 +321,7 @@ public interface ThrowableBiObjDoublePredicate<T, U, X extends Throwable> extend
      * @return A {@code ThrowableBiPredicate} that represents this predicate partially applied the some arguments.
      */
     @Nonnull
-    default ThrowableBiPredicate<T, U, X> ptestThrows(double value) {
+    default ThrowableBiPredicate<T, U, X> testThrowsPartially(double value) {
         return (t, u) -> testThrows(t, u, value);
     }
 
@@ -334,7 +334,7 @@ public interface ThrowableBiObjDoublePredicate<T, U, X extends Throwable> extend
      * @return A {@code ThrowablePredicate} that represents this predicate partially applied the some arguments.
      */
     @Nonnull
-    default ThrowablePredicate<U, X> ptestThrows(T t, double value) {
+    default ThrowablePredicate<U, X> testThrowsPartially(T t, double value) {
         return u -> testThrows(t, u, value);
     }
 

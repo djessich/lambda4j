@@ -173,7 +173,7 @@ public interface TriBooleanToCharFunction extends Lambda {
      * @return A {@code BiBooleanToCharFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default BiBooleanToCharFunction papplyAsChar(boolean value1) {
+    default BiBooleanToCharFunction applyAsCharPartially(boolean value1) {
         return (value2, value3) -> applyAsChar(value1, value2, value3);
     }
 
@@ -186,7 +186,7 @@ public interface TriBooleanToCharFunction extends Lambda {
      * @return A {@code BooleanToCharFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default BooleanToCharFunction papplyAsChar(boolean value1, boolean value2) {
+    default BooleanToCharFunction applyAsCharPartially(boolean value1, boolean value2) {
         return value3 -> applyAsChar(value1, value2, value3);
     }
 

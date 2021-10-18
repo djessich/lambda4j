@@ -174,7 +174,7 @@ public interface ThrowableBiConsumer<T, U, X extends Throwable> extends Lambda, 
      * @return A {@code ThrowableConsumer} that represents this consumer partially applied the some arguments.
      */
     @Nonnull
-    default ThrowableConsumer<U, X> pacceptThrows(T t) {
+    default ThrowableConsumer<U, X> acceptThrowsPartially(T t) {
         return u -> acceptThrows(t, u);
     }
 

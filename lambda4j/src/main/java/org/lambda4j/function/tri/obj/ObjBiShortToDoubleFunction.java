@@ -198,7 +198,7 @@ public interface ObjBiShortToDoubleFunction<T> extends Lambda {
      * @return A {@code BiShortToDoubleFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default BiShortToDoubleFunction papplyAsDouble(T t) {
+    default BiShortToDoubleFunction applyAsDoublePartially(T t) {
         return (value1, value2) -> applyAsDouble(t, value1, value2);
     }
 
@@ -211,7 +211,7 @@ public interface ObjBiShortToDoubleFunction<T> extends Lambda {
      * @return A {@code ShortToDoubleFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ShortToDoubleFunction papplyAsDouble(T t, short value1) {
+    default ShortToDoubleFunction applyAsDoublePartially(T t, short value1) {
         return value2 -> applyAsDouble(t, value1, value2);
     }
 
@@ -223,7 +223,7 @@ public interface ObjBiShortToDoubleFunction<T> extends Lambda {
      * @return A {@code ObjShortToDoubleFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ObjShortToDoubleFunction<T> papplyAsDouble(short value1) {
+    default ObjShortToDoubleFunction<T> applyAsDoublePartially(short value1) {
         return (t, value2) -> applyAsDouble(t, value1, value2);
     }
 
@@ -235,7 +235,7 @@ public interface ObjBiShortToDoubleFunction<T> extends Lambda {
      * @return A {@code ToDoubleFunction2} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ToDoubleFunction2<T> papplyAsDouble(short value1, short value2) {
+    default ToDoubleFunction2<T> applyAsDoublePartially(short value1, short value2) {
         return t -> applyAsDouble(t, value1, value2);
     }
 

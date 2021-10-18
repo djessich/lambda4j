@@ -156,7 +156,7 @@ public interface BiLongToShortFunction extends Lambda {
      * @return A {@code LongToShortFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default LongToShortFunction papplyAsShort(long value1) {
+    default LongToShortFunction applyAsShortPartially(long value1) {
         return value2 -> applyAsShort(value1, value2);
     }
 

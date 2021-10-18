@@ -173,7 +173,7 @@ public interface ThrowableBiByteToCharFunction<X extends Throwable> extends Lamb
      * @return A {@code ThrowableByteToCharFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ThrowableByteToCharFunction<X> papplyAsCharThrows(byte value1) {
+    default ThrowableByteToCharFunction<X> applyAsCharThrowsPartially(byte value1) {
         return value2 -> applyAsCharThrows(value1, value2);
     }
 

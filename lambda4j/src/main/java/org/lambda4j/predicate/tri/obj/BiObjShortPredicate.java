@@ -272,7 +272,7 @@ public interface BiObjShortPredicate<T, U> extends Lambda {
      * @return A {@code ObjShortPredicate} that represents this predicate partially applied the some arguments.
      */
     @Nonnull
-    default ObjShortPredicate<U> ptest(T t) {
+    default ObjShortPredicate<U> testPartially(T t) {
         return (u, value) -> test(t, u, value);
     }
 
@@ -284,7 +284,7 @@ public interface BiObjShortPredicate<T, U> extends Lambda {
      * @return A {@code ShortPredicate} that represents this predicate partially applied the some arguments.
      */
     @Nonnull
-    default ShortPredicate ptest(T t, U u) {
+    default ShortPredicate testPartially(T t, U u) {
         return value -> test(t, u, value);
     }
 
@@ -295,7 +295,7 @@ public interface BiObjShortPredicate<T, U> extends Lambda {
      * @return A {@code BiPredicate2} that represents this predicate partially applied the some arguments.
      */
     @Nonnull
-    default BiPredicate2<T, U> ptest(short value) {
+    default BiPredicate2<T, U> testPartially(short value) {
         return (t, u) -> test(t, u, value);
     }
 
@@ -307,7 +307,7 @@ public interface BiObjShortPredicate<T, U> extends Lambda {
      * @return A {@code Predicate2} that represents this predicate partially applied the some arguments.
      */
     @Nonnull
-    default Predicate2<U> ptest(T t, short value) {
+    default Predicate2<U> testPartially(T t, short value) {
         return u -> test(t, u, value);
     }
 

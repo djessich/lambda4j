@@ -217,7 +217,7 @@ public interface BiObjFloatToFloatFunction<T, U> extends Lambda {
      * @return A {@code ObjFloatToFloatFunction} that represents this operator partially applied the some arguments.
      */
     @Nonnull
-    default ObjFloatToFloatFunction<U> papplyAsFloat(T t) {
+    default ObjFloatToFloatFunction<U> applyAsFloatPartially(T t) {
         return (u, value) -> applyAsFloat(t, u, value);
     }
 
@@ -229,7 +229,7 @@ public interface BiObjFloatToFloatFunction<T, U> extends Lambda {
      * @return A {@code FloatUnaryOperator} that represents this operator partially applied the some arguments.
      */
     @Nonnull
-    default FloatUnaryOperator papplyAsFloat(T t, U u) {
+    default FloatUnaryOperator applyAsFloatPartially(T t, U u) {
         return value -> applyAsFloat(t, u, value);
     }
 
@@ -240,7 +240,7 @@ public interface BiObjFloatToFloatFunction<T, U> extends Lambda {
      * @return A {@code ToFloatBiFunction} that represents this operator partially applied the some arguments.
      */
     @Nonnull
-    default ToFloatBiFunction<T, U> papplyAsFloat(float value) {
+    default ToFloatBiFunction<T, U> applyAsFloatPartially(float value) {
         return (t, u) -> applyAsFloat(t, u, value);
     }
 
@@ -252,7 +252,7 @@ public interface BiObjFloatToFloatFunction<T, U> extends Lambda {
      * @return A {@code ToFloatFunction} that represents this operator partially applied the some arguments.
      */
     @Nonnull
-    default ToFloatFunction<U> papplyAsFloat(T t, float value) {
+    default ToFloatFunction<U> applyAsFloatPartially(T t, float value) {
         return u -> applyAsFloat(t, u, value);
     }
 

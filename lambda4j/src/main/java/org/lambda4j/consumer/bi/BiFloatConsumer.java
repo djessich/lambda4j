@@ -122,7 +122,7 @@ public interface BiFloatConsumer extends Lambda {
      * @return A {@code FloatConsumer} that represents this consumer partially applied the some arguments.
      */
     @Nonnull
-    default FloatConsumer paccept(float value1) {
+    default FloatConsumer acceptPartially(float value1) {
         return value2 -> accept(value1, value2);
     }
 

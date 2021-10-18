@@ -219,7 +219,7 @@ public interface BiObjCharToByteFunction<T, U> extends Lambda {
      * @return A {@code ObjCharToByteFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ObjCharToByteFunction<U> papplyAsByte(T t) {
+    default ObjCharToByteFunction<U> applyAsBytePartially(T t) {
         return (u, value) -> applyAsByte(t, u, value);
     }
 
@@ -231,7 +231,7 @@ public interface BiObjCharToByteFunction<T, U> extends Lambda {
      * @return A {@code CharToByteFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default CharToByteFunction papplyAsByte(T t, U u) {
+    default CharToByteFunction applyAsBytePartially(T t, U u) {
         return value -> applyAsByte(t, u, value);
     }
 
@@ -242,7 +242,7 @@ public interface BiObjCharToByteFunction<T, U> extends Lambda {
      * @return A {@code ToByteBiFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ToByteBiFunction<T, U> papplyAsByte(char value) {
+    default ToByteBiFunction<T, U> applyAsBytePartially(char value) {
         return (t, u) -> applyAsByte(t, u, value);
     }
 
@@ -254,7 +254,7 @@ public interface BiObjCharToByteFunction<T, U> extends Lambda {
      * @return A {@code ToByteFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ToByteFunction<U> papplyAsByte(T t, char value) {
+    default ToByteFunction<U> applyAsBytePartially(T t, char value) {
         return u -> applyAsByte(t, u, value);
     }
 

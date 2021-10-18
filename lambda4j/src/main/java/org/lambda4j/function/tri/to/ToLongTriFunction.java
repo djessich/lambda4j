@@ -198,7 +198,7 @@ public interface ToLongTriFunction<T, U, V> extends Lambda {
      * @return A {@code ToLongBiFunction2} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ToLongBiFunction2<U, V> papplyAsLong(T t) {
+    default ToLongBiFunction2<U, V> applyAsLongPartially(T t) {
         return (u, v) -> applyAsLong(t, u, v);
     }
 
@@ -210,7 +210,7 @@ public interface ToLongTriFunction<T, U, V> extends Lambda {
      * @return A {@code ToLongFunction2} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ToLongFunction2<V> papplyAsLong(T t, U u) {
+    default ToLongFunction2<V> applyAsLongPartially(T t, U u) {
         return v -> applyAsLong(t, u, v);
     }
 

@@ -192,7 +192,7 @@ public interface ThrowableObjLongToByteFunction<T, X extends Throwable> extends 
      * @return A {@code ThrowableLongToByteFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ThrowableLongToByteFunction<X> papplyAsByteThrows(T t) {
+    default ThrowableLongToByteFunction<X> applyAsByteThrowsPartially(T t) {
         return value -> applyAsByteThrows(t, value);
     }
 
@@ -204,7 +204,7 @@ public interface ThrowableObjLongToByteFunction<T, X extends Throwable> extends 
      * @return A {@code ThrowableToByteFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ThrowableToByteFunction<T, X> papplyAsByteThrows(long value) {
+    default ThrowableToByteFunction<T, X> applyAsByteThrowsPartially(long value) {
         return t -> applyAsByteThrows(t, value);
     }
 

@@ -157,7 +157,7 @@ public interface BiIntToDoubleFunction extends Lambda {
      * @return A {@code IntToDoubleFunction2} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default IntToDoubleFunction2 papplyAsDouble(int value1) {
+    default IntToDoubleFunction2 applyAsDoublePartially(int value1) {
         return value2 -> applyAsDouble(value1, value2);
     }
 

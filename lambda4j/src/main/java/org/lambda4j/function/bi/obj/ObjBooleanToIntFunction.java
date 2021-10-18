@@ -177,7 +177,7 @@ public interface ObjBooleanToIntFunction<T> extends Lambda {
      * @return A {@code BooleanToIntFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default BooleanToIntFunction papplyAsInt(T t) {
+    default BooleanToIntFunction applyAsIntPartially(T t) {
         return value -> applyAsInt(t, value);
     }
 
@@ -188,7 +188,7 @@ public interface ObjBooleanToIntFunction<T> extends Lambda {
      * @return A {@code ToIntFunction2} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ToIntFunction2<T> papplyAsInt(boolean value) {
+    default ToIntFunction2<T> applyAsIntPartially(boolean value) {
         return t -> applyAsInt(t, value);
     }
 

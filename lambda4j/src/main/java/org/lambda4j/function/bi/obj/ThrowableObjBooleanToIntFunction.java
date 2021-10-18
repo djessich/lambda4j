@@ -194,7 +194,7 @@ public interface ThrowableObjBooleanToIntFunction<T, X extends Throwable> extend
      * arguments.
      */
     @Nonnull
-    default ThrowableBooleanToIntFunction<X> papplyAsIntThrows(T t) {
+    default ThrowableBooleanToIntFunction<X> applyAsIntThrowsPartially(T t) {
         return value -> applyAsIntThrows(t, value);
     }
 
@@ -206,7 +206,7 @@ public interface ThrowableObjBooleanToIntFunction<T, X extends Throwable> extend
      * @return A {@code ThrowableToIntFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ThrowableToIntFunction<T, X> papplyAsIntThrows(boolean value) {
+    default ThrowableToIntFunction<T, X> applyAsIntThrowsPartially(boolean value) {
         return t -> applyAsIntThrows(t, value);
     }
 

@@ -186,7 +186,7 @@ public interface ThrowableToFloatBiFunction<T, U, X extends Throwable> extends L
      * @return A {@code ThrowableToFloatFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ThrowableToFloatFunction<U, X> papplyAsFloatThrows(T t) {
+    default ThrowableToFloatFunction<U, X> applyAsFloatThrowsPartially(T t) {
         return u -> applyAsFloatThrows(t, u);
     }
 

@@ -155,7 +155,7 @@ public interface BiBooleanToShortFunction extends Lambda {
      * @return A {@code BooleanToShortFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default BooleanToShortFunction papplyAsShort(boolean value1) {
+    default BooleanToShortFunction applyAsShortPartially(boolean value1) {
         return value2 -> applyAsShort(value1, value2);
     }
 

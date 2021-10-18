@@ -184,7 +184,7 @@ public interface DoubleTernaryOperator extends Lambda {
      * @return A {@code DoubleBinaryOperator2} that represents this operator partially applied the some arguments.
      */
     @Nonnull
-    default DoubleBinaryOperator2 papplyAsDouble(double value1) {
+    default DoubleBinaryOperator2 applyAsDoublePartially(double value1) {
         return (value2, value3) -> applyAsDouble(value1, value2, value3);
     }
 
@@ -197,7 +197,7 @@ public interface DoubleTernaryOperator extends Lambda {
      * @return A {@code DoubleUnaryOperator2} that represents this operator partially applied the some arguments.
      */
     @Nonnull
-    default DoubleUnaryOperator2 papplyAsDouble(double value1, double value2) {
+    default DoubleUnaryOperator2 applyAsDoublePartially(double value1, double value2) {
         return value3 -> applyAsDouble(value1, value2, value3);
     }
 

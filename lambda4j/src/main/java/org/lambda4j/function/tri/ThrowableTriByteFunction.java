@@ -204,7 +204,7 @@ public interface ThrowableTriByteFunction<R, X extends Throwable> extends Lambda
      * @return A {@code ThrowableBiByteFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ThrowableBiByteFunction<R, X> papplyThrows(byte value1) {
+    default ThrowableBiByteFunction<R, X> applyThrowsPartially(byte value1) {
         return (value2, value3) -> applyThrows(value1, value2, value3);
     }
 
@@ -217,7 +217,7 @@ public interface ThrowableTriByteFunction<R, X extends Throwable> extends Lambda
      * @return A {@code ThrowableByteFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ThrowableByteFunction<R, X> papplyThrows(byte value1, byte value2) {
+    default ThrowableByteFunction<R, X> applyThrowsPartially(byte value1, byte value2) {
         return value3 -> applyThrows(value1, value2, value3);
     }
 

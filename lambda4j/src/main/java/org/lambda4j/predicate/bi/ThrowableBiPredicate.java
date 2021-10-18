@@ -263,7 +263,7 @@ public interface ThrowableBiPredicate<T, U, X extends Throwable> extends Lambda,
      * @return A {@code ThrowablePredicate} that represents this predicate partially applied the some arguments.
      */
     @Nonnull
-    default ThrowablePredicate<U, X> ptestThrows(T t) {
+    default ThrowablePredicate<U, X> testThrowsPartially(T t) {
         return u -> testThrows(t, u);
     }
 

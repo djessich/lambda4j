@@ -239,7 +239,7 @@ public interface ThrowableBiObjShortToIntFunction<T, U, X extends Throwable> ext
      * arguments.
      */
     @Nonnull
-    default ThrowableObjShortToIntFunction<U, X> papplyAsIntThrows(T t) {
+    default ThrowableObjShortToIntFunction<U, X> applyAsIntThrowsPartially(T t) {
         return (u, value) -> applyAsIntThrows(t, u, value);
     }
 
@@ -252,7 +252,7 @@ public interface ThrowableBiObjShortToIntFunction<T, U, X extends Throwable> ext
      * @return A {@code ThrowableShortToIntFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ThrowableShortToIntFunction<X> papplyAsIntThrows(T t, U u) {
+    default ThrowableShortToIntFunction<X> applyAsIntThrowsPartially(T t, U u) {
         return value -> applyAsIntThrows(t, u, value);
     }
 
@@ -264,7 +264,7 @@ public interface ThrowableBiObjShortToIntFunction<T, U, X extends Throwable> ext
      * @return A {@code ThrowableToIntBiFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ThrowableToIntBiFunction<T, U, X> papplyAsIntThrows(short value) {
+    default ThrowableToIntBiFunction<T, U, X> applyAsIntThrowsPartially(short value) {
         return (t, u) -> applyAsIntThrows(t, u, value);
     }
 
@@ -277,7 +277,7 @@ public interface ThrowableBiObjShortToIntFunction<T, U, X extends Throwable> ext
      * @return A {@code ThrowableToIntFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ThrowableToIntFunction<U, X> papplyAsIntThrows(T t, short value) {
+    default ThrowableToIntFunction<U, X> applyAsIntThrowsPartially(T t, short value) {
         return u -> applyAsIntThrows(t, u, value);
     }
 

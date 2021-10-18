@@ -190,7 +190,7 @@ public interface ThrowableObjByteToByteFunction<T, X extends Throwable> extends 
      * @return A {@code ThrowableByteUnaryOperator} that represents this operator partially applied the some arguments.
      */
     @Nonnull
-    default ThrowableByteUnaryOperator<X> papplyAsByteThrows(T t) {
+    default ThrowableByteUnaryOperator<X> applyAsByteThrowsPartially(T t) {
         return value -> applyAsByteThrows(t, value);
     }
 
@@ -202,7 +202,7 @@ public interface ThrowableObjByteToByteFunction<T, X extends Throwable> extends 
      * @return A {@code ThrowableToByteFunction} that represents this operator partially applied the some arguments.
      */
     @Nonnull
-    default ThrowableToByteFunction<T, X> papplyAsByteThrows(byte value) {
+    default ThrowableToByteFunction<T, X> applyAsByteThrowsPartially(byte value) {
         return t -> applyAsByteThrows(t, value);
     }
 

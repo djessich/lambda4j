@@ -174,7 +174,7 @@ public interface TriBooleanToFloatFunction extends Lambda {
      * @return A {@code BiBooleanToFloatFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default BiBooleanToFloatFunction papplyAsFloat(boolean value1) {
+    default BiBooleanToFloatFunction applyAsFloatPartially(boolean value1) {
         return (value2, value3) -> applyAsFloat(value1, value2, value3);
     }
 
@@ -187,7 +187,7 @@ public interface TriBooleanToFloatFunction extends Lambda {
      * @return A {@code BooleanToFloatFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default BooleanToFloatFunction papplyAsFloat(boolean value1, boolean value2) {
+    default BooleanToFloatFunction applyAsFloatPartially(boolean value1, boolean value2) {
         return value3 -> applyAsFloat(value1, value2, value3);
     }
 

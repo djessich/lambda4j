@@ -163,7 +163,7 @@ public interface ThrowableObjFloatConsumer<T, X extends Throwable> extends Lambd
      * @return A {@code ThrowableFloatConsumer} that represents this consumer partially applied the some arguments.
      */
     @Nonnull
-    default ThrowableFloatConsumer<X> pacceptThrows(T t) {
+    default ThrowableFloatConsumer<X> acceptThrowsPartially(T t) {
         return value -> acceptThrows(t, value);
     }
 
@@ -174,7 +174,7 @@ public interface ThrowableObjFloatConsumer<T, X extends Throwable> extends Lambd
      * @return A {@code ThrowableConsumer} that represents this consumer partially applied the some arguments.
      */
     @Nonnull
-    default ThrowableConsumer<T, X> pacceptThrows(float value) {
+    default ThrowableConsumer<T, X> acceptThrowsPartially(float value) {
         return t -> acceptThrows(t, value);
     }
 

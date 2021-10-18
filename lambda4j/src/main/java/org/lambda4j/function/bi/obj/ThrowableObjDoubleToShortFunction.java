@@ -194,7 +194,7 @@ public interface ThrowableObjDoubleToShortFunction<T, X extends Throwable> exten
      * arguments.
      */
     @Nonnull
-    default ThrowableDoubleToShortFunction<X> papplyAsShortThrows(T t) {
+    default ThrowableDoubleToShortFunction<X> applyAsShortThrowsPartially(T t) {
         return value -> applyAsShortThrows(t, value);
     }
 
@@ -206,7 +206,7 @@ public interface ThrowableObjDoubleToShortFunction<T, X extends Throwable> exten
      * @return A {@code ThrowableToShortFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ThrowableToShortFunction<T, X> papplyAsShortThrows(double value) {
+    default ThrowableToShortFunction<T, X> applyAsShortThrowsPartially(double value) {
         return t -> applyAsShortThrows(t, value);
     }
 

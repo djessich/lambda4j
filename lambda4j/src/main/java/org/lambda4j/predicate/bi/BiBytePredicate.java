@@ -195,7 +195,7 @@ public interface BiBytePredicate extends Lambda {
      * @return A {@code BytePredicate} that represents this predicate partially applied the some arguments.
      */
     @Nonnull
-    default BytePredicate ptest(byte value1) {
+    default BytePredicate testPartially(byte value1) {
         return value2 -> test(value1, value2);
     }
 

@@ -216,7 +216,7 @@ public interface TriLongPredicate extends Lambda {
      * @return A {@code BiLongPredicate} that represents this predicate partially applied the some arguments.
      */
     @Nonnull
-    default BiLongPredicate ptest(long value1) {
+    default BiLongPredicate testPartially(long value1) {
         return (value2, value3) -> test(value1, value2, value3);
     }
 
@@ -228,7 +228,7 @@ public interface TriLongPredicate extends Lambda {
      * @return A {@code LongPredicate2} that represents this predicate partially applied the some arguments.
      */
     @Nonnull
-    default LongPredicate2 ptest(long value1, long value2) {
+    default LongPredicate2 testPartially(long value1, long value2) {
         return value3 -> test(value1, value2, value3);
     }
 

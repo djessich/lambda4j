@@ -237,7 +237,7 @@ public interface ThrowableTriIntPredicate<X extends Throwable> extends Lambda {
      * @return A {@code ThrowableBiIntPredicate} that represents this predicate partially applied the some arguments.
      */
     @Nonnull
-    default ThrowableBiIntPredicate<X> ptestThrows(int value1) {
+    default ThrowableBiIntPredicate<X> testThrowsPartially(int value1) {
         return (value2, value3) -> testThrows(value1, value2, value3);
     }
 
@@ -250,7 +250,7 @@ public interface ThrowableTriIntPredicate<X extends Throwable> extends Lambda {
      * @return A {@code ThrowableIntPredicate} that represents this predicate partially applied the some arguments.
      */
     @Nonnull
-    default ThrowableIntPredicate<X> ptestThrows(int value1, int value2) {
+    default ThrowableIntPredicate<X> testThrowsPartially(int value1, int value2) {
         return value3 -> testThrows(value1, value2, value3);
     }
 

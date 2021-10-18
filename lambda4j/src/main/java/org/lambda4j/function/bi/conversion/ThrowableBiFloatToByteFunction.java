@@ -174,7 +174,7 @@ public interface ThrowableBiFloatToByteFunction<X extends Throwable> extends Lam
      * arguments.
      */
     @Nonnull
-    default ThrowableFloatToByteFunction<X> papplyAsByteThrows(float value1) {
+    default ThrowableFloatToByteFunction<X> applyAsByteThrowsPartially(float value1) {
         return value2 -> applyAsByteThrows(value1, value2);
     }
 

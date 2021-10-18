@@ -176,7 +176,7 @@ public interface ObjBooleanToByteFunction<T> extends Lambda {
      * @return A {@code BooleanToByteFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default BooleanToByteFunction papplyAsByte(T t) {
+    default BooleanToByteFunction applyAsBytePartially(T t) {
         return value -> applyAsByte(t, value);
     }
 
@@ -187,7 +187,7 @@ public interface ObjBooleanToByteFunction<T> extends Lambda {
      * @return A {@code ToByteFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ToByteFunction<T> papplyAsByte(boolean value) {
+    default ToByteFunction<T> applyAsBytePartially(boolean value) {
         return t -> applyAsByte(t, value);
     }
 

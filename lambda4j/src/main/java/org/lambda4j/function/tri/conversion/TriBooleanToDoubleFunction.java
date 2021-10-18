@@ -174,7 +174,7 @@ public interface TriBooleanToDoubleFunction extends Lambda {
      * @return A {@code BiBooleanToDoubleFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default BiBooleanToDoubleFunction papplyAsDouble(boolean value1) {
+    default BiBooleanToDoubleFunction applyAsDoublePartially(boolean value1) {
         return (value2, value3) -> applyAsDouble(value1, value2, value3);
     }
 
@@ -187,7 +187,7 @@ public interface TriBooleanToDoubleFunction extends Lambda {
      * @return A {@code BooleanToDoubleFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default BooleanToDoubleFunction papplyAsDouble(boolean value1, boolean value2) {
+    default BooleanToDoubleFunction applyAsDoublePartially(boolean value1, boolean value2) {
         return value3 -> applyAsDouble(value1, value2, value3);
     }
 

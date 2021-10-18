@@ -122,7 +122,7 @@ public interface BiCharConsumer extends Lambda {
      * @return A {@code CharConsumer} that represents this consumer partially applied the some arguments.
      */
     @Nonnull
-    default CharConsumer paccept(char value1) {
+    default CharConsumer acceptPartially(char value1) {
         return value2 -> accept(value1, value2);
     }
 

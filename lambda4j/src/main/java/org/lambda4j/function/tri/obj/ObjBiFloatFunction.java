@@ -212,7 +212,7 @@ public interface ObjBiFloatFunction<T, R> extends Lambda {
      * @return A {@code BiFloatFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default BiFloatFunction<R> papply(T t) {
+    default BiFloatFunction<R> applyPartially(T t) {
         return (value1, value2) -> apply(t, value1, value2);
     }
 
@@ -224,7 +224,7 @@ public interface ObjBiFloatFunction<T, R> extends Lambda {
      * @return A {@code FloatFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default FloatFunction<R> papply(T t, float value1) {
+    default FloatFunction<R> applyPartially(T t, float value1) {
         return value2 -> apply(t, value1, value2);
     }
 
@@ -235,7 +235,7 @@ public interface ObjBiFloatFunction<T, R> extends Lambda {
      * @return A {@code ObjFloatFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ObjFloatFunction<T, R> papply(float value1) {
+    default ObjFloatFunction<T, R> applyPartially(float value1) {
         return (t, value2) -> apply(t, value1, value2);
     }
 
@@ -247,7 +247,7 @@ public interface ObjBiFloatFunction<T, R> extends Lambda {
      * @return A {@code Function2} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default Function2<T, R> papply(float value1, float value2) {
+    default Function2<T, R> applyPartially(float value1, float value2) {
         return t -> apply(t, value1, value2);
     }
 

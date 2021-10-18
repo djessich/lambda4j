@@ -217,7 +217,7 @@ public interface ThrowableToShortTriFunction<T, U, V, X extends Throwable> exten
      * @return A {@code ThrowableToShortBiFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ThrowableToShortBiFunction<U, V, X> papplyAsShortThrows(T t) {
+    default ThrowableToShortBiFunction<U, V, X> applyAsShortThrowsPartially(T t) {
         return (u, v) -> applyAsShortThrows(t, u, v);
     }
 
@@ -230,7 +230,7 @@ public interface ThrowableToShortTriFunction<T, U, V, X extends Throwable> exten
      * @return A {@code ThrowableToShortFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ThrowableToShortFunction<V, X> papplyAsShortThrows(T t, U u) {
+    default ThrowableToShortFunction<V, X> applyAsShortThrowsPartially(T t, U u) {
         return v -> applyAsShortThrows(t, u, v);
     }
 

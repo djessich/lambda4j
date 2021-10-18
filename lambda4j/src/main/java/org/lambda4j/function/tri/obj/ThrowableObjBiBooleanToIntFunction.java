@@ -217,7 +217,7 @@ public interface ThrowableObjBiBooleanToIntFunction<T, X extends Throwable> exte
      * arguments.
      */
     @Nonnull
-    default ThrowableBiBooleanToIntFunction<X> papplyAsIntThrows(T t) {
+    default ThrowableBiBooleanToIntFunction<X> applyAsIntThrowsPartially(T t) {
         return (value1, value2) -> applyAsIntThrows(t, value1, value2);
     }
 
@@ -231,7 +231,7 @@ public interface ThrowableObjBiBooleanToIntFunction<T, X extends Throwable> exte
      * arguments.
      */
     @Nonnull
-    default ThrowableBooleanToIntFunction<X> papplyAsIntThrows(T t, boolean value1) {
+    default ThrowableBooleanToIntFunction<X> applyAsIntThrowsPartially(T t, boolean value1) {
         return value2 -> applyAsIntThrows(t, value1, value2);
     }
 
@@ -244,7 +244,7 @@ public interface ThrowableObjBiBooleanToIntFunction<T, X extends Throwable> exte
      * arguments.
      */
     @Nonnull
-    default ThrowableObjBooleanToIntFunction<T, X> papplyAsIntThrows(boolean value1) {
+    default ThrowableObjBooleanToIntFunction<T, X> applyAsIntThrowsPartially(boolean value1) {
         return (t, value2) -> applyAsIntThrows(t, value1, value2);
     }
 
@@ -257,7 +257,7 @@ public interface ThrowableObjBiBooleanToIntFunction<T, X extends Throwable> exte
      * @return A {@code ThrowableToIntFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ThrowableToIntFunction<T, X> papplyAsIntThrows(boolean value1, boolean value2) {
+    default ThrowableToIntFunction<T, X> applyAsIntThrowsPartially(boolean value1, boolean value2) {
         return t -> applyAsIntThrows(t, value1, value2);
     }
 

@@ -155,7 +155,7 @@ public interface BiCharToIntFunction extends Lambda {
      * @return A {@code CharToIntFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default CharToIntFunction papplyAsInt(char value1) {
+    default CharToIntFunction applyAsIntPartially(char value1) {
         return value2 -> applyAsInt(value1, value2);
     }
 

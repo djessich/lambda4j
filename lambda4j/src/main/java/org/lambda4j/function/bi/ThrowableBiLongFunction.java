@@ -183,7 +183,7 @@ public interface ThrowableBiLongFunction<R, X extends Throwable> extends Lambda 
      * @return A {@code ThrowableLongFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ThrowableLongFunction<R, X> papplyThrows(long value1) {
+    default ThrowableLongFunction<R, X> applyThrowsPartially(long value1) {
         return value2 -> applyThrows(value1, value2);
     }
 

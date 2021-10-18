@@ -186,7 +186,7 @@ public interface ThrowableObjBiFloatConsumer<T, X extends Throwable> extends Lam
      * @return A {@code ThrowableBiFloatConsumer} that represents this consumer partially applied the some arguments.
      */
     @Nonnull
-    default ThrowableBiFloatConsumer<X> pacceptThrows(T t) {
+    default ThrowableBiFloatConsumer<X> acceptThrowsPartially(T t) {
         return (value1, value2) -> acceptThrows(t, value1, value2);
     }
 
@@ -199,7 +199,7 @@ public interface ThrowableObjBiFloatConsumer<T, X extends Throwable> extends Lam
      * @return A {@code ThrowableFloatConsumer} that represents this consumer partially applied the some arguments.
      */
     @Nonnull
-    default ThrowableFloatConsumer<X> pacceptThrows(T t, float value1) {
+    default ThrowableFloatConsumer<X> acceptThrowsPartially(T t, float value1) {
         return value2 -> acceptThrows(t, value1, value2);
     }
 
@@ -211,7 +211,7 @@ public interface ThrowableObjBiFloatConsumer<T, X extends Throwable> extends Lam
      * @return A {@code ThrowableObjFloatConsumer} that represents this consumer partially applied the some arguments.
      */
     @Nonnull
-    default ThrowableObjFloatConsumer<T, X> pacceptThrows(float value1) {
+    default ThrowableObjFloatConsumer<T, X> acceptThrowsPartially(float value1) {
         return (t, value2) -> acceptThrows(t, value1, value2);
     }
 
@@ -223,7 +223,7 @@ public interface ThrowableObjBiFloatConsumer<T, X extends Throwable> extends Lam
      * @return A {@code ThrowableConsumer} that represents this consumer partially applied the some arguments.
      */
     @Nonnull
-    default ThrowableConsumer<T, X> pacceptThrows(float value1, float value2) {
+    default ThrowableConsumer<T, X> acceptThrowsPartially(float value1, float value2) {
         return t -> acceptThrows(t, value1, value2);
     }
 

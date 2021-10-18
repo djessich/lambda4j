@@ -152,7 +152,7 @@ public interface ObjDoubleConsumer2<T> extends Lambda, ObjDoubleConsumer<T> {
      * @return A {@code DoubleConsumer2} that represents this consumer partially applied the some arguments.
      */
     @Nonnull
-    default DoubleConsumer2 paccept(T t) {
+    default DoubleConsumer2 acceptPartially(T t) {
         return value -> accept(t, value);
     }
 
@@ -163,7 +163,7 @@ public interface ObjDoubleConsumer2<T> extends Lambda, ObjDoubleConsumer<T> {
      * @return A {@code Consumer2} that represents this consumer partially applied the some arguments.
      */
     @Nonnull
-    default Consumer2<T> paccept(double value) {
+    default Consumer2<T> acceptPartially(double value) {
         return t -> accept(t, value);
     }
 

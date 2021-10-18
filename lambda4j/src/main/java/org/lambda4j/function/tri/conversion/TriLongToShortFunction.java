@@ -174,7 +174,7 @@ public interface TriLongToShortFunction extends Lambda {
      * @return A {@code BiLongToShortFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default BiLongToShortFunction papplyAsShort(long value1) {
+    default BiLongToShortFunction applyAsShortPartially(long value1) {
         return (value2, value3) -> applyAsShort(value1, value2, value3);
     }
 
@@ -187,7 +187,7 @@ public interface TriLongToShortFunction extends Lambda {
      * @return A {@code LongToShortFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default LongToShortFunction papplyAsShort(long value1, long value2) {
+    default LongToShortFunction applyAsShortPartially(long value1, long value2) {
         return value3 -> applyAsShort(value1, value2, value3);
     }
 

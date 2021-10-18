@@ -184,7 +184,7 @@ public interface BiFunction2<T, U, R> extends Lambda, BiFunction<T, U, R> {
      * @return A {@code Function2} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default Function2<U, R> papply(T t) {
+    default Function2<U, R> applyPartially(T t) {
         return u -> apply(t, u);
     }
 

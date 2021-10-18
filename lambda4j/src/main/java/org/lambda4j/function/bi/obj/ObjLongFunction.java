@@ -189,7 +189,7 @@ public interface ObjLongFunction<T, R> extends Lambda {
      * @return A {@code LongFunction2} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default LongFunction2<R> papply(T t) {
+    default LongFunction2<R> applyPartially(T t) {
         return value -> apply(t, value);
     }
 
@@ -200,7 +200,7 @@ public interface ObjLongFunction<T, R> extends Lambda {
      * @return A {@code Function2} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default Function2<T, R> papply(long value) {
+    default Function2<T, R> applyPartially(long value) {
         return t -> apply(t, value);
     }
 

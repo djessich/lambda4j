@@ -216,7 +216,7 @@ public interface TriDoublePredicate extends Lambda {
      * @return A {@code BiDoublePredicate} that represents this predicate partially applied the some arguments.
      */
     @Nonnull
-    default BiDoublePredicate ptest(double value1) {
+    default BiDoublePredicate testPartially(double value1) {
         return (value2, value3) -> test(value1, value2, value3);
     }
 
@@ -228,7 +228,7 @@ public interface TriDoublePredicate extends Lambda {
      * @return A {@code DoublePredicate2} that represents this predicate partially applied the some arguments.
      */
     @Nonnull
-    default DoublePredicate2 ptest(double value1, double value2) {
+    default DoublePredicate2 testPartially(double value1, double value2) {
         return value3 -> test(value1, value2, value3);
     }
 

@@ -213,7 +213,7 @@ public interface ObjBiLongFunction<T, R> extends Lambda {
      * @return A {@code BiLongFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default BiLongFunction<R> papply(T t) {
+    default BiLongFunction<R> applyPartially(T t) {
         return (value1, value2) -> apply(t, value1, value2);
     }
 
@@ -225,7 +225,7 @@ public interface ObjBiLongFunction<T, R> extends Lambda {
      * @return A {@code LongFunction2} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default LongFunction2<R> papply(T t, long value1) {
+    default LongFunction2<R> applyPartially(T t, long value1) {
         return value2 -> apply(t, value1, value2);
     }
 
@@ -236,7 +236,7 @@ public interface ObjBiLongFunction<T, R> extends Lambda {
      * @return A {@code ObjLongFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ObjLongFunction<T, R> papply(long value1) {
+    default ObjLongFunction<T, R> applyPartially(long value1) {
         return (t, value2) -> apply(t, value1, value2);
     }
 
@@ -248,7 +248,7 @@ public interface ObjBiLongFunction<T, R> extends Lambda {
      * @return A {@code Function2} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default Function2<T, R> papply(long value1, long value2) {
+    default Function2<T, R> applyPartially(long value1, long value2) {
         return t -> apply(t, value1, value2);
     }
 

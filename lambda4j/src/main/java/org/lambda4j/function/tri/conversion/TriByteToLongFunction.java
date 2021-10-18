@@ -174,7 +174,7 @@ public interface TriByteToLongFunction extends Lambda {
      * @return A {@code BiByteToLongFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default BiByteToLongFunction papplyAsLong(byte value1) {
+    default BiByteToLongFunction applyAsLongPartially(byte value1) {
         return (value2, value3) -> applyAsLong(value1, value2, value3);
     }
 
@@ -186,7 +186,7 @@ public interface TriByteToLongFunction extends Lambda {
      * @return A {@code ByteToLongFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ByteToLongFunction papplyAsLong(byte value1, byte value2) {
+    default ByteToLongFunction applyAsLongPartially(byte value1, byte value2) {
         return value3 -> applyAsLong(value1, value2, value3);
     }
 

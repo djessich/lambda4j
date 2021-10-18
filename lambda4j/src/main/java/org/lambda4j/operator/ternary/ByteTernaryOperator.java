@@ -182,7 +182,7 @@ public interface ByteTernaryOperator extends Lambda {
      * @return A {@code ByteBinaryOperator} that represents this operator partially applied the some arguments.
      */
     @Nonnull
-    default ByteBinaryOperator papplyAsByte(byte value1) {
+    default ByteBinaryOperator applyAsBytePartially(byte value1) {
         return (value2, value3) -> applyAsByte(value1, value2, value3);
     }
 
@@ -194,7 +194,7 @@ public interface ByteTernaryOperator extends Lambda {
      * @return A {@code ByteUnaryOperator} that represents this operator partially applied the some arguments.
      */
     @Nonnull
-    default ByteUnaryOperator papplyAsByte(byte value1, byte value2) {
+    default ByteUnaryOperator applyAsBytePartially(byte value1, byte value2) {
         return value3 -> applyAsByte(value1, value2, value3);
     }
 

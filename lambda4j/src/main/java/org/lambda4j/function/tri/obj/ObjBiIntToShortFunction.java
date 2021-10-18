@@ -196,7 +196,7 @@ public interface ObjBiIntToShortFunction<T> extends Lambda {
      * @return A {@code BiIntToShortFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default BiIntToShortFunction papplyAsShort(T t) {
+    default BiIntToShortFunction applyAsShortPartially(T t) {
         return (value1, value2) -> applyAsShort(t, value1, value2);
     }
 
@@ -208,7 +208,7 @@ public interface ObjBiIntToShortFunction<T> extends Lambda {
      * @return A {@code IntToShortFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default IntToShortFunction papplyAsShort(T t, int value1) {
+    default IntToShortFunction applyAsShortPartially(T t, int value1) {
         return value2 -> applyAsShort(t, value1, value2);
     }
 
@@ -220,7 +220,7 @@ public interface ObjBiIntToShortFunction<T> extends Lambda {
      * @return A {@code ObjIntToShortFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ObjIntToShortFunction<T> papplyAsShort(int value1) {
+    default ObjIntToShortFunction<T> applyAsShortPartially(int value1) {
         return (t, value2) -> applyAsShort(t, value1, value2);
     }
 
@@ -232,7 +232,7 @@ public interface ObjBiIntToShortFunction<T> extends Lambda {
      * @return A {@code ToShortFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ToShortFunction<T> papplyAsShort(int value1, int value2) {
+    default ToShortFunction<T> applyAsShortPartially(int value1, int value2) {
         return t -> applyAsShort(t, value1, value2);
     }
 

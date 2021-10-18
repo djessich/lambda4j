@@ -216,7 +216,7 @@ public interface ThrowableObjBiDoubleToByteFunction<T, X extends Throwable> exte
      * arguments.
      */
     @Nonnull
-    default ThrowableBiDoubleToByteFunction<X> papplyAsByteThrows(T t) {
+    default ThrowableBiDoubleToByteFunction<X> applyAsByteThrowsPartially(T t) {
         return (value1, value2) -> applyAsByteThrows(t, value1, value2);
     }
 
@@ -230,7 +230,7 @@ public interface ThrowableObjBiDoubleToByteFunction<T, X extends Throwable> exte
      * arguments.
      */
     @Nonnull
-    default ThrowableDoubleToByteFunction<X> papplyAsByteThrows(T t, double value1) {
+    default ThrowableDoubleToByteFunction<X> applyAsByteThrowsPartially(T t, double value1) {
         return value2 -> applyAsByteThrows(t, value1, value2);
     }
 
@@ -243,7 +243,7 @@ public interface ThrowableObjBiDoubleToByteFunction<T, X extends Throwable> exte
      * arguments.
      */
     @Nonnull
-    default ThrowableObjDoubleToByteFunction<T, X> papplyAsByteThrows(double value1) {
+    default ThrowableObjDoubleToByteFunction<T, X> applyAsByteThrowsPartially(double value1) {
         return (t, value2) -> applyAsByteThrows(t, value1, value2);
     }
 
@@ -256,7 +256,7 @@ public interface ThrowableObjBiDoubleToByteFunction<T, X extends Throwable> exte
      * @return A {@code ThrowableToByteFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ThrowableToByteFunction<T, X> papplyAsByteThrows(double value1, double value2) {
+    default ThrowableToByteFunction<T, X> applyAsByteThrowsPartially(double value1, double value2) {
         return t -> applyAsByteThrows(t, value1, value2);
     }
 

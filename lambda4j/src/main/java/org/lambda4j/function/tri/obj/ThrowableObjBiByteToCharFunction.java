@@ -216,7 +216,7 @@ public interface ThrowableObjBiByteToCharFunction<T, X extends Throwable> extend
      * arguments.
      */
     @Nonnull
-    default ThrowableBiByteToCharFunction<X> papplyAsCharThrows(T t) {
+    default ThrowableBiByteToCharFunction<X> applyAsCharThrowsPartially(T t) {
         return (value1, value2) -> applyAsCharThrows(t, value1, value2);
     }
 
@@ -229,7 +229,7 @@ public interface ThrowableObjBiByteToCharFunction<T, X extends Throwable> extend
      * @return A {@code ThrowableByteToCharFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ThrowableByteToCharFunction<X> papplyAsCharThrows(T t, byte value1) {
+    default ThrowableByteToCharFunction<X> applyAsCharThrowsPartially(T t, byte value1) {
         return value2 -> applyAsCharThrows(t, value1, value2);
     }
 
@@ -242,7 +242,7 @@ public interface ThrowableObjBiByteToCharFunction<T, X extends Throwable> extend
      * arguments.
      */
     @Nonnull
-    default ThrowableObjByteToCharFunction<T, X> papplyAsCharThrows(byte value1) {
+    default ThrowableObjByteToCharFunction<T, X> applyAsCharThrowsPartially(byte value1) {
         return (t, value2) -> applyAsCharThrows(t, value1, value2);
     }
 
@@ -255,7 +255,7 @@ public interface ThrowableObjBiByteToCharFunction<T, X extends Throwable> extend
      * @return A {@code ThrowableToCharFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ThrowableToCharFunction<T, X> papplyAsCharThrows(byte value1, byte value2) {
+    default ThrowableToCharFunction<T, X> applyAsCharThrowsPartially(byte value1, byte value2) {
         return t -> applyAsCharThrows(t, value1, value2);
     }
 

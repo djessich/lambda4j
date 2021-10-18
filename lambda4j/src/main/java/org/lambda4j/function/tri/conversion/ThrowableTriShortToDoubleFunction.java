@@ -194,7 +194,7 @@ public interface ThrowableTriShortToDoubleFunction<X extends Throwable> extends 
      * arguments.
      */
     @Nonnull
-    default ThrowableBiShortToDoubleFunction<X> papplyAsDoubleThrows(short value1) {
+    default ThrowableBiShortToDoubleFunction<X> applyAsDoubleThrowsPartially(short value1) {
         return (value2, value3) -> applyAsDoubleThrows(value1, value2, value3);
     }
 
@@ -208,7 +208,7 @@ public interface ThrowableTriShortToDoubleFunction<X extends Throwable> extends 
      * arguments.
      */
     @Nonnull
-    default ThrowableShortToDoubleFunction<X> papplyAsDoubleThrows(short value1, short value2) {
+    default ThrowableShortToDoubleFunction<X> applyAsDoubleThrowsPartially(short value1, short value2) {
         return value3 -> applyAsDoubleThrows(value1, value2, value3);
     }
 

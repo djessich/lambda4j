@@ -199,7 +199,7 @@ public interface BooleanBinaryOperator extends Lambda {
      * @return A {@code BooleanUnaryOperator} that represents this operator partially applied the some arguments.
      */
     @Nonnull
-    default BooleanUnaryOperator papplyAsBoolean(boolean value1) {
+    default BooleanUnaryOperator applyAsBooleanPartially(boolean value1) {
         return value2 -> applyAsBoolean(value1, value2);
     }
 

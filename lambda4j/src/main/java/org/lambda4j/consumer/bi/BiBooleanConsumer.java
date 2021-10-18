@@ -123,7 +123,7 @@ public interface BiBooleanConsumer extends Lambda {
      * @return A {@code BooleanConsumer} that represents this consumer partially applied the some arguments.
      */
     @Nonnull
-    default BooleanConsumer paccept(boolean value1) {
+    default BooleanConsumer acceptPartially(boolean value1) {
         return value2 -> accept(value1, value2);
     }
 

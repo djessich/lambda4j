@@ -194,7 +194,7 @@ public interface ThrowableTriBooleanToByteFunction<X extends Throwable> extends 
      * arguments.
      */
     @Nonnull
-    default ThrowableBiBooleanToByteFunction<X> papplyAsByteThrows(boolean value1) {
+    default ThrowableBiBooleanToByteFunction<X> applyAsByteThrowsPartially(boolean value1) {
         return (value2, value3) -> applyAsByteThrows(value1, value2, value3);
     }
 
@@ -208,7 +208,7 @@ public interface ThrowableTriBooleanToByteFunction<X extends Throwable> extends 
      * arguments.
      */
     @Nonnull
-    default ThrowableBooleanToByteFunction<X> papplyAsByteThrows(boolean value1, boolean value2) {
+    default ThrowableBooleanToByteFunction<X> applyAsByteThrowsPartially(boolean value1, boolean value2) {
         return value3 -> applyAsByteThrows(value1, value2, value3);
     }
 

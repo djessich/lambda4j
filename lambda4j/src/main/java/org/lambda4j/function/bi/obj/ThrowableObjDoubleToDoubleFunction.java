@@ -192,7 +192,7 @@ public interface ThrowableObjDoubleToDoubleFunction<T, X extends Throwable> exte
      * arguments.
      */
     @Nonnull
-    default ThrowableDoubleUnaryOperator<X> papplyAsDoubleThrows(T t) {
+    default ThrowableDoubleUnaryOperator<X> applyAsDoubleThrowsPartially(T t) {
         return value -> applyAsDoubleThrows(t, value);
     }
 
@@ -204,7 +204,7 @@ public interface ThrowableObjDoubleToDoubleFunction<T, X extends Throwable> exte
      * @return A {@code ThrowableToDoubleFunction} that represents this operator partially applied the some arguments.
      */
     @Nonnull
-    default ThrowableToDoubleFunction<T, X> papplyAsDoubleThrows(double value) {
+    default ThrowableToDoubleFunction<T, X> applyAsDoubleThrowsPartially(double value) {
         return t -> applyAsDoubleThrows(t, value);
     }
 

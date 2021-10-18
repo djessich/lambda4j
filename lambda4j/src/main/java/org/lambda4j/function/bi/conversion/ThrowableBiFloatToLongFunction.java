@@ -174,7 +174,7 @@ public interface ThrowableBiFloatToLongFunction<X extends Throwable> extends Lam
      * arguments.
      */
     @Nonnull
-    default ThrowableFloatToLongFunction<X> papplyAsLongThrows(float value1) {
+    default ThrowableFloatToLongFunction<X> applyAsLongThrowsPartially(float value1) {
         return value2 -> applyAsLongThrows(value1, value2);
     }
 

@@ -219,7 +219,7 @@ public interface BiObjLongToLongFunction<T, U> extends Lambda {
      * @return A {@code ObjLongToLongFunction} that represents this operator partially applied the some arguments.
      */
     @Nonnull
-    default ObjLongToLongFunction<U> papplyAsLong(T t) {
+    default ObjLongToLongFunction<U> applyAsLongPartially(T t) {
         return (u, value) -> applyAsLong(t, u, value);
     }
 
@@ -231,7 +231,7 @@ public interface BiObjLongToLongFunction<T, U> extends Lambda {
      * @return A {@code LongUnaryOperator2} that represents this operator partially applied the some arguments.
      */
     @Nonnull
-    default LongUnaryOperator2 papplyAsLong(T t, U u) {
+    default LongUnaryOperator2 applyAsLongPartially(T t, U u) {
         return value -> applyAsLong(t, u, value);
     }
 
@@ -242,7 +242,7 @@ public interface BiObjLongToLongFunction<T, U> extends Lambda {
      * @return A {@code ToLongBiFunction2} that represents this operator partially applied the some arguments.
      */
     @Nonnull
-    default ToLongBiFunction2<T, U> papplyAsLong(long value) {
+    default ToLongBiFunction2<T, U> applyAsLongPartially(long value) {
         return (t, u) -> applyAsLong(t, u, value);
     }
 
@@ -254,7 +254,7 @@ public interface BiObjLongToLongFunction<T, U> extends Lambda {
      * @return A {@code ToLongFunction2} that represents this operator partially applied the some arguments.
      */
     @Nonnull
-    default ToLongFunction2<U> papplyAsLong(T t, long value) {
+    default ToLongFunction2<U> applyAsLongPartially(T t, long value) {
         return u -> applyAsLong(t, u, value);
     }
 

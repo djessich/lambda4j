@@ -163,7 +163,7 @@ public interface ThrowableObjShortConsumer<T, X extends Throwable> extends Lambd
      * @return A {@code ThrowableShortConsumer} that represents this consumer partially applied the some arguments.
      */
     @Nonnull
-    default ThrowableShortConsumer<X> pacceptThrows(T t) {
+    default ThrowableShortConsumer<X> acceptThrowsPartially(T t) {
         return value -> acceptThrows(t, value);
     }
 
@@ -174,7 +174,7 @@ public interface ThrowableObjShortConsumer<T, X extends Throwable> extends Lambd
      * @return A {@code ThrowableConsumer} that represents this consumer partially applied the some arguments.
      */
     @Nonnull
-    default ThrowableConsumer<T, X> pacceptThrows(short value) {
+    default ThrowableConsumer<T, X> acceptThrowsPartially(short value) {
         return t -> acceptThrows(t, value);
     }
 

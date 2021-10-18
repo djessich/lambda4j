@@ -174,7 +174,7 @@ public interface ThrowableBiDoubleToLongFunction<X extends Throwable> extends La
      * arguments.
      */
     @Nonnull
-    default ThrowableDoubleToLongFunction<X> papplyAsLongThrows(double value1) {
+    default ThrowableDoubleToLongFunction<X> applyAsLongThrowsPartially(double value1) {
         return value2 -> applyAsLongThrows(value1, value2);
     }
 

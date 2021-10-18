@@ -155,7 +155,7 @@ public interface BiCharToLongFunction extends Lambda {
      * @return A {@code CharToLongFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default CharToLongFunction papplyAsLong(char value1) {
+    default CharToLongFunction applyAsLongPartially(char value1) {
         return value2 -> applyAsLong(value1, value2);
     }
 

@@ -195,7 +195,7 @@ public interface ObjBiIntToIntFunction<T> extends Lambda {
      * @return A {@code IntBinaryOperator2} that represents this operator partially applied the some arguments.
      */
     @Nonnull
-    default IntBinaryOperator2 papplyAsInt(T t) {
+    default IntBinaryOperator2 applyAsIntPartially(T t) {
         return (value1, value2) -> applyAsInt(t, value1, value2);
     }
 
@@ -207,7 +207,7 @@ public interface ObjBiIntToIntFunction<T> extends Lambda {
      * @return A {@code IntUnaryOperator2} that represents this operator partially applied the some arguments.
      */
     @Nonnull
-    default IntUnaryOperator2 papplyAsInt(T t, int value1) {
+    default IntUnaryOperator2 applyAsIntPartially(T t, int value1) {
         return value2 -> applyAsInt(t, value1, value2);
     }
 
@@ -219,7 +219,7 @@ public interface ObjBiIntToIntFunction<T> extends Lambda {
      * @return A {@code ObjIntToIntFunction} that represents this operator partially applied the some arguments.
      */
     @Nonnull
-    default ObjIntToIntFunction<T> papplyAsInt(int value1) {
+    default ObjIntToIntFunction<T> applyAsIntPartially(int value1) {
         return (t, value2) -> applyAsInt(t, value1, value2);
     }
 
@@ -231,7 +231,7 @@ public interface ObjBiIntToIntFunction<T> extends Lambda {
      * @return A {@code ToIntFunction2} that represents this operator partially applied the some arguments.
      */
     @Nonnull
-    default ToIntFunction2<T> papplyAsInt(int value1, int value2) {
+    default ToIntFunction2<T> applyAsIntPartially(int value1, int value2) {
         return t -> applyAsInt(t, value1, value2);
     }
 

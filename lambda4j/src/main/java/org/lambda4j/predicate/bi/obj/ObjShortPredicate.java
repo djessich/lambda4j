@@ -223,7 +223,7 @@ public interface ObjShortPredicate<T> extends Lambda {
      * @return A {@code ShortPredicate} that represents this predicate partially applied the some arguments.
      */
     @Nonnull
-    default ShortPredicate ptest(T t) {
+    default ShortPredicate testPartially(T t) {
         return value -> test(t, value);
     }
 
@@ -234,7 +234,7 @@ public interface ObjShortPredicate<T> extends Lambda {
      * @return A {@code Predicate2} that represents this predicate partially applied the some arguments.
      */
     @Nonnull
-    default Predicate2<T> ptest(short value) {
+    default Predicate2<T> testPartially(short value) {
         return t -> test(t, value);
     }
 

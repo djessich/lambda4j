@@ -175,7 +175,7 @@ public interface ObjCharToByteFunction<T> extends Lambda {
      * @return A {@code CharToByteFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default CharToByteFunction papplyAsByte(T t) {
+    default CharToByteFunction applyAsBytePartially(T t) {
         return value -> applyAsByte(t, value);
     }
 
@@ -186,7 +186,7 @@ public interface ObjCharToByteFunction<T> extends Lambda {
      * @return A {@code ToByteFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ToByteFunction<T> papplyAsByte(char value) {
+    default ToByteFunction<T> applyAsBytePartially(char value) {
         return t -> applyAsByte(t, value);
     }
 

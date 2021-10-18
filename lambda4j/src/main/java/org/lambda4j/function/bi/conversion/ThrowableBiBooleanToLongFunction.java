@@ -173,7 +173,7 @@ public interface ThrowableBiBooleanToLongFunction<X extends Throwable> extends L
      * arguments.
      */
     @Nonnull
-    default ThrowableBooleanToLongFunction<X> papplyAsLongThrows(boolean value1) {
+    default ThrowableBooleanToLongFunction<X> applyAsLongThrowsPartially(boolean value1) {
         return value2 -> applyAsLongThrows(value1, value2);
     }
 

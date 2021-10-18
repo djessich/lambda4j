@@ -147,7 +147,7 @@ public interface ObjCharConsumer<T> extends Lambda {
      * @return A {@code CharConsumer} that represents this consumer partially applied the some arguments.
      */
     @Nonnull
-    default CharConsumer paccept(T t) {
+    default CharConsumer acceptPartially(T t) {
         return value -> accept(t, value);
     }
 
@@ -158,7 +158,7 @@ public interface ObjCharConsumer<T> extends Lambda {
      * @return A {@code Consumer2} that represents this consumer partially applied the some arguments.
      */
     @Nonnull
-    default Consumer2<T> paccept(char value) {
+    default Consumer2<T> acceptPartially(char value) {
         return t -> accept(t, value);
     }
 

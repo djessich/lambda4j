@@ -197,7 +197,7 @@ public interface ObjBiBooleanToFloatFunction<T> extends Lambda {
      * @return A {@code BiBooleanToFloatFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default BiBooleanToFloatFunction papplyAsFloat(T t) {
+    default BiBooleanToFloatFunction applyAsFloatPartially(T t) {
         return (value1, value2) -> applyAsFloat(t, value1, value2);
     }
 
@@ -210,7 +210,7 @@ public interface ObjBiBooleanToFloatFunction<T> extends Lambda {
      * @return A {@code BooleanToFloatFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default BooleanToFloatFunction papplyAsFloat(T t, boolean value1) {
+    default BooleanToFloatFunction applyAsFloatPartially(T t, boolean value1) {
         return value2 -> applyAsFloat(t, value1, value2);
     }
 
@@ -222,7 +222,7 @@ public interface ObjBiBooleanToFloatFunction<T> extends Lambda {
      * @return A {@code ObjBooleanToFloatFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ObjBooleanToFloatFunction<T> papplyAsFloat(boolean value1) {
+    default ObjBooleanToFloatFunction<T> applyAsFloatPartially(boolean value1) {
         return (t, value2) -> applyAsFloat(t, value1, value2);
     }
 
@@ -234,7 +234,7 @@ public interface ObjBiBooleanToFloatFunction<T> extends Lambda {
      * @return A {@code ToFloatFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ToFloatFunction<T> papplyAsFloat(boolean value1, boolean value2) {
+    default ToFloatFunction<T> applyAsFloatPartially(boolean value1, boolean value2) {
         return t -> applyAsFloat(t, value1, value2);
     }
 

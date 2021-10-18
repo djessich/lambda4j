@@ -198,7 +198,7 @@ public interface CharBinaryOperator extends Lambda {
      * @return A {@code CharUnaryOperator} that represents this operator partially applied the some arguments.
      */
     @Nonnull
-    default CharUnaryOperator papplyAsChar(char value1) {
+    default CharUnaryOperator applyAsCharPartially(char value1) {
         return value2 -> applyAsChar(value1, value2);
     }
 

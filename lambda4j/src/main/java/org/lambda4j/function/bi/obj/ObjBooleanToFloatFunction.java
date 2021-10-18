@@ -176,7 +176,7 @@ public interface ObjBooleanToFloatFunction<T> extends Lambda {
      * @return A {@code BooleanToFloatFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default BooleanToFloatFunction papplyAsFloat(T t) {
+    default BooleanToFloatFunction applyAsFloatPartially(T t) {
         return value -> applyAsFloat(t, value);
     }
 
@@ -187,7 +187,7 @@ public interface ObjBooleanToFloatFunction<T> extends Lambda {
      * @return A {@code ToFloatFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ToFloatFunction<T> papplyAsFloat(boolean value) {
+    default ToFloatFunction<T> applyAsFloatPartially(boolean value) {
         return t -> applyAsFloat(t, value);
     }
 

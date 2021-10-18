@@ -188,7 +188,7 @@ public interface ObjByteFunction<T, R> extends Lambda {
      * @return A {@code ByteFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ByteFunction<R> papply(T t) {
+    default ByteFunction<R> applyPartially(T t) {
         return value -> apply(t, value);
     }
 
@@ -199,7 +199,7 @@ public interface ObjByteFunction<T, R> extends Lambda {
      * @return A {@code Function2} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default Function2<T, R> papply(byte value) {
+    default Function2<T, R> applyPartially(byte value) {
         return t -> apply(t, value);
     }
 

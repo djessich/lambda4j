@@ -213,7 +213,7 @@ public interface ThrowableObjBiIntToIntFunction<T, X extends Throwable> extends 
      * @return A {@code ThrowableIntBinaryOperator} that represents this operator partially applied the some arguments.
      */
     @Nonnull
-    default ThrowableIntBinaryOperator<X> papplyAsIntThrows(T t) {
+    default ThrowableIntBinaryOperator<X> applyAsIntThrowsPartially(T t) {
         return (value1, value2) -> applyAsIntThrows(t, value1, value2);
     }
 
@@ -226,7 +226,7 @@ public interface ThrowableObjBiIntToIntFunction<T, X extends Throwable> extends 
      * @return A {@code ThrowableIntUnaryOperator} that represents this operator partially applied the some arguments.
      */
     @Nonnull
-    default ThrowableIntUnaryOperator<X> papplyAsIntThrows(T t, int value1) {
+    default ThrowableIntUnaryOperator<X> applyAsIntThrowsPartially(T t, int value1) {
         return value2 -> applyAsIntThrows(t, value1, value2);
     }
 
@@ -239,7 +239,7 @@ public interface ThrowableObjBiIntToIntFunction<T, X extends Throwable> extends 
      * arguments.
      */
     @Nonnull
-    default ThrowableObjIntToIntFunction<T, X> papplyAsIntThrows(int value1) {
+    default ThrowableObjIntToIntFunction<T, X> applyAsIntThrowsPartially(int value1) {
         return (t, value2) -> applyAsIntThrows(t, value1, value2);
     }
 
@@ -252,7 +252,7 @@ public interface ThrowableObjBiIntToIntFunction<T, X extends Throwable> extends 
      * @return A {@code ThrowableToIntFunction} that represents this operator partially applied the some arguments.
      */
     @Nonnull
-    default ThrowableToIntFunction<T, X> papplyAsIntThrows(int value1, int value2) {
+    default ThrowableToIntFunction<T, X> applyAsIntThrowsPartially(int value1, int value2) {
         return t -> applyAsIntThrows(t, value1, value2);
     }
 

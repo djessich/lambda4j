@@ -194,7 +194,7 @@ public interface ThrowableTriByteToDoubleFunction<X extends Throwable> extends L
      * arguments.
      */
     @Nonnull
-    default ThrowableBiByteToDoubleFunction<X> papplyAsDoubleThrows(byte value1) {
+    default ThrowableBiByteToDoubleFunction<X> applyAsDoubleThrowsPartially(byte value1) {
         return (value2, value3) -> applyAsDoubleThrows(value1, value2, value3);
     }
 
@@ -208,7 +208,7 @@ public interface ThrowableTriByteToDoubleFunction<X extends Throwable> extends L
      * arguments.
      */
     @Nonnull
-    default ThrowableByteToDoubleFunction<X> papplyAsDoubleThrows(byte value1, byte value2) {
+    default ThrowableByteToDoubleFunction<X> applyAsDoubleThrowsPartially(byte value1, byte value2) {
         return value3 -> applyAsDoubleThrows(value1, value2, value3);
     }
 

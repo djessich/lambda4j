@@ -183,7 +183,7 @@ public interface ThrowableBiShortFunction<R, X extends Throwable> extends Lambda
      * @return A {@code ThrowableShortFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ThrowableShortFunction<R, X> papplyThrows(short value1) {
+    default ThrowableShortFunction<R, X> applyThrowsPartially(short value1) {
         return value2 -> applyThrows(value1, value2);
     }
 

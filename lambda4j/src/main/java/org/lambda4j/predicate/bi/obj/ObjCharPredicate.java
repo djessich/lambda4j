@@ -223,7 +223,7 @@ public interface ObjCharPredicate<T> extends Lambda {
      * @return A {@code CharPredicate} that represents this predicate partially applied the some arguments.
      */
     @Nonnull
-    default CharPredicate ptest(T t) {
+    default CharPredicate testPartially(T t) {
         return value -> test(t, value);
     }
 
@@ -234,7 +234,7 @@ public interface ObjCharPredicate<T> extends Lambda {
      * @return A {@code Predicate2} that represents this predicate partially applied the some arguments.
      */
     @Nonnull
-    default Predicate2<T> ptest(char value) {
+    default Predicate2<T> testPartially(char value) {
         return t -> test(t, value);
     }
 

@@ -198,7 +198,7 @@ public interface ToIntTriFunction<T, U, V> extends Lambda {
      * @return A {@code ToIntBiFunction2} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ToIntBiFunction2<U, V> papplyAsInt(T t) {
+    default ToIntBiFunction2<U, V> applyAsIntPartially(T t) {
         return (u, v) -> applyAsInt(t, u, v);
     }
 
@@ -210,7 +210,7 @@ public interface ToIntTriFunction<T, U, V> extends Lambda {
      * @return A {@code ToIntFunction2} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ToIntFunction2<V> papplyAsInt(T t, U u) {
+    default ToIntFunction2<V> applyAsIntPartially(T t, U u) {
         return v -> applyAsInt(t, u, v);
     }
 

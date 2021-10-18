@@ -204,7 +204,7 @@ public interface ThrowableTriFloatFunction<R, X extends Throwable> extends Lambd
      * @return A {@code ThrowableBiFloatFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ThrowableBiFloatFunction<R, X> papplyThrows(float value1) {
+    default ThrowableBiFloatFunction<R, X> applyThrowsPartially(float value1) {
         return (value2, value3) -> applyThrows(value1, value2, value3);
     }
 
@@ -217,7 +217,7 @@ public interface ThrowableTriFloatFunction<R, X extends Throwable> extends Lambd
      * @return A {@code ThrowableFloatFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ThrowableFloatFunction<R, X> papplyThrows(float value1, float value2) {
+    default ThrowableFloatFunction<R, X> applyThrowsPartially(float value1, float value2) {
         return value3 -> applyThrows(value1, value2, value3);
     }
 

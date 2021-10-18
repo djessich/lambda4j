@@ -219,7 +219,7 @@ public interface BiObjBooleanToCharFunction<T, U> extends Lambda {
      * @return A {@code ObjBooleanToCharFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ObjBooleanToCharFunction<U> papplyAsChar(T t) {
+    default ObjBooleanToCharFunction<U> applyAsCharPartially(T t) {
         return (u, value) -> applyAsChar(t, u, value);
     }
 
@@ -232,7 +232,7 @@ public interface BiObjBooleanToCharFunction<T, U> extends Lambda {
      * @return A {@code BooleanToCharFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default BooleanToCharFunction papplyAsChar(T t, U u) {
+    default BooleanToCharFunction applyAsCharPartially(T t, U u) {
         return value -> applyAsChar(t, u, value);
     }
 
@@ -243,7 +243,7 @@ public interface BiObjBooleanToCharFunction<T, U> extends Lambda {
      * @return A {@code ToCharBiFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ToCharBiFunction<T, U> papplyAsChar(boolean value) {
+    default ToCharBiFunction<T, U> applyAsCharPartially(boolean value) {
         return (t, u) -> applyAsChar(t, u, value);
     }
 
@@ -255,7 +255,7 @@ public interface BiObjBooleanToCharFunction<T, U> extends Lambda {
      * @return A {@code ToCharFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ToCharFunction<U> papplyAsChar(T t, boolean value) {
+    default ToCharFunction<U> applyAsCharPartially(T t, boolean value) {
         return u -> applyAsChar(t, u, value);
     }
 

@@ -194,7 +194,7 @@ public interface ThrowableObjCharToDoubleFunction<T, X extends Throwable> extend
      * arguments.
      */
     @Nonnull
-    default ThrowableCharToDoubleFunction<X> papplyAsDoubleThrows(T t) {
+    default ThrowableCharToDoubleFunction<X> applyAsDoubleThrowsPartially(T t) {
         return value -> applyAsDoubleThrows(t, value);
     }
 
@@ -206,7 +206,7 @@ public interface ThrowableObjCharToDoubleFunction<T, X extends Throwable> extend
      * @return A {@code ThrowableToDoubleFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ThrowableToDoubleFunction<T, X> papplyAsDoubleThrows(char value) {
+    default ThrowableToDoubleFunction<T, X> applyAsDoubleThrowsPartially(char value) {
         return t -> applyAsDoubleThrows(t, value);
     }
 

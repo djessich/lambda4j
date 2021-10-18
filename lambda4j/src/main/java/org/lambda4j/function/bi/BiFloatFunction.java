@@ -164,7 +164,7 @@ public interface BiFloatFunction<R> extends Lambda {
      * @return A {@code FloatFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default FloatFunction<R> papply(float value1) {
+    default FloatFunction<R> applyPartially(float value1) {
         return value2 -> apply(value1, value2);
     }
 

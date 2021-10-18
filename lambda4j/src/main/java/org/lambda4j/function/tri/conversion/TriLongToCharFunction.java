@@ -174,7 +174,7 @@ public interface TriLongToCharFunction extends Lambda {
      * @return A {@code BiLongToCharFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default BiLongToCharFunction papplyAsChar(long value1) {
+    default BiLongToCharFunction applyAsCharPartially(long value1) {
         return (value2, value3) -> applyAsChar(value1, value2, value3);
     }
 
@@ -186,7 +186,7 @@ public interface TriLongToCharFunction extends Lambda {
      * @return A {@code LongToCharFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default LongToCharFunction papplyAsChar(long value1, long value2) {
+    default LongToCharFunction applyAsCharPartially(long value1, long value2) {
         return value3 -> applyAsChar(value1, value2, value3);
     }
 

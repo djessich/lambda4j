@@ -192,7 +192,7 @@ public interface ThrowableObjShortToIntFunction<T, X extends Throwable> extends 
      * @return A {@code ThrowableShortToIntFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ThrowableShortToIntFunction<X> papplyAsIntThrows(T t) {
+    default ThrowableShortToIntFunction<X> applyAsIntThrowsPartially(T t) {
         return value -> applyAsIntThrows(t, value);
     }
 
@@ -204,7 +204,7 @@ public interface ThrowableObjShortToIntFunction<T, X extends Throwable> extends 
      * @return A {@code ThrowableToIntFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ThrowableToIntFunction<T, X> papplyAsIntThrows(short value) {
+    default ThrowableToIntFunction<T, X> applyAsIntThrowsPartially(short value) {
         return t -> applyAsIntThrows(t, value);
     }
 

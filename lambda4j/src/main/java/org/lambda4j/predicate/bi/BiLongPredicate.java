@@ -196,7 +196,7 @@ public interface BiLongPredicate extends Lambda {
      * @return A {@code LongPredicate2} that represents this predicate partially applied the some arguments.
      */
     @Nonnull
-    default LongPredicate2 ptest(long value1) {
+    default LongPredicate2 testPartially(long value1) {
         return value2 -> test(value1, value2);
     }
 

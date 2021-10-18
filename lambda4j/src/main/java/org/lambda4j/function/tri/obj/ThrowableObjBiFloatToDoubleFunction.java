@@ -216,7 +216,7 @@ public interface ThrowableObjBiFloatToDoubleFunction<T, X extends Throwable> ext
      * arguments.
      */
     @Nonnull
-    default ThrowableBiFloatToDoubleFunction<X> papplyAsDoubleThrows(T t) {
+    default ThrowableBiFloatToDoubleFunction<X> applyAsDoubleThrowsPartially(T t) {
         return (value1, value2) -> applyAsDoubleThrows(t, value1, value2);
     }
 
@@ -230,7 +230,7 @@ public interface ThrowableObjBiFloatToDoubleFunction<T, X extends Throwable> ext
      * arguments.
      */
     @Nonnull
-    default ThrowableFloatToDoubleFunction<X> papplyAsDoubleThrows(T t, float value1) {
+    default ThrowableFloatToDoubleFunction<X> applyAsDoubleThrowsPartially(T t, float value1) {
         return value2 -> applyAsDoubleThrows(t, value1, value2);
     }
 
@@ -243,7 +243,7 @@ public interface ThrowableObjBiFloatToDoubleFunction<T, X extends Throwable> ext
      * arguments.
      */
     @Nonnull
-    default ThrowableObjFloatToDoubleFunction<T, X> papplyAsDoubleThrows(float value1) {
+    default ThrowableObjFloatToDoubleFunction<T, X> applyAsDoubleThrowsPartially(float value1) {
         return (t, value2) -> applyAsDoubleThrows(t, value1, value2);
     }
 
@@ -256,7 +256,7 @@ public interface ThrowableObjBiFloatToDoubleFunction<T, X extends Throwable> ext
      * @return A {@code ThrowableToDoubleFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ThrowableToDoubleFunction<T, X> papplyAsDoubleThrows(float value1, float value2) {
+    default ThrowableToDoubleFunction<T, X> applyAsDoubleThrowsPartially(float value1, float value2) {
         return t -> applyAsDoubleThrows(t, value1, value2);
     }
 

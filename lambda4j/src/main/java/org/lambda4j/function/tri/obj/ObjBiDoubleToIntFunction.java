@@ -199,7 +199,7 @@ public interface ObjBiDoubleToIntFunction<T> extends Lambda {
      * @return A {@code BiDoubleToIntFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default BiDoubleToIntFunction papplyAsInt(T t) {
+    default BiDoubleToIntFunction applyAsIntPartially(T t) {
         return (value1, value2) -> applyAsInt(t, value1, value2);
     }
 
@@ -212,7 +212,7 @@ public interface ObjBiDoubleToIntFunction<T> extends Lambda {
      * @return A {@code DoubleToIntFunction2} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default DoubleToIntFunction2 papplyAsInt(T t, double value1) {
+    default DoubleToIntFunction2 applyAsIntPartially(T t, double value1) {
         return value2 -> applyAsInt(t, value1, value2);
     }
 
@@ -224,7 +224,7 @@ public interface ObjBiDoubleToIntFunction<T> extends Lambda {
      * @return A {@code ObjDoubleToIntFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ObjDoubleToIntFunction<T> papplyAsInt(double value1) {
+    default ObjDoubleToIntFunction<T> applyAsIntPartially(double value1) {
         return (t, value2) -> applyAsInt(t, value1, value2);
     }
 
@@ -236,7 +236,7 @@ public interface ObjBiDoubleToIntFunction<T> extends Lambda {
      * @return A {@code ToIntFunction2} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ToIntFunction2<T> papplyAsInt(double value1, double value2) {
+    default ToIntFunction2<T> applyAsIntPartially(double value1, double value2) {
         return t -> applyAsInt(t, value1, value2);
     }
 

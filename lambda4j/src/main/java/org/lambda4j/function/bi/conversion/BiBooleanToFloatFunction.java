@@ -155,7 +155,7 @@ public interface BiBooleanToFloatFunction extends Lambda {
      * @return A {@code BooleanToFloatFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default BooleanToFloatFunction papplyAsFloat(boolean value1) {
+    default BooleanToFloatFunction applyAsFloatPartially(boolean value1) {
         return value2 -> applyAsFloat(value1, value2);
     }
 

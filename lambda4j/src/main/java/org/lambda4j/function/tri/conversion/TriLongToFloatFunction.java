@@ -174,7 +174,7 @@ public interface TriLongToFloatFunction extends Lambda {
      * @return A {@code BiLongToFloatFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default BiLongToFloatFunction papplyAsFloat(long value1) {
+    default BiLongToFloatFunction applyAsFloatPartially(long value1) {
         return (value2, value3) -> applyAsFloat(value1, value2, value3);
     }
 
@@ -187,7 +187,7 @@ public interface TriLongToFloatFunction extends Lambda {
      * @return A {@code LongToFloatFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default LongToFloatFunction papplyAsFloat(long value1, long value2) {
+    default LongToFloatFunction applyAsFloatPartially(long value1, long value2) {
         return value3 -> applyAsFloat(value1, value2, value3);
     }
 

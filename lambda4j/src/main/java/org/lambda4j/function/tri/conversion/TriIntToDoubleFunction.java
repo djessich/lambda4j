@@ -175,7 +175,7 @@ public interface TriIntToDoubleFunction extends Lambda {
      * @return A {@code BiIntToDoubleFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default BiIntToDoubleFunction papplyAsDouble(int value1) {
+    default BiIntToDoubleFunction applyAsDoublePartially(int value1) {
         return (value2, value3) -> applyAsDouble(value1, value2, value3);
     }
 
@@ -188,7 +188,7 @@ public interface TriIntToDoubleFunction extends Lambda {
      * @return A {@code IntToDoubleFunction2} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default IntToDoubleFunction2 papplyAsDouble(int value1, int value2) {
+    default IntToDoubleFunction2 applyAsDoublePartially(int value1, int value2) {
         return value3 -> applyAsDouble(value1, value2, value3);
     }
 

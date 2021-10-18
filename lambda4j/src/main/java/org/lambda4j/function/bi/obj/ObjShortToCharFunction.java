@@ -176,7 +176,7 @@ public interface ObjShortToCharFunction<T> extends Lambda {
      * @return A {@code ShortToCharFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ShortToCharFunction papplyAsChar(T t) {
+    default ShortToCharFunction applyAsCharPartially(T t) {
         return value -> applyAsChar(t, value);
     }
 
@@ -187,7 +187,7 @@ public interface ObjShortToCharFunction<T> extends Lambda {
      * @return A {@code ToCharFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ToCharFunction<T> papplyAsChar(short value) {
+    default ToCharFunction<T> applyAsCharPartially(short value) {
         return t -> applyAsChar(t, value);
     }
 

@@ -194,7 +194,7 @@ public interface ThrowableTriFloatToByteFunction<X extends Throwable> extends La
      * arguments.
      */
     @Nonnull
-    default ThrowableBiFloatToByteFunction<X> papplyAsByteThrows(float value1) {
+    default ThrowableBiFloatToByteFunction<X> applyAsByteThrowsPartially(float value1) {
         return (value2, value3) -> applyAsByteThrows(value1, value2, value3);
     }
 
@@ -208,7 +208,7 @@ public interface ThrowableTriFloatToByteFunction<X extends Throwable> extends La
      * arguments.
      */
     @Nonnull
-    default ThrowableFloatToByteFunction<X> papplyAsByteThrows(float value1, float value2) {
+    default ThrowableFloatToByteFunction<X> applyAsByteThrowsPartially(float value1, float value2) {
         return value3 -> applyAsByteThrows(value1, value2, value3);
     }
 

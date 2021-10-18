@@ -198,7 +198,7 @@ public interface ObjBiIntToLongFunction<T> extends Lambda {
      * @return A {@code BiIntToLongFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default BiIntToLongFunction papplyAsLong(T t) {
+    default BiIntToLongFunction applyAsLongPartially(T t) {
         return (value1, value2) -> applyAsLong(t, value1, value2);
     }
 
@@ -210,7 +210,7 @@ public interface ObjBiIntToLongFunction<T> extends Lambda {
      * @return A {@code IntToLongFunction2} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default IntToLongFunction2 papplyAsLong(T t, int value1) {
+    default IntToLongFunction2 applyAsLongPartially(T t, int value1) {
         return value2 -> applyAsLong(t, value1, value2);
     }
 
@@ -222,7 +222,7 @@ public interface ObjBiIntToLongFunction<T> extends Lambda {
      * @return A {@code ObjIntToLongFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ObjIntToLongFunction<T> papplyAsLong(int value1) {
+    default ObjIntToLongFunction<T> applyAsLongPartially(int value1) {
         return (t, value2) -> applyAsLong(t, value1, value2);
     }
 
@@ -234,7 +234,7 @@ public interface ObjBiIntToLongFunction<T> extends Lambda {
      * @return A {@code ToLongFunction2} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ToLongFunction2<T> papplyAsLong(int value1, int value2) {
+    default ToLongFunction2<T> applyAsLongPartially(int value1, int value2) {
         return t -> applyAsLong(t, value1, value2);
     }
 

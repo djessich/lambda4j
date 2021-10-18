@@ -231,7 +231,7 @@ public interface ThrowableObjBiFloatFunction<T, R, X extends Throwable> extends 
      * @return A {@code ThrowableBiFloatFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ThrowableBiFloatFunction<R, X> papplyThrows(T t) {
+    default ThrowableBiFloatFunction<R, X> applyThrowsPartially(T t) {
         return (value1, value2) -> applyThrows(t, value1, value2);
     }
 
@@ -244,7 +244,7 @@ public interface ThrowableObjBiFloatFunction<T, R, X extends Throwable> extends 
      * @return A {@code ThrowableFloatFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ThrowableFloatFunction<R, X> papplyThrows(T t, float value1) {
+    default ThrowableFloatFunction<R, X> applyThrowsPartially(T t, float value1) {
         return value2 -> applyThrows(t, value1, value2);
     }
 
@@ -256,7 +256,7 @@ public interface ThrowableObjBiFloatFunction<T, R, X extends Throwable> extends 
      * @return A {@code ThrowableObjFloatFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ThrowableObjFloatFunction<T, R, X> papplyThrows(float value1) {
+    default ThrowableObjFloatFunction<T, R, X> applyThrowsPartially(float value1) {
         return (t, value2) -> applyThrows(t, value1, value2);
     }
 
@@ -268,7 +268,7 @@ public interface ThrowableObjBiFloatFunction<T, R, X extends Throwable> extends 
      * @return A {@code ThrowableFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ThrowableFunction<T, R, X> papplyThrows(float value1, float value2) {
+    default ThrowableFunction<T, R, X> applyThrowsPartially(float value1, float value2) {
         return t -> applyThrows(t, value1, value2);
     }
 

@@ -192,7 +192,7 @@ public interface ThrowableObjCharToByteFunction<T, X extends Throwable> extends 
      * @return A {@code ThrowableCharToByteFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ThrowableCharToByteFunction<X> papplyAsByteThrows(T t) {
+    default ThrowableCharToByteFunction<X> applyAsByteThrowsPartially(T t) {
         return value -> applyAsByteThrows(t, value);
     }
 
@@ -204,7 +204,7 @@ public interface ThrowableObjCharToByteFunction<T, X extends Throwable> extends 
      * @return A {@code ThrowableToByteFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ThrowableToByteFunction<T, X> papplyAsByteThrows(char value) {
+    default ThrowableToByteFunction<T, X> applyAsByteThrowsPartially(char value) {
         return t -> applyAsByteThrows(t, value);
     }
 

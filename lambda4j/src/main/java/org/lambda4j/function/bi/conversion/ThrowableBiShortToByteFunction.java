@@ -174,7 +174,7 @@ public interface ThrowableBiShortToByteFunction<X extends Throwable> extends Lam
      * arguments.
      */
     @Nonnull
-    default ThrowableShortToByteFunction<X> papplyAsByteThrows(short value1) {
+    default ThrowableShortToByteFunction<X> applyAsByteThrowsPartially(short value1) {
         return value2 -> applyAsByteThrows(value1, value2);
     }
 

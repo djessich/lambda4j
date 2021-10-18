@@ -238,7 +238,7 @@ public interface ThrowableIntBinaryOperator<X extends Throwable> extends Lambda,
      * @return A {@code ThrowableIntUnaryOperator} that represents this operator partially applied the some arguments.
      */
     @Nonnull
-    default ThrowableIntUnaryOperator<X> papplyAsIntThrows(int value1) {
+    default ThrowableIntUnaryOperator<X> applyAsIntThrowsPartially(int value1) {
         return value2 -> applyAsIntThrows(value1, value2);
     }
 

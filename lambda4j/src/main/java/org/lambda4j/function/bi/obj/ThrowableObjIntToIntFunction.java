@@ -190,7 +190,7 @@ public interface ThrowableObjIntToIntFunction<T, X extends Throwable> extends La
      * @return A {@code ThrowableIntUnaryOperator} that represents this operator partially applied the some arguments.
      */
     @Nonnull
-    default ThrowableIntUnaryOperator<X> papplyAsIntThrows(T t) {
+    default ThrowableIntUnaryOperator<X> applyAsIntThrowsPartially(T t) {
         return value -> applyAsIntThrows(t, value);
     }
 
@@ -202,7 +202,7 @@ public interface ThrowableObjIntToIntFunction<T, X extends Throwable> extends La
      * @return A {@code ThrowableToIntFunction} that represents this operator partially applied the some arguments.
      */
     @Nonnull
-    default ThrowableToIntFunction<T, X> papplyAsIntThrows(int value) {
+    default ThrowableToIntFunction<T, X> applyAsIntThrowsPartially(int value) {
         return t -> applyAsIntThrows(t, value);
     }
 

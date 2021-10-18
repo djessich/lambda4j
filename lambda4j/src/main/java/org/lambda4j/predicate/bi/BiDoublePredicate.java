@@ -197,7 +197,7 @@ public interface BiDoublePredicate extends Lambda {
      * @return A {@code DoublePredicate2} that represents this predicate partially applied the some arguments.
      */
     @Nonnull
-    default DoublePredicate2 ptest(double value1) {
+    default DoublePredicate2 testPartially(double value1) {
         return value2 -> test(value1, value2);
     }
 

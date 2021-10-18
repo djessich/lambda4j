@@ -215,7 +215,7 @@ public interface TriFloatPredicate extends Lambda {
      * @return A {@code BiFloatPredicate} that represents this predicate partially applied the some arguments.
      */
     @Nonnull
-    default BiFloatPredicate ptest(float value1) {
+    default BiFloatPredicate testPartially(float value1) {
         return (value2, value3) -> test(value1, value2, value3);
     }
 
@@ -227,7 +227,7 @@ public interface TriFloatPredicate extends Lambda {
      * @return A {@code FloatPredicate} that represents this predicate partially applied the some arguments.
      */
     @Nonnull
-    default FloatPredicate ptest(float value1, float value2) {
+    default FloatPredicate testPartially(float value1, float value2) {
         return value3 -> test(value1, value2, value3);
     }
 

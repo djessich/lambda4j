@@ -224,7 +224,7 @@ public interface ObjLongPredicate<T> extends Lambda {
      * @return A {@code LongPredicate2} that represents this predicate partially applied the some arguments.
      */
     @Nonnull
-    default LongPredicate2 ptest(T t) {
+    default LongPredicate2 testPartially(T t) {
         return value -> test(t, value);
     }
 
@@ -235,7 +235,7 @@ public interface ObjLongPredicate<T> extends Lambda {
      * @return A {@code Predicate2} that represents this predicate partially applied the some arguments.
      */
     @Nonnull
-    default Predicate2<T> ptest(long value) {
+    default Predicate2<T> testPartially(long value) {
         return t -> test(t, value);
     }
 

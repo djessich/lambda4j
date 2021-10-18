@@ -158,7 +158,7 @@ public interface ThrowableTriCharConsumer<X extends Throwable> extends Lambda {
      * @return A {@code ThrowableBiCharConsumer} that represents this consumer partially applied the some arguments.
      */
     @Nonnull
-    default ThrowableBiCharConsumer<X> pacceptThrows(char value1) {
+    default ThrowableBiCharConsumer<X> acceptThrowsPartially(char value1) {
         return (value2, value3) -> acceptThrows(value1, value2, value3);
     }
 
@@ -171,7 +171,7 @@ public interface ThrowableTriCharConsumer<X extends Throwable> extends Lambda {
      * @return A {@code ThrowableCharConsumer} that represents this consumer partially applied the some arguments.
      */
     @Nonnull
-    default ThrowableCharConsumer<X> pacceptThrows(char value1, char value2) {
+    default ThrowableCharConsumer<X> acceptThrowsPartially(char value1, char value2) {
         return value3 -> acceptThrows(value1, value2, value3);
     }
 

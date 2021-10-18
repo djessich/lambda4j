@@ -194,7 +194,7 @@ public interface ThrowableTriCharToLongFunction<X extends Throwable> extends Lam
      * arguments.
      */
     @Nonnull
-    default ThrowableBiCharToLongFunction<X> papplyAsLongThrows(char value1) {
+    default ThrowableBiCharToLongFunction<X> applyAsLongThrowsPartially(char value1) {
         return (value2, value3) -> applyAsLongThrows(value1, value2, value3);
     }
 
@@ -207,7 +207,7 @@ public interface ThrowableTriCharToLongFunction<X extends Throwable> extends Lam
      * @return A {@code ThrowableCharToLongFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ThrowableCharToLongFunction<X> papplyAsLongThrows(char value1, char value2) {
+    default ThrowableCharToLongFunction<X> applyAsLongThrowsPartially(char value1, char value2) {
         return value3 -> applyAsLongThrows(value1, value2, value3);
     }
 

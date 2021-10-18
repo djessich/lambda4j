@@ -173,7 +173,7 @@ public interface ObjCharToCharFunction<T> extends Lambda {
      * @return A {@code CharUnaryOperator} that represents this operator partially applied the some arguments.
      */
     @Nonnull
-    default CharUnaryOperator papplyAsChar(T t) {
+    default CharUnaryOperator applyAsCharPartially(T t) {
         return value -> applyAsChar(t, value);
     }
 
@@ -184,7 +184,7 @@ public interface ObjCharToCharFunction<T> extends Lambda {
      * @return A {@code ToCharFunction} that represents this operator partially applied the some arguments.
      */
     @Nonnull
-    default ToCharFunction<T> papplyAsChar(char value) {
+    default ToCharFunction<T> applyAsCharPartially(char value) {
         return t -> applyAsChar(t, value);
     }
 

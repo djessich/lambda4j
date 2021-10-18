@@ -148,7 +148,7 @@ public interface ObjShortConsumer<T> extends Lambda {
      * @return A {@code ShortConsumer} that represents this consumer partially applied the some arguments.
      */
     @Nonnull
-    default ShortConsumer paccept(T t) {
+    default ShortConsumer acceptPartially(T t) {
         return value -> accept(t, value);
     }
 
@@ -159,7 +159,7 @@ public interface ObjShortConsumer<T> extends Lambda {
      * @return A {@code Consumer2} that represents this consumer partially applied the some arguments.
      */
     @Nonnull
-    default Consumer2<T> paccept(short value) {
+    default Consumer2<T> acceptPartially(short value) {
         return t -> accept(t, value);
     }
 

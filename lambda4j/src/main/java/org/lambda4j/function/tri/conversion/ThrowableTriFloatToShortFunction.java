@@ -194,7 +194,7 @@ public interface ThrowableTriFloatToShortFunction<X extends Throwable> extends L
      * arguments.
      */
     @Nonnull
-    default ThrowableBiFloatToShortFunction<X> papplyAsShortThrows(float value1) {
+    default ThrowableBiFloatToShortFunction<X> applyAsShortThrowsPartially(float value1) {
         return (value2, value3) -> applyAsShortThrows(value1, value2, value3);
     }
 
@@ -208,7 +208,7 @@ public interface ThrowableTriFloatToShortFunction<X extends Throwable> extends L
      * arguments.
      */
     @Nonnull
-    default ThrowableFloatToShortFunction<X> papplyAsShortThrows(float value1, float value2) {
+    default ThrowableFloatToShortFunction<X> applyAsShortThrowsPartially(float value1, float value2) {
         return value3 -> applyAsShortThrows(value1, value2, value3);
     }
 

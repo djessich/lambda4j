@@ -196,7 +196,7 @@ public interface BiFloatPredicate extends Lambda {
      * @return A {@code FloatPredicate} that represents this predicate partially applied the some arguments.
      */
     @Nonnull
-    default FloatPredicate ptest(float value1) {
+    default FloatPredicate testPartially(float value1) {
         return value2 -> test(value1, value2);
     }
 

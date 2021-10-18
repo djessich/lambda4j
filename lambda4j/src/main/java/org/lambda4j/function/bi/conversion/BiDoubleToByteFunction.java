@@ -156,7 +156,7 @@ public interface BiDoubleToByteFunction extends Lambda {
      * @return A {@code DoubleToByteFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default DoubleToByteFunction papplyAsByte(double value1) {
+    default DoubleToByteFunction applyAsBytePartially(double value1) {
         return value2 -> applyAsByte(value1, value2);
     }
 

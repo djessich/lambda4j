@@ -203,7 +203,7 @@ public interface ThrowableShortTernaryOperator<X extends Throwable> extends Lamb
      * arguments.
      */
     @Nonnull
-    default ThrowableShortBinaryOperator<X> papplyAsShortThrows(short value1) {
+    default ThrowableShortBinaryOperator<X> applyAsShortThrowsPartially(short value1) {
         return (value2, value3) -> applyAsShortThrows(value1, value2, value3);
     }
 
@@ -216,7 +216,7 @@ public interface ThrowableShortTernaryOperator<X extends Throwable> extends Lamb
      * @return A {@code ThrowableShortUnaryOperator} that represents this operator partially applied the some arguments.
      */
     @Nonnull
-    default ThrowableShortUnaryOperator<X> papplyAsShortThrows(short value1, short value2) {
+    default ThrowableShortUnaryOperator<X> applyAsShortThrowsPartially(short value1, short value2) {
         return value3 -> applyAsShortThrows(value1, value2, value3);
     }
 

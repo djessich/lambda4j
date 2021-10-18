@@ -174,7 +174,7 @@ public interface TriByteToIntFunction extends Lambda {
      * @return A {@code BiByteToIntFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default BiByteToIntFunction papplyAsInt(byte value1) {
+    default BiByteToIntFunction applyAsIntPartially(byte value1) {
         return (value2, value3) -> applyAsInt(value1, value2, value3);
     }
 
@@ -186,7 +186,7 @@ public interface TriByteToIntFunction extends Lambda {
      * @return A {@code ByteToIntFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ByteToIntFunction papplyAsInt(byte value1, byte value2) {
+    default ByteToIntFunction applyAsIntPartially(byte value1, byte value2) {
         return value3 -> applyAsInt(value1, value2, value3);
     }
 

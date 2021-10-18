@@ -204,7 +204,7 @@ public interface ThrowableDoubleTernaryOperator<X extends Throwable> extends Lam
      * arguments.
      */
     @Nonnull
-    default ThrowableDoubleBinaryOperator<X> papplyAsDoubleThrows(double value1) {
+    default ThrowableDoubleBinaryOperator<X> applyAsDoubleThrowsPartially(double value1) {
         return (value2, value3) -> applyAsDoubleThrows(value1, value2, value3);
     }
 
@@ -218,7 +218,7 @@ public interface ThrowableDoubleTernaryOperator<X extends Throwable> extends Lam
      * arguments.
      */
     @Nonnull
-    default ThrowableDoubleUnaryOperator<X> papplyAsDoubleThrows(double value1, double value2) {
+    default ThrowableDoubleUnaryOperator<X> applyAsDoubleThrowsPartially(double value1, double value2) {
         return value3 -> applyAsDoubleThrows(value1, value2, value3);
     }
 

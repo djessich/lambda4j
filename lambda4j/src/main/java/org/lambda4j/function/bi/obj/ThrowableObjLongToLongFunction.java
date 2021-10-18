@@ -190,7 +190,7 @@ public interface ThrowableObjLongToLongFunction<T, X extends Throwable> extends 
      * @return A {@code ThrowableLongUnaryOperator} that represents this operator partially applied the some arguments.
      */
     @Nonnull
-    default ThrowableLongUnaryOperator<X> papplyAsLongThrows(T t) {
+    default ThrowableLongUnaryOperator<X> applyAsLongThrowsPartially(T t) {
         return value -> applyAsLongThrows(t, value);
     }
 
@@ -202,7 +202,7 @@ public interface ThrowableObjLongToLongFunction<T, X extends Throwable> extends 
      * @return A {@code ThrowableToLongFunction} that represents this operator partially applied the some arguments.
      */
     @Nonnull
-    default ThrowableToLongFunction<T, X> papplyAsLongThrows(long value) {
+    default ThrowableToLongFunction<T, X> applyAsLongThrowsPartially(long value) {
         return t -> applyAsLongThrows(t, value);
     }
 

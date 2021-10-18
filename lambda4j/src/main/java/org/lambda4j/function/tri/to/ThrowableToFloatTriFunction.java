@@ -217,7 +217,7 @@ public interface ThrowableToFloatTriFunction<T, U, V, X extends Throwable> exten
      * @return A {@code ThrowableToFloatBiFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ThrowableToFloatBiFunction<U, V, X> papplyAsFloatThrows(T t) {
+    default ThrowableToFloatBiFunction<U, V, X> applyAsFloatThrowsPartially(T t) {
         return (u, v) -> applyAsFloatThrows(t, u, v);
     }
 
@@ -230,7 +230,7 @@ public interface ThrowableToFloatTriFunction<T, U, V, X extends Throwable> exten
      * @return A {@code ThrowableToFloatFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ThrowableToFloatFunction<V, X> papplyAsFloatThrows(T t, U u) {
+    default ThrowableToFloatFunction<V, X> applyAsFloatThrowsPartially(T t, U u) {
         return v -> applyAsFloatThrows(t, u, v);
     }
 

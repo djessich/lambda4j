@@ -276,7 +276,7 @@ public interface ThrowableTriPredicate<T, U, V, X extends Throwable> extends Lam
      * @return A {@code ThrowableBiPredicate} that represents this predicate partially applied the some arguments.
      */
     @Nonnull
-    default ThrowableBiPredicate<U, V, X> ptestThrows(T t) {
+    default ThrowableBiPredicate<U, V, X> testThrowsPartially(T t) {
         return (u, v) -> testThrows(t, u, v);
     }
 
@@ -289,7 +289,7 @@ public interface ThrowableTriPredicate<T, U, V, X extends Throwable> extends Lam
      * @return A {@code ThrowablePredicate} that represents this predicate partially applied the some arguments.
      */
     @Nonnull
-    default ThrowablePredicate<V, X> ptestThrows(T t, U u) {
+    default ThrowablePredicate<V, X> testThrowsPartially(T t, U u) {
         return v -> testThrows(t, u, v);
     }
 

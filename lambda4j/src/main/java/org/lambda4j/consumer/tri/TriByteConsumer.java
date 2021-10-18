@@ -140,7 +140,7 @@ public interface TriByteConsumer extends Lambda {
      * @return A {@code BiByteConsumer} that represents this consumer partially applied the some arguments.
      */
     @Nonnull
-    default BiByteConsumer paccept(byte value1) {
+    default BiByteConsumer acceptPartially(byte value1) {
         return (value2, value3) -> accept(value1, value2, value3);
     }
 
@@ -152,7 +152,7 @@ public interface TriByteConsumer extends Lambda {
      * @return A {@code ByteConsumer} that represents this consumer partially applied the some arguments.
      */
     @Nonnull
-    default ByteConsumer paccept(byte value1, byte value2) {
+    default ByteConsumer acceptPartially(byte value1, byte value2) {
         return value3 -> accept(value1, value2, value3);
     }
 

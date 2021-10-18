@@ -221,7 +221,7 @@ public interface BiPredicate2<T, U> extends Lambda, BiPredicate<T, U> {
      * @return A {@code Predicate2} that represents this predicate partially applied the some arguments.
      */
     @Nonnull
-    default Predicate2<U> ptest(T t) {
+    default Predicate2<U> testPartially(T t) {
         return u -> test(t, u);
     }
 

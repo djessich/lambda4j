@@ -174,7 +174,7 @@ public interface TriCharToDoubleFunction extends Lambda {
      * @return A {@code BiCharToDoubleFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default BiCharToDoubleFunction papplyAsDouble(char value1) {
+    default BiCharToDoubleFunction applyAsDoublePartially(char value1) {
         return (value2, value3) -> applyAsDouble(value1, value2, value3);
     }
 
@@ -187,7 +187,7 @@ public interface TriCharToDoubleFunction extends Lambda {
      * @return A {@code CharToDoubleFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default CharToDoubleFunction papplyAsDouble(char value1, char value2) {
+    default CharToDoubleFunction applyAsDoublePartially(char value1, char value2) {
         return value3 -> applyAsDouble(value1, value2, value3);
     }
 

@@ -175,7 +175,7 @@ public interface ObjLongToByteFunction<T> extends Lambda {
      * @return A {@code LongToByteFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default LongToByteFunction papplyAsByte(T t) {
+    default LongToByteFunction applyAsBytePartially(T t) {
         return value -> applyAsByte(t, value);
     }
 
@@ -186,7 +186,7 @@ public interface ObjLongToByteFunction<T> extends Lambda {
      * @return A {@code ToByteFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ToByteFunction<T> papplyAsByte(long value) {
+    default ToByteFunction<T> applyAsBytePartially(long value) {
         return t -> applyAsByte(t, value);
     }
 

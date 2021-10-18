@@ -185,7 +185,7 @@ public interface TriBooleanFunction<R> extends Lambda {
      * @return A {@code BiBooleanFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default BiBooleanFunction<R> papply(boolean value1) {
+    default BiBooleanFunction<R> applyPartially(boolean value1) {
         return (value2, value3) -> apply(value1, value2, value3);
     }
 
@@ -197,7 +197,7 @@ public interface TriBooleanFunction<R> extends Lambda {
      * @return A {@code BooleanFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default BooleanFunction<R> papply(boolean value1, boolean value2) {
+    default BooleanFunction<R> applyPartially(boolean value1, boolean value2) {
         return value3 -> apply(value1, value2, value3);
     }
 

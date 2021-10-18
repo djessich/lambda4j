@@ -204,7 +204,7 @@ public interface ThrowableTriCharFunction<R, X extends Throwable> extends Lambda
      * @return A {@code ThrowableBiCharFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ThrowableBiCharFunction<R, X> papplyThrows(char value1) {
+    default ThrowableBiCharFunction<R, X> applyThrowsPartially(char value1) {
         return (value2, value3) -> applyThrows(value1, value2, value3);
     }
 
@@ -217,7 +217,7 @@ public interface ThrowableTriCharFunction<R, X extends Throwable> extends Lambda
      * @return A {@code ThrowableCharFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ThrowableCharFunction<R, X> papplyThrows(char value1, char value2) {
+    default ThrowableCharFunction<R, X> applyThrowsPartially(char value1, char value2) {
         return value3 -> applyThrows(value1, value2, value3);
     }
 

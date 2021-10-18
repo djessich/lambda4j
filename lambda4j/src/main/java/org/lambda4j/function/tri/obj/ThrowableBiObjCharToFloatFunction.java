@@ -239,7 +239,7 @@ public interface ThrowableBiObjCharToFloatFunction<T, U, X extends Throwable> ex
      * arguments.
      */
     @Nonnull
-    default ThrowableObjCharToFloatFunction<U, X> papplyAsFloatThrows(T t) {
+    default ThrowableObjCharToFloatFunction<U, X> applyAsFloatThrowsPartially(T t) {
         return (u, value) -> applyAsFloatThrows(t, u, value);
     }
 
@@ -253,7 +253,7 @@ public interface ThrowableBiObjCharToFloatFunction<T, U, X extends Throwable> ex
      * arguments.
      */
     @Nonnull
-    default ThrowableCharToFloatFunction<X> papplyAsFloatThrows(T t, U u) {
+    default ThrowableCharToFloatFunction<X> applyAsFloatThrowsPartially(T t, U u) {
         return value -> applyAsFloatThrows(t, u, value);
     }
 
@@ -265,7 +265,7 @@ public interface ThrowableBiObjCharToFloatFunction<T, U, X extends Throwable> ex
      * @return A {@code ThrowableToFloatBiFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ThrowableToFloatBiFunction<T, U, X> papplyAsFloatThrows(char value) {
+    default ThrowableToFloatBiFunction<T, U, X> applyAsFloatThrowsPartially(char value) {
         return (t, u) -> applyAsFloatThrows(t, u, value);
     }
 
@@ -278,7 +278,7 @@ public interface ThrowableBiObjCharToFloatFunction<T, U, X extends Throwable> ex
      * @return A {@code ThrowableToFloatFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ThrowableToFloatFunction<U, X> papplyAsFloatThrows(T t, char value) {
+    default ThrowableToFloatFunction<U, X> applyAsFloatThrowsPartially(T t, char value) {
         return u -> applyAsFloatThrows(t, u, value);
     }
 

@@ -216,7 +216,7 @@ public interface ThrowableObjBiShortToDoubleFunction<T, X extends Throwable> ext
      * arguments.
      */
     @Nonnull
-    default ThrowableBiShortToDoubleFunction<X> papplyAsDoubleThrows(T t) {
+    default ThrowableBiShortToDoubleFunction<X> applyAsDoubleThrowsPartially(T t) {
         return (value1, value2) -> applyAsDoubleThrows(t, value1, value2);
     }
 
@@ -230,7 +230,7 @@ public interface ThrowableObjBiShortToDoubleFunction<T, X extends Throwable> ext
      * arguments.
      */
     @Nonnull
-    default ThrowableShortToDoubleFunction<X> papplyAsDoubleThrows(T t, short value1) {
+    default ThrowableShortToDoubleFunction<X> applyAsDoubleThrowsPartially(T t, short value1) {
         return value2 -> applyAsDoubleThrows(t, value1, value2);
     }
 
@@ -243,7 +243,7 @@ public interface ThrowableObjBiShortToDoubleFunction<T, X extends Throwable> ext
      * arguments.
      */
     @Nonnull
-    default ThrowableObjShortToDoubleFunction<T, X> papplyAsDoubleThrows(short value1) {
+    default ThrowableObjShortToDoubleFunction<T, X> applyAsDoubleThrowsPartially(short value1) {
         return (t, value2) -> applyAsDoubleThrows(t, value1, value2);
     }
 
@@ -256,7 +256,7 @@ public interface ThrowableObjBiShortToDoubleFunction<T, X extends Throwable> ext
      * @return A {@code ThrowableToDoubleFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ThrowableToDoubleFunction<T, X> papplyAsDoubleThrows(short value1, short value2) {
+    default ThrowableToDoubleFunction<T, X> applyAsDoubleThrowsPartially(short value1, short value2) {
         return t -> applyAsDoubleThrows(t, value1, value2);
     }
 

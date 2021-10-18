@@ -176,7 +176,7 @@ public interface ObjDoubleToShortFunction<T> extends Lambda {
      * @return A {@code DoubleToShortFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default DoubleToShortFunction papplyAsShort(T t) {
+    default DoubleToShortFunction applyAsShortPartially(T t) {
         return value -> applyAsShort(t, value);
     }
 
@@ -187,7 +187,7 @@ public interface ObjDoubleToShortFunction<T> extends Lambda {
      * @return A {@code ToShortFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ToShortFunction<T> papplyAsShort(double value) {
+    default ToShortFunction<T> applyAsShortPartially(double value) {
         return t -> applyAsShort(t, value);
     }
 

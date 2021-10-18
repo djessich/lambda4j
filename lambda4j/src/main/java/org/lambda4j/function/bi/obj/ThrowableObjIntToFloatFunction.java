@@ -192,7 +192,7 @@ public interface ThrowableObjIntToFloatFunction<T, X extends Throwable> extends 
      * @return A {@code ThrowableIntToFloatFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ThrowableIntToFloatFunction<X> papplyAsFloatThrows(T t) {
+    default ThrowableIntToFloatFunction<X> applyAsFloatThrowsPartially(T t) {
         return value -> applyAsFloatThrows(t, value);
     }
 
@@ -204,7 +204,7 @@ public interface ThrowableObjIntToFloatFunction<T, X extends Throwable> extends 
      * @return A {@code ThrowableToFloatFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ThrowableToFloatFunction<T, X> papplyAsFloatThrows(int value) {
+    default ThrowableToFloatFunction<T, X> applyAsFloatThrowsPartially(int value) {
         return t -> applyAsFloatThrows(t, value);
     }
 

@@ -189,7 +189,7 @@ public interface BiObjCharConsumer<T, U> extends Lambda {
      * @return A {@code ObjCharConsumer} that represents this consumer partially applied the some arguments.
      */
     @Nonnull
-    default ObjCharConsumer<U> paccept(T t) {
+    default ObjCharConsumer<U> acceptPartially(T t) {
         return (u, value) -> accept(t, u, value);
     }
 
@@ -201,7 +201,7 @@ public interface BiObjCharConsumer<T, U> extends Lambda {
      * @return A {@code CharConsumer} that represents this consumer partially applied the some arguments.
      */
     @Nonnull
-    default CharConsumer paccept(T t, U u) {
+    default CharConsumer acceptPartially(T t, U u) {
         return value -> accept(t, u, value);
     }
 
@@ -212,7 +212,7 @@ public interface BiObjCharConsumer<T, U> extends Lambda {
      * @return A {@code BiConsumer2} that represents this consumer partially applied the some arguments.
      */
     @Nonnull
-    default BiConsumer2<T, U> paccept(char value) {
+    default BiConsumer2<T, U> acceptPartially(char value) {
         return (t, u) -> accept(t, u, value);
     }
 
@@ -224,7 +224,7 @@ public interface BiObjCharConsumer<T, U> extends Lambda {
      * @return A {@code Consumer2} that represents this consumer partially applied the some arguments.
      */
     @Nonnull
-    default Consumer2<U> paccept(T t, char value) {
+    default Consumer2<U> acceptPartially(T t, char value) {
         return u -> accept(t, u, value);
     }
 

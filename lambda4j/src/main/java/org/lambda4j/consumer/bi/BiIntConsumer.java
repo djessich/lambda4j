@@ -123,7 +123,7 @@ public interface BiIntConsumer extends Lambda {
      * @return A {@code IntConsumer2} that represents this consumer partially applied the some arguments.
      */
     @Nonnull
-    default IntConsumer2 paccept(int value1) {
+    default IntConsumer2 acceptPartially(int value1) {
         return value2 -> accept(value1, value2);
     }
 

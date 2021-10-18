@@ -197,7 +197,7 @@ public interface ToFloatTriFunction<T, U, V> extends Lambda {
      * @return A {@code ToFloatBiFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ToFloatBiFunction<U, V> papplyAsFloat(T t) {
+    default ToFloatBiFunction<U, V> applyAsFloatPartially(T t) {
         return (u, v) -> applyAsFloat(t, u, v);
     }
 
@@ -209,7 +209,7 @@ public interface ToFloatTriFunction<T, U, V> extends Lambda {
      * @return A {@code ToFloatFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ToFloatFunction<V> papplyAsFloat(T t, U u) {
+    default ToFloatFunction<V> applyAsFloatPartially(T t, U u) {
         return v -> applyAsFloat(t, u, v);
     }
 

@@ -212,7 +212,7 @@ public interface ObjBiCharFunction<T, R> extends Lambda {
      * @return A {@code BiCharFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default BiCharFunction<R> papply(T t) {
+    default BiCharFunction<R> applyPartially(T t) {
         return (value1, value2) -> apply(t, value1, value2);
     }
 
@@ -224,7 +224,7 @@ public interface ObjBiCharFunction<T, R> extends Lambda {
      * @return A {@code CharFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default CharFunction<R> papply(T t, char value1) {
+    default CharFunction<R> applyPartially(T t, char value1) {
         return value2 -> apply(t, value1, value2);
     }
 
@@ -235,7 +235,7 @@ public interface ObjBiCharFunction<T, R> extends Lambda {
      * @return A {@code ObjCharFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ObjCharFunction<T, R> papply(char value1) {
+    default ObjCharFunction<T, R> applyPartially(char value1) {
         return (t, value2) -> apply(t, value1, value2);
     }
 
@@ -247,7 +247,7 @@ public interface ObjBiCharFunction<T, R> extends Lambda {
      * @return A {@code Function2} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default Function2<T, R> papply(char value1, char value2) {
+    default Function2<T, R> applyPartially(char value1, char value2) {
         return t -> apply(t, value1, value2);
     }
 

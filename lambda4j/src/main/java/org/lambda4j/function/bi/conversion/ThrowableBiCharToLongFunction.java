@@ -173,7 +173,7 @@ public interface ThrowableBiCharToLongFunction<X extends Throwable> extends Lamb
      * @return A {@code ThrowableCharToLongFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ThrowableCharToLongFunction<X> papplyAsLongThrows(char value1) {
+    default ThrowableCharToLongFunction<X> applyAsLongThrowsPartially(char value1) {
         return value2 -> applyAsLongThrows(value1, value2);
     }
 

@@ -169,7 +169,7 @@ public interface ObjBiIntConsumer<T> extends Lambda {
      * @return A {@code BiIntConsumer} that represents this consumer partially applied the some arguments.
      */
     @Nonnull
-    default BiIntConsumer paccept(T t) {
+    default BiIntConsumer acceptPartially(T t) {
         return (value1, value2) -> accept(t, value1, value2);
     }
 
@@ -181,7 +181,7 @@ public interface ObjBiIntConsumer<T> extends Lambda {
      * @return A {@code IntConsumer2} that represents this consumer partially applied the some arguments.
      */
     @Nonnull
-    default IntConsumer2 paccept(T t, int value1) {
+    default IntConsumer2 acceptPartially(T t, int value1) {
         return value2 -> accept(t, value1, value2);
     }
 
@@ -192,7 +192,7 @@ public interface ObjBiIntConsumer<T> extends Lambda {
      * @return A {@code ObjIntConsumer2} that represents this consumer partially applied the some arguments.
      */
     @Nonnull
-    default ObjIntConsumer2<T> paccept(int value1) {
+    default ObjIntConsumer2<T> acceptPartially(int value1) {
         return (t, value2) -> accept(t, value1, value2);
     }
 
@@ -204,7 +204,7 @@ public interface ObjBiIntConsumer<T> extends Lambda {
      * @return A {@code Consumer2} that represents this consumer partially applied the some arguments.
      */
     @Nonnull
-    default Consumer2<T> paccept(int value1, int value2) {
+    default Consumer2<T> acceptPartially(int value1, int value2) {
         return t -> accept(t, value1, value2);
     }
 

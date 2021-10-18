@@ -203,7 +203,7 @@ public interface ThrowableFloatTernaryOperator<X extends Throwable> extends Lamb
      * arguments.
      */
     @Nonnull
-    default ThrowableFloatBinaryOperator<X> papplyAsFloatThrows(float value1) {
+    default ThrowableFloatBinaryOperator<X> applyAsFloatThrowsPartially(float value1) {
         return (value2, value3) -> applyAsFloatThrows(value1, value2, value3);
     }
 
@@ -216,7 +216,7 @@ public interface ThrowableFloatTernaryOperator<X extends Throwable> extends Lamb
      * @return A {@code ThrowableFloatUnaryOperator} that represents this operator partially applied the some arguments.
      */
     @Nonnull
-    default ThrowableFloatUnaryOperator<X> papplyAsFloatThrows(float value1, float value2) {
+    default ThrowableFloatUnaryOperator<X> applyAsFloatThrowsPartially(float value1, float value2) {
         return value3 -> applyAsFloatThrows(value1, value2, value3);
     }
 

@@ -173,7 +173,7 @@ public interface TriBooleanToLongFunction extends Lambda {
      * @return A {@code BiBooleanToLongFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default BiBooleanToLongFunction papplyAsLong(boolean value1) {
+    default BiBooleanToLongFunction applyAsLongPartially(boolean value1) {
         return (value2, value3) -> applyAsLong(value1, value2, value3);
     }
 
@@ -186,7 +186,7 @@ public interface TriBooleanToLongFunction extends Lambda {
      * @return A {@code BooleanToLongFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default BooleanToLongFunction papplyAsLong(boolean value1, boolean value2) {
+    default BooleanToLongFunction applyAsLongPartially(boolean value1, boolean value2) {
         return value3 -> applyAsLong(value1, value2, value3);
     }
 

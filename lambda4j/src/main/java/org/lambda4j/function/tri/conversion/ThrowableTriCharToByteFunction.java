@@ -194,7 +194,7 @@ public interface ThrowableTriCharToByteFunction<X extends Throwable> extends Lam
      * arguments.
      */
     @Nonnull
-    default ThrowableBiCharToByteFunction<X> papplyAsByteThrows(char value1) {
+    default ThrowableBiCharToByteFunction<X> applyAsByteThrowsPartially(char value1) {
         return (value2, value3) -> applyAsByteThrows(value1, value2, value3);
     }
 
@@ -207,7 +207,7 @@ public interface ThrowableTriCharToByteFunction<X extends Throwable> extends Lam
      * @return A {@code ThrowableCharToByteFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ThrowableCharToByteFunction<X> papplyAsByteThrows(char value1, char value2) {
+    default ThrowableCharToByteFunction<X> applyAsByteThrowsPartially(char value1, char value2) {
         return value3 -> applyAsByteThrows(value1, value2, value3);
     }
 

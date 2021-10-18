@@ -194,7 +194,7 @@ public interface ThrowableTriBooleanToDoubleFunction<X extends Throwable> extend
      * arguments.
      */
     @Nonnull
-    default ThrowableBiBooleanToDoubleFunction<X> papplyAsDoubleThrows(boolean value1) {
+    default ThrowableBiBooleanToDoubleFunction<X> applyAsDoubleThrowsPartially(boolean value1) {
         return (value2, value3) -> applyAsDoubleThrows(value1, value2, value3);
     }
 
@@ -208,7 +208,7 @@ public interface ThrowableTriBooleanToDoubleFunction<X extends Throwable> extend
      * arguments.
      */
     @Nonnull
-    default ThrowableBooleanToDoubleFunction<X> papplyAsDoubleThrows(boolean value1, boolean value2) {
+    default ThrowableBooleanToDoubleFunction<X> applyAsDoubleThrowsPartially(boolean value1, boolean value2) {
         return value3 -> applyAsDoubleThrows(value1, value2, value3);
     }
 

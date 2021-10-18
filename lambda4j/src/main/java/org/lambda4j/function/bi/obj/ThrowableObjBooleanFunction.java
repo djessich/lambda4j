@@ -208,7 +208,7 @@ public interface ThrowableObjBooleanFunction<T, R, X extends Throwable> extends 
      * @return A {@code ThrowableBooleanFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ThrowableBooleanFunction<R, X> papplyThrows(T t) {
+    default ThrowableBooleanFunction<R, X> applyThrowsPartially(T t) {
         return value -> applyThrows(t, value);
     }
 
@@ -219,7 +219,7 @@ public interface ThrowableObjBooleanFunction<T, R, X extends Throwable> extends 
      * @return A {@code ThrowableFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ThrowableFunction<T, R, X> papplyThrows(boolean value) {
+    default ThrowableFunction<T, R, X> applyThrowsPartially(boolean value) {
         return t -> applyThrows(t, value);
     }
 

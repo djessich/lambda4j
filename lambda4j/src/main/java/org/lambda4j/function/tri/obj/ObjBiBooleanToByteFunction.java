@@ -197,7 +197,7 @@ public interface ObjBiBooleanToByteFunction<T> extends Lambda {
      * @return A {@code BiBooleanToByteFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default BiBooleanToByteFunction papplyAsByte(T t) {
+    default BiBooleanToByteFunction applyAsBytePartially(T t) {
         return (value1, value2) -> applyAsByte(t, value1, value2);
     }
 
@@ -210,7 +210,7 @@ public interface ObjBiBooleanToByteFunction<T> extends Lambda {
      * @return A {@code BooleanToByteFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default BooleanToByteFunction papplyAsByte(T t, boolean value1) {
+    default BooleanToByteFunction applyAsBytePartially(T t, boolean value1) {
         return value2 -> applyAsByte(t, value1, value2);
     }
 
@@ -222,7 +222,7 @@ public interface ObjBiBooleanToByteFunction<T> extends Lambda {
      * @return A {@code ObjBooleanToByteFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ObjBooleanToByteFunction<T> papplyAsByte(boolean value1) {
+    default ObjBooleanToByteFunction<T> applyAsBytePartially(boolean value1) {
         return (t, value2) -> applyAsByte(t, value1, value2);
     }
 
@@ -234,7 +234,7 @@ public interface ObjBiBooleanToByteFunction<T> extends Lambda {
      * @return A {@code ToByteFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ToByteFunction<T> papplyAsByte(boolean value1, boolean value2) {
+    default ToByteFunction<T> applyAsBytePartially(boolean value1, boolean value2) {
         return t -> applyAsByte(t, value1, value2);
     }
 

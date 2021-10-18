@@ -198,7 +198,7 @@ public interface ByteBinaryOperator extends Lambda {
      * @return A {@code ByteUnaryOperator} that represents this operator partially applied the some arguments.
      */
     @Nonnull
-    default ByteUnaryOperator papplyAsByte(byte value1) {
+    default ByteUnaryOperator applyAsBytePartially(byte value1) {
         return value2 -> applyAsByte(value1, value2);
     }
 

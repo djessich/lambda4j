@@ -172,7 +172,7 @@ public interface ThrowableBiLongToIntFunction<X extends Throwable> extends Lambd
      * @return A {@code ThrowableLongToIntFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ThrowableLongToIntFunction<X> papplyAsIntThrows(long value1) {
+    default ThrowableLongToIntFunction<X> applyAsIntThrowsPartially(long value1) {
         return value2 -> applyAsIntThrows(value1, value2);
     }
 

@@ -272,7 +272,7 @@ public interface BiObjBytePredicate<T, U> extends Lambda {
      * @return A {@code ObjBytePredicate} that represents this predicate partially applied the some arguments.
      */
     @Nonnull
-    default ObjBytePredicate<U> ptest(T t) {
+    default ObjBytePredicate<U> testPartially(T t) {
         return (u, value) -> test(t, u, value);
     }
 
@@ -284,7 +284,7 @@ public interface BiObjBytePredicate<T, U> extends Lambda {
      * @return A {@code BytePredicate} that represents this predicate partially applied the some arguments.
      */
     @Nonnull
-    default BytePredicate ptest(T t, U u) {
+    default BytePredicate testPartially(T t, U u) {
         return value -> test(t, u, value);
     }
 
@@ -295,7 +295,7 @@ public interface BiObjBytePredicate<T, U> extends Lambda {
      * @return A {@code BiPredicate2} that represents this predicate partially applied the some arguments.
      */
     @Nonnull
-    default BiPredicate2<T, U> ptest(byte value) {
+    default BiPredicate2<T, U> testPartially(byte value) {
         return (t, u) -> test(t, u, value);
     }
 
@@ -307,7 +307,7 @@ public interface BiObjBytePredicate<T, U> extends Lambda {
      * @return A {@code Predicate2} that represents this predicate partially applied the some arguments.
      */
     @Nonnull
-    default Predicate2<U> ptest(T t, byte value) {
+    default Predicate2<U> testPartially(T t, byte value) {
         return u -> test(t, u, value);
     }
 

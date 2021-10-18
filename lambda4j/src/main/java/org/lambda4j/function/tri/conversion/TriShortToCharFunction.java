@@ -174,7 +174,7 @@ public interface TriShortToCharFunction extends Lambda {
      * @return A {@code BiShortToCharFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default BiShortToCharFunction papplyAsChar(short value1) {
+    default BiShortToCharFunction applyAsCharPartially(short value1) {
         return (value2, value3) -> applyAsChar(value1, value2, value3);
     }
 
@@ -187,7 +187,7 @@ public interface TriShortToCharFunction extends Lambda {
      * @return A {@code ShortToCharFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ShortToCharFunction papplyAsChar(short value1, short value2) {
+    default ShortToCharFunction applyAsCharPartially(short value1, short value2) {
         return value3 -> applyAsChar(value1, value2, value3);
     }
 

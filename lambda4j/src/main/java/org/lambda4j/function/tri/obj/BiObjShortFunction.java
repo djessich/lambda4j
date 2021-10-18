@@ -235,7 +235,7 @@ public interface BiObjShortFunction<T, U, R> extends Lambda {
      * @return A {@code ObjShortFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ObjShortFunction<U, R> papply(T t) {
+    default ObjShortFunction<U, R> applyPartially(T t) {
         return (u, value) -> apply(t, u, value);
     }
 
@@ -247,7 +247,7 @@ public interface BiObjShortFunction<T, U, R> extends Lambda {
      * @return A {@code ShortFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ShortFunction<R> papply(T t, U u) {
+    default ShortFunction<R> applyPartially(T t, U u) {
         return value -> apply(t, u, value);
     }
 
@@ -258,7 +258,7 @@ public interface BiObjShortFunction<T, U, R> extends Lambda {
      * @return A {@code BiFunction2} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default BiFunction2<T, U, R> papply(short value) {
+    default BiFunction2<T, U, R> applyPartially(short value) {
         return (t, u) -> apply(t, u, value);
     }
 
@@ -270,7 +270,7 @@ public interface BiObjShortFunction<T, U, R> extends Lambda {
      * @return A {@code Function2} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default Function2<U, R> papply(T t, short value) {
+    default Function2<U, R> applyPartially(T t, short value) {
         return u -> apply(t, u, value);
     }
 

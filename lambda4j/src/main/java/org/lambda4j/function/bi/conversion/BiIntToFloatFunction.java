@@ -155,7 +155,7 @@ public interface BiIntToFloatFunction extends Lambda {
      * @return A {@code IntToFloatFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default IntToFloatFunction papplyAsFloat(int value1) {
+    default IntToFloatFunction applyAsFloatPartially(int value1) {
         return value2 -> applyAsFloat(value1, value2);
     }
 

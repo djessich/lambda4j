@@ -184,7 +184,7 @@ public interface BooleanTernaryOperator extends Lambda {
      * @return A {@code BooleanBinaryOperator} that represents this operator partially applied the some arguments.
      */
     @Nonnull
-    default BooleanBinaryOperator papplyAsBoolean(boolean value1) {
+    default BooleanBinaryOperator applyAsBooleanPartially(boolean value1) {
         return (value2, value3) -> applyAsBoolean(value1, value2, value3);
     }
 
@@ -197,7 +197,7 @@ public interface BooleanTernaryOperator extends Lambda {
      * @return A {@code BooleanUnaryOperator} that represents this operator partially applied the some arguments.
      */
     @Nonnull
-    default BooleanUnaryOperator papplyAsBoolean(boolean value1, boolean value2) {
+    default BooleanUnaryOperator applyAsBooleanPartially(boolean value1, boolean value2) {
         return value3 -> applyAsBoolean(value1, value2, value3);
     }
 

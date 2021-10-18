@@ -168,7 +168,7 @@ public interface ObjBiByteConsumer<T> extends Lambda {
      * @return A {@code BiByteConsumer} that represents this consumer partially applied the some arguments.
      */
     @Nonnull
-    default BiByteConsumer paccept(T t) {
+    default BiByteConsumer acceptPartially(T t) {
         return (value1, value2) -> accept(t, value1, value2);
     }
 
@@ -180,7 +180,7 @@ public interface ObjBiByteConsumer<T> extends Lambda {
      * @return A {@code ByteConsumer} that represents this consumer partially applied the some arguments.
      */
     @Nonnull
-    default ByteConsumer paccept(T t, byte value1) {
+    default ByteConsumer acceptPartially(T t, byte value1) {
         return value2 -> accept(t, value1, value2);
     }
 
@@ -191,7 +191,7 @@ public interface ObjBiByteConsumer<T> extends Lambda {
      * @return A {@code ObjByteConsumer} that represents this consumer partially applied the some arguments.
      */
     @Nonnull
-    default ObjByteConsumer<T> paccept(byte value1) {
+    default ObjByteConsumer<T> acceptPartially(byte value1) {
         return (t, value2) -> accept(t, value1, value2);
     }
 
@@ -203,7 +203,7 @@ public interface ObjBiByteConsumer<T> extends Lambda {
      * @return A {@code Consumer2} that represents this consumer partially applied the some arguments.
      */
     @Nonnull
-    default Consumer2<T> paccept(byte value1, byte value2) {
+    default Consumer2<T> acceptPartially(byte value1, byte value2) {
         return t -> accept(t, value1, value2);
     }
 

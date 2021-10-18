@@ -163,7 +163,7 @@ public interface ThrowableObjByteConsumer<T, X extends Throwable> extends Lambda
      * @return A {@code ThrowableByteConsumer} that represents this consumer partially applied the some arguments.
      */
     @Nonnull
-    default ThrowableByteConsumer<X> pacceptThrows(T t) {
+    default ThrowableByteConsumer<X> acceptThrowsPartially(T t) {
         return value -> acceptThrows(t, value);
     }
 
@@ -174,7 +174,7 @@ public interface ThrowableObjByteConsumer<T, X extends Throwable> extends Lambda
      * @return A {@code ThrowableConsumer} that represents this consumer partially applied the some arguments.
      */
     @Nonnull
-    default ThrowableConsumer<T, X> pacceptThrows(byte value) {
+    default ThrowableConsumer<T, X> acceptThrowsPartially(byte value) {
         return t -> acceptThrows(t, value);
     }
 

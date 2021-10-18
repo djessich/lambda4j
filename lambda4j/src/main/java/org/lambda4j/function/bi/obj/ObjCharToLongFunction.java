@@ -176,7 +176,7 @@ public interface ObjCharToLongFunction<T> extends Lambda {
      * @return A {@code CharToLongFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default CharToLongFunction papplyAsLong(T t) {
+    default CharToLongFunction applyAsLongPartially(T t) {
         return value -> applyAsLong(t, value);
     }
 
@@ -187,7 +187,7 @@ public interface ObjCharToLongFunction<T> extends Lambda {
      * @return A {@code ToLongFunction2} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ToLongFunction2<T> papplyAsLong(char value) {
+    default ToLongFunction2<T> applyAsLongPartially(char value) {
         return t -> applyAsLong(t, value);
     }
 

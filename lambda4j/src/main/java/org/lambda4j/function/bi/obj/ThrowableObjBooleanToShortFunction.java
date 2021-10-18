@@ -194,7 +194,7 @@ public interface ThrowableObjBooleanToShortFunction<T, X extends Throwable> exte
      * arguments.
      */
     @Nonnull
-    default ThrowableBooleanToShortFunction<X> papplyAsShortThrows(T t) {
+    default ThrowableBooleanToShortFunction<X> applyAsShortThrowsPartially(T t) {
         return value -> applyAsShortThrows(t, value);
     }
 
@@ -206,7 +206,7 @@ public interface ThrowableObjBooleanToShortFunction<T, X extends Throwable> exte
      * @return A {@code ThrowableToShortFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ThrowableToShortFunction<T, X> papplyAsShortThrows(boolean value) {
+    default ThrowableToShortFunction<T, X> applyAsShortThrowsPartially(boolean value) {
         return t -> applyAsShortThrows(t, value);
     }
 

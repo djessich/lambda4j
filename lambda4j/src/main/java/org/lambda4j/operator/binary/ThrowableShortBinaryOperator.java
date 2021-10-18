@@ -218,7 +218,7 @@ public interface ThrowableShortBinaryOperator<X extends Throwable> extends Lambd
      * @return A {@code ThrowableShortUnaryOperator} that represents this operator partially applied the some arguments.
      */
     @Nonnull
-    default ThrowableShortUnaryOperator<X> papplyAsShortThrows(short value1) {
+    default ThrowableShortUnaryOperator<X> applyAsShortThrowsPartially(short value1) {
         return value2 -> applyAsShortThrows(value1, value2);
     }
 

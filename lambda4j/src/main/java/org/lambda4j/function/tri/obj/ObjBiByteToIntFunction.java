@@ -197,7 +197,7 @@ public interface ObjBiByteToIntFunction<T> extends Lambda {
      * @return A {@code BiByteToIntFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default BiByteToIntFunction papplyAsInt(T t) {
+    default BiByteToIntFunction applyAsIntPartially(T t) {
         return (value1, value2) -> applyAsInt(t, value1, value2);
     }
 
@@ -209,7 +209,7 @@ public interface ObjBiByteToIntFunction<T> extends Lambda {
      * @return A {@code ByteToIntFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ByteToIntFunction papplyAsInt(T t, byte value1) {
+    default ByteToIntFunction applyAsIntPartially(T t, byte value1) {
         return value2 -> applyAsInt(t, value1, value2);
     }
 
@@ -221,7 +221,7 @@ public interface ObjBiByteToIntFunction<T> extends Lambda {
      * @return A {@code ObjByteToIntFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ObjByteToIntFunction<T> papplyAsInt(byte value1) {
+    default ObjByteToIntFunction<T> applyAsIntPartially(byte value1) {
         return (t, value2) -> applyAsInt(t, value1, value2);
     }
 
@@ -233,7 +233,7 @@ public interface ObjBiByteToIntFunction<T> extends Lambda {
      * @return A {@code ToIntFunction2} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ToIntFunction2<T> papplyAsInt(byte value1, byte value2) {
+    default ToIntFunction2<T> applyAsIntPartially(byte value1, byte value2) {
         return t -> applyAsInt(t, value1, value2);
     }
 

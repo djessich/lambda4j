@@ -175,7 +175,7 @@ public interface TriIntToLongFunction extends Lambda {
      * @return A {@code BiIntToLongFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default BiIntToLongFunction papplyAsLong(int value1) {
+    default BiIntToLongFunction applyAsLongPartially(int value1) {
         return (value2, value3) -> applyAsLong(value1, value2, value3);
     }
 
@@ -187,7 +187,7 @@ public interface TriIntToLongFunction extends Lambda {
      * @return A {@code IntToLongFunction2} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default IntToLongFunction2 papplyAsLong(int value1, int value2) {
+    default IntToLongFunction2 applyAsLongPartially(int value1, int value2) {
         return value3 -> applyAsLong(value1, value2, value3);
     }
 

@@ -197,7 +197,7 @@ public interface ObjBiCharToIntFunction<T> extends Lambda {
      * @return A {@code BiCharToIntFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default BiCharToIntFunction papplyAsInt(T t) {
+    default BiCharToIntFunction applyAsIntPartially(T t) {
         return (value1, value2) -> applyAsInt(t, value1, value2);
     }
 
@@ -209,7 +209,7 @@ public interface ObjBiCharToIntFunction<T> extends Lambda {
      * @return A {@code CharToIntFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default CharToIntFunction papplyAsInt(T t, char value1) {
+    default CharToIntFunction applyAsIntPartially(T t, char value1) {
         return value2 -> applyAsInt(t, value1, value2);
     }
 
@@ -221,7 +221,7 @@ public interface ObjBiCharToIntFunction<T> extends Lambda {
      * @return A {@code ObjCharToIntFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ObjCharToIntFunction<T> papplyAsInt(char value1) {
+    default ObjCharToIntFunction<T> applyAsIntPartially(char value1) {
         return (t, value2) -> applyAsInt(t, value1, value2);
     }
 
@@ -233,7 +233,7 @@ public interface ObjBiCharToIntFunction<T> extends Lambda {
      * @return A {@code ToIntFunction2} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ToIntFunction2<T> papplyAsInt(char value1, char value2) {
+    default ToIntFunction2<T> applyAsIntPartially(char value1, char value2) {
         return t -> applyAsInt(t, value1, value2);
     }
 

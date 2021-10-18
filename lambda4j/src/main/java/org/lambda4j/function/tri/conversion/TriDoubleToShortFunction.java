@@ -174,7 +174,7 @@ public interface TriDoubleToShortFunction extends Lambda {
      * @return A {@code BiDoubleToShortFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default BiDoubleToShortFunction papplyAsShort(double value1) {
+    default BiDoubleToShortFunction applyAsShortPartially(double value1) {
         return (value2, value3) -> applyAsShort(value1, value2, value3);
     }
 
@@ -187,7 +187,7 @@ public interface TriDoubleToShortFunction extends Lambda {
      * @return A {@code DoubleToShortFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default DoubleToShortFunction papplyAsShort(double value1, double value2) {
+    default DoubleToShortFunction applyAsShortPartially(double value1, double value2) {
         return value3 -> applyAsShort(value1, value2, value3);
     }
 

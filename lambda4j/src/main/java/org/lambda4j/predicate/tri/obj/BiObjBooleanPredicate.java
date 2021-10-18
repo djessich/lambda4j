@@ -272,7 +272,7 @@ public interface BiObjBooleanPredicate<T, U> extends Lambda {
      * @return A {@code ObjBooleanPredicate} that represents this operator partially applied the some arguments.
      */
     @Nonnull
-    default ObjBooleanPredicate<U> ptest(T t) {
+    default ObjBooleanPredicate<U> testPartially(T t) {
         return (u, value) -> test(t, u, value);
     }
 
@@ -285,7 +285,7 @@ public interface BiObjBooleanPredicate<T, U> extends Lambda {
      * @return A {@code BooleanUnaryOperator} that represents this operator partially applied the some arguments.
      */
     @Nonnull
-    default BooleanUnaryOperator ptest(T t, U u) {
+    default BooleanUnaryOperator testPartially(T t, U u) {
         return value -> test(t, u, value);
     }
 
@@ -296,7 +296,7 @@ public interface BiObjBooleanPredicate<T, U> extends Lambda {
      * @return A {@code BiPredicate2} that represents this operator partially applied the some arguments.
      */
     @Nonnull
-    default BiPredicate2<T, U> ptest(boolean value) {
+    default BiPredicate2<T, U> testPartially(boolean value) {
         return (t, u) -> test(t, u, value);
     }
 
@@ -308,7 +308,7 @@ public interface BiObjBooleanPredicate<T, U> extends Lambda {
      * @return A {@code Predicate2} that represents this operator partially applied the some arguments.
      */
     @Nonnull
-    default Predicate2<U> ptest(T t, boolean value) {
+    default Predicate2<U> testPartially(T t, boolean value) {
         return u -> test(t, u, value);
     }
 

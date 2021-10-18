@@ -173,7 +173,7 @@ public interface ThrowableBiBooleanToFloatFunction<X extends Throwable> extends 
      * arguments.
      */
     @Nonnull
-    default ThrowableBooleanToFloatFunction<X> papplyAsFloatThrows(boolean value1) {
+    default ThrowableBooleanToFloatFunction<X> applyAsFloatThrowsPartially(boolean value1) {
         return value2 -> applyAsFloatThrows(value1, value2);
     }
 

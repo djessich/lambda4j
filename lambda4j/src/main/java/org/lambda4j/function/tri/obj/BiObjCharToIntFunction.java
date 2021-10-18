@@ -219,7 +219,7 @@ public interface BiObjCharToIntFunction<T, U> extends Lambda {
      * @return A {@code ObjCharToIntFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ObjCharToIntFunction<U> papplyAsInt(T t) {
+    default ObjCharToIntFunction<U> applyAsIntPartially(T t) {
         return (u, value) -> applyAsInt(t, u, value);
     }
 
@@ -231,7 +231,7 @@ public interface BiObjCharToIntFunction<T, U> extends Lambda {
      * @return A {@code CharToIntFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default CharToIntFunction papplyAsInt(T t, U u) {
+    default CharToIntFunction applyAsIntPartially(T t, U u) {
         return value -> applyAsInt(t, u, value);
     }
 
@@ -242,7 +242,7 @@ public interface BiObjCharToIntFunction<T, U> extends Lambda {
      * @return A {@code ToIntBiFunction2} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ToIntBiFunction2<T, U> papplyAsInt(char value) {
+    default ToIntBiFunction2<T, U> applyAsIntPartially(char value) {
         return (t, u) -> applyAsInt(t, u, value);
     }
 
@@ -254,7 +254,7 @@ public interface BiObjCharToIntFunction<T, U> extends Lambda {
      * @return A {@code ToIntFunction2} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ToIntFunction2<U> papplyAsInt(T t, char value) {
+    default ToIntFunction2<U> applyAsIntPartially(T t, char value) {
         return u -> applyAsInt(t, u, value);
     }
 

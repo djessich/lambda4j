@@ -217,7 +217,7 @@ public interface BiObjCharToCharFunction<T, U> extends Lambda {
      * @return A {@code ObjCharToCharFunction} that represents this operator partially applied the some arguments.
      */
     @Nonnull
-    default ObjCharToCharFunction<U> papplyAsChar(T t) {
+    default ObjCharToCharFunction<U> applyAsCharPartially(T t) {
         return (u, value) -> applyAsChar(t, u, value);
     }
 
@@ -229,7 +229,7 @@ public interface BiObjCharToCharFunction<T, U> extends Lambda {
      * @return A {@code CharUnaryOperator} that represents this operator partially applied the some arguments.
      */
     @Nonnull
-    default CharUnaryOperator papplyAsChar(T t, U u) {
+    default CharUnaryOperator applyAsCharPartially(T t, U u) {
         return value -> applyAsChar(t, u, value);
     }
 
@@ -240,7 +240,7 @@ public interface BiObjCharToCharFunction<T, U> extends Lambda {
      * @return A {@code ToCharBiFunction} that represents this operator partially applied the some arguments.
      */
     @Nonnull
-    default ToCharBiFunction<T, U> papplyAsChar(char value) {
+    default ToCharBiFunction<T, U> applyAsCharPartially(char value) {
         return (t, u) -> applyAsChar(t, u, value);
     }
 
@@ -252,7 +252,7 @@ public interface BiObjCharToCharFunction<T, U> extends Lambda {
      * @return A {@code ToCharFunction} that represents this operator partially applied the some arguments.
      */
     @Nonnull
-    default ToCharFunction<U> papplyAsChar(T t, char value) {
+    default ToCharFunction<U> applyAsCharPartially(T t, char value) {
         return u -> applyAsChar(t, u, value);
     }
 

@@ -194,7 +194,7 @@ public interface ThrowableTriIntToByteFunction<X extends Throwable> extends Lamb
      * arguments.
      */
     @Nonnull
-    default ThrowableBiIntToByteFunction<X> papplyAsByteThrows(int value1) {
+    default ThrowableBiIntToByteFunction<X> applyAsByteThrowsPartially(int value1) {
         return (value2, value3) -> applyAsByteThrows(value1, value2, value3);
     }
 
@@ -207,7 +207,7 @@ public interface ThrowableTriIntToByteFunction<X extends Throwable> extends Lamb
      * @return A {@code ThrowableIntToByteFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ThrowableIntToByteFunction<X> papplyAsByteThrows(int value1, int value2) {
+    default ThrowableIntToByteFunction<X> applyAsByteThrowsPartially(int value1, int value2) {
         return value3 -> applyAsByteThrows(value1, value2, value3);
     }
 

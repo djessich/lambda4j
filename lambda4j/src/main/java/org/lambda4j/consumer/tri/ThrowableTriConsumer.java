@@ -184,7 +184,7 @@ public interface ThrowableTriConsumer<T, U, V, X extends Throwable> extends Lamb
      * @return A {@code ThrowableBiConsumer} that represents this consumer partially applied the some arguments.
      */
     @Nonnull
-    default ThrowableBiConsumer<U, V, X> pacceptThrows(T t) {
+    default ThrowableBiConsumer<U, V, X> acceptThrowsPartially(T t) {
         return (u, v) -> acceptThrows(t, u, v);
     }
 
@@ -196,7 +196,7 @@ public interface ThrowableTriConsumer<T, U, V, X extends Throwable> extends Lamb
      * @return A {@code ThrowableConsumer} that represents this consumer partially applied the some arguments.
      */
     @Nonnull
-    default ThrowableConsumer<V, X> pacceptThrows(T t, U u) {
+    default ThrowableConsumer<V, X> acceptThrowsPartially(T t, U u) {
         return v -> acceptThrows(t, u, v);
     }
 

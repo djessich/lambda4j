@@ -168,7 +168,7 @@ public interface ObjBiShortConsumer<T> extends Lambda {
      * @return A {@code BiShortConsumer} that represents this consumer partially applied the some arguments.
      */
     @Nonnull
-    default BiShortConsumer paccept(T t) {
+    default BiShortConsumer acceptPartially(T t) {
         return (value1, value2) -> accept(t, value1, value2);
     }
 
@@ -180,7 +180,7 @@ public interface ObjBiShortConsumer<T> extends Lambda {
      * @return A {@code ShortConsumer} that represents this consumer partially applied the some arguments.
      */
     @Nonnull
-    default ShortConsumer paccept(T t, short value1) {
+    default ShortConsumer acceptPartially(T t, short value1) {
         return value2 -> accept(t, value1, value2);
     }
 
@@ -191,7 +191,7 @@ public interface ObjBiShortConsumer<T> extends Lambda {
      * @return A {@code ObjShortConsumer} that represents this consumer partially applied the some arguments.
      */
     @Nonnull
-    default ObjShortConsumer<T> paccept(short value1) {
+    default ObjShortConsumer<T> acceptPartially(short value1) {
         return (t, value2) -> accept(t, value1, value2);
     }
 
@@ -203,7 +203,7 @@ public interface ObjBiShortConsumer<T> extends Lambda {
      * @return A {@code Consumer2} that represents this consumer partially applied the some arguments.
      */
     @Nonnull
-    default Consumer2<T> paccept(short value1, short value2) {
+    default Consumer2<T> acceptPartially(short value1, short value2) {
         return t -> accept(t, value1, value2);
     }
 

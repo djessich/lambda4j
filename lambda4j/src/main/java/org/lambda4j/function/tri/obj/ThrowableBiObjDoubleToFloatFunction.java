@@ -240,7 +240,7 @@ public interface ThrowableBiObjDoubleToFloatFunction<T, U, X extends Throwable> 
      * arguments.
      */
     @Nonnull
-    default ThrowableObjDoubleToFloatFunction<U, X> papplyAsFloatThrows(T t) {
+    default ThrowableObjDoubleToFloatFunction<U, X> applyAsFloatThrowsPartially(T t) {
         return (u, value) -> applyAsFloatThrows(t, u, value);
     }
 
@@ -254,7 +254,7 @@ public interface ThrowableBiObjDoubleToFloatFunction<T, U, X extends Throwable> 
      * arguments.
      */
     @Nonnull
-    default ThrowableDoubleToFloatFunction<X> papplyAsFloatThrows(T t, U u) {
+    default ThrowableDoubleToFloatFunction<X> applyAsFloatThrowsPartially(T t, U u) {
         return value -> applyAsFloatThrows(t, u, value);
     }
 
@@ -266,7 +266,7 @@ public interface ThrowableBiObjDoubleToFloatFunction<T, U, X extends Throwable> 
      * @return A {@code ThrowableToFloatBiFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ThrowableToFloatBiFunction<T, U, X> papplyAsFloatThrows(double value) {
+    default ThrowableToFloatBiFunction<T, U, X> applyAsFloatThrowsPartially(double value) {
         return (t, u) -> applyAsFloatThrows(t, u, value);
     }
 
@@ -279,7 +279,7 @@ public interface ThrowableBiObjDoubleToFloatFunction<T, U, X extends Throwable> 
      * @return A {@code ThrowableToFloatFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ThrowableToFloatFunction<U, X> papplyAsFloatThrows(T t, double value) {
+    default ThrowableToFloatFunction<U, X> applyAsFloatThrowsPartially(T t, double value) {
         return u -> applyAsFloatThrows(t, u, value);
     }
 

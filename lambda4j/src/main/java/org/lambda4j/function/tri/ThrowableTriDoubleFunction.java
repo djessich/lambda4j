@@ -204,7 +204,7 @@ public interface ThrowableTriDoubleFunction<R, X extends Throwable> extends Lamb
      * @return A {@code ThrowableBiDoubleFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ThrowableBiDoubleFunction<R, X> papplyThrows(double value1) {
+    default ThrowableBiDoubleFunction<R, X> applyThrowsPartially(double value1) {
         return (value2, value3) -> applyThrows(value1, value2, value3);
     }
 
@@ -217,7 +217,7 @@ public interface ThrowableTriDoubleFunction<R, X extends Throwable> extends Lamb
      * @return A {@code ThrowableDoubleFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ThrowableDoubleFunction<R, X> papplyThrows(double value1, double value2) {
+    default ThrowableDoubleFunction<R, X> applyThrowsPartially(double value1, double value2) {
         return value3 -> applyThrows(value1, value2, value3);
     }
 

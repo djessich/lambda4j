@@ -165,7 +165,7 @@ public interface BiLongFunction<R> extends Lambda {
      * @return A {@code LongFunction2} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default LongFunction2<R> papply(long value1) {
+    default LongFunction2<R> applyPartially(long value1) {
         return value2 -> apply(value1, value2);
     }
 

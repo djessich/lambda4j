@@ -176,7 +176,7 @@ public interface ObjLongToFloatFunction<T> extends Lambda {
      * @return A {@code LongToFloatFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default LongToFloatFunction papplyAsFloat(T t) {
+    default LongToFloatFunction applyAsFloatPartially(T t) {
         return value -> applyAsFloat(t, value);
     }
 
@@ -187,7 +187,7 @@ public interface ObjLongToFloatFunction<T> extends Lambda {
      * @return A {@code ToFloatFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ToFloatFunction<T> papplyAsFloat(long value) {
+    default ToFloatFunction<T> applyAsFloatPartially(long value) {
         return t -> applyAsFloat(t, value);
     }
 

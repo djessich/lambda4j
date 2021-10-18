@@ -183,7 +183,7 @@ public interface ThrowableBiBooleanFunction<R, X extends Throwable> extends Lamb
      * @return A {@code ThrowableBooleanFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ThrowableBooleanFunction<R, X> papplyThrows(boolean value1) {
+    default ThrowableBooleanFunction<R, X> applyThrowsPartially(boolean value1) {
         return value2 -> applyThrows(value1, value2);
     }
 

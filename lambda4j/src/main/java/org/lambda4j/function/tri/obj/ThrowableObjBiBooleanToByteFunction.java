@@ -217,7 +217,7 @@ public interface ThrowableObjBiBooleanToByteFunction<T, X extends Throwable> ext
      * arguments.
      */
     @Nonnull
-    default ThrowableBiBooleanToByteFunction<X> papplyAsByteThrows(T t) {
+    default ThrowableBiBooleanToByteFunction<X> applyAsByteThrowsPartially(T t) {
         return (value1, value2) -> applyAsByteThrows(t, value1, value2);
     }
 
@@ -231,7 +231,7 @@ public interface ThrowableObjBiBooleanToByteFunction<T, X extends Throwable> ext
      * arguments.
      */
     @Nonnull
-    default ThrowableBooleanToByteFunction<X> papplyAsByteThrows(T t, boolean value1) {
+    default ThrowableBooleanToByteFunction<X> applyAsByteThrowsPartially(T t, boolean value1) {
         return value2 -> applyAsByteThrows(t, value1, value2);
     }
 
@@ -244,7 +244,7 @@ public interface ThrowableObjBiBooleanToByteFunction<T, X extends Throwable> ext
      * arguments.
      */
     @Nonnull
-    default ThrowableObjBooleanToByteFunction<T, X> papplyAsByteThrows(boolean value1) {
+    default ThrowableObjBooleanToByteFunction<T, X> applyAsByteThrowsPartially(boolean value1) {
         return (t, value2) -> applyAsByteThrows(t, value1, value2);
     }
 
@@ -257,7 +257,7 @@ public interface ThrowableObjBiBooleanToByteFunction<T, X extends Throwable> ext
      * @return A {@code ThrowableToByteFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ThrowableToByteFunction<T, X> papplyAsByteThrows(boolean value1, boolean value2) {
+    default ThrowableToByteFunction<T, X> applyAsByteThrowsPartially(boolean value1, boolean value2) {
         return t -> applyAsByteThrows(t, value1, value2);
     }
 

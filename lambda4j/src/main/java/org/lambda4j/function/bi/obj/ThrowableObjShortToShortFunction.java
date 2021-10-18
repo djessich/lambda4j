@@ -191,7 +191,7 @@ public interface ThrowableObjShortToShortFunction<T, X extends Throwable> extend
      * @return A {@code ThrowableShortUnaryOperator} that represents this operator partially applied the some arguments.
      */
     @Nonnull
-    default ThrowableShortUnaryOperator<X> papplyAsShortThrows(T t) {
+    default ThrowableShortUnaryOperator<X> applyAsShortThrowsPartially(T t) {
         return value -> applyAsShortThrows(t, value);
     }
 
@@ -203,7 +203,7 @@ public interface ThrowableObjShortToShortFunction<T, X extends Throwable> extend
      * @return A {@code ThrowableToShortFunction} that represents this operator partially applied the some arguments.
      */
     @Nonnull
-    default ThrowableToShortFunction<T, X> papplyAsShortThrows(short value) {
+    default ThrowableToShortFunction<T, X> applyAsShortThrowsPartially(short value) {
         return t -> applyAsShortThrows(t, value);
     }
 

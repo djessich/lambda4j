@@ -204,7 +204,7 @@ public interface ThrowableTriIntFunction<R, X extends Throwable> extends Lambda 
      * @return A {@code ThrowableBiIntFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ThrowableBiIntFunction<R, X> papplyThrows(int value1) {
+    default ThrowableBiIntFunction<R, X> applyThrowsPartially(int value1) {
         return (value2, value3) -> applyThrows(value1, value2, value3);
     }
 
@@ -217,7 +217,7 @@ public interface ThrowableTriIntFunction<R, X extends Throwable> extends Lambda 
      * @return A {@code ThrowableIntFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ThrowableIntFunction<R, X> papplyThrows(int value1, int value2) {
+    default ThrowableIntFunction<R, X> applyThrowsPartially(int value1, int value2) {
         return value3 -> applyThrows(value1, value2, value3);
     }
 

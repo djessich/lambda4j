@@ -217,7 +217,7 @@ public interface BiObjShortToShortFunction<T, U> extends Lambda {
      * @return A {@code ObjShortToShortFunction} that represents this operator partially applied the some arguments.
      */
     @Nonnull
-    default ObjShortToShortFunction<U> papplyAsShort(T t) {
+    default ObjShortToShortFunction<U> applyAsShortPartially(T t) {
         return (u, value) -> applyAsShort(t, u, value);
     }
 
@@ -229,7 +229,7 @@ public interface BiObjShortToShortFunction<T, U> extends Lambda {
      * @return A {@code ShortUnaryOperator} that represents this operator partially applied the some arguments.
      */
     @Nonnull
-    default ShortUnaryOperator papplyAsShort(T t, U u) {
+    default ShortUnaryOperator applyAsShortPartially(T t, U u) {
         return value -> applyAsShort(t, u, value);
     }
 
@@ -240,7 +240,7 @@ public interface BiObjShortToShortFunction<T, U> extends Lambda {
      * @return A {@code ToShortBiFunction} that represents this operator partially applied the some arguments.
      */
     @Nonnull
-    default ToShortBiFunction<T, U> papplyAsShort(short value) {
+    default ToShortBiFunction<T, U> applyAsShortPartially(short value) {
         return (t, u) -> applyAsShort(t, u, value);
     }
 
@@ -252,7 +252,7 @@ public interface BiObjShortToShortFunction<T, U> extends Lambda {
      * @return A {@code ToShortFunction} that represents this operator partially applied the some arguments.
      */
     @Nonnull
-    default ToShortFunction<U> papplyAsShort(T t, short value) {
+    default ToShortFunction<U> applyAsShortPartially(T t, short value) {
         return u -> applyAsShort(t, u, value);
     }
 

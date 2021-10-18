@@ -184,7 +184,7 @@ public interface LongTernaryOperator extends Lambda {
      * @return A {@code LongBinaryOperator2} that represents this operator partially applied the some arguments.
      */
     @Nonnull
-    default LongBinaryOperator2 papplyAsLong(long value1) {
+    default LongBinaryOperator2 applyAsLongPartially(long value1) {
         return (value2, value3) -> applyAsLong(value1, value2, value3);
     }
 
@@ -196,7 +196,7 @@ public interface LongTernaryOperator extends Lambda {
      * @return A {@code LongUnaryOperator2} that represents this operator partially applied the some arguments.
      */
     @Nonnull
-    default LongUnaryOperator2 papplyAsLong(long value1, long value2) {
+    default LongUnaryOperator2 applyAsLongPartially(long value1, long value2) {
         return value3 -> applyAsLong(value1, value2, value3);
     }
 

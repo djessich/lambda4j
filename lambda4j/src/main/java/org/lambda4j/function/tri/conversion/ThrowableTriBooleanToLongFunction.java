@@ -194,7 +194,7 @@ public interface ThrowableTriBooleanToLongFunction<X extends Throwable> extends 
      * arguments.
      */
     @Nonnull
-    default ThrowableBiBooleanToLongFunction<X> papplyAsLongThrows(boolean value1) {
+    default ThrowableBiBooleanToLongFunction<X> applyAsLongThrowsPartially(boolean value1) {
         return (value2, value3) -> applyAsLongThrows(value1, value2, value3);
     }
 
@@ -208,7 +208,7 @@ public interface ThrowableTriBooleanToLongFunction<X extends Throwable> extends 
      * arguments.
      */
     @Nonnull
-    default ThrowableBooleanToLongFunction<X> papplyAsLongThrows(boolean value1, boolean value2) {
+    default ThrowableBooleanToLongFunction<X> applyAsLongThrowsPartially(boolean value1, boolean value2) {
         return value3 -> applyAsLongThrows(value1, value2, value3);
     }
 

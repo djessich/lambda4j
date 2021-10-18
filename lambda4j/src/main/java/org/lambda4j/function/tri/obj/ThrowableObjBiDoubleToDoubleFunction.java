@@ -215,7 +215,7 @@ public interface ThrowableObjBiDoubleToDoubleFunction<T, X extends Throwable> ex
      * arguments.
      */
     @Nonnull
-    default ThrowableDoubleBinaryOperator<X> papplyAsDoubleThrows(T t) {
+    default ThrowableDoubleBinaryOperator<X> applyAsDoubleThrowsPartially(T t) {
         return (value1, value2) -> applyAsDoubleThrows(t, value1, value2);
     }
 
@@ -229,7 +229,7 @@ public interface ThrowableObjBiDoubleToDoubleFunction<T, X extends Throwable> ex
      * arguments.
      */
     @Nonnull
-    default ThrowableDoubleUnaryOperator<X> papplyAsDoubleThrows(T t, double value1) {
+    default ThrowableDoubleUnaryOperator<X> applyAsDoubleThrowsPartially(T t, double value1) {
         return value2 -> applyAsDoubleThrows(t, value1, value2);
     }
 
@@ -242,7 +242,7 @@ public interface ThrowableObjBiDoubleToDoubleFunction<T, X extends Throwable> ex
      * arguments.
      */
     @Nonnull
-    default ThrowableObjDoubleToDoubleFunction<T, X> papplyAsDoubleThrows(double value1) {
+    default ThrowableObjDoubleToDoubleFunction<T, X> applyAsDoubleThrowsPartially(double value1) {
         return (t, value2) -> applyAsDoubleThrows(t, value1, value2);
     }
 
@@ -255,7 +255,7 @@ public interface ThrowableObjBiDoubleToDoubleFunction<T, X extends Throwable> ex
      * @return A {@code ThrowableToDoubleFunction} that represents this operator partially applied the some arguments.
      */
     @Nonnull
-    default ThrowableToDoubleFunction<T, X> papplyAsDoubleThrows(double value1, double value2) {
+    default ThrowableToDoubleFunction<T, X> applyAsDoubleThrowsPartially(double value1, double value2) {
         return t -> applyAsDoubleThrows(t, value1, value2);
     }
 

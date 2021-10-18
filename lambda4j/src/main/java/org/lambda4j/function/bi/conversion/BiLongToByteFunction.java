@@ -155,7 +155,7 @@ public interface BiLongToByteFunction extends Lambda {
      * @return A {@code LongToByteFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default LongToByteFunction papplyAsByte(long value1) {
+    default LongToByteFunction applyAsBytePartially(long value1) {
         return value2 -> applyAsByte(value1, value2);
     }
 

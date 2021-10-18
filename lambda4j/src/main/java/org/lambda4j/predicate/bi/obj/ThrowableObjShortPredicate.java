@@ -242,7 +242,7 @@ public interface ThrowableObjShortPredicate<T, X extends Throwable> extends Lamb
      * @return A {@code ThrowableShortPredicate} that represents this predicate partially applied the some arguments.
      */
     @Nonnull
-    default ThrowableShortPredicate<X> ptestThrows(T t) {
+    default ThrowableShortPredicate<X> testThrowsPartially(T t) {
         return value -> testThrows(t, value);
     }
 
@@ -254,7 +254,7 @@ public interface ThrowableObjShortPredicate<T, X extends Throwable> extends Lamb
      * @return A {@code ThrowablePredicate} that represents this predicate partially applied the some arguments.
      */
     @Nonnull
-    default ThrowablePredicate<T, X> ptestThrows(short value) {
+    default ThrowablePredicate<T, X> testThrowsPartially(short value) {
         return t -> testThrows(t, value);
     }
 

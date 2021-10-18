@@ -196,7 +196,7 @@ public interface ObjBiLongToCharFunction<T> extends Lambda {
      * @return A {@code BiLongToCharFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default BiLongToCharFunction papplyAsChar(T t) {
+    default BiLongToCharFunction applyAsCharPartially(T t) {
         return (value1, value2) -> applyAsChar(t, value1, value2);
     }
 
@@ -208,7 +208,7 @@ public interface ObjBiLongToCharFunction<T> extends Lambda {
      * @return A {@code LongToCharFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default LongToCharFunction papplyAsChar(T t, long value1) {
+    default LongToCharFunction applyAsCharPartially(T t, long value1) {
         return value2 -> applyAsChar(t, value1, value2);
     }
 
@@ -220,7 +220,7 @@ public interface ObjBiLongToCharFunction<T> extends Lambda {
      * @return A {@code ObjLongToCharFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ObjLongToCharFunction<T> papplyAsChar(long value1) {
+    default ObjLongToCharFunction<T> applyAsCharPartially(long value1) {
         return (t, value2) -> applyAsChar(t, value1, value2);
     }
 
@@ -232,7 +232,7 @@ public interface ObjBiLongToCharFunction<T> extends Lambda {
      * @return A {@code ToCharFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ToCharFunction<T> papplyAsChar(long value1, long value2) {
+    default ToCharFunction<T> applyAsCharPartially(long value1, long value2) {
         return t -> applyAsChar(t, value1, value2);
     }
 

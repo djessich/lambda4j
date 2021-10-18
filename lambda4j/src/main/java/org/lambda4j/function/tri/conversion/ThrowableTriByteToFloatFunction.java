@@ -194,7 +194,7 @@ public interface ThrowableTriByteToFloatFunction<X extends Throwable> extends La
      * arguments.
      */
     @Nonnull
-    default ThrowableBiByteToFloatFunction<X> papplyAsFloatThrows(byte value1) {
+    default ThrowableBiByteToFloatFunction<X> applyAsFloatThrowsPartially(byte value1) {
         return (value2, value3) -> applyAsFloatThrows(value1, value2, value3);
     }
 
@@ -208,7 +208,7 @@ public interface ThrowableTriByteToFloatFunction<X extends Throwable> extends La
      * arguments.
      */
     @Nonnull
-    default ThrowableByteToFloatFunction<X> papplyAsFloatThrows(byte value1, byte value2) {
+    default ThrowableByteToFloatFunction<X> applyAsFloatThrowsPartially(byte value1, byte value2) {
         return value3 -> applyAsFloatThrows(value1, value2, value3);
     }
 

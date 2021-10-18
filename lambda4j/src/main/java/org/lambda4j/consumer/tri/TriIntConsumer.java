@@ -141,7 +141,7 @@ public interface TriIntConsumer extends Lambda {
      * @return A {@code BiIntConsumer} that represents this consumer partially applied the some arguments.
      */
     @Nonnull
-    default BiIntConsumer paccept(int value1) {
+    default BiIntConsumer acceptPartially(int value1) {
         return (value2, value3) -> accept(value1, value2, value3);
     }
 
@@ -153,7 +153,7 @@ public interface TriIntConsumer extends Lambda {
      * @return A {@code IntConsumer2} that represents this consumer partially applied the some arguments.
      */
     @Nonnull
-    default IntConsumer2 paccept(int value1, int value2) {
+    default IntConsumer2 acceptPartially(int value1, int value2) {
         return value3 -> accept(value1, value2, value3);
     }
 

@@ -155,7 +155,7 @@ public interface BiCharToByteFunction extends Lambda {
      * @return A {@code CharToByteFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default CharToByteFunction papplyAsByte(char value1) {
+    default CharToByteFunction applyAsBytePartially(char value1) {
         return value2 -> applyAsByte(value1, value2);
     }
 

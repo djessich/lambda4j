@@ -223,7 +223,7 @@ public interface ObjIntPredicate<T> extends Lambda {
      * @return A {@code IntPredicate2} that represents this predicate partially applied the some arguments.
      */
     @Nonnull
-    default IntPredicate2 ptest(T t) {
+    default IntPredicate2 testPartially(T t) {
         return value -> test(t, value);
     }
 
@@ -234,7 +234,7 @@ public interface ObjIntPredicate<T> extends Lambda {
      * @return A {@code Predicate2} that represents this predicate partially applied the some arguments.
      */
     @Nonnull
-    default Predicate2<T> ptest(int value) {
+    default Predicate2<T> testPartially(int value) {
         return t -> test(t, value);
     }
 

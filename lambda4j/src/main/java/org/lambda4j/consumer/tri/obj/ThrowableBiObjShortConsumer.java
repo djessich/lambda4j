@@ -208,7 +208,7 @@ public interface ThrowableBiObjShortConsumer<T, U, X extends Throwable> extends 
      * @return A {@code ThrowableObjShortConsumer} that represents this consumer partially applied the some arguments.
      */
     @Nonnull
-    default ThrowableObjShortConsumer<U, X> pacceptThrows(T t) {
+    default ThrowableObjShortConsumer<U, X> acceptThrowsPartially(T t) {
         return (u, value) -> acceptThrows(t, u, value);
     }
 
@@ -221,7 +221,7 @@ public interface ThrowableBiObjShortConsumer<T, U, X extends Throwable> extends 
      * @return A {@code ThrowableShortConsumer} that represents this consumer partially applied the some arguments.
      */
     @Nonnull
-    default ThrowableShortConsumer<X> pacceptThrows(T t, U u) {
+    default ThrowableShortConsumer<X> acceptThrowsPartially(T t, U u) {
         return value -> acceptThrows(t, u, value);
     }
 
@@ -233,7 +233,7 @@ public interface ThrowableBiObjShortConsumer<T, U, X extends Throwable> extends 
      * @return A {@code ThrowableBiConsumer} that represents this consumer partially applied the some arguments.
      */
     @Nonnull
-    default ThrowableBiConsumer<T, U, X> pacceptThrows(short value) {
+    default ThrowableBiConsumer<T, U, X> acceptThrowsPartially(short value) {
         return (t, u) -> acceptThrows(t, u, value);
     }
 
@@ -245,7 +245,7 @@ public interface ThrowableBiObjShortConsumer<T, U, X extends Throwable> extends 
      * @return A {@code ThrowableConsumer} that represents this consumer partially applied the some arguments.
      */
     @Nonnull
-    default ThrowableConsumer<U, X> pacceptThrows(T t, short value) {
+    default ThrowableConsumer<U, X> acceptThrowsPartially(T t, short value) {
         return u -> acceptThrows(t, u, value);
     }
 

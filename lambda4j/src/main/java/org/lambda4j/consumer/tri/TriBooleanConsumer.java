@@ -141,7 +141,7 @@ public interface TriBooleanConsumer extends Lambda {
      * @return A {@code BiBooleanConsumer} that represents this consumer partially applied the some arguments.
      */
     @Nonnull
-    default BiBooleanConsumer paccept(boolean value1) {
+    default BiBooleanConsumer acceptPartially(boolean value1) {
         return (value2, value3) -> accept(value1, value2, value3);
     }
 
@@ -153,7 +153,7 @@ public interface TriBooleanConsumer extends Lambda {
      * @return A {@code BooleanConsumer} that represents this consumer partially applied the some arguments.
      */
     @Nonnull
-    default BooleanConsumer paccept(boolean value1, boolean value2) {
+    default BooleanConsumer acceptPartially(boolean value1, boolean value2) {
         return value3 -> accept(value1, value2, value3);
     }
 

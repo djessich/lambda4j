@@ -173,7 +173,7 @@ public interface ObjShortToShortFunction<T> extends Lambda {
      * @return A {@code ShortUnaryOperator} that represents this operator partially applied the some arguments.
      */
     @Nonnull
-    default ShortUnaryOperator papplyAsShort(T t) {
+    default ShortUnaryOperator applyAsShortPartially(T t) {
         return value -> applyAsShort(t, value);
     }
 
@@ -184,7 +184,7 @@ public interface ObjShortToShortFunction<T> extends Lambda {
      * @return A {@code ToShortFunction} that represents this operator partially applied the some arguments.
      */
     @Nonnull
-    default ToShortFunction<T> papplyAsShort(short value) {
+    default ToShortFunction<T> applyAsShortPartially(short value) {
         return t -> applyAsShort(t, value);
     }
 

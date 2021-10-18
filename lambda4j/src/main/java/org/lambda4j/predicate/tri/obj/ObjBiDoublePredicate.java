@@ -247,7 +247,7 @@ public interface ObjBiDoublePredicate<T> extends Lambda {
      * @return A {@code BiDoublePredicate} that represents this predicate partially applied the some arguments.
      */
     @Nonnull
-    default BiDoublePredicate ptest(T t) {
+    default BiDoublePredicate testPartially(T t) {
         return (value1, value2) -> test(t, value1, value2);
     }
 
@@ -259,7 +259,7 @@ public interface ObjBiDoublePredicate<T> extends Lambda {
      * @return A {@code DoublePredicate2} that represents this predicate partially applied the some arguments.
      */
     @Nonnull
-    default DoublePredicate2 ptest(T t, double value1) {
+    default DoublePredicate2 testPartially(T t, double value1) {
         return value2 -> test(t, value1, value2);
     }
 
@@ -271,7 +271,7 @@ public interface ObjBiDoublePredicate<T> extends Lambda {
      * @return A {@code ObjDoublePredicate} that represents this predicate partially applied the some arguments.
      */
     @Nonnull
-    default ObjDoublePredicate<T> ptest(double value1) {
+    default ObjDoublePredicate<T> testPartially(double value1) {
         return (t, value2) -> test(t, value1, value2);
     }
 
@@ -283,7 +283,7 @@ public interface ObjBiDoublePredicate<T> extends Lambda {
      * @return A {@code Predicate2} that represents this predicate partially applied the some arguments.
      */
     @Nonnull
-    default Predicate2<T> ptest(double value1, double value2) {
+    default Predicate2<T> testPartially(double value1, double value2) {
         return t -> test(t, value1, value2);
     }
 

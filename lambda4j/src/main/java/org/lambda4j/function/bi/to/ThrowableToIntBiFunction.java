@@ -208,7 +208,7 @@ public interface ThrowableToIntBiFunction<T, U, X extends Throwable> extends Lam
      * @return A {@code ThrowableToIntFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ThrowableToIntFunction<U, X> papplyAsIntThrows(T t) {
+    default ThrowableToIntFunction<U, X> applyAsIntThrowsPartially(T t) {
         return u -> applyAsIntThrows(t, u);
     }
 

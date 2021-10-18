@@ -176,7 +176,7 @@ public interface ObjBooleanToCharFunction<T> extends Lambda {
      * @return A {@code BooleanToCharFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default BooleanToCharFunction papplyAsChar(T t) {
+    default BooleanToCharFunction applyAsCharPartially(T t) {
         return value -> applyAsChar(t, value);
     }
 
@@ -187,7 +187,7 @@ public interface ObjBooleanToCharFunction<T> extends Lambda {
      * @return A {@code ToCharFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ToCharFunction<T> papplyAsChar(boolean value) {
+    default ToCharFunction<T> applyAsCharPartially(boolean value) {
         return t -> applyAsChar(t, value);
     }
 

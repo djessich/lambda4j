@@ -194,7 +194,7 @@ public interface ThrowableTriBooleanToFloatFunction<X extends Throwable> extends
      * arguments.
      */
     @Nonnull
-    default ThrowableBiBooleanToFloatFunction<X> papplyAsFloatThrows(boolean value1) {
+    default ThrowableBiBooleanToFloatFunction<X> applyAsFloatThrowsPartially(boolean value1) {
         return (value2, value3) -> applyAsFloatThrows(value1, value2, value3);
     }
 
@@ -208,7 +208,7 @@ public interface ThrowableTriBooleanToFloatFunction<X extends Throwable> extends
      * arguments.
      */
     @Nonnull
-    default ThrowableBooleanToFloatFunction<X> papplyAsFloatThrows(boolean value1, boolean value2) {
+    default ThrowableBooleanToFloatFunction<X> applyAsFloatThrowsPartially(boolean value1, boolean value2) {
         return value3 -> applyAsFloatThrows(value1, value2, value3);
     }
 

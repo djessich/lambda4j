@@ -174,7 +174,7 @@ public interface TriDoubleToFloatFunction extends Lambda {
      * @return A {@code BiDoubleToFloatFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default BiDoubleToFloatFunction papplyAsFloat(double value1) {
+    default BiDoubleToFloatFunction applyAsFloatPartially(double value1) {
         return (value2, value3) -> applyAsFloat(value1, value2, value3);
     }
 
@@ -187,7 +187,7 @@ public interface TriDoubleToFloatFunction extends Lambda {
      * @return A {@code DoubleToFloatFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default DoubleToFloatFunction papplyAsFloat(double value1, double value2) {
+    default DoubleToFloatFunction applyAsFloatPartially(double value1, double value2) {
         return value3 -> applyAsFloat(value1, value2, value3);
     }
 

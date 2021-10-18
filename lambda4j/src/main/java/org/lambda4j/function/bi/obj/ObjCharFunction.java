@@ -188,7 +188,7 @@ public interface ObjCharFunction<T, R> extends Lambda {
      * @return A {@code CharFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default CharFunction<R> papply(T t) {
+    default CharFunction<R> applyPartially(T t) {
         return value -> apply(t, value);
     }
 
@@ -199,7 +199,7 @@ public interface ObjCharFunction<T, R> extends Lambda {
      * @return A {@code Function2} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default Function2<T, R> papply(char value) {
+    default Function2<T, R> applyPartially(char value) {
         return t -> apply(t, value);
     }
 

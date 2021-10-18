@@ -211,7 +211,7 @@ public interface TriFunction<T, U, V, R> extends Lambda {
      * @return A {@code BiFunction2} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default BiFunction2<U, V, R> papply(T t) {
+    default BiFunction2<U, V, R> applyPartially(T t) {
         return (u, v) -> apply(t, u, v);
     }
 
@@ -223,7 +223,7 @@ public interface TriFunction<T, U, V, R> extends Lambda {
      * @return A {@code Function2} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default Function2<V, R> papply(T t, U u) {
+    default Function2<V, R> applyPartially(T t, U u) {
         return v -> apply(t, u, v);
     }
 

@@ -174,7 +174,7 @@ public interface TriByteToDoubleFunction extends Lambda {
      * @return A {@code BiByteToDoubleFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default BiByteToDoubleFunction papplyAsDouble(byte value1) {
+    default BiByteToDoubleFunction applyAsDoublePartially(byte value1) {
         return (value2, value3) -> applyAsDouble(value1, value2, value3);
     }
 
@@ -187,7 +187,7 @@ public interface TriByteToDoubleFunction extends Lambda {
      * @return A {@code ByteToDoubleFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ByteToDoubleFunction papplyAsDouble(byte value1, byte value2) {
+    default ByteToDoubleFunction applyAsDoublePartially(byte value1, byte value2) {
         return value3 -> applyAsDouble(value1, value2, value3);
     }
 

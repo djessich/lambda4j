@@ -174,7 +174,7 @@ public interface ThrowableBiDoubleToIntFunction<X extends Throwable> extends Lam
      * arguments.
      */
     @Nonnull
-    default ThrowableDoubleToIntFunction<X> papplyAsIntThrows(double value1) {
+    default ThrowableDoubleToIntFunction<X> applyAsIntThrowsPartially(double value1) {
         return value2 -> applyAsIntThrows(value1, value2);
     }
 

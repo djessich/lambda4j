@@ -174,7 +174,7 @@ public interface ThrowableBiByteToDoubleFunction<X extends Throwable> extends La
      * arguments.
      */
     @Nonnull
-    default ThrowableByteToDoubleFunction<X> papplyAsDoubleThrows(byte value1) {
+    default ThrowableByteToDoubleFunction<X> applyAsDoubleThrowsPartially(byte value1) {
         return value2 -> applyAsDoubleThrows(value1, value2);
     }
 

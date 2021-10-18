@@ -176,7 +176,7 @@ public interface ObjLongToShortFunction<T> extends Lambda {
      * @return A {@code LongToShortFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default LongToShortFunction papplyAsShort(T t) {
+    default LongToShortFunction applyAsShortPartially(T t) {
         return value -> applyAsShort(t, value);
     }
 
@@ -187,7 +187,7 @@ public interface ObjLongToShortFunction<T> extends Lambda {
      * @return A {@code ToShortFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ToShortFunction<T> papplyAsShort(long value) {
+    default ToShortFunction<T> applyAsShortPartially(long value) {
         return t -> applyAsShort(t, value);
     }
 

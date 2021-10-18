@@ -194,7 +194,7 @@ public interface ThrowableTriLongToByteFunction<X extends Throwable> extends Lam
      * arguments.
      */
     @Nonnull
-    default ThrowableBiLongToByteFunction<X> papplyAsByteThrows(long value1) {
+    default ThrowableBiLongToByteFunction<X> applyAsByteThrowsPartially(long value1) {
         return (value2, value3) -> applyAsByteThrows(value1, value2, value3);
     }
 
@@ -207,7 +207,7 @@ public interface ThrowableTriLongToByteFunction<X extends Throwable> extends Lam
      * @return A {@code ThrowableLongToByteFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ThrowableLongToByteFunction<X> papplyAsByteThrows(long value1, long value2) {
+    default ThrowableLongToByteFunction<X> applyAsByteThrowsPartially(long value1, long value2) {
         return value3 -> applyAsByteThrows(value1, value2, value3);
     }
 

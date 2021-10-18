@@ -141,7 +141,7 @@ public interface BiConsumer2<T, U> extends Lambda, BiConsumer<T, U> {
      * @return A {@code Consumer2} that represents this consumer partially applied the some arguments.
      */
     @Nonnull
-    default Consumer2<U> paccept(T t) {
+    default Consumer2<U> acceptPartially(T t) {
         return u -> accept(t, u);
     }
 

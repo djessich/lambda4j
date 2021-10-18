@@ -216,7 +216,7 @@ public interface ThrowableObjBiShortToCharFunction<T, X extends Throwable> exten
      * arguments.
      */
     @Nonnull
-    default ThrowableBiShortToCharFunction<X> papplyAsCharThrows(T t) {
+    default ThrowableBiShortToCharFunction<X> applyAsCharThrowsPartially(T t) {
         return (value1, value2) -> applyAsCharThrows(t, value1, value2);
     }
 
@@ -230,7 +230,7 @@ public interface ThrowableObjBiShortToCharFunction<T, X extends Throwable> exten
      * arguments.
      */
     @Nonnull
-    default ThrowableShortToCharFunction<X> papplyAsCharThrows(T t, short value1) {
+    default ThrowableShortToCharFunction<X> applyAsCharThrowsPartially(T t, short value1) {
         return value2 -> applyAsCharThrows(t, value1, value2);
     }
 
@@ -243,7 +243,7 @@ public interface ThrowableObjBiShortToCharFunction<T, X extends Throwable> exten
      * arguments.
      */
     @Nonnull
-    default ThrowableObjShortToCharFunction<T, X> papplyAsCharThrows(short value1) {
+    default ThrowableObjShortToCharFunction<T, X> applyAsCharThrowsPartially(short value1) {
         return (t, value2) -> applyAsCharThrows(t, value1, value2);
     }
 
@@ -256,7 +256,7 @@ public interface ThrowableObjBiShortToCharFunction<T, X extends Throwable> exten
      * @return A {@code ThrowableToCharFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ThrowableToCharFunction<T, X> papplyAsCharThrows(short value1, short value2) {
+    default ThrowableToCharFunction<T, X> applyAsCharThrowsPartially(short value1, short value2) {
         return t -> applyAsCharThrows(t, value1, value2);
     }
 

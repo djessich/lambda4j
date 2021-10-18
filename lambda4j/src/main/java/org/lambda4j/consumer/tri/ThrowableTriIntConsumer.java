@@ -157,7 +157,7 @@ public interface ThrowableTriIntConsumer<X extends Throwable> extends Lambda {
      * @return A {@code ThrowableBiIntConsumer} that represents this consumer partially applied the some arguments.
      */
     @Nonnull
-    default ThrowableBiIntConsumer<X> pacceptThrows(int value1) {
+    default ThrowableBiIntConsumer<X> acceptThrowsPartially(int value1) {
         return (value2, value3) -> acceptThrows(value1, value2, value3);
     }
 
@@ -170,7 +170,7 @@ public interface ThrowableTriIntConsumer<X extends Throwable> extends Lambda {
      * @return A {@code ThrowableIntConsumer} that represents this consumer partially applied the some arguments.
      */
     @Nonnull
-    default ThrowableIntConsumer<X> pacceptThrows(int value1, int value2) {
+    default ThrowableIntConsumer<X> acceptThrowsPartially(int value1, int value2) {
         return value3 -> acceptThrows(value1, value2, value3);
     }
 

@@ -169,7 +169,7 @@ public interface ToCharBiFunction<T, U> extends Lambda {
      * @return A {@code ToCharFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ToCharFunction<U> papplyAsChar(T t) {
+    default ToCharFunction<U> applyAsCharPartially(T t) {
         return u -> applyAsChar(t, u);
     }
 

@@ -218,7 +218,7 @@ public interface BiObjIntToByteFunction<T, U> extends Lambda {
      * @return A {@code ObjIntToByteFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ObjIntToByteFunction<U> papplyAsByte(T t) {
+    default ObjIntToByteFunction<U> applyAsBytePartially(T t) {
         return (u, value) -> applyAsByte(t, u, value);
     }
 
@@ -230,7 +230,7 @@ public interface BiObjIntToByteFunction<T, U> extends Lambda {
      * @return A {@code IntToByteFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default IntToByteFunction papplyAsByte(T t, U u) {
+    default IntToByteFunction applyAsBytePartially(T t, U u) {
         return value -> applyAsByte(t, u, value);
     }
 
@@ -241,7 +241,7 @@ public interface BiObjIntToByteFunction<T, U> extends Lambda {
      * @return A {@code ToByteBiFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ToByteBiFunction<T, U> papplyAsByte(int value) {
+    default ToByteBiFunction<T, U> applyAsBytePartially(int value) {
         return (t, u) -> applyAsByte(t, u, value);
     }
 
@@ -253,7 +253,7 @@ public interface BiObjIntToByteFunction<T, U> extends Lambda {
      * @return A {@code ToByteFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ToByteFunction<U> papplyAsByte(T t, int value) {
+    default ToByteFunction<U> applyAsBytePartially(T t, int value) {
         return u -> applyAsByte(t, u, value);
     }
 

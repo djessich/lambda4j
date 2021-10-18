@@ -237,7 +237,7 @@ public interface ThrowableTriShortPredicate<X extends Throwable> extends Lambda 
      * @return A {@code ThrowableBiShortPredicate} that represents this predicate partially applied the some arguments.
      */
     @Nonnull
-    default ThrowableBiShortPredicate<X> ptestThrows(short value1) {
+    default ThrowableBiShortPredicate<X> testThrowsPartially(short value1) {
         return (value2, value3) -> testThrows(value1, value2, value3);
     }
 
@@ -250,7 +250,7 @@ public interface ThrowableTriShortPredicate<X extends Throwable> extends Lambda 
      * @return A {@code ThrowableShortPredicate} that represents this predicate partially applied the some arguments.
      */
     @Nonnull
-    default ThrowableShortPredicate<X> ptestThrows(short value1, short value2) {
+    default ThrowableShortPredicate<X> testThrowsPartially(short value1, short value2) {
         return value3 -> testThrows(value1, value2, value3);
     }
 

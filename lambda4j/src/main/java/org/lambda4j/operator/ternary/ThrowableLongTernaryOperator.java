@@ -202,7 +202,7 @@ public interface ThrowableLongTernaryOperator<X extends Throwable> extends Lambd
      * @return A {@code ThrowableLongBinaryOperator} that represents this operator partially applied the some arguments.
      */
     @Nonnull
-    default ThrowableLongBinaryOperator<X> papplyAsLongThrows(long value1) {
+    default ThrowableLongBinaryOperator<X> applyAsLongThrowsPartially(long value1) {
         return (value2, value3) -> applyAsLongThrows(value1, value2, value3);
     }
 
@@ -215,7 +215,7 @@ public interface ThrowableLongTernaryOperator<X extends Throwable> extends Lambd
      * @return A {@code ThrowableLongUnaryOperator} that represents this operator partially applied the some arguments.
      */
     @Nonnull
-    default ThrowableLongUnaryOperator<X> papplyAsLongThrows(long value1, long value2) {
+    default ThrowableLongUnaryOperator<X> applyAsLongThrowsPartially(long value1, long value2) {
         return value3 -> applyAsLongThrows(value1, value2, value3);
     }
 

@@ -176,7 +176,7 @@ public interface ObjShortToIntFunction<T> extends Lambda {
      * @return A {@code ShortToIntFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ShortToIntFunction papplyAsInt(T t) {
+    default ShortToIntFunction applyAsIntPartially(T t) {
         return value -> applyAsInt(t, value);
     }
 
@@ -187,7 +187,7 @@ public interface ObjShortToIntFunction<T> extends Lambda {
      * @return A {@code ToIntFunction2} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ToIntFunction2<T> papplyAsInt(short value) {
+    default ToIntFunction2<T> applyAsIntPartially(short value) {
         return t -> applyAsInt(t, value);
     }
 

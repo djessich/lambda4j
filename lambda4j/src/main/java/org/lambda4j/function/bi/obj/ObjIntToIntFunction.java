@@ -175,7 +175,7 @@ public interface ObjIntToIntFunction<T> extends Lambda {
      * @return A {@code IntUnaryOperator2} that represents this operator partially applied the some arguments.
      */
     @Nonnull
-    default IntUnaryOperator2 papplyAsInt(T t) {
+    default IntUnaryOperator2 applyAsIntPartially(T t) {
         return value -> applyAsInt(t, value);
     }
 
@@ -186,7 +186,7 @@ public interface ObjIntToIntFunction<T> extends Lambda {
      * @return A {@code ToIntFunction2} that represents this operator partially applied the some arguments.
      */
     @Nonnull
-    default ToIntFunction2<T> papplyAsInt(int value) {
+    default ToIntFunction2<T> applyAsIntPartially(int value) {
         return t -> applyAsInt(t, value);
     }
 

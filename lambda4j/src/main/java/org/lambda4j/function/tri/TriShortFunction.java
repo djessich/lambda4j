@@ -184,7 +184,7 @@ public interface TriShortFunction<R> extends Lambda {
      * @return A {@code BiShortFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default BiShortFunction<R> papply(short value1) {
+    default BiShortFunction<R> applyPartially(short value1) {
         return (value2, value3) -> apply(value1, value2, value3);
     }
 
@@ -196,7 +196,7 @@ public interface TriShortFunction<R> extends Lambda {
      * @return A {@code ShortFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ShortFunction<R> papply(short value1, short value2) {
+    default ShortFunction<R> applyPartially(short value1, short value2) {
         return value3 -> apply(value1, value2, value3);
     }
 

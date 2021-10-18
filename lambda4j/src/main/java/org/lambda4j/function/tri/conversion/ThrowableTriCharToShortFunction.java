@@ -194,7 +194,7 @@ public interface ThrowableTriCharToShortFunction<X extends Throwable> extends La
      * arguments.
      */
     @Nonnull
-    default ThrowableBiCharToShortFunction<X> papplyAsShortThrows(char value1) {
+    default ThrowableBiCharToShortFunction<X> applyAsShortThrowsPartially(char value1) {
         return (value2, value3) -> applyAsShortThrows(value1, value2, value3);
     }
 
@@ -208,7 +208,7 @@ public interface ThrowableTriCharToShortFunction<X extends Throwable> extends La
      * arguments.
      */
     @Nonnull
-    default ThrowableCharToShortFunction<X> papplyAsShortThrows(char value1, char value2) {
+    default ThrowableCharToShortFunction<X> applyAsShortThrowsPartially(char value1, char value2) {
         return value3 -> applyAsShortThrows(value1, value2, value3);
     }
 

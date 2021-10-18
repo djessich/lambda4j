@@ -215,7 +215,7 @@ public interface TriCharPredicate extends Lambda {
      * @return A {@code BiCharPredicate} that represents this predicate partially applied the some arguments.
      */
     @Nonnull
-    default BiCharPredicate ptest(char value1) {
+    default BiCharPredicate testPartially(char value1) {
         return (value2, value3) -> test(value1, value2, value3);
     }
 
@@ -227,7 +227,7 @@ public interface TriCharPredicate extends Lambda {
      * @return A {@code CharPredicate} that represents this predicate partially applied the some arguments.
      */
     @Nonnull
-    default CharPredicate ptest(char value1, char value2) {
+    default CharPredicate testPartially(char value1, char value2) {
         return value3 -> test(value1, value2, value3);
     }
 

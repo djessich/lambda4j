@@ -174,7 +174,7 @@ public interface ThrowableBiFloatToCharFunction<X extends Throwable> extends Lam
      * arguments.
      */
     @Nonnull
-    default ThrowableFloatToCharFunction<X> papplyAsCharThrows(float value1) {
+    default ThrowableFloatToCharFunction<X> applyAsCharThrowsPartially(float value1) {
         return value2 -> applyAsCharThrows(value1, value2);
     }
 

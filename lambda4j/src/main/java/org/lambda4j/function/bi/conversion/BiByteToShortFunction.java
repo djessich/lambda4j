@@ -156,7 +156,7 @@ public interface BiByteToShortFunction extends Lambda {
      * @return A {@code ByteToShortFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ByteToShortFunction papplyAsShort(byte value1) {
+    default ByteToShortFunction applyAsShortPartially(byte value1) {
         return value2 -> applyAsShort(value1, value2);
     }
 

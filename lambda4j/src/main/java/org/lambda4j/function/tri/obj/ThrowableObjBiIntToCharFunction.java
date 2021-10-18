@@ -216,7 +216,7 @@ public interface ThrowableObjBiIntToCharFunction<T, X extends Throwable> extends
      * arguments.
      */
     @Nonnull
-    default ThrowableBiIntToCharFunction<X> papplyAsCharThrows(T t) {
+    default ThrowableBiIntToCharFunction<X> applyAsCharThrowsPartially(T t) {
         return (value1, value2) -> applyAsCharThrows(t, value1, value2);
     }
 
@@ -229,7 +229,7 @@ public interface ThrowableObjBiIntToCharFunction<T, X extends Throwable> extends
      * @return A {@code ThrowableIntToCharFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ThrowableIntToCharFunction<X> papplyAsCharThrows(T t, int value1) {
+    default ThrowableIntToCharFunction<X> applyAsCharThrowsPartially(T t, int value1) {
         return value2 -> applyAsCharThrows(t, value1, value2);
     }
 
@@ -242,7 +242,7 @@ public interface ThrowableObjBiIntToCharFunction<T, X extends Throwable> extends
      * arguments.
      */
     @Nonnull
-    default ThrowableObjIntToCharFunction<T, X> papplyAsCharThrows(int value1) {
+    default ThrowableObjIntToCharFunction<T, X> applyAsCharThrowsPartially(int value1) {
         return (t, value2) -> applyAsCharThrows(t, value1, value2);
     }
 
@@ -255,7 +255,7 @@ public interface ThrowableObjBiIntToCharFunction<T, X extends Throwable> extends
      * @return A {@code ThrowableToCharFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ThrowableToCharFunction<T, X> papplyAsCharThrows(int value1, int value2) {
+    default ThrowableToCharFunction<T, X> applyAsCharThrowsPartially(int value1, int value2) {
         return t -> applyAsCharThrows(t, value1, value2);
     }
 

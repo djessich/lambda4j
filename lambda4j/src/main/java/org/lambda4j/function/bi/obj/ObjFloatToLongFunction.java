@@ -177,7 +177,7 @@ public interface ObjFloatToLongFunction<T> extends Lambda {
      * @return A {@code FloatToLongFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default FloatToLongFunction papplyAsLong(T t) {
+    default FloatToLongFunction applyAsLongPartially(T t) {
         return value -> applyAsLong(t, value);
     }
 
@@ -188,7 +188,7 @@ public interface ObjFloatToLongFunction<T> extends Lambda {
      * @return A {@code ToLongFunction2} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ToLongFunction2<T> papplyAsLong(float value) {
+    default ToLongFunction2<T> applyAsLongPartially(float value) {
         return t -> applyAsLong(t, value);
     }
 

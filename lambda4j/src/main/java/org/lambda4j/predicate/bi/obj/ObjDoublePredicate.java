@@ -224,7 +224,7 @@ public interface ObjDoublePredicate<T> extends Lambda {
      * @return A {@code DoublePredicate2} that represents this predicate partially applied the some arguments.
      */
     @Nonnull
-    default DoublePredicate2 ptest(T t) {
+    default DoublePredicate2 testPartially(T t) {
         return value -> test(t, value);
     }
 
@@ -235,7 +235,7 @@ public interface ObjDoublePredicate<T> extends Lambda {
      * @return A {@code Predicate2} that represents this predicate partially applied the some arguments.
      */
     @Nonnull
-    default Predicate2<T> ptest(double value) {
+    default Predicate2<T> testPartially(double value) {
         return t -> test(t, value);
     }
 

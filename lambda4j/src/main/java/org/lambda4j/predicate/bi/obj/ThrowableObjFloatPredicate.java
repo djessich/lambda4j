@@ -242,7 +242,7 @@ public interface ThrowableObjFloatPredicate<T, X extends Throwable> extends Lamb
      * @return A {@code ThrowableFloatPredicate} that represents this predicate partially applied the some arguments.
      */
     @Nonnull
-    default ThrowableFloatPredicate<X> ptestThrows(T t) {
+    default ThrowableFloatPredicate<X> testThrowsPartially(T t) {
         return value -> testThrows(t, value);
     }
 
@@ -254,7 +254,7 @@ public interface ThrowableObjFloatPredicate<T, X extends Throwable> extends Lamb
      * @return A {@code ThrowablePredicate} that represents this predicate partially applied the some arguments.
      */
     @Nonnull
-    default ThrowablePredicate<T, X> ptestThrows(float value) {
+    default ThrowablePredicate<T, X> testThrowsPartially(float value) {
         return t -> testThrows(t, value);
     }
 

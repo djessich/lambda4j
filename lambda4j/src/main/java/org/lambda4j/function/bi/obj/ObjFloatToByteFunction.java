@@ -176,7 +176,7 @@ public interface ObjFloatToByteFunction<T> extends Lambda {
      * @return A {@code FloatToByteFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default FloatToByteFunction papplyAsByte(T t) {
+    default FloatToByteFunction applyAsBytePartially(T t) {
         return value -> applyAsByte(t, value);
     }
 
@@ -187,7 +187,7 @@ public interface ObjFloatToByteFunction<T> extends Lambda {
      * @return A {@code ToByteFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ToByteFunction<T> papplyAsByte(float value) {
+    default ToByteFunction<T> applyAsBytePartially(float value) {
         return t -> applyAsByte(t, value);
     }
 

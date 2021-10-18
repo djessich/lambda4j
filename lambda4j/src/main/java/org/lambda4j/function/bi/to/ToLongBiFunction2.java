@@ -173,7 +173,7 @@ public interface ToLongBiFunction2<T, U> extends Lambda, ToLongBiFunction<T, U> 
      * @return A {@code ToLongFunction2} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ToLongFunction2<U> papplyAsLong(T t) {
+    default ToLongFunction2<U> applyAsLongPartially(T t) {
         return u -> applyAsLong(t, u);
     }
 

@@ -122,7 +122,7 @@ public interface BiByteConsumer extends Lambda {
      * @return A {@code ByteConsumer} that represents this consumer partially applied the some arguments.
      */
     @Nonnull
-    default ByteConsumer paccept(byte value1) {
+    default ByteConsumer acceptPartially(byte value1) {
         return value2 -> accept(value1, value2);
     }
 

@@ -183,7 +183,7 @@ public interface ThrowableBiCharFunction<R, X extends Throwable> extends Lambda 
      * @return A {@code ThrowableCharFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ThrowableCharFunction<R, X> papplyThrows(char value1) {
+    default ThrowableCharFunction<R, X> applyThrowsPartially(char value1) {
         return value2 -> applyThrows(value1, value2);
     }
 

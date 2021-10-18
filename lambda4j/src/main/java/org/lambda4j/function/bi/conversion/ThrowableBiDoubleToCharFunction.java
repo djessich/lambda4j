@@ -174,7 +174,7 @@ public interface ThrowableBiDoubleToCharFunction<X extends Throwable> extends La
      * arguments.
      */
     @Nonnull
-    default ThrowableDoubleToCharFunction<X> papplyAsCharThrows(double value1) {
+    default ThrowableDoubleToCharFunction<X> applyAsCharThrowsPartially(double value1) {
         return value2 -> applyAsCharThrows(value1, value2);
     }
 

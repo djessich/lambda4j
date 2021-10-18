@@ -197,7 +197,7 @@ public interface ToCharTriFunction<T, U, V> extends Lambda {
      * @return A {@code ToCharBiFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ToCharBiFunction<U, V> papplyAsChar(T t) {
+    default ToCharBiFunction<U, V> applyAsCharPartially(T t) {
         return (u, v) -> applyAsChar(t, u, v);
     }
 
@@ -209,7 +209,7 @@ public interface ToCharTriFunction<T, U, V> extends Lambda {
      * @return A {@code ToCharFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ToCharFunction<V> papplyAsChar(T t, U u) {
+    default ToCharFunction<V> applyAsCharPartially(T t, U u) {
         return v -> applyAsChar(t, u, v);
     }
 

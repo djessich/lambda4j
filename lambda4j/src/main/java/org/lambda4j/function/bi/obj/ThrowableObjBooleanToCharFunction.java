@@ -194,7 +194,7 @@ public interface ThrowableObjBooleanToCharFunction<T, X extends Throwable> exten
      * arguments.
      */
     @Nonnull
-    default ThrowableBooleanToCharFunction<X> papplyAsCharThrows(T t) {
+    default ThrowableBooleanToCharFunction<X> applyAsCharThrowsPartially(T t) {
         return value -> applyAsCharThrows(t, value);
     }
 
@@ -206,7 +206,7 @@ public interface ThrowableObjBooleanToCharFunction<T, X extends Throwable> exten
      * @return A {@code ThrowableToCharFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ThrowableToCharFunction<T, X> papplyAsCharThrows(boolean value) {
+    default ThrowableToCharFunction<T, X> applyAsCharThrowsPartially(boolean value) {
         return t -> applyAsCharThrows(t, value);
     }
 

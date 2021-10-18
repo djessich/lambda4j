@@ -204,7 +204,7 @@ public interface ThrowableTriShortFunction<R, X extends Throwable> extends Lambd
      * @return A {@code ThrowableBiShortFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ThrowableBiShortFunction<R, X> papplyThrows(short value1) {
+    default ThrowableBiShortFunction<R, X> applyThrowsPartially(short value1) {
         return (value2, value3) -> applyThrows(value1, value2, value3);
     }
 
@@ -217,7 +217,7 @@ public interface ThrowableTriShortFunction<R, X extends Throwable> extends Lambd
      * @return A {@code ThrowableShortFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ThrowableShortFunction<R, X> papplyThrows(short value1, short value2) {
+    default ThrowableShortFunction<R, X> applyThrowsPartially(short value1, short value2) {
         return value3 -> applyThrows(value1, value2, value3);
     }
 

@@ -151,7 +151,7 @@ public interface ObjIntConsumer2<T> extends Lambda, ObjIntConsumer<T> {
      * @return A {@code IntConsumer2} that represents this consumer partially applied the some arguments.
      */
     @Nonnull
-    default IntConsumer2 paccept(T t) {
+    default IntConsumer2 acceptPartially(T t) {
         return value -> accept(t, value);
     }
 
@@ -162,7 +162,7 @@ public interface ObjIntConsumer2<T> extends Lambda, ObjIntConsumer<T> {
      * @return A {@code Consumer2} that represents this consumer partially applied the some arguments.
      */
     @Nonnull
-    default Consumer2<T> paccept(int value) {
+    default Consumer2<T> acceptPartially(int value) {
         return t -> accept(t, value);
     }
 

@@ -220,7 +220,7 @@ public interface BiObjShortToDoubleFunction<T, U> extends Lambda {
      * @return A {@code ObjShortToDoubleFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ObjShortToDoubleFunction<U> papplyAsDouble(T t) {
+    default ObjShortToDoubleFunction<U> applyAsDoublePartially(T t) {
         return (u, value) -> applyAsDouble(t, u, value);
     }
 
@@ -233,7 +233,7 @@ public interface BiObjShortToDoubleFunction<T, U> extends Lambda {
      * @return A {@code ShortToDoubleFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ShortToDoubleFunction papplyAsDouble(T t, U u) {
+    default ShortToDoubleFunction applyAsDoublePartially(T t, U u) {
         return value -> applyAsDouble(t, u, value);
     }
 
@@ -245,7 +245,7 @@ public interface BiObjShortToDoubleFunction<T, U> extends Lambda {
      * @return A {@code ToDoubleBiFunction2} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ToDoubleBiFunction2<T, U> papplyAsDouble(short value) {
+    default ToDoubleBiFunction2<T, U> applyAsDoublePartially(short value) {
         return (t, u) -> applyAsDouble(t, u, value);
     }
 
@@ -257,7 +257,7 @@ public interface BiObjShortToDoubleFunction<T, U> extends Lambda {
      * @return A {@code ToDoubleFunction2} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ToDoubleFunction2<U> papplyAsDouble(T t, short value) {
+    default ToDoubleFunction2<U> applyAsDoublePartially(T t, short value) {
         return u -> applyAsDouble(t, u, value);
     }
 

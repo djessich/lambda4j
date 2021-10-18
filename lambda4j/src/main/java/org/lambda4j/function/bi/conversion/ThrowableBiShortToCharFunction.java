@@ -174,7 +174,7 @@ public interface ThrowableBiShortToCharFunction<X extends Throwable> extends Lam
      * arguments.
      */
     @Nonnull
-    default ThrowableShortToCharFunction<X> papplyAsCharThrows(short value1) {
+    default ThrowableShortToCharFunction<X> applyAsCharThrowsPartially(short value1) {
         return value2 -> applyAsCharThrows(value1, value2);
     }
 

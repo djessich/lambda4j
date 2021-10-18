@@ -155,7 +155,7 @@ public interface BiIntToByteFunction extends Lambda {
      * @return A {@code IntToByteFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default IntToByteFunction papplyAsByte(int value1) {
+    default IntToByteFunction applyAsBytePartially(int value1) {
         return value2 -> applyAsByte(value1, value2);
     }
 

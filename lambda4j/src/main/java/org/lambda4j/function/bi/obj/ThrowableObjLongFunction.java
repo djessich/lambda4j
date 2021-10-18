@@ -208,7 +208,7 @@ public interface ThrowableObjLongFunction<T, R, X extends Throwable> extends Lam
      * @return A {@code ThrowableLongFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ThrowableLongFunction<R, X> papplyThrows(T t) {
+    default ThrowableLongFunction<R, X> applyThrowsPartially(T t) {
         return value -> applyThrows(t, value);
     }
 
@@ -219,7 +219,7 @@ public interface ThrowableObjLongFunction<T, R, X extends Throwable> extends Lam
      * @return A {@code ThrowableFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ThrowableFunction<T, R, X> papplyThrows(long value) {
+    default ThrowableFunction<T, R, X> applyThrowsPartially(long value) {
         return t -> applyThrows(t, value);
     }
 

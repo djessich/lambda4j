@@ -173,7 +173,7 @@ public interface ToIntBiFunction2<T, U> extends Lambda, ToIntBiFunction<T, U> {
      * @return A {@code ToIntFunction2} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ToIntFunction2<U> papplyAsInt(T t) {
+    default ToIntFunction2<U> applyAsIntPartially(T t) {
         return u -> applyAsInt(t, u);
     }
 

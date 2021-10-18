@@ -183,7 +183,7 @@ public interface IntTernaryOperator extends Lambda {
      * @return A {@code IntBinaryOperator2} that represents this operator partially applied the some arguments.
      */
     @Nonnull
-    default IntBinaryOperator2 papplyAsInt(int value1) {
+    default IntBinaryOperator2 applyAsIntPartially(int value1) {
         return (value2, value3) -> applyAsInt(value1, value2, value3);
     }
 
@@ -195,7 +195,7 @@ public interface IntTernaryOperator extends Lambda {
      * @return A {@code IntUnaryOperator2} that represents this operator partially applied the some arguments.
      */
     @Nonnull
-    default IntUnaryOperator2 papplyAsInt(int value1, int value2) {
+    default IntUnaryOperator2 applyAsIntPartially(int value1, int value2) {
         return value3 -> applyAsInt(value1, value2, value3);
     }
 

@@ -202,7 +202,7 @@ public interface ThrowableCharTernaryOperator<X extends Throwable> extends Lambd
      * @return A {@code ThrowableCharBinaryOperator} that represents this operator partially applied the some arguments.
      */
     @Nonnull
-    default ThrowableCharBinaryOperator<X> papplyAsCharThrows(char value1) {
+    default ThrowableCharBinaryOperator<X> applyAsCharThrowsPartially(char value1) {
         return (value2, value3) -> applyAsCharThrows(value1, value2, value3);
     }
 
@@ -215,7 +215,7 @@ public interface ThrowableCharTernaryOperator<X extends Throwable> extends Lambd
      * @return A {@code ThrowableCharUnaryOperator} that represents this operator partially applied the some arguments.
      */
     @Nonnull
-    default ThrowableCharUnaryOperator<X> papplyAsCharThrows(char value1, char value2) {
+    default ThrowableCharUnaryOperator<X> applyAsCharThrowsPartially(char value1, char value2) {
         return value3 -> applyAsCharThrows(value1, value2, value3);
     }
 

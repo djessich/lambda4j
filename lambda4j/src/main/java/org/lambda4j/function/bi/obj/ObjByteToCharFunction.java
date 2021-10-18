@@ -175,7 +175,7 @@ public interface ObjByteToCharFunction<T> extends Lambda {
      * @return A {@code ByteToCharFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ByteToCharFunction papplyAsChar(T t) {
+    default ByteToCharFunction applyAsCharPartially(T t) {
         return value -> applyAsChar(t, value);
     }
 
@@ -186,7 +186,7 @@ public interface ObjByteToCharFunction<T> extends Lambda {
      * @return A {@code ToCharFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ToCharFunction<T> papplyAsChar(byte value) {
+    default ToCharFunction<T> applyAsCharPartially(byte value) {
         return t -> applyAsChar(t, value);
     }
 

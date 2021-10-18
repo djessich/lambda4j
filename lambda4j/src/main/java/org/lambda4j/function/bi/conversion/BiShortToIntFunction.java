@@ -155,7 +155,7 @@ public interface BiShortToIntFunction extends Lambda {
      * @return A {@code ShortToIntFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ShortToIntFunction papplyAsInt(short value1) {
+    default ShortToIntFunction applyAsIntPartially(short value1) {
         return value2 -> applyAsInt(value1, value2);
     }
 

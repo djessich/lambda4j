@@ -198,7 +198,7 @@ public interface FloatBinaryOperator extends Lambda {
      * @return A {@code FloatUnaryOperator} that represents this operator partially applied the some arguments.
      */
     @Nonnull
-    default FloatUnaryOperator papplyAsFloat(float value1) {
+    default FloatUnaryOperator applyAsFloatPartially(float value1) {
         return value2 -> applyAsFloat(value1, value2);
     }
 

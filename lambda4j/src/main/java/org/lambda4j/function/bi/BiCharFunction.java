@@ -164,7 +164,7 @@ public interface BiCharFunction<R> extends Lambda {
      * @return A {@code CharFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default CharFunction<R> papply(char value1) {
+    default CharFunction<R> applyPartially(char value1) {
         return value2 -> apply(value1, value2);
     }
 

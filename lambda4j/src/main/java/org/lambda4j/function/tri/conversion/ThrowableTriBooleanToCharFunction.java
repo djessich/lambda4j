@@ -194,7 +194,7 @@ public interface ThrowableTriBooleanToCharFunction<X extends Throwable> extends 
      * arguments.
      */
     @Nonnull
-    default ThrowableBiBooleanToCharFunction<X> papplyAsCharThrows(boolean value1) {
+    default ThrowableBiBooleanToCharFunction<X> applyAsCharThrowsPartially(boolean value1) {
         return (value2, value3) -> applyAsCharThrows(value1, value2, value3);
     }
 
@@ -208,7 +208,7 @@ public interface ThrowableTriBooleanToCharFunction<X extends Throwable> extends 
      * arguments.
      */
     @Nonnull
-    default ThrowableBooleanToCharFunction<X> papplyAsCharThrows(boolean value1, boolean value2) {
+    default ThrowableBooleanToCharFunction<X> applyAsCharThrowsPartially(boolean value1, boolean value2) {
         return value3 -> applyAsCharThrows(value1, value2, value3);
     }
 

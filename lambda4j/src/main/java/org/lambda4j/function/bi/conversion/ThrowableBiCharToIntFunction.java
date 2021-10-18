@@ -172,7 +172,7 @@ public interface ThrowableBiCharToIntFunction<X extends Throwable> extends Lambd
      * @return A {@code ThrowableCharToIntFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ThrowableCharToIntFunction<X> papplyAsIntThrows(char value1) {
+    default ThrowableCharToIntFunction<X> applyAsIntThrowsPartially(char value1) {
         return value2 -> applyAsIntThrows(value1, value2);
     }
 

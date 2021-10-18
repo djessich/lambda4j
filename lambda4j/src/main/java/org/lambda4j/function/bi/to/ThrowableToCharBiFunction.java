@@ -186,7 +186,7 @@ public interface ThrowableToCharBiFunction<T, U, X extends Throwable> extends La
      * @return A {@code ThrowableToCharFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ThrowableToCharFunction<U, X> papplyAsCharThrows(T t) {
+    default ThrowableToCharFunction<U, X> applyAsCharThrowsPartially(T t) {
         return u -> applyAsCharThrows(t, u);
     }
 

@@ -173,7 +173,7 @@ public interface ThrowableBiBooleanToDoubleFunction<X extends Throwable> extends
      * arguments.
      */
     @Nonnull
-    default ThrowableBooleanToDoubleFunction<X> papplyAsDoubleThrows(boolean value1) {
+    default ThrowableBooleanToDoubleFunction<X> applyAsDoubleThrowsPartially(boolean value1) {
         return value2 -> applyAsDoubleThrows(value1, value2);
     }
 

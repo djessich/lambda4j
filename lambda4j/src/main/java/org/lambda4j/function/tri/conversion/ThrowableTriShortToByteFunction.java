@@ -194,7 +194,7 @@ public interface ThrowableTriShortToByteFunction<X extends Throwable> extends La
      * arguments.
      */
     @Nonnull
-    default ThrowableBiShortToByteFunction<X> papplyAsByteThrows(short value1) {
+    default ThrowableBiShortToByteFunction<X> applyAsByteThrowsPartially(short value1) {
         return (value2, value3) -> applyAsByteThrows(value1, value2, value3);
     }
 
@@ -208,7 +208,7 @@ public interface ThrowableTriShortToByteFunction<X extends Throwable> extends La
      * arguments.
      */
     @Nonnull
-    default ThrowableShortToByteFunction<X> papplyAsByteThrows(short value1, short value2) {
+    default ThrowableShortToByteFunction<X> applyAsByteThrowsPartially(short value1, short value2) {
         return value3 -> applyAsByteThrows(value1, value2, value3);
     }
 

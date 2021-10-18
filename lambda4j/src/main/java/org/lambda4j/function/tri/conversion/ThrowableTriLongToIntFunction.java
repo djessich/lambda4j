@@ -194,7 +194,7 @@ public interface ThrowableTriLongToIntFunction<X extends Throwable> extends Lamb
      * arguments.
      */
     @Nonnull
-    default ThrowableBiLongToIntFunction<X> papplyAsIntThrows(long value1) {
+    default ThrowableBiLongToIntFunction<X> applyAsIntThrowsPartially(long value1) {
         return (value2, value3) -> applyAsIntThrows(value1, value2, value3);
     }
 
@@ -207,7 +207,7 @@ public interface ThrowableTriLongToIntFunction<X extends Throwable> extends Lamb
      * @return A {@code ThrowableLongToIntFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ThrowableLongToIntFunction<X> papplyAsIntThrows(long value1, long value2) {
+    default ThrowableLongToIntFunction<X> applyAsIntThrowsPartially(long value1, long value2) {
         return value3 -> applyAsIntThrows(value1, value2, value3);
     }
 

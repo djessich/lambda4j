@@ -194,7 +194,7 @@ public interface ThrowableTriLongToDoubleFunction<X extends Throwable> extends L
      * arguments.
      */
     @Nonnull
-    default ThrowableBiLongToDoubleFunction<X> papplyAsDoubleThrows(long value1) {
+    default ThrowableBiLongToDoubleFunction<X> applyAsDoubleThrowsPartially(long value1) {
         return (value2, value3) -> applyAsDoubleThrows(value1, value2, value3);
     }
 
@@ -208,7 +208,7 @@ public interface ThrowableTriLongToDoubleFunction<X extends Throwable> extends L
      * arguments.
      */
     @Nonnull
-    default ThrowableLongToDoubleFunction<X> papplyAsDoubleThrows(long value1, long value2) {
+    default ThrowableLongToDoubleFunction<X> applyAsDoubleThrowsPartially(long value1, long value2) {
         return value3 -> applyAsDoubleThrows(value1, value2, value3);
     }
 

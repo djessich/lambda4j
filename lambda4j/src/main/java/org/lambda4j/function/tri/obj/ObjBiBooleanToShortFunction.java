@@ -197,7 +197,7 @@ public interface ObjBiBooleanToShortFunction<T> extends Lambda {
      * @return A {@code BiBooleanToShortFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default BiBooleanToShortFunction papplyAsShort(T t) {
+    default BiBooleanToShortFunction applyAsShortPartially(T t) {
         return (value1, value2) -> applyAsShort(t, value1, value2);
     }
 
@@ -210,7 +210,7 @@ public interface ObjBiBooleanToShortFunction<T> extends Lambda {
      * @return A {@code BooleanToShortFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default BooleanToShortFunction papplyAsShort(T t, boolean value1) {
+    default BooleanToShortFunction applyAsShortPartially(T t, boolean value1) {
         return value2 -> applyAsShort(t, value1, value2);
     }
 
@@ -222,7 +222,7 @@ public interface ObjBiBooleanToShortFunction<T> extends Lambda {
      * @return A {@code ObjBooleanToShortFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ObjBooleanToShortFunction<T> papplyAsShort(boolean value1) {
+    default ObjBooleanToShortFunction<T> applyAsShortPartially(boolean value1) {
         return (t, value2) -> applyAsShort(t, value1, value2);
     }
 
@@ -234,7 +234,7 @@ public interface ObjBiBooleanToShortFunction<T> extends Lambda {
      * @return A {@code ToShortFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ToShortFunction<T> papplyAsShort(boolean value1, boolean value2) {
+    default ToShortFunction<T> applyAsShortPartially(boolean value1, boolean value2) {
         return t -> applyAsShort(t, value1, value2);
     }
 

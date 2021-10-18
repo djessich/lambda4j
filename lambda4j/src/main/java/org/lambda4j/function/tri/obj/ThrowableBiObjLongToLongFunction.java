@@ -237,7 +237,7 @@ public interface ThrowableBiObjLongToLongFunction<T, U, X extends Throwable> ext
      * arguments.
      */
     @Nonnull
-    default ThrowableObjLongToLongFunction<U, X> papplyAsLongThrows(T t) {
+    default ThrowableObjLongToLongFunction<U, X> applyAsLongThrowsPartially(T t) {
         return (u, value) -> applyAsLongThrows(t, u, value);
     }
 
@@ -250,7 +250,7 @@ public interface ThrowableBiObjLongToLongFunction<T, U, X extends Throwable> ext
      * @return A {@code ThrowableLongUnaryOperator} that represents this operator partially applied the some arguments.
      */
     @Nonnull
-    default ThrowableLongUnaryOperator<X> papplyAsLongThrows(T t, U u) {
+    default ThrowableLongUnaryOperator<X> applyAsLongThrowsPartially(T t, U u) {
         return value -> applyAsLongThrows(t, u, value);
     }
 
@@ -262,7 +262,7 @@ public interface ThrowableBiObjLongToLongFunction<T, U, X extends Throwable> ext
      * @return A {@code ThrowableToLongBiFunction} that represents this operator partially applied the some arguments.
      */
     @Nonnull
-    default ThrowableToLongBiFunction<T, U, X> papplyAsLongThrows(long value) {
+    default ThrowableToLongBiFunction<T, U, X> applyAsLongThrowsPartially(long value) {
         return (t, u) -> applyAsLongThrows(t, u, value);
     }
 
@@ -275,7 +275,7 @@ public interface ThrowableBiObjLongToLongFunction<T, U, X extends Throwable> ext
      * @return A {@code ThrowableToLongFunction} that represents this operator partially applied the some arguments.
      */
     @Nonnull
-    default ThrowableToLongFunction<U, X> papplyAsLongThrows(T t, long value) {
+    default ThrowableToLongFunction<U, X> applyAsLongThrowsPartially(T t, long value) {
         return u -> applyAsLongThrows(t, u, value);
     }
 

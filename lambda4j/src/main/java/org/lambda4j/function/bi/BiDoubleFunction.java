@@ -166,7 +166,7 @@ public interface BiDoubleFunction<R> extends Lambda {
      * @return A {@code DoubleFunction2} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default DoubleFunction2<R> papply(double value1) {
+    default DoubleFunction2<R> applyPartially(double value1) {
         return value2 -> apply(value1, value2);
     }
 

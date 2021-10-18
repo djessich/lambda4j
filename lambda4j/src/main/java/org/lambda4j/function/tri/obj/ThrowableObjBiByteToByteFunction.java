@@ -213,7 +213,7 @@ public interface ThrowableObjBiByteToByteFunction<T, X extends Throwable> extend
      * @return A {@code ThrowableByteBinaryOperator} that represents this operator partially applied the some arguments.
      */
     @Nonnull
-    default ThrowableByteBinaryOperator<X> papplyAsByteThrows(T t) {
+    default ThrowableByteBinaryOperator<X> applyAsByteThrowsPartially(T t) {
         return (value1, value2) -> applyAsByteThrows(t, value1, value2);
     }
 
@@ -226,7 +226,7 @@ public interface ThrowableObjBiByteToByteFunction<T, X extends Throwable> extend
      * @return A {@code ThrowableByteUnaryOperator} that represents this operator partially applied the some arguments.
      */
     @Nonnull
-    default ThrowableByteUnaryOperator<X> papplyAsByteThrows(T t, byte value1) {
+    default ThrowableByteUnaryOperator<X> applyAsByteThrowsPartially(T t, byte value1) {
         return value2 -> applyAsByteThrows(t, value1, value2);
     }
 
@@ -239,7 +239,7 @@ public interface ThrowableObjBiByteToByteFunction<T, X extends Throwable> extend
      * arguments.
      */
     @Nonnull
-    default ThrowableObjByteToByteFunction<T, X> papplyAsByteThrows(byte value1) {
+    default ThrowableObjByteToByteFunction<T, X> applyAsByteThrowsPartially(byte value1) {
         return (t, value2) -> applyAsByteThrows(t, value1, value2);
     }
 
@@ -252,7 +252,7 @@ public interface ThrowableObjBiByteToByteFunction<T, X extends Throwable> extend
      * @return A {@code ThrowableToByteFunction} that represents this operator partially applied the some arguments.
      */
     @Nonnull
-    default ThrowableToByteFunction<T, X> papplyAsByteThrows(byte value1, byte value2) {
+    default ThrowableToByteFunction<T, X> applyAsByteThrowsPartially(byte value1, byte value2) {
         return t -> applyAsByteThrows(t, value1, value2);
     }
 

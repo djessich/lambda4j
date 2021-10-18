@@ -199,7 +199,7 @@ public interface ToDoubleTriFunction<T, U, V> extends Lambda {
      * @return A {@code ToDoubleBiFunction2} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ToDoubleBiFunction2<U, V> papplyAsDouble(T t) {
+    default ToDoubleBiFunction2<U, V> applyAsDoublePartially(T t) {
         return (u, v) -> applyAsDouble(t, u, v);
     }
 
@@ -211,7 +211,7 @@ public interface ToDoubleTriFunction<T, U, V> extends Lambda {
      * @return A {@code ToDoubleFunction2} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ToDoubleFunction2<V> papplyAsDouble(T t, U u) {
+    default ToDoubleFunction2<V> applyAsDoublePartially(T t, U u) {
         return v -> applyAsDouble(t, u, v);
     }
 

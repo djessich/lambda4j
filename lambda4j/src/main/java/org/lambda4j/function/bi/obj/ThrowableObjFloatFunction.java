@@ -208,7 +208,7 @@ public interface ThrowableObjFloatFunction<T, R, X extends Throwable> extends La
      * @return A {@code ThrowableFloatFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ThrowableFloatFunction<R, X> papplyThrows(T t) {
+    default ThrowableFloatFunction<R, X> applyThrowsPartially(T t) {
         return value -> applyThrows(t, value);
     }
 
@@ -219,7 +219,7 @@ public interface ThrowableObjFloatFunction<T, R, X extends Throwable> extends La
      * @return A {@code ThrowableFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ThrowableFunction<T, R, X> papplyThrows(float value) {
+    default ThrowableFunction<T, R, X> applyThrowsPartially(float value) {
         return t -> applyThrows(t, value);
     }
 

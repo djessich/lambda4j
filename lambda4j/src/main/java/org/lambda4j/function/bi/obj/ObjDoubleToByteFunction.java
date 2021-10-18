@@ -176,7 +176,7 @@ public interface ObjDoubleToByteFunction<T> extends Lambda {
      * @return A {@code DoubleToByteFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default DoubleToByteFunction papplyAsByte(T t) {
+    default DoubleToByteFunction applyAsBytePartially(T t) {
         return value -> applyAsByte(t, value);
     }
 
@@ -187,7 +187,7 @@ public interface ObjDoubleToByteFunction<T> extends Lambda {
      * @return A {@code ToByteFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ToByteFunction<T> papplyAsByte(double value) {
+    default ToByteFunction<T> applyAsBytePartially(double value) {
         return t -> applyAsByte(t, value);
     }
 

@@ -220,7 +220,7 @@ public interface BiObjBooleanToDoubleFunction<T, U> extends Lambda {
      * @return A {@code ObjBooleanToDoubleFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ObjBooleanToDoubleFunction<U> papplyAsDouble(T t) {
+    default ObjBooleanToDoubleFunction<U> applyAsDoublePartially(T t) {
         return (u, value) -> applyAsDouble(t, u, value);
     }
 
@@ -233,7 +233,7 @@ public interface BiObjBooleanToDoubleFunction<T, U> extends Lambda {
      * @return A {@code BooleanToDoubleFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default BooleanToDoubleFunction papplyAsDouble(T t, U u) {
+    default BooleanToDoubleFunction applyAsDoublePartially(T t, U u) {
         return value -> applyAsDouble(t, u, value);
     }
 
@@ -245,7 +245,7 @@ public interface BiObjBooleanToDoubleFunction<T, U> extends Lambda {
      * @return A {@code ToDoubleBiFunction2} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ToDoubleBiFunction2<T, U> papplyAsDouble(boolean value) {
+    default ToDoubleBiFunction2<T, U> applyAsDoublePartially(boolean value) {
         return (t, u) -> applyAsDouble(t, u, value);
     }
 
@@ -257,7 +257,7 @@ public interface BiObjBooleanToDoubleFunction<T, U> extends Lambda {
      * @return A {@code ToDoubleFunction2} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ToDoubleFunction2<U> papplyAsDouble(T t, boolean value) {
+    default ToDoubleFunction2<U> applyAsDoublePartially(T t, boolean value) {
         return u -> applyAsDouble(t, u, value);
     }
 

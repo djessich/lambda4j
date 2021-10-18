@@ -216,7 +216,7 @@ public interface ThrowableToLongTriFunction<T, U, V, X extends Throwable> extend
      * @return A {@code ThrowableToLongBiFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ThrowableToLongBiFunction<U, V, X> papplyAsLongThrows(T t) {
+    default ThrowableToLongBiFunction<U, V, X> applyAsLongThrowsPartially(T t) {
         return (u, v) -> applyAsLongThrows(t, u, v);
     }
 
@@ -229,7 +229,7 @@ public interface ThrowableToLongTriFunction<T, U, V, X extends Throwable> extend
      * @return A {@code ThrowableToLongFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ThrowableToLongFunction<V, X> papplyAsLongThrows(T t, U u) {
+    default ThrowableToLongFunction<V, X> applyAsLongThrowsPartially(T t, U u) {
         return v -> applyAsLongThrows(t, u, v);
     }
 

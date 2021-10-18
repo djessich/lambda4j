@@ -237,7 +237,7 @@ public interface ThrowableTriBytePredicate<X extends Throwable> extends Lambda {
      * @return A {@code ThrowableBiBytePredicate} that represents this predicate partially applied the some arguments.
      */
     @Nonnull
-    default ThrowableBiBytePredicate<X> ptestThrows(byte value1) {
+    default ThrowableBiBytePredicate<X> testThrowsPartially(byte value1) {
         return (value2, value3) -> testThrows(value1, value2, value3);
     }
 
@@ -250,7 +250,7 @@ public interface ThrowableTriBytePredicate<X extends Throwable> extends Lambda {
      * @return A {@code ThrowableBytePredicate} that represents this predicate partially applied the some arguments.
      */
     @Nonnull
-    default ThrowableBytePredicate<X> ptestThrows(byte value1, byte value2) {
+    default ThrowableBytePredicate<X> testThrowsPartially(byte value1, byte value2) {
         return value3 -> testThrows(value1, value2, value3);
     }
 

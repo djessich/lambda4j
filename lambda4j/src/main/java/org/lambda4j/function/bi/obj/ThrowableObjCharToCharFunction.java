@@ -190,7 +190,7 @@ public interface ThrowableObjCharToCharFunction<T, X extends Throwable> extends 
      * @return A {@code ThrowableCharUnaryOperator} that represents this operator partially applied the some arguments.
      */
     @Nonnull
-    default ThrowableCharUnaryOperator<X> papplyAsCharThrows(T t) {
+    default ThrowableCharUnaryOperator<X> applyAsCharThrowsPartially(T t) {
         return value -> applyAsCharThrows(t, value);
     }
 
@@ -202,7 +202,7 @@ public interface ThrowableObjCharToCharFunction<T, X extends Throwable> extends 
      * @return A {@code ThrowableToCharFunction} that represents this operator partially applied the some arguments.
      */
     @Nonnull
-    default ThrowableToCharFunction<T, X> papplyAsCharThrows(char value) {
+    default ThrowableToCharFunction<T, X> applyAsCharThrowsPartially(char value) {
         return t -> applyAsCharThrows(t, value);
     }
 

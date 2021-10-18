@@ -175,7 +175,7 @@ public interface TriLongToIntFunction extends Lambda {
      * @return A {@code BiLongToIntFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default BiLongToIntFunction papplyAsInt(long value1) {
+    default BiLongToIntFunction applyAsIntPartially(long value1) {
         return (value2, value3) -> applyAsInt(value1, value2, value3);
     }
 
@@ -187,7 +187,7 @@ public interface TriLongToIntFunction extends Lambda {
      * @return A {@code LongToIntFunction2} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default LongToIntFunction2 papplyAsInt(long value1, long value2) {
+    default LongToIntFunction2 applyAsIntPartially(long value1, long value2) {
         return value3 -> applyAsInt(value1, value2, value3);
     }
 

@@ -183,7 +183,7 @@ public interface ThrowableBiDoubleFunction<R, X extends Throwable> extends Lambd
      * @return A {@code ThrowableDoubleFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ThrowableDoubleFunction<R, X> papplyThrows(double value1) {
+    default ThrowableDoubleFunction<R, X> applyThrowsPartially(double value1) {
         return value2 -> applyThrows(value1, value2);
     }
 

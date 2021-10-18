@@ -198,7 +198,7 @@ public interface ObjBiCharToDoubleFunction<T> extends Lambda {
      * @return A {@code BiCharToDoubleFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default BiCharToDoubleFunction papplyAsDouble(T t) {
+    default BiCharToDoubleFunction applyAsDoublePartially(T t) {
         return (value1, value2) -> applyAsDouble(t, value1, value2);
     }
 
@@ -211,7 +211,7 @@ public interface ObjBiCharToDoubleFunction<T> extends Lambda {
      * @return A {@code CharToDoubleFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default CharToDoubleFunction papplyAsDouble(T t, char value1) {
+    default CharToDoubleFunction applyAsDoublePartially(T t, char value1) {
         return value2 -> applyAsDouble(t, value1, value2);
     }
 
@@ -223,7 +223,7 @@ public interface ObjBiCharToDoubleFunction<T> extends Lambda {
      * @return A {@code ObjCharToDoubleFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ObjCharToDoubleFunction<T> papplyAsDouble(char value1) {
+    default ObjCharToDoubleFunction<T> applyAsDoublePartially(char value1) {
         return (t, value2) -> applyAsDouble(t, value1, value2);
     }
 
@@ -235,7 +235,7 @@ public interface ObjBiCharToDoubleFunction<T> extends Lambda {
      * @return A {@code ToDoubleFunction2} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ToDoubleFunction2<T> papplyAsDouble(char value1, char value2) {
+    default ToDoubleFunction2<T> applyAsDoublePartially(char value1, char value2) {
         return t -> applyAsDouble(t, value1, value2);
     }
 

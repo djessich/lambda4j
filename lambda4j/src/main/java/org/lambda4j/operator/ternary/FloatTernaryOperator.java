@@ -183,7 +183,7 @@ public interface FloatTernaryOperator extends Lambda {
      * @return A {@code FloatBinaryOperator} that represents this operator partially applied the some arguments.
      */
     @Nonnull
-    default FloatBinaryOperator papplyAsFloat(float value1) {
+    default FloatBinaryOperator applyAsFloatPartially(float value1) {
         return (value2, value3) -> applyAsFloat(value1, value2, value3);
     }
 
@@ -195,7 +195,7 @@ public interface FloatTernaryOperator extends Lambda {
      * @return A {@code FloatUnaryOperator} that represents this operator partially applied the some arguments.
      */
     @Nonnull
-    default FloatUnaryOperator papplyAsFloat(float value1, float value2) {
+    default FloatUnaryOperator applyAsFloatPartially(float value1, float value2) {
         return value3 -> applyAsFloat(value1, value2, value3);
     }
 

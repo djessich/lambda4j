@@ -242,7 +242,7 @@ public interface ThrowableObjLongPredicate<T, X extends Throwable> extends Lambd
      * @return A {@code ThrowableLongPredicate} that represents this predicate partially applied the some arguments.
      */
     @Nonnull
-    default ThrowableLongPredicate<X> ptestThrows(T t) {
+    default ThrowableLongPredicate<X> testThrowsPartially(T t) {
         return value -> testThrows(t, value);
     }
 
@@ -254,7 +254,7 @@ public interface ThrowableObjLongPredicate<T, X extends Throwable> extends Lambd
      * @return A {@code ThrowablePredicate} that represents this predicate partially applied the some arguments.
      */
     @Nonnull
-    default ThrowablePredicate<T, X> ptestThrows(long value) {
+    default ThrowablePredicate<T, X> testThrowsPartially(long value) {
         return t -> testThrows(t, value);
     }
 

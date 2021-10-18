@@ -148,7 +148,7 @@ public interface ObjBooleanConsumer<T> extends Lambda {
      * @return A {@code BooleanConsumer} that represents this consumer partially applied the some arguments.
      */
     @Nonnull
-    default BooleanConsumer paccept(T t) {
+    default BooleanConsumer acceptPartially(T t) {
         return value -> accept(t, value);
     }
 
@@ -159,7 +159,7 @@ public interface ObjBooleanConsumer<T> extends Lambda {
      * @return A {@code Consumer2} that represents this consumer partially applied the some arguments.
      */
     @Nonnull
-    default Consumer2<T> paccept(boolean value) {
+    default Consumer2<T> acceptPartially(boolean value) {
         return t -> accept(t, value);
     }
 

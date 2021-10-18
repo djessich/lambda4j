@@ -208,7 +208,7 @@ public interface ThrowableObjByteFunction<T, R, X extends Throwable> extends Lam
      * @return A {@code ThrowableByteFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ThrowableByteFunction<R, X> papplyThrows(T t) {
+    default ThrowableByteFunction<R, X> applyThrowsPartially(T t) {
         return value -> applyThrows(t, value);
     }
 
@@ -219,7 +219,7 @@ public interface ThrowableObjByteFunction<T, R, X extends Throwable> extends Lam
      * @return A {@code ThrowableFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ThrowableFunction<T, R, X> papplyThrows(byte value) {
+    default ThrowableFunction<T, R, X> applyThrowsPartially(byte value) {
         return t -> applyThrows(t, value);
     }
 

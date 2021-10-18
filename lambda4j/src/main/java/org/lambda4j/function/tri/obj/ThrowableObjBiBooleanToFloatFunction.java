@@ -217,7 +217,7 @@ public interface ThrowableObjBiBooleanToFloatFunction<T, X extends Throwable> ex
      * arguments.
      */
     @Nonnull
-    default ThrowableBiBooleanToFloatFunction<X> papplyAsFloatThrows(T t) {
+    default ThrowableBiBooleanToFloatFunction<X> applyAsFloatThrowsPartially(T t) {
         return (value1, value2) -> applyAsFloatThrows(t, value1, value2);
     }
 
@@ -231,7 +231,7 @@ public interface ThrowableObjBiBooleanToFloatFunction<T, X extends Throwable> ex
      * arguments.
      */
     @Nonnull
-    default ThrowableBooleanToFloatFunction<X> papplyAsFloatThrows(T t, boolean value1) {
+    default ThrowableBooleanToFloatFunction<X> applyAsFloatThrowsPartially(T t, boolean value1) {
         return value2 -> applyAsFloatThrows(t, value1, value2);
     }
 
@@ -244,7 +244,7 @@ public interface ThrowableObjBiBooleanToFloatFunction<T, X extends Throwable> ex
      * arguments.
      */
     @Nonnull
-    default ThrowableObjBooleanToFloatFunction<T, X> papplyAsFloatThrows(boolean value1) {
+    default ThrowableObjBooleanToFloatFunction<T, X> applyAsFloatThrowsPartially(boolean value1) {
         return (t, value2) -> applyAsFloatThrows(t, value1, value2);
     }
 
@@ -257,7 +257,7 @@ public interface ThrowableObjBiBooleanToFloatFunction<T, X extends Throwable> ex
      * @return A {@code ThrowableToFloatFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ThrowableToFloatFunction<T, X> papplyAsFloatThrows(boolean value1, boolean value2) {
+    default ThrowableToFloatFunction<T, X> applyAsFloatThrowsPartially(boolean value1, boolean value2) {
         return t -> applyAsFloatThrows(t, value1, value2);
     }
 

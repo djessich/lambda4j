@@ -196,7 +196,7 @@ public interface BiShortPredicate extends Lambda {
      * @return A {@code ShortPredicate} that represents this predicate partially applied the some arguments.
      */
     @Nonnull
-    default ShortPredicate ptest(short value1) {
+    default ShortPredicate testPartially(short value1) {
         return value2 -> test(value1, value2);
     }
 

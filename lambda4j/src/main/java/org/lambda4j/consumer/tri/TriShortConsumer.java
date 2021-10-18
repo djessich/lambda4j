@@ -141,7 +141,7 @@ public interface TriShortConsumer extends Lambda {
      * @return A {@code BiShortConsumer} that represents this consumer partially applied the some arguments.
      */
     @Nonnull
-    default BiShortConsumer paccept(short value1) {
+    default BiShortConsumer acceptPartially(short value1) {
         return (value2, value3) -> accept(value1, value2, value3);
     }
 
@@ -153,7 +153,7 @@ public interface TriShortConsumer extends Lambda {
      * @return A {@code ShortConsumer} that represents this consumer partially applied the some arguments.
      */
     @Nonnull
-    default ShortConsumer paccept(short value1, short value2) {
+    default ShortConsumer acceptPartially(short value1, short value2) {
         return value3 -> accept(value1, value2, value3);
     }
 

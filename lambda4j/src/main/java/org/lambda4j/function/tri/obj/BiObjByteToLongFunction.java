@@ -220,7 +220,7 @@ public interface BiObjByteToLongFunction<T, U> extends Lambda {
      * @return A {@code ObjByteToLongFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ObjByteToLongFunction<U> papplyAsLong(T t) {
+    default ObjByteToLongFunction<U> applyAsLongPartially(T t) {
         return (u, value) -> applyAsLong(t, u, value);
     }
 
@@ -232,7 +232,7 @@ public interface BiObjByteToLongFunction<T, U> extends Lambda {
      * @return A {@code ByteToLongFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ByteToLongFunction papplyAsLong(T t, U u) {
+    default ByteToLongFunction applyAsLongPartially(T t, U u) {
         return value -> applyAsLong(t, u, value);
     }
 
@@ -243,7 +243,7 @@ public interface BiObjByteToLongFunction<T, U> extends Lambda {
      * @return A {@code ToLongBiFunction2} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ToLongBiFunction2<T, U> papplyAsLong(byte value) {
+    default ToLongBiFunction2<T, U> applyAsLongPartially(byte value) {
         return (t, u) -> applyAsLong(t, u, value);
     }
 
@@ -255,7 +255,7 @@ public interface BiObjByteToLongFunction<T, U> extends Lambda {
      * @return A {@code ToLongFunction2} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ToLongFunction2<U> papplyAsLong(T t, byte value) {
+    default ToLongFunction2<U> applyAsLongPartially(T t, byte value) {
         return u -> applyAsLong(t, u, value);
     }
 

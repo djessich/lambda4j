@@ -194,7 +194,7 @@ public interface ThrowableTriDoubleToCharFunction<X extends Throwable> extends L
      * arguments.
      */
     @Nonnull
-    default ThrowableBiDoubleToCharFunction<X> papplyAsCharThrows(double value1) {
+    default ThrowableBiDoubleToCharFunction<X> applyAsCharThrowsPartially(double value1) {
         return (value2, value3) -> applyAsCharThrows(value1, value2, value3);
     }
 
@@ -208,7 +208,7 @@ public interface ThrowableTriDoubleToCharFunction<X extends Throwable> extends L
      * arguments.
      */
     @Nonnull
-    default ThrowableDoubleToCharFunction<X> papplyAsCharThrows(double value1, double value2) {
+    default ThrowableDoubleToCharFunction<X> applyAsCharThrowsPartially(double value1, double value2) {
         return value3 -> applyAsCharThrows(value1, value2, value3);
     }
 

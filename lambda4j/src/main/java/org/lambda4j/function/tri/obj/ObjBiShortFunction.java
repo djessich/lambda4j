@@ -212,7 +212,7 @@ public interface ObjBiShortFunction<T, R> extends Lambda {
      * @return A {@code BiShortFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default BiShortFunction<R> papply(T t) {
+    default BiShortFunction<R> applyPartially(T t) {
         return (value1, value2) -> apply(t, value1, value2);
     }
 
@@ -224,7 +224,7 @@ public interface ObjBiShortFunction<T, R> extends Lambda {
      * @return A {@code ShortFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ShortFunction<R> papply(T t, short value1) {
+    default ShortFunction<R> applyPartially(T t, short value1) {
         return value2 -> apply(t, value1, value2);
     }
 
@@ -235,7 +235,7 @@ public interface ObjBiShortFunction<T, R> extends Lambda {
      * @return A {@code ObjShortFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ObjShortFunction<T, R> papply(short value1) {
+    default ObjShortFunction<T, R> applyPartially(short value1) {
         return (t, value2) -> apply(t, value1, value2);
     }
 
@@ -247,7 +247,7 @@ public interface ObjBiShortFunction<T, R> extends Lambda {
      * @return A {@code Function2} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default Function2<T, R> papply(short value1, short value2) {
+    default Function2<T, R> applyPartially(short value1, short value2) {
         return t -> apply(t, value1, value2);
     }
 

@@ -175,7 +175,7 @@ public interface TriDoubleToLongFunction extends Lambda {
      * @return A {@code BiDoubleToLongFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default BiDoubleToLongFunction papplyAsLong(double value1) {
+    default BiDoubleToLongFunction applyAsLongPartially(double value1) {
         return (value2, value3) -> applyAsLong(value1, value2, value3);
     }
 
@@ -188,7 +188,7 @@ public interface TriDoubleToLongFunction extends Lambda {
      * @return A {@code DoubleToLongFunction2} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default DoubleToLongFunction2 papplyAsLong(double value1, double value2) {
+    default DoubleToLongFunction2 applyAsLongPartially(double value1, double value2) {
         return value3 -> applyAsLong(value1, value2, value3);
     }
 

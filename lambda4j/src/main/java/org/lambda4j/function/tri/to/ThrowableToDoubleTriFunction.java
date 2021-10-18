@@ -217,7 +217,7 @@ public interface ThrowableToDoubleTriFunction<T, U, V, X extends Throwable> exte
      * @return A {@code ThrowableToDoubleBiFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ThrowableToDoubleBiFunction<U, V, X> papplyAsDoubleThrows(T t) {
+    default ThrowableToDoubleBiFunction<U, V, X> applyAsDoubleThrowsPartially(T t) {
         return (u, v) -> applyAsDoubleThrows(t, u, v);
     }
 
@@ -230,7 +230,7 @@ public interface ThrowableToDoubleTriFunction<T, U, V, X extends Throwable> exte
      * @return A {@code ThrowableToDoubleFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ThrowableToDoubleFunction<V, X> papplyAsDoubleThrows(T t, U u) {
+    default ThrowableToDoubleFunction<V, X> applyAsDoubleThrowsPartially(T t, U u) {
         return v -> applyAsDoubleThrows(t, u, v);
     }
 

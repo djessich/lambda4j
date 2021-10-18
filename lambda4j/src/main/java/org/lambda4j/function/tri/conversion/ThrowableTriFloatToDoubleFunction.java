@@ -194,7 +194,7 @@ public interface ThrowableTriFloatToDoubleFunction<X extends Throwable> extends 
      * arguments.
      */
     @Nonnull
-    default ThrowableBiFloatToDoubleFunction<X> papplyAsDoubleThrows(float value1) {
+    default ThrowableBiFloatToDoubleFunction<X> applyAsDoubleThrowsPartially(float value1) {
         return (value2, value3) -> applyAsDoubleThrows(value1, value2, value3);
     }
 
@@ -208,7 +208,7 @@ public interface ThrowableTriFloatToDoubleFunction<X extends Throwable> extends 
      * arguments.
      */
     @Nonnull
-    default ThrowableFloatToDoubleFunction<X> papplyAsDoubleThrows(float value1, float value2) {
+    default ThrowableFloatToDoubleFunction<X> applyAsDoubleThrowsPartially(float value1, float value2) {
         return value3 -> applyAsDoubleThrows(value1, value2, value3);
     }
 

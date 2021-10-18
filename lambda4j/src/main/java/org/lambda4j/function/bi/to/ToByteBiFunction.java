@@ -169,7 +169,7 @@ public interface ToByteBiFunction<T, U> extends Lambda {
      * @return A {@code ToByteFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ToByteFunction<U> papplyAsByte(T t) {
+    default ToByteFunction<U> applyAsBytePartially(T t) {
         return u -> applyAsByte(t, u);
     }
 

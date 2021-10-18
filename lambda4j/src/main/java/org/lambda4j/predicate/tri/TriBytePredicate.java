@@ -215,7 +215,7 @@ public interface TriBytePredicate extends Lambda {
      * @return A {@code BiBytePredicate} that represents this predicate partially applied the some arguments.
      */
     @Nonnull
-    default BiBytePredicate ptest(byte value1) {
+    default BiBytePredicate testPartially(byte value1) {
         return (value2, value3) -> test(value1, value2, value3);
     }
 
@@ -227,7 +227,7 @@ public interface TriBytePredicate extends Lambda {
      * @return A {@code BytePredicate} that represents this predicate partially applied the some arguments.
      */
     @Nonnull
-    default BytePredicate ptest(byte value1, byte value2) {
+    default BytePredicate testPartially(byte value1, byte value2) {
         return value3 -> test(value1, value2, value3);
     }
 

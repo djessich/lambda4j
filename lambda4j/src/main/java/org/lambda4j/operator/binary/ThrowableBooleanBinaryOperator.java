@@ -221,7 +221,7 @@ public interface ThrowableBooleanBinaryOperator<X extends Throwable> extends Lam
      * arguments.
      */
     @Nonnull
-    default ThrowableBooleanUnaryOperator<X> papplyAsBooleanThrows(boolean value1) {
+    default ThrowableBooleanUnaryOperator<X> applyAsBooleanThrowsPartially(boolean value1) {
         return value2 -> applyAsBooleanThrows(value1, value2);
     }
 

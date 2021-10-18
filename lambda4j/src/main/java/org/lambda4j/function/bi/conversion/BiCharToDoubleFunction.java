@@ -156,7 +156,7 @@ public interface BiCharToDoubleFunction extends Lambda {
      * @return A {@code CharToDoubleFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default CharToDoubleFunction papplyAsDouble(char value1) {
+    default CharToDoubleFunction applyAsDoublePartially(char value1) {
         return value2 -> applyAsDouble(value1, value2);
     }
 

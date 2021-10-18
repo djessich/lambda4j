@@ -141,7 +141,7 @@ public interface TriFloatConsumer extends Lambda {
      * @return A {@code BiFloatConsumer} that represents this consumer partially applied the some arguments.
      */
     @Nonnull
-    default BiFloatConsumer paccept(float value1) {
+    default BiFloatConsumer acceptPartially(float value1) {
         return (value2, value3) -> accept(value1, value2, value3);
     }
 
@@ -153,7 +153,7 @@ public interface TriFloatConsumer extends Lambda {
      * @return A {@code FloatConsumer} that represents this consumer partially applied the some arguments.
      */
     @Nonnull
-    default FloatConsumer paccept(float value1, float value2) {
+    default FloatConsumer acceptPartially(float value1, float value2) {
         return value3 -> accept(value1, value2, value3);
     }
 

@@ -174,7 +174,7 @@ public interface TriShortToByteFunction extends Lambda {
      * @return A {@code BiShortToByteFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default BiShortToByteFunction papplyAsByte(short value1) {
+    default BiShortToByteFunction applyAsBytePartially(short value1) {
         return (value2, value3) -> applyAsByte(value1, value2, value3);
     }
 
@@ -187,7 +187,7 @@ public interface TriShortToByteFunction extends Lambda {
      * @return A {@code ShortToByteFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ShortToByteFunction papplyAsByte(short value1, short value2) {
+    default ShortToByteFunction applyAsBytePartially(short value1, short value2) {
         return value3 -> applyAsByte(value1, value2, value3);
     }
 

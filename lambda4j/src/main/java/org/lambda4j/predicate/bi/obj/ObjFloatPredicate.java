@@ -223,7 +223,7 @@ public interface ObjFloatPredicate<T> extends Lambda {
      * @return A {@code FloatPredicate} that represents this predicate partially applied the some arguments.
      */
     @Nonnull
-    default FloatPredicate ptest(T t) {
+    default FloatPredicate testPartially(T t) {
         return value -> test(t, value);
     }
 
@@ -234,7 +234,7 @@ public interface ObjFloatPredicate<T> extends Lambda {
      * @return A {@code Predicate2} that represents this predicate partially applied the some arguments.
      */
     @Nonnull
-    default Predicate2<T> ptest(float value) {
+    default Predicate2<T> testPartially(float value) {
         return t -> test(t, value);
     }
 

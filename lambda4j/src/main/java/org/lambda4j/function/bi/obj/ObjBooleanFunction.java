@@ -190,7 +190,7 @@ public interface ObjBooleanFunction<T, R> extends Lambda {
      * @return A {@code BooleanFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default BooleanFunction<R> papply(T t) {
+    default BooleanFunction<R> applyPartially(T t) {
         return value -> apply(t, value);
     }
 
@@ -201,7 +201,7 @@ public interface ObjBooleanFunction<T, R> extends Lambda {
      * @return A {@code Function2} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default Function2<T, R> papply(boolean value) {
+    default Function2<T, R> applyPartially(boolean value) {
         return t -> apply(t, value);
     }
 

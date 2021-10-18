@@ -196,7 +196,7 @@ public interface ObjBiLongToShortFunction<T> extends Lambda {
      * @return A {@code BiLongToShortFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default BiLongToShortFunction papplyAsShort(T t) {
+    default BiLongToShortFunction applyAsShortPartially(T t) {
         return (value1, value2) -> applyAsShort(t, value1, value2);
     }
 
@@ -209,7 +209,7 @@ public interface ObjBiLongToShortFunction<T> extends Lambda {
      * @return A {@code LongToShortFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default LongToShortFunction papplyAsShort(T t, long value1) {
+    default LongToShortFunction applyAsShortPartially(T t, long value1) {
         return value2 -> applyAsShort(t, value1, value2);
     }
 
@@ -221,7 +221,7 @@ public interface ObjBiLongToShortFunction<T> extends Lambda {
      * @return A {@code ObjLongToShortFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ObjLongToShortFunction<T> papplyAsShort(long value1) {
+    default ObjLongToShortFunction<T> applyAsShortPartially(long value1) {
         return (t, value2) -> applyAsShort(t, value1, value2);
     }
 
@@ -233,7 +233,7 @@ public interface ObjBiLongToShortFunction<T> extends Lambda {
      * @return A {@code ToShortFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ToShortFunction<T> papplyAsShort(long value1, long value2) {
+    default ToShortFunction<T> applyAsShortPartially(long value1, long value2) {
         return t -> applyAsShort(t, value1, value2);
     }
 

@@ -196,7 +196,7 @@ public interface ObjBiCharToShortFunction<T> extends Lambda {
      * @return A {@code BiCharToShortFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default BiCharToShortFunction papplyAsShort(T t) {
+    default BiCharToShortFunction applyAsShortPartially(T t) {
         return (value1, value2) -> applyAsShort(t, value1, value2);
     }
 
@@ -209,7 +209,7 @@ public interface ObjBiCharToShortFunction<T> extends Lambda {
      * @return A {@code CharToShortFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default CharToShortFunction papplyAsShort(T t, char value1) {
+    default CharToShortFunction applyAsShortPartially(T t, char value1) {
         return value2 -> applyAsShort(t, value1, value2);
     }
 
@@ -221,7 +221,7 @@ public interface ObjBiCharToShortFunction<T> extends Lambda {
      * @return A {@code ObjCharToShortFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ObjCharToShortFunction<T> papplyAsShort(char value1) {
+    default ObjCharToShortFunction<T> applyAsShortPartially(char value1) {
         return (t, value2) -> applyAsShort(t, value1, value2);
     }
 
@@ -233,7 +233,7 @@ public interface ObjBiCharToShortFunction<T> extends Lambda {
      * @return A {@code ToShortFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ToShortFunction<T> papplyAsShort(char value1, char value2) {
+    default ToShortFunction<T> applyAsShortPartially(char value1, char value2) {
         return t -> applyAsShort(t, value1, value2);
     }
 

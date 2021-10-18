@@ -186,7 +186,7 @@ public interface ThrowableToByteBiFunction<T, U, X extends Throwable> extends La
      * @return A {@code ThrowableToByteFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ThrowableToByteFunction<U, X> papplyAsByteThrows(T t) {
+    default ThrowableToByteFunction<U, X> applyAsByteThrowsPartially(T t) {
         return u -> applyAsByteThrows(t, u);
     }
 

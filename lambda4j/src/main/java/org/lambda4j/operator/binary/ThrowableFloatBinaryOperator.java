@@ -218,7 +218,7 @@ public interface ThrowableFloatBinaryOperator<X extends Throwable> extends Lambd
      * @return A {@code ThrowableFloatUnaryOperator} that represents this operator partially applied the some arguments.
      */
     @Nonnull
-    default ThrowableFloatUnaryOperator<X> papplyAsFloatThrows(float value1) {
+    default ThrowableFloatUnaryOperator<X> applyAsFloatThrowsPartially(float value1) {
         return value2 -> applyAsFloatThrows(value1, value2);
     }
 

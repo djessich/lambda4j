@@ -124,7 +124,7 @@ public interface BiDoubleConsumer extends Lambda {
      * @return A {@code DoubleConsumer2} that represents this consumer partially applied the some arguments.
      */
     @Nonnull
-    default DoubleConsumer2 paccept(double value1) {
+    default DoubleConsumer2 acceptPartially(double value1) {
         return value2 -> accept(value1, value2);
     }
 

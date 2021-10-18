@@ -233,7 +233,7 @@ public interface ThrowableTriFunction<T, U, V, R, X extends Throwable> extends L
      * @return A {@code ThrowableBiFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ThrowableBiFunction<U, V, R, X> papplyThrows(T t) {
+    default ThrowableBiFunction<U, V, R, X> applyThrowsPartially(T t) {
         return (u, v) -> applyThrows(t, u, v);
     }
 
@@ -245,7 +245,7 @@ public interface ThrowableTriFunction<T, U, V, R, X extends Throwable> extends L
      * @return A {@code ThrowableFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ThrowableFunction<V, R, X> papplyThrows(T t, U u) {
+    default ThrowableFunction<V, R, X> applyThrowsPartially(T t, U u) {
         return v -> applyThrows(t, u, v);
     }
 

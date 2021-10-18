@@ -163,7 +163,7 @@ public interface ThrowableObjBooleanConsumer<T, X extends Throwable> extends Lam
      * @return A {@code ThrowableBooleanConsumer} that represents this consumer partially applied the some arguments.
      */
     @Nonnull
-    default ThrowableBooleanConsumer<X> pacceptThrows(T t) {
+    default ThrowableBooleanConsumer<X> acceptThrowsPartially(T t) {
         return value -> acceptThrows(t, value);
     }
 
@@ -174,7 +174,7 @@ public interface ThrowableObjBooleanConsumer<T, X extends Throwable> extends Lam
      * @return A {@code ThrowableConsumer} that represents this consumer partially applied the some arguments.
      */
     @Nonnull
-    default ThrowableConsumer<T, X> pacceptThrows(boolean value) {
+    default ThrowableConsumer<T, X> acceptThrowsPartially(boolean value) {
         return t -> acceptThrows(t, value);
     }
 

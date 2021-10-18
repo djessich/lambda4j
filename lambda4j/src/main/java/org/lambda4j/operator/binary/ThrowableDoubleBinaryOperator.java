@@ -241,7 +241,7 @@ public interface ThrowableDoubleBinaryOperator<X extends Throwable> extends Lamb
      * arguments.
      */
     @Nonnull
-    default ThrowableDoubleUnaryOperator<X> papplyAsDoubleThrows(double value1) {
+    default ThrowableDoubleUnaryOperator<X> applyAsDoubleThrowsPartially(double value1) {
         return value2 -> applyAsDoubleThrows(value1, value2);
     }
 

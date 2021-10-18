@@ -216,7 +216,7 @@ public interface ThrowableBiLongPredicate<X extends Throwable> extends Lambda {
      * @return A {@code ThrowableLongPredicate} that represents this predicate partially applied the some arguments.
      */
     @Nonnull
-    default ThrowableLongPredicate<X> ptestThrows(long value1) {
+    default ThrowableLongPredicate<X> testThrowsPartially(long value1) {
         return value2 -> testThrows(value1, value2);
     }
 

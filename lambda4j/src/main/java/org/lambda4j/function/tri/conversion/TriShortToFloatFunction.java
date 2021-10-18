@@ -174,7 +174,7 @@ public interface TriShortToFloatFunction extends Lambda {
      * @return A {@code BiShortToFloatFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default BiShortToFloatFunction papplyAsFloat(short value1) {
+    default BiShortToFloatFunction applyAsFloatPartially(short value1) {
         return (value2, value3) -> applyAsFloat(value1, value2, value3);
     }
 
@@ -187,7 +187,7 @@ public interface TriShortToFloatFunction extends Lambda {
      * @return A {@code ShortToFloatFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ShortToFloatFunction papplyAsFloat(short value1, short value2) {
+    default ShortToFloatFunction applyAsFloatPartially(short value1, short value2) {
         return value3 -> applyAsFloat(value1, value2, value3);
     }
 

@@ -213,7 +213,7 @@ public interface ObjBiIntFunction<T, R> extends Lambda {
      * @return A {@code BiIntFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default BiIntFunction<R> papply(T t) {
+    default BiIntFunction<R> applyPartially(T t) {
         return (value1, value2) -> apply(t, value1, value2);
     }
 
@@ -225,7 +225,7 @@ public interface ObjBiIntFunction<T, R> extends Lambda {
      * @return A {@code IntFunction2} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default IntFunction2<R> papply(T t, int value1) {
+    default IntFunction2<R> applyPartially(T t, int value1) {
         return value2 -> apply(t, value1, value2);
     }
 
@@ -236,7 +236,7 @@ public interface ObjBiIntFunction<T, R> extends Lambda {
      * @return A {@code ObjIntFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ObjIntFunction<T, R> papply(int value1) {
+    default ObjIntFunction<T, R> applyPartially(int value1) {
         return (t, value2) -> apply(t, value1, value2);
     }
 
@@ -248,7 +248,7 @@ public interface ObjBiIntFunction<T, R> extends Lambda {
      * @return A {@code Function2} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default Function2<T, R> papply(int value1, int value2) {
+    default Function2<T, R> applyPartially(int value1, int value2) {
         return t -> apply(t, value1, value2);
     }
 

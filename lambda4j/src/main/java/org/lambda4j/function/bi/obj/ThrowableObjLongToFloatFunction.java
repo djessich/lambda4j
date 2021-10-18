@@ -193,7 +193,7 @@ public interface ThrowableObjLongToFloatFunction<T, X extends Throwable> extends
      * arguments.
      */
     @Nonnull
-    default ThrowableLongToFloatFunction<X> papplyAsFloatThrows(T t) {
+    default ThrowableLongToFloatFunction<X> applyAsFloatThrowsPartially(T t) {
         return value -> applyAsFloatThrows(t, value);
     }
 
@@ -205,7 +205,7 @@ public interface ThrowableObjLongToFloatFunction<T, X extends Throwable> extends
      * @return A {@code ThrowableToFloatFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ThrowableToFloatFunction<T, X> papplyAsFloatThrows(long value) {
+    default ThrowableToFloatFunction<T, X> applyAsFloatThrowsPartially(long value) {
         return t -> applyAsFloatThrows(t, value);
     }
 

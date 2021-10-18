@@ -215,7 +215,7 @@ public interface ThrowableToIntTriFunction<T, U, V, X extends Throwable> extends
      * @return A {@code ThrowableToIntBiFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ThrowableToIntBiFunction<U, V, X> papplyAsIntThrows(T t) {
+    default ThrowableToIntBiFunction<U, V, X> applyAsIntThrowsPartially(T t) {
         return (u, v) -> applyAsIntThrows(t, u, v);
     }
 
@@ -228,7 +228,7 @@ public interface ThrowableToIntTriFunction<T, U, V, X extends Throwable> extends
      * @return A {@code ThrowableToIntFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ThrowableToIntFunction<V, X> papplyAsIntThrows(T t, U u) {
+    default ThrowableToIntFunction<V, X> applyAsIntThrowsPartially(T t, U u) {
         return v -> applyAsIntThrows(t, u, v);
     }
 

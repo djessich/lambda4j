@@ -197,7 +197,7 @@ public interface ObjBiBooleanToCharFunction<T> extends Lambda {
      * @return A {@code BiBooleanToCharFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default BiBooleanToCharFunction papplyAsChar(T t) {
+    default BiBooleanToCharFunction applyAsCharPartially(T t) {
         return (value1, value2) -> applyAsChar(t, value1, value2);
     }
 
@@ -210,7 +210,7 @@ public interface ObjBiBooleanToCharFunction<T> extends Lambda {
      * @return A {@code BooleanToCharFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default BooleanToCharFunction papplyAsChar(T t, boolean value1) {
+    default BooleanToCharFunction applyAsCharPartially(T t, boolean value1) {
         return value2 -> applyAsChar(t, value1, value2);
     }
 
@@ -222,7 +222,7 @@ public interface ObjBiBooleanToCharFunction<T> extends Lambda {
      * @return A {@code ObjBooleanToCharFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ObjBooleanToCharFunction<T> papplyAsChar(boolean value1) {
+    default ObjBooleanToCharFunction<T> applyAsCharPartially(boolean value1) {
         return (t, value2) -> applyAsChar(t, value1, value2);
     }
 
@@ -234,7 +234,7 @@ public interface ObjBiBooleanToCharFunction<T> extends Lambda {
      * @return A {@code ToCharFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ToCharFunction<T> papplyAsChar(boolean value1, boolean value2) {
+    default ToCharFunction<T> applyAsCharPartially(boolean value1, boolean value2) {
         return t -> applyAsChar(t, value1, value2);
     }
 

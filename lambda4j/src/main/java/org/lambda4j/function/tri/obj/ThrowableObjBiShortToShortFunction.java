@@ -214,7 +214,7 @@ public interface ThrowableObjBiShortToShortFunction<T, X extends Throwable> exte
      * arguments.
      */
     @Nonnull
-    default ThrowableShortBinaryOperator<X> papplyAsShortThrows(T t) {
+    default ThrowableShortBinaryOperator<X> applyAsShortThrowsPartially(T t) {
         return (value1, value2) -> applyAsShortThrows(t, value1, value2);
     }
 
@@ -227,7 +227,7 @@ public interface ThrowableObjBiShortToShortFunction<T, X extends Throwable> exte
      * @return A {@code ThrowableShortUnaryOperator} that represents this operator partially applied the some arguments.
      */
     @Nonnull
-    default ThrowableShortUnaryOperator<X> papplyAsShortThrows(T t, short value1) {
+    default ThrowableShortUnaryOperator<X> applyAsShortThrowsPartially(T t, short value1) {
         return value2 -> applyAsShortThrows(t, value1, value2);
     }
 
@@ -240,7 +240,7 @@ public interface ThrowableObjBiShortToShortFunction<T, X extends Throwable> exte
      * arguments.
      */
     @Nonnull
-    default ThrowableObjShortToShortFunction<T, X> papplyAsShortThrows(short value1) {
+    default ThrowableObjShortToShortFunction<T, X> applyAsShortThrowsPartially(short value1) {
         return (t, value2) -> applyAsShortThrows(t, value1, value2);
     }
 
@@ -253,7 +253,7 @@ public interface ThrowableObjBiShortToShortFunction<T, X extends Throwable> exte
      * @return A {@code ThrowableToShortFunction} that represents this operator partially applied the some arguments.
      */
     @Nonnull
-    default ThrowableToShortFunction<T, X> papplyAsShortThrows(short value1, short value2) {
+    default ThrowableToShortFunction<T, X> applyAsShortThrowsPartially(short value1, short value2) {
         return t -> applyAsShortThrows(t, value1, value2);
     }
 

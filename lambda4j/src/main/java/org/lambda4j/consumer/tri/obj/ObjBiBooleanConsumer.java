@@ -168,7 +168,7 @@ public interface ObjBiBooleanConsumer<T> extends Lambda {
      * @return A {@code BiBooleanConsumer} that represents this consumer partially applied the some arguments.
      */
     @Nonnull
-    default BiBooleanConsumer paccept(T t) {
+    default BiBooleanConsumer acceptPartially(T t) {
         return (value1, value2) -> accept(t, value1, value2);
     }
 
@@ -180,7 +180,7 @@ public interface ObjBiBooleanConsumer<T> extends Lambda {
      * @return A {@code BooleanConsumer} that represents this consumer partially applied the some arguments.
      */
     @Nonnull
-    default BooleanConsumer paccept(T t, boolean value1) {
+    default BooleanConsumer acceptPartially(T t, boolean value1) {
         return value2 -> accept(t, value1, value2);
     }
 
@@ -191,7 +191,7 @@ public interface ObjBiBooleanConsumer<T> extends Lambda {
      * @return A {@code ObjBooleanConsumer} that represents this consumer partially applied the some arguments.
      */
     @Nonnull
-    default ObjBooleanConsumer<T> paccept(boolean value1) {
+    default ObjBooleanConsumer<T> acceptPartially(boolean value1) {
         return (t, value2) -> accept(t, value1, value2);
     }
 
@@ -203,7 +203,7 @@ public interface ObjBiBooleanConsumer<T> extends Lambda {
      * @return A {@code Consumer2} that represents this consumer partially applied the some arguments.
      */
     @Nonnull
-    default Consumer2<T> paccept(boolean value1, boolean value2) {
+    default Consumer2<T> acceptPartially(boolean value1, boolean value2) {
         return t -> accept(t, value1, value2);
     }
 

@@ -155,7 +155,7 @@ public interface BiBooleanToCharFunction extends Lambda {
      * @return A {@code BooleanToCharFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default BooleanToCharFunction papplyAsChar(boolean value1) {
+    default BooleanToCharFunction applyAsCharPartially(boolean value1) {
         return value2 -> applyAsChar(value1, value2);
     }
 

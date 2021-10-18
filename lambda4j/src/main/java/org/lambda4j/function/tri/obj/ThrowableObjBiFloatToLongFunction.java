@@ -216,7 +216,7 @@ public interface ThrowableObjBiFloatToLongFunction<T, X extends Throwable> exten
      * arguments.
      */
     @Nonnull
-    default ThrowableBiFloatToLongFunction<X> papplyAsLongThrows(T t) {
+    default ThrowableBiFloatToLongFunction<X> applyAsLongThrowsPartially(T t) {
         return (value1, value2) -> applyAsLongThrows(t, value1, value2);
     }
 
@@ -230,7 +230,7 @@ public interface ThrowableObjBiFloatToLongFunction<T, X extends Throwable> exten
      * arguments.
      */
     @Nonnull
-    default ThrowableFloatToLongFunction<X> papplyAsLongThrows(T t, float value1) {
+    default ThrowableFloatToLongFunction<X> applyAsLongThrowsPartially(T t, float value1) {
         return value2 -> applyAsLongThrows(t, value1, value2);
     }
 
@@ -243,7 +243,7 @@ public interface ThrowableObjBiFloatToLongFunction<T, X extends Throwable> exten
      * arguments.
      */
     @Nonnull
-    default ThrowableObjFloatToLongFunction<T, X> papplyAsLongThrows(float value1) {
+    default ThrowableObjFloatToLongFunction<T, X> applyAsLongThrowsPartially(float value1) {
         return (t, value2) -> applyAsLongThrows(t, value1, value2);
     }
 
@@ -256,7 +256,7 @@ public interface ThrowableObjBiFloatToLongFunction<T, X extends Throwable> exten
      * @return A {@code ThrowableToLongFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ThrowableToLongFunction<T, X> papplyAsLongThrows(float value1, float value2) {
+    default ThrowableToLongFunction<T, X> applyAsLongThrowsPartially(float value1, float value2) {
         return t -> applyAsLongThrows(t, value1, value2);
     }
 

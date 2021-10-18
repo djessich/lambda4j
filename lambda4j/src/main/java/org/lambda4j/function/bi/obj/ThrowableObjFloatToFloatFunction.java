@@ -191,7 +191,7 @@ public interface ThrowableObjFloatToFloatFunction<T, X extends Throwable> extend
      * @return A {@code ThrowableFloatUnaryOperator} that represents this operator partially applied the some arguments.
      */
     @Nonnull
-    default ThrowableFloatUnaryOperator<X> papplyAsFloatThrows(T t) {
+    default ThrowableFloatUnaryOperator<X> applyAsFloatThrowsPartially(T t) {
         return value -> applyAsFloatThrows(t, value);
     }
 
@@ -203,7 +203,7 @@ public interface ThrowableObjFloatToFloatFunction<T, X extends Throwable> extend
      * @return A {@code ThrowableToFloatFunction} that represents this operator partially applied the some arguments.
      */
     @Nonnull
-    default ThrowableToFloatFunction<T, X> papplyAsFloatThrows(float value) {
+    default ThrowableToFloatFunction<T, X> applyAsFloatThrowsPartially(float value) {
         return t -> applyAsFloatThrows(t, value);
     }
 

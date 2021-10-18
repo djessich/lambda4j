@@ -169,7 +169,7 @@ public interface ObjBiLongConsumer<T> extends Lambda {
      * @return A {@code BiLongConsumer} that represents this consumer partially applied the some arguments.
      */
     @Nonnull
-    default BiLongConsumer paccept(T t) {
+    default BiLongConsumer acceptPartially(T t) {
         return (value1, value2) -> accept(t, value1, value2);
     }
 
@@ -181,7 +181,7 @@ public interface ObjBiLongConsumer<T> extends Lambda {
      * @return A {@code LongConsumer2} that represents this consumer partially applied the some arguments.
      */
     @Nonnull
-    default LongConsumer2 paccept(T t, long value1) {
+    default LongConsumer2 acceptPartially(T t, long value1) {
         return value2 -> accept(t, value1, value2);
     }
 
@@ -192,7 +192,7 @@ public interface ObjBiLongConsumer<T> extends Lambda {
      * @return A {@code ObjLongConsumer2} that represents this consumer partially applied the some arguments.
      */
     @Nonnull
-    default ObjLongConsumer2<T> paccept(long value1) {
+    default ObjLongConsumer2<T> acceptPartially(long value1) {
         return (t, value2) -> accept(t, value1, value2);
     }
 
@@ -204,7 +204,7 @@ public interface ObjBiLongConsumer<T> extends Lambda {
      * @return A {@code Consumer2} that represents this consumer partially applied the some arguments.
      */
     @Nonnull
-    default Consumer2<T> paccept(long value1, long value2) {
+    default Consumer2<T> acceptPartially(long value1, long value2) {
         return t -> accept(t, value1, value2);
     }
 

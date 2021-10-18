@@ -155,7 +155,7 @@ public interface BiBooleanToLongFunction extends Lambda {
      * @return A {@code BooleanToLongFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default BooleanToLongFunction papplyAsLong(boolean value1) {
+    default BooleanToLongFunction applyAsLongPartially(boolean value1) {
         return value2 -> applyAsLong(value1, value2);
     }
 

@@ -156,7 +156,7 @@ public interface BiCharToShortFunction extends Lambda {
      * @return A {@code CharToShortFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default CharToShortFunction papplyAsShort(char value1) {
+    default CharToShortFunction applyAsShortPartially(char value1) {
         return value2 -> applyAsShort(value1, value2);
     }
 

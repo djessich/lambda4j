@@ -245,7 +245,7 @@ public interface ObjBiCharPredicate<T> extends Lambda {
      * @return A {@code BiCharPredicate} that represents this predicate partially applied the some arguments.
      */
     @Nonnull
-    default BiCharPredicate ptest(T t) {
+    default BiCharPredicate testPartially(T t) {
         return (value1, value2) -> test(t, value1, value2);
     }
 
@@ -257,7 +257,7 @@ public interface ObjBiCharPredicate<T> extends Lambda {
      * @return A {@code CharPredicate} that represents this predicate partially applied the some arguments.
      */
     @Nonnull
-    default CharPredicate ptest(T t, char value1) {
+    default CharPredicate testPartially(T t, char value1) {
         return value2 -> test(t, value1, value2);
     }
 
@@ -268,7 +268,7 @@ public interface ObjBiCharPredicate<T> extends Lambda {
      * @return A {@code ObjCharPredicate} that represents this predicate partially applied the some arguments.
      */
     @Nonnull
-    default ObjCharPredicate<T> ptest(char value1) {
+    default ObjCharPredicate<T> testPartially(char value1) {
         return (t, value2) -> test(t, value1, value2);
     }
 
@@ -280,7 +280,7 @@ public interface ObjBiCharPredicate<T> extends Lambda {
      * @return A {@code Predicate2} that represents this predicate partially applied the some arguments.
      */
     @Nonnull
-    default Predicate2<T> ptest(char value1, char value2) {
+    default Predicate2<T> testPartially(char value1, char value2) {
         return t -> test(t, value1, value2);
     }
 

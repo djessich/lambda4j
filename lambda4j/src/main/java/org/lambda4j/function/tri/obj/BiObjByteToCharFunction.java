@@ -219,7 +219,7 @@ public interface BiObjByteToCharFunction<T, U> extends Lambda {
      * @return A {@code ObjByteToCharFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ObjByteToCharFunction<U> papplyAsChar(T t) {
+    default ObjByteToCharFunction<U> applyAsCharPartially(T t) {
         return (u, value) -> applyAsChar(t, u, value);
     }
 
@@ -231,7 +231,7 @@ public interface BiObjByteToCharFunction<T, U> extends Lambda {
      * @return A {@code ByteToCharFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ByteToCharFunction papplyAsChar(T t, U u) {
+    default ByteToCharFunction applyAsCharPartially(T t, U u) {
         return value -> applyAsChar(t, u, value);
     }
 
@@ -242,7 +242,7 @@ public interface BiObjByteToCharFunction<T, U> extends Lambda {
      * @return A {@code ToCharBiFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ToCharBiFunction<T, U> papplyAsChar(byte value) {
+    default ToCharBiFunction<T, U> applyAsCharPartially(byte value) {
         return (t, u) -> applyAsChar(t, u, value);
     }
 
@@ -254,7 +254,7 @@ public interface BiObjByteToCharFunction<T, U> extends Lambda {
      * @return A {@code ToCharFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ToCharFunction<U> papplyAsChar(T t, byte value) {
+    default ToCharFunction<U> applyAsCharPartially(T t, byte value) {
         return u -> applyAsChar(t, u, value);
     }
 

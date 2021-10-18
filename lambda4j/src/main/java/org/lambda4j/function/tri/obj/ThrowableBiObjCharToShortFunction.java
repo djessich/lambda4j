@@ -239,7 +239,7 @@ public interface ThrowableBiObjCharToShortFunction<T, U, X extends Throwable> ex
      * arguments.
      */
     @Nonnull
-    default ThrowableObjCharToShortFunction<U, X> papplyAsShortThrows(T t) {
+    default ThrowableObjCharToShortFunction<U, X> applyAsShortThrowsPartially(T t) {
         return (u, value) -> applyAsShortThrows(t, u, value);
     }
 
@@ -253,7 +253,7 @@ public interface ThrowableBiObjCharToShortFunction<T, U, X extends Throwable> ex
      * arguments.
      */
     @Nonnull
-    default ThrowableCharToShortFunction<X> papplyAsShortThrows(T t, U u) {
+    default ThrowableCharToShortFunction<X> applyAsShortThrowsPartially(T t, U u) {
         return value -> applyAsShortThrows(t, u, value);
     }
 
@@ -265,7 +265,7 @@ public interface ThrowableBiObjCharToShortFunction<T, U, X extends Throwable> ex
      * @return A {@code ThrowableToShortBiFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ThrowableToShortBiFunction<T, U, X> papplyAsShortThrows(char value) {
+    default ThrowableToShortBiFunction<T, U, X> applyAsShortThrowsPartially(char value) {
         return (t, u) -> applyAsShortThrows(t, u, value);
     }
 
@@ -278,7 +278,7 @@ public interface ThrowableBiObjCharToShortFunction<T, U, X extends Throwable> ex
      * @return A {@code ThrowableToShortFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ThrowableToShortFunction<U, X> papplyAsShortThrows(T t, char value) {
+    default ThrowableToShortFunction<U, X> applyAsShortThrowsPartially(T t, char value) {
         return u -> applyAsShortThrows(t, u, value);
     }
 

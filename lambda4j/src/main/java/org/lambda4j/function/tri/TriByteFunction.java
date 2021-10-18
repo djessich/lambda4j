@@ -183,7 +183,7 @@ public interface TriByteFunction<R> extends Lambda {
      * @return A {@code BiByteFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default BiByteFunction<R> papply(byte value1) {
+    default BiByteFunction<R> applyPartially(byte value1) {
         return (value2, value3) -> apply(value1, value2, value3);
     }
 
@@ -195,7 +195,7 @@ public interface TriByteFunction<R> extends Lambda {
      * @return A {@code ByteFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ByteFunction<R> papply(byte value1, byte value2) {
+    default ByteFunction<R> applyPartially(byte value1, byte value2) {
         return value3 -> apply(value1, value2, value3);
     }
 

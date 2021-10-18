@@ -205,7 +205,7 @@ public interface ThrowableTriBooleanFunction<R, X extends Throwable> extends Lam
      * @return A {@code ThrowableBiBooleanFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ThrowableBiBooleanFunction<R, X> papplyThrows(boolean value1) {
+    default ThrowableBiBooleanFunction<R, X> applyThrowsPartially(boolean value1) {
         return (value2, value3) -> applyThrows(value1, value2, value3);
     }
 
@@ -218,7 +218,7 @@ public interface ThrowableTriBooleanFunction<R, X extends Throwable> extends Lam
      * @return A {@code ThrowableBooleanFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ThrowableBooleanFunction<R, X> papplyThrows(boolean value1, boolean value2) {
+    default ThrowableBooleanFunction<R, X> applyThrowsPartially(boolean value1, boolean value2) {
         return value3 -> applyThrows(value1, value2, value3);
     }
 

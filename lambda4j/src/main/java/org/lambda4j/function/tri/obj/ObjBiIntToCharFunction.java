@@ -196,7 +196,7 @@ public interface ObjBiIntToCharFunction<T> extends Lambda {
      * @return A {@code BiIntToCharFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default BiIntToCharFunction papplyAsChar(T t) {
+    default BiIntToCharFunction applyAsCharPartially(T t) {
         return (value1, value2) -> applyAsChar(t, value1, value2);
     }
 
@@ -208,7 +208,7 @@ public interface ObjBiIntToCharFunction<T> extends Lambda {
      * @return A {@code IntToCharFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default IntToCharFunction papplyAsChar(T t, int value1) {
+    default IntToCharFunction applyAsCharPartially(T t, int value1) {
         return value2 -> applyAsChar(t, value1, value2);
     }
 
@@ -220,7 +220,7 @@ public interface ObjBiIntToCharFunction<T> extends Lambda {
      * @return A {@code ObjIntToCharFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ObjIntToCharFunction<T> papplyAsChar(int value1) {
+    default ObjIntToCharFunction<T> applyAsCharPartially(int value1) {
         return (t, value2) -> applyAsChar(t, value1, value2);
     }
 
@@ -232,7 +232,7 @@ public interface ObjBiIntToCharFunction<T> extends Lambda {
      * @return A {@code ToCharFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ToCharFunction<T> papplyAsChar(int value1, int value2) {
+    default ToCharFunction<T> applyAsCharPartially(int value1, int value2) {
         return t -> applyAsChar(t, value1, value2);
     }
 

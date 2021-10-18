@@ -217,7 +217,7 @@ public interface ThrowableObjBiBooleanToShortFunction<T, X extends Throwable> ex
      * arguments.
      */
     @Nonnull
-    default ThrowableBiBooleanToShortFunction<X> papplyAsShortThrows(T t) {
+    default ThrowableBiBooleanToShortFunction<X> applyAsShortThrowsPartially(T t) {
         return (value1, value2) -> applyAsShortThrows(t, value1, value2);
     }
 
@@ -231,7 +231,7 @@ public interface ThrowableObjBiBooleanToShortFunction<T, X extends Throwable> ex
      * arguments.
      */
     @Nonnull
-    default ThrowableBooleanToShortFunction<X> papplyAsShortThrows(T t, boolean value1) {
+    default ThrowableBooleanToShortFunction<X> applyAsShortThrowsPartially(T t, boolean value1) {
         return value2 -> applyAsShortThrows(t, value1, value2);
     }
 
@@ -244,7 +244,7 @@ public interface ThrowableObjBiBooleanToShortFunction<T, X extends Throwable> ex
      * arguments.
      */
     @Nonnull
-    default ThrowableObjBooleanToShortFunction<T, X> papplyAsShortThrows(boolean value1) {
+    default ThrowableObjBooleanToShortFunction<T, X> applyAsShortThrowsPartially(boolean value1) {
         return (t, value2) -> applyAsShortThrows(t, value1, value2);
     }
 
@@ -257,7 +257,7 @@ public interface ThrowableObjBiBooleanToShortFunction<T, X extends Throwable> ex
      * @return A {@code ThrowableToShortFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ThrowableToShortFunction<T, X> papplyAsShortThrows(boolean value1, boolean value2) {
+    default ThrowableToShortFunction<T, X> applyAsShortThrowsPartially(boolean value1, boolean value2) {
         return t -> applyAsShortThrows(t, value1, value2);
     }
 

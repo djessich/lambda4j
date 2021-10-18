@@ -194,7 +194,7 @@ public interface ThrowableObjFloatToDoubleFunction<T, X extends Throwable> exten
      * arguments.
      */
     @Nonnull
-    default ThrowableFloatToDoubleFunction<X> papplyAsDoubleThrows(T t) {
+    default ThrowableFloatToDoubleFunction<X> applyAsDoubleThrowsPartially(T t) {
         return value -> applyAsDoubleThrows(t, value);
     }
 
@@ -206,7 +206,7 @@ public interface ThrowableObjFloatToDoubleFunction<T, X extends Throwable> exten
      * @return A {@code ThrowableToDoubleFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ThrowableToDoubleFunction<T, X> papplyAsDoubleThrows(float value) {
+    default ThrowableToDoubleFunction<T, X> applyAsDoubleThrowsPartially(float value) {
         return t -> applyAsDoubleThrows(t, value);
     }
 

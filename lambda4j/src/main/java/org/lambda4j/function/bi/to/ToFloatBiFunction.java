@@ -169,7 +169,7 @@ public interface ToFloatBiFunction<T, U> extends Lambda {
      * @return A {@code ToFloatFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ToFloatFunction<U> papplyAsFloat(T t) {
+    default ToFloatFunction<U> applyAsFloatPartially(T t) {
         return u -> applyAsFloat(t, u);
     }
 

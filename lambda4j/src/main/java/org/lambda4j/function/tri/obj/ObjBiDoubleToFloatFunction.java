@@ -197,7 +197,7 @@ public interface ObjBiDoubleToFloatFunction<T> extends Lambda {
      * @return A {@code BiDoubleToFloatFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default BiDoubleToFloatFunction papplyAsFloat(T t) {
+    default BiDoubleToFloatFunction applyAsFloatPartially(T t) {
         return (value1, value2) -> applyAsFloat(t, value1, value2);
     }
 
@@ -210,7 +210,7 @@ public interface ObjBiDoubleToFloatFunction<T> extends Lambda {
      * @return A {@code DoubleToFloatFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default DoubleToFloatFunction papplyAsFloat(T t, double value1) {
+    default DoubleToFloatFunction applyAsFloatPartially(T t, double value1) {
         return value2 -> applyAsFloat(t, value1, value2);
     }
 
@@ -222,7 +222,7 @@ public interface ObjBiDoubleToFloatFunction<T> extends Lambda {
      * @return A {@code ObjDoubleToFloatFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ObjDoubleToFloatFunction<T> papplyAsFloat(double value1) {
+    default ObjDoubleToFloatFunction<T> applyAsFloatPartially(double value1) {
         return (t, value2) -> applyAsFloat(t, value1, value2);
     }
 
@@ -234,7 +234,7 @@ public interface ObjBiDoubleToFloatFunction<T> extends Lambda {
      * @return A {@code ToFloatFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ToFloatFunction<T> papplyAsFloat(double value1, double value2) {
+    default ToFloatFunction<T> applyAsFloatPartially(double value1, double value2) {
         return t -> applyAsFloat(t, value1, value2);
     }
 

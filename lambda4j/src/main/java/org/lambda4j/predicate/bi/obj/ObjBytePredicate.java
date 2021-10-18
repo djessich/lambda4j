@@ -223,7 +223,7 @@ public interface ObjBytePredicate<T> extends Lambda {
      * @return A {@code BytePredicate} that represents this predicate partially applied the some arguments.
      */
     @Nonnull
-    default BytePredicate ptest(T t) {
+    default BytePredicate testPartially(T t) {
         return value -> test(t, value);
     }
 
@@ -234,7 +234,7 @@ public interface ObjBytePredicate<T> extends Lambda {
      * @return A {@code Predicate2} that represents this predicate partially applied the some arguments.
      */
     @Nonnull
-    default Predicate2<T> ptest(byte value) {
+    default Predicate2<T> testPartially(byte value) {
         return t -> test(t, value);
     }
 

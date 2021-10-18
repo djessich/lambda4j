@@ -216,7 +216,7 @@ public interface ThrowableToByteTriFunction<T, U, V, X extends Throwable> extend
      * @return A {@code ThrowableToByteBiFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ThrowableToByteBiFunction<U, V, X> papplyAsByteThrows(T t) {
+    default ThrowableToByteBiFunction<U, V, X> applyAsByteThrowsPartially(T t) {
         return (u, v) -> applyAsByteThrows(t, u, v);
     }
 
@@ -229,7 +229,7 @@ public interface ThrowableToByteTriFunction<T, U, V, X extends Throwable> extend
      * @return A {@code ThrowableToByteFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ThrowableToByteFunction<V, X> papplyAsByteThrows(T t, U u) {
+    default ThrowableToByteFunction<V, X> applyAsByteThrowsPartially(T t, U u) {
         return v -> applyAsByteThrows(t, u, v);
     }
 

@@ -215,7 +215,7 @@ public interface TriShortPredicate extends Lambda {
      * @return A {@code BiShortPredicate} that represents this predicate partially applied the some arguments.
      */
     @Nonnull
-    default BiShortPredicate ptest(short value1) {
+    default BiShortPredicate testPartially(short value1) {
         return (value2, value3) -> test(value1, value2, value3);
     }
 
@@ -227,7 +227,7 @@ public interface TriShortPredicate extends Lambda {
      * @return A {@code ShortPredicate} that represents this predicate partially applied the some arguments.
      */
     @Nonnull
-    default ShortPredicate ptest(short value1, short value2) {
+    default ShortPredicate testPartially(short value1, short value2) {
         return value3 -> test(value1, value2, value3);
     }
 

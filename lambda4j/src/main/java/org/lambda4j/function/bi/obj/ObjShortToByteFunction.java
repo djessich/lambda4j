@@ -176,7 +176,7 @@ public interface ObjShortToByteFunction<T> extends Lambda {
      * @return A {@code ShortToByteFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ShortToByteFunction papplyAsByte(T t) {
+    default ShortToByteFunction applyAsBytePartially(T t) {
         return value -> applyAsByte(t, value);
     }
 
@@ -187,7 +187,7 @@ public interface ObjShortToByteFunction<T> extends Lambda {
      * @return A {@code ToByteFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ToByteFunction<T> papplyAsByte(short value) {
+    default ToByteFunction<T> applyAsBytePartially(short value) {
         return t -> applyAsByte(t, value);
     }
 

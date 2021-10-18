@@ -204,7 +204,7 @@ public interface ThrowableBooleanTernaryOperator<X extends Throwable> extends La
      * arguments.
      */
     @Nonnull
-    default ThrowableBooleanBinaryOperator<X> papplyAsBooleanThrows(boolean value1) {
+    default ThrowableBooleanBinaryOperator<X> applyAsBooleanThrowsPartially(boolean value1) {
         return (value2, value3) -> applyAsBooleanThrows(value1, value2, value3);
     }
 
@@ -218,7 +218,7 @@ public interface ThrowableBooleanTernaryOperator<X extends Throwable> extends La
      * arguments.
      */
     @Nonnull
-    default ThrowableBooleanUnaryOperator<X> papplyAsBooleanThrows(boolean value1, boolean value2) {
+    default ThrowableBooleanUnaryOperator<X> applyAsBooleanThrowsPartially(boolean value1, boolean value2) {
         return value3 -> applyAsBooleanThrows(value1, value2, value3);
     }
 

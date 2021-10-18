@@ -164,7 +164,7 @@ public interface BiShortFunction<R> extends Lambda {
      * @return A {@code ShortFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ShortFunction<R> papply(short value1) {
+    default ShortFunction<R> applyPartially(short value1) {
         return value2 -> apply(value1, value2);
     }
 

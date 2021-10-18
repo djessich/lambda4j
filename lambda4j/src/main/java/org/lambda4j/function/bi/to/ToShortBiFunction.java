@@ -169,7 +169,7 @@ public interface ToShortBiFunction<T, U> extends Lambda {
      * @return A {@code ToShortFunction} that represents this function partially applied the some arguments.
      */
     @Nonnull
-    default ToShortFunction<U> papplyAsShort(T t) {
+    default ToShortFunction<U> applyAsShortPartially(T t) {
         return u -> applyAsShort(t, u);
     }
 

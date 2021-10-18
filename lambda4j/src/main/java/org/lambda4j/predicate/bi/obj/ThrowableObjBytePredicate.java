@@ -242,7 +242,7 @@ public interface ThrowableObjBytePredicate<T, X extends Throwable> extends Lambd
      * @return A {@code ThrowableBytePredicate} that represents this predicate partially applied the some arguments.
      */
     @Nonnull
-    default ThrowableBytePredicate<X> ptestThrows(T t) {
+    default ThrowableBytePredicate<X> testThrowsPartially(T t) {
         return value -> testThrows(t, value);
     }
 
@@ -254,7 +254,7 @@ public interface ThrowableObjBytePredicate<T, X extends Throwable> extends Lambd
      * @return A {@code ThrowablePredicate} that represents this predicate partially applied the some arguments.
      */
     @Nonnull
-    default ThrowablePredicate<T, X> ptestThrows(byte value) {
+    default ThrowablePredicate<T, X> testThrowsPartially(byte value) {
         return t -> testThrows(t, value);
     }
 
