@@ -22,6 +22,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Function;
 import java.util.function.IntToLongFunction;
 
+import javax.annotation.CheckForNull;
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -70,6 +71,8 @@ public interface ThrowableIntToLongFunction<X extends Throwable> extends Lambda,
      * Expression</a>
      * @see <a href="https://docs.oracle.com/javase/tutorial/java/javaOO/methodreferences.html">Method Reference</a>
      */
+    @CheckForNull
+    @Nullable
     static <X extends Throwable> ThrowableIntToLongFunction<X> of(
             @Nullable ThrowableIntToLongFunction<X> expression) {
         return expression;

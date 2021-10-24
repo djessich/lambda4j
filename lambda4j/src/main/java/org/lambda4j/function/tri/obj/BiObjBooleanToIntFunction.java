@@ -33,6 +33,7 @@ import java.util.function.LongPredicate;
 import java.util.function.Predicate;
 import java.util.function.ToIntFunction;
 
+import javax.annotation.CheckForNull;
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -102,6 +103,8 @@ public interface BiObjBooleanToIntFunction<T, U> extends Lambda {
      * Expression</a>
      * @see <a href="https://docs.oracle.com/javase/tutorial/java/javaOO/methodreferences.html">Method Reference</a>
      */
+    @CheckForNull
+    @Nullable
     static <T, U> BiObjBooleanToIntFunction<T, U> of(@Nullable BiObjBooleanToIntFunction<T, U> expression) {
         return expression;
     }

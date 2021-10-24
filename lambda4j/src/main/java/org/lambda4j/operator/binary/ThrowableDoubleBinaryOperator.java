@@ -24,6 +24,7 @@ import java.util.function.BinaryOperator;
 import java.util.function.DoubleBinaryOperator;
 import java.util.function.Function;
 
+import javax.annotation.CheckForNull;
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -100,6 +101,8 @@ public interface ThrowableDoubleBinaryOperator<X extends Throwable> extends Lamb
      * Expression</a>
      * @see <a href="https://docs.oracle.com/javase/tutorial/java/javaOO/methodreferences.html">Method Reference</a>
      */
+    @CheckForNull
+    @Nullable
     static <X extends Throwable> ThrowableDoubleBinaryOperator<X> of(
             @Nullable ThrowableDoubleBinaryOperator<X> expression) {
         return expression;

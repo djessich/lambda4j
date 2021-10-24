@@ -77,6 +77,8 @@ public interface ThrowableTriByteFunction<R, X extends Throwable> extends Lambda
      * Expression</a>
      * @see <a href="https://docs.oracle.com/javase/tutorial/java/javaOO/methodreferences.html">Method Reference</a>
      */
+    @CheckForNull
+    @Nullable
     static <R, X extends Throwable> ThrowableTriByteFunction<R, X> of(
             @Nullable ThrowableTriByteFunction<R, X> expression) {
         return expression;

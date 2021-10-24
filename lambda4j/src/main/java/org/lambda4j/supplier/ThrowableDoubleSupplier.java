@@ -21,6 +21,7 @@ import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.DoubleSupplier;
 import java.util.function.Function;
 
+import javax.annotation.CheckForNull;
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -71,6 +72,8 @@ public interface ThrowableDoubleSupplier<X extends Throwable> extends Lambda, Do
      * Expression</a>
      * @see <a href="https://docs.oracle.com/javase/tutorial/java/javaOO/methodreferences.html">Method Reference</a>
      */
+    @CheckForNull
+    @Nullable
     static <X extends Throwable> ThrowableDoubleSupplier<X> of(@Nullable ThrowableDoubleSupplier<X> expression) {
         return expression;
     }

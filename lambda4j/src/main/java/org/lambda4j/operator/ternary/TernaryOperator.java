@@ -19,6 +19,7 @@ package org.lambda4j.operator.ternary;
 import java.util.Objects;
 import java.util.function.UnaryOperator;
 
+import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
@@ -51,6 +52,8 @@ public interface TernaryOperator<T> extends Lambda, TriFunction<T, T, T, T> {
      * Expression</a>
      * @see <a href="https://docs.oracle.com/javase/tutorial/java/javaOO/methodreferences.html">Method Reference</a>
      */
+    @CheckForNull
+    @Nullable
     static <T> TernaryOperator<T> of(@Nullable TernaryOperator<T> expression) {
         return expression;
     }

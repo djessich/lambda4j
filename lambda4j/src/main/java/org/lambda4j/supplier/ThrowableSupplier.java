@@ -22,6 +22,7 @@ import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
+import javax.annotation.CheckForNull;
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -64,6 +65,8 @@ public interface ThrowableSupplier<R, X extends Throwable> extends Lambda, Suppl
      * Expression</a>
      * @see <a href="https://docs.oracle.com/javase/tutorial/java/javaOO/methodreferences.html">Method Reference</a>
      */
+    @CheckForNull
+    @Nullable
     static <R, X extends Throwable> ThrowableSupplier<R, X> of(@Nullable ThrowableSupplier<R, X> expression) {
         return expression;
     }

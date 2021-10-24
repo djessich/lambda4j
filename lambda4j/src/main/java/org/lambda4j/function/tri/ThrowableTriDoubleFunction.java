@@ -77,6 +77,8 @@ public interface ThrowableTriDoubleFunction<R, X extends Throwable> extends Lamb
      * Expression</a>
      * @see <a href="https://docs.oracle.com/javase/tutorial/java/javaOO/methodreferences.html">Method Reference</a>
      */
+    @CheckForNull
+    @Nullable
     static <R, X extends Throwable> ThrowableTriDoubleFunction<R, X> of(
             @Nullable ThrowableTriDoubleFunction<R, X> expression) {
         return expression;

@@ -72,6 +72,8 @@ public interface TriShortFunction<R> extends Lambda {
      * Expression</a>
      * @see <a href="https://docs.oracle.com/javase/tutorial/java/javaOO/methodreferences.html">Method Reference</a>
      */
+    @CheckForNull
+    @Nullable
     static <R> TriShortFunction<R> of(@Nullable TriShortFunction<R> expression) {
         return expression;
     }

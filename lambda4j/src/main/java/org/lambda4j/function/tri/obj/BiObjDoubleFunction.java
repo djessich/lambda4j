@@ -30,6 +30,7 @@ import java.util.function.LongFunction;
 import java.util.function.LongToDoubleFunction;
 import java.util.function.ToDoubleFunction;
 
+import javax.annotation.CheckForNull;
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -95,6 +96,8 @@ public interface BiObjDoubleFunction<T, U, R> extends Lambda {
      * Expression</a>
      * @see <a href="https://docs.oracle.com/javase/tutorial/java/javaOO/methodreferences.html">Method Reference</a>
      */
+    @CheckForNull
+    @Nullable
     static <T, U, R> BiObjDoubleFunction<T, U, R> of(@Nullable BiObjDoubleFunction<T, U, R> expression) {
         return expression;
     }

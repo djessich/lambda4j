@@ -21,6 +21,7 @@ import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
+import javax.annotation.CheckForNull;
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -60,6 +61,8 @@ public interface BiConsumer2<T, U> extends Lambda, BiConsumer<T, U> {
      * Expression</a>
      * @see <a href="https://docs.oracle.com/javase/tutorial/java/javaOO/methodreferences.html">Method Reference</a>
      */
+    @CheckForNull
+    @Nullable
     static <T, U> BiConsumer2<T, U> of(@Nullable BiConsumer2<T, U> expression) {
         return expression;
     }

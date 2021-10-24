@@ -29,6 +29,7 @@ import java.util.function.IntUnaryOperator;
 import java.util.function.ToIntBiFunction;
 import java.util.function.ToIntFunction;
 
+import javax.annotation.CheckForNull;
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -76,6 +77,8 @@ public interface ToIntBiFunction2<T, U> extends Lambda, ToIntBiFunction<T, U> {
      * Expression</a>
      * @see <a href="https://docs.oracle.com/javase/tutorial/java/javaOO/methodreferences.html">Method Reference</a>
      */
+    @CheckForNull
+    @Nullable
     static <T, U> ToIntBiFunction2<T, U> of(@Nullable ToIntBiFunction2<T, U> expression) {
         return expression;
     }

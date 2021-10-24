@@ -29,6 +29,7 @@ import java.util.function.Function;
 import java.util.function.ToDoubleBiFunction;
 import java.util.function.ToDoubleFunction;
 
+import javax.annotation.CheckForNull;
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -76,6 +77,8 @@ public interface ToDoubleBiFunction2<T, U> extends Lambda, ToDoubleBiFunction<T,
      * Expression</a>
      * @see <a href="https://docs.oracle.com/javase/tutorial/java/javaOO/methodreferences.html">Method Reference</a>
      */
+    @CheckForNull
+    @Nullable
     static <T, U> ToDoubleBiFunction2<T, U> of(@Nullable ToDoubleBiFunction2<T, U> expression) {
         return expression;
     }

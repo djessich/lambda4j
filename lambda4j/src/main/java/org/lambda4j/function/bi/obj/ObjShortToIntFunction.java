@@ -30,6 +30,7 @@ import java.util.function.IntUnaryOperator;
 import java.util.function.LongFunction;
 import java.util.function.ToIntFunction;
 
+import javax.annotation.CheckForNull;
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -97,6 +98,8 @@ public interface ObjShortToIntFunction<T> extends Lambda {
      * Expression</a>
      * @see <a href="https://docs.oracle.com/javase/tutorial/java/javaOO/methodreferences.html">Method Reference</a>
      */
+    @CheckForNull
+    @Nullable
     static <T> ObjShortToIntFunction<T> of(@Nullable ObjShortToIntFunction<T> expression) {
         return expression;
     }

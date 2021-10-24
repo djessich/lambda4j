@@ -30,6 +30,7 @@ import java.util.function.LongToDoubleFunction;
 import java.util.function.Predicate;
 import java.util.function.ToDoubleFunction;
 
+import javax.annotation.CheckForNull;
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -106,6 +107,8 @@ public interface ObjBiDoublePredicate<T> extends Lambda {
      * Expression</a>
      * @see <a href="https://docs.oracle.com/javase/tutorial/java/javaOO/methodreferences.html">Method Reference</a>
      */
+    @CheckForNull
+    @Nullable
     static <T> ObjBiDoublePredicate<T> of(@Nullable ObjBiDoublePredicate<T> expression) {
         return expression;
     }

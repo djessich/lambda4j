@@ -21,6 +21,7 @@ import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Function;
 
+import javax.annotation.CheckForNull;
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -87,6 +88,8 @@ public interface ThrowableTriPredicate<T, U, V, X extends Throwable> extends Lam
      * Expression</a>
      * @see <a href="https://docs.oracle.com/javase/tutorial/java/javaOO/methodreferences.html">Method Reference</a>
      */
+    @CheckForNull
+    @Nullable
     static <T, U, V, X extends Throwable> ThrowableTriPredicate<T, U, V, X> of(
             @Nullable ThrowableTriPredicate<T, U, V, X> expression) {
         return expression;

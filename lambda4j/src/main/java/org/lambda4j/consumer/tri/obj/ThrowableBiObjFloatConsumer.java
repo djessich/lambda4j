@@ -19,6 +19,7 @@ package org.lambda4j.consumer.tri.obj;
 import java.util.Objects;
 import java.util.function.Function;
 
+import javax.annotation.CheckForNull;
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -94,6 +95,8 @@ public interface ThrowableBiObjFloatConsumer<T, U, X extends Throwable> extends 
      * Expression</a>
      * @see <a href="https://docs.oracle.com/javase/tutorial/java/javaOO/methodreferences.html">Method Reference</a>
      */
+    @CheckForNull
+    @Nullable
     static <T, U, X extends Throwable> ThrowableBiObjFloatConsumer<T, U, X> of(
             @Nullable ThrowableBiObjFloatConsumer<T, U, X> expression) {
         return expression;

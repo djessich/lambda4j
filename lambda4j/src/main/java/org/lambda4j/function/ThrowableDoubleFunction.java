@@ -23,6 +23,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.DoubleFunction;
 import java.util.function.Function;
 
+import javax.annotation.CheckForNull;
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -73,6 +74,8 @@ public interface ThrowableDoubleFunction<R, X extends Throwable> extends Lambda,
      * Expression</a>
      * @see <a href="https://docs.oracle.com/javase/tutorial/java/javaOO/methodreferences.html">Method Reference</a>
      */
+    @CheckForNull
+    @Nullable
     static <R, X extends Throwable> ThrowableDoubleFunction<R, X> of(
             @Nullable ThrowableDoubleFunction<R, X> expression) {
         return expression;

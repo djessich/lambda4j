@@ -76,6 +76,8 @@ public interface ThrowableBiLongFunction<R, X extends Throwable> extends Lambda 
      * Expression</a>
      * @see <a href="https://docs.oracle.com/javase/tutorial/java/javaOO/methodreferences.html">Method Reference</a>
      */
+    @CheckForNull
+    @Nullable
     static <R, X extends Throwable> ThrowableBiLongFunction<R, X> of(
             @Nullable ThrowableBiLongFunction<R, X> expression) {
         return expression;

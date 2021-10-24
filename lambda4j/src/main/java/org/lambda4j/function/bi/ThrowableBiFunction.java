@@ -72,6 +72,8 @@ public interface ThrowableBiFunction<T, U, R, X extends Throwable> extends Lambd
      * Expression</a>
      * @see <a href="https://docs.oracle.com/javase/tutorial/java/javaOO/methodreferences.html">Method Reference</a>
      */
+    @CheckForNull
+    @Nullable
     static <T, U, R, X extends Throwable> ThrowableBiFunction<T, U, R, X> of(
             @Nullable ThrowableBiFunction<T, U, R, X> expression) {
         return expression;

@@ -29,6 +29,7 @@ import java.util.function.LongToIntFunction;
 import java.util.function.ObjIntConsumer;
 import java.util.function.ToIntFunction;
 
+import javax.annotation.CheckForNull;
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -85,6 +86,8 @@ public interface ObjIntConsumer2<T> extends Lambda, ObjIntConsumer<T> {
      * Expression</a>
      * @see <a href="https://docs.oracle.com/javase/tutorial/java/javaOO/methodreferences.html">Method Reference</a>
      */
+    @CheckForNull
+    @Nullable
     static <T> ObjIntConsumer2<T> of(@Nullable ObjIntConsumer2<T> expression) {
         return expression;
     }

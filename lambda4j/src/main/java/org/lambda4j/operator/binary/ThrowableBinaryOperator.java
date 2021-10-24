@@ -20,6 +20,7 @@ import java.util.Comparator;
 import java.util.Objects;
 import java.util.function.BinaryOperator;
 
+import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
@@ -59,6 +60,8 @@ public interface ThrowableBinaryOperator<T, X extends Throwable>
      * Expression</a>
      * @see <a href="https://docs.oracle.com/javase/tutorial/java/javaOO/methodreferences.html">Method Reference</a>
      */
+    @CheckForNull
+    @Nullable
     static <T, X extends Throwable> ThrowableBinaryOperator<T, X> of(
             @Nullable ThrowableBinaryOperator<T, X> expression) {
         return expression;

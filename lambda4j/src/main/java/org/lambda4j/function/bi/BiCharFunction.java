@@ -70,6 +70,8 @@ public interface BiCharFunction<R> extends Lambda {
      * Expression</a>
      * @see <a href="https://docs.oracle.com/javase/tutorial/java/javaOO/methodreferences.html">Method Reference</a>
      */
+    @CheckForNull
+    @Nullable
     static <R> BiCharFunction<R> of(@Nullable BiCharFunction<R> expression) {
         return expression;
     }

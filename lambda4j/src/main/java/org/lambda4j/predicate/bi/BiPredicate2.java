@@ -23,6 +23,7 @@ import java.util.function.BiPredicate;
 import java.util.function.Function;
 import java.util.function.Predicate;
 
+import javax.annotation.CheckForNull;
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -80,6 +81,8 @@ public interface BiPredicate2<T, U> extends Lambda, BiPredicate<T, U> {
      * Expression</a>
      * @see <a href="https://docs.oracle.com/javase/tutorial/java/javaOO/methodreferences.html">Method Reference</a>
      */
+    @CheckForNull
+    @Nullable
     static <T, U> BiPredicate2<T, U> of(@Nullable BiPredicate2<T, U> expression) {
         return expression;
     }

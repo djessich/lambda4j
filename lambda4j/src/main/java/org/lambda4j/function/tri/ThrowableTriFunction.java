@@ -73,6 +73,8 @@ public interface ThrowableTriFunction<T, U, V, R, X extends Throwable> extends L
      * Expression</a>
      * @see <a href="https://docs.oracle.com/javase/tutorial/java/javaOO/methodreferences.html">Method Reference</a>
      */
+    @CheckForNull
+    @Nullable
     static <T, U, V, R, X extends Throwable> ThrowableTriFunction<T, U, V, R, X> of(
             @Nullable ThrowableTriFunction<T, U, V, R, X> expression) {
         return expression;

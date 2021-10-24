@@ -28,6 +28,7 @@ import java.util.function.LongFunction;
 import java.util.function.LongUnaryOperator;
 import java.util.function.ToLongFunction;
 
+import javax.annotation.CheckForNull;
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -68,6 +69,8 @@ public interface LongFunction2<R> extends Lambda, LongFunction<R> {
      * Expression</a>
      * @see <a href="https://docs.oracle.com/javase/tutorial/java/javaOO/methodreferences.html">Method Reference</a>
      */
+    @CheckForNull
+    @Nullable
     static <R> LongFunction2<R> of(@Nullable LongFunction2<R> expression) {
         return expression;
     }

@@ -30,6 +30,7 @@ import java.util.function.LongToIntFunction;
 import java.util.function.LongUnaryOperator;
 import java.util.function.ToLongFunction;
 
+import javax.annotation.CheckForNull;
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -102,6 +103,8 @@ public interface BiObjCharToLongFunction<T, U> extends Lambda {
      * Expression</a>
      * @see <a href="https://docs.oracle.com/javase/tutorial/java/javaOO/methodreferences.html">Method Reference</a>
      */
+    @CheckForNull
+    @Nullable
     static <T, U> BiObjCharToLongFunction<T, U> of(@Nullable BiObjCharToLongFunction<T, U> expression) {
         return expression;
     }

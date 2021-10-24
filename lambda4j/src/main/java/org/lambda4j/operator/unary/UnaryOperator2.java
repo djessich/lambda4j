@@ -19,6 +19,7 @@ package org.lambda4j.operator.unary;
 import java.util.Objects;
 import java.util.function.UnaryOperator;
 
+import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
@@ -52,6 +53,8 @@ public interface UnaryOperator2<T> extends Lambda, Function2<T, T>, UnaryOperato
      * Expression</a>
      * @see <a href="https://docs.oracle.com/javase/tutorial/java/javaOO/methodreferences.html">Method Reference</a>
      */
+    @CheckForNull
+    @Nullable
     static <T> UnaryOperator2<T> of(@Nullable UnaryOperator2<T> expression) {
         return expression;
     }

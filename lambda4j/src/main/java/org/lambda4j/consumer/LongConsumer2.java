@@ -23,6 +23,7 @@ import java.util.function.LongConsumer;
 import java.util.function.LongUnaryOperator;
 import java.util.function.ToLongFunction;
 
+import javax.annotation.CheckForNull;
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -61,6 +62,8 @@ public interface LongConsumer2 extends Lambda, LongConsumer {
      * Expression</a>
      * @see <a href="https://docs.oracle.com/javase/tutorial/java/javaOO/methodreferences.html">Method Reference</a>
      */
+    @CheckForNull
+    @Nullable
     static LongConsumer2 of(@Nullable LongConsumer2 expression) {
         return expression;
     }

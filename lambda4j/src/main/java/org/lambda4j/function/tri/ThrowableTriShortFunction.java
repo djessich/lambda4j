@@ -77,6 +77,8 @@ public interface ThrowableTriShortFunction<R, X extends Throwable> extends Lambd
      * Expression</a>
      * @see <a href="https://docs.oracle.com/javase/tutorial/java/javaOO/methodreferences.html">Method Reference</a>
      */
+    @CheckForNull
+    @Nullable
     static <R, X extends Throwable> ThrowableTriShortFunction<R, X> of(
             @Nullable ThrowableTriShortFunction<R, X> expression) {
         return expression;

@@ -29,6 +29,7 @@ import java.util.function.LongToDoubleFunction;
 import java.util.function.ObjDoubleConsumer;
 import java.util.function.ToDoubleFunction;
 
+import javax.annotation.CheckForNull;
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -86,6 +87,8 @@ public interface ObjDoubleConsumer2<T> extends Lambda, ObjDoubleConsumer<T> {
      * Expression</a>
      * @see <a href="https://docs.oracle.com/javase/tutorial/java/javaOO/methodreferences.html">Method Reference</a>
      */
+    @CheckForNull
+    @Nullable
     static <T> ObjDoubleConsumer2<T> of(@Nullable ObjDoubleConsumer2<T> expression) {
         return expression;
     }

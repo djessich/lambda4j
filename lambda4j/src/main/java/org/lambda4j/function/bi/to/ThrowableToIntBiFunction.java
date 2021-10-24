@@ -22,6 +22,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Function;
 import java.util.function.ToIntBiFunction;
 
+import javax.annotation.CheckForNull;
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -80,6 +81,8 @@ public interface ThrowableToIntBiFunction<T, U, X extends Throwable> extends Lam
      * Expression</a>
      * @see <a href="https://docs.oracle.com/javase/tutorial/java/javaOO/methodreferences.html">Method Reference</a>
      */
+    @CheckForNull
+    @Nullable
     static <T, U, X extends Throwable> ThrowableToIntBiFunction<T, U, X> of(
             @Nullable ThrowableToIntBiFunction<T, U, X> expression) {
         return expression;

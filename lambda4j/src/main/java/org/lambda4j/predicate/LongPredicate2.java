@@ -25,6 +25,7 @@ import java.util.function.LongPredicate;
 import java.util.function.LongUnaryOperator;
 import java.util.function.ToLongFunction;
 
+import javax.annotation.CheckForNull;
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -80,6 +81,8 @@ public interface LongPredicate2 extends Lambda, LongPredicate {
      * Expression</a>
      * @see <a href="https://docs.oracle.com/javase/tutorial/java/javaOO/methodreferences.html">Method Reference</a>
      */
+    @CheckForNull
+    @Nullable
     static LongPredicate2 of(@Nullable LongPredicate2 expression) {
         return expression;
     }

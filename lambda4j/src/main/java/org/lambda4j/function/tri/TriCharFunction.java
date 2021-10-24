@@ -71,6 +71,8 @@ public interface TriCharFunction<R> extends Lambda {
      * Expression</a>
      * @see <a href="https://docs.oracle.com/javase/tutorial/java/javaOO/methodreferences.html">Method Reference</a>
      */
+    @CheckForNull
+    @Nullable
     static <R> TriCharFunction<R> of(@Nullable TriCharFunction<R> expression) {
         return expression;
     }

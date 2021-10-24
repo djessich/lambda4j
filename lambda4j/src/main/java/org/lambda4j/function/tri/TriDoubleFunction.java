@@ -73,6 +73,8 @@ public interface TriDoubleFunction<R> extends Lambda {
      * Expression</a>
      * @see <a href="https://docs.oracle.com/javase/tutorial/java/javaOO/methodreferences.html">Method Reference</a>
      */
+    @CheckForNull
+    @Nullable
     static <R> TriDoubleFunction<R> of(@Nullable TriDoubleFunction<R> expression) {
         return expression;
     }

@@ -32,6 +32,7 @@ import java.util.function.LongToIntFunction;
 import java.util.function.LongUnaryOperator;
 import java.util.function.ToLongFunction;
 
+import javax.annotation.CheckForNull;
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -94,6 +95,8 @@ public interface LongBinaryOperator2 extends Lambda, LongBinaryOperator {
      * Expression</a>
      * @see <a href="https://docs.oracle.com/javase/tutorial/java/javaOO/methodreferences.html">Method Reference</a>
      */
+    @CheckForNull
+    @Nullable
     static LongBinaryOperator2 of(@Nullable LongBinaryOperator2 expression) {
         return expression;
     }

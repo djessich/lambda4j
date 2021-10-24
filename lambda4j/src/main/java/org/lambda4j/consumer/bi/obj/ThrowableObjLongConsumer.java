@@ -20,6 +20,7 @@ import java.util.Objects;
 import java.util.function.Function;
 import java.util.function.ObjLongConsumer;
 
+import javax.annotation.CheckForNull;
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -90,6 +91,8 @@ public interface ThrowableObjLongConsumer<T, X extends Throwable> extends Lambda
      * Expression</a>
      * @see <a href="https://docs.oracle.com/javase/tutorial/java/javaOO/methodreferences.html">Method Reference</a>
      */
+    @CheckForNull
+    @Nullable
     static <T, X extends Throwable> ThrowableObjLongConsumer<T, X> of(
             @Nullable ThrowableObjLongConsumer<T, X> expression) {
         return expression;

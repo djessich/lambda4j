@@ -28,6 +28,7 @@ import java.util.function.IntUnaryOperator;
 import java.util.function.LongToIntFunction;
 import java.util.function.ToIntFunction;
 
+import javax.annotation.CheckForNull;
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -68,6 +69,8 @@ public interface IntFunction2<R> extends Lambda, IntFunction<R> {
      * Expression</a>
      * @see <a href="https://docs.oracle.com/javase/tutorial/java/javaOO/methodreferences.html">Method Reference</a>
      */
+    @CheckForNull
+    @Nullable
     static <R> IntFunction2<R> of(@Nullable IntFunction2<R> expression) {
         return expression;
     }

@@ -22,6 +22,7 @@ import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Function;
 
+import javax.annotation.CheckForNull;
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -99,6 +100,8 @@ public interface ThrowableBiObjDoubleFunction<T, U, R, X extends Throwable> exte
      * Expression</a>
      * @see <a href="https://docs.oracle.com/javase/tutorial/java/javaOO/methodreferences.html">Method Reference</a>
      */
+    @CheckForNull
+    @Nullable
     static <T, U, R, X extends Throwable> ThrowableBiObjDoubleFunction<T, U, R, X> of(
             @Nullable ThrowableBiObjDoubleFunction<T, U, R, X> expression) {
         return expression;

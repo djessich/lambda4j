@@ -24,6 +24,7 @@ import java.util.function.BinaryOperator;
 import java.util.function.Function;
 import java.util.function.IntBinaryOperator;
 
+import javax.annotation.CheckForNull;
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -99,6 +100,8 @@ public interface ThrowableIntBinaryOperator<X extends Throwable> extends Lambda,
      * Expression</a>
      * @see <a href="https://docs.oracle.com/javase/tutorial/java/javaOO/methodreferences.html">Method Reference</a>
      */
+    @CheckForNull
+    @Nullable
     static <X extends Throwable> ThrowableIntBinaryOperator<X> of(
             @Nullable ThrowableIntBinaryOperator<X> expression) {
         return expression;

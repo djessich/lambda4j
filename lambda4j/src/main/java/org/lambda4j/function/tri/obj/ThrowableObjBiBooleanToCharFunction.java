@@ -21,6 +21,7 @@ import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Function;
 
+import javax.annotation.CheckForNull;
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -105,6 +106,8 @@ public interface ThrowableObjBiBooleanToCharFunction<T, X extends Throwable> ext
      * Expression</a>
      * @see <a href="https://docs.oracle.com/javase/tutorial/java/javaOO/methodreferences.html">Method Reference</a>
      */
+    @CheckForNull
+    @Nullable
     static <T, X extends Throwable> ThrowableObjBiBooleanToCharFunction<T, X> of(
             @Nullable ThrowableObjBiBooleanToCharFunction<T, X> expression) {
         return expression;

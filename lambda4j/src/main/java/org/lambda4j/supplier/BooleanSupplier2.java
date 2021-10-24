@@ -20,6 +20,7 @@ import java.util.Objects;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.BooleanSupplier;
 
+import javax.annotation.CheckForNull;
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -65,6 +66,8 @@ public interface BooleanSupplier2 extends Lambda, BooleanSupplier {
      * Expression</a>
      * @see <a href="https://docs.oracle.com/javase/tutorial/java/javaOO/methodreferences.html">Method Reference</a>
      */
+    @CheckForNull
+    @Nullable
     static BooleanSupplier2 of(@Nullable BooleanSupplier2 expression) {
         return expression;
     }

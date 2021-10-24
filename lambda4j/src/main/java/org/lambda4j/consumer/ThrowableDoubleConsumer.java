@@ -20,6 +20,7 @@ import java.util.Objects;
 import java.util.function.DoubleConsumer;
 import java.util.function.Function;
 
+import javax.annotation.CheckForNull;
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -67,6 +68,8 @@ public interface ThrowableDoubleConsumer<X extends Throwable> extends Lambda, Do
      * Expression</a>
      * @see <a href="https://docs.oracle.com/javase/tutorial/java/javaOO/methodreferences.html">Method Reference</a>
      */
+    @CheckForNull
+    @Nullable
     static <X extends Throwable> ThrowableDoubleConsumer<X> of(@Nullable ThrowableDoubleConsumer<X> expression) {
         return expression;
     }

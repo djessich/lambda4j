@@ -66,6 +66,8 @@ public interface BiFunction2<T, U, R> extends Lambda, BiFunction<T, U, R> {
      * Expression</a>
      * @see <a href="https://docs.oracle.com/javase/tutorial/java/javaOO/methodreferences.html">Method Reference</a>
      */
+    @CheckForNull
+    @Nullable
     static <T, U, R> BiFunction2<T, U, R> of(@Nullable BiFunction2<T, U, R> expression) {
         return expression;
     }

@@ -18,6 +18,7 @@ package org.lambda4j.operator.ternary;
 
 import java.util.Objects;
 
+import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
@@ -55,6 +56,8 @@ public interface ThrowableTernaryOperator<T, X extends Throwable> extends Lambda
      * Expression</a>
      * @see <a href="https://docs.oracle.com/javase/tutorial/java/javaOO/methodreferences.html">Method Reference</a>
      */
+    @CheckForNull
+    @Nullable
     static <T, X extends Throwable> ThrowableTernaryOperator<T, X> of(
             @Nullable ThrowableTernaryOperator<T, X> expression) {
         return expression;

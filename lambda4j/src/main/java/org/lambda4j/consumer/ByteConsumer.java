@@ -18,6 +18,7 @@ package org.lambda4j.consumer;
 
 import java.util.Objects;
 
+import javax.annotation.CheckForNull;
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -59,6 +60,8 @@ public interface ByteConsumer extends Lambda {
      * Expression</a>
      * @see <a href="https://docs.oracle.com/javase/tutorial/java/javaOO/methodreferences.html">Method Reference</a>
      */
+    @CheckForNull
+    @Nullable
     static ByteConsumer of(@Nullable ByteConsumer expression) {
         return expression;
     }

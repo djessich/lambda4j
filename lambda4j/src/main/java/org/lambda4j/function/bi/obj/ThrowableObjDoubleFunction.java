@@ -22,6 +22,7 @@ import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Function;
 
+import javax.annotation.CheckForNull;
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -94,6 +95,8 @@ public interface ThrowableObjDoubleFunction<T, R, X extends Throwable> extends L
      * Expression</a>
      * @see <a href="https://docs.oracle.com/javase/tutorial/java/javaOO/methodreferences.html">Method Reference</a>
      */
+    @CheckForNull
+    @Nullable
     static <T, R, X extends Throwable> ThrowableObjDoubleFunction<T, R, X> of(
             @Nullable ThrowableObjDoubleFunction<T, R, X> expression) {
         return expression;

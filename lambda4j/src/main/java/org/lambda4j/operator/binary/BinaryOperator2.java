@@ -21,6 +21,7 @@ import java.util.Objects;
 import java.util.function.BinaryOperator;
 import java.util.function.UnaryOperator;
 
+import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
@@ -54,6 +55,8 @@ public interface BinaryOperator2<T> extends Lambda, BiFunction2<T, T, T>, Binary
      * Expression</a>
      * @see <a href="https://docs.oracle.com/javase/tutorial/java/javaOO/methodreferences.html">Method Reference</a>
      */
+    @CheckForNull
+    @Nullable
     static <T> BinaryOperator2<T> of(@Nullable BinaryOperator2<T> expression) {
         return expression;
     }

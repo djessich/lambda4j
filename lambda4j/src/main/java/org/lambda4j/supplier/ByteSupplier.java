@@ -19,6 +19,7 @@ package org.lambda4j.supplier;
 import java.util.Objects;
 import java.util.concurrent.atomic.AtomicReference;
 
+import javax.annotation.CheckForNull;
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -62,6 +63,8 @@ public interface ByteSupplier extends Lambda {
      * Expression</a>
      * @see <a href="https://docs.oracle.com/javase/tutorial/java/javaOO/methodreferences.html">Method Reference</a>
      */
+    @CheckForNull
+    @Nullable
     static ByteSupplier of(@Nullable ByteSupplier expression) {
         return expression;
     }

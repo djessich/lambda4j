@@ -22,6 +22,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Function;
 import java.util.function.ToLongBiFunction;
 
+import javax.annotation.CheckForNull;
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -80,6 +81,8 @@ public interface ThrowableToLongBiFunction<T, U, X extends Throwable> extends La
      * Expression</a>
      * @see <a href="https://docs.oracle.com/javase/tutorial/java/javaOO/methodreferences.html">Method Reference</a>
      */
+    @CheckForNull
+    @Nullable
     static <T, U, X extends Throwable> ThrowableToLongBiFunction<T, U, X> of(
             @Nullable ThrowableToLongBiFunction<T, U, X> expression) {
         return expression;

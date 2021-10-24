@@ -28,6 +28,7 @@ import java.util.function.LongFunction;
 import java.util.function.LongPredicate;
 import java.util.function.Predicate;
 
+import javax.annotation.CheckForNull;
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -98,6 +99,8 @@ public interface ObjBiBooleanToCharFunction<T> extends Lambda {
      * Expression</a>
      * @see <a href="https://docs.oracle.com/javase/tutorial/java/javaOO/methodreferences.html">Method Reference</a>
      */
+    @CheckForNull
+    @Nullable
     static <T> ObjBiBooleanToCharFunction<T> of(@Nullable ObjBiBooleanToCharFunction<T> expression) {
         return expression;
     }

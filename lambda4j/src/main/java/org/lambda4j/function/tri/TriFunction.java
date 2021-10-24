@@ -67,6 +67,8 @@ public interface TriFunction<T, U, V, R> extends Lambda {
      * Expression</a>
      * @see <a href="https://docs.oracle.com/javase/tutorial/java/javaOO/methodreferences.html">Method Reference</a>
      */
+    @CheckForNull
+    @Nullable
     static <T, U, V, R> TriFunction<T, U, V, R> of(@Nullable TriFunction<T, U, V, R> expression) {
         return expression;
     }

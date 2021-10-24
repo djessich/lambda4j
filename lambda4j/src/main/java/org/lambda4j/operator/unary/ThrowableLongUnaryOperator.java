@@ -22,6 +22,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Function;
 import java.util.function.LongUnaryOperator;
 
+import javax.annotation.CheckForNull;
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -77,6 +78,8 @@ public interface ThrowableLongUnaryOperator<X extends Throwable> extends Lambda,
      * Expression</a>
      * @see <a href="https://docs.oracle.com/javase/tutorial/java/javaOO/methodreferences.html">Method Reference</a>
      */
+    @CheckForNull
+    @Nullable
     static <X extends Throwable> ThrowableLongUnaryOperator<X> of(
             @Nullable ThrowableLongUnaryOperator<X> expression) {
         return expression;

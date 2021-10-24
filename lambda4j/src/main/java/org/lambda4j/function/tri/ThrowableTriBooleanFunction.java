@@ -77,6 +77,8 @@ public interface ThrowableTriBooleanFunction<R, X extends Throwable> extends Lam
      * Expression</a>
      * @see <a href="https://docs.oracle.com/javase/tutorial/java/javaOO/methodreferences.html">Method Reference</a>
      */
+    @CheckForNull
+    @Nullable
     static <R, X extends Throwable> ThrowableTriBooleanFunction<R, X> of(
             @Nullable ThrowableTriBooleanFunction<R, X> expression) {
         return expression;

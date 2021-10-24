@@ -22,6 +22,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.DoubleUnaryOperator;
 import java.util.function.Function;
 
+import javax.annotation.CheckForNull;
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -78,6 +79,8 @@ public interface ThrowableDoubleUnaryOperator<X extends Throwable> extends Lambd
      * Expression</a>
      * @see <a href="https://docs.oracle.com/javase/tutorial/java/javaOO/methodreferences.html">Method Reference</a>
      */
+    @CheckForNull
+    @Nullable
     static <X extends Throwable> ThrowableDoubleUnaryOperator<X> of(
             @Nullable ThrowableDoubleUnaryOperator<X> expression) {
         return expression;

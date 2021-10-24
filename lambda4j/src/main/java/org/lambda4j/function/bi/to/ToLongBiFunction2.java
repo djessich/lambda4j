@@ -29,6 +29,7 @@ import java.util.function.LongUnaryOperator;
 import java.util.function.ToLongBiFunction;
 import java.util.function.ToLongFunction;
 
+import javax.annotation.CheckForNull;
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -76,6 +77,8 @@ public interface ToLongBiFunction2<T, U> extends Lambda, ToLongBiFunction<T, U> 
      * Expression</a>
      * @see <a href="https://docs.oracle.com/javase/tutorial/java/javaOO/methodreferences.html">Method Reference</a>
      */
+    @CheckForNull
+    @Nullable
     static <T, U> ToLongBiFunction2<T, U> of(@Nullable ToLongBiFunction2<T, U> expression) {
         return expression;
     }

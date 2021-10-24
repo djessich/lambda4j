@@ -28,6 +28,7 @@ import java.util.function.IntToDoubleFunction;
 import java.util.function.LongToDoubleFunction;
 import java.util.function.ToDoubleFunction;
 
+import javax.annotation.CheckForNull;
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -68,6 +69,8 @@ public interface DoubleFunction2<R> extends Lambda, DoubleFunction<R> {
      * Expression</a>
      * @see <a href="https://docs.oracle.com/javase/tutorial/java/javaOO/methodreferences.html">Method Reference</a>
      */
+    @CheckForNull
+    @Nullable
     static <R> DoubleFunction2<R> of(@Nullable DoubleFunction2<R> expression) {
         return expression;
     }
