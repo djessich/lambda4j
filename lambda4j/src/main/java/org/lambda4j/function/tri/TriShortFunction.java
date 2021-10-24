@@ -23,6 +23,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
+import javax.annotation.CheckForNull;
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -73,6 +74,30 @@ public interface TriShortFunction<R> extends Lambda {
      */
     static <R> TriShortFunction<R> of(@Nullable TriShortFunction<R> expression) {
         return expression;
+    }
+
+    /**
+     * Constructs a {@link TriShortFunction} based on a curried lambda expression. Thereby the given curried lambda
+     * expression is converted to the desired uncurried type of same arity. With this method, it is possible to uncurry
+     * a curried lambda expression.
+     *
+     * @param <R> The type of return value from the function
+     * @param curried A curried lambda expression, e.g. {@code value1 -> value2 -> value3 -> method(value1, value2,
+     * value3)}
+     * @return A {@code TriShortFunction} from given curried lambda expression.
+     * @implNote This implementation allows the given argument to be {@code null}, but only if {@code null} given,
+     * {@code null} will be returned.
+     * @see <a href="https://docs.oracle.com/javase/tutorial/java/javaOO/lambdaexpressions.html#syntax">Lambda
+     * Expression</a>
+     * @see <a href="https://docs.oracle.com/javase/tutorial/java/javaOO/methodreferences.html">Method Reference</a>
+     */
+    @CheckForNull
+    @Nullable
+    static <R> TriShortFunction<R> of(@Nullable ShortFunction<ShortFunction<ShortFunction<R>>> curried) {
+        if (Objects.isNull(curried)) {
+            return null;
+        }
+        return (value1, value2, value3) -> curried.apply(value1).apply(value2).apply(value3);
     }
 
     /**

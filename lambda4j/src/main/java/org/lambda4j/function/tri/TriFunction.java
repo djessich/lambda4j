@@ -23,6 +23,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
+import javax.annotation.CheckForNull;
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -68,6 +69,32 @@ public interface TriFunction<T, U, V, R> extends Lambda {
      */
     static <T, U, V, R> TriFunction<T, U, V, R> of(@Nullable TriFunction<T, U, V, R> expression) {
         return expression;
+    }
+
+    /**
+     * Constructs a {@link TriFunction} based on a curried lambda expression. Thereby the given curried lambda
+     * expression is converted to the desired uncurried type of same arity. With this method, it is possible to uncurry
+     * a curried lambda expression.
+     *
+     * @param <T> The type of the first argument to the function
+     * @param <U> The type of the second argument to the function
+     * @param <V> The type of the third argument to the function
+     * @param <R> The type of return value from the function
+     * @param curried A curried lambda expression, e.g. {@code t -> u -> v -> method(t, u, v)}
+     * @return A {@code TriFunction} from given curried lambda expression.
+     * @implNote This implementation allows the given argument to be {@code null}, but only if {@code null} given,
+     * {@code null} will be returned.
+     * @see <a href="https://docs.oracle.com/javase/tutorial/java/javaOO/lambdaexpressions.html#syntax">Lambda
+     * Expression</a>
+     * @see <a href="https://docs.oracle.com/javase/tutorial/java/javaOO/methodreferences.html">Method Reference</a>
+     */
+    @CheckForNull
+    @Nullable
+    static <T, U, V, R> TriFunction<T, U, V, R> of(@Nullable Function2<T, Function2<U, Function2<V, R>>> curried) {
+        if (Objects.isNull(curried)) {
+            return null;
+        }
+        return (t, u, v) -> curried.apply(t).apply(u).apply(v);
     }
 
     /**

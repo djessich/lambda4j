@@ -22,6 +22,7 @@ import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Function;
 
+import javax.annotation.CheckForNull;
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -78,6 +79,32 @@ public interface ThrowableBiFloatFunction<R, X extends Throwable> extends Lambda
     static <R, X extends Throwable> ThrowableBiFloatFunction<R, X> of(
             @Nullable ThrowableBiFloatFunction<R, X> expression) {
         return expression;
+    }
+
+    /**
+     * Constructs a {@link ThrowableBiFloatFunction} based on a curried lambda expression. Thereby the given curried
+     * lambda expression is converted to the desired uncurried type of same arity. With this method, it is possible to
+     * uncurry a curried lambda expression.
+     *
+     * @param <R> The type of return value from the function
+     * @param <X> The type of the throwable to be thrown by this function
+     * @param curried A curried lambda expression, e.g. {@code value1 -> value2 -> method(value1, value2)}
+     * @return A {@code ThrowableBiFloatFunction} from given curried lambda expression.
+     * @throws X Any throwable from this functions action
+     * @implNote This implementation allows the given argument to be {@code null}, but only if {@code null} given,
+     * {@code null} will be returned.
+     * @see <a href="https://docs.oracle.com/javase/tutorial/java/javaOO/lambdaexpressions.html#syntax">Lambda
+     * Expression</a>
+     * @see <a href="https://docs.oracle.com/javase/tutorial/java/javaOO/methodreferences.html">Method Reference</a>
+     */
+    @CheckForNull
+    @Nullable
+    static <R, X extends Throwable> ThrowableBiFloatFunction<R, X> of(
+            @Nullable ThrowableFloatFunction<ThrowableFloatFunction<R, X>, X> curried) throws X {
+        if (Objects.isNull(curried)) {
+            return null;
+        }
+        return (value1, value2) -> curried.applyThrows(value1).applyThrows(value2);
     }
 
     /**

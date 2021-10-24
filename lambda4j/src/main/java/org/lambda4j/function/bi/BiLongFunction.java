@@ -28,6 +28,7 @@ import java.util.function.LongFunction;
 import java.util.function.LongUnaryOperator;
 import java.util.function.ToLongFunction;
 
+import javax.annotation.CheckForNull;
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -72,6 +73,29 @@ public interface BiLongFunction<R> extends Lambda {
      */
     static <R> BiLongFunction<R> of(@Nullable BiLongFunction<R> expression) {
         return expression;
+    }
+
+    /**
+     * Constructs a {@link BiLongFunction} based on a curried lambda expression. Thereby the given curried lambda
+     * expression is converted to the desired uncurried type of same arity. With this method, it is possible to uncurry
+     * a curried lambda expression.
+     *
+     * @param <R> The type of return value from the function
+     * @param curried A curried lambda expression, e.g. {@code value1 -> value2 -> method(value1, value2)}
+     * @return A {@code BiLongFunction} from given curried lambda expression.
+     * @implNote This implementation allows the given argument to be {@code null}, but only if {@code null} given,
+     * {@code null} will be returned.
+     * @see <a href="https://docs.oracle.com/javase/tutorial/java/javaOO/lambdaexpressions.html#syntax">Lambda
+     * Expression</a>
+     * @see <a href="https://docs.oracle.com/javase/tutorial/java/javaOO/methodreferences.html">Method Reference</a>
+     */
+    @CheckForNull
+    @Nullable
+    static <R> BiLongFunction<R> of(@Nullable LongFunction2<LongFunction2<R>> curried) {
+        if (Objects.isNull(curried)) {
+            return null;
+        }
+        return (value1, value2) -> curried.apply(value1).apply(value2);
     }
 
     /**
