@@ -540,6 +540,16 @@ public interface ThrowableTriShortFunction<R, X extends Throwable> extends Lambd
     }
 
     /**
+     * Returns a curried version of this function.
+     *
+     * @return A curried version of this function.
+     */
+    @Nonnull
+    default ThrowableShortFunction<ThrowableShortFunction<ThrowableShortFunction<R, X>, X>, X> curried() {
+        return value1 -> value2 -> value3 -> applyThrows(value1, value2, value3);
+    }
+
+    /**
      * Returns a memoized (caching) version of this {@link ThrowableTriShortFunction}. Whenever it is called, the
      * mapping between the input parameters and the return value is preserved in a cache, making subsequent calls
      * returning the memoized value instead of computing the return value again.

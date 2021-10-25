@@ -439,6 +439,16 @@ public interface BiLongFunction<R> extends Lambda {
     }
 
     /**
+     * Returns a curried version of this function.
+     *
+     * @return A curried version of this function.
+     */
+    @Nonnull
+    default LongFunction2<LongFunction2<R>> curried() {
+        return value1 -> value2 -> apply(value1, value2);
+    }
+
+    /**
      * Returns a memoized (caching) version of this {@link BiLongFunction}. Whenever it is called, the mapping between
      * the input parameters and the return value is preserved in a cache, making subsequent calls returning the memoized
      * value instead of computing the return value again.
