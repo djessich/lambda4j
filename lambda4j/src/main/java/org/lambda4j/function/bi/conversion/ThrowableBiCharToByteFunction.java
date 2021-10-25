@@ -581,6 +581,16 @@ public interface ThrowableBiCharToByteFunction<X extends Throwable> extends Lamb
     }
 
     /**
+     * Returns a reversed version of this function. This may be useful in recursive context.
+     *
+     * @return A reversed version of this function.
+     */
+    @Nonnull
+    default ThrowableBiCharToByteFunction<X> reversed() {
+        return (value2, value1) -> applyAsByteThrows(value1, value2);
+    }
+
+    /**
      * Returns a memoized (caching) version of this {@link ThrowableBiCharToByteFunction}. Whenever it is called, the
      * mapping between the input parameters and the return value is preserved in a cache, making subsequent calls
      * returning the memoized value instead of computing the return value again.

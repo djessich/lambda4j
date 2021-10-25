@@ -359,6 +359,16 @@ public interface BiIntConsumer extends Lambda {
     }
 
     /**
+     * Returns a reversed version of this consumer. This may be useful in recursive context.
+     *
+     * @return A reversed version of this consumer.
+     */
+    @Nonnull
+    default BiIntConsumer reversed() {
+        return (value2, value1) -> accept(value1, value2);
+    }
+
+    /**
      * Returns a composed {@link BiConsumer2} which represents this {@link BiIntConsumer}. Thereby the primitive input
      * argument for this consumer is autoboxed. This method provides the possibility to use this {@code BiIntConsumer}
      * with methods provided by the {@code JDK}.

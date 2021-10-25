@@ -410,6 +410,16 @@ public interface TriBooleanConsumer extends Lambda {
     }
 
     /**
+     * Returns a reversed version of this consumer. This may be useful in recursive context.
+     *
+     * @return A reversed version of this consumer.
+     */
+    @Nonnull
+    default TriBooleanConsumer reversed() {
+        return (value3, value2, value1) -> accept(value1, value2, value3);
+    }
+
+    /**
      * Returns a composed {@link TriConsumer} which represents this {@link TriBooleanConsumer}. Thereby the primitive
      * input argument for this consumer is autoboxed. This method provides the possibility to use this {@code
      * TriBooleanConsumer} with methods provided by the {@code JDK}.

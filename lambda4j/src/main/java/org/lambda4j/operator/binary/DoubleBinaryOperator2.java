@@ -606,6 +606,16 @@ public interface DoubleBinaryOperator2 extends Lambda, DoubleBinaryOperator {
     }
 
     /**
+     * Returns a reversed version of this function. This may be useful in recursive context.
+     *
+     * @return A reversed version of this function.
+     */
+    @Nonnull
+    default DoubleBinaryOperator2 reversed() {
+        return (value2, value1) -> applyAsDouble(value1, value2);
+    }
+
+    /**
      * Returns a memoized (caching) version of this {@link DoubleBinaryOperator2}. Whenever it is called, the mapping
      * between the input parameters and the return value is preserved in a cache, making subsequent calls returning the
      * memoized value instead of computing the return value again.

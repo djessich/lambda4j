@@ -291,6 +291,16 @@ public interface ThrowableCharConsumer<X extends Throwable> extends Lambda {
     }
 
     /**
+     * Returns a reversed version of this consumer. This may be useful in recursive context.
+     *
+     * @return A reversed version of this consumer.
+     */
+    @Nonnull
+    default ThrowableCharConsumer<X> reversed() {
+        return this;
+    }
+
+    /**
      * Returns a composed {@link ThrowableConsumer} which represents this {@link ThrowableCharConsumer}. Thereby the
      * primitive input argument for this consumer is autoboxed. This method provides the possibility to use this {@code
      * ThrowableCharConsumer} with methods provided by the {@code JDK}.

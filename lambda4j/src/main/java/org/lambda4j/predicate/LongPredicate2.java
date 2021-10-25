@@ -596,6 +596,16 @@ public interface LongPredicate2 extends Lambda, LongPredicate {
     }
 
     /**
+     * Returns a reversed version of this predicate. This may be useful in recursive context.
+     *
+     * @return A reversed version of this predicate.
+     */
+    @Nonnull
+    default LongPredicate2 reversed() {
+        return this;
+    }
+
+    /**
      * Returns a memoized (caching) version of this {@link LongPredicate2}. Whenever it is called, the mapping between
      * the input parameter and the return value is preserved in a cache, making subsequent calls returning the memoized
      * value instead of computing the return value again.

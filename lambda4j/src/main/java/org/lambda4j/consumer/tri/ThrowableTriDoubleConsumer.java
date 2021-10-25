@@ -451,6 +451,16 @@ public interface ThrowableTriDoubleConsumer<X extends Throwable> extends Lambda 
     }
 
     /**
+     * Returns a reversed version of this consumer. This may be useful in recursive context.
+     *
+     * @return A reversed version of this consumer.
+     */
+    @Nonnull
+    default ThrowableTriDoubleConsumer<X> reversed() {
+        return (value3, value2, value1) -> acceptThrows(value1, value2, value3);
+    }
+
+    /**
      * Returns a composed {@link ThrowableTriConsumer} which represents this {@link ThrowableTriDoubleConsumer}. Thereby
      * the primitive input argument for this consumer is autoboxed. This method provides the possibility to use this
      * {@code ThrowableTriDoubleConsumer} with methods provided by the {@code JDK}.

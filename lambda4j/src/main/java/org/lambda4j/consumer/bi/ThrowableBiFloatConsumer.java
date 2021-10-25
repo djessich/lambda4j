@@ -370,6 +370,16 @@ public interface ThrowableBiFloatConsumer<X extends Throwable> extends Lambda {
     }
 
     /**
+     * Returns a reversed version of this consumer. This may be useful in recursive context.
+     *
+     * @return A reversed version of this consumer.
+     */
+    @Nonnull
+    default ThrowableBiFloatConsumer<X> reversed() {
+        return (value2, value1) -> acceptThrows(value1, value2);
+    }
+
+    /**
      * Returns a composed {@link ThrowableBiConsumer} which represents this {@link ThrowableBiFloatConsumer}. Thereby
      * the primitive input argument for this consumer is autoboxed. This method provides the possibility to use this
      * {@code ThrowableBiFloatConsumer} with methods provided by the {@code JDK}.

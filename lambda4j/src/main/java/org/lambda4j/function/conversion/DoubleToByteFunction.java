@@ -473,6 +473,16 @@ public interface DoubleToByteFunction extends Lambda {
     }
 
     /**
+     * Returns a reversed version of this function. This may be useful in recursive context.
+     *
+     * @return A reversed version of this function.
+     */
+    @Nonnull
+    default DoubleToByteFunction reversed() {
+        return this;
+    }
+
+    /**
      * Returns a memoized (caching) version of this {@link DoubleToByteFunction}. Whenever it is called, the mapping
      * between the input parameter and the return value is preserved in a cache, making subsequent calls returning the
      * memoized value instead of computing the return value again.

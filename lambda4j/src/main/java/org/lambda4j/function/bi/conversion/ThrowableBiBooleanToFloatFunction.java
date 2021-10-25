@@ -575,6 +575,16 @@ public interface ThrowableBiBooleanToFloatFunction<X extends Throwable> extends 
     }
 
     /**
+     * Returns a reversed version of this function. This may be useful in recursive context.
+     *
+     * @return A reversed version of this function.
+     */
+    @Nonnull
+    default ThrowableBiBooleanToFloatFunction<X> reversed() {
+        return (value2, value1) -> applyAsFloatThrows(value1, value2);
+    }
+
+    /**
      * Returns a memoized (caching) version of this {@link ThrowableBiBooleanToFloatFunction}. Whenever it is called,
      * the mapping between the input parameters and the return value is preserved in a cache, making subsequent calls
      * returning the memoized value instead of computing the return value again.

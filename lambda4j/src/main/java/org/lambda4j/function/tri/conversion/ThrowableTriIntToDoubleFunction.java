@@ -654,6 +654,16 @@ public interface ThrowableTriIntToDoubleFunction<X extends Throwable> extends La
     }
 
     /**
+     * Returns a reversed version of this function. This may be useful in recursive context.
+     *
+     * @return A reversed version of this function.
+     */
+    @Nonnull
+    default ThrowableTriIntToDoubleFunction<X> reversed() {
+        return (value3, value2, value1) -> applyAsDoubleThrows(value1, value2, value3);
+    }
+
+    /**
      * Returns a memoized (caching) version of this {@link ThrowableTriIntToDoubleFunction}. Whenever it is called, the
      * mapping between the input parameters and the return value is preserved in a cache, making subsequent calls
      * returning the memoized value instead of computing the return value again.

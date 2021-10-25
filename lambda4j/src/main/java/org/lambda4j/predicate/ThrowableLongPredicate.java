@@ -623,6 +623,16 @@ public interface ThrowableLongPredicate<X extends Throwable> extends Lambda, Lon
     }
 
     /**
+     * Returns a reversed version of this predicate. This may be useful in recursive context.
+     *
+     * @return A reversed version of this predicate.
+     */
+    @Nonnull
+    default ThrowableLongPredicate<X> reversed() {
+        return this;
+    }
+
+    /**
      * Returns a memoized (caching) version of this {@link ThrowableLongPredicate}. Whenever it is called, the mapping
      * between the input parameter and the return value is preserved in a cache, making subsequent calls returning the
      * memoized value instead of computing the return value again.

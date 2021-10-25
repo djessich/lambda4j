@@ -617,6 +617,16 @@ public interface TriDoubleToByteFunction extends Lambda {
     }
 
     /**
+     * Returns a reversed version of this function. This may be useful in recursive context.
+     *
+     * @return A reversed version of this function.
+     */
+    @Nonnull
+    default TriDoubleToByteFunction reversed() {
+        return (value3, value2, value1) -> applyAsByte(value1, value2, value3);
+    }
+
+    /**
      * Returns a memoized (caching) version of this {@link TriDoubleToByteFunction}. Whenever it is called, the mapping
      * between the input parameters and the return value is preserved in a cache, making subsequent calls returning the
      * memoized value instead of computing the return value again.

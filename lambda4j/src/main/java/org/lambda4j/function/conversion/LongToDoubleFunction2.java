@@ -478,6 +478,16 @@ public interface LongToDoubleFunction2 extends Lambda, LongToDoubleFunction {
     }
 
     /**
+     * Returns a reversed version of this function. This may be useful in recursive context.
+     *
+     * @return A reversed version of this function.
+     */
+    @Nonnull
+    default LongToDoubleFunction2 reversed() {
+        return this;
+    }
+
+    /**
      * Returns a memoized (caching) version of this {@link LongToDoubleFunction2}. Whenever it is called, the mapping
      * between the input parameter and the return value is preserved in a cache, making subsequent calls returning the
      * memoized value instead of computing the return value again.

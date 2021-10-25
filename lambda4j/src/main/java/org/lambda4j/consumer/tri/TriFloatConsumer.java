@@ -417,6 +417,16 @@ public interface TriFloatConsumer extends Lambda {
     }
 
     /**
+     * Returns a reversed version of this consumer. This may be useful in recursive context.
+     *
+     * @return A reversed version of this consumer.
+     */
+    @Nonnull
+    default TriFloatConsumer reversed() {
+        return (value3, value2, value1) -> accept(value1, value2, value3);
+    }
+
+    /**
      * Returns a composed {@link TriConsumer} which represents this {@link TriFloatConsumer}. Thereby the primitive
      * input argument for this consumer is autoboxed. This method provides the possibility to use this {@code
      * TriFloatConsumer} with methods provided by the {@code JDK}.

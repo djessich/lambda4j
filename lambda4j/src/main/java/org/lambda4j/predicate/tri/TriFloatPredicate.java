@@ -727,6 +727,16 @@ public interface TriFloatPredicate extends Lambda {
     }
 
     /**
+     * Returns a reversed version of this predicate. This may be useful in recursive context.
+     *
+     * @return A reversed version of this predicate.
+     */
+    @Nonnull
+    default TriFloatPredicate reversed() {
+        return (value3, value2, value1) -> test(value1, value2, value3);
+    }
+
+    /**
      * Returns a memoized (caching) version of this {@link TriFloatPredicate}. Whenever it is called, the mapping
      * between the input parameters and the return value is preserved in a cache, making subsequent calls returning the
      * memoized value instead of computing the return value again.

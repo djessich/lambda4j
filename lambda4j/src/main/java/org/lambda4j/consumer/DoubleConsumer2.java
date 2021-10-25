@@ -291,6 +291,16 @@ public interface DoubleConsumer2 extends Lambda, DoubleConsumer {
     }
 
     /**
+     * Returns a reversed version of this consumer. This may be useful in recursive context.
+     *
+     * @return A reversed version of this consumer.
+     */
+    @Nonnull
+    default DoubleConsumer2 reversed() {
+        return this;
+    }
+
+    /**
      * Returns a composed {@link Consumer2} which represents this {@link DoubleConsumer2}. Thereby the primitive input
      * argument for this consumer is autoboxed. This method provides the possibility to use this {@code DoubleConsumer2}
      * with methods provided by the {@code JDK}.

@@ -351,6 +351,16 @@ public interface LongFunction2<R> extends Lambda, LongFunction<R> {
     }
 
     /**
+     * Returns a reversed version of this function. This may be useful in recursive context.
+     *
+     * @return A reversed version of this function.
+     */
+    @Nonnull
+    default LongFunction2<R> reversed() {
+        return this;
+    }
+
+    /**
      * Returns a memoized (caching) version of this {@link LongFunction2}. Whenever it is called, the mapping between
      * the input parameter and the return value is preserved in a cache, making subsequent calls returning the memoized
      * value instead of computing the return value again.

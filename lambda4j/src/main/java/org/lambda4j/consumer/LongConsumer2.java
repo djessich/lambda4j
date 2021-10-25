@@ -290,6 +290,16 @@ public interface LongConsumer2 extends Lambda, LongConsumer {
     }
 
     /**
+     * Returns a reversed version of this consumer. This may be useful in recursive context.
+     *
+     * @return A reversed version of this consumer.
+     */
+    @Nonnull
+    default LongConsumer2 reversed() {
+        return this;
+    }
+
+    /**
      * Returns a composed {@link Consumer2} which represents this {@link LongConsumer2}. Thereby the primitive input
      * argument for this consumer is autoboxed. This method provides the possibility to use this {@code LongConsumer2}
      * with methods provided by the {@code JDK}.
