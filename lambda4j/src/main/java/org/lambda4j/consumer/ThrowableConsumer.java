@@ -28,7 +28,15 @@ import javax.annotation.Nullable;
 import org.lambda4j.Lambda;
 import org.lambda4j.core.exception.ThrownByFunctionalInterfaceException;
 import org.lambda4j.core.util.ThrowableUtils;
+import org.lambda4j.function.ThrowableBooleanFunction;
+import org.lambda4j.function.ThrowableByteFunction;
+import org.lambda4j.function.ThrowableCharFunction;
+import org.lambda4j.function.ThrowableDoubleFunction;
+import org.lambda4j.function.ThrowableFloatFunction;
 import org.lambda4j.function.ThrowableFunction;
+import org.lambda4j.function.ThrowableIntFunction;
+import org.lambda4j.function.ThrowableLongFunction;
+import org.lambda4j.function.ThrowableShortFunction;
 
 /**
  * Represents an operation that accepts one input argument and returns no result which is able to throw any {@link
@@ -136,6 +144,154 @@ public interface ThrowableConsumer<T, X extends Throwable> extends Lambda, Consu
             @Nonnull ThrowableFunction<? super A, ? extends T, ? extends X> before) {
         Objects.requireNonNull(before);
         return a -> acceptThrows(before.applyThrows(a));
+    }
+
+    /**
+     * Returns a composed {@link ThrowableBooleanConsumer} that first applies the {@code before} function to its input,
+     * and then applies this consumer to the result. This method is just convenience, to provide the ability to execute
+     * an operation which accepts {@code boolean} input, before this consumer is executed.
+     *
+     * @param before The function to apply before this consumer is applied
+     * @return A composed {@code ThrowableBooleanConsumer} that first applies the {@code before} function to its input,
+     * and then applies this consumer to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
+     * boolean}.
+     */
+    @Nonnull
+    default ThrowableBooleanConsumer<X> composeFromBoolean(
+            @Nonnull ThrowableBooleanFunction<? extends T, ? extends X> before) {
+        Objects.requireNonNull(before);
+        return value -> acceptThrows(before.applyThrows(value));
+    }
+
+    /**
+     * Returns a composed {@link ThrowableByteConsumer} that first applies the {@code before} function to its input, and
+     * then applies this consumer to the result. This method is just convenience, to provide the ability to execute an
+     * operation which accepts {@code byte} input, before this consumer is executed.
+     *
+     * @param before The function to apply before this consumer is applied
+     * @return A composed {@code ThrowableByteConsumer} that first applies the {@code before} function to its input, and
+     * then applies this consumer to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
+     * byte}.
+     */
+    @Nonnull
+    default ThrowableByteConsumer<X> composeFromByte(@Nonnull ThrowableByteFunction<? extends T, ? extends X> before) {
+        Objects.requireNonNull(before);
+        return value -> acceptThrows(before.applyThrows(value));
+    }
+
+    /**
+     * Returns a composed {@link ThrowableCharConsumer} that first applies the {@code before} function to its input, and
+     * then applies this consumer to the result. This method is just convenience, to provide the ability to execute an
+     * operation which accepts {@code char} input, before this consumer is executed.
+     *
+     * @param before The function to apply before this consumer is applied
+     * @return A composed {@code ThrowableCharConsumer} that first applies the {@code before} function to its input, and
+     * then applies this consumer to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
+     * char}.
+     */
+    @Nonnull
+    default ThrowableCharConsumer<X> composeFromChar(@Nonnull ThrowableCharFunction<? extends T, ? extends X> before) {
+        Objects.requireNonNull(before);
+        return value -> acceptThrows(before.applyThrows(value));
+    }
+
+    /**
+     * Returns a composed {@link ThrowableDoubleConsumer} that first applies the {@code before} function to its input,
+     * and then applies this consumer to the result. This method is just convenience, to provide the ability to execute
+     * an operation which accepts {@code double} input, before this consumer is executed.
+     *
+     * @param before The function to apply before this consumer is applied
+     * @return A composed {@code ThrowableDoubleConsumer} that first applies the {@code before} function to its input,
+     * and then applies this consumer to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
+     * double}.
+     */
+    @Nonnull
+    default ThrowableDoubleConsumer<X> composeFromDouble(
+            @Nonnull ThrowableDoubleFunction<? extends T, ? extends X> before) {
+        Objects.requireNonNull(before);
+        return value -> acceptThrows(before.applyThrows(value));
+    }
+
+    /**
+     * Returns a composed {@link ThrowableFloatConsumer} that first applies the {@code before} function to its input,
+     * and then applies this consumer to the result. This method is just convenience, to provide the ability to execute
+     * an operation which accepts {@code float} input, before this consumer is executed.
+     *
+     * @param before The function to apply before this consumer is applied
+     * @return A composed {@code ThrowableFloatConsumer} that first applies the {@code before} function to its input,
+     * and then applies this consumer to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
+     * float}.
+     */
+    @Nonnull
+    default ThrowableFloatConsumer<X> composeFromFloat(
+            @Nonnull ThrowableFloatFunction<? extends T, ? extends X> before) {
+        Objects.requireNonNull(before);
+        return value -> acceptThrows(before.applyThrows(value));
+    }
+
+    /**
+     * Returns a composed {@link ThrowableIntConsumer} that first applies the {@code before} function to its input, and
+     * then applies this consumer to the result. This method is just convenience, to provide the ability to execute an
+     * operation which accepts {@code int} input, before this consumer is executed.
+     *
+     * @param before The function to apply before this consumer is applied
+     * @return A composed {@code ThrowableIntConsumer} that first applies the {@code before} function to its input, and
+     * then applies this consumer to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
+     * int}.
+     */
+    @Nonnull
+    default ThrowableIntConsumer<X> composeFromInt(@Nonnull ThrowableIntFunction<? extends T, ? extends X> before) {
+        Objects.requireNonNull(before);
+        return value -> acceptThrows(before.applyThrows(value));
+    }
+
+    /**
+     * Returns a composed {@link ThrowableLongConsumer} that first applies the {@code before} function to its input, and
+     * then applies this consumer to the result. This method is just convenience, to provide the ability to execute an
+     * operation which accepts {@code long} input, before this consumer is executed.
+     *
+     * @param before The function to apply before this consumer is applied
+     * @return A composed {@code ThrowableLongConsumer} that first applies the {@code before} function to its input, and
+     * then applies this consumer to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
+     * long}.
+     */
+    @Nonnull
+    default ThrowableLongConsumer<X> composeFromLong(@Nonnull ThrowableLongFunction<? extends T, ? extends X> before) {
+        Objects.requireNonNull(before);
+        return value -> acceptThrows(before.applyThrows(value));
+    }
+
+    /**
+     * Returns a composed {@link ThrowableShortConsumer} that first applies the {@code before} function to its input,
+     * and then applies this consumer to the result. This method is just convenience, to provide the ability to execute
+     * an operation which accepts {@code short} input, before this consumer is executed.
+     *
+     * @param before The function to apply before this consumer is applied
+     * @return A composed {@code ThrowableShortConsumer} that first applies the {@code before} function to its input,
+     * and then applies this consumer to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
+     * short}.
+     */
+    @Nonnull
+    default ThrowableShortConsumer<X> composeFromShort(
+            @Nonnull ThrowableShortFunction<? extends T, ? extends X> before) {
+        Objects.requireNonNull(before);
+        return value -> acceptThrows(before.applyThrows(value));
     }
 
     /**

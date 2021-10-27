@@ -18,7 +18,10 @@ package org.lambda4j.consumer.tri;
 
 import java.util.Objects;
 import java.util.function.Consumer;
+import java.util.function.DoubleFunction;
 import java.util.function.Function;
+import java.util.function.IntFunction;
+import java.util.function.LongFunction;
 
 import javax.annotation.CheckForNull;
 import javax.annotation.Nonnegative;
@@ -30,6 +33,11 @@ import org.apache.commons.lang3.tuple.Triple;
 import org.lambda4j.Lambda;
 import org.lambda4j.consumer.Consumer2;
 import org.lambda4j.consumer.bi.BiConsumer2;
+import org.lambda4j.function.BooleanFunction;
+import org.lambda4j.function.ByteFunction;
+import org.lambda4j.function.CharFunction;
+import org.lambda4j.function.FloatFunction;
+import org.lambda4j.function.ShortFunction;
 
 /**
  * Represents an operation that accepts three input arguments and returns no result. Unlike most other functional
@@ -218,6 +226,198 @@ public interface TriConsumer<T, U, V> extends Lambda {
         Objects.requireNonNull(before2);
         Objects.requireNonNull(before3);
         return (a, b, c) -> accept(before1.apply(a), before2.apply(b), before3.apply(c));
+    }
+
+    /**
+     * Returns a composed {@link TriBooleanConsumer} that first applies the {@code before} functions to its input, and
+     * then applies this consumer to the result. If evaluation of either operation throws an exception, it is relayed to
+     * the caller of the composed operation. This method is just convenience, to provide the ability to execute an
+     * operation which accepts {@code boolean} input, before this consumer is executed.
+     *
+     * @param before1 The first function to apply before this consumer is applied
+     * @param before2 The second function to apply before this consumer is applied
+     * @param before3 The third function to apply before this consumer is applied
+     * @return A composed {@code TriBooleanConsumer} that first applies the {@code before} functions to its input, and
+     * then applies this consumer to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
+     * boolean}.
+     */
+    @Nonnull
+    default TriBooleanConsumer composeFromBoolean(@Nonnull BooleanFunction<? extends T> before1,
+            @Nonnull BooleanFunction<? extends U> before2, @Nonnull BooleanFunction<? extends V> before3) {
+        Objects.requireNonNull(before1);
+        Objects.requireNonNull(before2);
+        Objects.requireNonNull(before3);
+        return (value1, value2, value3) -> accept(before1.apply(value1), before2.apply(value2), before3.apply(value3));
+    }
+
+    /**
+     * Returns a composed {@link TriByteConsumer} that first applies the {@code before} functions to its input, and then
+     * applies this consumer to the result. If evaluation of either operation throws an exception, it is relayed to the
+     * caller of the composed operation. This method is just convenience, to provide the ability to execute an operation
+     * which accepts {@code byte} input, before this consumer is executed.
+     *
+     * @param before1 The first function to apply before this consumer is applied
+     * @param before2 The second function to apply before this consumer is applied
+     * @param before3 The third function to apply before this consumer is applied
+     * @return A composed {@code TriByteConsumer} that first applies the {@code before} functions to its input, and then
+     * applies this consumer to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
+     * byte}.
+     */
+    @Nonnull
+    default TriByteConsumer composeFromByte(@Nonnull ByteFunction<? extends T> before1,
+            @Nonnull ByteFunction<? extends U> before2, @Nonnull ByteFunction<? extends V> before3) {
+        Objects.requireNonNull(before1);
+        Objects.requireNonNull(before2);
+        Objects.requireNonNull(before3);
+        return (value1, value2, value3) -> accept(before1.apply(value1), before2.apply(value2), before3.apply(value3));
+    }
+
+    /**
+     * Returns a composed {@link TriCharConsumer} that first applies the {@code before} functions to its input, and then
+     * applies this consumer to the result. If evaluation of either operation throws an exception, it is relayed to the
+     * caller of the composed operation. This method is just convenience, to provide the ability to execute an operation
+     * which accepts {@code char} input, before this consumer is executed.
+     *
+     * @param before1 The first function to apply before this consumer is applied
+     * @param before2 The second function to apply before this consumer is applied
+     * @param before3 The third function to apply before this consumer is applied
+     * @return A composed {@code TriCharConsumer} that first applies the {@code before} functions to its input, and then
+     * applies this consumer to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
+     * char}.
+     */
+    @Nonnull
+    default TriCharConsumer composeFromChar(@Nonnull CharFunction<? extends T> before1,
+            @Nonnull CharFunction<? extends U> before2, @Nonnull CharFunction<? extends V> before3) {
+        Objects.requireNonNull(before1);
+        Objects.requireNonNull(before2);
+        Objects.requireNonNull(before3);
+        return (value1, value2, value3) -> accept(before1.apply(value1), before2.apply(value2), before3.apply(value3));
+    }
+
+    /**
+     * Returns a composed {@link TriDoubleConsumer} that first applies the {@code before} functions to its input, and
+     * then applies this consumer to the result. If evaluation of either operation throws an exception, it is relayed to
+     * the caller of the composed operation. This method is just convenience, to provide the ability to execute an
+     * operation which accepts {@code double} input, before this consumer is executed.
+     *
+     * @param before1 The first function to apply before this consumer is applied
+     * @param before2 The second function to apply before this consumer is applied
+     * @param before3 The third function to apply before this consumer is applied
+     * @return A composed {@code TriDoubleConsumer} that first applies the {@code before} functions to its input, and
+     * then applies this consumer to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
+     * double}.
+     */
+    @Nonnull
+    default TriDoubleConsumer composeFromDouble(@Nonnull DoubleFunction<? extends T> before1,
+            @Nonnull DoubleFunction<? extends U> before2, @Nonnull DoubleFunction<? extends V> before3) {
+        Objects.requireNonNull(before1);
+        Objects.requireNonNull(before2);
+        Objects.requireNonNull(before3);
+        return (value1, value2, value3) -> accept(before1.apply(value1), before2.apply(value2), before3.apply(value3));
+    }
+
+    /**
+     * Returns a composed {@link TriFloatConsumer} that first applies the {@code before} functions to its input, and
+     * then applies this consumer to the result. If evaluation of either operation throws an exception, it is relayed to
+     * the caller of the composed operation. This method is just convenience, to provide the ability to execute an
+     * operation which accepts {@code float} input, before this consumer is executed.
+     *
+     * @param before1 The first function to apply before this consumer is applied
+     * @param before2 The second function to apply before this consumer is applied
+     * @param before3 The third function to apply before this consumer is applied
+     * @return A composed {@code TriFloatConsumer} that first applies the {@code before} functions to its input, and
+     * then applies this consumer to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
+     * float}.
+     */
+    @Nonnull
+    default TriFloatConsumer composeFromFloat(@Nonnull FloatFunction<? extends T> before1,
+            @Nonnull FloatFunction<? extends U> before2, @Nonnull FloatFunction<? extends V> before3) {
+        Objects.requireNonNull(before1);
+        Objects.requireNonNull(before2);
+        Objects.requireNonNull(before3);
+        return (value1, value2, value3) -> accept(before1.apply(value1), before2.apply(value2), before3.apply(value3));
+    }
+
+    /**
+     * Returns a composed {@link TriIntConsumer} that first applies the {@code before} functions to its input, and then
+     * applies this consumer to the result. If evaluation of either operation throws an exception, it is relayed to the
+     * caller of the composed operation. This method is just convenience, to provide the ability to execute an operation
+     * which accepts {@code int} input, before this consumer is executed.
+     *
+     * @param before1 The first function to apply before this consumer is applied
+     * @param before2 The second function to apply before this consumer is applied
+     * @param before3 The third function to apply before this consumer is applied
+     * @return A composed {@code TriIntConsumer} that first applies the {@code before} functions to its input, and then
+     * applies this consumer to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
+     * int}.
+     */
+    @Nonnull
+    default TriIntConsumer composeFromInt(@Nonnull IntFunction<? extends T> before1,
+            @Nonnull IntFunction<? extends U> before2, @Nonnull IntFunction<? extends V> before3) {
+        Objects.requireNonNull(before1);
+        Objects.requireNonNull(before2);
+        Objects.requireNonNull(before3);
+        return (value1, value2, value3) -> accept(before1.apply(value1), before2.apply(value2), before3.apply(value3));
+    }
+
+    /**
+     * Returns a composed {@link TriLongConsumer} that first applies the {@code before} functions to its input, and then
+     * applies this consumer to the result. If evaluation of either operation throws an exception, it is relayed to the
+     * caller of the composed operation. This method is just convenience, to provide the ability to execute an operation
+     * which accepts {@code long} input, before this consumer is executed.
+     *
+     * @param before1 The first function to apply before this consumer is applied
+     * @param before2 The second function to apply before this consumer is applied
+     * @param before3 The third function to apply before this consumer is applied
+     * @return A composed {@code TriLongConsumer} that first applies the {@code before} functions to its input, and then
+     * applies this consumer to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
+     * long}.
+     */
+    @Nonnull
+    default TriLongConsumer composeFromLong(@Nonnull LongFunction<? extends T> before1,
+            @Nonnull LongFunction<? extends U> before2, @Nonnull LongFunction<? extends V> before3) {
+        Objects.requireNonNull(before1);
+        Objects.requireNonNull(before2);
+        Objects.requireNonNull(before3);
+        return (value1, value2, value3) -> accept(before1.apply(value1), before2.apply(value2), before3.apply(value3));
+    }
+
+    /**
+     * Returns a composed {@link TriShortConsumer} that first applies the {@code before} functions to its input, and
+     * then applies this consumer to the result. If evaluation of either operation throws an exception, it is relayed to
+     * the caller of the composed operation. This method is just convenience, to provide the ability to execute an
+     * operation which accepts {@code short} input, before this consumer is executed.
+     *
+     * @param before1 The first function to apply before this consumer is applied
+     * @param before2 The second function to apply before this consumer is applied
+     * @param before3 The third function to apply before this consumer is applied
+     * @return A composed {@code TriShortConsumer} that first applies the {@code before} functions to its input, and
+     * then applies this consumer to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
+     * short}.
+     */
+    @Nonnull
+    default TriShortConsumer composeFromShort(@Nonnull ShortFunction<? extends T> before1,
+            @Nonnull ShortFunction<? extends U> before2, @Nonnull ShortFunction<? extends V> before3) {
+        Objects.requireNonNull(before1);
+        Objects.requireNonNull(before2);
+        Objects.requireNonNull(before3);
+        return (value1, value2, value3) -> accept(before1.apply(value1), before2.apply(value2), before3.apply(value3));
     }
 
     /**

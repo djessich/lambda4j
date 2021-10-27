@@ -19,7 +19,10 @@ package org.lambda4j.function.to;
 import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.function.DoubleFunction;
 import java.util.function.Function;
+import java.util.function.IntFunction;
+import java.util.function.LongFunction;
 
 import javax.annotation.CheckForNull;
 import javax.annotation.Nonnegative;
@@ -29,14 +32,25 @@ import javax.annotation.Nullable;
 import org.lambda4j.Lambda;
 import org.lambda4j.consumer.ByteConsumer;
 import org.lambda4j.consumer.Consumer2;
+import org.lambda4j.function.BooleanFunction;
 import org.lambda4j.function.ByteFunction;
+import org.lambda4j.function.CharFunction;
+import org.lambda4j.function.FloatFunction;
 import org.lambda4j.function.Function2;
+import org.lambda4j.function.ShortFunction;
+import org.lambda4j.function.conversion.BooleanToByteFunction;
 import org.lambda4j.function.conversion.ByteToCharFunction;
 import org.lambda4j.function.conversion.ByteToDoubleFunction;
 import org.lambda4j.function.conversion.ByteToFloatFunction;
 import org.lambda4j.function.conversion.ByteToIntFunction;
 import org.lambda4j.function.conversion.ByteToLongFunction;
 import org.lambda4j.function.conversion.ByteToShortFunction;
+import org.lambda4j.function.conversion.CharToByteFunction;
+import org.lambda4j.function.conversion.DoubleToByteFunction;
+import org.lambda4j.function.conversion.FloatToByteFunction;
+import org.lambda4j.function.conversion.IntToByteFunction;
+import org.lambda4j.function.conversion.LongToByteFunction;
+import org.lambda4j.function.conversion.ShortToByteFunction;
 import org.lambda4j.operator.unary.ByteUnaryOperator;
 import org.lambda4j.predicate.BytePredicate;
 import org.lambda4j.predicate.Predicate2;
@@ -135,6 +149,158 @@ public interface ToByteFunction<T> extends Lambda {
     default <A> ToByteFunction<A> compose(@Nonnull Function<? super A, ? extends T> before) {
         Objects.requireNonNull(before);
         return a -> applyAsByte(before.apply(a));
+    }
+
+    /**
+     * Returns a composed {@link BooleanToByteFunction} that first applies the {@code before} function to its input, and
+     * then applies this function to the result. If evaluation of either operation throws an exception, it is relayed to
+     * the caller of the composed operation. This method is just convenience, to provide the ability to execute an
+     * operation which accepts {@code boolean} input, before this primitive function is executed.
+     *
+     * @param before The function to apply before this function is applied
+     * @return A composed {@code BooleanToByteFunction} that first applies the {@code before} function to its input, and
+     * then applies this function to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
+     * boolean}.
+     */
+    @Nonnull
+    default BooleanToByteFunction composeFromBoolean(@Nonnull BooleanFunction<? extends T> before) {
+        Objects.requireNonNull(before);
+        return value -> applyAsByte(before.apply(value));
+    }
+
+    /**
+     * Returns a composed {@link ByteUnaryOperator} that first applies the {@code before} function to its input, and
+     * then applies this function to the result. If evaluation of either operation throws an exception, it is relayed to
+     * the caller of the composed operation. This method is just convenience, to provide the ability to execute an
+     * operation which accepts {@code byte} input, before this primitive function is executed.
+     *
+     * @param before The function to apply before this function is applied
+     * @return A composed {@code ByteUnaryOperator} that first applies the {@code before} function to its input, and
+     * then applies this function to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
+     * byte}.
+     */
+    @Nonnull
+    default ByteUnaryOperator composeFromByte(@Nonnull ByteFunction<? extends T> before) {
+        Objects.requireNonNull(before);
+        return value -> applyAsByte(before.apply(value));
+    }
+
+    /**
+     * Returns a composed {@link CharToByteFunction} that first applies the {@code before} function to its input, and
+     * then applies this function to the result. If evaluation of either operation throws an exception, it is relayed to
+     * the caller of the composed operation. This method is just convenience, to provide the ability to execute an
+     * operation which accepts {@code char} input, before this primitive function is executed.
+     *
+     * @param before The function to apply before this function is applied
+     * @return A composed {@code CharToByteFunction} that first applies the {@code before} function to its input, and
+     * then applies this function to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
+     * char}.
+     */
+    @Nonnull
+    default CharToByteFunction composeFromChar(@Nonnull CharFunction<? extends T> before) {
+        Objects.requireNonNull(before);
+        return value -> applyAsByte(before.apply(value));
+    }
+
+    /**
+     * Returns a composed {@link DoubleToByteFunction} that first applies the {@code before} function to its input, and
+     * then applies this function to the result. If evaluation of either operation throws an exception, it is relayed to
+     * the caller of the composed operation. This method is just convenience, to provide the ability to execute an
+     * operation which accepts {@code double} input, before this primitive function is executed.
+     *
+     * @param before The function to apply before this function is applied
+     * @return A composed {@code DoubleToByteFunction} that first applies the {@code before} function to its input, and
+     * then applies this function to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
+     * double}.
+     */
+    @Nonnull
+    default DoubleToByteFunction composeFromDouble(@Nonnull DoubleFunction<? extends T> before) {
+        Objects.requireNonNull(before);
+        return value -> applyAsByte(before.apply(value));
+    }
+
+    /**
+     * Returns a composed {@link FloatToByteFunction} that first applies the {@code before} function to its input, and
+     * then applies this function to the result. If evaluation of either operation throws an exception, it is relayed to
+     * the caller of the composed operation. This method is just convenience, to provide the ability to execute an
+     * operation which accepts {@code float} input, before this primitive function is executed.
+     *
+     * @param before The function to apply before this function is applied
+     * @return A composed {@code FloatToByteFunction} that first applies the {@code before} function to its input, and
+     * then applies this function to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
+     * float}.
+     */
+    @Nonnull
+    default FloatToByteFunction composeFromFloat(@Nonnull FloatFunction<? extends T> before) {
+        Objects.requireNonNull(before);
+        return value -> applyAsByte(before.apply(value));
+    }
+
+    /**
+     * Returns a composed {@link IntToByteFunction} that first applies the {@code before} function to its input, and
+     * then applies this function to the result. If evaluation of either operation throws an exception, it is relayed to
+     * the caller of the composed operation. This method is just convenience, to provide the ability to execute an
+     * operation which accepts {@code int} input, before this primitive function is executed.
+     *
+     * @param before The function to apply before this function is applied
+     * @return A composed {@code IntToByteFunction} that first applies the {@code before} function to its input, and
+     * then applies this function to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
+     * int}.
+     */
+    @Nonnull
+    default IntToByteFunction composeFromInt(@Nonnull IntFunction<? extends T> before) {
+        Objects.requireNonNull(before);
+        return value -> applyAsByte(before.apply(value));
+    }
+
+    /**
+     * Returns a composed {@link LongToByteFunction} that first applies the {@code before} function to its input, and
+     * then applies this function to the result. If evaluation of either operation throws an exception, it is relayed to
+     * the caller of the composed operation. This method is just convenience, to provide the ability to execute an
+     * operation which accepts {@code long} input, before this primitive function is executed.
+     *
+     * @param before The function to apply before this function is applied
+     * @return A composed {@code LongToByteFunction} that first applies the {@code before} function to its input, and
+     * then applies this function to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
+     * long}.
+     */
+    @Nonnull
+    default LongToByteFunction composeFromLong(@Nonnull LongFunction<? extends T> before) {
+        Objects.requireNonNull(before);
+        return value -> applyAsByte(before.apply(value));
+    }
+
+    /**
+     * Returns a composed {@link ShortToByteFunction} that first applies the {@code before} function to its input, and
+     * then applies this function to the result. If evaluation of either operation throws an exception, it is relayed to
+     * the caller of the composed operation. This method is just convenience, to provide the ability to execute an
+     * operation which accepts {@code short} input, before this primitive function is executed.
+     *
+     * @param before The function to apply before this function is applied
+     * @return A composed {@code ShortToByteFunction} that first applies the {@code before} function to its input, and
+     * then applies this function to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
+     * short}.
+     */
+    @Nonnull
+    default ShortToByteFunction composeFromShort(@Nonnull ShortFunction<? extends T> before) {
+        Objects.requireNonNull(before);
+        return value -> applyAsByte(before.apply(value));
     }
 
     /**

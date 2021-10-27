@@ -19,7 +19,9 @@ package org.lambda4j.function.tri.to;
 import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.function.DoubleFunction;
 import java.util.function.Function;
+import java.util.function.IntFunction;
 import java.util.function.LongConsumer;
 import java.util.function.LongFunction;
 import java.util.function.LongPredicate;
@@ -37,6 +39,11 @@ import org.apache.commons.lang3.tuple.Triple;
 
 import org.lambda4j.Lambda;
 import org.lambda4j.consumer.tri.TriConsumer;
+import org.lambda4j.function.BooleanFunction;
+import org.lambda4j.function.ByteFunction;
+import org.lambda4j.function.CharFunction;
+import org.lambda4j.function.FloatFunction;
+import org.lambda4j.function.ShortFunction;
 import org.lambda4j.function.bi.to.ToLongBiFunction2;
 import org.lambda4j.function.conversion.LongToByteFunction;
 import org.lambda4j.function.conversion.LongToCharFunction;
@@ -44,6 +51,14 @@ import org.lambda4j.function.conversion.LongToFloatFunction;
 import org.lambda4j.function.conversion.LongToShortFunction;
 import org.lambda4j.function.to.ToLongFunction2;
 import org.lambda4j.function.tri.TriFunction;
+import org.lambda4j.function.tri.conversion.TriBooleanToLongFunction;
+import org.lambda4j.function.tri.conversion.TriByteToLongFunction;
+import org.lambda4j.function.tri.conversion.TriCharToLongFunction;
+import org.lambda4j.function.tri.conversion.TriDoubleToLongFunction;
+import org.lambda4j.function.tri.conversion.TriFloatToLongFunction;
+import org.lambda4j.function.tri.conversion.TriIntToLongFunction;
+import org.lambda4j.function.tri.conversion.TriShortToLongFunction;
+import org.lambda4j.operator.ternary.LongTernaryOperator;
 import org.lambda4j.predicate.tri.TriPredicate;
 
 /**
@@ -252,6 +267,206 @@ public interface ToLongTriFunction<T, U, V> extends Lambda {
         Objects.requireNonNull(before2);
         Objects.requireNonNull(before3);
         return (a, b, c) -> applyAsLong(before1.apply(a), before2.apply(b), before3.apply(c));
+    }
+
+    /**
+     * Returns a composed {@link TriBooleanToLongFunction} that first applies the {@code before} functions to its input,
+     * and then applies this function to the result. If evaluation of either operation throws an exception, it is
+     * relayed to the caller of the composed operation. This method is just convenience, to provide the ability to
+     * execute an operation which accepts {@code boolean} input, before this primitive function is executed.
+     *
+     * @param before1 The first function to apply before this function is applied
+     * @param before2 The second function to apply before this function is applied
+     * @param before3 The third function to apply before this function is applied
+     * @return A composed {@code TriBooleanToLongFunction} that first applies the {@code before} functions to its input,
+     * and then applies this function to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
+     * boolean}.
+     */
+    @Nonnull
+    default TriBooleanToLongFunction composeFromBoolean(@Nonnull BooleanFunction<? extends T> before1,
+            @Nonnull BooleanFunction<? extends U> before2, @Nonnull BooleanFunction<? extends V> before3) {
+        Objects.requireNonNull(before1);
+        Objects.requireNonNull(before2);
+        Objects.requireNonNull(before3);
+        return (value1, value2, value3) -> applyAsLong(before1.apply(value1), before2.apply(value2),
+                before3.apply(value3));
+    }
+
+    /**
+     * Returns a composed {@link TriByteToLongFunction} that first applies the {@code before} functions to its input,
+     * and then applies this function to the result. If evaluation of either operation throws an exception, it is
+     * relayed to the caller of the composed operation. This method is just convenience, to provide the ability to
+     * execute an operation which accepts {@code byte} input, before this primitive function is executed.
+     *
+     * @param before1 The first function to apply before this function is applied
+     * @param before2 The second function to apply before this function is applied
+     * @param before3 The third function to apply before this function is applied
+     * @return A composed {@code TriByteToLongFunction} that first applies the {@code before} functions to its input,
+     * and then applies this function to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
+     * byte}.
+     */
+    @Nonnull
+    default TriByteToLongFunction composeFromByte(@Nonnull ByteFunction<? extends T> before1,
+            @Nonnull ByteFunction<? extends U> before2, @Nonnull ByteFunction<? extends V> before3) {
+        Objects.requireNonNull(before1);
+        Objects.requireNonNull(before2);
+        Objects.requireNonNull(before3);
+        return (value1, value2, value3) -> applyAsLong(before1.apply(value1), before2.apply(value2),
+                before3.apply(value3));
+    }
+
+    /**
+     * Returns a composed {@link TriCharToLongFunction} that first applies the {@code before} functions to its input,
+     * and then applies this function to the result. If evaluation of either operation throws an exception, it is
+     * relayed to the caller of the composed operation. This method is just convenience, to provide the ability to
+     * execute an operation which accepts {@code char} input, before this primitive function is executed.
+     *
+     * @param before1 The first function to apply before this function is applied
+     * @param before2 The second function to apply before this function is applied
+     * @param before3 The third function to apply before this function is applied
+     * @return A composed {@code TriCharToLongFunction} that first applies the {@code before} functions to its input,
+     * and then applies this function to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
+     * char}.
+     */
+    @Nonnull
+    default TriCharToLongFunction composeFromChar(@Nonnull CharFunction<? extends T> before1,
+            @Nonnull CharFunction<? extends U> before2, @Nonnull CharFunction<? extends V> before3) {
+        Objects.requireNonNull(before1);
+        Objects.requireNonNull(before2);
+        Objects.requireNonNull(before3);
+        return (value1, value2, value3) -> applyAsLong(before1.apply(value1), before2.apply(value2),
+                before3.apply(value3));
+    }
+
+    /**
+     * Returns a composed {@link TriDoubleToLongFunction} that first applies the {@code before} functions to its input,
+     * and then applies this function to the result. If evaluation of either operation throws an exception, it is
+     * relayed to the caller of the composed operation. This method is just convenience, to provide the ability to
+     * execute an operation which accepts {@code double} input, before this primitive function is executed.
+     *
+     * @param before1 The first function to apply before this function is applied
+     * @param before2 The second function to apply before this function is applied
+     * @param before3 The third function to apply before this function is applied
+     * @return A composed {@code TriDoubleToLongFunction} that first applies the {@code before} functions to its input,
+     * and then applies this function to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
+     * double}.
+     */
+    @Nonnull
+    default TriDoubleToLongFunction composeFromDouble(@Nonnull DoubleFunction<? extends T> before1,
+            @Nonnull DoubleFunction<? extends U> before2, @Nonnull DoubleFunction<? extends V> before3) {
+        Objects.requireNonNull(before1);
+        Objects.requireNonNull(before2);
+        Objects.requireNonNull(before3);
+        return (value1, value2, value3) -> applyAsLong(before1.apply(value1), before2.apply(value2),
+                before3.apply(value3));
+    }
+
+    /**
+     * Returns a composed {@link TriFloatToLongFunction} that first applies the {@code before} functions to its input,
+     * and then applies this function to the result. If evaluation of either operation throws an exception, it is
+     * relayed to the caller of the composed operation. This method is just convenience, to provide the ability to
+     * execute an operation which accepts {@code float} input, before this primitive function is executed.
+     *
+     * @param before1 The first function to apply before this function is applied
+     * @param before2 The second function to apply before this function is applied
+     * @param before3 The third function to apply before this function is applied
+     * @return A composed {@code TriFloatToLongFunction} that first applies the {@code before} functions to its input,
+     * and then applies this function to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
+     * float}.
+     */
+    @Nonnull
+    default TriFloatToLongFunction composeFromFloat(@Nonnull FloatFunction<? extends T> before1,
+            @Nonnull FloatFunction<? extends U> before2, @Nonnull FloatFunction<? extends V> before3) {
+        Objects.requireNonNull(before1);
+        Objects.requireNonNull(before2);
+        Objects.requireNonNull(before3);
+        return (value1, value2, value3) -> applyAsLong(before1.apply(value1), before2.apply(value2),
+                before3.apply(value3));
+    }
+
+    /**
+     * Returns a composed {@link TriIntToLongFunction} that first applies the {@code before} functions to its input, and
+     * then applies this function to the result. If evaluation of either operation throws an exception, it is relayed to
+     * the caller of the composed operation. This method is just convenience, to provide the ability to execute an
+     * operation which accepts {@code int} input, before this primitive function is executed.
+     *
+     * @param before1 The first function to apply before this function is applied
+     * @param before2 The second function to apply before this function is applied
+     * @param before3 The third function to apply before this function is applied
+     * @return A composed {@code TriIntToLongFunction} that first applies the {@code before} functions to its input, and
+     * then applies this function to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
+     * int}.
+     */
+    @Nonnull
+    default TriIntToLongFunction composeFromInt(@Nonnull IntFunction<? extends T> before1,
+            @Nonnull IntFunction<? extends U> before2, @Nonnull IntFunction<? extends V> before3) {
+        Objects.requireNonNull(before1);
+        Objects.requireNonNull(before2);
+        Objects.requireNonNull(before3);
+        return (value1, value2, value3) -> applyAsLong(before1.apply(value1), before2.apply(value2),
+                before3.apply(value3));
+    }
+
+    /**
+     * Returns a composed {@link LongTernaryOperator} that first applies the {@code before} functions to its input, and
+     * then applies this function to the result. If evaluation of either operation throws an exception, it is relayed to
+     * the caller of the composed operation. This method is just convenience, to provide the ability to execute an
+     * operation which accepts {@code long} input, before this primitive function is executed.
+     *
+     * @param before1 The first function to apply before this function is applied
+     * @param before2 The second function to apply before this function is applied
+     * @param before3 The third function to apply before this function is applied
+     * @return A composed {@code LongTernaryOperator} that first applies the {@code before} functions to its input, and
+     * then applies this function to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
+     * long}.
+     */
+    @Nonnull
+    default LongTernaryOperator composeFromLong(@Nonnull LongFunction<? extends T> before1,
+            @Nonnull LongFunction<? extends U> before2, @Nonnull LongFunction<? extends V> before3) {
+        Objects.requireNonNull(before1);
+        Objects.requireNonNull(before2);
+        Objects.requireNonNull(before3);
+        return (value1, value2, value3) -> applyAsLong(before1.apply(value1), before2.apply(value2),
+                before3.apply(value3));
+    }
+
+    /**
+     * Returns a composed {@link TriShortToLongFunction} that first applies the {@code before} functions to its input,
+     * and then applies this function to the result. If evaluation of either operation throws an exception, it is
+     * relayed to the caller of the composed operation. This method is just convenience, to provide the ability to
+     * execute an operation which accepts {@code short} input, before this primitive function is executed.
+     *
+     * @param before1 The first function to apply before this function is applied
+     * @param before2 The second function to apply before this function is applied
+     * @param before3 The third function to apply before this function is applied
+     * @return A composed {@code TriShortToLongFunction} that first applies the {@code before} functions to its input,
+     * and then applies this function to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
+     * short}.
+     */
+    @Nonnull
+    default TriShortToLongFunction composeFromShort(@Nonnull ShortFunction<? extends T> before1,
+            @Nonnull ShortFunction<? extends U> before2, @Nonnull ShortFunction<? extends V> before3) {
+        Objects.requireNonNull(before1);
+        Objects.requireNonNull(before2);
+        Objects.requireNonNull(before3);
+        return (value1, value2, value3) -> applyAsLong(before1.apply(value1), before2.apply(value2),
+                before3.apply(value3));
     }
 
     /**

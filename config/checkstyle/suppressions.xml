@@ -7,13 +7,13 @@
     <suppress checks="LineLength" files="ThrowableBiObjBooleanFunction" lines="703"/>
     <suppress checks="LineLength" files="ThrowableBiObjCharFunction" lines="702"/>
     <suppress checks="LineLength" files="ThrowableBiObjIntFunction" lines="702"/>
-    <suppress checks="LineLength" files="ThrowableToByteTriFunction" lines="578"/>
-    <suppress checks="LineLength" files="ThrowableToCharTriFunction" lines="578"/>
-    <suppress checks="LineLength" files="ThrowableToDoubleTriFunction" lines="580"/>
-    <suppress checks="LineLength" files="ThrowableToFloatTriFunction" lines="579"/>
-    <suppress checks="LineLength" files="ThrowableToLongTriFunction" lines="578"/>
-    <suppress checks="LineLength" files="ThrowableToShortTriFunction" lines="579"/>
-    <suppress checks="LineLength" files="ThrowableTriFunction" lines="483"/>
+    <suppress checks="LineLength" files="ThrowableToByteTriFunction" lines="801"/>
+    <suppress checks="LineLength" files="ThrowableToCharTriFunction" lines="801"/>
+    <suppress checks="LineLength" files="ThrowableToDoubleTriFunction" lines="803"/>
+    <suppress checks="LineLength" files="ThrowableToFloatTriFunction" lines="802"/>
+    <suppress checks="LineLength" files="ThrowableToLongTriFunction" lines="801"/>
+    <suppress checks="LineLength" files="ThrowableToShortTriFunction" lines="802"/>
+    <suppress checks="LineLength" files="ThrowableTriFunction" lines="699"/>
 
     <!-- Suppress nested if statements check for memoized method -->
     <suppress checks="NestedIfDepth" files="BooleanSupplier2" lines="354"/>

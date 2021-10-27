@@ -31,7 +31,15 @@ import org.lambda4j.consumer.ThrowableConsumer;
 import org.lambda4j.consumer.bi.ThrowableBiConsumer;
 import org.lambda4j.core.exception.ThrownByFunctionalInterfaceException;
 import org.lambda4j.core.util.ThrowableUtils;
+import org.lambda4j.function.ThrowableBooleanFunction;
+import org.lambda4j.function.ThrowableByteFunction;
+import org.lambda4j.function.ThrowableCharFunction;
+import org.lambda4j.function.ThrowableDoubleFunction;
+import org.lambda4j.function.ThrowableFloatFunction;
 import org.lambda4j.function.ThrowableFunction;
+import org.lambda4j.function.ThrowableIntFunction;
+import org.lambda4j.function.ThrowableLongFunction;
+import org.lambda4j.function.ThrowableShortFunction;
 
 /**
  * Represents an operation that accepts three input arguments and returns no result which is able to throw any {@link
@@ -238,6 +246,213 @@ public interface ThrowableTriConsumer<T, U, V, X extends Throwable> extends Lamb
         Objects.requireNonNull(before2);
         Objects.requireNonNull(before3);
         return (a, b, c) -> acceptThrows(before1.applyThrows(a), before2.applyThrows(b), before3.applyThrows(c));
+    }
+
+    /**
+     * Returns a composed {@link ThrowableTriBooleanConsumer} that first applies the {@code before} functions to its
+     * input, and then applies this consumer to the result. This method is just convenience, to provide the ability to
+     * execute an operation which accepts {@code boolean} input, before this consumer is executed.
+     *
+     * @param before1 The first function to apply before this consumer is applied
+     * @param before2 The second function to apply before this consumer is applied
+     * @param before3 The third function to apply before this consumer is applied
+     * @return A composed {@code ThrowableTriBooleanConsumer} that first applies the {@code before} functions to its
+     * input, and then applies this consumer to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
+     * boolean}.
+     */
+    @Nonnull
+    default ThrowableTriBooleanConsumer<X> composeFromBoolean(
+            @Nonnull ThrowableBooleanFunction<? extends T, ? extends X> before1,
+            @Nonnull ThrowableBooleanFunction<? extends U, ? extends X> before2,
+            @Nonnull ThrowableBooleanFunction<? extends V, ? extends X> before3) {
+        Objects.requireNonNull(before1);
+        Objects.requireNonNull(before2);
+        Objects.requireNonNull(before3);
+        return (value1, value2, value3) -> acceptThrows(before1.applyThrows(value1), before2.applyThrows(value2),
+                before3.applyThrows(value3));
+    }
+
+    /**
+     * Returns a composed {@link ThrowableTriByteConsumer} that first applies the {@code before} functions to its input,
+     * and then applies this consumer to the result. This method is just convenience, to provide the ability to execute
+     * an operation which accepts {@code byte} input, before this consumer is executed.
+     *
+     * @param before1 The first function to apply before this consumer is applied
+     * @param before2 The second function to apply before this consumer is applied
+     * @param before3 The third function to apply before this consumer is applied
+     * @return A composed {@code ThrowableTriByteConsumer} that first applies the {@code before} functions to its input,
+     * and then applies this consumer to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
+     * byte}.
+     */
+    @Nonnull
+    default ThrowableTriByteConsumer<X> composeFromByte(
+            @Nonnull ThrowableByteFunction<? extends T, ? extends X> before1,
+            @Nonnull ThrowableByteFunction<? extends U, ? extends X> before2,
+            @Nonnull ThrowableByteFunction<? extends V, ? extends X> before3) {
+        Objects.requireNonNull(before1);
+        Objects.requireNonNull(before2);
+        Objects.requireNonNull(before3);
+        return (value1, value2, value3) -> acceptThrows(before1.applyThrows(value1), before2.applyThrows(value2),
+                before3.applyThrows(value3));
+    }
+
+    /**
+     * Returns a composed {@link ThrowableTriCharConsumer} that first applies the {@code before} functions to its input,
+     * and then applies this consumer to the result. This method is just convenience, to provide the ability to execute
+     * an operation which accepts {@code char} input, before this consumer is executed.
+     *
+     * @param before1 The first function to apply before this consumer is applied
+     * @param before2 The second function to apply before this consumer is applied
+     * @param before3 The third function to apply before this consumer is applied
+     * @return A composed {@code ThrowableTriCharConsumer} that first applies the {@code before} functions to its input,
+     * and then applies this consumer to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
+     * char}.
+     */
+    @Nonnull
+    default ThrowableTriCharConsumer<X> composeFromChar(
+            @Nonnull ThrowableCharFunction<? extends T, ? extends X> before1,
+            @Nonnull ThrowableCharFunction<? extends U, ? extends X> before2,
+            @Nonnull ThrowableCharFunction<? extends V, ? extends X> before3) {
+        Objects.requireNonNull(before1);
+        Objects.requireNonNull(before2);
+        Objects.requireNonNull(before3);
+        return (value1, value2, value3) -> acceptThrows(before1.applyThrows(value1), before2.applyThrows(value2),
+                before3.applyThrows(value3));
+    }
+
+    /**
+     * Returns a composed {@link ThrowableTriDoubleConsumer} that first applies the {@code before} functions to its
+     * input, and then applies this consumer to the result. This method is just convenience, to provide the ability to
+     * execute an operation which accepts {@code double} input, before this consumer is executed.
+     *
+     * @param before1 The first function to apply before this consumer is applied
+     * @param before2 The second function to apply before this consumer is applied
+     * @param before3 The third function to apply before this consumer is applied
+     * @return A composed {@code ThrowableTriDoubleConsumer} that first applies the {@code before} functions to its
+     * input, and then applies this consumer to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
+     * double}.
+     */
+    @Nonnull
+    default ThrowableTriDoubleConsumer<X> composeFromDouble(
+            @Nonnull ThrowableDoubleFunction<? extends T, ? extends X> before1,
+            @Nonnull ThrowableDoubleFunction<? extends U, ? extends X> before2,
+            @Nonnull ThrowableDoubleFunction<? extends V, ? extends X> before3) {
+        Objects.requireNonNull(before1);
+        Objects.requireNonNull(before2);
+        Objects.requireNonNull(before3);
+        return (value1, value2, value3) -> acceptThrows(before1.applyThrows(value1), before2.applyThrows(value2),
+                before3.applyThrows(value3));
+    }
+
+    /**
+     * Returns a composed {@link ThrowableTriFloatConsumer} that first applies the {@code before} functions to its
+     * input, and then applies this consumer to the result. This method is just convenience, to provide the ability to
+     * execute an operation which accepts {@code float} input, before this consumer is executed.
+     *
+     * @param before1 The first function to apply before this consumer is applied
+     * @param before2 The second function to apply before this consumer is applied
+     * @param before3 The third function to apply before this consumer is applied
+     * @return A composed {@code ThrowableTriFloatConsumer} that first applies the {@code before} functions to its
+     * input, and then applies this consumer to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
+     * float}.
+     */
+    @Nonnull
+    default ThrowableTriFloatConsumer<X> composeFromFloat(
+            @Nonnull ThrowableFloatFunction<? extends T, ? extends X> before1,
+            @Nonnull ThrowableFloatFunction<? extends U, ? extends X> before2,
+            @Nonnull ThrowableFloatFunction<? extends V, ? extends X> before3) {
+        Objects.requireNonNull(before1);
+        Objects.requireNonNull(before2);
+        Objects.requireNonNull(before3);
+        return (value1, value2, value3) -> acceptThrows(before1.applyThrows(value1), before2.applyThrows(value2),
+                before3.applyThrows(value3));
+    }
+
+    /**
+     * Returns a composed {@link ThrowableTriIntConsumer} that first applies the {@code before} functions to its input,
+     * and then applies this consumer to the result. This method is just convenience, to provide the ability to execute
+     * an operation which accepts {@code int} input, before this consumer is executed.
+     *
+     * @param before1 The first function to apply before this consumer is applied
+     * @param before2 The second function to apply before this consumer is applied
+     * @param before3 The third function to apply before this consumer is applied
+     * @return A composed {@code ThrowableTriIntConsumer} that first applies the {@code before} functions to its input,
+     * and then applies this consumer to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
+     * int}.
+     */
+    @Nonnull
+    default ThrowableTriIntConsumer<X> composeFromInt(@Nonnull ThrowableIntFunction<? extends T, ? extends X> before1,
+            @Nonnull ThrowableIntFunction<? extends U, ? extends X> before2,
+            @Nonnull ThrowableIntFunction<? extends V, ? extends X> before3) {
+        Objects.requireNonNull(before1);
+        Objects.requireNonNull(before2);
+        Objects.requireNonNull(before3);
+        return (value1, value2, value3) -> acceptThrows(before1.applyThrows(value1), before2.applyThrows(value2),
+                before3.applyThrows(value3));
+    }
+
+    /**
+     * Returns a composed {@link ThrowableTriLongConsumer} that first applies the {@code before} functions to its input,
+     * and then applies this consumer to the result. This method is just convenience, to provide the ability to execute
+     * an operation which accepts {@code long} input, before this consumer is executed.
+     *
+     * @param before1 The first function to apply before this consumer is applied
+     * @param before2 The second function to apply before this consumer is applied
+     * @param before3 The third function to apply before this consumer is applied
+     * @return A composed {@code ThrowableTriLongConsumer} that first applies the {@code before} functions to its input,
+     * and then applies this consumer to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
+     * long}.
+     */
+    @Nonnull
+    default ThrowableTriLongConsumer<X> composeFromLong(
+            @Nonnull ThrowableLongFunction<? extends T, ? extends X> before1,
+            @Nonnull ThrowableLongFunction<? extends U, ? extends X> before2,
+            @Nonnull ThrowableLongFunction<? extends V, ? extends X> before3) {
+        Objects.requireNonNull(before1);
+        Objects.requireNonNull(before2);
+        Objects.requireNonNull(before3);
+        return (value1, value2, value3) -> acceptThrows(before1.applyThrows(value1), before2.applyThrows(value2),
+                before3.applyThrows(value3));
+    }
+
+    /**
+     * Returns a composed {@link ThrowableTriShortConsumer} that first applies the {@code before} functions to its
+     * input, and then applies this consumer to the result. This method is just convenience, to provide the ability to
+     * execute an operation which accepts {@code short} input, before this consumer is executed.
+     *
+     * @param before1 The first function to apply before this consumer is applied
+     * @param before2 The second function to apply before this consumer is applied
+     * @param before3 The third function to apply before this consumer is applied
+     * @return A composed {@code ThrowableTriShortConsumer} that first applies the {@code before} functions to its
+     * input, and then applies this consumer to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
+     * short}.
+     */
+    @Nonnull
+    default ThrowableTriShortConsumer<X> composeFromShort(
+            @Nonnull ThrowableShortFunction<? extends T, ? extends X> before1,
+            @Nonnull ThrowableShortFunction<? extends U, ? extends X> before2,
+            @Nonnull ThrowableShortFunction<? extends V, ? extends X> before3) {
+        Objects.requireNonNull(before1);
+        Objects.requireNonNull(before2);
+        Objects.requireNonNull(before3);
+        return (value1, value2, value3) -> acceptThrows(before1.applyThrows(value1), before2.applyThrows(value2),
+                before3.applyThrows(value3));
     }
 
     /**

@@ -19,7 +19,9 @@ package org.lambda4j.function.to;
 import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.function.DoubleFunction;
 import java.util.function.Function;
+import java.util.function.IntFunction;
 import java.util.function.LongConsumer;
 import java.util.function.LongFunction;
 import java.util.function.LongPredicate;
@@ -35,11 +37,24 @@ import javax.annotation.Nullable;
 
 import org.lambda4j.Lambda;
 import org.lambda4j.consumer.Consumer2;
+import org.lambda4j.function.BooleanFunction;
+import org.lambda4j.function.ByteFunction;
+import org.lambda4j.function.CharFunction;
+import org.lambda4j.function.FloatFunction;
 import org.lambda4j.function.Function2;
+import org.lambda4j.function.ShortFunction;
+import org.lambda4j.function.conversion.BooleanToLongFunction;
+import org.lambda4j.function.conversion.ByteToLongFunction;
+import org.lambda4j.function.conversion.CharToLongFunction;
+import org.lambda4j.function.conversion.DoubleToLongFunction2;
+import org.lambda4j.function.conversion.FloatToLongFunction;
+import org.lambda4j.function.conversion.IntToLongFunction2;
 import org.lambda4j.function.conversion.LongToByteFunction;
 import org.lambda4j.function.conversion.LongToCharFunction;
 import org.lambda4j.function.conversion.LongToFloatFunction;
 import org.lambda4j.function.conversion.LongToShortFunction;
+import org.lambda4j.function.conversion.ShortToLongFunction;
+import org.lambda4j.operator.unary.LongUnaryOperator2;
 import org.lambda4j.predicate.Predicate2;
 
 /**
@@ -138,6 +153,158 @@ public interface ToLongFunction2<T> extends Lambda, ToLongFunction<T> {
     default <A> ToLongFunction2<A> compose(@Nonnull Function<? super A, ? extends T> before) {
         Objects.requireNonNull(before);
         return a -> applyAsLong(before.apply(a));
+    }
+
+    /**
+     * Returns a composed {@link BooleanToLongFunction} that first applies the {@code before} function to its input, and
+     * then applies this function to the result. If evaluation of either operation throws an exception, it is relayed to
+     * the caller of the composed operation. This method is just convenience, to provide the ability to execute an
+     * operation which accepts {@code boolean} input, before this primitive function is executed.
+     *
+     * @param before The function to apply before this function is applied
+     * @return A composed {@code BooleanToLongFunction} that first applies the {@code before} function to its input, and
+     * then applies this function to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
+     * boolean}.
+     */
+    @Nonnull
+    default BooleanToLongFunction composeFromBoolean(@Nonnull BooleanFunction<? extends T> before) {
+        Objects.requireNonNull(before);
+        return value -> applyAsLong(before.apply(value));
+    }
+
+    /**
+     * Returns a composed {@link ByteToLongFunction} that first applies the {@code before} function to its input, and
+     * then applies this function to the result. If evaluation of either operation throws an exception, it is relayed to
+     * the caller of the composed operation. This method is just convenience, to provide the ability to execute an
+     * operation which accepts {@code byte} input, before this primitive function is executed.
+     *
+     * @param before The function to apply before this function is applied
+     * @return A composed {@code ByteToLongFunction} that first applies the {@code before} function to its input, and
+     * then applies this function to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
+     * byte}.
+     */
+    @Nonnull
+    default ByteToLongFunction composeFromByte(@Nonnull ByteFunction<? extends T> before) {
+        Objects.requireNonNull(before);
+        return value -> applyAsLong(before.apply(value));
+    }
+
+    /**
+     * Returns a composed {@link CharToLongFunction} that first applies the {@code before} function to its input, and
+     * then applies this function to the result. If evaluation of either operation throws an exception, it is relayed to
+     * the caller of the composed operation. This method is just convenience, to provide the ability to execute an
+     * operation which accepts {@code char} input, before this primitive function is executed.
+     *
+     * @param before The function to apply before this function is applied
+     * @return A composed {@code CharToLongFunction} that first applies the {@code before} function to its input, and
+     * then applies this function to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
+     * char}.
+     */
+    @Nonnull
+    default CharToLongFunction composeFromChar(@Nonnull CharFunction<? extends T> before) {
+        Objects.requireNonNull(before);
+        return value -> applyAsLong(before.apply(value));
+    }
+
+    /**
+     * Returns a composed {@link DoubleToLongFunction2} that first applies the {@code before} function to its input, and
+     * then applies this function to the result. If evaluation of either operation throws an exception, it is relayed to
+     * the caller of the composed operation. This method is just convenience, to provide the ability to execute an
+     * operation which accepts {@code double} input, before this primitive function is executed.
+     *
+     * @param before The function to apply before this function is applied
+     * @return A composed {@code DoubleToLongFunction2} that first applies the {@code before} function to its input, and
+     * then applies this function to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
+     * double}.
+     */
+    @Nonnull
+    default DoubleToLongFunction2 composeFromDouble(@Nonnull DoubleFunction<? extends T> before) {
+        Objects.requireNonNull(before);
+        return value -> applyAsLong(before.apply(value));
+    }
+
+    /**
+     * Returns a composed {@link FloatToLongFunction} that first applies the {@code before} function to its input, and
+     * then applies this function to the result. If evaluation of either operation throws an exception, it is relayed to
+     * the caller of the composed operation. This method is just convenience, to provide the ability to execute an
+     * operation which accepts {@code float} input, before this primitive function is executed.
+     *
+     * @param before The function to apply before this function is applied
+     * @return A composed {@code FloatToLongFunction} that first applies the {@code before} function to its input, and
+     * then applies this function to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
+     * float}.
+     */
+    @Nonnull
+    default FloatToLongFunction composeFromFloat(@Nonnull FloatFunction<? extends T> before) {
+        Objects.requireNonNull(before);
+        return value -> applyAsLong(before.apply(value));
+    }
+
+    /**
+     * Returns a composed {@link IntToLongFunction2} that first applies the {@code before} function to its input, and
+     * then applies this function to the result. If evaluation of either operation throws an exception, it is relayed to
+     * the caller of the composed operation. This method is just convenience, to provide the ability to execute an
+     * operation which accepts {@code int} input, before this primitive function is executed.
+     *
+     * @param before The function to apply before this function is applied
+     * @return A composed {@code IntToLongFunction2} that first applies the {@code before} function to its input, and
+     * then applies this function to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
+     * int}.
+     */
+    @Nonnull
+    default IntToLongFunction2 composeFromInt(@Nonnull IntFunction<? extends T> before) {
+        Objects.requireNonNull(before);
+        return value -> applyAsLong(before.apply(value));
+    }
+
+    /**
+     * Returns a composed {@link LongUnaryOperator2} that first applies the {@code before} function to its input, and
+     * then applies this function to the result. If evaluation of either operation throws an exception, it is relayed to
+     * the caller of the composed operation. This method is just convenience, to provide the ability to execute an
+     * operation which accepts {@code long} input, before this primitive function is executed.
+     *
+     * @param before The function to apply before this function is applied
+     * @return A composed {@code LongUnaryOperator2} that first applies the {@code before} function to its input, and
+     * then applies this function to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
+     * long}.
+     */
+    @Nonnull
+    default LongUnaryOperator2 composeFromLong(@Nonnull LongFunction<? extends T> before) {
+        Objects.requireNonNull(before);
+        return value -> applyAsLong(before.apply(value));
+    }
+
+    /**
+     * Returns a composed {@link ShortToLongFunction} that first applies the {@code before} function to its input, and
+     * then applies this function to the result. If evaluation of either operation throws an exception, it is relayed to
+     * the caller of the composed operation. This method is just convenience, to provide the ability to execute an
+     * operation which accepts {@code short} input, before this primitive function is executed.
+     *
+     * @param before The function to apply before this function is applied
+     * @return A composed {@code ShortToLongFunction} that first applies the {@code before} function to its input, and
+     * then applies this function to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
+     * short}.
+     */
+    @Nonnull
+    default ShortToLongFunction composeFromShort(@Nonnull ShortFunction<? extends T> before) {
+        Objects.requireNonNull(before);
+        return value -> applyAsLong(before.apply(value));
     }
 
     /**

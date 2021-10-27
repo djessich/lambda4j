@@ -33,8 +33,15 @@ import org.lambda4j.consumer.ThrowableFloatConsumer;
 import org.lambda4j.consumer.tri.ThrowableTriConsumer;
 import org.lambda4j.core.exception.ThrownByFunctionalInterfaceException;
 import org.lambda4j.core.util.ThrowableUtils;
+import org.lambda4j.function.ThrowableBooleanFunction;
+import org.lambda4j.function.ThrowableByteFunction;
+import org.lambda4j.function.ThrowableCharFunction;
+import org.lambda4j.function.ThrowableDoubleFunction;
 import org.lambda4j.function.ThrowableFloatFunction;
 import org.lambda4j.function.ThrowableFunction;
+import org.lambda4j.function.ThrowableIntFunction;
+import org.lambda4j.function.ThrowableLongFunction;
+import org.lambda4j.function.ThrowableShortFunction;
 import org.lambda4j.function.bi.to.ThrowableToFloatBiFunction;
 import org.lambda4j.function.conversion.ThrowableFloatToByteFunction;
 import org.lambda4j.function.conversion.ThrowableFloatToCharFunction;
@@ -44,6 +51,14 @@ import org.lambda4j.function.conversion.ThrowableFloatToLongFunction;
 import org.lambda4j.function.conversion.ThrowableFloatToShortFunction;
 import org.lambda4j.function.to.ThrowableToFloatFunction;
 import org.lambda4j.function.tri.ThrowableTriFunction;
+import org.lambda4j.function.tri.conversion.ThrowableTriBooleanToFloatFunction;
+import org.lambda4j.function.tri.conversion.ThrowableTriByteToFloatFunction;
+import org.lambda4j.function.tri.conversion.ThrowableTriCharToFloatFunction;
+import org.lambda4j.function.tri.conversion.ThrowableTriDoubleToFloatFunction;
+import org.lambda4j.function.tri.conversion.ThrowableTriIntToFloatFunction;
+import org.lambda4j.function.tri.conversion.ThrowableTriLongToFloatFunction;
+import org.lambda4j.function.tri.conversion.ThrowableTriShortToFloatFunction;
+import org.lambda4j.operator.ternary.ThrowableFloatTernaryOperator;
 import org.lambda4j.operator.unary.ThrowableFloatUnaryOperator;
 import org.lambda4j.predicate.ThrowableFloatPredicate;
 import org.lambda4j.predicate.tri.ThrowableTriPredicate;
@@ -272,6 +287,214 @@ public interface ThrowableToFloatTriFunction<T, U, V, X extends Throwable> exten
         Objects.requireNonNull(before2);
         Objects.requireNonNull(before3);
         return (a, b, c) -> applyAsFloatThrows(before1.applyThrows(a), before2.applyThrows(b), before3.applyThrows(c));
+    }
+
+    /**
+     * Returns a composed {@link ThrowableTriBooleanToFloatFunction} that first applies the {@code before} functions to
+     * its input, and then applies this function to the result. This method is just convenience, to provide the ability
+     * to execute an operation which accepts {@code boolean} input, before this primitive function is executed.
+     *
+     * @param before1 The first function to apply before this function is applied
+     * @param before2 The second function to apply before this function is applied
+     * @param before3 The third function to apply before this function is applied
+     * @return A composed {@code ThrowableTriBooleanToFloatFunction} that first applies the {@code before} functions to
+     * its input, and then applies this function to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
+     * boolean}.
+     */
+    @Nonnull
+    default ThrowableTriBooleanToFloatFunction<X> composeFromBoolean(
+            @Nonnull ThrowableBooleanFunction<? extends T, ? extends X> before1,
+            @Nonnull ThrowableBooleanFunction<? extends U, ? extends X> before2,
+            @Nonnull ThrowableBooleanFunction<? extends V, ? extends X> before3) {
+        Objects.requireNonNull(before1);
+        Objects.requireNonNull(before2);
+        Objects.requireNonNull(before3);
+        return (value1, value2, value3) -> applyAsFloatThrows(before1.applyThrows(value1), before2.applyThrows(value2),
+                before3.applyThrows(value3));
+    }
+
+    /**
+     * Returns a composed {@link ThrowableTriByteToFloatFunction} that first applies the {@code before} functions to its
+     * input, and then applies this function to the result. This method is just convenience, to provide the ability to
+     * execute an operation which accepts {@code byte} input, before this primitive function is executed.
+     *
+     * @param before1 The first function to apply before this function is applied
+     * @param before2 The second function to apply before this function is applied
+     * @param before3 The third function to apply before this function is applied
+     * @return A composed {@code ThrowableTriByteToFloatFunction} that first applies the {@code before} functions to its
+     * input, and then applies this function to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
+     * byte}.
+     */
+    @Nonnull
+    default ThrowableTriByteToFloatFunction<X> composeFromByte(
+            @Nonnull ThrowableByteFunction<? extends T, ? extends X> before1,
+            @Nonnull ThrowableByteFunction<? extends U, ? extends X> before2,
+            @Nonnull ThrowableByteFunction<? extends V, ? extends X> before3) {
+        Objects.requireNonNull(before1);
+        Objects.requireNonNull(before2);
+        Objects.requireNonNull(before3);
+        return (value1, value2, value3) -> applyAsFloatThrows(before1.applyThrows(value1), before2.applyThrows(value2),
+                before3.applyThrows(value3));
+    }
+
+    /**
+     * Returns a composed {@link ThrowableTriCharToFloatFunction} that first applies the {@code before} functions to its
+     * input, and then applies this function to the result. This method is just convenience, to provide the ability to
+     * execute an operation which accepts {@code char} input, before this primitive function is executed.
+     *
+     * @param before1 The first function to apply before this function is applied
+     * @param before2 The second function to apply before this function is applied
+     * @param before3 The third function to apply before this function is applied
+     * @return A composed {@code ThrowableTriCharToFloatFunction} that first applies the {@code before} functions to its
+     * input, and then applies this function to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
+     * char}.
+     */
+    @Nonnull
+    default ThrowableTriCharToFloatFunction<X> composeFromChar(
+            @Nonnull ThrowableCharFunction<? extends T, ? extends X> before1,
+            @Nonnull ThrowableCharFunction<? extends U, ? extends X> before2,
+            @Nonnull ThrowableCharFunction<? extends V, ? extends X> before3) {
+        Objects.requireNonNull(before1);
+        Objects.requireNonNull(before2);
+        Objects.requireNonNull(before3);
+        return (value1, value2, value3) -> applyAsFloatThrows(before1.applyThrows(value1), before2.applyThrows(value2),
+                before3.applyThrows(value3));
+    }
+
+    /**
+     * Returns a composed {@link ThrowableTriDoubleToFloatFunction} that first applies the {@code before} functions to
+     * its input, and then applies this function to the result. This method is just convenience, to provide the ability
+     * to execute an operation which accepts {@code double} input, before this primitive function is executed.
+     *
+     * @param before1 The first function to apply before this function is applied
+     * @param before2 The second function to apply before this function is applied
+     * @param before3 The third function to apply before this function is applied
+     * @return A composed {@code ThrowableTriDoubleToFloatFunction} that first applies the {@code before} functions to
+     * its input, and then applies this function to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
+     * double}.
+     */
+    @Nonnull
+    default ThrowableTriDoubleToFloatFunction<X> composeFromDouble(
+            @Nonnull ThrowableDoubleFunction<? extends T, ? extends X> before1,
+            @Nonnull ThrowableDoubleFunction<? extends U, ? extends X> before2,
+            @Nonnull ThrowableDoubleFunction<? extends V, ? extends X> before3) {
+        Objects.requireNonNull(before1);
+        Objects.requireNonNull(before2);
+        Objects.requireNonNull(before3);
+        return (value1, value2, value3) -> applyAsFloatThrows(before1.applyThrows(value1), before2.applyThrows(value2),
+                before3.applyThrows(value3));
+    }
+
+    /**
+     * Returns a composed {@link ThrowableFloatTernaryOperator} that first applies the {@code before} functions to its
+     * input, and then applies this function to the result. This method is just convenience, to provide the ability to
+     * execute an operation which accepts {@code float} input, before this primitive function is executed.
+     *
+     * @param before1 The first function to apply before this function is applied
+     * @param before2 The second function to apply before this function is applied
+     * @param before3 The third function to apply before this function is applied
+     * @return A composed {@code ThrowableFloatTernaryOperator} that first applies the {@code before} functions to its
+     * input, and then applies this function to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
+     * float}.
+     */
+    @Nonnull
+    default ThrowableFloatTernaryOperator<X> composeFromFloat(
+            @Nonnull ThrowableFloatFunction<? extends T, ? extends X> before1,
+            @Nonnull ThrowableFloatFunction<? extends U, ? extends X> before2,
+            @Nonnull ThrowableFloatFunction<? extends V, ? extends X> before3) {
+        Objects.requireNonNull(before1);
+        Objects.requireNonNull(before2);
+        Objects.requireNonNull(before3);
+        return (value1, value2, value3) -> applyAsFloatThrows(before1.applyThrows(value1), before2.applyThrows(value2),
+                before3.applyThrows(value3));
+    }
+
+    /**
+     * Returns a composed {@link ThrowableTriIntToFloatFunction} that first applies the {@code before} functions to its
+     * input, and then applies this function to the result. This method is just convenience, to provide the ability to
+     * execute an operation which accepts {@code int} input, before this primitive function is executed.
+     *
+     * @param before1 The first function to apply before this function is applied
+     * @param before2 The second function to apply before this function is applied
+     * @param before3 The third function to apply before this function is applied
+     * @return A composed {@code ThrowableTriIntToFloatFunction} that first applies the {@code before} functions to its
+     * input, and then applies this function to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
+     * int}.
+     */
+    @Nonnull
+    default ThrowableTriIntToFloatFunction<X> composeFromInt(
+            @Nonnull ThrowableIntFunction<? extends T, ? extends X> before1,
+            @Nonnull ThrowableIntFunction<? extends U, ? extends X> before2,
+            @Nonnull ThrowableIntFunction<? extends V, ? extends X> before3) {
+        Objects.requireNonNull(before1);
+        Objects.requireNonNull(before2);
+        Objects.requireNonNull(before3);
+        return (value1, value2, value3) -> applyAsFloatThrows(before1.applyThrows(value1), before2.applyThrows(value2),
+                before3.applyThrows(value3));
+    }
+
+    /**
+     * Returns a composed {@link ThrowableTriLongToFloatFunction} that first applies the {@code before} functions to its
+     * input, and then applies this function to the result. This method is just convenience, to provide the ability to
+     * execute an operation which accepts {@code long} input, before this primitive function is executed.
+     *
+     * @param before1 The first function to apply before this function is applied
+     * @param before2 The second function to apply before this function is applied
+     * @param before3 The third function to apply before this function is applied
+     * @return A composed {@code ThrowableTriLongToFloatFunction} that first applies the {@code before} functions to its
+     * input, and then applies this function to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
+     * long}.
+     */
+    @Nonnull
+    default ThrowableTriLongToFloatFunction<X> composeFromLong(
+            @Nonnull ThrowableLongFunction<? extends T, ? extends X> before1,
+            @Nonnull ThrowableLongFunction<? extends U, ? extends X> before2,
+            @Nonnull ThrowableLongFunction<? extends V, ? extends X> before3) {
+        Objects.requireNonNull(before1);
+        Objects.requireNonNull(before2);
+        Objects.requireNonNull(before3);
+        return (value1, value2, value3) -> applyAsFloatThrows(before1.applyThrows(value1), before2.applyThrows(value2),
+                before3.applyThrows(value3));
+    }
+
+    /**
+     * Returns a composed {@link ThrowableTriShortToFloatFunction} that first applies the {@code before} functions to
+     * its input, and then applies this function to the result. This method is just convenience, to provide the ability
+     * to execute an operation which accepts {@code short} input, before this primitive function is executed.
+     *
+     * @param before1 The first function to apply before this function is applied
+     * @param before2 The second function to apply before this function is applied
+     * @param before3 The third function to apply before this function is applied
+     * @return A composed {@code ThrowableTriShortToFloatFunction} that first applies the {@code before} functions to
+     * its input, and then applies this function to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
+     * short}.
+     */
+    @Nonnull
+    default ThrowableTriShortToFloatFunction<X> composeFromShort(
+            @Nonnull ThrowableShortFunction<? extends T, ? extends X> before1,
+            @Nonnull ThrowableShortFunction<? extends U, ? extends X> before2,
+            @Nonnull ThrowableShortFunction<? extends V, ? extends X> before3) {
+        Objects.requireNonNull(before1);
+        Objects.requireNonNull(before2);
+        Objects.requireNonNull(before3);
+        return (value1, value2, value3) -> applyAsFloatThrows(before1.applyThrows(value1), before2.applyThrows(value2),
+                before3.applyThrows(value3));
     }
 
     /**

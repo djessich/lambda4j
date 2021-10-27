@@ -33,9 +33,23 @@ import org.lambda4j.consumer.ThrowableShortConsumer;
 import org.lambda4j.consumer.bi.ThrowableBiConsumer;
 import org.lambda4j.core.exception.ThrownByFunctionalInterfaceException;
 import org.lambda4j.core.util.ThrowableUtils;
+import org.lambda4j.function.ThrowableBooleanFunction;
+import org.lambda4j.function.ThrowableByteFunction;
+import org.lambda4j.function.ThrowableCharFunction;
+import org.lambda4j.function.ThrowableDoubleFunction;
+import org.lambda4j.function.ThrowableFloatFunction;
 import org.lambda4j.function.ThrowableFunction;
+import org.lambda4j.function.ThrowableIntFunction;
+import org.lambda4j.function.ThrowableLongFunction;
 import org.lambda4j.function.ThrowableShortFunction;
 import org.lambda4j.function.bi.ThrowableBiFunction;
+import org.lambda4j.function.bi.conversion.ThrowableBiBooleanToShortFunction;
+import org.lambda4j.function.bi.conversion.ThrowableBiByteToShortFunction;
+import org.lambda4j.function.bi.conversion.ThrowableBiCharToShortFunction;
+import org.lambda4j.function.bi.conversion.ThrowableBiDoubleToShortFunction;
+import org.lambda4j.function.bi.conversion.ThrowableBiFloatToShortFunction;
+import org.lambda4j.function.bi.conversion.ThrowableBiIntToShortFunction;
+import org.lambda4j.function.bi.conversion.ThrowableBiLongToShortFunction;
 import org.lambda4j.function.conversion.ThrowableShortToByteFunction;
 import org.lambda4j.function.conversion.ThrowableShortToCharFunction;
 import org.lambda4j.function.conversion.ThrowableShortToDoubleFunction;
@@ -43,6 +57,7 @@ import org.lambda4j.function.conversion.ThrowableShortToFloatFunction;
 import org.lambda4j.function.conversion.ThrowableShortToIntFunction;
 import org.lambda4j.function.conversion.ThrowableShortToLongFunction;
 import org.lambda4j.function.to.ThrowableToShortFunction;
+import org.lambda4j.operator.binary.ThrowableShortBinaryOperator;
 import org.lambda4j.operator.unary.ThrowableShortUnaryOperator;
 import org.lambda4j.predicate.ThrowableShortPredicate;
 import org.lambda4j.predicate.bi.ThrowableBiPredicate;
@@ -224,6 +239,182 @@ public interface ThrowableToShortBiFunction<T, U, X extends Throwable> extends L
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         return (a, b) -> applyAsShortThrows(before1.applyThrows(a), before2.applyThrows(b));
+    }
+
+    /**
+     * Returns a composed {@link ThrowableBiBooleanToShortFunction} that first applies the {@code before} functions to
+     * its input, and then applies this function to the result. This method is just convenience, to provide the ability
+     * to execute an operation which accepts {@code boolean} input, before this primitive function is executed.
+     *
+     * @param before1 The first function to apply before this function is applied
+     * @param before2 The second function to apply before this function is applied
+     * @return A composed {@code ThrowableBiBooleanToShortFunction} that first applies the {@code before} functions to
+     * its input, and then applies this function to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
+     * boolean}.
+     */
+    @Nonnull
+    default ThrowableBiBooleanToShortFunction<X> composeFromBoolean(
+            @Nonnull ThrowableBooleanFunction<? extends T, ? extends X> before1,
+            @Nonnull ThrowableBooleanFunction<? extends U, ? extends X> before2) {
+        Objects.requireNonNull(before1);
+        Objects.requireNonNull(before2);
+        return (value1, value2) -> applyAsShortThrows(before1.applyThrows(value1), before2.applyThrows(value2));
+    }
+
+    /**
+     * Returns a composed {@link ThrowableBiByteToShortFunction} that first applies the {@code before} functions to its
+     * input, and then applies this function to the result. This method is just convenience, to provide the ability to
+     * execute an operation which accepts {@code byte} input, before this primitive function is executed.
+     *
+     * @param before1 The first function to apply before this function is applied
+     * @param before2 The second function to apply before this function is applied
+     * @return A composed {@code ThrowableBiByteToShortFunction} that first applies the {@code before} functions to its
+     * input, and then applies this function to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
+     * byte}.
+     */
+    @Nonnull
+    default ThrowableBiByteToShortFunction<X> composeFromByte(
+            @Nonnull ThrowableByteFunction<? extends T, ? extends X> before1,
+            @Nonnull ThrowableByteFunction<? extends U, ? extends X> before2) {
+        Objects.requireNonNull(before1);
+        Objects.requireNonNull(before2);
+        return (value1, value2) -> applyAsShortThrows(before1.applyThrows(value1), before2.applyThrows(value2));
+    }
+
+    /**
+     * Returns a composed {@link ThrowableBiCharToShortFunction} that first applies the {@code before} functions to its
+     * input, and then applies this function to the result. This method is just convenience, to provide the ability to
+     * execute an operation which accepts {@code char} input, before this primitive function is executed.
+     *
+     * @param before1 The first function to apply before this function is applied
+     * @param before2 The second function to apply before this function is applied
+     * @return A composed {@code ThrowableBiCharToShortFunction} that first applies the {@code before} functions to its
+     * input, and then applies this function to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
+     * char}.
+     */
+    @Nonnull
+    default ThrowableBiCharToShortFunction<X> composeFromChar(
+            @Nonnull ThrowableCharFunction<? extends T, ? extends X> before1,
+            @Nonnull ThrowableCharFunction<? extends U, ? extends X> before2) {
+        Objects.requireNonNull(before1);
+        Objects.requireNonNull(before2);
+        return (value1, value2) -> applyAsShortThrows(before1.applyThrows(value1), before2.applyThrows(value2));
+    }
+
+    /**
+     * Returns a composed {@link ThrowableBiDoubleToShortFunction} that first applies the {@code before} functions to
+     * its input, and then applies this function to the result. This method is just convenience, to provide the ability
+     * to execute an operation which accepts {@code double} input, before this primitive function is executed.
+     *
+     * @param before1 The first function to apply before this function is applied
+     * @param before2 The second function to apply before this function is applied
+     * @return A composed {@code ThrowableBiDoubleToShortFunction} that first applies the {@code before} functions to
+     * its input, and then applies this function to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
+     * double}.
+     */
+    @Nonnull
+    default ThrowableBiDoubleToShortFunction<X> composeFromDouble(
+            @Nonnull ThrowableDoubleFunction<? extends T, ? extends X> before1,
+            @Nonnull ThrowableDoubleFunction<? extends U, ? extends X> before2) {
+        Objects.requireNonNull(before1);
+        Objects.requireNonNull(before2);
+        return (value1, value2) -> applyAsShortThrows(before1.applyThrows(value1), before2.applyThrows(value2));
+    }
+
+    /**
+     * Returns a composed {@link ThrowableBiFloatToShortFunction} that first applies the {@code before} functions to its
+     * input, and then applies this function to the result. This method is just convenience, to provide the ability to
+     * execute an operation which accepts {@code float} input, before this primitive function is executed.
+     *
+     * @param before1 The first function to apply before this function is applied
+     * @param before2 The second function to apply before this function is applied
+     * @return A composed {@code ThrowableBiFloatToShortFunction} that first applies the {@code before} functions to its
+     * input, and then applies this function to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
+     * float}.
+     */
+    @Nonnull
+    default ThrowableBiFloatToShortFunction<X> composeFromFloat(
+            @Nonnull ThrowableFloatFunction<? extends T, ? extends X> before1,
+            @Nonnull ThrowableFloatFunction<? extends U, ? extends X> before2) {
+        Objects.requireNonNull(before1);
+        Objects.requireNonNull(before2);
+        return (value1, value2) -> applyAsShortThrows(before1.applyThrows(value1), before2.applyThrows(value2));
+    }
+
+    /**
+     * Returns a composed {@link ThrowableBiIntToShortFunction} that first applies the {@code before} functions to its
+     * input, and then applies this function to the result. This method is just convenience, to provide the ability to
+     * execute an operation which accepts {@code int} input, before this primitive function is executed.
+     *
+     * @param before1 The first function to apply before this function is applied
+     * @param before2 The second function to apply before this function is applied
+     * @return A composed {@code ThrowableBiIntToShortFunction} that first applies the {@code before} functions to its
+     * input, and then applies this function to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
+     * int}.
+     */
+    @Nonnull
+    default ThrowableBiIntToShortFunction<X> composeFromInt(
+            @Nonnull ThrowableIntFunction<? extends T, ? extends X> before1,
+            @Nonnull ThrowableIntFunction<? extends U, ? extends X> before2) {
+        Objects.requireNonNull(before1);
+        Objects.requireNonNull(before2);
+        return (value1, value2) -> applyAsShortThrows(before1.applyThrows(value1), before2.applyThrows(value2));
+    }
+
+    /**
+     * Returns a composed {@link ThrowableBiLongToShortFunction} that first applies the {@code before} functions to its
+     * input, and then applies this function to the result. This method is just convenience, to provide the ability to
+     * execute an operation which accepts {@code long} input, before this primitive function is executed.
+     *
+     * @param before1 The first function to apply before this function is applied
+     * @param before2 The second function to apply before this function is applied
+     * @return A composed {@code ThrowableBiLongToShortFunction} that first applies the {@code before} functions to its
+     * input, and then applies this function to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
+     * long}.
+     */
+    @Nonnull
+    default ThrowableBiLongToShortFunction<X> composeFromLong(
+            @Nonnull ThrowableLongFunction<? extends T, ? extends X> before1,
+            @Nonnull ThrowableLongFunction<? extends U, ? extends X> before2) {
+        Objects.requireNonNull(before1);
+        Objects.requireNonNull(before2);
+        return (value1, value2) -> applyAsShortThrows(before1.applyThrows(value1), before2.applyThrows(value2));
+    }
+
+    /**
+     * Returns a composed {@link ThrowableShortBinaryOperator} that first applies the {@code before} functions to its
+     * input, and then applies this function to the result. This method is just convenience, to provide the ability to
+     * execute an operation which accepts {@code short} input, before this primitive function is executed.
+     *
+     * @param before1 The first function to apply before this function is applied
+     * @param before2 The second function to apply before this function is applied
+     * @return A composed {@code ThrowableShortBinaryOperator} that first applies the {@code before} functions to its
+     * input, and then applies this function to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
+     * short}.
+     */
+    @Nonnull
+    default ThrowableShortBinaryOperator<X> composeFromShort(
+            @Nonnull ThrowableShortFunction<? extends T, ? extends X> before1,
+            @Nonnull ThrowableShortFunction<? extends U, ? extends X> before2) {
+        Objects.requireNonNull(before1);
+        Objects.requireNonNull(before2);
+        return (value1, value2) -> applyAsShortThrows(before1.applyThrows(value1), before2.applyThrows(value2));
     }
 
     /**

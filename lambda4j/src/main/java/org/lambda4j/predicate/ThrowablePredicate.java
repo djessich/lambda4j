@@ -33,7 +33,14 @@ import org.lambda4j.consumer.ThrowableConsumer;
 import org.lambda4j.core.exception.ThrownByFunctionalInterfaceException;
 import org.lambda4j.core.util.ThrowableUtils;
 import org.lambda4j.function.ThrowableBooleanFunction;
+import org.lambda4j.function.ThrowableByteFunction;
+import org.lambda4j.function.ThrowableCharFunction;
+import org.lambda4j.function.ThrowableDoubleFunction;
+import org.lambda4j.function.ThrowableFloatFunction;
 import org.lambda4j.function.ThrowableFunction;
+import org.lambda4j.function.ThrowableIntFunction;
+import org.lambda4j.function.ThrowableLongFunction;
+import org.lambda4j.function.ThrowableShortFunction;
 import org.lambda4j.function.conversion.ThrowableBooleanToByteFunction;
 import org.lambda4j.function.conversion.ThrowableBooleanToCharFunction;
 import org.lambda4j.function.conversion.ThrowableBooleanToDoubleFunction;
@@ -217,6 +224,154 @@ public interface ThrowablePredicate<T, X extends Throwable> extends Lambda, Pred
     }
 
     /**
+     * Returns a composed {@link ThrowableBooleanUnaryOperator} that first applies the {@code before} function to its
+     * input, and then applies this predicate to the result. This method is just convenience, to provide the ability to
+     * execute an operation which accepts {@code boolean} input, before this predicate is executed.
+     *
+     * @param before The function to apply before this predicate is applied
+     * @return A composed {@code ThrowableBooleanUnaryOperator} that first applies the {@code before} function to its
+     * input, and then applies this predicate to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
+     * boolean}.
+     */
+    @Nonnull
+    default ThrowableBooleanUnaryOperator<X> composeFromBoolean(
+            @Nonnull ThrowableBooleanFunction<? extends T, ? extends X> before) {
+        Objects.requireNonNull(before);
+        return value -> testThrows(before.applyThrows(value));
+    }
+
+    /**
+     * Returns a composed {@link ThrowableBytePredicate} that first applies the {@code before} function to its input,
+     * and then applies this predicate to the result. This method is just convenience, to provide the ability to execute
+     * an operation which accepts {@code byte} input, before this predicate is executed.
+     *
+     * @param before The function to apply before this predicate is applied
+     * @return A composed {@code ThrowableBytePredicate} that first applies the {@code before} function to its input,
+     * and then applies this predicate to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
+     * byte}.
+     */
+    @Nonnull
+    default ThrowableBytePredicate<X> composeFromByte(@Nonnull ThrowableByteFunction<? extends T, ? extends X> before) {
+        Objects.requireNonNull(before);
+        return value -> testThrows(before.applyThrows(value));
+    }
+
+    /**
+     * Returns a composed {@link ThrowableCharPredicate} that first applies the {@code before} function to its input,
+     * and then applies this predicate to the result. This method is just convenience, to provide the ability to execute
+     * an operation which accepts {@code char} input, before this predicate is executed.
+     *
+     * @param before The function to apply before this predicate is applied
+     * @return A composed {@code ThrowableCharPredicate} that first applies the {@code before} function to its input,
+     * and then applies this predicate to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
+     * char}.
+     */
+    @Nonnull
+    default ThrowableCharPredicate<X> composeFromChar(@Nonnull ThrowableCharFunction<? extends T, ? extends X> before) {
+        Objects.requireNonNull(before);
+        return value -> testThrows(before.applyThrows(value));
+    }
+
+    /**
+     * Returns a composed {@link ThrowableDoublePredicate} that first applies the {@code before} function to its input,
+     * and then applies this predicate to the result. This method is just convenience, to provide the ability to execute
+     * an operation which accepts {@code double} input, before this predicate is executed.
+     *
+     * @param before The function to apply before this predicate is applied
+     * @return A composed {@code ThrowableDoublePredicate} that first applies the {@code before} function to its input,
+     * and then applies this predicate to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
+     * double}.
+     */
+    @Nonnull
+    default ThrowableDoublePredicate<X> composeFromDouble(
+            @Nonnull ThrowableDoubleFunction<? extends T, ? extends X> before) {
+        Objects.requireNonNull(before);
+        return value -> testThrows(before.applyThrows(value));
+    }
+
+    /**
+     * Returns a composed {@link ThrowableFloatPredicate} that first applies the {@code before} function to its input,
+     * and then applies this predicate to the result. This method is just convenience, to provide the ability to execute
+     * an operation which accepts {@code float} input, before this predicate is executed.
+     *
+     * @param before The function to apply before this predicate is applied
+     * @return A composed {@code ThrowableFloatPredicate} that first applies the {@code before} function to its input,
+     * and then applies this predicate to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
+     * float}.
+     */
+    @Nonnull
+    default ThrowableFloatPredicate<X> composeFromFloat(
+            @Nonnull ThrowableFloatFunction<? extends T, ? extends X> before) {
+        Objects.requireNonNull(before);
+        return value -> testThrows(before.applyThrows(value));
+    }
+
+    /**
+     * Returns a composed {@link ThrowableIntPredicate} that first applies the {@code before} function to its input, and
+     * then applies this predicate to the result. This method is just convenience, to provide the ability to execute an
+     * operation which accepts {@code int} input, before this predicate is executed.
+     *
+     * @param before The function to apply before this predicate is applied
+     * @return A composed {@code ThrowableIntPredicate} that first applies the {@code before} function to its input, and
+     * then applies this predicate to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
+     * int}.
+     */
+    @Nonnull
+    default ThrowableIntPredicate<X> composeFromInt(@Nonnull ThrowableIntFunction<? extends T, ? extends X> before) {
+        Objects.requireNonNull(before);
+        return value -> testThrows(before.applyThrows(value));
+    }
+
+    /**
+     * Returns a composed {@link ThrowableLongPredicate} that first applies the {@code before} function to its input,
+     * and then applies this predicate to the result. This method is just convenience, to provide the ability to execute
+     * an operation which accepts {@code long} input, before this predicate is executed.
+     *
+     * @param before The function to apply before this predicate is applied
+     * @return A composed {@code ThrowableLongPredicate} that first applies the {@code before} function to its input,
+     * and then applies this predicate to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
+     * long}.
+     */
+    @Nonnull
+    default ThrowableLongPredicate<X> composeFromLong(@Nonnull ThrowableLongFunction<? extends T, ? extends X> before) {
+        Objects.requireNonNull(before);
+        return value -> testThrows(before.applyThrows(value));
+    }
+
+    /**
+     * Returns a composed {@link ThrowableShortPredicate} that first applies the {@code before} function to its input,
+     * and then applies this predicate to the result. This method is just convenience, to provide the ability to execute
+     * an operation which accepts {@code short} input, before this predicate is executed.
+     *
+     * @param before The function to apply before this predicate is applied
+     * @return A composed {@code ThrowableShortPredicate} that first applies the {@code before} function to its input,
+     * and then applies this predicate to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
+     * short}.
+     */
+    @Nonnull
+    default ThrowableShortPredicate<X> composeFromShort(
+            @Nonnull ThrowableShortFunction<? extends T, ? extends X> before) {
+        Objects.requireNonNull(before);
+        return value -> testThrows(before.applyThrows(value));
+    }
+
+    /**
      * Returns a composed {@link ThrowableFunction} that first applies this predicate to its input, and then applies the
      * {@code after} function to the result.
      *
@@ -228,8 +383,7 @@ public interface ThrowablePredicate<T, X extends Throwable> extends Lambda, Pred
      * @implSpec The input argument of this method is able to return every type.
      */
     @Nonnull
-    default <S> ThrowableFunction<T, S, X> andThen(
-            @Nonnull ThrowableBooleanFunction<? extends S, ? extends X> after) {
+    default <S> ThrowableFunction<T, S, X> andThen(@Nonnull ThrowableBooleanFunction<? extends S, ? extends X> after) {
         Objects.requireNonNull(after);
         return t -> after.applyThrows(testThrows(t));
     }

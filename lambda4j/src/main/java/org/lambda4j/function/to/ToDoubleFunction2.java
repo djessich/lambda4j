@@ -26,6 +26,8 @@ import java.util.function.DoubleToIntFunction;
 import java.util.function.DoubleToLongFunction;
 import java.util.function.DoubleUnaryOperator;
 import java.util.function.Function;
+import java.util.function.IntFunction;
+import java.util.function.LongFunction;
 import java.util.function.ToDoubleFunction;
 
 import javax.annotation.CheckForNull;
@@ -35,11 +37,24 @@ import javax.annotation.Nullable;
 
 import org.lambda4j.Lambda;
 import org.lambda4j.consumer.Consumer2;
+import org.lambda4j.function.BooleanFunction;
+import org.lambda4j.function.ByteFunction;
+import org.lambda4j.function.CharFunction;
+import org.lambda4j.function.FloatFunction;
 import org.lambda4j.function.Function2;
+import org.lambda4j.function.ShortFunction;
+import org.lambda4j.function.conversion.BooleanToDoubleFunction;
+import org.lambda4j.function.conversion.ByteToDoubleFunction;
+import org.lambda4j.function.conversion.CharToDoubleFunction;
 import org.lambda4j.function.conversion.DoubleToByteFunction;
 import org.lambda4j.function.conversion.DoubleToCharFunction;
 import org.lambda4j.function.conversion.DoubleToFloatFunction;
 import org.lambda4j.function.conversion.DoubleToShortFunction;
+import org.lambda4j.function.conversion.FloatToDoubleFunction;
+import org.lambda4j.function.conversion.IntToDoubleFunction2;
+import org.lambda4j.function.conversion.LongToDoubleFunction2;
+import org.lambda4j.function.conversion.ShortToDoubleFunction;
+import org.lambda4j.operator.unary.DoubleUnaryOperator2;
 import org.lambda4j.predicate.Predicate2;
 
 /**
@@ -139,6 +154,158 @@ public interface ToDoubleFunction2<T> extends Lambda, ToDoubleFunction<T> {
     default <A> ToDoubleFunction2<A> compose(@Nonnull Function<? super A, ? extends T> before) {
         Objects.requireNonNull(before);
         return a -> applyAsDouble(before.apply(a));
+    }
+
+    /**
+     * Returns a composed {@link BooleanToDoubleFunction} that first applies the {@code before} function to its input,
+     * and then applies this function to the result. If evaluation of either operation throws an exception, it is
+     * relayed to the caller of the composed operation. This method is just convenience, to provide the ability to
+     * execute an operation which accepts {@code boolean} input, before this primitive function is executed.
+     *
+     * @param before The function to apply before this function is applied
+     * @return A composed {@code BooleanToDoubleFunction} that first applies the {@code before} function to its input,
+     * and then applies this function to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
+     * boolean}.
+     */
+    @Nonnull
+    default BooleanToDoubleFunction composeFromBoolean(@Nonnull BooleanFunction<? extends T> before) {
+        Objects.requireNonNull(before);
+        return value -> applyAsDouble(before.apply(value));
+    }
+
+    /**
+     * Returns a composed {@link ByteToDoubleFunction} that first applies the {@code before} function to its input, and
+     * then applies this function to the result. If evaluation of either operation throws an exception, it is relayed to
+     * the caller of the composed operation. This method is just convenience, to provide the ability to execute an
+     * operation which accepts {@code byte} input, before this primitive function is executed.
+     *
+     * @param before The function to apply before this function is applied
+     * @return A composed {@code ByteToDoubleFunction} that first applies the {@code before} function to its input, and
+     * then applies this function to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
+     * byte}.
+     */
+    @Nonnull
+    default ByteToDoubleFunction composeFromByte(@Nonnull ByteFunction<? extends T> before) {
+        Objects.requireNonNull(before);
+        return value -> applyAsDouble(before.apply(value));
+    }
+
+    /**
+     * Returns a composed {@link CharToDoubleFunction} that first applies the {@code before} function to its input, and
+     * then applies this function to the result. If evaluation of either operation throws an exception, it is relayed to
+     * the caller of the composed operation. This method is just convenience, to provide the ability to execute an
+     * operation which accepts {@code char} input, before this primitive function is executed.
+     *
+     * @param before The function to apply before this function is applied
+     * @return A composed {@code CharToDoubleFunction} that first applies the {@code before} function to its input, and
+     * then applies this function to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
+     * char}.
+     */
+    @Nonnull
+    default CharToDoubleFunction composeFromChar(@Nonnull CharFunction<? extends T> before) {
+        Objects.requireNonNull(before);
+        return value -> applyAsDouble(before.apply(value));
+    }
+
+    /**
+     * Returns a composed {@link DoubleUnaryOperator2} that first applies the {@code before} function to its input, and
+     * then applies this function to the result. If evaluation of either operation throws an exception, it is relayed to
+     * the caller of the composed operation. This method is just convenience, to provide the ability to execute an
+     * operation which accepts {@code double} input, before this primitive function is executed.
+     *
+     * @param before The function to apply before this function is applied
+     * @return A composed {@code DoubleUnaryOperator2} that first applies the {@code before} function to its input, and
+     * then applies this function to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
+     * double}.
+     */
+    @Nonnull
+    default DoubleUnaryOperator2 composeFromDouble(@Nonnull DoubleFunction<? extends T> before) {
+        Objects.requireNonNull(before);
+        return value -> applyAsDouble(before.apply(value));
+    }
+
+    /**
+     * Returns a composed {@link FloatToDoubleFunction} that first applies the {@code before} function to its input, and
+     * then applies this function to the result. If evaluation of either operation throws an exception, it is relayed to
+     * the caller of the composed operation. This method is just convenience, to provide the ability to execute an
+     * operation which accepts {@code float} input, before this primitive function is executed.
+     *
+     * @param before The function to apply before this function is applied
+     * @return A composed {@code FloatToDoubleFunction} that first applies the {@code before} function to its input, and
+     * then applies this function to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
+     * float}.
+     */
+    @Nonnull
+    default FloatToDoubleFunction composeFromFloat(@Nonnull FloatFunction<? extends T> before) {
+        Objects.requireNonNull(before);
+        return value -> applyAsDouble(before.apply(value));
+    }
+
+    /**
+     * Returns a composed {@link IntToDoubleFunction2} that first applies the {@code before} function to its input, and
+     * then applies this function to the result. If evaluation of either operation throws an exception, it is relayed to
+     * the caller of the composed operation. This method is just convenience, to provide the ability to execute an
+     * operation which accepts {@code int} input, before this primitive function is executed.
+     *
+     * @param before The function to apply before this function is applied
+     * @return A composed {@code IntToDoubleFunction2} that first applies the {@code before} function to its input, and
+     * then applies this function to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
+     * int}.
+     */
+    @Nonnull
+    default IntToDoubleFunction2 composeFromInt(@Nonnull IntFunction<? extends T> before) {
+        Objects.requireNonNull(before);
+        return value -> applyAsDouble(before.apply(value));
+    }
+
+    /**
+     * Returns a composed {@link LongToDoubleFunction2} that first applies the {@code before} function to its input, and
+     * then applies this function to the result. If evaluation of either operation throws an exception, it is relayed to
+     * the caller of the composed operation. This method is just convenience, to provide the ability to execute an
+     * operation which accepts {@code long} input, before this primitive function is executed.
+     *
+     * @param before The function to apply before this function is applied
+     * @return A composed {@code LongToDoubleFunction2} that first applies the {@code before} function to its input, and
+     * then applies this function to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
+     * long}.
+     */
+    @Nonnull
+    default LongToDoubleFunction2 composeFromLong(@Nonnull LongFunction<? extends T> before) {
+        Objects.requireNonNull(before);
+        return value -> applyAsDouble(before.apply(value));
+    }
+
+    /**
+     * Returns a composed {@link ShortToDoubleFunction} that first applies the {@code before} function to its input, and
+     * then applies this function to the result. If evaluation of either operation throws an exception, it is relayed to
+     * the caller of the composed operation. This method is just convenience, to provide the ability to execute an
+     * operation which accepts {@code short} input, before this primitive function is executed.
+     *
+     * @param before The function to apply before this function is applied
+     * @return A composed {@code ShortToDoubleFunction} that first applies the {@code before} function to its input, and
+     * then applies this function to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
+     * short}.
+     */
+    @Nonnull
+    default ShortToDoubleFunction composeFromShort(@Nonnull ShortFunction<? extends T> before) {
+        Objects.requireNonNull(before);
+        return value -> applyAsDouble(before.apply(value));
     }
 
     /**

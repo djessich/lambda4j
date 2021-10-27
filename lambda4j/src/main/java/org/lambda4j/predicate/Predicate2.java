@@ -19,7 +19,10 @@ package org.lambda4j.predicate;
 import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.function.DoubleFunction;
 import java.util.function.Function;
+import java.util.function.IntFunction;
+import java.util.function.LongFunction;
 import java.util.function.Predicate;
 
 import javax.annotation.CheckForNull;
@@ -31,7 +34,11 @@ import org.lambda4j.Lambda;
 import org.lambda4j.consumer.BooleanConsumer;
 import org.lambda4j.consumer.Consumer2;
 import org.lambda4j.function.BooleanFunction;
+import org.lambda4j.function.ByteFunction;
+import org.lambda4j.function.CharFunction;
+import org.lambda4j.function.FloatFunction;
 import org.lambda4j.function.Function2;
+import org.lambda4j.function.ShortFunction;
 import org.lambda4j.function.conversion.BooleanToByteFunction;
 import org.lambda4j.function.conversion.BooleanToCharFunction;
 import org.lambda4j.function.conversion.BooleanToDoubleFunction;
@@ -181,6 +188,158 @@ public interface Predicate2<T> extends Lambda, Predicate<T> {
     default <A> Predicate2<A> compose(@Nonnull Function<? super A, ? extends T> before) {
         Objects.requireNonNull(before);
         return a -> test(before.apply(a));
+    }
+
+    /**
+     * Returns a composed {@link BooleanUnaryOperator} that first applies the {@code before} function to its input, and
+     * then applies this predicate to the result. If evaluation of either operation throws an exception, it is relayed
+     * to the caller of the composed operation. This method is just convenience, to provide the ability to execute an
+     * operation which accepts {@code boolean} input, before this predicate is executed.
+     *
+     * @param before The function to apply before this predicate is applied
+     * @return A composed {@code BooleanUnaryOperator} that first applies the {@code before} function to its input, and
+     * then applies this predicate to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
+     * boolean}.
+     */
+    @Nonnull
+    default BooleanUnaryOperator composeFromBoolean(@Nonnull BooleanFunction<? extends T> before) {
+        Objects.requireNonNull(before);
+        return value -> test(before.apply(value));
+    }
+
+    /**
+     * Returns a composed {@link BytePredicate} that first applies the {@code before} function to its input, and then
+     * applies this predicate to the result. If evaluation of either operation throws an exception, it is relayed to the
+     * caller of the composed operation. This method is just convenience, to provide the ability to execute an operation
+     * which accepts {@code byte} input, before this predicate is executed.
+     *
+     * @param before The function to apply before this predicate is applied
+     * @return A composed {@code BytePredicate} that first applies the {@code before} function to its input, and then
+     * applies this predicate to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
+     * byte}.
+     */
+    @Nonnull
+    default BytePredicate composeFromByte(@Nonnull ByteFunction<? extends T> before) {
+        Objects.requireNonNull(before);
+        return value -> test(before.apply(value));
+    }
+
+    /**
+     * Returns a composed {@link CharPredicate} that first applies the {@code before} function to its input, and then
+     * applies this predicate to the result. If evaluation of either operation throws an exception, it is relayed to the
+     * caller of the composed operation. This method is just convenience, to provide the ability to execute an operation
+     * which accepts {@code char} input, before this predicate is executed.
+     *
+     * @param before The function to apply before this predicate is applied
+     * @return A composed {@code CharPredicate} that first applies the {@code before} function to its input, and then
+     * applies this predicate to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
+     * char}.
+     */
+    @Nonnull
+    default CharPredicate composeFromChar(@Nonnull CharFunction<? extends T> before) {
+        Objects.requireNonNull(before);
+        return value -> test(before.apply(value));
+    }
+
+    /**
+     * Returns a composed {@link DoublePredicate2} that first applies the {@code before} function to its input, and then
+     * applies this predicate to the result. If evaluation of either operation throws an exception, it is relayed to the
+     * caller of the composed operation. This method is just convenience, to provide the ability to execute an operation
+     * which accepts {@code double} input, before this predicate is executed.
+     *
+     * @param before The function to apply before this predicate is applied
+     * @return A composed {@code DoublePredicate2} that first applies the {@code before} function to its input, and then
+     * applies this predicate to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
+     * double}.
+     */
+    @Nonnull
+    default DoublePredicate2 composeFromDouble(@Nonnull DoubleFunction<? extends T> before) {
+        Objects.requireNonNull(before);
+        return value -> test(before.apply(value));
+    }
+
+    /**
+     * Returns a composed {@link FloatPredicate} that first applies the {@code before} function to its input, and then
+     * applies this predicate to the result. If evaluation of either operation throws an exception, it is relayed to the
+     * caller of the composed operation. This method is just convenience, to provide the ability to execute an operation
+     * which accepts {@code float} input, before this predicate is executed.
+     *
+     * @param before The function to apply before this predicate is applied
+     * @return A composed {@code FloatPredicate} that first applies the {@code before} function to its input, and then
+     * applies this predicate to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
+     * float}.
+     */
+    @Nonnull
+    default FloatPredicate composeFromFloat(@Nonnull FloatFunction<? extends T> before) {
+        Objects.requireNonNull(before);
+        return value -> test(before.apply(value));
+    }
+
+    /**
+     * Returns a composed {@link IntPredicate2} that first applies the {@code before} function to its input, and then
+     * applies this predicate to the result. If evaluation of either operation throws an exception, it is relayed to the
+     * caller of the composed operation. This method is just convenience, to provide the ability to execute an operation
+     * which accepts {@code int} input, before this predicate is executed.
+     *
+     * @param before The function to apply before this predicate is applied
+     * @return A composed {@code IntPredicate2} that first applies the {@code before} function to its input, and then
+     * applies this predicate to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
+     * int}.
+     */
+    @Nonnull
+    default IntPredicate2 composeFromInt(@Nonnull IntFunction<? extends T> before) {
+        Objects.requireNonNull(before);
+        return value -> test(before.apply(value));
+    }
+
+    /**
+     * Returns a composed {@link LongPredicate2} that first applies the {@code before} function to its input, and then
+     * applies this predicate to the result. If evaluation of either operation throws an exception, it is relayed to the
+     * caller of the composed operation. This method is just convenience, to provide the ability to execute an operation
+     * which accepts {@code long} input, before this predicate is executed.
+     *
+     * @param before The function to apply before this predicate is applied
+     * @return A composed {@code LongPredicate2} that first applies the {@code before} function to its input, and then
+     * applies this predicate to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
+     * long}.
+     */
+    @Nonnull
+    default LongPredicate2 composeFromLong(@Nonnull LongFunction<? extends T> before) {
+        Objects.requireNonNull(before);
+        return value -> test(before.apply(value));
+    }
+
+    /**
+     * Returns a composed {@link ShortPredicate} that first applies the {@code before} function to its input, and then
+     * applies this predicate to the result. If evaluation of either operation throws an exception, it is relayed to the
+     * caller of the composed operation. This method is just convenience, to provide the ability to execute an operation
+     * which accepts {@code short} input, before this predicate is executed.
+     *
+     * @param before The function to apply before this predicate is applied
+     * @return A composed {@code ShortPredicate} that first applies the {@code before} function to its input, and then
+     * applies this predicate to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
+     * short}.
+     */
+    @Nonnull
+    default ShortPredicate composeFromShort(@Nonnull ShortFunction<? extends T> before) {
+        Objects.requireNonNull(before);
+        return value -> test(before.apply(value));
     }
 
     /**

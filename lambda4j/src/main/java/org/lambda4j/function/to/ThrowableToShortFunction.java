@@ -31,8 +31,22 @@ import org.lambda4j.consumer.ThrowableConsumer;
 import org.lambda4j.consumer.ThrowableShortConsumer;
 import org.lambda4j.core.exception.ThrownByFunctionalInterfaceException;
 import org.lambda4j.core.util.ThrowableUtils;
+import org.lambda4j.function.ThrowableBooleanFunction;
+import org.lambda4j.function.ThrowableByteFunction;
+import org.lambda4j.function.ThrowableCharFunction;
+import org.lambda4j.function.ThrowableDoubleFunction;
+import org.lambda4j.function.ThrowableFloatFunction;
 import org.lambda4j.function.ThrowableFunction;
+import org.lambda4j.function.ThrowableIntFunction;
+import org.lambda4j.function.ThrowableLongFunction;
 import org.lambda4j.function.ThrowableShortFunction;
+import org.lambda4j.function.conversion.ThrowableBooleanToShortFunction;
+import org.lambda4j.function.conversion.ThrowableByteToShortFunction;
+import org.lambda4j.function.conversion.ThrowableCharToShortFunction;
+import org.lambda4j.function.conversion.ThrowableDoubleToShortFunction;
+import org.lambda4j.function.conversion.ThrowableFloatToShortFunction;
+import org.lambda4j.function.conversion.ThrowableIntToShortFunction;
+import org.lambda4j.function.conversion.ThrowableLongToShortFunction;
 import org.lambda4j.function.conversion.ThrowableShortToByteFunction;
 import org.lambda4j.function.conversion.ThrowableShortToCharFunction;
 import org.lambda4j.function.conversion.ThrowableShortToDoubleFunction;
@@ -146,6 +160,158 @@ public interface ThrowableToShortFunction<T, X extends Throwable> extends Lambda
             @Nonnull ThrowableFunction<? super A, ? extends T, ? extends X> before) {
         Objects.requireNonNull(before);
         return a -> applyAsShortThrows(before.applyThrows(a));
+    }
+
+    /**
+     * Returns a composed {@link ThrowableBooleanToShortFunction} that first applies the {@code before} function to its
+     * input, and then applies this function to the result. This method is just convenience, to provide the ability to
+     * execute an operation which accepts {@code boolean} input, before this function is executed.
+     *
+     * @param before The function to apply before this function is applied
+     * @return A composed {@code ThrowableBooleanToShortFunction} that first applies the {@code before} function to its
+     * input, and then applies this function to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
+     * boolean}.
+     */
+    @Nonnull
+    default ThrowableBooleanToShortFunction<X> composeFromBoolean(
+            @Nonnull ThrowableBooleanFunction<? extends T, ? extends X> before) {
+        Objects.requireNonNull(before);
+        return value -> applyAsShortThrows(before.applyThrows(value));
+    }
+
+    /**
+     * Returns a composed {@link ThrowableByteToShortFunction} that first applies the {@code before} function to its
+     * input, and then applies this function to the result. This method is just convenience, to provide the ability to
+     * execute an operation which accepts {@code byte} input, before this function is executed.
+     *
+     * @param before The function to apply before this function is applied
+     * @return A composed {@code ThrowableByteToShortFunction} that first applies the {@code before} function to its
+     * input, and then applies this function to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
+     * byte}.
+     */
+    @Nonnull
+    default ThrowableByteToShortFunction<X> composeFromByte(
+            @Nonnull ThrowableByteFunction<? extends T, ? extends X> before) {
+        Objects.requireNonNull(before);
+        return value -> applyAsShortThrows(before.applyThrows(value));
+    }
+
+    /**
+     * Returns a composed {@link ThrowableCharToShortFunction} that first applies the {@code before} function to its
+     * input, and then applies this function to the result. This method is just convenience, to provide the ability to
+     * execute an operation which accepts {@code char} input, before this function is executed.
+     *
+     * @param before The function to apply before this function is applied
+     * @return A composed {@code ThrowableCharToShortFunction} that first applies the {@code before} function to its
+     * input, and then applies this function to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
+     * char}.
+     */
+    @Nonnull
+    default ThrowableCharToShortFunction<X> composeFromChar(
+            @Nonnull ThrowableCharFunction<? extends T, ? extends X> before) {
+        Objects.requireNonNull(before);
+        return value -> applyAsShortThrows(before.applyThrows(value));
+    }
+
+    /**
+     * Returns a composed {@link ThrowableDoubleToShortFunction} that first applies the {@code before} function to its
+     * input, and then applies this function to the result. This method is just convenience, to provide the ability to
+     * execute an operation which accepts {@code double} input, before this function is executed.
+     *
+     * @param before The function to apply before this function is applied
+     * @return A composed {@code ThrowableDoubleToShortFunction} that first applies the {@code before} function to its
+     * input, and then applies this function to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
+     * double}.
+     */
+    @Nonnull
+    default ThrowableDoubleToShortFunction<X> composeFromDouble(
+            @Nonnull ThrowableDoubleFunction<? extends T, ? extends X> before) {
+        Objects.requireNonNull(before);
+        return value -> applyAsShortThrows(before.applyThrows(value));
+    }
+
+    /**
+     * Returns a composed {@link ThrowableFloatToShortFunction} that first applies the {@code before} function to its
+     * input, and then applies this function to the result. This method is just convenience, to provide the ability to
+     * execute an operation which accepts {@code float} input, before this function is executed.
+     *
+     * @param before The function to apply before this function is applied
+     * @return A composed {@code ThrowableFloatToShortFunction} that first applies the {@code before} function to its
+     * input, and then applies this function to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
+     * float}.
+     */
+    @Nonnull
+    default ThrowableFloatToShortFunction<X> composeFromFloat(
+            @Nonnull ThrowableFloatFunction<? extends T, ? extends X> before) {
+        Objects.requireNonNull(before);
+        return value -> applyAsShortThrows(before.applyThrows(value));
+    }
+
+    /**
+     * Returns a composed {@link ThrowableIntToShortFunction} that first applies the {@code before} function to its
+     * input, and then applies this function to the result. This method is just convenience, to provide the ability to
+     * execute an operation which accepts {@code int} input, before this function is executed.
+     *
+     * @param before The function to apply before this function is applied
+     * @return A composed {@code ThrowableIntToShortFunction} that first applies the {@code before} function to its
+     * input, and then applies this function to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
+     * int}.
+     */
+    @Nonnull
+    default ThrowableIntToShortFunction<X> composeFromInt(
+            @Nonnull ThrowableIntFunction<? extends T, ? extends X> before) {
+        Objects.requireNonNull(before);
+        return value -> applyAsShortThrows(before.applyThrows(value));
+    }
+
+    /**
+     * Returns a composed {@link ThrowableLongToShortFunction} that first applies the {@code before} function to its
+     * input, and then applies this function to the result. This method is just convenience, to provide the ability to
+     * execute an operation which accepts {@code long} input, before this function is executed.
+     *
+     * @param before The function to apply before this function is applied
+     * @return A composed {@code ThrowableLongToShortFunction} that first applies the {@code before} function to its
+     * input, and then applies this function to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
+     * long}.
+     */
+    @Nonnull
+    default ThrowableLongToShortFunction<X> composeFromLong(
+            @Nonnull ThrowableLongFunction<? extends T, ? extends X> before) {
+        Objects.requireNonNull(before);
+        return value -> applyAsShortThrows(before.applyThrows(value));
+    }
+
+    /**
+     * Returns a composed {@link ThrowableShortUnaryOperator} that first applies the {@code before} function to its
+     * input, and then applies this function to the result. This method is just convenience, to provide the ability to
+     * execute an operation which accepts {@code short} input, before this function is executed.
+     *
+     * @param before The function to apply before this function is applied
+     * @return A composed {@code ThrowableShortUnaryOperator} that first applies the {@code before} function to its
+     * input, and then applies this function to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
+     * short}.
+     */
+    @Nonnull
+    default ThrowableShortUnaryOperator<X> composeFromShort(
+            @Nonnull ThrowableShortFunction<? extends T, ? extends X> before) {
+        Objects.requireNonNull(before);
+        return value -> applyAsShortThrows(before.applyThrows(value));
     }
 
     /**

@@ -20,7 +20,10 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.BiPredicate;
+import java.util.function.DoubleFunction;
 import java.util.function.Function;
+import java.util.function.IntFunction;
+import java.util.function.LongFunction;
 import java.util.function.Predicate;
 
 import javax.annotation.CheckForNull;
@@ -34,6 +37,10 @@ import org.lambda4j.Lambda;
 import org.lambda4j.consumer.BooleanConsumer;
 import org.lambda4j.consumer.bi.BiConsumer2;
 import org.lambda4j.function.BooleanFunction;
+import org.lambda4j.function.ByteFunction;
+import org.lambda4j.function.CharFunction;
+import org.lambda4j.function.FloatFunction;
+import org.lambda4j.function.ShortFunction;
 import org.lambda4j.function.bi.BiFunction2;
 import org.lambda4j.function.bi.to.ToByteBiFunction;
 import org.lambda4j.function.bi.to.ToCharBiFunction;
@@ -49,6 +56,7 @@ import org.lambda4j.function.conversion.BooleanToFloatFunction;
 import org.lambda4j.function.conversion.BooleanToIntFunction;
 import org.lambda4j.function.conversion.BooleanToLongFunction;
 import org.lambda4j.function.conversion.BooleanToShortFunction;
+import org.lambda4j.operator.binary.BooleanBinaryOperator;
 import org.lambda4j.operator.unary.BooleanUnaryOperator;
 import org.lambda4j.predicate.Predicate2;
 
@@ -259,6 +267,182 @@ public interface BiPredicate2<T, U> extends Lambda, BiPredicate<T, U> {
         Objects.requireNonNull(before1);
         Objects.requireNonNull(before2);
         return (a, b) -> test(before1.apply(a), before2.apply(b));
+    }
+
+    /**
+     * Returns a composed {@link BooleanBinaryOperator} that first applies the {@code before} functions to its input,
+     * and then applies this predicate to the result. If evaluation of either operation throws an exception, it is
+     * relayed to the caller of the composed operation. This method is just convenience, to provide the ability to
+     * execute an operation which accepts {@code boolean} input, before this predicate is executed.
+     *
+     * @param before1 The first function to apply before this predicate is applied
+     * @param before2 The second function to apply before this predicate is applied
+     * @return A composed {@code BooleanBinaryOperator} that first applies the {@code before} functions to its input,
+     * and then applies this predicate to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
+     * boolean}.
+     */
+    @Nonnull
+    default BooleanBinaryOperator composeFromBoolean(@Nonnull BooleanFunction<? extends T> before1,
+            @Nonnull BooleanFunction<? extends U> before2) {
+        Objects.requireNonNull(before1);
+        Objects.requireNonNull(before2);
+        return (value1, value2) -> test(before1.apply(value1), before2.apply(value2));
+    }
+
+    /**
+     * Returns a composed {@link BiBytePredicate} that first applies the {@code before} functions to its input, and then
+     * applies this predicate to the result. If evaluation of either operation throws an exception, it is relayed to the
+     * caller of the composed operation. This method is just convenience, to provide the ability to execute an operation
+     * which accepts {@code byte} input, before this predicate is executed.
+     *
+     * @param before1 The first function to apply before this predicate is applied
+     * @param before2 The second function to apply before this predicate is applied
+     * @return A composed {@code BiBytePredicate} that first applies the {@code before} functions to its input, and then
+     * applies this predicate to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
+     * byte}.
+     */
+    @Nonnull
+    default BiBytePredicate composeFromByte(@Nonnull ByteFunction<? extends T> before1,
+            @Nonnull ByteFunction<? extends U> before2) {
+        Objects.requireNonNull(before1);
+        Objects.requireNonNull(before2);
+        return (value1, value2) -> test(before1.apply(value1), before2.apply(value2));
+    }
+
+    /**
+     * Returns a composed {@link BiCharPredicate} that first applies the {@code before} functions to its input, and then
+     * applies this predicate to the result. If evaluation of either operation throws an exception, it is relayed to the
+     * caller of the composed operation. This method is just convenience, to provide the ability to execute an operation
+     * which accepts {@code char} input, before this predicate is executed.
+     *
+     * @param before1 The first function to apply before this predicate is applied
+     * @param before2 The second function to apply before this predicate is applied
+     * @return A composed {@code BiCharPredicate} that first applies the {@code before} functions to its input, and then
+     * applies this predicate to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
+     * char}.
+     */
+    @Nonnull
+    default BiCharPredicate composeFromChar(@Nonnull CharFunction<? extends T> before1,
+            @Nonnull CharFunction<? extends U> before2) {
+        Objects.requireNonNull(before1);
+        Objects.requireNonNull(before2);
+        return (value1, value2) -> test(before1.apply(value1), before2.apply(value2));
+    }
+
+    /**
+     * Returns a composed {@link BiDoublePredicate} that first applies the {@code before} functions to its input, and
+     * then applies this predicate to the result. If evaluation of either operation throws an exception, it is relayed
+     * to the caller of the composed operation. This method is just convenience, to provide the ability to execute an
+     * operation which accepts {@code double} input, before this predicate is executed.
+     *
+     * @param before1 The first function to apply before this predicate is applied
+     * @param before2 The second function to apply before this predicate is applied
+     * @return A composed {@code BiDoublePredicate} that first applies the {@code before} functions to its input, and
+     * then applies this predicate to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
+     * double}.
+     */
+    @Nonnull
+    default BiDoublePredicate composeFromDouble(@Nonnull DoubleFunction<? extends T> before1,
+            @Nonnull DoubleFunction<? extends U> before2) {
+        Objects.requireNonNull(before1);
+        Objects.requireNonNull(before2);
+        return (value1, value2) -> test(before1.apply(value1), before2.apply(value2));
+    }
+
+    /**
+     * Returns a composed {@link BiFloatPredicate} that first applies the {@code before} functions to its input, and
+     * then applies this predicate to the result. If evaluation of either operation throws an exception, it is relayed
+     * to the caller of the composed operation. This method is just convenience, to provide the ability to execute an
+     * operation which accepts {@code float} input, before this predicate is executed.
+     *
+     * @param before1 The first function to apply before this predicate is applied
+     * @param before2 The second function to apply before this predicate is applied
+     * @return A composed {@code BiFloatPredicate} that first applies the {@code before} functions to its input, and
+     * then applies this predicate to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
+     * float}.
+     */
+    @Nonnull
+    default BiFloatPredicate composeFromFloat(@Nonnull FloatFunction<? extends T> before1,
+            @Nonnull FloatFunction<? extends U> before2) {
+        Objects.requireNonNull(before1);
+        Objects.requireNonNull(before2);
+        return (value1, value2) -> test(before1.apply(value1), before2.apply(value2));
+    }
+
+    /**
+     * Returns a composed {@link BiIntPredicate} that first applies the {@code before} functions to its input, and then
+     * applies this predicate to the result. If evaluation of either operation throws an exception, it is relayed to the
+     * caller of the composed operation. This method is just convenience, to provide the ability to execute an operation
+     * which accepts {@code int} input, before this predicate is executed.
+     *
+     * @param before1 The first function to apply before this predicate is applied
+     * @param before2 The second function to apply before this predicate is applied
+     * @return A composed {@code BiIntPredicate} that first applies the {@code before} functions to its input, and then
+     * applies this predicate to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
+     * int}.
+     */
+    @Nonnull
+    default BiIntPredicate composeFromInt(@Nonnull IntFunction<? extends T> before1,
+            @Nonnull IntFunction<? extends U> before2) {
+        Objects.requireNonNull(before1);
+        Objects.requireNonNull(before2);
+        return (value1, value2) -> test(before1.apply(value1), before2.apply(value2));
+    }
+
+    /**
+     * Returns a composed {@link BiLongPredicate} that first applies the {@code before} functions to its input, and then
+     * applies this predicate to the result. If evaluation of either operation throws an exception, it is relayed to the
+     * caller of the composed operation. This method is just convenience, to provide the ability to execute an operation
+     * which accepts {@code long} input, before this predicate is executed.
+     *
+     * @param before1 The first function to apply before this predicate is applied
+     * @param before2 The second function to apply before this predicate is applied
+     * @return A composed {@code BiLongPredicate} that first applies the {@code before} functions to its input, and then
+     * applies this predicate to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
+     * long}.
+     */
+    @Nonnull
+    default BiLongPredicate composeFromLong(@Nonnull LongFunction<? extends T> before1,
+            @Nonnull LongFunction<? extends U> before2) {
+        Objects.requireNonNull(before1);
+        Objects.requireNonNull(before2);
+        return (value1, value2) -> test(before1.apply(value1), before2.apply(value2));
+    }
+
+    /**
+     * Returns a composed {@link BiShortPredicate} that first applies the {@code before} functions to its input, and
+     * then applies this predicate to the result. If evaluation of either operation throws an exception, it is relayed
+     * to the caller of the composed operation. This method is just convenience, to provide the ability to execute an
+     * operation which accepts {@code short} input, before this predicate is executed.
+     *
+     * @param before1 The first function to apply before this predicate is applied
+     * @param before2 The second function to apply before this predicate is applied
+     * @return A composed {@code BiShortPredicate} that first applies the {@code before} functions to its input, and
+     * then applies this predicate to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
+     * short}.
+     */
+    @Nonnull
+    default BiShortPredicate composeFromShort(@Nonnull ShortFunction<? extends T> before1,
+            @Nonnull ShortFunction<? extends U> before2) {
+        Objects.requireNonNull(before1);
+        Objects.requireNonNull(before2);
+        return (value1, value2) -> test(before1.apply(value1), before2.apply(value2));
     }
 
     /**

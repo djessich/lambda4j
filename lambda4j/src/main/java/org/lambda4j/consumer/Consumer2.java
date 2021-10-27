@@ -18,7 +18,10 @@ package org.lambda4j.consumer;
 
 import java.util.Objects;
 import java.util.function.Consumer;
+import java.util.function.DoubleFunction;
 import java.util.function.Function;
+import java.util.function.IntFunction;
+import java.util.function.LongFunction;
 
 import javax.annotation.CheckForNull;
 import javax.annotation.Nonnegative;
@@ -26,6 +29,11 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import org.lambda4j.Lambda;
+import org.lambda4j.function.BooleanFunction;
+import org.lambda4j.function.ByteFunction;
+import org.lambda4j.function.CharFunction;
+import org.lambda4j.function.FloatFunction;
+import org.lambda4j.function.ShortFunction;
 
 /**
  * Represents an operation that accepts one input argument and returns no result. Unlike most other functional
@@ -109,6 +117,158 @@ public interface Consumer2<T> extends Lambda, Consumer<T> {
     default <A> Consumer2<A> compose(@Nonnull Function<? super A, ? extends T> before) {
         Objects.requireNonNull(before);
         return a -> accept(before.apply(a));
+    }
+
+    /**
+     * Returns a composed {@link BooleanConsumer} that first applies the {@code before} function to its input, and then
+     * applies this consumer to the result. If evaluation of either operation throws an exception, it is relayed to the
+     * caller of the composed operation. This method is just convenience, to provide the ability to execute an operation
+     * which accepts {@code boolean} input, before this consumer is executed.
+     *
+     * @param before The function to apply before this consumer is applied
+     * @return A composed {@code BooleanConsumer} that first applies the {@code before} function to its input, and then
+     * applies this consumer to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
+     * boolean}.
+     */
+    @Nonnull
+    default BooleanConsumer composeFromBoolean(@Nonnull BooleanFunction<? extends T> before) {
+        Objects.requireNonNull(before);
+        return value -> accept(before.apply(value));
+    }
+
+    /**
+     * Returns a composed {@link ByteConsumer} that first applies the {@code before} function to its input, and then
+     * applies this consumer to the result. If evaluation of either operation throws an exception, it is relayed to the
+     * caller of the composed operation. This method is just convenience, to provide the ability to execute an operation
+     * which accepts {@code byte} input, before this consumer is executed.
+     *
+     * @param before The function to apply before this consumer is applied
+     * @return A composed {@code ByteConsumer} that first applies the {@code before} function to its input, and then
+     * applies this consumer to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
+     * byte}.
+     */
+    @Nonnull
+    default ByteConsumer composeFromByte(@Nonnull ByteFunction<? extends T> before) {
+        Objects.requireNonNull(before);
+        return value -> accept(before.apply(value));
+    }
+
+    /**
+     * Returns a composed {@link CharConsumer} that first applies the {@code before} function to its input, and then
+     * applies this consumer to the result. If evaluation of either operation throws an exception, it is relayed to the
+     * caller of the composed operation. This method is just convenience, to provide the ability to execute an operation
+     * which accepts {@code char} input, before this consumer is executed.
+     *
+     * @param before The function to apply before this consumer is applied
+     * @return A composed {@code CharConsumer} that first applies the {@code before} function to its input, and then
+     * applies this consumer to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
+     * char}.
+     */
+    @Nonnull
+    default CharConsumer composeFromChar(@Nonnull CharFunction<? extends T> before) {
+        Objects.requireNonNull(before);
+        return value -> accept(before.apply(value));
+    }
+
+    /**
+     * Returns a composed {@link DoubleConsumer2} that first applies the {@code before} function to its input, and then
+     * applies this consumer to the result. If evaluation of either operation throws an exception, it is relayed to the
+     * caller of the composed operation. This method is just convenience, to provide the ability to execute an operation
+     * which accepts {@code double} input, before this consumer is executed.
+     *
+     * @param before The function to apply before this consumer is applied
+     * @return A composed {@code DoubleConsumer2} that first applies the {@code before} function to its input, and then
+     * applies this consumer to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
+     * double}.
+     */
+    @Nonnull
+    default DoubleConsumer2 composeFromDouble(@Nonnull DoubleFunction<? extends T> before) {
+        Objects.requireNonNull(before);
+        return value -> accept(before.apply(value));
+    }
+
+    /**
+     * Returns a composed {@link FloatConsumer} that first applies the {@code before} function to its input, and then
+     * applies this consumer to the result. If evaluation of either operation throws an exception, it is relayed to the
+     * caller of the composed operation. This method is just convenience, to provide the ability to execute an operation
+     * which accepts {@code float} input, before this consumer is executed.
+     *
+     * @param before The function to apply before this consumer is applied
+     * @return A composed {@code FloatConsumer} that first applies the {@code before} function to its input, and then
+     * applies this consumer to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
+     * float}.
+     */
+    @Nonnull
+    default FloatConsumer composeFromFloat(@Nonnull FloatFunction<? extends T> before) {
+        Objects.requireNonNull(before);
+        return value -> accept(before.apply(value));
+    }
+
+    /**
+     * Returns a composed {@link IntConsumer2} that first applies the {@code before} function to its input, and then
+     * applies this consumer to the result. If evaluation of either operation throws an exception, it is relayed to the
+     * caller of the composed operation. This method is just convenience, to provide the ability to execute an operation
+     * which accepts {@code int} input, before this consumer is executed.
+     *
+     * @param before The function to apply before this consumer is applied
+     * @return A composed {@code IntConsumer2} that first applies the {@code before} function to its input, and then
+     * applies this consumer to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
+     * int}.
+     */
+    @Nonnull
+    default IntConsumer2 composeFromInt(@Nonnull IntFunction<? extends T> before) {
+        Objects.requireNonNull(before);
+        return value -> accept(before.apply(value));
+    }
+
+    /**
+     * Returns a composed {@link LongConsumer2} that first applies the {@code before} function to its input, and then
+     * applies this consumer to the result. If evaluation of either operation throws an exception, it is relayed to the
+     * caller of the composed operation. This method is just convenience, to provide the ability to execute an operation
+     * which accepts {@code long} input, before this consumer is executed.
+     *
+     * @param before The function to apply before this consumer is applied
+     * @return A composed {@code LongConsumer2} that first applies the {@code before} function to its input, and then
+     * applies this consumer to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
+     * long}.
+     */
+    @Nonnull
+    default LongConsumer2 composeFromLong(@Nonnull LongFunction<? extends T> before) {
+        Objects.requireNonNull(before);
+        return value -> accept(before.apply(value));
+    }
+
+    /**
+     * Returns a composed {@link ShortConsumer} that first applies the {@code before} function to its input, and then
+     * applies this consumer to the result. If evaluation of either operation throws an exception, it is relayed to the
+     * caller of the composed operation. This method is just convenience, to provide the ability to execute an operation
+     * which accepts {@code short} input, before this consumer is executed.
+     *
+     * @param before The function to apply before this consumer is applied
+     * @return A composed {@code ShortConsumer} that first applies the {@code before} function to its input, and then
+     * applies this consumer to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
+     * short}.
+     */
+    @Nonnull
+    default ShortConsumer composeFromShort(@Nonnull ShortFunction<? extends T> before) {
+        Objects.requireNonNull(before);
+        return value -> accept(before.apply(value));
     }
 
     /**

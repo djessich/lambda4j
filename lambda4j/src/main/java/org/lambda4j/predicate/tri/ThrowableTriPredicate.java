@@ -34,7 +34,14 @@ import org.lambda4j.consumer.tri.ThrowableTriConsumer;
 import org.lambda4j.core.exception.ThrownByFunctionalInterfaceException;
 import org.lambda4j.core.util.ThrowableUtils;
 import org.lambda4j.function.ThrowableBooleanFunction;
+import org.lambda4j.function.ThrowableByteFunction;
+import org.lambda4j.function.ThrowableCharFunction;
+import org.lambda4j.function.ThrowableDoubleFunction;
+import org.lambda4j.function.ThrowableFloatFunction;
 import org.lambda4j.function.ThrowableFunction;
+import org.lambda4j.function.ThrowableIntFunction;
+import org.lambda4j.function.ThrowableLongFunction;
+import org.lambda4j.function.ThrowableShortFunction;
 import org.lambda4j.function.conversion.ThrowableBooleanToByteFunction;
 import org.lambda4j.function.conversion.ThrowableBooleanToCharFunction;
 import org.lambda4j.function.conversion.ThrowableBooleanToDoubleFunction;
@@ -50,6 +57,7 @@ import org.lambda4j.function.tri.to.ThrowableToFloatTriFunction;
 import org.lambda4j.function.tri.to.ThrowableToIntTriFunction;
 import org.lambda4j.function.tri.to.ThrowableToLongTriFunction;
 import org.lambda4j.function.tri.to.ThrowableToShortTriFunction;
+import org.lambda4j.operator.ternary.ThrowableBooleanTernaryOperator;
 import org.lambda4j.operator.unary.ThrowableBooleanUnaryOperator;
 import org.lambda4j.predicate.ThrowablePredicate;
 import org.lambda4j.predicate.bi.ThrowableBiPredicate;
@@ -331,6 +339,213 @@ public interface ThrowableTriPredicate<T, U, V, X extends Throwable> extends Lam
         Objects.requireNonNull(before2);
         Objects.requireNonNull(before3);
         return (a, b, c) -> testThrows(before1.applyThrows(a), before2.applyThrows(b), before3.applyThrows(c));
+    }
+
+    /**
+     * Returns a composed {@link ThrowableBooleanTernaryOperator} that first applies the {@code before} functions to its
+     * input, and then applies this predicate to the result. This method is just convenience, to provide the ability to
+     * execute an operation which accepts {@code boolean} input, before this predicate is executed.
+     *
+     * @param before1 The first function to apply before this predicate is applied
+     * @param before2 The second function to apply before this predicate is applied
+     * @param before3 The third function to apply before this predicate is applied
+     * @return A composed {@code ThrowableBooleanTernaryOperator} that first applies the {@code before} functions to its
+     * input, and then applies this predicate to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
+     * boolean}.
+     */
+    @Nonnull
+    default ThrowableBooleanTernaryOperator<X> composeFromBoolean(
+            @Nonnull ThrowableBooleanFunction<? extends T, ? extends X> before1,
+            @Nonnull ThrowableBooleanFunction<? extends U, ? extends X> before2,
+            @Nonnull ThrowableBooleanFunction<? extends V, ? extends X> before3) {
+        Objects.requireNonNull(before1);
+        Objects.requireNonNull(before2);
+        Objects.requireNonNull(before3);
+        return (value1, value2, value3) -> testThrows(before1.applyThrows(value1), before2.applyThrows(value2),
+                before3.applyThrows(value3));
+    }
+
+    /**
+     * Returns a composed {@link ThrowableTriBytePredicate} that first applies the {@code before} functions to its
+     * input, and then applies this predicate to the result. This method is just convenience, to provide the ability to
+     * execute an operation which accepts {@code byte} input, before this predicate is executed.
+     *
+     * @param before1 The first function to apply before this predicate is applied
+     * @param before2 The second function to apply before this predicate is applied
+     * @param before3 The third function to apply before this predicate is applied
+     * @return A composed {@code ThrowableTriBytePredicate} that first applies the {@code before} functions to its
+     * input, and then applies this predicate to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
+     * byte}.
+     */
+    @Nonnull
+    default ThrowableTriBytePredicate<X> composeFromByte(
+            @Nonnull ThrowableByteFunction<? extends T, ? extends X> before1,
+            @Nonnull ThrowableByteFunction<? extends U, ? extends X> before2,
+            @Nonnull ThrowableByteFunction<? extends V, ? extends X> before3) {
+        Objects.requireNonNull(before1);
+        Objects.requireNonNull(before2);
+        Objects.requireNonNull(before3);
+        return (value1, value2, value3) -> testThrows(before1.applyThrows(value1), before2.applyThrows(value2),
+                before3.applyThrows(value3));
+    }
+
+    /**
+     * Returns a composed {@link ThrowableTriCharPredicate} that first applies the {@code before} functions to its
+     * input, and then applies this predicate to the result. This method is just convenience, to provide the ability to
+     * execute an operation which accepts {@code char} input, before this predicate is executed.
+     *
+     * @param before1 The first function to apply before this predicate is applied
+     * @param before2 The second function to apply before this predicate is applied
+     * @param before3 The third function to apply before this predicate is applied
+     * @return A composed {@code ThrowableTriCharPredicate} that first applies the {@code before} functions to its
+     * input, and then applies this predicate to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
+     * char}.
+     */
+    @Nonnull
+    default ThrowableTriCharPredicate<X> composeFromChar(
+            @Nonnull ThrowableCharFunction<? extends T, ? extends X> before1,
+            @Nonnull ThrowableCharFunction<? extends U, ? extends X> before2,
+            @Nonnull ThrowableCharFunction<? extends V, ? extends X> before3) {
+        Objects.requireNonNull(before1);
+        Objects.requireNonNull(before2);
+        Objects.requireNonNull(before3);
+        return (value1, value2, value3) -> testThrows(before1.applyThrows(value1), before2.applyThrows(value2),
+                before3.applyThrows(value3));
+    }
+
+    /**
+     * Returns a composed {@link ThrowableTriDoublePredicate} that first applies the {@code before} functions to its
+     * input, and then applies this predicate to the result. This method is just convenience, to provide the ability to
+     * execute an operation which accepts {@code double} input, before this predicate is executed.
+     *
+     * @param before1 The first function to apply before this predicate is applied
+     * @param before2 The second function to apply before this predicate is applied
+     * @param before3 The third function to apply before this predicate is applied
+     * @return A composed {@code ThrowableTriDoublePredicate} that first applies the {@code before} functions to its
+     * input, and then applies this predicate to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
+     * double}.
+     */
+    @Nonnull
+    default ThrowableTriDoublePredicate<X> composeFromDouble(
+            @Nonnull ThrowableDoubleFunction<? extends T, ? extends X> before1,
+            @Nonnull ThrowableDoubleFunction<? extends U, ? extends X> before2,
+            @Nonnull ThrowableDoubleFunction<? extends V, ? extends X> before3) {
+        Objects.requireNonNull(before1);
+        Objects.requireNonNull(before2);
+        Objects.requireNonNull(before3);
+        return (value1, value2, value3) -> testThrows(before1.applyThrows(value1), before2.applyThrows(value2),
+                before3.applyThrows(value3));
+    }
+
+    /**
+     * Returns a composed {@link ThrowableTriFloatPredicate} that first applies the {@code before} functions to its
+     * input, and then applies this predicate to the result. This method is just convenience, to provide the ability to
+     * execute an operation which accepts {@code float} input, before this predicate is executed.
+     *
+     * @param before1 The first function to apply before this predicate is applied
+     * @param before2 The second function to apply before this predicate is applied
+     * @param before3 The third function to apply before this predicate is applied
+     * @return A composed {@code ThrowableTriFloatPredicate} that first applies the {@code before} functions to its
+     * input, and then applies this predicate to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
+     * float}.
+     */
+    @Nonnull
+    default ThrowableTriFloatPredicate<X> composeFromFloat(
+            @Nonnull ThrowableFloatFunction<? extends T, ? extends X> before1,
+            @Nonnull ThrowableFloatFunction<? extends U, ? extends X> before2,
+            @Nonnull ThrowableFloatFunction<? extends V, ? extends X> before3) {
+        Objects.requireNonNull(before1);
+        Objects.requireNonNull(before2);
+        Objects.requireNonNull(before3);
+        return (value1, value2, value3) -> testThrows(before1.applyThrows(value1), before2.applyThrows(value2),
+                before3.applyThrows(value3));
+    }
+
+    /**
+     * Returns a composed {@link ThrowableTriIntPredicate} that first applies the {@code before} functions to its input,
+     * and then applies this predicate to the result. This method is just convenience, to provide the ability to execute
+     * an operation which accepts {@code int} input, before this predicate is executed.
+     *
+     * @param before1 The first function to apply before this predicate is applied
+     * @param before2 The second function to apply before this predicate is applied
+     * @param before3 The third function to apply before this predicate is applied
+     * @return A composed {@code ThrowableTriIntPredicate} that first applies the {@code before} functions to its input,
+     * and then applies this predicate to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
+     * int}.
+     */
+    @Nonnull
+    default ThrowableTriIntPredicate<X> composeFromInt(@Nonnull ThrowableIntFunction<? extends T, ? extends X> before1,
+            @Nonnull ThrowableIntFunction<? extends U, ? extends X> before2,
+            @Nonnull ThrowableIntFunction<? extends V, ? extends X> before3) {
+        Objects.requireNonNull(before1);
+        Objects.requireNonNull(before2);
+        Objects.requireNonNull(before3);
+        return (value1, value2, value3) -> testThrows(before1.applyThrows(value1), before2.applyThrows(value2),
+                before3.applyThrows(value3));
+    }
+
+    /**
+     * Returns a composed {@link ThrowableTriLongPredicate} that first applies the {@code before} functions to its
+     * input, and then applies this predicate to the result. This method is just convenience, to provide the ability to
+     * execute an operation which accepts {@code long} input, before this predicate is executed.
+     *
+     * @param before1 The first function to apply before this predicate is applied
+     * @param before2 The second function to apply before this predicate is applied
+     * @param before3 The third function to apply before this predicate is applied
+     * @return A composed {@code ThrowableTriLongPredicate} that first applies the {@code before} functions to its
+     * input, and then applies this predicate to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
+     * long}.
+     */
+    @Nonnull
+    default ThrowableTriLongPredicate<X> composeFromLong(
+            @Nonnull ThrowableLongFunction<? extends T, ? extends X> before1,
+            @Nonnull ThrowableLongFunction<? extends U, ? extends X> before2,
+            @Nonnull ThrowableLongFunction<? extends V, ? extends X> before3) {
+        Objects.requireNonNull(before1);
+        Objects.requireNonNull(before2);
+        Objects.requireNonNull(before3);
+        return (value1, value2, value3) -> testThrows(before1.applyThrows(value1), before2.applyThrows(value2),
+                before3.applyThrows(value3));
+    }
+
+    /**
+     * Returns a composed {@link ThrowableTriShortPredicate} that first applies the {@code before} functions to its
+     * input, and then applies this predicate to the result. This method is just convenience, to provide the ability to
+     * execute an operation which accepts {@code short} input, before this predicate is executed.
+     *
+     * @param before1 The first function to apply before this predicate is applied
+     * @param before2 The second function to apply before this predicate is applied
+     * @param before3 The third function to apply before this predicate is applied
+     * @return A composed {@code ThrowableTriShortPredicate} that first applies the {@code before} functions to its
+     * input, and then applies this predicate to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
+     * short}.
+     */
+    @Nonnull
+    default ThrowableTriShortPredicate<X> composeFromShort(
+            @Nonnull ThrowableShortFunction<? extends T, ? extends X> before1,
+            @Nonnull ThrowableShortFunction<? extends U, ? extends X> before2,
+            @Nonnull ThrowableShortFunction<? extends V, ? extends X> before3) {
+        Objects.requireNonNull(before1);
+        Objects.requireNonNull(before2);
+        Objects.requireNonNull(before3);
+        return (value1, value2, value3) -> testThrows(before1.applyThrows(value1), before2.applyThrows(value2),
+                before3.applyThrows(value3));
     }
 
     /**

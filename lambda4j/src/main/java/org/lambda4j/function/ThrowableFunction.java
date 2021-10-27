@@ -192,6 +192,157 @@ public interface ThrowableFunction<T, R, X extends Throwable> extends Lambda, Fu
     }
 
     /**
+     * Returns a composed {@link ThrowableBooleanFunction} that first applies the {@code before} function to its input,
+     * and then applies this function to the result. This method is just convenience, to provide the ability to execute
+     * an operation which accepts {@code boolean} input, before this function is executed.
+     *
+     * @param before The function to apply before this function is applied
+     * @return A composed {@code ThrowableBooleanFunction} that first applies the {@code before} function to its input,
+     * and then applies this function to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
+     * boolean}.
+     */
+    @Nonnull
+    default ThrowableBooleanFunction<R, X> composeFromBoolean(
+            @Nonnull ThrowableBooleanFunction<? extends T, ? extends X> before) {
+        Objects.requireNonNull(before);
+        return value -> applyThrows(before.applyThrows(value));
+    }
+
+    /**
+     * Returns a composed {@link ThrowableByteFunction} that first applies the {@code before} function to its input, and
+     * then applies this function to the result. This method is just convenience, to provide the ability to execute an
+     * operation which accepts {@code byte} input, before this function is executed.
+     *
+     * @param before The function to apply before this function is applied
+     * @return A composed {@code ThrowableByteFunction} that first applies the {@code before} function to its input, and
+     * then applies this function to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
+     * byte}.
+     */
+    @Nonnull
+    default ThrowableByteFunction<R, X> composeFromByte(
+            @Nonnull ThrowableByteFunction<? extends T, ? extends X> before) {
+        Objects.requireNonNull(before);
+        return value -> applyThrows(before.applyThrows(value));
+    }
+
+    /**
+     * Returns a composed {@link ThrowableCharFunction} that first applies the {@code before} function to its input, and
+     * then applies this function to the result. This method is just convenience, to provide the ability to execute an
+     * operation which accepts {@code char} input, before this function is executed.
+     *
+     * @param before The function to apply before this function is applied
+     * @return A composed {@code ThrowableCharFunction} that first applies the {@code before} function to its input, and
+     * then applies this function to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
+     * char}.
+     */
+    @Nonnull
+    default ThrowableCharFunction<R, X> composeFromChar(
+            @Nonnull ThrowableCharFunction<? extends T, ? extends X> before) {
+        Objects.requireNonNull(before);
+        return value -> applyThrows(before.applyThrows(value));
+    }
+
+    /**
+     * Returns a composed {@link ThrowableDoubleFunction} that first applies the {@code before} function to its input,
+     * and then applies this function to the result. This method is just convenience, to provide the ability to execute
+     * an operation which accepts {@code double} input, before this function is executed.
+     *
+     * @param before The function to apply before this function is applied
+     * @return A composed {@code ThrowableDoubleFunction} that first applies the {@code before} function to its input,
+     * and then applies this function to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
+     * double}.
+     */
+    @Nonnull
+    default ThrowableDoubleFunction<R, X> composeFromDouble(
+            @Nonnull ThrowableDoubleFunction<? extends T, ? extends X> before) {
+        Objects.requireNonNull(before);
+        return value -> applyThrows(before.applyThrows(value));
+    }
+
+    /**
+     * Returns a composed {@link ThrowableFloatFunction} that first applies the {@code before} function to its input,
+     * and then applies this function to the result. This method is just convenience, to provide the ability to execute
+     * an operation which accepts {@code float} input, before this function is executed.
+     *
+     * @param before The function to apply before this function is applied
+     * @return A composed {@code ThrowableFloatFunction} that first applies the {@code before} function to its input,
+     * and then applies this function to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
+     * float}.
+     */
+    @Nonnull
+    default ThrowableFloatFunction<R, X> composeFromFloat(
+            @Nonnull ThrowableFloatFunction<? extends T, ? extends X> before) {
+        Objects.requireNonNull(before);
+        return value -> applyThrows(before.applyThrows(value));
+    }
+
+    /**
+     * Returns a composed {@link ThrowableIntFunction} that first applies the {@code before} function to its input, and
+     * then applies this function to the result. This method is just convenience, to provide the ability to execute an
+     * operation which accepts {@code int} input, before this function is executed.
+     *
+     * @param before The function to apply before this function is applied
+     * @return A composed {@code ThrowableIntFunction} that first applies the {@code before} function to its input, and
+     * then applies this function to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
+     * int}.
+     */
+    @Nonnull
+    default ThrowableIntFunction<R, X> composeFromInt(@Nonnull ThrowableIntFunction<? extends T, ? extends X> before) {
+        Objects.requireNonNull(before);
+        return value -> applyThrows(before.applyThrows(value));
+    }
+
+    /**
+     * Returns a composed {@link ThrowableLongFunction} that first applies the {@code before} function to its input, and
+     * then applies this function to the result. This method is just convenience, to provide the ability to execute an
+     * operation which accepts {@code long} input, before this function is executed.
+     *
+     * @param before The function to apply before this function is applied
+     * @return A composed {@code ThrowableLongFunction} that first applies the {@code before} function to its input, and
+     * then applies this function to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
+     * long}.
+     */
+    @Nonnull
+    default ThrowableLongFunction<R, X> composeFromLong(
+            @Nonnull ThrowableLongFunction<? extends T, ? extends X> before) {
+        Objects.requireNonNull(before);
+        return value -> applyThrows(before.applyThrows(value));
+    }
+
+    /**
+     * Returns a composed {@link ThrowableShortFunction} that first applies the {@code before} function to its input,
+     * and then applies this function to the result. This method is just convenience, to provide the ability to execute
+     * an operation which accepts {@code short} input, before this function is executed.
+     *
+     * @param before The function to apply before this function is applied
+     * @return A composed {@code ThrowableShortFunction} that first applies the {@code before} function to its input,
+     * and then applies this function to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implSpec The input argument of this method is able to handle primitive values. In this case this is {@code
+     * short}.
+     */
+    @Nonnull
+    default ThrowableShortFunction<R, X> composeFromShort(
+            @Nonnull ThrowableShortFunction<? extends T, ? extends X> before) {
+        Objects.requireNonNull(before);
+        return value -> applyThrows(before.applyThrows(value));
+    }
+
+    /**
      * Returns a composed {@link ThrowableFunction} that first applies this function to its input, and then applies the
      * {@code after} function to the result.
      *
