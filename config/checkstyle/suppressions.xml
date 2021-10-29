@@ -13,7 +13,7 @@
     <suppress checks="LineLength" files="ThrowableToFloatTriFunction" lines="802"/>
     <suppress checks="LineLength" files="ThrowableToLongTriFunction" lines="801"/>
     <suppress checks="LineLength" files="ThrowableToShortTriFunction" lines="802"/>
-    <suppress checks="LineLength" files="ThrowableTriFunction" lines="699"/>
+    <suppress checks="LineLength" files="ThrowableTriFunction" lines="867"/>
 
     <!-- Suppress nested if statements check for memoized method -->
     <suppress checks="NestedIfDepth" files="BooleanSupplier2" lines="354"/>

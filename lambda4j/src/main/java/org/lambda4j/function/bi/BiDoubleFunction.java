@@ -26,7 +26,10 @@ import java.util.function.DoubleUnaryOperator;
 import java.util.function.Function;
 import java.util.function.IntToDoubleFunction;
 import java.util.function.LongToDoubleFunction;
+import java.util.function.Predicate;
 import java.util.function.ToDoubleFunction;
+import java.util.function.ToIntFunction;
+import java.util.function.ToLongFunction;
 
 import javax.annotation.CheckForNull;
 import javax.annotation.Nonnegative;
@@ -38,11 +41,23 @@ import org.apache.commons.lang3.tuple.Pair;
 import org.lambda4j.Lambda;
 import org.lambda4j.consumer.bi.BiDoubleConsumer;
 import org.lambda4j.function.DoubleFunction2;
+import org.lambda4j.function.bi.conversion.BiDoubleToByteFunction;
+import org.lambda4j.function.bi.conversion.BiDoubleToCharFunction;
+import org.lambda4j.function.bi.conversion.BiDoubleToFloatFunction;
+import org.lambda4j.function.bi.conversion.BiDoubleToIntFunction;
+import org.lambda4j.function.bi.conversion.BiDoubleToLongFunction;
+import org.lambda4j.function.bi.conversion.BiDoubleToShortFunction;
 import org.lambda4j.function.conversion.BooleanToDoubleFunction;
 import org.lambda4j.function.conversion.ByteToDoubleFunction;
 import org.lambda4j.function.conversion.CharToDoubleFunction;
 import org.lambda4j.function.conversion.FloatToDoubleFunction;
 import org.lambda4j.function.conversion.ShortToDoubleFunction;
+import org.lambda4j.function.to.ToByteFunction;
+import org.lambda4j.function.to.ToCharFunction;
+import org.lambda4j.function.to.ToFloatFunction;
+import org.lambda4j.function.to.ToShortFunction;
+import org.lambda4j.operator.binary.DoubleBinaryOperator2;
+import org.lambda4j.predicate.bi.BiDoublePredicate;
 
 /**
  * Represents an operation that accepts two {@code double}-valued input arguments and produces a result. This is a
@@ -421,6 +436,158 @@ public interface BiDoubleFunction<R> extends Lambda {
     default <S> BiDoubleFunction<S> andThen(@Nonnull Function<? super R, ? extends S> after) {
         Objects.requireNonNull(after);
         return (value1, value2) -> after.apply(apply(value1, value2));
+    }
+
+    /**
+     * Returns a composed {@link BiDoublePredicate} that first applies this function to its input, and then applies the
+     * {@code after} predicate to the result. If evaluation of either operation throws an exception, it is relayed to
+     * the caller of the composed operation. This method is just convenience, to provide the ability to transform this
+     * primitive function to an operation returning {@code boolean}.
+     *
+     * @param after The predicate to apply after this function is applied
+     * @return A composed {@code BiDoublePredicate} that first applies this function to its input, and then applies the
+     * {@code after} predicate to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
+     * boolean}.
+     */
+    @Nonnull
+    default BiDoublePredicate andThenToBoolean(@Nonnull Predicate<? super R> after) {
+        Objects.requireNonNull(after);
+        return (value1, value2) -> after.test(apply(value1, value2));
+    }
+
+    /**
+     * Returns a composed {@link BiDoubleToByteFunction} that first applies this function to its input, and then applies
+     * the {@code after} function to the result. If evaluation of either operation throws an exception, it is relayed to
+     * the caller of the composed operation. This method is just convenience, to provide the ability to transform this
+     * primitive function to an operation returning {@code byte}.
+     *
+     * @param after The function to apply after this function is applied
+     * @return A composed {@code BiDoubleToByteFunction} that first applies this function to its input, and then applies
+     * the {@code after} function to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
+     * byte}.
+     */
+    @Nonnull
+    default BiDoubleToByteFunction andThenToByte(@Nonnull ToByteFunction<? super R> after) {
+        Objects.requireNonNull(after);
+        return (value1, value2) -> after.applyAsByte(apply(value1, value2));
+    }
+
+    /**
+     * Returns a composed {@link BiDoubleToCharFunction} that first applies this function to its input, and then applies
+     * the {@code after} function to the result. If evaluation of either operation throws an exception, it is relayed to
+     * the caller of the composed operation. This method is just convenience, to provide the ability to transform this
+     * primitive function to an operation returning {@code char}.
+     *
+     * @param after The function to apply after this function is applied
+     * @return A composed {@code BiDoubleToCharFunction} that first applies this function to its input, and then applies
+     * the {@code after} function to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
+     * char}.
+     */
+    @Nonnull
+    default BiDoubleToCharFunction andThenToChar(@Nonnull ToCharFunction<? super R> after) {
+        Objects.requireNonNull(after);
+        return (value1, value2) -> after.applyAsChar(apply(value1, value2));
+    }
+
+    /**
+     * Returns a composed {@link DoubleBinaryOperator2} that first applies this function to its input, and then applies
+     * the {@code after} function to the result. If evaluation of either operation throws an exception, it is relayed to
+     * the caller of the composed operation. This method is just convenience, to provide the ability to transform this
+     * primitive function to an operation returning {@code double}.
+     *
+     * @param after The function to apply after this function is applied
+     * @return A composed {@code DoubleBinaryOperator2} that first applies this function to its input, and then applies
+     * the {@code after} function to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
+     * double}.
+     */
+    @Nonnull
+    default DoubleBinaryOperator2 andThenToDouble(@Nonnull ToDoubleFunction<? super R> after) {
+        Objects.requireNonNull(after);
+        return (value1, value2) -> after.applyAsDouble(apply(value1, value2));
+    }
+
+    /**
+     * Returns a composed {@link BiDoubleToFloatFunction} that first applies this function to its input, and then
+     * applies the {@code after} function to the result. If evaluation of either operation throws an exception, it is
+     * relayed to the caller of the composed operation. This method is just convenience, to provide the ability to
+     * transform this primitive function to an operation returning {@code float}.
+     *
+     * @param after The function to apply after this function is applied
+     * @return A composed {@code BiDoubleToFloatFunction} that first applies this function to its input, and then
+     * applies the {@code after} function to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
+     * float}.
+     */
+    @Nonnull
+    default BiDoubleToFloatFunction andThenToFloat(@Nonnull ToFloatFunction<? super R> after) {
+        Objects.requireNonNull(after);
+        return (value1, value2) -> after.applyAsFloat(apply(value1, value2));
+    }
+
+    /**
+     * Returns a composed {@link BiDoubleToIntFunction} that first applies this function to its input, and then applies
+     * the {@code after} function to the result. If evaluation of either operation throws an exception, it is relayed to
+     * the caller of the composed operation. This method is just convenience, to provide the ability to transform this
+     * primitive function to an operation returning {@code int}.
+     *
+     * @param after The function to apply after this function is applied
+     * @return A composed {@code BiDoubleToIntFunction} that first applies this function to its input, and then applies
+     * the {@code after} function to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
+     * int}.
+     */
+    @Nonnull
+    default BiDoubleToIntFunction andThenToInt(@Nonnull ToIntFunction<? super R> after) {
+        Objects.requireNonNull(after);
+        return (value1, value2) -> after.applyAsInt(apply(value1, value2));
+    }
+
+    /**
+     * Returns a composed {@link BiDoubleToLongFunction} that first applies this function to its input, and then applies
+     * the {@code after} function to the result. If evaluation of either operation throws an exception, it is relayed to
+     * the caller of the composed operation. This method is just convenience, to provide the ability to transform this
+     * primitive function to an operation returning {@code long}.
+     *
+     * @param after The function to apply after this function is applied
+     * @return A composed {@code BiDoubleToLongFunction} that first applies this function to its input, and then applies
+     * the {@code after} function to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
+     * long}.
+     */
+    @Nonnull
+    default BiDoubleToLongFunction andThenToLong(@Nonnull ToLongFunction<? super R> after) {
+        Objects.requireNonNull(after);
+        return (value1, value2) -> after.applyAsLong(apply(value1, value2));
+    }
+
+    /**
+     * Returns a composed {@link BiDoubleToShortFunction} that first applies this function to its input, and then
+     * applies the {@code after} function to the result. If evaluation of either operation throws an exception, it is
+     * relayed to the caller of the composed operation. This method is just convenience, to provide the ability to
+     * transform this primitive function to an operation returning {@code short}.
+     *
+     * @param after The function to apply after this function is applied
+     * @return A composed {@code BiDoubleToShortFunction} that first applies this function to its input, and then
+     * applies the {@code after} function to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
+     * short}.
+     */
+    @Nonnull
+    default BiDoubleToShortFunction andThenToShort(@Nonnull ToShortFunction<? super R> after) {
+        Objects.requireNonNull(after);
+        return (value1, value2) -> after.applyAsShort(apply(value1, value2));
     }
 
     /**

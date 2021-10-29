@@ -26,6 +26,9 @@ import java.util.function.Function;
 import java.util.function.IntPredicate;
 import java.util.function.LongPredicate;
 import java.util.function.Predicate;
+import java.util.function.ToDoubleFunction;
+import java.util.function.ToIntFunction;
+import java.util.function.ToLongFunction;
 
 import javax.annotation.CheckForNull;
 import javax.annotation.Nonnegative;
@@ -34,6 +37,17 @@ import javax.annotation.Nullable;
 
 import org.lambda4j.Lambda;
 import org.lambda4j.consumer.BooleanConsumer;
+import org.lambda4j.function.conversion.BooleanToByteFunction;
+import org.lambda4j.function.conversion.BooleanToCharFunction;
+import org.lambda4j.function.conversion.BooleanToDoubleFunction;
+import org.lambda4j.function.conversion.BooleanToFloatFunction;
+import org.lambda4j.function.conversion.BooleanToIntFunction;
+import org.lambda4j.function.conversion.BooleanToLongFunction;
+import org.lambda4j.function.conversion.BooleanToShortFunction;
+import org.lambda4j.function.to.ToByteFunction;
+import org.lambda4j.function.to.ToCharFunction;
+import org.lambda4j.function.to.ToFloatFunction;
+import org.lambda4j.function.to.ToShortFunction;
 import org.lambda4j.operator.unary.BooleanUnaryOperator;
 import org.lambda4j.predicate.BytePredicate;
 import org.lambda4j.predicate.CharPredicate;
@@ -320,6 +334,158 @@ public interface BooleanFunction<R> extends Lambda {
     default <S> BooleanFunction<S> andThen(@Nonnull Function<? super R, ? extends S> after) {
         Objects.requireNonNull(after);
         return value -> after.apply(apply(value));
+    }
+
+    /**
+     * Returns a composed {@link BooleanUnaryOperator} that first applies this function to its input, and then applies
+     * the {@code after} predicate to the result. If evaluation of either operation throws an exception, it is relayed
+     * to the caller of the composed operation. This method is just convenience, to provide the ability to transform
+     * this primitive function to an operation returning {@code boolean}.
+     *
+     * @param after The predicate to apply after this function is applied
+     * @return A composed {@code BooleanUnaryOperator} that first applies this function to its input, and then applies
+     * the {@code after} predicate to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
+     * boolean}.
+     */
+    @Nonnull
+    default BooleanUnaryOperator andThenToBoolean(@Nonnull Predicate<? super R> after) {
+        Objects.requireNonNull(after);
+        return value -> after.test(apply(value));
+    }
+
+    /**
+     * Returns a composed {@link BooleanToByteFunction} that first applies this function to its input, and then applies
+     * the {@code after} function to the result. If evaluation of either operation throws an exception, it is relayed to
+     * the caller of the composed operation. This method is just convenience, to provide the ability to transform this
+     * primitive function to an operation returning {@code byte}.
+     *
+     * @param after The function to apply after this function is applied
+     * @return A composed {@code BooleanToByteFunction} that first applies this function to its input, and then applies
+     * the {@code after} function to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
+     * byte}.
+     */
+    @Nonnull
+    default BooleanToByteFunction andThenToByte(@Nonnull ToByteFunction<? super R> after) {
+        Objects.requireNonNull(after);
+        return value -> after.applyAsByte(apply(value));
+    }
+
+    /**
+     * Returns a composed {@link BooleanToCharFunction} that first applies this function to its input, and then applies
+     * the {@code after} function to the result. If evaluation of either operation throws an exception, it is relayed to
+     * the caller of the composed operation. This method is just convenience, to provide the ability to transform this
+     * primitive function to an operation returning {@code char}.
+     *
+     * @param after The function to apply after this function is applied
+     * @return A composed {@code BooleanToCharFunction} that first applies this function to its input, and then applies
+     * the {@code after} function to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
+     * char}.
+     */
+    @Nonnull
+    default BooleanToCharFunction andThenToChar(@Nonnull ToCharFunction<? super R> after) {
+        Objects.requireNonNull(after);
+        return value -> after.applyAsChar(apply(value));
+    }
+
+    /**
+     * Returns a composed {@link BooleanToDoubleFunction} that first applies this function to its input, and then
+     * applies the {@code after} function to the result. If evaluation of either operation throws an exception, it is
+     * relayed to the caller of the composed operation. This method is just convenience, to provide the ability to
+     * transform this primitive function to an operation returning {@code double}.
+     *
+     * @param after The function to apply after this function is applied
+     * @return A composed {@code BooleanToDoubleFunction} that first applies this function to its input, and then
+     * applies the {@code after} function to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
+     * double}.
+     */
+    @Nonnull
+    default BooleanToDoubleFunction andThenToDouble(@Nonnull ToDoubleFunction<? super R> after) {
+        Objects.requireNonNull(after);
+        return value -> after.applyAsDouble(apply(value));
+    }
+
+    /**
+     * Returns a composed {@link BooleanToFloatFunction} that first applies this function to its input, and then applies
+     * the {@code after} function to the result. If evaluation of either operation throws an exception, it is relayed to
+     * the caller of the composed operation. This method is just convenience, to provide the ability to transform this
+     * primitive function to an operation returning {@code float}.
+     *
+     * @param after The function to apply after this function is applied
+     * @return A composed {@code BooleanToFloatFunction} that first applies this function to its input, and then applies
+     * the {@code after} function to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
+     * float}.
+     */
+    @Nonnull
+    default BooleanToFloatFunction andThenToFloat(@Nonnull ToFloatFunction<? super R> after) {
+        Objects.requireNonNull(after);
+        return value -> after.applyAsFloat(apply(value));
+    }
+
+    /**
+     * Returns a composed {@link BooleanToIntFunction} that first applies this function to its input, and then applies
+     * the {@code after} function to the result. If evaluation of either operation throws an exception, it is relayed to
+     * the caller of the composed operation. This method is just convenience, to provide the ability to transform this
+     * primitive function to an operation returning {@code int}.
+     *
+     * @param after The function to apply after this function is applied
+     * @return A composed {@code BooleanToIntFunction} that first applies this function to its input, and then applies
+     * the {@code after} function to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
+     * int}.
+     */
+    @Nonnull
+    default BooleanToIntFunction andThenToInt(@Nonnull ToIntFunction<? super R> after) {
+        Objects.requireNonNull(after);
+        return value -> after.applyAsInt(apply(value));
+    }
+
+    /**
+     * Returns a composed {@link BooleanToLongFunction} that first applies this function to its input, and then applies
+     * the {@code after} function to the result. If evaluation of either operation throws an exception, it is relayed to
+     * the caller of the composed operation. This method is just convenience, to provide the ability to transform this
+     * primitive function to an operation returning {@code long}.
+     *
+     * @param after The function to apply after this function is applied
+     * @return A composed {@code BooleanToLongFunction} that first applies this function to its input, and then applies
+     * the {@code after} function to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
+     * long}.
+     */
+    @Nonnull
+    default BooleanToLongFunction andThenToLong(@Nonnull ToLongFunction<? super R> after) {
+        Objects.requireNonNull(after);
+        return value -> after.applyAsLong(apply(value));
+    }
+
+    /**
+     * Returns a composed {@link BooleanToShortFunction} that first applies this function to its input, and then applies
+     * the {@code after} function to the result. If evaluation of either operation throws an exception, it is relayed to
+     * the caller of the composed operation. This method is just convenience, to provide the ability to transform this
+     * primitive function to an operation returning {@code short}.
+     *
+     * @param after The function to apply after this function is applied
+     * @return A composed {@code BooleanToShortFunction} that first applies this function to its input, and then applies
+     * the {@code after} function to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
+     * short}.
+     */
+    @Nonnull
+    default BooleanToShortFunction andThenToShort(@Nonnull ToShortFunction<? super R> after) {
+        Objects.requireNonNull(after);
+        return value -> after.applyAsShort(apply(value));
     }
 
     /**

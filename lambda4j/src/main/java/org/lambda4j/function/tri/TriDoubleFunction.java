@@ -26,7 +26,10 @@ import java.util.function.DoubleUnaryOperator;
 import java.util.function.Function;
 import java.util.function.IntToDoubleFunction;
 import java.util.function.LongToDoubleFunction;
+import java.util.function.Predicate;
 import java.util.function.ToDoubleFunction;
+import java.util.function.ToIntFunction;
+import java.util.function.ToLongFunction;
 
 import javax.annotation.CheckForNull;
 import javax.annotation.Nonnegative;
@@ -44,6 +47,18 @@ import org.lambda4j.function.conversion.ByteToDoubleFunction;
 import org.lambda4j.function.conversion.CharToDoubleFunction;
 import org.lambda4j.function.conversion.FloatToDoubleFunction;
 import org.lambda4j.function.conversion.ShortToDoubleFunction;
+import org.lambda4j.function.to.ToByteFunction;
+import org.lambda4j.function.to.ToCharFunction;
+import org.lambda4j.function.to.ToFloatFunction;
+import org.lambda4j.function.to.ToShortFunction;
+import org.lambda4j.function.tri.conversion.TriDoubleToByteFunction;
+import org.lambda4j.function.tri.conversion.TriDoubleToCharFunction;
+import org.lambda4j.function.tri.conversion.TriDoubleToFloatFunction;
+import org.lambda4j.function.tri.conversion.TriDoubleToIntFunction;
+import org.lambda4j.function.tri.conversion.TriDoubleToLongFunction;
+import org.lambda4j.function.tri.conversion.TriDoubleToShortFunction;
+import org.lambda4j.operator.ternary.DoubleTernaryOperator;
+import org.lambda4j.predicate.tri.TriDoublePredicate;
 
 /**
  * Represents an operation that accepts three {@code double}-valued input arguments and produces a result. This is a
@@ -481,6 +496,158 @@ public interface TriDoubleFunction<R> extends Lambda {
     default <S> TriDoubleFunction<S> andThen(@Nonnull Function<? super R, ? extends S> after) {
         Objects.requireNonNull(after);
         return (value1, value2, value3) -> after.apply(apply(value1, value2, value3));
+    }
+
+    /**
+     * Returns a composed {@link TriDoublePredicate} that first applies this function to its input, and then applies the
+     * {@code after} predicate to the result. If evaluation of either operation throws an exception, it is relayed to
+     * the caller of the composed operation. This method is just convenience, to provide the ability to transform this
+     * primitive function to an operation returning {@code boolean}.
+     *
+     * @param after The predicate to apply after this function is applied
+     * @return A composed {@code TriDoublePredicate} that first applies this function to its input, and then applies the
+     * {@code after} predicate to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
+     * boolean}.
+     */
+    @Nonnull
+    default TriDoublePredicate andThenToBoolean(@Nonnull Predicate<? super R> after) {
+        Objects.requireNonNull(after);
+        return (value1, value2, value3) -> after.test(apply(value1, value2, value3));
+    }
+
+    /**
+     * Returns a composed {@link TriDoubleToByteFunction} that first applies this function to its input, and then
+     * applies the {@code after} function to the result. If evaluation of either operation throws an exception, it is
+     * relayed to the caller of the composed operation. This method is just convenience, to provide the ability to
+     * transform this primitive function to an operation returning {@code byte}.
+     *
+     * @param after The function to apply after this function is applied
+     * @return A composed {@code TriDoubleToByteFunction} that first applies this function to its input, and then
+     * applies the {@code after} function to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
+     * byte}.
+     */
+    @Nonnull
+    default TriDoubleToByteFunction andThenToByte(@Nonnull ToByteFunction<? super R> after) {
+        Objects.requireNonNull(after);
+        return (value1, value2, value3) -> after.applyAsByte(apply(value1, value2, value3));
+    }
+
+    /**
+     * Returns a composed {@link TriDoubleToCharFunction} that first applies this function to its input, and then
+     * applies the {@code after} function to the result. If evaluation of either operation throws an exception, it is
+     * relayed to the caller of the composed operation. This method is just convenience, to provide the ability to
+     * transform this primitive function to an operation returning {@code char}.
+     *
+     * @param after The function to apply after this function is applied
+     * @return A composed {@code TriDoubleToCharFunction} that first applies this function to its input, and then
+     * applies the {@code after} function to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
+     * char}.
+     */
+    @Nonnull
+    default TriDoubleToCharFunction andThenToChar(@Nonnull ToCharFunction<? super R> after) {
+        Objects.requireNonNull(after);
+        return (value1, value2, value3) -> after.applyAsChar(apply(value1, value2, value3));
+    }
+
+    /**
+     * Returns a composed {@link DoubleTernaryOperator} that first applies this function to its input, and then applies
+     * the {@code after} function to the result. If evaluation of either operation throws an exception, it is relayed to
+     * the caller of the composed operation. This method is just convenience, to provide the ability to transform this
+     * primitive function to an operation returning {@code double}.
+     *
+     * @param after The function to apply after this function is applied
+     * @return A composed {@code DoubleTernaryOperator} that first applies this function to its input, and then applies
+     * the {@code after} function to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
+     * double}.
+     */
+    @Nonnull
+    default DoubleTernaryOperator andThenToDouble(@Nonnull ToDoubleFunction<? super R> after) {
+        Objects.requireNonNull(after);
+        return (value1, value2, value3) -> after.applyAsDouble(apply(value1, value2, value3));
+    }
+
+    /**
+     * Returns a composed {@link TriDoubleToFloatFunction} that first applies this function to its input, and then
+     * applies the {@code after} function to the result. If evaluation of either operation throws an exception, it is
+     * relayed to the caller of the composed operation. This method is just convenience, to provide the ability to
+     * transform this primitive function to an operation returning {@code float}.
+     *
+     * @param after The function to apply after this function is applied
+     * @return A composed {@code TriDoubleToFloatFunction} that first applies this function to its input, and then
+     * applies the {@code after} function to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
+     * float}.
+     */
+    @Nonnull
+    default TriDoubleToFloatFunction andThenToFloat(@Nonnull ToFloatFunction<? super R> after) {
+        Objects.requireNonNull(after);
+        return (value1, value2, value3) -> after.applyAsFloat(apply(value1, value2, value3));
+    }
+
+    /**
+     * Returns a composed {@link TriDoubleToIntFunction} that first applies this function to its input, and then applies
+     * the {@code after} function to the result. If evaluation of either operation throws an exception, it is relayed to
+     * the caller of the composed operation. This method is just convenience, to provide the ability to transform this
+     * primitive function to an operation returning {@code int}.
+     *
+     * @param after The function to apply after this function is applied
+     * @return A composed {@code TriDoubleToIntFunction} that first applies this function to its input, and then applies
+     * the {@code after} function to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
+     * int}.
+     */
+    @Nonnull
+    default TriDoubleToIntFunction andThenToInt(@Nonnull ToIntFunction<? super R> after) {
+        Objects.requireNonNull(after);
+        return (value1, value2, value3) -> after.applyAsInt(apply(value1, value2, value3));
+    }
+
+    /**
+     * Returns a composed {@link TriDoubleToLongFunction} that first applies this function to its input, and then
+     * applies the {@code after} function to the result. If evaluation of either operation throws an exception, it is
+     * relayed to the caller of the composed operation. This method is just convenience, to provide the ability to
+     * transform this primitive function to an operation returning {@code long}.
+     *
+     * @param after The function to apply after this function is applied
+     * @return A composed {@code TriDoubleToLongFunction} that first applies this function to its input, and then
+     * applies the {@code after} function to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
+     * long}.
+     */
+    @Nonnull
+    default TriDoubleToLongFunction andThenToLong(@Nonnull ToLongFunction<? super R> after) {
+        Objects.requireNonNull(after);
+        return (value1, value2, value3) -> after.applyAsLong(apply(value1, value2, value3));
+    }
+
+    /**
+     * Returns a composed {@link TriDoubleToShortFunction} that first applies this function to its input, and then
+     * applies the {@code after} function to the result. If evaluation of either operation throws an exception, it is
+     * relayed to the caller of the composed operation. This method is just convenience, to provide the ability to
+     * transform this primitive function to an operation returning {@code short}.
+     *
+     * @param after The function to apply after this function is applied
+     * @return A composed {@code TriDoubleToShortFunction} that first applies this function to its input, and then
+     * applies the {@code after} function to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
+     * short}.
+     */
+    @Nonnull
+    default TriDoubleToShortFunction andThenToShort(@Nonnull ToShortFunction<? super R> after) {
+        Objects.requireNonNull(after);
+        return (value1, value2, value3) -> after.applyAsShort(apply(value1, value2, value3));
     }
 
     /**

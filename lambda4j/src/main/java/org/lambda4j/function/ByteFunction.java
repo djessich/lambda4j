@@ -22,6 +22,10 @@ import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Consumer;
 import java.util.function.Function;
+import java.util.function.Predicate;
+import java.util.function.ToDoubleFunction;
+import java.util.function.ToIntFunction;
+import java.util.function.ToLongFunction;
 
 import javax.annotation.CheckForNull;
 import javax.annotation.Nonnegative;
@@ -31,6 +35,12 @@ import javax.annotation.Nullable;
 import org.lambda4j.Lambda;
 import org.lambda4j.consumer.ByteConsumer;
 import org.lambda4j.function.conversion.BooleanToByteFunction;
+import org.lambda4j.function.conversion.ByteToCharFunction;
+import org.lambda4j.function.conversion.ByteToDoubleFunction;
+import org.lambda4j.function.conversion.ByteToFloatFunction;
+import org.lambda4j.function.conversion.ByteToIntFunction;
+import org.lambda4j.function.conversion.ByteToLongFunction;
+import org.lambda4j.function.conversion.ByteToShortFunction;
 import org.lambda4j.function.conversion.CharToByteFunction;
 import org.lambda4j.function.conversion.DoubleToByteFunction;
 import org.lambda4j.function.conversion.FloatToByteFunction;
@@ -38,7 +48,11 @@ import org.lambda4j.function.conversion.IntToByteFunction;
 import org.lambda4j.function.conversion.LongToByteFunction;
 import org.lambda4j.function.conversion.ShortToByteFunction;
 import org.lambda4j.function.to.ToByteFunction;
+import org.lambda4j.function.to.ToCharFunction;
+import org.lambda4j.function.to.ToFloatFunction;
+import org.lambda4j.function.to.ToShortFunction;
 import org.lambda4j.operator.unary.ByteUnaryOperator;
+import org.lambda4j.predicate.BytePredicate;
 
 /**
  * Represents an operation that accepts one {@code byte}-valued input argument and produces a result. This is a
@@ -319,6 +333,158 @@ public interface ByteFunction<R> extends Lambda {
     default <S> ByteFunction<S> andThen(@Nonnull Function<? super R, ? extends S> after) {
         Objects.requireNonNull(after);
         return value -> after.apply(apply(value));
+    }
+
+    /**
+     * Returns a composed {@link BytePredicate} that first applies this function to its input, and then applies the
+     * {@code after} predicate to the result. If evaluation of either operation throws an exception, it is relayed to
+     * the caller of the composed operation. This method is just convenience, to provide the ability to transform this
+     * primitive function to an operation returning {@code boolean}.
+     *
+     * @param after The predicate to apply after this function is applied
+     * @return A composed {@code BytePredicate} that first applies this function to its input, and then applies the
+     * {@code after} predicate to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
+     * boolean}.
+     */
+    @Nonnull
+    default BytePredicate andThenToBoolean(@Nonnull Predicate<? super R> after) {
+        Objects.requireNonNull(after);
+        return value -> after.test(apply(value));
+    }
+
+    /**
+     * Returns a composed {@link ByteUnaryOperator} that first applies this function to its input, and then applies the
+     * {@code after} function to the result. If evaluation of either operation throws an exception, it is relayed to the
+     * caller of the composed operation. This method is just convenience, to provide the ability to transform this
+     * primitive function to an operation returning {@code byte}.
+     *
+     * @param after The function to apply after this function is applied
+     * @return A composed {@code ByteUnaryOperator} that first applies this function to its input, and then applies the
+     * {@code after} function to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
+     * byte}.
+     */
+    @Nonnull
+    default ByteUnaryOperator andThenToByte(@Nonnull ToByteFunction<? super R> after) {
+        Objects.requireNonNull(after);
+        return value -> after.applyAsByte(apply(value));
+    }
+
+    /**
+     * Returns a composed {@link ByteToCharFunction} that first applies this function to its input, and then applies the
+     * {@code after} function to the result. If evaluation of either operation throws an exception, it is relayed to the
+     * caller of the composed operation. This method is just convenience, to provide the ability to transform this
+     * primitive function to an operation returning {@code char}.
+     *
+     * @param after The function to apply after this function is applied
+     * @return A composed {@code ByteToCharFunction} that first applies this function to its input, and then applies the
+     * {@code after} function to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
+     * char}.
+     */
+    @Nonnull
+    default ByteToCharFunction andThenToChar(@Nonnull ToCharFunction<? super R> after) {
+        Objects.requireNonNull(after);
+        return value -> after.applyAsChar(apply(value));
+    }
+
+    /**
+     * Returns a composed {@link ByteToDoubleFunction} that first applies this function to its input, and then applies
+     * the {@code after} function to the result. If evaluation of either operation throws an exception, it is relayed to
+     * the caller of the composed operation. This method is just convenience, to provide the ability to transform this
+     * primitive function to an operation returning {@code double}.
+     *
+     * @param after The function to apply after this function is applied
+     * @return A composed {@code ByteToDoubleFunction} that first applies this function to its input, and then applies
+     * the {@code after} function to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
+     * double}.
+     */
+    @Nonnull
+    default ByteToDoubleFunction andThenToDouble(@Nonnull ToDoubleFunction<? super R> after) {
+        Objects.requireNonNull(after);
+        return value -> after.applyAsDouble(apply(value));
+    }
+
+    /**
+     * Returns a composed {@link ByteToFloatFunction} that first applies this function to its input, and then applies
+     * the {@code after} function to the result. If evaluation of either operation throws an exception, it is relayed to
+     * the caller of the composed operation. This method is just convenience, to provide the ability to transform this
+     * primitive function to an operation returning {@code float}.
+     *
+     * @param after The function to apply after this function is applied
+     * @return A composed {@code ByteToFloatFunction} that first applies this function to its input, and then applies
+     * the {@code after} function to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
+     * float}.
+     */
+    @Nonnull
+    default ByteToFloatFunction andThenToFloat(@Nonnull ToFloatFunction<? super R> after) {
+        Objects.requireNonNull(after);
+        return value -> after.applyAsFloat(apply(value));
+    }
+
+    /**
+     * Returns a composed {@link ByteToIntFunction} that first applies this function to its input, and then applies the
+     * {@code after} function to the result. If evaluation of either operation throws an exception, it is relayed to the
+     * caller of the composed operation. This method is just convenience, to provide the ability to transform this
+     * primitive function to an operation returning {@code int}.
+     *
+     * @param after The function to apply after this function is applied
+     * @return A composed {@code ByteToIntFunction} that first applies this function to its input, and then applies the
+     * {@code after} function to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
+     * int}.
+     */
+    @Nonnull
+    default ByteToIntFunction andThenToInt(@Nonnull ToIntFunction<? super R> after) {
+        Objects.requireNonNull(after);
+        return value -> after.applyAsInt(apply(value));
+    }
+
+    /**
+     * Returns a composed {@link ByteToLongFunction} that first applies this function to its input, and then applies the
+     * {@code after} function to the result. If evaluation of either operation throws an exception, it is relayed to the
+     * caller of the composed operation. This method is just convenience, to provide the ability to transform this
+     * primitive function to an operation returning {@code long}.
+     *
+     * @param after The function to apply after this function is applied
+     * @return A composed {@code ByteToLongFunction} that first applies this function to its input, and then applies the
+     * {@code after} function to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
+     * long}.
+     */
+    @Nonnull
+    default ByteToLongFunction andThenToLong(@Nonnull ToLongFunction<? super R> after) {
+        Objects.requireNonNull(after);
+        return value -> after.applyAsLong(apply(value));
+    }
+
+    /**
+     * Returns a composed {@link ByteToShortFunction} that first applies this function to its input, and then applies
+     * the {@code after} function to the result. If evaluation of either operation throws an exception, it is relayed to
+     * the caller of the composed operation. This method is just convenience, to provide the ability to transform this
+     * primitive function to an operation returning {@code short}.
+     *
+     * @param after The function to apply after this function is applied
+     * @return A composed {@code ByteToShortFunction} that first applies this function to its input, and then applies
+     * the {@code after} function to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
+     * short}.
+     */
+    @Nonnull
+    default ByteToShortFunction andThenToShort(@Nonnull ToShortFunction<? super R> after) {
+        Objects.requireNonNull(after);
+        return value -> after.applyAsShort(apply(value));
     }
 
     /**

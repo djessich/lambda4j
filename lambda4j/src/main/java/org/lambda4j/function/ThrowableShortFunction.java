@@ -39,8 +39,22 @@ import org.lambda4j.function.conversion.ThrowableDoubleToShortFunction;
 import org.lambda4j.function.conversion.ThrowableFloatToShortFunction;
 import org.lambda4j.function.conversion.ThrowableIntToShortFunction;
 import org.lambda4j.function.conversion.ThrowableLongToShortFunction;
+import org.lambda4j.function.conversion.ThrowableShortToByteFunction;
+import org.lambda4j.function.conversion.ThrowableShortToCharFunction;
+import org.lambda4j.function.conversion.ThrowableShortToDoubleFunction;
+import org.lambda4j.function.conversion.ThrowableShortToFloatFunction;
+import org.lambda4j.function.conversion.ThrowableShortToIntFunction;
+import org.lambda4j.function.conversion.ThrowableShortToLongFunction;
+import org.lambda4j.function.to.ThrowableToByteFunction;
+import org.lambda4j.function.to.ThrowableToCharFunction;
+import org.lambda4j.function.to.ThrowableToDoubleFunction;
+import org.lambda4j.function.to.ThrowableToFloatFunction;
+import org.lambda4j.function.to.ThrowableToIntFunction;
+import org.lambda4j.function.to.ThrowableToLongFunction;
 import org.lambda4j.function.to.ThrowableToShortFunction;
 import org.lambda4j.operator.unary.ThrowableShortUnaryOperator;
+import org.lambda4j.predicate.ThrowablePredicate;
+import org.lambda4j.predicate.ThrowableShortPredicate;
 
 /**
  * Represents an operation that accepts one {@code short}-valued input argument and produces a result which is able to
@@ -332,6 +346,156 @@ public interface ThrowableShortFunction<R, X extends Throwable> extends Lambda {
             @Nonnull ThrowableFunction<? super R, ? extends S, ? extends X> after) {
         Objects.requireNonNull(after);
         return value -> after.applyThrows(applyThrows(value));
+    }
+
+    /**
+     * Returns a composed {@link ThrowableShortPredicate} that first applies this function to its input, and then
+     * applies the {@code after} predicate to the result. This method is just convenience, to provide the ability to
+     * transform this primitive function to an operation returning {@code boolean}.
+     *
+     * @param after The predicate to apply after this function is applied
+     * @return A composed {@code ThrowableShortPredicate} that first applies this function to its input, and then
+     * applies the {@code after} predicate to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
+     * boolean}.
+     */
+    @Nonnull
+    default ThrowableShortPredicate<X> andThenToBoolean(@Nonnull ThrowablePredicate<? super R, ? extends X> after) {
+        Objects.requireNonNull(after);
+        return value -> after.testThrows(applyThrows(value));
+    }
+
+    /**
+     * Returns a composed {@link ThrowableShortToByteFunction} that first applies this function to its input, and then
+     * applies the {@code after} function to the result. This method is just convenience, to provide the ability to
+     * transform this primitive function to an operation returning {@code byte}.
+     *
+     * @param after The function to apply after this function is applied
+     * @return A composed {@code ThrowableShortToByteFunction} that first applies this function to its input, and then
+     * applies the {@code after} function to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
+     * byte}.
+     */
+    @Nonnull
+    default ThrowableShortToByteFunction<X> andThenToByte(
+            @Nonnull ThrowableToByteFunction<? super R, ? extends X> after) {
+        Objects.requireNonNull(after);
+        return value -> after.applyAsByteThrows(applyThrows(value));
+    }
+
+    /**
+     * Returns a composed {@link ThrowableShortToCharFunction} that first applies this function to its input, and then
+     * applies the {@code after} function to the result. This method is just convenience, to provide the ability to
+     * transform this primitive function to an operation returning {@code char}.
+     *
+     * @param after The function to apply after this function is applied
+     * @return A composed {@code ThrowableShortToCharFunction} that first applies this function to its input, and then
+     * applies the {@code after} function to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
+     * char}.
+     */
+    @Nonnull
+    default ThrowableShortToCharFunction<X> andThenToChar(
+            @Nonnull ThrowableToCharFunction<? super R, ? extends X> after) {
+        Objects.requireNonNull(after);
+        return value -> after.applyAsCharThrows(applyThrows(value));
+    }
+
+    /**
+     * Returns a composed {@link ThrowableShortToDoubleFunction} that first applies this function to its input, and then
+     * applies the {@code after} function to the result. This method is just convenience, to provide the ability to
+     * transform this primitive function to an operation returning {@code double}.
+     *
+     * @param after The function to apply after this function is applied
+     * @return A composed {@code ThrowableShortToDoubleFunction} that first applies this function to its input, and then
+     * applies the {@code after} function to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
+     * double}.
+     */
+    @Nonnull
+    default ThrowableShortToDoubleFunction<X> andThenToDouble(
+            @Nonnull ThrowableToDoubleFunction<? super R, ? extends X> after) {
+        Objects.requireNonNull(after);
+        return value -> after.applyAsDoubleThrows(applyThrows(value));
+    }
+
+    /**
+     * Returns a composed {@link ThrowableShortToFloatFunction} that first applies this function to its input, and then
+     * applies the {@code after} function to the result. This method is just convenience, to provide the ability to
+     * transform this primitive function to an operation returning {@code float}.
+     *
+     * @param after The function to apply after this function is applied
+     * @return A composed {@code ThrowableShortToFloatFunction} that first applies this function to its input, and then
+     * applies the {@code after} function to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
+     * float}.
+     */
+    @Nonnull
+    default ThrowableShortToFloatFunction<X> andThenToFloat(
+            @Nonnull ThrowableToFloatFunction<? super R, ? extends X> after) {
+        Objects.requireNonNull(after);
+        return value -> after.applyAsFloatThrows(applyThrows(value));
+    }
+
+    /**
+     * Returns a composed {@link ThrowableShortToIntFunction} that first applies this function to its input, and then
+     * applies the {@code after} function to the result. This method is just convenience, to provide the ability to
+     * transform this primitive function to an operation returning {@code int}.
+     *
+     * @param after The function to apply after this function is applied
+     * @return A composed {@code ThrowableShortToIntFunction} that first applies this function to its input, and then
+     * applies the {@code after} function to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
+     * int}.
+     */
+    @Nonnull
+    default ThrowableShortToIntFunction<X> andThenToInt(@Nonnull ThrowableToIntFunction<? super R, ? extends X> after) {
+        Objects.requireNonNull(after);
+        return value -> after.applyAsIntThrows(applyThrows(value));
+    }
+
+    /**
+     * Returns a composed {@link ThrowableShortToLongFunction} that first applies this function to its input, and then
+     * applies the {@code after} function to the result. This method is just convenience, to provide the ability to
+     * transform this primitive function to an operation returning {@code long}.
+     *
+     * @param after The function to apply after this function is applied
+     * @return A composed {@code ThrowableShortToLongFunction} that first applies this function to its input, and then
+     * applies the {@code after} function to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
+     * long}.
+     */
+    @Nonnull
+    default ThrowableShortToLongFunction<X> andThenToLong(
+            @Nonnull ThrowableToLongFunction<? super R, ? extends X> after) {
+        Objects.requireNonNull(after);
+        return value -> after.applyAsLongThrows(applyThrows(value));
+    }
+
+    /**
+     * Returns a composed {@link ThrowableShortUnaryOperator} that first applies this function to its input, and then
+     * applies the {@code after} function to the result. This method is just convenience, to provide the ability to
+     * transform this primitive function to an operation returning {@code short}.
+     *
+     * @param after The function to apply after this function is applied
+     * @return A composed {@code ThrowableShortUnaryOperator} that first applies this function to its input, and then
+     * applies the {@code after} function to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
+     * short}.
+     */
+    @Nonnull
+    default ThrowableShortUnaryOperator<X> andThenToShort(
+            @Nonnull ThrowableToShortFunction<? super R, ? extends X> after) {
+        Objects.requireNonNull(after);
+        return value -> after.applyAsShortThrows(applyThrows(value));
     }
 
     /**

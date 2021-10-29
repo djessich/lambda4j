@@ -45,7 +45,22 @@ import org.lambda4j.function.conversion.ThrowableIntToByteFunction;
 import org.lambda4j.function.conversion.ThrowableLongToByteFunction;
 import org.lambda4j.function.conversion.ThrowableShortToByteFunction;
 import org.lambda4j.function.to.ThrowableToByteFunction;
+import org.lambda4j.function.to.ThrowableToCharFunction;
+import org.lambda4j.function.to.ThrowableToDoubleFunction;
+import org.lambda4j.function.to.ThrowableToFloatFunction;
+import org.lambda4j.function.to.ThrowableToIntFunction;
+import org.lambda4j.function.to.ThrowableToLongFunction;
+import org.lambda4j.function.to.ThrowableToShortFunction;
+import org.lambda4j.function.tri.conversion.ThrowableTriByteToCharFunction;
+import org.lambda4j.function.tri.conversion.ThrowableTriByteToDoubleFunction;
+import org.lambda4j.function.tri.conversion.ThrowableTriByteToFloatFunction;
+import org.lambda4j.function.tri.conversion.ThrowableTriByteToIntFunction;
+import org.lambda4j.function.tri.conversion.ThrowableTriByteToLongFunction;
+import org.lambda4j.function.tri.conversion.ThrowableTriByteToShortFunction;
+import org.lambda4j.operator.ternary.ThrowableByteTernaryOperator;
 import org.lambda4j.operator.unary.ThrowableByteUnaryOperator;
+import org.lambda4j.predicate.ThrowablePredicate;
+import org.lambda4j.predicate.tri.ThrowableTriBytePredicate;
 
 /**
  * Represents an operation that accepts three {@code byte}-valued input arguments and produces a result which is able to
@@ -521,6 +536,157 @@ public interface ThrowableTriByteFunction<R, X extends Throwable> extends Lambda
             @Nonnull ThrowableFunction<? super R, ? extends S, ? extends X> after) {
         Objects.requireNonNull(after);
         return (value1, value2, value3) -> after.applyThrows(applyThrows(value1, value2, value3));
+    }
+
+    /**
+     * Returns a composed {@link ThrowableTriBytePredicate} that first applies this function to its input, and then
+     * applies the {@code after} predicate to the result. This method is just convenience, to provide the ability to
+     * transform this primitive function to an operation returning {@code boolean}.
+     *
+     * @param after The predicate to apply after this function is applied
+     * @return A composed {@code ThrowableTriBytePredicate} that first applies this function to its input, and then
+     * applies the {@code after} predicate to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
+     * boolean}.
+     */
+    @Nonnull
+    default ThrowableTriBytePredicate<X> andThenToBoolean(@Nonnull ThrowablePredicate<? super R, ? extends X> after) {
+        Objects.requireNonNull(after);
+        return (value1, value2, value3) -> after.testThrows(applyThrows(value1, value2, value3));
+    }
+
+    /**
+     * Returns a composed {@link ThrowableByteTernaryOperator} that first applies this function to its input, and then
+     * applies the {@code after} operator to the result. This method is just convenience, to provide the ability to
+     * transform this primitive function to an operation returning {@code byte}.
+     *
+     * @param after The operator to apply after this function is applied
+     * @return A composed {@code ThrowableByteTernaryOperator} that first applies this function to its input, and then
+     * applies the {@code after} operator to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
+     * byte}.
+     */
+    @Nonnull
+    default ThrowableByteTernaryOperator<X> andThenToByte(
+            @Nonnull ThrowableToByteFunction<? super R, ? extends X> after) {
+        Objects.requireNonNull(after);
+        return (value1, value2, value3) -> after.applyAsByteThrows(applyThrows(value1, value2, value3));
+    }
+
+    /**
+     * Returns a composed {@link ThrowableTriByteToCharFunction} that first applies this function to its input, and then
+     * applies the {@code after} function to the result. This method is just convenience, to provide the ability to
+     * transform this primitive function to an operation returning {@code char}.
+     *
+     * @param after The function to apply after this function is applied
+     * @return A composed {@code ThrowableTriByteToCharFunction} that first applies this function to its input, and then
+     * applies the {@code after} function to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
+     * char}.
+     */
+    @Nonnull
+    default ThrowableTriByteToCharFunction<X> andThenToChar(
+            @Nonnull ThrowableToCharFunction<? super R, ? extends X> after) {
+        Objects.requireNonNull(after);
+        return (value1, value2, value3) -> after.applyAsCharThrows(applyThrows(value1, value2, value3));
+    }
+
+    /**
+     * Returns a composed {@link ThrowableTriByteToDoubleFunction} that first applies this function to its input, and
+     * then applies the {@code after} function to the result. This method is just convenience, to provide the ability to
+     * transform this primitive function to an operation returning {@code double}.
+     *
+     * @param after The function to apply after this function is applied
+     * @return A composed {@code ThrowableTriByteToDoubleFunction} that first applies this function to its input, and
+     * then applies the {@code after} function to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
+     * double}.
+     */
+    @Nonnull
+    default ThrowableTriByteToDoubleFunction<X> andThenToDouble(
+            @Nonnull ThrowableToDoubleFunction<? super R, ? extends X> after) {
+        Objects.requireNonNull(after);
+        return (value1, value2, value3) -> after.applyAsDoubleThrows(applyThrows(value1, value2, value3));
+    }
+
+    /**
+     * Returns a composed {@link ThrowableTriByteToFloatFunction} that first applies this function to its input, and
+     * then applies the {@code after} function to the result. This method is just convenience, to provide the ability to
+     * transform this primitive function to an operation returning {@code float}.
+     *
+     * @param after The function to apply after this function is applied
+     * @return A composed {@code ThrowableTriByteToFloatFunction} that first applies this function to its input, and
+     * then applies the {@code after} function to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
+     * float}.
+     */
+    @Nonnull
+    default ThrowableTriByteToFloatFunction<X> andThenToFloat(
+            @Nonnull ThrowableToFloatFunction<? super R, ? extends X> after) {
+        Objects.requireNonNull(after);
+        return (value1, value2, value3) -> after.applyAsFloatThrows(applyThrows(value1, value2, value3));
+    }
+
+    /**
+     * Returns a composed {@link ThrowableTriByteToIntFunction} that first applies this function to its input, and then
+     * applies the {@code after} function to the result. This method is just convenience, to provide the ability to
+     * transform this primitive function to an operation returning {@code int}.
+     *
+     * @param after The function to apply after this function is applied
+     * @return A composed {@code ThrowableTriByteToIntFunction} that first applies this function to its input, and then
+     * applies the {@code after} function to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
+     * int}.
+     */
+    @Nonnull
+    default ThrowableTriByteToIntFunction<X> andThenToInt(
+            @Nonnull ThrowableToIntFunction<? super R, ? extends X> after) {
+        Objects.requireNonNull(after);
+        return (value1, value2, value3) -> after.applyAsIntThrows(applyThrows(value1, value2, value3));
+    }
+
+    /**
+     * Returns a composed {@link ThrowableTriByteToLongFunction} that first applies this function to its input, and then
+     * applies the {@code after} function to the result. This method is just convenience, to provide the ability to
+     * transform this primitive function to an operation returning {@code long}.
+     *
+     * @param after The function to apply after this function is applied
+     * @return A composed {@code ThrowableTriByteToLongFunction} that first applies this function to its input, and then
+     * applies the {@code after} function to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
+     * long}.
+     */
+    @Nonnull
+    default ThrowableTriByteToLongFunction<X> andThenToLong(
+            @Nonnull ThrowableToLongFunction<? super R, ? extends X> after) {
+        Objects.requireNonNull(after);
+        return (value1, value2, value3) -> after.applyAsLongThrows(applyThrows(value1, value2, value3));
+    }
+
+    /**
+     * Returns a composed {@link ThrowableTriByteToShortFunction} that first applies this function to its input, and
+     * then applies the {@code after} function to the result. This method is just convenience, to provide the ability to
+     * transform this primitive function to an operation returning {@code short}.
+     *
+     * @param after The function to apply after this function is applied
+     * @return A composed {@code ThrowableTriByteToShortFunction} that first applies this function to its input, and
+     * then applies the {@code after} function to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
+     * short}.
+     */
+    @Nonnull
+    default ThrowableTriByteToShortFunction<X> andThenToShort(
+            @Nonnull ThrowableToShortFunction<? super R, ? extends X> after) {
+        Objects.requireNonNull(after);
+        return (value1, value2, value3) -> after.applyAsShortThrows(applyThrows(value1, value2, value3));
     }
 
     /**

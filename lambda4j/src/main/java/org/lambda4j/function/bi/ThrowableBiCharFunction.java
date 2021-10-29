@@ -36,6 +36,12 @@ import org.lambda4j.core.exception.ThrownByFunctionalInterfaceException;
 import org.lambda4j.core.util.ThrowableUtils;
 import org.lambda4j.function.ThrowableCharFunction;
 import org.lambda4j.function.ThrowableFunction;
+import org.lambda4j.function.bi.conversion.ThrowableBiCharToByteFunction;
+import org.lambda4j.function.bi.conversion.ThrowableBiCharToDoubleFunction;
+import org.lambda4j.function.bi.conversion.ThrowableBiCharToFloatFunction;
+import org.lambda4j.function.bi.conversion.ThrowableBiCharToIntFunction;
+import org.lambda4j.function.bi.conversion.ThrowableBiCharToLongFunction;
+import org.lambda4j.function.bi.conversion.ThrowableBiCharToShortFunction;
 import org.lambda4j.function.conversion.ThrowableBooleanToCharFunction;
 import org.lambda4j.function.conversion.ThrowableByteToCharFunction;
 import org.lambda4j.function.conversion.ThrowableDoubleToCharFunction;
@@ -43,8 +49,17 @@ import org.lambda4j.function.conversion.ThrowableFloatToCharFunction;
 import org.lambda4j.function.conversion.ThrowableIntToCharFunction;
 import org.lambda4j.function.conversion.ThrowableLongToCharFunction;
 import org.lambda4j.function.conversion.ThrowableShortToCharFunction;
+import org.lambda4j.function.to.ThrowableToByteFunction;
 import org.lambda4j.function.to.ThrowableToCharFunction;
+import org.lambda4j.function.to.ThrowableToDoubleFunction;
+import org.lambda4j.function.to.ThrowableToFloatFunction;
+import org.lambda4j.function.to.ThrowableToIntFunction;
+import org.lambda4j.function.to.ThrowableToLongFunction;
+import org.lambda4j.function.to.ThrowableToShortFunction;
+import org.lambda4j.operator.binary.ThrowableCharBinaryOperator;
 import org.lambda4j.operator.unary.ThrowableCharUnaryOperator;
+import org.lambda4j.predicate.ThrowablePredicate;
+import org.lambda4j.predicate.bi.ThrowableBiCharPredicate;
 
 /**
  * Represents an operation that accepts two {@code char}-valued input arguments and produces a result which is able to
@@ -440,6 +455,158 @@ public interface ThrowableBiCharFunction<R, X extends Throwable> extends Lambda 
             @Nonnull ThrowableFunction<? super R, ? extends S, ? extends X> after) {
         Objects.requireNonNull(after);
         return (value1, value2) -> after.applyThrows(applyThrows(value1, value2));
+    }
+
+    /**
+     * Returns a composed {@link ThrowableBiCharPredicate} that first applies this function to its input, and then
+     * applies the {@code after} predicate to the result. This method is just convenience, to provide the ability to
+     * transform this primitive function to an operation returning {@code boolean}.
+     *
+     * @param after The predicate to apply after this function is applied
+     * @return A composed {@code ThrowableBiCharPredicate} that first applies this function to its input, and then
+     * applies the {@code after} predicate to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
+     * boolean}.
+     */
+    @Nonnull
+    default ThrowableBiCharPredicate<X> andThenToBoolean(
+            @Nonnull ThrowablePredicate<? super R, ? extends X> after) {
+        Objects.requireNonNull(after);
+        return (value1, value2) -> after.testThrows(applyThrows(value1, value2));
+    }
+
+    /**
+     * Returns a composed {@link ThrowableBiCharToByteFunction} that first applies this function to its input, and then
+     * applies the {@code after} function to the result. This method is just convenience, to provide the ability to
+     * transform this primitive function to an operation returning {@code byte}.
+     *
+     * @param after The function to apply after this function is applied
+     * @return A composed {@code ThrowableBiCharToByteFunction} that first applies this function to its input, and then
+     * applies the {@code after} function to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
+     * byte}.
+     */
+    @Nonnull
+    default ThrowableBiCharToByteFunction<X> andThenToByte(
+            @Nonnull ThrowableToByteFunction<? super R, ? extends X> after) {
+        Objects.requireNonNull(after);
+        return (value1, value2) -> after.applyAsByteThrows(applyThrows(value1, value2));
+    }
+
+    /**
+     * Returns a composed {@link ThrowableCharBinaryOperator} that first applies this function to its input, and then
+     * applies the {@code after} function to the result. This method is just convenience, to provide the ability to
+     * transform this primitive function to an operation returning {@code char}.
+     *
+     * @param after The function to apply after this function is applied
+     * @return A composed {@code ThrowableCharBinaryOperator} that first applies this function to its input, and then
+     * applies the {@code after} function to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
+     * char}.
+     */
+    @Nonnull
+    default ThrowableCharBinaryOperator<X> andThenToChar(
+            @Nonnull ThrowableToCharFunction<? super R, ? extends X> after) {
+        Objects.requireNonNull(after);
+        return (value1, value2) -> after.applyAsCharThrows(applyThrows(value1, value2));
+    }
+
+    /**
+     * Returns a composed {@link ThrowableBiCharToDoubleFunction} that first applies this function to its input, and
+     * then applies the {@code after} function to the result. This method is just convenience, to provide the ability to
+     * transform this primitive function to an operation returning {@code double}.
+     *
+     * @param after The function to apply after this function is applied
+     * @return A composed {@code ThrowableBiCharToDoubleFunction} that first applies this function to its input, and
+     * then applies the {@code after} function to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
+     * double}.
+     */
+    @Nonnull
+    default ThrowableBiCharToDoubleFunction<X> andThenToDouble(
+            @Nonnull ThrowableToDoubleFunction<? super R, ? extends X> after) {
+        Objects.requireNonNull(after);
+        return (value1, value2) -> after.applyAsDoubleThrows(applyThrows(value1, value2));
+    }
+
+    /**
+     * Returns a composed {@link ThrowableBiCharToFloatFunction} that first applies this function to its input, and then
+     * applies the {@code after} function to the result. This method is just convenience, to provide the ability to
+     * transform this primitive function to an operation returning {@code float}.
+     *
+     * @param after The function to apply after this function is applied
+     * @return A composed {@code ThrowableBiCharToFloatFunction} that first applies this function to its input, and then
+     * applies the {@code after} function to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
+     * float}.
+     */
+    @Nonnull
+    default ThrowableBiCharToFloatFunction<X> andThenToFloat(
+            @Nonnull ThrowableToFloatFunction<? super R, ? extends X> after) {
+        Objects.requireNonNull(after);
+        return (value1, value2) -> after.applyAsFloatThrows(applyThrows(value1, value2));
+    }
+
+    /**
+     * Returns a composed {@link ThrowableBiCharToIntFunction} that first applies this function to its input, and then
+     * applies the {@code after} function to the result. This method is just convenience, to provide the ability to
+     * transform this primitive function to an operation returning {@code int}.
+     *
+     * @param after The function to apply after this function is applied
+     * @return A composed {@code ThrowableBiCharToIntFunction} that first applies this function to its input, and then
+     * applies the {@code after} function to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
+     * int}.
+     */
+    @Nonnull
+    default ThrowableBiCharToIntFunction<X> andThenToInt(
+            @Nonnull ThrowableToIntFunction<? super R, ? extends X> after) {
+        Objects.requireNonNull(after);
+        return (value1, value2) -> after.applyAsIntThrows(applyThrows(value1, value2));
+    }
+
+    /**
+     * Returns a composed {@link ThrowableBiCharToLongFunction} that first applies this function to its input, and then
+     * applies the {@code after} function to the result. This method is just convenience, to provide the ability to
+     * transform this primitive function to an operation returning {@code long}.
+     *
+     * @param after The function to apply after this function is applied
+     * @return A composed {@code ThrowableBiCharToLongFunction} that first applies this function to its input, and then
+     * applies the {@code after} function to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
+     * long}.
+     */
+    @Nonnull
+    default ThrowableBiCharToLongFunction<X> andThenToLong(
+            @Nonnull ThrowableToLongFunction<? super R, ? extends X> after) {
+        Objects.requireNonNull(after);
+        return (value1, value2) -> after.applyAsLongThrows(applyThrows(value1, value2));
+    }
+
+    /**
+     * Returns a composed {@link ThrowableBiCharToShortFunction} that first applies this function to its input, and then
+     * applies the {@code after} function to the result. This method is just convenience, to provide the ability to
+     * transform this primitive function to an operation returning {@code short}.
+     *
+     * @param after The function to apply after this function is applied
+     * @return A composed {@code ThrowableBiCharToShortFunction} that first applies this function to its input, and then
+     * applies the {@code after} function to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
+     * short}.
+     */
+    @Nonnull
+    default ThrowableBiCharToShortFunction<X> andThenToShort(
+            @Nonnull ThrowableToShortFunction<? super R, ? extends X> after) {
+        Objects.requireNonNull(after);
+        return (value1, value2) -> after.applyAsShortThrows(applyThrows(value1, value2));
     }
 
     /**

@@ -36,6 +36,12 @@ import org.lambda4j.core.exception.ThrownByFunctionalInterfaceException;
 import org.lambda4j.core.util.ThrowableUtils;
 import org.lambda4j.function.ThrowableFunction;
 import org.lambda4j.function.ThrowableIntFunction;
+import org.lambda4j.function.bi.conversion.ThrowableBiIntToByteFunction;
+import org.lambda4j.function.bi.conversion.ThrowableBiIntToCharFunction;
+import org.lambda4j.function.bi.conversion.ThrowableBiIntToDoubleFunction;
+import org.lambda4j.function.bi.conversion.ThrowableBiIntToFloatFunction;
+import org.lambda4j.function.bi.conversion.ThrowableBiIntToLongFunction;
+import org.lambda4j.function.bi.conversion.ThrowableBiIntToShortFunction;
 import org.lambda4j.function.conversion.ThrowableBooleanToIntFunction;
 import org.lambda4j.function.conversion.ThrowableByteToIntFunction;
 import org.lambda4j.function.conversion.ThrowableCharToIntFunction;
@@ -43,8 +49,17 @@ import org.lambda4j.function.conversion.ThrowableDoubleToIntFunction;
 import org.lambda4j.function.conversion.ThrowableFloatToIntFunction;
 import org.lambda4j.function.conversion.ThrowableLongToIntFunction;
 import org.lambda4j.function.conversion.ThrowableShortToIntFunction;
+import org.lambda4j.function.to.ThrowableToByteFunction;
+import org.lambda4j.function.to.ThrowableToCharFunction;
+import org.lambda4j.function.to.ThrowableToDoubleFunction;
+import org.lambda4j.function.to.ThrowableToFloatFunction;
 import org.lambda4j.function.to.ThrowableToIntFunction;
+import org.lambda4j.function.to.ThrowableToLongFunction;
+import org.lambda4j.function.to.ThrowableToShortFunction;
+import org.lambda4j.operator.binary.ThrowableIntBinaryOperator;
 import org.lambda4j.operator.unary.ThrowableIntUnaryOperator;
+import org.lambda4j.predicate.ThrowablePredicate;
+import org.lambda4j.predicate.bi.ThrowableBiIntPredicate;
 
 /**
  * Represents an operation that accepts two {@code int}-valued input arguments and produces a result which is able to
@@ -440,6 +455,158 @@ public interface ThrowableBiIntFunction<R, X extends Throwable> extends Lambda {
             @Nonnull ThrowableFunction<? super R, ? extends S, ? extends X> after) {
         Objects.requireNonNull(after);
         return (value1, value2) -> after.applyThrows(applyThrows(value1, value2));
+    }
+
+    /**
+     * Returns a composed {@link ThrowableBiIntPredicate} that first applies this function to its input, and then
+     * applies the {@code after} predicate to the result. This method is just convenience, to provide the ability to
+     * transform this primitive function to an operation returning {@code boolean}.
+     *
+     * @param after The predicate to apply after this function is applied
+     * @return A composed {@code ThrowableBiIntPredicate} that first applies this function to its input, and then
+     * applies the {@code after} predicate to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
+     * boolean}.
+     */
+    @Nonnull
+    default ThrowableBiIntPredicate<X> andThenToBoolean(
+            @Nonnull ThrowablePredicate<? super R, ? extends X> after) {
+        Objects.requireNonNull(after);
+        return (value1, value2) -> after.testThrows(applyThrows(value1, value2));
+    }
+
+    /**
+     * Returns a composed {@link ThrowableBiIntToByteFunction} that first applies this function to its input, and then
+     * applies the {@code after} function to the result. This method is just convenience, to provide the ability to
+     * transform this primitive function to an operation returning {@code byte}.
+     *
+     * @param after The function to apply after this function is applied
+     * @return A composed {@code ThrowableBiIntToByteFunction} that first applies this function to its input, and then
+     * applies the {@code after} function to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
+     * byte}.
+     */
+    @Nonnull
+    default ThrowableBiIntToByteFunction<X> andThenToByte(
+            @Nonnull ThrowableToByteFunction<? super R, ? extends X> after) {
+        Objects.requireNonNull(after);
+        return (value1, value2) -> after.applyAsByteThrows(applyThrows(value1, value2));
+    }
+
+    /**
+     * Returns a composed {@link ThrowableBiIntToCharFunction} that first applies this function to its input, and then
+     * applies the {@code after} function to the result. This method is just convenience, to provide the ability to
+     * transform this primitive function to an operation returning {@code char}.
+     *
+     * @param after The function to apply after this function is applied
+     * @return A composed {@code ThrowableBiIntToCharFunction} that first applies this function to its input, and then
+     * applies the {@code after} function to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
+     * char}.
+     */
+    @Nonnull
+    default ThrowableBiIntToCharFunction<X> andThenToChar(
+            @Nonnull ThrowableToCharFunction<? super R, ? extends X> after) {
+        Objects.requireNonNull(after);
+        return (value1, value2) -> after.applyAsCharThrows(applyThrows(value1, value2));
+    }
+
+    /**
+     * Returns a composed {@link ThrowableBiIntToDoubleFunction} that first applies this function to its input, and then
+     * applies the {@code after} function to the result. This method is just convenience, to provide the ability to
+     * transform this primitive function to an operation returning {@code double}.
+     *
+     * @param after The function to apply after this function is applied
+     * @return A composed {@code ThrowableBiIntToDoubleFunction} that first applies this function to its input, and then
+     * applies the {@code after} function to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
+     * double}.
+     */
+    @Nonnull
+    default ThrowableBiIntToDoubleFunction<X> andThenToDouble(
+            @Nonnull ThrowableToDoubleFunction<? super R, ? extends X> after) {
+        Objects.requireNonNull(after);
+        return (value1, value2) -> after.applyAsDoubleThrows(applyThrows(value1, value2));
+    }
+
+    /**
+     * Returns a composed {@link ThrowableBiIntToFloatFunction} that first applies this function to its input, and then
+     * applies the {@code after} function to the result. This method is just convenience, to provide the ability to
+     * transform this primitive function to an operation returning {@code float}.
+     *
+     * @param after The function to apply after this function is applied
+     * @return A composed {@code ThrowableBiIntToFloatFunction} that first applies this function to its input, and then
+     * applies the {@code after} function to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
+     * float}.
+     */
+    @Nonnull
+    default ThrowableBiIntToFloatFunction<X> andThenToFloat(
+            @Nonnull ThrowableToFloatFunction<? super R, ? extends X> after) {
+        Objects.requireNonNull(after);
+        return (value1, value2) -> after.applyAsFloatThrows(applyThrows(value1, value2));
+    }
+
+    /**
+     * Returns a composed {@link ThrowableIntBinaryOperator} that first applies this function to its input, and then
+     * applies the {@code after} function to the result. This method is just convenience, to provide the ability to
+     * transform this primitive function to an operation returning {@code int}.
+     *
+     * @param after The function to apply after this function is applied
+     * @return A composed {@code ThrowableIntBinaryOperator} that first applies this function to its input, and then
+     * applies the {@code after} function to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
+     * int}.
+     */
+    @Nonnull
+    default ThrowableIntBinaryOperator<X> andThenToInt(
+            @Nonnull ThrowableToIntFunction<? super R, ? extends X> after) {
+        Objects.requireNonNull(after);
+        return (value1, value2) -> after.applyAsIntThrows(applyThrows(value1, value2));
+    }
+
+    /**
+     * Returns a composed {@link ThrowableBiIntToLongFunction} that first applies this function to its input, and then
+     * applies the {@code after} function to the result. This method is just convenience, to provide the ability to
+     * transform this primitive function to an operation returning {@code long}.
+     *
+     * @param after The function to apply after this function is applied
+     * @return A composed {@code ThrowableBiIntToLongFunction} that first applies this function to its input, and then
+     * applies the {@code after} function to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
+     * long}.
+     */
+    @Nonnull
+    default ThrowableBiIntToLongFunction<X> andThenToLong(
+            @Nonnull ThrowableToLongFunction<? super R, ? extends X> after) {
+        Objects.requireNonNull(after);
+        return (value1, value2) -> after.applyAsLongThrows(applyThrows(value1, value2));
+    }
+
+    /**
+     * Returns a composed {@link ThrowableBiIntToShortFunction} that first applies this function to its input, and then
+     * applies the {@code after} function to the result. This method is just convenience, to provide the ability to
+     * transform this primitive function to an operation returning {@code short}.
+     *
+     * @param after The function to apply after this function is applied
+     * @return A composed {@code ThrowableBiIntToShortFunction} that first applies this function to its input, and then
+     * applies the {@code after} function to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
+     * short}.
+     */
+    @Nonnull
+    default ThrowableBiIntToShortFunction<X> andThenToShort(
+            @Nonnull ThrowableToShortFunction<? super R, ? extends X> after) {
+        Objects.requireNonNull(after);
+        return (value1, value2) -> after.applyAsShortThrows(applyThrows(value1, value2));
     }
 
     /**
