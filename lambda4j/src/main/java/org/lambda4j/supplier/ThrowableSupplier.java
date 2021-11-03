@@ -18,7 +18,6 @@ package org.lambda4j.supplier;
 
 import java.util.Objects;
 import java.util.Optional;
-import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
@@ -188,43 +187,6 @@ public interface ThrowableSupplier<R, X extends Throwable> extends Lambda, Suppl
     default ThrowableConsumer<Void, X> consume(@Nonnull ThrowableConsumer<? super R, ? extends X> consumer) {
         Objects.requireNonNull(consumer);
         return ignored -> consumer.acceptThrows(getThrows());
-    }
-
-    /**
-     * Returns a memoized (caching) version of this {@link ThrowableSupplier}. Whenever it is called, the return value
-     * is preserved in a cache, making subsequent calls returning the memoized value instead of computing the return
-     * value again.
-     * <p>
-     * Unless the supplier and therefore the used cache will be garbage-collected, it will keep all memoized values
-     * forever.
-     *
-     * @return A memoized (caching) version of this {@code ThrowableSupplier}.
-     * @implSpec This implementation does not allow the return value to be {@code null} for the resulting memoized
-     * supplier, as the cache used internally does not permit {@code null} values.
-     * @implNote The returned memoized supplier can be safely used concurrently from multiple threads which makes it
-     * thread-safe.
-     */
-    @SuppressWarnings("checkstyle:NestedIfDepth")
-    @Nonnull
-    default ThrowableSupplier<R, X> memoized() {
-        if (isMemoized()) {
-            return this;
-        } else {
-            AtomicReference<R> cache = new AtomicReference<>();
-            return (ThrowableSupplier<R, X> & Memoized) () -> {
-                R returnValue = cache.get();
-                if (returnValue == null) {
-                    synchronized (this) {
-                        returnValue = cache.get();
-                        if (returnValue == null) {
-                            returnValue = getThrows();
-                            cache.set(returnValue);
-                        }
-                    }
-                }
-                return returnValue;
-            };
-        }
     }
 
     /**

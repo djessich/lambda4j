@@ -17,7 +17,6 @@
 package org.lambda4j.supplier;
 
 import java.util.Objects;
-import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.Function;
 import java.util.function.LongSupplier;
 
@@ -319,42 +318,6 @@ public interface ThrowableLongSupplier<X extends Throwable> extends Lambda, Long
     default ThrowableConsumer<Void, X> consume(@Nonnull ThrowableLongConsumer<? extends X> consumer) {
         Objects.requireNonNull(consumer);
         return ignored -> consumer.acceptThrows(getAsLongThrows());
-    }
-
-    /**
-     * Returns a memoized (caching) version of this {@link ThrowableLongSupplier}. Whenever it is called, the return
-     * value is preserved in a cache, making subsequent calls returning the memoized value instead of computing the
-     * return value again.
-     * <p>
-     * Unless the supplier and therefore the used cache will be garbage-collected, it will keep all memoized values
-     * forever.
-     *
-     * @return A memoized (caching) version of this {@code ThrowableLongSupplier}.
-     * @implSpec This implementation does not allow the return value to be {@code null} for the resulting memoized
-     * supplier, as the cache used internally does not permit {@code null} values.
-     * @implNote The returned memoized supplier can be safely used concurrently from multiple threads which makes it
-     * thread-safe.
-     */
-    @Nonnull
-    default ThrowableLongSupplier<X> memoized() {
-        if (isMemoized()) {
-            return this;
-        } else {
-            AtomicReference<Long> cache = new AtomicReference<>();
-            return (ThrowableLongSupplier<X> & Memoized) () -> {
-                Long returnValue = cache.get();
-                if (returnValue == null) {
-                    synchronized (this) {
-                        returnValue = cache.get();
-                        if (returnValue == null) {
-                            returnValue = getAsLongThrows();
-                            cache.set(returnValue);
-                        }
-                    }
-                }
-                return returnValue;
-            };
-        }
     }
 
     /**
