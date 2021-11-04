@@ -716,15 +716,9 @@ public interface BiObjByteToDoubleFunction<T, U> extends Lambda {
             return this;
         } else {
             Map<Triple<T, U, Byte>, Double> cache = new ConcurrentHashMap<>();
-            Object lock = new Object();
             return (BiObjByteToDoubleFunction<T, U> & Memoized) (t, u, value) -> {
-                double returnValue;
-                synchronized (lock) {
-                    returnValue = cache.computeIfAbsent(Triple.of(t, u, value),
-                            key -> applyAsDouble(key.getLeft(), key.getMiddle(),
-                                    key.getRight()));
-                }
-                return returnValue;
+                return cache.computeIfAbsent(Triple.of(t, u, value),
+                        key -> applyAsDouble(key.getLeft(), key.getMiddle(), key.getRight()));
             };
         }
     }

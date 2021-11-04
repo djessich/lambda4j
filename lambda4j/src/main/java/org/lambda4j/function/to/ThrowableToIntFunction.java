@@ -544,13 +544,8 @@ public interface ThrowableToIntFunction<T, X extends Throwable> extends Lambda, 
             return this;
         } else {
             Map<T, Integer> cache = new ConcurrentHashMap<>();
-            Object lock = new Object();
             return (ThrowableToIntFunction<T, X> & Memoized) t -> {
-                int returnValue;
-                synchronized (lock) {
-                    returnValue = cache.computeIfAbsent(t, ThrowableFunction.of(this::applyAsIntThrows));
-                }
-                return returnValue;
+                return cache.computeIfAbsent(t, ThrowableFunction.of(this::applyAsIntThrows));
             };
         }
     }

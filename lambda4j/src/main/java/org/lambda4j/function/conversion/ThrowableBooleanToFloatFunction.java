@@ -511,13 +511,8 @@ public interface ThrowableBooleanToFloatFunction<X extends Throwable> extends La
             return this;
         } else {
             Map<Boolean, Float> cache = new ConcurrentHashMap<>();
-            Object lock = new Object();
             return (ThrowableBooleanToFloatFunction<X> & Memoized) value -> {
-                float returnValue;
-                synchronized (lock) {
-                    returnValue = cache.computeIfAbsent(value, ThrowableFunction.of(this::applyAsFloatThrows));
-                }
-                return returnValue;
+                return cache.computeIfAbsent(value, ThrowableFunction.of(this::applyAsFloatThrows));
             };
         }
     }

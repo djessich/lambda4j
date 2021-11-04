@@ -684,14 +684,9 @@ public interface ThrowableTriDoubleToShortFunction<X extends Throwable> extends 
             return this;
         } else {
             Map<Triple<Double, Double, Double>, Short> cache = new ConcurrentHashMap<>();
-            Object lock = new Object();
             return (ThrowableTriDoubleToShortFunction<X> & Memoized) (value1, value2, value3) -> {
-                short returnValue;
-                synchronized (lock) {
-                    returnValue = cache.computeIfAbsent(Triple.of(value1, value2, value3), ThrowableFunction.of(
-                            key -> applyAsShortThrows(key.getLeft(), key.getMiddle(), key.getRight())));
-                }
-                return returnValue;
+                return cache.computeIfAbsent(Triple.of(value1, value2, value3), ThrowableFunction.of(
+                        key -> applyAsShortThrows(key.getLeft(), key.getMiddle(), key.getRight())));
             };
         }
     }

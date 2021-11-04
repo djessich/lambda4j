@@ -612,14 +612,9 @@ public interface ThrowableBiFloatToLongFunction<X extends Throwable> extends Lam
             return this;
         } else {
             Map<Pair<Float, Float>, Long> cache = new ConcurrentHashMap<>();
-            Object lock = new Object();
             return (ThrowableBiFloatToLongFunction<X> & Memoized) (value1, value2) -> {
-                long returnValue;
-                synchronized (lock) {
-                    returnValue = cache.computeIfAbsent(Pair.of(value1, value2), ThrowableFunction.of(
-                            key -> applyAsLongThrows(key.getLeft(), key.getRight())));
-                }
-                return returnValue;
+                return cache.computeIfAbsent(Pair.of(value1, value2),
+                        ThrowableFunction.of(key -> applyAsLongThrows(key.getLeft(), key.getRight())));
             };
         }
     }

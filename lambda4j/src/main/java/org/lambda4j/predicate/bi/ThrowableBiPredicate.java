@@ -785,14 +785,9 @@ public interface ThrowableBiPredicate<T, U, X extends Throwable> extends Lambda,
             return this;
         } else {
             Map<Pair<T, U>, Boolean> cache = new ConcurrentHashMap<>();
-            Object lock = new Object();
             return (ThrowableBiPredicate<T, U, X> & Memoized) (t, u) -> {
-                boolean returnValue;
-                synchronized (lock) {
-                    returnValue = cache.computeIfAbsent(Pair.of(t, u), ThrowableFunction.of(
-                            key -> testThrows(key.getLeft(), key.getRight())));
-                }
-                return returnValue;
+                return cache.computeIfAbsent(Pair.of(t, u),
+                        ThrowableFunction.of(key -> testThrows(key.getLeft(), key.getRight())));
             };
         }
     }

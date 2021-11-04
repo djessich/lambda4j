@@ -526,13 +526,8 @@ public interface DoubleUnaryOperator2 extends Lambda, DoubleUnaryOperator {
             return this;
         } else {
             Map<Double, Double> cache = new ConcurrentHashMap<>();
-            Object lock = new Object();
             return (DoubleUnaryOperator2 & Memoized) value -> {
-                double returnValue;
-                synchronized (lock) {
-                    returnValue = cache.computeIfAbsent(value, this::applyAsDouble);
-                }
-                return returnValue;
+                return cache.computeIfAbsent(value, this::applyAsDouble);
             };
         }
     }

@@ -627,14 +627,9 @@ public interface ThrowableObjFloatToDoubleFunction<T, X extends Throwable> exten
             return this;
         } else {
             Map<Pair<T, Float>, Double> cache = new ConcurrentHashMap<>();
-            Object lock = new Object();
             return (ThrowableObjFloatToDoubleFunction<T, X> & Memoized) (t, value) -> {
-                double returnValue;
-                synchronized (lock) {
-                    returnValue = cache.computeIfAbsent(Pair.of(t, value), ThrowableFunction.of(
-                            key -> applyAsDoubleThrows(key.getLeft(), key.getRight())));
-                }
-                return returnValue;
+                return cache.computeIfAbsent(Pair.of(t, value),
+                        ThrowableFunction.of(key -> applyAsDoubleThrows(key.getLeft(), key.getRight())));
             };
         }
     }

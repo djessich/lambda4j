@@ -694,15 +694,9 @@ public interface ToCharTriFunction<T, U, V> extends Lambda {
             return this;
         } else {
             Map<Triple<T, U, V>, Character> cache = new ConcurrentHashMap<>();
-            Object lock = new Object();
             return (ToCharTriFunction<T, U, V> & Memoized) (t, u, v) -> {
-                char returnValue;
-                synchronized (lock) {
-                    returnValue = cache.computeIfAbsent(Triple.of(t, u, v),
-                            key -> applyAsChar(key.getLeft(), key.getMiddle(),
-                                    key.getRight()));
-                }
-                return returnValue;
+                return cache.computeIfAbsent(Triple.of(t, u, v),
+                        key -> applyAsChar(key.getLeft(), key.getMiddle(), key.getRight()));
             };
         }
     }

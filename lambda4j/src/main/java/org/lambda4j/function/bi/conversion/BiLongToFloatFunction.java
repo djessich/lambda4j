@@ -588,14 +588,9 @@ public interface BiLongToFloatFunction extends Lambda {
             return this;
         } else {
             Map<Pair<Long, Long>, Float> cache = new ConcurrentHashMap<>();
-            Object lock = new Object();
             return (BiLongToFloatFunction & Memoized) (value1, value2) -> {
-                float returnValue;
-                synchronized (lock) {
-                    returnValue = cache.computeIfAbsent(Pair.of(value1, value2),
-                            key -> applyAsFloat(key.getLeft(), key.getRight()));
-                }
-                return returnValue;
+                return cache.computeIfAbsent(Pair.of(value1, value2),
+                        key -> applyAsFloat(key.getLeft(), key.getRight()));
             };
         }
     }

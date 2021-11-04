@@ -631,13 +631,8 @@ public interface Predicate2<T> extends Lambda, Predicate<T> {
             return this;
         } else {
             Map<T, Boolean> cache = new ConcurrentHashMap<>();
-            Object lock = new Object();
             return (Predicate2<T> & Memoized) t -> {
-                boolean returnValue;
-                synchronized (lock) {
-                    returnValue = cache.computeIfAbsent(t, this::test);
-                }
-                return returnValue;
+                return cache.computeIfAbsent(t, this::test);
             };
         }
     }

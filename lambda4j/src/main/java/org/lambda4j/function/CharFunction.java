@@ -543,13 +543,8 @@ public interface CharFunction<R> extends Lambda {
             return this;
         } else {
             Map<Character, R> cache = new ConcurrentHashMap<>();
-            Object lock = new Object();
             return (CharFunction<R> & Memoized) value -> {
-                R returnValue;
-                synchronized (lock) {
-                    returnValue = cache.computeIfAbsent(value, this::apply);
-                }
-                return returnValue;
+                return cache.computeIfAbsent(value, this::apply);
             };
         }
     }

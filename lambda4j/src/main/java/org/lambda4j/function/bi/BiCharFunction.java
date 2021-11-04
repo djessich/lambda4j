@@ -71,6 +71,7 @@ import org.lambda4j.predicate.bi.BiCharPredicate;
 @FunctionalInterface
 public interface BiCharFunction<R> extends Lambda {
 
+
     /**
      * Constructs a {@link BiCharFunction} based on a lambda expression or a method reference. Thereby the given lambda
      * expression or method reference is returned on an as-is basis to implicitly transform it to the desired type. With
@@ -644,14 +645,8 @@ public interface BiCharFunction<R> extends Lambda {
             return this;
         } else {
             Map<Pair<Character, Character>, R> cache = new ConcurrentHashMap<>();
-            Object lock = new Object();
             return (BiCharFunction<R> & Memoized) (value1, value2) -> {
-                R returnValue;
-                synchronized (lock) {
-                    returnValue = cache.computeIfAbsent(Pair.of(value1, value2),
-                            key -> apply(key.getLeft(), key.getRight()));
-                }
-                return returnValue;
+                return cache.computeIfAbsent(Pair.of(value1, value2), key -> apply(key.getLeft(), key.getRight()));
             };
         }
     }

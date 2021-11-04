@@ -618,13 +618,8 @@ public interface ShortPredicate extends Lambda {
             return this;
         } else {
             Map<Short, Boolean> cache = new ConcurrentHashMap<>();
-            Object lock = new Object();
             return (ShortPredicate & Memoized) value -> {
-                boolean returnValue;
-                synchronized (lock) {
-                    returnValue = cache.computeIfAbsent(value, this::test);
-                }
-                return returnValue;
+                return cache.computeIfAbsent(value, this::test);
             };
         }
     }

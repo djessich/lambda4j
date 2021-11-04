@@ -504,13 +504,8 @@ public interface BooleanToShortFunction extends Lambda {
             return this;
         } else {
             Map<Boolean, Short> cache = new ConcurrentHashMap<>();
-            Object lock = new Object();
             return (BooleanToShortFunction & Memoized) value -> {
-                short returnValue;
-                synchronized (lock) {
-                    returnValue = cache.computeIfAbsent(value, this::applyAsShort);
-                }
-                return returnValue;
+                return cache.computeIfAbsent(value, this::applyAsShort);
             };
         }
     }

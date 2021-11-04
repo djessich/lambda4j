@@ -499,13 +499,8 @@ public interface ByteToFloatFunction extends Lambda {
             return this;
         } else {
             Map<Byte, Float> cache = new ConcurrentHashMap<>();
-            Object lock = new Object();
             return (ByteToFloatFunction & Memoized) value -> {
-                float returnValue;
-                synchronized (lock) {
-                    returnValue = cache.computeIfAbsent(value, this::applyAsFloat);
-                }
-                return returnValue;
+                return cache.computeIfAbsent(value, this::applyAsFloat);
             };
         }
     }

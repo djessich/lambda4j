@@ -609,14 +609,8 @@ public interface ObjByteToLongFunction<T> extends Lambda {
             return this;
         } else {
             Map<Pair<T, Byte>, Long> cache = new ConcurrentHashMap<>();
-            Object lock = new Object();
             return (ObjByteToLongFunction<T> & Memoized) (t, value) -> {
-                long returnValue;
-                synchronized (lock) {
-                    returnValue = cache.computeIfAbsent(Pair.of(t, value),
-                            key -> applyAsLong(key.getLeft(), key.getRight()));
-                }
-                return returnValue;
+                return cache.computeIfAbsent(Pair.of(t, value), key -> applyAsLong(key.getLeft(), key.getRight()));
             };
         }
     }

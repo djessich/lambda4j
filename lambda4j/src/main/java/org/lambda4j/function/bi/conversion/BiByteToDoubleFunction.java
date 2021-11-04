@@ -588,14 +588,9 @@ public interface BiByteToDoubleFunction extends Lambda {
             return this;
         } else {
             Map<Pair<Byte, Byte>, Double> cache = new ConcurrentHashMap<>();
-            Object lock = new Object();
             return (BiByteToDoubleFunction & Memoized) (value1, value2) -> {
-                double returnValue;
-                synchronized (lock) {
-                    returnValue = cache.computeIfAbsent(Pair.of(value1, value2),
-                            key -> applyAsDouble(key.getLeft(), key.getRight()));
-                }
-                return returnValue;
+                return cache.computeIfAbsent(Pair.of(value1, value2),
+                        key -> applyAsDouble(key.getLeft(), key.getRight()));
             };
         }
     }

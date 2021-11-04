@@ -507,13 +507,8 @@ public interface DoubleToLongFunction2 extends Lambda, DoubleToLongFunction {
             return this;
         } else {
             Map<Double, Long> cache = new ConcurrentHashMap<>();
-            Object lock = new Object();
             return (DoubleToLongFunction2 & Memoized) value -> {
-                long returnValue;
-                synchronized (lock) {
-                    returnValue = cache.computeIfAbsent(value, this::applyAsLong);
-                }
-                return returnValue;
+                return cache.computeIfAbsent(value, this::applyAsLong);
             };
         }
     }

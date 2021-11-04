@@ -628,14 +628,9 @@ public interface ThrowableObjBooleanToDoubleFunction<T, X extends Throwable> ext
             return this;
         } else {
             Map<Pair<T, Boolean>, Double> cache = new ConcurrentHashMap<>();
-            Object lock = new Object();
             return (ThrowableObjBooleanToDoubleFunction<T, X> & Memoized) (t, value) -> {
-                double returnValue;
-                synchronized (lock) {
-                    returnValue = cache.computeIfAbsent(Pair.of(t, value), ThrowableFunction.of(
-                            key -> applyAsDoubleThrows(key.getLeft(), key.getRight())));
-                }
-                return returnValue;
+                return cache.computeIfAbsent(Pair.of(t, value),
+                        ThrowableFunction.of(key -> applyAsDoubleThrows(key.getLeft(), key.getRight())));
             };
         }
     }

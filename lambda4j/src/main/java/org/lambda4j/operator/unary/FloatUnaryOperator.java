@@ -515,13 +515,8 @@ public interface FloatUnaryOperator extends Lambda {
             return this;
         } else {
             Map<Float, Float> cache = new ConcurrentHashMap<>();
-            Object lock = new Object();
             return (FloatUnaryOperator & Memoized) value -> {
-                float returnValue;
-                synchronized (lock) {
-                    returnValue = cache.computeIfAbsent(value, this::applyAsFloat);
-                }
-                return returnValue;
+                return cache.computeIfAbsent(value, this::applyAsFloat);
             };
         }
     }

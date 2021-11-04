@@ -721,14 +721,9 @@ public interface ThrowableObjBiByteToCharFunction<T, X extends Throwable> extend
             return this;
         } else {
             Map<Triple<T, Byte, Byte>, Character> cache = new ConcurrentHashMap<>();
-            Object lock = new Object();
             return (ThrowableObjBiByteToCharFunction<T, X> & Memoized) (t, value1, value2) -> {
-                char returnValue;
-                synchronized (lock) {
-                    returnValue = cache.computeIfAbsent(Triple.of(t, value1, value2), ThrowableFunction.of(
-                            key -> applyAsCharThrows(key.getLeft(), key.getMiddle(), key.getRight())));
-                }
-                return returnValue;
+                return cache.computeIfAbsent(Triple.of(t, value1, value2),
+                        ThrowableFunction.of(key -> applyAsCharThrows(key.getLeft(), key.getMiddle(), key.getRight())));
             };
         }
     }

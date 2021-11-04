@@ -682,14 +682,9 @@ public interface ThrowableTriByteToLongFunction<X extends Throwable> extends Lam
             return this;
         } else {
             Map<Triple<Byte, Byte, Byte>, Long> cache = new ConcurrentHashMap<>();
-            Object lock = new Object();
             return (ThrowableTriByteToLongFunction<X> & Memoized) (value1, value2, value3) -> {
-                long returnValue;
-                synchronized (lock) {
-                    returnValue = cache.computeIfAbsent(Triple.of(value1, value2, value3), ThrowableFunction.of(
-                            key -> applyAsLongThrows(key.getLeft(), key.getMiddle(), key.getRight())));
-                }
-                return returnValue;
+                return cache.computeIfAbsent(Triple.of(value1, value2, value3),
+                        ThrowableFunction.of(key -> applyAsLongThrows(key.getLeft(), key.getMiddle(), key.getRight())));
             };
         }
     }

@@ -502,13 +502,8 @@ public interface DoubleToByteFunction extends Lambda {
             return this;
         } else {
             Map<Double, Byte> cache = new ConcurrentHashMap<>();
-            Object lock = new Object();
             return (DoubleToByteFunction & Memoized) value -> {
-                byte returnValue;
-                synchronized (lock) {
-                    returnValue = cache.computeIfAbsent(value, this::applyAsByte);
-                }
-                return returnValue;
+                return cache.computeIfAbsent(value, this::applyAsByte);
             };
         }
     }

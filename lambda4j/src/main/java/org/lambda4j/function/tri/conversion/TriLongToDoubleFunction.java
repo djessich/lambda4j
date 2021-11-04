@@ -647,15 +647,9 @@ public interface TriLongToDoubleFunction extends Lambda {
             return this;
         } else {
             Map<Triple<Long, Long, Long>, Double> cache = new ConcurrentHashMap<>();
-            Object lock = new Object();
             return (TriLongToDoubleFunction & Memoized) (value1, value2, value3) -> {
-                double returnValue;
-                synchronized (lock) {
-                    returnValue = cache.computeIfAbsent(Triple.of(value1, value2, value3),
-                            key -> applyAsDouble(key.getLeft(), key.getMiddle(),
-                                    key.getRight()));
-                }
-                return returnValue;
+                return cache.computeIfAbsent(Triple.of(value1, value2, value3),
+                        key -> applyAsDouble(key.getLeft(), key.getMiddle(), key.getRight()));
             };
         }
     }

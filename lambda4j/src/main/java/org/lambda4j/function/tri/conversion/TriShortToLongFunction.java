@@ -646,15 +646,9 @@ public interface TriShortToLongFunction extends Lambda {
             return this;
         } else {
             Map<Triple<Short, Short, Short>, Long> cache = new ConcurrentHashMap<>();
-            Object lock = new Object();
             return (TriShortToLongFunction & Memoized) (value1, value2, value3) -> {
-                long returnValue;
-                synchronized (lock) {
-                    returnValue = cache.computeIfAbsent(Triple.of(value1, value2, value3),
-                            key -> applyAsLong(key.getLeft(), key.getMiddle(),
-                                    key.getRight()));
-                }
-                return returnValue;
+                return cache.computeIfAbsent(Triple.of(value1, value2, value3),
+                        key -> applyAsLong(key.getLeft(), key.getMiddle(), key.getRight()));
             };
         }
     }

@@ -502,13 +502,8 @@ public interface ByteToIntFunction extends Lambda {
             return this;
         } else {
             Map<Byte, Integer> cache = new ConcurrentHashMap<>();
-            Object lock = new Object();
             return (ByteToIntFunction & Memoized) value -> {
-                int returnValue;
-                synchronized (lock) {
-                    returnValue = cache.computeIfAbsent(value, this::applyAsInt);
-                }
-                return returnValue;
+                return cache.computeIfAbsent(value, this::applyAsInt);
             };
         }
     }

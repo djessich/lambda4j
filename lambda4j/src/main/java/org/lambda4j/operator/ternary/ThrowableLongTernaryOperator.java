@@ -690,14 +690,9 @@ public interface ThrowableLongTernaryOperator<X extends Throwable> extends Lambd
             return this;
         } else {
             Map<Triple<Long, Long, Long>, Long> cache = new ConcurrentHashMap<>();
-            Object lock = new Object();
             return (ThrowableLongTernaryOperator<X> & Memoized) (value1, value2, value3) -> {
-                long returnValue;
-                synchronized (lock) {
-                    returnValue = cache.computeIfAbsent(Triple.of(value1, value2, value3), ThrowableFunction.of(
-                            key -> applyAsLongThrows(key.getLeft(), key.getMiddle(), key.getRight())));
-                }
-                return returnValue;
+                return cache.computeIfAbsent(Triple.of(value1, value2, value3),
+                        ThrowableFunction.of(key -> applyAsLongThrows(key.getLeft(), key.getMiddle(), key.getRight())));
             };
         }
     }

@@ -604,14 +604,9 @@ public interface ThrowableBiBooleanToShortFunction<X extends Throwable> extends 
             return this;
         } else {
             Map<Pair<Boolean, Boolean>, Short> cache = new ConcurrentHashMap<>();
-            Object lock = new Object();
             return (ThrowableBiBooleanToShortFunction<X> & Memoized) (value1, value2) -> {
-                short returnValue;
-                synchronized (lock) {
-                    returnValue = cache.computeIfAbsent(Pair.of(value1, value2), ThrowableFunction.of(
-                            key -> applyAsShortThrows(key.getLeft(), key.getRight())));
-                }
-                return returnValue;
+                return cache.computeIfAbsent(Pair.of(value1, value2),
+                        ThrowableFunction.of(key -> applyAsShortThrows(key.getLeft(), key.getRight())));
             };
         }
     }

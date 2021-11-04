@@ -587,14 +587,9 @@ public interface BiBooleanToDoubleFunction extends Lambda {
             return this;
         } else {
             Map<Pair<Boolean, Boolean>, Double> cache = new ConcurrentHashMap<>();
-            Object lock = new Object();
             return (BiBooleanToDoubleFunction & Memoized) (value1, value2) -> {
-                double returnValue;
-                synchronized (lock) {
-                    returnValue = cache.computeIfAbsent(Pair.of(value1, value2),
-                            key -> applyAsDouble(key.getLeft(), key.getRight()));
-                }
-                return returnValue;
+                return cache.computeIfAbsent(Pair.of(value1, value2),
+                        key -> applyAsDouble(key.getLeft(), key.getRight()));
             };
         }
     }

@@ -683,14 +683,9 @@ public interface ThrowableTriFloatToByteFunction<X extends Throwable> extends La
             return this;
         } else {
             Map<Triple<Float, Float, Float>, Byte> cache = new ConcurrentHashMap<>();
-            Object lock = new Object();
             return (ThrowableTriFloatToByteFunction<X> & Memoized) (value1, value2, value3) -> {
-                byte returnValue;
-                synchronized (lock) {
-                    returnValue = cache.computeIfAbsent(Triple.of(value1, value2, value3), ThrowableFunction.of(
-                            key -> applyAsByteThrows(key.getLeft(), key.getMiddle(), key.getRight())));
-                }
-                return returnValue;
+                return cache.computeIfAbsent(Triple.of(value1, value2, value3),
+                        ThrowableFunction.of(key -> applyAsByteThrows(key.getLeft(), key.getMiddle(), key.getRight())));
             };
         }
     }

@@ -802,14 +802,9 @@ public interface TriPredicate<T, U, V> extends Lambda {
             return this;
         } else {
             Map<Triple<T, U, V>, Boolean> cache = new ConcurrentHashMap<>();
-            Object lock = new Object();
             return (TriPredicate<T, U, V> & Memoized) (t, u, v) -> {
-                boolean returnValue;
-                synchronized (lock) {
-                    returnValue = cache.computeIfAbsent(Triple.of(t, u, v),
-                            key -> test(key.getLeft(), key.getMiddle(), key.getRight()));
-                }
-                return returnValue;
+                return cache.computeIfAbsent(Triple.of(t, u, v),
+                        key -> test(key.getLeft(), key.getMiddle(), key.getRight()));
             };
         }
     }

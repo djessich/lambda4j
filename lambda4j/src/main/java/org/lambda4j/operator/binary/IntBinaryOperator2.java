@@ -634,14 +634,8 @@ public interface IntBinaryOperator2 extends Lambda, IntBinaryOperator {
             return this;
         } else {
             Map<Pair<Integer, Integer>, Integer> cache = new ConcurrentHashMap<>();
-            Object lock = new Object();
             return (IntBinaryOperator2 & Memoized) (value1, value2) -> {
-                int returnValue;
-                synchronized (lock) {
-                    returnValue = cache.computeIfAbsent(Pair.of(value1, value2),
-                            key -> applyAsInt(key.getLeft(), key.getRight()));
-                }
-                return returnValue;
+                return cache.computeIfAbsent(Pair.of(value1, value2), key -> applyAsInt(key.getLeft(), key.getRight()));
             };
         }
     }

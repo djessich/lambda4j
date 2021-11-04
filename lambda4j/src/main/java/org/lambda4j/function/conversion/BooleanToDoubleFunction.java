@@ -507,13 +507,8 @@ public interface BooleanToDoubleFunction extends Lambda {
             return this;
         } else {
             Map<Boolean, Double> cache = new ConcurrentHashMap<>();
-            Object lock = new Object();
             return (BooleanToDoubleFunction & Memoized) value -> {
-                double returnValue;
-                synchronized (lock) {
-                    returnValue = cache.computeIfAbsent(value, this::applyAsDouble);
-                }
-                return returnValue;
+                return cache.computeIfAbsent(value, this::applyAsDouble);
             };
         }
     }

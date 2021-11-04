@@ -502,13 +502,8 @@ public interface LongToCharFunction extends Lambda {
             return this;
         } else {
             Map<Long, Character> cache = new ConcurrentHashMap<>();
-            Object lock = new Object();
             return (LongToCharFunction & Memoized) value -> {
-                char returnValue;
-                synchronized (lock) {
-                    returnValue = cache.computeIfAbsent(value, this::applyAsChar);
-                }
-                return returnValue;
+                return cache.computeIfAbsent(value, this::applyAsChar);
             };
         }
     }

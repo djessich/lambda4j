@@ -610,14 +610,9 @@ public interface ThrowableBiCharToLongFunction<X extends Throwable> extends Lamb
             return this;
         } else {
             Map<Pair<Character, Character>, Long> cache = new ConcurrentHashMap<>();
-            Object lock = new Object();
             return (ThrowableBiCharToLongFunction<X> & Memoized) (value1, value2) -> {
-                long returnValue;
-                synchronized (lock) {
-                    returnValue = cache.computeIfAbsent(Pair.of(value1, value2), ThrowableFunction.of(
-                            key -> applyAsLongThrows(key.getLeft(), key.getRight())));
-                }
-                return returnValue;
+                return cache.computeIfAbsent(Pair.of(value1, value2),
+                        ThrowableFunction.of(key -> applyAsLongThrows(key.getLeft(), key.getRight())));
             };
         }
     }

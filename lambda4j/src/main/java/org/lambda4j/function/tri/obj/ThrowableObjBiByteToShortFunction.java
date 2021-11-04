@@ -722,14 +722,9 @@ public interface ThrowableObjBiByteToShortFunction<T, X extends Throwable> exten
             return this;
         } else {
             Map<Triple<T, Byte, Byte>, Short> cache = new ConcurrentHashMap<>();
-            Object lock = new Object();
             return (ThrowableObjBiByteToShortFunction<T, X> & Memoized) (t, value1, value2) -> {
-                short returnValue;
-                synchronized (lock) {
-                    returnValue = cache.computeIfAbsent(Triple.of(t, value1, value2), ThrowableFunction.of(
-                            key -> applyAsShortThrows(key.getLeft(), key.getMiddle(), key.getRight())));
-                }
-                return returnValue;
+                return cache.computeIfAbsent(Triple.of(t, value1, value2), ThrowableFunction.of(
+                        key -> applyAsShortThrows(key.getLeft(), key.getMiddle(), key.getRight())));
             };
         }
     }

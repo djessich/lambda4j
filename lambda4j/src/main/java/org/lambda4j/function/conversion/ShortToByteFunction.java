@@ -499,13 +499,8 @@ public interface ShortToByteFunction extends Lambda {
             return this;
         } else {
             Map<Short, Byte> cache = new ConcurrentHashMap<>();
-            Object lock = new Object();
             return (ShortToByteFunction & Memoized) value -> {
-                byte returnValue;
-                synchronized (lock) {
-                    returnValue = cache.computeIfAbsent(value, this::applyAsByte);
-                }
-                return returnValue;
+                return cache.computeIfAbsent(value, this::applyAsByte);
             };
         }
     }

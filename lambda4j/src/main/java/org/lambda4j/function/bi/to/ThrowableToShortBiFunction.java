@@ -641,14 +641,9 @@ public interface ThrowableToShortBiFunction<T, U, X extends Throwable> extends L
             return this;
         } else {
             Map<Pair<T, U>, Short> cache = new ConcurrentHashMap<>();
-            Object lock = new Object();
             return (ThrowableToShortBiFunction<T, U, X> & Memoized) (t, u) -> {
-                short returnValue;
-                synchronized (lock) {
-                    returnValue = cache.computeIfAbsent(Pair.of(t, u), ThrowableFunction.of(
-                            key -> applyAsShortThrows(key.getLeft(), key.getRight())));
-                }
-                return returnValue;
+                return cache.computeIfAbsent(Pair.of(t, u),
+                        ThrowableFunction.of(key -> applyAsShortThrows(key.getLeft(), key.getRight())));
             };
         }
     }

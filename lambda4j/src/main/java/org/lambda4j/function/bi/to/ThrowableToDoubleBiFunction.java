@@ -663,14 +663,9 @@ public interface ThrowableToDoubleBiFunction<T, U, X extends Throwable> extends 
             return this;
         } else {
             Map<Pair<T, U>, Double> cache = new ConcurrentHashMap<>();
-            Object lock = new Object();
             return (ThrowableToDoubleBiFunction<T, U, X> & Memoized) (t, u) -> {
-                double returnValue;
-                synchronized (lock) {
-                    returnValue = cache.computeIfAbsent(Pair.of(t, u), ThrowableFunction.of(
-                            key -> applyAsDoubleThrows(key.getLeft(), key.getRight())));
-                }
-                return returnValue;
+                return cache.computeIfAbsent(Pair.of(t, u),
+                        ThrowableFunction.of(key -> applyAsDoubleThrows(key.getLeft(), key.getRight())));
             };
         }
     }

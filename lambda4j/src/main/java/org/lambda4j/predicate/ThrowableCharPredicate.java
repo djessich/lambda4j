@@ -631,13 +631,8 @@ public interface ThrowableCharPredicate<X extends Throwable> extends Lambda {
             return this;
         } else {
             Map<Character, Boolean> cache = new ConcurrentHashMap<>();
-            Object lock = new Object();
             return (ThrowableCharPredicate<X> & Memoized) value -> {
-                boolean returnValue;
-                synchronized (lock) {
-                    returnValue = cache.computeIfAbsent(value, ThrowableFunction.of(this::testThrows));
-                }
-                return returnValue;
+                return cache.computeIfAbsent(value, ThrowableFunction.of(this::testThrows));
             };
         }
     }

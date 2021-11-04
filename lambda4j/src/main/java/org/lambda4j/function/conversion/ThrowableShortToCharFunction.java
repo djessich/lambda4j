@@ -508,13 +508,8 @@ public interface ThrowableShortToCharFunction<X extends Throwable> extends Lambd
             return this;
         } else {
             Map<Short, Character> cache = new ConcurrentHashMap<>();
-            Object lock = new Object();
             return (ThrowableShortToCharFunction<X> & Memoized) value -> {
-                char returnValue;
-                synchronized (lock) {
-                    returnValue = cache.computeIfAbsent(value, ThrowableFunction.of(this::applyAsCharThrows));
-                }
-                return returnValue;
+                return cache.computeIfAbsent(value, ThrowableFunction.of(this::applyAsCharThrows));
             };
         }
     }

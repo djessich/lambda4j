@@ -624,14 +624,9 @@ public interface ThrowableObjIntToByteFunction<T, X extends Throwable> extends L
             return this;
         } else {
             Map<Pair<T, Integer>, Byte> cache = new ConcurrentHashMap<>();
-            Object lock = new Object();
             return (ThrowableObjIntToByteFunction<T, X> & Memoized) (t, value) -> {
-                byte returnValue;
-                synchronized (lock) {
-                    returnValue = cache.computeIfAbsent(Pair.of(t, value), ThrowableFunction.of(
-                            key -> applyAsByteThrows(key.getLeft(), key.getRight())));
-                }
-                return returnValue;
+                return cache.computeIfAbsent(Pair.of(t, value),
+                        ThrowableFunction.of(key -> applyAsByteThrows(key.getLeft(), key.getRight())));
             };
         }
     }

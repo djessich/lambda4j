@@ -630,14 +630,9 @@ public interface CharBinaryOperator extends Lambda {
             return this;
         } else {
             Map<Pair<Character, Character>, Character> cache = new ConcurrentHashMap<>();
-            Object lock = new Object();
             return (CharBinaryOperator & Memoized) (value1, value2) -> {
-                char returnValue;
-                synchronized (lock) {
-                    returnValue = cache.computeIfAbsent(Pair.of(value1, value2),
-                            key -> applyAsChar(key.getLeft(), key.getRight()));
-                }
-                return returnValue;
+                return cache.computeIfAbsent(Pair.of(value1, value2),
+                        key -> applyAsChar(key.getLeft(), key.getRight()));
             };
         }
     }

@@ -680,14 +680,9 @@ public interface ThrowableBooleanTernaryOperator<X extends Throwable> extends La
             return this;
         } else {
             Map<Triple<Boolean, Boolean, Boolean>, Boolean> cache = new ConcurrentHashMap<>();
-            Object lock = new Object();
             return (ThrowableBooleanTernaryOperator<X> & Memoized) (value1, value2, value3) -> {
-                boolean returnValue;
-                synchronized (lock) {
-                    returnValue = cache.computeIfAbsent(Triple.of(value1, value2, value3), ThrowableFunction.of(
-                            key -> applyAsBooleanThrows(key.getLeft(), key.getMiddle(), key.getRight())));
-                }
-                return returnValue;
+                return cache.computeIfAbsent(Triple.of(value1, value2, value3), ThrowableFunction.of(
+                        key -> applyAsBooleanThrows(key.getLeft(), key.getMiddle(), key.getRight())));
             };
         }
     }

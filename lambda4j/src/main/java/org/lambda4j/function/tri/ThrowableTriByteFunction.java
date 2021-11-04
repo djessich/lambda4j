@@ -744,14 +744,9 @@ public interface ThrowableTriByteFunction<R, X extends Throwable> extends Lambda
             return this;
         } else {
             Map<Triple<Byte, Byte, Byte>, R> cache = new ConcurrentHashMap<>();
-            Object lock = new Object();
             return (ThrowableTriByteFunction<R, X> & Memoized) (value1, value2, value3) -> {
-                R returnValue;
-                synchronized (lock) {
-                    returnValue = cache.computeIfAbsent(Triple.of(value1, value2, value3), ThrowableFunction.of(
-                            key -> applyThrows(key.getLeft(), key.getMiddle(), key.getRight())));
-                }
-                return returnValue;
+                return cache.computeIfAbsent(Triple.of(value1, value2, value3),
+                        ThrowableFunction.of(key -> applyThrows(key.getLeft(), key.getMiddle(), key.getRight())));
             };
         }
     }

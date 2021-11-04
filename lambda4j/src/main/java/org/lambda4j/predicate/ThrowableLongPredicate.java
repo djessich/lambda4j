@@ -652,13 +652,8 @@ public interface ThrowableLongPredicate<X extends Throwable> extends Lambda, Lon
             return this;
         } else {
             Map<Long, Boolean> cache = new ConcurrentHashMap<>();
-            Object lock = new Object();
             return (ThrowableLongPredicate<X> & Memoized) value -> {
-                boolean returnValue;
-                synchronized (lock) {
-                    returnValue = cache.computeIfAbsent(value, ThrowableFunction.of(this::testThrows));
-                }
-                return returnValue;
+                return cache.computeIfAbsent(value, ThrowableFunction.of(this::testThrows));
             };
         }
     }

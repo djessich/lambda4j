@@ -601,14 +601,9 @@ public interface ThrowableBiBooleanToIntFunction<X extends Throwable> extends La
             return this;
         } else {
             Map<Pair<Boolean, Boolean>, Integer> cache = new ConcurrentHashMap<>();
-            Object lock = new Object();
             return (ThrowableBiBooleanToIntFunction<X> & Memoized) (value1, value2) -> {
-                int returnValue;
-                synchronized (lock) {
-                    returnValue = cache.computeIfAbsent(Pair.of(value1, value2), ThrowableFunction.of(
-                            key -> applyAsIntThrows(key.getLeft(), key.getRight())));
-                }
-                return returnValue;
+                return cache.computeIfAbsent(Pair.of(value1, value2),
+                        ThrowableFunction.of(key -> applyAsIntThrows(key.getLeft(), key.getRight())));
             };
         }
     }

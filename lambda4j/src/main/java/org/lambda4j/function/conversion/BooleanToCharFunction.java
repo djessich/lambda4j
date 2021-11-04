@@ -504,13 +504,8 @@ public interface BooleanToCharFunction extends Lambda {
             return this;
         } else {
             Map<Boolean, Character> cache = new ConcurrentHashMap<>();
-            Object lock = new Object();
             return (BooleanToCharFunction & Memoized) value -> {
-                char returnValue;
-                synchronized (lock) {
-                    returnValue = cache.computeIfAbsent(value, this::applyAsChar);
-                }
-                return returnValue;
+                return cache.computeIfAbsent(value, this::applyAsChar);
             };
         }
     }

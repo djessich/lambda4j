@@ -641,14 +641,9 @@ public interface ThrowableToCharBiFunction<T, U, X extends Throwable> extends La
             return this;
         } else {
             Map<Pair<T, U>, Character> cache = new ConcurrentHashMap<>();
-            Object lock = new Object();
             return (ThrowableToCharBiFunction<T, U, X> & Memoized) (t, u) -> {
-                char returnValue;
-                synchronized (lock) {
-                    returnValue = cache.computeIfAbsent(Pair.of(t, u), ThrowableFunction.of(
-                            key -> applyAsCharThrows(key.getLeft(), key.getRight())));
-                }
-                return returnValue;
+                return cache.computeIfAbsent(Pair.of(t, u),
+                        ThrowableFunction.of(key -> applyAsCharThrows(key.getLeft(), key.getRight())));
             };
         }
     }

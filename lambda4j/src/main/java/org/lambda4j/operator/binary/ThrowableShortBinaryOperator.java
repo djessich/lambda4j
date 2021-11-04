@@ -656,14 +656,9 @@ public interface ThrowableShortBinaryOperator<X extends Throwable> extends Lambd
             return this;
         } else {
             Map<Pair<Short, Short>, Short> cache = new ConcurrentHashMap<>();
-            Object lock = new Object();
             return (ThrowableShortBinaryOperator<X> & Memoized) (value1, value2) -> {
-                short returnValue;
-                synchronized (lock) {
-                    returnValue = cache.computeIfAbsent(Pair.of(value1, value2), ThrowableFunction.of(
-                            key -> applyAsShortThrows(key.getLeft(), key.getRight())));
-                }
-                return returnValue;
+                return cache.computeIfAbsent(Pair.of(value1, value2),
+                        ThrowableFunction.of(key -> applyAsShortThrows(key.getLeft(), key.getRight())));
             };
         }
     }

@@ -502,13 +502,8 @@ public interface ByteToLongFunction extends Lambda {
             return this;
         } else {
             Map<Byte, Long> cache = new ConcurrentHashMap<>();
-            Object lock = new Object();
             return (ByteToLongFunction & Memoized) value -> {
-                long returnValue;
-                synchronized (lock) {
-                    returnValue = cache.computeIfAbsent(value, this::applyAsLong);
-                }
-                return returnValue;
+                return cache.computeIfAbsent(value, this::applyAsLong);
             };
         }
     }

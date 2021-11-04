@@ -528,13 +528,8 @@ public interface ThrowableDoubleToIntFunction<X extends Throwable> extends Lambd
             return this;
         } else {
             Map<Double, Integer> cache = new ConcurrentHashMap<>();
-            Object lock = new Object();
             return (ThrowableDoubleToIntFunction<X> & Memoized) value -> {
-                int returnValue;
-                synchronized (lock) {
-                    returnValue = cache.computeIfAbsent(value, ThrowableFunction.of(this::applyAsIntThrows));
-                }
-                return returnValue;
+                return cache.computeIfAbsent(value, ThrowableFunction.of(this::applyAsIntThrows));
             };
         }
     }

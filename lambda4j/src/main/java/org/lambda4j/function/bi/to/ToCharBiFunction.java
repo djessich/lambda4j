@@ -626,14 +626,8 @@ public interface ToCharBiFunction<T, U> extends Lambda {
             return this;
         } else {
             Map<Pair<T, U>, Character> cache = new ConcurrentHashMap<>();
-            Object lock = new Object();
             return (ToCharBiFunction<T, U> & Memoized) (t, u) -> {
-                char returnValue;
-                synchronized (lock) {
-                    returnValue = cache.computeIfAbsent(Pair.of(t, u),
-                            key -> applyAsChar(key.getLeft(), key.getRight()));
-                }
-                return returnValue;
+                return cache.computeIfAbsent(Pair.of(t, u), key -> applyAsChar(key.getLeft(), key.getRight()));
             };
         }
     }

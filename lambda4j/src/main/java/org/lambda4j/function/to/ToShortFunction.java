@@ -519,13 +519,8 @@ public interface ToShortFunction<T> extends Lambda {
             return this;
         } else {
             Map<T, Short> cache = new ConcurrentHashMap<>();
-            Object lock = new Object();
             return (ToShortFunction<T> & Memoized) t -> {
-                short returnValue;
-                synchronized (lock) {
-                    returnValue = cache.computeIfAbsent(t, this::applyAsShort);
-                }
-                return returnValue;
+                return cache.computeIfAbsent(t, this::applyAsShort);
             };
         }
     }

@@ -625,13 +625,8 @@ public interface IntPredicate2 extends Lambda, IntPredicate {
             return this;
         } else {
             Map<Integer, Boolean> cache = new ConcurrentHashMap<>();
-            Object lock = new Object();
             return (IntPredicate2 & Memoized) value -> {
-                boolean returnValue;
-                synchronized (lock) {
-                    returnValue = cache.computeIfAbsent(value, this::test);
-                }
-                return returnValue;
+                return cache.computeIfAbsent(value, this::test);
             };
         }
     }

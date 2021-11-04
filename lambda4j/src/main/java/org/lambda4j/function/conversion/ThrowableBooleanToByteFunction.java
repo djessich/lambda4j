@@ -511,13 +511,8 @@ public interface ThrowableBooleanToByteFunction<X extends Throwable> extends Lam
             return this;
         } else {
             Map<Boolean, Byte> cache = new ConcurrentHashMap<>();
-            Object lock = new Object();
             return (ThrowableBooleanToByteFunction<X> & Memoized) value -> {
-                byte returnValue;
-                synchronized (lock) {
-                    returnValue = cache.computeIfAbsent(value, ThrowableFunction.of(this::applyAsByteThrows));
-                }
-                return returnValue;
+                return cache.computeIfAbsent(value, ThrowableFunction.of(this::applyAsByteThrows));
             };
         }
     }

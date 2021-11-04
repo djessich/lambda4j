@@ -664,14 +664,9 @@ public interface ThrowableBiIntFunction<R, X extends Throwable> extends Lambda {
             return this;
         } else {
             Map<Pair<Integer, Integer>, R> cache = new ConcurrentHashMap<>();
-            Object lock = new Object();
             return (ThrowableBiIntFunction<R, X> & Memoized) (value1, value2) -> {
-                R returnValue;
-                synchronized (lock) {
-                    returnValue = cache.computeIfAbsent(Pair.of(value1, value2), ThrowableFunction.of(
-                            key -> applyThrows(key.getLeft(), key.getRight())));
-                }
-                return returnValue;
+                return cache.computeIfAbsent(Pair.of(value1, value2),
+                        ThrowableFunction.of(key -> applyThrows(key.getLeft(), key.getRight())));
             };
         }
     }

@@ -608,14 +608,9 @@ public interface ThrowableBiObjCharFunction<T, U, R, X extends Throwable> extend
             return this;
         } else {
             Map<Triple<T, U, Character>, R> cache = new ConcurrentHashMap<>();
-            Object lock = new Object();
             return (ThrowableBiObjCharFunction<T, U, R, X> & Memoized) (t, u, value) -> {
-                R returnValue;
-                synchronized (lock) {
-                    returnValue = cache.computeIfAbsent(Triple.of(t, u, value), ThrowableFunction.of(
-                            key -> applyThrows(key.getLeft(), key.getMiddle(), key.getRight())));
-                }
-                return returnValue;
+                return cache.computeIfAbsent(Triple.of(t, u, value),
+                        ThrowableFunction.of(key -> applyThrows(key.getLeft(), key.getMiddle(), key.getRight())));
             };
         }
     }

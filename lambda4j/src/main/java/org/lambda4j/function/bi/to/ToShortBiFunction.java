@@ -626,14 +626,8 @@ public interface ToShortBiFunction<T, U> extends Lambda {
             return this;
         } else {
             Map<Pair<T, U>, Short> cache = new ConcurrentHashMap<>();
-            Object lock = new Object();
             return (ToShortBiFunction<T, U> & Memoized) (t, u) -> {
-                short returnValue;
-                synchronized (lock) {
-                    returnValue = cache.computeIfAbsent(Pair.of(t, u),
-                            key -> applyAsShort(key.getLeft(), key.getRight()));
-                }
-                return returnValue;
+                return cache.computeIfAbsent(Pair.of(t, u), key -> applyAsShort(key.getLeft(), key.getRight()));
             };
         }
     }

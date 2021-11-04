@@ -722,14 +722,9 @@ public interface ThrowableToFloatTriFunction<T, U, V, X extends Throwable> exten
             return this;
         } else {
             Map<Triple<T, U, V>, Float> cache = new ConcurrentHashMap<>();
-            Object lock = new Object();
             return (ThrowableToFloatTriFunction<T, U, V, X> & Memoized) (t, u, v) -> {
-                float returnValue;
-                synchronized (lock) {
-                    returnValue = cache.computeIfAbsent(Triple.of(t, u, v), ThrowableFunction.of(
-                            key -> applyAsFloatThrows(key.getLeft(), key.getMiddle(), key.getRight())));
-                }
-                return returnValue;
+                return cache.computeIfAbsent(Triple.of(t, u, v), ThrowableFunction.of(
+                        key -> applyAsFloatThrows(key.getLeft(), key.getMiddle(), key.getRight())));
             };
         }
     }

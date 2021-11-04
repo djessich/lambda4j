@@ -746,14 +746,9 @@ public interface ThrowableBiObjShortToFloatFunction<T, U, X extends Throwable> e
             return this;
         } else {
             Map<Triple<T, U, Short>, Float> cache = new ConcurrentHashMap<>();
-            Object lock = new Object();
             return (ThrowableBiObjShortToFloatFunction<T, U, X> & Memoized) (t, u, value) -> {
-                float returnValue;
-                synchronized (lock) {
-                    returnValue = cache.computeIfAbsent(Triple.of(t, u, value), ThrowableFunction.of(
-                            key -> applyAsFloatThrows(key.getLeft(), key.getMiddle(), key.getRight())));
-                }
-                return returnValue;
+                return cache.computeIfAbsent(Triple.of(t, u, value), ThrowableFunction.of(
+                        key -> applyAsFloatThrows(key.getLeft(), key.getMiddle(), key.getRight())));
             };
         }
     }

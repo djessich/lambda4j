@@ -528,13 +528,8 @@ public interface ThrowableDoubleToLongFunction<X extends Throwable> extends Lamb
             return this;
         } else {
             Map<Double, Long> cache = new ConcurrentHashMap<>();
-            Object lock = new Object();
             return (ThrowableDoubleToLongFunction<X> & Memoized) value -> {
-                long returnValue;
-                synchronized (lock) {
-                    returnValue = cache.computeIfAbsent(value, ThrowableFunction.of(this::applyAsLongThrows));
-                }
-                return returnValue;
+                return cache.computeIfAbsent(value, ThrowableFunction.of(this::applyAsLongThrows));
             };
         }
     }

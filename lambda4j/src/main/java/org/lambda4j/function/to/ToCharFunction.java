@@ -519,13 +519,8 @@ public interface ToCharFunction<T> extends Lambda {
             return this;
         } else {
             Map<T, Character> cache = new ConcurrentHashMap<>();
-            Object lock = new Object();
             return (ToCharFunction<T> & Memoized) t -> {
-                char returnValue;
-                synchronized (lock) {
-                    returnValue = cache.computeIfAbsent(t, this::applyAsChar);
-                }
-                return returnValue;
+                return cache.computeIfAbsent(t, this::applyAsChar);
             };
         }
     }

@@ -682,15 +682,9 @@ public interface ObjBiShortToByteFunction<T> extends Lambda {
             return this;
         } else {
             Map<Triple<T, Short, Short>, Byte> cache = new ConcurrentHashMap<>();
-            Object lock = new Object();
             return (ObjBiShortToByteFunction<T> & Memoized) (t, value1, value2) -> {
-                byte returnValue;
-                synchronized (lock) {
-                    returnValue = cache.computeIfAbsent(Triple.of(t, value1, value2),
-                            key -> applyAsByte(key.getLeft(), key.getMiddle(),
-                                    key.getRight()));
-                }
-                return returnValue;
+                return cache.computeIfAbsent(Triple.of(t, value1, value2),
+                        key -> applyAsByte(key.getLeft(), key.getMiddle(), key.getRight()));
             };
         }
     }

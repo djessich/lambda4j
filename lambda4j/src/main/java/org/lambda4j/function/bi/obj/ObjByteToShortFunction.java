@@ -609,14 +609,8 @@ public interface ObjByteToShortFunction<T> extends Lambda {
             return this;
         } else {
             Map<Pair<T, Byte>, Short> cache = new ConcurrentHashMap<>();
-            Object lock = new Object();
             return (ObjByteToShortFunction<T> & Memoized) (t, value) -> {
-                short returnValue;
-                synchronized (lock) {
-                    returnValue = cache.computeIfAbsent(Pair.of(t, value),
-                            key -> applyAsShort(key.getLeft(), key.getRight()));
-                }
-                return returnValue;
+                return cache.computeIfAbsent(Pair.of(t, value), key -> applyAsShort(key.getLeft(), key.getRight()));
             };
         }
     }

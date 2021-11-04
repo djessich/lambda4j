@@ -694,15 +694,9 @@ public interface ToShortTriFunction<T, U, V> extends Lambda {
             return this;
         } else {
             Map<Triple<T, U, V>, Short> cache = new ConcurrentHashMap<>();
-            Object lock = new Object();
             return (ToShortTriFunction<T, U, V> & Memoized) (t, u, v) -> {
-                short returnValue;
-                synchronized (lock) {
-                    returnValue = cache.computeIfAbsent(Triple.of(t, u, v),
-                            key -> applyAsShort(key.getLeft(), key.getMiddle(),
-                                    key.getRight()));
-                }
-                return returnValue;
+                return cache.computeIfAbsent(Triple.of(t, u, v),
+                        key -> applyAsShort(key.getLeft(), key.getMiddle(), key.getRight()));
             };
         }
     }

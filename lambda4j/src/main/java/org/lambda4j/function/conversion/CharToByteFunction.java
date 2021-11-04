@@ -499,13 +499,8 @@ public interface CharToByteFunction extends Lambda {
             return this;
         } else {
             Map<Character, Byte> cache = new ConcurrentHashMap<>();
-            Object lock = new Object();
             return (CharToByteFunction & Memoized) value -> {
-                byte returnValue;
-                synchronized (lock) {
-                    returnValue = cache.computeIfAbsent(value, this::applyAsByte);
-                }
-                return returnValue;
+                return cache.computeIfAbsent(value, this::applyAsByte);
             };
         }
     }

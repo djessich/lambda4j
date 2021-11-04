@@ -526,13 +526,8 @@ public interface IntUnaryOperator2 extends Lambda, IntUnaryOperator {
             return this;
         } else {
             Map<Integer, Integer> cache = new ConcurrentHashMap<>();
-            Object lock = new Object();
             return (IntUnaryOperator2 & Memoized) value -> {
-                int returnValue;
-                synchronized (lock) {
-                    returnValue = cache.computeIfAbsent(value, this::applyAsInt);
-                }
-                return returnValue;
+                return cache.computeIfAbsent(value, this::applyAsInt);
             };
         }
     }

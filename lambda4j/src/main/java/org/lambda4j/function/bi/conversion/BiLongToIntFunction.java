@@ -588,14 +588,8 @@ public interface BiLongToIntFunction extends Lambda {
             return this;
         } else {
             Map<Pair<Long, Long>, Integer> cache = new ConcurrentHashMap<>();
-            Object lock = new Object();
             return (BiLongToIntFunction & Memoized) (value1, value2) -> {
-                int returnValue;
-                synchronized (lock) {
-                    returnValue = cache.computeIfAbsent(Pair.of(value1, value2),
-                            key -> applyAsInt(key.getLeft(), key.getRight()));
-                }
-                return returnValue;
+                return cache.computeIfAbsent(Pair.of(value1, value2), key -> applyAsInt(key.getLeft(), key.getRight()));
             };
         }
     }

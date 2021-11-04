@@ -630,14 +630,8 @@ public interface ToDoubleBiFunction2<T, U> extends Lambda, ToDoubleBiFunction<T,
             return this;
         } else {
             Map<Pair<T, U>, Double> cache = new ConcurrentHashMap<>();
-            Object lock = new Object();
             return (ToDoubleBiFunction2<T, U> & Memoized) (t, u) -> {
-                double returnValue;
-                synchronized (lock) {
-                    returnValue = cache.computeIfAbsent(Pair.of(t, u),
-                            key -> applyAsDouble(key.getLeft(), key.getRight()));
-                }
-                return returnValue;
+                return cache.computeIfAbsent(Pair.of(t, u), key -> applyAsDouble(key.getLeft(), key.getRight()));
             };
         }
     }

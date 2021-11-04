@@ -630,14 +630,9 @@ public interface ShortBinaryOperator extends Lambda {
             return this;
         } else {
             Map<Pair<Short, Short>, Short> cache = new ConcurrentHashMap<>();
-            Object lock = new Object();
             return (ShortBinaryOperator & Memoized) (value1, value2) -> {
-                short returnValue;
-                synchronized (lock) {
-                    returnValue = cache.computeIfAbsent(Pair.of(value1, value2),
-                            key -> applyAsShort(key.getLeft(), key.getRight()));
-                }
-                return returnValue;
+                return cache.computeIfAbsent(Pair.of(value1, value2),
+                        key -> applyAsShort(key.getLeft(), key.getRight()));
             };
         }
     }

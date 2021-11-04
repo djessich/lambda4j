@@ -625,13 +625,8 @@ public interface LongPredicate2 extends Lambda, LongPredicate {
             return this;
         } else {
             Map<Long, Boolean> cache = new ConcurrentHashMap<>();
-            Object lock = new Object();
             return (LongPredicate2 & Memoized) value -> {
-                boolean returnValue;
-                synchronized (lock) {
-                    returnValue = cache.computeIfAbsent(value, this::test);
-                }
-                return returnValue;
+                return cache.computeIfAbsent(value, this::test);
             };
         }
     }

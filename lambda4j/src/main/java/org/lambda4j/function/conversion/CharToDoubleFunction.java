@@ -502,13 +502,8 @@ public interface CharToDoubleFunction extends Lambda {
             return this;
         } else {
             Map<Character, Double> cache = new ConcurrentHashMap<>();
-            Object lock = new Object();
             return (CharToDoubleFunction & Memoized) value -> {
-                double returnValue;
-                synchronized (lock) {
-                    returnValue = cache.computeIfAbsent(value, this::applyAsDouble);
-                }
-                return returnValue;
+                return cache.computeIfAbsent(value, this::applyAsDouble);
             };
         }
     }

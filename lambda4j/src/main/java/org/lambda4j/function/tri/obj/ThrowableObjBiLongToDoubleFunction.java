@@ -722,14 +722,9 @@ public interface ThrowableObjBiLongToDoubleFunction<T, X extends Throwable> exte
             return this;
         } else {
             Map<Triple<T, Long, Long>, Double> cache = new ConcurrentHashMap<>();
-            Object lock = new Object();
             return (ThrowableObjBiLongToDoubleFunction<T, X> & Memoized) (t, value1, value2) -> {
-                double returnValue;
-                synchronized (lock) {
-                    returnValue = cache.computeIfAbsent(Triple.of(t, value1, value2), ThrowableFunction.of(
-                            key -> applyAsDoubleThrows(key.getLeft(), key.getMiddle(), key.getRight())));
-                }
-                return returnValue;
+                return cache.computeIfAbsent(Triple.of(t, value1, value2), ThrowableFunction.of(
+                        key -> applyAsDoubleThrows(key.getLeft(), key.getMiddle(), key.getRight())));
             };
         }
     }

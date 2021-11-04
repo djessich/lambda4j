@@ -523,13 +523,8 @@ public interface ToIntFunction2<T> extends Lambda, ToIntFunction<T> {
             return this;
         } else {
             Map<T, Integer> cache = new ConcurrentHashMap<>();
-            Object lock = new Object();
             return (ToIntFunction2<T> & Memoized) t -> {
-                int returnValue;
-                synchronized (lock) {
-                    returnValue = cache.computeIfAbsent(t, this::applyAsInt);
-                }
-                return returnValue;
+                return cache.computeIfAbsent(t, this::applyAsInt);
             };
         }
     }

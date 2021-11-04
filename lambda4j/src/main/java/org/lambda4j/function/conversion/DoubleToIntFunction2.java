@@ -507,13 +507,8 @@ public interface DoubleToIntFunction2 extends Lambda, DoubleToIntFunction {
             return this;
         } else {
             Map<Double, Integer> cache = new ConcurrentHashMap<>();
-            Object lock = new Object();
             return (DoubleToIntFunction2 & Memoized) value -> {
-                int returnValue;
-                synchronized (lock) {
-                    returnValue = cache.computeIfAbsent(value, this::applyAsInt);
-                }
-                return returnValue;
+                return cache.computeIfAbsent(value, this::applyAsInt);
             };
         }
     }

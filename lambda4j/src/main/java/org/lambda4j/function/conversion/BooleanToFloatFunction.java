@@ -504,13 +504,8 @@ public interface BooleanToFloatFunction extends Lambda {
             return this;
         } else {
             Map<Boolean, Float> cache = new ConcurrentHashMap<>();
-            Object lock = new Object();
             return (BooleanToFloatFunction & Memoized) value -> {
-                float returnValue;
-                synchronized (lock) {
-                    returnValue = cache.computeIfAbsent(value, this::applyAsFloat);
-                }
-                return returnValue;
+                return cache.computeIfAbsent(value, this::applyAsFloat);
             };
         }
     }

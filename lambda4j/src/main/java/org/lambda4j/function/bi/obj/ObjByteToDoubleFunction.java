@@ -610,14 +610,8 @@ public interface ObjByteToDoubleFunction<T> extends Lambda {
             return this;
         } else {
             Map<Pair<T, Byte>, Double> cache = new ConcurrentHashMap<>();
-            Object lock = new Object();
             return (ObjByteToDoubleFunction<T> & Memoized) (t, value) -> {
-                double returnValue;
-                synchronized (lock) {
-                    returnValue = cache.computeIfAbsent(Pair.of(t, value),
-                            key -> applyAsDouble(key.getLeft(), key.getRight()));
-                }
-                return returnValue;
+                return cache.computeIfAbsent(Pair.of(t, value), key -> applyAsDouble(key.getLeft(), key.getRight()));
             };
         }
     }

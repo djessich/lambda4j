@@ -695,15 +695,9 @@ public interface ToIntTriFunction<T, U, V> extends Lambda {
             return this;
         } else {
             Map<Triple<T, U, V>, Integer> cache = new ConcurrentHashMap<>();
-            Object lock = new Object();
             return (ToIntTriFunction<T, U, V> & Memoized) (t, u, v) -> {
-                int returnValue;
-                synchronized (lock) {
-                    returnValue = cache.computeIfAbsent(Triple.of(t, u, v),
-                            key -> applyAsInt(key.getLeft(), key.getMiddle(),
-                                    key.getRight()));
-                }
-                return returnValue;
+                return cache.computeIfAbsent(Triple.of(t, u, v),
+                        key -> applyAsInt(key.getLeft(), key.getMiddle(), key.getRight()));
             };
         }
     }

@@ -524,13 +524,8 @@ public interface ThrowableByteUnaryOperator<X extends Throwable> extends Lambda 
             return this;
         } else {
             Map<Byte, Byte> cache = new ConcurrentHashMap<>();
-            Object lock = new Object();
             return (ThrowableByteUnaryOperator<X> & Memoized) value -> {
-                byte returnValue;
-                synchronized (lock) {
-                    returnValue = cache.computeIfAbsent(value, ThrowableFunction.of(this::applyAsByteThrows));
-                }
-                return returnValue;
+                return cache.computeIfAbsent(value, ThrowableFunction.of(this::applyAsByteThrows));
             };
         }
     }

@@ -681,14 +681,9 @@ public interface ThrowableTriIntToFloatFunction<X extends Throwable> extends Lam
             return this;
         } else {
             Map<Triple<Integer, Integer, Integer>, Float> cache = new ConcurrentHashMap<>();
-            Object lock = new Object();
             return (ThrowableTriIntToFloatFunction<X> & Memoized) (value1, value2, value3) -> {
-                float returnValue;
-                synchronized (lock) {
-                    returnValue = cache.computeIfAbsent(Triple.of(value1, value2, value3), ThrowableFunction.of(
-                            key -> applyAsFloatThrows(key.getLeft(), key.getMiddle(), key.getRight())));
-                }
-                return returnValue;
+                return cache.computeIfAbsent(Triple.of(value1, value2, value3), ThrowableFunction.of(
+                        key -> applyAsFloatThrows(key.getLeft(), key.getMiddle(), key.getRight())));
             };
         }
     }

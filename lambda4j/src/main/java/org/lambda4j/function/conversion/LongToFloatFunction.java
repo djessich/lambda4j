@@ -502,13 +502,8 @@ public interface LongToFloatFunction extends Lambda {
             return this;
         } else {
             Map<Long, Float> cache = new ConcurrentHashMap<>();
-            Object lock = new Object();
             return (LongToFloatFunction & Memoized) value -> {
-                float returnValue;
-                synchronized (lock) {
-                    returnValue = cache.computeIfAbsent(value, this::applyAsFloat);
-                }
-                return returnValue;
+                return cache.computeIfAbsent(value, this::applyAsFloat);
             };
         }
     }

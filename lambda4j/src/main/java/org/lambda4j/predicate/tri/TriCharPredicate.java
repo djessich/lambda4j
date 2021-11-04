@@ -756,14 +756,9 @@ public interface TriCharPredicate extends Lambda {
             return this;
         } else {
             Map<Triple<Character, Character, Character>, Boolean> cache = new ConcurrentHashMap<>();
-            Object lock = new Object();
             return (TriCharPredicate & Memoized) (value1, value2, value3) -> {
-                boolean returnValue;
-                synchronized (lock) {
-                    returnValue = cache.computeIfAbsent(Triple.of(value1, value2, value3),
-                            key -> test(key.getLeft(), key.getMiddle(), key.getRight()));
-                }
-                return returnValue;
+                return cache.computeIfAbsent(Triple.of(value1, value2, value3),
+                        key -> test(key.getLeft(), key.getMiddle(), key.getRight()));
             };
         }
     }

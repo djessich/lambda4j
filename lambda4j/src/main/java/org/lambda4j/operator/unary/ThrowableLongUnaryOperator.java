@@ -544,13 +544,8 @@ public interface ThrowableLongUnaryOperator<X extends Throwable> extends Lambda,
             return this;
         } else {
             Map<Long, Long> cache = new ConcurrentHashMap<>();
-            Object lock = new Object();
             return (ThrowableLongUnaryOperator<X> & Memoized) value -> {
-                long returnValue;
-                synchronized (lock) {
-                    returnValue = cache.computeIfAbsent(value, ThrowableFunction.of(this::applyAsLongThrows));
-                }
-                return returnValue;
+                return cache.computeIfAbsent(value, ThrowableFunction.of(this::applyAsLongThrows));
             };
         }
     }

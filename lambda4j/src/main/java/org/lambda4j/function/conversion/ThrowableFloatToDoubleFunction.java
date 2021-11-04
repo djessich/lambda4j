@@ -509,13 +509,8 @@ public interface ThrowableFloatToDoubleFunction<X extends Throwable> extends Lam
             return this;
         } else {
             Map<Float, Double> cache = new ConcurrentHashMap<>();
-            Object lock = new Object();
             return (ThrowableFloatToDoubleFunction<X> & Memoized) value -> {
-                double returnValue;
-                synchronized (lock) {
-                    returnValue = cache.computeIfAbsent(value, ThrowableFunction.of(this::applyAsDoubleThrows));
-                }
-                return returnValue;
+                return cache.computeIfAbsent(value, ThrowableFunction.of(this::applyAsDoubleThrows));
             };
         }
     }

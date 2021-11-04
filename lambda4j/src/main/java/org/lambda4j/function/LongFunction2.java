@@ -547,13 +547,8 @@ public interface LongFunction2<R> extends Lambda, LongFunction<R> {
             return this;
         } else {
             Map<Long, R> cache = new ConcurrentHashMap<>();
-            Object lock = new Object();
             return (LongFunction2<R> & Memoized) value -> {
-                R returnValue;
-                synchronized (lock) {
-                    returnValue = cache.computeIfAbsent(value, this::apply);
-                }
-                return returnValue;
+                return cache.computeIfAbsent(value, this::apply);
             };
         }
     }

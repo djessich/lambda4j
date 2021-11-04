@@ -502,13 +502,8 @@ public interface ShortToIntFunction extends Lambda {
             return this;
         } else {
             Map<Short, Integer> cache = new ConcurrentHashMap<>();
-            Object lock = new Object();
             return (ShortToIntFunction & Memoized) value -> {
-                int returnValue;
-                synchronized (lock) {
-                    returnValue = cache.computeIfAbsent(value, this::applyAsInt);
-                }
-                return returnValue;
+                return cache.computeIfAbsent(value, this::applyAsInt);
             };
         }
     }

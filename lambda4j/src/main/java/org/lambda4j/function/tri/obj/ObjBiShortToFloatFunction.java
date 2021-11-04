@@ -683,15 +683,9 @@ public interface ObjBiShortToFloatFunction<T> extends Lambda {
             return this;
         } else {
             Map<Triple<T, Short, Short>, Float> cache = new ConcurrentHashMap<>();
-            Object lock = new Object();
             return (ObjBiShortToFloatFunction<T> & Memoized) (t, value1, value2) -> {
-                float returnValue;
-                synchronized (lock) {
-                    returnValue = cache.computeIfAbsent(Triple.of(t, value1, value2),
-                            key -> applyAsFloat(key.getLeft(), key.getMiddle(),
-                                    key.getRight()));
-                }
-                return returnValue;
+                return cache.computeIfAbsent(Triple.of(t, value1, value2),
+                        key -> applyAsFloat(key.getLeft(), key.getMiddle(), key.getRight()));
             };
         }
     }

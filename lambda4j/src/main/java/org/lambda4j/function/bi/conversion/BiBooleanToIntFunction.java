@@ -587,14 +587,8 @@ public interface BiBooleanToIntFunction extends Lambda {
             return this;
         } else {
             Map<Pair<Boolean, Boolean>, Integer> cache = new ConcurrentHashMap<>();
-            Object lock = new Object();
             return (BiBooleanToIntFunction & Memoized) (value1, value2) -> {
-                int returnValue;
-                synchronized (lock) {
-                    returnValue = cache.computeIfAbsent(Pair.of(value1, value2),
-                            key -> applyAsInt(key.getLeft(), key.getRight()));
-                }
-                return returnValue;
+                return cache.computeIfAbsent(Pair.of(value1, value2), key -> applyAsInt(key.getLeft(), key.getRight()));
             };
         }
     }

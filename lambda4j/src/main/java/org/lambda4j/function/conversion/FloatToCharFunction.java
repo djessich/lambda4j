@@ -499,13 +499,8 @@ public interface FloatToCharFunction extends Lambda {
             return this;
         } else {
             Map<Float, Character> cache = new ConcurrentHashMap<>();
-            Object lock = new Object();
             return (FloatToCharFunction & Memoized) value -> {
-                char returnValue;
-                synchronized (lock) {
-                    returnValue = cache.computeIfAbsent(value, this::applyAsChar);
-                }
-                return returnValue;
+                return cache.computeIfAbsent(value, this::applyAsChar);
             };
         }
     }

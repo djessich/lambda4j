@@ -674,14 +674,9 @@ public interface ThrowableTriBooleanToLongFunction<X extends Throwable> extends 
             return this;
         } else {
             Map<Triple<Boolean, Boolean, Boolean>, Long> cache = new ConcurrentHashMap<>();
-            Object lock = new Object();
             return (ThrowableTriBooleanToLongFunction<X> & Memoized) (value1, value2, value3) -> {
-                long returnValue;
-                synchronized (lock) {
-                    returnValue = cache.computeIfAbsent(Triple.of(value1, value2, value3), ThrowableFunction.of(
-                            key -> applyAsLongThrows(key.getLeft(), key.getMiddle(), key.getRight())));
-                }
-                return returnValue;
+                return cache.computeIfAbsent(Triple.of(value1, value2, value3),
+                        ThrowableFunction.of(key -> applyAsLongThrows(key.getLeft(), key.getMiddle(), key.getRight())));
             };
         }
     }

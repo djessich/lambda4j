@@ -646,15 +646,9 @@ public interface TriDoubleToFloatFunction extends Lambda {
             return this;
         } else {
             Map<Triple<Double, Double, Double>, Float> cache = new ConcurrentHashMap<>();
-            Object lock = new Object();
             return (TriDoubleToFloatFunction & Memoized) (value1, value2, value3) -> {
-                float returnValue;
-                synchronized (lock) {
-                    returnValue = cache.computeIfAbsent(Triple.of(value1, value2, value3),
-                            key -> applyAsFloat(key.getLeft(), key.getMiddle(),
-                                    key.getRight()));
-                }
-                return returnValue;
+                return cache.computeIfAbsent(Triple.of(value1, value2, value3),
+                        key -> applyAsFloat(key.getLeft(), key.getMiddle(), key.getRight()));
             };
         }
     }

@@ -523,13 +523,8 @@ public interface ToLongFunction2<T> extends Lambda, ToLongFunction<T> {
             return this;
         } else {
             Map<T, Long> cache = new ConcurrentHashMap<>();
-            Object lock = new Object();
             return (ToLongFunction2<T> & Memoized) t -> {
-                long returnValue;
-                synchronized (lock) {
-                    returnValue = cache.computeIfAbsent(t, this::applyAsLong);
-                }
-                return returnValue;
+                return cache.computeIfAbsent(t, this::applyAsLong);
             };
         }
     }

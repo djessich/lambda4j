@@ -645,15 +645,9 @@ public interface TriByteToIntFunction extends Lambda {
             return this;
         } else {
             Map<Triple<Byte, Byte, Byte>, Integer> cache = new ConcurrentHashMap<>();
-            Object lock = new Object();
             return (TriByteToIntFunction & Memoized) (value1, value2, value3) -> {
-                int returnValue;
-                synchronized (lock) {
-                    returnValue = cache.computeIfAbsent(Triple.of(value1, value2, value3),
-                            key -> applyAsInt(key.getLeft(), key.getMiddle(),
-                                    key.getRight()));
-                }
-                return returnValue;
+                return cache.computeIfAbsent(Triple.of(value1, value2, value3),
+                        key -> applyAsInt(key.getLeft(), key.getMiddle(), key.getRight()));
             };
         }
     }

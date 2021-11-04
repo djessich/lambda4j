@@ -515,13 +515,8 @@ public interface ShortUnaryOperator extends Lambda {
             return this;
         } else {
             Map<Short, Short> cache = new ConcurrentHashMap<>();
-            Object lock = new Object();
             return (ShortUnaryOperator & Memoized) value -> {
-                short returnValue;
-                synchronized (lock) {
-                    returnValue = cache.computeIfAbsent(value, this::applyAsShort);
-                }
-                return returnValue;
+                return cache.computeIfAbsent(value, this::applyAsShort);
             };
         }
     }

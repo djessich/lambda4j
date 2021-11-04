@@ -716,15 +716,9 @@ public interface BiObjShortToLongFunction<T, U> extends Lambda {
             return this;
         } else {
             Map<Triple<T, U, Short>, Long> cache = new ConcurrentHashMap<>();
-            Object lock = new Object();
             return (BiObjShortToLongFunction<T, U> & Memoized) (t, u, value) -> {
-                long returnValue;
-                synchronized (lock) {
-                    returnValue = cache.computeIfAbsent(Triple.of(t, u, value),
-                            key -> applyAsLong(key.getLeft(), key.getMiddle(),
-                                    key.getRight()));
-                }
-                return returnValue;
+                return cache.computeIfAbsent(Triple.of(t, u, value),
+                        key -> applyAsLong(key.getLeft(), key.getMiddle(), key.getRight()));
             };
         }
     }

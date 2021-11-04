@@ -575,14 +575,9 @@ public interface ThrowableObjBiShortFunction<T, R, X extends Throwable> extends 
             return this;
         } else {
             Map<Triple<T, Short, Short>, R> cache = new ConcurrentHashMap<>();
-            Object lock = new Object();
             return (ThrowableObjBiShortFunction<T, R, X> & Memoized) (t, value1, value2) -> {
-                R returnValue;
-                synchronized (lock) {
-                    returnValue = cache.computeIfAbsent(Triple.of(t, value1, value2), ThrowableFunction.of(
-                            key -> applyThrows(key.getLeft(), key.getMiddle(), key.getRight())));
-                }
-                return returnValue;
+                return cache.computeIfAbsent(Triple.of(t, value1, value2),
+                        ThrowableFunction.of(key -> applyThrows(key.getLeft(), key.getMiddle(), key.getRight())));
             };
         }
     }

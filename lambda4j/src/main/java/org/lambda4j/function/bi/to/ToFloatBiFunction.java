@@ -626,14 +626,8 @@ public interface ToFloatBiFunction<T, U> extends Lambda {
             return this;
         } else {
             Map<Pair<T, U>, Float> cache = new ConcurrentHashMap<>();
-            Object lock = new Object();
             return (ToFloatBiFunction<T, U> & Memoized) (t, u) -> {
-                float returnValue;
-                synchronized (lock) {
-                    returnValue = cache.computeIfAbsent(Pair.of(t, u),
-                            key -> applyAsFloat(key.getLeft(), key.getRight()));
-                }
-                return returnValue;
+                return cache.computeIfAbsent(Pair.of(t, u), key -> applyAsFloat(key.getLeft(), key.getRight()));
             };
         }
     }

@@ -587,14 +587,9 @@ public interface BiCharToLongFunction extends Lambda {
             return this;
         } else {
             Map<Pair<Character, Character>, Long> cache = new ConcurrentHashMap<>();
-            Object lock = new Object();
             return (BiCharToLongFunction & Memoized) (value1, value2) -> {
-                long returnValue;
-                synchronized (lock) {
-                    returnValue = cache.computeIfAbsent(Pair.of(value1, value2),
-                            key -> applyAsLong(key.getLeft(), key.getRight()));
-                }
-                return returnValue;
+                return cache.computeIfAbsent(Pair.of(value1, value2),
+                        key -> applyAsLong(key.getLeft(), key.getRight()));
             };
         }
     }

@@ -507,13 +507,8 @@ public interface ThrowableShortToIntFunction<X extends Throwable> extends Lambda
             return this;
         } else {
             Map<Short, Integer> cache = new ConcurrentHashMap<>();
-            Object lock = new Object();
             return (ThrowableShortToIntFunction<X> & Memoized) value -> {
-                int returnValue;
-                synchronized (lock) {
-                    returnValue = cache.computeIfAbsent(value, ThrowableFunction.of(this::applyAsIntThrows));
-                }
-                return returnValue;
+                return cache.computeIfAbsent(value, ThrowableFunction.of(this::applyAsIntThrows));
             };
         }
     }

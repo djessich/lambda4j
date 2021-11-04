@@ -508,13 +508,8 @@ public interface ThrowableFloatToLongFunction<X extends Throwable> extends Lambd
             return this;
         } else {
             Map<Float, Long> cache = new ConcurrentHashMap<>();
-            Object lock = new Object();
             return (ThrowableFloatToLongFunction<X> & Memoized) value -> {
-                long returnValue;
-                synchronized (lock) {
-                    returnValue = cache.computeIfAbsent(value, ThrowableFunction.of(this::applyAsLongThrows));
-                }
-                return returnValue;
+                return cache.computeIfAbsent(value, ThrowableFunction.of(this::applyAsLongThrows));
             };
         }
     }

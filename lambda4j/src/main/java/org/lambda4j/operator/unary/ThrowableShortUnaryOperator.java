@@ -526,13 +526,8 @@ public interface ThrowableShortUnaryOperator<X extends Throwable> extends Lambda
             return this;
         } else {
             Map<Short, Short> cache = new ConcurrentHashMap<>();
-            Object lock = new Object();
             return (ThrowableShortUnaryOperator<X> & Memoized) value -> {
-                short returnValue;
-                synchronized (lock) {
-                    returnValue = cache.computeIfAbsent(value, ThrowableFunction.of(this::applyAsShortThrows));
-                }
-                return returnValue;
+                return cache.computeIfAbsent(value, ThrowableFunction.of(this::applyAsShortThrows));
             };
         }
     }

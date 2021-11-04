@@ -607,14 +607,9 @@ public interface ThrowableBiCharToIntFunction<X extends Throwable> extends Lambd
             return this;
         } else {
             Map<Pair<Character, Character>, Integer> cache = new ConcurrentHashMap<>();
-            Object lock = new Object();
             return (ThrowableBiCharToIntFunction<X> & Memoized) (value1, value2) -> {
-                int returnValue;
-                synchronized (lock) {
-                    returnValue = cache.computeIfAbsent(Pair.of(value1, value2), ThrowableFunction.of(
-                            key -> applyAsIntThrows(key.getLeft(), key.getRight())));
-                }
-                return returnValue;
+                return cache.computeIfAbsent(Pair.of(value1, value2),
+                        ThrowableFunction.of(key -> applyAsIntThrows(key.getLeft(), key.getRight())));
             };
         }
     }

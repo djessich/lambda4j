@@ -508,13 +508,8 @@ public interface ThrowableCharToFloatFunction<X extends Throwable> extends Lambd
             return this;
         } else {
             Map<Character, Float> cache = new ConcurrentHashMap<>();
-            Object lock = new Object();
             return (ThrowableCharToFloatFunction<X> & Memoized) value -> {
-                float returnValue;
-                synchronized (lock) {
-                    returnValue = cache.computeIfAbsent(value, ThrowableFunction.of(this::applyAsFloatThrows));
-                }
-                return returnValue;
+                return cache.computeIfAbsent(value, ThrowableFunction.of(this::applyAsFloatThrows));
             };
         }
     }

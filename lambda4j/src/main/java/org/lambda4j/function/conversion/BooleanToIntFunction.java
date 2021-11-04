@@ -507,13 +507,8 @@ public interface BooleanToIntFunction extends Lambda {
             return this;
         } else {
             Map<Boolean, Integer> cache = new ConcurrentHashMap<>();
-            Object lock = new Object();
             return (BooleanToIntFunction & Memoized) value -> {
-                int returnValue;
-                synchronized (lock) {
-                    returnValue = cache.computeIfAbsent(value, this::applyAsInt);
-                }
-                return returnValue;
+                return cache.computeIfAbsent(value, this::applyAsInt);
             };
         }
     }

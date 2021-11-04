@@ -749,14 +749,9 @@ public interface ThrowableObjShortPredicate<T, X extends Throwable> extends Lamb
             return this;
         } else {
             Map<Pair<T, Short>, Boolean> cache = new ConcurrentHashMap<>();
-            Object lock = new Object();
             return (ThrowableObjShortPredicate<T, X> & Memoized) (t, value) -> {
-                boolean returnValue;
-                synchronized (lock) {
-                    returnValue = cache.computeIfAbsent(Pair.of(t, value), ThrowableFunction.of(
-                            key -> testThrows(key.getLeft(), key.getRight())));
-                }
-                return returnValue;
+                return cache.computeIfAbsent(Pair.of(t, value), ThrowableFunction.of(
+                        key -> testThrows(key.getLeft(), key.getRight())));
             };
         }
     }

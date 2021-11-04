@@ -612,14 +612,9 @@ public interface ThrowableBiDoubleToByteFunction<X extends Throwable> extends La
             return this;
         } else {
             Map<Pair<Double, Double>, Byte> cache = new ConcurrentHashMap<>();
-            Object lock = new Object();
             return (ThrowableBiDoubleToByteFunction<X> & Memoized) (value1, value2) -> {
-                byte returnValue;
-                synchronized (lock) {
-                    returnValue = cache.computeIfAbsent(Pair.of(value1, value2), ThrowableFunction.of(
-                            key -> applyAsByteThrows(key.getLeft(), key.getRight())));
-                }
-                return returnValue;
+                return cache.computeIfAbsent(Pair.of(value1, value2),
+                        ThrowableFunction.of(key -> applyAsByteThrows(key.getLeft(), key.getRight())));
             };
         }
     }

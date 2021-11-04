@@ -630,14 +630,8 @@ public interface ToIntBiFunction2<T, U> extends Lambda, ToIntBiFunction<T, U> {
             return this;
         } else {
             Map<Pair<T, U>, Integer> cache = new ConcurrentHashMap<>();
-            Object lock = new Object();
             return (ToIntBiFunction2<T, U> & Memoized) (t, u) -> {
-                int returnValue;
-                synchronized (lock) {
-                    returnValue = cache.computeIfAbsent(Pair.of(t, u),
-                            key -> applyAsInt(key.getLeft(), key.getRight()));
-                }
-                return returnValue;
+                return cache.computeIfAbsent(Pair.of(t, u), key -> applyAsInt(key.getLeft(), key.getRight()));
             };
         }
     }

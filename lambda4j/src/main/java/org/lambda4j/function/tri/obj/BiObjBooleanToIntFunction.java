@@ -715,15 +715,9 @@ public interface BiObjBooleanToIntFunction<T, U> extends Lambda {
             return this;
         } else {
             Map<Triple<T, U, Boolean>, Integer> cache = new ConcurrentHashMap<>();
-            Object lock = new Object();
             return (BiObjBooleanToIntFunction<T, U> & Memoized) (t, u, value) -> {
-                int returnValue;
-                synchronized (lock) {
-                    returnValue = cache.computeIfAbsent(Triple.of(t, u, value),
-                            key -> applyAsInt(key.getLeft(), key.getMiddle(),
-                                    key.getRight()));
-                }
-                return returnValue;
+                return cache.computeIfAbsent(Triple.of(t, u, value),
+                        key -> applyAsInt(key.getLeft(), key.getMiddle(), key.getRight()));
             };
         }
     }

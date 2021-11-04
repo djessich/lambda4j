@@ -508,13 +508,8 @@ public interface ThrowableDoubleToCharFunction<X extends Throwable> extends Lamb
             return this;
         } else {
             Map<Double, Character> cache = new ConcurrentHashMap<>();
-            Object lock = new Object();
             return (ThrowableDoubleToCharFunction<X> & Memoized) value -> {
-                char returnValue;
-                synchronized (lock) {
-                    returnValue = cache.computeIfAbsent(value, ThrowableFunction.of(this::applyAsCharThrows));
-                }
-                return returnValue;
+                return cache.computeIfAbsent(value, ThrowableFunction.of(this::applyAsCharThrows));
             };
         }
     }

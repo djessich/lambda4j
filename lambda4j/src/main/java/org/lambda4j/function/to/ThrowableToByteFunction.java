@@ -524,13 +524,8 @@ public interface ThrowableToByteFunction<T, X extends Throwable> extends Lambda 
             return this;
         } else {
             Map<T, Byte> cache = new ConcurrentHashMap<>();
-            Object lock = new Object();
             return (ThrowableToByteFunction<T, X> & Memoized) t -> {
-                byte returnValue;
-                synchronized (lock) {
-                    returnValue = cache.computeIfAbsent(t, ThrowableFunction.of(this::applyAsByteThrows));
-                }
-                return returnValue;
+                return cache.computeIfAbsent(t, ThrowableFunction.of(this::applyAsByteThrows));
             };
         }
     }

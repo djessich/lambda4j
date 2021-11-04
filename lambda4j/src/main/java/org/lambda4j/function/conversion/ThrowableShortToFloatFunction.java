@@ -508,13 +508,8 @@ public interface ThrowableShortToFloatFunction<X extends Throwable> extends Lamb
             return this;
         } else {
             Map<Short, Float> cache = new ConcurrentHashMap<>();
-            Object lock = new Object();
             return (ThrowableShortToFloatFunction<X> & Memoized) value -> {
-                float returnValue;
-                synchronized (lock) {
-                    returnValue = cache.computeIfAbsent(value, ThrowableFunction.of(this::applyAsFloatThrows));
-                }
-                return returnValue;
+                return cache.computeIfAbsent(value, ThrowableFunction.of(this::applyAsFloatThrows));
             };
         }
     }

@@ -588,14 +588,9 @@ public interface BiShortToFloatFunction extends Lambda {
             return this;
         } else {
             Map<Pair<Short, Short>, Float> cache = new ConcurrentHashMap<>();
-            Object lock = new Object();
             return (BiShortToFloatFunction & Memoized) (value1, value2) -> {
-                float returnValue;
-                synchronized (lock) {
-                    returnValue = cache.computeIfAbsent(Pair.of(value1, value2),
-                            key -> applyAsFloat(key.getLeft(), key.getRight()));
-                }
-                return returnValue;
+                return cache.computeIfAbsent(Pair.of(value1, value2),
+                        key -> applyAsFloat(key.getLeft(), key.getRight()));
             };
         }
     }

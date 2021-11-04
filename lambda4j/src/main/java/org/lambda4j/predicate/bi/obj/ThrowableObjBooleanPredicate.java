@@ -749,14 +749,9 @@ public interface ThrowableObjBooleanPredicate<T, X extends Throwable> extends La
             return this;
         } else {
             Map<Pair<T, Boolean>, Boolean> cache = new ConcurrentHashMap<>();
-            Object lock = new Object();
             return (ThrowableObjBooleanPredicate<T, X> & Memoized) (t, value) -> {
-                boolean returnValue;
-                synchronized (lock) {
-                    returnValue = cache.computeIfAbsent(Pair.of(t, value), ThrowableFunction.of(
-                            key -> testThrows(key.getLeft(), key.getRight())));
-                }
-                return returnValue;
+                return cache.computeIfAbsent(Pair.of(t, value), ThrowableFunction.of(
+                        key -> testThrows(key.getLeft(), key.getRight())));
             };
         }
     }

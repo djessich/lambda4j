@@ -876,14 +876,9 @@ public interface ThrowableBiObjDoublePredicate<T, U, X extends Throwable> extend
             return this;
         } else {
             Map<Triple<T, U, Double>, Boolean> cache = new ConcurrentHashMap<>();
-            Object lock = new Object();
             return (ThrowableBiObjDoublePredicate<T, U, X> & Memoized) (t, u, value) -> {
-                boolean returnValue;
-                synchronized (lock) {
-                    returnValue = cache.computeIfAbsent(Triple.of(t, u, value), ThrowableFunction.of(
-                            key -> testThrows(key.getLeft(), key.getMiddle(), key.getRight())));
-                }
-                return returnValue;
+                return cache.computeIfAbsent(Triple.of(t, u, value), ThrowableFunction.of(
+                        key -> testThrows(key.getLeft(), key.getMiddle(), key.getRight())));
             };
         }
     }

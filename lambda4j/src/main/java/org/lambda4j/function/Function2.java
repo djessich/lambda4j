@@ -553,13 +553,8 @@ public interface Function2<T, R> extends Lambda, Function<T, R> {
             return this;
         } else {
             Map<T, R> cache = new ConcurrentHashMap<>();
-            Object lock = new Object();
             return (Function2<T, R> & Memoized) t -> {
-                R returnValue;
-                synchronized (lock) {
-                    returnValue = cache.computeIfAbsent(t, this::apply);
-                }
-                return returnValue;
+                return cache.computeIfAbsent(t, this::apply);
             };
         }
     }

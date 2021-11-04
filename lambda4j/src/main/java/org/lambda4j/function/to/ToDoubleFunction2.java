@@ -524,13 +524,8 @@ public interface ToDoubleFunction2<T> extends Lambda, ToDoubleFunction<T> {
             return this;
         } else {
             Map<T, Double> cache = new ConcurrentHashMap<>();
-            Object lock = new Object();
             return (ToDoubleFunction2<T> & Memoized) t -> {
-                double returnValue;
-                synchronized (lock) {
-                    returnValue = cache.computeIfAbsent(t, this::applyAsDouble);
-                }
-                return returnValue;
+                return cache.computeIfAbsent(t, this::applyAsDouble);
             };
         }
     }

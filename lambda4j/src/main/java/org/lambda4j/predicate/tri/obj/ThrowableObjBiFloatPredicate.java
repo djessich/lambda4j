@@ -838,14 +838,9 @@ public interface ThrowableObjBiFloatPredicate<T, X extends Throwable> extends La
             return this;
         } else {
             Map<Triple<T, Float, Float>, Boolean> cache = new ConcurrentHashMap<>();
-            Object lock = new Object();
             return (ThrowableObjBiFloatPredicate<T, X> & Memoized) (t, value1, value2) -> {
-                boolean returnValue;
-                synchronized (lock) {
-                    returnValue = cache.computeIfAbsent(Triple.of(t, value1, value2), ThrowableFunction.of(
-                            key -> testThrows(key.getLeft(), key.getMiddle(), key.getRight())));
-                }
-                return returnValue;
+                return cache.computeIfAbsent(Triple.of(t, value1, value2), ThrowableFunction.of(
+                        key -> testThrows(key.getLeft(), key.getMiddle(), key.getRight())));
             };
         }
     }

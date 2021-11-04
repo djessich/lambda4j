@@ -545,14 +545,9 @@ public interface ObjBiLongFunction<T, R> extends Lambda {
             return this;
         } else {
             Map<Triple<T, Long, Long>, R> cache = new ConcurrentHashMap<>();
-            Object lock = new Object();
             return (ObjBiLongFunction<T, R> & Memoized) (t, value1, value2) -> {
-                R returnValue;
-                synchronized (lock) {
-                    returnValue = cache.computeIfAbsent(Triple.of(t, value1, value2),
-                            key -> apply(key.getLeft(), key.getMiddle(), key.getRight()));
-                }
-                return returnValue;
+                return cache.computeIfAbsent(Triple.of(t, value1, value2),
+                        key -> apply(key.getLeft(), key.getMiddle(), key.getRight()));
             };
         }
     }

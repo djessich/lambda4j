@@ -618,13 +618,8 @@ public interface FloatPredicate extends Lambda {
             return this;
         } else {
             Map<Float, Boolean> cache = new ConcurrentHashMap<>();
-            Object lock = new Object();
             return (FloatPredicate & Memoized) value -> {
-                boolean returnValue;
-                synchronized (lock) {
-                    returnValue = cache.computeIfAbsent(value, this::test);
-                }
-                return returnValue;
+                return cache.computeIfAbsent(value, this::test);
             };
         }
     }

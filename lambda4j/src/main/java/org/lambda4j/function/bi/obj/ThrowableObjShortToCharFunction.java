@@ -627,14 +627,9 @@ public interface ThrowableObjShortToCharFunction<T, X extends Throwable> extends
             return this;
         } else {
             Map<Pair<T, Short>, Character> cache = new ConcurrentHashMap<>();
-            Object lock = new Object();
             return (ThrowableObjShortToCharFunction<T, X> & Memoized) (t, value) -> {
-                char returnValue;
-                synchronized (lock) {
-                    returnValue = cache.computeIfAbsent(Pair.of(t, value), ThrowableFunction.of(
-                            key -> applyAsCharThrows(key.getLeft(), key.getRight())));
-                }
-                return returnValue;
+                return cache.computeIfAbsent(Pair.of(t, value),
+                        ThrowableFunction.of(key -> applyAsCharThrows(key.getLeft(), key.getRight())));
             };
         }
     }

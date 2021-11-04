@@ -715,21 +715,16 @@ public interface ThrowableObjBiBooleanToFloatFunction<T, X extends Throwable> ex
             return this;
         } else {
             Map<Triple<T, Boolean, Boolean>, Float> cache = new ConcurrentHashMap<>();
-            Object lock = new Object();
             return (ThrowableObjBiBooleanToFloatFunction<T, X> & Memoized) (t, value1, value2) -> {
-                float returnValue;
-                synchronized (lock) {
-                    returnValue = cache.computeIfAbsent(Triple.of(t, value1, value2), ThrowableFunction.of(
-                            key -> applyAsFloatThrows(key.getLeft(), key.getMiddle(), key.getRight())));
-                }
-                return returnValue;
+                return cache.computeIfAbsent(Triple.of(t, value1, value2), ThrowableFunction.of(
+                        key -> applyAsFloatThrows(key.getLeft(), key.getMiddle(), key.getRight())));
             };
         }
     }
 
     /**
      * Returns a composed {@link ThrowableTriFunction} which represents this {@link
-     * ThrowableObjBiBooleanToFloatFunction}. Thereby the primitive input argument for this function is autoboxed. This
+     * ThrowableObjBiBooleanToFloatFunction}. Thereby the primitive input argument for this function is autoboxed . This
      * method provides the possibility to use this {@code ThrowableObjBiBooleanToFloatFunction} with methods provided by
      * the {@code JDK}.
      *

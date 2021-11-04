@@ -548,13 +548,8 @@ public interface ThrowableDoubleUnaryOperator<X extends Throwable> extends Lambd
             return this;
         } else {
             Map<Double, Double> cache = new ConcurrentHashMap<>();
-            Object lock = new Object();
             return (ThrowableDoubleUnaryOperator<X> & Memoized) value -> {
-                double returnValue;
-                synchronized (lock) {
-                    returnValue = cache.computeIfAbsent(value, ThrowableFunction.of(this::applyAsDoubleThrows));
-                }
-                return returnValue;
+                return cache.computeIfAbsent(value, ThrowableFunction.of(this::applyAsDoubleThrows));
             };
         }
     }

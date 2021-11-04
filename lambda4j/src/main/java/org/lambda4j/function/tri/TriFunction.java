@@ -744,14 +744,9 @@ public interface TriFunction<T, U, V, R> extends Lambda {
             return this;
         } else {
             Map<Triple<T, U, V>, R> cache = new ConcurrentHashMap<>();
-            Object lock = new Object();
             return (TriFunction<T, U, V, R> & Memoized) (t, u, v) -> {
-                R returnValue;
-                synchronized (lock) {
-                    returnValue = cache.computeIfAbsent(Triple.of(t, u, v),
-                            key -> apply(key.getLeft(), key.getMiddle(), key.getRight()));
-                }
-                return returnValue;
+                return cache.computeIfAbsent(Triple.of(t, u, v),
+                        key -> apply(key.getLeft(), key.getMiddle(), key.getRight()));
             };
         }
     }

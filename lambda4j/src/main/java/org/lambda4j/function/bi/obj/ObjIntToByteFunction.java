@@ -608,14 +608,8 @@ public interface ObjIntToByteFunction<T> extends Lambda {
             return this;
         } else {
             Map<Pair<T, Integer>, Byte> cache = new ConcurrentHashMap<>();
-            Object lock = new Object();
             return (ObjIntToByteFunction<T> & Memoized) (t, value) -> {
-                byte returnValue;
-                synchronized (lock) {
-                    returnValue = cache.computeIfAbsent(Pair.of(t, value),
-                            key -> applyAsByte(key.getLeft(), key.getRight()));
-                }
-                return returnValue;
+                return cache.computeIfAbsent(Pair.of(t, value), key -> applyAsByte(key.getLeft(), key.getRight()));
             };
         }
     }

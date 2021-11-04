@@ -519,13 +519,8 @@ public interface ToFloatFunction<T> extends Lambda {
             return this;
         } else {
             Map<T, Float> cache = new ConcurrentHashMap<>();
-            Object lock = new Object();
             return (ToFloatFunction<T> & Memoized) t -> {
-                float returnValue;
-                synchronized (lock) {
-                    returnValue = cache.computeIfAbsent(t, this::applyAsFloat);
-                }
-                return returnValue;
+                return cache.computeIfAbsent(t, this::applyAsFloat);
             };
         }
     }

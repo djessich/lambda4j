@@ -524,13 +524,8 @@ public interface ThrowableCharUnaryOperator<X extends Throwable> extends Lambda 
             return this;
         } else {
             Map<Character, Character> cache = new ConcurrentHashMap<>();
-            Object lock = new Object();
             return (ThrowableCharUnaryOperator<X> & Memoized) value -> {
-                char returnValue;
-                synchronized (lock) {
-                    returnValue = cache.computeIfAbsent(value, ThrowableFunction.of(this::applyAsCharThrows));
-                }
-                return returnValue;
+                return cache.computeIfAbsent(value, ThrowableFunction.of(this::applyAsCharThrows));
             };
         }
     }

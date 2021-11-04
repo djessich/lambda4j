@@ -681,15 +681,9 @@ public interface ObjBiIntToByteFunction<T> extends Lambda {
             return this;
         } else {
             Map<Triple<T, Integer, Integer>, Byte> cache = new ConcurrentHashMap<>();
-            Object lock = new Object();
             return (ObjBiIntToByteFunction<T> & Memoized) (t, value1, value2) -> {
-                byte returnValue;
-                synchronized (lock) {
-                    returnValue = cache.computeIfAbsent(Triple.of(t, value1, value2),
-                            key -> applyAsByte(key.getLeft(), key.getMiddle(),
-                                    key.getRight()));
-                }
-                return returnValue;
+                return cache.computeIfAbsent(Triple.of(t, value1, value2),
+                        key -> applyAsByte(key.getLeft(), key.getMiddle(), key.getRight()));
             };
         }
     }

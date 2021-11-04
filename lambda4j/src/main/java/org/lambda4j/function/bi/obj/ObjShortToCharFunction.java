@@ -609,14 +609,8 @@ public interface ObjShortToCharFunction<T> extends Lambda {
             return this;
         } else {
             Map<Pair<T, Short>, Character> cache = new ConcurrentHashMap<>();
-            Object lock = new Object();
             return (ObjShortToCharFunction<T> & Memoized) (t, value) -> {
-                char returnValue;
-                synchronized (lock) {
-                    returnValue = cache.computeIfAbsent(Pair.of(t, value),
-                            key -> applyAsChar(key.getLeft(), key.getRight()));
-                }
-                return returnValue;
+                return cache.computeIfAbsent(Pair.of(t, value), key -> applyAsChar(key.getLeft(), key.getRight()));
             };
         }
     }

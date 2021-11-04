@@ -526,13 +526,8 @@ public interface LongUnaryOperator2 extends Lambda, LongUnaryOperator {
             return this;
         } else {
             Map<Long, Long> cache = new ConcurrentHashMap<>();
-            Object lock = new Object();
             return (LongUnaryOperator2 & Memoized) value -> {
-                long returnValue;
-                synchronized (lock) {
-                    returnValue = cache.computeIfAbsent(value, this::applyAsLong);
-                }
-                return returnValue;
+                return cache.computeIfAbsent(value, this::applyAsLong);
             };
         }
     }

@@ -515,13 +515,8 @@ public interface ByteUnaryOperator extends Lambda {
             return this;
         } else {
             Map<Byte, Byte> cache = new ConcurrentHashMap<>();
-            Object lock = new Object();
             return (ByteUnaryOperator & Memoized) value -> {
-                byte returnValue;
-                synchronized (lock) {
-                    returnValue = cache.computeIfAbsent(value, this::applyAsByte);
-                }
-                return returnValue;
+                return cache.computeIfAbsent(value, this::applyAsByte);
             };
         }
     }

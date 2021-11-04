@@ -686,13 +686,8 @@ public interface BiFunction2<T, U, R> extends Lambda, BiFunction<T, U, R> {
             return this;
         } else {
             Map<Pair<T, U>, R> cache = new ConcurrentHashMap<>();
-            Object lock = new Object();
             return (BiFunction2<T, U, R> & Memoized) (t, u) -> {
-                R returnValue;
-                synchronized (lock) {
-                    returnValue = cache.computeIfAbsent(Pair.of(t, u), key -> apply(key.getLeft(), key.getRight()));
-                }
-                return returnValue;
+                return cache.computeIfAbsent(Pair.of(t, u), key -> apply(key.getLeft(), key.getRight()));
             };
         }
     }

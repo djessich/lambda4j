@@ -654,15 +654,9 @@ public interface FloatTernaryOperator extends Lambda {
             return this;
         } else {
             Map<Triple<Float, Float, Float>, Float> cache = new ConcurrentHashMap<>();
-            Object lock = new Object();
             return (FloatTernaryOperator & Memoized) (value1, value2, value3) -> {
-                float returnValue;
-                synchronized (lock) {
-                    returnValue = cache.computeIfAbsent(Triple.of(value1, value2, value3),
-                            key -> applyAsFloat(key.getLeft(), key.getMiddle(),
-                                    key.getRight()));
-                }
-                return returnValue;
+                return cache.computeIfAbsent(Triple.of(value1, value2, value3),
+                        key -> applyAsFloat(key.getLeft(), key.getMiddle(), key.getRight()));
             };
         }
     }

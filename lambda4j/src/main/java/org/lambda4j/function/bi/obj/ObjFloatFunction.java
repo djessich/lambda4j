@@ -471,13 +471,8 @@ public interface ObjFloatFunction<T, R> extends Lambda {
             return this;
         } else {
             Map<Pair<T, Float>, R> cache = new ConcurrentHashMap<>();
-            Object lock = new Object();
             return (ObjFloatFunction<T, R> & Memoized) (t, value) -> {
-                R returnValue;
-                synchronized (lock) {
-                    returnValue = cache.computeIfAbsent(Pair.of(t, value), key -> apply(key.getLeft(), key.getRight()));
-                }
-                return returnValue;
+                return cache.computeIfAbsent(Pair.of(t, value), key -> apply(key.getLeft(), key.getRight()));
             };
         }
     }

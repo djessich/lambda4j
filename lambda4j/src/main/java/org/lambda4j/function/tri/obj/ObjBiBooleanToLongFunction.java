@@ -684,15 +684,9 @@ public interface ObjBiBooleanToLongFunction<T> extends Lambda {
             return this;
         } else {
             Map<Triple<T, Boolean, Boolean>, Long> cache = new ConcurrentHashMap<>();
-            Object lock = new Object();
             return (ObjBiBooleanToLongFunction<T> & Memoized) (t, value1, value2) -> {
-                long returnValue;
-                synchronized (lock) {
-                    returnValue = cache.computeIfAbsent(Triple.of(t, value1, value2),
-                            key -> applyAsLong(key.getLeft(), key.getMiddle(),
-                                    key.getRight()));
-                }
-                return returnValue;
+                return cache.computeIfAbsent(Triple.of(t, value1, value2),
+                        key -> applyAsLong(key.getLeft(), key.getMiddle(), key.getRight()));
             };
         }
     }

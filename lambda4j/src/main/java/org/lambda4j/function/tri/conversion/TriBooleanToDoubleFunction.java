@@ -646,15 +646,9 @@ public interface TriBooleanToDoubleFunction extends Lambda {
             return this;
         } else {
             Map<Triple<Boolean, Boolean, Boolean>, Double> cache = new ConcurrentHashMap<>();
-            Object lock = new Object();
             return (TriBooleanToDoubleFunction & Memoized) (value1, value2, value3) -> {
-                double returnValue;
-                synchronized (lock) {
-                    returnValue = cache.computeIfAbsent(Triple.of(value1, value2, value3),
-                            key -> applyAsDouble(key.getLeft(), key.getMiddle(),
-                                    key.getRight()));
-                }
-                return returnValue;
+                return cache.computeIfAbsent(Triple.of(value1, value2, value3),
+                        key -> applyAsDouble(key.getLeft(), key.getMiddle(), key.getRight()));
             };
         }
     }

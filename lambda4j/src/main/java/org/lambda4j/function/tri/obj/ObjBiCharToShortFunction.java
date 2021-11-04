@@ -682,15 +682,9 @@ public interface ObjBiCharToShortFunction<T> extends Lambda {
             return this;
         } else {
             Map<Triple<T, Character, Character>, Short> cache = new ConcurrentHashMap<>();
-            Object lock = new Object();
             return (ObjBiCharToShortFunction<T> & Memoized) (t, value1, value2) -> {
-                short returnValue;
-                synchronized (lock) {
-                    returnValue = cache.computeIfAbsent(Triple.of(t, value1, value2),
-                            key -> applyAsShort(key.getLeft(), key.getMiddle(),
-                                    key.getRight()));
-                }
-                return returnValue;
+                return cache.computeIfAbsent(Triple.of(t, value1, value2),
+                        key -> applyAsShort(key.getLeft(), key.getMiddle(), key.getRight()));
             };
         }
     }

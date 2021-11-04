@@ -725,13 +725,8 @@ public interface ObjBooleanPredicate<T> extends Lambda {
             return this;
         } else {
             Map<Pair<T, Boolean>, Boolean> cache = new ConcurrentHashMap<>();
-            Object lock = new Object();
             return (ObjBooleanPredicate<T> & Memoized) (t, value) -> {
-                boolean returnValue;
-                synchronized (lock) {
-                    returnValue = cache.computeIfAbsent(Pair.of(t, value), key -> test(key.getLeft(), key.getRight()));
-                }
-                return returnValue;
+                return cache.computeIfAbsent(Pair.of(t, value), key -> test(key.getLeft(), key.getRight()));
             };
         }
     }

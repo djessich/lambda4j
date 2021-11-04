@@ -488,14 +488,9 @@ public interface ThrowableObjLongFunction<T, R, X extends Throwable> extends Lam
             return this;
         } else {
             Map<Pair<T, Long>, R> cache = new ConcurrentHashMap<>();
-            Object lock = new Object();
             return (ThrowableObjLongFunction<T, R, X> & Memoized) (t, value) -> {
-                R returnValue;
-                synchronized (lock) {
-                    returnValue = cache.computeIfAbsent(Pair.of(t, value), ThrowableFunction.of(
-                            key -> applyThrows(key.getLeft(), key.getRight())));
-                }
-                return returnValue;
+                return cache.computeIfAbsent(Pair.of(t, value),
+                        ThrowableFunction.of(key -> applyThrows(key.getLeft(), key.getRight())));
             };
         }
     }

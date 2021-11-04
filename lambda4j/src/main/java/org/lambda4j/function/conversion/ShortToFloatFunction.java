@@ -499,13 +499,8 @@ public interface ShortToFloatFunction extends Lambda {
             return this;
         } else {
             Map<Short, Float> cache = new ConcurrentHashMap<>();
-            Object lock = new Object();
             return (ShortToFloatFunction & Memoized) value -> {
-                float returnValue;
-                synchronized (lock) {
-                    returnValue = cache.computeIfAbsent(value, this::applyAsFloat);
-                }
-                return returnValue;
+                return cache.computeIfAbsent(value, this::applyAsFloat);
             };
         }
     }

@@ -717,14 +717,9 @@ public interface ThrowableBiShortPredicate<X extends Throwable> extends Lambda {
             return this;
         } else {
             Map<Pair<Short, Short>, Boolean> cache = new ConcurrentHashMap<>();
-            Object lock = new Object();
             return (ThrowableBiShortPredicate<X> & Memoized) (value1, value2) -> {
-                boolean returnValue;
-                synchronized (lock) {
-                    returnValue = cache.computeIfAbsent(Pair.of(value1, value2), ThrowableFunction.of(
-                            key -> testThrows(key.getLeft(), key.getRight())));
-                }
-                return returnValue;
+                return cache.computeIfAbsent(Pair.of(value1, value2),
+                        ThrowableFunction.of(key -> testThrows(key.getLeft(), key.getRight())));
             };
         }
     }

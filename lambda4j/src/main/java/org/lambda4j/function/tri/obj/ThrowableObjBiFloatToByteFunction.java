@@ -722,14 +722,9 @@ public interface ThrowableObjBiFloatToByteFunction<T, X extends Throwable> exten
             return this;
         } else {
             Map<Triple<T, Float, Float>, Byte> cache = new ConcurrentHashMap<>();
-            Object lock = new Object();
             return (ThrowableObjBiFloatToByteFunction<T, X> & Memoized) (t, value1, value2) -> {
-                byte returnValue;
-                synchronized (lock) {
-                    returnValue = cache.computeIfAbsent(Triple.of(t, value1, value2), ThrowableFunction.of(
-                            key -> applyAsByteThrows(key.getLeft(), key.getMiddle(), key.getRight())));
-                }
-                return returnValue;
+                return cache.computeIfAbsent(Triple.of(t, value1, value2),
+                        ThrowableFunction.of(key -> applyAsByteThrows(key.getLeft(), key.getMiddle(), key.getRight())));
             };
         }
     }

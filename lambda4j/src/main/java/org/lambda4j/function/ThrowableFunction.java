@@ -573,13 +573,8 @@ public interface ThrowableFunction<T, R, X extends Throwable> extends Lambda, Fu
             return this;
         } else {
             Map<T, R> cache = new ConcurrentHashMap<>();
-            Object lock = new Object();
             return (ThrowableFunction<T, R, X> & Memoized) t -> {
-                R returnValue;
-                synchronized (lock) {
-                    returnValue = cache.computeIfAbsent(t, ThrowableFunction.of(this::applyThrows));
-                }
-                return returnValue;
+                return cache.computeIfAbsent(t, ThrowableFunction.of(this::applyThrows));
             };
         }
     }

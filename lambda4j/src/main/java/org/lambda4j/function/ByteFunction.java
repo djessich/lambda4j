@@ -543,13 +543,8 @@ public interface ByteFunction<R> extends Lambda {
             return this;
         } else {
             Map<Byte, R> cache = new ConcurrentHashMap<>();
-            Object lock = new Object();
             return (ByteFunction<R> & Memoized) value -> {
-                R returnValue;
-                synchronized (lock) {
-                    returnValue = cache.computeIfAbsent(value, this::apply);
-                }
-                return returnValue;
+                return cache.computeIfAbsent(value, this::apply);
             };
         }
     }

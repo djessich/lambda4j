@@ -519,13 +519,8 @@ public interface ToByteFunction<T> extends Lambda {
             return this;
         } else {
             Map<T, Byte> cache = new ConcurrentHashMap<>();
-            Object lock = new Object();
             return (ToByteFunction<T> & Memoized) t -> {
-                byte returnValue;
-                synchronized (lock) {
-                    returnValue = cache.computeIfAbsent(t, this::applyAsByte);
-                }
-                return returnValue;
+                return cache.computeIfAbsent(t, this::applyAsByte);
             };
         }
     }

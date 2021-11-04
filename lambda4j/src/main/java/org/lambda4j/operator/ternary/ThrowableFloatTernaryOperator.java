@@ -691,14 +691,9 @@ public interface ThrowableFloatTernaryOperator<X extends Throwable> extends Lamb
             return this;
         } else {
             Map<Triple<Float, Float, Float>, Float> cache = new ConcurrentHashMap<>();
-            Object lock = new Object();
             return (ThrowableFloatTernaryOperator<X> & Memoized) (value1, value2, value3) -> {
-                float returnValue;
-                synchronized (lock) {
-                    returnValue = cache.computeIfAbsent(Triple.of(value1, value2, value3), ThrowableFunction.of(
-                            key -> applyAsFloatThrows(key.getLeft(), key.getMiddle(), key.getRight())));
-                }
-                return returnValue;
+                return cache.computeIfAbsent(Triple.of(value1, value2, value3), ThrowableFunction.of(
+                        key -> applyAsFloatThrows(key.getLeft(), key.getMiddle(), key.getRight())));
             };
         }
     }

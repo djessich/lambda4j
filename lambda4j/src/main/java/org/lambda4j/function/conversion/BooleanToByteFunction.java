@@ -504,13 +504,8 @@ public interface BooleanToByteFunction extends Lambda {
             return this;
         } else {
             Map<Boolean, Byte> cache = new ConcurrentHashMap<>();
-            Object lock = new Object();
             return (BooleanToByteFunction & Memoized) value -> {
-                byte returnValue;
-                synchronized (lock) {
-                    returnValue = cache.computeIfAbsent(value, this::applyAsByte);
-                }
-                return returnValue;
+                return cache.computeIfAbsent(value, this::applyAsByte);
             };
         }
     }

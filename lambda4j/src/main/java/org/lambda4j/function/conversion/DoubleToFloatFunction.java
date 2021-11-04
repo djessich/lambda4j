@@ -502,13 +502,8 @@ public interface DoubleToFloatFunction extends Lambda {
             return this;
         } else {
             Map<Double, Float> cache = new ConcurrentHashMap<>();
-            Object lock = new Object();
             return (DoubleToFloatFunction & Memoized) value -> {
-                float returnValue;
-                synchronized (lock) {
-                    returnValue = cache.computeIfAbsent(value, this::applyAsFloat);
-                }
-                return returnValue;
+                return cache.computeIfAbsent(value, this::applyAsFloat);
             };
         }
     }

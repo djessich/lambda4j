@@ -502,13 +502,8 @@ public interface ShortToDoubleFunction extends Lambda {
             return this;
         } else {
             Map<Short, Double> cache = new ConcurrentHashMap<>();
-            Object lock = new Object();
             return (ShortToDoubleFunction & Memoized) value -> {
-                double returnValue;
-                synchronized (lock) {
-                    returnValue = cache.computeIfAbsent(value, this::applyAsDouble);
-                }
-                return returnValue;
+                return cache.computeIfAbsent(value, this::applyAsDouble);
             };
         }
     }

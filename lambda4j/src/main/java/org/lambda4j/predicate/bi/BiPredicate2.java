@@ -744,13 +744,8 @@ public interface BiPredicate2<T, U> extends Lambda, BiPredicate<T, U> {
             return this;
         } else {
             Map<Pair<T, U>, Boolean> cache = new ConcurrentHashMap<>();
-            Object lock = new Object();
             return (BiPredicate2<T, U> & Memoized) (t, u) -> {
-                boolean returnValue;
-                synchronized (lock) {
-                    returnValue = cache.computeIfAbsent(Pair.of(t, u), key -> test(key.getLeft(), key.getRight()));
-                }
-                return returnValue;
+                return cache.computeIfAbsent(Pair.of(t, u), key -> test(key.getLeft(), key.getRight()));
             };
         }
     }

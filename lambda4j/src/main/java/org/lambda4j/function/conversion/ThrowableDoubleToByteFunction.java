@@ -508,13 +508,8 @@ public interface ThrowableDoubleToByteFunction<X extends Throwable> extends Lamb
             return this;
         } else {
             Map<Double, Byte> cache = new ConcurrentHashMap<>();
-            Object lock = new Object();
             return (ThrowableDoubleToByteFunction<X> & Memoized) value -> {
-                byte returnValue;
-                synchronized (lock) {
-                    returnValue = cache.computeIfAbsent(value, ThrowableFunction.of(this::applyAsByteThrows));
-                }
-                return returnValue;
+                return cache.computeIfAbsent(value, ThrowableFunction.of(this::applyAsByteThrows));
             };
         }
     }

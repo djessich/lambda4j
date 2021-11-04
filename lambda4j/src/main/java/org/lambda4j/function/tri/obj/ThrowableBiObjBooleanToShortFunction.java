@@ -747,14 +747,9 @@ public interface ThrowableBiObjBooleanToShortFunction<T, U, X extends Throwable>
             return this;
         } else {
             Map<Triple<T, U, Boolean>, Short> cache = new ConcurrentHashMap<>();
-            Object lock = new Object();
             return (ThrowableBiObjBooleanToShortFunction<T, U, X> & Memoized) (t, u, value) -> {
-                short returnValue;
-                synchronized (lock) {
-                    returnValue = cache.computeIfAbsent(Triple.of(t, u, value), ThrowableFunction.of(
-                            key -> applyAsShortThrows(key.getLeft(), key.getMiddle(), key.getRight())));
-                }
-                return returnValue;
+                return cache.computeIfAbsent(Triple.of(t, u, value), ThrowableFunction.of(
+                        key -> applyAsShortThrows(key.getLeft(), key.getMiddle(), key.getRight())));
             };
         }
     }

@@ -690,14 +690,9 @@ public interface ThrowableCharTernaryOperator<X extends Throwable> extends Lambd
             return this;
         } else {
             Map<Triple<Character, Character, Character>, Character> cache = new ConcurrentHashMap<>();
-            Object lock = new Object();
             return (ThrowableCharTernaryOperator<X> & Memoized) (value1, value2, value3) -> {
-                char returnValue;
-                synchronized (lock) {
-                    returnValue = cache.computeIfAbsent(Triple.of(value1, value2, value3), ThrowableFunction.of(
-                            key -> applyAsCharThrows(key.getLeft(), key.getMiddle(), key.getRight())));
-                }
-                return returnValue;
+                return cache.computeIfAbsent(Triple.of(value1, value2, value3),
+                        ThrowableFunction.of(key -> applyAsCharThrows(key.getLeft(), key.getMiddle(), key.getRight())));
             };
         }
     }

@@ -634,14 +634,9 @@ public interface LongBinaryOperator2 extends Lambda, LongBinaryOperator {
             return this;
         } else {
             Map<Pair<Long, Long>, Long> cache = new ConcurrentHashMap<>();
-            Object lock = new Object();
             return (LongBinaryOperator2 & Memoized) (value1, value2) -> {
-                long returnValue;
-                synchronized (lock) {
-                    returnValue = cache.computeIfAbsent(Pair.of(value1, value2),
-                            key -> applyAsLong(key.getLeft(), key.getRight()));
-                }
-                return returnValue;
+                return cache.computeIfAbsent(Pair.of(value1, value2),
+                        key -> applyAsLong(key.getLeft(), key.getRight()));
             };
         }
     }

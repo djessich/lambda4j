@@ -507,13 +507,8 @@ public interface LongToIntFunction2 extends Lambda, LongToIntFunction {
             return this;
         } else {
             Map<Long, Integer> cache = new ConcurrentHashMap<>();
-            Object lock = new Object();
             return (LongToIntFunction2 & Memoized) value -> {
-                int returnValue;
-                synchronized (lock) {
-                    returnValue = cache.computeIfAbsent(value, this::applyAsInt);
-                }
-                return returnValue;
+                return cache.computeIfAbsent(value, this::applyAsInt);
             };
         }
     }

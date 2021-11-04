@@ -648,13 +648,8 @@ public interface ThrowableIntPredicate<X extends Throwable> extends Lambda, IntP
             return this;
         } else {
             Map<Integer, Boolean> cache = new ConcurrentHashMap<>();
-            Object lock = new Object();
             return (ThrowableIntPredicate<X> & Memoized) value -> {
-                boolean returnValue;
-                synchronized (lock) {
-                    returnValue = cache.computeIfAbsent(value, ThrowableFunction.of(this::testThrows));
-                }
-                return returnValue;
+                return cache.computeIfAbsent(value, ThrowableFunction.of(this::testThrows));
             };
         }
     }

@@ -587,14 +587,9 @@ public interface BiByteToCharFunction extends Lambda {
             return this;
         } else {
             Map<Pair<Byte, Byte>, Character> cache = new ConcurrentHashMap<>();
-            Object lock = new Object();
             return (BiByteToCharFunction & Memoized) (value1, value2) -> {
-                char returnValue;
-                synchronized (lock) {
-                    returnValue = cache.computeIfAbsent(Pair.of(value1, value2),
-                            key -> applyAsChar(key.getLeft(), key.getRight()));
-                }
-                return returnValue;
+                return cache.computeIfAbsent(Pair.of(value1, value2),
+                        key -> applyAsChar(key.getLeft(), key.getRight()));
             };
         }
     }

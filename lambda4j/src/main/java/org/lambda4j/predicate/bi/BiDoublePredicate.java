@@ -699,14 +699,8 @@ public interface BiDoublePredicate extends Lambda {
             return this;
         } else {
             Map<Pair<Double, Double>, Boolean> cache = new ConcurrentHashMap<>();
-            Object lock = new Object();
             return (BiDoublePredicate & Memoized) (value1, value2) -> {
-                boolean returnValue;
-                synchronized (lock) {
-                    returnValue = cache.computeIfAbsent(Pair.of(value1, value2),
-                            key -> test(key.getLeft(), key.getRight()));
-                }
-                return returnValue;
+                return cache.computeIfAbsent(Pair.of(value1, value2), key -> test(key.getLeft(), key.getRight()));
             };
         }
     }

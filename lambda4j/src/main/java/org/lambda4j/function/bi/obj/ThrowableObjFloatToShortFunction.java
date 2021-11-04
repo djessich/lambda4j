@@ -627,14 +627,9 @@ public interface ThrowableObjFloatToShortFunction<T, X extends Throwable> extend
             return this;
         } else {
             Map<Pair<T, Float>, Short> cache = new ConcurrentHashMap<>();
-            Object lock = new Object();
             return (ThrowableObjFloatToShortFunction<T, X> & Memoized) (t, value) -> {
-                short returnValue;
-                synchronized (lock) {
-                    returnValue = cache.computeIfAbsent(Pair.of(t, value), ThrowableFunction.of(
-                            key -> applyAsShortThrows(key.getLeft(), key.getRight())));
-                }
-                return returnValue;
+                return cache.computeIfAbsent(Pair.of(t, value),
+                        ThrowableFunction.of(key -> applyAsShortThrows(key.getLeft(), key.getRight())));
             };
         }
     }

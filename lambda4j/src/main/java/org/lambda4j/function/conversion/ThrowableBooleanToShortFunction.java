@@ -511,13 +511,8 @@ public interface ThrowableBooleanToShortFunction<X extends Throwable> extends La
             return this;
         } else {
             Map<Boolean, Short> cache = new ConcurrentHashMap<>();
-            Object lock = new Object();
             return (ThrowableBooleanToShortFunction<X> & Memoized) value -> {
-                short returnValue;
-                synchronized (lock) {
-                    returnValue = cache.computeIfAbsent(value, ThrowableFunction.of(this::applyAsShortThrows));
-                }
-                return returnValue;
+                return cache.computeIfAbsent(value, ThrowableFunction.of(this::applyAsShortThrows));
             };
         }
     }

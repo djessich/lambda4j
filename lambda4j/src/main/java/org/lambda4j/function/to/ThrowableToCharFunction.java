@@ -524,13 +524,8 @@ public interface ThrowableToCharFunction<T, X extends Throwable> extends Lambda 
             return this;
         } else {
             Map<T, Character> cache = new ConcurrentHashMap<>();
-            Object lock = new Object();
             return (ThrowableToCharFunction<T, X> & Memoized) t -> {
-                char returnValue;
-                synchronized (lock) {
-                    returnValue = cache.computeIfAbsent(t, ThrowableFunction.of(this::applyAsCharThrows));
-                }
-                return returnValue;
+                return cache.computeIfAbsent(t, ThrowableFunction.of(this::applyAsCharThrows));
             };
         }
     }

@@ -520,13 +520,8 @@ public interface ThrowableBooleanUnaryOperator<X extends Throwable> extends Lamb
             return this;
         } else {
             Map<Boolean, Boolean> cache = new ConcurrentHashMap<>();
-            Object lock = new Object();
             return (ThrowableBooleanUnaryOperator<X> & Memoized) value -> {
-                boolean returnValue;
-                synchronized (lock) {
-                    returnValue = cache.computeIfAbsent(value, ThrowableFunction.of(this::applyAsBooleanThrows));
-                }
-                return returnValue;
+                return cache.computeIfAbsent(value, ThrowableFunction.of(this::applyAsBooleanThrows));
             };
         }
     }

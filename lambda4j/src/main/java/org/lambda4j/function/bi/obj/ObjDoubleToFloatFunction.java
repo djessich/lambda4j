@@ -609,14 +609,8 @@ public interface ObjDoubleToFloatFunction<T> extends Lambda {
             return this;
         } else {
             Map<Pair<T, Double>, Float> cache = new ConcurrentHashMap<>();
-            Object lock = new Object();
             return (ObjDoubleToFloatFunction<T> & Memoized) (t, value) -> {
-                float returnValue;
-                synchronized (lock) {
-                    returnValue = cache.computeIfAbsent(Pair.of(t, value),
-                            key -> applyAsFloat(key.getLeft(), key.getRight()));
-                }
-                return returnValue;
+                return cache.computeIfAbsent(Pair.of(t, value), key -> applyAsFloat(key.getLeft(), key.getRight()));
             };
         }
     }

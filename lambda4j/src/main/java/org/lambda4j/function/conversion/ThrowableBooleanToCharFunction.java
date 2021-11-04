@@ -511,13 +511,8 @@ public interface ThrowableBooleanToCharFunction<X extends Throwable> extends Lam
             return this;
         } else {
             Map<Boolean, Character> cache = new ConcurrentHashMap<>();
-            Object lock = new Object();
             return (ThrowableBooleanToCharFunction<X> & Memoized) value -> {
-                char returnValue;
-                synchronized (lock) {
-                    returnValue = cache.computeIfAbsent(value, ThrowableFunction.of(this::applyAsCharThrows));
-                }
-                return returnValue;
+                return cache.computeIfAbsent(value, ThrowableFunction.of(this::applyAsCharThrows));
             };
         }
     }

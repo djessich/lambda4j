@@ -630,14 +630,9 @@ public interface BooleanBinaryOperator extends Lambda {
             return this;
         } else {
             Map<Pair<Boolean, Boolean>, Boolean> cache = new ConcurrentHashMap<>();
-            Object lock = new Object();
             return (BooleanBinaryOperator & Memoized) (value1, value2) -> {
-                boolean returnValue;
-                synchronized (lock) {
-                    returnValue = cache.computeIfAbsent(Pair.of(value1, value2),
-                            key -> applyAsBoolean(key.getLeft(), key.getRight()));
-                }
-                return returnValue;
+                return cache.computeIfAbsent(Pair.of(value1, value2),
+                        key -> applyAsBoolean(key.getLeft(), key.getRight()));
             };
         }
     }
