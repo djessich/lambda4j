@@ -3,35 +3,15 @@
         "https://checkstyle.org/dtds/suppressions_1_2.dtd">
 <suppressions>
     <!-- Suppress line length check for recover method -->
-    <suppress checks="LineLength" files="ThrowableBiObjBooleanToDoubleFunction" lines="830"/>
-    <suppress checks="LineLength" files="ThrowableBiObjBooleanFunction" lines="703"/>
-    <suppress checks="LineLength" files="ThrowableBiObjCharFunction" lines="702"/>
-    <suppress checks="LineLength" files="ThrowableBiObjIntFunction" lines="702"/>
-    <suppress checks="LineLength" files="ThrowableToByteTriFunction" lines="801"/>
-    <suppress checks="LineLength" files="ThrowableToCharTriFunction" lines="801"/>
-    <suppress checks="LineLength" files="ThrowableToDoubleTriFunction" lines="803"/>
-    <suppress checks="LineLength" files="ThrowableToFloatTriFunction" lines="802"/>
-    <suppress checks="LineLength" files="ThrowableToLongTriFunction" lines="801"/>
-    <suppress checks="LineLength" files="ThrowableToShortTriFunction" lines="802"/>
-    <suppress checks="LineLength" files="ThrowableTriFunction" lines="867"/>
-
-    <!-- Suppress nested if statements check for memoized method -->
-    <suppress checks="NestedIfDepth" files="BooleanSupplier2" lines="354"/>
-    <suppress checks="NestedIfDepth" files="ByteSupplier" lines="328"/>
-    <suppress checks="NestedIfDepth" files="CharSupplier" lines="328"/>
-    <suppress checks="NestedIfDepth" files="DoubleSupplier2" lines="331"/>
-    <suppress checks="NestedIfDepth" files="FloatSupplier" lines="328"/>
-    <suppress checks="NestedIfDepth" files="IntSupplier2" lines="331"/>
-    <suppress checks="NestedIfDepth" files="LongSupplier2" lines="331"/>
-    <suppress checks="NestedIfDepth" files="ShortSupplier" lines="328"/>
-    <suppress checks="NestedIfDepth" files="Supplier2" lines="190"/>
-    <suppress checks="NestedIfDepth" files="ThrowableBooleanSupplier" lines="379"/>
-    <suppress checks="NestedIfDepth" files="ThrowableByteSupplier" lines="330"/>
-    <suppress checks="NestedIfDepth" files="ThrowableCharSupplier" lines="330"/>
-    <suppress checks="NestedIfDepth" files="ThrowableDoubleSupplier" lines="349"/>
-    <suppress checks="NestedIfDepth" files="ThrowableFloatSupplier" lines="330"/>
-    <suppress checks="NestedIfDepth" files="ThrowableIntSupplier" lines="348"/>
-    <suppress checks="NestedIfDepth" files="ThrowableLongSupplier" lines="349"/>
-    <suppress checks="NestedIfDepth" files="ThrowableShortSupplier" lines="330"/>
-    <suppress checks="NestedIfDepth" files="ThrowableSupplier" lines="219"/>
+    <suppress checks="LineLength" files="ThrowableBiObjBooleanToDoubleFunction" lines="825"/>
+    <suppress checks="LineLength" files="ThrowableBiObjBooleanFunction" lines="698"/>
+    <suppress checks="LineLength" files="ThrowableBiObjCharFunction" lines="697"/>
+    <suppress checks="LineLength" files="ThrowableBiObjIntFunction" lines="697"/>
+    <suppress checks="LineLength" files="ThrowableToByteTriFunction" lines="796"/>
+    <suppress checks="LineLength" files="ThrowableToCharTriFunction" lines="796"/>
+    <suppress checks="LineLength" files="ThrowableToDoubleTriFunction" lines="798"/>
+    <suppress checks="LineLength" files="ThrowableToFloatTriFunction" lines="797"/>
+    <suppress checks="LineLength" files="ThrowableToLongTriFunction" lines="796"/>
+    <suppress checks="LineLength" files="ThrowableToShortTriFunction" lines="797"/>
+    <suppress checks="LineLength" files="ThrowableTriFunction" lines="862"/>
 </suppressions>
