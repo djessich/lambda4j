@@ -452,6 +452,7 @@ public interface ThrowableObjFloatConsumer<T, X extends Throwable> extends Lambd
      */
     @Nonnull
     default ObjFloatConsumer<T> nest(@Nonnull Function<? super Throwable, ? extends RuntimeException> mapper) {
+        Objects.requireNonNull(mapper);
         return recover(throwable -> {
             throw mapper.apply(throwable);
         });

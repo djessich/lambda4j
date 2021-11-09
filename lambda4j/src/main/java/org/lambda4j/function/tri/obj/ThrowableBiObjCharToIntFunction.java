@@ -794,8 +794,8 @@ public interface ThrowableBiObjCharToIntFunction<T, U, X extends Throwable> exte
      * @see #nest()
      */
     @Nonnull
-    default BiObjCharToIntFunction<T, U> nest(
-            @Nonnull Function<? super Throwable, ? extends RuntimeException> mapper) {
+    default BiObjCharToIntFunction<T, U> nest(@Nonnull Function<? super Throwable, ? extends RuntimeException> mapper) {
+        Objects.requireNonNull(mapper);
         return recover(throwable -> {
             throw mapper.apply(throwable);
         });

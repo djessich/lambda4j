@@ -392,6 +392,7 @@ public interface ThrowableBooleanSupplier<X extends Throwable> extends Lambda, B
      */
     @Nonnull
     default BooleanSupplier2 nest(@Nonnull Function<? super Throwable, ? extends RuntimeException> mapper) {
+        Objects.requireNonNull(mapper);
         return recover(throwable -> {
             throw mapper.apply(throwable);
         });

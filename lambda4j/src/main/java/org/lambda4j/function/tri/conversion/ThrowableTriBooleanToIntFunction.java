@@ -721,8 +721,8 @@ public interface ThrowableTriBooleanToIntFunction<X extends Throwable> extends L
      * @see #nest()
      */
     @Nonnull
-    default TriBooleanToIntFunction nest(
-            @Nonnull Function<? super Throwable, ? extends RuntimeException> mapper) {
+    default TriBooleanToIntFunction nest(@Nonnull Function<? super Throwable, ? extends RuntimeException> mapper) {
+        Objects.requireNonNull(mapper);
         return recover(throwable -> {
             throw mapper.apply(throwable);
         });

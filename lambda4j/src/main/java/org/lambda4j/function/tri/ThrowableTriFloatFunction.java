@@ -808,6 +808,7 @@ public interface ThrowableTriFloatFunction<R, X extends Throwable> extends Lambd
      */
     @Nonnull
     default TriFloatFunction<R> nest(@Nonnull Function<? super Throwable, ? extends RuntimeException> mapper) {
+        Objects.requireNonNull(mapper);
         return recover(throwable -> {
             throw mapper.apply(throwable);
         });

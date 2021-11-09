@@ -799,6 +799,7 @@ public interface ThrowableBiObjBooleanToCharFunction<T, U, X extends Throwable> 
     @Nonnull
     default BiObjBooleanToCharFunction<T, U> nest(
             @Nonnull Function<? super Throwable, ? extends RuntimeException> mapper) {
+        Objects.requireNonNull(mapper);
         return recover(throwable -> {
             throw mapper.apply(throwable);
         });

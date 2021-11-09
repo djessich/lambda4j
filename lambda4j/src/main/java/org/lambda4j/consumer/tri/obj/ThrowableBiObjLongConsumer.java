@@ -568,8 +568,8 @@ public interface ThrowableBiObjLongConsumer<T, U, X extends Throwable> extends L
      * @see #nest()
      */
     @Nonnull
-    default BiObjLongConsumer<T, U> nest(
-            @Nonnull Function<? super Throwable, ? extends RuntimeException> mapper) {
+    default BiObjLongConsumer<T, U> nest(@Nonnull Function<? super Throwable, ? extends RuntimeException> mapper) {
+        Objects.requireNonNull(mapper);
         return recover(throwable -> {
             throw mapper.apply(throwable);
         });

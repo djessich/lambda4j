@@ -675,8 +675,8 @@ public interface ThrowableObjByteToShortFunction<T, X extends Throwable> extends
      * @see #nest()
      */
     @Nonnull
-    default ObjByteToShortFunction<T> nest(
-            @Nonnull Function<? super Throwable, ? extends RuntimeException> mapper) {
+    default ObjByteToShortFunction<T> nest(@Nonnull Function<? super Throwable, ? extends RuntimeException> mapper) {
+        Objects.requireNonNull(mapper);
         return recover(throwable -> {
             throw mapper.apply(throwable);
         });

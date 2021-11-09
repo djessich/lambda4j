@@ -420,6 +420,7 @@ public interface ThrowableBiByteConsumer<X extends Throwable> extends Lambda {
      */
     @Nonnull
     default BiByteConsumer nest(@Nonnull Function<? super Throwable, ? extends RuntimeException> mapper) {
+        Objects.requireNonNull(mapper);
         return recover(throwable -> {
             throw mapper.apply(throwable);
         });

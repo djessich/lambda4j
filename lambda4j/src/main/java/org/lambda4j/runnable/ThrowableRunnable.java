@@ -169,6 +169,7 @@ public interface ThrowableRunnable<X extends Throwable> extends Lambda, Runnable
      */
     @Nonnull
     default Runnable2 nest(@Nonnull Function<? super Throwable, ? extends RuntimeException> mapper) {
+        Objects.requireNonNull(mapper);
         return recover(throwable -> {
             throw mapper.apply(throwable);
         });

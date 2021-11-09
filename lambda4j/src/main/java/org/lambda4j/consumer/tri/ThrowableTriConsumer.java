@@ -525,6 +525,7 @@ public interface ThrowableTriConsumer<T, U, V, X extends Throwable> extends Lamb
      */
     @Nonnull
     default TriConsumer<T, U, V> nest(@Nonnull Function<? super Throwable, ? extends RuntimeException> mapper) {
+        Objects.requireNonNull(mapper);
         return recover(throwable -> {
             throw mapper.apply(throwable);
         });

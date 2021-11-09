@@ -675,8 +675,8 @@ public interface ThrowableObjCharToShortFunction<T, X extends Throwable> extends
      * @see #nest()
      */
     @Nonnull
-    default ObjCharToShortFunction<T> nest(
-            @Nonnull Function<? super Throwable, ? extends RuntimeException> mapper) {
+    default ObjCharToShortFunction<T> nest(@Nonnull Function<? super Throwable, ? extends RuntimeException> mapper) {
+        Objects.requireNonNull(mapper);
         return recover(throwable -> {
             throw mapper.apply(throwable);
         });

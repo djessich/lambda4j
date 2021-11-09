@@ -729,6 +729,7 @@ public interface ThrowableDoubleBinaryOperator<X extends Throwable> extends Lamb
      */
     @Nonnull
     default DoubleBinaryOperator2 nest(@Nonnull Function<? super Throwable, ? extends RuntimeException> mapper) {
+        Objects.requireNonNull(mapper);
         return recover(throwable -> {
             throw mapper.apply(throwable);
         });

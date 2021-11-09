@@ -771,8 +771,8 @@ public interface ThrowableObjBiShortToLongFunction<T, X extends Throwable> exten
      * @see #nest()
      */
     @Nonnull
-    default ObjBiShortToLongFunction<T> nest(
-            @Nonnull Function<? super Throwable, ? extends RuntimeException> mapper) {
+    default ObjBiShortToLongFunction<T> nest(@Nonnull Function<? super Throwable, ? extends RuntimeException> mapper) {
+        Objects.requireNonNull(mapper);
         return recover(throwable -> {
             throw mapper.apply(throwable);
         });

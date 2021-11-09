@@ -557,6 +557,7 @@ public interface ThrowableCharToFloatFunction<X extends Throwable> extends Lambd
      */
     @Nonnull
     default CharToFloatFunction nest(@Nonnull Function<? super Throwable, ? extends RuntimeException> mapper) {
+        Objects.requireNonNull(mapper);
         return recover(throwable -> {
             throw mapper.apply(throwable);
         });

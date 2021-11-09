@@ -726,6 +726,7 @@ public interface ThrowableBiLongFunction<R, X extends Throwable> extends Lambda 
      */
     @Nonnull
     default BiLongFunction<R> nest(@Nonnull Function<? super Throwable, ? extends RuntimeException> mapper) {
+        Objects.requireNonNull(mapper);
         return recover(throwable -> {
             throw mapper.apply(throwable);
         });

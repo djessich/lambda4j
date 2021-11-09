@@ -673,8 +673,8 @@ public interface ThrowableObjIntToLongFunction<T, X extends Throwable> extends L
      * @see #nest()
      */
     @Nonnull
-    default ObjIntToLongFunction<T> nest(
-            @Nonnull Function<? super Throwable, ? extends RuntimeException> mapper) {
+    default ObjIntToLongFunction<T> nest(@Nonnull Function<? super Throwable, ? extends RuntimeException> mapper) {
+        Objects.requireNonNull(mapper);
         return recover(throwable -> {
             throw mapper.apply(throwable);
         });

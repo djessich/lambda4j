@@ -798,6 +798,7 @@ public interface ThrowableObjFloatPredicate<T, X extends Throwable> extends Lamb
      */
     @Nonnull
     default ObjFloatPredicate<T> nest(@Nonnull Function<? super Throwable, ? extends RuntimeException> mapper) {
+        Objects.requireNonNull(mapper);
         return recover(throwable -> {
             throw mapper.apply(throwable);
         });

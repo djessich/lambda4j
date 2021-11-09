@@ -800,6 +800,7 @@ public interface ThrowableBiObjDoubleToFloatFunction<T, U, X extends Throwable> 
     @Nonnull
     default BiObjDoubleToFloatFunction<T, U> nest(
             @Nonnull Function<? super Throwable, ? extends RuntimeException> mapper) {
+        Objects.requireNonNull(mapper);
         return recover(throwable -> {
             throw mapper.apply(throwable);
         });

@@ -732,6 +732,7 @@ public interface ThrowableTriCharToByteFunction<X extends Throwable> extends Lam
      */
     @Nonnull
     default TriCharToByteFunction nest(@Nonnull Function<? super Throwable, ? extends RuntimeException> mapper) {
+        Objects.requireNonNull(mapper);
         return recover(throwable -> {
             throw mapper.apply(throwable);
         });

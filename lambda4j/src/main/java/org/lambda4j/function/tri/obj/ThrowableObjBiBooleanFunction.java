@@ -638,8 +638,8 @@ public interface ThrowableObjBiBooleanFunction<T, R, X extends Throwable> extend
      * @see #nest()
      */
     @Nonnull
-    default ObjBiBooleanFunction<T, R> nest(
-            @Nonnull Function<? super Throwable, ? extends RuntimeException> mapper) {
+    default ObjBiBooleanFunction<T, R> nest(@Nonnull Function<? super Throwable, ? extends RuntimeException> mapper) {
+        Objects.requireNonNull(mapper);
         return recover(throwable -> {
             throw mapper.apply(throwable);
         });

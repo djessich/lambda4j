@@ -676,8 +676,8 @@ public interface ThrowableObjByteToDoubleFunction<T, X extends Throwable> extend
      * @see #nest()
      */
     @Nonnull
-    default ObjByteToDoubleFunction<T> nest(
-            @Nonnull Function<? super Throwable, ? extends RuntimeException> mapper) {
+    default ObjByteToDoubleFunction<T> nest(@Nonnull Function<? super Throwable, ? extends RuntimeException> mapper) {
+        Objects.requireNonNull(mapper);
         return recover(throwable -> {
             throw mapper.apply(throwable);
         });

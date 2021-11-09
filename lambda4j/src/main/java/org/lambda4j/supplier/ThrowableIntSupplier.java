@@ -361,6 +361,7 @@ public interface ThrowableIntSupplier<X extends Throwable> extends Lambda, IntSu
      */
     @Nonnull
     default IntSupplier2 nest(@Nonnull Function<? super Throwable, ? extends RuntimeException> mapper) {
+        Objects.requireNonNull(mapper);
         return recover(throwable -> {
             throw mapper.apply(throwable);
         });

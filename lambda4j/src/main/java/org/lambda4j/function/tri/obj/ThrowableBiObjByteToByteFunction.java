@@ -794,6 +794,7 @@ public interface ThrowableBiObjByteToByteFunction<T, U, X extends Throwable> ext
     @Nonnull
     default BiObjByteToByteFunction<T, U> nest(
             @Nonnull Function<? super Throwable, ? extends RuntimeException> mapper) {
+        Objects.requireNonNull(mapper);
         return recover(throwable -> {
             throw mapper.apply(throwable);
         });

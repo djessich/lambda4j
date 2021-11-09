@@ -723,8 +723,8 @@ public interface ThrowableTriBooleanToLongFunction<X extends Throwable> extends 
      * @see #nest()
      */
     @Nonnull
-    default TriBooleanToLongFunction nest(
-            @Nonnull Function<? super Throwable, ? extends RuntimeException> mapper) {
+    default TriBooleanToLongFunction nest(@Nonnull Function<? super Throwable, ? extends RuntimeException> mapper) {
+        Objects.requireNonNull(mapper);
         return recover(throwable -> {
             throw mapper.apply(throwable);
         });

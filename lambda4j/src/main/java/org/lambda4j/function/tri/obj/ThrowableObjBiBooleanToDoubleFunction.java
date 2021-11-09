@@ -768,6 +768,7 @@ public interface ThrowableObjBiBooleanToDoubleFunction<T, X extends Throwable> e
     @Nonnull
     default ObjBiBooleanToDoubleFunction<T> nest(
             @Nonnull Function<? super Throwable, ? extends RuntimeException> mapper) {
+        Objects.requireNonNull(mapper);
         return recover(throwable -> {
             throw mapper.apply(throwable);
         });

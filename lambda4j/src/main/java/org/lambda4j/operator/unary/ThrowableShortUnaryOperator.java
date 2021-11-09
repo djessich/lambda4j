@@ -574,6 +574,7 @@ public interface ThrowableShortUnaryOperator<X extends Throwable> extends Lambda
      */
     @Nonnull
     default ShortUnaryOperator nest(@Nonnull Function<? super Throwable, ? extends RuntimeException> mapper) {
+        Objects.requireNonNull(mapper);
         return recover(throwable -> {
             throw mapper.apply(throwable);
         });

@@ -715,6 +715,7 @@ public interface ThrowableIntBinaryOperator<X extends Throwable> extends Lambda,
      */
     @Nonnull
     default IntBinaryOperator2 nest(@Nonnull Function<? super Throwable, ? extends RuntimeException> mapper) {
+        Objects.requireNonNull(mapper);
         return recover(throwable -> {
             throw mapper.apply(throwable);
         });

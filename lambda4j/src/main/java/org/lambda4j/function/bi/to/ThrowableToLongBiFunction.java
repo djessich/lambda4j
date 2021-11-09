@@ -711,8 +711,8 @@ public interface ThrowableToLongBiFunction<T, U, X extends Throwable> extends La
      * @see #nest()
      */
     @Nonnull
-    default ToLongBiFunction2<T, U> nest(
-            @Nonnull Function<? super Throwable, ? extends RuntimeException> mapper) {
+    default ToLongBiFunction2<T, U> nest(@Nonnull Function<? super Throwable, ? extends RuntimeException> mapper) {
+        Objects.requireNonNull(mapper);
         return recover(throwable -> {
             throw mapper.apply(throwable);
         });

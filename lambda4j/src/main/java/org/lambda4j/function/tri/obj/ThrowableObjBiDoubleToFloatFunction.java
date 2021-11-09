@@ -776,6 +776,7 @@ public interface ThrowableObjBiDoubleToFloatFunction<T, X extends Throwable> ext
     @Nonnull
     default ObjBiDoubleToFloatFunction<T> nest(
             @Nonnull Function<? super Throwable, ? extends RuntimeException> mapper) {
+        Objects.requireNonNull(mapper);
         return recover(throwable -> {
             throw mapper.apply(throwable);
         });

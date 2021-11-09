@@ -592,6 +592,7 @@ public interface ThrowableLongUnaryOperator<X extends Throwable> extends Lambda,
      */
     @Nonnull
     default LongUnaryOperator2 nest(@Nonnull Function<? super Throwable, ? extends RuntimeException> mapper) {
+        Objects.requireNonNull(mapper);
         return recover(throwable -> {
             throw mapper.apply(throwable);
         });

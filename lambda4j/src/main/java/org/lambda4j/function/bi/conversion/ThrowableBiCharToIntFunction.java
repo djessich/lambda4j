@@ -657,6 +657,7 @@ public interface ThrowableBiCharToIntFunction<X extends Throwable> extends Lambd
      */
     @Nonnull
     default BiCharToIntFunction nest(@Nonnull Function<? super Throwable, ? extends RuntimeException> mapper) {
+        Objects.requireNonNull(mapper);
         return recover(throwable -> {
             throw mapper.apply(throwable);
         });

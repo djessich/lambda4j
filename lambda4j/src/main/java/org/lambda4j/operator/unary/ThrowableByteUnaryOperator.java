@@ -572,6 +572,7 @@ public interface ThrowableByteUnaryOperator<X extends Throwable> extends Lambda 
      */
     @Nonnull
     default ByteUnaryOperator nest(@Nonnull Function<? super Throwable, ? extends RuntimeException> mapper) {
+        Objects.requireNonNull(mapper);
         return recover(throwable -> {
             throw mapper.apply(throwable);
         });

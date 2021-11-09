@@ -767,8 +767,8 @@ public interface ThrowableObjBiCharToCharFunction<T, X extends Throwable> extend
      * @see #nest()
      */
     @Nonnull
-    default ObjBiCharToCharFunction<T> nest(
-            @Nonnull Function<? super Throwable, ? extends RuntimeException> mapper) {
+    default ObjBiCharToCharFunction<T> nest(@Nonnull Function<? super Throwable, ? extends RuntimeException> mapper) {
+        Objects.requireNonNull(mapper);
         return recover(throwable -> {
             throw mapper.apply(throwable);
         });

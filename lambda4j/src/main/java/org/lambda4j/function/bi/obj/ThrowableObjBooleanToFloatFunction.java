@@ -677,8 +677,8 @@ public interface ThrowableObjBooleanToFloatFunction<T, X extends Throwable> exte
      * @see #nest()
      */
     @Nonnull
-    default ObjBooleanToFloatFunction<T> nest(
-            @Nonnull Function<? super Throwable, ? extends RuntimeException> mapper) {
+    default ObjBooleanToFloatFunction<T> nest(@Nonnull Function<? super Throwable, ? extends RuntimeException> mapper) {
+        Objects.requireNonNull(mapper);
         return recover(throwable -> {
             throw mapper.apply(throwable);
         });

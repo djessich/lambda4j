@@ -662,6 +662,7 @@ public interface ThrowableBiByteToShortFunction<X extends Throwable> extends Lam
      */
     @Nonnull
     default BiByteToShortFunction nest(@Nonnull Function<? super Throwable, ? extends RuntimeException> mapper) {
+        Objects.requireNonNull(mapper);
         return recover(throwable -> {
             throw mapper.apply(throwable);
         });

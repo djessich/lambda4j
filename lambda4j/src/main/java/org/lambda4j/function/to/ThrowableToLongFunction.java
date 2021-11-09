@@ -592,6 +592,7 @@ public interface ThrowableToLongFunction<T, X extends Throwable> extends Lambda,
      */
     @Nonnull
     default ToLongFunction2<T> nest(@Nonnull Function<? super Throwable, ? extends RuntimeException> mapper) {
+        Objects.requireNonNull(mapper);
         return recover(throwable -> {
             throw mapper.apply(throwable);
         });

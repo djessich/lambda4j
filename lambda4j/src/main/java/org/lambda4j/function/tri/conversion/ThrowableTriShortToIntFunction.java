@@ -732,6 +732,7 @@ public interface ThrowableTriShortToIntFunction<X extends Throwable> extends Lam
      */
     @Nonnull
     default TriShortToIntFunction nest(@Nonnull Function<? super Throwable, ? extends RuntimeException> mapper) {
+        Objects.requireNonNull(mapper);
         return recover(throwable -> {
             throw mapper.apply(throwable);
         });

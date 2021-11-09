@@ -638,8 +638,8 @@ public interface ThrowableObjBiDoubleFunction<T, R, X extends Throwable> extends
      * @see #nest()
      */
     @Nonnull
-    default ObjBiDoubleFunction<T, R> nest(
-            @Nonnull Function<? super Throwable, ? extends RuntimeException> mapper) {
+    default ObjBiDoubleFunction<T, R> nest(@Nonnull Function<? super Throwable, ? extends RuntimeException> mapper) {
+        Objects.requireNonNull(mapper);
         return recover(throwable -> {
             throw mapper.apply(throwable);
         });

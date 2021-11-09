@@ -343,6 +343,7 @@ public interface ThrowableCharSupplier<X extends Throwable> extends Lambda {
      */
     @Nonnull
     default CharSupplier nest(@Nonnull Function<? super Throwable, ? extends RuntimeException> mapper) {
+        Objects.requireNonNull(mapper);
         return recover(throwable -> {
             throw mapper.apply(throwable);
         });

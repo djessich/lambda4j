@@ -794,8 +794,8 @@ public interface ThrowableBiObjLongToIntFunction<T, U, X extends Throwable> exte
      * @see #nest()
      */
     @Nonnull
-    default BiObjLongToIntFunction<T, U> nest(
-            @Nonnull Function<? super Throwable, ? extends RuntimeException> mapper) {
+    default BiObjLongToIntFunction<T, U> nest(@Nonnull Function<? super Throwable, ? extends RuntimeException> mapper) {
+        Objects.requireNonNull(mapper);
         return recover(throwable -> {
             throw mapper.apply(throwable);
         });

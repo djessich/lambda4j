@@ -353,6 +353,7 @@ public interface ThrowableConsumer<T, X extends Throwable> extends Lambda, Consu
      */
     @Nonnull
     default Consumer2<T> nest(@Nonnull Function<? super Throwable, ? extends RuntimeException> mapper) {
+        Objects.requireNonNull(mapper);
         return recover(throwable -> {
             throw mapper.apply(throwable);
         });

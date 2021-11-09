@@ -836,8 +836,8 @@ public interface ThrowableTriFunction<T, U, V, R, X extends Throwable> extends L
      * @see #nest()
      */
     @Nonnull
-    default TriFunction<T, U, V, R> nest(
-            @Nonnull Function<? super Throwable, ? extends RuntimeException> mapper) {
+    default TriFunction<T, U, V, R> nest(@Nonnull Function<? super Throwable, ? extends RuntimeException> mapper) {
+        Objects.requireNonNull(mapper);
         return recover(throwable -> {
             throw mapper.apply(throwable);
         });

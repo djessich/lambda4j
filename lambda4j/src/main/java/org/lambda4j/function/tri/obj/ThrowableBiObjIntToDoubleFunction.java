@@ -797,6 +797,7 @@ public interface ThrowableBiObjIntToDoubleFunction<T, U, X extends Throwable> ex
     @Nonnull
     default BiObjIntToDoubleFunction<T, U> nest(
             @Nonnull Function<? super Throwable, ? extends RuntimeException> mapper) {
+        Objects.requireNonNull(mapper);
         return recover(throwable -> {
             throw mapper.apply(throwable);
         });

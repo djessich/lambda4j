@@ -676,8 +676,8 @@ public interface ThrowableObjBooleanToCharFunction<T, X extends Throwable> exten
      * @see #nest()
      */
     @Nonnull
-    default ObjBooleanToCharFunction<T> nest(
-            @Nonnull Function<? super Throwable, ? extends RuntimeException> mapper) {
+    default ObjBooleanToCharFunction<T> nest(@Nonnull Function<? super Throwable, ? extends RuntimeException> mapper) {
+        Objects.requireNonNull(mapper);
         return recover(throwable -> {
             throw mapper.apply(throwable);
         });

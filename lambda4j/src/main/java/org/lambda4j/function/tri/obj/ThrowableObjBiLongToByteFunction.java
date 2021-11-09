@@ -770,8 +770,8 @@ public interface ThrowableObjBiLongToByteFunction<T, X extends Throwable> extend
      * @see #nest()
      */
     @Nonnull
-    default ObjBiLongToByteFunction<T> nest(
-            @Nonnull Function<? super Throwable, ? extends RuntimeException> mapper) {
+    default ObjBiLongToByteFunction<T> nest(@Nonnull Function<? super Throwable, ? extends RuntimeException> mapper) {
+        Objects.requireNonNull(mapper);
         return recover(throwable -> {
             throw mapper.apply(throwable);
         });

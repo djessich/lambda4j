@@ -768,8 +768,8 @@ public interface ThrowableObjBiFloatToFloatFunction<T, X extends Throwable> exte
      * @see #nest()
      */
     @Nonnull
-    default ObjBiFloatToFloatFunction<T> nest(
-            @Nonnull Function<? super Throwable, ? extends RuntimeException> mapper) {
+    default ObjBiFloatToFloatFunction<T> nest(@Nonnull Function<? super Throwable, ? extends RuntimeException> mapper) {
+        Objects.requireNonNull(mapper);
         return recover(throwable -> {
             throw mapper.apply(throwable);
         });

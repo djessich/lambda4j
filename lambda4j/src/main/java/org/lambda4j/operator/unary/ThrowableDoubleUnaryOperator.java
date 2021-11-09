@@ -597,6 +597,7 @@ public interface ThrowableDoubleUnaryOperator<X extends Throwable> extends Lambd
      */
     @Nonnull
     default DoubleUnaryOperator2 nest(@Nonnull Function<? super Throwable, ? extends RuntimeException> mapper) {
+        Objects.requireNonNull(mapper);
         return recover(throwable -> {
             throw mapper.apply(throwable);
         });

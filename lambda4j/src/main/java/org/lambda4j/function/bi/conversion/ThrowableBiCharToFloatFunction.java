@@ -662,6 +662,7 @@ public interface ThrowableBiCharToFloatFunction<X extends Throwable> extends Lam
      */
     @Nonnull
     default BiCharToFloatFunction nest(@Nonnull Function<? super Throwable, ? extends RuntimeException> mapper) {
+        Objects.requireNonNull(mapper);
         return recover(throwable -> {
             throw mapper.apply(throwable);
         });

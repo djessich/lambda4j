@@ -740,6 +740,7 @@ public interface ThrowableLongTernaryOperator<X extends Throwable> extends Lambd
      */
     @Nonnull
     default LongTernaryOperator nest(@Nonnull Function<? super Throwable, ? extends RuntimeException> mapper) {
+        Objects.requireNonNull(mapper);
         return recover(throwable -> {
             throw mapper.apply(throwable);
         });

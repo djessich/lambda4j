@@ -557,6 +557,7 @@ public interface ThrowableByteToDoubleFunction<X extends Throwable> extends Lamb
      */
     @Nonnull
     default ByteToDoubleFunction nest(@Nonnull Function<? super Throwable, ? extends RuntimeException> mapper) {
+        Objects.requireNonNull(mapper);
         return recover(throwable -> {
             throw mapper.apply(throwable);
         });

@@ -553,6 +553,7 @@ public interface ThrowableLongToByteFunction<X extends Throwable> extends Lambda
      */
     @Nonnull
     default LongToByteFunction nest(@Nonnull Function<? super Throwable, ? extends RuntimeException> mapper) {
+        Objects.requireNonNull(mapper);
         return recover(throwable -> {
             throw mapper.apply(throwable);
         });

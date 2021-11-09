@@ -724,8 +724,8 @@ public interface ThrowableTriBooleanToShortFunction<X extends Throwable> extends
      * @see #nest()
      */
     @Nonnull
-    default TriBooleanToShortFunction nest(
-            @Nonnull Function<? super Throwable, ? extends RuntimeException> mapper) {
+    default TriBooleanToShortFunction nest(@Nonnull Function<? super Throwable, ? extends RuntimeException> mapper) {
+        Objects.requireNonNull(mapper);
         return recover(throwable -> {
             throw mapper.apply(throwable);
         });

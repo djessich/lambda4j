@@ -733,6 +733,7 @@ public interface ThrowableTriIntToDoubleFunction<X extends Throwable> extends La
      */
     @Nonnull
     default TriIntToDoubleFunction nest(@Nonnull Function<? super Throwable, ? extends RuntimeException> mapper) {
+        Objects.requireNonNull(mapper);
         return recover(throwable -> {
             throw mapper.apply(throwable);
         });

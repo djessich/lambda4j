@@ -673,8 +673,8 @@ public interface ThrowableObjFloatToIntFunction<T, X extends Throwable> extends 
      * @see #nest()
      */
     @Nonnull
-    default ObjFloatToIntFunction<T> nest(
-            @Nonnull Function<? super Throwable, ? extends RuntimeException> mapper) {
+    default ObjFloatToIntFunction<T> nest(@Nonnull Function<? super Throwable, ? extends RuntimeException> mapper) {
+        Objects.requireNonNull(mapper);
         return recover(throwable -> {
             throw mapper.apply(throwable);
         });

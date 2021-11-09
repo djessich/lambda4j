@@ -362,6 +362,7 @@ public interface ThrowableLongSupplier<X extends Throwable> extends Lambda, Long
      */
     @Nonnull
     default LongSupplier2 nest(@Nonnull Function<? super Throwable, ? extends RuntimeException> mapper) {
+        Objects.requireNonNull(mapper);
         return recover(throwable -> {
             throw mapper.apply(throwable);
         });

@@ -660,6 +660,7 @@ public interface ThrowableBiIntToFloatFunction<X extends Throwable> extends Lamb
      */
     @Nonnull
     default BiIntToFloatFunction nest(@Nonnull Function<? super Throwable, ? extends RuntimeException> mapper) {
+        Objects.requireNonNull(mapper);
         return recover(throwable -> {
             throw mapper.apply(throwable);
         });

@@ -726,8 +726,8 @@ public interface ThrowableTriBooleanToDoubleFunction<X extends Throwable> extend
      * @see #nest()
      */
     @Nonnull
-    default TriBooleanToDoubleFunction nest(
-            @Nonnull Function<? super Throwable, ? extends RuntimeException> mapper) {
+    default TriBooleanToDoubleFunction nest(@Nonnull Function<? super Throwable, ? extends RuntimeException> mapper) {
+        Objects.requireNonNull(mapper);
         return recover(throwable -> {
             throw mapper.apply(throwable);
         });

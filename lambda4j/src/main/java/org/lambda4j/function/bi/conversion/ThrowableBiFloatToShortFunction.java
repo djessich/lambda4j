@@ -662,6 +662,7 @@ public interface ThrowableBiFloatToShortFunction<X extends Throwable> extends La
      */
     @Nonnull
     default BiFloatToShortFunction nest(@Nonnull Function<? super Throwable, ? extends RuntimeException> mapper) {
+        Objects.requireNonNull(mapper);
         return recover(throwable -> {
             throw mapper.apply(throwable);
         });

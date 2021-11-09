@@ -538,6 +538,7 @@ public interface ThrowableObjBiByteConsumer<T, X extends Throwable> extends Lamb
      */
     @Nonnull
     default ObjBiByteConsumer<T> nest(@Nonnull Function<? super Throwable, ? extends RuntimeException> mapper) {
+        Objects.requireNonNull(mapper);
         return recover(throwable -> {
             throw mapper.apply(throwable);
         });

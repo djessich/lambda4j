@@ -419,6 +419,7 @@ public interface ThrowableBiBooleanConsumer<X extends Throwable> extends Lambda 
      */
     @Nonnull
     default BiBooleanConsumer nest(@Nonnull Function<? super Throwable, ? extends RuntimeException> mapper) {
+        Objects.requireNonNull(mapper);
         return recover(throwable -> {
             throw mapper.apply(throwable);
         });

@@ -549,8 +549,7 @@ public interface ThrowableIntUnaryOperator<X extends Throwable> extends Lambda, 
 
     /**
      * Returns a composed {@link ThrowableUnaryOperator} which represents this {@link ThrowableIntUnaryOperator}.
-     * Thereby the primitive input argument for this operator is autoboxed. This method provides the possibility
-     * to use
+     * Thereby the primitive input argument for this operator is autoboxed. This method provides the possibility to use
      * this {@code ThrowableIntUnaryOperator} with methods provided by the {@code JDK}.
      *
      * @return A composed {@code ThrowableUnaryOperator} which represents this {@code ThrowableIntUnaryOperator}.
@@ -561,14 +560,11 @@ public interface ThrowableIntUnaryOperator<X extends Throwable> extends Lambda, 
     }
 
     /**
-     * Returns a composed {@link IntUnaryOperator2} that applies this operator to its input and nests the thrown
-     * {@link
-     * Throwable} from it. The {@code Throwable} is nested (wrapped) in a
-     * {@link ThrownByFunctionalInterfaceException},
+     * Returns a composed {@link IntUnaryOperator2} that applies this operator to its input and nests the thrown {@link
+     * Throwable} from it. The {@code Throwable} is nested (wrapped) in a {@link ThrownByFunctionalInterfaceException},
      * which is constructed from the thrown {@code Throwable}s message and the thrown {@code Throwable} itself.
      *
-     * @return A composed {@link IntUnaryOperator2} that applies this operator to its input and nests the thrown
-     * {@code
+     * @return A composed {@link IntUnaryOperator2} that applies this operator to its input and nests the thrown {@code
      * Throwable} from it.
      * @implNote If thrown {@code Throwable} is of type {@link Error} it is thrown as-is and thus not nested.
      * @see #nest(Function)
@@ -580,14 +576,12 @@ public interface ThrowableIntUnaryOperator<X extends Throwable> extends Lambda, 
     }
 
     /**
-     * Returns a composed {@link IntUnaryOperator2} that applies this operator to its input and nests the thrown
-     * {@link
+     * Returns a composed {@link IntUnaryOperator2} that applies this operator to its input and nests the thrown {@link
      * Throwable} from it using {@code mapper} operation. Thereby {@code mapper} may modify the thrown {@code
      * Throwable}, regarding its implementation, and returns it nested (wrapped) in a {@link RuntimeException}.
      *
      * @param mapper The operation to map the thrown {@code Throwable} to {@code RuntimeException}
-     * @return A composed {@link IntUnaryOperator2} that applies this operator to its input and nests the thrown
-     * {@code
+     * @return A composed {@link IntUnaryOperator2} that applies this operator to its input and nests the thrown {@code
      * Throwable} from it using {@code mapper} operation.
      * @throws NullPointerException If given argument is {@code null}
      * @implNote If thrown {@code Throwable} is of type {@link Error} it is thrown as-is and thus not nested.
@@ -595,25 +589,23 @@ public interface ThrowableIntUnaryOperator<X extends Throwable> extends Lambda, 
      */
     @Nonnull
     default IntUnaryOperator2 nest(@Nonnull Function<? super Throwable, ? extends RuntimeException> mapper) {
+        Objects.requireNonNull(mapper);
         return recover(throwable -> {
             throw mapper.apply(throwable);
         });
     }
 
     /**
-     * Returns a composed {@link IntUnaryOperator2} that first applies this operator to its input, and then
-     * applies the
+     * Returns a composed {@link IntUnaryOperator2} that first applies this operator to its input, and then applies the
      * {@code recover} operation if a {@link Throwable} is thrown from this one. The {@code recover} operation is
      * represented by a curried operation which is called with throwable information and same argument of this
      * operator.
      *
      * @param recover The operation to apply if this operator throws a {@code Throwable}
-     * @return A composed {@link IntUnaryOperator2} that first applies this operator to its input, and then
-     * applies the
+     * @return A composed {@link IntUnaryOperator2} that first applies this operator to its input, and then applies the
      * {@code recover} operation if a {@code Throwable} is thrown from this one.
      * @throws NullPointerException If given argument or the returned enclosing operator is {@code null}
-     * @implSpec The implementation checks that the returned enclosing operator from {@code recover} operation is
-     * not
+     * @implSpec The implementation checks that the returned enclosing operator from {@code recover} operation is not
      * {@code null}. If it is, then a {@link NullPointerException} with appropriate message is thrown.
      * @implNote If thrown {@code Throwable} is of type {@link Error}, it is thrown as-is and thus not passed to {@code
      * recover} operation.
@@ -637,13 +629,10 @@ public interface ThrowableIntUnaryOperator<X extends Throwable> extends Lambda, 
 
     /**
      * Returns a composed {@link IntUnaryOperator2} that applies this operator to its input and sneakily throws the
-     * thrown {@link Throwable} from it, if it is not of type {@link RuntimeException} or {@link Error}. This
-     * means that
+     * thrown {@link Throwable} from it, if it is not of type {@link RuntimeException} or {@link Error}. This means that
      * each throwable thrown from the returned composed operator behaves exactly the same as an <em>unchecked</em>
-     * throwable does. As a result, there is no need to handle the throwable of this operator in the returned
-     * composed
-     * operator by either wrapping it in an <em>unchecked</em> throwable or to declare it in the {@code throws}
-     * clause,
+     * throwable does. As a result, there is no need to handle the throwable of this operator in the returned composed
+     * operator by either wrapping it in an <em>unchecked</em> throwable or to declare it in the {@code throws} clause,
      * as it would be done in a non sneaky throwing operator.
      * <p>
      * What sneaky throwing simply does, is to fake out the compiler and thus it bypasses the principle of
@@ -653,16 +642,12 @@ public interface ThrowableIntUnaryOperator<X extends Throwable> extends Lambda, 
      * However, when using this method to get a sneaky throwing operator variant of this throwable operator, the
      * following advantages, disadvantages and limitations will apply:
      * <p>
-     * If the calling-code is to handle the sneakily thrown throwable, it is required to add it to the {@code
-     * throws}
-     * clause of the method that applies the returned composed operator. The compiler will not force the
-     * declaration in
+     * If the calling-code is to handle the sneakily thrown throwable, it is required to add it to the {@code throws}
+     * clause of the method that applies the returned composed operator. The compiler will not force the declaration in
      * the {@code throws} clause anymore.
      * <p>
-     * If the calling-code already handles the sneakily thrown throwable, the compiler requires it to be added to
-     * the
-     * {@code throws} clause of the method that applies the returned composed operator. If not added, the
-     * compiler will
+     * If the calling-code already handles the sneakily thrown throwable, the compiler requires it to be added to the
+     * {@code throws} clause of the method that applies the returned composed operator. If not added, the compiler will
      * error that the caught throwable is never thrown in the corresponding {@code try} block.
      * <p>
      * If the returned composed operator is directly surrounded by a {@code try}-{@code catch} block to catch the
@@ -675,13 +660,10 @@ public interface ThrowableIntUnaryOperator<X extends Throwable> extends Lambda, 
      * catch(RuntimeException e) { ... }} or {@code try { ... } catch(Exception e) { ... }}, but perhaps this is
      * intended.
      * <p>
-     * When the called code never throws the specific throwable that it declares, it should obviously be omitted.
-     * For
+     * When the called code never throws the specific throwable that it declares, it should obviously be omitted. For
      * example: {@code new String(byteArr, "UTF-8") throws UnsupportedEncodingException}, but {@code UTF-8} is
-     * guaranteed by the Java specification to be always present. Here, the {@code throws} declaration is a
-     * nuisance and
-     * any solution to silence it with minimal boilerplate is welcome. The throwable should therefore be omitted
-     * in the
+     * guaranteed by the Java specification to be always present. Here, the {@code throws} declaration is a nuisance and
+     * any solution to silence it with minimal boilerplate is welcome. The throwable should therefore be omitted in the
      * {@code throws} clause of the method that applies the returned composed operator.
      * <p>
      * With all that mentioned, the following example will demonstrate this methods correct use:

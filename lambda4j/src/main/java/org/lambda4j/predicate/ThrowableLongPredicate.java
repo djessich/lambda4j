@@ -700,6 +700,7 @@ public interface ThrowableLongPredicate<X extends Throwable> extends Lambda, Lon
      */
     @Nonnull
     default LongPredicate2 nest(@Nonnull Function<? super Throwable, ? extends RuntimeException> mapper) {
+        Objects.requireNonNull(mapper);
         return recover(throwable -> {
             throw mapper.apply(throwable);
         });

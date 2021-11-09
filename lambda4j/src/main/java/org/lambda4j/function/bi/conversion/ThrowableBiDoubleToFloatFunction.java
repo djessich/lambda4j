@@ -661,8 +661,8 @@ public interface ThrowableBiDoubleToFloatFunction<X extends Throwable> extends L
      * @see #nest()
      */
     @Nonnull
-    default BiDoubleToFloatFunction nest(
-            @Nonnull Function<? super Throwable, ? extends RuntimeException> mapper) {
+    default BiDoubleToFloatFunction nest(@Nonnull Function<? super Throwable, ? extends RuntimeException> mapper) {
+        Objects.requireNonNull(mapper);
         return recover(throwable -> {
             throw mapper.apply(throwable);
         });

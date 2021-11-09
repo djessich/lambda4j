@@ -538,6 +538,7 @@ public interface ThrowableObjBiLongConsumer<T, X extends Throwable> extends Lamb
      */
     @Nonnull
     default ObjBiLongConsumer<T> nest(@Nonnull Function<? super Throwable, ? extends RuntimeException> mapper) {
+        Objects.requireNonNull(mapper);
         return recover(throwable -> {
             throw mapper.apply(throwable);
         });

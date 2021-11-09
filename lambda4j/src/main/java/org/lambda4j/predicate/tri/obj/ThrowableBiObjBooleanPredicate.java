@@ -923,8 +923,8 @@ public interface ThrowableBiObjBooleanPredicate<T, U, X extends Throwable> exten
      * @see #nest()
      */
     @Nonnull
-    default BiObjBooleanPredicate<T, U> nest(
-            @Nonnull Function<? super Throwable, ? extends RuntimeException> mapper) {
+    default BiObjBooleanPredicate<T, U> nest(@Nonnull Function<? super Throwable, ? extends RuntimeException> mapper) {
+        Objects.requireNonNull(mapper);
         return recover(throwable -> {
             throw mapper.apply(throwable);
         });

@@ -472,6 +472,7 @@ public interface ThrowableObjDoubleConsumer<T, X extends Throwable> extends Lamb
      */
     @Nonnull
     default ObjDoubleConsumer2<T> nest(@Nonnull Function<? super Throwable, ? extends RuntimeException> mapper) {
+        Objects.requireNonNull(mapper);
         return recover(throwable -> {
             throw mapper.apply(throwable);
         });

@@ -733,8 +733,8 @@ public interface ThrowableTriDoubleToShortFunction<X extends Throwable> extends 
      * @see #nest()
      */
     @Nonnull
-    default TriDoubleToShortFunction nest(
-            @Nonnull Function<? super Throwable, ? extends RuntimeException> mapper) {
+    default TriDoubleToShortFunction nest(@Nonnull Function<? super Throwable, ? extends RuntimeException> mapper) {
+        Objects.requireNonNull(mapper);
         return recover(throwable -> {
             throw mapper.apply(throwable);
         });

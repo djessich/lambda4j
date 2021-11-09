@@ -704,6 +704,7 @@ public interface ThrowableDoublePredicate<X extends Throwable> extends Lambda, D
      */
     @Nonnull
     default DoublePredicate2 nest(@Nonnull Function<? super Throwable, ? extends RuntimeException> mapper) {
+        Objects.requireNonNull(mapper);
         return recover(throwable -> {
             throw mapper.apply(throwable);
         });

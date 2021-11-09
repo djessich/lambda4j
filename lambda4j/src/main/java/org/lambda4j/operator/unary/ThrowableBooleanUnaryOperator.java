@@ -569,6 +569,7 @@ public interface ThrowableBooleanUnaryOperator<X extends Throwable> extends Lamb
      */
     @Nonnull
     default BooleanUnaryOperator nest(@Nonnull Function<? super Throwable, ? extends RuntimeException> mapper) {
+        Objects.requireNonNull(mapper);
         return recover(throwable -> {
             throw mapper.apply(throwable);
         });

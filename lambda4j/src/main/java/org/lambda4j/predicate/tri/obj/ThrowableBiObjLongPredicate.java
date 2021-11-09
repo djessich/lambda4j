@@ -923,8 +923,8 @@ public interface ThrowableBiObjLongPredicate<T, U, X extends Throwable> extends 
      * @see #nest()
      */
     @Nonnull
-    default BiObjLongPredicate<T, U> nest(
-            @Nonnull Function<? super Throwable, ? extends RuntimeException> mapper) {
+    default BiObjLongPredicate<T, U> nest(@Nonnull Function<? super Throwable, ? extends RuntimeException> mapper) {
+        Objects.requireNonNull(mapper);
         return recover(throwable -> {
             throw mapper.apply(throwable);
         });

@@ -362,6 +362,7 @@ public interface ThrowableDoubleSupplier<X extends Throwable> extends Lambda, Do
      */
     @Nonnull
     default DoubleSupplier2 nest(@Nonnull Function<? super Throwable, ? extends RuntimeException> mapper) {
+        Objects.requireNonNull(mapper);
         return recover(throwable -> {
             throw mapper.apply(throwable);
         });

@@ -731,6 +731,7 @@ public interface ThrowableTriIntToFloatFunction<X extends Throwable> extends Lam
      */
     @Nonnull
     default TriIntToFloatFunction nest(@Nonnull Function<? super Throwable, ? extends RuntimeException> mapper) {
+        Objects.requireNonNull(mapper);
         return recover(throwable -> {
             throw mapper.apply(throwable);
         });

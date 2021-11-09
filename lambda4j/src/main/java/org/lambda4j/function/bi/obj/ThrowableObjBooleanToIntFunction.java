@@ -676,8 +676,8 @@ public interface ThrowableObjBooleanToIntFunction<T, X extends Throwable> extend
      * @see #nest()
      */
     @Nonnull
-    default ObjBooleanToIntFunction<T> nest(
-            @Nonnull Function<? super Throwable, ? extends RuntimeException> mapper) {
+    default ObjBooleanToIntFunction<T> nest(@Nonnull Function<? super Throwable, ? extends RuntimeException> mapper) {
+        Objects.requireNonNull(mapper);
         return recover(throwable -> {
             throw mapper.apply(throwable);
         });

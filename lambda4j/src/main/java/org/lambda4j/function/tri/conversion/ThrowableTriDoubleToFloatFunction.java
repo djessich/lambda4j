@@ -733,8 +733,8 @@ public interface ThrowableTriDoubleToFloatFunction<X extends Throwable> extends 
      * @see #nest()
      */
     @Nonnull
-    default TriDoubleToFloatFunction nest(
-            @Nonnull Function<? super Throwable, ? extends RuntimeException> mapper) {
+    default TriDoubleToFloatFunction nest(@Nonnull Function<? super Throwable, ? extends RuntimeException> mapper) {
+        Objects.requireNonNull(mapper);
         return recover(throwable -> {
             throw mapper.apply(throwable);
         });

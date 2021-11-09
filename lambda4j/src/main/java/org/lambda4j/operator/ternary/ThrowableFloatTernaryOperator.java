@@ -741,6 +741,7 @@ public interface ThrowableFloatTernaryOperator<X extends Throwable> extends Lamb
      */
     @Nonnull
     default FloatTernaryOperator nest(@Nonnull Function<? super Throwable, ? extends RuntimeException> mapper) {
+        Objects.requireNonNull(mapper);
         return recover(throwable -> {
             throw mapper.apply(throwable);
         });

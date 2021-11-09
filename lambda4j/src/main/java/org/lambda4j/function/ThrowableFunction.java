@@ -623,6 +623,7 @@ public interface ThrowableFunction<T, R, X extends Throwable> extends Lambda, Fu
      */
     @Nonnull
     default Function2<T, R> nest(@Nonnull Function<? super Throwable, ? extends RuntimeException> mapper) {
+        Objects.requireNonNull(mapper);
         return recover(throwable -> {
             throw mapper.apply(throwable);
         });

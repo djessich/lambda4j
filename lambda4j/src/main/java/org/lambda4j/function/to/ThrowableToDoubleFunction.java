@@ -595,6 +595,7 @@ public interface ThrowableToDoubleFunction<T, X extends Throwable> extends Lambd
      */
     @Nonnull
     default ToDoubleFunction2<T> nest(@Nonnull Function<? super Throwable, ? extends RuntimeException> mapper) {
+        Objects.requireNonNull(mapper);
         return recover(throwable -> {
             throw mapper.apply(throwable);
         });

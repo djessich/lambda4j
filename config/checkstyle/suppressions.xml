@@ -3,8 +3,8 @@
         "https://checkstyle.org/dtds/suppressions_1_2.dtd">
 <suppressions>
     <!-- Suppress line length check for recover method -->
-    <suppress checks="LineLength" files="ThrowableBiObjBooleanToDoubleFunction" lines="825"/>
-    <suppress checks="LineLength" files="ThrowableBiObjBooleanFunction" lines="698"/>
+    <suppress checks="LineLength" files="ThrowableBiObjBooleanToDoubleFunction" lines="826"/>
+    <suppress checks="LineLength" files="ThrowableBiObjBooleanFunction" lines="699"/>
     <suppress checks="LineLength" files="ThrowableBiObjCharFunction" lines="697"/>
     <suppress checks="LineLength" files="ThrowableBiObjIntFunction" lines="697"/>
     <suppress checks="LineLength" files="ThrowableToByteTriFunction" lines="796"/>
