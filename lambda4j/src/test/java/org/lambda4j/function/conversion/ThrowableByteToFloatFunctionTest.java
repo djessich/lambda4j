@@ -6,13 +6,13 @@ import org.junit.jupiter.api.Test;
 class ThrowableByteToFloatFunctionTest {
     @Test
     void of_givenExpression_returnsFunctionalInterface() {
-        ThrowableByteToFloatFunction<Exception> function = ThrowableByteToFloatFunction.of(value -> 0.0f);
+        ThrowableByteToFloatFunction<Throwable> function = ThrowableByteToFloatFunction.of(value -> 0.0f);
         Assertions.assertNotNull(function);
     }
 
     @Test
     void of_givenNull_returnsNull() {
-        ThrowableByteToFloatFunction<Exception> function = ThrowableByteToFloatFunction.of(null);
+        ThrowableByteToFloatFunction<Throwable> function = ThrowableByteToFloatFunction.of(null);
         Assertions.assertNull(function);
     }
 }

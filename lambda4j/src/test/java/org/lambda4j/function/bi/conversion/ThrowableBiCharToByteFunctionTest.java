@@ -6,14 +6,14 @@ import org.junit.jupiter.api.Test;
 class ThrowableBiCharToByteFunctionTest {
     @Test
     void of_givenExpression_returnsFunctionalInterface() {
-        ThrowableBiCharToByteFunction<Exception> function =
+        ThrowableBiCharToByteFunction<Throwable> function =
                 ThrowableBiCharToByteFunction.of((value1, value2) -> (byte) 0);
         Assertions.assertNotNull(function);
     }
 
     @Test
     void of_givenNull_returnsNull() {
-        ThrowableBiCharToByteFunction<Exception> function = ThrowableBiCharToByteFunction.of(null);
+        ThrowableBiCharToByteFunction<Throwable> function = ThrowableBiCharToByteFunction.of(null);
         Assertions.assertNull(function);
     }
 }

@@ -6,13 +6,13 @@ import org.junit.jupiter.api.Test;
 class ThrowableLongUnaryOperatorTest {
     @Test
     void of_givenExpression_returnsFunctionalInterface() {
-        ThrowableLongUnaryOperator<Exception> operator = ThrowableLongUnaryOperator.of(value -> value);
+        ThrowableLongUnaryOperator<Throwable> operator = ThrowableLongUnaryOperator.of(value -> value);
         Assertions.assertNotNull(operator);
     }
 
     @Test
     void of_givenNull_returnsNull() {
-        ThrowableLongUnaryOperator<Exception> operator = ThrowableLongUnaryOperator.of(null);
+        ThrowableLongUnaryOperator<Throwable> operator = ThrowableLongUnaryOperator.of(null);
         Assertions.assertNull(operator);
     }
 }

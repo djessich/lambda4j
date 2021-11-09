@@ -6,14 +6,14 @@ import org.junit.jupiter.api.Test;
 class ThrowableBiBooleanToFloatFunctionTest {
     @Test
     void of_givenExpression_returnsFunctionalInterface() {
-        ThrowableBiBooleanToFloatFunction<Exception> function =
+        ThrowableBiBooleanToFloatFunction<Throwable> function =
                 ThrowableBiBooleanToFloatFunction.of((value1, value2) -> 0.0f);
         Assertions.assertNotNull(function);
     }
 
     @Test
     void of_givenNull_returnsNull() {
-        ThrowableBiBooleanToFloatFunction<Exception> function = ThrowableBiBooleanToFloatFunction.of(null);
+        ThrowableBiBooleanToFloatFunction<Throwable> function = ThrowableBiBooleanToFloatFunction.of(null);
         Assertions.assertNull(function);
     }
 }

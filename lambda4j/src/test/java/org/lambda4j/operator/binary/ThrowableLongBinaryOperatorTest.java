@@ -6,13 +6,13 @@ import org.junit.jupiter.api.Test;
 class ThrowableLongBinaryOperatorTest {
     @Test
     void of_givenExpression_returnsFunctionalInterface() {
-        ThrowableLongBinaryOperator<Exception> operator = ThrowableLongBinaryOperator.of((value1, value2) -> value1);
+        ThrowableLongBinaryOperator<Throwable> operator = ThrowableLongBinaryOperator.of((value1, value2) -> value1);
         Assertions.assertNotNull(operator);
     }
 
     @Test
     void of_givenNull_returnsNull() {
-        ThrowableLongBinaryOperator<Exception> operator = ThrowableLongBinaryOperator.of(null);
+        ThrowableLongBinaryOperator<Throwable> operator = ThrowableLongBinaryOperator.of(null);
         Assertions.assertNull(operator);
     }
 }

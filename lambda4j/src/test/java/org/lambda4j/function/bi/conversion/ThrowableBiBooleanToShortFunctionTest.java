@@ -6,14 +6,14 @@ import org.junit.jupiter.api.Test;
 class ThrowableBiBooleanToShortFunctionTest {
     @Test
     void of_givenExpression_returnsFunctionalInterface() {
-        ThrowableBiBooleanToShortFunction<Exception> function =
+        ThrowableBiBooleanToShortFunction<Throwable> function =
                 ThrowableBiBooleanToShortFunction.of((value1, value2) -> (short) 0);
         Assertions.assertNotNull(function);
     }
 
     @Test
     void of_givenNull_returnsNull() {
-        ThrowableBiBooleanToShortFunction<Exception> function = ThrowableBiBooleanToShortFunction.of(null);
+        ThrowableBiBooleanToShortFunction<Throwable> function = ThrowableBiBooleanToShortFunction.of(null);
         Assertions.assertNull(function);
     }
 }

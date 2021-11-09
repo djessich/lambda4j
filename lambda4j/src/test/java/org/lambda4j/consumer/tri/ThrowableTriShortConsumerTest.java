@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 class ThrowableTriShortConsumerTest {
     @Test
     void of_givenExpression_returnsFunctionalInterface() {
-        ThrowableTriShortConsumer<Exception> consumer = ThrowableTriShortConsumer.of((value1, value2, value3) -> {
+        ThrowableTriShortConsumer<Throwable> consumer = ThrowableTriShortConsumer.of((value1, value2, value3) -> {
             Assertions.assertNotNull(value1);
             Assertions.assertNotNull(value2);
             Assertions.assertNotNull(value3);
@@ -16,7 +16,7 @@ class ThrowableTriShortConsumerTest {
 
     @Test
     void of_givenNull_returnsNull() {
-        ThrowableTriShortConsumer<Exception> consumer = ThrowableTriShortConsumer.of(null);
+        ThrowableTriShortConsumer<Throwable> consumer = ThrowableTriShortConsumer.of(null);
         Assertions.assertNull(consumer);
     }
 }

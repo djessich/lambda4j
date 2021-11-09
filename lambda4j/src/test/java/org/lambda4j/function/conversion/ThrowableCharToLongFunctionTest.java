@@ -6,13 +6,13 @@ import org.junit.jupiter.api.Test;
 class ThrowableCharToLongFunctionTest {
     @Test
     void of_givenExpression_returnsFunctionalInterface() {
-        ThrowableCharToLongFunction<Exception> function = ThrowableCharToLongFunction.of(value -> 0L);
+        ThrowableCharToLongFunction<Throwable> function = ThrowableCharToLongFunction.of(value -> 0L);
         Assertions.assertNotNull(function);
     }
 
     @Test
     void of_givenNull_returnsNull() {
-        ThrowableCharToLongFunction<Exception> function = ThrowableCharToLongFunction.of(null);
+        ThrowableCharToLongFunction<Throwable> function = ThrowableCharToLongFunction.of(null);
         Assertions.assertNull(function);
     }
 }

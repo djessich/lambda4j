@@ -6,14 +6,14 @@ import org.junit.jupiter.api.Test;
 class ThrowableBiObjByteToFloatFunctionTest {
     @Test
     void of_givenExpression_returnsFunctionalInterface() {
-        ThrowableBiObjByteToFloatFunction<String, String, Exception> function =
+        ThrowableBiObjByteToFloatFunction<String, String, Throwable> function =
                 ThrowableBiObjByteToFloatFunction.of((t, u, value) -> Float.parseFloat(t));
         Assertions.assertNotNull(function);
     }
 
     @Test
     void of_givenNull_returnsNull() {
-        ThrowableBiObjByteToFloatFunction<String, String, Exception> function =
+        ThrowableBiObjByteToFloatFunction<String, String, Throwable> function =
                 ThrowableBiObjByteToFloatFunction.of(null);
         Assertions.assertNull(function);
     }

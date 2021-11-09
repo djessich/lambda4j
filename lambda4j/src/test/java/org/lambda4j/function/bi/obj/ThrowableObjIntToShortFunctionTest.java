@@ -6,14 +6,14 @@ import org.junit.jupiter.api.Test;
 class ThrowableObjIntToShortFunctionTest {
     @Test
     void of_givenExpression_returnsFunctionalInterface() {
-        ThrowableObjIntToShortFunction<String, Exception> function =
+        ThrowableObjIntToShortFunction<String, Throwable> function =
                 ThrowableObjIntToShortFunction.of((t, value) -> Short.parseShort(t));
         Assertions.assertNotNull(function);
     }
 
     @Test
     void of_givenNull_returnsNull() {
-        ThrowableObjIntToShortFunction<String, Exception> function = ThrowableObjIntToShortFunction.of(null);
+        ThrowableObjIntToShortFunction<String, Throwable> function = ThrowableObjIntToShortFunction.of(null);
         Assertions.assertNull(function);
     }
 }

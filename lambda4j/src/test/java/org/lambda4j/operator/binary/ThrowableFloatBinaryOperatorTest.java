@@ -6,13 +6,13 @@ import org.junit.jupiter.api.Test;
 class ThrowableFloatBinaryOperatorTest {
     @Test
     void of_givenExpression_returnsFunctionalInterface() {
-        ThrowableFloatBinaryOperator<Exception> operator = ThrowableFloatBinaryOperator.of((value1, value2) -> value1);
+        ThrowableFloatBinaryOperator<Throwable> operator = ThrowableFloatBinaryOperator.of((value1, value2) -> value1);
         Assertions.assertNotNull(operator);
     }
 
     @Test
     void of_givenNull_returnsNull() {
-        ThrowableFloatBinaryOperator<Exception> operator = ThrowableFloatBinaryOperator.of(null);
+        ThrowableFloatBinaryOperator<Throwable> operator = ThrowableFloatBinaryOperator.of(null);
         Assertions.assertNull(operator);
     }
 }

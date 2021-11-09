@@ -6,13 +6,13 @@ import org.junit.jupiter.api.Test;
 class ThrowableBiFloatToIntFunctionTest {
     @Test
     void of_givenExpression_returnsFunctionalInterface() {
-        ThrowableBiFloatToIntFunction<Exception> function = ThrowableBiFloatToIntFunction.of((value1, value2) -> 0);
+        ThrowableBiFloatToIntFunction<Throwable> function = ThrowableBiFloatToIntFunction.of((value1, value2) -> 0);
         Assertions.assertNotNull(function);
     }
 
     @Test
     void of_givenNull_returnsNull() {
-        ThrowableBiFloatToIntFunction<Exception> function = ThrowableBiFloatToIntFunction.of(null);
+        ThrowableBiFloatToIntFunction<Throwable> function = ThrowableBiFloatToIntFunction.of(null);
         Assertions.assertNull(function);
     }
 }

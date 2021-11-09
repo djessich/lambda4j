@@ -6,13 +6,13 @@ import org.junit.jupiter.api.Test;
 class ThrowableTernaryOperatorTest {
     @Test
     void of_givenExpression_returnsFunctionalInterface() {
-        ThrowableTernaryOperator<String, Exception> operator = ThrowableTernaryOperator.of((t, u, v) -> t);
+        ThrowableTernaryOperator<String, Throwable> operator = ThrowableTernaryOperator.of((t, u, v) -> t);
         Assertions.assertNotNull(operator);
     }
 
     @Test
     void of_givenNull_returnsNull() {
-        ThrowableTernaryOperator<String, Exception> operator = ThrowableTernaryOperator.of(null);
+        ThrowableTernaryOperator<String, Throwable> operator = ThrowableTernaryOperator.of(null);
         Assertions.assertNull(operator);
     }
 }

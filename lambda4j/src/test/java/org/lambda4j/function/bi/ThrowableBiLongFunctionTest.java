@@ -6,15 +6,15 @@ import org.junit.jupiter.api.Test;
 class ThrowableBiLongFunctionTest {
     @Test
     void of_givenExpression_returnsFunctionalInterface() {
-        ThrowableBiLongFunction<String, Exception> function =
+        ThrowableBiLongFunction<String, Throwable> function =
                 ThrowableBiLongFunction.of((value1, value2) -> Long.toString(value1));
         Assertions.assertNotNull(function);
     }
 
     @Test
     void of_givenNull_returnsNull() {
-        ThrowableBiLongFunction<String, Exception> function =
-                ThrowableBiLongFunction.of((ThrowableBiLongFunction<String, Exception>) null);
+        ThrowableBiLongFunction<String, Throwable> function =
+                ThrowableBiLongFunction.of((ThrowableBiLongFunction<String, Throwable>) null);
         Assertions.assertNull(function);
     }
 }

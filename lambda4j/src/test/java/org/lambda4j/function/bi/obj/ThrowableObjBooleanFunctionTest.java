@@ -6,14 +6,14 @@ import org.junit.jupiter.api.Test;
 class ThrowableObjBooleanFunctionTest {
     @Test
     void of_givenExpression_returnsFunctionalInterface() {
-        ThrowableObjBooleanFunction<String, String, Exception> function =
+        ThrowableObjBooleanFunction<String, String, Throwable> function =
                 ThrowableObjBooleanFunction.of((t, value) -> t);
         Assertions.assertNotNull(function);
     }
 
     @Test
     void of_givenNull_returnsNull() {
-        ThrowableObjBooleanFunction<String, String, Exception> function = ThrowableObjBooleanFunction.of(null);
+        ThrowableObjBooleanFunction<String, String, Throwable> function = ThrowableObjBooleanFunction.of(null);
         Assertions.assertNull(function);
     }
 }

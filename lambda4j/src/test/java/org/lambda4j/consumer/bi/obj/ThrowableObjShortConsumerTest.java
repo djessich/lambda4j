@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 class ThrowableObjShortConsumerTest {
     @Test
     void of_givenExpression_returnsFunctionalInterface() {
-        ThrowableObjShortConsumer<String, Exception> consumer = ThrowableObjShortConsumer.of((t, value) -> {
+        ThrowableObjShortConsumer<String, Throwable> consumer = ThrowableObjShortConsumer.of((t, value) -> {
             Assertions.assertNotNull(t);
             Assertions.assertNotNull(value);
         });
@@ -15,7 +15,7 @@ class ThrowableObjShortConsumerTest {
 
     @Test
     void of_givenNull_returnsNull() {
-        ThrowableObjShortConsumer<String, Exception> consumer = ThrowableObjShortConsumer.of(null);
+        ThrowableObjShortConsumer<String, Throwable> consumer = ThrowableObjShortConsumer.of(null);
         Assertions.assertNull(consumer);
     }
 }

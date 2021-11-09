@@ -6,13 +6,13 @@ import org.junit.jupiter.api.Test;
 class ThrowableByteConsumerTest {
     @Test
     void of_givenExpression_returnsFunctionalInterface() {
-        ThrowableByteConsumer<Exception> consumer = ThrowableByteConsumer.of(Assertions::assertNotNull);
+        ThrowableByteConsumer<Throwable> consumer = ThrowableByteConsumer.of(Assertions::assertNotNull);
         Assertions.assertNotNull(consumer);
     }
 
     @Test
     void of_givenNull_returnsNull() {
-        ThrowableByteConsumer<Exception> consumer = ThrowableByteConsumer.of(null);
+        ThrowableByteConsumer<Throwable> consumer = ThrowableByteConsumer.of(null);
         Assertions.assertNull(consumer);
     }
 }

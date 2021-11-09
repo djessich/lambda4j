@@ -6,14 +6,14 @@ import org.junit.jupiter.api.Test;
 class ThrowableObjBiDoubleToCharFunctionTest {
     @Test
     void of_givenExpression_returnsFunctionalInterface() {
-        ThrowableObjBiDoubleToCharFunction<String, Exception> function =
+        ThrowableObjBiDoubleToCharFunction<String, Throwable> function =
                 ThrowableObjBiDoubleToCharFunction.of((t, value1, value2) -> t.charAt(0));
         Assertions.assertNotNull(function);
     }
 
     @Test
     void of_givenNull_returnsNull() {
-        ThrowableObjBiDoubleToCharFunction<String, Exception> function = ThrowableObjBiDoubleToCharFunction.of(null);
+        ThrowableObjBiDoubleToCharFunction<String, Throwable> function = ThrowableObjBiDoubleToCharFunction.of(null);
         Assertions.assertNull(function);
     }
 }

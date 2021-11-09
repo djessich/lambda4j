@@ -6,13 +6,13 @@ import org.junit.jupiter.api.Test;
 class ThrowableTriIntPredicateTest {
     @Test
     void of_givenExpression_returnsFunctionalInterface() {
-        ThrowableTriIntPredicate<Exception> predicate = ThrowableTriIntPredicate.of((value1, value2, value3) -> false);
+        ThrowableTriIntPredicate<Throwable> predicate = ThrowableTriIntPredicate.of((value1, value2, value3) -> false);
         Assertions.assertNotNull(predicate);
     }
 
     @Test
     void of_givenNull_returnsNull() {
-        ThrowableTriIntPredicate<Exception> predicate = ThrowableTriIntPredicate.of(null);
+        ThrowableTriIntPredicate<Throwable> predicate = ThrowableTriIntPredicate.of(null);
         Assertions.assertNull(predicate);
     }
 }

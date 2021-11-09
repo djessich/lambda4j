@@ -6,13 +6,13 @@ import org.junit.jupiter.api.Test;
 class ThrowableObjShortPredicateTest {
     @Test
     void of_givenExpression_returnsFunctionalInterface() {
-        ThrowableObjShortPredicate<String, Exception> predicate = ThrowableObjShortPredicate.of((t, value) -> false);
+        ThrowableObjShortPredicate<String, Throwable> predicate = ThrowableObjShortPredicate.of((t, value) -> false);
         Assertions.assertNotNull(predicate);
     }
 
     @Test
     void of_givenNull_returnsNull() {
-        ThrowableObjShortPredicate<String, Exception> predicate = ThrowableObjShortPredicate.of(null);
+        ThrowableObjShortPredicate<String, Throwable> predicate = ThrowableObjShortPredicate.of(null);
         Assertions.assertNull(predicate);
     }
 }

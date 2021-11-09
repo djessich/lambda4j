@@ -6,14 +6,14 @@ import org.junit.jupiter.api.Test;
 class ThrowableObjByteToIntFunctionTest {
     @Test
     void of_givenExpression_returnsFunctionalInterface() {
-        ThrowableObjByteToIntFunction<String, Exception> function =
+        ThrowableObjByteToIntFunction<String, Throwable> function =
                 ThrowableObjByteToIntFunction.of((t, value) -> Integer.parseInt(t));
         Assertions.assertNotNull(function);
     }
 
     @Test
     void of_givenNull_returnsNull() {
-        ThrowableObjByteToIntFunction<String, Exception> function = ThrowableObjByteToIntFunction.of(null);
+        ThrowableObjByteToIntFunction<String, Throwable> function = ThrowableObjByteToIntFunction.of(null);
         Assertions.assertNull(function);
     }
 }

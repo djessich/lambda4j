@@ -6,13 +6,13 @@ import org.junit.jupiter.api.Test;
 class ThrowableDoubleToIntFunctionTest {
     @Test
     void of_givenExpression_returnsFunctionalInterface() {
-        ThrowableDoubleToIntFunction<Exception> function = ThrowableDoubleToIntFunction.of(value -> 0);
+        ThrowableDoubleToIntFunction<Throwable> function = ThrowableDoubleToIntFunction.of(value -> 0);
         Assertions.assertNotNull(function);
     }
 
     @Test
     void of_givenNull_returnsNull() {
-        ThrowableDoubleToIntFunction<Exception> function = ThrowableDoubleToIntFunction.of(null);
+        ThrowableDoubleToIntFunction<Throwable> function = ThrowableDoubleToIntFunction.of(null);
         Assertions.assertNull(function);
     }
 }

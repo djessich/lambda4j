@@ -6,13 +6,13 @@ import org.junit.jupiter.api.Test;
 class ThrowableFloatFunctionTest {
     @Test
     void of_givenExpression_returnsFunctionalInterface() {
-        ThrowableFloatFunction<String, Exception> function = ThrowableFloatFunction.of(Float::toString);
+        ThrowableFloatFunction<String, Throwable> function = ThrowableFloatFunction.of(Float::toString);
         Assertions.assertNotNull(function);
     }
 
     @Test
     void of_givenNull_returnsNull() {
-        ThrowableFloatFunction<String, Exception> function = ThrowableFloatFunction.of(null);
+        ThrowableFloatFunction<String, Throwable> function = ThrowableFloatFunction.of(null);
         Assertions.assertNull(function);
     }
 }

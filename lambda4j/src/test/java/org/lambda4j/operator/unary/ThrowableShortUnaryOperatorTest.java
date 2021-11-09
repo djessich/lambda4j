@@ -6,13 +6,13 @@ import org.junit.jupiter.api.Test;
 class ThrowableShortUnaryOperatorTest {
     @Test
     void of_givenExpression_returnsFunctionalInterface() {
-        ThrowableShortUnaryOperator<Exception> operator = ThrowableShortUnaryOperator.of(value -> value);
+        ThrowableShortUnaryOperator<Throwable> operator = ThrowableShortUnaryOperator.of(value -> value);
         Assertions.assertNotNull(operator);
     }
 
     @Test
     void of_givenNull_returnsNull() {
-        ThrowableShortUnaryOperator<Exception> operator = ThrowableShortUnaryOperator.of(null);
+        ThrowableShortUnaryOperator<Throwable> operator = ThrowableShortUnaryOperator.of(null);
         Assertions.assertNull(operator);
     }
 }

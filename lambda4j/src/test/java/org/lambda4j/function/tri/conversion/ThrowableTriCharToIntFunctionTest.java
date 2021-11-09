@@ -6,14 +6,14 @@ import org.junit.jupiter.api.Test;
 class ThrowableTriCharToIntFunctionTest {
     @Test
     void of_givenExpression_returnsFunctionalInterface() {
-        ThrowableTriCharToIntFunction<Exception> function =
+        ThrowableTriCharToIntFunction<Throwable> function =
                 ThrowableTriCharToIntFunction.of((value1, value2, value3) -> 0);
         Assertions.assertNotNull(function);
     }
 
     @Test
     void of_givenNull_returnsNull() {
-        ThrowableTriCharToIntFunction<Exception> function = ThrowableTriCharToIntFunction.of(null);
+        ThrowableTriCharToIntFunction<Throwable> function = ThrowableTriCharToIntFunction.of(null);
         Assertions.assertNull(function);
     }
 }

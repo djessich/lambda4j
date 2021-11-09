@@ -6,15 +6,15 @@ import org.junit.jupiter.api.Test;
 class ThrowableTriFunctionTest {
     @Test
     void of_givenExpression_returnsFunctionalInterface() {
-        ThrowableTriFunction<String, String, String, String, Exception> function =
+        ThrowableTriFunction<String, String, String, String, Throwable> function =
                 ThrowableTriFunction.of((t, u, v) -> t);
         Assertions.assertNotNull(function);
     }
 
     @Test
     void of_givenNull_returnsNull() {
-        ThrowableTriFunction<String, String, String, String, Exception> function =
-                ThrowableTriFunction.of((ThrowableTriFunction<String, String, String, String, Exception>) null);
+        ThrowableTriFunction<String, String, String, String, Throwable> function =
+                ThrowableTriFunction.of((ThrowableTriFunction<String, String, String, String, Throwable>) null);
         Assertions.assertNull(function);
     }
 }

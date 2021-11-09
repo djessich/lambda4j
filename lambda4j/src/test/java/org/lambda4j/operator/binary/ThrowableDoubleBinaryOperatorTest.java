@@ -6,14 +6,14 @@ import org.junit.jupiter.api.Test;
 class ThrowableDoubleBinaryOperatorTest {
     @Test
     void of_givenExpression_returnsFunctionalInterface() {
-        ThrowableDoubleBinaryOperator<Exception> operator =
+        ThrowableDoubleBinaryOperator<Throwable> operator =
                 ThrowableDoubleBinaryOperator.of((value1, value2) -> value1);
         Assertions.assertNotNull(operator);
     }
 
     @Test
     void of_givenNull_returnsNull() {
-        ThrowableDoubleBinaryOperator<Exception> operator = ThrowableDoubleBinaryOperator.of(null);
+        ThrowableDoubleBinaryOperator<Throwable> operator = ThrowableDoubleBinaryOperator.of(null);
         Assertions.assertNull(operator);
     }
 }
