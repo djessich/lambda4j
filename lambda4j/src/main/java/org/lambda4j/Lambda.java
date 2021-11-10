@@ -16,18 +16,11 @@
 
 package org.lambda4j;
 
-import java.io.Serializable;
-
 /**
  * A general interface which each functional interface declared in this library is inherited from. It is used for
  * general things which all functional interfaces have in common.
  */
-public interface Lambda extends Serializable {
-
-    /**
-     * The <a href="https://docs.oracle.com/javase/8/docs/api/index.html">serial version uid</a>.
-     */
-    long serialVersionUID = 1L;
+public interface Lambda {
 
     /**
      * Checks if this functional interface is memoizing (= caching) computed values.
