@@ -496,20 +496,6 @@ public interface ThrowableObjIntFunction<T, R, X extends Throwable> extends Lamb
     }
 
     /**
-     * Converts this function to an equal function, which ensures that its result is not {@code null} using {@link
-     * Optional}. This method mainly exists to avoid unnecessary {@code NullPointerException}s through referencing
-     * {@code null} from this function.
-     *
-     * @return An equal function, which ensures that its result is not {@code null}.
-     * @deprecated Use {@code lift} method for lifting this function.
-     */
-    @Deprecated
-    @Nonnull
-    default ThrowableObjIntFunction<T, Optional<R>, X> nonNull() {
-        return (t, value) -> Optional.ofNullable(applyThrows(t, value));
-    }
-
-    /**
      * Returns a composed {@link ThrowableBiFunction} which represents this {@link ThrowableObjIntFunction}. Thereby the
      * primitive input argument for this function is autoboxed. This method provides the possibility to use this {@code
      * ThrowableObjIntFunction} with methods provided by the {@code JDK}.

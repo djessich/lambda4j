@@ -478,20 +478,6 @@ public interface ObjShortFunction<T, R> extends Lambda {
     }
 
     /**
-     * Converts this function to an equal function, which ensures that its result is not {@code null} using {@link
-     * Optional}. This method mainly exists to avoid unnecessary {@code NullPointerException}s through referencing
-     * {@code null} from this function.
-     *
-     * @return An equal function, which ensures that its result is not {@code null}.
-     * @deprecated Use {@code lift} method for lifting this function.
-     */
-    @Deprecated
-    @Nonnull
-    default ObjShortFunction<T, Optional<R>> nonNull() {
-        return (t, value) -> Optional.ofNullable(apply(t, value));
-    }
-
-    /**
      * Returns a composed {@link BiFunction2} which represents this {@link ObjShortFunction}. Thereby the primitive
      * input argument for this function is autoboxed. This method provides the possibility to use this {@code
      * ObjShortFunction} with methods provided by the {@code JDK}.

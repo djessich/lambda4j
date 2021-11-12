@@ -580,20 +580,6 @@ public interface ThrowableFunction<T, R, X extends Throwable> extends Lambda, Fu
     }
 
     /**
-     * Converts this function to an equal function, which ensures that its result is not {@code null} using {@link
-     * Optional}. This method mainly exists to avoid unnecessary {@code NullPointerException}s through referencing
-     * {@code null} from this function.
-     *
-     * @return An equal function, which ensures that its result is not {@code null}.
-     * @deprecated Use {@code lift} method for lifting this function.
-     */
-    @Deprecated
-    @Nonnull
-    default ThrowableFunction<T, Optional<R>, X> nonNull() {
-        return t -> Optional.ofNullable(applyThrows(t));
-    }
-
-    /**
      * Returns a composed {@link Function2} that applies this function to its input and nests the thrown {@link
      * Throwable} from it. The {@code Throwable} is nested (wrapped) in a {@link ThrownByFunctionalInterfaceException},
      * which is constructed from the thrown {@code Throwable}s message and the thrown {@code Throwable} itself.

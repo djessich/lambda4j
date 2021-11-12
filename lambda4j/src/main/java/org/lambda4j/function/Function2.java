@@ -559,18 +559,4 @@ public interface Function2<T, R> extends Lambda, Function<T, R> {
         }
     }
 
-    /**
-     * Converts this function to an equal function, which ensures that its result is not {@code null} using {@link
-     * Optional}. This method mainly exists to avoid unnecessary {@code NullPointerException}s through referencing
-     * {@code null} from this function.
-     *
-     * @return An equal function, which ensures that its result is not {@code null}.
-     * @deprecated Use {@code lift} method for lifting this function.
-     */
-    @Deprecated
-    @Nonnull
-    default Function2<T, Optional<R>> nonNull() {
-        return t -> Optional.ofNullable(apply(t));
-    }
-
 }

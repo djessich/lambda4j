@@ -794,20 +794,6 @@ public interface ThrowableTriFunction<T, U, V, R, X extends Throwable> extends L
     }
 
     /**
-     * Converts this function to an equal function, which ensures that its result is not {@code null} using {@link
-     * Optional}. This method mainly exists to avoid unnecessary {@code NullPointerException}s through referencing
-     * {@code null} from this function.
-     *
-     * @return An equal function, which ensures that its result is not {@code null}.
-     * @deprecated Use {@code lift} method for lifting this function.
-     */
-    @Deprecated
-    @Nonnull
-    default ThrowableTriFunction<T, U, V, Optional<R>, X> nonNull() {
-        return (t, u, v) -> Optional.ofNullable(applyThrows(t, u, v));
-    }
-
-    /**
      * Returns a composed {@link TriFunction} that applies this function to its input and nests the thrown {@link
      * Throwable} from it. The {@code Throwable} is nested (wrapped) in a {@link ThrownByFunctionalInterfaceException},
      * which is constructed from the thrown {@code Throwable}s message and the thrown {@code Throwable} itself.

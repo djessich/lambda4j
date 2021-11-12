@@ -583,20 +583,6 @@ public interface ThrowableObjBiDoubleFunction<T, R, X extends Throwable> extends
     }
 
     /**
-     * Converts this function to an equal function, which ensures that its result is not {@code null} using {@link
-     * Optional}. This method mainly exists to avoid unnecessary {@code NullPointerException}s through referencing
-     * {@code null} from this function.
-     *
-     * @return An equal function, which ensures that its result is not {@code null}.
-     * @deprecated Use {@code lift} method for lifting this function.
-     */
-    @Deprecated
-    @Nonnull
-    default ThrowableObjBiDoubleFunction<T, Optional<R>, X> nonNull() {
-        return (t, value1, value2) -> Optional.ofNullable(applyThrows(t, value1, value2));
-    }
-
-    /**
      * Returns a composed {@link ThrowableTriFunction} which represents this {@link ThrowableObjBiDoubleFunction}.
      * Thereby the primitive input argument for this function is autoboxed. This method provides the possibility to use
      * this {@code ThrowableObjBiDoubleFunction} with methods provided by the {@code JDK}.

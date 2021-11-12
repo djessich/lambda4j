@@ -712,20 +712,6 @@ public interface TriFloatFunction<R> extends Lambda {
     }
 
     /**
-     * Converts this function to an equal function, which ensures that its result is not {@code null} using {@link
-     * Optional}. This method mainly exists to avoid unnecessary {@code NullPointerException}s through referencing
-     * {@code null} from this function.
-     *
-     * @return An equal function, which ensures that its result is not {@code null}.
-     * @deprecated Use {@code lift} method for lifting this function.
-     */
-    @Deprecated
-    @Nonnull
-    default TriFloatFunction<Optional<R>> nonNull() {
-        return (value1, value2, value3) -> Optional.ofNullable(apply(value1, value2, value3));
-    }
-
-    /**
      * Returns a composed {@link TriFunction} which represents this {@link TriFloatFunction}. Thereby the primitive
      * input argument for this function is autoboxed. This method provides the possibility to use this {@code
      * TriFloatFunction} with methods provided by the {@code JDK}.

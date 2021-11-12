@@ -555,20 +555,6 @@ public interface DoubleFunction2<R> extends Lambda, DoubleFunction<R> {
     }
 
     /**
-     * Converts this function to an equal function, which ensures that its result is not {@code null} using {@link
-     * Optional}. This method mainly exists to avoid unnecessary {@code NullPointerException}s through referencing
-     * {@code null} from this function.
-     *
-     * @return An equal function, which ensures that its result is not {@code null}.
-     * @deprecated Use {@code lift} method for lifting this function.
-     */
-    @Deprecated
-    @Nonnull
-    default DoubleFunction2<Optional<R>> nonNull() {
-        return value -> Optional.ofNullable(apply(value));
-    }
-
-    /**
      * Returns a composed {@link Function2} which represents this {@link DoubleFunction2}. Thereby the primitive input
      * argument for this function is autoboxed. This method provides the possibility to use this {@code DoubleFunction2}
      * with methods provided by the {@code JDK}.

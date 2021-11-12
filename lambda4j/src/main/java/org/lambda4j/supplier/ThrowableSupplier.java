@@ -190,20 +190,6 @@ public interface ThrowableSupplier<R, X extends Throwable> extends Lambda, Suppl
     }
 
     /**
-     * Converts this supplier to an equal supplier, which ensures that its result is not {@code null} using {@link
-     * Optional}. This method mainly exists to avoid unnecessary {@code NullPointerException}s through referencing
-     * {@code null} from this supplier.
-     *
-     * @return An equal supplier, which ensures that its result is not {@code null}.
-     * @deprecated Use {@code lift} method for lifting this function.
-     */
-    @Deprecated
-    @Nonnull
-    default ThrowableSupplier<Optional<R>, X> nonNull() {
-        return () -> Optional.ofNullable(getThrows());
-    }
-
-    /**
      * Returns a composed {@link Supplier2} that applies this supplier to its input and nests the thrown {@link
      * Throwable} from it. The {@code Throwable} is nested (wrapped) in a {@link ThrownByFunctionalInterfaceException},
      * which is constructed from the thrown {@code Throwable}s message and the thrown {@code Throwable} itself.
