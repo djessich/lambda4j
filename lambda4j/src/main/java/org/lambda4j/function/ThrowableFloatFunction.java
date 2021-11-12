@@ -30,8 +30,7 @@ import javax.annotation.Nullable;
 import org.lambda4j.Lambda;
 import org.lambda4j.consumer.ThrowableConsumer;
 import org.lambda4j.consumer.ThrowableFloatConsumer;
-import org.lambda4j.core.exception.ThrownByFunctionalInterfaceException;
-import org.lambda4j.core.util.ThrowableUtils;
+import org.lambda4j.exception.ThrownByFunctionalInterfaceException;
 import org.lambda4j.function.conversion.ThrowableBooleanToFloatFunction;
 import org.lambda4j.function.conversion.ThrowableByteToFloatFunction;
 import org.lambda4j.function.conversion.ThrowableCharToFloatFunction;
@@ -55,6 +54,7 @@ import org.lambda4j.function.to.ThrowableToShortFunction;
 import org.lambda4j.operator.unary.ThrowableFloatUnaryOperator;
 import org.lambda4j.predicate.ThrowableFloatPredicate;
 import org.lambda4j.predicate.ThrowablePredicate;
+import org.lambda4j.util.ThrowableUtils;
 
 /**
  * Represents an operation that accepts one {@code float}-valued input argument and produces a result which is able to

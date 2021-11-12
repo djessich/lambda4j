@@ -25,8 +25,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import org.lambda4j.Lambda;
-import org.lambda4j.core.exception.ThrownByFunctionalInterfaceException;
-import org.lambda4j.core.util.ThrowableUtils;
+import org.lambda4j.exception.ThrownByFunctionalInterfaceException;
 import org.lambda4j.function.conversion.ThrowableBooleanToFloatFunction;
 import org.lambda4j.function.conversion.ThrowableByteToFloatFunction;
 import org.lambda4j.function.conversion.ThrowableCharToFloatFunction;
@@ -36,6 +35,7 @@ import org.lambda4j.function.conversion.ThrowableLongToFloatFunction;
 import org.lambda4j.function.conversion.ThrowableShortToFloatFunction;
 import org.lambda4j.function.to.ThrowableToFloatFunction;
 import org.lambda4j.operator.unary.ThrowableFloatUnaryOperator;
+import org.lambda4j.util.ThrowableUtils;
 
 /**
  * Represents an operation that accepts one {@code float}-valued input argument and returns no result which is able to

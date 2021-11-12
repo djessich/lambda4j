@@ -31,8 +31,7 @@ import org.apache.commons.lang3.tuple.Triple;
 import org.lambda4j.Lambda;
 import org.lambda4j.consumer.ThrowableByteConsumer;
 import org.lambda4j.consumer.tri.ThrowableTriByteConsumer;
-import org.lambda4j.core.exception.ThrownByFunctionalInterfaceException;
-import org.lambda4j.core.util.ThrowableUtils;
+import org.lambda4j.exception.ThrownByFunctionalInterfaceException;
 import org.lambda4j.function.ThrowableByteFunction;
 import org.lambda4j.function.ThrowableFunction;
 import org.lambda4j.function.conversion.ThrowableBooleanToByteFunction;
@@ -68,6 +67,7 @@ import org.lambda4j.operator.binary.ThrowableByteBinaryOperator;
 import org.lambda4j.operator.unary.ThrowableByteUnaryOperator;
 import org.lambda4j.predicate.ThrowableBytePredicate;
 import org.lambda4j.predicate.tri.ThrowableTriBytePredicate;
+import org.lambda4j.util.ThrowableUtils;
 
 /**
  * Represents an operation that accepts three {@code byte}-valued input arguments and produces a {@code byte}-valued

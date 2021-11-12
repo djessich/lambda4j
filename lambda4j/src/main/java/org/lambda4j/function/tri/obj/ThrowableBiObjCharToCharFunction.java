@@ -32,8 +32,7 @@ import org.apache.commons.lang3.tuple.Triple;
 import org.lambda4j.Lambda;
 import org.lambda4j.consumer.ThrowableCharConsumer;
 import org.lambda4j.consumer.tri.obj.ThrowableBiObjCharConsumer;
-import org.lambda4j.core.exception.ThrownByFunctionalInterfaceException;
-import org.lambda4j.core.util.ThrowableUtils;
+import org.lambda4j.exception.ThrownByFunctionalInterfaceException;
 import org.lambda4j.function.ThrowableBooleanFunction;
 import org.lambda4j.function.ThrowableByteFunction;
 import org.lambda4j.function.ThrowableCharFunction;
@@ -72,6 +71,7 @@ import org.lambda4j.operator.ternary.ThrowableCharTernaryOperator;
 import org.lambda4j.operator.unary.ThrowableCharUnaryOperator;
 import org.lambda4j.predicate.ThrowableCharPredicate;
 import org.lambda4j.predicate.tri.obj.ThrowableBiObjCharPredicate;
+import org.lambda4j.util.ThrowableUtils;
 
 /**
  * Represents an operation that accepts two object-valued and one {@code char}-valued input argument and produces a

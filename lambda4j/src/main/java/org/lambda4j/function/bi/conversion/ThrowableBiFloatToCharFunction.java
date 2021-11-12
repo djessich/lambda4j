@@ -31,8 +31,7 @@ import org.apache.commons.lang3.tuple.Pair;
 import org.lambda4j.Lambda;
 import org.lambda4j.consumer.ThrowableCharConsumer;
 import org.lambda4j.consumer.bi.ThrowableBiFloatConsumer;
-import org.lambda4j.core.exception.ThrownByFunctionalInterfaceException;
-import org.lambda4j.core.util.ThrowableUtils;
+import org.lambda4j.exception.ThrownByFunctionalInterfaceException;
 import org.lambda4j.function.ThrowableCharFunction;
 import org.lambda4j.function.ThrowableFunction;
 import org.lambda4j.function.bi.ThrowableBiFloatFunction;
@@ -58,6 +57,7 @@ import org.lambda4j.operator.unary.ThrowableCharUnaryOperator;
 import org.lambda4j.operator.unary.ThrowableFloatUnaryOperator;
 import org.lambda4j.predicate.ThrowableCharPredicate;
 import org.lambda4j.predicate.bi.ThrowableBiFloatPredicate;
+import org.lambda4j.util.ThrowableUtils;
 
 /**
  * Represents an operation that accepts two {@code float}-valued input arguments and produces a {@code char}-valued

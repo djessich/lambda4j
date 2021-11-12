@@ -25,8 +25,8 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import org.lambda4j.Lambda;
-import org.lambda4j.core.exception.ThrownByFunctionalInterfaceException;
-import org.lambda4j.core.util.ThrowableUtils;
+import org.lambda4j.exception.ThrownByFunctionalInterfaceException;
+import org.lambda4j.util.ThrowableUtils;
 
 /**
  * The {@link Runnable} interface should be implemented by any class whose instances are intended to be executed by a

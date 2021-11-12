@@ -31,8 +31,7 @@ import org.apache.commons.lang3.tuple.Triple;
 import org.lambda4j.Lambda;
 import org.lambda4j.consumer.ThrowableBooleanConsumer;
 import org.lambda4j.consumer.tri.obj.ThrowableObjBiIntConsumer;
-import org.lambda4j.core.exception.ThrownByFunctionalInterfaceException;
-import org.lambda4j.core.util.ThrowableUtils;
+import org.lambda4j.exception.ThrownByFunctionalInterfaceException;
 import org.lambda4j.function.ThrowableBooleanFunction;
 import org.lambda4j.function.ThrowableByteFunction;
 import org.lambda4j.function.ThrowableCharFunction;
@@ -79,6 +78,7 @@ import org.lambda4j.predicate.tri.ThrowableTriIntPredicate;
 import org.lambda4j.predicate.tri.ThrowableTriLongPredicate;
 import org.lambda4j.predicate.tri.ThrowableTriPredicate;
 import org.lambda4j.predicate.tri.ThrowableTriShortPredicate;
+import org.lambda4j.util.ThrowableUtils;
 
 /**
  * Represents an predicate (boolean-valued function) of one object-valued and two {@code int}-valued input arguments

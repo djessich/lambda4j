@@ -30,8 +30,7 @@ import javax.annotation.Nullable;
 import org.lambda4j.Lambda;
 import org.lambda4j.consumer.ThrowableBooleanConsumer;
 import org.lambda4j.consumer.ThrowableConsumer;
-import org.lambda4j.core.exception.ThrownByFunctionalInterfaceException;
-import org.lambda4j.core.util.ThrowableUtils;
+import org.lambda4j.exception.ThrownByFunctionalInterfaceException;
 import org.lambda4j.function.ThrowableBooleanFunction;
 import org.lambda4j.function.ThrowableByteFunction;
 import org.lambda4j.function.ThrowableCharFunction;
@@ -56,6 +55,7 @@ import org.lambda4j.function.to.ThrowableToIntFunction;
 import org.lambda4j.function.to.ThrowableToLongFunction;
 import org.lambda4j.function.to.ThrowableToShortFunction;
 import org.lambda4j.operator.unary.ThrowableBooleanUnaryOperator;
+import org.lambda4j.util.ThrowableUtils;
 
 /**
  * Represents an predicate (boolean-valued function) of one input argument which is able to throw any {@link

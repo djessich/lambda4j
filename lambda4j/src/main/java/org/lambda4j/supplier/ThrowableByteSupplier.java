@@ -27,8 +27,7 @@ import javax.annotation.Nullable;
 import org.lambda4j.Lambda;
 import org.lambda4j.consumer.ThrowableByteConsumer;
 import org.lambda4j.consumer.ThrowableConsumer;
-import org.lambda4j.core.exception.ThrownByFunctionalInterfaceException;
-import org.lambda4j.core.util.ThrowableUtils;
+import org.lambda4j.exception.ThrownByFunctionalInterfaceException;
 import org.lambda4j.function.ThrowableByteFunction;
 import org.lambda4j.function.conversion.ThrowableByteToCharFunction;
 import org.lambda4j.function.conversion.ThrowableByteToDoubleFunction;
@@ -38,6 +37,7 @@ import org.lambda4j.function.conversion.ThrowableByteToLongFunction;
 import org.lambda4j.function.conversion.ThrowableByteToShortFunction;
 import org.lambda4j.operator.unary.ThrowableByteUnaryOperator;
 import org.lambda4j.predicate.ThrowableBytePredicate;
+import org.lambda4j.util.ThrowableUtils;
 
 /**
  * Represents a supplier of {@code byte}-valued results which is able to throw any {@link Throwable}. This is a

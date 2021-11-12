@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.lambda4j.core.util;
+package org.lambda4j.util;
 
 import java.util.Objects;
 

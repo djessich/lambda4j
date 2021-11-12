@@ -33,8 +33,7 @@ import org.apache.commons.lang3.tuple.Pair;
 import org.lambda4j.Lambda;
 import org.lambda4j.consumer.ThrowableShortConsumer;
 import org.lambda4j.consumer.bi.ThrowableBiShortConsumer;
-import org.lambda4j.core.exception.ThrownByFunctionalInterfaceException;
-import org.lambda4j.core.util.ThrowableUtils;
+import org.lambda4j.exception.ThrownByFunctionalInterfaceException;
 import org.lambda4j.function.ThrowableFunction;
 import org.lambda4j.function.ThrowableShortFunction;
 import org.lambda4j.function.bi.ThrowableBiShortFunction;
@@ -69,6 +68,7 @@ import org.lambda4j.function.to.ThrowableToShortFunction;
 import org.lambda4j.operator.unary.ThrowableShortUnaryOperator;
 import org.lambda4j.predicate.ThrowableShortPredicate;
 import org.lambda4j.predicate.bi.ThrowableBiShortPredicate;
+import org.lambda4j.util.ThrowableUtils;
 
 /**
  * Represents an operation that accepts two {@code short}-valued input arguments and produces a {@code short}-valued

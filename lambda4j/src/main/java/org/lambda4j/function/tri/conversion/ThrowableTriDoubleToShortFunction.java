@@ -31,8 +31,7 @@ import org.apache.commons.lang3.tuple.Triple;
 import org.lambda4j.Lambda;
 import org.lambda4j.consumer.ThrowableShortConsumer;
 import org.lambda4j.consumer.tri.ThrowableTriDoubleConsumer;
-import org.lambda4j.core.exception.ThrownByFunctionalInterfaceException;
-import org.lambda4j.core.util.ThrowableUtils;
+import org.lambda4j.exception.ThrownByFunctionalInterfaceException;
 import org.lambda4j.function.ThrowableFunction;
 import org.lambda4j.function.ThrowableShortFunction;
 import org.lambda4j.function.bi.conversion.ThrowableBiDoubleToShortFunction;
@@ -59,6 +58,7 @@ import org.lambda4j.operator.unary.ThrowableDoubleUnaryOperator;
 import org.lambda4j.operator.unary.ThrowableShortUnaryOperator;
 import org.lambda4j.predicate.ThrowableShortPredicate;
 import org.lambda4j.predicate.tri.ThrowableTriDoublePredicate;
+import org.lambda4j.util.ThrowableUtils;
 
 /**
  * Represents an operation that accepts three {@code double}-valued input arguments and produces a {@code short}-valued

@@ -27,8 +27,7 @@ import javax.annotation.Nullable;
 import org.lambda4j.Lambda;
 import org.lambda4j.consumer.ThrowableConsumer;
 import org.lambda4j.consumer.ThrowableFloatConsumer;
-import org.lambda4j.core.exception.ThrownByFunctionalInterfaceException;
-import org.lambda4j.core.util.ThrowableUtils;
+import org.lambda4j.exception.ThrownByFunctionalInterfaceException;
 import org.lambda4j.function.ThrowableFloatFunction;
 import org.lambda4j.function.conversion.ThrowableFloatToByteFunction;
 import org.lambda4j.function.conversion.ThrowableFloatToCharFunction;
@@ -38,6 +37,7 @@ import org.lambda4j.function.conversion.ThrowableFloatToLongFunction;
 import org.lambda4j.function.conversion.ThrowableFloatToShortFunction;
 import org.lambda4j.operator.unary.ThrowableFloatUnaryOperator;
 import org.lambda4j.predicate.ThrowableFloatPredicate;
+import org.lambda4j.util.ThrowableUtils;
 
 /**
  * Represents a supplier of {@code float}-valued results which is able to throw any {@link Throwable}. This is a

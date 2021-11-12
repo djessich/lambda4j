@@ -31,8 +31,7 @@ import org.apache.commons.lang3.tuple.Pair;
 import org.lambda4j.Lambda;
 import org.lambda4j.consumer.ThrowableBooleanConsumer;
 import org.lambda4j.consumer.bi.ThrowableBiFloatConsumer;
-import org.lambda4j.core.exception.ThrownByFunctionalInterfaceException;
-import org.lambda4j.core.util.ThrowableUtils;
+import org.lambda4j.exception.ThrownByFunctionalInterfaceException;
 import org.lambda4j.function.ThrowableBooleanFunction;
 import org.lambda4j.function.ThrowableFunction;
 import org.lambda4j.function.bi.ThrowableBiFloatFunction;
@@ -61,6 +60,7 @@ import org.lambda4j.operator.binary.ThrowableFloatBinaryOperator;
 import org.lambda4j.operator.unary.ThrowableBooleanUnaryOperator;
 import org.lambda4j.operator.unary.ThrowableFloatUnaryOperator;
 import org.lambda4j.predicate.ThrowableFloatPredicate;
+import org.lambda4j.util.ThrowableUtils;
 
 /**
  * Represents an predicate (boolean-valued function) of two {@code float}-valued input arguments which is able to throw

@@ -26,8 +26,7 @@ import javax.annotation.Nullable;
 
 import org.lambda4j.Lambda;
 import org.lambda4j.consumer.ThrowableIntConsumer;
-import org.lambda4j.core.exception.ThrownByFunctionalInterfaceException;
-import org.lambda4j.core.util.ThrowableUtils;
+import org.lambda4j.exception.ThrownByFunctionalInterfaceException;
 import org.lambda4j.function.conversion.ThrowableBooleanToIntFunction;
 import org.lambda4j.function.conversion.ThrowableByteToIntFunction;
 import org.lambda4j.function.conversion.ThrowableCharToIntFunction;
@@ -37,6 +36,7 @@ import org.lambda4j.function.conversion.ThrowableLongToIntFunction;
 import org.lambda4j.function.conversion.ThrowableShortToIntFunction;
 import org.lambda4j.function.to.ThrowableToIntFunction;
 import org.lambda4j.operator.unary.ThrowableIntUnaryOperator;
+import org.lambda4j.util.ThrowableUtils;
 
 /**
  * Represents an operation that accepts two {@code int}-valued input arguments and returns no result which is able to

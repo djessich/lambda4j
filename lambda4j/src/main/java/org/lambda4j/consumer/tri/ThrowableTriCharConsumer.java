@@ -27,8 +27,7 @@ import javax.annotation.Nullable;
 import org.lambda4j.Lambda;
 import org.lambda4j.consumer.ThrowableCharConsumer;
 import org.lambda4j.consumer.bi.ThrowableBiCharConsumer;
-import org.lambda4j.core.exception.ThrownByFunctionalInterfaceException;
-import org.lambda4j.core.util.ThrowableUtils;
+import org.lambda4j.exception.ThrownByFunctionalInterfaceException;
 import org.lambda4j.function.conversion.ThrowableBooleanToCharFunction;
 import org.lambda4j.function.conversion.ThrowableByteToCharFunction;
 import org.lambda4j.function.conversion.ThrowableDoubleToCharFunction;
@@ -38,6 +37,7 @@ import org.lambda4j.function.conversion.ThrowableLongToCharFunction;
 import org.lambda4j.function.conversion.ThrowableShortToCharFunction;
 import org.lambda4j.function.to.ThrowableToCharFunction;
 import org.lambda4j.operator.unary.ThrowableCharUnaryOperator;
+import org.lambda4j.util.ThrowableUtils;
 
 /**
  * Represents an operation that accepts three {@code char}-valued input arguments and returns no result which is able to

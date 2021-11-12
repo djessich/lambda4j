@@ -33,8 +33,7 @@ import org.apache.commons.lang3.tuple.Pair;
 import org.lambda4j.Lambda;
 import org.lambda4j.consumer.ThrowableConsumer;
 import org.lambda4j.consumer.bi.ThrowableBiConsumer;
-import org.lambda4j.core.exception.ThrownByFunctionalInterfaceException;
-import org.lambda4j.core.util.ThrowableUtils;
+import org.lambda4j.exception.ThrownByFunctionalInterfaceException;
 import org.lambda4j.function.ThrowableBooleanFunction;
 import org.lambda4j.function.ThrowableByteFunction;
 import org.lambda4j.function.ThrowableCharFunction;
@@ -60,6 +59,7 @@ import org.lambda4j.function.to.ThrowableToLongFunction;
 import org.lambda4j.function.to.ThrowableToShortFunction;
 import org.lambda4j.predicate.ThrowablePredicate;
 import org.lambda4j.predicate.bi.ThrowableBiPredicate;
+import org.lambda4j.util.ThrowableUtils;
 
 /**
  * Represents an operation that accepts two input arguments and produces a result which is able to throw any {@link

@@ -32,8 +32,7 @@ import org.apache.commons.lang3.tuple.Triple;
 import org.lambda4j.Lambda;
 import org.lambda4j.consumer.ThrowableConsumer;
 import org.lambda4j.consumer.tri.obj.ThrowableObjBiLongConsumer;
-import org.lambda4j.core.exception.ThrownByFunctionalInterfaceException;
-import org.lambda4j.core.util.ThrowableUtils;
+import org.lambda4j.exception.ThrownByFunctionalInterfaceException;
 import org.lambda4j.function.ThrowableBooleanFunction;
 import org.lambda4j.function.ThrowableByteFunction;
 import org.lambda4j.function.ThrowableCharFunction;
@@ -63,6 +62,7 @@ import org.lambda4j.function.tri.ThrowableTriIntFunction;
 import org.lambda4j.function.tri.ThrowableTriLongFunction;
 import org.lambda4j.function.tri.ThrowableTriShortFunction;
 import org.lambda4j.operator.unary.ThrowableLongUnaryOperator;
+import org.lambda4j.util.ThrowableUtils;
 
 /**
  * Represents an operation that accepts one object-valued and two {@code long}-valued input arguments and produces a

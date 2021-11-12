@@ -28,8 +28,7 @@ import javax.annotation.Nullable;
 import org.lambda4j.Lambda;
 import org.lambda4j.consumer.ThrowableConsumer;
 import org.lambda4j.consumer.ThrowableLongConsumer;
-import org.lambda4j.core.exception.ThrownByFunctionalInterfaceException;
-import org.lambda4j.core.util.ThrowableUtils;
+import org.lambda4j.exception.ThrownByFunctionalInterfaceException;
 import org.lambda4j.function.ThrowableLongFunction;
 import org.lambda4j.function.conversion.ThrowableLongToByteFunction;
 import org.lambda4j.function.conversion.ThrowableLongToCharFunction;
@@ -39,6 +38,7 @@ import org.lambda4j.function.conversion.ThrowableLongToIntFunction;
 import org.lambda4j.function.conversion.ThrowableLongToShortFunction;
 import org.lambda4j.operator.unary.ThrowableLongUnaryOperator;
 import org.lambda4j.predicate.ThrowableLongPredicate;
+import org.lambda4j.util.ThrowableUtils;
 
 /**
  * Represents a supplier of {@code long}-valued results which is able to throw any {@link Throwable}. This is a

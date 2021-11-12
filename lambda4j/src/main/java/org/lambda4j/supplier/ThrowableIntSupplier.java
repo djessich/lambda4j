@@ -28,8 +28,7 @@ import javax.annotation.Nullable;
 import org.lambda4j.Lambda;
 import org.lambda4j.consumer.ThrowableConsumer;
 import org.lambda4j.consumer.ThrowableIntConsumer;
-import org.lambda4j.core.exception.ThrownByFunctionalInterfaceException;
-import org.lambda4j.core.util.ThrowableUtils;
+import org.lambda4j.exception.ThrownByFunctionalInterfaceException;
 import org.lambda4j.function.ThrowableIntFunction;
 import org.lambda4j.function.conversion.ThrowableIntToByteFunction;
 import org.lambda4j.function.conversion.ThrowableIntToCharFunction;
@@ -39,6 +38,7 @@ import org.lambda4j.function.conversion.ThrowableIntToLongFunction;
 import org.lambda4j.function.conversion.ThrowableIntToShortFunction;
 import org.lambda4j.operator.unary.ThrowableIntUnaryOperator;
 import org.lambda4j.predicate.ThrowableIntPredicate;
+import org.lambda4j.util.ThrowableUtils;
 
 /**
  * Represents a supplier of {@code int}-valued results which is able to throw any {@link Throwable}. This is a primitive

@@ -27,8 +27,7 @@ import javax.annotation.Nullable;
 import org.lambda4j.Lambda;
 import org.lambda4j.consumer.ThrowableShortConsumer;
 import org.lambda4j.consumer.bi.ThrowableBiShortConsumer;
-import org.lambda4j.core.exception.ThrownByFunctionalInterfaceException;
-import org.lambda4j.core.util.ThrowableUtils;
+import org.lambda4j.exception.ThrownByFunctionalInterfaceException;
 import org.lambda4j.function.conversion.ThrowableBooleanToShortFunction;
 import org.lambda4j.function.conversion.ThrowableByteToShortFunction;
 import org.lambda4j.function.conversion.ThrowableCharToShortFunction;
@@ -38,6 +37,7 @@ import org.lambda4j.function.conversion.ThrowableIntToShortFunction;
 import org.lambda4j.function.conversion.ThrowableLongToShortFunction;
 import org.lambda4j.function.to.ThrowableToShortFunction;
 import org.lambda4j.operator.unary.ThrowableShortUnaryOperator;
+import org.lambda4j.util.ThrowableUtils;
 
 /**
  * Represents an operation that accepts three {@code short}-valued input arguments and returns no result which is able

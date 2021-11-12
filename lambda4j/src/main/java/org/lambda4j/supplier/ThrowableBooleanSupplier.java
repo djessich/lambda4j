@@ -28,8 +28,7 @@ import javax.annotation.Nullable;
 import org.lambda4j.Lambda;
 import org.lambda4j.consumer.ThrowableBooleanConsumer;
 import org.lambda4j.consumer.ThrowableConsumer;
-import org.lambda4j.core.exception.ThrownByFunctionalInterfaceException;
-import org.lambda4j.core.util.ThrowableUtils;
+import org.lambda4j.exception.ThrownByFunctionalInterfaceException;
 import org.lambda4j.function.ThrowableBooleanFunction;
 import org.lambda4j.function.conversion.ThrowableBooleanToByteFunction;
 import org.lambda4j.function.conversion.ThrowableBooleanToCharFunction;
@@ -39,6 +38,7 @@ import org.lambda4j.function.conversion.ThrowableBooleanToIntFunction;
 import org.lambda4j.function.conversion.ThrowableBooleanToLongFunction;
 import org.lambda4j.function.conversion.ThrowableBooleanToShortFunction;
 import org.lambda4j.operator.unary.ThrowableBooleanUnaryOperator;
+import org.lambda4j.util.ThrowableUtils;
 
 /**
  * Represents a supplier of {@code boolean}-valued results which is able to throw any {@link Throwable}. This is a

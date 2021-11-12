@@ -30,8 +30,7 @@ import javax.annotation.Nullable;
 import org.lambda4j.Lambda;
 import org.lambda4j.consumer.ThrowableBooleanConsumer;
 import org.lambda4j.consumer.ThrowableLongConsumer;
-import org.lambda4j.core.exception.ThrownByFunctionalInterfaceException;
-import org.lambda4j.core.util.ThrowableUtils;
+import org.lambda4j.exception.ThrownByFunctionalInterfaceException;
 import org.lambda4j.function.ThrowableBooleanFunction;
 import org.lambda4j.function.ThrowableFunction;
 import org.lambda4j.function.ThrowableLongFunction;
@@ -57,6 +56,7 @@ import org.lambda4j.function.conversion.ThrowableShortToLongFunction;
 import org.lambda4j.function.to.ThrowableToLongFunction;
 import org.lambda4j.operator.unary.ThrowableBooleanUnaryOperator;
 import org.lambda4j.operator.unary.ThrowableLongUnaryOperator;
+import org.lambda4j.util.ThrowableUtils;
 
 /**
  * Represents an predicate (boolean-valued function) of one {@code long}-valued input argument which is able to throw

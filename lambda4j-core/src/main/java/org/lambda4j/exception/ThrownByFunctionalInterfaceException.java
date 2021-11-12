@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.lambda4j.core.exception;
+package org.lambda4j.exception;
 
 /**
  * Represents an exception which wraps any thrown {@link Throwable} from a functional interface.

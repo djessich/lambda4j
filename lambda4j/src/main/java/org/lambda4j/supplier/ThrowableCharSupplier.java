@@ -27,8 +27,7 @@ import javax.annotation.Nullable;
 import org.lambda4j.Lambda;
 import org.lambda4j.consumer.ThrowableCharConsumer;
 import org.lambda4j.consumer.ThrowableConsumer;
-import org.lambda4j.core.exception.ThrownByFunctionalInterfaceException;
-import org.lambda4j.core.util.ThrowableUtils;
+import org.lambda4j.exception.ThrownByFunctionalInterfaceException;
 import org.lambda4j.function.ThrowableCharFunction;
 import org.lambda4j.function.conversion.ThrowableCharToByteFunction;
 import org.lambda4j.function.conversion.ThrowableCharToDoubleFunction;
@@ -38,6 +37,7 @@ import org.lambda4j.function.conversion.ThrowableCharToLongFunction;
 import org.lambda4j.function.conversion.ThrowableCharToShortFunction;
 import org.lambda4j.operator.unary.ThrowableCharUnaryOperator;
 import org.lambda4j.predicate.ThrowableCharPredicate;
+import org.lambda4j.util.ThrowableUtils;
 
 /**
  * Represents a supplier of {@code char}-valued results which is able to throw any {@link Throwable}. This is a

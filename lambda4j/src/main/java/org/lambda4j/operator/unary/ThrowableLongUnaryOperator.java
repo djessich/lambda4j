@@ -29,8 +29,7 @@ import javax.annotation.Nullable;
 
 import org.lambda4j.Lambda;
 import org.lambda4j.consumer.ThrowableLongConsumer;
-import org.lambda4j.core.exception.ThrownByFunctionalInterfaceException;
-import org.lambda4j.core.util.ThrowableUtils;
+import org.lambda4j.exception.ThrownByFunctionalInterfaceException;
 import org.lambda4j.function.ThrowableFunction;
 import org.lambda4j.function.ThrowableLongFunction;
 import org.lambda4j.function.conversion.ThrowableBooleanToLongFunction;
@@ -48,6 +47,7 @@ import org.lambda4j.function.conversion.ThrowableLongToShortFunction;
 import org.lambda4j.function.conversion.ThrowableShortToLongFunction;
 import org.lambda4j.function.to.ThrowableToLongFunction;
 import org.lambda4j.predicate.ThrowableLongPredicate;
+import org.lambda4j.util.ThrowableUtils;
 
 /**
  * Represents an operation that accepts one {@code long}-valued input argument and produces a {@code long}-valued result

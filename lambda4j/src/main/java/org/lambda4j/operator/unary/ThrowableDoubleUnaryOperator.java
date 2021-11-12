@@ -29,8 +29,7 @@ import javax.annotation.Nullable;
 
 import org.lambda4j.Lambda;
 import org.lambda4j.consumer.ThrowableDoubleConsumer;
-import org.lambda4j.core.exception.ThrownByFunctionalInterfaceException;
-import org.lambda4j.core.util.ThrowableUtils;
+import org.lambda4j.exception.ThrownByFunctionalInterfaceException;
 import org.lambda4j.function.ThrowableDoubleFunction;
 import org.lambda4j.function.ThrowableFunction;
 import org.lambda4j.function.conversion.ThrowableBooleanToDoubleFunction;
@@ -48,6 +47,7 @@ import org.lambda4j.function.conversion.ThrowableLongToDoubleFunction;
 import org.lambda4j.function.conversion.ThrowableShortToDoubleFunction;
 import org.lambda4j.function.to.ThrowableToDoubleFunction;
 import org.lambda4j.predicate.ThrowableDoublePredicate;
+import org.lambda4j.util.ThrowableUtils;
 
 /**
  * Represents an operation that accepts one {@code double}-valued input argument and produces a {@code double}-valued

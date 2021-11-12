@@ -31,8 +31,7 @@ import org.apache.commons.lang3.tuple.Pair;
 import org.lambda4j.Lambda;
 import org.lambda4j.consumer.ThrowableLongConsumer;
 import org.lambda4j.consumer.bi.ThrowableBiDoubleConsumer;
-import org.lambda4j.core.exception.ThrownByFunctionalInterfaceException;
-import org.lambda4j.core.util.ThrowableUtils;
+import org.lambda4j.exception.ThrownByFunctionalInterfaceException;
 import org.lambda4j.function.ThrowableFunction;
 import org.lambda4j.function.ThrowableLongFunction;
 import org.lambda4j.function.bi.ThrowableBiDoubleFunction;
@@ -58,6 +57,7 @@ import org.lambda4j.operator.unary.ThrowableDoubleUnaryOperator;
 import org.lambda4j.operator.unary.ThrowableLongUnaryOperator;
 import org.lambda4j.predicate.ThrowableLongPredicate;
 import org.lambda4j.predicate.bi.ThrowableBiDoublePredicate;
+import org.lambda4j.util.ThrowableUtils;
 
 /**
  * Represents an operation that accepts two {@code double}-valued input arguments and produces a {@code long}-valued

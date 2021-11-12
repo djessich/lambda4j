@@ -28,8 +28,7 @@ import javax.annotation.Nullable;
 import org.lambda4j.Lambda;
 import org.lambda4j.consumer.ThrowableConsumer;
 import org.lambda4j.consumer.ThrowableDoubleConsumer;
-import org.lambda4j.core.exception.ThrownByFunctionalInterfaceException;
-import org.lambda4j.core.util.ThrowableUtils;
+import org.lambda4j.exception.ThrownByFunctionalInterfaceException;
 import org.lambda4j.function.ThrowableDoubleFunction;
 import org.lambda4j.function.conversion.ThrowableDoubleToByteFunction;
 import org.lambda4j.function.conversion.ThrowableDoubleToCharFunction;
@@ -39,6 +38,7 @@ import org.lambda4j.function.conversion.ThrowableDoubleToLongFunction;
 import org.lambda4j.function.conversion.ThrowableDoubleToShortFunction;
 import org.lambda4j.operator.unary.ThrowableDoubleUnaryOperator;
 import org.lambda4j.predicate.ThrowableDoublePredicate;
+import org.lambda4j.util.ThrowableUtils;
 
 /**
  * Represents a supplier of {@code double}-valued results which is able to throw any {@link Throwable}. This is a

@@ -38,8 +38,7 @@ import org.lambda4j.consumer.tri.ThrowableTriFloatConsumer;
 import org.lambda4j.consumer.tri.ThrowableTriIntConsumer;
 import org.lambda4j.consumer.tri.ThrowableTriLongConsumer;
 import org.lambda4j.consumer.tri.ThrowableTriShortConsumer;
-import org.lambda4j.core.exception.ThrownByFunctionalInterfaceException;
-import org.lambda4j.core.util.ThrowableUtils;
+import org.lambda4j.exception.ThrownByFunctionalInterfaceException;
 import org.lambda4j.function.ThrowableBooleanFunction;
 import org.lambda4j.function.ThrowableByteFunction;
 import org.lambda4j.function.ThrowableCharFunction;
@@ -58,6 +57,7 @@ import org.lambda4j.function.conversion.ThrowableLongToByteFunction;
 import org.lambda4j.function.conversion.ThrowableShortToByteFunction;
 import org.lambda4j.function.to.ThrowableToByteFunction;
 import org.lambda4j.operator.unary.ThrowableByteUnaryOperator;
+import org.lambda4j.util.ThrowableUtils;
 
 /**
  * Represents an operation that accepts one object-valued and two {@code byte}-valued input arguments and returns no

@@ -36,8 +36,7 @@ import org.lambda4j.consumer.bi.ThrowableBiFloatConsumer;
 import org.lambda4j.consumer.bi.ThrowableBiIntConsumer;
 import org.lambda4j.consumer.bi.ThrowableBiLongConsumer;
 import org.lambda4j.consumer.bi.ThrowableBiShortConsumer;
-import org.lambda4j.core.exception.ThrownByFunctionalInterfaceException;
-import org.lambda4j.core.util.ThrowableUtils;
+import org.lambda4j.exception.ThrownByFunctionalInterfaceException;
 import org.lambda4j.function.ThrowableBooleanFunction;
 import org.lambda4j.function.ThrowableByteFunction;
 import org.lambda4j.function.ThrowableCharFunction;
@@ -56,6 +55,7 @@ import org.lambda4j.function.conversion.ThrowableLongToFloatFunction;
 import org.lambda4j.function.conversion.ThrowableShortToFloatFunction;
 import org.lambda4j.function.to.ThrowableToFloatFunction;
 import org.lambda4j.operator.unary.ThrowableFloatUnaryOperator;
+import org.lambda4j.util.ThrowableUtils;
 
 /**
  * Represents an operation that accepts one object-valued and one {@code float}-valued input argument and returns no
