@@ -39,7 +39,7 @@ import org.lambda4j.predicate.FloatPredicate;
 /**
  * Represents a supplier of {@code float}-valued results. This is a primitive specialization of {@link Supplier2}.
  * <p>
- * There is no requirement that a distinct result be returned each time the supplier is invoked.
+ * There is no requirement that a distinct result is returned each time the supplier is invoked.
  * <p>
  * This is a {@link FunctionalInterface} whose functional method is {@link #getAsFloat()}.
  *

@@ -40,7 +40,7 @@ import org.lambda4j.function.conversion.IntToShortFunction;
 /**
  * Represents a supplier of {@code int}-valued results. This is a primitive specialization of {@link Supplier2}.
  * <p>
- * There is no requirement that a distinct result be returned each time the supplier is invoked.
+ * There is no requirement that a distinct result is returned each time the supplier is invoked.
  * <p>
  * This is a {@link FunctionalInterface} whose functional method is {@link #getAsInt()}.
  *

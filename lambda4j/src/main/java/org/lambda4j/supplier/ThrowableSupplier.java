@@ -35,7 +35,7 @@ import org.lambda4j.function.ThrowableFunction;
 /**
  * Represents a supplier of results which is able to throw any {@link Throwable}.
  * <p>
- * There is no requirement that a distinct result be returned each time the supplier is invoked.
+ * There is no requirement that a distinct result is returned each time the supplier is invoked.
  * <p>
  * This is a {@link FunctionalInterface} whose functional method is {@link #getThrows()}.
  *

@@ -44,7 +44,7 @@ import org.lambda4j.operator.unary.ThrowableBooleanUnaryOperator;
  * Represents a supplier of {@code boolean}-valued results which is able to throw any {@link Throwable}. This is a
  * primitive specialization of {@link ThrowableSupplier}.
  * <p>
- * There is no requirement that a distinct result be returned each time the supplier is invoked.
+ * There is no requirement that a distinct result is returned each time the supplier is invoked.
  * <p>
  * This is a {@link FunctionalInterface} whose functional method is {@link #getAsBooleanThrows()}.
  *
