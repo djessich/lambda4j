@@ -4,14 +4,14 @@
 <suppressions>
     <!-- Suppress line length check for recover method -->
     <suppress checks="LineLength" files="ThrowableBiObjBooleanToDoubleFunction" lines="826"/>
-    <suppress checks="LineLength" files="ThrowableBiObjBooleanFunction" lines="699"/>
-    <suppress checks="LineLength" files="ThrowableBiObjCharFunction" lines="697"/>
-    <suppress checks="LineLength" files="ThrowableBiObjIntFunction" lines="697"/>
+    <suppress checks="LineLength" files="ThrowableBiObjBooleanFunction" lines="685"/>
+    <suppress checks="LineLength" files="ThrowableBiObjCharFunction" lines="683"/>
+    <suppress checks="LineLength" files="ThrowableBiObjIntFunction" lines="683"/>
     <suppress checks="LineLength" files="ThrowableToByteTriFunction" lines="796"/>
     <suppress checks="LineLength" files="ThrowableToCharTriFunction" lines="796"/>
     <suppress checks="LineLength" files="ThrowableToDoubleTriFunction" lines="798"/>
     <suppress checks="LineLength" files="ThrowableToFloatTriFunction" lines="797"/>
     <suppress checks="LineLength" files="ThrowableToLongTriFunction" lines="796"/>
     <suppress checks="LineLength" files="ThrowableToShortTriFunction" lines="797"/>
-    <suppress checks="LineLength" files="ThrowableTriFunction" lines="862"/>
+    <suppress checks="LineLength" files="ThrowableTriFunction" lines="848"/>
 </suppressions>
