@@ -21,7 +21,6 @@ package org.lambda4j;
  * general things which all functional interfaces have in common.
  */
 public interface Lambda {
-
     /**
      * Checks if this functional interface is memoizing (= caching) computed values.
      *
