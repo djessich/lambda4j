@@ -775,5 +775,4 @@ public interface TriLongPredicate extends Lambda {
     default TriPredicate<Long, Long, Long> boxed() {
         return this::test;
     }
-
 }

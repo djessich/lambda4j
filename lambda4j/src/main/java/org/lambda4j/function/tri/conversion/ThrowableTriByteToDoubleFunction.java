@@ -850,5 +850,4 @@ public interface ThrowableTriByteToDoubleFunction<X extends Throwable> extends L
             }
         };
     }
-
 }

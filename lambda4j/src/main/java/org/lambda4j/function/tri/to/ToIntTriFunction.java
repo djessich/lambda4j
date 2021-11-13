@@ -713,5 +713,4 @@ public interface ToIntTriFunction<T, U, V> extends Lambda {
     default TriFunction<T, U, V, Integer> boxed() {
         return this::applyAsInt;
     }
-
 }

@@ -774,5 +774,4 @@ public interface ThrowableBiLongToIntFunction<X extends Throwable> extends Lambd
             }
         };
     }
-
 }

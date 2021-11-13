@@ -768,5 +768,4 @@ public interface ThrowableBiBooleanToByteFunction<X extends Throwable> extends L
             }
         };
     }
-
 }

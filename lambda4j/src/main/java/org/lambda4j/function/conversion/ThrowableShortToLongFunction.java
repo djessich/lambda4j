@@ -488,7 +488,6 @@ public interface ThrowableShortToLongFunction<X extends Throwable> extends Lambd
         return this;
     }
 
-
     /**
      * Returns a memoized (caching) version of this {@link ThrowableShortToLongFunction}. Whenever it is called, the
      * mapping between the input parameter and the return value is preserved in a cache, making subsequent calls
@@ -675,5 +674,4 @@ public interface ThrowableShortToLongFunction<X extends Throwable> extends Lambd
             }
         };
     }
-
 }

@@ -664,5 +664,4 @@ public interface TriFloatToByteFunction extends Lambda {
     default TriFunction<Float, Float, Float, Byte> boxed() {
         return this::applyAsByte;
     }
-
 }

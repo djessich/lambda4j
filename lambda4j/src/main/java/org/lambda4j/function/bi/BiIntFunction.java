@@ -662,5 +662,4 @@ public interface BiIntFunction<R> extends Lambda {
     default BiFunction2<Integer, Integer, R> boxed() {
         return this::apply;
     }
-
 }

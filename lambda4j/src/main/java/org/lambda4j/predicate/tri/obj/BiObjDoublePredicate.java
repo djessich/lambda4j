@@ -858,5 +858,4 @@ public interface BiObjDoublePredicate<T, U> extends Lambda {
     default TriPredicate<T, U, Double> boxed() {
         return this::test;
     }
-
 }

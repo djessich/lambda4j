@@ -604,5 +604,4 @@ public interface BiFloatToIntFunction extends Lambda {
     default BiFunction2<Float, Float, Integer> boxed() {
         return this::applyAsInt;
     }
-
 }

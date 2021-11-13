@@ -540,5 +540,4 @@ public interface ToLongFunction2<T> extends Lambda, ToLongFunction<T> {
     default Function2<T, Long> boxed() {
         return this::applyAsLong;
     }
-
 }

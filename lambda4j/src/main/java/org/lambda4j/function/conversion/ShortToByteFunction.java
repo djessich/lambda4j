@@ -516,5 +516,4 @@ public interface ShortToByteFunction extends Lambda {
     default Function2<Short, Byte> boxed() {
         return this::applyAsByte;
     }
-
 }

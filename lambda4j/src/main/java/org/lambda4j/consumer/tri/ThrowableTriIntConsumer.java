@@ -614,5 +614,4 @@ public interface ThrowableTriIntConsumer<X extends Throwable> extends Lambda {
             }
         };
     }
-
 }

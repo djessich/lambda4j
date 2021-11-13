@@ -663,5 +663,4 @@ public interface TriBooleanToCharFunction extends Lambda {
     default TriFunction<Boolean, Boolean, Boolean, Character> boxed() {
         return this::applyAsChar;
     }
-
 }

@@ -654,5 +654,4 @@ public interface ThrowableObjFloatFunction<T, R, X extends Throwable> extends La
             }
         };
     }
-
 }

@@ -846,5 +846,4 @@ public interface ThrowableDoubleBinaryOperator<X extends Throwable> extends Lamb
             }
         };
     }
-
 }

@@ -732,5 +732,4 @@ public interface BiObjBooleanToFloatFunction<T, U> extends Lambda {
     default TriFunction<T, U, Boolean, Float> boxed() {
         return this::applyAsFloat;
     }
-
 }

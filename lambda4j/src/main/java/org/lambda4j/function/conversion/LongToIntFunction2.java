@@ -524,5 +524,4 @@ public interface LongToIntFunction2 extends Lambda, LongToIntFunction {
     default Function2<Long, Integer> boxed() {
         return this::applyAsInt;
     }
-
 }

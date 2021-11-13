@@ -543,5 +543,4 @@ public interface LongUnaryOperator2 extends Lambda, LongUnaryOperator {
     default UnaryOperator2<Long> boxed() {
         return this::applyAsLong;
     }
-
 }

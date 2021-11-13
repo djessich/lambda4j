@@ -606,5 +606,4 @@ public interface BiShortToByteFunction extends Lambda {
     default BiFunction2<Short, Short, Byte> boxed() {
         return this::applyAsByte;
     }
-
 }

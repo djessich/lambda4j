@@ -842,5 +842,4 @@ public interface ThrowableTriBooleanToShortFunction<X extends Throwable> extends
             }
         };
     }
-
 }

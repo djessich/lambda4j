@@ -914,5 +914,4 @@ public interface ThrowableObjLongPredicate<T, X extends Throwable> extends Lambd
             }
         };
     }
-
 }

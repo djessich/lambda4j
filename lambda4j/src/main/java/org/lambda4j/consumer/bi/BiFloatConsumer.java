@@ -379,5 +379,4 @@ public interface BiFloatConsumer extends Lambda {
     default BiConsumer2<Float, Float> boxed() {
         return this::accept;
     }
-
 }

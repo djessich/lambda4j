@@ -648,5 +648,4 @@ public interface CharBinaryOperator extends Lambda {
     default BinaryOperator2<Character> boxed() {
         return this::applyAsChar;
     }
-
 }

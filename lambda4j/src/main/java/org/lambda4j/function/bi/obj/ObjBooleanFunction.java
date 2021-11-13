@@ -488,5 +488,4 @@ public interface ObjBooleanFunction<T, R> extends Lambda {
     default BiFunction2<T, Boolean, R> boxed() {
         return this::apply;
     }
-
 }

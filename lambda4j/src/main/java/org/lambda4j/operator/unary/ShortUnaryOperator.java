@@ -532,5 +532,4 @@ public interface ShortUnaryOperator extends Lambda {
     default UnaryOperator2<Short> boxed() {
         return this::applyAsShort;
     }
-
 }

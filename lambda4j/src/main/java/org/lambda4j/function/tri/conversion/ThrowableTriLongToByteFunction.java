@@ -849,5 +849,4 @@ public interface ThrowableTriLongToByteFunction<X extends Throwable> extends Lam
             }
         };
     }
-
 }

@@ -477,5 +477,4 @@ public interface ThrowableIntSupplier<X extends Throwable> extends Lambda, IntSu
             }
         };
     }
-
 }

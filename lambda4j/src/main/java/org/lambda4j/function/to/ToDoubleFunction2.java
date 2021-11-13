@@ -541,5 +541,4 @@ public interface ToDoubleFunction2<T> extends Lambda, ToDoubleFunction<T> {
     default Function2<T, Double> boxed() {
         return this::applyAsDouble;
     }
-
 }

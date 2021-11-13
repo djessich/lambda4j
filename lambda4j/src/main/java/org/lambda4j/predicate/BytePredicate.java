@@ -635,5 +635,4 @@ public interface BytePredicate extends Lambda {
     default Predicate2<Byte> boxed() {
         return this::test;
     }
-
 }

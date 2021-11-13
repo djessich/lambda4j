@@ -771,5 +771,4 @@ public interface ThrowableBiBooleanToFloatFunction<X extends Throwable> extends 
             }
         };
     }
-
 }

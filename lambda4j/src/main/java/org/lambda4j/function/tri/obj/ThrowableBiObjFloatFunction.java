@@ -775,5 +775,4 @@ public interface ThrowableBiObjFloatFunction<T, U, R, X extends Throwable> exten
             }
         };
     }
-
 }

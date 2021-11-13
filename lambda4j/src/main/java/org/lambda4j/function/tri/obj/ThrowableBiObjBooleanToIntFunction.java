@@ -913,5 +913,4 @@ public interface ThrowableBiObjBooleanToIntFunction<T, U, X extends Throwable> e
             }
         };
     }
-
 }

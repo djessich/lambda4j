@@ -626,5 +626,4 @@ public interface ObjCharToIntFunction<T> extends Lambda {
     default BiFunction2<T, Character, Integer> boxed() {
         return this::applyAsInt;
     }
-
 }

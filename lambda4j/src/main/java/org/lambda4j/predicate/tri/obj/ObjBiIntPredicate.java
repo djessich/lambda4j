@@ -818,5 +818,4 @@ public interface ObjBiIntPredicate<T> extends Lambda {
     default TriPredicate<T, Integer, Integer> boxed() {
         return this::test;
     }
-
 }

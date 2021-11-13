@@ -524,5 +524,4 @@ public interface BooleanToLongFunction extends Lambda {
     default Function2<Boolean, Long> boxed() {
         return this::applyAsLong;
     }
-
 }

@@ -702,5 +702,4 @@ public interface ObjBiBooleanToDoubleFunction<T> extends Lambda {
     default TriFunction<T, Boolean, Boolean, Double> boxed() {
         return this::applyAsDouble;
     }
-
 }

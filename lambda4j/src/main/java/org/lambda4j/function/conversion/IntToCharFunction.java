@@ -519,5 +519,4 @@ public interface IntToCharFunction extends Lambda {
     default Function2<Integer, Character> boxed() {
         return this::applyAsChar;
     }
-
 }

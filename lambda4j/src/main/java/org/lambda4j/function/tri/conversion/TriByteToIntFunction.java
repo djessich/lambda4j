@@ -663,5 +663,4 @@ public interface TriByteToIntFunction extends Lambda {
     default TriFunction<Byte, Byte, Byte, Integer> boxed() {
         return this::applyAsInt;
     }
-
 }

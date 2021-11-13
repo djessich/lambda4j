@@ -605,5 +605,4 @@ public interface BiByteToLongFunction extends Lambda {
     default BiFunction2<Byte, Byte, Long> boxed() {
         return this::applyAsLong;
     }
-
 }

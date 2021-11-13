@@ -796,5 +796,4 @@ public interface ThrowableObjBooleanToDoubleFunction<T, X extends Throwable> ext
             }
         };
     }
-
 }

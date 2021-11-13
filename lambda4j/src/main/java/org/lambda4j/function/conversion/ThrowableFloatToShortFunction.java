@@ -674,5 +674,4 @@ public interface ThrowableFloatToShortFunction<X extends Throwable> extends Lamb
             }
         };
     }
-
 }

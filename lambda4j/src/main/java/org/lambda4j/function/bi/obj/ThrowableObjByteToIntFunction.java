@@ -791,5 +791,4 @@ public interface ThrowableObjByteToIntFunction<T, X extends Throwable> extends L
             }
         };
     }
-
 }

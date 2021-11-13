@@ -651,5 +651,4 @@ public interface IntBinaryOperator2 extends Lambda, IntBinaryOperator {
     default BinaryOperator2<Integer> boxed() {
         return this::applyAsInt;
     }
-
 }

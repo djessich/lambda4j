@@ -779,5 +779,4 @@ public interface ThrowableBiFloatToDoubleFunction<X extends Throwable> extends L
             }
         };
     }
-
 }

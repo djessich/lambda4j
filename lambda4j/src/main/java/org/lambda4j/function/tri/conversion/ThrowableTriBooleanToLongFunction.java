@@ -841,5 +841,4 @@ public interface ThrowableTriBooleanToLongFunction<X extends Throwable> extends 
             }
         };
     }
-
 }

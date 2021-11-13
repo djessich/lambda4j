@@ -688,5 +688,4 @@ public interface ThrowableBiObjDoubleConsumer<T, U, X extends Throwable> extends
             }
         };
     }
-
 }

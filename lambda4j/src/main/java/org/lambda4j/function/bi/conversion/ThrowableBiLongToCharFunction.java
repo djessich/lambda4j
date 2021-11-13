@@ -777,5 +777,4 @@ public interface ThrowableBiLongToCharFunction<X extends Throwable> extends Lamb
             }
         };
     }
-
 }

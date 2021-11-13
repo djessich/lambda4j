@@ -674,5 +674,4 @@ public interface ThrowableCharToShortFunction<X extends Throwable> extends Lambd
             }
         };
     }
-
 }

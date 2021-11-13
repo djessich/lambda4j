@@ -700,5 +700,4 @@ public interface ObjBiCharToLongFunction<T> extends Lambda {
     default TriFunction<T, Character, Character, Long> boxed() {
         return this::applyAsLong;
     }
-
 }

@@ -561,5 +561,4 @@ public interface BooleanFunction<R> extends Lambda {
     default Function2<Boolean, R> boxed() {
         return this::apply;
     }
-
 }

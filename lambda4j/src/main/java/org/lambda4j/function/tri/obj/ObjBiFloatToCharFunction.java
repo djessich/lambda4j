@@ -700,5 +700,4 @@ public interface ObjBiFloatToCharFunction<T> extends Lambda {
     default TriFunction<T, Float, Float, Character> boxed() {
         return this::applyAsChar;
     }
-
 }

@@ -774,5 +774,4 @@ public interface TriFloatPredicate extends Lambda {
     default TriPredicate<Float, Float, Float> boxed() {
         return this::test;
     }
-
 }

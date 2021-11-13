@@ -889,5 +889,4 @@ public interface ThrowableToDoubleTriFunction<T, U, V, X extends Throwable> exte
             }
         };
     }
-
 }

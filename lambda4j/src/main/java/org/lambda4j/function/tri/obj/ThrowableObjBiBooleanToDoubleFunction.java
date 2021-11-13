@@ -885,5 +885,4 @@ public interface ThrowableObjBiBooleanToDoubleFunction<T, X extends Throwable> e
             }
         };
     }
-
 }

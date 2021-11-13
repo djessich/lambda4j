@@ -664,5 +664,4 @@ public interface ThrowableObjBiDoubleConsumer<T, X extends Throwable> extends La
             }
         };
     }
-
 }

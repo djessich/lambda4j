@@ -652,5 +652,4 @@ public interface LongBinaryOperator2 extends Lambda, LongBinaryOperator {
     default BinaryOperator2<Long> boxed() {
         return this::applyAsLong;
     }
-
 }

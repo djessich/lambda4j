@@ -379,5 +379,4 @@ public interface BiIntConsumer extends Lambda {
     default BiConsumer2<Integer, Integer> boxed() {
         return this::accept;
     }
-
 }

@@ -741,5 +741,4 @@ public interface ThrowableObjBiFloatFunction<T, R, X extends Throwable> extends 
             }
         };
     }
-
 }

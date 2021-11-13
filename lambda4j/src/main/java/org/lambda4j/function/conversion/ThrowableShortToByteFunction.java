@@ -674,5 +674,4 @@ public interface ThrowableShortToByteFunction<X extends Throwable> extends Lambd
             }
         };
     }
-
 }

@@ -703,5 +703,4 @@ public interface ObjBiDoubleToLongFunction<T> extends Lambda {
     default TriFunction<T, Double, Double, Long> boxed() {
         return this::applyAsLong;
     }
-
 }

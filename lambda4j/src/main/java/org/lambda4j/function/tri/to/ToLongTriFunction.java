@@ -713,5 +713,4 @@ public interface ToLongTriFunction<T, U, V> extends Lambda {
     default TriFunction<T, U, V, Long> boxed() {
         return this::applyAsLong;
     }
-
 }

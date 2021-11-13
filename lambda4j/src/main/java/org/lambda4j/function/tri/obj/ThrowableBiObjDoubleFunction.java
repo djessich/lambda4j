@@ -776,5 +776,4 @@ public interface ThrowableBiObjDoubleFunction<T, U, R, X extends Throwable> exte
             }
         };
     }
-
 }

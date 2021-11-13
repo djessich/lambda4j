@@ -700,5 +700,4 @@ public interface ObjBiByteToLongFunction<T> extends Lambda {
     default TriFunction<T, Byte, Byte, Long> boxed() {
         return this::applyAsLong;
     }
-
 }

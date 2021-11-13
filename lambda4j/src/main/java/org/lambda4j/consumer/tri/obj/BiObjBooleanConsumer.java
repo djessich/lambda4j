@@ -502,5 +502,4 @@ public interface BiObjBooleanConsumer<T, U> extends Lambda {
     default TriConsumer<T, U, Boolean> boxed() {
         return this::accept;
     }
-
 }

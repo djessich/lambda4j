@@ -645,5 +645,4 @@ public interface DoublePredicate2 extends Lambda, DoublePredicate {
     default Predicate2<Double> boxed() {
         return this::test;
     }
-
 }

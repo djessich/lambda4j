@@ -857,5 +857,4 @@ public interface ThrowableCharTernaryOperator<X extends Throwable> extends Lambd
             }
         };
     }
-
 }

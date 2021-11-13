@@ -478,5 +478,4 @@ public interface ThrowableLongSupplier<X extends Throwable> extends Lambda, Long
             }
         };
     }
-
 }

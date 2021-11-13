@@ -618,5 +618,4 @@ public interface ThrowableTriFloatConsumer<X extends Throwable> extends Lambda {
             }
         };
     }
-
 }

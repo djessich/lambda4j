@@ -733,5 +733,4 @@ public interface BiObjBooleanToIntFunction<T, U> extends Lambda {
     default TriFunction<T, U, Boolean, Integer> boxed() {
         return this::applyAsInt;
     }
-
 }

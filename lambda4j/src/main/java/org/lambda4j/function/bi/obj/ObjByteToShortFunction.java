@@ -626,5 +626,4 @@ public interface ObjByteToShortFunction<T> extends Lambda {
     default BiFunction2<T, Byte, Short> boxed() {
         return this::applyAsShort;
     }
-
 }

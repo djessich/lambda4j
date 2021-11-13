@@ -615,5 +615,4 @@ public interface ThrowableTriLongConsumer<X extends Throwable> extends Lambda {
             }
         };
     }
-
 }

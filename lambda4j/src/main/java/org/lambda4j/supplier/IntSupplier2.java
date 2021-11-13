@@ -313,5 +313,4 @@ public interface IntSupplier2 extends Lambda, IntSupplier {
     default Supplier2<Integer> boxed() {
         return this::getAsInt;
     }
-
 }

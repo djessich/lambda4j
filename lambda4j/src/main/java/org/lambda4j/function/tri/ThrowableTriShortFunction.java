@@ -911,5 +911,4 @@ public interface ThrowableTriShortFunction<R, X extends Throwable> extends Lambd
             }
         };
     }
-
 }

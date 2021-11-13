@@ -1005,5 +1005,4 @@ public interface ThrowableObjBiCharPredicate<T, X extends Throwable> extends Lam
             }
         };
     }
-
 }

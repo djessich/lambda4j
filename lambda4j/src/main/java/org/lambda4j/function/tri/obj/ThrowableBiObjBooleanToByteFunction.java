@@ -916,5 +916,4 @@ public interface ThrowableBiObjBooleanToByteFunction<T, U, X extends Throwable> 
             }
         };
     }
-
 }

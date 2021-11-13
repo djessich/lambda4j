@@ -671,5 +671,4 @@ public interface ByteTernaryOperator extends Lambda {
     default TernaryOperator<Byte> boxed() {
         return this::applyAsByte;
     }
-
 }

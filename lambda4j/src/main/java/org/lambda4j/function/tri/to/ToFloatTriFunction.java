@@ -712,5 +712,4 @@ public interface ToFloatTriFunction<T, U, V> extends Lambda {
     default TriFunction<T, U, V, Float> boxed() {
         return this::applyAsFloat;
     }
-
 }

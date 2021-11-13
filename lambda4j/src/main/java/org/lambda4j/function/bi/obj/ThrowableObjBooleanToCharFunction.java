@@ -794,5 +794,4 @@ public interface ThrowableObjBooleanToCharFunction<T, X extends Throwable> exten
             }
         };
     }
-
 }

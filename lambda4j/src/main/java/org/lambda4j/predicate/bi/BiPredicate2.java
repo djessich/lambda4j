@@ -749,5 +749,4 @@ public interface BiPredicate2<T, U> extends Lambda, BiPredicate<T, U> {
             };
         }
     }
-
 }

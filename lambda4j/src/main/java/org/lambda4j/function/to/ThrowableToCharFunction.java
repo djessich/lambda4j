@@ -689,5 +689,4 @@ public interface ThrowableToCharFunction<T, X extends Throwable> extends Lambda 
             }
         };
     }
-
 }

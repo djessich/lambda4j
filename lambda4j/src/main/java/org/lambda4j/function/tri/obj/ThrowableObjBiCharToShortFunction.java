@@ -889,5 +889,4 @@ public interface ThrowableObjBiCharToShortFunction<T, X extends Throwable> exten
             }
         };
     }
-
 }

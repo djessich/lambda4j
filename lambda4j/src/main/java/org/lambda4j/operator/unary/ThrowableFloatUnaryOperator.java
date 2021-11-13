@@ -691,5 +691,4 @@ public interface ThrowableFloatUnaryOperator<X extends Throwable> extends Lambda
             }
         };
     }
-
 }

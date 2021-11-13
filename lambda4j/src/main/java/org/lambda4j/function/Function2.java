@@ -558,5 +558,4 @@ public interface Function2<T, R> extends Lambda, Function<T, R> {
             };
         }
     }
-
 }

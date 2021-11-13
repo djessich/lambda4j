@@ -509,5 +509,4 @@ public interface BiObjFloatConsumer<T, U> extends Lambda {
     default TriConsumer<T, U, Float> boxed() {
         return this::accept;
     }
-
 }

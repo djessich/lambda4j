@@ -560,5 +560,4 @@ public interface ByteFunction<R> extends Lambda {
     default Function2<Byte, R> boxed() {
         return this::apply;
     }
-
 }

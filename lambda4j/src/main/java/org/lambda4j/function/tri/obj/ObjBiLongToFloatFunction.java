@@ -700,5 +700,4 @@ public interface ObjBiLongToFloatFunction<T> extends Lambda {
     default TriFunction<T, Long, Long, Float> boxed() {
         return this::applyAsFloat;
     }
-
 }

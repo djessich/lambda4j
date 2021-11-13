@@ -777,5 +777,4 @@ public interface ThrowableBiIntToShortFunction<X extends Throwable> extends Lamb
             }
         };
     }
-
 }

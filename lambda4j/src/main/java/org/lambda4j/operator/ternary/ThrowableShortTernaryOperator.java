@@ -858,5 +858,4 @@ public interface ThrowableShortTernaryOperator<X extends Throwable> extends Lamb
             }
         };
     }
-
 }

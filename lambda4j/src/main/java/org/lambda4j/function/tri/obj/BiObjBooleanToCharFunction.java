@@ -732,5 +732,4 @@ public interface BiObjBooleanToCharFunction<T, U> extends Lambda {
     default TriFunction<T, U, Boolean, Character> boxed() {
         return this::applyAsChar;
     }
-
 }

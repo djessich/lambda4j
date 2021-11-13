@@ -776,5 +776,4 @@ public interface ThrowableBiObjBooleanFunction<T, U, R, X extends Throwable> ext
             }
         };
     }
-
 }

@@ -705,5 +705,4 @@ public interface ThrowableIntUnaryOperator<X extends Throwable> extends Lambda, 
             }
         };
     }
-
 }

@@ -779,5 +779,4 @@ public interface ThrowableBiDoubleToByteFunction<X extends Throwable> extends La
             }
         };
     }
-
 }

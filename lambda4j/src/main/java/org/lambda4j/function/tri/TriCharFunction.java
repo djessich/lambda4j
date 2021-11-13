@@ -721,5 +721,4 @@ public interface TriCharFunction<R> extends Lambda {
     default TriFunction<Character, Character, Character, R> boxed() {
         return this::apply;
     }
-
 }

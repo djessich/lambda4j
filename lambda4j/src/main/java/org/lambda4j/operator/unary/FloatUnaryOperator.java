@@ -532,5 +532,4 @@ public interface FloatUnaryOperator extends Lambda {
     default UnaryOperator2<Float> boxed() {
         return this::applyAsFloat;
     }
-
 }

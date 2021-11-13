@@ -478,5 +478,4 @@ public interface ThrowableDoubleConsumer<X extends Throwable> extends Lambda, Do
             }
         };
     }
-
 }

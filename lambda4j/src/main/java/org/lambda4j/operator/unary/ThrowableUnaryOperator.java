@@ -106,5 +106,4 @@ public interface ThrowableUnaryOperator<T, X extends Throwable>
     static <T, X extends Throwable> ThrowableUnaryOperator<T, X> constant(T ret) {
         return t -> ret;
     }
-
 }

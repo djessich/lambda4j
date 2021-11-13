@@ -516,5 +516,4 @@ public interface FloatToByteFunction extends Lambda {
     default Function2<Float, Byte> boxed() {
         return this::applyAsByte;
     }
-
 }

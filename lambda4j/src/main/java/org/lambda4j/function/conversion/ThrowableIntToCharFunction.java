@@ -667,5 +667,4 @@ public interface ThrowableIntToCharFunction<X extends Throwable> extends Lambda 
             }
         };
     }
-
 }

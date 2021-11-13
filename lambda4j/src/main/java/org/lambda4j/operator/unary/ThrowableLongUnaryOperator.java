@@ -709,5 +709,4 @@ public interface ThrowableLongUnaryOperator<X extends Throwable> extends Lambda,
             }
         };
     }
-
 }

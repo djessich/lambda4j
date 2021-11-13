@@ -800,5 +800,4 @@ public interface ThrowableObjDoubleToDoubleFunction<T, X extends Throwable> exte
             }
         };
     }
-
 }

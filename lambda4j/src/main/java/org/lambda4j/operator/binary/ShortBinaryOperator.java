@@ -648,5 +648,4 @@ public interface ShortBinaryOperator extends Lambda {
     default BinaryOperator2<Short> boxed() {
         return this::applyAsShort;
     }
-
 }

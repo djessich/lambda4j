@@ -789,5 +789,4 @@ public interface ThrowableObjIntToIntFunction<T, X extends Throwable> extends La
             }
         };
     }
-
 }

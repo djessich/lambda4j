@@ -664,5 +664,4 @@ public interface TriBooleanToDoubleFunction extends Lambda {
     default TriFunction<Boolean, Boolean, Boolean, Double> boxed() {
         return this::applyAsDouble;
     }
-
 }

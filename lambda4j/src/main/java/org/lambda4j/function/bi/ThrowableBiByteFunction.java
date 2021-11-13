@@ -829,5 +829,4 @@ public interface ThrowableBiByteFunction<R, X extends Throwable> extends Lambda 
             }
         };
     }
-
 }

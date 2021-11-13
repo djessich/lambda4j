@@ -635,5 +635,4 @@ public interface ShortPredicate extends Lambda {
     default Predicate2<Short> boxed() {
         return this::test;
     }
-
 }

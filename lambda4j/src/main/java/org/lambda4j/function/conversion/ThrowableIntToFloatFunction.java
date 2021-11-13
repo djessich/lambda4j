@@ -672,5 +672,4 @@ public interface ThrowableIntToFloatFunction<X extends Throwable> extends Lambda
             }
         };
     }
-
 }

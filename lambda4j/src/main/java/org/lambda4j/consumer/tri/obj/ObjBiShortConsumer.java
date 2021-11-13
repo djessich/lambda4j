@@ -477,5 +477,4 @@ public interface ObjBiShortConsumer<T> extends Lambda {
     default TriConsumer<T, Short, Short> boxed() {
         return this::accept;
     }
-
 }

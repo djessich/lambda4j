@@ -115,5 +115,4 @@ public interface Runnable2 extends Lambda, Runnable {
             after.run();
         };
     }
-
 }

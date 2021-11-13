@@ -858,5 +858,4 @@ public interface ThrowableFloatTernaryOperator<X extends Throwable> extends Lamb
             }
         };
     }
-
 }

@@ -519,5 +519,4 @@ public interface LongToByteFunction extends Lambda {
     default Function2<Long, Byte> boxed() {
         return this::applyAsByte;
     }
-
 }

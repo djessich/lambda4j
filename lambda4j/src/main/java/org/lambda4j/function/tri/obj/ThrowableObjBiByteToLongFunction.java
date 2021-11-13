@@ -888,5 +888,4 @@ public interface ThrowableObjBiByteToLongFunction<T, X extends Throwable> extend
             }
         };
     }
-
 }

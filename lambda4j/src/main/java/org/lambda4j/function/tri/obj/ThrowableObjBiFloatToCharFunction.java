@@ -889,5 +889,4 @@ public interface ThrowableObjBiFloatToCharFunction<T, X extends Throwable> exten
             }
         };
     }
-
 }

@@ -664,5 +664,4 @@ public interface TriDoubleToShortFunction extends Lambda {
     default TriFunction<Double, Double, Double, Short> boxed() {
         return this::applyAsShort;
     }
-
 }

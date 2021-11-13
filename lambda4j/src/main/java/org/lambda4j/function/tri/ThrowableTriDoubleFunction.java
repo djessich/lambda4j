@@ -911,5 +911,4 @@ public interface ThrowableTriDoubleFunction<R, X extends Throwable> extends Lamb
             }
         };
     }
-
 }

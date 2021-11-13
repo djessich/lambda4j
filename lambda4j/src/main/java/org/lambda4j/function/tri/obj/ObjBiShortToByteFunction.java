@@ -700,5 +700,4 @@ public interface ObjBiShortToByteFunction<T> extends Lambda {
     default TriFunction<T, Short, Short, Byte> boxed() {
         return this::applyAsByte;
     }
-
 }

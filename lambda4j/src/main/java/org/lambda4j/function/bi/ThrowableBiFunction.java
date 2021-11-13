@@ -876,5 +876,4 @@ public interface ThrowableBiFunction<T, U, R, X extends Throwable> extends Lambd
             }
         };
     }
-
 }

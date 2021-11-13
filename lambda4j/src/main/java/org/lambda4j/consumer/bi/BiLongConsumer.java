@@ -379,5 +379,4 @@ public interface BiLongConsumer extends Lambda {
     default BiConsumer2<Long, Long> boxed() {
         return this::accept;
     }
-
 }

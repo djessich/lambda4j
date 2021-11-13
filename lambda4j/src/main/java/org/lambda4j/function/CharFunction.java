@@ -560,5 +560,4 @@ public interface CharFunction<R> extends Lambda {
     default Function2<Character, R> boxed() {
         return this::apply;
     }
-
 }

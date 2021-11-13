@@ -823,5 +823,4 @@ public interface ThrowableShortBinaryOperator<X extends Throwable> extends Lambd
             }
         };
     }
-
 }

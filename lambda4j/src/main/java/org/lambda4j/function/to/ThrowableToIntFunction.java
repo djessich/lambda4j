@@ -709,5 +709,4 @@ public interface ThrowableToIntFunction<T, X extends Throwable> extends Lambda, 
             }
         };
     }
-
 }

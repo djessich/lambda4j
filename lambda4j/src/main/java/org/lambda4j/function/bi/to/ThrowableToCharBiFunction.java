@@ -807,5 +807,4 @@ public interface ThrowableToCharBiFunction<T, U, X extends Throwable> extends La
             }
         };
     }
-
 }

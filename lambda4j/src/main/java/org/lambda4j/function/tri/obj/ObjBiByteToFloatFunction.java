@@ -700,5 +700,4 @@ public interface ObjBiByteToFloatFunction<T> extends Lambda {
     default TriFunction<T, Byte, Byte, Float> boxed() {
         return this::applyAsFloat;
     }
-
 }

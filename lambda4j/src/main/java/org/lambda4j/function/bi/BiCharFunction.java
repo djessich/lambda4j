@@ -71,7 +71,6 @@ import org.lambda4j.predicate.bi.BiCharPredicate;
 @FunctionalInterface
 public interface BiCharFunction<R> extends Lambda {
 
-
     /**
      * Constructs a {@link BiCharFunction} based on a lambda expression or a method reference. Thereby the given lambda
      * expression or method reference is returned on an as-is basis to implicitly transform it to the desired type. With
@@ -662,5 +661,4 @@ public interface BiCharFunction<R> extends Lambda {
     default BiFunction2<Character, Character, R> boxed() {
         return this::apply;
     }
-
 }

@@ -701,5 +701,4 @@ public interface ObjBiBooleanToByteFunction<T> extends Lambda {
     default TriFunction<T, Boolean, Boolean, Byte> boxed() {
         return this::applyAsByte;
     }
-
 }

@@ -913,5 +913,4 @@ public interface ThrowableBiObjFloatToIntFunction<T, U, X extends Throwable> ext
             }
         };
     }
-
 }

@@ -779,5 +779,4 @@ public interface ThrowableBiFloatToShortFunction<X extends Throwable> extends La
             }
         };
     }
-
 }

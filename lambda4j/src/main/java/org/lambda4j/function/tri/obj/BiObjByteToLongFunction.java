@@ -732,5 +732,4 @@ public interface BiObjByteToLongFunction<T, U> extends Lambda {
     default TriFunction<T, U, Byte, Long> boxed() {
         return this::applyAsLong;
     }
-
 }

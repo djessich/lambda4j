@@ -532,5 +532,4 @@ public interface CharUnaryOperator extends Lambda {
     default UnaryOperator2<Character> boxed() {
         return this::applyAsChar;
     }
-
 }

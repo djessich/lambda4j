@@ -794,5 +794,4 @@ public interface ThrowableObjBooleanToLongFunction<T, X extends Throwable> exten
             }
         };
     }
-
 }

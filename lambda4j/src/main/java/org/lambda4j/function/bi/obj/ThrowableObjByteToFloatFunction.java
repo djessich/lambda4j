@@ -793,5 +793,4 @@ public interface ThrowableObjByteToFloatFunction<T, X extends Throwable> extends
             }
         };
     }
-
 }

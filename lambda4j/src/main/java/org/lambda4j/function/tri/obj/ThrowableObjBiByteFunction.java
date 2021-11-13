@@ -741,5 +741,4 @@ public interface ThrowableObjBiByteFunction<T, R, X extends Throwable> extends L
             }
         };
     }
-
 }

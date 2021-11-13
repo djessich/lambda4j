@@ -694,5 +694,4 @@ public interface ThrowableDoubleToLongFunction<X extends Throwable> extends Lamb
             }
         };
     }
-
 }

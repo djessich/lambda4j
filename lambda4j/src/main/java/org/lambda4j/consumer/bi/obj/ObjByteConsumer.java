@@ -405,5 +405,4 @@ public interface ObjByteConsumer<T> extends Lambda {
     default BiConsumer2<T, Byte> boxed() {
         return this::accept;
     }
-
 }

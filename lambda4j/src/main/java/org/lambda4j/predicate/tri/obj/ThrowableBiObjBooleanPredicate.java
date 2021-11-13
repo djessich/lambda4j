@@ -1041,5 +1041,4 @@ public interface ThrowableBiObjBooleanPredicate<T, U, X extends Throwable> exten
             }
         };
     }
-
 }

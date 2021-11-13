@@ -735,5 +735,4 @@ public interface BiObjDoubleToIntFunction<T, U> extends Lambda {
     default TriFunction<T, U, Double, Integer> boxed() {
         return this::applyAsInt;
     }
-
 }

@@ -722,5 +722,4 @@ public interface TriShortFunction<R> extends Lambda {
     default TriFunction<Short, Short, Short, R> boxed() {
         return this::apply;
     }
-
 }

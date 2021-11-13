@@ -336,5 +336,4 @@ public interface BooleanSupplier2 extends Lambda, BooleanSupplier {
     default Supplier2<Boolean> boxed() {
         return this::getAsBoolean;
     }
-
 }

@@ -776,5 +776,4 @@ public interface ThrowableBiIntToCharFunction<X extends Throwable> extends Lambd
             }
         };
     }
-
 }

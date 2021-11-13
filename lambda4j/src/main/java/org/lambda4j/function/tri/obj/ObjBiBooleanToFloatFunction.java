@@ -701,5 +701,4 @@ public interface ObjBiBooleanToFloatFunction<T> extends Lambda {
     default TriFunction<T, Boolean, Boolean, Float> boxed() {
         return this::applyAsFloat;
     }
-
 }

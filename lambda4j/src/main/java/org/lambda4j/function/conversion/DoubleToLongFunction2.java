@@ -524,5 +524,4 @@ public interface DoubleToLongFunction2 extends Lambda, DoubleToLongFunction {
     default Function2<Double, Long> boxed() {
         return this::applyAsLong;
     }
-
 }

@@ -664,5 +664,4 @@ public interface TriCharToShortFunction extends Lambda {
     default TriFunction<Character, Character, Character, Short> boxed() {
         return this::applyAsShort;
     }
-
 }

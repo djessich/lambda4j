@@ -564,5 +564,4 @@ public interface IntFunction2<R> extends Lambda, IntFunction<R> {
     default Function2<Integer, R> boxed() {
         return this::apply;
     }
-
 }

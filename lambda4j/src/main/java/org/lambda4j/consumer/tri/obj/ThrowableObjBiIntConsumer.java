@@ -654,5 +654,4 @@ public interface ThrowableObjBiIntConsumer<T, X extends Throwable> extends Lambd
             }
         };
     }
-
 }

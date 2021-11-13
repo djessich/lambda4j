@@ -686,5 +686,4 @@ public interface ThrowableBiObjFloatConsumer<T, U, X extends Throwable> extends 
             }
         };
     }
-
 }

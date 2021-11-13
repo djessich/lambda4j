@@ -887,5 +887,4 @@ public interface ThrowableToCharTriFunction<T, U, V, X extends Throwable> extend
             }
         };
     }
-
 }

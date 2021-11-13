@@ -917,5 +917,4 @@ public interface ThrowableBiObjBooleanToShortFunction<T, U, X extends Throwable>
             }
         };
     }
-
 }

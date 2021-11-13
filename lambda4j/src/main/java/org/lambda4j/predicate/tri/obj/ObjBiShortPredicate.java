@@ -817,5 +817,4 @@ public interface ObjBiShortPredicate<T> extends Lambda {
     default TriPredicate<T, Short, Short> boxed() {
         return this::test;
     }
-
 }

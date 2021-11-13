@@ -774,5 +774,4 @@ public interface TriShortPredicate extends Lambda {
     default TriPredicate<Short, Short, Short> boxed() {
         return this::test;
     }
-
 }

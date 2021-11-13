@@ -569,5 +569,4 @@ public interface ThrowableObjFloatConsumer<T, X extends Throwable> extends Lambd
             }
         };
     }
-
 }

@@ -916,5 +916,4 @@ public interface ThrowableObjBooleanPredicate<T, X extends Throwable> extends La
             }
         };
     }
-
 }

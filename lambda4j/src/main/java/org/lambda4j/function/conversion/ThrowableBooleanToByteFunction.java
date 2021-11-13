@@ -677,5 +677,4 @@ public interface ThrowableBooleanToByteFunction<X extends Throwable> extends Lam
             }
         };
     }
-
 }

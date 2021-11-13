@@ -306,5 +306,4 @@ public interface CharConsumer extends Lambda {
     default Consumer2<Character> boxed() {
         return this::accept;
     }
-
 }

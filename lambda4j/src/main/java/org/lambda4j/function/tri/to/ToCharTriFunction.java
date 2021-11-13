@@ -712,5 +712,4 @@ public interface ToCharTriFunction<T, U, V> extends Lambda {
     default TriFunction<T, U, V, Character> boxed() {
         return this::applyAsChar;
     }
-
 }

@@ -313,5 +313,4 @@ public interface LongSupplier2 extends Lambda, LongSupplier {
     default Supplier2<Long> boxed() {
         return this::getAsLong;
     }
-
 }

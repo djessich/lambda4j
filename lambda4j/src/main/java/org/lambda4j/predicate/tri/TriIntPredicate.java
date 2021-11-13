@@ -774,5 +774,4 @@ public interface TriIntPredicate extends Lambda {
     default TriPredicate<Integer, Integer, Integer> boxed() {
         return this::test;
     }
-
 }

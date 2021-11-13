@@ -665,5 +665,4 @@ public interface TriLongToDoubleFunction extends Lambda {
     default TriFunction<Long, Long, Long, Double> boxed() {
         return this::applyAsDouble;
     }
-
 }

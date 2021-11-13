@@ -677,5 +677,4 @@ public interface ThrowableBooleanToShortFunction<X extends Throwable> extends La
             }
         };
     }
-
 }

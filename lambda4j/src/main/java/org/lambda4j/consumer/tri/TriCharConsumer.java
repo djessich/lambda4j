@@ -436,5 +436,4 @@ public interface TriCharConsumer extends Lambda {
     default TriConsumer<Character, Character, Character> boxed() {
         return this::accept;
     }
-
 }

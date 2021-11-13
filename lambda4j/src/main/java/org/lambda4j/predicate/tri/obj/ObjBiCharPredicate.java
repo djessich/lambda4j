@@ -817,5 +817,4 @@ public interface ObjBiCharPredicate<T> extends Lambda {
     default TriPredicate<T, Character, Character> boxed() {
         return this::test;
     }
-
 }

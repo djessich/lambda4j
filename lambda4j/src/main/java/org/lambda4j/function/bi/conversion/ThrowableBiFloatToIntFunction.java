@@ -777,5 +777,4 @@ public interface ThrowableBiFloatToIntFunction<X extends Throwable> extends Lamb
             }
         };
     }
-
 }

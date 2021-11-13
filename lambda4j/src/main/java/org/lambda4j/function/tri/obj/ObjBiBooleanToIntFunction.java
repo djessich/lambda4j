@@ -702,5 +702,4 @@ public interface ObjBiBooleanToIntFunction<T> extends Lambda {
     default TriFunction<T, Boolean, Boolean, Integer> boxed() {
         return this::applyAsInt;
     }
-
 }

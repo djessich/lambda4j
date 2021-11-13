@@ -475,5 +475,4 @@ public interface ThrowableIntConsumer<X extends Throwable> extends Lambda, IntCo
             }
         };
     }
-
 }

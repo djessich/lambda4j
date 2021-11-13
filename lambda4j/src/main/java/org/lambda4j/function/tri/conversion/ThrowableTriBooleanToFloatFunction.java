@@ -842,5 +842,4 @@ public interface ThrowableTriBooleanToFloatFunction<X extends Throwable> extends
             }
         };
     }
-
 }

@@ -774,5 +774,4 @@ public interface ThrowableBiObjCharFunction<T, U, R, X extends Throwable> extend
             }
         };
     }
-
 }

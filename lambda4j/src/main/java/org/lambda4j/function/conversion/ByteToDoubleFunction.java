@@ -519,5 +519,4 @@ public interface ByteToDoubleFunction extends Lambda {
     default Function2<Byte, Double> boxed() {
         return this::applyAsDouble;
     }
-
 }

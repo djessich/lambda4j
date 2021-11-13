@@ -914,5 +914,4 @@ public interface ThrowableBiObjShortToFloatFunction<T, U, X extends Throwable> e
             }
         };
     }
-
 }

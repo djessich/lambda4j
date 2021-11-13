@@ -701,5 +701,4 @@ public interface ObjBiDoubleToFloatFunction<T> extends Lambda {
     default TriFunction<T, Double, Double, Float> boxed() {
         return this::applyAsFloat;
     }
-
 }

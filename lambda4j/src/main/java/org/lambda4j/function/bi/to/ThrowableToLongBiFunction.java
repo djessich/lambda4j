@@ -829,5 +829,4 @@ public interface ThrowableToLongBiFunction<T, U, X extends Throwable> extends La
             }
         };
     }
-
 }

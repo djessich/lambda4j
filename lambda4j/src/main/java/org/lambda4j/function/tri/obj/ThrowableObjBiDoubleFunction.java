@@ -742,5 +742,4 @@ public interface ThrowableObjBiDoubleFunction<T, R, X extends Throwable> extends
             }
         };
     }
-
 }

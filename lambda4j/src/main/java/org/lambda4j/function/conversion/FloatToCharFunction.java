@@ -516,5 +516,4 @@ public interface FloatToCharFunction extends Lambda {
     default Function2<Float, Character> boxed() {
         return this::applyAsChar;
     }
-
 }

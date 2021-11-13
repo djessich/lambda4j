@@ -774,5 +774,4 @@ public interface TriCharPredicate extends Lambda {
     default TriPredicate<Character, Character, Character> boxed() {
         return this::test;
     }
-
 }

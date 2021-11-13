@@ -911,5 +911,4 @@ public interface ThrowableTriFloatFunction<R, X extends Throwable> extends Lambd
             }
         };
     }
-
 }

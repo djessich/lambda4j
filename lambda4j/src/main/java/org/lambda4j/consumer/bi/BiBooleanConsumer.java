@@ -376,5 +376,4 @@ public interface BiBooleanConsumer extends Lambda {
     default BiConsumer2<Boolean, Boolean> boxed() {
         return this::accept;
     }
-
 }

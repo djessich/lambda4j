@@ -725,5 +725,4 @@ public interface ThrowableFunction<T, R, X extends Throwable> extends Lambda, Fu
             }
         };
     }
-
 }

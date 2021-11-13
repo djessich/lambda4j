@@ -700,5 +700,4 @@ public interface ObjBiShortToCharFunction<T> extends Lambda {
     default TriFunction<T, Short, Short, Character> boxed() {
         return this::applyAsChar;
     }
-
 }

@@ -791,5 +791,4 @@ public interface ThrowableObjShortToIntFunction<T, X extends Throwable> extends 
             }
         };
     }
-
 }

@@ -615,5 +615,4 @@ public interface ThrowableTriByteConsumer<X extends Throwable> extends Lambda {
             }
         };
     }
-
 }

@@ -739,5 +739,4 @@ public interface ThrowableDoubleFunction<R, X extends Throwable> extends Lambda,
             }
         };
     }
-
 }

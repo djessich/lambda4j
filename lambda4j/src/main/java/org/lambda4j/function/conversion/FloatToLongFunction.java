@@ -519,5 +519,4 @@ public interface FloatToLongFunction extends Lambda {
     default Function2<Float, Long> boxed() {
         return this::applyAsLong;
     }
-
 }

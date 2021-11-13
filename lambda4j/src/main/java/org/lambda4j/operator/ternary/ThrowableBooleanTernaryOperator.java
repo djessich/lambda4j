@@ -849,5 +849,4 @@ public interface ThrowableBooleanTernaryOperator<X extends Throwable> extends La
             }
         };
     }
-
 }

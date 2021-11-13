@@ -733,5 +733,4 @@ public interface BiObjBooleanToLongFunction<T, U> extends Lambda {
     default TriFunction<T, U, Boolean, Long> boxed() {
         return this::applyAsLong;
     }
-
 }

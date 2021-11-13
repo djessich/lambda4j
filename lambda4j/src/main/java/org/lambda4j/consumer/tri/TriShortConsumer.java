@@ -437,5 +437,4 @@ public interface TriShortConsumer extends Lambda {
     default TriConsumer<Short, Short, Short> boxed() {
         return this::accept;
     }
-
 }

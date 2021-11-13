@@ -714,5 +714,4 @@ public interface ThrowableBooleanFunction<R, X extends Throwable> extends Lambda
             }
         };
     }
-
 }

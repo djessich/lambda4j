@@ -861,5 +861,4 @@ public interface ThrowableDoubleTernaryOperator<X extends Throwable> extends Lam
             }
         };
     }
-
 }

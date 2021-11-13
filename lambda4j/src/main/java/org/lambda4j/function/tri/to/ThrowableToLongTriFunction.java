@@ -887,5 +887,4 @@ public interface ThrowableToLongTriFunction<T, U, V, X extends Throwable> extend
             }
         };
     }
-
 }

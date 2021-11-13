@@ -655,5 +655,4 @@ public interface ThrowableObjBooleanFunction<T, R, X extends Throwable> extends 
             }
         };
     }
-
 }

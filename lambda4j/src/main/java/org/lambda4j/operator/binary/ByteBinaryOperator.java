@@ -648,5 +648,4 @@ public interface ByteBinaryOperator extends Lambda {
     default BinaryOperator2<Byte> boxed() {
         return this::applyAsByte;
     }
-
 }

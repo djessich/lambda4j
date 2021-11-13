@@ -686,5 +686,4 @@ public interface ThrowableBooleanUnaryOperator<X extends Throwable> extends Lamb
             }
         };
     }
-
 }

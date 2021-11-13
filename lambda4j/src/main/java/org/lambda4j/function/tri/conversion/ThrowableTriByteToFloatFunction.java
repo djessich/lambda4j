@@ -850,5 +850,4 @@ public interface ThrowableTriByteToFloatFunction<X extends Throwable> extends La
             }
         };
     }
-
 }

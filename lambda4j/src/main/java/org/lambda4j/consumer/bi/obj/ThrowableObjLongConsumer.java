@@ -589,5 +589,4 @@ public interface ThrowableObjLongConsumer<T, X extends Throwable> extends Lambda
             }
         };
     }
-
 }

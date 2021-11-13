@@ -664,5 +664,4 @@ public interface TriLongToShortFunction extends Lambda {
     default TriFunction<Long, Long, Long, Short> boxed() {
         return this::applyAsShort;
     }
-
 }

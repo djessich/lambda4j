@@ -519,5 +519,4 @@ public interface CharToLongFunction extends Lambda {
     default Function2<Character, Long> boxed() {
         return this::applyAsLong;
     }
-
 }

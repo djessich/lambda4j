@@ -648,5 +648,4 @@ public interface FloatBinaryOperator extends Lambda {
     default BinaryOperator2<Float> boxed() {
         return this::applyAsFloat;
     }
-
 }

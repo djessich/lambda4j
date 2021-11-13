@@ -561,5 +561,4 @@ public interface ShortFunction<R> extends Lambda {
     default Function2<Short, R> boxed() {
         return this::apply;
     }
-
 }

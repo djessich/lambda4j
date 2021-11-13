@@ -561,5 +561,4 @@ public interface FloatFunction<R> extends Lambda {
     default Function2<Float, R> boxed() {
         return this::apply;
     }
-
 }

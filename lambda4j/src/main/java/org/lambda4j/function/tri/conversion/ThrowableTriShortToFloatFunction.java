@@ -850,5 +850,4 @@ public interface ThrowableTriShortToFloatFunction<X extends Throwable> extends L
             }
         };
     }
-
 }

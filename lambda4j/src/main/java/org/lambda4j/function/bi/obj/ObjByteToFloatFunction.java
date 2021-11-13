@@ -626,5 +626,4 @@ public interface ObjByteToFloatFunction<T> extends Lambda {
     default BiFunction2<T, Byte, Float> boxed() {
         return this::applyAsFloat;
     }
-
 }

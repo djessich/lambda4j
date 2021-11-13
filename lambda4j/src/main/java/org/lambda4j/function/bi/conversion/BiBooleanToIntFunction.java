@@ -604,5 +604,4 @@ public interface BiBooleanToIntFunction extends Lambda {
     default BiFunction2<Boolean, Boolean, Integer> boxed() {
         return this::applyAsInt;
     }
-
 }

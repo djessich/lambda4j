@@ -653,5 +653,4 @@ public interface DoubleBinaryOperator2 extends Lambda, DoubleBinaryOperator {
     default BinaryOperator2<Double> boxed() {
         return this::applyAsDouble;
     }
-
 }

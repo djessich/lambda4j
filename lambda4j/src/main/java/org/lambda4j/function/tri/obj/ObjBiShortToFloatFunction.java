@@ -701,5 +701,4 @@ public interface ObjBiShortToFloatFunction<T> extends Lambda {
     default TriFunction<T, Short, Short, Float> boxed() {
         return this::applyAsFloat;
     }
-
 }

@@ -606,5 +606,4 @@ public interface BiFloatToDoubleFunction extends Lambda {
     default BiFunction2<Float, Float, Double> boxed() {
         return this::applyAsDouble;
     }
-
 }

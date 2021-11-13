@@ -604,5 +604,4 @@ public interface BiShortToIntFunction extends Lambda {
     default BiFunction2<Short, Short, Integer> boxed() {
         return this::applyAsInt;
     }
-
 }

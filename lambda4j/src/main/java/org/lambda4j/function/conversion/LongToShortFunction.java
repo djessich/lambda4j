@@ -519,5 +519,4 @@ public interface LongToShortFunction extends Lambda {
     default Function2<Long, Short> boxed() {
         return this::applyAsShort;
     }
-
 }

@@ -794,5 +794,4 @@ public interface ThrowableObjShortToFloatFunction<T, X extends Throwable> extend
             }
         };
     }
-
 }

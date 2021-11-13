@@ -910,5 +910,4 @@ public interface ThrowableTriByteFunction<R, X extends Throwable> extends Lambda
             }
         };
     }
-
 }

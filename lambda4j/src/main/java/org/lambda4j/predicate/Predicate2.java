@@ -636,5 +636,4 @@ public interface Predicate2<T> extends Lambda, Predicate<T> {
             };
         }
     }
-
 }

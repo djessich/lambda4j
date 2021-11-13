@@ -702,5 +702,4 @@ public interface ObjBiShortToDoubleFunction<T> extends Lambda {
     default TriFunction<T, Short, Short, Double> boxed() {
         return this::applyAsDouble;
     }
-
 }

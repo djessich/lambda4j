@@ -915,5 +915,4 @@ public interface ThrowableObjShortPredicate<T, X extends Throwable> extends Lamb
             }
         };
     }
-
 }

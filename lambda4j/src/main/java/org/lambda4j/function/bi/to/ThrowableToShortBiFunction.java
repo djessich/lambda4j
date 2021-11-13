@@ -807,5 +807,4 @@ public interface ThrowableToShortBiFunction<T, U, X extends Throwable> extends L
             }
         };
     }
-
 }

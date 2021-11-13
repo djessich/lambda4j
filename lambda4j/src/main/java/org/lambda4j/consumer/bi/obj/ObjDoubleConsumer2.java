@@ -410,5 +410,4 @@ public interface ObjDoubleConsumer2<T> extends Lambda, ObjDoubleConsumer<T> {
     default BiConsumer2<T, Double> boxed() {
         return this::accept;
     }
-
 }

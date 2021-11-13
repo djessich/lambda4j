@@ -648,5 +648,4 @@ public interface BooleanBinaryOperator extends Lambda {
     default BinaryOperator2<Boolean> boxed() {
         return this::applyAsBoolean;
     }
-
 }

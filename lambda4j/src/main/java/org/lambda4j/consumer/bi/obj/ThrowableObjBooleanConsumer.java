@@ -569,5 +569,4 @@ public interface ThrowableObjBooleanConsumer<T, X extends Throwable> extends Lam
             }
         };
     }
-
 }

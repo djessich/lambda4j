@@ -1004,5 +1004,4 @@ public interface ThrowableObjBiIntPredicate<T, X extends Throwable> extends Lamb
             }
         };
     }
-
 }

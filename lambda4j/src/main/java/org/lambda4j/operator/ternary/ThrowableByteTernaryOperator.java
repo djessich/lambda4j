@@ -857,5 +857,4 @@ public interface ThrowableByteTernaryOperator<X extends Throwable> extends Lambd
             }
         };
     }
-
 }

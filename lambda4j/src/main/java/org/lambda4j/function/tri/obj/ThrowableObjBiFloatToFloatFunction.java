@@ -886,5 +886,4 @@ public interface ThrowableObjBiFloatToFloatFunction<T, X extends Throwable> exte
             }
         };
     }
-
 }

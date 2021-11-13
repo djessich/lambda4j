@@ -663,5 +663,4 @@ public interface TriBooleanToLongFunction extends Lambda {
     default TriFunction<Boolean, Boolean, Boolean, Long> boxed() {
         return this::applyAsLong;
     }
-
 }

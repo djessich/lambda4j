@@ -647,5 +647,4 @@ public interface ToLongBiFunction2<T, U> extends Lambda, ToLongBiFunction<T, U> 
     default BiFunction2<T, U, Long> boxed() {
         return this::applyAsLong;
     }
-
 }

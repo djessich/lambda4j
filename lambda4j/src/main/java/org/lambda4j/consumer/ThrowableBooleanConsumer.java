@@ -456,5 +456,4 @@ public interface ThrowableBooleanConsumer<X extends Throwable> extends Lambda {
             }
         };
     }
-
 }

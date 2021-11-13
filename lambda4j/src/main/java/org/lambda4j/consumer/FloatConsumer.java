@@ -306,5 +306,4 @@ public interface FloatConsumer extends Lambda {
     default Consumer2<Float> boxed() {
         return this::accept;
     }
-
 }

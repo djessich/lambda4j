@@ -524,5 +524,4 @@ public interface DoubleToIntFunction2 extends Lambda, DoubleToIntFunction {
     default Function2<Double, Integer> boxed() {
         return this::applyAsInt;
     }
-
 }

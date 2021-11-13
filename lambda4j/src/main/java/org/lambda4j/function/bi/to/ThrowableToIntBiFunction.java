@@ -829,5 +829,4 @@ public interface ThrowableToIntBiFunction<T, U, X extends Throwable> extends Lam
             }
         };
     }
-
 }

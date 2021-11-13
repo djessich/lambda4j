@@ -1005,5 +1005,4 @@ public interface ThrowableObjBiShortPredicate<T, X extends Throwable> extends La
             }
         };
     }
-
 }

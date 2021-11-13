@@ -722,5 +722,4 @@ public interface TriLongFunction<R> extends Lambda {
     default TriFunction<Long, Long, Long, R> boxed() {
         return this::apply;
     }
-
 }

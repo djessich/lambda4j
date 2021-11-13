@@ -626,5 +626,4 @@ public interface ObjBooleanToByteFunction<T> extends Lambda {
     default BiFunction2<T, Boolean, Byte> boxed() {
         return this::applyAsByte;
     }
-
 }

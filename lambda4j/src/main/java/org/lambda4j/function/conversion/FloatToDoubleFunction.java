@@ -519,5 +519,4 @@ public interface FloatToDoubleFunction extends Lambda {
     default Function2<Float, Double> boxed() {
         return this::applyAsDouble;
     }
-
 }

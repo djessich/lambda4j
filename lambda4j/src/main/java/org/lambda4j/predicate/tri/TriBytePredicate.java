@@ -774,5 +774,4 @@ public interface TriBytePredicate extends Lambda {
     default TriPredicate<Byte, Byte, Byte> boxed() {
         return this::test;
     }
-
 }

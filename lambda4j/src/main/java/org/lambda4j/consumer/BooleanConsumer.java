@@ -307,5 +307,4 @@ public interface BooleanConsumer extends Lambda {
     default Consumer2<Boolean> boxed() {
         return this::accept;
     }
-
 }

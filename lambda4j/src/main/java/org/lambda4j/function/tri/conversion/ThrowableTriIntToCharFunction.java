@@ -848,5 +848,4 @@ public interface ThrowableTriIntToCharFunction<X extends Throwable> extends Lamb
             }
         };
     }
-
 }

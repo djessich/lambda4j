@@ -886,5 +886,4 @@ public interface ThrowableToIntTriFunction<T, U, V, X extends Throwable> extends
             }
         };
     }
-
 }

@@ -615,5 +615,4 @@ public interface ThrowableTriCharConsumer<X extends Throwable> extends Lambda {
             }
         };
     }
-
 }

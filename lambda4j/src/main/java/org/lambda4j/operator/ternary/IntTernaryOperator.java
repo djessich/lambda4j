@@ -672,5 +672,4 @@ public interface IntTernaryOperator extends Lambda {
     default TernaryOperator<Integer> boxed() {
         return this::applyAsInt;
     }
-
 }

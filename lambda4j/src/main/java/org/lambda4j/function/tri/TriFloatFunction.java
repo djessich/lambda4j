@@ -722,5 +722,4 @@ public interface TriFloatFunction<R> extends Lambda {
     default TriFunction<Float, Float, Float, R> boxed() {
         return this::apply;
     }
-
 }

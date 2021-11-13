@@ -540,5 +540,4 @@ public interface ToIntFunction2<T> extends Lambda, ToIntFunction<T> {
     default Function2<T, Integer> boxed() {
         return this::applyAsInt;
     }
-
 }

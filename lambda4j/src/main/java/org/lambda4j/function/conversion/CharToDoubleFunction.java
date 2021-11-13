@@ -519,5 +519,4 @@ public interface CharToDoubleFunction extends Lambda {
     default Function2<Character, Double> boxed() {
         return this::applyAsDouble;
     }
-
 }

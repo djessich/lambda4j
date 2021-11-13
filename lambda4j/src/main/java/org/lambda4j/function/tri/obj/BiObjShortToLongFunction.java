@@ -734,5 +734,4 @@ public interface BiObjShortToLongFunction<T, U> extends Lambda {
     default TriFunction<T, U, Short, Long> boxed() {
         return this::applyAsLong;
     }
-
 }

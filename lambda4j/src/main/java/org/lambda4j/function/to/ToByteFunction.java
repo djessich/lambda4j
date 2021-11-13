@@ -536,5 +536,4 @@ public interface ToByteFunction<T> extends Lambda {
     default Function2<T, Byte> boxed() {
         return this::applyAsByte;
     }
-
 }

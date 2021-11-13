@@ -153,5 +153,4 @@ public interface BinaryOperator2<T> extends Lambda, BiFunction2<T, T, T>, Binary
         Objects.requireNonNull(comparator);
         return (t, u) -> comparator.compare(t, u) >= 0 ? t : u;
     }
-
 }

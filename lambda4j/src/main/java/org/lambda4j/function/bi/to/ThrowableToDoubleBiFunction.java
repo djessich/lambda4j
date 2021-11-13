@@ -830,5 +830,4 @@ public interface ThrowableToDoubleBiFunction<T, U, X extends Throwable> extends 
             }
         };
     }
-
 }

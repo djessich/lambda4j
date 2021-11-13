@@ -565,5 +565,4 @@ public interface DoubleFunction2<R> extends Lambda, DoubleFunction<R> {
     default Function2<Double, R> boxed() {
         return this::apply;
     }
-
 }

@@ -628,5 +628,4 @@ public interface ObjLongToDoubleFunction<T> extends Lambda {
     default BiFunction2<T, Long, Double> boxed() {
         return this::applyAsDouble;
     }
-
 }

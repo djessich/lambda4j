@@ -839,5 +839,4 @@ public interface ThrowableBiDoubleFunction<R, X extends Throwable> extends Lambd
             }
         };
     }
-
 }

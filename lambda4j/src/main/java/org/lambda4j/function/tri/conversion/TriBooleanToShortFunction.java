@@ -664,5 +664,4 @@ public interface TriBooleanToShortFunction extends Lambda {
     default TriFunction<Boolean, Boolean, Boolean, Short> boxed() {
         return this::applyAsShort;
     }
-
 }

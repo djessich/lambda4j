@@ -300,5 +300,4 @@ public interface Consumer2<T> extends Lambda, Consumer<T> {
     default Consumer2<T> reversed() {
         return this;
     }
-
 }

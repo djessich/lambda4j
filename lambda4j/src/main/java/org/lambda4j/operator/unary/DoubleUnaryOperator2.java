@@ -543,5 +543,4 @@ public interface DoubleUnaryOperator2 extends Lambda, DoubleUnaryOperator {
     default UnaryOperator2<Double> boxed() {
         return this::applyAsDouble;
     }
-
 }

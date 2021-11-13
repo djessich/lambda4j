@@ -1005,5 +1005,4 @@ public interface ThrowableObjBiFloatPredicate<T, X extends Throwable> extends La
             }
         };
     }
-
 }

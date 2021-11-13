@@ -892,5 +892,4 @@ public interface ThrowableObjBiFloatToDoubleFunction<T, X extends Throwable> ext
             }
         };
     }
-
 }

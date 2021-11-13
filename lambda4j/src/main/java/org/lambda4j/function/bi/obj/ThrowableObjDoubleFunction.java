@@ -655,5 +655,4 @@ public interface ThrowableObjDoubleFunction<T, R, X extends Throwable> extends L
             }
         };
     }
-
 }

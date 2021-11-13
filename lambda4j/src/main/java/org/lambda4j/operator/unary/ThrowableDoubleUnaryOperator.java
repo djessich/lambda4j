@@ -714,5 +714,4 @@ public interface ThrowableDoubleUnaryOperator<X extends Throwable> extends Lambd
             }
         };
     }
-
 }

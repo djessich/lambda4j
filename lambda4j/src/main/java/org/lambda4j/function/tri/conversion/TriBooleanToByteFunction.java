@@ -663,5 +663,4 @@ public interface TriBooleanToByteFunction extends Lambda {
     default TriFunction<Boolean, Boolean, Boolean, Byte> boxed() {
         return this::applyAsByte;
     }
-
 }

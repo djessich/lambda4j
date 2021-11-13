@@ -789,5 +789,4 @@ public interface ThrowableObjCharToCharFunction<T, X extends Throwable> extends 
             }
         };
     }
-
 }

@@ -438,5 +438,4 @@ public interface TriDoubleConsumer extends Lambda {
     default TriConsumer<Double, Double, Double> boxed() {
         return this::accept;
     }
-
 }

@@ -740,5 +740,4 @@ public interface ThrowableObjBiIntFunction<T, R, X extends Throwable> extends La
             }
         };
     }
-
 }

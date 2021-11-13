@@ -310,5 +310,4 @@ public interface LongConsumer2 extends Lambda, LongConsumer {
     default Consumer2<Long> boxed() {
         return this::accept;
     }
-
 }

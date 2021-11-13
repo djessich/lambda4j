@@ -306,5 +306,4 @@ public interface ByteConsumer extends Lambda {
     default Consumer2<Byte> boxed() {
         return this::accept;
     }
-
 }

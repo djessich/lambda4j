@@ -664,5 +664,4 @@ public interface TriBooleanToFloatFunction extends Lambda {
     default TriFunction<Boolean, Boolean, Boolean, Float> boxed() {
         return this::applyAsFloat;
     }
-
 }

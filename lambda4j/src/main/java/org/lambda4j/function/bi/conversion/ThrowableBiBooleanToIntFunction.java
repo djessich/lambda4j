@@ -768,5 +768,4 @@ public interface ThrowableBiBooleanToIntFunction<X extends Throwable> extends La
             }
         };
     }
-
 }

@@ -477,5 +477,4 @@ public interface ObjBiCharConsumer<T> extends Lambda {
     default TriConsumer<T, Character, Character> boxed() {
         return this::accept;
     }
-
 }

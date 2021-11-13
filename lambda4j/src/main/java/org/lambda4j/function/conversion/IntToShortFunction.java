@@ -519,5 +519,4 @@ public interface IntToShortFunction extends Lambda {
     default Function2<Integer, Short> boxed() {
         return this::applyAsShort;
     }
-
 }

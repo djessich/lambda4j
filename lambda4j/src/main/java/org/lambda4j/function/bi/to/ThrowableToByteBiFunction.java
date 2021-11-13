@@ -807,5 +807,4 @@ public interface ThrowableToByteBiFunction<T, U, X extends Throwable> extends La
             }
         };
     }
-
 }

@@ -888,5 +888,4 @@ public interface ThrowableObjBiIntToShortFunction<T, X extends Throwable> extend
             }
         };
     }
-
 }

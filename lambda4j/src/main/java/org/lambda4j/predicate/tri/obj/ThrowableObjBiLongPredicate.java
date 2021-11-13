@@ -1005,5 +1005,4 @@ public interface ThrowableObjBiLongPredicate<T, X extends Throwable> extends Lam
             }
         };
     }
-
 }

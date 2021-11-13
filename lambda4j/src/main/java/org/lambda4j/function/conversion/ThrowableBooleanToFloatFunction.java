@@ -677,5 +677,4 @@ public interface ThrowableBooleanToFloatFunction<X extends Throwable> extends La
             }
         };
     }
-
 }

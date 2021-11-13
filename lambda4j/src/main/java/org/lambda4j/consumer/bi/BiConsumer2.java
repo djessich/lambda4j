@@ -404,5 +404,4 @@ public interface BiConsumer2<T, U> extends Lambda, BiConsumer<T, U> {
     default BiConsumer2<U, T> reversed() {
         return (u, t) -> accept(t, u);
     }
-
 }

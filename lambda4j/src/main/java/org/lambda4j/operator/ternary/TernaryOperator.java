@@ -133,5 +133,4 @@ public interface TernaryOperator<T> extends Lambda, TriFunction<T, T, T, T> {
     static <T> TernaryOperator<T> constant(T ret) {
         return (t, u, v) -> ret;
     }
-
 }

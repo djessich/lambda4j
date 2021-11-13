@@ -888,5 +888,4 @@ public interface ThrowableObjBiLongToCharFunction<T, X extends Throwable> extend
             }
         };
     }
-
 }

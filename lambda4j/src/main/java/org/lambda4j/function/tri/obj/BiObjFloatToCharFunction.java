@@ -733,5 +733,4 @@ public interface BiObjFloatToCharFunction<T, U> extends Lambda {
     default TriFunction<T, U, Float, Character> boxed() {
         return this::applyAsChar;
     }
-
 }

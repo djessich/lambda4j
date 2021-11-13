@@ -889,5 +889,4 @@ public interface ThrowableObjBiLongToFloatFunction<T, X extends Throwable> exten
             }
         };
     }
-
 }

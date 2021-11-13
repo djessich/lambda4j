@@ -509,5 +509,4 @@ public interface BiObjLongConsumer<T, U> extends Lambda {
     default TriConsumer<T, U, Long> boxed() {
         return this::accept;
     }
-
 }

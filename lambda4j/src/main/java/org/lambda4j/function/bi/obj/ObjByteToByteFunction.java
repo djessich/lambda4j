@@ -623,5 +623,4 @@ public interface ObjByteToByteFunction<T> extends Lambda {
     default BiFunction2<T, Byte, Byte> boxed() {
         return this::applyAsByte;
     }
-
 }

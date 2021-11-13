@@ -731,5 +731,4 @@ public interface BiObjCharToIntFunction<T, U> extends Lambda {
     default TriFunction<T, U, Character, Integer> boxed() {
         return this::applyAsInt;
     }
-
 }

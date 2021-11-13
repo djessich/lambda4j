@@ -712,5 +712,4 @@ public interface ThrowableToDoubleFunction<T, X extends Throwable> extends Lambd
             }
         };
     }
-
 }

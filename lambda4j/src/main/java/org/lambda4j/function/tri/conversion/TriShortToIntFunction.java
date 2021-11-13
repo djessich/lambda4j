@@ -663,5 +663,4 @@ public interface TriShortToIntFunction extends Lambda {
     default TriFunction<Short, Short, Short, Integer> boxed() {
         return this::applyAsInt;
     }
-
 }

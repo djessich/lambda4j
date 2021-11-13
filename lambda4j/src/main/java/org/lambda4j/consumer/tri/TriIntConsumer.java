@@ -436,5 +436,4 @@ public interface TriIntConsumer extends Lambda {
     default TriConsumer<Integer, Integer, Integer> boxed() {
         return this::accept;
     }
-
 }

@@ -808,5 +808,4 @@ public interface TriPredicate<T, U, V> extends Lambda {
             };
         }
     }
-
 }

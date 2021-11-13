@@ -655,5 +655,4 @@ public interface ThrowableObjBiCharConsumer<T, X extends Throwable> extends Lamb
             }
         };
     }
-
 }

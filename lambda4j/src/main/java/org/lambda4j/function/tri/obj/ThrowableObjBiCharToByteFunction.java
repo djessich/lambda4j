@@ -888,5 +888,4 @@ public interface ThrowableObjBiCharToByteFunction<T, X extends Throwable> extend
             }
         };
     }
-
 }

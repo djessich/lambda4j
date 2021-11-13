@@ -672,5 +672,4 @@ public interface FloatTernaryOperator extends Lambda {
     default TernaryOperator<Float> boxed() {
         return this::applyAsFloat;
     }
-
 }

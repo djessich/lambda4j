@@ -939,5 +939,4 @@ public interface ThrowableTriFunction<T, U, V, R, X extends Throwable> extends L
             }
         };
     }
-
 }

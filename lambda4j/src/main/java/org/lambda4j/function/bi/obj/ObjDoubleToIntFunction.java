@@ -628,5 +628,4 @@ public interface ObjDoubleToIntFunction<T> extends Lambda {
     default BiFunction2<T, Double, Integer> boxed() {
         return this::applyAsInt;
     }
-
 }

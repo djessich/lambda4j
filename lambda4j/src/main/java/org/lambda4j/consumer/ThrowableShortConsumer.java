@@ -458,5 +458,4 @@ public interface ThrowableShortConsumer<X extends Throwable> extends Lambda {
             }
         };
     }
-
 }

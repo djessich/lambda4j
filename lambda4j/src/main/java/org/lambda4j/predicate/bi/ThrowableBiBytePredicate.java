@@ -879,5 +879,4 @@ public interface ThrowableBiBytePredicate<X extends Throwable> extends Lambda {
             }
         };
     }
-
 }

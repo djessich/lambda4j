@@ -671,5 +671,4 @@ public interface CharTernaryOperator extends Lambda {
     default TernaryOperator<Character> boxed() {
         return this::applyAsChar;
     }
-
 }

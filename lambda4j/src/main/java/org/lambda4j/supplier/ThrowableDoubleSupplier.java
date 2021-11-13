@@ -478,5 +478,4 @@ public interface ThrowableDoubleSupplier<X extends Throwable> extends Lambda, Do
             }
         };
     }
-
 }

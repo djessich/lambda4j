@@ -848,5 +848,4 @@ public interface ThrowableTriIntToLongFunction<X extends Throwable> extends Lamb
             }
         };
     }
-
 }

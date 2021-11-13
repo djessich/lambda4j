@@ -663,5 +663,4 @@ public interface TriCharToIntFunction extends Lambda {
     default TriFunction<Character, Character, Character, Integer> boxed() {
         return this::applyAsInt;
     }
-
 }

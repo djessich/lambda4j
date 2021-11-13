@@ -459,5 +459,4 @@ public interface ThrowableByteSupplier<X extends Throwable> extends Lambda {
             }
         };
     }
-
 }

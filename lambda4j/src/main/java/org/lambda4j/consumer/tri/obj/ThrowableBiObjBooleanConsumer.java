@@ -687,5 +687,4 @@ public interface ThrowableBiObjBooleanConsumer<T, U, X extends Throwable> extend
             }
         };
     }
-
 }

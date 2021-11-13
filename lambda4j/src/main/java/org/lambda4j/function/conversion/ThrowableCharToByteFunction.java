@@ -670,5 +670,4 @@ public interface ThrowableCharToByteFunction<X extends Throwable> extends Lambda
             }
         };
     }
-
 }

@@ -849,5 +849,4 @@ public interface ThrowableTriShortToIntFunction<X extends Throwable> extends Lam
             }
         };
     }
-
 }

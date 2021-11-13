@@ -854,5 +854,4 @@ public interface BiObjIntPredicate<T, U> extends Lambda {
     default TriPredicate<T, U, Integer> boxed() {
         return this::test;
     }
-
 }

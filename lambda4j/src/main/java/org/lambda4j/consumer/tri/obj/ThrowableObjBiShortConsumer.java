@@ -655,5 +655,4 @@ public interface ThrowableObjBiShortConsumer<T, X extends Throwable> extends Lam
             }
         };
     }
-
 }

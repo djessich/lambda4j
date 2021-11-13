@@ -812,5 +812,4 @@ public interface ObjBiBooleanPredicate<T> extends Lambda {
     default TriPredicate<T, Boolean, Boolean> boxed() {
         return this::test;
     }
-
 }

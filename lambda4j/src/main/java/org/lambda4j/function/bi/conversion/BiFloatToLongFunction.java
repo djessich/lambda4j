@@ -606,5 +606,4 @@ public interface BiFloatToLongFunction extends Lambda {
     default BiFunction2<Float, Float, Long> boxed() {
         return this::applyAsLong;
     }
-
 }

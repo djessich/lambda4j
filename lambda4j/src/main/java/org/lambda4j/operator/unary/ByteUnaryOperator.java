@@ -532,5 +532,4 @@ public interface ByteUnaryOperator extends Lambda {
     default UnaryOperator2<Byte> boxed() {
         return this::applyAsByte;
     }
-
 }

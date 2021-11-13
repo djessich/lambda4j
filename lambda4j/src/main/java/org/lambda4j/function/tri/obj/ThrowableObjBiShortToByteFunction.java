@@ -889,5 +889,4 @@ public interface ThrowableObjBiShortToByteFunction<T, X extends Throwable> exten
             }
         };
     }
-
 }

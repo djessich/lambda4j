@@ -686,5 +686,4 @@ public interface ThrowableBiObjCharConsumer<T, U, X extends Throwable> extends L
             }
         };
     }
-
 }

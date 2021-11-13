@@ -826,5 +826,4 @@ public interface ThrowableBiBooleanFunction<R, X extends Throwable> extends Lamb
             }
         };
     }
-
 }

@@ -701,5 +701,4 @@ public interface ObjBiDoubleToByteFunction<T> extends Lambda {
     default TriFunction<T, Double, Double, Byte> boxed() {
         return this::applyAsByte;
     }
-
 }

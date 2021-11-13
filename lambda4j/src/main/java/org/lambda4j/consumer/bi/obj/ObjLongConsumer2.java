@@ -410,5 +410,4 @@ public interface ObjLongConsumer2<T> extends Lambda, ObjLongConsumer<T> {
     default BiConsumer2<T, Long> boxed() {
         return this::accept;
     }
-
 }

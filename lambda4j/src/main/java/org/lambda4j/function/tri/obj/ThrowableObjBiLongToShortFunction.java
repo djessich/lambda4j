@@ -889,5 +889,4 @@ public interface ThrowableObjBiLongToShortFunction<T, X extends Throwable> exten
             }
         };
     }
-
 }

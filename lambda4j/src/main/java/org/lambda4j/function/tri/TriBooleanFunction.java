@@ -716,5 +716,4 @@ public interface TriBooleanFunction<R> extends Lambda {
     default TriFunction<Boolean, Boolean, Boolean, R> boxed() {
         return this::apply;
     }
-
 }

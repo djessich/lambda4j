@@ -1006,5 +1006,4 @@ public interface ThrowableObjBiDoublePredicate<T, X extends Throwable> extends L
             }
         };
     }
-
 }

@@ -605,5 +605,4 @@ public interface BiBooleanToFloatFunction extends Lambda {
     default BiFunction2<Boolean, Boolean, Float> boxed() {
         return this::applyAsFloat;
     }
-
 }

@@ -562,5 +562,4 @@ public interface ObjBiCharFunction<T, R> extends Lambda {
     default TriFunction<T, Character, Character, R> boxed() {
         return this::apply;
     }
-
 }

@@ -830,5 +830,4 @@ public interface ThrowableBiCharFunction<R, X extends Throwable> extends Lambda 
             }
         };
     }
-
 }

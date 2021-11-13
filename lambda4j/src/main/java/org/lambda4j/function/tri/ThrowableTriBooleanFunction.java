@@ -901,5 +901,4 @@ public interface ThrowableTriBooleanFunction<R, X extends Throwable> extends Lam
             }
         };
     }
-
 }

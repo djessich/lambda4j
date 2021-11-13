@@ -670,5 +670,4 @@ public interface ThrowableByteToLongFunction<X extends Throwable> extends Lambda
             }
         };
     }
-
 }

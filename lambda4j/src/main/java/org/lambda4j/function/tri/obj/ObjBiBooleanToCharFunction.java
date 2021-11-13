@@ -701,5 +701,4 @@ public interface ObjBiBooleanToCharFunction<T> extends Lambda {
     default TriFunction<T, Boolean, Boolean, Character> boxed() {
         return this::applyAsChar;
     }
-
 }

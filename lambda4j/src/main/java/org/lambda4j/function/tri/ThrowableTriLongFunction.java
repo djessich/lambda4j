@@ -910,5 +910,4 @@ public interface ThrowableTriLongFunction<R, X extends Throwable> extends Lambda
             }
         };
     }
-
 }

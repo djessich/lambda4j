@@ -1000,5 +1000,4 @@ public interface ThrowableTriPredicate<T, U, V, X extends Throwable> extends Lam
             }
         };
     }
-
 }

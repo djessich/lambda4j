@@ -794,5 +794,4 @@ public interface ThrowableObjDoubleToCharFunction<T, X extends Throwable> extend
             }
         };
     }
-
 }

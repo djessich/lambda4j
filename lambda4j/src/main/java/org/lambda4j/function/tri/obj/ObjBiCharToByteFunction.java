@@ -699,5 +699,4 @@ public interface ObjBiCharToByteFunction<T> extends Lambda {
     default TriFunction<T, Character, Character, Byte> boxed() {
         return this::applyAsByte;
     }
-
 }

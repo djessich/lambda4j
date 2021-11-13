@@ -793,5 +793,4 @@ public interface ThrowableObjCharToFloatFunction<T, X extends Throwable> extends
             }
         };
     }
-
 }

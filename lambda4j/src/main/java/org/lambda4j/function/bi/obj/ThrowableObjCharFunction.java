@@ -654,5 +654,4 @@ public interface ThrowableObjCharFunction<T, R, X extends Throwable> extends Lam
             }
         };
     }
-
 }

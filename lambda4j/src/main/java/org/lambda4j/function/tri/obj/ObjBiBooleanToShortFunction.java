@@ -701,5 +701,4 @@ public interface ObjBiBooleanToShortFunction<T> extends Lambda {
     default TriFunction<T, Boolean, Boolean, Short> boxed() {
         return this::applyAsShort;
     }
-
 }

@@ -721,5 +721,4 @@ public interface TriByteFunction<R> extends Lambda {
     default TriFunction<Byte, Byte, Byte, R> boxed() {
         return this::apply;
     }
-
 }

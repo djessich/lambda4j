@@ -675,5 +675,4 @@ public interface BooleanTernaryOperator extends Lambda {
     default TernaryOperator<Boolean> boxed() {
         return this::applyAsBoolean;
     }
-
 }

@@ -718,5 +718,4 @@ public interface ThrowableFloatFunction<R, X extends Throwable> extends Lambda {
             }
         };
     }
-
 }

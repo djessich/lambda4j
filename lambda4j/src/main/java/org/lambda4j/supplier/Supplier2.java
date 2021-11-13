@@ -160,5 +160,4 @@ public interface Supplier2<R> extends Lambda, Supplier<R> {
         Objects.requireNonNull(consumer);
         return ignored -> consumer.accept(get());
     }
-
 }

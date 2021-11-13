@@ -882,5 +882,4 @@ public interface ThrowableBiShortPredicate<X extends Throwable> extends Lambda {
             }
         };
     }
-
 }

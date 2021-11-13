@@ -521,5 +521,4 @@ public interface BooleanToFloatFunction extends Lambda {
     default Function2<Boolean, Float> boxed() {
         return this::applyAsFloat;
     }
-
 }

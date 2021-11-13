@@ -774,5 +774,4 @@ public interface ThrowableBiByteToIntFunction<X extends Throwable> extends Lambd
             }
         };
     }
-
 }

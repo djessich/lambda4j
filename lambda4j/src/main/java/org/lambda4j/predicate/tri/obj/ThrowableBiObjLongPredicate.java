@@ -1041,5 +1041,4 @@ public interface ThrowableBiObjLongPredicate<T, U, X extends Throwable> extends 
             }
         };
     }
-
 }

@@ -626,5 +626,4 @@ public interface ObjBooleanToCharFunction<T> extends Lambda {
     default BiFunction2<T, Boolean, Character> boxed() {
         return this::applyAsChar;
     }
-
 }

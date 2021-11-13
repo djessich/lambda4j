@@ -854,5 +854,4 @@ public interface ThrowableIntTernaryOperator<X extends Throwable> extends Lambda
             }
         };
     }
-
 }

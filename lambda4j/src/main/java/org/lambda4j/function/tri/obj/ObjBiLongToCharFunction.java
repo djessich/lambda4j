@@ -699,5 +699,4 @@ public interface ObjBiLongToCharFunction<T> extends Lambda {
     default TriFunction<T, Long, Long, Character> boxed() {
         return this::applyAsChar;
     }
-
 }

@@ -823,5 +823,4 @@ public interface ThrowableFloatBinaryOperator<X extends Throwable> extends Lambd
             }
         };
     }
-
 }

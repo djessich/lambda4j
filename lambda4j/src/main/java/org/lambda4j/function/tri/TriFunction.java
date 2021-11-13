@@ -750,5 +750,4 @@ public interface TriFunction<T, U, V, R> extends Lambda {
             };
         }
     }
-
 }

@@ -519,5 +519,4 @@ public interface FloatToIntFunction extends Lambda {
     default Function2<Float, Integer> boxed() {
         return this::applyAsInt;
     }
-
 }

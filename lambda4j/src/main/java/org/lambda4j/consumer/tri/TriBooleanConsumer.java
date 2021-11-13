@@ -430,5 +430,4 @@ public interface TriBooleanConsumer extends Lambda {
     default TriConsumer<Boolean, Boolean, Boolean> boxed() {
         return this::accept;
     }
-
 }

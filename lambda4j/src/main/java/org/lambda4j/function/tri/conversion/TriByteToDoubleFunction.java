@@ -664,5 +664,4 @@ public interface TriByteToDoubleFunction extends Lambda {
     default TriFunction<Byte, Byte, Byte, Double> boxed() {
         return this::applyAsDouble;
     }
-
 }

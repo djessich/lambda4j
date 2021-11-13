@@ -310,5 +310,4 @@ public interface CharSupplier extends Lambda {
     default Supplier2<Character> boxed() {
         return this::getAsChar;
     }
-
 }

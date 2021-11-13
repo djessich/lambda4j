@@ -311,5 +311,4 @@ public interface DoubleConsumer2 extends Lambda, DoubleConsumer {
     default Consumer2<Double> boxed() {
         return this::accept;
     }
-
 }

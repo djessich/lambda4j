@@ -795,5 +795,4 @@ public interface ThrowableCharPredicate<X extends Throwable> extends Lambda {
             }
         };
     }
-
 }

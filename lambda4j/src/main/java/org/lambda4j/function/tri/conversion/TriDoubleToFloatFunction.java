@@ -664,5 +664,4 @@ public interface TriDoubleToFloatFunction extends Lambda {
     default TriFunction<Double, Double, Double, Float> boxed() {
         return this::applyAsFloat;
     }
-
 }

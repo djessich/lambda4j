@@ -714,5 +714,4 @@ public interface BiCharPredicate extends Lambda {
     default BiPredicate2<Character, Character> boxed() {
         return this::test;
     }
-
 }

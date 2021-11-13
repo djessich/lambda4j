@@ -914,5 +914,4 @@ public interface ThrowableBiObjDoubleToIntFunction<T, U, X extends Throwable> ex
             }
         };
     }
-
 }

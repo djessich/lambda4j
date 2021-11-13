@@ -458,5 +458,4 @@ public interface ThrowableCharConsumer<X extends Throwable> extends Lambda {
             }
         };
     }
-
 }

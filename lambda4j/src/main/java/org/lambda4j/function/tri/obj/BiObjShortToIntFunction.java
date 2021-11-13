@@ -733,5 +733,4 @@ public interface BiObjShortToIntFunction<T, U> extends Lambda {
     default TriFunction<T, U, Short, Integer> boxed() {
         return this::applyAsInt;
     }
-
 }

@@ -732,5 +732,4 @@ public interface BiObjLongToIntFunction<T, U> extends Lambda {
     default TriFunction<T, U, Long, Integer> boxed() {
         return this::applyAsInt;
     }
-
 }

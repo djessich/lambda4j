@@ -814,5 +814,4 @@ public interface ThrowableBooleanBinaryOperator<X extends Throwable> extends Lam
             }
         };
     }
-
 }

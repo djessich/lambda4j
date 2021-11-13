@@ -672,5 +672,4 @@ public interface ShortTernaryOperator extends Lambda {
     default TernaryOperator<Short> boxed() {
         return this::applyAsShort;
     }
-
 }

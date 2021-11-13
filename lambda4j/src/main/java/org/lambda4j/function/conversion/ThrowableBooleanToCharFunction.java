@@ -677,5 +677,4 @@ public interface ThrowableBooleanToCharFunction<X extends Throwable> extends Lam
             }
         };
     }
-
 }

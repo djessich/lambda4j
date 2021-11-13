@@ -664,5 +664,4 @@ public interface TriByteToShortFunction extends Lambda {
     default TriFunction<Byte, Byte, Byte, Short> boxed() {
         return this::applyAsShort;
     }
-
 }

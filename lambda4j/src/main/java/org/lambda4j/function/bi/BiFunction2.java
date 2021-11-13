@@ -691,5 +691,4 @@ public interface BiFunction2<T, U, R> extends Lambda, BiFunction<T, U, R> {
             };
         }
     }
-
 }

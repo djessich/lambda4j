@@ -306,5 +306,4 @@ public interface ShortConsumer extends Lambda {
     default Consumer2<Short> boxed() {
         return this::accept;
     }
-
 }

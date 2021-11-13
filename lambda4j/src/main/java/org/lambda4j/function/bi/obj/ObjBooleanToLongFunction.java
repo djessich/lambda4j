@@ -627,5 +627,4 @@ public interface ObjBooleanToLongFunction<T> extends Lambda {
     default BiFunction2<T, Boolean, Long> boxed() {
         return this::applyAsLong;
     }
-
 }

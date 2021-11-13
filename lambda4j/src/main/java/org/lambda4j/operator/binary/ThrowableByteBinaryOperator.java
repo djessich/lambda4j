@@ -820,5 +820,4 @@ public interface ThrowableByteBinaryOperator<X extends Throwable> extends Lambda
             }
         };
     }
-
 }

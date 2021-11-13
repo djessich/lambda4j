@@ -714,5 +714,4 @@ public interface BiBytePredicate extends Lambda {
     default BiPredicate2<Byte, Byte> boxed() {
         return this::test;
     }
-
 }

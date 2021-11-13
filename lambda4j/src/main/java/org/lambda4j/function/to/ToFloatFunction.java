@@ -536,5 +536,4 @@ public interface ToFloatFunction<T> extends Lambda {
     default Function2<T, Float> boxed() {
         return this::applyAsFloat;
     }
-
 }

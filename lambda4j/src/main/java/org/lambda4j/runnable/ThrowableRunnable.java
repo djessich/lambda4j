@@ -284,5 +284,4 @@ public interface ThrowableRunnable<X extends Throwable> extends Lambda, Runnable
             }
         };
     }
-
 }

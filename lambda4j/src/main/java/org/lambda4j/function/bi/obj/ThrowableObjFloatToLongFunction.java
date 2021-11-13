@@ -794,5 +794,4 @@ public interface ThrowableObjFloatToLongFunction<T, X extends Throwable> extends
             }
         };
     }
-
 }

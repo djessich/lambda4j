@@ -914,5 +914,4 @@ public interface ThrowableBiObjDoubleToLongFunction<T, U, X extends Throwable> e
             }
         };
     }
-
 }

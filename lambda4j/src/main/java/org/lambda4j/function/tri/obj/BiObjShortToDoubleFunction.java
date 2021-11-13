@@ -735,5 +735,4 @@ public interface BiObjShortToDoubleFunction<T, U> extends Lambda {
     default TriFunction<T, U, Short, Double> boxed() {
         return this::applyAsDouble;
     }
-
 }

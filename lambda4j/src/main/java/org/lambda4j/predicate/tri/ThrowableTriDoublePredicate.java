@@ -967,5 +967,4 @@ public interface ThrowableTriDoublePredicate<X extends Throwable> extends Lambda
             }
         };
     }
-
 }

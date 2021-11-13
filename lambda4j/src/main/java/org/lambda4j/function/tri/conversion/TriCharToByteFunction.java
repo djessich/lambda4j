@@ -663,5 +663,4 @@ public interface TriCharToByteFunction extends Lambda {
     default TriFunction<Character, Character, Character, Byte> boxed() {
         return this::applyAsByte;
     }
-
 }

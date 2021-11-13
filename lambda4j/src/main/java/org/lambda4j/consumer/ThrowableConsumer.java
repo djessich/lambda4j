@@ -468,5 +468,4 @@ public interface ThrowableConsumer<T, X extends Throwable> extends Lambda, Consu
             }
         };
     }
-
 }

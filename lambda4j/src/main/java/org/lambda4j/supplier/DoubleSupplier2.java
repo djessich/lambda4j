@@ -313,5 +313,4 @@ public interface DoubleSupplier2 extends Lambda, DoubleSupplier {
     default Supplier2<Double> boxed() {
         return this::getAsDouble;
     }
-
 }

@@ -674,5 +674,4 @@ public interface DoubleTernaryOperator extends Lambda {
     default TernaryOperator<Double> boxed() {
         return this::applyAsDouble;
     }
-
 }

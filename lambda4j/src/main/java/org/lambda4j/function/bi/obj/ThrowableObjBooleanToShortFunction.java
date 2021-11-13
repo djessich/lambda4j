@@ -795,5 +795,4 @@ public interface ThrowableObjBooleanToShortFunction<T, X extends Throwable> exte
             }
         };
     }
-
 }

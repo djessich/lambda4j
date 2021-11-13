@@ -655,5 +655,4 @@ public interface ThrowableObjBiByteConsumer<T, X extends Throwable> extends Lamb
             }
         };
     }
-
 }

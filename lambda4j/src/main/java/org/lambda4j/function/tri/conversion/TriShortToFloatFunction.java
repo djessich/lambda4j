@@ -664,5 +664,4 @@ public interface TriShortToFloatFunction extends Lambda {
     default TriFunction<Short, Short, Short, Float> boxed() {
         return this::applyAsFloat;
     }
-
 }

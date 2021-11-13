@@ -850,5 +850,4 @@ public interface ThrowableTriDoubleToCharFunction<X extends Throwable> extends L
             }
         };
     }
-
 }

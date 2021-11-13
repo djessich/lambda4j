@@ -771,5 +771,4 @@ public interface ThrowableBiBooleanToShortFunction<X extends Throwable> extends 
             }
         };
     }
-
 }

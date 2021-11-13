@@ -642,5 +642,4 @@ public interface IntPredicate2 extends Lambda, IntPredicate {
     default Predicate2<Integer> boxed() {
         return this::test;
     }
-
 }

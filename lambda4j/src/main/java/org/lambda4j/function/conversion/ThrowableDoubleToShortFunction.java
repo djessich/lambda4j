@@ -675,5 +675,4 @@ public interface ThrowableDoubleToShortFunction<X extends Throwable> extends Lam
             }
         };
     }
-
 }

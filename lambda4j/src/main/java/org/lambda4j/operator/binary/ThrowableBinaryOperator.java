@@ -169,5 +169,4 @@ public interface ThrowableBinaryOperator<T, X extends Throwable>
         Objects.requireNonNull(comparator);
         return (t, u) -> comparator.compare(t, u) >= 0 ? t : u;
     }
-
 }

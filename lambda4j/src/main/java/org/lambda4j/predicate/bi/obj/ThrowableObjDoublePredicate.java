@@ -917,5 +917,4 @@ public interface ThrowableObjDoublePredicate<T, X extends Throwable> extends Lam
             }
         };
     }
-
 }

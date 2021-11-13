@@ -779,5 +779,4 @@ public interface ThrowableBiLongToFloatFunction<X extends Throwable> extends Lam
             }
         };
     }
-
 }

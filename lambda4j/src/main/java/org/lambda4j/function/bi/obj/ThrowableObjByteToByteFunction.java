@@ -789,5 +789,4 @@ public interface ThrowableObjByteToByteFunction<T, X extends Throwable> extends 
             }
         };
     }
-
 }

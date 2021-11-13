@@ -148,5 +148,4 @@ public interface ThrowableTernaryOperator<T, X extends Throwable> extends Lambda
     static <T, X extends Throwable> ThrowableTernaryOperator<T, X> constant(T ret) {
         return (t, u, v) -> ret;
     }
-
 }

@@ -889,5 +889,4 @@ public interface ThrowableObjBiCharToDoubleFunction<T, X extends Throwable> exte
             }
         };
     }
-
 }

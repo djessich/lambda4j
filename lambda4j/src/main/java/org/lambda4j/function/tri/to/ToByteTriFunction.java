@@ -712,5 +712,4 @@ public interface ToByteTriFunction<T, U, V> extends Lambda {
     default TriFunction<T, U, V, Byte> boxed() {
         return this::applyAsByte;
     }
-
 }

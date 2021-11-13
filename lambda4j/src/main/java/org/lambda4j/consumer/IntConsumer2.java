@@ -310,5 +310,4 @@ public interface IntConsumer2 extends Lambda, IntConsumer {
     default Consumer2<Integer> boxed() {
         return this::accept;
     }
-
 }

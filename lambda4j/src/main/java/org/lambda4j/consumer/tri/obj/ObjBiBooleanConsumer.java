@@ -470,5 +470,4 @@ public interface ObjBiBooleanConsumer<T> extends Lambda {
     default TriConsumer<T, Boolean, Boolean> boxed() {
         return this::accept;
     }
-
 }

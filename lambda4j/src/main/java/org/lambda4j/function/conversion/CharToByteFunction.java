@@ -516,5 +516,4 @@ public interface CharToByteFunction extends Lambda {
     default Function2<Character, Byte> boxed() {
         return this::applyAsByte;
     }
-
 }

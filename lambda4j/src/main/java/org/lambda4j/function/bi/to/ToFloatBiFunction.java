@@ -643,5 +643,4 @@ public interface ToFloatBiFunction<T, U> extends Lambda {
     default BiFunction2<T, U, Float> boxed() {
         return this::applyAsFloat;
     }
-
 }

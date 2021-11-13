@@ -543,5 +543,4 @@ public interface IntUnaryOperator2 extends Lambda, IntUnaryOperator {
     default UnaryOperator2<Integer> boxed() {
         return this::applyAsInt;
     }
-
 }

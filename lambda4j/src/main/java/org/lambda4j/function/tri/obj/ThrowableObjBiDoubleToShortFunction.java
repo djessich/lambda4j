@@ -893,5 +893,4 @@ public interface ThrowableObjBiDoubleToShortFunction<T, X extends Throwable> ext
             }
         };
     }
-
 }

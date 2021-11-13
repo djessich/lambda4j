@@ -887,5 +887,4 @@ public interface ThrowableToByteTriFunction<T, U, V, X extends Throwable> extend
             }
         };
     }
-
 }

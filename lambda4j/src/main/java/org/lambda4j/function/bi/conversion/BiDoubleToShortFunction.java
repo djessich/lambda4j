@@ -606,5 +606,4 @@ public interface BiDoubleToShortFunction extends Lambda {
     default BiFunction2<Double, Double, Short> boxed() {
         return this::applyAsShort;
     }
-
 }

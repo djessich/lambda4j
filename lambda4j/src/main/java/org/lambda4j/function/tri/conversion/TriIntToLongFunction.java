@@ -664,5 +664,4 @@ public interface TriIntToLongFunction extends Lambda {
     default TriFunction<Integer, Integer, Integer, Long> boxed() {
         return this::applyAsLong;
     }
-
 }

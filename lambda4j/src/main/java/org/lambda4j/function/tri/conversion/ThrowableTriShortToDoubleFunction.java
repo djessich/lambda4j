@@ -850,5 +850,4 @@ public interface ThrowableTriShortToDoubleFunction<X extends Throwable> extends 
             }
         };
     }
-
 }

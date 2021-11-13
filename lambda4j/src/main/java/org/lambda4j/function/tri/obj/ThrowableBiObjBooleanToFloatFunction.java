@@ -917,5 +917,4 @@ public interface ThrowableBiObjBooleanToFloatFunction<T, U, X extends Throwable>
             }
         };
     }
-
 }

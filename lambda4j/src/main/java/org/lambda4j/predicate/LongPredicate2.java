@@ -642,5 +642,4 @@ public interface LongPredicate2 extends Lambda, LongPredicate {
     default Predicate2<Long> boxed() {
         return this::test;
     }
-
 }

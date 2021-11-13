@@ -536,5 +536,4 @@ public interface ToCharFunction<T> extends Lambda {
     default Function2<T, Character> boxed() {
         return this::applyAsChar;
     }
-
 }

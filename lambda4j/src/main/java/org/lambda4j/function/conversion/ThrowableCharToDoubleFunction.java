@@ -674,5 +674,4 @@ public interface ThrowableCharToDoubleFunction<X extends Throwable> extends Lamb
             }
         };
     }
-
 }

@@ -564,5 +564,4 @@ public interface LongFunction2<R> extends Lambda, LongFunction<R> {
     default Function2<Long, R> boxed() {
         return this::apply;
     }
-
 }

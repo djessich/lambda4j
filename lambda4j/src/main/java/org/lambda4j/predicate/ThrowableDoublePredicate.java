@@ -820,5 +820,4 @@ public interface ThrowableDoublePredicate<X extends Throwable> extends Lambda, D
             }
         };
     }
-
 }

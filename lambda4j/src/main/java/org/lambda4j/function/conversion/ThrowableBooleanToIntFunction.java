@@ -674,5 +674,4 @@ public interface ThrowableBooleanToIntFunction<X extends Throwable> extends Lamb
             }
         };
     }
-
 }

@@ -521,5 +521,4 @@ public interface BooleanToShortFunction extends Lambda {
     default Function2<Boolean, Short> boxed() {
         return this::applyAsShort;
     }
-
 }

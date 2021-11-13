@@ -699,5 +699,4 @@ public interface ObjBiLongToByteFunction<T> extends Lambda {
     default TriFunction<T, Long, Long, Byte> boxed() {
         return this::applyAsByte;
     }
-
 }

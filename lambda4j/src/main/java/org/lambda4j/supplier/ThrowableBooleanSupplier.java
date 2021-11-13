@@ -508,5 +508,4 @@ public interface ThrowableBooleanSupplier<X extends Throwable> extends Lambda, B
             }
         };
     }
-
 }

@@ -486,5 +486,4 @@ public interface ObjCharFunction<T, R> extends Lambda {
     default BiFunction2<T, Character, R> boxed() {
         return this::apply;
     }
-
 }

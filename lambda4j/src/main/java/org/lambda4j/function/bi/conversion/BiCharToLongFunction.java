@@ -605,5 +605,4 @@ public interface BiCharToLongFunction extends Lambda {
     default BiFunction2<Character, Character, Long> boxed() {
         return this::applyAsLong;
     }
-
 }

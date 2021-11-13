@@ -888,5 +888,4 @@ public interface ThrowableToShortTriFunction<T, U, V, X extends Throwable> exten
             }
         };
     }
-
 }

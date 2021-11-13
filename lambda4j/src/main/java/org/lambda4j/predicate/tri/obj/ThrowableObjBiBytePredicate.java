@@ -1005,5 +1005,4 @@ public interface ThrowableObjBiBytePredicate<T, X extends Throwable> extends Lam
             }
         };
     }
-
 }

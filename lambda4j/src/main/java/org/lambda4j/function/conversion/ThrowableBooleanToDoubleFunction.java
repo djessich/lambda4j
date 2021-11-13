@@ -680,5 +680,4 @@ public interface ThrowableBooleanToDoubleFunction<X extends Throwable> extends L
             }
         };
     }
-
 }

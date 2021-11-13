@@ -816,5 +816,4 @@ public interface ThrowableLongPredicate<X extends Throwable> extends Lambda, Lon
             }
         };
     }
-
 }

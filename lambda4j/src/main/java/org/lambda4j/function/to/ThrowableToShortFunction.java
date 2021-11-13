@@ -692,5 +692,4 @@ public interface ThrowableToShortFunction<T, X extends Throwable> extends Lambda
             }
         };
     }
-
 }

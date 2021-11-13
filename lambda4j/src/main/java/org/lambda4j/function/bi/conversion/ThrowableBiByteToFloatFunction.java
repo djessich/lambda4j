@@ -779,5 +779,4 @@ public interface ThrowableBiByteToFloatFunction<X extends Throwable> extends Lam
             }
         };
     }
-
 }

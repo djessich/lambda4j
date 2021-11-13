@@ -698,5 +698,4 @@ public interface ObjBiIntToIntFunction<T> extends Lambda {
     default TriFunction<T, Integer, Integer, Integer> boxed() {
         return this::applyAsInt;
     }
-
 }

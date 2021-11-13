@@ -562,5 +562,4 @@ public interface ObjBiByteFunction<T, R> extends Lambda {
     default TriFunction<T, Byte, Byte, R> boxed() {
         return this::apply;
     }
-
 }

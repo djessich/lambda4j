@@ -656,5 +656,4 @@ public interface TriBooleanToIntFunction extends Lambda {
     default TriFunction<Boolean, Boolean, Boolean, Integer> boxed() {
         return this::applyAsInt;
     }
-
 }

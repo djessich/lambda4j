@@ -521,5 +521,4 @@ public interface BooleanToCharFunction extends Lambda {
     default Function2<Boolean, Character> boxed() {
         return this::applyAsChar;
     }
-
 }

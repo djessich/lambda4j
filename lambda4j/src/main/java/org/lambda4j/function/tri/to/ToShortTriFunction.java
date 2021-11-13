@@ -712,5 +712,4 @@ public interface ToShortTriFunction<T, U, V> extends Lambda {
     default TriFunction<T, U, V, Short> boxed() {
         return this::applyAsShort;
     }
-
 }

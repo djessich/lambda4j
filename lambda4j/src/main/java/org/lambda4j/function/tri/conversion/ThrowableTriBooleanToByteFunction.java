@@ -841,5 +841,4 @@ public interface ThrowableTriBooleanToByteFunction<X extends Throwable> extends 
             }
         };
     }
-
 }

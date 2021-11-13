@@ -548,5 +548,4 @@ public interface ThrowableBiDoubleConsumer<X extends Throwable> extends Lambda {
             }
         };
     }
-
 }

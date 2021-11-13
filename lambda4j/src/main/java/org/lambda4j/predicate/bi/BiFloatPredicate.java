@@ -715,5 +715,4 @@ public interface BiFloatPredicate extends Lambda {
     default BiPredicate2<Float, Float> boxed() {
         return this::test;
     }
-
 }

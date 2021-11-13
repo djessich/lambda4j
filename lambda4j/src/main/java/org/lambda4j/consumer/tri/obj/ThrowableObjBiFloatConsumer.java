@@ -655,5 +655,4 @@ public interface ThrowableObjBiFloatConsumer<T, X extends Throwable> extends Lam
             }
         };
     }
-
 }

@@ -791,5 +791,4 @@ public interface ThrowableObjByteToCharFunction<T, X extends Throwable> extends 
             }
         };
     }
-
 }

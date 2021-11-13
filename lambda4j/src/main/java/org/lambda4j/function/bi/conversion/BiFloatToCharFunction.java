@@ -606,5 +606,4 @@ public interface BiFloatToCharFunction extends Lambda {
     default BiFunction2<Float, Float, Character> boxed() {
         return this::applyAsChar;
     }
-
 }

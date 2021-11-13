@@ -655,5 +655,4 @@ public interface ThrowableObjBiLongConsumer<T, X extends Throwable> extends Lamb
             }
         };
     }
-
 }

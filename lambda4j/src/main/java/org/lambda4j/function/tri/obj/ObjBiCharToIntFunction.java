@@ -700,5 +700,4 @@ public interface ObjBiCharToIntFunction<T> extends Lambda {
     default TriFunction<T, Character, Character, Integer> boxed() {
         return this::applyAsInt;
     }
-
 }

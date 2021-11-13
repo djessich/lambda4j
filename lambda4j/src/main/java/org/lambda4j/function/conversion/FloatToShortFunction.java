@@ -516,5 +516,4 @@ public interface FloatToShortFunction extends Lambda {
     default Function2<Float, Short> boxed() {
         return this::applyAsShort;
     }
-
 }

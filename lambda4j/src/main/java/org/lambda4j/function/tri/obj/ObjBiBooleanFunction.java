@@ -555,5 +555,4 @@ public interface ObjBiBooleanFunction<T, R> extends Lambda {
     default TriFunction<T, Boolean, Boolean, R> boxed() {
         return this::apply;
     }
-
 }

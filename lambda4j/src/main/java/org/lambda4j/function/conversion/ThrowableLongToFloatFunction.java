@@ -674,5 +674,4 @@ public interface ThrowableLongToFloatFunction<X extends Throwable> extends Lambd
             }
         };
     }
-
 }

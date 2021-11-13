@@ -654,5 +654,4 @@ public interface ThrowableObjByteFunction<T, R, X extends Throwable> extends Lam
             }
         };
     }
-
 }

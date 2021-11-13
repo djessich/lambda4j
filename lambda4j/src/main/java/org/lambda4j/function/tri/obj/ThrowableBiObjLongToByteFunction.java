@@ -913,5 +913,4 @@ public interface ThrowableBiObjLongToByteFunction<T, U, X extends Throwable> ext
             }
         };
     }
-
 }

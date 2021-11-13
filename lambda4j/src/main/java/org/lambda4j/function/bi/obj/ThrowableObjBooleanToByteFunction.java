@@ -794,5 +794,4 @@ public interface ThrowableObjBooleanToByteFunction<T, X extends Throwable> exten
             }
         };
     }
-
 }

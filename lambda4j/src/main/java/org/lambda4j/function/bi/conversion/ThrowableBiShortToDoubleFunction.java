@@ -779,5 +779,4 @@ public interface ThrowableBiShortToDoubleFunction<X extends Throwable> extends L
             }
         };
     }
-
 }

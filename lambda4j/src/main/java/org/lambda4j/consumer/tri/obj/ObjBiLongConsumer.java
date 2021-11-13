@@ -478,5 +478,4 @@ public interface ObjBiLongConsumer<T> extends Lambda {
     default TriConsumer<T, Long, Long> boxed() {
         return this::accept;
     }
-
 }

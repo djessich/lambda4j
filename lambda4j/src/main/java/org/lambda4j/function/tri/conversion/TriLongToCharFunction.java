@@ -663,5 +663,4 @@ public interface TriLongToCharFunction extends Lambda {
     default TriFunction<Long, Long, Long, Character> boxed() {
         return this::applyAsChar;
     }
-
 }

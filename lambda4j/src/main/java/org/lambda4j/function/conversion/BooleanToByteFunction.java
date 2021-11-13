@@ -521,5 +521,4 @@ public interface BooleanToByteFunction extends Lambda {
     default Function2<Boolean, Byte> boxed() {
         return this::applyAsByte;
     }
-
 }

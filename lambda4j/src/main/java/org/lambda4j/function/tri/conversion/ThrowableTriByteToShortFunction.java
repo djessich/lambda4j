@@ -850,5 +850,4 @@ public interface ThrowableTriByteToShortFunction<X extends Throwable> extends La
             }
         };
     }
-
 }

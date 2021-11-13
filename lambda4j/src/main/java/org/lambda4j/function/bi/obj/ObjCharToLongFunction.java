@@ -626,5 +626,4 @@ public interface ObjCharToLongFunction<T> extends Lambda {
     default BiFunction2<T, Character, Long> boxed() {
         return this::applyAsLong;
     }
-
 }

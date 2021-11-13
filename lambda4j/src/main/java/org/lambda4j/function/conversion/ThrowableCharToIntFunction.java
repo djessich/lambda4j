@@ -667,5 +667,4 @@ public interface ThrowableCharToIntFunction<X extends Throwable> extends Lambda 
             }
         };
     }
-
 }

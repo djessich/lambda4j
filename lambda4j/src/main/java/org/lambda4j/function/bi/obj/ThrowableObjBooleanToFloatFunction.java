@@ -795,5 +795,4 @@ public interface ThrowableObjBooleanToFloatFunction<T, X extends Throwable> exte
             }
         };
     }
-
 }

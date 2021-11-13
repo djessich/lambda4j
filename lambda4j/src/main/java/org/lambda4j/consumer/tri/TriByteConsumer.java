@@ -436,5 +436,4 @@ public interface TriByteConsumer extends Lambda {
     default TriConsumer<Byte, Byte, Byte> boxed() {
         return this::accept;
     }
-
 }

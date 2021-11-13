@@ -807,5 +807,4 @@ public interface ThrowableToFloatBiFunction<T, U, X extends Throwable> extends L
             }
         };
     }
-
 }

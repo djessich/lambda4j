@@ -488,5 +488,4 @@ public interface ObjFloatFunction<T, R> extends Lambda {
     default BiFunction2<T, Float, R> boxed() {
         return this::apply;
     }
-
 }

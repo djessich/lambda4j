@@ -635,5 +635,4 @@ public interface CharPredicate extends Lambda {
     default Predicate2<Character> boxed() {
         return this::test;
     }
-
 }

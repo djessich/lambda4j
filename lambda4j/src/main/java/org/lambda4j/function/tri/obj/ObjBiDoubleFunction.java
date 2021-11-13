@@ -563,5 +563,4 @@ public interface ObjBiDoubleFunction<T, R> extends Lambda {
     default TriFunction<T, Double, Double, R> boxed() {
         return this::apply;
     }
-
 }

@@ -742,5 +742,4 @@ public interface ThrowableObjBiBooleanFunction<T, R, X extends Throwable> extend
             }
         };
     }
-
 }

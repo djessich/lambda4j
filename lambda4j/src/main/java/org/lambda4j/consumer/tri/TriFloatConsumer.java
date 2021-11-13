@@ -437,5 +437,4 @@ public interface TriFloatConsumer extends Lambda {
     default TriConsumer<Float, Float, Float> boxed() {
         return this::accept;
     }
-
 }

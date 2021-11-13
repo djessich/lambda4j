@@ -677,5 +677,4 @@ public interface ThrowableBooleanToLongFunction<X extends Throwable> extends Lam
             }
         };
     }
-
 }

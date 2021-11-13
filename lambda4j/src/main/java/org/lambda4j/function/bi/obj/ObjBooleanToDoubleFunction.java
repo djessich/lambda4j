@@ -627,5 +627,4 @@ public interface ObjBooleanToDoubleFunction<T> extends Lambda {
     default BiFunction2<T, Boolean, Double> boxed() {
         return this::applyAsDouble;
     }
-
 }

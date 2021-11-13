@@ -691,5 +691,4 @@ public interface ThrowableShortUnaryOperator<X extends Throwable> extends Lambda
             }
         };
     }
-
 }

@@ -519,5 +519,4 @@ public interface ByteToIntFunction extends Lambda {
     default Function2<Byte, Integer> boxed() {
         return this::applyAsInt;
     }
-
 }

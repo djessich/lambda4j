@@ -477,5 +477,4 @@ public interface ObjBiByteConsumer<T> extends Lambda {
     default TriConsumer<T, Byte, Byte> boxed() {
         return this::accept;
     }
-
 }

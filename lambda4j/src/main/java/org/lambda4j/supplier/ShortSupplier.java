@@ -310,5 +310,4 @@ public interface ShortSupplier extends Lambda {
     default Supplier2<Short> boxed() {
         return this::getAsShort;
     }
-
 }

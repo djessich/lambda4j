@@ -605,5 +605,4 @@ public interface BiBooleanToShortFunction extends Lambda {
     default BiFunction2<Boolean, Boolean, Short> boxed() {
         return this::applyAsShort;
     }
-
 }

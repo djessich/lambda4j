@@ -524,5 +524,4 @@ public interface BooleanToIntFunction extends Lambda {
     default Function2<Boolean, Integer> boxed() {
         return this::applyAsInt;
     }
-
 }

@@ -700,5 +700,4 @@ public interface ObjBiLongToShortFunction<T> extends Lambda {
     default TriFunction<T, Long, Long, Short> boxed() {
         return this::applyAsShort;
     }
-
 }

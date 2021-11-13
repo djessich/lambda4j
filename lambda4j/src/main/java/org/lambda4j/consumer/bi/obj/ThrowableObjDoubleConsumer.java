@@ -589,5 +589,4 @@ public interface ThrowableObjDoubleConsumer<T, X extends Throwable> extends Lamb
             }
         };
     }
-
 }

@@ -733,5 +733,4 @@ public interface BiObjDoubleToFloatFunction<T, U> extends Lambda {
     default TriFunction<T, U, Double, Float> boxed() {
         return this::applyAsFloat;
     }
-
 }

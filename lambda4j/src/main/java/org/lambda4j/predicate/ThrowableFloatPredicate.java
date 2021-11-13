@@ -795,5 +795,4 @@ public interface ThrowableFloatPredicate<X extends Throwable> extends Lambda {
             }
         };
     }
-
 }

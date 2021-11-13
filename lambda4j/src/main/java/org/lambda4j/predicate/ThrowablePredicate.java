@@ -805,5 +805,4 @@ public interface ThrowablePredicate<T, X extends Throwable> extends Lambda, Pred
             }
         };
     }
-
 }

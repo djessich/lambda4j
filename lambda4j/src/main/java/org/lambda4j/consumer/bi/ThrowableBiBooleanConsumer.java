@@ -535,5 +535,4 @@ public interface ThrowableBiBooleanConsumer<X extends Throwable> extends Lambda 
             }
         };
     }
-
 }

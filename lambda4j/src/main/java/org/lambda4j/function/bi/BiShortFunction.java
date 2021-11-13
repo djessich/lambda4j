@@ -661,5 +661,4 @@ public interface BiShortFunction<R> extends Lambda {
     default BiFunction2<Short, Short, R> boxed() {
         return this::apply;
     }
-
 }

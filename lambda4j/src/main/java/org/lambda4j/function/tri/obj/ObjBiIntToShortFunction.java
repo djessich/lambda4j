@@ -699,5 +699,4 @@ public interface ObjBiIntToShortFunction<T> extends Lambda {
     default TriFunction<T, Integer, Integer, Short> boxed() {
         return this::applyAsShort;
     }
-
 }

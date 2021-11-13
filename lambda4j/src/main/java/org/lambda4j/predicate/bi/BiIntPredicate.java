@@ -715,5 +715,4 @@ public interface BiIntPredicate extends Lambda {
     default BiPredicate2<Integer, Integer> boxed() {
         return this::test;
     }
-
 }

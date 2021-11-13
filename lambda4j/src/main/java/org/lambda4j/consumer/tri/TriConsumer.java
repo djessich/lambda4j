@@ -458,5 +458,4 @@ public interface TriConsumer<T, U, V> extends Lambda {
     default TriConsumer<V, U, T> reversed() {
         return (v, u, t) -> accept(t, u, v);
     }
-
 }

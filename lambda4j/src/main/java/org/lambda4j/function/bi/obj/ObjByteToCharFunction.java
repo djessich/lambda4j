@@ -625,5 +625,4 @@ public interface ObjByteToCharFunction<T> extends Lambda {
     default BiFunction2<T, Byte, Character> boxed() {
         return this::applyAsChar;
     }
-
 }

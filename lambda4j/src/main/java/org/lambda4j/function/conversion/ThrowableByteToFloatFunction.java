@@ -674,5 +674,4 @@ public interface ThrowableByteToFloatFunction<X extends Throwable> extends Lambd
             }
         };
     }
-
 }

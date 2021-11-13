@@ -888,5 +888,4 @@ public interface ThrowableObjBiFloatToIntFunction<T, X extends Throwable> extend
             }
         };
     }
-
 }

@@ -663,5 +663,4 @@ public interface TriFloatToIntFunction extends Lambda {
     default TriFunction<Float, Float, Float, Integer> boxed() {
         return this::applyAsInt;
     }
-
 }

@@ -888,5 +888,4 @@ public interface ThrowableToFloatTriFunction<T, U, V, X extends Throwable> exten
             }
         };
     }
-
 }

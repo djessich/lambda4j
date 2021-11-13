@@ -536,5 +536,4 @@ public interface ThrowableBiByteConsumer<X extends Throwable> extends Lambda {
             }
         };
     }
-
 }

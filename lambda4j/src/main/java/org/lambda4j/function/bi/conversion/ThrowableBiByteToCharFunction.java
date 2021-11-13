@@ -777,5 +777,4 @@ public interface ThrowableBiByteToCharFunction<X extends Throwable> extends Lamb
             }
         };
     }
-
 }

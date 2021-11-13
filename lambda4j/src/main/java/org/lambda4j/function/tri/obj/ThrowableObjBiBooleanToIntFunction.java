@@ -882,5 +882,4 @@ public interface ThrowableObjBiBooleanToIntFunction<T, X extends Throwable> exte
             }
         };
     }
-
 }

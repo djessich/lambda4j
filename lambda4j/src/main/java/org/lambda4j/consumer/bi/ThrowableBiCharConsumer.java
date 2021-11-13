@@ -536,5 +536,4 @@ public interface ThrowableBiCharConsumer<X extends Throwable> extends Lambda {
             }
         };
     }
-
 }

@@ -778,5 +778,4 @@ public interface ThrowableBiIntToDoubleFunction<X extends Throwable> extends Lam
             }
         };
     }
-
 }

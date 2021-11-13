@@ -667,5 +667,4 @@ public interface ThrowableIntToByteFunction<X extends Throwable> extends Lambda 
             }
         };
     }
-
 }

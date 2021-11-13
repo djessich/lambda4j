@@ -912,5 +912,4 @@ public interface ThrowableObjIntPredicate<T, X extends Throwable> extends Lambda
             }
         };
     }
-
 }

@@ -95,5 +95,4 @@ public interface UnaryOperator2<T> extends Lambda, Function2<T, T>, UnaryOperato
     static <T> UnaryOperator2<T> constant(T ret) {
         return t -> ret;
     }
-
 }

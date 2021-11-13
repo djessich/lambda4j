@@ -1004,5 +1004,4 @@ public interface ThrowableObjBiBooleanPredicate<T, X extends Throwable> extends 
             }
         };
     }
-
 }

@@ -310,5 +310,4 @@ public interface ByteSupplier extends Lambda {
     default Supplier2<Byte> boxed() {
         return this::getAsByte;
     }
-
 }

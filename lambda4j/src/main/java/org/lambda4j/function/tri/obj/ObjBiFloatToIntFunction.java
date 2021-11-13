@@ -700,5 +700,4 @@ public interface ObjBiFloatToIntFunction<T> extends Lambda {
     default TriFunction<T, Float, Float, Integer> boxed() {
         return this::applyAsInt;
     }
-
 }

@@ -674,5 +674,4 @@ public interface ThrowableFloatToCharFunction<X extends Throwable> extends Lambd
             }
         };
     }
-
 }

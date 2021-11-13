@@ -459,5 +459,4 @@ public interface ThrowableShortSupplier<X extends Throwable> extends Lambda {
             }
         };
     }
-
 }

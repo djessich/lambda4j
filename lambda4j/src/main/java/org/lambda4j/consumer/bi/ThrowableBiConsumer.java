@@ -582,5 +582,4 @@ public interface ThrowableBiConsumer<T, U, X extends Throwable> extends Lambda, 
             }
         };
     }
-
 }

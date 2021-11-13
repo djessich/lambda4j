@@ -775,5 +775,4 @@ public interface TriDoublePredicate extends Lambda {
     default TriPredicate<Double, Double, Double> boxed() {
         return this::test;
     }
-
 }

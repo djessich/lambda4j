@@ -569,5 +569,4 @@ public interface ThrowableObjShortConsumer<T, X extends Throwable> extends Lambd
             }
         };
     }
-
 }

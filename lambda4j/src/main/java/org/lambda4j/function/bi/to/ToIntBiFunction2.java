@@ -647,5 +647,4 @@ public interface ToIntBiFunction2<T, U> extends Lambda, ToIntBiFunction<T, U> {
     default BiFunction2<T, U, Integer> boxed() {
         return this::applyAsInt;
     }
-
 }

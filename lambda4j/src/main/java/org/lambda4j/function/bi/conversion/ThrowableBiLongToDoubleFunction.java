@@ -779,5 +779,4 @@ public interface ThrowableBiLongToDoubleFunction<X extends Throwable> extends La
             }
         };
     }
-
 }

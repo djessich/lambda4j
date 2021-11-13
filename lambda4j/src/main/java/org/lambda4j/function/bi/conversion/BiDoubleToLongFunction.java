@@ -607,5 +607,4 @@ public interface BiDoubleToLongFunction extends Lambda {
     default BiFunction2<Double, Double, Long> boxed() {
         return this::applyAsLong;
     }
-
 }

@@ -717,5 +717,4 @@ public interface ThrowableByteFunction<R, X extends Throwable> extends Lambda {
             }
         };
     }
-
 }

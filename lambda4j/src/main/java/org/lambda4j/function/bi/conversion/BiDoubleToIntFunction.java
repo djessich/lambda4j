@@ -606,5 +606,4 @@ public interface BiDoubleToIntFunction extends Lambda {
     default BiFunction2<Double, Double, Integer> boxed() {
         return this::applyAsInt;
     }
-
 }

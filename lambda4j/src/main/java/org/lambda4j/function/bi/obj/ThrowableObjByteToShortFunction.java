@@ -793,5 +793,4 @@ public interface ThrowableObjByteToShortFunction<T, X extends Throwable> extends
             }
         };
     }
-
 }

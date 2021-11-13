@@ -916,5 +916,4 @@ public interface ThrowableBiObjBooleanToCharFunction<T, U, X extends Throwable> 
             }
         };
     }
-
 }

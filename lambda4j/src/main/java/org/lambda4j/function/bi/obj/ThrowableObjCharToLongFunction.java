@@ -791,5 +791,4 @@ public interface ThrowableObjCharToLongFunction<T, X extends Throwable> extends 
             }
         };
     }
-
 }

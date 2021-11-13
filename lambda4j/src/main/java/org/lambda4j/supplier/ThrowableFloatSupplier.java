@@ -459,5 +459,4 @@ public interface ThrowableFloatSupplier<X extends Throwable> extends Lambda {
             }
         };
     }
-
 }

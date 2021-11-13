@@ -536,5 +536,4 @@ public interface BooleanUnaryOperator extends Lambda {
     default UnaryOperator2<Boolean> boxed() {
         return this::applyAsBoolean;
     }
-
 }

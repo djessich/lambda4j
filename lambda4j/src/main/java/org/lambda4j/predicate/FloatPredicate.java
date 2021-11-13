@@ -635,5 +635,4 @@ public interface FloatPredicate extends Lambda {
     default Predicate2<Float> boxed() {
         return this::test;
     }
-
 }

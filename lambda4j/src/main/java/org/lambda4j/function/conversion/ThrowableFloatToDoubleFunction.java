@@ -675,5 +675,4 @@ public interface ThrowableFloatToDoubleFunction<X extends Throwable> extends Lam
             }
         };
     }
-
 }

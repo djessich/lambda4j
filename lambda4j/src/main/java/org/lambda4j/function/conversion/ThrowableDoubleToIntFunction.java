@@ -694,5 +694,4 @@ public interface ThrowableDoubleToIntFunction<X extends Throwable> extends Lambd
             }
         };
     }
-
 }

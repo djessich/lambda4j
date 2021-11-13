@@ -310,5 +310,4 @@ public interface FloatSupplier extends Lambda {
     default Supplier2<Float> boxed() {
         return this::getAsFloat;
     }
-
 }

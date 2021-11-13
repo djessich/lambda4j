@@ -519,5 +519,4 @@ public interface DoubleToShortFunction extends Lambda {
     default Function2<Double, Short> boxed() {
         return this::applyAsShort;
     }
-
 }

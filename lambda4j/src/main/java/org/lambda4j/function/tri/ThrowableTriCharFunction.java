@@ -910,5 +910,4 @@ public interface ThrowableTriCharFunction<R, X extends Throwable> extends Lambda
             }
         };
     }
-
 }

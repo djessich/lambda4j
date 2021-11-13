@@ -478,5 +478,4 @@ public interface ObjBiIntConsumer<T> extends Lambda {
     default TriConsumer<T, Integer, Integer> boxed() {
         return this::accept;
     }
-
 }

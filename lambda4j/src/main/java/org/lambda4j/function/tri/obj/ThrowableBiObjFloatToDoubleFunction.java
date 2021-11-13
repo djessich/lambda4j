@@ -917,5 +917,4 @@ public interface ThrowableBiObjFloatToDoubleFunction<T, U, X extends Throwable> 
             }
         };
     }
-
 }

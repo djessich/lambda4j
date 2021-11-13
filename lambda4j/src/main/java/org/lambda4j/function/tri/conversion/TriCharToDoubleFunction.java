@@ -664,5 +664,4 @@ public interface TriCharToDoubleFunction extends Lambda {
     default TriFunction<Character, Character, Character, Double> boxed() {
         return this::applyAsDouble;
     }
-
 }

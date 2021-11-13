@@ -673,5 +673,4 @@ public interface LongTernaryOperator extends Lambda {
     default TernaryOperator<Long> boxed() {
         return this::applyAsLong;
     }
-
 }

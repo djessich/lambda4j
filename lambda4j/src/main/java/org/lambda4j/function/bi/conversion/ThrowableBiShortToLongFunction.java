@@ -779,5 +779,4 @@ public interface ThrowableBiShortToLongFunction<X extends Throwable> extends Lam
             }
         };
     }
-
 }

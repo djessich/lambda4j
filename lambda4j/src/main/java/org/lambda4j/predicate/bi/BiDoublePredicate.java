@@ -716,5 +716,4 @@ public interface BiDoublePredicate extends Lambda {
     default BiPredicate2<Double, Double> boxed() {
         return this::test;
     }
-
 }

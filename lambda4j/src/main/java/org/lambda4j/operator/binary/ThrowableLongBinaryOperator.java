@@ -843,5 +843,4 @@ public interface ThrowableLongBinaryOperator<X extends Throwable> extends Lambda
             }
         };
     }
-
 }

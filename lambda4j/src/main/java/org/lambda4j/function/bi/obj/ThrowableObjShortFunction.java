@@ -654,5 +654,4 @@ public interface ThrowableObjShortFunction<T, R, X extends Throwable> extends La
             }
         };
     }
-
 }

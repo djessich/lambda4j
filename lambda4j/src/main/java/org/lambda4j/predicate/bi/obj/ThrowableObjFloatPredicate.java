@@ -915,5 +915,4 @@ public interface ThrowableObjFloatPredicate<T, X extends Throwable> extends Lamb
             }
         };
     }
-
 }

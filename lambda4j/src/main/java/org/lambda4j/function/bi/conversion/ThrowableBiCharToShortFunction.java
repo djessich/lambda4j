@@ -779,5 +779,4 @@ public interface ThrowableBiCharToShortFunction<X extends Throwable> extends Lam
             }
         };
     }
-
 }

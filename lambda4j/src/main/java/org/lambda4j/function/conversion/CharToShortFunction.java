@@ -516,5 +516,4 @@ public interface CharToShortFunction extends Lambda {
     default Function2<Character, Short> boxed() {
         return this::applyAsShort;
     }
-
 }

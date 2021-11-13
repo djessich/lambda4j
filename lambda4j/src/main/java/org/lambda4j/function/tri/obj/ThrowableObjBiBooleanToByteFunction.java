@@ -885,5 +885,4 @@ public interface ThrowableObjBiBooleanToByteFunction<T, X extends Throwable> ext
             }
         };
     }
-
 }

@@ -743,5 +743,4 @@ public interface ObjShortPredicate<T> extends Lambda {
     default BiPredicate2<T, Short> boxed() {
         return this::test;
     }
-
 }

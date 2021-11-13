@@ -334,5 +334,4 @@ public interface ThrowableSupplier<R, X extends Throwable> extends Lambda, Suppl
             }
         };
     }
-
 }

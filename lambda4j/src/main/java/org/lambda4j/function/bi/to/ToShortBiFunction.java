@@ -643,5 +643,4 @@ public interface ToShortBiFunction<T, U> extends Lambda {
     default BiFunction2<T, U, Short> boxed() {
         return this::applyAsShort;
     }
-
 }

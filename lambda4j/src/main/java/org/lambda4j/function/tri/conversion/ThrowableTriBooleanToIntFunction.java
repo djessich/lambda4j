@@ -839,5 +839,4 @@ public interface ThrowableTriBooleanToIntFunction<X extends Throwable> extends L
             }
         };
     }
-
 }

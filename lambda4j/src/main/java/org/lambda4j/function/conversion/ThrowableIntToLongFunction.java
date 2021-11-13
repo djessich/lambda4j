@@ -688,5 +688,4 @@ public interface ThrowableIntToLongFunction<X extends Throwable> extends Lambda,
             }
         };
     }
-
 }

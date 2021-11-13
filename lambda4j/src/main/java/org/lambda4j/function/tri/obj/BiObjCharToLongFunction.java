@@ -732,5 +732,4 @@ public interface BiObjCharToLongFunction<T, U> extends Lambda {
     default TriFunction<T, U, Character, Long> boxed() {
         return this::applyAsLong;
     }
-
 }

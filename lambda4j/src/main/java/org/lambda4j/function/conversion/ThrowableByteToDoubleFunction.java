@@ -674,5 +674,4 @@ public interface ThrowableByteToDoubleFunction<X extends Throwable> extends Lamb
             }
         };
     }
-
 }

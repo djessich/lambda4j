@@ -688,5 +688,4 @@ public interface ThrowableCharUnaryOperator<X extends Throwable> extends Lambda 
             }
         };
     }
-
 }

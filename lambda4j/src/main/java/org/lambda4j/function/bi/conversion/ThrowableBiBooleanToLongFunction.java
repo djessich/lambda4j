@@ -768,5 +768,4 @@ public interface ThrowableBiBooleanToLongFunction<X extends Throwable> extends L
             }
         };
     }
-
 }

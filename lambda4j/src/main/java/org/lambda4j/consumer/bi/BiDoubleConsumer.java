@@ -381,5 +381,4 @@ public interface BiDoubleConsumer extends Lambda {
     default BiConsumer2<Double, Double> boxed() {
         return this::accept;
     }
-
 }

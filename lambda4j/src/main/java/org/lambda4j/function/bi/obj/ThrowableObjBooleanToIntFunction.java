@@ -794,5 +794,4 @@ public interface ThrowableObjBooleanToIntFunction<T, X extends Throwable> extend
             }
         };
     }
-
 }

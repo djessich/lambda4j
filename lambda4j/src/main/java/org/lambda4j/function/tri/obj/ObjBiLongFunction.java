@@ -563,5 +563,4 @@ public interface ObjBiLongFunction<T, R> extends Lambda {
     default TriFunction<T, Long, Long, R> boxed() {
         return this::apply;
     }
-
 }

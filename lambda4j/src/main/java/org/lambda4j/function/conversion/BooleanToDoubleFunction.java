@@ -524,5 +524,4 @@ public interface BooleanToDoubleFunction extends Lambda {
     default Function2<Boolean, Double> boxed() {
         return this::applyAsDouble;
     }
-
 }

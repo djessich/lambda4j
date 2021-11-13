@@ -914,5 +914,4 @@ public interface ThrowableObjBytePredicate<T, X extends Throwable> extends Lambd
             }
         };
     }
-
 }

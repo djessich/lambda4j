@@ -850,5 +850,4 @@ public interface ThrowableTriFloatToLongFunction<X extends Throwable> extends La
             }
         };
     }
-
 }

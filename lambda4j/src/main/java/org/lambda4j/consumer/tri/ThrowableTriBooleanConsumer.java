@@ -606,5 +606,4 @@ public interface ThrowableTriBooleanConsumer<X extends Throwable> extends Lambda
             }
         };
     }
-
 }

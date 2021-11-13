@@ -459,5 +459,4 @@ public interface ThrowableCharSupplier<X extends Throwable> extends Lambda {
             }
         };
     }
-
 }

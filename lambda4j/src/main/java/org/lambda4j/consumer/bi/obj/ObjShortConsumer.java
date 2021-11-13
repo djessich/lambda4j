@@ -406,5 +406,4 @@ public interface ObjShortConsumer<T> extends Lambda {
     default BiConsumer2<T, Short> boxed() {
         return this::accept;
     }
-
 }

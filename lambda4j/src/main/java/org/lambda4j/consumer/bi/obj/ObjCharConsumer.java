@@ -405,5 +405,4 @@ public interface ObjCharConsumer<T> extends Lambda {
     default BiConsumer2<T, Character> boxed() {
         return this::accept;
     }
-
 }

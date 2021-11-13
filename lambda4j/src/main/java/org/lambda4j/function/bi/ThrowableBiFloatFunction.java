@@ -830,5 +830,4 @@ public interface ThrowableBiFloatFunction<R, X extends Throwable> extends Lambda
             }
         };
     }
-
 }

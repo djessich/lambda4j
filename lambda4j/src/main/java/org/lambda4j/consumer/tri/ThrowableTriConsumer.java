@@ -641,5 +641,4 @@ public interface ThrowableTriConsumer<T, U, V, X extends Throwable> extends Lamb
             }
         };
     }
-
 }

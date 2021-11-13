@@ -715,5 +715,4 @@ public interface BiLongPredicate extends Lambda {
     default BiPredicate2<Long, Long> boxed() {
         return this::test;
     }
-
 }

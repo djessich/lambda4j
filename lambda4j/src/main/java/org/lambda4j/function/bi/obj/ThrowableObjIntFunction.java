@@ -654,5 +654,4 @@ public interface ThrowableObjIntFunction<T, R, X extends Throwable> extends Lamb
             }
         };
     }
-
 }
