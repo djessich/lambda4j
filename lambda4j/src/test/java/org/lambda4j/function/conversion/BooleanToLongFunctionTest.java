@@ -20,6 +20,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 class BooleanToLongFunctionTest {
+
     @Test
     void of_givenExpression_returnsFunctionalInterface() {
         BooleanToLongFunction function = BooleanToLongFunction.of(value -> 0L);

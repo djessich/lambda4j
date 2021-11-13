@@ -20,6 +20,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 class BiLongPredicateTest {
+
     @Test
     void of_givenExpression_returnsFunctionalInterface() {
         BiLongPredicate predicate = BiLongPredicate.of((value1, value2) -> false);

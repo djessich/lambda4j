@@ -20,6 +20,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 class ThrowableCharToIntFunctionTest {
+
     @Test
     void of_givenExpression_returnsFunctionalInterface() {
         ThrowableCharToIntFunction<Throwable> function = ThrowableCharToIntFunction.of(value -> 0);

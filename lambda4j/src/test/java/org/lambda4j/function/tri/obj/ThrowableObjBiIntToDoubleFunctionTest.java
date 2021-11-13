@@ -20,6 +20,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 class ThrowableObjBiIntToDoubleFunctionTest {
+
     @Test
     void of_givenExpression_returnsFunctionalInterface() {
         ThrowableObjBiIntToDoubleFunction<String, Throwable> function =

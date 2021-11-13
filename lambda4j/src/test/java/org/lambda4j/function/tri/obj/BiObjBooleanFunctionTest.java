@@ -26,6 +26,7 @@ import org.junit.jupiter.params.provider.EmptySource;
 import org.junit.jupiter.params.provider.NullSource;
 
 class BiObjBooleanFunctionTest {
+
     @Test
     void of_givenExpression_returnsFunctionalInterface() {
         BiObjBooleanFunction<String, String, String> function = BiObjBooleanFunction.of((t, u, value) -> t);

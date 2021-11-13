@@ -26,6 +26,7 @@ import org.junit.jupiter.params.provider.EmptySource;
 import org.junit.jupiter.params.provider.NullSource;
 
 class ThrowableByteFunctionTest {
+
     @Test
     void of_givenExpression_returnsFunctionalInterface() {
         ThrowableByteFunction<String, Throwable> function = ThrowableByteFunction.of(Byte::toString);

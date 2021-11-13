@@ -20,6 +20,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 class ThrowableObjBiDoublePredicateTest {
+
     @Test
     void of_givenExpression_returnsFunctionalInterface() {
         ThrowableObjBiDoublePredicate<String, Throwable> predicate =

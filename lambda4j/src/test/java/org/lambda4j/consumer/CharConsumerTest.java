@@ -20,6 +20,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 class CharConsumerTest {
+
     @Test
     void of_givenExpression_returnsFunctionalInterface() {
         CharConsumer consumer = CharConsumer.of(Assertions::assertNotNull);

@@ -20,6 +20,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 class BooleanToShortFunctionTest {
+
     @Test
     void of_givenExpression_returnsFunctionalInterface() {
         BooleanToShortFunction function = BooleanToShortFunction.of(value -> (short) 0);

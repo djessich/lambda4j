@@ -20,6 +20,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 class ThrowableBooleanToShortFunctionTest {
+
     @Test
     void of_givenExpression_returnsFunctionalInterface() {
         ThrowableBooleanToShortFunction<Throwable> function = ThrowableBooleanToShortFunction.of(value -> (short) 0);

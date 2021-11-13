@@ -20,6 +20,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 class DoubleConsumer2Test {
+
     @Test
     void of_givenExpression_returnsFunctionalInterface() {
         DoubleConsumer2 consumer = DoubleConsumer2.of(Assertions::assertNotNull);

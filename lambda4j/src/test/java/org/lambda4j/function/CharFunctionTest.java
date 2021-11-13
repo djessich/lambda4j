@@ -26,6 +26,7 @@ import org.junit.jupiter.params.provider.EmptySource;
 import org.junit.jupiter.params.provider.NullSource;
 
 class CharFunctionTest {
+
     @Test
     void of_givenExpression_returnsFunctionalInterface() {
         CharFunction<String> function = CharFunction.of(Character::toString);

@@ -27,6 +27,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 import org.lambda4j.exception.ThrownByFunctionalInterfaceException;
 
 class ThrowableRunnableTest {
+
     private static Stream<Arguments> generateSourcesForRunThrowsMethodTest() {
         return Stream.of(
                 Arguments.arguments(new Error("error to be thrown in runThrows()")),

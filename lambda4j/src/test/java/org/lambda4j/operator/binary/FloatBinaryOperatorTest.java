@@ -20,6 +20,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 class FloatBinaryOperatorTest {
+
     @Test
     void of_givenExpression_returnsFunctionalInterface() {
         FloatBinaryOperator operator = FloatBinaryOperator.of((value1, value2) -> value1);

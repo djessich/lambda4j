@@ -20,6 +20,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 class ThrowableTriShortToLongFunctionTest {
+
     @Test
     void of_givenExpression_returnsFunctionalInterface() {
         ThrowableTriShortToLongFunction<Throwable> function =

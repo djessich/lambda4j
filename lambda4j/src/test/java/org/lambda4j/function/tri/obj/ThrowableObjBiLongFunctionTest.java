@@ -26,6 +26,7 @@ import org.junit.jupiter.params.provider.EmptySource;
 import org.junit.jupiter.params.provider.NullSource;
 
 class ThrowableObjBiLongFunctionTest {
+
     @Test
     void of_givenExpression_returnsFunctionalInterface() {
         ThrowableObjBiLongFunction<String, String, Throwable> function =

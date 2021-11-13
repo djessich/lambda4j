@@ -26,6 +26,7 @@ import org.junit.jupiter.params.provider.EmptySource;
 import org.junit.jupiter.params.provider.NullSource;
 
 class DoubleFunction2Test {
+
     @Test
     void of_givenExpression_returnsFunctionalInterface() {
         DoubleFunction2<String> function = DoubleFunction2.of(Double::toString);

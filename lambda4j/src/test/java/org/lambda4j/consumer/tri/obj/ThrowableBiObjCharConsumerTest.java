@@ -20,6 +20,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 class ThrowableBiObjCharConsumerTest {
+
     @Test
     void of_givenExpression_returnsFunctionalInterface() {
         ThrowableBiObjCharConsumer<String, String, Throwable> consumer =

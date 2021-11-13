@@ -20,6 +20,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 class TriBooleanToFloatFunctionTest {
+
     @Test
     void of_givenExpression_returnsFunctionalInterface() {
         TriBooleanToFloatFunction function = TriBooleanToFloatFunction.of((value1, value2, value3) -> 0.0f);

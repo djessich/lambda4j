@@ -26,6 +26,7 @@ import org.junit.jupiter.params.provider.EmptySource;
 import org.junit.jupiter.params.provider.NullSource;
 
 class ObjShortFunctionTest {
+
     @Test
     void of_givenExpression_returnsFunctionalInterface() {
         ObjShortFunction<String, String> function = ObjShortFunction.of((t, value) -> t);

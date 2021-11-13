@@ -20,6 +20,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 class ToByteFunctionTest {
+
     @Test
     void of_givenExpression_returnsFunctionalInterface() {
         ToByteFunction<String> function = ToByteFunction.of(Byte::parseByte);

@@ -26,6 +26,7 @@ import org.junit.jupiter.params.provider.EmptySource;
 import org.junit.jupiter.params.provider.NullSource;
 
 class BiDoubleFunctionTest {
+
     @Test
     void of_givenExpression_returnsFunctionalInterface() {
         BiDoubleFunction<String> function = BiDoubleFunction.of((value1, value2) -> Double.toString(value1));

@@ -20,6 +20,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 class BiObjDoubleToIntFunctionTest {
+
     @Test
     void of_givenExpression_returnsFunctionalInterface() {
         BiObjDoubleToIntFunction<String, String> function =

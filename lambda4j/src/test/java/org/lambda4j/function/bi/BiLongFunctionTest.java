@@ -26,6 +26,7 @@ import org.junit.jupiter.params.provider.EmptySource;
 import org.junit.jupiter.params.provider.NullSource;
 
 class BiLongFunctionTest {
+
     @Test
     void of_givenExpression_returnsFunctionalInterface() {
         BiLongFunction<String> function = BiLongFunction.of((value1, value2) -> Long.toString(value1));

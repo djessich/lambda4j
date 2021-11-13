@@ -20,6 +20,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 class CharSupplierTest {
+
     @Test
     void of_givenExpression_returnsFunctionalInterface() {
         CharSupplier supplier = CharSupplier.of(() -> Character.MIN_VALUE);

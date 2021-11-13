@@ -20,6 +20,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 class ThrowableObjDoubleConsumerTest {
+
     @Test
     void of_givenExpression_returnsFunctionalInterface() {
         ThrowableObjDoubleConsumer<String, Throwable> consumer = ThrowableObjDoubleConsumer.of((t, value) -> {

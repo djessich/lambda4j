@@ -20,6 +20,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 class ThrowableBiLongToIntFunctionTest {
+
     @Test
     void of_givenExpression_returnsFunctionalInterface() {
         ThrowableBiLongToIntFunction<Throwable> function = ThrowableBiLongToIntFunction.of((value1, value2) -> 0);

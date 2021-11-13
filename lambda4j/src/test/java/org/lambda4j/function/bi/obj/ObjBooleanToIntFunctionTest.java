@@ -20,6 +20,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 class ObjBooleanToIntFunctionTest {
+
     @Test
     void of_givenExpression_returnsFunctionalInterface() {
         ObjBooleanToIntFunction<String> function = ObjBooleanToIntFunction.of((t, value) -> Integer.parseInt(t));

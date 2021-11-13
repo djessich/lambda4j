@@ -20,6 +20,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 class ThrowableBooleanTernaryOperatorTest {
+
     @Test
     void of_givenExpression_returnsFunctionalInterface() {
         ThrowableBooleanTernaryOperator<Throwable> operator =

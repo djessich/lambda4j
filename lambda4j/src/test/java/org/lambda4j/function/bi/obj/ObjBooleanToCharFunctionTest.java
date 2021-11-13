@@ -20,6 +20,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 class ObjBooleanToCharFunctionTest {
+
     @Test
     void of_givenExpression_returnsFunctionalInterface() {
         ObjBooleanToCharFunction<String> function = ObjBooleanToCharFunction.of((t, value) -> t.charAt(0));

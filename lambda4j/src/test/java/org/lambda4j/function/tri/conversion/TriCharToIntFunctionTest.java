@@ -20,6 +20,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 class TriCharToIntFunctionTest {
+
     @Test
     void of_givenExpression_returnsFunctionalInterface() {
         TriCharToIntFunction function = TriCharToIntFunction.of((value1, value2, value3) -> 0);

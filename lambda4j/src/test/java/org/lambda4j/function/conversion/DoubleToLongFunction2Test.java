@@ -20,6 +20,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 class DoubleToLongFunction2Test {
+
     @Test
     void of_givenExpression_returnsFunctionalInterface() {
         DoubleToLongFunction2 function = DoubleToLongFunction2.of(value -> 0L);

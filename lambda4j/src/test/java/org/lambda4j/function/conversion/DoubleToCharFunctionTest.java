@@ -20,6 +20,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 class DoubleToCharFunctionTest {
+
     @Test
     void of_givenExpression_returnsFunctionalInterface() {
         DoubleToCharFunction function = DoubleToCharFunction.of(value -> 'c');

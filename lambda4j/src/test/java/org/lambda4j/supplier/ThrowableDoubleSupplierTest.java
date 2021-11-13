@@ -20,6 +20,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 class ThrowableDoubleSupplierTest {
+
     @Test
     void of_givenExpression_returnsFunctionalInterface() {
         ThrowableDoubleSupplier<Throwable> supplier = ThrowableDoubleSupplier.of(() -> Double.MIN_VALUE);

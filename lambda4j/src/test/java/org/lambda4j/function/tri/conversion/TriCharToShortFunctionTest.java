@@ -20,6 +20,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 class TriCharToShortFunctionTest {
+
     @Test
     void of_givenExpression_returnsFunctionalInterface() {
         TriCharToShortFunction function = TriCharToShortFunction.of((value1, value2, value3) -> (short) 0);

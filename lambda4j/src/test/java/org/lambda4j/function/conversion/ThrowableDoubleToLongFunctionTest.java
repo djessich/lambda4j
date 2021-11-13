@@ -20,6 +20,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 class ThrowableDoubleToLongFunctionTest {
+
     @Test
     void of_givenExpression_returnsFunctionalInterface() {
         ThrowableDoubleToLongFunction<Throwable> function = ThrowableDoubleToLongFunction.of(value -> 0L);

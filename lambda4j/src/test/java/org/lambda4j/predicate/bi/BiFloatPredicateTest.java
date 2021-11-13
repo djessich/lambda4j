@@ -20,6 +20,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 class BiFloatPredicateTest {
+
     @Test
     void of_givenExpression_returnsFunctionalInterface() {
         BiFloatPredicate predicate = BiFloatPredicate.of((value1, value2) -> false);

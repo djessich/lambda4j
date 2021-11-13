@@ -26,6 +26,7 @@ import org.junit.jupiter.params.provider.EmptySource;
 import org.junit.jupiter.params.provider.NullSource;
 
 class BiObjFloatFunctionTest {
+
     @Test
     void of_givenExpression_returnsFunctionalInterface() {
         BiObjFloatFunction<String, String, String> function = BiObjFloatFunction.of((t, u, value) -> t);

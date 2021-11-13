@@ -26,6 +26,7 @@ import org.junit.jupiter.params.provider.EmptySource;
 import org.junit.jupiter.params.provider.NullSource;
 
 class TriDoubleFunctionTest {
+
     @Test
     void of_givenExpression_returnsFunctionalInterface() {
         TriDoubleFunction<String> function = TriDoubleFunction.of((value1, value2, value3) -> Double.toString(value1));

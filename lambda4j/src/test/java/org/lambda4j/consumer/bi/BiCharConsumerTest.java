@@ -20,6 +20,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 class BiCharConsumerTest {
+
     @Test
     void of_givenExpression_returnsFunctionalInterface() {
         BiCharConsumer consumer = BiCharConsumer.of((value1, value2) -> {

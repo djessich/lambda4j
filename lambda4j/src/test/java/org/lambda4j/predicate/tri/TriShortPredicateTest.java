@@ -20,6 +20,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 class TriShortPredicateTest {
+
     @Test
     void of_givenExpression_returnsFunctionalInterface() {
         TriShortPredicate predicate = TriShortPredicate.of((value1, value2, value3) -> false);

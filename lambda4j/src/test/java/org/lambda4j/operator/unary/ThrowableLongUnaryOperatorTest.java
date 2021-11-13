@@ -20,6 +20,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 class ThrowableLongUnaryOperatorTest {
+
     @Test
     void of_givenExpression_returnsFunctionalInterface() {
         ThrowableLongUnaryOperator<Throwable> operator = ThrowableLongUnaryOperator.of(value -> value);

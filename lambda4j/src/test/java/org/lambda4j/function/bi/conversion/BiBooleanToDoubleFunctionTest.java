@@ -20,6 +20,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 class BiBooleanToDoubleFunctionTest {
+
     @Test
     void of_givenExpression_returnsFunctionalInterface() {
         BiBooleanToDoubleFunction function = BiBooleanToDoubleFunction.of((value1, value2) -> 0.0d);

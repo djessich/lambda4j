@@ -20,6 +20,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 class ThrowableBiByteConsumerTest {
+
     @Test
     void of_givenExpression_returnsFunctionalInterface() {
         ThrowableBiByteConsumer<Throwable> consumer = ThrowableBiByteConsumer.of((value1, value2) -> {

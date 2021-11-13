@@ -20,6 +20,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 class CharToByteFunctionTest {
+
     @Test
     void of_givenExpression_returnsFunctionalInterface() {
         CharToByteFunction function = CharToByteFunction.of(value -> (byte) 0);

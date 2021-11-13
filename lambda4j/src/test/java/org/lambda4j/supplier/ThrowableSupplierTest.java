@@ -26,6 +26,7 @@ import org.junit.jupiter.params.provider.EmptySource;
 import org.junit.jupiter.params.provider.NullSource;
 
 class ThrowableSupplierTest {
+
     @Test
     void of_givenExpression_returnsFunctionalInterface() {
         ThrowableSupplier<String, Throwable> supplier = ThrowableSupplier.of(() -> "");

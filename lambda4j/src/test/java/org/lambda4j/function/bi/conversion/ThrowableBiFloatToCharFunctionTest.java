@@ -20,6 +20,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 class ThrowableBiFloatToCharFunctionTest {
+
     @Test
     void of_givenExpression_returnsFunctionalInterface() {
         ThrowableBiFloatToCharFunction<Throwable> function = ThrowableBiFloatToCharFunction.of((value1, value2) -> 'c');

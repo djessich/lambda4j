@@ -20,6 +20,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 class ThrowableIntUnaryOperatorTest {
+
     @Test
     void of_givenExpression_returnsFunctionalInterface() {
         ThrowableIntUnaryOperator<Throwable> operator = ThrowableIntUnaryOperator.of(value -> value);

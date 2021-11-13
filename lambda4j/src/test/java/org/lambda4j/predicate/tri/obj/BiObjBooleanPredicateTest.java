@@ -20,6 +20,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 class BiObjBooleanPredicateTest {
+
     @Test
     void of_givenExpression_returnsFunctionalInterface() {
         BiObjBooleanPredicate<String, String> predicate = BiObjBooleanPredicate.of((t, u, value) -> false);

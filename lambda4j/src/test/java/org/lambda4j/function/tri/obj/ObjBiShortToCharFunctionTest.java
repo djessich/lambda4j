@@ -20,6 +20,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 class ObjBiShortToCharFunctionTest {
+
     @Test
     void of_givenExpression_returnsFunctionalInterface() {
         ObjBiShortToCharFunction<String> function = ObjBiShortToCharFunction.of((t, value1, value2) -> t.charAt(0));

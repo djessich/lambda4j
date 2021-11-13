@@ -20,6 +20,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 class BiObjIntToIntFunctionTest {
+
     @Test
     void of_givenExpression_returnsFunctionalInterface() {
         BiObjIntToIntFunction<String, String> function = BiObjIntToIntFunction.of((t, u, value) -> Integer.parseInt(t));

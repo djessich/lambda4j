@@ -20,6 +20,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 class BiLongToCharFunctionTest {
+
     @Test
     void of_givenExpression_returnsFunctionalInterface() {
         BiLongToCharFunction function = BiLongToCharFunction.of((value1, value2) -> 'c');

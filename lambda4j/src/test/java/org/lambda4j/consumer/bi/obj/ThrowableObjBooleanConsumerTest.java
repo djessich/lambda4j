@@ -20,6 +20,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 class ThrowableObjBooleanConsumerTest {
+
     @Test
     void of_givenExpression_returnsFunctionalInterface() {
         ThrowableObjBooleanConsumer<String, Throwable> consumer = ThrowableObjBooleanConsumer.of((t, value) -> {

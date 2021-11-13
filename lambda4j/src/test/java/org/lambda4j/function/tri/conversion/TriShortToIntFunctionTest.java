@@ -20,6 +20,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 class TriShortToIntFunctionTest {
+
     @Test
     void of_givenExpression_returnsFunctionalInterface() {
         TriShortToIntFunction function = TriShortToIntFunction.of((value1, value2, value3) -> 0);

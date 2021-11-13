@@ -26,6 +26,7 @@ import org.junit.jupiter.params.provider.EmptySource;
 import org.junit.jupiter.params.provider.NullSource;
 
 class ShortFunctionTest {
+
     @Test
     void of_givenExpression_returnsFunctionalInterface() {
         ShortFunction<String> function = ShortFunction.of(Short::toString);

@@ -20,6 +20,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 class BiObjShortToLongFunctionTest {
+
     @Test
     void of_givenExpression_returnsFunctionalInterface() {
         BiObjShortToLongFunction<String, String> function =

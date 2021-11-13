@@ -20,6 +20,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 class ToDoubleBiFunction2Test {
+
     @Test
     void of_givenExpression_returnsFunctionalInterface() {
         ToDoubleBiFunction2<String, String> function = ToDoubleBiFunction2.of((t, u) -> Double.parseDouble(t));

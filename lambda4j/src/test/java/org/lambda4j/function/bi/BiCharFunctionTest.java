@@ -26,6 +26,7 @@ import org.junit.jupiter.params.provider.EmptySource;
 import org.junit.jupiter.params.provider.NullSource;
 
 class BiCharFunctionTest {
+
     @Test
     void of_givenExpression_returnsFunctionalInterface() {
         BiCharFunction<String> function = BiCharFunction.of((value1, value2) -> Character.toString(value1));

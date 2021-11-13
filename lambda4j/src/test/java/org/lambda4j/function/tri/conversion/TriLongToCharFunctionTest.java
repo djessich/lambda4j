@@ -20,6 +20,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 class TriLongToCharFunctionTest {
+
     @Test
     void of_givenExpression_returnsFunctionalInterface() {
         TriLongToCharFunction function = TriLongToCharFunction.of((value1, value2, value3) -> 'c');

@@ -20,6 +20,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 class CharToDoubleFunctionTest {
+
     @Test
     void of_givenExpression_returnsFunctionalInterface() {
         CharToDoubleFunction function = CharToDoubleFunction.of(value -> 0.0d);

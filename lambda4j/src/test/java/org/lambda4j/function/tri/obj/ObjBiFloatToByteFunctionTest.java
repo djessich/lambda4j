@@ -20,6 +20,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 class ObjBiFloatToByteFunctionTest {
+
     @Test
     void of_givenExpression_returnsFunctionalInterface() {
         ObjBiFloatToByteFunction<String> function =

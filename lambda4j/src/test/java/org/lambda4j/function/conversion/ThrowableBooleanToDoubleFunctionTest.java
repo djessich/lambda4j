@@ -20,6 +20,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 class ThrowableBooleanToDoubleFunctionTest {
+
     @Test
     void of_givenExpression_returnsFunctionalInterface() {
         ThrowableBooleanToDoubleFunction<Throwable> function = ThrowableBooleanToDoubleFunction.of(value -> 0.0d);

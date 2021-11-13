@@ -20,6 +20,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 class ThrowableBiIntToFloatFunctionTest {
+
     @Test
     void of_givenExpression_returnsFunctionalInterface() {
         ThrowableBiIntToFloatFunction<Throwable> function = ThrowableBiIntToFloatFunction.of((value1, value2) -> 0.0f);

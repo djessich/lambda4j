@@ -20,6 +20,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 class BiObjIntToFloatFunctionTest {
+
     @Test
     void of_givenExpression_returnsFunctionalInterface() {
         BiObjIntToFloatFunction<String, String> function =

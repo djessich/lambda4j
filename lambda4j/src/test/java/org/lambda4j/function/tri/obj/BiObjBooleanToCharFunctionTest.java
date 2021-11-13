@@ -20,6 +20,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 class BiObjBooleanToCharFunctionTest {
+
     @Test
     void of_givenExpression_returnsFunctionalInterface() {
         BiObjBooleanToCharFunction<String, String> function =

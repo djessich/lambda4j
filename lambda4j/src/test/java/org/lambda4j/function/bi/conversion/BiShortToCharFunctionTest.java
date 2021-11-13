@@ -20,6 +20,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 class BiShortToCharFunctionTest {
+
     @Test
     void of_givenExpression_returnsFunctionalInterface() {
         BiShortToCharFunction function = BiShortToCharFunction.of((value1, value2) -> 'c');

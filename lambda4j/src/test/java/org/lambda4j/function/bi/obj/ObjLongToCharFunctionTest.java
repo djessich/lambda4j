@@ -20,6 +20,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 class ObjLongToCharFunctionTest {
+
     @Test
     void of_givenExpression_returnsFunctionalInterface() {
         ObjLongToCharFunction<String> function = ObjLongToCharFunction.of((t, value) -> t.charAt(0));

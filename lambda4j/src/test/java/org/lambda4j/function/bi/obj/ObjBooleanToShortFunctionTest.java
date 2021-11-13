@@ -20,6 +20,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 class ObjBooleanToShortFunctionTest {
+
     @Test
     void of_givenExpression_returnsFunctionalInterface() {
         ObjBooleanToShortFunction<String> function = ObjBooleanToShortFunction.of((t, value) -> Short.parseShort(t));

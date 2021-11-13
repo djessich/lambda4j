@@ -20,6 +20,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 class ObjBiShortConsumerTest {
+
     @Test
     void of_givenExpression_returnsFunctionalInterface() {
         ObjBiShortConsumer<String> consumer = ObjBiShortConsumer.of((t, value1, value2) -> {

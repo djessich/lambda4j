@@ -20,6 +20,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 class ThrowableObjFloatPredicateTest {
+
     @Test
     void of_givenExpression_returnsFunctionalInterface() {
         ThrowableObjFloatPredicate<String, Throwable> predicate = ThrowableObjFloatPredicate.of((t, value) -> false);

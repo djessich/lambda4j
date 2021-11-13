@@ -20,6 +20,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 class ObjBiByteToCharFunctionTest {
+
     @Test
     void of_givenExpression_returnsFunctionalInterface() {
         ObjBiByteToCharFunction<String> function = ObjBiByteToCharFunction.of((t, value1, value2) -> t.charAt(0));

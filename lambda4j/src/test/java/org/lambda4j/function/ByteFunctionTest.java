@@ -26,6 +26,7 @@ import org.junit.jupiter.params.provider.EmptySource;
 import org.junit.jupiter.params.provider.NullSource;
 
 class ByteFunctionTest {
+
     @Test
     void of_givenExpression_returnsFunctionalInterface() {
         ByteFunction<String> function = ByteFunction.of(Byte::toString);

@@ -20,6 +20,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 class FloatToLongFunctionTest {
+
     @Test
     void of_givenExpression_returnsFunctionalInterface() {
         FloatToLongFunction function = FloatToLongFunction.of(value -> 0L);

@@ -20,6 +20,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 class TriCharConsumerTest {
+
     @Test
     void of_givenExpression_returnsFunctionalInterface() {
         TriCharConsumer consumer = TriCharConsumer.of((value1, value2, value3) -> {

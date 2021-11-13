@@ -20,6 +20,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 class TriFloatToLongFunctionTest {
+
     @Test
     void of_givenExpression_returnsFunctionalInterface() {
         TriFloatToLongFunction function = TriFloatToLongFunction.of((value1, value2, value3) -> 0L);

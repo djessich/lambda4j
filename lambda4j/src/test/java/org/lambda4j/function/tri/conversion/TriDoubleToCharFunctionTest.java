@@ -20,6 +20,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 class TriDoubleToCharFunctionTest {
+
     @Test
     void of_givenExpression_returnsFunctionalInterface() {
         TriDoubleToCharFunction function = TriDoubleToCharFunction.of((value1, value2, value3) -> 'c');

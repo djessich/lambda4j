@@ -20,6 +20,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 class BiObjLongToCharFunctionTest {
+
     @Test
     void of_givenExpression_returnsFunctionalInterface() {
         BiObjLongToCharFunction<String, String> function = BiObjLongToCharFunction.of((t, u, value) -> t.charAt(0));

@@ -20,6 +20,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 class ToFloatTriFunctionTest {
+
     @Test
     void of_givenExpression_returnsFunctionalInterface() {
         ToFloatTriFunction<String, String, String> function = ToFloatTriFunction.of((t, u, v) -> Float.parseFloat(t));

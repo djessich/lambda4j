@@ -20,6 +20,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 class ObjLongToShortFunctionTest {
+
     @Test
     void of_givenExpression_returnsFunctionalInterface() {
         ObjLongToShortFunction<String> function = ObjLongToShortFunction.of((t, value) -> Short.parseShort(t));

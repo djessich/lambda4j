@@ -20,6 +20,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 class ByteConsumerTest {
+
     @Test
     void of_givenExpression_returnsFunctionalInterface() {
         ByteConsumer consumer = ByteConsumer.of(Assertions::assertNotNull);

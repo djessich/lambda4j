@@ -20,6 +20,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 class BiFloatToShortFunctionTest {
+
     @Test
     void of_givenExpression_returnsFunctionalInterface() {
         BiFloatToShortFunction function = BiFloatToShortFunction.of((value1, value2) -> (short) 0);

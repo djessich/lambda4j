@@ -20,6 +20,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 class BiBooleanConsumerTest {
+
     @Test
     void of_givenExpression_returnsFunctionalInterface() {
         BiBooleanConsumer consumer = BiBooleanConsumer.of((value1, value2) -> {

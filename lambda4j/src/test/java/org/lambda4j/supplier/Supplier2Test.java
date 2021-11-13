@@ -26,6 +26,7 @@ import org.junit.jupiter.params.provider.EmptySource;
 import org.junit.jupiter.params.provider.NullSource;
 
 class Supplier2Test {
+
     @Test
     void of_givenExpression_returnsFunctionalInterface() {
         Supplier2<String> supplier = Supplier2.of(() -> "");

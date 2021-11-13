@@ -20,6 +20,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 class ToIntBiFunction2Test {
+
     @Test
     void of_givenExpression_returnsFunctionalInterface() {
         ToIntBiFunction2<String, String> function = ToIntBiFunction2.of((t, u) -> Integer.parseInt(t));

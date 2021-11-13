@@ -20,6 +20,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 class ThrowableBiFloatToLongFunctionTest {
+
     @Test
     void of_givenExpression_returnsFunctionalInterface() {
         ThrowableBiFloatToLongFunction<Throwable> function = ThrowableBiFloatToLongFunction.of((value1, value2) -> 0L);

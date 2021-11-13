@@ -20,6 +20,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 class ShortConsumerTest {
+
     @Test
     void of_givenExpression_returnsFunctionalInterface() {
         ShortConsumer consumer = ShortConsumer.of(Assertions::assertNotNull);

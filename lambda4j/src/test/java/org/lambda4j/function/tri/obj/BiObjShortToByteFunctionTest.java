@@ -20,6 +20,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 class BiObjShortToByteFunctionTest {
+
     @Test
     void of_givenExpression_returnsFunctionalInterface() {
         BiObjShortToByteFunction<String, String> function =

@@ -20,6 +20,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 class ThrowableTriBooleanConsumerTest {
+
     @Test
     void of_givenExpression_returnsFunctionalInterface() {
         ThrowableTriBooleanConsumer<Throwable> consumer = ThrowableTriBooleanConsumer.of((value1, value2, value3) -> {

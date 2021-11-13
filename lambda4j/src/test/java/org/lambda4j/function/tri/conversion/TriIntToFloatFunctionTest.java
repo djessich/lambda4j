@@ -20,6 +20,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 class TriIntToFloatFunctionTest {
+
     @Test
     void of_givenExpression_returnsFunctionalInterface() {
         TriIntToFloatFunction function = TriIntToFloatFunction.of((value1, value2, value3) -> 0.0f);

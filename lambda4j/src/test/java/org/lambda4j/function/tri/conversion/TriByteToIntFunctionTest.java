@@ -20,6 +20,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 class TriByteToIntFunctionTest {
+
     @Test
     void of_givenExpression_returnsFunctionalInterface() {
         TriByteToIntFunction function = TriByteToIntFunction.of((value1, value2, value3) -> 0);

@@ -20,6 +20,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 class BinaryOperator2Test {
+
     @Test
     void of_givenExpression_returnsFunctionalInterface() {
         BinaryOperator2<String> operator = BinaryOperator2.of((t, u) -> t);

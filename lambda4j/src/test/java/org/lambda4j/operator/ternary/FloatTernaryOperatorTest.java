@@ -20,6 +20,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 class FloatTernaryOperatorTest {
+
     @Test
     void of_givenExpression_returnsFunctionalInterface() {
         FloatTernaryOperator operator = FloatTernaryOperator.of((value1, value2, value3) -> value1);

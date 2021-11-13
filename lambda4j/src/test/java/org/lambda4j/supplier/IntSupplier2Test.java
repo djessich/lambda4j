@@ -20,6 +20,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 class IntSupplier2Test {
+
     @Test
     void of_givenExpression_returnsFunctionalInterface() {
         IntSupplier2 supplier = IntSupplier2.of(() -> Integer.MIN_VALUE);

@@ -20,6 +20,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 class BiIntToByteFunctionTest {
+
     @Test
     void of_givenExpression_returnsFunctionalInterface() {
         BiIntToByteFunction function = BiIntToByteFunction.of((value1, value2) -> (byte) 0);

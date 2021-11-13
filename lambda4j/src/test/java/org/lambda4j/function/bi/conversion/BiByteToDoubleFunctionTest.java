@@ -20,6 +20,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 class BiByteToDoubleFunctionTest {
+
     @Test
     void of_givenExpression_returnsFunctionalInterface() {
         BiByteToDoubleFunction function = BiByteToDoubleFunction.of((value1, value2) -> 0.0d);

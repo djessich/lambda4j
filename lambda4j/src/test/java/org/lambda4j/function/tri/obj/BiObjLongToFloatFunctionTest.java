@@ -20,6 +20,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 class BiObjLongToFloatFunctionTest {
+
     @Test
     void of_givenExpression_returnsFunctionalInterface() {
         BiObjLongToFloatFunction<String, String> function =

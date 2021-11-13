@@ -20,6 +20,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 class BiDoubleToFloatFunctionTest {
+
     @Test
     void of_givenExpression_returnsFunctionalInterface() {
         BiDoubleToFloatFunction function = BiDoubleToFloatFunction.of((value1, value2) -> 0.0f);

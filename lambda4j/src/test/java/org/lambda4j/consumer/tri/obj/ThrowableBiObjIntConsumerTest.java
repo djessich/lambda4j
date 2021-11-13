@@ -20,6 +20,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 class ThrowableBiObjIntConsumerTest {
+
     @Test
     void of_givenExpression_returnsFunctionalInterface() {
         ThrowableBiObjIntConsumer<String, String, Throwable> consumer = ThrowableBiObjIntConsumer.of((t, u, value) -> {

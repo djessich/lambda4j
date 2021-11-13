@@ -20,6 +20,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 class ThrowableByteBinaryOperatorTest {
+
     @Test
     void of_givenExpression_returnsFunctionalInterface() {
         ThrowableByteBinaryOperator<Throwable> operator = ThrowableByteBinaryOperator.of((value1, value2) -> value1);

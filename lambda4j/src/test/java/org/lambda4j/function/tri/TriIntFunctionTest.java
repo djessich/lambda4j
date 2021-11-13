@@ -26,6 +26,7 @@ import org.junit.jupiter.params.provider.EmptySource;
 import org.junit.jupiter.params.provider.NullSource;
 
 class TriIntFunctionTest {
+
     @Test
     void of_givenExpression_returnsFunctionalInterface() {
         TriIntFunction<String> function = TriIntFunction.of((value1, value2, value3) -> Integer.toString(value1));

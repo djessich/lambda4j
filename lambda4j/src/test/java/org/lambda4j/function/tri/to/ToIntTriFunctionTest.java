@@ -20,6 +20,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 class ToIntTriFunctionTest {
+
     @Test
     void of_givenExpression_returnsFunctionalInterface() {
         ToIntTriFunction<String, String, String> function = ToIntTriFunction.of((t, u, v) -> Integer.parseInt(t));

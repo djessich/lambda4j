@@ -20,6 +20,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 class BooleanToByteFunctionTest {
+
     @Test
     void of_givenExpression_returnsFunctionalInterface() {
         BooleanToByteFunction function = BooleanToByteFunction.of(value -> (byte) 0);

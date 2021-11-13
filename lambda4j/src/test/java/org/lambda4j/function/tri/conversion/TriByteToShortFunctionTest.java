@@ -20,6 +20,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 class TriByteToShortFunctionTest {
+
     @Test
     void of_givenExpression_returnsFunctionalInterface() {
         TriByteToShortFunction function = TriByteToShortFunction.of((value1, value2, value3) -> (short) 0);

@@ -20,6 +20,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 class ToShortBiFunctionTest {
+
     @Test
     void of_givenExpression_returnsFunctionalInterface() {
         ToShortBiFunction<String, String> function = ToShortBiFunction.of((t, u) -> Short.parseShort(t));

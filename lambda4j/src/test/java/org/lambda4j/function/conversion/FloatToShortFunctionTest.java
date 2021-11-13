@@ -20,6 +20,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 class FloatToShortFunctionTest {
+
     @Test
     void of_givenExpression_returnsFunctionalInterface() {
         FloatToShortFunction function = FloatToShortFunction.of(value -> (short) 0);

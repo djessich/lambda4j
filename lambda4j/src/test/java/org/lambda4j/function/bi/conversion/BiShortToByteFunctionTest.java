@@ -20,6 +20,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 class BiShortToByteFunctionTest {
+
     @Test
     void of_givenExpression_returnsFunctionalInterface() {
         BiShortToByteFunction function = BiShortToByteFunction.of((value1, value2) -> (byte) 0);

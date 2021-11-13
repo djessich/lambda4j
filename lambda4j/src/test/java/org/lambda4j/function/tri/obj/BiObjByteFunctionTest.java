@@ -26,6 +26,7 @@ import org.junit.jupiter.params.provider.EmptySource;
 import org.junit.jupiter.params.provider.NullSource;
 
 class BiObjByteFunctionTest {
+
     @Test
     void of_givenExpression_returnsFunctionalInterface() {
         BiObjByteFunction<String, String, String> function = BiObjByteFunction.of((t, u, value) -> t);

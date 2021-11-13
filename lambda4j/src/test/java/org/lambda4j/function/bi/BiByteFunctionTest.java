@@ -26,6 +26,7 @@ import org.junit.jupiter.params.provider.EmptySource;
 import org.junit.jupiter.params.provider.NullSource;
 
 class BiByteFunctionTest {
+
     @Test
     void of_givenExpression_returnsFunctionalInterface() {
         BiByteFunction<String> function = BiByteFunction.of((value1, value2) -> Byte.toString(value1));

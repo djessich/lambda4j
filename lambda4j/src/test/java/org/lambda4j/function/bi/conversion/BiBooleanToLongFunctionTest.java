@@ -20,6 +20,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 class BiBooleanToLongFunctionTest {
+
     @Test
     void of_givenExpression_returnsFunctionalInterface() {
         BiBooleanToLongFunction function = BiBooleanToLongFunction.of((value1, value2) -> 0L);

@@ -20,6 +20,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 class ObjCharToShortFunctionTest {
+
     @Test
     void of_givenExpression_returnsFunctionalInterface() {
         ObjCharToShortFunction<String> function = ObjCharToShortFunction.of((t, value) -> Short.parseShort(t));

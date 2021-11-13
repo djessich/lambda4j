@@ -20,6 +20,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 class ObjFloatToIntFunctionTest {
+
     @Test
     void of_givenExpression_returnsFunctionalInterface() {
         ObjFloatToIntFunction<String> function = ObjFloatToIntFunction.of((t, value) -> Integer.parseInt(t));

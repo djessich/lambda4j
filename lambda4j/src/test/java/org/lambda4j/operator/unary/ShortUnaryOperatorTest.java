@@ -20,6 +20,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 class ShortUnaryOperatorTest {
+
     @Test
     void of_givenExpression_returnsFunctionalInterface() {
         ShortUnaryOperator operator = ShortUnaryOperator.of(value -> value);

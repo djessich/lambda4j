@@ -20,6 +20,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 class BooleanToCharFunctionTest {
+
     @Test
     void of_givenExpression_returnsFunctionalInterface() {
         BooleanToCharFunction function = BooleanToCharFunction.of(value -> 'c');

@@ -20,6 +20,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 class ThrowableDoubleUnaryOperatorTest {
+
     @Test
     void of_givenExpression_returnsFunctionalInterface() {
         ThrowableDoubleUnaryOperator<Throwable> operator = ThrowableDoubleUnaryOperator.of(value -> value);

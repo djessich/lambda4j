@@ -20,6 +20,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 class CharToIntFunctionTest {
+
     @Test
     void of_givenExpression_returnsFunctionalInterface() {
         CharToIntFunction function = CharToIntFunction.of(value -> 0);

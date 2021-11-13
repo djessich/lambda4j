@@ -20,6 +20,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 class ThrowableObjBiLongConsumerTest {
+
     @Test
     void of_givenExpression_returnsFunctionalInterface() {
         ThrowableObjBiLongConsumer<String, Throwable> consumer = ThrowableObjBiLongConsumer.of((t, value1, value2) -> {

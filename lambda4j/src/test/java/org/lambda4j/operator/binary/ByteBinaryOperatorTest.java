@@ -20,6 +20,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 class ByteBinaryOperatorTest {
+
     @Test
     void of_givenExpression_returnsFunctionalInterface() {
         ByteBinaryOperator operator = ByteBinaryOperator.of((value1, value2) -> value1);

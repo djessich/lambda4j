@@ -20,6 +20,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 class FloatPredicateTest {
+
     @Test
     void of_givenExpression_returnsFunctionalInterface() {
         FloatPredicate predicate = FloatPredicate.of(value -> false);

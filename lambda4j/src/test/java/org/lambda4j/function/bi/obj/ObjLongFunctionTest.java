@@ -26,6 +26,7 @@ import org.junit.jupiter.params.provider.EmptySource;
 import org.junit.jupiter.params.provider.NullSource;
 
 class ObjLongFunctionTest {
+
     @Test
     void of_givenExpression_returnsFunctionalInterface() {
         ObjLongFunction<String, String> function = ObjLongFunction.of((t, value) -> t);

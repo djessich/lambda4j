@@ -20,6 +20,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 class TriFloatPredicateTest {
+
     @Test
     void of_givenExpression_returnsFunctionalInterface() {
         TriFloatPredicate predicate = TriFloatPredicate.of((value1, value2, value3) -> false);

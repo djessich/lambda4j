@@ -20,6 +20,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 class ObjFloatToByteFunctionTest {
+
     @Test
     void of_givenExpression_returnsFunctionalInterface() {
         ObjFloatToByteFunction<String> function = ObjFloatToByteFunction.of((t, value) -> Byte.parseByte(t));

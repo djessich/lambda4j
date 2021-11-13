@@ -20,6 +20,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 class TriCharToFloatFunctionTest {
+
     @Test
     void of_givenExpression_returnsFunctionalInterface() {
         TriCharToFloatFunction function = TriCharToFloatFunction.of((value1, value2, value3) -> 0.0f);

@@ -20,6 +20,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 class ObjCharConsumerTest {
+
     @Test
     void of_givenExpression_returnsFunctionalInterface() {
         ObjCharConsumer<String> consumer = ObjCharConsumer.of((t, value) -> {

@@ -20,6 +20,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 class BiFloatConsumerTest {
+
     @Test
     void of_givenExpression_returnsFunctionalInterface() {
         BiFloatConsumer consumer = BiFloatConsumer.of((value1, value2) -> {

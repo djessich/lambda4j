@@ -20,6 +20,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 class TernaryOperatorTest {
+
     @Test
     void of_givenExpression_returnsFunctionalInterface() {
         TernaryOperator<String> operator = TernaryOperator.of((t, u, v) -> t);

@@ -26,6 +26,7 @@ import org.junit.jupiter.params.provider.EmptySource;
 import org.junit.jupiter.params.provider.NullSource;
 
 class TriFloatFunctionTest {
+
     @Test
     void of_givenExpression_returnsFunctionalInterface() {
         TriFloatFunction<String> function = TriFloatFunction.of((value1, value2, value3) -> Float.toString(value1));

@@ -26,6 +26,7 @@ import org.junit.jupiter.params.provider.EmptySource;
 import org.junit.jupiter.params.provider.NullSource;
 
 class Function2Test {
+
     @Test
     void of_givenExpression_returnsFunctionalInterface() {
         Function2<String, String> function = Function2.of(t -> t);

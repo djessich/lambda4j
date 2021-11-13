@@ -20,6 +20,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 class TriBooleanToIntFunctionTest {
+
     @Test
     void of_givenExpression_returnsFunctionalInterface() {
         TriBooleanToIntFunction function = TriBooleanToIntFunction.of((value1, value2, value3) -> 0);

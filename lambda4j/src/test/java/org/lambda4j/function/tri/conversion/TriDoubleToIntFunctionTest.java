@@ -20,6 +20,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 class TriDoubleToIntFunctionTest {
+
     @Test
     void of_givenExpression_returnsFunctionalInterface() {
         TriDoubleToIntFunction function = TriDoubleToIntFunction.of((value1, value2, value3) -> 0);

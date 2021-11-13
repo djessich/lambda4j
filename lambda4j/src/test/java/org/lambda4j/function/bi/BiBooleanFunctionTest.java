@@ -26,6 +26,7 @@ import org.junit.jupiter.params.provider.EmptySource;
 import org.junit.jupiter.params.provider.NullSource;
 
 class BiBooleanFunctionTest {
+
     @Test
     void of_givenExpression_returnsFunctionalInterface() {
         BiBooleanFunction<String> function = BiBooleanFunction.of((value1, value2) -> Boolean.toString(value1));

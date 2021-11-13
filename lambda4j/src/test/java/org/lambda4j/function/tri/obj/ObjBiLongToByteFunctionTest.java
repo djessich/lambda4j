@@ -20,6 +20,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 class ObjBiLongToByteFunctionTest {
+
     @Test
     void of_givenExpression_returnsFunctionalInterface() {
         ObjBiLongToByteFunction<String> function = ObjBiLongToByteFunction.of((t, value1, value2) -> Byte.parseByte(t));

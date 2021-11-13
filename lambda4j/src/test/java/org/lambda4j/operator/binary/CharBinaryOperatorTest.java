@@ -20,6 +20,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 class CharBinaryOperatorTest {
+
     @Test
     void of_givenExpression_returnsFunctionalInterface() {
         CharBinaryOperator operator = CharBinaryOperator.of((value1, value2) -> value1);

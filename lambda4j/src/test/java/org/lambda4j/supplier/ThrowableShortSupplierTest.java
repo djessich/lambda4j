@@ -20,6 +20,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 class ThrowableShortSupplierTest {
+
     @Test
     void of_givenExpression_returnsFunctionalInterface() {
         ThrowableShortSupplier<Throwable> supplier = ThrowableShortSupplier.of(() -> Short.MIN_VALUE);

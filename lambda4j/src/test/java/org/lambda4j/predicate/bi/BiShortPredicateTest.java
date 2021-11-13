@@ -20,6 +20,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 class BiShortPredicateTest {
+
     @Test
     void of_givenExpression_returnsFunctionalInterface() {
         BiShortPredicate predicate = BiShortPredicate.of((value1, value2) -> false);

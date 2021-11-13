@@ -20,6 +20,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 class LongSupplier2Test {
+
     @Test
     void of_givenExpression_returnsFunctionalInterface() {
         LongSupplier2 supplier = LongSupplier2.of(() -> Long.MIN_VALUE);

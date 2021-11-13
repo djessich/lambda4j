@@ -26,6 +26,7 @@ import org.junit.jupiter.params.provider.EmptySource;
 import org.junit.jupiter.params.provider.NullSource;
 
 class BiShortFunctionTest {
+
     @Test
     void of_givenExpression_returnsFunctionalInterface() {
         BiShortFunction<String> function = BiShortFunction.of((value1, value2) -> Short.toString(value1));

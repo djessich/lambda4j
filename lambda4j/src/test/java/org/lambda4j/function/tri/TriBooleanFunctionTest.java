@@ -26,6 +26,7 @@ import org.junit.jupiter.params.provider.EmptySource;
 import org.junit.jupiter.params.provider.NullSource;
 
 class TriBooleanFunctionTest {
+
     @Test
     void of_givenExpression_returnsFunctionalInterface() {
         TriBooleanFunction<String> function =

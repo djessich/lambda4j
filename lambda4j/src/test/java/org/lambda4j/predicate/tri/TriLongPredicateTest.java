@@ -20,6 +20,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 class TriLongPredicateTest {
+
     @Test
     void of_givenExpression_returnsFunctionalInterface() {
         TriLongPredicate predicate = TriLongPredicate.of((value1, value2, value3) -> false);

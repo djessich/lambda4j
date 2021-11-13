@@ -26,6 +26,7 @@ import org.junit.jupiter.params.provider.EmptySource;
 import org.junit.jupiter.params.provider.NullSource;
 
 class BiIntFunctionTest {
+
     @Test
     void of_givenExpression_returnsFunctionalInterface() {
         BiIntFunction<String> function = BiIntFunction.of((value1, value2) -> Integer.toString(value1));

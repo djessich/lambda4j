@@ -20,6 +20,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 class LongToShortFunctionTest {
+
     @Test
     void of_givenExpression_returnsFunctionalInterface() {
         LongToShortFunction function = LongToShortFunction.of(value -> (short) 0);

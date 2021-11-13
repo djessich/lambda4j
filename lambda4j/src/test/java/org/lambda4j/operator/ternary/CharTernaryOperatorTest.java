@@ -20,6 +20,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 class CharTernaryOperatorTest {
+
     @Test
     void of_givenExpression_returnsFunctionalInterface() {
         CharTernaryOperator operator = CharTernaryOperator.of((value1, value2, value3) -> value1);

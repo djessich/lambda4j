@@ -20,6 +20,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 class ShortToIntFunctionTest {
+
     @Test
     void of_givenExpression_returnsFunctionalInterface() {
         ShortToIntFunction function = ShortToIntFunction.of(value -> 0);

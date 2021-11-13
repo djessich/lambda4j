@@ -26,6 +26,7 @@ import org.junit.jupiter.params.provider.EmptySource;
 import org.junit.jupiter.params.provider.NullSource;
 
 class BooleanFunctionTest {
+
     @Test
     void of_givenExpression_returnsFunctionalInterface() {
         BooleanFunction<String> function = BooleanFunction.of(Boolean::toString);

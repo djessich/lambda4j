@@ -20,6 +20,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 class ByteToShortFunctionTest {
+
     @Test
     void of_givenExpression_returnsFunctionalInterface() {
         ByteToShortFunction function = ByteToShortFunction.of(value -> (short) 0);

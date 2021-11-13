@@ -20,6 +20,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 class ThrowableBiDoubleToIntFunctionTest {
+
     @Test
     void of_givenExpression_returnsFunctionalInterface() {
         ThrowableBiDoubleToIntFunction<Throwable> function = ThrowableBiDoubleToIntFunction.of((value1, value2) -> 0);

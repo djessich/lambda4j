@@ -26,6 +26,7 @@ import org.junit.jupiter.params.provider.EmptySource;
 import org.junit.jupiter.params.provider.NullSource;
 
 class TriFunctionTest {
+
     @Test
     void of_givenExpression_returnsFunctionalInterface() {
         TriFunction<String, String, String, String> function = TriFunction.of((t, u, v) -> t);

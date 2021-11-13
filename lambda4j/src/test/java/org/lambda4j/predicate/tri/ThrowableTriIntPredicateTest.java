@@ -20,6 +20,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 class ThrowableTriIntPredicateTest {
+
     @Test
     void of_givenExpression_returnsFunctionalInterface() {
         ThrowableTriIntPredicate<Throwable> predicate = ThrowableTriIntPredicate.of((value1, value2, value3) -> false);

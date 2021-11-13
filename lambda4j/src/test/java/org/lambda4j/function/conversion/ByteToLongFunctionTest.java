@@ -20,6 +20,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 class ByteToLongFunctionTest {
+
     @Test
     void of_givenExpression_returnsFunctionalInterface() {
         ByteToLongFunction function = ByteToLongFunction.of(value -> 0L);

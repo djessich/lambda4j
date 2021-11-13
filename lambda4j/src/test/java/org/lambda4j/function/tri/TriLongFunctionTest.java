@@ -26,6 +26,7 @@ import org.junit.jupiter.params.provider.EmptySource;
 import org.junit.jupiter.params.provider.NullSource;
 
 class TriLongFunctionTest {
+
     @Test
     void of_givenExpression_returnsFunctionalInterface() {
         TriLongFunction<String> function = TriLongFunction.of((value1, value2, value3) -> Long.toString(value1));

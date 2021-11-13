@@ -20,6 +20,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 class ObjLongToDoubleFunctionTest {
+
     @Test
     void of_givenExpression_returnsFunctionalInterface() {
         ObjLongToDoubleFunction<String> function = ObjLongToDoubleFunction.of((t, value) -> Double.parseDouble(t));

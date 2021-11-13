@@ -26,6 +26,7 @@ import org.junit.jupiter.params.provider.EmptySource;
 import org.junit.jupiter.params.provider.NullSource;
 
 class TriByteFunctionTest {
+
     @Test
     void of_givenExpression_returnsFunctionalInterface() {
         TriByteFunction<String> function = TriByteFunction.of((value1, value2, value3) -> Byte.toString(value1));

@@ -20,6 +20,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 class TriIntToLongFunctionTest {
+
     @Test
     void of_givenExpression_returnsFunctionalInterface() {
         TriIntToLongFunction function = TriIntToLongFunction.of((value1, value2, value3) -> 0L);

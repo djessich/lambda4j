@@ -20,6 +20,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 class BooleanTernaryOperatorTest {
+
     @Test
     void of_givenExpression_returnsFunctionalInterface() {
         BooleanTernaryOperator operator = BooleanTernaryOperator.of((value1, value2, value3) -> value1);

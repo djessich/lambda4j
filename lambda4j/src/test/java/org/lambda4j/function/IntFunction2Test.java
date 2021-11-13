@@ -26,6 +26,7 @@ import org.junit.jupiter.params.provider.EmptySource;
 import org.junit.jupiter.params.provider.NullSource;
 
 class IntFunction2Test {
+
     @Test
     void of_givenExpression_returnsFunctionalInterface() {
         IntFunction2<String> function = IntFunction2.of(Integer::toString);

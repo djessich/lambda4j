@@ -20,6 +20,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 class ToCharBiFunctionTest {
+
     @Test
     void of_givenExpression_returnsFunctionalInterface() {
         ToCharBiFunction<String, String> function = ToCharBiFunction.of((t, u) -> t.charAt(0));

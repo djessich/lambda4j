@@ -20,6 +20,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 class ObjDoubleToFloatFunctionTest {
+
     @Test
     void of_givenExpression_returnsFunctionalInterface() {
         ObjDoubleToFloatFunction<String> function = ObjDoubleToFloatFunction.of((t, value) -> Float.parseFloat(t));

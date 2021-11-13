@@ -20,6 +20,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 class DoubleToByteFunctionTest {
+
     @Test
     void of_givenExpression_returnsFunctionalInterface() {
         DoubleToByteFunction function = DoubleToByteFunction.of(value -> (byte) 0);

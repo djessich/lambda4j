@@ -20,6 +20,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 class ShortToByteFunctionTest {
+
     @Test
     void of_givenExpression_returnsFunctionalInterface() {
         ShortToByteFunction function = ShortToByteFunction.of(value -> (byte) 0);

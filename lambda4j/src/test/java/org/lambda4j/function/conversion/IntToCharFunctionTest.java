@@ -20,6 +20,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 class IntToCharFunctionTest {
+
     @Test
     void of_givenExpression_returnsFunctionalInterface() {
         IntToCharFunction function = IntToCharFunction.of(value -> 'c');

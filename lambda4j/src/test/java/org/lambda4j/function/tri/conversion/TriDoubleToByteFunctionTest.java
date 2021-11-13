@@ -20,6 +20,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 class TriDoubleToByteFunctionTest {
+
     @Test
     void of_givenExpression_returnsFunctionalInterface() {
         TriDoubleToByteFunction function = TriDoubleToByteFunction.of((value1, value2, value3) -> (byte) 0);

@@ -20,6 +20,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 class IntToLongFunction2Test {
+
     @Test
     void of_givenExpression_returnsFunctionalInterface() {
         IntToLongFunction2 function = IntToLongFunction2.of(value -> 0L);

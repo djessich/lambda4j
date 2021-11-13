@@ -26,6 +26,7 @@ import org.junit.jupiter.params.provider.EmptySource;
 import org.junit.jupiter.params.provider.NullSource;
 
 class LongFunction2Test {
+
     @Test
     void of_givenExpression_returnsFunctionalInterface() {
         LongFunction2<String> function = LongFunction2.of(Long::toString);

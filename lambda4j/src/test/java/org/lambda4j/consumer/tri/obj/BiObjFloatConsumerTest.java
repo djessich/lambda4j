@@ -20,6 +20,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 class BiObjFloatConsumerTest {
+
     @Test
     void of_givenExpression_returnsFunctionalInterface() {
         BiObjFloatConsumer<String, String> consumer = BiObjFloatConsumer.of((t, u, value) -> {

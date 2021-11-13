@@ -20,6 +20,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 class ByteSupplierTest {
+
     @Test
     void of_givenExpression_returnsFunctionalInterface() {
         ByteSupplier supplier = ByteSupplier.of(() -> Byte.MIN_VALUE);

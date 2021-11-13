@@ -20,6 +20,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 class LongToCharFunctionTest {
+
     @Test
     void of_givenExpression_returnsFunctionalInterface() {
         LongToCharFunction function = LongToCharFunction.of(value -> 'c');

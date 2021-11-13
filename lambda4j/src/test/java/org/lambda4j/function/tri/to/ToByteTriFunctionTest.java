@@ -20,6 +20,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 class ToByteTriFunctionTest {
+
     @Test
     void of_givenExpression_returnsFunctionalInterface() {
         ToByteTriFunction<String, String, String> function = ToByteTriFunction.of((t, u, v) -> Byte.parseByte(t));

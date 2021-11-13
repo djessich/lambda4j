@@ -20,6 +20,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 class ObjCharToDoubleFunctionTest {
+
     @Test
     void of_givenExpression_returnsFunctionalInterface() {
         ObjCharToDoubleFunction<String> function = ObjCharToDoubleFunction.of((t, value) -> Double.parseDouble(t));

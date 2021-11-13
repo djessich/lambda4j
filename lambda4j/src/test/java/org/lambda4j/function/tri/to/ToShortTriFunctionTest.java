@@ -20,6 +20,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 class ToShortTriFunctionTest {
+
     @Test
     void of_givenExpression_returnsFunctionalInterface() {
         ToShortTriFunction<String, String, String> function = ToShortTriFunction.of((t, u, v) -> Short.parseShort(t));

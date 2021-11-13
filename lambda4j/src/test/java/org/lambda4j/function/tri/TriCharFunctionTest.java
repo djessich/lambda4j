@@ -26,6 +26,7 @@ import org.junit.jupiter.params.provider.EmptySource;
 import org.junit.jupiter.params.provider.NullSource;
 
 class TriCharFunctionTest {
+
     @Test
     void of_givenExpression_returnsFunctionalInterface() {
         TriCharFunction<String> function = TriCharFunction.of((value1, value2, value3) -> Character.toString(value1));

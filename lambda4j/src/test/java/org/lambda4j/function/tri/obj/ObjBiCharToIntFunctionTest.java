@@ -20,6 +20,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 class ObjBiCharToIntFunctionTest {
+
     @Test
     void of_givenExpression_returnsFunctionalInterface() {
         ObjBiCharToIntFunction<String> function = ObjBiCharToIntFunction.of((t, value1, value2) -> Integer.parseInt(t));

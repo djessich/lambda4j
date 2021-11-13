@@ -20,6 +20,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 class ToCharTriFunctionTest {
+
     @Test
     void of_givenExpression_returnsFunctionalInterface() {
         ToCharTriFunction<String, String, String> function = ToCharTriFunction.of((t, u, v) -> t.charAt(0));

@@ -20,6 +20,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 class TriCharToDoubleFunctionTest {
+
     @Test
     void of_givenExpression_returnsFunctionalInterface() {
         TriCharToDoubleFunction function = TriCharToDoubleFunction.of((value1, value2, value3) -> 0.0d);

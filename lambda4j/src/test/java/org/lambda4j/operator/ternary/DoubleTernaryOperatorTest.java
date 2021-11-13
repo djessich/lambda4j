@@ -20,6 +20,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 class DoubleTernaryOperatorTest {
+
     @Test
     void of_givenExpression_returnsFunctionalInterface() {
         DoubleTernaryOperator operator = DoubleTernaryOperator.of((value1, value2, value3) -> value1);

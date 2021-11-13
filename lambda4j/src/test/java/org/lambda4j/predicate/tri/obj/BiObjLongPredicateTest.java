@@ -20,6 +20,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 class BiObjLongPredicateTest {
+
     @Test
     void of_givenExpression_returnsFunctionalInterface() {
         BiObjLongPredicate<String, String> predicate = BiObjLongPredicate.of((t, u, value) -> false);

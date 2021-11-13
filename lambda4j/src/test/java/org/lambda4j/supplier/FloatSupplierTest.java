@@ -20,6 +20,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 class FloatSupplierTest {
+
     @Test
     void of_givenExpression_returnsFunctionalInterface() {
         FloatSupplier supplier = FloatSupplier.of(() -> Float.MIN_VALUE);

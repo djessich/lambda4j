@@ -20,6 +20,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 class ObjDoublePredicateTest {
+
     @Test
     void of_givenExpression_returnsFunctionalInterface() {
         ObjDoublePredicate<String> predicate = ObjDoublePredicate.of((t, value) -> false);

@@ -20,6 +20,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 class ToLongTriFunctionTest {
+
     @Test
     void of_givenExpression_returnsFunctionalInterface() {
         ToLongTriFunction<String, String, String> function = ToLongTriFunction.of((t, u, v) -> Long.parseLong(t));

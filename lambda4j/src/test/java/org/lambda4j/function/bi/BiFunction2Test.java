@@ -26,6 +26,7 @@ import org.junit.jupiter.params.provider.EmptySource;
 import org.junit.jupiter.params.provider.NullSource;
 
 class BiFunction2Test {
+
     @Test
     void of_givenExpression_returnsFunctionalInterface() {
         BiFunction2<String, String, String> function = BiFunction2.of((t, u) -> t);

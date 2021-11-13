@@ -20,6 +20,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 class BooleanUnaryOperatorTest {
+
     @Test
     void of_givenExpression_returnsFunctionalInterface() {
         BooleanUnaryOperator operator = BooleanUnaryOperator.of(value -> value);

@@ -20,6 +20,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 class UnaryOperator2Test {
+
     @Test
     void of_givenExpression_returnsFunctionalInterface() {
         UnaryOperator2<String> operator = UnaryOperator2.of(t -> t);

@@ -20,6 +20,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 class ThrowableBiBooleanToIntFunctionTest {
+
     @Test
     void of_givenExpression_returnsFunctionalInterface() {
         ThrowableBiBooleanToIntFunction<Throwable> function = ThrowableBiBooleanToIntFunction.of((value1, value2) -> 0);

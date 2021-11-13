@@ -20,6 +20,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 class DoubleToIntFunction2Test {
+
     @Test
     void of_givenExpression_returnsFunctionalInterface() {
         DoubleToIntFunction2 function = DoubleToIntFunction2.of(value -> 0);

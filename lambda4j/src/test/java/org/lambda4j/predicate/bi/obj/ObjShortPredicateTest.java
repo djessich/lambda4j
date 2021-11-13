@@ -20,6 +20,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 class ObjShortPredicateTest {
+
     @Test
     void of_givenExpression_returnsFunctionalInterface() {
         ObjShortPredicate<String> predicate = ObjShortPredicate.of((t, value) -> false);

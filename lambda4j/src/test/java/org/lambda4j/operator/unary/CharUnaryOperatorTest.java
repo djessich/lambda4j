@@ -20,6 +20,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 class CharUnaryOperatorTest {
+
     @Test
     void of_givenExpression_returnsFunctionalInterface() {
         CharUnaryOperator operator = CharUnaryOperator.of(value -> value);

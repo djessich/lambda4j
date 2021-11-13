@@ -20,6 +20,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 class LongPredicate2Test {
+
     @Test
     void of_givenExpression_returnsFunctionalInterface() {
         LongPredicate2 predicate = LongPredicate2.of(value -> false);

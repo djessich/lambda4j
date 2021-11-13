@@ -20,6 +20,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 class ToFloatBiFunctionTest {
+
     @Test
     void of_givenExpression_returnsFunctionalInterface() {
         ToFloatBiFunction<String, String> function = ToFloatBiFunction.of((t, u) -> Float.parseFloat(t));
