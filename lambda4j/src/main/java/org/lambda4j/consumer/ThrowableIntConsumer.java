@@ -83,8 +83,7 @@ public interface ThrowableIntConsumer<X extends Throwable> extends Lambda, IntCo
      * @throws NullPointerException If given argument is {@code null}
      * @throws X Any throwable from this consumers action
      */
-    static <X extends Throwable> void call(@Nonnull ThrowableIntConsumer<? extends X> consumer, int value) throws
-            X {
+    static <X extends Throwable> void call(@Nonnull ThrowableIntConsumer<? extends X> consumer, int value) throws X {
         Objects.requireNonNull(consumer);
         consumer.acceptThrows(value);
     }

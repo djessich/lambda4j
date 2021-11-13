@@ -123,8 +123,7 @@ public interface ThrowableObjDoubleToCharFunction<T, X extends Throwable> extend
      * @throws X Any throwable from this functions action
      */
     static <T, X extends Throwable> char call(
-            @Nonnull ThrowableObjDoubleToCharFunction<? super T, ? extends X> function, T t, double value) throws
-            X {
+            @Nonnull ThrowableObjDoubleToCharFunction<? super T, ? extends X> function, T t, double value) throws X {
         Objects.requireNonNull(function);
         return function.applyAsCharThrows(t, value);
     }

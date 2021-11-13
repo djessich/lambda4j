@@ -121,8 +121,7 @@ public interface ThrowableObjShortToShortFunction<T, X extends Throwable> extend
      * @throws X Any throwable from this functions action
      */
     static <T, X extends Throwable> short call(
-            @Nonnull ThrowableObjShortToShortFunction<? super T, ? extends X> function, T t, short value) throws
-            X {
+            @Nonnull ThrowableObjShortToShortFunction<? super T, ? extends X> function, T t, short value) throws X {
         Objects.requireNonNull(function);
         return function.applyAsShortThrows(t, value);
     }

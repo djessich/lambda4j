@@ -123,8 +123,7 @@ public interface ThrowableObjDoubleToLongFunction<T, X extends Throwable> extend
      * @throws X Any throwable from this functions action
      */
     static <T, X extends Throwable> long call(
-            @Nonnull ThrowableObjDoubleToLongFunction<? super T, ? extends X> function, T t, double value) throws
-            X {
+            @Nonnull ThrowableObjDoubleToLongFunction<? super T, ? extends X> function, T t, double value) throws X {
         Objects.requireNonNull(function);
         return function.applyAsLongThrows(t, value);
     }

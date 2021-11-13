@@ -123,8 +123,7 @@ public interface ThrowableObjShortToCharFunction<T, X extends Throwable> extends
      * @throws X Any throwable from this functions action
      */
     static <T, X extends Throwable> char call(
-            @Nonnull ThrowableObjShortToCharFunction<? super T, ? extends X> function, T t, short value) throws
-            X {
+            @Nonnull ThrowableObjShortToCharFunction<? super T, ? extends X> function, T t, short value) throws X {
         Objects.requireNonNull(function);
         return function.applyAsCharThrows(t, value);
     }

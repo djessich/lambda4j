@@ -76,8 +76,7 @@ public interface ThrowableUnaryOperator<T, X extends Throwable>
      * @throws NullPointerException If given argument is {@code null}
      * @throws X Any throwable from this operators action
      */
-    static <T, X extends Throwable> T call(@Nonnull ThrowableUnaryOperator<T, ? extends X> operator, T t) throws
-            X {
+    static <T, X extends Throwable> T call(@Nonnull ThrowableUnaryOperator<T, ? extends X> operator, T t) throws X {
         Objects.requireNonNull(operator);
         return operator.applyThrows(t);
     }

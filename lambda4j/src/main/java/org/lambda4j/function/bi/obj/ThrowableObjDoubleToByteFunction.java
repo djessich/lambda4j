@@ -123,8 +123,7 @@ public interface ThrowableObjDoubleToByteFunction<T, X extends Throwable> extend
      * @throws X Any throwable from this functions action
      */
     static <T, X extends Throwable> byte call(
-            @Nonnull ThrowableObjDoubleToByteFunction<? super T, ? extends X> function, T t, double value) throws
-            X {
+            @Nonnull ThrowableObjDoubleToByteFunction<? super T, ? extends X> function, T t, double value) throws X {
         Objects.requireNonNull(function);
         return function.applyAsByteThrows(t, value);
     }

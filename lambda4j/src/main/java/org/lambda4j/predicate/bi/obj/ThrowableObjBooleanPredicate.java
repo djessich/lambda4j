@@ -127,8 +127,7 @@ public interface ThrowableObjBooleanPredicate<T, X extends Throwable> extends La
      * @throws X Any throwable from this predicates action
      */
     static <T, X extends Throwable> boolean call(
-            @Nonnull ThrowableObjBooleanPredicate<? super T, ? extends X> predicate, T t, boolean value) throws
-            X {
+            @Nonnull ThrowableObjBooleanPredicate<? super T, ? extends X> predicate, T t, boolean value) throws X {
         Objects.requireNonNull(predicate);
         return predicate.testThrows(t, value);
     }

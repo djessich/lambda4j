@@ -123,8 +123,7 @@ public interface ThrowableObjShortToByteFunction<T, X extends Throwable> extends
      * @throws X Any throwable from this functions action
      */
     static <T, X extends Throwable> byte call(
-            @Nonnull ThrowableObjShortToByteFunction<? super T, ? extends X> function, T t, short value) throws
-            X {
+            @Nonnull ThrowableObjShortToByteFunction<? super T, ? extends X> function, T t, short value) throws X {
         Objects.requireNonNull(function);
         return function.applyAsByteThrows(t, value);
     }

@@ -135,8 +135,7 @@ public interface ThrowableObjIntFunction<T, R, X extends Throwable> extends Lamb
      * @throws X Any throwable from this functions action
      */
     static <T, R, X extends Throwable> R call(
-            @Nonnull ThrowableObjIntFunction<? super T, ? extends R, ? extends X> function, T t, int value) throws
-            X {
+            @Nonnull ThrowableObjIntFunction<? super T, ? extends R, ? extends X> function, T t, int value) throws X {
         Objects.requireNonNull(function);
         return function.applyThrows(t, value);
     }

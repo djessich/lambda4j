@@ -20,7 +20,11 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.function.Consumer;
 import java.util.function.Function;
+import java.util.function.Predicate;
 import java.util.function.Supplier;
+import java.util.function.ToDoubleFunction;
+import java.util.function.ToIntFunction;
+import java.util.function.ToLongFunction;
 
 import javax.annotation.CheckForNull;
 import javax.annotation.Nonnegative;
@@ -29,6 +33,10 @@ import javax.annotation.Nullable;
 
 import org.lambda4j.Lambda;
 import org.lambda4j.consumer.Consumer2;
+import org.lambda4j.function.to.ToByteFunction;
+import org.lambda4j.function.to.ToCharFunction;
+import org.lambda4j.function.to.ToFloatFunction;
+import org.lambda4j.function.to.ToShortFunction;
 
 /**
  * Represents a supplier of results.
@@ -139,6 +147,158 @@ public interface Supplier2<R> extends Lambda, Supplier<R> {
     default <S> Supplier2<S> andThen(@Nonnull Function<? super R, ? extends S> after) {
         Objects.requireNonNull(after);
         return () -> after.apply(get());
+    }
+
+    /**
+     * Returns a composed {@link BooleanSupplier2} that first applies this supplier to its input, and then applies the
+     * {@code after} predicate to the result. If evaluation of either operation throws an exception, it is relayed to
+     * the caller of the composed operation. This method is just convenience, to provide the ability to transform this
+     * primitive supplier to an operation returning {@code boolean}.
+     *
+     * @param after The predicate to apply after this supplier is applied
+     * @return A composed {@code BooleanSupplier2} that first applies this supplier to its input, and then applies the
+     * {@code after} predicate to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
+     * boolean}.
+     */
+    @Nonnull
+    default BooleanSupplier2 andThenToBoolean(@Nonnull Predicate<? super R> after) {
+        Objects.requireNonNull(after);
+        return () -> after.test(get());
+    }
+
+    /**
+     * Returns a composed {@link ByteSupplier} that first applies this supplier to its input, and then applies the
+     * {@code after} function to the result. If evaluation of either operation throws an exception, it is relayed to the
+     * caller of the composed operation. This method is just convenience, to provide the ability to transform this
+     * primitive supplier to an operation returning {@code byte}.
+     *
+     * @param after The function to apply after this supplier is applied
+     * @return A composed {@code ByteSupplier} that first applies this supplier to its input, and then applies the
+     * {@code after} function to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
+     * byte}.
+     */
+    @Nonnull
+    default ByteSupplier andThenToByte(@Nonnull ToByteFunction<? super R> after) {
+        Objects.requireNonNull(after);
+        return () -> after.applyAsByte(get());
+    }
+
+    /**
+     * Returns a composed {@link CharSupplier} that first applies this supplier to its input, and then applies the
+     * {@code after} function to the result. If evaluation of either operation throws an exception, it is relayed to the
+     * caller of the composed operation. This method is just convenience, to provide the ability to transform this
+     * primitive supplier to an operation returning {@code char}.
+     *
+     * @param after The function to apply after this supplier is applied
+     * @return A composed {@code CharSupplier} that first applies this supplier to its input, and then applies the
+     * {@code after} function to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
+     * char}.
+     */
+    @Nonnull
+    default CharSupplier andThenToChar(@Nonnull ToCharFunction<? super R> after) {
+        Objects.requireNonNull(after);
+        return () -> after.applyAsChar(get());
+    }
+
+    /**
+     * Returns a composed {@link DoubleSupplier2} that first applies this supplier to its input, and then applies the
+     * {@code after} function to the result. If evaluation of either operation throws an exception, it is relayed to the
+     * caller of the composed operation. This method is just convenience, to provide the ability to transform this
+     * primitive supplier to an operation returning {@code double}.
+     *
+     * @param after The function to apply after this supplier is applied
+     * @return A composed {@code DoubleSupplier2} that first applies this supplier to its input, and then applies the
+     * {@code after} function to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
+     * double}.
+     */
+    @Nonnull
+    default DoubleSupplier2 andThenToDouble(@Nonnull ToDoubleFunction<? super R> after) {
+        Objects.requireNonNull(after);
+        return () -> after.applyAsDouble(get());
+    }
+
+    /**
+     * Returns a composed {@link FloatSupplier} that first applies this supplier to its input, and then applies the
+     * {@code after} function to the result. If evaluation of either operation throws an exception, it is relayed to the
+     * caller of the composed operation. This method is just convenience, to provide the ability to transform this
+     * primitive supplier to an operation returning {@code float}.
+     *
+     * @param after The function to apply after this supplier is applied
+     * @return A composed {@code FloatSupplier} that first applies this supplier to its input, and then applies the
+     * {@code after} function to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
+     * float}.
+     */
+    @Nonnull
+    default FloatSupplier andThenToFloat(@Nonnull ToFloatFunction<? super R> after) {
+        Objects.requireNonNull(after);
+        return () -> after.applyAsFloat(get());
+    }
+
+    /**
+     * Returns a composed {@link IntSupplier2} that first applies this supplier to its input, and then applies the
+     * {@code after} function to the result. If evaluation of either operation throws an exception, it is relayed to the
+     * caller of the composed operation. This method is just convenience, to provide the ability to transform this
+     * primitive supplier to an operation returning {@code int}.
+     *
+     * @param after The function to apply after this supplier is applied
+     * @return A composed {@code IntSupplier2} that first applies this supplier to its input, and then applies the
+     * {@code after} function to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
+     * int}.
+     */
+    @Nonnull
+    default IntSupplier2 andThenToInt(@Nonnull ToIntFunction<? super R> after) {
+        Objects.requireNonNull(after);
+        return () -> after.applyAsInt(get());
+    }
+
+    /**
+     * Returns a composed {@link LongSupplier2} that first applies this supplier to its input, and then applies the
+     * {@code after} function to the result. If evaluation of either operation throws an exception, it is relayed to the
+     * caller of the composed operation. This method is just convenience, to provide the ability to transform this
+     * primitive supplier to an operation returning {@code long}.
+     *
+     * @param after The function to apply after this supplier is applied
+     * @return A composed {@code LongSupplier2} that first applies this supplier to its input, and then applies the
+     * {@code after} function to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
+     * long}.
+     */
+    @Nonnull
+    default LongSupplier2 andThenToLong(@Nonnull ToLongFunction<? super R> after) {
+        Objects.requireNonNull(after);
+        return () -> after.applyAsLong(get());
+    }
+
+    /**
+     * Returns a composed {@link ShortSupplier} that first applies this supplier to its input, and then applies the
+     * {@code after} function to the result. If evaluation of either operation throws an exception, it is relayed to the
+     * caller of the composed operation. This method is just convenience, to provide the ability to transform this
+     * primitive supplier to an operation returning {@code short}.
+     *
+     * @param after The function to apply after this supplier is applied
+     * @return A composed {@code ShortSupplier} that first applies this supplier to its input, and then applies the
+     * {@code after} function to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
+     * short}.
+     */
+    @Nonnull
+    default ShortSupplier andThenToShort(@Nonnull ToShortFunction<? super R> after) {
+        Objects.requireNonNull(after);
+        return () -> after.applyAsShort(get());
     }
 
     /**

@@ -123,8 +123,7 @@ public interface ThrowableObjShortToFloatFunction<T, X extends Throwable> extend
      * @throws X Any throwable from this functions action
      */
     static <T, X extends Throwable> float call(
-            @Nonnull ThrowableObjShortToFloatFunction<? super T, ? extends X> function, T t, short value) throws
-            X {
+            @Nonnull ThrowableObjShortToFloatFunction<? super T, ? extends X> function, T t, short value) throws X {
         Objects.requireNonNull(function);
         return function.applyAsFloatThrows(t, value);
     }

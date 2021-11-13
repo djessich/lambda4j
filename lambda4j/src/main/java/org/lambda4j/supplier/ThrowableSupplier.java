@@ -30,6 +30,14 @@ import org.lambda4j.Lambda;
 import org.lambda4j.consumer.ThrowableConsumer;
 import org.lambda4j.exception.ThrownByFunctionalInterfaceException;
 import org.lambda4j.function.ThrowableFunction;
+import org.lambda4j.function.to.ThrowableToByteFunction;
+import org.lambda4j.function.to.ThrowableToCharFunction;
+import org.lambda4j.function.to.ThrowableToDoubleFunction;
+import org.lambda4j.function.to.ThrowableToFloatFunction;
+import org.lambda4j.function.to.ThrowableToIntFunction;
+import org.lambda4j.function.to.ThrowableToLongFunction;
+import org.lambda4j.function.to.ThrowableToShortFunction;
+import org.lambda4j.predicate.ThrowablePredicate;
 import org.lambda4j.util.ThrowableUtils;
 
 /**
@@ -98,8 +106,7 @@ public interface ThrowableSupplier<R, X extends Throwable> extends Lambda, Suppl
      * @throws NullPointerException If given argument is {@code null}
      * @throws X Any throwable from this suppliers action
      */
-    static <R, X extends Throwable> R call(@Nonnull ThrowableSupplier<? extends R, ? extends X> supplier) throws
-            X {
+    static <R, X extends Throwable> R call(@Nonnull ThrowableSupplier<? extends R, ? extends X> supplier) throws X {
         Objects.requireNonNull(supplier);
         return supplier.getThrows();
     }
@@ -164,10 +171,154 @@ public interface ThrowableSupplier<R, X extends Throwable> extends Lambda, Suppl
      * @implSpec The input argument of this method is able to return every type.
      */
     @Nonnull
-    default <S> ThrowableSupplier<S, X> andThen(
-            @Nonnull ThrowableFunction<? super R, ? extends S, ? extends X> after) {
+    default <S> ThrowableSupplier<S, X> andThen(@Nonnull ThrowableFunction<? super R, ? extends S, ? extends X> after) {
         Objects.requireNonNull(after);
         return () -> after.applyThrows(getThrows());
+    }
+
+    /**
+     * Returns a composed {@link ThrowableBooleanSupplier} that first applies this supplier to its input, and then
+     * applies the {@code after} predicate to the result. This method is just convenience, to provide the ability to
+     * transform this primitive supplier to an operation returning {@code boolean}.
+     *
+     * @param after The predicate to apply after this supplier is applied
+     * @return A composed {@code ThrowableBooleanSupplier} that first applies this supplier to its input, and then
+     * applies the {@code after} predicate to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
+     * boolean}.
+     */
+    @Nonnull
+    default ThrowableBooleanSupplier<X> andThenToBoolean(@Nonnull ThrowablePredicate<? super R, ? extends X> after) {
+        Objects.requireNonNull(after);
+        return () -> after.testThrows(getThrows());
+    }
+
+    /**
+     * Returns a composed {@link ThrowableByteSupplier} that first applies this supplier to its input, and then applies
+     * the {@code after} function to the result. This method is just convenience, to provide the ability to transform
+     * this primitive supplier to an operation returning {@code byte}.
+     *
+     * @param after The function to apply after this supplier is applied
+     * @return A composed {@code ThrowableByteSupplier} that first applies this supplier to its input, and then applies
+     * the {@code after} function to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
+     * byte}.
+     */
+    @Nonnull
+    default ThrowableByteSupplier<X> andThenToByte(@Nonnull ThrowableToByteFunction<? super R, ? extends X> after) {
+        Objects.requireNonNull(after);
+        return () -> after.applyAsByteThrows(getThrows());
+    }
+
+    /**
+     * Returns a composed {@link ThrowableCharSupplier} that first applies this supplier to its input, and then applies
+     * the {@code after} function to the result. This method is just convenience, to provide the ability to transform
+     * this primitive supplier to an operation returning {@code char}.
+     *
+     * @param after The function to apply after this supplier is applied
+     * @return A composed {@code ThrowableCharSupplier} that first applies this supplier to its input, and then applies
+     * the {@code after} function to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
+     * char}.
+     */
+    @Nonnull
+    default ThrowableCharSupplier<X> andThenToChar(@Nonnull ThrowableToCharFunction<? super R, ? extends X> after) {
+        Objects.requireNonNull(after);
+        return () -> after.applyAsCharThrows(getThrows());
+    }
+
+    /**
+     * Returns a composed {@link ThrowableDoubleSupplier} that first applies this supplier to its input, and then
+     * applies the {@code after} function to the result. This method is just convenience, to provide the ability to
+     * transform this primitive supplier to an operation returning {@code double}.
+     *
+     * @param after The function to apply after this supplier is applied
+     * @return A composed {@code ThrowableDoubleSupplier} that first applies this supplier to its input, and then
+     * applies the {@code after} function to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
+     * double}.
+     */
+    @Nonnull
+    default ThrowableDoubleSupplier<X> andThenToDouble(
+            @Nonnull ThrowableToDoubleFunction<? super R, ? extends X> after) {
+        Objects.requireNonNull(after);
+        return () -> after.applyAsDoubleThrows(getThrows());
+    }
+
+    /**
+     * Returns a composed {@link ThrowableFloatSupplier} that first applies this supplier to its input, and then applies
+     * the {@code after} function to the result. This method is just convenience, to provide the ability to transform
+     * this primitive supplier to an operation returning {@code float}.
+     *
+     * @param after The function to apply after this supplier is applied
+     * @return A composed {@code ThrowableFloatSupplier} that first applies this supplier to its input, and then applies
+     * the {@code after} function to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
+     * float}.
+     */
+    @Nonnull
+    default ThrowableFloatSupplier<X> andThenToFloat(@Nonnull ThrowableToFloatFunction<? super R, ? extends X> after) {
+        Objects.requireNonNull(after);
+        return () -> after.applyAsFloatThrows(getThrows());
+    }
+
+    /**
+     * Returns a composed {@link ThrowableIntSupplier} that first applies this supplier to its input, and then applies
+     * the {@code after} function to the result. This method is just convenience, to provide the ability to transform
+     * this primitive supplier to an operation returning {@code int}.
+     *
+     * @param after The function to apply after this supplier is applied
+     * @return A composed {@code ThrowableIntSupplier} that first applies this supplier to its input, and then applies
+     * the {@code after} function to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
+     * int}.
+     */
+    @Nonnull
+    default ThrowableIntSupplier<X> andThenToInt(@Nonnull ThrowableToIntFunction<? super R, ? extends X> after) {
+        Objects.requireNonNull(after);
+        return () -> after.applyAsIntThrows(getThrows());
+    }
+
+    /**
+     * Returns a composed {@link ThrowableLongSupplier} that first applies this supplier to its input, and then applies
+     * the {@code after} function to the result. This method is just convenience, to provide the ability to transform
+     * this primitive supplier to an operation returning {@code long}.
+     *
+     * @param after The function to apply after this supplier is applied
+     * @return A composed {@code ThrowableLongSupplier} that first applies this supplier to its input, and then applies
+     * the {@code after} function to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
+     * long}.
+     */
+    @Nonnull
+    default ThrowableLongSupplier<X> andThenToLong(@Nonnull ThrowableToLongFunction<? super R, ? extends X> after) {
+        Objects.requireNonNull(after);
+        return () -> after.applyAsLongThrows(getThrows());
+    }
+
+    /**
+     * Returns a composed {@link ThrowableShortSupplier} that first applies this supplier to its input, and then applies
+     * the {@code after} function to the result. This method is just convenience, to provide the ability to transform
+     * this primitive supplier to an operation returning {@code short}.
+     *
+     * @param after The function to apply after this supplier is applied
+     * @return A composed {@code ThrowableShortSupplier} that first applies this supplier to its input, and then applies
+     * the {@code after} function to the result.
+     * @throws NullPointerException If given argument is {@code null}
+     * @implSpec The input argument of this method is able to return primitive values. In this case this is {@code
+     * short}.
+     */
+    @Nonnull
+    default ThrowableShortSupplier<X> andThenToShort(@Nonnull ThrowableToShortFunction<? super R, ? extends X> after) {
+        Objects.requireNonNull(after);
+        return () -> after.applyAsShortThrows(getThrows());
     }
 
     /**

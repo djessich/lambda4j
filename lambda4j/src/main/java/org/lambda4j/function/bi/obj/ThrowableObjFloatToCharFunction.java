@@ -123,8 +123,7 @@ public interface ThrowableObjFloatToCharFunction<T, X extends Throwable> extends
      * @throws X Any throwable from this functions action
      */
     static <T, X extends Throwable> char call(
-            @Nonnull ThrowableObjFloatToCharFunction<? super T, ? extends X> function, T t, float value) throws
-            X {
+            @Nonnull ThrowableObjFloatToCharFunction<? super T, ? extends X> function, T t, float value) throws X {
         Objects.requireNonNull(function);
         return function.applyAsCharThrows(t, value);
     }

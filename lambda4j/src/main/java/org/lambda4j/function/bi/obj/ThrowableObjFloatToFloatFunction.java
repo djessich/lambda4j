@@ -121,8 +121,7 @@ public interface ThrowableObjFloatToFloatFunction<T, X extends Throwable> extend
      * @throws X Any throwable from this functions action
      */
     static <T, X extends Throwable> float call(
-            @Nonnull ThrowableObjFloatToFloatFunction<? super T, ? extends X> function, T t, float value) throws
-            X {
+            @Nonnull ThrowableObjFloatToFloatFunction<? super T, ? extends X> function, T t, float value) throws X {
         Objects.requireNonNull(function);
         return function.applyAsFloatThrows(t, value);
     }

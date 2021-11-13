@@ -123,8 +123,7 @@ public interface ThrowableObjDoubleToIntFunction<T, X extends Throwable> extends
      * @throws X Any throwable from this functions action
      */
     static <T, X extends Throwable> int call(
-            @Nonnull ThrowableObjDoubleToIntFunction<? super T, ? extends X> function, T t, double value) throws
-            X {
+            @Nonnull ThrowableObjDoubleToIntFunction<? super T, ? extends X> function, T t, double value) throws X {
         Objects.requireNonNull(function);
         return function.applyAsIntThrows(t, value);
     }

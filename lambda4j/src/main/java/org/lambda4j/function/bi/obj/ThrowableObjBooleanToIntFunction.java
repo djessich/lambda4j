@@ -123,8 +123,7 @@ public interface ThrowableObjBooleanToIntFunction<T, X extends Throwable> extend
      * @throws X Any throwable from this functions action
      */
     static <T, X extends Throwable> int call(
-            @Nonnull ThrowableObjBooleanToIntFunction<? super T, ? extends X> function, T t, boolean value) throws
-            X {
+            @Nonnull ThrowableObjBooleanToIntFunction<? super T, ? extends X> function, T t, boolean value) throws X {
         Objects.requireNonNull(function);
         return function.applyAsIntThrows(t, value);
     }
