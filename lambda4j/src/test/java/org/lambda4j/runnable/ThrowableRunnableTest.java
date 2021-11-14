@@ -40,7 +40,7 @@ class ThrowableRunnableTest {
         return Stream.of(
                 Arguments.arguments(new Error("error to be thrown in run()")),
                 Arguments.arguments(new Exception("exception to be thrown in run()")),
-                Arguments.arguments(new RuntimeException("runtime exception to be thrown in run()()"))
+                Arguments.arguments(new RuntimeException("runtime exception to be thrown in run()"))
         );
     }
 
