@@ -147,12 +147,12 @@ public interface ThrowableDoublePredicate<X extends Throwable> extends Lambda, D
     }
 
     /**
-     * Returns a {@link ThrowableDoublePredicate} that tests if the given argument are <b>equal</b> to the one of this
+     * Returns a {@link ThrowableDoublePredicate} that tests if the given argument is <b>equal</b> to the one of this
      * predicate.
      *
      * @param <X> The type of the throwable to be thrown by this predicate
      * @param target The reference with which to compare for equality, which may be {@code null}
-     * @return A {@code ThrowableDoublePredicate} that tests if the given argument are <b>equal</b> to the one of this
+     * @return A {@code ThrowableDoublePredicate} that tests if the given argument is <b>equal</b> to the one of this
      * predicate.
      * @implNote This implementation checks equality according to {@link Objects#equals(Object)} operation for {@link
      * Object} references and {@code value == target} operation for primitive values.

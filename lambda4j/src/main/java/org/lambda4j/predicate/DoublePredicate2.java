@@ -135,12 +135,11 @@ public interface DoublePredicate2 extends Lambda, DoublePredicate {
     }
 
     /**
-     * Returns a {@link DoublePredicate2} that tests if the given argument are <b>equal</b> to the one of this
+     * Returns a {@link DoublePredicate2} that tests if the given argument is <b>equal</b> to the one of this
      * predicate.
      *
      * @param target The reference with which to compare for equality, which may be {@code null}
-     * @return A {@code DoublePredicate2} that tests if the given argument are <b>equal</b> to the one of this
-     * predicate.
+     * @return A {@code DoublePredicate2} that tests if the given argument is <b>equal</b> to the one of this predicate.
      * @implNote This implementation checks equality according to {@link Objects#equals(Object)} operation for {@link
      * Object} references and {@code value == target} operation for primitive values.
      */

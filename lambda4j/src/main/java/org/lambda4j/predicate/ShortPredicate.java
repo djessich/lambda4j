@@ -131,10 +131,10 @@ public interface ShortPredicate extends Lambda {
     }
 
     /**
-     * Returns a {@link ShortPredicate} that tests if the given argument are <b>equal</b> to the one of this predicate.
+     * Returns a {@link ShortPredicate} that tests if the given argument is <b>equal</b> to the one of this predicate.
      *
      * @param target The reference with which to compare for equality, which may be {@code null}
-     * @return A {@code ShortPredicate} that tests if the given argument are <b>equal</b> to the one of this predicate.
+     * @return A {@code ShortPredicate} that tests if the given argument is <b>equal</b> to the one of this predicate.
      * @implNote This implementation checks equality according to {@link Objects#equals(Object)} operation for {@link
      * Object} references and {@code value == target} operation for primitive values.
      */
