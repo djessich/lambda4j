@@ -32,4 +32,58 @@ class BiShortPredicateTest {
         BiShortPredicate predicate = BiShortPredicate.of(null);
         Assertions.assertNull(predicate);
     }
+
+    @Test
+    void call_givenExpression_executesFunctionalInterface() {
+        Assertions.assertFalse(BiShortPredicate.call((value1, value2) -> false, (short) 0, (short) 0));
+    }
+
+    @Test
+    void call_givenNullExpression_throwsException() {
+        Assertions.assertThrows(NullPointerException.class, () -> BiShortPredicate.call(null, (short) 0, (short) 0));
+    }
+
+    @Test
+    void constant_givenValue_returnsAlwaysValue() {
+        boolean ret = false;
+        BiShortPredicate predicate = BiShortPredicate.constant(ret);
+        Assertions.assertEquals(ret, predicate.test((short) 0, (short) 0));
+        Assertions.assertFalse(predicate.test((short) 0, (short) 0));
+    }
+
+    @Test
+    void alwaysTrue_givenNothing_returnsAlwaysValue() {
+        BiShortPredicate predicate = BiShortPredicate.alwaysTrue();
+        Assertions.assertTrue(predicate.test((short) 0, (short) 0));
+    }
+
+    @Test
+    void alwaysFalse_givenNothing_returnsAlwaysValue() {
+        BiShortPredicate predicate = BiShortPredicate.alwaysFalse();
+        Assertions.assertFalse(predicate.test((short) 0, (short) 0));
+    }
+
+    @Test
+    void isEqual_givenSame_returnsTrue() {
+        BiShortPredicate predicate = BiShortPredicate.isEqual((short) 0, (short) 0);
+        Assertions.assertTrue(predicate.test((short) 0, (short) 0));
+    }
+
+    @Test
+    void isEqual_givenDifferentFirstValue_returnsFalse() {
+        BiShortPredicate predicate = BiShortPredicate.isEqual((short) 1, (short) 0);
+        Assertions.assertFalse(predicate.test((short) 0, (short) 0));
+    }
+
+    @Test
+    void isEqual_givenDifferentSecondValue_returnsFalse() {
+        BiShortPredicate predicate = BiShortPredicate.isEqual((short) 0, (short) 1);
+        Assertions.assertFalse(predicate.test((short) 0, (short) 0));
+    }
+
+    @Test
+    void isEqual_givenDifferentAll_returnsFalse() {
+        BiShortPredicate predicate = BiShortPredicate.isEqual((byte) 1, (byte) 1);
+        Assertions.assertFalse(predicate.test((short) 0, (short) 0));
+    }
 }

@@ -32,4 +32,48 @@ class ThrowableBytePredicateTest {
         ThrowableBytePredicate<Throwable> predicate = ThrowableBytePredicate.of(null);
         Assertions.assertNull(predicate);
     }
+
+    @Test
+    void call_givenExpression_executesFunctionalInterface() {
+        Assertions.assertFalse(ThrowableBytePredicate.call(value -> false, (byte) 0));
+    }
+
+    @Test
+    void call_givenNullExpression_throwsException() {
+        Assertions.assertThrows(NullPointerException.class, () -> ThrowableBytePredicate.call(null, (byte) 0));
+    }
+
+    @Test
+    void constant_givenValue_returnsAlwaysValue() {
+        boolean ret = false;
+        ThrowableBytePredicate<Throwable> predicate = ThrowableBytePredicate.constant(ret);
+        Assertions.assertDoesNotThrow(() -> {
+            Assertions.assertEquals(ret, predicate.testThrows((byte) 0));
+            Assertions.assertFalse(predicate.testThrows((byte) 0));
+        });
+    }
+
+    @Test
+    void alwaysTrue_givenNothing_returnsAlwaysValue() {
+        ThrowableBytePredicate<Throwable> predicate = ThrowableBytePredicate.alwaysTrue();
+        Assertions.assertDoesNotThrow(() -> Assertions.assertTrue(predicate.testThrows((byte) 0)));
+    }
+
+    @Test
+    void alwaysFalse_givenNothing_returnsAlwaysValue() {
+        ThrowableBytePredicate<Throwable> predicate = ThrowableBytePredicate.alwaysFalse();
+        Assertions.assertDoesNotThrow(() -> Assertions.assertFalse(predicate.testThrows((byte) 0)));
+    }
+
+    @Test
+    void isEqual_givenSame_returnsTrue() {
+        ThrowableBytePredicate<Throwable> predicate = ThrowableBytePredicate.isEqual((byte) 0);
+        Assertions.assertDoesNotThrow(() -> Assertions.assertTrue(predicate.testThrows((byte) 0)));
+    }
+
+    @Test
+    void isEqual_givenDifferent_returnsFalse() {
+        ThrowableBytePredicate<Throwable> predicate = ThrowableBytePredicate.isEqual((byte) 1);
+        Assertions.assertDoesNotThrow(() -> Assertions.assertFalse(predicate.testThrows((byte) 0)));
+    }
 }

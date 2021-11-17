@@ -32,4 +32,63 @@ class ObjCharPredicateTest {
         ObjCharPredicate<String> predicate = ObjCharPredicate.of(null);
         Assertions.assertNull(predicate);
     }
+
+    @Test
+    void call_givenExpression_executesFunctionalInterface() {
+        Assertions.assertFalse(ObjCharPredicate.call((t, value) -> false, "", 'c'));
+    }
+
+    @Test
+    void call_givenNullValue_executesFunctionalInterface() {
+        Assertions.assertFalse(ObjCharPredicate.call((t, value) -> false, null, 'c'));
+    }
+
+    @Test
+    void call_givenNullExpression_throwsException() {
+        Assertions.assertThrows(NullPointerException.class, () -> ObjCharPredicate.call(null, "", 'c'));
+    }
+
+    @Test
+    void constant_givenValue_returnsAlwaysValue() {
+        boolean ret = false;
+        ObjCharPredicate<String> predicate = ObjCharPredicate.constant(ret);
+        Assertions.assertEquals(ret, predicate.test("", 'c'));
+        Assertions.assertFalse(predicate.test("", 'c'));
+    }
+
+    @Test
+    void alwaysTrue_givenNothing_returnsAlwaysValue() {
+        ObjCharPredicate<String> predicate = ObjCharPredicate.alwaysTrue();
+        Assertions.assertTrue(predicate.test("", 'c'));
+    }
+
+    @Test
+    void alwaysFalse_givenNothing_returnsAlwaysValue() {
+        ObjCharPredicate<String> predicate = ObjCharPredicate.alwaysFalse();
+        Assertions.assertFalse(predicate.test("", 'c'));
+    }
+
+    @Test
+    void isEqual_givenSame_returnsTrue() {
+        ObjCharPredicate<String> predicate = ObjCharPredicate.isEqual("", 'c');
+        Assertions.assertTrue(predicate.test("", 'c'));
+    }
+
+    @Test
+    void isEqual_givenDifferentFirstValue_returnsFalse() {
+        ObjCharPredicate<String> predicate = ObjCharPredicate.isEqual("first", 'c');
+        Assertions.assertFalse(predicate.test("", 'c'));
+    }
+
+    @Test
+    void isEqual_givenDifferentSecondValue_returnsFalse() {
+        ObjCharPredicate<String> predicate = ObjCharPredicate.isEqual("", 'd');
+        Assertions.assertFalse(predicate.test("", 'c'));
+    }
+
+    @Test
+    void isEqual_givenDifferentAll_returnsFalse() {
+        ObjCharPredicate<String> predicate = ObjCharPredicate.isEqual("other", 'd');
+        Assertions.assertFalse(predicate.test("", 'c'));
+    }
 }

@@ -32,4 +32,46 @@ class DoublePredicate2Test {
         DoublePredicate2 predicate = DoublePredicate2.of(null);
         Assertions.assertNull(predicate);
     }
+
+    @Test
+    void call_givenExpression_executesFunctionalInterface() {
+        Assertions.assertFalse(DoublePredicate2.call(value -> false, 0.0d));
+    }
+
+    @Test
+    void call_givenNullExpression_throwsException() {
+        Assertions.assertThrows(NullPointerException.class, () -> DoublePredicate2.call(null, 0.0d));
+    }
+
+    @Test
+    void constant_givenValue_returnsAlwaysValue() {
+        boolean ret = false;
+        DoublePredicate2 predicate = DoublePredicate2.constant(ret);
+        Assertions.assertEquals(ret, predicate.test(0.0d));
+        Assertions.assertFalse(predicate.test(0.0d));
+    }
+
+    @Test
+    void alwaysTrue_givenNothing_returnsAlwaysValue() {
+        DoublePredicate2 predicate = DoublePredicate2.alwaysTrue();
+        Assertions.assertTrue(predicate.test(0.0d));
+    }
+
+    @Test
+    void alwaysFalse_givenNothing_returnsAlwaysValue() {
+        DoublePredicate2 predicate = DoublePredicate2.alwaysFalse();
+        Assertions.assertFalse(predicate.test(0.0d));
+    }
+
+    @Test
+    void isEqual_givenSame_returnsTrue() {
+        DoublePredicate2 predicate = DoublePredicate2.isEqual(0.0d);
+        Assertions.assertTrue(predicate.test(0.0d));
+    }
+
+    @Test
+    void isEqual_givenDifferent_returnsFalse() {
+        DoublePredicate2 predicate = DoublePredicate2.isEqual(1.0d);
+        Assertions.assertFalse(predicate.test(0.0d));
+    }
 }

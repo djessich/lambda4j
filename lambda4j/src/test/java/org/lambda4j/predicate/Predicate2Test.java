@@ -23,7 +23,7 @@ class Predicate2Test {
 
     @Test
     void of_givenExpression_returnsFunctionalInterface() {
-        Predicate2<String> predicate = Predicate2.of(value -> false);
+        Predicate2<String> predicate = Predicate2.of(t -> false);
         Assertions.assertNotNull(predicate);
     }
 
@@ -31,5 +31,52 @@ class Predicate2Test {
     void of_givenNull_returnsNull() {
         Predicate2<String> predicate = Predicate2.of(null);
         Assertions.assertNull(predicate);
+    }
+
+    @Test
+    void call_givenExpression_executesFunctionalInterface() {
+        Assertions.assertFalse(Predicate2.call(t -> false, ""));
+    }
+
+    @Test
+    void call_givenNullValue_executesFunctionalInterface() {
+        Assertions.assertFalse(Predicate2.call(t -> false, null));
+    }
+
+    @Test
+    void call_givenNullExpression_throwsException() {
+        Assertions.assertThrows(NullPointerException.class, () -> Predicate2.call(null, ""));
+    }
+
+    @Test
+    void constant_givenValue_returnsAlwaysValue() {
+        boolean ret = false;
+        Predicate2<String> predicate = Predicate2.constant(ret);
+        Assertions.assertEquals(ret, predicate.test(""));
+        Assertions.assertFalse(predicate.test(""));
+    }
+
+    @Test
+    void alwaysTrue_givenNothing_returnsAlwaysValue() {
+        Predicate2<String> predicate = Predicate2.alwaysTrue();
+        Assertions.assertTrue(predicate.test(""));
+    }
+
+    @Test
+    void alwaysFalse_givenNothing_returnsAlwaysValue() {
+        Predicate2<String> predicate = Predicate2.alwaysFalse();
+        Assertions.assertFalse(predicate.test(""));
+    }
+
+    @Test
+    void isEqual_givenSame_returnsTrue() {
+        Predicate2<String> predicate = Predicate2.isEqual("");
+        Assertions.assertTrue(predicate.test(""));
+    }
+
+    @Test
+    void isEqual_givenDifferent_returnsFalse() {
+        Predicate2<String> predicate = Predicate2.isEqual("other");
+        Assertions.assertFalse(predicate.test(""));
     }
 }

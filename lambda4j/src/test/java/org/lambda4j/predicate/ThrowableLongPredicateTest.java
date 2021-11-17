@@ -32,4 +32,48 @@ class ThrowableLongPredicateTest {
         ThrowableLongPredicate<Throwable> predicate = ThrowableLongPredicate.of(null);
         Assertions.assertNull(predicate);
     }
+
+    @Test
+    void call_givenExpression_executesFunctionalInterface() {
+        Assertions.assertFalse(ThrowableLongPredicate.call(value -> false, 0L));
+    }
+
+    @Test
+    void call_givenNullExpression_throwsException() {
+        Assertions.assertThrows(NullPointerException.class, () -> ThrowableLongPredicate.call(null, 0L));
+    }
+
+    @Test
+    void constant_givenValue_returnsAlwaysValue() {
+        boolean ret = false;
+        ThrowableLongPredicate<Throwable> predicate = ThrowableLongPredicate.constant(ret);
+        Assertions.assertDoesNotThrow(() -> {
+            Assertions.assertEquals(ret, predicate.testThrows(0L));
+            Assertions.assertFalse(predicate.testThrows(0L));
+        });
+    }
+
+    @Test
+    void alwaysTrue_givenNothing_returnsAlwaysValue() {
+        ThrowableLongPredicate<Throwable> predicate = ThrowableLongPredicate.alwaysTrue();
+        Assertions.assertDoesNotThrow(() -> Assertions.assertTrue(predicate.testThrows(0L)));
+    }
+
+    @Test
+    void alwaysFalse_givenNothing_returnsAlwaysValue() {
+        ThrowableLongPredicate<Throwable> predicate = ThrowableLongPredicate.alwaysFalse();
+        Assertions.assertDoesNotThrow(() -> Assertions.assertFalse(predicate.testThrows(0L)));
+    }
+
+    @Test
+    void isEqual_givenSame_returnsTrue() {
+        ThrowableLongPredicate<Throwable> predicate = ThrowableLongPredicate.isEqual(0L);
+        Assertions.assertDoesNotThrow(() -> Assertions.assertTrue(predicate.testThrows(0L)));
+    }
+
+    @Test
+    void isEqual_givenDifferent_returnsFalse() {
+        ThrowableLongPredicate<Throwable> predicate = ThrowableLongPredicate.isEqual(1L);
+        Assertions.assertDoesNotThrow(() -> Assertions.assertFalse(predicate.testThrows(0L)));
+    }
 }

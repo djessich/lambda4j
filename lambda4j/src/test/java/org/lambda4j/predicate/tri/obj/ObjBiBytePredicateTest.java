@@ -32,4 +32,70 @@ class ObjBiBytePredicateTest {
         ObjBiBytePredicate<String> predicate = ObjBiBytePredicate.of(null);
         Assertions.assertNull(predicate);
     }
+
+    @Test
+    void call_givenExpression_executesFunctionalInterface() {
+        Assertions.assertFalse(ObjBiBytePredicate.call((t, value1, value2) -> false, "", (byte) 0, (byte) 0));
+    }
+
+    @Test
+    void call_givenNullValue_executesFunctionalInterface() {
+        Assertions.assertFalse(ObjBiBytePredicate.call((t, value1, value2) -> false, null, (byte) 0, (byte) 0));
+    }
+
+    @Test
+    void call_givenNullExpression_throwsException() {
+        Assertions.assertThrows(NullPointerException.class,
+                () -> ObjBiBytePredicate.call(null, "", (byte) 0, (byte) 0));
+    }
+
+    @Test
+    void constant_givenValue_returnsAlwaysValue() {
+        boolean ret = false;
+        ObjBiBytePredicate<String> predicate = ObjBiBytePredicate.constant(ret);
+        Assertions.assertEquals(ret, predicate.test("", (byte) 0, (byte) 0));
+        Assertions.assertFalse(predicate.test("", (byte) 0, (byte) 0));
+    }
+
+    @Test
+    void alwaysTrue_givenNothing_returnsAlwaysValue() {
+        ObjBiBytePredicate<String> predicate = ObjBiBytePredicate.alwaysTrue();
+        Assertions.assertTrue(predicate.test("", (byte) 0, (byte) 0));
+    }
+
+    @Test
+    void alwaysFalse_givenNothing_returnsAlwaysValue() {
+        ObjBiBytePredicate<String> predicate = ObjBiBytePredicate.alwaysFalse();
+        Assertions.assertFalse(predicate.test("", (byte) 0, (byte) 0));
+    }
+
+    @Test
+    void isEqual_givenSame_returnsTrue() {
+        ObjBiBytePredicate<String> predicate = ObjBiBytePredicate.isEqual("", (byte) 0, (byte) 0);
+        Assertions.assertTrue(predicate.test("", (byte) 0, (byte) 0));
+    }
+
+    @Test
+    void isEqual_givenDifferentFirstValue_returnsFalse() {
+        ObjBiBytePredicate<String> predicate = ObjBiBytePredicate.isEqual("first", (byte) 0, (byte) 0);
+        Assertions.assertFalse(predicate.test("", (byte) 0, (byte) 0));
+    }
+
+    @Test
+    void isEqual_givenDifferentSecondValue_returnsFalse() {
+        ObjBiBytePredicate<String> predicate = ObjBiBytePredicate.isEqual("", (byte) 1, (byte) 0);
+        Assertions.assertFalse(predicate.test("", (byte) 0, (byte) 0));
+    }
+
+    @Test
+    void isEqual_givenDifferentThirdValue_returnsFalse() {
+        ObjBiBytePredicate<String> predicate = ObjBiBytePredicate.isEqual("", (byte) 0, (byte) 1);
+        Assertions.assertFalse(predicate.test("", (byte) 0, (byte) 0));
+    }
+
+    @Test
+    void isEqual_givenDifferentAll_returnsFalse() {
+        ObjBiBytePredicate<String> predicate = ObjBiBytePredicate.isEqual("other", (byte) 1, (byte) 1);
+        Assertions.assertFalse(predicate.test("", (byte) 0, (byte) 0));
+    }
 }

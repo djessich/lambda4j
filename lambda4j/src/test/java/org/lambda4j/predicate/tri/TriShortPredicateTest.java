@@ -32,4 +32,66 @@ class TriShortPredicateTest {
         TriShortPredicate predicate = TriShortPredicate.of(null);
         Assertions.assertNull(predicate);
     }
+
+    @Test
+    void call_givenExpression_executesFunctionalInterface() {
+        Assertions.assertFalse(
+                TriShortPredicate.call((value1, value2, value3) -> false, (short) 0, (short) 0, (short) 0));
+    }
+
+    @Test
+    void call_givenNullExpression_throwsException() {
+        Assertions.assertThrows(NullPointerException.class,
+                () -> TriShortPredicate.call(null, (short) 0, (short) 0, (short) 0));
+    }
+
+    @Test
+    void constant_givenValue_returnsAlwaysValue() {
+        boolean ret = false;
+        TriShortPredicate predicate = TriShortPredicate.constant(ret);
+        Assertions.assertEquals(ret, predicate.test((short) 0, (short) 0, (short) 0));
+        Assertions.assertFalse(predicate.test((short) 0, (short) 0, (short) 0));
+    }
+
+    @Test
+    void alwaysTrue_givenNothing_returnsAlwaysValue() {
+        TriShortPredicate predicate = TriShortPredicate.alwaysTrue();
+        Assertions.assertTrue(predicate.test((short) 0, (short) 0, (short) 0));
+    }
+
+    @Test
+    void alwaysFalse_givenNothing_returnsAlwaysValue() {
+        TriShortPredicate predicate = TriShortPredicate.alwaysFalse();
+        Assertions.assertFalse(predicate.test((short) 0, (short) 0, (short) 0));
+    }
+
+    @Test
+    void isEqual_givenSame_returnsTrue() {
+        TriShortPredicate predicate = TriShortPredicate.isEqual((short) 0, (short) 0, (short) 0);
+        Assertions.assertTrue(predicate.test((short) 0, (short) 0, (short) 0));
+    }
+
+    @Test
+    void isEqual_givenDifferentFirstValue_returnsFalse() {
+        TriShortPredicate predicate = TriShortPredicate.isEqual((short) 1, (short) 0, (short) 0);
+        Assertions.assertFalse(predicate.test((short) 0, (short) 0, (short) 0));
+    }
+
+    @Test
+    void isEqual_givenDifferentSecondValue_returnsFalse() {
+        TriShortPredicate predicate = TriShortPredicate.isEqual((short) 0, (short) 1, (short) 0);
+        Assertions.assertFalse(predicate.test((short) 0, (short) 0, (short) 0));
+    }
+
+    @Test
+    void isEqual_givenDifferentThirdValue_returnsFalse() {
+        TriShortPredicate predicate = TriShortPredicate.isEqual((short) 0, (short) 0, (short) 1);
+        Assertions.assertFalse(predicate.test((short) 0, (short) 0, (short) 0));
+    }
+
+    @Test
+    void isEqual_givenDifferentAll_returnsFalse() {
+        TriShortPredicate predicate = TriShortPredicate.isEqual((short) 1, (short) 1, (short) 1);
+        Assertions.assertFalse(predicate.test((short) 0, (short) 0, (short) 0));
+    }
 }

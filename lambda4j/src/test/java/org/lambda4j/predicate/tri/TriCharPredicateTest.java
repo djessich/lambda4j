@@ -32,4 +32,64 @@ class TriCharPredicateTest {
         TriCharPredicate predicate = TriCharPredicate.of(null);
         Assertions.assertNull(predicate);
     }
+
+    @Test
+    void call_givenExpression_executesFunctionalInterface() {
+        Assertions.assertFalse(TriCharPredicate.call((value1, value2, value3) -> false, 'c', 'c', 'c'));
+    }
+
+    @Test
+    void call_givenNullExpression_throwsException() {
+        Assertions.assertThrows(NullPointerException.class, () -> TriCharPredicate.call(null, 'c', 'c', 'c'));
+    }
+
+    @Test
+    void constant_givenValue_returnsAlwaysValue() {
+        boolean ret = false;
+        TriCharPredicate predicate = TriCharPredicate.constant(ret);
+        Assertions.assertEquals(ret, predicate.test('c', 'c', 'c'));
+        Assertions.assertFalse(predicate.test('c', 'c', 'c'));
+    }
+
+    @Test
+    void alwaysTrue_givenNothing_returnsAlwaysValue() {
+        TriCharPredicate predicate = TriCharPredicate.alwaysTrue();
+        Assertions.assertTrue(predicate.test('c', 'c', 'c'));
+    }
+
+    @Test
+    void alwaysFalse_givenNothing_returnsAlwaysValue() {
+        TriCharPredicate predicate = TriCharPredicate.alwaysFalse();
+        Assertions.assertFalse(predicate.test('c', 'c', 'c'));
+    }
+
+    @Test
+    void isEqual_givenSame_returnsTrue() {
+        TriCharPredicate predicate = TriCharPredicate.isEqual('c', 'c', 'c');
+        Assertions.assertTrue(predicate.test('c', 'c', 'c'));
+    }
+
+    @Test
+    void isEqual_givenDifferentFirstValue_returnsFalse() {
+        TriCharPredicate predicate = TriCharPredicate.isEqual('d', 'c', 'c');
+        Assertions.assertFalse(predicate.test('c', 'c', 'c'));
+    }
+
+    @Test
+    void isEqual_givenDifferentSecondValue_returnsFalse() {
+        TriCharPredicate predicate = TriCharPredicate.isEqual('c', 'd', 'c');
+        Assertions.assertFalse(predicate.test('c', 'c', 'c'));
+    }
+
+    @Test
+    void isEqual_givenDifferentThirdValue_returnsFalse() {
+        TriCharPredicate predicate = TriCharPredicate.isEqual('c', 'c', 'd');
+        Assertions.assertFalse(predicate.test('c', 'c', 'c'));
+    }
+
+    @Test
+    void isEqual_givenDifferentAll_returnsFalse() {
+        TriCharPredicate predicate = TriCharPredicate.isEqual('d', 'd', 'd');
+        Assertions.assertFalse(predicate.test('c', 'c', 'c'));
+    }
 }

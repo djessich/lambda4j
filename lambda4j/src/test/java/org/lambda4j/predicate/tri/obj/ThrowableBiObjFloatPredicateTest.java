@@ -33,4 +33,82 @@ class ThrowableBiObjFloatPredicateTest {
         ThrowableBiObjFloatPredicate<String, String, Throwable> predicate = ThrowableBiObjFloatPredicate.of(null);
         Assertions.assertNull(predicate);
     }
+
+    @Test
+    void call_givenExpression_executesFunctionalInterface() {
+        Assertions.assertFalse(ThrowableBiObjFloatPredicate.call((t, u, value) -> false, "", "", 0.0f));
+    }
+
+    @Test
+    void call_givenNullFirstValue_executesFunctionalInterface() {
+        Assertions.assertFalse(ThrowableBiObjFloatPredicate.call((t, u, value) -> false, null, "", 0.0f));
+    }
+
+    @Test
+    void call_givenNullSecondValue_executesFunctionalInterface() {
+        Assertions.assertFalse(ThrowableBiObjFloatPredicate.call((t, u, value) -> false, "", null, 0.0f));
+    }
+
+    @Test
+    void call_givenNullExpression_throwsException() {
+        Assertions.assertThrows(NullPointerException.class,
+                () -> ThrowableBiObjFloatPredicate.call(null, "", "", 0.0f));
+    }
+
+    @Test
+    void constant_givenValue_returnsAlwaysValue() {
+        boolean ret = false;
+        ThrowableBiObjFloatPredicate<String, String, Throwable> predicate = ThrowableBiObjFloatPredicate.constant(ret);
+        Assertions.assertDoesNotThrow(() -> {
+            Assertions.assertEquals(ret, predicate.testThrows("", "", 0.0f));
+            Assertions.assertFalse(predicate.testThrows("", "", 0.0f));
+        });
+    }
+
+    @Test
+    void alwaysTrue_givenNothing_returnsAlwaysValue() {
+        ThrowableBiObjFloatPredicate<String, String, Throwable> predicate = ThrowableBiObjFloatPredicate.alwaysTrue();
+        Assertions.assertDoesNotThrow(() -> Assertions.assertTrue(predicate.testThrows("", "", 0.0f)));
+    }
+
+    @Test
+    void alwaysFalse_givenNothing_returnsAlwaysValue() {
+        ThrowableBiObjFloatPredicate<String, String, Throwable> predicate = ThrowableBiObjFloatPredicate.alwaysFalse();
+        Assertions.assertDoesNotThrow(() -> Assertions.assertFalse(predicate.testThrows("", "", 0.0f)));
+    }
+
+    @Test
+    void isEqual_givenSame_returnsTrue() {
+        ThrowableBiObjFloatPredicate<String, String, Throwable> predicate =
+                ThrowableBiObjFloatPredicate.isEqual("", "", 0.0f);
+        Assertions.assertDoesNotThrow(() -> Assertions.assertTrue(predicate.testThrows("", "", 0.0f)));
+    }
+
+    @Test
+    void isEqual_givenDifferentFirstValue_returnsFalse() {
+        ThrowableBiObjFloatPredicate<String, String, Throwable> predicate =
+                ThrowableBiObjFloatPredicate.isEqual("first", "", 0.0f);
+        Assertions.assertDoesNotThrow(() -> Assertions.assertFalse(predicate.testThrows("", "", 0.0f)));
+    }
+
+    @Test
+    void isEqual_givenDifferentSecondValue_returnsFalse() {
+        ThrowableBiObjFloatPredicate<String, String, Throwable> predicate =
+                ThrowableBiObjFloatPredicate.isEqual("", "second", 0.0f);
+        Assertions.assertDoesNotThrow(() -> Assertions.assertFalse(predicate.testThrows("", "", 0.0f)));
+    }
+
+    @Test
+    void isEqual_givenDifferentThirdValue_returnsFalse() {
+        ThrowableBiObjFloatPredicate<String, String, Throwable> predicate =
+                ThrowableBiObjFloatPredicate.isEqual("", "", 1.0f);
+        Assertions.assertDoesNotThrow(() -> Assertions.assertFalse(predicate.testThrows("", "", 0.0f)));
+    }
+
+    @Test
+    void isEqual_givenDifferentAll_returnsFalse() {
+        ThrowableBiObjFloatPredicate<String, String, Throwable> predicate =
+                ThrowableBiObjFloatPredicate.isEqual("other1", "other2", 1.0f);
+        Assertions.assertDoesNotThrow(() -> Assertions.assertFalse(predicate.testThrows("", "", 0.0f)));
+    }
 }

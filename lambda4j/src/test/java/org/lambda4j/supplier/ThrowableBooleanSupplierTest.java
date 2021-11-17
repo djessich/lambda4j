@@ -110,13 +110,13 @@ class ThrowableBooleanSupplierTest {
     }
 
     @Test
-    void alwaysTrue_givenValue_returnsAlwaysValue() {
+    void alwaysTrue_givenNothing_returnsAlwaysValue() {
         ThrowableBooleanSupplier<Throwable> supplier = ThrowableBooleanSupplier.alwaysTrue();
         Assertions.assertDoesNotThrow(() -> Assertions.assertTrue(supplier.getAsBoolean()));
     }
 
     @Test
-    void alwaysFalse_givenValue_returnsAlwaysValue() {
+    void alwaysFalse_givenNothing_returnsAlwaysValue() {
         ThrowableBooleanSupplier<Throwable> supplier = ThrowableBooleanSupplier.alwaysFalse();
         Assertions.assertDoesNotThrow(() -> Assertions.assertFalse(supplier.getAsBoolean()));
     }

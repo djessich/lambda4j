@@ -32,4 +32,63 @@ class ObjDoublePredicateTest {
         ObjDoublePredicate<String> predicate = ObjDoublePredicate.of(null);
         Assertions.assertNull(predicate);
     }
+
+    @Test
+    void call_givenExpression_executesFunctionalInterface() {
+        Assertions.assertFalse(ObjDoublePredicate.call((t, value) -> false, "", 0.0d));
+    }
+
+    @Test
+    void call_givenNullValue_executesFunctionalInterface() {
+        Assertions.assertFalse(ObjDoublePredicate.call((t, value) -> false, null, 0.0d));
+    }
+
+    @Test
+    void call_givenNullExpression_throwsException() {
+        Assertions.assertThrows(NullPointerException.class, () -> ObjDoublePredicate.call(null, "", 0.0d));
+    }
+
+    @Test
+    void constant_givenValue_returnsAlwaysValue() {
+        boolean ret = false;
+        ObjDoublePredicate<String> predicate = ObjDoublePredicate.constant(ret);
+        Assertions.assertEquals(ret, predicate.test("", 0.0d));
+        Assertions.assertFalse(predicate.test("", 0.0d));
+    }
+
+    @Test
+    void alwaysTrue_givenNothing_returnsAlwaysValue() {
+        ObjDoublePredicate<String> predicate = ObjDoublePredicate.alwaysTrue();
+        Assertions.assertTrue(predicate.test("", 0.0d));
+    }
+
+    @Test
+    void alwaysFalse_givenNothing_returnsAlwaysValue() {
+        ObjDoublePredicate<String> predicate = ObjDoublePredicate.alwaysFalse();
+        Assertions.assertFalse(predicate.test("", 0.0d));
+    }
+
+    @Test
+    void isEqual_givenSame_returnsTrue() {
+        ObjDoublePredicate<String> predicate = ObjDoublePredicate.isEqual("", 0.0d);
+        Assertions.assertTrue(predicate.test("", 0.0d));
+    }
+
+    @Test
+    void isEqual_givenDifferentFirstValue_returnsFalse() {
+        ObjDoublePredicate<String> predicate = ObjDoublePredicate.isEqual("first", 0.0d);
+        Assertions.assertFalse(predicate.test("", 0.0d));
+    }
+
+    @Test
+    void isEqual_givenDifferentSecondValue_returnsFalse() {
+        ObjDoublePredicate<String> predicate = ObjDoublePredicate.isEqual("", 1.0d);
+        Assertions.assertFalse(predicate.test("", 0.0d));
+    }
+
+    @Test
+    void isEqual_givenDifferentAll_returnsFalse() {
+        ObjDoublePredicate<String> predicate = ObjDoublePredicate.isEqual("other", 1.0d);
+        Assertions.assertFalse(predicate.test("", 0.0d));
+    }
 }

@@ -54,13 +54,13 @@ class BooleanSupplier2Test {
     }
 
     @Test
-    void alwaysTrue_givenValue_returnsAlwaysValue() {
+    void alwaysTrue_givenNothing_returnsAlwaysValue() {
         BooleanSupplier2 supplier = BooleanSupplier2.alwaysTrue();
         Assertions.assertTrue(supplier.getAsBoolean());
     }
 
     @Test
-    void alwaysFalse_givenValue_returnsAlwaysValue() {
+    void alwaysFalse_givenNothing_returnsAlwaysValue() {
         BooleanSupplier2 supplier = BooleanSupplier2.alwaysFalse();
         Assertions.assertFalse(supplier.getAsBoolean());
     }

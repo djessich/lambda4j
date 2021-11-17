@@ -32,4 +32,63 @@ class ObjLongPredicateTest {
         ObjLongPredicate<String> predicate = ObjLongPredicate.of(null);
         Assertions.assertNull(predicate);
     }
+
+    @Test
+    void call_givenExpression_executesFunctionalInterface() {
+        Assertions.assertFalse(ObjLongPredicate.call((t, value) -> false, "", 0L));
+    }
+
+    @Test
+    void call_givenNullValue_executesFunctionalInterface() {
+        Assertions.assertFalse(ObjLongPredicate.call((t, value) -> false, null, 0L));
+    }
+
+    @Test
+    void call_givenNullExpression_throwsException() {
+        Assertions.assertThrows(NullPointerException.class, () -> ObjLongPredicate.call(null, "", 0L));
+    }
+
+    @Test
+    void constant_givenValue_returnsAlwaysValue() {
+        boolean ret = false;
+        ObjLongPredicate<String> predicate = ObjLongPredicate.constant(ret);
+        Assertions.assertEquals(ret, predicate.test("", 0L));
+        Assertions.assertFalse(predicate.test("", 0L));
+    }
+
+    @Test
+    void alwaysTrue_givenNothing_returnsAlwaysValue() {
+        ObjLongPredicate<String> predicate = ObjLongPredicate.alwaysTrue();
+        Assertions.assertTrue(predicate.test("", 0L));
+    }
+
+    @Test
+    void alwaysFalse_givenNothing_returnsAlwaysValue() {
+        ObjLongPredicate<String> predicate = ObjLongPredicate.alwaysFalse();
+        Assertions.assertFalse(predicate.test("", 0L));
+    }
+
+    @Test
+    void isEqual_givenSame_returnsTrue() {
+        ObjLongPredicate<String> predicate = ObjLongPredicate.isEqual("", 0L);
+        Assertions.assertTrue(predicate.test("", 0L));
+    }
+
+    @Test
+    void isEqual_givenDifferentFirstValue_returnsFalse() {
+        ObjLongPredicate<String> predicate = ObjLongPredicate.isEqual("first", 0L);
+        Assertions.assertFalse(predicate.test("", 0L));
+    }
+
+    @Test
+    void isEqual_givenDifferentSecondValue_returnsFalse() {
+        ObjLongPredicate<String> predicate = ObjLongPredicate.isEqual("", 1L);
+        Assertions.assertFalse(predicate.test("", 0L));
+    }
+
+    @Test
+    void isEqual_givenDifferentAll_returnsFalse() {
+        ObjLongPredicate<String> predicate = ObjLongPredicate.isEqual("other", 1L);
+        Assertions.assertFalse(predicate.test("", 0L));
+    }
 }

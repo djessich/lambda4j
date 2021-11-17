@@ -32,4 +32,58 @@ class BiLongPredicateTest {
         BiLongPredicate predicate = BiLongPredicate.of(null);
         Assertions.assertNull(predicate);
     }
+
+    @Test
+    void call_givenExpression_executesFunctionalInterface() {
+        Assertions.assertFalse(BiLongPredicate.call((value1, value2) -> false, 0L, 0L));
+    }
+
+    @Test
+    void call_givenNullExpression_throwsException() {
+        Assertions.assertThrows(NullPointerException.class, () -> BiLongPredicate.call(null, 0L, 0L));
+    }
+
+    @Test
+    void constant_givenValue_returnsAlwaysValue() {
+        boolean ret = false;
+        BiLongPredicate predicate = BiLongPredicate.constant(ret);
+        Assertions.assertEquals(ret, predicate.test(0L, 0L));
+        Assertions.assertFalse(predicate.test(0L, 0L));
+    }
+
+    @Test
+    void alwaysTrue_givenNothing_returnsAlwaysValue() {
+        BiLongPredicate predicate = BiLongPredicate.alwaysTrue();
+        Assertions.assertTrue(predicate.test(0L, 0L));
+    }
+
+    @Test
+    void alwaysFalse_givenNothing_returnsAlwaysValue() {
+        BiLongPredicate predicate = BiLongPredicate.alwaysFalse();
+        Assertions.assertFalse(predicate.test(0L, 0L));
+    }
+
+    @Test
+    void isEqual_givenSame_returnsTrue() {
+        BiLongPredicate predicate = BiLongPredicate.isEqual(0L, 0L);
+        Assertions.assertTrue(predicate.test(0L, 0L));
+    }
+
+    @Test
+    void isEqual_givenDifferentFirstValue_returnsFalse() {
+        BiLongPredicate predicate = BiLongPredicate.isEqual(1L, 0L);
+        Assertions.assertFalse(predicate.test(0L, 0L));
+    }
+
+    @Test
+    void isEqual_givenDifferentSecondValue_returnsFalse() {
+        BiLongPredicate predicate = BiLongPredicate.isEqual(0L, 1L);
+        Assertions.assertFalse(predicate.test(0L, 0L));
+    }
+
+    @Test
+    void isEqual_givenDifferentAll_returnsFalse() {
+        BiLongPredicate predicate = BiLongPredicate.isEqual(1L, 1L);
+        Assertions.assertFalse(predicate.test(0L, 0L));
+    }
 }

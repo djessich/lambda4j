@@ -32,4 +32,63 @@ class ObjFloatPredicateTest {
         ObjFloatPredicate<String> predicate = ObjFloatPredicate.of(null);
         Assertions.assertNull(predicate);
     }
+
+    @Test
+    void call_givenExpression_executesFunctionalInterface() {
+        Assertions.assertFalse(ObjFloatPredicate.call((t, value) -> false, "", 0.0f));
+    }
+
+    @Test
+    void call_givenNullValue_executesFunctionalInterface() {
+        Assertions.assertFalse(ObjFloatPredicate.call((t, value) -> false, null, 0.0f));
+    }
+
+    @Test
+    void call_givenNullExpression_throwsException() {
+        Assertions.assertThrows(NullPointerException.class, () -> ObjFloatPredicate.call(null, "", 0.0f));
+    }
+
+    @Test
+    void constant_givenValue_returnsAlwaysValue() {
+        boolean ret = false;
+        ObjFloatPredicate<String> predicate = ObjFloatPredicate.constant(ret);
+        Assertions.assertEquals(ret, predicate.test("", 0.0f));
+        Assertions.assertFalse(predicate.test("", 0.0f));
+    }
+
+    @Test
+    void alwaysTrue_givenNothing_returnsAlwaysValue() {
+        ObjFloatPredicate<String> predicate = ObjFloatPredicate.alwaysTrue();
+        Assertions.assertTrue(predicate.test("", 0.0f));
+    }
+
+    @Test
+    void alwaysFalse_givenNothing_returnsAlwaysValue() {
+        ObjFloatPredicate<String> predicate = ObjFloatPredicate.alwaysFalse();
+        Assertions.assertFalse(predicate.test("", 0.0f));
+    }
+
+    @Test
+    void isEqual_givenSame_returnsTrue() {
+        ObjFloatPredicate<String> predicate = ObjFloatPredicate.isEqual("", 0.0f);
+        Assertions.assertTrue(predicate.test("", 0.0f));
+    }
+
+    @Test
+    void isEqual_givenDifferentFirstValue_returnsFalse() {
+        ObjFloatPredicate<String> predicate = ObjFloatPredicate.isEqual("first", 0.0f);
+        Assertions.assertFalse(predicate.test("", 0.0f));
+    }
+
+    @Test
+    void isEqual_givenDifferentSecondValue_returnsFalse() {
+        ObjFloatPredicate<String> predicate = ObjFloatPredicate.isEqual("", 1.0f);
+        Assertions.assertFalse(predicate.test("", 0.0f));
+    }
+
+    @Test
+    void isEqual_givenDifferentAll_returnsFalse() {
+        ObjFloatPredicate<String> predicate = ObjFloatPredicate.isEqual("other", 1.0f);
+        Assertions.assertFalse(predicate.test("", 0.0f));
+    }
 }

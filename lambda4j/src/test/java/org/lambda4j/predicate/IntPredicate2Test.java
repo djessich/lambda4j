@@ -32,4 +32,46 @@ class IntPredicate2Test {
         IntPredicate2 predicate = IntPredicate2.of(null);
         Assertions.assertNull(predicate);
     }
+
+    @Test
+    void call_givenExpression_executesFunctionalInterface() {
+        Assertions.assertFalse(IntPredicate2.call(value -> false, 0));
+    }
+
+    @Test
+    void call_givenNullExpression_throwsException() {
+        Assertions.assertThrows(NullPointerException.class, () -> IntPredicate2.call(null, 0));
+    }
+
+    @Test
+    void constant_givenValue_returnsAlwaysValue() {
+        boolean ret = false;
+        IntPredicate2 predicate = IntPredicate2.constant(ret);
+        Assertions.assertEquals(ret, predicate.test(0));
+        Assertions.assertFalse(predicate.test(0));
+    }
+
+    @Test
+    void alwaysTrue_givenNothing_returnsAlwaysValue() {
+        IntPredicate2 predicate = IntPredicate2.alwaysTrue();
+        Assertions.assertTrue(predicate.test(0));
+    }
+
+    @Test
+    void alwaysFalse_givenNothing_returnsAlwaysValue() {
+        IntPredicate2 predicate = IntPredicate2.alwaysFalse();
+        Assertions.assertFalse(predicate.test(0));
+    }
+
+    @Test
+    void isEqual_givenSame_returnsTrue() {
+        IntPredicate2 predicate = IntPredicate2.isEqual(0);
+        Assertions.assertTrue(predicate.test(0));
+    }
+
+    @Test
+    void isEqual_givenDifferent_returnsFalse() {
+        IntPredicate2 predicate = IntPredicate2.isEqual(1);
+        Assertions.assertFalse(predicate.test(0));
+    }
 }

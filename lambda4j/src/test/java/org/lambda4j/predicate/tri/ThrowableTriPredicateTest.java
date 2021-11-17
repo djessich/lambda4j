@@ -24,7 +24,7 @@ class ThrowableTriPredicateTest {
     @Test
     void of_givenExpression_returnsFunctionalInterface() {
         ThrowableTriPredicate<String, String, String, Throwable> predicate =
-                ThrowableTriPredicate.of((value1, value2, value3) -> false);
+                ThrowableTriPredicate.of((t, u, v) -> false);
         Assertions.assertNotNull(predicate);
     }
 
@@ -32,5 +32,86 @@ class ThrowableTriPredicateTest {
     void of_givenNull_returnsNull() {
         ThrowableTriPredicate<String, String, String, Throwable> predicate = ThrowableTriPredicate.of(null);
         Assertions.assertNull(predicate);
+    }
+
+    @Test
+    void call_givenExpression_executesFunctionalInterface() {
+        Assertions.assertFalse(ThrowableTriPredicate.call((t, u, v) -> false, "", "", ""));
+    }
+
+    @Test
+    void call_givenNullFirstValue_executesFunctionalInterface() {
+        Assertions.assertFalse(ThrowableTriPredicate.call((t, u, v) -> false, null, "", ""));
+    }
+
+    @Test
+    void call_givenNullSecondValue_executesFunctionalInterface() {
+        Assertions.assertFalse(ThrowableTriPredicate.call((t, u, v) -> false, "", null, ""));
+    }
+
+    @Test
+    void call_givenNullThirdValue_executesFunctionalInterface() {
+        Assertions.assertFalse(ThrowableTriPredicate.call((t, u, v) -> false, "", "", null));
+    }
+
+    @Test
+    void call_givenNullExpression_throwsException() {
+        Assertions.assertThrows(NullPointerException.class, () -> ThrowableTriPredicate.call(null, "", "", ""));
+    }
+
+    @Test
+    void constant_givenValue_returnsAlwaysValue() {
+        boolean ret = false;
+        ThrowableTriPredicate<String, String, String, Throwable> predicate = ThrowableTriPredicate.constant(ret);
+        Assertions.assertDoesNotThrow(() -> {
+            Assertions.assertEquals(ret, predicate.testThrows("", "", ""));
+            Assertions.assertFalse(predicate.testThrows("", "", ""));
+        });
+    }
+
+    @Test
+    void alwaysTrue_givenNothing_returnsAlwaysValue() {
+        ThrowableTriPredicate<String, String, String, Throwable> predicate = ThrowableTriPredicate.alwaysTrue();
+        Assertions.assertDoesNotThrow(() -> Assertions.assertTrue(predicate.testThrows("", "", "")));
+    }
+
+    @Test
+    void alwaysFalse_givenNothing_returnsAlwaysValue() {
+        ThrowableTriPredicate<String, String, String, Throwable> predicate = ThrowableTriPredicate.alwaysFalse();
+        Assertions.assertDoesNotThrow(() -> Assertions.assertFalse(predicate.testThrows("", "", "")));
+    }
+
+    @Test
+    void isEqual_givenSame_returnsTrue() {
+        ThrowableTriPredicate<String, String, String, Throwable> predicate = ThrowableTriPredicate.isEqual("", "", "");
+        Assertions.assertDoesNotThrow(() -> Assertions.assertTrue(predicate.testThrows("", "", "")));
+    }
+
+    @Test
+    void isEqual_givenDifferentFirstValue_returnsFalse() {
+        ThrowableTriPredicate<String, String, String, Throwable> predicate =
+                ThrowableTriPredicate.isEqual("first", "", "");
+        Assertions.assertDoesNotThrow(() -> Assertions.assertFalse(predicate.testThrows("", "", "")));
+    }
+
+    @Test
+    void isEqual_givenDifferentSecondValue_returnsFalse() {
+        ThrowableTriPredicate<String, String, String, Throwable> predicate =
+                ThrowableTriPredicate.isEqual("", "second", "");
+        Assertions.assertDoesNotThrow(() -> Assertions.assertFalse(predicate.testThrows("", "", "")));
+    }
+
+    @Test
+    void isEqual_givenDifferentThirdValue_returnsFalse() {
+        ThrowableTriPredicate<String, String, String, Throwable> predicate =
+                ThrowableTriPredicate.isEqual("", "", "third");
+        Assertions.assertDoesNotThrow(() -> Assertions.assertFalse(predicate.testThrows("", "", "")));
+    }
+
+    @Test
+    void isEqual_givenDifferentAll_returnsFalse() {
+        ThrowableTriPredicate<String, String, String, Throwable> predicate =
+                ThrowableTriPredicate.isEqual("other1", "other2", "other3");
+        Assertions.assertDoesNotThrow(() -> Assertions.assertFalse(predicate.testThrows("", "", "")));
     }
 }

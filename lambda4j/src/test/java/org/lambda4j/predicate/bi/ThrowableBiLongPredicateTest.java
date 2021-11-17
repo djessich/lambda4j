@@ -32,4 +32,60 @@ class ThrowableBiLongPredicateTest {
         ThrowableBiLongPredicate<Throwable> predicate = ThrowableBiLongPredicate.of(null);
         Assertions.assertNull(predicate);
     }
+
+    @Test
+    void call_givenExpression_executesFunctionalInterface() {
+        Assertions.assertFalse(ThrowableBiLongPredicate.call((value1, value2) -> false, 0L, 0L));
+    }
+
+    @Test
+    void call_givenNullExpression_throwsException() {
+        Assertions.assertThrows(NullPointerException.class, () -> ThrowableBiLongPredicate.call(null, 0L, 0L));
+    }
+
+    @Test
+    void constant_givenValue_returnsAlwaysValue() {
+        boolean ret = false;
+        ThrowableBiLongPredicate<Throwable> predicate = ThrowableBiLongPredicate.constant(ret);
+        Assertions.assertDoesNotThrow(() -> {
+            Assertions.assertEquals(ret, predicate.testThrows(0L, 0L));
+            Assertions.assertFalse(predicate.testThrows(0L, 0L));
+        });
+    }
+
+    @Test
+    void alwaysTrue_givenNothing_returnsAlwaysValue() {
+        ThrowableBiLongPredicate<Throwable> predicate = ThrowableBiLongPredicate.alwaysTrue();
+        Assertions.assertDoesNotThrow(() -> Assertions.assertTrue(predicate.testThrows(0L, 0L)));
+    }
+
+    @Test
+    void alwaysFalse_givenNothing_returnsAlwaysValue() {
+        ThrowableBiLongPredicate<Throwable> predicate = ThrowableBiLongPredicate.alwaysFalse();
+        Assertions.assertDoesNotThrow(() -> Assertions.assertFalse(predicate.testThrows(0L, 0L)));
+    }
+
+    @Test
+    void isEqual_givenSame_returnsTrue() {
+        ThrowableBiLongPredicate<Throwable> predicate = ThrowableBiLongPredicate.isEqual(0L, 0L);
+        Assertions.assertDoesNotThrow(() -> Assertions.assertTrue(predicate.testThrows(0L, 0L)));
+    }
+
+    @Test
+    void isEqual_givenDifferentFirstValue_returnsFalse() {
+        ThrowableBiLongPredicate<Throwable> predicate = ThrowableBiLongPredicate.isEqual(1L, 0L);
+        Assertions.assertDoesNotThrow(() -> Assertions.assertFalse(predicate.testThrows(0L, 0L)));
+    }
+
+    @Test
+    void isEqual_givenDifferentSecondValue_returnsFalse() {
+        ThrowableBiLongPredicate<Throwable> predicate = ThrowableBiLongPredicate.isEqual(0L, 1L);
+        Assertions.assertDoesNotThrow(() -> Assertions.assertFalse(predicate.testThrows(0L, 0L)));
+    }
+
+    @Test
+    void isEqual_givenDifferentAll_returnsFalse() {
+        ThrowableBiLongPredicate<Throwable> predicate = ThrowableBiLongPredicate.isEqual(1L, 1L);
+        Assertions.assertDoesNotThrow(() -> Assertions.assertFalse(predicate.testThrows(0L, 0L)));
+    }
 }

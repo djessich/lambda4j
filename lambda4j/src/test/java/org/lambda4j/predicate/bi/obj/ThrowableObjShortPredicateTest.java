@@ -32,4 +32,67 @@ class ThrowableObjShortPredicateTest {
         ThrowableObjShortPredicate<String, Throwable> predicate = ThrowableObjShortPredicate.of(null);
         Assertions.assertNull(predicate);
     }
+
+    @Test
+    void call_givenExpression_executesFunctionalInterface() {
+        Assertions.assertFalse(ThrowableObjShortPredicate.call((t, value) -> false, "", (short) 0));
+    }
+
+    @Test
+    void call_givenNullValue_executesFunctionalInterface() {
+        Assertions.assertFalse(ThrowableObjShortPredicate.call((t, value) -> false, null, (short) 0));
+    }
+
+    @Test
+    void call_givenNullExpression_throwsException() {
+        Assertions.assertThrows(NullPointerException.class, () -> ThrowableObjShortPredicate.call(null, "", (short) 0));
+    }
+
+    @Test
+    void constant_givenValue_returnsAlwaysValue() {
+        boolean ret = false;
+        ThrowableObjShortPredicate<String, Throwable> predicate = ThrowableObjShortPredicate.constant(ret);
+        Assertions.assertDoesNotThrow(() -> {
+            Assertions.assertEquals(ret, predicate.testThrows("", (short) 0));
+            Assertions.assertFalse(predicate.testThrows("", (short) 0));
+        });
+    }
+
+    @Test
+    void alwaysTrue_givenNothing_returnsAlwaysValue() {
+        ThrowableObjShortPredicate<String, Throwable> predicate = ThrowableObjShortPredicate.alwaysTrue();
+        Assertions.assertDoesNotThrow(() -> Assertions.assertTrue(predicate.testThrows("", (short) 0)));
+    }
+
+    @Test
+    void alwaysFalse_givenNothing_returnsAlwaysValue() {
+        ThrowableObjShortPredicate<String, Throwable> predicate = ThrowableObjShortPredicate.alwaysFalse();
+        Assertions.assertDoesNotThrow(() -> Assertions.assertFalse(predicate.testThrows("", (short) 0)));
+    }
+
+    @Test
+    void isEqual_givenSame_returnsTrue() {
+        ThrowableObjShortPredicate<String, Throwable> predicate = ThrowableObjShortPredicate.isEqual("", (short) 0);
+        Assertions.assertDoesNotThrow(() -> Assertions.assertTrue(predicate.testThrows("", (short) 0)));
+    }
+
+    @Test
+    void isEqual_givenDifferentFirstValue_returnsFalse() {
+        ThrowableObjShortPredicate<String, Throwable> predicate =
+                ThrowableObjShortPredicate.isEqual("first", (short) 0);
+        Assertions.assertDoesNotThrow(() -> Assertions.assertFalse(predicate.testThrows("", (short) 0)));
+    }
+
+    @Test
+    void isEqual_givenDifferentSecondValue_returnsFalse() {
+        ThrowableObjShortPredicate<String, Throwable> predicate = ThrowableObjShortPredicate.isEqual("", (short) 1);
+        Assertions.assertDoesNotThrow(() -> Assertions.assertFalse(predicate.testThrows("", (short) 0)));
+    }
+
+    @Test
+    void isEqual_givenDifferentAll_returnsFalse() {
+        ThrowableObjShortPredicate<String, Throwable> predicate =
+                ThrowableObjShortPredicate.isEqual("other", (short) 1);
+        Assertions.assertDoesNotThrow(() -> Assertions.assertFalse(predicate.testThrows("", (short) 0)));
+    }
 }

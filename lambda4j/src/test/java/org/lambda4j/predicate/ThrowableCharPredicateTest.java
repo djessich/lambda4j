@@ -32,4 +32,48 @@ class ThrowableCharPredicateTest {
         ThrowableCharPredicate<Throwable> predicate = ThrowableCharPredicate.of(null);
         Assertions.assertNull(predicate);
     }
+
+    @Test
+    void call_givenExpression_executesFunctionalInterface() {
+        Assertions.assertFalse(ThrowableCharPredicate.call(value -> false, 'c'));
+    }
+
+    @Test
+    void call_givenNullExpression_throwsException() {
+        Assertions.assertThrows(NullPointerException.class, () -> ThrowableCharPredicate.call(null, 'c'));
+    }
+
+    @Test
+    void constant_givenValue_returnsAlwaysValue() {
+        boolean ret = false;
+        ThrowableCharPredicate<Throwable> predicate = ThrowableCharPredicate.constant(ret);
+        Assertions.assertDoesNotThrow(() -> {
+            Assertions.assertEquals(ret, predicate.testThrows('c'));
+            Assertions.assertFalse(predicate.testThrows('c'));
+        });
+    }
+
+    @Test
+    void alwaysTrue_givenNothing_returnsAlwaysValue() {
+        ThrowableCharPredicate<Throwable> predicate = ThrowableCharPredicate.alwaysTrue();
+        Assertions.assertDoesNotThrow(() -> Assertions.assertTrue(predicate.testThrows('c')));
+    }
+
+    @Test
+    void alwaysFalse_givenNothing_returnsAlwaysValue() {
+        ThrowableCharPredicate<Throwable> predicate = ThrowableCharPredicate.alwaysFalse();
+        Assertions.assertDoesNotThrow(() -> Assertions.assertFalse(predicate.testThrows('c')));
+    }
+
+    @Test
+    void isEqual_givenSame_returnsTrue() {
+        ThrowableCharPredicate<Throwable> predicate = ThrowableCharPredicate.isEqual('c');
+        Assertions.assertDoesNotThrow(() -> Assertions.assertTrue(predicate.testThrows('c')));
+    }
+
+    @Test
+    void isEqual_givenDifferent_returnsFalse() {
+        ThrowableCharPredicate<Throwable> predicate = ThrowableCharPredicate.isEqual('d');
+        Assertions.assertDoesNotThrow(() -> Assertions.assertFalse(predicate.testThrows('c')));
+    }
 }

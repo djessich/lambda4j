@@ -32,4 +32,61 @@ class ThrowableBiBytePredicateTest {
         ThrowableBiBytePredicate<Throwable> predicate = ThrowableBiBytePredicate.of(null);
         Assertions.assertNull(predicate);
     }
+
+    @Test
+    void call_givenExpression_executesFunctionalInterface() {
+        Assertions.assertFalse(ThrowableBiBytePredicate.call((value1, value2) -> false, (byte) 0, (byte) 0));
+    }
+
+    @Test
+    void call_givenNullExpression_throwsException() {
+        Assertions.assertThrows(NullPointerException.class,
+                () -> ThrowableBiBytePredicate.call(null, (byte) 0, (byte) 0));
+    }
+
+    @Test
+    void constant_givenValue_returnsAlwaysValue() {
+        boolean ret = false;
+        ThrowableBiBytePredicate<Throwable> predicate = ThrowableBiBytePredicate.constant(ret);
+        Assertions.assertDoesNotThrow(() -> {
+            Assertions.assertEquals(ret, predicate.testThrows((byte) 0, (byte) 0));
+            Assertions.assertFalse(predicate.testThrows((byte) 0, (byte) 0));
+        });
+    }
+
+    @Test
+    void alwaysTrue_givenNothing_returnsAlwaysValue() {
+        ThrowableBiBytePredicate<Throwable> predicate = ThrowableBiBytePredicate.alwaysTrue();
+        Assertions.assertDoesNotThrow(() -> Assertions.assertTrue(predicate.testThrows((byte) 0, (byte) 0)));
+    }
+
+    @Test
+    void alwaysFalse_givenNothing_returnsAlwaysValue() {
+        ThrowableBiBytePredicate<Throwable> predicate = ThrowableBiBytePredicate.alwaysFalse();
+        Assertions.assertDoesNotThrow(() -> Assertions.assertFalse(predicate.testThrows((byte) 0, (byte) 0)));
+    }
+
+    @Test
+    void isEqual_givenSame_returnsTrue() {
+        ThrowableBiBytePredicate<Throwable> predicate = ThrowableBiBytePredicate.isEqual((byte) 0, (byte) 0);
+        Assertions.assertDoesNotThrow(() -> Assertions.assertTrue(predicate.testThrows((byte) 0, (byte) 0)));
+    }
+
+    @Test
+    void isEqual_givenDifferentFirstValue_returnsFalse() {
+        ThrowableBiBytePredicate<Throwable> predicate = ThrowableBiBytePredicate.isEqual((byte) 1, (byte) 0);
+        Assertions.assertDoesNotThrow(() -> Assertions.assertFalse(predicate.testThrows((byte) 0, (byte) 0)));
+    }
+
+    @Test
+    void isEqual_givenDifferentSecondValue_returnsFalse() {
+        ThrowableBiBytePredicate<Throwable> predicate = ThrowableBiBytePredicate.isEqual((byte) 0, (byte) 1);
+        Assertions.assertDoesNotThrow(() -> Assertions.assertFalse(predicate.testThrows((byte) 0, (byte) 0)));
+    }
+
+    @Test
+    void isEqual_givenDifferentAll_returnsFalse() {
+        ThrowableBiBytePredicate<Throwable> predicate = ThrowableBiBytePredicate.isEqual((byte) 1, (byte) 1);
+        Assertions.assertDoesNotThrow(() -> Assertions.assertFalse(predicate.testThrows((byte) 0, (byte) 0)));
+    }
 }

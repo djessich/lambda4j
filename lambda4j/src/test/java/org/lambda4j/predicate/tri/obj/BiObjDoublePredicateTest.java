@@ -32,4 +32,74 @@ class BiObjDoublePredicateTest {
         BiObjDoublePredicate<String, String> predicate = BiObjDoublePredicate.of(null);
         Assertions.assertNull(predicate);
     }
+
+    @Test
+    void call_givenExpression_executesFunctionalInterface() {
+        Assertions.assertFalse(BiObjDoublePredicate.call((t, u, value) -> false, "", "", 0.0d));
+    }
+
+    @Test
+    void call_givenNullFirstValue_executesFunctionalInterface() {
+        Assertions.assertFalse(BiObjDoublePredicate.call((t, u, value) -> false, null, "", 0.0d));
+    }
+
+    @Test
+    void call_givenNullSecondValue_executesFunctionalInterface() {
+        Assertions.assertFalse(BiObjDoublePredicate.call((t, u, value) -> false, "", null, 0.0d));
+    }
+
+    @Test
+    void call_givenNullExpression_throwsException() {
+        Assertions.assertThrows(NullPointerException.class, () -> BiObjDoublePredicate.call(null, "", "", 0.0d));
+    }
+
+    @Test
+    void constant_givenValue_returnsAlwaysValue() {
+        boolean ret = false;
+        BiObjDoublePredicate<String, String> predicate = BiObjDoublePredicate.constant(ret);
+        Assertions.assertEquals(ret, predicate.test("", "", 0.0d));
+        Assertions.assertFalse(predicate.test("", "", 0.0d));
+    }
+
+    @Test
+    void alwaysTrue_givenNothing_returnsAlwaysValue() {
+        BiObjDoublePredicate<String, String> predicate = BiObjDoublePredicate.alwaysTrue();
+        Assertions.assertTrue(predicate.test("", "", 0.0d));
+    }
+
+    @Test
+    void alwaysFalse_givenNothing_returnsAlwaysValue() {
+        BiObjDoublePredicate<String, String> predicate = BiObjDoublePredicate.alwaysFalse();
+        Assertions.assertFalse(predicate.test("", "", 0.0d));
+    }
+
+    @Test
+    void isEqual_givenSame_returnsTrue() {
+        BiObjDoublePredicate<String, String> predicate = BiObjDoublePredicate.isEqual("", "", 0.0d);
+        Assertions.assertTrue(predicate.test("", "", 0.0d));
+    }
+
+    @Test
+    void isEqual_givenDifferentFirstValue_returnsFalse() {
+        BiObjDoublePredicate<String, String> predicate = BiObjDoublePredicate.isEqual("first", "", 0.0d);
+        Assertions.assertFalse(predicate.test("", "", 0.0d));
+    }
+
+    @Test
+    void isEqual_givenDifferentSecondValue_returnsFalse() {
+        BiObjDoublePredicate<String, String> predicate = BiObjDoublePredicate.isEqual("", "second", 0.0d);
+        Assertions.assertFalse(predicate.test("", "", 0.0d));
+    }
+
+    @Test
+    void isEqual_givenDifferentThirdValue_returnsFalse() {
+        BiObjDoublePredicate<String, String> predicate = BiObjDoublePredicate.isEqual("", "", 1.0d);
+        Assertions.assertFalse(predicate.test("", "", 0.0d));
+    }
+
+    @Test
+    void isEqual_givenDifferentAll_returnsFalse() {
+        BiObjDoublePredicate<String, String> predicate = BiObjDoublePredicate.isEqual("other1", "other2", 1.0d);
+        Assertions.assertFalse(predicate.test("", "", 0.0d));
+    }
 }

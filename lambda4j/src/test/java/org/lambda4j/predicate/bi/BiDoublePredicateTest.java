@@ -32,4 +32,58 @@ class BiDoublePredicateTest {
         BiDoublePredicate predicate = BiDoublePredicate.of(null);
         Assertions.assertNull(predicate);
     }
+
+    @Test
+    void call_givenExpression_executesFunctionalInterface() {
+        Assertions.assertFalse(BiDoublePredicate.call((value1, value2) -> false, 0.0d, 0.0d));
+    }
+
+    @Test
+    void call_givenNullExpression_throwsException() {
+        Assertions.assertThrows(NullPointerException.class, () -> BiDoublePredicate.call(null, 0.0d, 0.0d));
+    }
+
+    @Test
+    void constant_givenValue_returnsAlwaysValue() {
+        boolean ret = false;
+        BiDoublePredicate predicate = BiDoublePredicate.constant(ret);
+        Assertions.assertEquals(ret, predicate.test(0.0d, 0.0d));
+        Assertions.assertFalse(predicate.test(0.0d, 0.0d));
+    }
+
+    @Test
+    void alwaysTrue_givenNothing_returnsAlwaysValue() {
+        BiDoublePredicate predicate = BiDoublePredicate.alwaysTrue();
+        Assertions.assertTrue(predicate.test(0.0d, 0.0d));
+    }
+
+    @Test
+    void alwaysFalse_givenNothing_returnsAlwaysValue() {
+        BiDoublePredicate predicate = BiDoublePredicate.alwaysFalse();
+        Assertions.assertFalse(predicate.test(0.0d, 0.0d));
+    }
+
+    @Test
+    void isEqual_givenSame_returnsTrue() {
+        BiDoublePredicate predicate = BiDoublePredicate.isEqual(0.0d, 0.0d);
+        Assertions.assertTrue(predicate.test(0.0d, 0.0d));
+    }
+
+    @Test
+    void isEqual_givenDifferentFirstValue_returnsFalse() {
+        BiDoublePredicate predicate = BiDoublePredicate.isEqual(1.0d, 0.0d);
+        Assertions.assertFalse(predicate.test(0.0d, 0.0d));
+    }
+
+    @Test
+    void isEqual_givenDifferentSecondValue_returnsFalse() {
+        BiDoublePredicate predicate = BiDoublePredicate.isEqual(0.0d, 1.0d);
+        Assertions.assertFalse(predicate.test(0.0d, 0.0d));
+    }
+
+    @Test
+    void isEqual_givenDifferentAll_returnsFalse() {
+        BiDoublePredicate predicate = BiDoublePredicate.isEqual(1.0d, 1.0d);
+        Assertions.assertFalse(predicate.test(0.0d, 0.0d));
+    }
 }

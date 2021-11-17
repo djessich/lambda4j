@@ -32,4 +32,46 @@ class LongPredicate2Test {
         LongPredicate2 predicate = LongPredicate2.of(null);
         Assertions.assertNull(predicate);
     }
+
+    @Test
+    void call_givenExpression_executesFunctionalInterface() {
+        Assertions.assertFalse(LongPredicate2.call(value -> false, 0L));
+    }
+
+    @Test
+    void call_givenNullExpression_throwsException() {
+        Assertions.assertThrows(NullPointerException.class, () -> LongPredicate2.call(null, 0L));
+    }
+
+    @Test
+    void constant_givenValue_returnsAlwaysValue() {
+        boolean ret = false;
+        LongPredicate2 predicate = LongPredicate2.constant(ret);
+        Assertions.assertEquals(ret, predicate.test(0L));
+        Assertions.assertFalse(predicate.test(0L));
+    }
+
+    @Test
+    void alwaysTrue_givenNothing_returnsAlwaysValue() {
+        LongPredicate2 predicate = LongPredicate2.alwaysTrue();
+        Assertions.assertTrue(predicate.test(0L));
+    }
+
+    @Test
+    void alwaysFalse_givenNothing_returnsAlwaysValue() {
+        LongPredicate2 predicate = LongPredicate2.alwaysFalse();
+        Assertions.assertFalse(predicate.test(0L));
+    }
+
+    @Test
+    void isEqual_givenSame_returnsTrue() {
+        LongPredicate2 predicate = LongPredicate2.isEqual(0L);
+        Assertions.assertTrue(predicate.test(0L));
+    }
+
+    @Test
+    void isEqual_givenDifferent_returnsFalse() {
+        LongPredicate2 predicate = LongPredicate2.isEqual(1L);
+        Assertions.assertFalse(predicate.test(0L));
+    }
 }

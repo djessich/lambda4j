@@ -32,4 +32,64 @@ class TriLongPredicateTest {
         TriLongPredicate predicate = TriLongPredicate.of(null);
         Assertions.assertNull(predicate);
     }
+
+    @Test
+    void call_givenExpression_executesFunctionalInterface() {
+        Assertions.assertFalse(TriLongPredicate.call((value1, value2, value3) -> false, 0L, 0L, 0L));
+    }
+
+    @Test
+    void call_givenNullExpression_throwsException() {
+        Assertions.assertThrows(NullPointerException.class, () -> TriLongPredicate.call(null, 0L, 0L, 0L));
+    }
+
+    @Test
+    void constant_givenValue_returnsAlwaysValue() {
+        boolean ret = false;
+        TriLongPredicate predicate = TriLongPredicate.constant(ret);
+        Assertions.assertEquals(ret, predicate.test(0L, 0L, 0L));
+        Assertions.assertFalse(predicate.test(0L, 0L, 0L));
+    }
+
+    @Test
+    void alwaysTrue_givenNothing_returnsAlwaysValue() {
+        TriLongPredicate predicate = TriLongPredicate.alwaysTrue();
+        Assertions.assertTrue(predicate.test(0L, 0L, 0L));
+    }
+
+    @Test
+    void alwaysFalse_givenNothing_returnsAlwaysValue() {
+        TriLongPredicate predicate = TriLongPredicate.alwaysFalse();
+        Assertions.assertFalse(predicate.test(0L, 0L, 0L));
+    }
+
+    @Test
+    void isEqual_givenSame_returnsTrue() {
+        TriLongPredicate predicate = TriLongPredicate.isEqual(0L, 0L, 0L);
+        Assertions.assertTrue(predicate.test(0L, 0L, 0L));
+    }
+
+    @Test
+    void isEqual_givenDifferentFirstValue_returnsFalse() {
+        TriLongPredicate predicate = TriLongPredicate.isEqual(1L, 0L, 0L);
+        Assertions.assertFalse(predicate.test(0L, 0L, 0L));
+    }
+
+    @Test
+    void isEqual_givenDifferentSecondValue_returnsFalse() {
+        TriLongPredicate predicate = TriLongPredicate.isEqual(0L, 1L, 0L);
+        Assertions.assertFalse(predicate.test(0L, 0L, 0L));
+    }
+
+    @Test
+    void isEqual_givenDifferentThirdValue_returnsFalse() {
+        TriLongPredicate predicate = TriLongPredicate.isEqual(0L, 0L, 1L);
+        Assertions.assertFalse(predicate.test(0L, 0L, 0L));
+    }
+
+    @Test
+    void isEqual_givenDifferentAll_returnsFalse() {
+        TriLongPredicate predicate = TriLongPredicate.isEqual(1L, 1L, 1L);
+        Assertions.assertFalse(predicate.test(0L, 0L, 0L));
+    }
 }

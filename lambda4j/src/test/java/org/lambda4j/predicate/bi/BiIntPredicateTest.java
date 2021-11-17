@@ -32,4 +32,58 @@ class BiIntPredicateTest {
         BiIntPredicate predicate = BiIntPredicate.of(null);
         Assertions.assertNull(predicate);
     }
+
+    @Test
+    void call_givenExpression_executesFunctionalInterface() {
+        Assertions.assertFalse(BiIntPredicate.call((value1, value2) -> false, 0, 0));
+    }
+
+    @Test
+    void call_givenNullExpression_throwsException() {
+        Assertions.assertThrows(NullPointerException.class, () -> BiIntPredicate.call(null, 0, 0));
+    }
+
+    @Test
+    void constant_givenValue_returnsAlwaysValue() {
+        boolean ret = false;
+        BiIntPredicate predicate = BiIntPredicate.constant(ret);
+        Assertions.assertEquals(ret, predicate.test(0, 0));
+        Assertions.assertFalse(predicate.test(0, 0));
+    }
+
+    @Test
+    void alwaysTrue_givenNothing_returnsAlwaysValue() {
+        BiIntPredicate predicate = BiIntPredicate.alwaysTrue();
+        Assertions.assertTrue(predicate.test(0, 0));
+    }
+
+    @Test
+    void alwaysFalse_givenNothing_returnsAlwaysValue() {
+        BiIntPredicate predicate = BiIntPredicate.alwaysFalse();
+        Assertions.assertFalse(predicate.test(0, 0));
+    }
+
+    @Test
+    void isEqual_givenSame_returnsTrue() {
+        BiIntPredicate predicate = BiIntPredicate.isEqual(0, 0);
+        Assertions.assertTrue(predicate.test(0, 0));
+    }
+
+    @Test
+    void isEqual_givenDifferentFirstValue_returnsFalse() {
+        BiIntPredicate predicate = BiIntPredicate.isEqual(1, 0);
+        Assertions.assertFalse(predicate.test(0, 0));
+    }
+
+    @Test
+    void isEqual_givenDifferentSecondValue_returnsFalse() {
+        BiIntPredicate predicate = BiIntPredicate.isEqual(0, 1);
+        Assertions.assertFalse(predicate.test(0, 0));
+    }
+
+    @Test
+    void isEqual_givenDifferentAll_returnsFalse() {
+        BiIntPredicate predicate = BiIntPredicate.isEqual(1, 1);
+        Assertions.assertFalse(predicate.test(0, 0));
+    }
 }

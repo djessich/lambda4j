@@ -32,4 +32,69 @@ class ObjBiBooleanPredicateTest {
         ObjBiBooleanPredicate<String> predicate = ObjBiBooleanPredicate.of(null);
         Assertions.assertNull(predicate);
     }
+
+    @Test
+    void call_givenExpression_executesFunctionalInterface() {
+        Assertions.assertFalse(ObjBiBooleanPredicate.call((t, value1, value2) -> false, "", true, true));
+    }
+
+    @Test
+    void call_givenNullValue_executesFunctionalInterface() {
+        Assertions.assertFalse(ObjBiBooleanPredicate.call((t, value1, value2) -> false, null, true, true));
+    }
+
+    @Test
+    void call_givenNullExpression_throwsException() {
+        Assertions.assertThrows(NullPointerException.class, () -> ObjBiBooleanPredicate.call(null, "", true, true));
+    }
+
+    @Test
+    void constant_givenValue_returnsAlwaysValue() {
+        boolean ret = false;
+        ObjBiBooleanPredicate<String> predicate = ObjBiBooleanPredicate.constant(ret);
+        Assertions.assertEquals(ret, predicate.test("", false, false));
+        Assertions.assertFalse(predicate.test("", false, false));
+    }
+
+    @Test
+    void alwaysTrue_givenNothing_returnsAlwaysValue() {
+        ObjBiBooleanPredicate<String> predicate = ObjBiBooleanPredicate.alwaysTrue();
+        Assertions.assertTrue(predicate.test("", false, false));
+    }
+
+    @Test
+    void alwaysFalse_givenNothing_returnsAlwaysValue() {
+        ObjBiBooleanPredicate<String> predicate = ObjBiBooleanPredicate.alwaysFalse();
+        Assertions.assertFalse(predicate.test("", false, false));
+    }
+
+    @Test
+    void isEqual_givenSame_returnsTrue() {
+        ObjBiBooleanPredicate<String> predicate = ObjBiBooleanPredicate.isEqual("", false, false);
+        Assertions.assertTrue(predicate.test("", false, false));
+    }
+
+    @Test
+    void isEqual_givenDifferentFirstValue_returnsFalse() {
+        ObjBiBooleanPredicate<String> predicate = ObjBiBooleanPredicate.isEqual("first", false, false);
+        Assertions.assertFalse(predicate.test("", false, false));
+    }
+
+    @Test
+    void isEqual_givenDifferentSecondValue_returnsFalse() {
+        ObjBiBooleanPredicate<String> predicate = ObjBiBooleanPredicate.isEqual("", true, false);
+        Assertions.assertFalse(predicate.test("", false, false));
+    }
+
+    @Test
+    void isEqual_givenDifferentThirdValue_returnsFalse() {
+        ObjBiBooleanPredicate<String> predicate = ObjBiBooleanPredicate.isEqual("", false, true);
+        Assertions.assertFalse(predicate.test("", false, false));
+    }
+
+    @Test
+    void isEqual_givenDifferentAll_returnsFalse() {
+        ObjBiBooleanPredicate<String> predicate = ObjBiBooleanPredicate.isEqual("other", true, true);
+        Assertions.assertFalse(predicate.test("", false, false));
+    }
 }

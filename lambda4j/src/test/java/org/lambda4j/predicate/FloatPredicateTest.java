@@ -32,4 +32,46 @@ class FloatPredicateTest {
         FloatPredicate predicate = FloatPredicate.of(null);
         Assertions.assertNull(predicate);
     }
+
+    @Test
+    void call_givenExpression_executesFunctionalInterface() {
+        Assertions.assertFalse(FloatPredicate.call(value -> false, 0.0f));
+    }
+
+    @Test
+    void call_givenNullExpression_throwsException() {
+        Assertions.assertThrows(NullPointerException.class, () -> FloatPredicate.call(null, 0.0f));
+    }
+
+    @Test
+    void constant_givenValue_returnsAlwaysValue() {
+        boolean ret = false;
+        FloatPredicate predicate = FloatPredicate.constant(ret);
+        Assertions.assertEquals(ret, predicate.test(0.0f));
+        Assertions.assertFalse(predicate.test(0.0f));
+    }
+
+    @Test
+    void alwaysTrue_givenNothing_returnsAlwaysValue() {
+        FloatPredicate predicate = FloatPredicate.alwaysTrue();
+        Assertions.assertTrue(predicate.test(0.0f));
+    }
+
+    @Test
+    void alwaysFalse_givenNothing_returnsAlwaysValue() {
+        FloatPredicate predicate = FloatPredicate.alwaysFalse();
+        Assertions.assertFalse(predicate.test(0.0f));
+    }
+
+    @Test
+    void isEqual_givenSame_returnsTrue() {
+        FloatPredicate predicate = FloatPredicate.isEqual(0.0f);
+        Assertions.assertTrue(predicate.test(0.0f));
+    }
+
+    @Test
+    void isEqual_givenDifferent_returnsFalse() {
+        FloatPredicate predicate = FloatPredicate.isEqual(1.0f);
+        Assertions.assertFalse(predicate.test(0.0f));
+    }
 }

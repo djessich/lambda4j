@@ -32,4 +32,65 @@ class TriBytePredicateTest {
         TriBytePredicate predicate = TriBytePredicate.of(null);
         Assertions.assertNull(predicate);
     }
+
+    @Test
+    void call_givenExpression_executesFunctionalInterface() {
+        Assertions.assertFalse(TriBytePredicate.call((value1, value2, value3) -> false, (byte) 0, (byte) 0, (byte) 0));
+    }
+
+    @Test
+    void call_givenNullExpression_throwsException() {
+        Assertions.assertThrows(NullPointerException.class,
+                () -> TriBytePredicate.call(null, (byte) 0, (byte) 0, (byte) 0));
+    }
+
+    @Test
+    void constant_givenValue_returnsAlwaysValue() {
+        boolean ret = false;
+        TriBytePredicate predicate = TriBytePredicate.constant(ret);
+        Assertions.assertEquals(ret, predicate.test((byte) 0, (byte) 0, (byte) 0));
+        Assertions.assertFalse(predicate.test((byte) 0, (byte) 0, (byte) 0));
+    }
+
+    @Test
+    void alwaysTrue_givenNothing_returnsAlwaysValue() {
+        TriBytePredicate predicate = TriBytePredicate.alwaysTrue();
+        Assertions.assertTrue(predicate.test((byte) 0, (byte) 0, (byte) 0));
+    }
+
+    @Test
+    void alwaysFalse_givenNothing_returnsAlwaysValue() {
+        TriBytePredicate predicate = TriBytePredicate.alwaysFalse();
+        Assertions.assertFalse(predicate.test((byte) 0, (byte) 0, (byte) 0));
+    }
+
+    @Test
+    void isEqual_givenSame_returnsTrue() {
+        TriBytePredicate predicate = TriBytePredicate.isEqual((byte) 0, (byte) 0, (byte) 0);
+        Assertions.assertTrue(predicate.test((byte) 0, (byte) 0, (byte) 0));
+    }
+
+    @Test
+    void isEqual_givenDifferentFirstValue_returnsFalse() {
+        TriBytePredicate predicate = TriBytePredicate.isEqual((byte) 1, (byte) 0, (byte) 0);
+        Assertions.assertFalse(predicate.test((byte) 0, (byte) 0, (byte) 0));
+    }
+
+    @Test
+    void isEqual_givenDifferentSecondValue_returnsFalse() {
+        TriBytePredicate predicate = TriBytePredicate.isEqual((byte) 0, (byte) 1, (byte) 0);
+        Assertions.assertFalse(predicate.test((byte) 0, (byte) 0, (byte) 0));
+    }
+
+    @Test
+    void isEqual_givenDifferentThirdValue_returnsFalse() {
+        TriBytePredicate predicate = TriBytePredicate.isEqual((byte) 0, (byte) 0, (byte) 1);
+        Assertions.assertFalse(predicate.test((byte) 0, (byte) 0, (byte) 0));
+    }
+
+    @Test
+    void isEqual_givenDifferentAll_returnsFalse() {
+        TriBytePredicate predicate = TriBytePredicate.isEqual((byte) 1, (byte) 1, (byte) 1);
+        Assertions.assertFalse(predicate.test((byte) 0, (byte) 0, (byte) 0));
+    }
 }

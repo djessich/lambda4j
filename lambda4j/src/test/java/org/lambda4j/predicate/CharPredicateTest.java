@@ -32,4 +32,46 @@ class CharPredicateTest {
         CharPredicate predicate = CharPredicate.of(null);
         Assertions.assertNull(predicate);
     }
+
+    @Test
+    void call_givenExpression_executesFunctionalInterface() {
+        Assertions.assertFalse(CharPredicate.call(value -> false, 'c'));
+    }
+
+    @Test
+    void call_givenNullExpression_throwsException() {
+        Assertions.assertThrows(NullPointerException.class, () -> CharPredicate.call(null, 'c'));
+    }
+
+    @Test
+    void constant_givenValue_returnsAlwaysValue() {
+        boolean ret = false;
+        CharPredicate predicate = CharPredicate.constant(ret);
+        Assertions.assertEquals(ret, predicate.test('c'));
+        Assertions.assertFalse(predicate.test('c'));
+    }
+
+    @Test
+    void alwaysTrue_givenNothing_returnsAlwaysValue() {
+        CharPredicate predicate = CharPredicate.alwaysTrue();
+        Assertions.assertTrue(predicate.test('c'));
+    }
+
+    @Test
+    void alwaysFalse_givenNothing_returnsAlwaysValue() {
+        CharPredicate predicate = CharPredicate.alwaysFalse();
+        Assertions.assertFalse(predicate.test('c'));
+    }
+
+    @Test
+    void isEqual_givenSame_returnsTrue() {
+        CharPredicate predicate = CharPredicate.isEqual('c');
+        Assertions.assertTrue(predicate.test('c'));
+    }
+
+    @Test
+    void isEqual_givenDifferent_returnsFalse() {
+        CharPredicate predicate = CharPredicate.isEqual('d');
+        Assertions.assertFalse(predicate.test('c'));
+    }
 }

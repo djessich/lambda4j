@@ -32,4 +32,58 @@ class BiBytePredicateTest {
         BiBytePredicate predicate = BiBytePredicate.of(null);
         Assertions.assertNull(predicate);
     }
+
+    @Test
+    void call_givenExpression_executesFunctionalInterface() {
+        Assertions.assertFalse(BiBytePredicate.call((value1, value2) -> false, (byte) 0, (byte) 0));
+    }
+
+    @Test
+    void call_givenNullExpression_throwsException() {
+        Assertions.assertThrows(NullPointerException.class, () -> BiBytePredicate.call(null, (byte) 0, (byte) 0));
+    }
+
+    @Test
+    void constant_givenValue_returnsAlwaysValue() {
+        boolean ret = false;
+        BiBytePredicate predicate = BiBytePredicate.constant(ret);
+        Assertions.assertEquals(ret, predicate.test((byte) 0, (byte) 0));
+        Assertions.assertFalse(predicate.test((byte) 0, (byte) 0));
+    }
+
+    @Test
+    void alwaysTrue_givenNothing_returnsAlwaysValue() {
+        BiBytePredicate predicate = BiBytePredicate.alwaysTrue();
+        Assertions.assertTrue(predicate.test((byte) 0, (byte) 0));
+    }
+
+    @Test
+    void alwaysFalse_givenNothing_returnsAlwaysValue() {
+        BiBytePredicate predicate = BiBytePredicate.alwaysFalse();
+        Assertions.assertFalse(predicate.test((byte) 0, (byte) 0));
+    }
+
+    @Test
+    void isEqual_givenSame_returnsTrue() {
+        BiBytePredicate predicate = BiBytePredicate.isEqual((byte) 0, (byte) 0);
+        Assertions.assertTrue(predicate.test((byte) 0, (byte) 0));
+    }
+
+    @Test
+    void isEqual_givenDifferentFirstValue_returnsFalse() {
+        BiBytePredicate predicate = BiBytePredicate.isEqual((byte) 1, (byte) 0);
+        Assertions.assertFalse(predicate.test((byte) 0, (byte) 0));
+    }
+
+    @Test
+    void isEqual_givenDifferentSecondValue_returnsFalse() {
+        BiBytePredicate predicate = BiBytePredicate.isEqual((byte) 0, (byte) 1);
+        Assertions.assertFalse(predicate.test((byte) 0, (byte) 0));
+    }
+
+    @Test
+    void isEqual_givenDifferentAll_returnsFalse() {
+        BiBytePredicate predicate = BiBytePredicate.isEqual((byte) 1, (byte) 1);
+        Assertions.assertFalse(predicate.test((byte) 0, (byte) 0));
+    }
 }

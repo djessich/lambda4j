@@ -32,4 +32,64 @@ class TriFloatPredicateTest {
         TriFloatPredicate predicate = TriFloatPredicate.of(null);
         Assertions.assertNull(predicate);
     }
+
+    @Test
+    void call_givenExpression_executesFunctionalInterface() {
+        Assertions.assertFalse(TriFloatPredicate.call((value1, value2, value3) -> false, 0.0f, 0.0f, 0.0f));
+    }
+
+    @Test
+    void call_givenNullExpression_throwsException() {
+        Assertions.assertThrows(NullPointerException.class, () -> TriFloatPredicate.call(null, 0.0f, 0.0f, 0.0f));
+    }
+
+    @Test
+    void constant_givenValue_returnsAlwaysValue() {
+        boolean ret = false;
+        TriFloatPredicate predicate = TriFloatPredicate.constant(ret);
+        Assertions.assertEquals(ret, predicate.test(0.0f, 0.0f, 0.0f));
+        Assertions.assertFalse(predicate.test(0.0f, 0.0f, 0.0f));
+    }
+
+    @Test
+    void alwaysTrue_givenNothing_returnsAlwaysValue() {
+        TriFloatPredicate predicate = TriFloatPredicate.alwaysTrue();
+        Assertions.assertTrue(predicate.test(0.0f, 0.0f, 0.0f));
+    }
+
+    @Test
+    void alwaysFalse_givenNothing_returnsAlwaysValue() {
+        TriFloatPredicate predicate = TriFloatPredicate.alwaysFalse();
+        Assertions.assertFalse(predicate.test(0.0f, 0.0f, 0.0f));
+    }
+
+    @Test
+    void isEqual_givenSame_returnsTrue() {
+        TriFloatPredicate predicate = TriFloatPredicate.isEqual(0.0f, 0.0f, 0.0f);
+        Assertions.assertTrue(predicate.test(0.0f, 0.0f, 0.0f));
+    }
+
+    @Test
+    void isEqual_givenDifferentFirstValue_returnsFalse() {
+        TriFloatPredicate predicate = TriFloatPredicate.isEqual(1.0f, 0.0f, 0.0f);
+        Assertions.assertFalse(predicate.test(0.0f, 0.0f, 0.0f));
+    }
+
+    @Test
+    void isEqual_givenDifferentSecondValue_returnsFalse() {
+        TriFloatPredicate predicate = TriFloatPredicate.isEqual(0.0f, 1.0f, 0.0f);
+        Assertions.assertFalse(predicate.test(0.0f, 0.0f, 0.0f));
+    }
+
+    @Test
+    void isEqual_givenDifferentThirdValue_returnsFalse() {
+        TriFloatPredicate predicate = TriFloatPredicate.isEqual(0.0f, 0.0f, 1.0f);
+        Assertions.assertFalse(predicate.test(0.0f, 0.0f, 0.0f));
+    }
+
+    @Test
+    void isEqual_givenDifferentAll_returnsFalse() {
+        TriFloatPredicate predicate = TriFloatPredicate.isEqual(1.0f, 1.0f, 1.0f);
+        Assertions.assertFalse(predicate.test(0.0f, 0.0f, 0.0f));
+    }
 }

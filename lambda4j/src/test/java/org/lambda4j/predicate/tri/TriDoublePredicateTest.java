@@ -32,4 +32,64 @@ class TriDoublePredicateTest {
         TriDoublePredicate predicate = TriDoublePredicate.of(null);
         Assertions.assertNull(predicate);
     }
+
+    @Test
+    void call_givenExpression_executesFunctionalInterface() {
+        Assertions.assertFalse(TriDoublePredicate.call((value1, value2, value3) -> false, 0.0d, 0.0d, 0.0d));
+    }
+
+    @Test
+    void call_givenNullExpression_throwsException() {
+        Assertions.assertThrows(NullPointerException.class, () -> TriDoublePredicate.call(null, 0.0d, 0.0d, 0.0d));
+    }
+
+    @Test
+    void constant_givenValue_returnsAlwaysValue() {
+        boolean ret = false;
+        TriDoublePredicate predicate = TriDoublePredicate.constant(ret);
+        Assertions.assertEquals(ret, predicate.test(0.0d, 0.0d, 0.0d));
+        Assertions.assertFalse(predicate.test(0.0d, 0.0d, 0.0d));
+    }
+
+    @Test
+    void alwaysTrue_givenNothing_returnsAlwaysValue() {
+        TriDoublePredicate predicate = TriDoublePredicate.alwaysTrue();
+        Assertions.assertTrue(predicate.test(0.0d, 0.0d, 0.0d));
+    }
+
+    @Test
+    void alwaysFalse_givenNothing_returnsAlwaysValue() {
+        TriDoublePredicate predicate = TriDoublePredicate.alwaysFalse();
+        Assertions.assertFalse(predicate.test(0.0d, 0.0d, 0.0d));
+    }
+
+    @Test
+    void isEqual_givenSame_returnsTrue() {
+        TriDoublePredicate predicate = TriDoublePredicate.isEqual(0.0d, 0.0d, 0.0d);
+        Assertions.assertTrue(predicate.test(0.0d, 0.0d, 0.0d));
+    }
+
+    @Test
+    void isEqual_givenDifferentFirstValue_returnsFalse() {
+        TriDoublePredicate predicate = TriDoublePredicate.isEqual(1.0d, 0.0d, 0.0d);
+        Assertions.assertFalse(predicate.test(0.0d, 0.0d, 0.0d));
+    }
+
+    @Test
+    void isEqual_givenDifferentSecondValue_returnsFalse() {
+        TriDoublePredicate predicate = TriDoublePredicate.isEqual(0.0d, 1.0d, 0.0d);
+        Assertions.assertFalse(predicate.test(0.0d, 0.0d, 0.0d));
+    }
+
+    @Test
+    void isEqual_givenDifferentThirdValue_returnsFalse() {
+        TriDoublePredicate predicate = TriDoublePredicate.isEqual(0.0d, 0.0d, 1.0d);
+        Assertions.assertFalse(predicate.test(0.0d, 0.0d, 0.0d));
+    }
+
+    @Test
+    void isEqual_givenDifferentAll_returnsFalse() {
+        TriDoublePredicate predicate = TriDoublePredicate.isEqual(1.0d, 1.0d, 1.0d);
+        Assertions.assertFalse(predicate.test(0.0d, 0.0d, 0.0d));
+    }
 }

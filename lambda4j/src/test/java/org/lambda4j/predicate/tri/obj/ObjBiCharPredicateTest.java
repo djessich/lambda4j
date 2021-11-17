@@ -32,4 +32,69 @@ class ObjBiCharPredicateTest {
         ObjBiCharPredicate<String> predicate = ObjBiCharPredicate.of(null);
         Assertions.assertNull(predicate);
     }
+
+    @Test
+    void call_givenExpression_executesFunctionalInterface() {
+        Assertions.assertFalse(ObjBiCharPredicate.call((t, value1, value2) -> false, "", 'c', 'c'));
+    }
+
+    @Test
+    void call_givenNullValue_executesFunctionalInterface() {
+        Assertions.assertFalse(ObjBiCharPredicate.call((t, value1, value2) -> false, null, 'c', 'c'));
+    }
+
+    @Test
+    void call_givenNullExpression_throwsException() {
+        Assertions.assertThrows(NullPointerException.class, () -> ObjBiCharPredicate.call(null, "", 'c', 'c'));
+    }
+
+    @Test
+    void constant_givenValue_returnsAlwaysValue() {
+        boolean ret = false;
+        ObjBiCharPredicate<String> predicate = ObjBiCharPredicate.constant(ret);
+        Assertions.assertEquals(ret, predicate.test("", 'c', 'c'));
+        Assertions.assertFalse(predicate.test("", 'c', 'c'));
+    }
+
+    @Test
+    void alwaysTrue_givenNothing_returnsAlwaysValue() {
+        ObjBiCharPredicate<String> predicate = ObjBiCharPredicate.alwaysTrue();
+        Assertions.assertTrue(predicate.test("", 'c', 'c'));
+    }
+
+    @Test
+    void alwaysFalse_givenNothing_returnsAlwaysValue() {
+        ObjBiCharPredicate<String> predicate = ObjBiCharPredicate.alwaysFalse();
+        Assertions.assertFalse(predicate.test("", 'c', 'c'));
+    }
+
+    @Test
+    void isEqual_givenSame_returnsTrue() {
+        ObjBiCharPredicate<String> predicate = ObjBiCharPredicate.isEqual("", 'c', 'c');
+        Assertions.assertTrue(predicate.test("", 'c', 'c'));
+    }
+
+    @Test
+    void isEqual_givenDifferentFirstValue_returnsFalse() {
+        ObjBiCharPredicate<String> predicate = ObjBiCharPredicate.isEqual("first", 'c', 'c');
+        Assertions.assertFalse(predicate.test("", 'c', 'c'));
+    }
+
+    @Test
+    void isEqual_givenDifferentSecondValue_returnsFalse() {
+        ObjBiCharPredicate<String> predicate = ObjBiCharPredicate.isEqual("", 'd', 'c');
+        Assertions.assertFalse(predicate.test("", 'c', 'c'));
+    }
+
+    @Test
+    void isEqual_givenDifferentThirdValue_returnsFalse() {
+        ObjBiCharPredicate<String> predicate = ObjBiCharPredicate.isEqual("", 'c', 'd');
+        Assertions.assertFalse(predicate.test("", 'c', 'c'));
+    }
+
+    @Test
+    void isEqual_givenDifferentAll_returnsFalse() {
+        ObjBiCharPredicate<String> predicate = ObjBiCharPredicate.isEqual("other", 'd', 'd');
+        Assertions.assertFalse(predicate.test("", 'c', 'c'));
+    }
 }

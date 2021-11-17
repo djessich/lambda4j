@@ -32,4 +32,46 @@ class ShortPredicateTest {
         ShortPredicate predicate = ShortPredicate.of(null);
         Assertions.assertNull(predicate);
     }
+
+    @Test
+    void call_givenExpression_executesFunctionalInterface() {
+        Assertions.assertFalse(ShortPredicate.call(value -> false, (short) 0));
+    }
+
+    @Test
+    void call_givenNullExpression_throwsException() {
+        Assertions.assertThrows(NullPointerException.class, () -> ShortPredicate.call(null, (short) 0));
+    }
+
+    @Test
+    void constant_givenValue_returnsAlwaysValue() {
+        boolean ret = false;
+        ShortPredicate predicate = ShortPredicate.constant(ret);
+        Assertions.assertEquals(ret, predicate.test((short) 0));
+        Assertions.assertFalse(predicate.test((short) 0));
+    }
+
+    @Test
+    void alwaysTrue_givenNothing_returnsAlwaysValue() {
+        ShortPredicate predicate = ShortPredicate.alwaysTrue();
+        Assertions.assertTrue(predicate.test((short) 0));
+    }
+
+    @Test
+    void alwaysFalse_givenNothing_returnsAlwaysValue() {
+        ShortPredicate predicate = ShortPredicate.alwaysFalse();
+        Assertions.assertFalse(predicate.test((short) 0));
+    }
+
+    @Test
+    void isEqual_givenSame_returnsTrue() {
+        ShortPredicate predicate = ShortPredicate.isEqual((short) 0);
+        Assertions.assertTrue(predicate.test((short) 0));
+    }
+
+    @Test
+    void isEqual_givenDifferent_returnsFalse() {
+        ShortPredicate predicate = ShortPredicate.isEqual((short) 1);
+        Assertions.assertFalse(predicate.test((short) 0));
+    }
 }

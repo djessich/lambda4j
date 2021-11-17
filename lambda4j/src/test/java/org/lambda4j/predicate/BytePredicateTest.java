@@ -32,4 +32,46 @@ class BytePredicateTest {
         BytePredicate predicate = BytePredicate.of(null);
         Assertions.assertNull(predicate);
     }
+
+    @Test
+    void call_givenExpression_executesFunctionalInterface() {
+        Assertions.assertFalse(BytePredicate.call(value -> false, (byte) 0));
+    }
+
+    @Test
+    void call_givenNullExpression_throwsException() {
+        Assertions.assertThrows(NullPointerException.class, () -> BytePredicate.call(null, (byte) 0));
+    }
+
+    @Test
+    void constant_givenValue_returnsAlwaysValue() {
+        boolean ret = false;
+        BytePredicate predicate = BytePredicate.constant(ret);
+        Assertions.assertEquals(ret, predicate.test((byte) 0));
+        Assertions.assertFalse(predicate.test((byte) 0));
+    }
+
+    @Test
+    void alwaysTrue_givenNothing_returnsAlwaysValue() {
+        BytePredicate predicate = BytePredicate.alwaysTrue();
+        Assertions.assertTrue(predicate.test((byte) 0));
+    }
+
+    @Test
+    void alwaysFalse_givenNothing_returnsAlwaysValue() {
+        BytePredicate predicate = BytePredicate.alwaysFalse();
+        Assertions.assertFalse(predicate.test((byte) 0));
+    }
+
+    @Test
+    void isEqual_givenSame_returnsTrue() {
+        BytePredicate predicate = BytePredicate.isEqual((byte) 0);
+        Assertions.assertTrue(predicate.test((byte) 0));
+    }
+
+    @Test
+    void isEqual_givenDifferent_returnsFalse() {
+        BytePredicate predicate = BytePredicate.isEqual((byte) 1);
+        Assertions.assertFalse(predicate.test((byte) 0));
+    }
 }

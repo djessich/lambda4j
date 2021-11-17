@@ -33,4 +33,67 @@ class ThrowableTriDoublePredicateTest {
         ThrowableTriDoublePredicate<Throwable> predicate = ThrowableTriDoublePredicate.of(null);
         Assertions.assertNull(predicate);
     }
+
+    @Test
+    void call_givenExpression_executesFunctionalInterface() {
+        Assertions.assertFalse(ThrowableTriDoublePredicate.call((value1, value2, value3) -> false, 0.0d, 0.0d, 0.0d));
+    }
+
+    @Test
+    void call_givenNullExpression_throwsException() {
+        Assertions.assertThrows(NullPointerException.class,
+                () -> ThrowableTriDoublePredicate.call(null, 0.0d, 0.0d, 0.0d));
+    }
+
+    @Test
+    void constant_givenValue_returnsAlwaysValue() {
+        boolean ret = false;
+        ThrowableTriDoublePredicate<Throwable> predicate = ThrowableTriDoublePredicate.constant(ret);
+        Assertions.assertDoesNotThrow(() -> {
+            Assertions.assertEquals(ret, predicate.testThrows(0.0d, 0.0d, 0.0d));
+            Assertions.assertFalse(predicate.testThrows(0.0d, 0.0d, 0.0d));
+        });
+    }
+
+    @Test
+    void alwaysTrue_givenNothing_returnsAlwaysValue() {
+        ThrowableTriDoublePredicate<Throwable> predicate = ThrowableTriDoublePredicate.alwaysTrue();
+        Assertions.assertDoesNotThrow(() -> Assertions.assertTrue(predicate.testThrows(0.0d, 0.0d, 0.0d)));
+    }
+
+    @Test
+    void alwaysFalse_givenNothing_returnsAlwaysValue() {
+        ThrowableTriDoublePredicate<Throwable> predicate = ThrowableTriDoublePredicate.alwaysFalse();
+        Assertions.assertDoesNotThrow(() -> Assertions.assertFalse(predicate.testThrows(0.0d, 0.0d, 0.0d)));
+    }
+
+    @Test
+    void isEqual_givenSame_returnsTrue() {
+        ThrowableTriDoublePredicate<Throwable> predicate = ThrowableTriDoublePredicate.isEqual(0.0d, 0.0d, 0.0d);
+        Assertions.assertDoesNotThrow(() -> Assertions.assertTrue(predicate.testThrows(0.0d, 0.0d, 0.0d)));
+    }
+
+    @Test
+    void isEqual_givenDifferentFirstValue_returnsFalse() {
+        ThrowableTriDoublePredicate<Throwable> predicate = ThrowableTriDoublePredicate.isEqual(1.0d, 0.0d, 0.0d);
+        Assertions.assertDoesNotThrow(() -> Assertions.assertFalse(predicate.testThrows(0.0d, 0.0d, 0.0d)));
+    }
+
+    @Test
+    void isEqual_givenDifferentSecondValue_returnsFalse() {
+        ThrowableTriDoublePredicate<Throwable> predicate = ThrowableTriDoublePredicate.isEqual(0.0d, 1.0d, 0.0d);
+        Assertions.assertDoesNotThrow(() -> Assertions.assertFalse(predicate.testThrows(0.0d, 0.0d, 0.0d)));
+    }
+
+    @Test
+    void isEqual_givenDifferentThirdValue_returnsFalse() {
+        ThrowableTriDoublePredicate<Throwable> predicate = ThrowableTriDoublePredicate.isEqual(0.0d, 0.0d, 1.0d);
+        Assertions.assertDoesNotThrow(() -> Assertions.assertFalse(predicate.testThrows(0.0d, 0.0d, 0.0d)));
+    }
+
+    @Test
+    void isEqual_givenDifferentAll_returnsFalse() {
+        ThrowableTriDoublePredicate<Throwable> predicate = ThrowableTriDoublePredicate.isEqual(1.0d, 1.0d, 1.0d);
+        Assertions.assertDoesNotThrow(() -> Assertions.assertFalse(predicate.testThrows(0.0d, 0.0d, 0.0d)));
+    }
 }

@@ -32,4 +32,74 @@ class BiObjShortPredicateTest {
         BiObjShortPredicate<String, String> predicate = BiObjShortPredicate.of(null);
         Assertions.assertNull(predicate);
     }
+
+    @Test
+    void call_givenExpression_executesFunctionalInterface() {
+        Assertions.assertFalse(BiObjShortPredicate.call((t, u, value) -> false, "", "", (short) 0));
+    }
+
+    @Test
+    void call_givenNullFirstValue_executesFunctionalInterface() {
+        Assertions.assertFalse(BiObjShortPredicate.call((t, u, value) -> false, null, "", (short) 0));
+    }
+
+    @Test
+    void call_givenNullSecondValue_executesFunctionalInterface() {
+        Assertions.assertFalse(BiObjShortPredicate.call((t, u, value) -> false, "", null, (short) 0));
+    }
+
+    @Test
+    void call_givenNullExpression_throwsException() {
+        Assertions.assertThrows(NullPointerException.class, () -> BiObjShortPredicate.call(null, "", "", (short) 0));
+    }
+
+    @Test
+    void constant_givenValue_returnsAlwaysValue() {
+        boolean ret = false;
+        BiObjShortPredicate<String, String> predicate = BiObjShortPredicate.constant(ret);
+        Assertions.assertEquals(ret, predicate.test("", "", (short) 0));
+        Assertions.assertFalse(predicate.test("", "", (short) 0));
+    }
+
+    @Test
+    void alwaysTrue_givenNothing_returnsAlwaysValue() {
+        BiObjShortPredicate<String, String> predicate = BiObjShortPredicate.alwaysTrue();
+        Assertions.assertTrue(predicate.test("", "", (short) 0));
+    }
+
+    @Test
+    void alwaysFalse_givenNothing_returnsAlwaysValue() {
+        BiObjShortPredicate<String, String> predicate = BiObjShortPredicate.alwaysFalse();
+        Assertions.assertFalse(predicate.test("", "", (short) 0));
+    }
+
+    @Test
+    void isEqual_givenSame_returnsTrue() {
+        BiObjShortPredicate<String, String> predicate = BiObjShortPredicate.isEqual("", "", (short) 0);
+        Assertions.assertTrue(predicate.test("", "", (short) 0));
+    }
+
+    @Test
+    void isEqual_givenDifferentFirstValue_returnsFalse() {
+        BiObjShortPredicate<String, String> predicate = BiObjShortPredicate.isEqual("first", "", (short) 0);
+        Assertions.assertFalse(predicate.test("", "", (short) 0));
+    }
+
+    @Test
+    void isEqual_givenDifferentSecondValue_returnsFalse() {
+        BiObjShortPredicate<String, String> predicate = BiObjShortPredicate.isEqual("", "second", (short) 0);
+        Assertions.assertFalse(predicate.test("", "", (short) 0));
+    }
+
+    @Test
+    void isEqual_givenDifferentThirdValue_returnsFalse() {
+        BiObjShortPredicate<String, String> predicate = BiObjShortPredicate.isEqual("", "", (short) 1);
+        Assertions.assertFalse(predicate.test("", "", (short) 0));
+    }
+
+    @Test
+    void isEqual_givenDifferentAll_returnsFalse() {
+        BiObjShortPredicate<String, String> predicate = BiObjShortPredicate.isEqual("other1", "other2", (short) 1);
+        Assertions.assertFalse(predicate.test("", "", (short) 0));
+    }
 }

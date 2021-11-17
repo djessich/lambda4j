@@ -23,7 +23,7 @@ class ThrowablePredicateTest {
 
     @Test
     void of_givenExpression_returnsFunctionalInterface() {
-        ThrowablePredicate<String, Throwable> predicate = ThrowablePredicate.of(value -> false);
+        ThrowablePredicate<String, Throwable> predicate = ThrowablePredicate.of(t -> false);
         Assertions.assertNotNull(predicate);
     }
 
@@ -31,5 +31,54 @@ class ThrowablePredicateTest {
     void of_givenNull_returnsNull() {
         ThrowablePredicate<String, Throwable> predicate = ThrowablePredicate.of(null);
         Assertions.assertNull(predicate);
+    }
+
+    @Test
+    void call_givenExpression_executesFunctionalInterface() {
+        Assertions.assertFalse(ThrowablePredicate.call(t -> false, ""));
+    }
+
+    @Test
+    void call_givenNullValue_executesFunctionalInterface() {
+        Assertions.assertFalse(ThrowablePredicate.call(t -> false, null));
+    }
+
+    @Test
+    void call_givenNullExpression_throwsException() {
+        Assertions.assertThrows(NullPointerException.class, () -> ThrowablePredicate.call(null, ""));
+    }
+
+    @Test
+    void constant_givenValue_returnsAlwaysValue() {
+        boolean ret = false;
+        ThrowablePredicate<String, Throwable> predicate = ThrowablePredicate.constant(ret);
+        Assertions.assertDoesNotThrow(() -> {
+            Assertions.assertEquals(ret, predicate.testThrows(""));
+            Assertions.assertFalse(predicate.testThrows(""));
+        });
+    }
+
+    @Test
+    void alwaysTrue_givenNothing_returnsAlwaysValue() {
+        ThrowablePredicate<String, Throwable> predicate = ThrowablePredicate.alwaysTrue();
+        Assertions.assertDoesNotThrow(() -> Assertions.assertTrue(predicate.testThrows("")));
+    }
+
+    @Test
+    void alwaysFalse_givenNothing_returnsAlwaysValue() {
+        ThrowablePredicate<String, Throwable> predicate = ThrowablePredicate.alwaysFalse();
+        Assertions.assertDoesNotThrow(() -> Assertions.assertFalse(predicate.testThrows("")));
+    }
+
+    @Test
+    void isEqual_givenSame_returnsTrue() {
+        ThrowablePredicate<String, Throwable> predicate = ThrowablePredicate.isEqual("");
+        Assertions.assertDoesNotThrow(() -> Assertions.assertTrue(predicate.testThrows("")));
+    }
+
+    @Test
+    void isEqual_givenDifferent_returnsFalse() {
+        ThrowablePredicate<String, Throwable> predicate = ThrowablePredicate.isEqual("other");
+        Assertions.assertDoesNotThrow(() -> Assertions.assertFalse(predicate.testThrows("")));
     }
 }

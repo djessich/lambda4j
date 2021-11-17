@@ -32,4 +32,63 @@ class ObjBooleanPredicateTest {
         ObjBooleanPredicate<String> predicate = ObjBooleanPredicate.of(null);
         Assertions.assertNull(predicate);
     }
+
+    @Test
+    void call_givenExpression_executesFunctionalInterface() {
+        Assertions.assertFalse(ObjBooleanPredicate.call((t, value) -> false, "", true));
+    }
+
+    @Test
+    void call_givenNullValue_executesFunctionalInterface() {
+        Assertions.assertFalse(ObjBooleanPredicate.call((t, value) -> false, null, true));
+    }
+
+    @Test
+    void call_givenNullExpression_throwsException() {
+        Assertions.assertThrows(NullPointerException.class, () -> ObjBooleanPredicate.call(null, "", true));
+    }
+
+    @Test
+    void constant_givenValue_returnsAlwaysValue() {
+        boolean ret = false;
+        ObjBooleanPredicate<String> predicate = ObjBooleanPredicate.constant(ret);
+        Assertions.assertEquals(ret, predicate.test("", false));
+        Assertions.assertFalse(predicate.test("", false));
+    }
+
+    @Test
+    void alwaysTrue_givenNothing_returnsAlwaysValue() {
+        ObjBooleanPredicate<String> predicate = ObjBooleanPredicate.alwaysTrue();
+        Assertions.assertTrue(predicate.test("", false));
+    }
+
+    @Test
+    void alwaysFalse_givenNothing_returnsAlwaysValue() {
+        ObjBooleanPredicate<String> predicate = ObjBooleanPredicate.alwaysFalse();
+        Assertions.assertFalse(predicate.test("", false));
+    }
+
+    @Test
+    void isEqual_givenSame_returnsTrue() {
+        ObjBooleanPredicate<String> predicate = ObjBooleanPredicate.isEqual("", false);
+        Assertions.assertTrue(predicate.test("", false));
+    }
+
+    @Test
+    void isEqual_givenDifferentFirstValue_returnsFalse() {
+        ObjBooleanPredicate<String> predicate = ObjBooleanPredicate.isEqual("first", false);
+        Assertions.assertFalse(predicate.test("", false));
+    }
+
+    @Test
+    void isEqual_givenDifferentSecondValue_returnsFalse() {
+        ObjBooleanPredicate<String> predicate = ObjBooleanPredicate.isEqual("", true);
+        Assertions.assertFalse(predicate.test("", false));
+    }
+
+    @Test
+    void isEqual_givenDifferentAll_returnsFalse() {
+        ObjBooleanPredicate<String> predicate = ObjBooleanPredicate.isEqual("other", true);
+        Assertions.assertFalse(predicate.test("", false));
+    }
 }
